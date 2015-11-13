@@ -350,6 +350,56 @@ bool LVL_Block::isInited()
     return _isInited;
 }
 
+long LVL_Block::lua_getID()
+{
+    return data.id;
+}
+
+int LVL_Block::lua_contentID_old()
+{
+    return data.npc_id+1000;
+}
+
+void LVL_Block::lua_setContentID_old(int npcid)
+{
+    data.npc_id=npcid-1000;
+}
+
+int LVL_Block::lua_contentID()
+{
+    return data.npc_id;
+}
+
+void LVL_Block::lua_setContentID(int npcid)
+{
+    data.npc_id=npcid;
+}
+
+bool LVL_Block::lua_invisible()
+{
+    return data.invisible;
+}
+
+void LVL_Block::lua_setInvisible(bool iv)
+{
+    data.invisible=iv;
+}
+
+bool LVL_Block::lua_slippery()
+{
+    return data.slippery;
+}
+
+void LVL_Block::lua_setSlippery(bool sl)
+{
+    data.slippery=sl;
+}
+
+bool LVL_Block::lua_isSolid()
+{
+    return (collide_npc==COLLISION_ANY);
+}
+
 void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
 {
     PGE_RectF tx;
@@ -380,25 +430,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
     if((setup->destroyable)&&(data.npc_id==0))
     {
-        triggerEvent=true;
-        if(setup->destroy_sound_id==0)
-            PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
-        else
-            PGE_Audio::playSound(setup->destroy_sound_id);
-        destroyed=true;
-        QString oldLayer=data.layer;
-        LvlSceneP::s->layers.removeRegItem(data.layer, this);
-        data.layer="Destroyed Blocks";
-        LvlSceneP::s->layers.registerItem(data.layer, this);
-        if(!data.event_destroy.isEmpty())
-        {
-            LvlSceneP::s->events.triggerEvent(data.event_destroy);
-        }
-        if(!data.event_emptylayer.isEmpty())
-        {
-            if(LvlSceneP::s->layers.isEmpty(oldLayer))
-                LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
-        }
+        destroy(true);
         return;
     }
 
@@ -495,6 +527,39 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             LvlSceneP::s->fading_blocks.push_back(this);
         fadeOffset=0.f;
         setFade(5, 1.0f, 0.07f);
+    }
+}
+
+void LVL_Block::hit(bool isUp, LVL_Player *, int numHits)
+{
+    while(numHits>0)
+    {
+        hit(isUp?up:down);
+        numHits--;
+    }
+}
+
+void LVL_Block::destroy(bool playEffect)
+{
+    (void)playEffect;
+
+    if(setup->destroy_sound_id==0)
+        PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
+    else
+        PGE_Audio::playSound(setup->destroy_sound_id);
+    destroyed=true;
+    QString oldLayer=data.layer;
+    LvlSceneP::s->layers.removeRegItem(data.layer, this);
+    data.layer="Destroyed Blocks";
+    LvlSceneP::s->layers.registerItem(data.layer, this);
+    if(!data.event_destroy.isEmpty())
+    {
+        LvlSceneP::s->events.triggerEvent(data.event_destroy);
+    }
+    if(!data.event_emptylayer.isEmpty())
+    {
+        if(LvlSceneP::s->layers.isEmpty(oldLayer))
+            LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
     }
 }
 

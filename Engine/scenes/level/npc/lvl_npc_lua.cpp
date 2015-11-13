@@ -159,4 +159,11 @@ InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float 
     return &detectors_inarea.last();
 }
 
+ContactDetector *LVL_Npc::lua_installContactDetector()
+{
+    detectors_contact.push_back(ContactDetector(this));
+    detectors.push_back(&detectors_contact.last());
+    return &detectors_contact.last();
+}
+
 

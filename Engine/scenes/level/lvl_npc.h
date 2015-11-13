@@ -9,6 +9,7 @@
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
 #include "npc_detectors/lvl_dtc_player_pos.h"
+#include "npc_detectors/lvl_dtc_contact.h"
 #include "npc_detectors/lvl_dtc_inarea.h"
 
 #include <luabind/luabind.hpp>
@@ -87,6 +88,7 @@ public:
     QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
     QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
 
+    QHash<int, PGE_Phys_Object*> contacted_blocks;
     QHash<int, PGE_Phys_Object*> contacted_bgos;
     QHash<int, PGE_Phys_Object*> contacted_npc;
     QHash<int, PGE_Phys_Object*> contacted_players;
@@ -124,7 +126,11 @@ public:
     PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
     QList<InAreaDetector >    detectors_inarea; //! Is player touches selected relative area;
     InAreaDetector * lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::adl::object filters);//! Detects is player(s) are enters into specific area relative to NPC's center
+    QList<ContactDetector >        detectors_contact;       //!< Entire list of all detectors
+    ContactDetector * lua_installContactDetector();//! Detects contacted elements
+
     QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
+
     /***************************************************/
 
     /*****Warp*Sprite*****/
