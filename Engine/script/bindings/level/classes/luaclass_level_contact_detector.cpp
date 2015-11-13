@@ -10,5 +10,6 @@ luabind::scope Binding_Level_Class_ContactDetector::bindToLua()
             .def("detected", &ContactDetector::detected)
             .def("getBlocks", &ContactDetector::getBlocks)
             .def("getBGOs", &ContactDetector::getBGOs)
-            .def("getNPCs", &ContactDetector::getNPCs);
+            .def("getNPCs", &ContactDetector::getNPCs)
+            .def("getPlayers", &ContactDetector::getPlayers);
 }
