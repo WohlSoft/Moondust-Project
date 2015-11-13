@@ -50,6 +50,7 @@ function vinehead:__init(npc_obj)
     self.init_y = 0
     self.passed_height = 0
     self.firstTime=false
+    self.contacts = npc_obj:installContactDetector()
 end
 
 function vinehead:onActivated()
@@ -67,6 +68,15 @@ function vinehead:onLoop(tickTime)
     if(self.passed_height>=32)then
         self:spawnVine()
         self.init_y = self.init_y-32
+        -- selfDestroy on contact with solid blocks
+        if(self.contacts:detected())then
+            local blocks= self.contacts:getBlocks()
+            for K,Blk in pairs(blocks) do
+                if(Blk.isSolid and Blk.y>=self.npc_obj.y)then
+                    self.npc_obj:unregister()
+                end
+            end
+        end
     end
 end
 

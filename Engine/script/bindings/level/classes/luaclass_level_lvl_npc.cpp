@@ -69,6 +69,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             .def("installInAreaDetector", &LVL_Npc::lua_installInAreaDetector)
             .def("installPlayerPosDetector", &LVL_Npc::lua_installPlayerPosDetector)
+            .def("installContactDetector", &LVL_Npc::lua_installContactDetector)
             .def("spawnNPC", &LVL_Npc::lua_spawnNPC)
 
             .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
