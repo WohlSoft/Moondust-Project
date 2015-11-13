@@ -12,8 +12,8 @@ function twitter:__init(npc_obj)
     self.def_normalJumps = 3
     self.def_highJumps = 1
 
-    self.def_normalJumpsSpeedY = -3
-    self.def_highJumpsSpeedY = -5
+    self.def_normalJumpsSpeedY = -3.5
+    self.def_highJumpsSpeedY = -5.5
 
     self:initProps()
 end
