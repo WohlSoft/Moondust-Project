@@ -74,6 +74,10 @@ bool ConfigManager::loadLevelNPC()
       marker_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
 
         marker_npc.eff_lava_burn =  npcset.value("effect-lava-burn", "13").toInt();
+
+        marker_npc.projectile_sound_id = npcset.value("projectile-sound-id", 0).toInt();
+        marker_npc.projectile_effect.fill("projectile", &npcset);
+        marker_npc.projectile_speed = npcset.value("projectile-speed", 10.0f).toFloat();
     npcset.endGroup();
 
     /*************Buffers*********************/
@@ -123,6 +127,10 @@ bool ConfigManager::loadLevelNPC()
         snpc.algorithm_script = npcset.value("algorithm", PGESTRING("npc-%1.lua").arg(i) ).toString();
         snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
         snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
+
+        snpc.block_spawn_type=npcset.value("block-spawn-type", 0).toInt();
+        snpc.block_spawn_speed=npcset.value("block-spawn-speed", 3.0f).toFloat();
+        snpc.block_spawn_sound=npcset.value("block-spawn-sound", true).toBool();
 
         //Physics
         snpc.height =               npcset.value("fixture-height", "0").toInt();//Leaved for compatibility
@@ -182,6 +190,7 @@ bool ConfigManager::loadLevelNPC()
             NumberLimiter::apply(snpc.display_frame, 0u);
         snpc.foreground =           npcset.value("foreground", false).toBool();
         snpc.background =           npcset.value("background", false).toBool();
+        snpc.z_offset =             npcset.value("z-offset", 0.0f).toDouble();
         snpc.ani_directed_direct =  npcset.value("animation-directed-direction", false).toBool();
         snpc.ani_direct =           npcset.value("animation-direction", false).toBool();
         snpc.ani_bidir =            npcset.value("animation-bidirectional", false).toBool();
@@ -294,6 +303,7 @@ bool ConfigManager::loadLevelNPC()
         snpc.movement =     npcset.value("moving", "1").toBool();
         snpc.activity =     npcset.value("activity", "1").toBool();
         snpc.scenery =      npcset.value("scenery", "0").toBool();
+        snpc.keep_position = npcset.value("keep-position", "0").toBool();
         snpc.shared_ani =   npcset.value("shared-animation", "0").toBool();
         snpc.immortal =     npcset.value("immortal", "0").toBool();
         snpc.can_be_eaten = npcset.value("can-be-eaten", "0").toBool();

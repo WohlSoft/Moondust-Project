@@ -16,43 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LVL_BGO_H
-#define LVL_BGO_H
+#include <scenes/level/lvl_bgo.h>
 
-#include "lvl_base_object.h"
-#include <data_configs/obj_bgo.h>
-#include <PGE_File_Formats/file_formats.h>
-
-#include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
-
-class LVL_Bgo : public PGE_Phys_Object
+luabind::scope LVL_Bgo::bindToLua()
 {
-public:
-    LVL_Bgo();
-    ~LVL_Bgo();
-    void init();
-
-    void transformTo_x(long id);
-
-    LevelBGO data; //Local settings
-
-    bool animated;
-    long animator_ID;
-
-    obj_bgo * setup;//Global config
-
-    void render(double camX, double camY);
-    bool isInited();
-
-    /************LUA-Specific functions*********/
-    long lua_getID();
-    static luabind::scope bindToLua();
-    /*******************************************/
-
-private:
-    bool _isInited;
-};
+    using namespace luabind;
+    return
+        class_<LVL_Bgo, PGE_Phys_Object, detail::null_type, LVL_Bgo>("BGO")
+            .def(constructor<>())
+            //Properties
+            .property("id", &LVL_Bgo::lua_getID);
+}
 
 
-#endif // LVL_BGO_H

@@ -113,3 +113,8 @@ bool LVL_Bgo::isInited()
 {
     return _isInited;
 }
+
+long LVL_Bgo::lua_getID()
+{
+    return data.id;
+}
