@@ -1,7 +1,8 @@
 class 'vinehead'
 
-function vinehead:mod(a, b)
-    return a - math.floor(a/b)*b
+function vinehead:round(num) 
+    if num >= 0 then return math.floor(num+.5) 
+    else return math.ceil(num-.5) end
 end
 
 function vinehead:spawnVine()
@@ -17,19 +18,29 @@ function vinehead:spawnVine()
     local vine=self.npc_obj:spawnNPC(spawnID, GENERATOR_APPEAR, SPAWN_UP, false)
     vine.speedX = 0
     vine.speedY = 0
-    vine.center_x = self.npc_obj.center_x
-    if(self.npc_obj.y>0)then
-        vine.y = self.npc_obj.y - (self:mod(self.npc_obj.y, 32))
+
+    -- Let's align Y value to 32px grid!
+    local rY = self:round(self.npc_obj.y)
+    local gridY = rY - (math.fmod(rY, 32))
+    if(rY<0)then
+        if(rY < (gridY-16) )then
+            gridY = gridY-32
+        end
     else
-        vine.y = self.npc_obj.y+(32-self:mod(self.npc_obj.y, 32))
+        if(rY > (gridY+16) )then
+            gridY = gridY+32
+        end
     end
+
+    vine.center_x = self.npc_obj.center_x
+    vine.y = gridY
 end
 
 function vinehead:initProps()
     -- Animation properties
     --self.radius = 4*32-self.npc_obj.width/2-16
     self.init_y = self.npc_obj.y
-    self.passed_height = 32
+    self.passed_height = 0
     self.firstTime=true
     self.speed = -2
 end
@@ -38,7 +49,7 @@ function vinehead:__init(npc_obj)
     self.npc_obj = npc_obj
     self.init_y = 0
     self.passed_height = 0
-    self:initProps()
+    self.firstTime=false
 end
 
 function vinehead:onActivated()
