@@ -9,7 +9,7 @@ PGE_Audio::~PGE_Audio() {}
 void PGE_Audio::playSound(long soundID)
 {
     if(soundID<=0) return;
-    if(soundID>=ConfigManager::main_sfx_index.size()) return;
+    if(soundID>ConfigManager::main_sfx_index.size()) return;
     ConfigManager::main_sfx_index[soundID-1].play();
 }
 
