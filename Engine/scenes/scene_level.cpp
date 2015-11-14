@@ -509,6 +509,9 @@ void LevelScene::update()
             luaEngine.destoryLuaNpc(corpse);
         }
 
+        if(!dead_players.isEmpty())
+            LvlSceneP::s->checkPlayers();
+
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //update activated NPC's
@@ -976,43 +979,45 @@ int LevelScene::exitType()
 
 void LevelScene::checkPlayers()
 {
-    bool haveAlivePlayers=false;
-    for(int i=0; i<players.size(); i++)
+    while(!dead_players.isEmpty())
     {
-        if(players[i]->isAlive)
-            haveAlivePlayers = true;
-    }
+        LVL_Player *corpse = dead_players.last();
+        dead_players.pop_back();
+        LVL_Player::deathReason reason = corpse->kill_reason;
 
-    for(int i=0; i<players.size(); i++)
-    {
-        if((!players[i]->isAlive) && (!players[i]->locked()))
+        #if (QT_VERSION >= 0x050400)
+        players.removeAll(corpse);
+        #else
+        //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
+        while(1)
         {
-            switch(players[i]->kill_reason)
+            const QVector<LVL_Player *>::const_iterator ce = players.cend(), cit = std::find(players.cbegin(), ce, corpse);
+            if (cit == ce)
+                break;
+            const QVector<LVL_Player *>::iterator e = players.end(), it = std::remove(players.begin() + (cit - players.cbegin()), e, corpse);
+            players.erase(it, e);
+            break;
+        }
+        #endif
+        luaEngine.destoryLuaPlayer(corpse);
+
+        switch(reason)
+        {
+        case LVL_Player::deathReason::DEAD_burn:
+        case LVL_Player::deathReason::DEAD_fall:
+        case LVL_Player::deathReason::DEAD_killed:
+            if(players.size() > 0)
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
+            else
             {
-            case LVL_Player::deathReason::DEAD_burn:
-                if(!haveAlivePlayers)
-                {
-                    Mix_HaltChannel(-1);
-                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
-                }
-                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
-                break;
-            case LVL_Player::deathReason::DEAD_fall:
-            case LVL_Player::deathReason::DEAD_killed:
-                if(haveAlivePlayers)
-                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
-                else
-                {
-                    Mix_HaltChannel(-1);
-                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
-                }
-                break;
+                Mix_HaltChannel(-1);
+                PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
             }
-            players[i]->setLocked(true);
+            break;
         }
     }
 
-    if(!haveAlivePlayers)
+    if(players.isEmpty())
     {
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);

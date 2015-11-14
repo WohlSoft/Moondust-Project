@@ -75,15 +75,6 @@ void LVL_Player::update(float ticks)
     else
         phys_setup.decelerate_x = physics_cur.decelerate_air;
 
-    if(doKill)
-    {
-        doKill=false;
-        isAlive = false;
-        setPaused(true);
-        LvlSceneP::s->checkPlayers();
-        return;
-    }
-
     if(climbing)
     {
         PGE_Phys_Object* climbableItem = *(climbable_map.begin());
