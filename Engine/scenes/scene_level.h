@@ -217,6 +217,7 @@ public:
 
     QVector<LVL_Npc* > active_npcs;
     QVector<LVL_Npc* > dead_npcs;
+    QVector<LVL_Player* > dead_players;
 
     QVector<LVL_Block* > fading_blocks;
 

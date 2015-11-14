@@ -60,6 +60,16 @@ void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
     }
 }
 
+void LuaLevelEngine::destoryLuaPlayer(LVL_Player *plr)
+{
+    try {
+        luabind::call_function<void>(getNativeState(), "__destroy_luaplayer", plr);
+    } catch (luabind::error& error){
+        postLateShutdownError(error);
+        return;
+    }
+}
+
 void LuaLevelEngine::loadNPCClass(int id, const QString &path)
 {
     if(shouldShutdown())
