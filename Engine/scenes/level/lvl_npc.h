@@ -216,8 +216,11 @@ public:
     LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
 
     inline bool not_movable() { return data.nomove; }
+    inline void setNot_movable(bool n) { data.nomove=n; }
     inline long special1() { return data.special_data; }
+    inline void setSpecial1(long s) { data.special_data=s; }
     inline long special2() { return data.special_data2; }
+    inline void setSpecial2(long s) { data.special_data2=s; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
     inline long getHealth() { return health; }
