@@ -11,6 +11,7 @@ function bubble:dropContents()
     thrownNPC.speedY = 0
     thrownNPC.center_x = self.npc_obj.center_x
     thrownNPC.center_y = self.npc_obj.center_y
+    thrownNPC.special1 = 0
 end
 
 function bubble:onLoop(tickTime)
