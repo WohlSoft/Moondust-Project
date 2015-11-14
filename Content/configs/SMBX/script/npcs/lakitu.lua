@@ -50,6 +50,7 @@ function lakitu:throwNPC()
     thrownNPC.speedY = -3
     thrownNPC.center_x = self.npc_obj.center_x + self.npc_obj.direction*(self.npc_obj.width/2)
     thrownNPC.center_y = self.npc_obj.top-16
+    thrownNPC.special1 = 0
 end
 
 function lakitu:onActivated()
