@@ -25,6 +25,15 @@ function yoshi_egg:initProps()
     self.npc_obj:setSequence(self.egg_color)
 end
 
+function yoshi_egg:dropContents()
+    local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.special1, GENERATOR_APPEAR, SPAWN_UP, false)
+    thrownNPC.speedX = 0
+    thrownNPC.speedY = 0
+    thrownNPC.center_x = self.npc_obj.center_x
+    thrownNPC.y = self.npc_obj.bottom - thrownNPC.height
+    thrownNPC.special1 = 0
+end
+
 function yoshi_egg:__init(npc_obj)
     self.npc_obj = npc_obj
     self.egg_color = {0}
@@ -43,13 +52,17 @@ end
 function yoshi_egg:onLoop(TickTime)
     if ((self.npc_obj.onGround) and (self.recent_speedY > 3)) then
         self.npc_obj:kill(1);
-        if(self.npc_obj.special1==0)then
-            Audio.playSound(self.def_eggSmashSoundID)        
-        else
-            Audio.playSound(self.def_eggHatchSoundID)
-        end
     end
     self.recent_speedY=self.npc_obj.speedY
+end
+
+function yoshi_egg:onKill(reason)
+    if(self.npc_obj.special1==0)then
+        Audio.playSound(self.def_eggSmashSoundID)        
+    else
+        Audio.playSound(self.def_eggHatchSoundID)
+        self:dropContents()
+    end
 end
 
 return yoshi_egg
