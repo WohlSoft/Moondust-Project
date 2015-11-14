@@ -825,11 +825,9 @@ void LevelScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
     if(!placingMode) return;
     PGE_Point mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
-    if( mbevent.button==SDL_BUTTON_LEFT )
-    {
+    if( mbevent.button==SDL_BUTTON_LEFT ) {
         placeItemByMouse(mousePos.x(), mousePos.y());
-    }else if( mbevent.button==SDL_BUTTON_RIGHT )
-    {
+    } else if( mbevent.button==SDL_BUTTON_RIGHT ) {
         placingMode=false;
     }
 }
