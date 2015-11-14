@@ -194,6 +194,40 @@ public:
     LVL_Npc*         buddies_leader;
     /**********************************************/
 
+    class KillEvent
+    {
+        public:
+            KillEvent();
+            KillEvent(const KillEvent &ke);
+            bool cancel;
+            int  reason_code;
+            enum killedBy {
+                self=0,
+                player,
+                otherNPC
+            };
+            int         killed_by;
+            LVL_Player* killer_p;
+            LVL_Npc*    killer_n;
+    };
+
+    class HarmEvent
+    {
+        public:
+            HarmEvent();
+            HarmEvent(const HarmEvent &he);
+            bool cancel;
+            int  damage;
+            int  reason_code;
+            enum killedBy {
+                self=0,
+                player,
+                otherNPC
+            };
+            int         killed_by;
+            LVL_Player* killer_p;
+            LVL_Npc*    killer_n;
+    };
     //Additional lua enums
 
     //Additional lua events
