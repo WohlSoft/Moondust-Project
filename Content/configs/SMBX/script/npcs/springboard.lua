@@ -62,7 +62,7 @@ function Springboard:onLoop(tickTime)
         for K,Plr in pairs(players) do
             if(Plr.speedY>0 and (Plr.bottom > self.npc_obj.top+4) and (Plr.bottom < self.npc_obj.top+8-(Plr.speedY/2)))then
                 self:startAni(Plr.speedY)
-            elseif(Plr.speedY>0 and (Plr.bottom > self.npc_obj.top+8-(Plr.speedY/2)))then
+            elseif(Plr.speedY>0 and (Plr.bottom > self.npc_obj.top+8-(Plr.speedY/2)) and (Plr.bottom < self.npc_obj.bottom) )then
                 self:startAni(Plr.speedY)
                 self:spring(Plr)
             end
