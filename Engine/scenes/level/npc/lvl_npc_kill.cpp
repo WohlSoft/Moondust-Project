@@ -105,17 +105,22 @@ void LVL_Npc::kill(int damageReason)
     switch(damageReason)
     {
         case DAMAGE_STOMPED:
-            LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+            if(setup->effect_1>0)
+                LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
         default:
-            LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+            if(setup->effect_2>0)
+                LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
     }
 
     if(setup->death_sound_id==0)
         PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
     else
-        PGE_Audio::playSound(setup->death_sound_id);
+    {
+        if(setup->death_sound_id>0)
+            PGE_Audio::playSound(setup->death_sound_id);
+    }
 
     //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())
