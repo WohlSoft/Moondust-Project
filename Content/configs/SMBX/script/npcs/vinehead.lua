@@ -72,7 +72,7 @@ function vinehead:onLoop(tickTime)
         if(self.contacts:detected())then
             local blocks= self.contacts:getBlocks()
             for K,Blk in pairs(blocks) do
-                if(Blk.isSolid and Blk.y>=self.npc_obj.y)then
+                if(Blk.isSolid and Blk.y>=self.npc_obj.y and (Blk.left+10)>=self.npc_obj.left and (Blk.right-10)<=self.npc_obj.right )then
                     self.npc_obj:unregister()
                 end
             end
