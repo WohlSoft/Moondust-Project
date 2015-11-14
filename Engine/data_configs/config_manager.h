@@ -241,7 +241,7 @@ public:
     static long getNpcTexture(long npcID);
     /*****************************/
     static QMap<long, obj_npc>   lvl_npc_indexes;
-    static npc_Markers           marker_npc;
+    static NPC_GlobalSetup           marker_npc;
     static CustomDirManager Dir_NPC;
     static CustomDirManager Dir_NPCScript;
     static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)

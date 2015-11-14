@@ -238,7 +238,7 @@ struct obj_npc
 
 
 
-struct npc_Markers
+struct NPC_GlobalSetup
 {
     //    ;Defines for SMBX64
     unsigned long bubble;   //    bubble=283	; NPC-Container for packed in bubble
@@ -265,6 +265,9 @@ struct npc_Markers
     SpawnEffectDef projectile_effect;
     long  projectile_sound_id;
     float projectile_speed;
+
+    //Talking NPC's properties
+    QString talking_sign_img;
 };
 
 #endif // OBJ_NPC_H
