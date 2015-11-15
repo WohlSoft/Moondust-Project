@@ -1013,6 +1013,8 @@ void LevelScene::checkPlayers()
             }
             break;
         }
+        if(reason==LVL_Player::deathReason::DEAD_burn)
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
 
     if(players.isEmpty())

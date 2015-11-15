@@ -200,7 +200,6 @@ void LVL_Player::kill(deathReason reason)
     setPaused(true);
     if(kill_reason==DEAD_burn)
     {
-        PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
         LvlSceneP::s->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
                                           posCenterX(),
                                           posCenterY(), 1, 0, 0, 0, 0, _direction);
