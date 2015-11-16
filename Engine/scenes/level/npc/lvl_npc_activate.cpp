@@ -59,13 +59,9 @@ void LVL_Npc::deActivate()
     if(!is_shared_animation)
         animator.stop();
 
-    if(!keep_position_on_despawn){
+    if(!keep_position_on_despawn) {
         setDefaults();
         setPos(data.x, data.y);
-    }
-
-    if(!is_shared_animation)
-    {
         if(!reSpawnable) unregister();
         setPaused(true);
     }
