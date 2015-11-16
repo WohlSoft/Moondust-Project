@@ -58,6 +58,10 @@ function para_goomba:onActivated()
     self:initProps()
 end
 
+function para_goomba:onTransform(id)
+    self.npc_obj.speedY = math.abs(self.npc_obj.speedY)/4
+end
+
 function para_goomba:onLoop(tickTime)
     if(self.cur_mode == AI_WALKING)then
         if(self.def_walkingTicks > self.cur_walkingTicks)then
