@@ -157,6 +157,7 @@ void LVL_Player::updateCollisions()
                         _floorY = nearest->posRect.top();
                     _floorY-=posRect.height();
                 } else {
+                    collided_slope=false;
                     _floorY = nearest->posRect.top()-posRect.height();
                 }
                 resolveBottom=true;
@@ -389,6 +390,22 @@ void LVL_Player::_collideUnduck()
                     if(blk->shape==LVL_Block::shape_tr_bottom_left)
                     {
                         _floorY = nearest->posRect.top()+SL_HeightTopRight(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                    else
+                    if(blk->shape==LVL_Block::shape_tr_top_right)
+                    {
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
+                        if(_floorY < nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY > nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                    else
+                    if(blk->shape==LVL_Block::shape_tr_top_left)
+                    {
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
                     }
