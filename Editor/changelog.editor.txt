@@ -2,6 +2,8 @@ Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation
 - Added question boxes on attempt to remove layer from list
 - [WIP] Testing settings (there are will don't take effect on actual testing inside engine yet!)
+- Fixed grid offset bug
+- Added "Open folder of file" and "Open custom folder of file" to quickly open custom folder of current level or world map
 
 Editor 0.3.1.7
 - Small update of File Library
