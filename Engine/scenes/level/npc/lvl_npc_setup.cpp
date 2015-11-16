@@ -190,6 +190,7 @@ void LVL_Npc::transformTo_x(long id)
     {
        int leftHealth=setup->health-(setup->health-health);
        health=(leftHealth>0)? leftHealth : 1;
+       animator.start();
     }
     else
        health=(setup->health>0)?setup->health : 1;
