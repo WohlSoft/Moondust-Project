@@ -84,6 +84,8 @@ void LVL_Npc::talkWith()
 
 void LVL_Npc::kill(int damageReason)
 {
+    if((damageReason==DAMAGE_LAVABURN) && (setup->lava_protect)) return;
+
     try{
         lua_onKill(damageReason);
     } catch (luabind::error& e) {
@@ -117,12 +119,17 @@ void LVL_Npc::kill(int damageReason)
             break;
     }
 
-    if(setup->death_sound_id==0)
-        PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
-    else
+    if(damageReason!=DAMAGE_LAVABURN)
     {
-        if(setup->death_sound_id>0)
-            PGE_Audio::playSound(setup->death_sound_id);
+        if(setup->death_sound_id==0)
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
+        else
+        {
+            if(setup->death_sound_id>0)
+                PGE_Audio::playSound(setup->death_sound_id);
+        }
+    } else {
+        PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
 
     //Post-unregistring event
