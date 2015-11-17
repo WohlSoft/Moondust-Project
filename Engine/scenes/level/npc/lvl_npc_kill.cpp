@@ -113,6 +113,7 @@ void LVL_Npc::kill(int damageReason)
                                                   posCenterY(), 1, 0, 0, 0, 0, _direction);
             }
             break;
+        case DAMAGE_PITFALL: break;
         default:
             if(setup->effect_2>0)
                 LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);

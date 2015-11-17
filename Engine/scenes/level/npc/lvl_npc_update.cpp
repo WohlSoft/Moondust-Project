@@ -93,7 +93,7 @@ void LVL_Npc::update(float tickTime)
         if(posY()>sBox.bottom() + 1 )
             setPosY(sBox.top()-_height+1);
     } else if((setup->kill_on_pit_fall) && (posY() > sBox.bottom()+_height) ) {
-        kill(DAMAGE_CUSTOM_REASON);
+        kill(DAMAGE_PITFALL);
     }
 
     for(int i=0; i<detectors.size(); i++)
