@@ -60,6 +60,7 @@ bool LevelScene::loadFileIP()
     time.start();
     //wait for accepting of level data
     bool timeOut=false;
+    int attempts=0;
 
     while(!IntProc::editor->levelIsLoad())
     {
@@ -69,8 +70,20 @@ bool LevelScene::loadFileIP()
         #ifndef __APPLE__
         qApp->processEvents();
         #endif
-        qDebug()<<"tick-"<<time.elapsed();
-        if(time.elapsed()>10000)
+
+        if(time.elapsed()>1500)
+        {
+            time.restart();
+            attempts+=1;
+            //Send command again
+            if(!IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE"))
+            {
+                errorMsg += "Editor is not started!\n";
+                return false;
+            }
+        }
+
+        if(attempts>4)
         {
             errorMsg += "Wait timeout\n";
             timeOut=true;
