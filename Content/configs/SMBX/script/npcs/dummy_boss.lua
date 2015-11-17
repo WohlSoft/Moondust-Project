@@ -68,7 +68,11 @@ function dummy_boss:onKill(reason)
             elseif(self.npc_obj.id==39)then
                spawnID=41
                Audio.playSound(41)
+            else
+               Audio.playSound(20)
+               return
             end
+
             local reward=self.npc_obj:spawnNPC(spawnID, GENERATOR_APPEAR, SPAWN_UP, false)
             reward.speedX = 0
             reward.speedY = -4.5
