@@ -31,6 +31,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
     deActivatable=true;
     reSpawnable=true;
     wasDeactivated=false;
+    offSectionDeactivate=false;
     activationTimeout=4000;
     warpSpawing=false;
 

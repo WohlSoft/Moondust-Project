@@ -340,9 +340,14 @@ bool ConfigManager::loadLevelNPC()
         snpc.deactivation =         npcset.value("deactivate", false).toBool();
         snpc.deactivetionDelay =    npcset.value("deactivate-delay", 4000).toInt();
             NumberLimiter::applyD(snpc.deactivetionDelay, 4000, 0);
+
+        snpc.deactivate_off_room = npcset.value("deactivate-off-room", false).toBool();
+
+        snpc.bump_on_stomp =        npcset.value("bump-on-stomp", true).toBool();
         snpc.kill_slide_slope =     npcset.value("kill-slside", false).toBool();
         snpc.kill_on_jump =         npcset.value("kill-onjump", false).toBool();
         snpc.kill_by_npc =          npcset.value("kill-bynpc", false).toBool();
+        snpc.kill_on_pit_fall =     npcset.value("kill-on-pit-fall", false).toBool();
         snpc.kill_by_fireball =     npcset.value("kill-fireball", false).toBool();
         snpc.freeze_by_iceball =    npcset.value("kill-iceball", false).toBool();
         snpc.kill_hammer =          npcset.value("kill-hammer", false).toBool();

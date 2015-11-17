@@ -156,6 +156,7 @@ void LVL_Npc::transformTo_x(long id)
     }
 
     deActivatable = ((setup->deactivation)||(!setup->activity));
+    offSectionDeactivate = setup->deactivate_off_room;
     activationTimeout= setup->deactivetionDelay;
 
     disableBlockCollision=!setup->collision_with_blocks;
