@@ -111,6 +111,9 @@ public:
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
     void onMousePressed(SDL_MouseButtonEvent &mbevent);
+    void onMouseMoved(SDL_MouseMotionEvent &mvevent);
+    void onMouseReleased(SDL_MouseButtonEvent &mvevent);
+
     LuaEngine* getLuaEngine();
 
     void update();
@@ -254,6 +257,22 @@ public:
     LevelBlock placingMode_block;
     LevelBGO   placingMode_bgo;
     LevelNPC   placingMode_npc;
+    PGE_PointF placingMode_renderAt;
+    PGE_PointF placingMode_renderOffset;
+    PGE_PointF placingMode_drawSize;
+    /********************Rect***********************/
+    bool       placingMode_sizableBlock;
+    bool       placingMode_rect_draw;
+    PGE_PointF placingMode_drawBegin;
+    PGE_PointF placingMode_drawEnd;
+    /********************Rect***********************/
+    /********************Placing element's texture***********************/
+    bool        placingMode_animated;
+    int         placingMode_animatorID;
+    PGE_Texture placingMode_texture;
+    /********************Placing element's texture***********************/
+
+    void       drawPlacingItem();
     void       placeItemByMouse(int x, int y);
     /*******************************************************/
 
