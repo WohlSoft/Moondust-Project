@@ -249,6 +249,7 @@ void WldPathOpener::initFetcher()
                 }
                 break;
             }
+            force = false; // Reset "force"
         }
     }
 }
