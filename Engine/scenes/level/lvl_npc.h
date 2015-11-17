@@ -55,6 +55,7 @@ public:
         //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
         DAMAGE_TAKEN, //is Power up taken
         DAMAGE_LAVABURN, //Does NPC burn in lava
+        DAMAGE_PITFALL, //Does NPC fell into the pit
         DAMAGE_CUSTOM_REASON
     };
     void doHarm(int damageReason);
@@ -119,6 +120,7 @@ public:
     bool isActivated;
     bool deActivatable;
     bool wasDeactivated;
+    bool offSectionDeactivate;
     int  activationTimeout;
 
     /********************Detectors**********************/
