@@ -74,7 +74,10 @@ void LVL_Npc::update(float tickTime)
 
     if(offSectionDeactivate) {
         if(!sBox.collideRect(posRect)) {
-            if(activationTimeout>100) activationTimeout=100;
+            if(activationTimeout>100)
+                activationTimeout=100;
+            //Iterate activation timeout if deactivation disabled by default
+            if(!deActivatable) activationTimeout-=tickTime;
         }
     }
 
