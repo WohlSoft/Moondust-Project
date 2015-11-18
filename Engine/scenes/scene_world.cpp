@@ -244,6 +244,7 @@ void WorldScene::setGameState(EpisodeState *_state)
                     {
                         gameState->LevelTargetWarp = 0;
                     }
+
                     gameState->isHubLevel = data.HubStyledWorld;
 
                     //Jump to the intro/hub level

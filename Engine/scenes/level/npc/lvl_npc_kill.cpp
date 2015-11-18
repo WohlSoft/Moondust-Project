@@ -54,14 +54,9 @@ void LVL_Npc::harm(int damage, int damageReason)
         {
             //Spawn the contents of the dead NPC's container
             if (damageReason == LVL_Npc::DAMAGE_STOMPED)
-            {
                 transformTo_x(setup->contents_id);
-                //LevelNPC def = data;
-                //def.id=setup->contents_id;
-                //def.x=posX();
-                //def.y=posY();
-                //LvlSceneP::s->placeNPC(def);
-            }
+            else
+                kill(damageReason);
         }
     }
     else
@@ -89,6 +84,8 @@ void LVL_Npc::talkWith()
 
 void LVL_Npc::kill(int damageReason)
 {
+    if((damageReason==DAMAGE_LAVABURN) && (setup->lava_protect)) return;
+
     try{
         lua_onKill(damageReason);
     } catch (luabind::error& e) {
@@ -105,17 +102,36 @@ void LVL_Npc::kill(int damageReason)
     switch(damageReason)
     {
         case DAMAGE_STOMPED:
-            LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+            if(setup->effect_1>0)
+                LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
+        case DAMAGE_LAVABURN:
+            if(ConfigManager::marker_npc.eff_lava_burn>0)
+            {
+                LvlSceneP::s->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
+                                                  posCenterX(),
+                                                  posCenterY(), 1, 0, 0, 0, 0, _direction);
+            }
+            break;
+        case DAMAGE_PITFALL: break;
         default:
-            LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+            if(setup->effect_2>0)
+                LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
     }
 
-    if(setup->death_sound_id==0)
-        PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
-    else
-        PGE_Audio::playSound(setup->death_sound_id);
+    if(damageReason!=DAMAGE_LAVABURN)
+    {
+        if(setup->death_sound_id==0)
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
+        else
+        {
+            if(setup->death_sound_id>0)
+                PGE_Audio::playSound(setup->death_sound_id);
+        }
+    } else {
+        PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
+    }
 
     //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())

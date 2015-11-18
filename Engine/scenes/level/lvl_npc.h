@@ -54,6 +54,8 @@ public:
         DAMAGE_BY_PLAYER_ATTACK, //Caused by attaking by player
         //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
         DAMAGE_TAKEN, //is Power up taken
+        DAMAGE_LAVABURN, //Does NPC burn in lava
+        DAMAGE_PITFALL, //Does NPC fell into the pit
         DAMAGE_CUSTOM_REASON
     };
     void doHarm(int damageReason);
@@ -118,6 +120,7 @@ public:
     bool isActivated;
     bool deActivatable;
     bool wasDeactivated;
+    bool offSectionDeactivate;
     int  activationTimeout;
 
     /********************Detectors**********************/
@@ -193,6 +196,40 @@ public:
     LVL_Npc*         buddies_leader;
     /**********************************************/
 
+    class KillEvent
+    {
+        public:
+            KillEvent();
+            KillEvent(const KillEvent &ke);
+            bool cancel;
+            int  reason_code;
+            enum killedBy {
+                self=0,
+                player,
+                otherNPC
+            };
+            int         killed_by;
+            LVL_Player* killer_p;
+            LVL_Npc*    killer_n;
+    };
+
+    class HarmEvent
+    {
+        public:
+            HarmEvent();
+            HarmEvent(const HarmEvent &he);
+            bool cancel;
+            int  damage;
+            int  reason_code;
+            enum killedBy {
+                self=0,
+                player,
+                otherNPC
+            };
+            int         killed_by;
+            LVL_Player* killer_p;
+            LVL_Npc*    killer_n;
+    };
     //Additional lua enums
 
     //Additional lua events
@@ -215,8 +252,11 @@ public:
     LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
 
     inline bool not_movable() { return data.nomove; }
+    inline void setNot_movable(bool n) { data.nomove=n; }
     inline long special1() { return data.special_data; }
+    inline void setSpecial1(long s) { data.special_data=s; }
     inline long special2() { return data.special_data2; }
+    inline void setSpecial2(long s) { data.special_data2=s; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
     inline long getHealth() { return health; }

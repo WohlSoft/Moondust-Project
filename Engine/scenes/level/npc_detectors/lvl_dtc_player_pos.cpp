@@ -28,12 +28,7 @@ PlayerPosDetector::~PlayerPosDetector()
 void PlayerPosDetector::processDetector()
 {
     if(!_parentNPC) return;
-    _playersDirection=0;
-    pos.setPoint(0.0, 0.0);
-    _directedTo=0.0;
-    _plrptr=NULL;
-    _plr_id=0;
-    _plr_state=0;
+
     float d=0.0f;
     for(int i=0; i<LvlSceneP::s->players.size(); i++)
     {

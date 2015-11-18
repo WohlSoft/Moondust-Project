@@ -51,6 +51,24 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
     using namespace luabind;
     return
         class_<LVL_Npc, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
+            .enum_("DamageReason")
+            [
+                value("DAMAGE_NOREASON", LVL_Npc::DamageReason::DAMAGE_NOREASON),
+                value("DAMAGE_STOMPED", LVL_Npc::DamageReason::DAMAGE_STOMPED),
+                value("DAMAGE_BY_KICK", LVL_Npc::DamageReason::DAMAGE_BY_KICK),
+                value("DAMAGE_BY_PLAYER_ATTACK", LVL_Npc::DamageReason::DAMAGE_BY_PLAYER_ATTACK),
+                value("DAMAGE_TAKEN", LVL_Npc::DamageReason::DAMAGE_TAKEN),
+                value("DAMAGE_LAVABURN", LVL_Npc::DamageReason::DAMAGE_LAVABURN),
+                value("DAMAGE_PITFALL", LVL_Npc::DamageReason::DAMAGE_PITFALL),
+                value("DAMAGE_CUSTOM_REASON", LVL_Npc::DamageReason::DAMAGE_CUSTOM_REASON)
+            ]
+            .enum_("WarpingSide")
+            [
+                value("WARP_TOP", LVL_Npc::WarpingSide::WARP_TOP),
+                value("WARP_LEFT", LVL_Npc::WarpingSide::WARP_LEFT),
+                value("WARP_BOTTOM", LVL_Npc::WarpingSide::WARP_BOTTOM),
+                value("WARP_RIGHT", LVL_Npc::WarpingSide::WARP_RIGHT)
+            ]
             .def(constructor<>())
             //Events
             .def("onActivated", &LVL_Npc::lua_onActivated, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onActivated)
@@ -83,9 +101,9 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             //Properties
             .property("id", &LVL_Npc::getID)
             .property("direction", &LVL_Npc::direction, &LVL_Npc::setDirection)
-            .property("not_movable", &LVL_Npc::not_movable)
-            .property("special1", &LVL_Npc::special1)
-            .property("special2", &LVL_Npc::special2)
+            .property("not_movable", &LVL_Npc::not_movable, &LVL_Npc::setNot_movable)
+            .property("special1", &LVL_Npc::special1, &LVL_Npc::setSpecial1)
+            .property("special2", &LVL_Npc::special2, &LVL_Npc::setSpecial2)
             .property("isBoss", &LVL_Npc::isBoss)
 
             .property("collideWithBlocks", &LVL_Npc::getCollideWithBlocks, &LVL_Npc::setCollideWithBlocks)

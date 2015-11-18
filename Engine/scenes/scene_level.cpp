@@ -86,6 +86,10 @@ LevelScene::LevelScene()
     placingMode_block=FileFormats::CreateLvlBlock();
     placingMode_bgo  =FileFormats::CreateLvlBgo();
     placingMode_npc  =FileFormats::CreateLvlNpc();
+    placingMode_animatorID=0;
+    placingMode_animated=false;
+    placingMode_sizableBlock=false;
+    placingMode_rect_draw=false;
     /**************************/
 
     /*********Default players number*************/
@@ -509,6 +513,9 @@ void LevelScene::update()
             luaEngine.destoryLuaNpc(corpse);
         }
 
+        if(!dead_players.isEmpty())
+            LvlSceneP::s->checkPlayers();
+
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //update activated NPC's
@@ -560,6 +567,16 @@ void LevelScene::update()
                     placingMode=true;
                     placingMode_item_type=0;
                     placingMode_block=got.blocks[0];
+                    long tID = ConfigManager::getBlockTexture(placingMode_block.id);
+                    if( tID  >= 0 )
+                    {
+                        placingMode_texture = ConfigManager::level_textures[tID];
+                        obj_block &bl = ConfigManager::lvl_block_indexes[placingMode_block.id];
+                        placingMode_animated = bl.animated;
+                        placingMode_animatorID = bl.animator_ID;
+                        placingMode_drawSize.setX(placingMode_texture.w);
+                        placingMode_drawSize.setY(placingMode_texture.h/bl.frames);
+                    }
                 } else
                 if(raw.startsWith("BGO_PLACE", Qt::CaseInsensitive))
                 {
@@ -567,6 +584,16 @@ void LevelScene::update()
                     placingMode=true;
                     placingMode_item_type=1;
                     placingMode_bgo=got.bgo[0];
+                    long tID = ConfigManager::getBgoTexture(placingMode_bgo.id);
+                    if( tID  >= 0 )
+                    {
+                        placingMode_texture = ConfigManager::level_textures[tID];
+                        obj_bgo &bg=ConfigManager::lvl_bgo_indexes[placingMode_bgo.id];
+                        placingMode_animated = bg.animated;
+                        placingMode_animatorID = bg.animator_ID;
+                        placingMode_drawSize.setX(placingMode_texture.w);
+                        placingMode_drawSize.setY(placingMode_texture.h);
+                    }
                 } else
                 if(raw.startsWith("NPC_PLACE", Qt::CaseInsensitive))
                 {
@@ -574,6 +601,18 @@ void LevelScene::update()
                     placingMode=true;
                     placingMode_item_type=2;
                     placingMode_npc=got.npc[0];
+                    long tID = ConfigManager::getNpcTexture(placingMode_npc.id);
+                    if( tID  >= 0 )
+                    {
+                        placingMode_texture = ConfigManager::level_textures[tID];
+                        obj_npc &np=ConfigManager::lvl_npc_indexes[placingMode_npc.id];
+                        placingMode_animated = ((np.frames>1) || (np.framestyle>0));
+                        placingMode_animatorID = np.animator_ID;
+                        placingMode_drawSize.setX(np.gfx_w);
+                        placingMode_drawSize.setY(np.gfx_h);
+                        placingMode_renderOffset.setX(np.gfx_offset_x);
+                        placingMode_renderOffset.setY(np.gfx_offset_y);
+                    }
                 }
                 else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
 
@@ -692,14 +731,18 @@ void LevelScene::render()
         }
 
         if(placingMode)
-            FontManager::printText(QString("Placing! %1")
-                        .arg(placingMode_item_type), 10, 10, 0);
+            FontManager::printText(QString("Placing! %1 X=%2 Y=%3")
+                        .arg(placingMode_item_type)
+                        .arg(placingMode_renderAt.x())
+                        .arg(placingMode_renderAt.y()), 10, 10, 0);
         else
             FontManager::printText(QString("%1")
                         .arg(PGE_MusPlayer::MUS_Title()), 10, 10, 0);
     }
     renderBlack:
     Scene::render();
+    if(placingMode) drawPlacingItem();
+
     if(IsLoaderWorks) drawLoader();
 
     if(isPauseMenu) _pauseMenu.render();
@@ -822,14 +865,63 @@ void LevelScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
     if(!placingMode) return;
     PGE_Point mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
-    if( mbevent.button==SDL_BUTTON_LEFT )
-    {
+    if( mbevent.button==SDL_BUTTON_LEFT ) {
         placeItemByMouse(mousePos.x(), mousePos.y());
-    }else if( mbevent.button==SDL_BUTTON_RIGHT )
-    {
+    } else if( mbevent.button==SDL_BUTTON_RIGHT ) {
         placingMode=false;
     }
 }
+
+void LevelScene::onMouseMoved(SDL_MouseMotionEvent &mvevent)
+{
+    if(!placingMode) return;
+    placingMode_renderAt = GlRenderer::MapToScr(mvevent.x, mvevent.y);
+}
+
+void LevelScene::onMouseReleased(SDL_MouseButtonEvent &)
+{
+    if(!placingMode) return;
+}
+
+void LevelScene::drawPlacingItem()
+{
+    if(!placingMode) return;
+
+    AniPos x(0,1);
+    int d=0;
+    switch(placingMode_item_type)
+    {
+        case 0:
+            if(placingMode_animated) x = ConfigManager::Animator_Blocks[placingMode_animatorID].image();
+            GlRenderer::renderTexture(&placingMode_texture,
+                                      placingMode_renderAt.x(),
+                                      placingMode_renderAt.y(),
+                                      placingMode_drawSize.x(),
+                                      placingMode_drawSize.y(),
+                                      x.first, x.second);
+            break;
+        case 1:
+            if(placingMode_animated) x = ConfigManager::Animator_BGO[placingMode_animatorID].image();
+            GlRenderer::renderTexture(&placingMode_texture,
+                                      placingMode_renderAt.x(),
+                                      placingMode_renderAt.y(),
+                                      placingMode_drawSize.x(),
+                                      placingMode_drawSize.y(),
+                                      x.first, x.second);
+            break;
+        case 2:
+            if(placingMode_animated) x = ConfigManager::Animator_NPC[placingMode_animatorID].image(placingMode_npc.direct);
+            d=placingMode_npc.direct; if(d==0) d=-1;
+            GlRenderer::renderTexture(&placingMode_texture,
+                                      placingMode_renderAt.x()+placingMode_renderOffset.x()*d,
+                                      placingMode_renderAt.y()+placingMode_renderOffset.y(),
+                                      placingMode_drawSize.x(),
+                                      placingMode_drawSize.y(),
+                                      x.first, x.second);
+            break;
+    }
+}
+
 
 LuaEngine *LevelScene::getLuaEngine()
 {
@@ -976,43 +1068,47 @@ int LevelScene::exitType()
 
 void LevelScene::checkPlayers()
 {
-    bool haveAlivePlayers=false;
-    for(int i=0; i<players.size(); i++)
+    while(!dead_players.isEmpty())
     {
-        if(players[i]->isAlive)
-            haveAlivePlayers = true;
-    }
+        LVL_Player *corpse = dead_players.last();
+        dead_players.pop_back();
+        LVL_Player::deathReason reason = corpse->kill_reason;
 
-    for(int i=0; i<players.size(); i++)
-    {
-        if((!players[i]->isAlive) && (!players[i]->locked()))
+        #if (QT_VERSION >= 0x050400)
+        players.removeAll(corpse);
+        #else
+        //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
+        while(1)
         {
-            switch(players[i]->kill_reason)
-            {
-            case LVL_Player::deathReason::DEAD_burn:
-                if(!haveAlivePlayers)
-                {
-                    Mix_HaltChannel(-1);
-                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
-                }
-                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
+            const QVector<LVL_Player *>::const_iterator ce = players.cend(), cit = std::find(players.cbegin(), ce, corpse);
+            if (cit == ce)
                 break;
-            case LVL_Player::deathReason::DEAD_fall:
-            case LVL_Player::deathReason::DEAD_killed:
-                if(haveAlivePlayers)
-                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
-                else
-                {
-                    Mix_HaltChannel(-1);
-                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
-                }
-                break;
-            }
-            players[i]->setLocked(true);
+            const QVector<LVL_Player *>::iterator e = players.end(), it = std::remove(players.begin() + (cit - players.cbegin()), e, corpse);
+            players.erase(it, e);
+            break;
         }
+        #endif
+        luaEngine.destoryLuaPlayer(corpse);
+
+        switch(reason)
+        {
+        case LVL_Player::deathReason::DEAD_burn:
+        case LVL_Player::deathReason::DEAD_fall:
+        case LVL_Player::deathReason::DEAD_killed:
+            if(players.size() > 0)
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
+            else
+            {
+                Mix_HaltChannel(-1);
+                PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+            }
+            break;
+        }
+        if(reason==LVL_Player::deathReason::DEAD_burn)
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
 
-    if(!haveAlivePlayers)
+    if(players.isEmpty())
     {
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);

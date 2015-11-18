@@ -123,6 +123,8 @@ class LVL_Player :
             DEAD_killed
         };
         void    kill(deathReason reason=DEAD_killed);
+        void    unregister();
+
         bool    doKill;
         deathReason kill_reason;
 
@@ -254,6 +256,7 @@ public:
         /********************Lua Stuff******************/
 
         bool isInited();
+
 private:
         bool _no_render;
         bool isLocked;

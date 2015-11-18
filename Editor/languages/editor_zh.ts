@@ -6,17 +6,17 @@
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="14"/>
         <source>Additional settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">其他设置</translation>
     </message>
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="101"/>
         <source>Apply and Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">应用和保存</translation>
     </message>
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="108"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">设置</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="68"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">主要</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="99"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="140"/>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">音乐播放器</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
@@ -60,12 +60,12 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="155"/>
         <source>Autoplay music on file open</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开文件后自动播放音乐</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="171"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">性能</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="183"/>
@@ -8707,87 +8707,89 @@ Please, check the application directory.</source>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="26"/>
         <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转换成PNG蒙面的GIF</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="53"/>
         <source>This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">此工具与转换PNG图像内置透明度SMBX图形，其与单独的透明度掩模图像GIF格式。</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="66"/>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">浏览</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">输出目录，这里的GIF文件将被保存（ * .gif和* m.gif ）</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">开始</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">寻找在子目录图片</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">亲密</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">旗</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">其中包含了PNG图像（ * 。PNG ）输入目录</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="165"/>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转换成功后删除源图像</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">开源目录</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="56"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开目标目录</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="69"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">源目录未设置</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="69"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">请设置源目录</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="83"/>
         <source>Tool is not found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">工具未找到</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="83"/>
         <source>Can&apos;t run application: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">无法运行应用程序：
+%1:
+请检查应用程序目录，并确保安装正确。</translation>
     </message>
 </context>
 <context>
@@ -8796,7 +8798,7 @@ Please, check the application directory.</source>
         <location filename="../tools/tilesets/tileset.cpp" line="74"/>
         <source>Drag &amp; Drop items to this box!
 Rightclick to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">拖放项目到这个盒子！</translation>
     </message>
 </context>
 </TS>

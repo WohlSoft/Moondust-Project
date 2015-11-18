@@ -28,8 +28,7 @@ void LVL_Npc::update(float tickTime)
 
     _onGround = !collided_bottom.isEmpty();
 
-    if(isGenerator)
-    {
+    if(isGenerator) {
         updateCollisions();
         activationTimeout-=tickTime;
         updateGenerator(tickTime);
@@ -40,8 +39,7 @@ void LVL_Npc::update(float tickTime)
 
     animator.manualTick(tickTime);
 
-    if(warpSpawing)
-    {
+    if(warpSpawing) {
         setSpeed(0.0, 0.0);
         return;
     }
@@ -49,8 +47,7 @@ void LVL_Npc::update(float tickTime)
     PGE_Phys_Object::update(tickTime);
     if(deActivatable) activationTimeout-=tickTime;
 
-    if(motionSpeed!=0)
-    {
+    if(motionSpeed!=0) {
         if(!collided_left.isEmpty())
             setDirection(1);
         else
@@ -65,8 +62,8 @@ void LVL_Npc::update(float tickTime)
 
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
-    if(not_movable())
-    {
+
+    if(not_movable()) {
         detector_player_pos.processDetector();
         if(detector_player_pos.directedTo()!=0)
             setDirection(detector_player_pos.directedTo());
@@ -75,8 +72,16 @@ void LVL_Npc::update(float tickTime)
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
 
-    if(section->isWrapH())
-    {
+    if(offSectionDeactivate) {
+        if(!sBox.collideRect(posRect)) {
+            if(activationTimeout>100)
+                activationTimeout=100;
+            //Iterate activation timeout if deactivation disabled by default
+            if(!deActivatable) activationTimeout-=tickTime;
+        }
+    }
+
+    if(section->isWrapH()) {
         if(posX()<sBox.left()-_width-1 )
             setPosX(sBox.right()-1);
         else
@@ -84,13 +89,14 @@ void LVL_Npc::update(float tickTime)
             setPosX(sBox.left()-_width+1);
     }
 
-    if(section->isWrapV())
-    {
+    if(section->isWrapV()) {
         if(posY()<sBox.top()-_height-1 )
             setPosY(sBox.bottom()-1);
         else
         if(posY()>sBox.bottom() + 1 )
             setPosY(sBox.top()-_height+1);
+    } else if((setup->kill_on_pit_fall) && (posY() > sBox.bottom()+_height) ) {
+        kill(DAMAGE_PITFALL);
     }
 
     for(int i=0; i<detectors.size(); i++)

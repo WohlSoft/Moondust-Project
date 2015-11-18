@@ -2,6 +2,7 @@ Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation
 - Added question boxes on attempt to remove layer from list
 - [WIP] Testing settings (there are will don't take effect on actual testing inside engine yet!)
+- Fixed grid offset bug
 
 Editor 0.3.1.7
 - Small update of File Library
@@ -10,6 +11,7 @@ Editor 0.3.1.7
 - Fixed serious bug causes crash on attempt to place something after removing with enabled collisions.
 - Added experimental support of background2-*.txt custom configs (currently works with Editor only, engine still don't work with it) which allows to reconfigure animation, image filenames or settings for custom backgrounds. Note: unlike npc-*.txt, background2-*.txt uses INI-file syntax and requires a header "[background2-x]" at top of file. Instead of X put a number of background.
 - Fixed bug with locked event entry after undeletion
+- Added "Open folder of file" and "Open custom folder of file" to quickly open custom folder of current level or world map
 
 Editor 0.3.1.6
 - Added support of game musics formats
