@@ -82,6 +82,7 @@ void LVL_Player::updateCollisions()
     QVector<PGE_Phys_Object*> floor_blocks;
     QVector<PGE_Phys_Object*> wall_blocks;
     QVector<PGE_Phys_Object*> blocks_to_hit;
+    QVector<LVL_Npc*>        npcs_to_stomp;
     //QVector<PGE_Phys_Object*> add_speed_to;
 
     if(!collided_bottom.isEmpty())
@@ -111,6 +112,7 @@ void LVL_Player::updateCollisions()
                     foot_contacts_map[(intptr_t)collided]=collided;
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     floor_blocks.push_back(npc);
+                    npcs_to_stomp.push_back(npc);
                     _floorY_vel+=npc->speedYsum();
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
@@ -155,6 +157,7 @@ void LVL_Player::updateCollisions()
                         _floorY = nearest->posRect.top();
                     _floorY-=posRect.height();
                 } else {
+                    collided_slope=false;
                     _floorY = nearest->posRect.top()-posRect.height();
                 }
                 resolveBottom=true;
@@ -374,7 +377,41 @@ void LVL_Player::_collideUnduck()
             PGE_Phys_Object*nearest = nearestBlockY(blocks_to_hit);
             if(nearest)
             {
-                _floorY=nearest->posRect.bottom()+1.0;
+                LVL_Block *blk= static_cast<LVL_Block*>(nearest);
+                if(blk && (blk->shape!=LVL_Block::shape_rect))
+                {
+                    if(blk->shape==LVL_Block::shape_tr_bottom_right)
+                    {
+                        _floorY = nearest->posRect.top()+SL_HeightTopLeft(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                    else
+                    if(blk->shape==LVL_Block::shape_tr_bottom_left)
+                    {
+                        _floorY = nearest->posRect.top()+SL_HeightTopRight(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                    else
+                    if(blk->shape==LVL_Block::shape_tr_top_right)
+                    {
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
+                        if(_floorY < nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY > nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                    else
+                    if(blk->shape==LVL_Block::shape_tr_top_left)
+                    {
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                    }
+                }
+                else
+                    _floorY = nearest->posRect.bottom()+1.0;
                 resolveTop=true;
             }
         }

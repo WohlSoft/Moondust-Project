@@ -6,6 +6,12 @@
   - illparkwhereiwant instead of "i" key
   - redigitiscool to spawn dummy message box
   - iwishexitas X to exit from a level with specific exit code
+- Contact Detector for NPC-AI (detects elements which are contacted to self NPC and returns pointer to them)
+- Added ability to spawn other NPC's from NPC-AI scripts
+- Working projectile generators!
+- Fixed bug with down directed NPC spawn from blocks
+- Experimental in-game render of placing elements
+- All non-protected NPC's will burn in lava
 
 0.2.3.1
 - Small update of File Library

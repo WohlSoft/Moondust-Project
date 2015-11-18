@@ -45,6 +45,10 @@ function __destroy_luanpc(theNPC)
     __refs.npcs[theNPC] = nil --Let the garbage collector destory our object
 end
 
+function __destroy_luaplayer(thePlayer)
+    __refs.players[thePlayer] = nil --Let the garbage collector destory our object
+end
+
 
 
 

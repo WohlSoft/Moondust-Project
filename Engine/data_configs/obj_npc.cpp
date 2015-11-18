@@ -28,7 +28,7 @@
 
 /*****Level NPC************/
 QMap<long, obj_npc>   ConfigManager::lvl_npc_indexes;
-npc_Markers           ConfigManager::marker_npc;
+NPC_GlobalSetup           ConfigManager::marker_npc;
 CustomDirManager ConfigManager::Dir_NPC;
 CustomDirManager ConfigManager::Dir_NPCScript;
 QList<AdvNpcAnimator > ConfigManager::Animator_NPC;
@@ -70,14 +70,16 @@ bool ConfigManager::loadLevelNPC()
         marker_npc.boomerang =      npcset.value("boomerang", "292").toInt();
         marker_npc.coin_in_block =  npcset.value("coin-in-block", "10").toInt();
 
-      marker_npc.phs_gravity_accel= npcset.value("physics-gravity-acceleration", 16.25).toFloat();
-      marker_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
+        marker_npc.phs_gravity_accel= npcset.value("physics-gravity-acceleration", 16.25).toFloat();
+        marker_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
 
         marker_npc.eff_lava_burn =  npcset.value("effect-lava-burn", "13").toInt();
 
         marker_npc.projectile_sound_id = npcset.value("projectile-sound-id", 0).toInt();
         marker_npc.projectile_effect.fill("projectile", &npcset);
         marker_npc.projectile_speed = npcset.value("projectile-speed", 10.0f).toFloat();
+
+        marker_npc.talking_sign_img = npcset.value("talking-sign-image", "").toString();
     npcset.endGroup();
 
     /*************Buffers*********************/
@@ -232,7 +234,7 @@ bool ConfigManager::loadLevelNPC()
         else
             snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
 
-        if(snpc.grid_attach_style==1) snpc.grid_offset_x += 16;
+        if(snpc.grid_attach_style==1) snpc.grid_offset_x += (snpc.grid/2);
 
         snpc.grid_offset_y = -snpc.height % snpc.grid;
         /***************Calculate the grid offset********************/
@@ -338,9 +340,14 @@ bool ConfigManager::loadLevelNPC()
         snpc.deactivation =         npcset.value("deactivate", false).toBool();
         snpc.deactivetionDelay =    npcset.value("deactivate-delay", 4000).toInt();
             NumberLimiter::applyD(snpc.deactivetionDelay, 4000, 0);
+
+        snpc.deactivate_off_room = npcset.value("deactivate-off-room", false).toBool();
+
+        snpc.bump_on_stomp =        npcset.value("bump-on-stomp", true).toBool();
         snpc.kill_slide_slope =     npcset.value("kill-slside", false).toBool();
         snpc.kill_on_jump =         npcset.value("kill-onjump", false).toBool();
         snpc.kill_by_npc =          npcset.value("kill-bynpc", false).toBool();
+        snpc.kill_on_pit_fall =     npcset.value("kill-on-pit-fall", false).toBool();
         snpc.kill_by_fireball =     npcset.value("kill-fireball", false).toBool();
         snpc.freeze_by_iceball =    npcset.value("kill-iceball", false).toBool();
         snpc.kill_hammer =          npcset.value("kill-hammer", false).toBool();

@@ -23,6 +23,8 @@
 
 #include <QVector>
 
+#include "collision_checks.h"
+
 const float PGE_Phys_Object::_smbxTickTime=1000.f/65.f;
 
 float PGE_Phys_Object::SMBXTicksToTime(float ticks)
@@ -519,15 +521,46 @@ PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &bloc
         return blocks.first();
 
     PGE_Phys_Object*nearest=NULL;
+    double nearest_blockY=0.0;
+    double blockY=0.0;
     for(int i=0; i<blocks.size(); i++)
     {
         if(!nearest)
             nearest=blocks[i];
         else
         {
-            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
-                fabs(nearest->posRect.center().y()-posRect.center().y()) )
+            //Check for a possible slope
+            if(blocks[i]->type==PGE_Phys_Object::LVLBlock)
+            {
+                LVL_Block* b = static_cast<LVL_Block*>(blocks[i]);
+                switch(b->shape)
+                {
+                    case LVL_Block::shape_tr_bottom_right:
+                        blockY=nearest->posRect.top()+SL_HeightTopRight(*this, nearest);
+                        break;
+
+                    case LVL_Block::shape_tr_bottom_left:
+                        blockY=nearest->posRect.top()+SL_HeightTopLeft(*this, nearest);
+                        break;
+
+                    case LVL_Block::shape_tr_top_right:
+                        blockY=nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
+                        break;
+
+                    case LVL_Block::shape_tr_top_left:
+                        blockY=nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
+                        break;
+
+                    default:break;
+                        blockY=blocks[i]->posRect.center().y();
+                }
+            } else blockY=blocks[i]->posRect.center().y();
+            if( fabs(blockY-posRect.center().y())<
+                fabs(nearest_blockY-posRect.center().y()) )
+            {
                 nearest=blocks[i];
+                nearest_blockY=blockY;
+            }
         }
     }
     return nearest;

@@ -31,6 +31,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
     deActivatable=true;
     reSpawnable=true;
     wasDeactivated=false;
+    offSectionDeactivate=false;
     activationTimeout=4000;
     warpSpawing=false;
 
@@ -88,4 +89,44 @@ void LVL_Npc::show()
 {
     wasDeactivated=false;
     PGE_Phys_Object::show();
+}
+
+
+/****************Additional event callbacks******************/
+LVL_Npc::KillEvent::KillEvent()
+{
+    cancel=false;
+    reason_code=DAMAGE_NOREASON;
+    killed_by=self;
+    killer_p=NULL;
+    killer_n=NULL;
+}
+
+LVL_Npc::KillEvent::KillEvent(const LVL_Npc::KillEvent &ke)
+{
+    cancel=ke.cancel;
+    reason_code=ke.reason_code;
+    killed_by=ke.killed_by;
+    killer_p=ke.killer_p;
+    killer_n=ke.killer_n;
+}
+
+LVL_Npc::HarmEvent::HarmEvent()
+{
+    cancel=false;
+    damage=1;
+    reason_code=DAMAGE_NOREASON;
+    killed_by=self;
+    killer_p=NULL;
+    killer_n=NULL;
+}
+
+LVL_Npc::HarmEvent::HarmEvent(const LVL_Npc::HarmEvent &he)
+{
+    cancel=he.cancel;
+    damage=he.damage;
+    reason_code=he.reason_code;
+    killed_by=he.killed_by;
+    killer_p=he.killer_p;
+    killer_n=he.killer_n;
 }

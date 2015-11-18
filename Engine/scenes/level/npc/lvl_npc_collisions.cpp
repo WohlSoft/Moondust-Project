@@ -398,6 +398,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                        if(blk->setup->lava) kill(DAMAGE_LAVABURN);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Top of block";
                         #endif
@@ -420,7 +421,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                   ){
                     if(blk->isHidden) break;
                     collided_bottom[(intptr_t)collided]=collided;//bottom of NPC
-                    //if(blk->setup->lava) kill(DEAD_burn);
+                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Head of NPC****************************/
@@ -434,7 +435,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                        )
                 {
                     collided_top[(intptr_t)collided]=collided;//top of NPC
-                    //if(blk->setup->lava) kill(DEAD_burn);
+                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==-2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Left****************************/
@@ -446,7 +447,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 {
                     if(blk->isHidden) break;
                     collided_left[(intptr_t)collided]=collided;//right of NPC
-                    //if(blk->setup->lava) kill(DEAD_burn);
+                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Right****************************/
@@ -459,7 +460,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 {
                     if(blk->isHidden) break;
                     collided_right[(intptr_t)collided]=collided;//left of NPC
-                    //if(blk->setup->lava) kill(DEAD_burn);
+                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                 }
 

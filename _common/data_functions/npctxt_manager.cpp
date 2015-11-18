@@ -75,15 +75,22 @@ obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
     merged.gfx_h = (local.en_gfxheight) ? (local.gfxheight>0 ? local.gfxheight : 1 ) : merged.gfx_h;
 
 
+    merged.grid = (local.en_grid)?local.grid:global.grid;
+
     if(((int)merged.width>=(int)merged.grid))
         merged.grid_offset_x = -1 * qRound( qreal((int)merged.width % merged.grid)/2 );
     else
         merged.grid_offset_x = qRound( qreal( merged.grid - (int)merged.width )/2 );
 
-    if(merged.grid_attach_style==1) merged.grid_offset_x += 16;
+
+    merged.grid_attach_style = (local.en_grid_align)?local.grid_align:global.grid_attach_style;
+
+    if(merged.grid_attach_style==1) merged.grid_offset_x += (merged.grid/2);
 
     merged.grid_offset_y = -merged.height % merged.grid;
 
+    merged.grid_offset_x += (local.en_grid_offset_x) ? local.grid_offset_x : 0;
+    merged.grid_offset_y += (local.en_grid_offset_y) ? local.grid_offset_y : 0;
 
     if((merged.framestyle==0)&&((local.en_gfxheight)||(local.en_height))&&(!local.en_frames))
     {
@@ -131,11 +138,6 @@ obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
     merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
     merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
-
-    merged.grid = (local.en_grid)?local.grid:global.grid;
-    merged.grid_offset_x = (local.en_grid_offset_x)?local.grid_offset_x:global.grid_offset_x;
-    merged.grid_offset_y = (local.en_grid_offset_y)?local.grid_offset_y:global.grid_offset_y;
-    merged.grid_attach_style = (local.en_grid_align)?local.grid_align:global.grid_attach_style;
 
     #ifdef PGE_EDITOR
     WriteToLog(QtDebugMsg, QString("-------------------------------------"));

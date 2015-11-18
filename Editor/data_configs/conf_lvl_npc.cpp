@@ -245,7 +245,7 @@ void dataconfigs::loadLevelNPC()
         else
             snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
 
-        if(snpc.grid_attach_style==1) snpc.grid_offset_x += 16;
+        if(snpc.grid_attach_style==1) snpc.grid_offset_x += (snpc.grid/2);
 
         snpc.grid_offset_y = -snpc.height % snpc.grid;
         /***************Calculate the grid offset********************/

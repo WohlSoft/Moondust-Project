@@ -195,10 +195,14 @@ struct obj_npc
     bool deactivation;  //deactivate=1		; Deactivate on state offscreen > 4 sec ago
     int  deactivetionDelay;
 
+    bool deactivate_off_room; //Decativate NPC outed of section box
+
+    bool bump_on_stomp;  //    Bumps playable character on stomp attak of this NPC
     bool kill_slide_slope;  //    kill-slside=1		; Kill on Slope slide
     bool kill_on_jump;  //    kill-onjump=1		; Kill on jump on NPC's head
     bool kill_by_npc;   //    kill-bynpc=1		; Kill by contact with other NPC with hurt-npc
                         //; for example: moving SHELL have "HURT_NPC", and shell kiling ALL NPCs on contact
+    bool kill_on_pit_fall; // NPC will die on falling into pit
 
     bool kill_by_fireball;//    kill-fireball=1		; kill on collision with NPC, marked as "fireball"
     bool freeze_by_iceball;//    kill-iceball=1		; freeze on collision with NPC, marked as "iceball"
@@ -238,7 +242,7 @@ struct obj_npc
 
 
 
-struct npc_Markers
+struct NPC_GlobalSetup
 {
     //    ;Defines for SMBX64
     unsigned long bubble;   //    bubble=283	; NPC-Container for packed in bubble
@@ -265,6 +269,9 @@ struct npc_Markers
     SpawnEffectDef projectile_effect;
     long  projectile_sound_id;
     float projectile_speed;
+
+    //Talking NPC's properties
+    QString talking_sign_img;
 };
 
 #endif // OBJ_NPC_H

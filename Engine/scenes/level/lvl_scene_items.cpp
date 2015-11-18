@@ -167,8 +167,6 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     return npc;
 }
 
-
-
 void LevelScene::toggleSwitch(int switch_id)
 {
     PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
