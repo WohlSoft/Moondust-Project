@@ -106,6 +106,11 @@ LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawna
     def.direct=_direction;
     def.generator=false;
     def.layer="Spawned NPCs";
+    def.attach_layer = "";
+    def.event_activate = "";
+    def.event_die = "";
+    def.event_talk = "";
+    def.event_emptylayer = "";
     return LvlSceneP::s->spawnNPC(def,
                            (LevelScene::NpcSpawnType)sp_type,
                            (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
