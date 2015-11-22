@@ -9,6 +9,7 @@ struct Mix_Chunk;
 struct obj_sound_index
 {
     obj_sound_index();
+    QString path;
     Mix_Chunk *chunk;
     int channel;
     void play(); //!< play sound
