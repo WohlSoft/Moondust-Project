@@ -268,7 +268,7 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
         if(validX)
         {
-            qreal t_width = fabs( cXY.x()-cWH.x() );
+            qreal t_width = (qreal)abs( cXY.x()-cWH.x() );
             if(t_width < _minSize.width())
             {
                 cXY.setX(oXY.x());
@@ -290,7 +290,7 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
         if(validY)
         {
-            qreal t_height = fabs( cXY.y()-cWH.y() );
+            qreal t_height = (qreal)abs( cXY.y()-cWH.y() );
             if(t_height < _minSize.height())
             {
                 cXY.setY(
@@ -301,7 +301,7 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
                                 oXY.y():
                               (oWH.y()-_minSize.height()) );
                 cWH.setY(oWH.y());
-                _drawingHeight = fabs( cXY.y()-cWH.y() );
+                _drawingHeight = (qreal)abs( cXY.y()-cWH.y() );
                 _height=_drawingHeight;
             }
             else
