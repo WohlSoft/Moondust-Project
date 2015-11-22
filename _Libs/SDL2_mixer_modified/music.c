@@ -588,13 +588,13 @@ Mix_Music *Mix_LoadMUS(const char *file)
         strcpy(music_file, (char*)file);
         gme_track_number=0;
         int hasTrackNum=0;
-        unsigned int i, j;
-        for(i=0; i<(unsigned)strlen(music_file); i++)
+        int i, j;
+        for(i=0; i<(signed)strlen(music_file); i++)
             if(music_file[i]=='|') hasTrackNum=1;
         if(hasTrackNum==1)
         {
             char trackNum[strlen(music_file)];
-            for(i=(unsigned)strlen(music_file)-1;i>=0;i-- )
+            for(i=(signed)strlen(music_file)-1;i>=0;i-- )
             {
                 trackNum[i]=music_file[i];
                 if(music_file[i]=='|')
@@ -604,9 +604,9 @@ Mix_Music *Mix_LoadMUS(const char *file)
                     break;
                 }
             }
-            for(j=0;i<(unsigned)strlen(file);i++,j++)
+            for(j=0;i<(signed)strlen(file);i++,j++)
                 trackNum[j]=trackNum[i];
-            if(j<(unsigned)strlen(file)) trackNum[j]='\0';
+            if(j<(signed)strlen(file)) trackNum[j]='\0';
             gme_track_number=atoi(trackNum);
         }
         music_filename = strrchr(music_file, '/');
