@@ -588,13 +588,13 @@ Mix_Music *Mix_LoadMUS(const char *file)
         strcpy(music_file, (char*)file);
         gme_track_number=0;
         int hasTrackNum=0;
-        int i, j;
-        for(i=0; i<strlen(music_file); i++)
+        unsigned int i, j;
+        for(i=0; i<(unsigned)strlen(music_file); i++)
             if(music_file[i]=='|') hasTrackNum=1;
         if(hasTrackNum==1)
         {
             char trackNum[strlen(music_file)];
-            for(i=strlen(music_file)-1;i>=0;i-- )
+            for(i=(unsigned)strlen(music_file)-1;i>=0;i-- )
             {
                 trackNum[i]=music_file[i];
                 if(music_file[i]=='|')
@@ -604,9 +604,9 @@ Mix_Music *Mix_LoadMUS(const char *file)
                     break;
                 }
             }
-            for(j=0;i<strlen(file);i++,j++)
+            for(j=0;i<(unsigned)strlen(file);i++,j++)
                 trackNum[j]=trackNum[i];
-            if(j<strlen(file)) trackNum[j]='\0';
+            if(j<(unsigned)strlen(file)) trackNum[j]='\0';
             gme_track_number=atoi(trackNum);
         }
         music_filename = strrchr(music_file, '/');
@@ -770,7 +770,7 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
                     FLAC__byte* ent=tags->data.vorbis_comment.comments[i].entry;
                     char argument[len+1];
                     char value[len+1];
-                    for(int j=0, k=0; j<=len; j++, k++)
+                    for(int j=0, k=0; j<=(signed)len; j++, k++)
                     {
                         if(doValue==0)
                         {
@@ -1965,6 +1965,7 @@ int Mix_SetMusicCMD(const char *command)
 
 int Mix_SetSynchroValue(int i)
 {
+    (void)i;
     /* Not supported by any players at this time */
     return(-1);
 }
