@@ -32,6 +32,9 @@ clone_folder: C:\_Repos\PGE-Project
 
 clone_depth: 3                      # clone entire repository history if not defined
 
+init:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 # scripts that run after cloning repository
 install:
   # by default, all script lines are interpreted as batch
@@ -39,6 +42,9 @@ install:
   # batch commands start from cmd:
   # - cmd: echo This is batch again
   # - cmd: set MY_VAR=12345
+  - nuget install 7ZipCLI -ExcludeVersion
+  - set PATH=%appveyor_build_folder%\7ZipCLI\tools;%PATH%
+  - mklink /D "C:\Program Files\7-Zip" "%appveyor_build_folder%\7ZipCLI\tools"
   - echo set QtDir=C:\Qt\5.5\mingw492_32\bin>> _paths.bat
   - echo set MinGW=C:\Qt\Tools\mingw492_32\bin>> _paths.bat
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
