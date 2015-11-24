@@ -73,6 +73,7 @@ void ConfigManager::buildSoundIndex()
         {
             obj_sound snd = main_sound[i];
             sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8());
+            sound.path = snd.absPath;
             if(!sound.chunk)
                 qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
             else

@@ -87,7 +87,7 @@ void LVL_Block::transformTo_x(long id)
     obj_block *newSetup=NULL;
     if(_isInited)
     {
-        if(data.id==(unsigned)abs(id)) return;
+        if(data.id==(unsigned)labs(id)) return;
 
         if(!ConfigManager::lvl_block_indexes.contains(id)) return;
 

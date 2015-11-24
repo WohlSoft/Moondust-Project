@@ -100,6 +100,7 @@ void _Eff_PositionDeinit(void)
 /* This just frees up the callback-specific data. */
 static void _Eff_PositionDone(int channel, void *udata)
 {
+    (void)udata;
     if (channel < 0) {
         if (pos_args_global != NULL) {
             SDL_free(pos_args_global);
@@ -116,6 +117,7 @@ static void _Eff_PositionDone(int channel, void *udata)
 
 static void _Eff_position_u8(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint8 *ptr = (Uint8 *) stream;
     int i;
@@ -153,6 +155,7 @@ static void _Eff_position_u8(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_u8_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint8 *ptr = (Uint8 *) stream;
     int i;
@@ -237,6 +240,7 @@ static void _Eff_position_u8_c4(int chan, void *stream, int len, void *udata)
 
 static void _Eff_position_u8_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint8 *ptr = (Uint8 *) stream;
     int i;
@@ -359,6 +363,7 @@ static void _Eff_position_u8_c6(int chan, void *stream, int len, void *udata)
  */
 static void _Eff_position_table_u8(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint8 *ptr = (Uint8 *) stream;
     Uint32 *p;
@@ -408,6 +413,7 @@ static void _Eff_position_table_u8(int chan, void *stream, int len, void *udata)
 
 static void _Eff_position_s8(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Sint8 *ptr = (Sint8 *) stream;
     int i;
@@ -440,6 +446,7 @@ static void _Eff_position_s8(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_s8_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Sint8 *ptr = (Sint8 *) stream;
     int i;
@@ -486,6 +493,7 @@ static void _Eff_position_s8_c4(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_s8_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Sint8 *ptr = (Sint8 *) stream;
     int i;
@@ -553,6 +561,7 @@ static void _Eff_position_s8_c6(int chan, void *stream, int len, void *udata)
  */
 static void _Eff_position_table_s8(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Sint8 *ptr = (Sint8 *) stream;
     Uint32 *p;
@@ -603,6 +612,7 @@ static void _Eff_position_table_s8(int chan, void *stream, int len, void *udata)
 
 static void _Eff_position_u16lsb(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
     int i;
@@ -628,6 +638,7 @@ static void _Eff_position_u16lsb(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_u16lsb_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
     int i;
@@ -677,6 +688,7 @@ static void _Eff_position_u16lsb_c4(int chan, void *stream, int len, void *udata
 }
 static void _Eff_position_u16lsb_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
     int i;
@@ -741,6 +753,7 @@ static void _Eff_position_u16lsb_c6(int chan, void *stream, int len, void *udata
 
 static void _Eff_position_s16lsb(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 2 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;
@@ -770,6 +783,7 @@ static void _Eff_position_s16lsb(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_s16lsb_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 4 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;
@@ -815,6 +829,7 @@ static void _Eff_position_s16lsb_c4(int chan, void *stream, int len, void *udata
 
 static void _Eff_position_s16lsb_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 6 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;
@@ -872,6 +887,7 @@ static void _Eff_position_s16lsb_c6(int chan, void *stream, int len, void *udata
 
 static void _Eff_position_u16msb(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 2 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
@@ -898,6 +914,7 @@ static void _Eff_position_u16msb(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_u16msb_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 4 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
@@ -948,6 +965,7 @@ static void _Eff_position_u16msb_c4(int chan, void *stream, int len, void *udata
 }
 static void _Eff_position_u16msb_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 6 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Uint16 *ptr = (Uint16 *) stream;
@@ -1013,6 +1031,7 @@ static void _Eff_position_u16msb_c6(int chan, void *stream, int len, void *udata
 
 static void _Eff_position_s16msb(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 2 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;
@@ -1029,6 +1048,7 @@ static void _Eff_position_s16msb(int chan, void *stream, int len, void *udata)
 }
 static void _Eff_position_s16msb_c4(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 4 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;
@@ -1073,6 +1093,7 @@ static void _Eff_position_s16msb_c4(int chan, void *stream, int len, void *udata
 }
 static void _Eff_position_s16msb_c6(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;
     /* 16 signed bits (lsb) * 6 channels. */
     volatile position_args *args = (volatile position_args *) udata;
     Sint16 *ptr = (Sint16 *) stream;

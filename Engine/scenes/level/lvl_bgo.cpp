@@ -49,7 +49,7 @@ void LVL_Bgo::transformTo_x(long id)
 {
     if(_isInited)
     {
-        if(data.id==(unsigned)abs(id)) return;
+        if(data.id==(unsigned)labs(id)) return;
         if(!ConfigManager::lvl_bgo_indexes.contains(id))
             return;
     }

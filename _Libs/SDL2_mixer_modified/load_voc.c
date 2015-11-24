@@ -160,7 +160,7 @@ static int voc_get_block(SDL_RWops *src, vs_t *v, SDL_AudioSpec *spec)
                         return 0;
                     }
 
-                    if ((v->rate != -1) && (uc != v->rate))
+                    if (((signed)v->rate != -1) && (uc != v->rate))
                     {
                         SDL_SetError("VOC sample rate codes differ");
                         return 0;
@@ -194,7 +194,7 @@ static int voc_get_block(SDL_RWops *src, vs_t *v, SDL_AudioSpec *spec)
                     SDL_SetError("VOC Sample rate is zero?");
                     return 0;
                 }
-                if ((v->rate != -1) && (new_rate_long != v->rate))
+                if (((signed)v->rate != -1) && (new_rate_long != v->rate))
                 {
                     SDL_SetError("VOC sample rate codes differ");
                     return 0;
@@ -245,7 +245,7 @@ static int voc_get_block(SDL_RWops *src, vs_t *v, SDL_AudioSpec *spec)
                  * different sample rate codes in silence.
                  * Adjust period.
                  */
-                if ((v->rate != -1) && (uc != v->rate))
+                if (((signed)v->rate != -1) && (uc != v->rate))
                     period = (Uint16)((period * (256 - uc))/(256 - v->rate));
                 else
                     v->rate = uc;
@@ -276,7 +276,7 @@ static int voc_get_block(SDL_RWops *src, vs_t *v, SDL_AudioSpec *spec)
                    SDL_SetError("VOC sample rate is zero");
                    return 0;
                 }
-                if ((v->rate != -1) && (new_rate_short != v->rate))
+                if (((signed)v->rate != -1) && (new_rate_short != v->rate))
                 {
                    SDL_SetError("VOC sample rate codes differ");
                    return 0;
@@ -400,7 +400,7 @@ SDL_AudioSpec *Mix_LoadVOC_RW (SDL_RWops *src, int freesrc,
     if (!voc_get_block(src, &v, spec))
         goto done;
 
-    if (v.rate == -1)
+    if ((signed)v.rate == -1)
     {
         SDL_SetError("VOC data had no sound!");
         goto done;
