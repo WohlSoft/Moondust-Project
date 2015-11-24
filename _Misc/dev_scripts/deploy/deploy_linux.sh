@@ -78,5 +78,5 @@ echo ""
 echo "All done!"
 echo ""
 cd $InitDir
-read -n 1
+if [[ $1 != "nopause" ]]; then read -n 1; fi
 
