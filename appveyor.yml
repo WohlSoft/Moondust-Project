@@ -30,7 +30,7 @@ os: unstable
 # clone directory
 clone_folder: C:\_Repos\PGE-Project
 
-clone_depth: 3                      # clone entire repository history if not defined
+clone_depth: 1                      # clone entire repository history if not defined
 
 # init:
 # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
@@ -42,8 +42,6 @@ install:
   # batch commands start from cmd:
   # - cmd: echo This is batch again
   # - cmd: set MY_VAR=12345
-  - nuget install 7ZipCLI -ExcludeVersion
-  - set PATH=%appveyor_build_folder%\7ZipCLI\tools;%PATH%
   - echo set QtDir=C:\Qt\5.5\mingw492_32\bin>> _paths.bat
   - echo set MinGW=C:\Qt\Tools\mingw492_32\bin>> _paths.bat
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
