@@ -24,7 +24,7 @@ echo "#=========================================================================
 #cp $PWD/_Libs/qt.conf /home/travis/Qt/Qt-5.4_static/bin
 #/home/travis/Qt/Qt-5.4_static/bin/qmake -query
 #echo "export QMAKESPEC QT_INSTALL_CONFIGURATION QT_INSTALL_PREFIX" >> _paths.sh
-echo "QMake=\"qmake QTPLUGIN.platforms=qxcb\"; #" >> _paths.sh
+echo "QMake=\"qmake\"; #" >> _paths.sh
 echo "" >> _paths.sh
 echo "LRelease=\"lrelease\"; #" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
