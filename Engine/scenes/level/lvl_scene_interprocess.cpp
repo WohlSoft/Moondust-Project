@@ -51,6 +51,10 @@ void LevelScene::process_InterprocessCommands()
                     return;
                 }
 
+                //Don't show placing item sprite before mouse will be on screen
+                placingMode_renderAt.setPoint(PGE_Window::Width+placingMode_drawSize.x()+16,
+                                              PGE_Window::Height+placingMode_drawSize.y()+16);
+
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
 
                 if(raw.startsWith("BLOCK_PLACE", Qt::CaseInsensitive))
@@ -122,7 +126,6 @@ void LevelScene::process_InterprocessCommands()
                     }
                 }
                 else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
-
                 break;
             }
         }
