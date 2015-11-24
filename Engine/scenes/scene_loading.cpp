@@ -54,7 +54,7 @@ LoadingScene::LoadingScene() : Scene(Loading)
 LoadingScene::~LoadingScene()
 {
     glDisable(GL_TEXTURE_2D);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
@@ -71,10 +71,9 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::init()
 {
-    glClearColor(float(ConfigManager::setup_LoadingScreen.backgroundColor.red())/255.0f,
-                 float(ConfigManager::setup_LoadingScreen.backgroundColor.green())/255.0f,
-                 float(ConfigManager::setup_LoadingScreen.backgroundColor.blue())/255.0f, 1.0f);
-                // Set background color from file
+    bgcolor.r = float(ConfigManager::setup_LoadingScreen.backgroundColor.red())/255.0f;
+    bgcolor.g = float(ConfigManager::setup_LoadingScreen.backgroundColor.green())/255.0f;
+    bgcolor.b = float(ConfigManager::setup_LoadingScreen.backgroundColor.blue())/255.0f;
 
     if(!ConfigManager::setup_LoadingScreen.backgroundImg.isEmpty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_LoadingScreen.backgroundImg);
@@ -160,6 +159,8 @@ void LoadingScene::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
     glLoadIdentity();
+
+    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
     GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2, PGE_Window::Height/2 - background.h/2);
 

@@ -57,7 +57,6 @@ Scene::Scene(TypeOfScene _type)
 
 Scene::~Scene()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix

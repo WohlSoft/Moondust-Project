@@ -49,10 +49,9 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 
     controller = NULL;
 
-    glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
-                 float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
-                 float(ConfigManager::setup_TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
-                // Set background color from file
+    bgcolor.r = float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f;
+    bgcolor.g = float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f;
+    bgcolor.b = float(ConfigManager::setup_TitleScreen.backgroundColor.blue())/255.0f;
 
     if(ConfigManager::setup_cursors.normal.isEmpty())
     {
@@ -135,7 +134,6 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 
 TitleScene::~TitleScene()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
@@ -340,6 +338,8 @@ void TitleScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
+    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
+
     if(_bgIsLoaded)
     {
         GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2,
@@ -422,6 +422,9 @@ int TitleScene::exec()
 
     menustates.clear();
     menuChain.clear();
+
+    //Set black color clearer
+    glClearColor(0.f, 0.f, 0.f, 1.0f);
 
     for(int i=menuFirst; i<menuLast;i++)
         menustates[(CurrentMenu)i] = menustate(0, 0);

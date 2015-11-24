@@ -159,8 +159,6 @@ void LevelScene::processPhysics(float ticks)
 
 LevelScene::~LevelScene()
 {
-
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
@@ -656,21 +654,24 @@ int LevelScene::exec()
     running=true;
 
     //Level scene's Loop
- Uint32 start_render=0;
- Uint32 stop_render=0;
-  float doUpdate_render=0;
+    Uint32 start_render=0;
+    Uint32 stop_render=0;
+    float doUpdate_render=0;
 
- Uint32 start_physics=0;
- Uint32 stop_physics=0;
+    Uint32 start_physics=0;
+    Uint32 stop_physics=0;
 
-  Uint32 start_events=0;
-  Uint32 stop_events=0;
-  //float junkTicks=0.0f;
+    Uint32 start_events=0;
+    Uint32 stop_events=0;
+    //float junkTicks=0.0f;
 
-  //StTimePt start_common=StClock::now();
-  Uint32 start_common = SDL_GetTicks();
-  //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
-  #define PassedTime (SDL_GetTicks()-start_common)
+    //StTimePt start_common=StClock::now();
+    Uint32 start_common = SDL_GetTicks();
+    //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
+     #define PassedTime (SDL_GetTicks()-start_common)
+
+    //Set black color clearer
+    glClearColor(0.f, 0.f, 0.f, 1.0f);
 
     /****************Initial update***********************/
     //Apply musics and backgrounds

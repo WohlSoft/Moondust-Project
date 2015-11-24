@@ -48,7 +48,6 @@ public:
     void setNone();
     void setBox(PGE_RectF &_box);
     void draw(float x, float y, float w, float h); //draw by camera position
-    void applyColor();
     bool isInit();
     int  curBgId();
 

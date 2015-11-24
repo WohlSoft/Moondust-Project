@@ -143,7 +143,8 @@ private:
     QStack<int > menuChain;
 
     PGE_Texture background;
-    bool _bgIsLoaded;
+    bool        _bgIsLoaded;
+    PGEColor    bgcolor;
     QVector<TitleScene_misc_img > imgs;
 
     PGE_Texture cursor;

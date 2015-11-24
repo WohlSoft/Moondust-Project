@@ -60,6 +60,7 @@ private:
     float _waitTimer;
 
     PGE_Texture background;
+    PGEColor    bgcolor;
     QVector<LoadingScene_misc_img > imgs;
 };
 

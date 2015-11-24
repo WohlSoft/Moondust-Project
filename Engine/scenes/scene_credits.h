@@ -61,6 +61,7 @@ private:
     float _waitTimer;
 
     PGE_Texture background;
+    PGEColor    bgcolor;
     QVector<CreditsScene_misc_img > imgs;
 
     LuaCreditsEngine luaEngine;

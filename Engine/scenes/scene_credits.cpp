@@ -54,7 +54,6 @@ CreditsScene::CreditsScene() : Scene(Credits), luaEngine(this)
 CreditsScene::~CreditsScene()
 {
     glDisable(GL_TEXTURE_2D);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
@@ -72,10 +71,9 @@ CreditsScene::~CreditsScene()
 void CreditsScene::init()
 {
     /*****************************Load built-in stuff*******************************/
-    glClearColor(float(ConfigManager::setup_CreditsScreen.backgroundColor.red())/255.0f,
-                 float(ConfigManager::setup_CreditsScreen.backgroundColor.green())/255.0f,
-                 float(ConfigManager::setup_CreditsScreen.backgroundColor.blue())/255.0f, 1.0f);
-                // Set background color from file
+    bgcolor.r = float(ConfigManager::setup_CreditsScreen.backgroundColor.red())/255.0f;
+    bgcolor.g = float(ConfigManager::setup_CreditsScreen.backgroundColor.green())/255.0f;
+    bgcolor.b = float(ConfigManager::setup_CreditsScreen.backgroundColor.blue())/255.0f;
 
     if(!ConfigManager::setup_CreditsScreen.backgroundImg.isEmpty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_CreditsScreen.backgroundImg);
@@ -193,6 +191,8 @@ void CreditsScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
+    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
+
     GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2, PGE_Window::Height/2 - background.h/2);
 
     for(int i=0;i<imgs.size();i++)
@@ -213,6 +213,8 @@ int CreditsScene::exec()
     //Level scene's Loop
     Uint32 start_render;
     doExit=false;
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black background color
 
     while(running)
     {

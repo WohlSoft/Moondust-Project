@@ -1,3 +1,8 @@
+0.2.4.1
+- Fixed crash on NPC placement with interprocessing
+- Sprite in real-time placing mode will be aligned to center of mouse rather left-top corner
+- Background color of screen padding no is always black
+
 0.2.4
 - Working paths system on world map! Now there are closed at episode start, but opens on level passes.
 - Fixed bug with autospawning of "gameover" question on non-zero exit codes
