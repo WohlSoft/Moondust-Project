@@ -1,0 +1,59 @@
+# Notes:
+#   - Minimal appveyor.yml file is an empty file. All sections are optional.
+#   - Indent each level of configuration with 2 spaces. Do not use tabs!
+#   - All section names are case-sensitive.
+#   - Section names should be unique on each level.
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 0.3.3.3.{build}
+
+# you can use {branch} name in version format too
+# version: 1.0.{build}-{branch}
+
+branches:
+  # whitelist
+  only:
+    - master
+
+skip_tags: true
+
+skip_commits:
+  message: /Created.*\.(png|jpg|jpeg|bmp|gif)/       # Regex for matching commit message
+
+# Operating system (build VM template)
+os: Windows Server 2012
+
+# clone directory
+clone_folder: C:\_Repos\PGE-Project
+
+clone_depth: 3                      # clone entire repository history if not defined
+
+os: unstable
+
+init:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+# scripts that run after cloning repository
+install:
+  # by default, all script lines are interpreted as batch
+  # - echo This is batch
+  # batch commands start from cmd:
+  # - cmd: echo This is batch again
+  # - cmd: set MY_VAR=12345
+  - echo set QtDir=C:\Qt\5.5\mingw492_32\bin>> _paths.bat
+  - echo set MinGW=C:\Qt\Tools\mingw492_32\bin>> _paths.bat
+  - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
+  
+build_script:
+  - build_deps.bat
+  - build.bat
+
+after_build:
+  - cd _Misc\dev_scripts\deploy\
+  - deploy_windows_dynamic.bat
+  - cd ..\..\..\
+  
