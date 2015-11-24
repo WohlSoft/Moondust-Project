@@ -141,7 +141,6 @@ public:
     /****************Level Running State*****************/
     bool isLevelContinues;
 
-    void checkPlayers();
     void setExiting(int delay, int reason);
 
     QString     toAnotherLevel();
@@ -164,6 +163,9 @@ public:
     Controller* player1Controller;
     Controller* player2Controller;
 
+    //Garbage collecting
+    void collectGarbageNPCs();
+    void collectGarbagePlayers();
 
     /**************Z-Layers**************/
     static double zCounter;
@@ -272,6 +274,8 @@ public:
     PGE_Texture placingMode_texture;
     /********************Placing element's texture***********************/
 
+    void       process_InterprocessCommands();
+
     void       drawPlacingItem();
     void       placeItemByMouse(int x, int y);
     /*******************************************************/
@@ -364,6 +368,7 @@ public:
     LVL_PlayersArray& getPlayers();
     LVL_NpcsArray& getNpcs();
     LVL_NpcsArray& getActiveNpcs();
+
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;

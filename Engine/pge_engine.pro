@@ -266,7 +266,10 @@ SOURCES += \
     data_configs/spawn_effect_def.cpp \
     script/bindings/level/classes/luaclass_lvl_block.cpp \
     script/bindings/level/classes/luaclass_lvl_bgo.cpp \
-    script/bindings/level/classes/luaclass_level_contact_detector.cpp
+    script/bindings/level/classes/luaclass_level_contact_detector.cpp \
+    scenes/level/lvl_scene_interprocess.cpp \
+    scenes/level/lvl_scene_pausemenu.cpp \
+    scenes/level/lvl_scene_garbage_collecting.cpp
 
 HEADERS  += \
     graphics/graphics.h \
