@@ -157,122 +157,122 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="412"/>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminados</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="424"/>
         <source>Classic Events tabs auto-expending</source>
-        <translation type="unfinished"></translation>
+        <translation>Pestañas de Eventos clásico auto-expandibles</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="430"/>
         <source>Autoscroll Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sección auto deslizable</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="437"/>
         <source>Common</source>
-        <translation type="unfinished">Común</translation>
+        <translation>Común</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="444"/>
         <source>Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Visibilidad de capa</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="451"/>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Movimiento de capa</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="458"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Evento seguido</translation>
+        <translation>Evento seguido</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="465"/>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener botones</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="472"/>
         <source>Section Settings</source>
-        <translation type="unfinished">Opciones de Sección</translation>
+        <translation>Opciones de Sección</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="504"/>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de PNJs</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="516"/>
         <source>Generator</source>
-        <translation type="unfinished">Generador</translation>
+        <translation>Generador</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="547"/>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="555"/>
         <source>Warp</source>
-        <translation type="unfinished">Traslado</translation>
+        <translation>Traslado</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="560"/>
         <source>Projectile</source>
-        <translation type="unfinished">Proyectil</translation>
+        <translation>Proyectil</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="568"/>
         <source>Delay:</source>
-        <translation type="unfinished">Retraso:</translation>
+        <translation>Retraso:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="597"/>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="618"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="625"/>
         <source>Random</source>
-        <translation type="unfinished">Aleatorio</translation>
+        <translation>Aleatorio</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="632"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="667"/>
         <source>Warps and Doors</source>
-        <translation type="unfinished">Traslados y puertas</translation>
+        <translation>Traslados y puertas</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="673"/>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de traslado:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="681"/>
         <source>0 - Instant</source>
-        <translation type="unfinished">0 - Instantáneo</translation>
+        <translation>0 - Instantáneo</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="686"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished">1 - Tubo</translation>
+        <translation>1 - Tubo</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="691"/>
         <source>2 - Door</source>
-        <translation type="unfinished">2 - Puerta</translation>
+        <translation>2 - Puerta</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="703"/>
@@ -2951,7 +2951,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="159"/>
         <source>Level name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del nivel:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="226"/>
@@ -3741,13 +3741,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="910"/>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover capa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
         <source>Are you want to remove this layer?
 All elements on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Desea remover esta capa?
+Todos los elementos de la capa serán movidos a la capa predeterminada.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
@@ -3768,13 +3769,15 @@ All elements on this layer will be moved to the &apos;Default&apos; layer.</sour
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
         <source>Are you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Desea remover esta capa?
+¡Todos los elementos de la capa serán movidos a la capa predeterminada!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
         <source>Are you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Desea remover esta capa?
+¡Todos los elementos de esta capa serán removidos también!</translation>
     </message>
 </context>
 <context>
@@ -4239,13 +4242,13 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="231"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>Propiedades de la sección...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="232"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>Propiedades del nivel...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="262"/>
@@ -4586,12 +4589,12 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="137"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Conectar lados izquierdo y derecho</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="147"/>
         <source>Wrap vertucally</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar lados superior e inferior</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="157"/>
@@ -4803,12 +4806,12 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="934"/>
         <source>Exit only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo salida</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="941"/>
         <source>Enter only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo entrada</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="967"/>
@@ -4818,13 +4821,13 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1005"/>
         <source>Level file:</source>
-        <translation type="unfinished">Archivo de nivel:</translation>
+        <translation>Archivo de nivel:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="995"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Traslado #</translation>
     </message>
     <message>
         <source>Level file</source>
@@ -6078,7 +6081,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="1325"/>
         <source>Wrap Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar horizontalmente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1339"/>
@@ -6322,37 +6325,37 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="2694"/>
         <source>Start Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar motor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2697"/>
         <source>Launch game engine application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar juego.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2702"/>
         <source>Open folder of current file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir carpeta del archivo actual</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2705"/>
         <source>Open folder which contains currently opened file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir carpeta que contenga el archivo abierto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2710"/>
         <source>Open custom data folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir carpeta personalizada de datos</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2713"/>
         <source>Open custom folder: a folder with a name equal to basename of currently opened file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir carpeta personalizada: una carpeta con el mismo nombre del nivel actual</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2721"/>
         <source>Wrap Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar verticalmente</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -7143,13 +7146,13 @@ El archivo no existe.</translation>
         <location filename="../main_window/file/file_open.cpp" line="69"/>
         <location filename="../main_window/file/file_open.cpp" line="104"/>
         <source>Untitled file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin título</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="69"/>
         <location filename="../main_window/file/file_open.cpp" line="104"/>
         <source>Please save file to the disk first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Primero guarde el archivo.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="125"/>
@@ -7561,7 +7564,9 @@ Puede ejecutar sin guardar si usa la opción &quot;Ejecutar prueba&quot; del men
         <source>Engine is not found: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró el juego:
+%1
+Por favor, compruebe el directorio.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="209"/>
@@ -7867,7 +7872,7 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC garbage!</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo está bien, ¡el nivel no tiene PNJs basura!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
@@ -7880,7 +7885,8 @@ Presionar el botón de ayuda para ver los PNJs encontrados</translation>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC garbabe has been removed!
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La basura PNJ fue removida!
+Esta operación se puede deshacer.</translation>
     </message>
     <message>
         <source>NPC gargabe has been removed!
@@ -8172,7 +8178,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="884"/>
         <source>Default health level</source>
-        <translation type="unfinished"></translation>
+        <translation>Salud normal</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="900"/>
@@ -8888,7 +8894,7 @@ File: %1
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="347"/>
         <source>Cut right here</source>
-        <translation>Cortar derecha</translation>
+        <translation>Cortar acá</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="350"/>
@@ -8903,12 +8909,12 @@ File: %1
     <message>
         <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
         <source>File is not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no existe</translation>
     </message>
     <message>
         <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="66"/>
         <source>Can&apos;t read the file</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer el archivo</translation>
     </message>
     <message>
         <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="632"/>
@@ -8927,93 +8933,111 @@ cuando guarde su archivo</translation>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 secciones
+El máximo de secciones es %2
+Todos los bordes y opciones de más de 21 secciones se perderán.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="38"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 bloques
+El máximo de bloques es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="45"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 Objetos de Fondo
+El máximo de objetos de fondo es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="52"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 PNJs
+El máximo de PNJs es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="59"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 traslados
+El máximo de traslados es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="66"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 cajas de agua
+El máximo es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="73"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 capas
+El máximo de capas es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="80"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 events
+El máximo de eventos es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="87"/>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunos problemas fueron encontrados al guardar en formato SMBX64:
+
+%1Por favor remover exceso de elementos u opciones o guardar en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="101"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 azulejos
+El máximo de azulejos es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="108"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 decoraciones
+El máximo de decoraciones es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="115"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 caminos
+El máximo de caminos es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="122"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 niveles
+El máximo de niveles es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="130"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>El estándar SMBX64 no permite guardar %1 cajas de música
+El máximo es %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="137"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunos problemas fueron hallados al guardar en formato SMBX64:
+
+%1Por favor remover exceso de elementos u opciones o guarde en formato WLDX.</translation>
     </message>
 </context>
 <context>
@@ -9058,103 +9082,103 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="14"/>
         <source>Testing settings</source>
-        <translation type="unfinished">Opciones de prueba</translation>
+        <translation>Opciones de prueba</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="30"/>
         <source>2 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>2do jugador</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="39"/>
         <location filename="../main_window/testing/testing_settings.ui" line="203"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation>Personaje</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="46"/>
         <location filename="../main_window/testing/testing_settings.ui" line="213"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="79"/>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones extra</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="85"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info de depuración</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="92"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permite destruir objetos sin excepciones.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="95"/>
         <source>Chuck Norris</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricky Fort</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="102"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le permite caminar en cualquier lugar del mapa.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="105"/>
         <source>World freedom</source>
-        <translation type="unfinished"></translation>
+        <translation>Libertad en Maiamee</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="112"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
-        <translation type="unfinished"></translation>
+        <translation>El jugador no recibirá daño y no se quemará en lava.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="115"/>
         <source>God mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo Gokú</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="122"/>
         <source>Allows you to fly up to the space!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Le permite volar sin limitaciones!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="125"/>
         <source>Unlimited flying</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuelo ilimitado</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="145"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Depuración física</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="155"/>
         <source>Number of players</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de jugadores</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="161"/>
         <source>1 player</source>
-        <translation type="unfinished"></translation>
+        <translation>1 jugador</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="168"/>
         <source>2 player</source>
-        <translation type="unfinished"></translation>
+        <translation>2 jugadores</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="197"/>
         <source>1 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>1er jugador</translation>
     </message>
 </context>
 <context>
@@ -9516,7 +9540,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
         <source>Did you know?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Lo sabía...?</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="58"/>
@@ -10406,7 +10430,7 @@ Cajas de música:		%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="634"/>
         <source>Music box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caja de música</translation>
     </message>
     <message>
         <source>Music</source>
