@@ -32,8 +32,8 @@ clone_folder: C:\_Repos\PGE-Project
 
 clone_depth: 3                      # clone entire repository history if not defined
 
-init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# init:
+# - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # scripts that run after cloning repository
 install:
