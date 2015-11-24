@@ -99,7 +99,7 @@ bool ConfigManager::loadLevelNPC()
         snpc.isInit = false;
         snpc.image = NULL;
         snpc.textureArrayId = 0;
-        snpc.animator_ID = 0;
+        snpc.animator_ID = -1;
         npcset.beginGroup( PGESTRING("npc-"+PGESTRING::number(i)) );
         snpc.name =         npcset.value("name", "").toString();
         if(snpc.name.isEmpty())

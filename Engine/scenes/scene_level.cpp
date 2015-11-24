@@ -602,11 +602,18 @@ void LevelScene::update()
                     placingMode_item_type=2;
                     placingMode_npc=got.npc[0];
                     long tID = ConfigManager::getNpcTexture(placingMode_npc.id);
-                    if( tID  >= 0 )
+                    if( tID >= 0 )
                     {
                         placingMode_texture = ConfigManager::level_textures[tID];
                         obj_npc &np=ConfigManager::lvl_npc_indexes[placingMode_npc.id];
                         placingMode_animated = ((np.frames>1) || (np.framestyle>0));
+                        if((np.animator_ID < 0) && ( (np.shared_ani)&&((np.frames > 1)||(np.framestyle > 0))))
+                        {
+                            AdvNpcAnimator animator(placingMode_texture, np);
+                            ConfigManager::Animator_NPC.push_back(animator);
+                            ConfigManager::Animator_NPC.last().start();
+                            np.animator_ID = ConfigManager::Animator_NPC.size()-1;
+                        }
                         placingMode_animatorID = np.animator_ID;
                         placingMode_drawSize.setX(np.gfx_w);
                         placingMode_drawSize.setY(np.gfx_h);
