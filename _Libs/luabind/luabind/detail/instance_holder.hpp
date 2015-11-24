@@ -122,7 +122,7 @@ namespace luabind {
 		{
 		public:
 			// No need for dynamic_id / dynamic_ptr, since we always get the most derived type
-			pointer_like_holder(lua_State* L, ValueType val, class_id dynamic_id, void* dynamic_ptr)
+            pointer_like_holder(lua_State* /*L*/, ValueType val, class_id dynamic_id, void* dynamic_ptr)
 				: 
 				instance_holder(std::is_const< decltype(*get_pointer(val)) >::value),
 				val_(std::move(val)),

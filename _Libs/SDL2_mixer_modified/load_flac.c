@@ -49,11 +49,12 @@ typedef struct {
 } FLAC_SDL_Data;
 
 static FLAC__StreamDecoderReadStatus flac_read_load_cb(
-                                    const FLAC__StreamDecoder *decoder,
+                                    const FLAC__StreamDecoder decoder,
                                     FLAC__byte buffer[],
                                     size_t *bytes,
                                     void *client_data)
 {
+    (void)decoder;
     // make sure there is something to be reading
     if (*bytes > 0) {
         FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
@@ -72,10 +73,11 @@ static FLAC__StreamDecoderReadStatus flac_read_load_cb(
 }
 
 static FLAC__StreamDecoderSeekStatus flac_seek_load_cb(
-                                    const FLAC__StreamDecoder *decoder,
+                                    const FLAC__StreamDecoder decoder,
                                     FLAC__uint64 absolute_byte_offset,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     if (SDL_RWseek (data->sdl_src, absolute_byte_offset, RW_SEEK_SET) < 0) {
@@ -86,10 +88,11 @@ static FLAC__StreamDecoderSeekStatus flac_seek_load_cb(
 }
 
 static FLAC__StreamDecoderTellStatus flac_tell_load_cb(
-                                    const FLAC__StreamDecoder *decoder,
+                                    const FLAC__StreamDecoder decoder,
                                     FLAC__uint64 *absolute_byte_offset,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
@@ -103,10 +106,11 @@ static FLAC__StreamDecoderTellStatus flac_tell_load_cb(
 }
 
 static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
-                                    const FLAC__StreamDecoder *decoder,
+                                    const FLAC__StreamDecoder decoder,
                                     FLAC__uint64 *stream_length,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
@@ -122,9 +126,10 @@ static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
     }
 }
 
-static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder *decoder,
+static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder decoder,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
@@ -142,11 +147,12 @@ static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder *decoder,
 }
 
 static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
-                                    const FLAC__StreamDecoder *decoder,
+                                    const FLAC__StreamDecoder decoder,
                                     const FLAC__Frame *frame,
                                     const FLAC__int32 *const buffer[],
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
     size_t i;
     Uint8 *buf;
@@ -198,10 +204,11 @@ static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
 }
 
 static void flac_metadata_load_cb(
-                    const FLAC__StreamDecoder *decoder,
+                    const FLAC__StreamDecoder decoder,
                     const FLAC__StreamMetadata *metadata,
                     void *client_data)
 {
+    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
     FLAC__uint64 total_samples;
     unsigned bps;
@@ -227,10 +234,11 @@ static void flac_metadata_load_cb(
 }
 
 static void flac_error_load_cb(
-                const FLAC__StreamDecoder *decoder,
+                const FLAC__StreamDecoder decoder,
                 FLAC__StreamDecoderErrorStatus status,
                 void *client_data)
 {
+    (void)decoder;(void)client_data;
     // print an SDL error based on the error status
     switch (status) {
         case FLAC__STREAM_DECODER_ERROR_STATUS_LOST_SYNC:

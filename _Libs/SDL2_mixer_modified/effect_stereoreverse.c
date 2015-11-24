@@ -57,6 +57,7 @@
 
 static void _Eff_reversestereo16(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;(void)udata;
     /* 16 bits * 2 channels. */
     Uint32 *ptr = (Uint32 *) stream;
     int i;
@@ -69,6 +70,7 @@ static void _Eff_reversestereo16(int chan, void *stream, int len, void *udata)
 
 static void _Eff_reversestereo8(int chan, void *stream, int len, void *udata)
 {
+    (void)chan;(void)udata;
     /* 8 bits * 2 channels. */
     Uint32 *ptr = (Uint32 *) stream;
     int i;

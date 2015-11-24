@@ -144,7 +144,7 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
 #elif defined(MP3_MAD_MUSIC)
 			mad_seek(mp3_mad, 0);
 			mad_start(mp3_mad);
-			err = (*audio_len != mad_getSamples(mp3_mad, *audio_buf, *audio_len));
+            err = ((signed)*audio_len != mad_getSamples(mp3_mad, *audio_buf, *audio_len));
 			mad_stop(mp3_mad);
 #endif
 		}
