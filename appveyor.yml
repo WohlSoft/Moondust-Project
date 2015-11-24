@@ -49,9 +49,14 @@ install:
 build_script:
   - build_deps.bat nopause
   - build.bat nopause
-
-after_build:
   - cd _Misc\dev_scripts\deploy\
   - deploy_windows_dynamic.bat nopause
   - cd ..\..\..\
   
+artifacts:
+- path: bin-w32\_packed\pge-project-dev-win32.zip
+- path: bin-w32\_packed\install-pge-common-dev-win32.zip
+- path: bin-w32\_packed\install-pge-editor-dev-win32.zip
+- path: bin-w32\_packed\install-pge-engine-dev-win32.zip
+- path: bin-w32\_packed\install-pge-tools-dev-win32.zip
+
