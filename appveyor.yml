@@ -49,11 +49,11 @@ install:
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
   
 build_script:
-  - build_deps.bat
-  - build.bat
+  - build_deps.bat nopause
+  - build.bat nopause
 
 after_build:
   - cd _Misc\dev_scripts\deploy\
-  - deploy_windows_dynamic.bat
+  - deploy_windows_dynamic.bat nopause
   - cd ..\..\..\
   

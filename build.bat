@@ -34,5 +34,5 @@ echo =========ERROR!!===========
 echo.
 :quit
 PATH=%OldPATH%
-pause
+if not "%1"=="nopause" pause
 

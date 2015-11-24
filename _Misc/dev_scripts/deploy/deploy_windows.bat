@@ -156,5 +156,5 @@ echo.
 echo ERROR: 7zip not found: %SEVENZIP%
 echo.
 :exitFrom
-pause
+if not "%1"=="nopause" pause
 
