@@ -25,17 +25,12 @@ skip_commits:
   message: /Created.*\.(png|jpg|jpeg|bmp|gif)/       # Regex for matching commit message
 
 # Operating system (build VM template)
-os: Windows Server 2012
+os: unstable
 
 # clone directory
 clone_folder: C:\_Repos\PGE-Project
 
 clone_depth: 3                      # clone entire repository history if not defined
-
-os: unstable
-
-init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # scripts that run after cloning repository
 install:
