@@ -52,7 +52,7 @@ buildLibs()
        InstallTo=$(readlink -f $InstallTo)
     fi
 
-    echo $InstallTo
+    echo "Library install path: $InstallTo"
     source ./___build_script.sh
 }
 

@@ -18,11 +18,11 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 OurOS="freebsd"
 fi
 
-if [[ "$OurOS" != "macos" ]]; then
-    $Sed=sed
-else
-    $Sed=gsed
-fi
+#if [[ "$OurOS" != "macos" ]]; then
+$Sed=sed
+#else
+#    $Sed=gsed
+#fi
 
 #=======================================================================
 errorofbuild()
