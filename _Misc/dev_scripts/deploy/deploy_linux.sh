@@ -9,7 +9,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 CurDir="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
-cd ..
+cd $CurDir/..
 CurDir=$CurDir/../
 source ./_paths.sh
 
