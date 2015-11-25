@@ -63,7 +63,7 @@ BuildSrc()
       errorofbuild
     fi
 
-    if [[ OurOS != "macos" ]]; then
+    if [[ "$OurOS" != "macos" ]]; then
         make install
         if [ $? -eq 0 ]
         then
@@ -165,7 +165,7 @@ else
   errorofbuild
 fi
 
-if [[ OurOS != "macos" ]]; then
+if [[ "$OurOS" != "macos" ]]; then
     make install PREFIX=$InstallTo BUILDMODE=static
     if [ $? -eq 0 ]
     then
@@ -182,6 +182,10 @@ cd ..
 #BuildSrc 'SDL2_mixer-2.0.0' '--prefix=$InstallTo --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --enable-music-mod-modplug --enable-music-mod --disable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest'
 
 #=======================================================================
+if [[ "$OurOS" == "macos" ]]; then
+    #run manual installation script for OS-X to avoid sudi usage
+    source ./install_osx.sh
+fi
 echo Libraries installed into $InstallTo
 
 

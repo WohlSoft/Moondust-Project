@@ -54,10 +54,6 @@ buildLibs()
 
     echo $InstallTo
     source ./___build_script.sh
-    if [[ OurOS == "macos" ]]; then
-        #run manual installation script for OS-X to avoid sudi usage
-        source ./install_osx.sh
-    fi
 }
 
 PrjPath=$SCRDIR
