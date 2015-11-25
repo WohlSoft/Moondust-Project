@@ -35,8 +35,32 @@ calibrator_cnfs.files  = Content/calibrator/*
 
 INSTALLS += configs helps themes calibrator_cnfs
 
+noeditor: {
+    SUBDIRS -= Editor
+}
 noengine: {
     SUBDIRS -= Engine
+}
+nocalibrator: {
+    SUBDIRS -= pcalibrator
+}
+nocalibrator: {
+    SUBDIRS -= pcalibrator
+}
+nogifs2png: {
+    SUBDIRS -= GIFs2PNG
+}
+nopng2gifs: {
+    SUBDIRS -= PNG2GIFs
+}
+nolazyfixtool: {
+    SUBDIRS -= LazyFixTool
+}
+nomanager: {
+    SUBDIRS -= Manager
+}
+nomaintainer: {
+    SUBDIRS -= Maintainer
 }
 
 android:{

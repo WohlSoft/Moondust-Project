@@ -48,7 +48,7 @@ install:
   
 build_script:
   - build_deps.bat nopause
-  - build.bat nopause noengine
+  - build.bat nopause noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer
   - cd _Misc\dev_scripts\deploy\
   - deploy_windows_dynamic.bat nopause
   - cd ..\..\..\

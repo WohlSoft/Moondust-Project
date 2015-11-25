@@ -5,7 +5,14 @@ SET BuildArgs=
 
 :argsloop
 if "%1"=="nopause"  SET NoPause=1
+if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
 if "%1"=="noengine" SET BuildArgs=%BuildArgs% CONFIG+=noengine
+if "%1"=="nocalibrator" SET BuildArgs=%BuildArgs% CONFIG+=nocalibrator
+if "%1"=="nogifs2png" SET BuildArgs=%BuildArgs% CONFIG+=nogifs2png
+if "%1"=="nopng2gifs" SET BuildArgs=%BuildArgs% CONFIG+=nopng2gifs
+if "%1"=="nolazyfixtool" SET BuildArgs=%BuildArgs% CONFIG+=nolazyfixtool
+if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
+if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% CONFIG+=nomaintainer
 shift
 if NOT "%1"=="" goto argsloop
 
