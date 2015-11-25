@@ -106,6 +106,12 @@ sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am
 sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
 BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
+if [[ "$OurOS" == "macos" ]]; then
+    #install libOGG
+    mkdir -p $InstallTo/include/ogg
+    instLib libogg-1.3.2/src/.libs
+    cp -a ./SDL/libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
+fi
 
 ###########VORBIS###########
 echo "============VORBIS=========="
