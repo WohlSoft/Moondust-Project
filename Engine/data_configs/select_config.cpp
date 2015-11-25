@@ -139,8 +139,18 @@ QString SelectConfig::isPreLoaded(QString openConfig)
 {
     QString configPath = openConfig;
 
-    if(QFileInfo(openConfig+"/main.ini").exists())
-        currentConfig=configPath;
+    if(!configPath.isEmpty())
+    {
+        if(QFileInfo(openConfig+"/main.ini").exists())
+            currentConfig=configPath;
+    } else {
+        QList<QListWidgetItem*> list=ui->configList->findItems("*", Qt::MatchWildcard);
+        if(list.size()==1)
+        {
+            currentConfig = list.first()->data(Qt::UserRole).toString();
+            currentConfigPath = list.first()->data(Qt::UserRole+4).toString();
+        }
+    }
 //    //check exists of config in list
 //    foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
 //    {
