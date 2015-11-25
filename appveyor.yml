@@ -47,8 +47,8 @@ install:
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
   
 build_script:
-  - build_deps.bat nopause noengine
-  - build.bat nopause
+  - build_deps.bat nopause
+  - build.bat nopause noengine
   - cd _Misc\dev_scripts\deploy\
   - deploy_windows_dynamic.bat nopause
   - cd ..\..\..\
