@@ -23,7 +23,7 @@ cp -a ./SDL/libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
 
 #install libVorbis
 mkdir -p $InstallTo/include/vorbis
-instLib libvorbis-1.3.4/src/.libs
+instLib libvorbis-1.3.4/lib/.libs
 cp -a ./SDL/libvorbis-1.3.4/include/vorbis/*.h $InstallTo/include/vorbis
 
 
