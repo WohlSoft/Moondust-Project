@@ -18,6 +18,12 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 OurOS="freebsd"
 fi
 
+if [[ "$OurOS" != "macos" ]]; then
+    $Sed=sed
+else
+    $Sed=gsed
+fi
+
 #=======================================================================
 errorofbuild()
 {
@@ -93,7 +99,7 @@ cp ../libmad-0.15.1b.patched_osx_configure.txt .
 ###########SDL2###########
 echo "=======SDL2========="
 #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
 BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
 
 #apply fix of SDL2 bug
@@ -102,8 +108,8 @@ cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 
 ###########OGG###########
 echo "=========OGG==========="
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
 BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
 if [[ "$OurOS" == "macos" ]]; then
@@ -113,20 +119,27 @@ if [[ "$OurOS" == "macos" ]]; then
     cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
     mkdir -p $InstallTo/include/ogg
     cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
+    cd ./libogg-1.3.2/src
+        bash ../libtool --mode=install ginstall -c libogg.la $InstallTo/lib
+        gmkdir -p $InstallTo/share/aclocal
+        ginstall -c -m 644 ogg.m4 $InstallTo/share/aclocal
+        gmkdir -p $InstallTo/lib/pkgconfig
+        ginstall -c -m 644 ogg.pc $InstallTo/lib/pkgconfig
+    cd ../../
 fi
 
 ###########VORBIS###########
 echo "============VORBIS=========="
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
 BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
 
 ###########FLAC###########
 echo "==========FLAC========="
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
-sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
-sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
-sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
+$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
+$Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
+$Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
 BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --prefix='$InstallTo
 
 
@@ -136,8 +149,8 @@ BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --prefix='$InstallTo
 
 ###########MODPLUG###########
 echo "==========MODPLUG=========="
-sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
-sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
+$Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
+$Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
 BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
 
 ###########LibMAD###########
@@ -154,8 +167,8 @@ then
     chmod u+x ./configure
 fi
 cd ..
-sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
-sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
+$Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
+$Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
 if [[ "$OurOS" == "macos" ]]; then
     BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --prefix='$InstallTo
 else
