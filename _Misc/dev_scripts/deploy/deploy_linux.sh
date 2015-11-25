@@ -74,6 +74,8 @@ if [ -f "$SOURCEDIR/bin/_packed/$TarGzArName" ]; then
 fi
 mv ./$TarGzArName "$SOURCEDIR/bin/_packed/$TarGzArName"
 
+echo "Packed archive placed into: $SOURCEDIR/bin/_packed/$TarGzArName"
+
 echo ""
 echo "All done!"
 echo ""
