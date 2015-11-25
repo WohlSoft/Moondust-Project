@@ -1,12 +1,25 @@
-# Notes:
-#   - Minimal appveyor.yml file is an empty file. All sections are optional.
-#   - Indent each level of configuration with 2 spaces. Do not use tabs!
-#   - All section names are case-sensitive.
-#   - Section names should be unique on each level.
-
-#---------------------------------#
-#      general configuration      #
-#---------------------------------#
+#----------------------------------------------------------------------------
+#
+# Platform Game Engine Project by Wohlstand, a free platform for making games of platform genre
+# Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#--------------------------------------------------------------------------------
+# AppVeyor CI building configuration file for Microsoft Windows Operating system
+#                             created 2015-11-25
+#--------------------------------------------------------------------------------
 
 # version format
 version: 0.3.3.3.{build}
@@ -32,6 +45,7 @@ clone_folder: C:\_Repos\PGE-Project
 
 clone_depth: 1                      # clone entire repository history if not defined
 
+# Uncommend those two lines to enable RDP (which can be used to debug stuff and test built stuff)
 # init:
 # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
@@ -57,6 +71,6 @@ artifacts:
 - path: bin-w32\_packed\pge-project-dev-win32.zip
 - path: bin-w32\_packed\install-pge-common-dev-win32.zip
 - path: bin-w32\_packed\install-pge-editor-dev-win32.zip
-- path: bin-w32\_packed\install-pge-engine-dev-win32.zip
-- path: bin-w32\_packed\install-pge-tools-dev-win32.zip
+#- path: bin-w32\_packed\install-pge-engine-dev-win32.zip #This archive has no built applications (engine disabled to don't excite building timeout)
+#- path: bin-w32\_packed\install-pge-tools-dev-win32.zip #This archive has no built applications (toosl are disabled to don't excite building timeout)
 
