@@ -240,14 +240,13 @@ bool LevelScene::init_items()
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
     luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
-    std::function<void (const QString &, const QString &)> ErrorReporterFunc = [this](const QString& errorMessage, const QString& stacktrace){
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace)->void{
         WriteToLog(QtWarningMsg, "Lua-Error: ");
         WriteToLog(QtWarningMsg, "Error Message: "+errorMessage);
         WriteToLog(QtWarningMsg, "Stacktrace: \n"+stacktrace);
         _errorString = QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
-        return false;
-    };
-    luaEngine.setErrorReporterFunc(ErrorReporterFunc);
+        //return false;
+    });
     luaEngine.init();
 
     if(luaEngine.shouldShutdown())
