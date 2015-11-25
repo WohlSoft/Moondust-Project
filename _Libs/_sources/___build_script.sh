@@ -199,7 +199,7 @@ fi
     else
       errorofbuild
     fi
-    if [[ "$OurOS" != "macos" ]]; then
+    if [[ "$OurOS" == "macos" ]]; then
         cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
         cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
     fi
