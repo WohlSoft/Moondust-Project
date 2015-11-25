@@ -42,10 +42,16 @@ cd SDL
 UnArch()
 {
 # $1 - archive name
-if [ ! -d $1 ]
-	then
-	tar -xvf ../$1.tar.*z
-	fi
+    if [ ! -d $1 ]
+	    then
+        printf "tar -xf ../$1.tar.*z ..."
+	    tar -xf ../$1.tar.*z
+        if [ $? -eq 0 ]; then
+          printf "OK!\n"
+        else
+          printf "FAILED!\n"
+        fi
+    fi
 }
 
 BuildSrc()
