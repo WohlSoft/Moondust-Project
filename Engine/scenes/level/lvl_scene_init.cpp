@@ -24,7 +24,7 @@
 
 #include <QDebug>
 #include <QFileInfo>
-
+#include <functional>
 
 bool LevelScene::setEntrance(int entr)
 {
@@ -240,13 +240,14 @@ bool LevelScene::init_items()
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
     luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
-    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+    std::function<void (const QString &, const QString &)> ErrorReporterFunc = [this](const QString& errorMessage, const QString& stacktrace){
         WriteToLog(QtWarningMsg, "Lua-Error: ");
         WriteToLog(QtWarningMsg, "Error Message: "+errorMessage);
         WriteToLog(QtWarningMsg, "Stacktrace: \n"+stacktrace);
         _errorString = QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
         return false;
-    });
+    };
+    luaEngine.setErrorReporterFunc(ErrorReporterFunc);
     luaEngine.init();
 
     if(luaEngine.shouldShutdown())
