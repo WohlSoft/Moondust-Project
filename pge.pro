@@ -35,6 +35,10 @@ calibrator_cnfs.files  = Content/calibrator/*
 
 INSTALLS += configs helps themes calibrator_cnfs
 
+noengine: {
+    SUBDIRS -= Engine
+}
+
 android:{
 DEFINES -= USE_LUA_JIT
 SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer
