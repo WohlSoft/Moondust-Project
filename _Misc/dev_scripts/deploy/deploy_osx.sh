@@ -88,10 +88,11 @@ fi
 if [ -f "$DeployDir/$TarGzArName" ]; then
         mv "$DeployDir/$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
 else 
-if [ -f "$DeployDir/rw.$TarGzArName" ]; then
-        mv "$DeployDir/rw.$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
-else
-        echo "Built DMG file not found. Nothing to move!"
+    if [ -f "$DeployDir/rw.$TarGzArName" ]; then
+            mv "$DeployDir/rw.$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
+    else
+            echo "Built DMG file not found. Nothing to move!"
+    fi
 fi
 
 echo ""
