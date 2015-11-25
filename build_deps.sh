@@ -40,6 +40,10 @@ checkState()
 	fi
 }
 
+osx_realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 buildLibs()
 {
     # build libraries
@@ -47,7 +51,7 @@ buildLibs()
     InstallTo=$(echo ~+/../_builds/$OurOS)
 
     if [[ "$OurOS" == "macos" ]]; then
-       InstallTo=$(readlink $InstallTo)
+       InstallTo=$(osx_realpath $InstallTo)
     else
        InstallTo=$(readlink -f $InstallTo)
     fi
