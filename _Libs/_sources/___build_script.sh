@@ -192,7 +192,6 @@ else
   errorofbuild
 fi
 
-#if [[ "$OurOS" != "macos" ]]; then
     make install PREFIX=$InstallTo BUILDMODE=static
     if [ $? -eq 0 ]
     then
@@ -200,8 +199,10 @@ fi
     else
       errorofbuild
     fi
-#fi
-
+    if [[ "$OurOS" != "macos" ]]; then
+        cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
+        cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
+    fi
 cd ..
 
 ###########SDL2_mixer###########
