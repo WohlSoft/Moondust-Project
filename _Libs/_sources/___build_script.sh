@@ -108,9 +108,11 @@ BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
 if [[ "$OurOS" == "macos" ]]; then
     #install libOGG
+    cp -a ./libogg-1.3.2/src/.libs/*.dylib $installTo/lib
+    cp -a ./libogg-1.3.2/src/.libs/*.a $installTo/lib
+    cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
     mkdir -p $InstallTo/include/ogg
-    instLib libogg-1.3.2/src/.libs
-    cp -a ./SDL/libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
+    cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
 fi
 
 ###########VORBIS###########
