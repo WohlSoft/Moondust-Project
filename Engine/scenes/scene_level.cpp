@@ -279,7 +279,7 @@ void LevelScene::update()
 {
     if(luaEngine.shouldShutdown()){
         fader.setFade(10, 1.0f, 1.0f);
-        setExiting(0, LvlExit::EXIT_MenuExit);
+        setExiting(0, LvlExit::EXIT_Error);
     }
     Scene::update();
     tickAnimations(uTickf);
