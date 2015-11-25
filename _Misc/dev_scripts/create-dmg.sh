@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Create a read-only disk image of the contents of a folder
+# Create a read-only disk image of the conkmtents of a folder
 
 set -e;
 
@@ -171,7 +171,7 @@ if ! test -z "$VOLUME_ICON_FILE"; then
 fi
 
 # run applescript
-APPLESCRIPT=$(mktemp -t createdmg)
+APPLESCRIPT=$(mktemp -t createdmg.XXXXXXX)
 cat "$AUX_PATH/template.applescript" | sed -e "s/WINX/$WINX/g" -e "s/WINY/$WINY/g" -e "s/WINW/$WINW/g" -e "s/WINH/$WINH/g" -e "s/BACKGROUND_CLAUSE/$BACKGROUND_CLAUSE/g" -e "s/ICON_SIZE/$ICON_SIZE/g" | perl -pe  "s/POSITION_CLAUSE/$POSITION_CLAUSE/g" | perl -pe "s/APPLICATION_CLAUSE/$APPLICATION_CLAUSE/g" | perl -pe "s/HIDING_CLAUSE/$HIDING_CLAUSE/" >"$APPLESCRIPT"
 
 echo "Running Applescript: /usr/bin/osascript \"${APPLESCRIPT}\" \"${VOLUME_NAME}\""
@@ -219,3 +219,4 @@ fi
 
 echo "Disk image done"
 exit 0
+
