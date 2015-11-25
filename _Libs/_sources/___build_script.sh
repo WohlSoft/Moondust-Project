@@ -46,31 +46,33 @@ BuildSrc()
 {
 # $1 - dir name   #2 additional props
 
-cd $1
-./configure $2
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuild
-fi
+    cd $1
+    ./configure $2
+    if [ $? -eq 0 ]
+    then
+      echo "[good]"
+    else
+      errorofbuild
+    fi
 
-make
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuild
-fi
+    make
+    if [ $? -eq 0 ]
+    then
+      echo "[good]"
+    else
+      errorofbuild
+    fi
 
-make install
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuild
-fi
-cd ..
+    if [[ OurOS != "macos" ]]; then
+        make install
+        if [ $? -eq 0 ]
+        then
+          echo "[good]"
+        else
+          errorofbuild
+        fi
+    fi
+    cd ..
 }
 LatestSDL='SDL-dbcbdc2940ef'
 UnArch $LatestSDL
@@ -162,13 +164,17 @@ then
 else
   errorofbuild
 fi
-make install PREFIX=$InstallTo BUILDMODE=static
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuild
+
+if [[ OurOS != "macos" ]]; then
+    make install PREFIX=$InstallTo BUILDMODE=static
+    if [ $? -eq 0 ]
+    then
+      echo "[good]"
+    else
+      errorofbuild
+    fi
 fi
+
 cd ..
 
 ###########SDL2_mixer###########

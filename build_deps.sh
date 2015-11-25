@@ -42,18 +42,22 @@ checkState()
 
 buildLibs()
 {
-# build libraries
-cd "$PrjPath/_Libs/_sources"
-InstallTo=$(echo ~+/../_builds/$OurOS)
+    # build libraries
+    cd "$PrjPath/_Libs/_sources"
+    InstallTo=$(echo ~+/../_builds/$OurOS)
 
-if [[ "$OurOS" == "macos" ]]; then
-   InstallTo=$(readlink $InstallTo)
-else
-   InstallTo=$(readlink -f $InstallTo)
-fi
+    if [[ "$OurOS" == "macos" ]]; then
+       InstallTo=$(readlink $InstallTo)
+    else
+       InstallTo=$(readlink -f $InstallTo)
+    fi
 
-echo $InstallTo
-source ./___build_script.sh
+    echo $InstallTo
+    source ./___build_script.sh
+    if [[ OurOS == "macos" ]]; then
+        #run manual installation script for OS-X to avoid sudi usage
+        source ./install_osx.sh
+    if
 }
 
 PrjPath=$SCRDIR
