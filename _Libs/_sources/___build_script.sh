@@ -75,7 +75,7 @@ BuildSrc()
       errorofbuild
     fi
 
-    if [[ "$OurOS" != "macos" ]]; then
+    #if [[ "$OurOS" != "macos" ]]; then
         make install
         if [ $? -eq 0 ]
         then
@@ -83,7 +83,7 @@ BuildSrc()
         else
           errorofbuild
         fi
-    fi
+    #fi
     cd ..
 }
 LatestSDL='SDL-dbcbdc2940ef'
@@ -118,21 +118,21 @@ $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.a
 $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
 BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
-if [[ "$OurOS" == "macos" ]]; then
+#if [[ "$OurOS" == "macos" ]]; then
     #install libOGG
-    cp -a ./libogg-1.3.2/src/.libs/*.dylib $installTo/lib
-    cp -a ./libogg-1.3.2/src/.libs/*.a $installTo/lib
-    cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
-    mkdir -p $InstallTo/include/ogg
-    cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
-    cd ./libogg-1.3.2/src
-        bash ../libtool --mode=install ginstall -c libogg.la $InstallTo/lib
-        gmkdir -p $InstallTo/share/aclocal
-        ginstall -c -m 644 ogg.m4 $InstallTo/share/aclocal
-        gmkdir -p $InstallTo/lib/pkgconfig
-        ginstall -c -m 644 ogg.pc $InstallTo/lib/pkgconfig
-    cd ../../
-fi
+#    cp -a ./libogg-1.3.2/src/.libs/*.dylib $installTo/lib
+#    cp -a ./libogg-1.3.2/src/.libs/*.a $installTo/lib
+#    cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
+#    mkdir -p $InstallTo/include/ogg
+#    cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
+#    cd ./libogg-1.3.2/src
+#        bash ../libtool --mode=install ginstall -c libogg.la $InstallTo/lib
+#        gmkdir -p $InstallTo/share/aclocal
+#        ginstall -c -m 644 ogg.m4 $InstallTo/share/aclocal
+#        gmkdir -p $InstallTo/lib/pkgconfig
+#        ginstall -c -m 644 ogg.pc $InstallTo/lib/pkgconfig
+#    cd ../../
+#fi
 
 ###########VORBIS###########
 echo "============VORBIS=========="
@@ -192,7 +192,7 @@ else
   errorofbuild
 fi
 
-if [[ "$OurOS" != "macos" ]]; then
+#if [[ "$OurOS" != "macos" ]]; then
     make install PREFIX=$InstallTo BUILDMODE=static
     if [ $? -eq 0 ]
     then
@@ -200,7 +200,7 @@ if [[ "$OurOS" != "macos" ]]; then
     else
       errorofbuild
     fi
-fi
+#fi
 
 cd ..
 
@@ -209,10 +209,10 @@ cd ..
 #BuildSrc 'SDL2_mixer-2.0.0' '--prefix=$InstallTo --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --enable-music-mod-modplug --enable-music-mod --disable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest'
 
 #=======================================================================
-if [[ "$OurOS" == "macos" ]]; then
+#if [[ "$OurOS" == "macos" ]]; then
     #run manual installation script for OS-X to avoid sudi usage
-    source ./install_osx.sh
-fi
+#    source ./install_osx.sh
+#fi
 echo Libraries installed into $InstallTo
 
 
