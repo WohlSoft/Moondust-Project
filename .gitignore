@@ -16,8 +16,9 @@
 *.dylib
 !_Libs/_builds/*/*/*.dylib
 _Libs/_builds/linux/*
+_Libs/_builds/macos/*
 _Libs/_builds/android/*
-!_Libs/_builds/macos/*
+#!_Libs/_builds/macos/*
 _Libs/_builds/sdl2_mixer_mod/*
 _Libs/_builds/win32/lib/SDL2_mixer.dll
 _Libs/_builds/win32/bin/SDL2_mixer.dll
