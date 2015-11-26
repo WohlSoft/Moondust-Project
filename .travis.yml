@@ -31,21 +31,21 @@ compiler:
 
 env:
 # Default build. Release.
-- PATH=/Users/$QtStaticBuildUser/Qt/5.4_static/bin:/Users/$QtStaticBuildUser/Qt/5.4_static/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+- PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 before_install:
 # ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.4.1 on OS X 10.9.4
+# Downloading and unpacking of pre-built static Qt 5.5.1 on OS X 10.11.1
 # ------------------------------------------------------------------------------
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
-- sudo mkdir -p /Users/$QtStaticBuildUser/Qt
-- sudo chown -R travis /Users/$QtStaticBuildUser
-- wget https://www.dropbox.com/s/adauisccz4ou92e/qt-5.4.1-static-osx.tar.gz?dl=1 -O /Users/$QtStaticBuildUser/Qt/qt-5.4.1-static-osx.tar.gz
+- sudo mkdir -p /Users/StaticQt/
+- sudo chown -R travis /Users/StaticQt/
+- wget https://www.dropbox.com/s/7j9vb6890acgpi2/qt-5.5.1-static-osx-10.11.1.tar.gz?dl=1 -O /Users/StaticQt/qt-5.5.1-static-osx-10.11.1.tar.gz
 - Bak=~+
-- cd /Users/$QtStaticBuildUser/Qt
-- tar -xf qt-5.4.1-static-osx.tar.gz
+- cd /Users/StaticQt/
+- tar -xf qt-5.5.1-static-osx-10.11.1.tar.gz
 - cd $Bak
 
 # ==============================================================================
