@@ -74,3 +74,7 @@ artifacts:
 #- path: bin-w32\_packed\install-pge-engine-dev-win32.zip #This archive has no built applications (engine disabled to don't excite building timeout)
 #- path: bin-w32\_packed\install-pge-tools-dev-win32.zip #This archive has no built applications (toosl are disabled to don't excite building timeout)
 
+deploy:
+- provider: Environment
+  name: WohlnetFTP
+
