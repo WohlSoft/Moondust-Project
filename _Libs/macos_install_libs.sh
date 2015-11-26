@@ -82,26 +82,42 @@ echo "Installing libs for $TARGET_APP..."
 fetchPathsForApp # Fetch for executable
 relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the space
 
+EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.dylib"
+fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.0.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
+EXECUTABLE_PATH="_Libs/libogg.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbis.0.dylib"
+EXECUTABLE_PATH="_Libs/libvorbis.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbisenc.2.dylib"
+EXECUTABLE_PATH="_Libs/libvorbisenc.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libvorbisfile.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libFLAC.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libFLAC.8.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libFLAC++.6.dylib"
+EXECUTABLE_PATH="_Libs/libFLAC++.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libFLAC++.6.dylib"
+EXECUTABLE_PATH="_Libs/libmad.dylib"
 fetchPathsForLib #fetch for our dylib
-
+EXECUTABLE_PATH="_Libs/libmodplug.dylib"
+fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbis.0.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbisenc.2.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libFLAC++.6.dylib"
+#fetchPathsForLib #fetch for our dylib
 
 cd $bak
 #if [[ $1 != "no-pause" ]]; then read -n 1; fi
 exit 0
+
