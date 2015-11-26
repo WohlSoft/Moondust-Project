@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
             exit(0);
         }
     } else if(!configPath_manager.isEmpty() && configPath.isEmpty()) {
-        configPath = configPath_manager;
+        configPath = cmanager->currentConfigPath;
     }
     delete cmanager;
 
