@@ -26,6 +26,14 @@ realpath() {
 SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname $SCRIPT)
 
+SCRP=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+bak2=$PWD
+
+SCRP_Libs=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+cd $SCRIPTPATH/_sources
+SCRP_SrcD=$(realpath $PWD"/../_Libs/_builds/macos/lib/")
+cd $bak2
+
 curd="$SCRDIR/../"
 CONFIGURATION_BUILD_DIR=$SCRDIR'/../bin'
 
@@ -46,12 +54,12 @@ fi
 EXECUTABLE_PATH="$TARGET_APP.app/Contents/MacOS/$TARGET_APP"
 
 function relocateLibraryInCurrentApp() {
-  install_name_tool -change $1$2 @executable_path/../../../_Libs/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH
+  install_name_tool -change $1$2 "@executable_path/../../../_Libs/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
 }
 
 function relocateLibraryInCurrentLib() {
   #echo $1$2
-  install_name_tool -change $1$2 @loader_path/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH
+  install_name_tool -change $1$2 "@loader_path/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
 }
 
 fetchPathsForApp()
@@ -74,7 +82,8 @@ do
 filename="${f##*/}"
 #echo "Processing $filename file..."
 relocateLibraryInCurrentLib "/lib/" $filename #note the space
-relocateLibraryInCurrentLib $SCRP $filename #note the space
+relocateLibraryInCurrentLib $SCRP_Libs $filename #note the space
+relocateLibraryInCurrentLib $SCRP_SrcD $filename #note the space
 done
 }
 
@@ -100,14 +109,14 @@ EXECUTABLE_PATH="_Libs/libvorbisfile.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libFLAC.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libFLAC.8.dylib"
-fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libFLAC++.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libmad.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libmodplug.dylib"
 fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libFLAC.8.dylib"
+#fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libvorbis.0.dylib"
