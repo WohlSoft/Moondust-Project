@@ -136,6 +136,7 @@ static void free_old_bank(int dr, int b, int how_old)
 
 int32 convert_envelope_rate_attack(uint8 rate, uint8 fastness)
 {
+    (void)fastness;
   int32 r;
 
   r=3-((rate>>6) & 0x3);
@@ -238,6 +239,7 @@ static InstrumentLayer *load_instrument(const char *name, int font_type, int per
 				   int strip_loop, int strip_envelope,
 				   int strip_tail, int bank, int gm_num, int sf_ix)
 {
+    (void)font_type;(void)sf_ix;
   InstrumentLayer *lp, *lastlp, *headlp = 0;
   Instrument *ip;
   FILE *fp;

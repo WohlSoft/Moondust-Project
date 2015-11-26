@@ -96,6 +96,7 @@ id3_length_t id3_util_deunsynchronise(id3_byte_t *data, id3_length_t length)
 id3_byte_t *id3_util_compress(id3_byte_t const *data, id3_length_t length,
 			      id3_length_t *newlength)
 {
+    (void)data;(void)length;(void)newlength;
     return NULL;
     /*
   id3_byte_t *compressed;
@@ -130,6 +131,7 @@ id3_byte_t *id3_util_compress(id3_byte_t const *data, id3_length_t length,
 id3_byte_t *id3_util_decompress(id3_byte_t const *data, id3_length_t length,
 				id3_length_t newlength)
 {
+    (void)data;(void)length;(void)newlength;
     return NULL;
     /*
   id3_byte_t *decompressed;

@@ -26,6 +26,7 @@ Dual_Resampler::Dual_Resampler() :
 	buf_pos(-1),
 	resampler_size(0)
 {
+    (void)resampler_extra;//Dead code: it fixes warning that "resampler_extra" is not used
 }
 
 Dual_Resampler::~Dual_Resampler() { }

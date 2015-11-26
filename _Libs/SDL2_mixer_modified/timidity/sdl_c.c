@@ -53,6 +53,7 @@ ControlMode ctl=
 
 static int ctl_open(int using_stdin, int using_stdout)
 {
+    (void)using_stdin;(void)using_stdout;
   ctl.opened=1;
   return 0;
 }
@@ -64,6 +65,7 @@ static void ctl_close(void)
 
 static int ctl_read(int32 *valp)
 {
+    (void)valp;
   return RC_NONE;
 }
 
@@ -108,26 +110,26 @@ static int cmsg(int type, int verbosity_level, char *fmt, ...)
 
 static void ctl_refresh(void) { }
 
-static void ctl_total_time(int tt) {}
+static void ctl_total_time(int tt) {(void)tt;}
 
-static void ctl_master_volume(int mv) {}
+static void ctl_master_volume(int mv) {(void)mv;}
 
-static void ctl_file_name(char *name) {}
+static void ctl_file_name(char *name) {(void)name;}
 
-static void ctl_current_time(int ct) {}
+static void ctl_current_time(int ct) {(void)ct;}
 
-static void ctl_note(int v) {}
+static void ctl_note(int v) {(void)v;}
 
-static void ctl_program(int ch, int val) {}
+static void ctl_program(int ch, int val) {(void)ch;(void)val;}
 
-static void ctl_volume(int channel, int val) {}
+static void ctl_volume(int channel, int val) {(void)channel;(void)val;}
 
-static void ctl_expression(int channel, int val) {}
+static void ctl_expression(int channel, int val) {(void)channel;(void)val;}
 
-static void ctl_panning(int channel, int val) {}
+static void ctl_panning(int channel, int val) {(void)channel;(void)val;}
 
-static void ctl_sustain(int channel, int val) {}
+static void ctl_sustain(int channel, int val) {(void)channel;(void)val;}
 
-static void ctl_pitch_bend(int channel, int val) {}
+static void ctl_pitch_bend(int channel, int val) {(void)channel;(void)val;}
 
 static void ctl_reset(void) {}

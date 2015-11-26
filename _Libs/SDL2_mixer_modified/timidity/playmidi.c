@@ -463,6 +463,7 @@ static void kill_others(int i)
 
 static void clone_voice(Instrument *ip, int v, MidiEvent *e, int clone_type, int variationbank)
 {
+    (void)ip;
   int w, played_note, chorus=0, reverb=0, milli;
   int chan = voice[v].channel;
 

@@ -56,6 +56,7 @@ static FLAC__StreamDecoderReadStatus flac_read_music_cb(
                                     size_t *bytes,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music*)client_data;
 
     // make sure there is something to be reading
@@ -77,6 +78,7 @@ static FLAC__StreamDecoderSeekStatus flac_seek_music_cb(
                                     FLAC__uint64 absolute_byte_offset,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music*)client_data;
 
     if (SDL_RWseek (data->src, absolute_byte_offset, RW_SEEK_SET) < 0) {
@@ -91,6 +93,7 @@ static FLAC__StreamDecoderTellStatus flac_tell_music_cb(
                                     FLAC__uint64 *absolute_byte_offset,
                                     void *client_data )
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music*)client_data;
 
     Sint64 pos = SDL_RWtell (data->src);
@@ -108,6 +111,7 @@ static FLAC__StreamDecoderLengthStatus flac_length_music_cb (
                                     FLAC__uint64 *stream_length,
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music*)client_data;
 
     Sint64 pos = SDL_RWtell (data->src);
@@ -127,6 +131,7 @@ static FLAC__bool flac_eof_music_cb(
                                 const FLAC__StreamDecoder *decoder,
                                 void *client_data )
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music*)client_data;
 
     Sint64 pos = SDL_RWtell (data->src);
@@ -149,6 +154,7 @@ static FLAC__StreamDecoderWriteStatus flac_write_music_cb(
                                     const FLAC__int32 *const buffer[],
                                     void *client_data)
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music *)client_data;
     size_t i;
 
@@ -250,6 +256,7 @@ static void flac_metadata_music_cb(
                     const FLAC__StreamMetadata *metadata,
                     void *client_data)
 {
+    (void)decoder;
     FLAC_music *data = (FLAC_music *)client_data;
 
     if (metadata->type == FLAC__METADATA_TYPE_STREAMINFO) {
@@ -269,6 +276,7 @@ static void flac_error_music_cb(
                 FLAC__StreamDecoderErrorStatus status,
                 void *client_data)
 {
+    (void)decoder;(void)client_data;
     // print an SDL error based on the error status
     switch (status) {
         case FLAC__STREAM_DECODER_ERROR_STATUS_LOST_SYNC:
