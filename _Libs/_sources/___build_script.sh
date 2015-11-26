@@ -113,8 +113,29 @@ else
     #on Mac OS X build via X-Code
     cd $LatestSDL
         UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
+        if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
+            #Deletion of old builds
+            rm -Rf $UNIVERSAL_OUTPUTFOLDER
+        fi
         mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
+
         xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
+
+        if [ $? -eq 0 ]
+        then
+          echo "[good]"
+        else
+          errorofbuild
+        fi
+
+        #move out built framework from "Release" folder
+        mv -f $InstallTo/frameworks/Release/SDL2.framework $InstallTo/frameworks/
+        rm -Rf $InstallTo/frameworks/Release
+
+        #make RIGHT headers organization in the SDL Framework
+        mkdir -p -- ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
+        mv ${InstallTo}/frameworks/SDL2.framework/Headers/*.h ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
+
     cd ..
 fi
 
