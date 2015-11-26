@@ -69,6 +69,10 @@ SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer
 INSTALLS -= configs helps themes calibrator_cnfs
 }
 
+macx:{
+DEFINES -= USE_LUA_JIT
+}
+
 #CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb
 
 DISTFILES += \

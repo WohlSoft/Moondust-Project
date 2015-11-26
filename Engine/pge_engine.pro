@@ -51,14 +51,15 @@ DEFINES += PGE_ENGINE USE_LUA_JIT PGE_FILES_QT
 
 include ($$PWD/../_common/lib_destdir.pri)
 
+android || macx: {
+ DEFINES -= USE_LUA_JIT
+}
+
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/liajit-2.0
 
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
-android {
- DEFINES -= USE_LUA_JIT
-}
 
 android: {
     LIBS += -lSDL2 -lglut -lGLU
