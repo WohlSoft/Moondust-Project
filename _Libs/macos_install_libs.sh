@@ -31,7 +31,7 @@ bak2=$PWD
 
 SCRP_Libs=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
 cd $SCRIPTPATH/_sources
-SCRP_SrcD=$(realpath $PWD"/../_Libs/_builds/macos/lib/")
+SCRP_SrcD=$(realpath $PWD"/../_builds/macos/lib/")
 cd $bak2
 
 curd="$SCRDIR/../"
