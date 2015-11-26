@@ -114,7 +114,7 @@ else
     cd $LatestSDL
         UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
         mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
-        xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${$InstallTo}/frameworks"
+        xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
     cd ..
 fi
 
