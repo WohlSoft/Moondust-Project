@@ -106,7 +106,17 @@ cp ../libmad-0.15.1b.patched_osx_configure.txt .
 echo "=======SDL2========="
 #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
 $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
-BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
+if [[ "$OurOS" != "macos" ]]; then
+    #on any other OS'es build via autotools
+    BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
+else
+    #on Mac OS X build via X-Code
+    cd $LatestSDL
+        UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
+        mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
+        xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${$InstallTo}/frameworks"
+    cd ..
+fi
 
 #apply fix of SDL2 bug
 cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
