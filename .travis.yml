@@ -1,0 +1,91 @@
+#----------------------------------------------------------------------------
+#
+# Platform Game Engine Project by Wohlstand, a free platform for making games of platform genre
+# Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#----------------------------------------------------------------------------
+# Travis-CI building configuration file for Mac OS X Operating system
+#                       created 2015-11-26
+#----------------------------------------------------------------------------
+
+os:
+- osx
+
+language: cpp
+
+compiler:
+- clang++
+
+env:
+# Default build. Release.
+- PATH=/Users/$QtStaticBuildUser/Qt/5.4_static/bin:/Users/$QtStaticBuildUser/Qt/5.4_static/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+
+before_install:
+# ==============================================================================
+# Downloading and unpacking of pre-built static Qt 5.4.1 on OS X 10.9.4
+# ------------------------------------------------------------------------------
+# Static Qt is dependent to absolute build path, so,
+# we are re-making same tree which was on previous machine where this build of Qt was built
+# ==============================================================================
+- sudo mkdir -p /Users/$QtStaticBuildUser/Qt
+- sudo chown -R travis /Users/$QtStaticBuildUser
+- wget https://www.dropbox.com/s/adauisccz4ou92e/qt-5.4.1-static-osx.tar.gz?dl=1 -O /Users/$QtStaticBuildUser/Qt/qt-5.4.1-static-osx.tar.gz
+- Bak=~+
+- cd /Users/$QtStaticBuildUser/Qt
+- tar -xf qt-5.4.1-static-osx.tar.gz
+- cd $Bak
+
+# ==============================================================================
+# Installing of required for building process tools via homebrew toolset
+# ==============================================================================
+#- brew install qt5 #Don't install dynamic version of Qt 5 because we are have our pre-built static version of Qt
+- brew install lftp
+- brew install coreutils
+- brew install binutils
+- brew install gnu-sed
+# ==============================================================================
+# Making "_paths.sh" config file
+# ==============================================================================
+- echo "QMake=\"qmake\"" > _paths.sh
+- echo "LRelease=\"lrelease\"" >> _paths.sh
+- echo "" >> _paths.sh
+- chmod u+x _paths.sh
+
+# ==============================================================================
+# Building of dependencies of PGE
+# ==============================================================================
+- bash build_deps.sh no-pause
+
+install: true
+
+script:
+# ==============================================================================
+# Building of PGE
+# ==============================================================================
+- bash build.sh no-pause
+
+# ==============================================================================
+# Deploying of built PGE
+# ==============================================================================
+- cd _Misc/dev_scripts/deploy
+- bash deploy_osx.sh nopause
+- cd ../../..
+
+# ==============================================================================
+# Upload created DMG file to the server
+# ==============================================================================
+- lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword wohlnet.ru
+
