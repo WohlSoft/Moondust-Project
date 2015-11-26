@@ -9,30 +9,38 @@ TARGET_APP=$1
 
 bak=~+
 
+function abspath()
+{
+case "${1}" in
+[./]*)
+echo "$(cd ${1%/*}; pwd)/${1##*/}"
+;;
+*)
+echo "${PWD}/${1}"
+;;
+esac
+}
+
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-SOURCE="$(readlink "$SOURCE")"
+SOURCE="$(abspath "$SOURCE")"
 [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
 
-realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
-SCRIPT=$(realpath "$0")
+SCRIPT=$(abspath "$0")
 SCRIPTPATH=$(dirname $SCRIPT)
 
-SCRP=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+SCRP=$(abspath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
 bak2=$PWD
 
-SCRP_Libs=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
-cd $SCRIPTPATH/_sources
-SCRP_SrcD=$(realpath $PWD"/../_builds/macos/lib/")
-cd $bak2
+SCRP_Libs=$(abspath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+#cd $SCRIPTPATH/_sources
+#SCRP_SrcD=$(abspath $PWD"/../_builds/macos/lib/")
+#cd $bak2
 
 curd="$SCRDIR/../"
 CONFIGURATION_BUILD_DIR=$SCRDIR'/../bin'
@@ -76,14 +84,16 @@ done
 fetchPathsForLib()
 {
 FILES=$SCRIPTPATH"/../bin/_Libs/*.dylib"
-SCRP=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+SCRP=$(abspath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
 for f in $FILES
 do
 filename="${f##*/}"
 #echo "Processing $filename file..."
 relocateLibraryInCurrentLib "/lib/" $filename #note the space
 relocateLibraryInCurrentLib $SCRP_Libs $filename #note the space
-relocateLibraryInCurrentLib $SCRP_SrcD $filename #note the space
+#relocateLibraryInCurrentLib $SCRP_SrcD $filename #note the space
+#echo $SCRP_Libs$filename
+#echo $SCRP_SrcD$filename
 done
 }
 

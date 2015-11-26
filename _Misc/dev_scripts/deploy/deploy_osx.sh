@@ -1,10 +1,23 @@
 #!/bin/bash
 InitDir=~+
+
+function osxabspath()
+{
+  case "${1}" in
+  [./]*)
+   echo "$(cd ${1%/*}; pwd)/${1##*/}"
+   ;;
+  *)
+   echo "${PWD}/${1}"
+   ;;
+  esac
+}
+
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   CurDir="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
+  SOURCE="$(osxabspath "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 CurDir="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -72,7 +85,7 @@ fi
 if [ -f "$DeployDir/$PgePrjSD/Data directory" ]; then
     rm "$DeployDir/$PgePrjSD/Data directory"
 fi
-ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
+#ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
