@@ -75,7 +75,6 @@ BuildSrc()
       errorofbuild
     fi
 
-<<<<<<< Updated upstream
     #if [[ "$OurOS" != "macos" ]]; then
         make install
         if [ $? -eq 0 ]
@@ -86,18 +85,6 @@ BuildSrc()
         fi
     #fi
     cd ..
-=======
-if [[ "$OurOS" != "macos" ]]; then
-  make install
-  if [ $? -eq 0 ]
-  then
-    echo "[good]"
-  else
-    errorofbuild
-  fi
-fi
-cd ..
->>>>>>> Stashed changes
 }
 LatestSDL='SDL-dbcbdc2940ef'
 UnArch $LatestSDL
@@ -205,7 +192,6 @@ else
   errorofbuild
 fi
 
-<<<<<<< Updated upstream
     make install PREFIX=$InstallTo BUILDMODE=static
     if [ $? -eq 0 ]
     then
@@ -217,17 +203,6 @@ fi
         cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
         cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
     fi
-=======
-if [[ "$OurOS" != "macos" ]]; then
-  make install PREFIX=$InstallTo BUILDMODE=static
-  if [ $? -eq 0 ]
-  then
-    echo "[good]"
-  else
-    errorofbuild
-  fi
-fi
->>>>>>> Stashed changes
 cd ..
 
 ###########SDL2_mixer###########
@@ -240,5 +215,6 @@ cd ..
 #    source ./install_osx.sh
 #fi
 echo Libraries installed into $InstallTo
+
 
 
