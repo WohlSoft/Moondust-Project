@@ -26,16 +26,8 @@ win32: {
 deplibs.files += $$PWD/_builds/win32/bin/*.dll
 deplibs.files += $$PWD/_builds/win32/lib/*.dll
 }
-macx: {
-deplibs.files += $$PWD/_builds/macos/lib/*.dylib
-deplibs.files += $$PWD/_builds/macos/frameworks/*
-}
 
 !macx: {
 deplibs.path = $$DESTDIR
-} else {
-deplibs.path = $$PWD/../bin/_Libs
-}
-
 INSTALLS += deplibs
-
+}
