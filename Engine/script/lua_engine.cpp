@@ -17,6 +17,21 @@
 #include <sstream>
 #include <QFileInfo>
 
+#ifdef ANDROID
+#include <string>
+#include <sstream>
+template <typename T>
+std::string to_string(T value)
+{
+    std::ostringstream os ;
+    os << value ;
+    return os.str() ;
+}
+#define NUM2STR(x) to_string(x)
+#else
+#define NUM2STR(x) std::to_string(x)
+#endif
+
 #ifdef USE_LUA_JIT
 extern "C" {
 #include <luajit-2.0/lualib.h>
@@ -380,7 +395,7 @@ int pcall_handler(lua_State *L)
             }else{
                 nextEntry += "[unknown name] ";
             }
-            nextEntry += std::string("at line ") + std::to_string(d.currentline) + std::string("\n");
+            nextEntry += std::string("at line ") + NUM2STR(d.currentline) + std::string("\n");
 
             msg += nextEntry;
         }

@@ -40,6 +40,7 @@ public:
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize=0);
+    static QImage convertToGLFormat(const QImage &img);//Taken from QGLWidget
 };
 
 #endif // GRAPHICS_FUNCS_H

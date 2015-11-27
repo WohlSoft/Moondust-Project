@@ -22,8 +22,6 @@
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <QtOpenGL/QGLWidget>
-
 #include <gui/pge_msgbox.h>
 
 #undef main
@@ -33,7 +31,16 @@
 #ifdef __APPLE__
     #include <OpenGL/glu.h>
 #else
+    #ifndef ANDROID
     #include <GL/glu.h>
+    #else
+    void gluOrtho2D(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top)
+    {
+        glOrtho(left, right, bottom, top, -1, 1);
+    }
+    //#include <GLES2/gl2.h>
+    //#include <GLES2/gl2ext.h>
+    #endif
 #endif
 #undef main
 
@@ -43,7 +50,6 @@
 #include <QImage>
 #include <QDateTime>
 #include <QMessageBox>
-#include <QGLWidget>
 #include <QtDebug>
 
 bool GlRenderer::_isReady=false;
@@ -104,9 +110,14 @@ bool GlRenderer::init()
     GLenum error = glGetError();
     if( error != GL_NO_ERROR )
     {
+        #ifdef ANDROID
+            #define GLU_ErrorFunc "<unknown error>"
+        #else
+            #define GLU_ErrorFunc (char*)gluErrorString( error )
+        #endif
         QMessageBox::critical(NULL, "OpenGL Error",
             QString("Error initializing OpenGL!\n%1")
-            .arg( (char*)gluErrorString( error ) ), QMessageBox::Ok);
+            .arg( GLU_ErrorFunc ), QMessageBox::Ok);
        //printf( "Error initializing OpenGL! %s\n", gluErrorString( error ) );
        return false;
     }
@@ -180,7 +191,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     //qDebug() << path << sourceImage.size();
 
-    sourceImage = QGLWidget::convertToGLFormat(sourceImage).mirrored(false, true);
+    sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
     target.format = GL_RGBA;
@@ -484,13 +495,42 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
     float bottom = point.y();
 
     glEnable(GL_TEXTURE_2D);
+
+    glBindTexture( GL_TEXTURE_2D, texture->texture );
+
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
 
+    //glBlendEquationANY(GL_FUNC_ADD);
+    //glBlendEquation(GL_FUNC_ADD);
+    //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
-    glBindTexture( GL_TEXTURE_2D, texture->texture );
+    /*GLfloat Vertices[] = {
+        left, top, 0,
+        right, top, 0,
+        right, bottom, 0,
+        left, bottom, 0
+    };
+    GLfloat TexCoord[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
+    };
+    GLubyte indices[] = {
+        0, 1, 2, // (bottom left - top left - top right)
+        0, 2, 3  // (bottom left - top right - bottom right)
+    };
+
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    //GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    //GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+*/
 
     glBegin( GL_TRIANGLES );
         glTexCoord2f( 0, 0 );
@@ -506,8 +546,11 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
         glVertex2f( left,  bottom);
         glTexCoord2f( 1, 1 );
         glVertex2f(  right, bottom);
-        glEnd();
+    glEnd();
+
+    glBindTexture( GL_TEXTURE_2D, 0 );
     glDisable(GL_TEXTURE_2D);
+
 }
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
@@ -545,6 +588,9 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
         glTexCoord2f( ani_right, ani_bottom );
         glVertex2f(  right, bottom);
     glEnd();
+
+    //glBindTexture( GL_TEXTURE_2D, 0 );
+
     glDisable(GL_TEXTURE_2D);
 }
 

@@ -246,9 +246,6 @@ int main(int argc, char *argv[])
     SDL_Event event; //  Events of SDL
     while ( SDL_PollEvent(&event) ){}
 
-    //Init OpenGL (to work with textures, OpenGL should be load)
-    if(!GlRenderer::init()) exit(1);
-
     PGE_Window::setFullScreen(AppSettings.fullScreen);
     GlRenderer::resetViewport();
 

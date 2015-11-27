@@ -21,8 +21,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui opengl network
-#QT += widgets
+QT += core gui widgets network
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 !macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
@@ -62,7 +61,7 @@ LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
 
 android: {
-    LIBS += -lSDL2 -lglut -lGLU
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lGLESv2 -lGLESv1_CM -ldl -landroid
 }
 win32: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32

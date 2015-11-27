@@ -30,7 +30,6 @@
 #include <QPainter>
 #include <QFontMetrics>
 #include <QFontDatabase>
-#include <QGLWidget>
 #include <QFileInfo>
 #include <QDir>
 
@@ -731,7 +730,7 @@ GLuint FontManager::getChar1(QChar _x)
             text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
         }
 
-        text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+        text_image = GraphicsHelps::convertToGLFormat(text_image);//.mirrored(false, true);
 
         GLuint texture;
 
@@ -792,7 +791,7 @@ GLuint FontManager::getChar2(QChar _x)
             text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
         }
 
-        text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+        text_image = GraphicsHelps::convertToGLFormat(text_image);//.mirrored(false, true);
 
         GLuint texture;
 
@@ -873,7 +872,7 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
         x.drawText(text_image.rect(), text);
     x.end();
 
-    text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+    text_image = GraphicsHelps::convertToGLFormat(text_image);//.mirrored(false, true);
 
     glGenTextures(1, texture);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -926,7 +925,7 @@ void FontManager::SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int
         text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
     }
 
-    text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+    text_image = GraphicsHelps::convertToGLFormat(text_image);//.mirrored(false, true);
 
     glGenTextures(1, texture);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
