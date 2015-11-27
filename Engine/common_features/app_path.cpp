@@ -89,6 +89,12 @@ void AppPathManager::initAppPath()
                 if(!appDir.mkpath(path+UserDirName))
                     goto defaultSettingsPath;
 
+            #ifdef __APPLE__
+                if(!QDir(ApplicationPath+"/Data directory").exists()) {
+                system(QString("ln -s \"%1\" \"%2/Data directory\"").arg(path+UserDirName).arg(ApplicationPath).toLocal8Bit().data());
+                }
+            #endif
+
             _settingsPath = appDir.absolutePath();
         }
         else
