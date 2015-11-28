@@ -29,7 +29,7 @@ UnArch()
 # $1 - archive name
 if [ ! -d $1 ]
 	then
-	tar -xvf ../$1.tar.*z
+	tar -xf ../$1.tar.*z
 	fi
 }
 
@@ -110,7 +110,7 @@ BuildSrcOnly()
 	fi
 	cd ..
 }
-LatestSDL='SDL-2.0.4-9723'
+LatestSDL='SDL-dbcbdc2940ef'
 UnArch $LatestSDL
 #UnArch 'SDL2_mixer-2.0.0'
 UnArch 'libogg-1.3.2'
@@ -121,7 +121,7 @@ UnArch 'flac-1.3.1'
 UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
-UnArch 'luajit-2.0-fromgit'
+UnArch 'luajit-2.0'
 cp ../libmad-0.15.1b.patched_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
@@ -346,7 +346,7 @@ buildMAD
 #buildLuaJit
 
 #Copy header of SDL Mixer into target path
-cp ../../SDL2_mixer_modified/SDL_mixer.h $InstallTo/include/SDL2/
+cp ../../SDL2_mixer_modified/SDL_mixer_ext.h $InstallTo/include/SDL2/
 
 ###########MIKMOD###########
 #echo "=============MIKMOD=========="

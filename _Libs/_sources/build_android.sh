@@ -5,7 +5,7 @@ InstallTo=$(readlink -f $InstallTo)
 IsAndroid="android"
 ANDR_PLTF=android-18
 ANDR_HOST=arm-linux-androideabi-4.9
-AN_ROOT=/home/vitaly/android-ndk-r10d
+AN_ROOT=/home/vitaly/android-ndk-r10e
 
 PREBUILT=$AN_ROOT/toolchains/$ANDR_HOST
 PLATFORM=$AN_ROOT/platforms/$ANDR_PLTF/arch-arm
@@ -31,9 +31,9 @@ export LDFLAGS=$CORE_LDFLAGS" "$CMN_LDFLAGS
 CFLAGS=$CFLAGS" -I/"$InstallTo"/include"
 CPPFLAGS=$CPPFLAGS" -I/"$InstallTo"/include"
 
-PATH="/usr/src/android-ndk-r9d:$PATH"          # for 'ndk-build'
+#PATH="/usr/src/android-ndk-r9e:$PATH"          # for 'ndk-build'
 PATH="/home/vitaly/_git_repos/android-sdk-linux/tools:$PATH"  # for 'android'
-PATH="/home/vitaly/_git_repos/android-ndk-r10d:$PATH"
+PATH="/home/vitaly/android-ndk-r10e:$PATH"
 
 echo $InstallTo
 source ./___build_script_android.sh
@@ -41,3 +41,4 @@ source ./___build_script_android.sh
 printf "\n\n=========BUILT!!===========\n\n"
 read -n 1
 exit 0
+
