@@ -36,6 +36,16 @@ struct MUSIC_MIDIADL
     char *mus_title;
 };
 
+/*Setup editing functions (changes applying on file reopening)*/
+extern int  ADLMIDI_getBankID();
+extern void ADLMIDI_setBankID(int bnk);
+extern int  ADLMIDI_getTremolo();
+extern void ADLMIDI_setTremolo(int tr);
+extern int  ADLMIDI_getVibrato();
+extern void ADLMIDI_setVibrato(int vib);
+extern int  ADLMIDI_getScaleMod();
+extern void ADLMIDI_setScaleMod(int sc);
+
 extern int ADLMIDI_init(SDL_AudioSpec *mixer);
 
 /* Uninitialize the music players */

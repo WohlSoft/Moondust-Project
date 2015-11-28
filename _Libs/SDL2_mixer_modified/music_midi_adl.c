@@ -19,8 +19,51 @@ static int music_swap16;
 
 struct ADL_MIDIPlayer* adl_midiplayer=NULL;
 
+static int adlmidi_tremolo = 1;
+static int adlmidi_vibrato = 1;
+static int adlmidi_scalemod = 0;
+
+static int adlmidi_bank = 58;
+
 int adlmidi_is_playing=-1;
 int adlmidi_t_sample_rate=44100;
+
+
+int ADLMIDI_getBankID()
+{
+    return adlmidi_bank;
+}
+void ADLMIDI_setBankID(int bnk)
+{
+    adlmidi_bank = bnk;
+}
+
+int ADLMIDI_getTremolo()
+{
+    return adlmidi_tremolo;
+}
+void ADLMIDI_setTremolo(int tr)
+{
+    adlmidi_tremolo = tr;
+}
+
+int ADLMIDI_getVibrato()
+{
+    return adlmidi_vibrato;
+}
+void ADLMIDI_setVibrato(int vib)
+{
+    adlmidi_vibrato = vib;
+}
+
+int ADLMIDI_getScaleMod()
+{
+    return adlmidi_scalemod;
+}
+void ADLMIDI_setScaleMod(int sc)
+{
+    adlmidi_scalemod = sc;
+}
 
 /* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
@@ -130,11 +173,11 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
 
         adl_midiplayer= adl_init(adlmidi_t_sample_rate);
 
-        adl_setHVibrato(adl_midiplayer, 1);
-        adl_setHTremolo(adl_midiplayer, 1);
-        adl_setBank(adl_midiplayer, 58);
+        adl_setHVibrato(adl_midiplayer, adlmidi_vibrato);
+        adl_setHTremolo(adl_midiplayer, adlmidi_tremolo);
+        adl_setBank(adl_midiplayer, adlmidi_bank);
         adl_setNumCards(adl_midiplayer, 4);
-        adl_setScaleModulators(adl_midiplayer, 0);
+        adl_setScaleModulators(adl_midiplayer, adlmidi_scalemod);
 
         int err = adl_openData( adl_midiplayer, bytes, spcsize);
         free(bytes);

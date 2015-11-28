@@ -93,6 +93,9 @@ static char *music_filename = NULL;
 static Mix_Music * volatile music_playing = NULL;
 static int music_volume = MIX_MAX_VOLUME;
 
+static int mididevice_next    = MIDI_ADLMIDI;
+static int mididevice_current = MIDI_ADLMIDI;
+
 struct _Mix_Music {
     Mix_MusicType type;
     union {
@@ -225,7 +228,7 @@ static int music_halt_or_loop (void)
     {
 #ifdef USE_NATIVE_MIDI
         /* Native MIDI handles looping internally */
-        if (music_playing->type == MUS_MID && native_midi_ok) {
+        if (mididevice_current == MIDI_Native && music_playing->type == MUS_MID && native_midi_ok) {
             music_loops = 0;
         }
 #endif
@@ -319,31 +322,42 @@ void music_mixer(void *udata, Uint8 *stream, int len)
 #endif
 #ifdef MID_MUSIC
             case MUS_MID:
+            switch(mididevice_current)
+            {
 #ifdef USE_NATIVE_MIDI
+            case MIDI_Native:
                 if ( native_midi_ok ) {
                     /* Native midi is handled asynchronously */
                     goto skip;
                 }
+                break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
+            case MIDI_Fluidsynth:
                 if ( fluidsynth_ok ) {
                     fluidsynth_playsome(music_playing->data.fluidsynthmidi, stream, len);
                     goto skip;
                 }
+                break;
 #endif
 #ifdef USE_ADL_MIDI
+            case MIDI_ADLMIDI:
                 if (adl_midi_ok) {
                     left = ADLMIDI_playAudio(music_playing->data.midi_adl, stream, len);
                     goto skip;
                 }
+                break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
+            case MIDI_Timidity:
                 if ( timidity_ok ) {
                     int samples = len / samplesize;
                     Timidity_PlaySome(stream, samples);
                     goto skip;
                 }
+                break;
 #endif
+            }
                 break;
 #endif
 #ifdef OGG_MUSIC
@@ -431,21 +445,22 @@ int open_music(SDL_AudioSpec *mixer)
     }
 #endif
 #ifdef USE_NATIVE_MIDI
-#ifdef USE_FLUIDSYNTH_MIDI
-    native_midi_ok = !fluidsynth_ok;
-    if ( native_midi_ok )
-#endif
-#ifdef USE_ADL_MIDI
-        native_midi_ok = !adl_midi_ok;
-    if ( native_midi_ok )
-#endif
-#ifdef USE_TIMIDITY_MIDI
-        native_midi_ok = !timidity_ok;
-    if ( !native_midi_ok ) {
-        native_midi_ok = (getenv("SDL_NATIVE_MUSIC") != NULL);
-    }
-    if ( native_midi_ok )
-#endif
+//Don't block Native MIDI usage if other MIDI devices are fine to allows dynamic toggling of midi-devices
+    //#ifdef USE_FLUIDSYNTH_MIDI
+    //    native_midi_ok = !fluidsynth_ok;
+    //    if ( native_midi_ok )
+    //#endif
+    //#ifdef USE_ADL_MIDI
+    //        native_midi_ok = !adl_midi_ok;
+    //    if ( native_midi_ok )
+    //#endif
+    //#ifdef USE_TIMIDITY_MIDI
+    //        native_midi_ok = !timidity_ok;
+    //    if ( !native_midi_ok ) {
+    //        native_midi_ok = (getenv("SDL_NATIVE_MUSIC") != NULL);
+    //    }
+    //    if ( native_midi_ok )
+    //#endif
         native_midi_ok = native_midi_detect();
     if ( native_midi_ok )
         add_music_decoder("NATIVEMIDI");
@@ -612,6 +627,9 @@ Mix_Music *Mix_LoadMUS(const char *file)
         music_filename = strrchr(music_file, '/');
 
     char *ext = strrchr(music_file, '.');
+
+    //Install next MIDI device
+    mididevice_current = mididevice_next;
 
 #ifdef CMD_MUSIC
     if ( music_cmd ) {
@@ -896,51 +914,62 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 #ifdef MID_MUSIC
     case MUS_MID:
         music->type = MUS_MID;
+        switch(mididevice_current)
+        {
 #ifdef USE_NATIVE_MIDI
-        if (native_midi_ok) {
-            SDL_RWseek(src, start, RW_SEEK_SET);
-            music->data.nativemidi = native_midi_loadsong_RW(src, freesrc);
-            if (music->data.nativemidi) {
-                music->error = 0;
-            } else {
-                Mix_SetError("%s", native_midi_error());
+        case MIDI_Native:
+            if (native_midi_ok) {
+                SDL_RWseek(src, start, RW_SEEK_SET);
+                music->data.nativemidi = native_midi_loadsong_RW(src, freesrc);
+                if (music->data.nativemidi) {
+                    music->error = 0;
+                } else {
+                    Mix_SetError("%s", native_midi_error());
+                }
+                break;
             }
-            break;
-        }
+        break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
-        if (fluidsynth_ok) {
-            SDL_RWseek(src, start, RW_SEEK_SET);
-            music->data.fluidsynthmidi = fluidsynth_loadsong_RW(src, freesrc);
-            if (music->data.fluidsynthmidi) {
-                music->error = 0;
+        case MIDI_Fluidsynth:
+            if (fluidsynth_ok) {
+                SDL_RWseek(src, start, RW_SEEK_SET);
+                music->data.fluidsynthmidi = fluidsynth_loadsong_RW(src, freesrc);
+                if (music->data.fluidsynthmidi) {
+                    music->error = 0;
+                }
+                break;
             }
-            break;
-        }
+        break;
 #endif
 #ifdef USE_ADL_MIDI
-        if (adl_midi_ok) {
-            SDL_RWseek(src, start, RW_SEEK_SET);
-            music->data.midi_adl = ADLMIDI_new_RW(src, freesrc);
-            if (music->data.midi_adl) {
-                music->error = 0;
+        case MIDI_ADLMIDI:
+            if (adl_midi_ok) {
+                SDL_RWseek(src, start, RW_SEEK_SET);
+                music->data.midi_adl = ADLMIDI_new_RW(src, freesrc);
+                if (music->data.midi_adl) {
+                    music->error = 0;
+                }
+                break;
             }
-            break;
-        }
+        break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
-        if (timidity_ok) {
-            SDL_RWseek(src, start, RW_SEEK_SET);
-            music->data.midi = Timidity_LoadSong_RW(src, freesrc);
-            if (music->data.midi) {
-                music->error = 0;
+        case MIDI_Timidity:
+            if (timidity_ok) {
+                SDL_RWseek(src, start, RW_SEEK_SET);
+                music->data.midi = Timidity_LoadSong_RW(src, freesrc);
+                if (music->data.midi) {
+                    music->error = 0;
+                } else {
+                    Mix_SetError("%s", Timidity_Error());
+                }
             } else {
                 Mix_SetError("%s", Timidity_Error());
             }
-        } else {
-            Mix_SetError("%s", Timidity_Error());
-        }
+        break;
 #endif
+        }
         break;
 #endif
 #ifdef GME_MUSIC
@@ -1044,30 +1073,41 @@ void Mix_FreeMusic(Mix_Music *music)
 #endif
 #ifdef MID_MUSIC
             case MUS_MID:
+            switch(mididevice_current)
+            {
 #ifdef USE_NATIVE_MIDI
+            case MIDI_Native:
                 if ( native_midi_ok ) {
                     native_midi_freesong(music->data.nativemidi);
                     goto skip;
                 }
+            break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
+            case MIDI_Fluidsynth:
                 if ( fluidsynth_ok ) {
                     fluidsynth_freesong(music->data.fluidsynthmidi);
                     goto skip;
                 }
+            break;
 #endif
 #ifdef USE_ADL_MIDI
+            case MIDI_ADLMIDI:
                 if (adl_midi_ok) {
                     ADLMIDI_delete(music->data.midi_adl);
                     goto skip;
                 }
+            break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
+            case MIDI_Timidity:
                 if ( timidity_ok ) {
                     Timidity_FreeSong(music->data.midi);
                     goto skip;
                 }
+            break;
 #endif
+            }
                 break;
 #endif
 #ifdef OGG_MUSIC
@@ -1339,31 +1379,42 @@ static int music_internal_play(Mix_Music *music, double position)
 #endif
 #ifdef MID_MUSIC
         case MUS_MID:
+        switch(mididevice_current)
+        {
 #ifdef USE_NATIVE_MIDI
-        if ( native_midi_ok ) {
-            native_midi_start(music->data.nativemidi, music_loops);
-            goto skip;
-        }
+        case MIDI_Native:
+            if ( native_midi_ok ) {
+                native_midi_start(music->data.nativemidi, music_loops);
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
-        if (fluidsynth_ok ) {
-            fluidsynth_start(music->data.fluidsynthmidi);
-            goto skip;
-        }
+        case MIDI_Fluidsynth:
+            if (fluidsynth_ok ) {
+                fluidsynth_start(music->data.fluidsynthmidi);
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_ADL_MIDI
-        if (adl_midi_ok) {
-            ADLMIDI_play(music->data.midi_adl);
-            music_internal_initialize_volume();
-            goto skip;
-        }
+        case MIDI_ADLMIDI:
+            if (adl_midi_ok) {
+                ADLMIDI_play(music->data.midi_adl);
+                music_internal_initialize_volume();
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
-        if ( timidity_ok ) {
-            Timidity_Start(music->data.midi);
-            goto skip;
-        }
+        case MIDI_Timidity:
+            if ( timidity_ok ) {
+                Timidity_Start(music->data.midi);
+                goto skip;
+            }
+        break;
 #endif
+        }
         break;
 #endif
 #ifdef OGG_MUSIC
@@ -1573,30 +1624,41 @@ static void music_internal_volume(int volume)
 #endif
 #ifdef MID_MUSIC
         case MUS_MID:
+        switch(mididevice_current)
+        {
 #ifdef USE_NATIVE_MIDI
-        if ( native_midi_ok ) {
-            native_midi_setvolume(volume);
-            return;
-        }
+        case MIDI_Native:
+            if ( native_midi_ok ) {
+                native_midi_setvolume(volume);
+                return;
+            }
+        break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
-        if ( fluidsynth_ok ) {
-            fluidsynth_setvolume(music_playing->data.fluidsynthmidi, volume);
-            return;
-        }
+        case MIDI_Fluidsynth:
+            if ( fluidsynth_ok ) {
+                fluidsynth_setvolume(music_playing->data.fluidsynthmidi, volume);
+                return;
+            }
+        break;
 #endif
 #ifdef USE_ADL_MIDI
-        if (adl_midi_ok) {
-            ADLMIDI_setvolume(music_playing->data.midi_adl, volume);
-            return;
-        }
+        case MIDI_ADLMIDI:
+            if (adl_midi_ok) {
+                ADLMIDI_setvolume(music_playing->data.midi_adl, volume);
+                return;
+            }
+        break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
-        if ( timidity_ok ) {
-            Timidity_SetVolume(volume);
-            return;
-        }
+        case MIDI_Timidity:
+            if ( timidity_ok ) {
+                Timidity_SetVolume(volume);
+                return;
+            }
+        break;
 #endif
+        }
         break;
 #endif
 #ifdef OGG_MUSIC
@@ -1675,30 +1737,41 @@ static void music_internal_halt(void)
 #endif
 #ifdef MID_MUSIC
         case MUS_MID:
+        switch(mididevice_current)
+        {
 #ifdef USE_NATIVE_MIDI
-        if ( native_midi_ok ) {
-            native_midi_stop();
-            goto skip;
-        }
+        case MIDI_Native:
+            if ( native_midi_ok ) {
+                native_midi_stop();
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
-        if ( fluidsynth_ok ) {
-            fluidsynth_stop(music_playing->data.fluidsynthmidi);
-            goto skip;
-        }
+        case MIDI_Fluidsynth:
+            if ( fluidsynth_ok ) {
+                fluidsynth_stop(music_playing->data.fluidsynthmidi);
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_ADL_MIDI
-        if (adl_midi_ok) {
-            ADLMIDI_stop(music_playing->data.midi_adl);
-            goto skip;
-        }
+        case MIDI_ADLMIDI:
+            if (adl_midi_ok) {
+                ADLMIDI_stop(music_playing->data.midi_adl);
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
-        if ( timidity_ok ) {
-            Timidity_Stop();
-            goto skip;
-        }
+        case MIDI_Timidity:
+            if ( timidity_ok ) {
+                Timidity_Stop();
+                goto skip;
+            }
+        break;
 #endif
+        }
         break;
 #endif
 #ifdef OGG_MUSIC
@@ -1866,35 +1939,46 @@ static int music_internal_playing()
 #endif
 #ifdef MID_MUSIC
         case MUS_MID:
+        switch(mididevice_current)
+        {
 #ifdef USE_NATIVE_MIDI
-        if ( native_midi_ok ) {
-            if ( ! native_midi_active() )
-                playing = 0;
-            goto skip;
-        }
+        case MIDI_Native:
+            if ( native_midi_ok ) {
+                if ( ! native_midi_active() )
+                    playing = 0;
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
-        if ( fluidsynth_ok ) {
-            if ( ! fluidsynth_active(music_playing->data.fluidsynthmidi) )
-                playing = 0;
-            goto skip;
-        }
+        case MIDI_Fluidsynth:
+            if ( fluidsynth_ok ) {
+                if ( ! fluidsynth_active(music_playing->data.fluidsynthmidi) )
+                    playing = 0;
+                goto skip;
+            }
+        break;
 #endif
 #ifdef USE_ADL_MIDI
-        if (adl_midi_ok) {
-            if ( ! ADLMIDI_playing(music_playing->data.midi_adl) ) {
-                playing = 0;
+        case MIDI_ADLMIDI:
+            if (adl_midi_ok) {
+                if ( ! ADLMIDI_playing(music_playing->data.midi_adl) ) {
+                    playing = 0;
+                }
+                goto skip;
             }
-            goto skip;
-        }
+        break;
 #endif
 #ifdef USE_TIMIDITY_MIDI
-        if ( timidity_ok ) {
-            if ( ! Timidity_Active() )
-                playing = 0;
-            goto skip;
-        }
+        case MIDI_Timidity:
+            if ( timidity_ok ) {
+                if ( ! Timidity_Active() )
+                    playing = 0;
+                goto skip;
+            }
+        break;
 #endif
+        }
         break;
 #endif
 #ifdef OGG_MUSIC
@@ -2088,4 +2172,103 @@ void MIX_Timidity_addToPathList(const char *path)
     #else
     (void*)path;
     #endif
+}
+
+
+/* ADLMIDI Setup functions */
+int  MIX_ADLMIDI_getBankID()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getBankID();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void MIX_ADLMIDI_setBankID(int bnk)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setBankID(bnk);
+    #endif
+}
+
+int  MIX_ADLMIDI_getTremolo()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getTremolo();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void MIX_ADLMIDI_setTremolo(int tr)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setTremolo(tr);
+    #endif
+}
+
+int  MIX_ADLMIDI_getVibrato()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getVibrato();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void MIX_ADLMIDI_setVibrato(int vib)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setVibrato(vib);
+    #endif
+}
+
+int  MIX_ADLMIDI_getScaleMod()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getScaleMod();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void MIX_ADLMIDI_setScaleMod(int sc)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setScaleMod(sc);
+    #endif
+}
+
+
+int MIX_SetMidiDevice(int device)
+{
+    switch(device)
+    {
+        #ifdef MID_MUSIC
+        #ifdef USE_ADL_MIDI
+        case MIDI_ADLMIDI:
+        #endif
+        #ifdef USE_TIMIDITY_MIDI
+        case MIDI_Timidity:
+        #endif
+        #ifdef USE_NATIVE_MIDI
+        case MIDI_Native:
+        #endif
+        #ifdef USE_FLUIDSYNTH_MIDI
+        case MIDI_Fluidsynth:
+        #endif
+            mididevice_next=device;
+            return 0;
+            break;
+        #endif
+        default:
+            Mix_SetError("Unknown MIDI Device");
+            return -1;
+            break;
+    }
 }

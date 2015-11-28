@@ -40,9 +40,21 @@ linux-g++||unix:!macx:!android:{
     CONFIG += unversioned_libname
 }
 android:{
-    LIBS += -L$$PWD/../../_Libs/_builds/android/lib -lSDL2_mixer_ext
+    LIBS += -L$$PWD/../../_Libs/_builds/android/lib
     INCLUDEPATH += $$PWD/../../_Libs/_builds/android/include
+
+    ANDROID_EXTRA_LIBS += $$PWD/../../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libvorbisfile.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libvorbis.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libvorbisenc.so \
+                          #$$PWD/../../_Libs/_builds/android/lib/libvorbisidec.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libogg.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libmad.so \
+                          $$PWD/../../_Libs/_builds/android/lib/libmodplug.so
+
 }
+
 macx:{
     LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
     INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
@@ -56,12 +68,25 @@ macx:{
 SOURCES += main.cpp\
         mainwindow.cpp \
     SingleApplication/localserver.cpp \
-    SingleApplication/singleapplication.cpp
+    SingleApplication/singleapplication.cpp \
+    main_sdl_android.c
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
+    android/src/SDLActivity.java
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 

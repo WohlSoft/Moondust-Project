@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>364</width>
-    <height>150</height>
+    <height>314</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -56,6 +56,13 @@
       </property>
      </widget>
     </item>
+    <item row="6" column="3">
+     <widget class="QSpinBox" name="trackID">
+      <property name="maximum">
+       <number>9999999</number>
+      </property>
+     </widget>
+    </item>
     <item row="4" column="0" colspan="4">
      <widget class="QLabel" name="label">
       <property name="text">
@@ -73,18 +80,93 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="3">
-     <widget class="QSpinBox" name="trackID">
-      <property name="maximum">
-       <number>9999999</number>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="0" colspan="4">
      <widget class="QLabel" name="musCopyright">
       <property name="text">
        <string/>
       </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="4">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="vibrato">
+         <property name="text">
+          <string>Vibrato</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="tremolo">
+         <property name="text">
+          <string>Tremolo</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="mididevice">
+         <item>
+          <property name="text">
+           <string>ADL Midi</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Timidity</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Native midi</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="fmBank">
+         <property name="maximum">
+          <number>64</number>
+         </property>
+         <property name="value">
+          <number>58</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>MIDI Device:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>ADL Midi bank ID:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="modulation">
+         <property name="text">
+          <string>Scalable modulation</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

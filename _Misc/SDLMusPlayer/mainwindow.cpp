@@ -14,7 +14,7 @@
 namespace PGE_MusicPlayer
 {
 
-void error(QString msg)
+static void error(QString msg)
 {
     QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
 }
@@ -169,4 +169,35 @@ void MainWindow::on_play_clicked()
     ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
     ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
     ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
+}
+
+void MainWindow::on_mididevice_currentIndexChanged(int index)
+{
+    switch(index)
+    {
+        case 0: MIX_SetMidiDevice(MIDI_ADLMIDI); break;
+        case 1: MIX_SetMidiDevice(MIDI_Timidity); break;
+        case 2: MIX_SetMidiDevice(MIDI_Native); break;
+        default: MIX_SetMidiDevice(MIDI_ADLMIDI); break;
+    }
+}
+
+void MainWindow::on_fmBank_valueChanged(int arg1)
+{
+    MIX_ADLMIDI_setBankID(arg1);
+}
+
+void MainWindow::on_tremolo_clicked(bool checked)
+{
+    MIX_ADLMIDI_setTremolo((int)checked);
+}
+
+void MainWindow::on_vibrato_clicked(bool checked)
+{
+    MIX_ADLMIDI_setVibrato((int)checked);
+}
+
+void MainWindow::on_modulation_clicked(bool checked)
+{
+    MIX_ADLMIDI_setScaleMod((int)checked);
 }
