@@ -181,33 +181,9 @@ namespace luabind { namespace meta
 	};
 
 	/*
-	pop_back
+	Index access to type list
 	*/
 
-    // Empty case
-    template< >
-    struct pop_back< type_list< > >
-    {
-        using type = type_list< >;
-    };
-
-    // Single element case
-    template< typename TypeN> struct pop_back< type_list< TypeN > >
-    {
-        typedef type_list<> type; // TypeN will be removed
-    };
-
-    // Normal case, recursively pop_back while pushing all but one onto the front
-    template< typename TypeN, typename... Types >
-    struct pop_back< type_list< TypeN, Types... > >
-    {
-        typedef typename pop_back< type_list<Types...> >::type tail;
-        typedef typename push_front<tail, TypeN>::type type;
-    };
-
-    /*
-    get
-    */
 
 	template< typename Element0, typename... Elements, unsigned int Index >
 	struct get< type_list<Element0, Elements...>, Index > {
