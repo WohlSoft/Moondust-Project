@@ -10,10 +10,6 @@
 #include <luabind/lua_include.hpp>
 #include <luabind/detail/meta.hpp>
 
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
-#include <boost/optional.hpp>
-#endif
-
 namespace luabind {
 
 # ifndef LUABIND_NO_EXCEPTIONS
@@ -75,27 +71,6 @@ void register_exception_handler(Handler handler, meta::type<E>* = 0)
     );
 # endif
 }
-
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
-template<class R, class F>
-boost::optional<R> handle_exceptions(lua_State* L, F fn, boost::type<R>* = 0)
-{
-# ifndef LUABIND_NO_EXCEPTIONS
-    try
-    {
-        return fn();
-    }
-    catch (...)
-    {
-        detail::handle_exception_aux(L);
-    }
-
-    return boost::optional<R>();
-# else
-    return fn();
-# endif
-}
-#endif
 
 } // namespace luabind
 

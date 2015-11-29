@@ -31,8 +31,6 @@
 #include <luabind/detail/call_shared.hpp>
 #include <luabind/detail/stack_utils.hpp>
 
-#include <___unused.h>
-
 namespace luabind
 {
 	namespace adl {
@@ -44,15 +42,15 @@ namespace luabind
 	namespace detail {
 
 		template< typename PolicyList, unsigned int pos >
-        void push_arguments(lua_State* L) { _unused(L); }
+        void push_arguments(lua_State* /*L*/) {};
 
 		template< typename PolicyList, unsigned int Pos, typename Arg0, typename... Args >
 		void push_arguments(lua_State* L, Arg0&& arg0, Args&&... args)
 		{
 			using converter_type = specialized_converter_policy< fetched_converter_policy<Pos, PolicyList>, Arg0, cpp_to_lua >;
 			converter_type().to_lua(L, unwrapped<Arg0>::get(std::forward<Arg0>(arg0)));
-            push_arguments<PolicyList, Pos+1>(L, std::forward<Args>(args)...);
-        }
+			push_arguments<PolicyList, Pos+1>(L, std::forward<Args>(args)...);
+		}
 
 #ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
 		template<typename Ret, typename PolicyList, typename... Args, unsigned int... Indices, typename Fn>
@@ -105,7 +103,7 @@ namespace luabind
 				push_arguments<PolicyList, 1>(L, std::forward<Args>(args)...);
 
 				if(Function(L, sizeof...(Args), 0)) {
-                    assert(lua_gettop(L)==top-(signed)NumParams+1);
+					assert(lua_gettop(L)==top-NumParams+1);
 					call_error(L);
 				}
 				// pops the return values from the function call
@@ -123,7 +121,7 @@ namespace luabind
 				push_arguments<PolicyList, 1>(L, std::forward<Args>(args)...);
 
 				if(Function(L, sizeof...(Args), 1)) {
-                    assert(lua_gettop(L)==top-(signed)NumParams+1);
+					assert(lua_gettop(L)==top-NumParams+1);
 					call_error(L);
 				}
 				// pops the return values from the function call

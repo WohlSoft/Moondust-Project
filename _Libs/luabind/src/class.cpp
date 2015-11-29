@@ -34,7 +34,15 @@
 
 namespace luabind
 {
-   LUABIND_API detail::nil_type nil;
+    // Implement for nil.hpp
+    LUABIND_API detail::nil_type nil;
+
+    // Implement for detail/policy.hpp
+    LUABIND_API meta::index<0> return_value;
+    LUABIND_API meta::index<0> result;
+    LUABIND_API meta::index<1> _1;
+    LUABIND_API meta::index<2> _2;
+    LUABIND_API meta::index<3> _3;
 }
 
 namespace luabind { namespace detail {

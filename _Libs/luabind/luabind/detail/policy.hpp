@@ -28,8 +28,6 @@
 #include <luabind/detail/primitives.hpp>
 #include <luabind/detail/decorate_type.hpp>
 
-#include <___unused.h>
-
 #include <typeinfo>
 #include <type_traits>
 #include <string>
@@ -138,16 +136,13 @@ namespace luabind
 	}
 } // namespace luabind::detail
 
-
-namespace luabind { namespace
-{
-  static meta::index<0> return_value;
-  static meta::index<0> result;
-  static meta::index<1> _1;
-  static meta::index<2> _2;
-  static meta::index<3> _3;
-  inline void _unused_stuff() { _unused(return_value); _unused(result); _unused(_1); _unused(_2); _unused(_3); }
-}}
+namespace luabind {
+  extern LUABIND_API meta::index<0> return_value;
+  extern LUABIND_API meta::index<0> result;
+  extern LUABIND_API meta::index<1> _1;
+  extern LUABIND_API meta::index<2> _2;
+  extern LUABIND_API meta::index<3> _3;
+}
 
 #endif // LUABIND_POLICY_HPP_INCLUDED
 
