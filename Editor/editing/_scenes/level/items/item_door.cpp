@@ -396,12 +396,27 @@ void ItemDoor::arrayApply()
         doorData.ix = qRound(this->scenePos().x());
         doorData.iy = qRound(this->scenePos().y());
     }
-    else if( doorData.isSetOut )
+    else if((direction==D_Exit) && doorData.isSetOut )
     {
         doorData.ox = qRound(this->scenePos().x());
         doorData.oy = qRound(this->scenePos().y());
     }
-
+    /** Explanation for cramps-man why was that dumb bug:
+     *
+     * when we killed point, doorData.isSetIn is false.
+     * so:
+     * direction==D_Entrance is true, but isSetIN - false
+     * else isSetOut - true
+     * so: we are applying ENTRANCE's physical coordinates into EXIT :P
+     * but that will NOT appear in file if we will just make dummy modify
+     * of exit point and it's true value will overwrire invalid data.
+     *
+     * To prevent this crap, need to also add condition
+     * to check "is this point is exit"?
+     * so, even if entrance point marked as "false" because "not placed" flag
+     * exit point's value will not be overwritten
+     *
+     */
 
     if(doorData.index < (unsigned int)scene->LvlData->doors.size())
     { //Check index

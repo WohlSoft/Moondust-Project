@@ -1,3 +1,6 @@
+Editor 0.3.1.9
+- Fixed bug with removed warp entrance point and after placing it again
+
 Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation
 - Added question boxes on attempt to remove layer from list
@@ -329,3 +332,4 @@ Editor 0.0.2
 
 Editor 0.0.1
 - First test version, can only check parsing of LVL files
+

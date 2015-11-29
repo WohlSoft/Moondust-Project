@@ -3,7 +3,6 @@ Editor
 * New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 - Add re-configurable hot-keys
-- "Open Episode folder in explorer" and "Open Custom folder in explorer" actions
 
 Engine
 - Exclamation sign sprite over talkable NPC's
@@ -38,6 +37,7 @@ Common
 Completed works
 ============================================================
 Editor
++ "Open Episode folder in explorer" and "Open Custom folder in explorer" actions
 + Add function to refresh warp's entry XY coordninates inside combobox
 + Add "Replace all Item-ID in a current section" feature
 + Provide ability to define NPC's "friendly" flag from message editing dialog
