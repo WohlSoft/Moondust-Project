@@ -12,37 +12,37 @@ Binding_Level_ClassWrapper_LVL_NPC::~Binding_Level_ClassWrapper_LVL_NPC()
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onActivated()
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onActivated");
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop(float tickTime)
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onLoop", tickTime);
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onInit()
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onInit");
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill(int damageReason)
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onKill", damageReason);
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage, int damageReason)
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onHarm", damage, damageReason);
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onTransform(long id)
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onTransform", id);
 }
 

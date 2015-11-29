@@ -28,6 +28,8 @@ public:
 
 
     static luabind::scope bindToLua();
+private:
+    luabind::detail::wrap_access mself;
 };
 
 #endif // BINDING_LEVEL_CLASSWRAPPER_LVL_NPC_H
