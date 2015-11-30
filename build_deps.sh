@@ -36,11 +36,11 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
   OurOS="freebsd"
-elif [[ "$OSTYPE" == "msys" ]]; then
+elif [[ "$OSTYPE" == "msys"* ]]; then
   OurOS="win32"
 fi
 
-if [[ "$OurOS"=="win32" ]]; then
+if [[ "$OurOS" == "win32" ]]; then
    ./build_deps.bat
    exit 0
    checkState
