@@ -19,7 +19,7 @@ echo "#=========================================================================
 echo "#===============================================================================================" >> _paths.sh
 echo "" >> _paths.sh
 
-if [[ "$1"!="silent" ]]; then
+if [[ $1 != "silent" ]]; then
    if [[ "$OSTYPE" == "linux-gnu" ]]; then
       gedit _paths.sh
    else
@@ -27,3 +27,4 @@ if [[ "$1"!="silent" ]]; then
    fi
 fi
 chmod u+x _paths.sh
+
