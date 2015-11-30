@@ -62,6 +62,16 @@ LIBS += -lluabind
 
 android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lGLESv2 -lGLESv1_CM -ldl -landroid
+
+    ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
+                          #$$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
+                          $$PWD/../_Libs/_builds/android/lib/libogg.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmad.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 win32: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32

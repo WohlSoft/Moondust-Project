@@ -51,6 +51,12 @@ Makefile.*
 /Editor/app_process
 /Editor/android-build
 /Editor/android-libpge_editor.so*
+/Engine/app_process
+/Engine/android-build
+/Engine/android-libpge_engine.so*
+/_Misc/SDLMusPlayer/app_process
+/_Misc/SDLMusPlayer/android-build
+/_Misc/SDLMusPlayer/android-libpge_engine.so*
 
 #compiled translation
 editor_*.qm

@@ -12,7 +12,7 @@ Binding_Level_ClassWrapper_LVL_Player::~Binding_Level_ClassWrapper_LVL_Player()
 
 void Binding_Level_ClassWrapper_LVL_Player::lua_onLoop()
 {
-    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onLoop");
 }
 

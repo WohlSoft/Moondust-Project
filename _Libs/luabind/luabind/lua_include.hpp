@@ -28,13 +28,8 @@ extern "C"
 {
 #endif
 
-#ifdef USE_LUA_JIT
-    #include "../lua_inclues/lua_jit.h"
-    #include "../lua_inclues/lauxlib_jit.h"
-#else
 	#include "lua.h"
 	#include "lauxlib.h"
-#endif
 
 #ifndef LUABIND_CPLUSPLUS_LUA
 }

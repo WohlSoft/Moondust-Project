@@ -10,6 +10,7 @@
    "ndk-host": "linux-x86_64",
    "target-architecture": "armeabi-v7a",
    "android-package-source-directory": "/home/vitaly/_git_repos/PGE-Project/Engine/android",
+   "android-extra-libs": "/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libSDL2.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libvorbisfile.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libvorbis.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libvorbisenc.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libogg.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libmad.so,/home/vitaly/_git_repos/PGE-Project/Engine/../_Libs/_builds/android/lib/libmodplug.so",
    "qml-root-path": "/home/vitaly/_git_repos/PGE-Project/Engine",
    "application-binary": "/home/vitaly/_git_repos/PGE-Project/bin/_android/libpge_engine.so"
 }

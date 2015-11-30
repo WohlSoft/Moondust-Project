@@ -22,14 +22,6 @@
 
 #ifndef LUABIND_OBJECT_050419_HPP
 #define LUABIND_OBJECT_050419_HPP
-// I don't feel like implementing optional myself, that's why
-// this reference to boost stays if the user decides
-// to use the nothrow policies.
-
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
-#include <boost/config.hpp>
-#include <boost/optional.hpp>
-#endif
 
 #include <tuple>
 

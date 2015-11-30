@@ -154,6 +154,12 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
         int w = _rect.width();
         int h = _rect.height();
 
@@ -283,6 +289,12 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
         drawPiece(_rect, PGE_RectF(w-x+dX, h-y+dY, x-dX, y-dY), PGE_RectF(styleTexture.w-x+dX, styleTexture.h-y+dY, x-dX, y-dY));
          //4 Left-bottom
         drawPiece(_rect, PGE_RectF(0, h-y+dY, x-dX, y-dY), PGE_RectF(0, styleTexture.h-y+dY, x-dX, y-dY));
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glBindTexture( GL_TEXTURE_2D, 0 );
+        glDisable(GL_TEXTURE_2D);
     }
 }
 
@@ -298,19 +310,26 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
     blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
     blockG.setBottomRight( GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ) );
 
-    glBegin( GL_TRIANGLES );
-        glTexCoord2f( tx.left(), tx.top() );
-        glVertex2f( blockG.left(), blockG.top());
-        glTexCoord2f( tx.right(), tx.top() );
-        glVertex2f(  blockG.right(), blockG.top());
-        glTexCoord2f( tx.right(), tx.bottom() );
-        glVertex2f(  blockG.right(),  blockG.bottom());
-
-        glTexCoord2f( tx.left(), tx.top() );
-        glVertex2f( blockG.left(), blockG.top());
-        glTexCoord2f( tx.left(), tx.bottom() );
-        glVertex2f( blockG.left(),  blockG.bottom());
-        glTexCoord2f( tx.right(), tx.bottom() );
-        glVertex2f(  blockG.right(),  blockG.bottom());
-    glEnd();
+    GLfloat Vertices[] = {
+        (float)blockG.left(),  (float)blockG.top(), 0,
+        (float)blockG.right(), (float)blockG.top(), 0,
+        (float)blockG.right(), (float)blockG.bottom(), 0,
+        (float)blockG.left(),  (float)blockG.bottom(), 0
+    };
+    GLfloat TexCoord[] = {
+        (float)tx.left(), (float)tx.top(),
+        (float)tx.right(),(float)tx.top(),
+        (float)tx.right(),(float)tx.bottom(),
+        (float)tx.left(), (float)tx.bottom()
+    };
+    GLubyte indices[] = {
+        0, 1, 2, // (bottom left - top left - top right)
+        0, 2, 3  // (bottom left - top right - bottom right)
+    };
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    //GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    //GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    //GLERRORCHECK();
 }

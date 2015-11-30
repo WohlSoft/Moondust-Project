@@ -16,7 +16,8 @@ public:
     static void def_lua_onLoop(LVL_Player* base) { base->LVL_Player::lua_onLoop(); }
 
     static luabind::scope bindToLua();
-
+private:
+    luabind::detail::wrap_access mself;
 };
 
 #endif // LUACLASS_CORE_LVL_PLAYER_H

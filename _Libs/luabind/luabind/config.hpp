@@ -42,11 +42,6 @@
 	#define LUABIND_MAX_BASES 1
 #endif
 
-// LUABIND_SUPPORT_NOTHROW_POLICY
-// define this to allow the nothrow policy
-// which in turn will add a reference
-// to boost/optional.hpp
-
 // LUABIND_NO_ERROR_CHECKING
 // define this to remove all error checks
 // this will improve performance and memory

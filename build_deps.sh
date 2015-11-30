@@ -1,6 +1,23 @@
 #/bin/bash
 bak=~+
 
+errorofbuid()
+{
+	printf "\n\n=========ERROR!!===========\n\n"
+	cd $bak
+	exit 1
+}
+
+checkState()
+{
+	if [ $? -eq 0 ]
+	then
+	  echo "[good]"
+	else
+	  errorofbuid
+	fi
+}
+
 osx_realpath() {
   case "${1}" in
     [./]*)
@@ -19,6 +36,14 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
   OurOS="freebsd"
+elif [[ "$OSTYPE" == "msys"* ]]; then
+  OurOS="win32"
+fi
+
+if [[ "$OurOS" == "win32" ]]; then
+   ./build_deps.bat
+   exit 0
+   checkState
 fi
 
 echo $OurOS
@@ -37,25 +62,7 @@ SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
 cd $SCRDIR
 
-
-
 #=======================================================================
-errorofbuid()
-{
-	printf "\n\n=========ERROR!!===========\n\n"
-	cd $bak
-	exit 1
-}
-
-checkState()
-{
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-}
 
 buildLibs()
 {

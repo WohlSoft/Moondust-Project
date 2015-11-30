@@ -18,7 +18,7 @@ set(LUABIND_SRCS
 	object_rep.cpp
 	open.cpp
 	operator.cpp
-	pcall.cpp
+  pcall.cpp
 	scope.cpp
 	set_package_preload.cpp
 	stack_content_by_name.cpp
@@ -68,6 +68,7 @@ source_group(API FILES ${LUABIND_API})
 set(LUABIND_DETAIL_API
 	../luabind/detail/meta.hpp
 	../luabind/detail/call_traits.hpp
+	../luabind/detail/call_shared.hpp
 	../luabind/detail/crtp_iterator.hpp
 	../luabind/detail/call_function.hpp
 	../luabind/detail/call.hpp
@@ -157,7 +158,7 @@ set_property(TARGET
 set(ALLHEADERS ${LUABIND_API} ${LUABIND_DETAIL_API} PARENT_SCOPE)
 set(APIHEADERS ${LUABIND_API} PARENT_SCOPE)
 
-if(INSTALL_LUABIND)
+if(LUABIND_INSTALL)
 	if(NOT INCLUDE_DIR)
 		set(INCLUDE_DIR include)
 	endif()
@@ -173,8 +174,14 @@ if(INSTALL_LUABIND)
 	install(FILES ${LUABIND_API}
 		DESTINATION ${INCLUDE_DIR}/luabind
 		COMPONENT sdk)
+	install(FILES ${LUABIND_USER_POLICIES}
+		DESTINATION ${INCLUDE_DIR}/luabind
+		COMPONENT sdk)	
 	install(FILES ${LUABIND_DETAIL_API}
 		DESTINATION ${INCLUDE_DIR}/luabind/detail
+		COMPONENT sdk)
+	install(FILES ${LUABIND_DEFAULT_POLICIES}
+		DESTINATION ${INCLUDE_DIR}/luabind/detail/conversion_policies
 		COMPONENT sdk)
 	install(TARGETS luabind
 		EXPORT luabind

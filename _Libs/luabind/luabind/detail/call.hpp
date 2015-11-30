@@ -13,8 +13,6 @@
 #include <luabind/detail/decorate_type.hpp>
 #include <luabind/detail/object.hpp>
 
-#include <___unused.h>
-
 #ifdef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
 #include <tuple>
 #endif
@@ -110,7 +108,7 @@ namespace luabind {
 
 			template< typename ConverterPolicy, typename StackIndexList >
 			struct converter_policy_postcall< ConverterPolicy, StackIndexList, false > {
-                static void postcall(lua_State* L, int results) {_unused(L);_unused(results);
+                static void postcall(lua_State* /*L*/, int /*results*/) {
 				}
 			};
 
@@ -118,13 +116,13 @@ namespace luabind {
 			struct policy_list_postcall< meta::type_list< converter_policy_injector< Index, Policy >, Policies... >, StackIndexList > {
 				static void postcall(lua_State* L, int results) {
 					converter_policy_postcall < Policy, StackIndexList, converter_policy_injector< Index, Policy >::has_postcall >::postcall(L, results);
-					policy_list_postcall< meta::type_list< Policies... >, StackIndexList >::postcall(L, results);
+                    policy_list_postcall< meta::type_list< Policies... >, StackIndexList >::postcall(L, results);
 				}
 			};
 
 			template< typename StackIndexList >
 			struct policy_list_postcall< meta::type_list< >, StackIndexList > {
-                static void postcall(lua_State* L, int results) {_unused(L);_unused(results);}
+                static void postcall(lua_State* /*L*/, int /*results*/) {}
 			};
 
 #ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS		
@@ -367,8 +365,7 @@ namespace luabind {
 		struct match_struct< StackIndexList, SignatureList, Index, Index >
 		{
 			template< typename TupleType >
-			static int match(lua_State* L, TupleType&) {
-                _unused(L);
+            static int match(lua_State* /*L*/, TupleType&) {
 				return 0;
 			}
 		};
@@ -388,13 +385,13 @@ namespace luabind {
 				{
 					typedef typename traits::decorated_argument_list decorated_list;
 					typedef typename traits::stack_index_list stack_indices;
+                    typedef typename traits::result_converter result_converter;
 
-					typename traits::result_converter().to_lua(
-						L,
-							f( (std::get<ArgumentIndices>(argument_tuple).to_cpp(L, 
-									typename meta::get<decorated_list, ArgumentIndices>::type(),
-									meta::get<stack_indices, ArgumentIndices>::value ))...
-							)						
+                    result_converter().to_lua(L,
+                        f( (std::get<ArgumentIndices>(argument_tuple).to_cpp(L,
+                                typename meta::get<decorated_list, ArgumentIndices>::type(),
+                                meta::get<stack_indices, ArgumentIndices>::value ))...
+                        )
 					);
 
 					meta::init_order{
@@ -408,19 +405,22 @@ namespace luabind {
 			template< unsigned int... ArgumentIndices >
 			struct call_struct< false /*member*/, true /*void*/, meta::index_list<ArgumentIndices...> >
 			{
-				static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
+                static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
 				{
 					typedef typename traits::decorated_argument_list decorated_list;
 					typedef typename traits::stack_index_list stack_indices;
 
-					f(std::get<ArgumentIndices>(argument_tuple).to_cpp(L,
+                    // This prevents unused warnings with empty parameter lists
+                    (void)L;
+
+                    f(std::get<ArgumentIndices>(argument_tuple).to_cpp(L,
 							typename meta::get<decorated_list, ArgumentIndices>::type(),
 							meta::get<stack_indices, ArgumentIndices>::value)...
 											
 					);
 
 					meta::init_order{
-						(std::get<ArgumentIndices>(argument_tuple).converter_postcall(L,
+                        (std::get<ArgumentIndices>(argument_tuple).converter_postcall(L,
 						typename meta::get<typename traits::decorated_argument_list, ArgumentIndices>::type(),
 						meta::get<typename traits::stack_index_list, ArgumentIndices>::value), 0)...
 					};
@@ -434,10 +434,12 @@ namespace luabind {
 				{
 					typedef typename traits::decorated_argument_list decorated_list;
 					typedef typename traits::stack_index_list stack_indices;
+                    typedef typename traits::result_converter result_converter;
 
-					auto& object = std::get<0>(argument_tuple).to_cpp(L, typename meta::get<typename traits::decorated_argument_list, 0>::type(), 1);
+                    auto& object = std::get<0>(argument_tuple).to_cpp(L,
+                        typename meta::get<typename traits::decorated_argument_list, 0>::type(), 1);
 
-					typename traits::result_converter().to_lua(L,
+                    result_converter().to_lua(L,
 						(object.*f)(std::get<ArgumentIndices>(argument_tuple).to_cpp(L,
 							typename meta::get<decorated_list, ArgumentIndices>::type(),
 							meta::get<stack_indices, ArgumentIndices>::value)...

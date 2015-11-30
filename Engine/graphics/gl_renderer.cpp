@@ -33,13 +33,6 @@
 #else
     #ifndef ANDROID
     #include <GL/glu.h>
-    #else
-    void gluOrtho2D(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top)
-    {
-        glOrtho(left, right, bottom, top, -1, 1);
-    }
-    //#include <GLES2/gl2.h>
-    //#include <GLES2/gl2ext.h>
     #endif
 #endif
 #undef main
@@ -51,6 +44,23 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QtDebug>
+
+#include <sstream>
+
+// Macro inserting the arguments
+#define GLERRORCHECK() _GLErrorCheck(__FILE__, __LINE__, __FUNCTION__)
+
+// Error checking function
+static inline void _GLErrorCheck(const char* fn, int line, const char* func) {
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR) {
+        std::ostringstream errMsg;
+        errMsg << "OpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
+        errMsg << "\r\n";
+        errMsg << "Error code: "<< err << " (0x" << std::hex << (unsigned int)err << ")";
+        QMessageBox::warning(nullptr, "OpenGL Error", errMsg.str().c_str());
+    }
+}
 
 bool GlRenderer::_isReady=false;
 SDL_Thread *GlRenderer::thread = NULL;
@@ -404,7 +414,7 @@ void GlRenderer::resetViewport()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1);
-    gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+    //gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
     setViewportSize(window_w, window_h);
 }
 
@@ -433,29 +443,47 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     float right = point.x();
     float bottom = point.y();
 
+    glBindTexture( GL_TEXTURE_2D, 0 );
+    glDisable(GL_TEXTURE_2D);
+
+    glColor4f( red, green, blue, alpha);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
+
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GLERRORCHECK();
+
+    GLfloat Vertices[] = {
+        left, top, 0,
+        right, top, 0,
+        right, bottom, 0,
+        left, bottom, 0
+    };
+
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    GLERRORCHECK();
+
     if(filled)
     {
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( red, green, blue, alpha);
-    glBegin( GL_TRIANGLES );
-        glVertex2f( left, top);
-        glVertex2f( right, top);
-        glVertex2f( right, bottom);
-
-        glVertex2f( left, top);
-        glVertex2f( left, bottom);
-        glVertex2f( right,  bottom);
-    glEnd();
+        GLubyte indices[] = {
+            0, 1, 2, // (bottom left - top left - top right)
+            0, 2, 3  // (bottom left - top right - bottom right)
+        };
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+        GLERRORCHECK();
     } else {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( red, green, blue, alpha);
-        glBegin( GL_LINE_LOOP );
-            glVertex2f( left, top);
-            glVertex2f( right, top);
-            glVertex2f( right,  bottom);
-            glVertex2f( left, bottom);
-        glEnd();
+        glDrawArrays(GL_LINE_LOOP, 0, 4);
+        GLERRORCHECK();
     }
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
 }
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
@@ -468,17 +496,39 @@ void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bott
     float right = point.x();
     float bottom = point.y();
 
+    glBindTexture( GL_TEXTURE_2D, 0 );
     glDisable(GL_TEXTURE_2D);
-    glColor4f( red, green, blue, alpha);
-    glBegin( GL_TRIANGLES );
-        glVertex2f( left, top);
-        glVertex2f( right, top);
-        glVertex2f( right, bottom);
 
-        glVertex2f( left, top);
-        glVertex2f( left, bottom);
-        glVertex2f( right,  bottom);
-    glEnd();
+    glColor4f( red, green, blue, alpha);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
+
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GLERRORCHECK();
+
+    GLfloat Vertices[] = {
+        left, top, 0,
+        right, top, 0,
+        right, bottom, 0,
+        left, bottom, 0
+    };
+    GLubyte indices[] = {
+        0, 1, 2, // (bottom left - top left - top right)
+        0, 2, 3  // (bottom left - top right - bottom right)
+    };
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
 }
 
 
@@ -503,12 +553,19 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
 
+glEnableClientState(GL_VERTEX_ARRAY);
+GLERRORCHECK();
+glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+GLERRORCHECK();
+
     //glBlendEquationANY(GL_FUNC_ADD);
-    //glBlendEquation(GL_FUNC_ADD);
-    //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    GLERRORCHECK();
 
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
-    /*GLfloat Vertices[] = {
+    GLfloat Vertices[] = {
         left, top, 0,
         right, top, 0,
         right, bottom, 0,
@@ -524,29 +581,17 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
         0, 1, 2, // (bottom left - top left - top right)
         0, 2, 3  // (bottom left - top right - bottom right)
     };
-
     glVertexPointer(3, GL_FLOAT, 0, Vertices);
-    //GLERRORCHECK();
+    GLERRORCHECK();
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
-    //GLERRORCHECK();
+    GLERRORCHECK();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
-*/
+    GLERRORCHECK();
 
-    glBegin( GL_TRIANGLES );
-        glTexCoord2f( 0, 0 );
-        glVertex2f( left, top);
-        glTexCoord2f( 1, 0 );
-        glVertex2f(  right, top);
-        glTexCoord2f( 1, 1 );
-        glVertex2f(  right, bottom);
-
-        glTexCoord2f( 0, 0 );
-        glVertex2f( left, top);
-        glTexCoord2f( 0, 1 );
-        glVertex2f( left,  bottom);
-        glTexCoord2f( 1, 1 );
-        glVertex2f(  right, bottom);
-    glEnd();
+glDisableClientState(GL_VERTEX_ARRAY);
+GLERRORCHECK();
+glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+GLERRORCHECK();
 
     glBindTexture( GL_TEXTURE_2D, 0 );
     glDisable(GL_TEXTURE_2D);
@@ -573,24 +618,48 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     glBindTexture( GL_TEXTURE_2D, texture->texture );
 
-    glBegin( GL_TRIANGLES );
-        glTexCoord2f( ani_left, ani_top );
-        glVertex2f( left, top);
-        glTexCoord2f( ani_right, ani_top );
-        glVertex2f(  right, top);
-        glTexCoord2f( ani_right, ani_bottom );
-        glVertex2f(  right, bottom);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
 
-        glTexCoord2f( ani_left, ani_top );
-        glVertex2f( left, top);
-        glTexCoord2f( ani_left, ani_bottom );
-        glVertex2f( left,  bottom);
-        glTexCoord2f( ani_right, ani_bottom );
-        glVertex2f(  right, bottom);
-    glEnd();
+    //glBlendEquationANY(GL_FUNC_ADD);
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    GLERRORCHECK();
 
-    //glBindTexture( GL_TEXTURE_2D, 0 );
+    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+    GLfloat Vertices[] = {
+        left, top, 0,
+        right, top, 0,
+        right, bottom, 0,
+        left, bottom, 0
+    };
+    GLfloat TexCoord[] = {
+        ani_left, ani_top,
+        ani_right, ani_top,
+        ani_right, ani_bottom,
+        ani_left, ani_bottom
+    };
+    GLubyte indices[] = {
+        0, 1, 2, // (bottom left - top left - top right)
+        0, 2, 3  // (bottom left - top right - bottom right)
+    };
 
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
+
+    glBindTexture( GL_TEXTURE_2D, 0 );
     glDisable(GL_TEXTURE_2D);
 }
 
@@ -604,20 +673,45 @@ void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_
     float right = point.x();
     float bottom = point.y();
 
-    glBegin( GL_TRIANGLES );
-        glTexCoord2f( ani_left, ani_top );
-        glVertex2f( left, top);
-        glTexCoord2f( ani_right, ani_top );
-        glVertex2f(  right, top);
-        glTexCoord2f( ani_right, ani_bottom );
-        glVertex2f(  right, bottom);
+glEnableClientState(GL_VERTEX_ARRAY);
+GLERRORCHECK();
+glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+GLERRORCHECK();
 
-        glTexCoord2f( ani_left, ani_top );
-        glVertex2f( left, top);
-        glTexCoord2f( ani_left, ani_bottom );
-        glVertex2f( left,  bottom);
-        glTexCoord2f( ani_right, ani_bottom );
-        glVertex2f(  right, bottom);
-    glEnd();
+    //glBlendEquationANY(GL_FUNC_ADD);
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    GLERRORCHECK();
+
+    GLfloat Vertices[] = {
+        left, top, 0,
+        right, top, 0,
+        right, bottom, 0,
+        left, bottom, 0
+    };
+    GLfloat TexCoord[] = {
+        ani_left, ani_top,
+        ani_right, ani_top,
+        ani_right, ani_bottom,
+        ani_left, ani_bottom
+    };
+    GLubyte indices[] = {
+        0, 1, 2, // (bottom left - top left - top right)
+        0, 2, 3  // (bottom left - top right - bottom right)
+    };
+
+    glVertexPointer(3, GL_FLOAT, 0, Vertices);
+    GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
+
+glDisableClientState(GL_VERTEX_ARRAY);
+GLERRORCHECK();
+glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+GLERRORCHECK();
+
 }
 

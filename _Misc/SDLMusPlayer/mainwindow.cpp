@@ -20,6 +20,7 @@ static void error(QString msg)
 }
 
 Mix_Music *play_mus = NULL;
+static Mix_MusicType type;
 
     void MUS_stopMusic()
     {
@@ -87,7 +88,7 @@ Mix_Music *play_mus = NULL;
             return false;
         }
 
-        Mix_MusicType type=Mix_GetMusicType(play_mus);
+                type=Mix_GetMusicType(play_mus);
         qDebug() << QString("Music type: %1").arg(
                 type==MUS_NONE?"MUS_NONE":
                 type==MUS_CMD?"MUS_CMD":
@@ -99,6 +100,7 @@ Mix_Music *play_mus = NULL;
                 type==MUS_MP3?"MUS_MP3":
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
+                type==MUS_SPC?"MUS_SPC":
                 "Unknown");
         return true;
     }
@@ -110,6 +112,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->adlmidi_xtra->setVisible(false);
+    ui->midi_setup->setVisible(false);
+    ui->gme_setup->setVisible(false);
+    ui->gridLayout->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 MainWindow::~MainWindow()
@@ -169,17 +175,45 @@ void MainWindow::on_play_clicked()
     ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
     ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
     ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
+    switch(PGE_MusicPlayer::type)
+    {
+        case MUS_MID:
+            ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex()==0);
+            ui->midi_setup->setVisible(true);
+            ui->gme_setup->setVisible(false);
+            break;
+        case MUS_SPC:
+            ui->adlmidi_xtra->setVisible(false);
+            ui->midi_setup->setVisible(false);
+            ui->gme_setup->setVisible(true);
+            break;
+        default:
+            ui->adlmidi_xtra->setVisible(false);
+            ui->midi_setup->setVisible(false);
+            ui->gme_setup->setVisible(false);
+            break;
+    }
+    this->window()->resize(minimumWidth(), minimumHeight());
 }
 
 void MainWindow::on_mididevice_currentIndexChanged(int index)
 {
     switch(index)
     {
-        case 0: MIX_SetMidiDevice(MIDI_ADLMIDI); break;
-        case 1: MIX_SetMidiDevice(MIDI_Timidity); break;
-        case 2: MIX_SetMidiDevice(MIDI_Native); break;
-        default: MIX_SetMidiDevice(MIDI_ADLMIDI); break;
+        case 0: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        ui->adlmidi_xtra->setVisible(true);
+        break;
+        case 1: MIX_SetMidiDevice(MIDI_Timidity);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
+        case 2: MIX_SetMidiDevice(MIDI_Native);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
+        default: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        ui->adlmidi_xtra->setVisible(true);
+        break;
     }
+    this->window()->resize(minimumWidth(), minimumHeight());
 }
 
 void MainWindow::on_fmBank_valueChanged(int arg1)

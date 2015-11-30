@@ -249,6 +249,11 @@ namespace luabind {
 	{};
 
 	template <>
+	struct default_converter<const char*&>
+		: default_converter<char const*>
+	{};
+
+	template <>
 	struct default_converter<char*>
 		: default_converter<char const*>
 	{};

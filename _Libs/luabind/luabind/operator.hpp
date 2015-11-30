@@ -330,13 +330,10 @@ namespace luabind {
 
 #undef LUABIND_UNARY_OPERATOR
 
-    namespace {
 
-        self_type self;
-        const_self_type const_self;
-        inline void __unused_stuff() { _unused(self); _unused(const_self); }
+    extern LUABIND_API self_type self;
+    extern LUABIND_API const_self_type const_self;
 
-    } // namespace unnamed
     
 } // namespace luabind
 

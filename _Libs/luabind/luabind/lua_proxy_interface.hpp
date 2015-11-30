@@ -5,10 +5,6 @@
 #include <luabind/detail/call_function.hpp>
 #include <ostream>
 
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
-# include <boost/optional.hpp>
-#endif
-
 #if LUA_VERSION_NUM < 502
 # define lua_compare(L, index1, index2, fn) fn(L, index1, index2)
 # define LUA_OPEQ lua_equal
@@ -227,13 +223,13 @@ namespace luabind {
 	namespace detail
 	{
 		template<class T, class ValueWrapper, class Policies, class ErrorPolicy, class ReturnType >
-		ReturnType object_cast_aux(ValueWrapper const& value_wrapper, T*, Policies*, ErrorPolicy*, ReturnType*)
+		ReturnType object_cast_aux(ValueWrapper const& value_wrapper, T*, Policies*, ErrorPolicy error_policy, ReturnType*)
 		{
 			lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(value_wrapper);
 
 #ifndef LUABIND_NO_ERROR_CHECKING
 			if(!interpreter)
-				return ErrorPolicy::handle_error(interpreter, typeid(void));
+				return error_policy.handle_error(interpreter, typeid(void));
 #endif
 			lua_proxy_traits<ValueWrapper>::unwrap(interpreter, value_wrapper);
 			detail::stack_pop pop(interpreter, 1);
@@ -241,7 +237,7 @@ namespace luabind {
 
 #ifndef LUABIND_NO_ERROR_CHECKING
 			if(cv.match(interpreter, decorated_type<T>(), -1)<0) {
-				return ErrorPolicy::handle_error(interpreter, typeid(T));
+				return error_policy.handle_error(interpreter, typeid(T));
 			}
 #endif
 			return cv.to_cpp(interpreter, decorated_type<T>(), -1);
@@ -250,7 +246,7 @@ namespace luabind {
 		template<class T>
 		struct throw_error_policy
 		{
-			static T handle_error(lua_State* interpreter, type_id const& type_info)
+			T handle_error(lua_State* interpreter, type_id const& type_info)
 			{
 #ifndef LUABIND_NO_EXCEPTIONS
 				throw cast_failed(interpreter, type_info);
@@ -266,44 +262,43 @@ namespace luabind {
 			}
 		};
 
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
 		template<class T>
 		struct nothrow_error_policy
 		{
-			static boost::optional<T> handle_error(lua_State*, type_id const&)
-			{
-				return boost::optional<T>();
-			}
-		};
-#endif
+			nothrow_error_policy(T rhs) : value(rhs) {}
 
+			T handle_error(lua_State*, type_id const&)
+			{
+				return value;
+			}
+		private:
+			T value;
+		};
 	} // namespace detail
 
-	template<class T, class ValueWrapper>
+	template<class T, class ValueWrapper> inline
 	T object_cast(ValueWrapper const& value_wrapper)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (no_policies*) 0, (detail::throw_error_policy<T>*)0, (T*) 0);
+		return detail::object_cast_aux(value_wrapper, (T*) 0, (no_policies*) 0, detail::throw_error_policy<T>(), (T*) 0);
 	}
 
-	template<class T, class ValueWrapper, class Policies>
+	template<class T, class ValueWrapper, class Policies> inline
 	T object_cast(ValueWrapper const& value_wrapper, Policies const&)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (Policies*) 0, (detail::throw_error_policy<T>*)0, (T*) 0);
+		return detail::object_cast_aux(value_wrapper, (T*) 0, (Policies*) 0, detail::throw_error_policy<T>(), (T*) 0);
 	}
 
-#ifdef LUABIND_SUPPORT_NOTHROW_POLICY
-	template<class T, class ValueWrapper>
-	boost::optional<T> object_cast_nothrow(ValueWrapper const& value_wrapper)
+	template<typename T, typename ValueWrapper, typename ReturnValue> inline
+	ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, ReturnValue default_value)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (no_policies*) 0, (detail::nothrow_error_policy<T>*)0, (boost::optional<T>*)0);
+		return detail::object_cast_aux(value_wrapper, (T*)0, (no_policies*)0, detail::nothrow_error_policy<ReturnValue>(default_value), (ReturnValue*)0);
 	}
 
-	template<class T, class ValueWrapper, class Policies>
-	boost::optional<T> object_cast_nothrow(ValueWrapper const& value_wrapper, Policies const&)
+	template<typename T, typename ValueWrapper, typename Policies, typename ReturnValue> inline
+	ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, Policies const&, ReturnValue default_value)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (Policies*) 0, (detail::nothrow_error_policy<T>*)0, (boost::optional<T>*)0);
+		return detail::object_cast_aux(value_wrapper, (T*)0, (Policies*)0, detail::nothrow_error_policy<ReturnValue>(default_value), (ReturnValue*)0);
 	}
-#endif
 
 	template <class ValueWrapper>
 	inline lua_CFunction tocfunction(ValueWrapper const& value)
