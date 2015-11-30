@@ -23,7 +23,7 @@ win32:{
     LIBS += -L../_builds/win32/lib
     LIBS += -lmingw32 -lSDL2main -mwindows
     INCLUDEPATH += ../_builds/win32/include
-    DEFINES -= USE_NATIVE_MIDI
+    DEFINES += USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
