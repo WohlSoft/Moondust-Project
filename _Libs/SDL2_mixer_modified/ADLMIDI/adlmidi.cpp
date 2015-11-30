@@ -59,6 +59,7 @@
 #include "adlmidi.h"
 
 #ifdef ADLMIDI_buildAsApp
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #endif
 
@@ -2099,7 +2100,6 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
 
 #ifdef ADLMIDI_buildAsApp
 
-#undef main
 int main(int argc, char** argv)
 {
 

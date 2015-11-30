@@ -1,12 +1,10 @@
 #include "pge_boxbase.h"
 
-#undef main
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
-#undef main
 #include <common_features/graphics_funcs.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
-
 
 PGE_BoxBase::PGE_BoxBase()
 {
@@ -157,7 +155,10 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+        #ifdef GL_GLEXT_PROTOTYPES
         glBlendEquation(GL_FUNC_ADD);
+        GLERRORCHECK();
+        #endif
         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
         int w = _rect.width();

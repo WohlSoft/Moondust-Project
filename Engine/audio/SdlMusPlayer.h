@@ -3,11 +3,10 @@
 
 #ifndef SDL_MUS_PLAYER
 #define SDL_MUS_PLAYER
-
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer_ext.h>
 #include <SDL2/SDL_stdinc.h>
-#undef main
 #include <QHash>
 #include <QString>
 

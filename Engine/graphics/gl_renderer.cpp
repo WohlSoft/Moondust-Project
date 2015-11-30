@@ -24,7 +24,7 @@
 #include <common_features/logger.h>
 #include <gui/pge_msgbox.h>
 
-#undef main
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_thread.h>
@@ -35,7 +35,6 @@
     #include <GL/glu.h>
     #endif
 #endif
-#undef main
 
 #include <audio/pge_audio.h>
 
@@ -454,8 +453,10 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     GLERRORCHECK();
 
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
     GLERRORCHECK();
+    #endif
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GLERRORCHECK();
 
@@ -507,8 +508,10 @@ void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bott
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     GLERRORCHECK();
 
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
     GLERRORCHECK();
+    #endif
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GLERRORCHECK();
 
@@ -558,9 +561,10 @@ GLERRORCHECK();
 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 GLERRORCHECK();
 
-    //glBlendEquationANY(GL_FUNC_ADD);
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
     GLERRORCHECK();
+    #endif
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     GLERRORCHECK();
 
@@ -623,9 +627,10 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     GLERRORCHECK();
 
-    //glBlendEquationANY(GL_FUNC_ADD);
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
     GLERRORCHECK();
+    #endif
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     GLERRORCHECK();
 
@@ -678,9 +683,10 @@ GLERRORCHECK();
 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 GLERRORCHECK();
 
-    //glBlendEquationANY(GL_FUNC_ADD);
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
     GLERRORCHECK();
+    #endif
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     GLERRORCHECK();
 

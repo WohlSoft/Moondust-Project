@@ -22,8 +22,8 @@
 #include <controls/controller_key_map.h>
 #include <QList>
 
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
-#undef main
 
 class QSettings;
 class Controller;

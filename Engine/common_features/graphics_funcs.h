@@ -22,10 +22,9 @@
 
 #include "size.h"
 
-#undef main
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
-#undef main
 
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H

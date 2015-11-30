@@ -19,12 +19,15 @@
 #include "window.h"
 #include <iostream>
 
-#undef main
-#include "../common_features/graphics_funcs.h"
+#include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 
 #include <settings/global_settings.h>
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
+
+#include <QMessageBox>
+#include <QtDebug>
 
 int PGE_Window::Width=800;
 int PGE_Window::Height=600;
@@ -37,17 +40,12 @@ bool PGE_Window::vsync=true;
 bool PGE_Window::showDebugInfo=false;
 bool PGE_Window::showPhysicsDebug=false;
 
-
 SDL_Window *PGE_Window::window;
 SDL_GLContext PGE_Window::glcontext_background;
 SDL_GLContext PGE_Window::glcontext;
 
 bool PGE_Window::IsInit=false;
 bool PGE_Window::showCursor=true;
-
-
-#include <QMessageBox>
-#include <QtDebug>
 
 bool PGE_Window::checkSDLError(int line)
 {
@@ -61,7 +59,6 @@ bool PGE_Window::checkSDLError(int line)
     }
     return true;
 }
-
 
 bool PGE_Window::init(QString WindowTitle)
 {
@@ -88,7 +85,7 @@ bool PGE_Window::init(QString WindowTitle)
     GlRenderer::setViewportSize(Width, Height);
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+                              Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if(!checkSDLError()) return false;
 
     SDL_SetWindowMinimumSize(window, Width, Height);
@@ -110,26 +107,22 @@ bool PGE_Window::init(QString WindowTitle)
 #endif
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
-    qDebug()<<"Create context BG...";
-    //glcontext_background = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    //if(!checkSDLError()) return false;
-    //SDL_GL_MakeCurrent(PGE_Window::window, NULL);
-
-    qDebug()<<"Create context Main...";
+    WriteToLog(QtDebugMsg, "Create OpenGL context...");
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     if(!checkSDLError()) return false;
 
+    WriteToLog(QtDebugMsg, "Toggle vsync...");
     toggleVSync(vsync);
     IsInit=true;
+
     //Init OpenGL (to work with textures, OpenGL should be load)
+    WriteToLog(QtDebugMsg, "Init OpenGL settings...");
     if(!GlRenderer::init())
     {
         checkSDLError();
         IsInit=false;
         return false;
     }
-
-    SDL_ShowWindow(window);
 
     return true;
 }

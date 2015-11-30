@@ -39,7 +39,6 @@
 
 #include "graphics/window.h"
 #include "graphics/gl_renderer.h"
-#undef main
 
 #include <audio/SdlMusPlayer.h>
 
@@ -208,11 +207,16 @@ int main(int argc, char *argv[])
 
     //Load selected configuration pack
 
-
+    WriteToLog(QtDebugMsg, "Opening of the configuration package...");
     ConfigManager::setConfigPath(configPath);
+
+    WriteToLog(QtDebugMsg, "Initalization of basic properties...");
     if(!ConfigManager::loadBasics()) exit(1);
 
+    WriteToLog(QtDebugMsg, "Configuration package successfully loaded!");
+
     // Initalizing SDL
+    WriteToLog(QtDebugMsg, "Initialization of SDL...");
     if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
     {
         QMessageBox::critical(NULL, "SDL Error",
@@ -222,23 +226,27 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    WriteToLog(QtDebugMsg, "Initialization of Audio subsystem...");
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
-        QMessageBox::critical(NULL, "SDL Error",
+        QMessageBox::critical(NULL, "Audio subsystem Error",
             QString("Unable to load audio sub-system!\n%1")
                 .arg( Mix_GetError() ), QMessageBox::Ok);
         exit(1);
     }
     PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music);
 
+    WriteToLog(QtDebugMsg, "Build SFX index cache...");
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
-    //Init Window
+    WriteToLog(QtDebugMsg, "Init main window...");
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
 
+    WriteToLog(QtDebugMsg, "Init joystics...");
     AppSettings.initJoysticks();
     AppSettings.loadJoystickSettings();
 
+    WriteToLog(QtDebugMsg, "Clear screen...");
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();//Reset modelview matrix
     glFlush();
@@ -246,11 +254,16 @@ int main(int argc, char *argv[])
     SDL_Event event; //  Events of SDL
     while ( SDL_PollEvent(&event) ){}
 
+    if(AppSettings.fullScreen) qDebug()<<"Toggle fullscreen...";
     PGE_Window::setFullScreen(AppSettings.fullScreen);
     GlRenderer::resetViewport();
 
     //Init font manager
+    WriteToLog(QtDebugMsg, "Init font manager...");
     FontManager::init();
+
+    WriteToLog(QtDebugMsg, "Showing window...");
+    SDL_ShowWindow(PGE_Window::window);
 
     EpisodeState _game_state;
 
