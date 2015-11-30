@@ -19,6 +19,13 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
   OurOS="freebsd"
+elif [[ "$OSTYPE" == "msys"* ]]; then
+  OurOS="win32"
+fi
+
+if [[ "$OurOS"=="win32" ]]; then
+   ./build_deps.bat
+   exit 0
 fi
 
 echo $OurOS
@@ -36,8 +43,6 @@ done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
 cd $SCRDIR
-
-
 
 #=======================================================================
 errorofbuid()
