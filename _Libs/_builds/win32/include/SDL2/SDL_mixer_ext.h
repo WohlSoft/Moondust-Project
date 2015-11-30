@@ -128,6 +128,14 @@ typedef enum {
     MUS_SPC
 } Mix_MusicType;
 
+typedef enum {
+    MIDI_ADLMIDI,
+    MIDI_Native,
+    MIDI_Timidity,
+    MIDI_Fluidsynth
+} Mix_MIDI_Device;
+
+
 /* The internal format for a music chunk interpreted via mikmod */
 typedef struct _Mix_Music Mix_Music;
 
@@ -632,6 +640,18 @@ extern DECLSPEC void SDLCALL Mix_CloseAudio(void);
 
 /* Add additional Timidity bank path */
 extern DECLSPEC void SDLCALL MIX_Timidity_addToPathList(const char *path);
+
+/* ADLMIDI Setup functions */
+extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getBankID();
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setBankID(int bnk);
+extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getTremolo();
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setTremolo(int tr);
+extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getVibrato();
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setVibrato(int vib);
+extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getScaleMod();
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setScaleMod(int sc);
+
+extern DECLSPEC int SDLCALL MIX_SetMidiDevice(int device);
 
 /* We'll use SDL for reporting errors */
 #define Mix_SetError    SDL_SetError
