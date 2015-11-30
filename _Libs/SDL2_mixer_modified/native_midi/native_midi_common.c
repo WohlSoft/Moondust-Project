@@ -61,6 +61,7 @@ typedef struct
              (((x)>>24)&0xFF))
 #endif
 
+char *common_nm_error = NULL;
 
 
 /* Get Variable Length Quantity */
@@ -287,27 +288,43 @@ static int ReadMIDIFile(MIDIFile *mididata, SDL_RWops *src)
     Uint16  division;
 
     if (!mididata)
+    {
+        common_nm_error=(char*)"MIDI-data is null";
         return 0;
+    }
     if (!src)
+    {
+        common_nm_error=(char*)"Source is null";
         return 0;
+    }
 
     /* Make sure this is really a MIDI file */
+    SDL_RWseek(src, 0, RW_SEEK_SET);
     SDL_RWread(src, &ID, 1, 4);
     //if (BE_LONG(ID) != 'MThd')
-    if(BE_LONG(ID) != (Uint32)1684558925)
+    if(BE_LONG(ID) != (Uint32)0x4D546864)
+    {
+        common_nm_error=(char*)"Wrong magic number!";
         return 0;
+    }
 
     /* Header size must be 6 */
     SDL_RWread(src, &size, 1, 4);
     size = BE_LONG(size);
     if (size != 6)
+    {
+        common_nm_error=(char*)"Bad header size!";
         return 0;
+    }
 
     /* We only support format 0 and 1, but not 2 */
     SDL_RWread(src, &format, 1, 2);
     format = BE_SHORT(format);
     if (format != 0 && format != 1)
+    {
+        common_nm_error=(char*)"MIDI Format suported only 0 or 1!";
         return 0;
+    }
 
     SDL_RWread(src, &tracks, 1, 2);
     tracks = BE_SHORT(tracks);
@@ -317,6 +334,7 @@ static int ReadMIDIFile(MIDIFile *mididata, SDL_RWops *src)
     mididata->track = (MIDITrack*) calloc(1, sizeof(MIDITrack) * mididata->nTracks);
     if (NULL == mididata->track)
     {
+        common_nm_error=(char*)"Out of memory";
         Mix_SetError("Out of memory");
         goto bail;
     }
@@ -358,9 +376,14 @@ MIDIEvent *CreateMIDIEventList(SDL_RWops *src, Uint16 *division)
     MIDIEvent *eventList;
     int trackID;
 
+    common_nm_error = NULL;
+
     mididata = calloc(1, sizeof(MIDIFile));
     if (!mididata)
+    {
+        common_nm_error=(char*)"Out of memory";
         return NULL;
+    }
 
     /* Open the file */
     if ( src != NULL )
@@ -374,6 +397,7 @@ MIDIEvent *CreateMIDIEventList(SDL_RWops *src, Uint16 *division)
     }
     else
     {
+        common_nm_error=(char*)"Source is null";
         free(mididata);
         return NULL;
     }

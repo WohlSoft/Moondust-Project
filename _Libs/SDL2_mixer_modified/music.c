@@ -626,7 +626,7 @@ Mix_Music *Mix_LoadMUS(const char *file)
         }
         music_filename = strrchr(music_file, '/');
 
-    char *ext = strrchr(music_file, '.');
+    char *ext = strrchr(music_filename, '.');
 
     //Install next MIDI device
     mididevice_current = mididevice_next;
@@ -924,9 +924,11 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
                 if (music->data.nativemidi) {
                     music->error = 0;
                 } else {
-                    Mix_SetError("%s", native_midi_error());
+                    Mix_SetError("Native MIDI error: %s", native_midi_error());
                 }
                 break;
+            } else {
+                Mix_SetError("Native MIDI is not ok: %s", native_midi_error());
             }
         break;
 #endif
@@ -962,10 +964,10 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
                 if (music->data.midi) {
                     music->error = 0;
                 } else {
-                    Mix_SetError("%s", Timidity_Error());
+                    Mix_SetError("Timidity error: %s", Timidity_Error());
                 }
             } else {
-                Mix_SetError("%s", Timidity_Error());
+                Mix_SetError("Timidty is not ok: %s", Timidity_Error());
             }
         break;
 #endif

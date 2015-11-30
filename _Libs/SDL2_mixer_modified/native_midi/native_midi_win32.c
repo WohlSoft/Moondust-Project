@@ -48,6 +48,13 @@ struct _NativeMidiSong {
 static UINT MidiDevice=MIDI_MAPPER;
 static HMIDISTRM hMidiStream;
 static NativeMidiSong *currentsong;
+enum NM_errorCode{
+    NM_NoError=0,
+    NM_OutOfMemory,
+    NM_CreateMidiEventListFail
+};
+
+static int NM_error = NM_NoError;
 
 static int BlockOut(NativeMidiSong *song)
 {
@@ -206,8 +213,11 @@ NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
     NativeMidiSong *newsong;
     MIDIEvent       *evntlist = NULL;
 
+    NM_error=NM_NoError;
+
     newsong=malloc(sizeof(NativeMidiSong));
     if (!newsong) {
+        NM_error=NM_OutOfMemory;
         return NULL;
     }
     memset(newsong,0,sizeof(NativeMidiSong));
@@ -216,6 +226,7 @@ NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
     evntlist = CreateMIDIEventList(src, &newsong->ppqn);
     if (!evntlist)
     {
+        NM_error=NM_CreateMidiEventListFail;
         free(newsong);
         return NULL;
     }
@@ -301,7 +312,18 @@ void native_midi_setvolume(int volume)
 
 const char *native_midi_error(void)
 {
-  return "";
+    switch(NM_error)
+    {
+    case NM_NoError:
+        return "Unknown error";
+    case NM_OutOfMemory:
+        return "Our of memory";
+    case NM_CreateMidiEventListFail:
+        if(common_nm_error)
+            return common_nm_error;
+        return "CreateMIDIEventList is failed";
+    }
+  return "huh???";
 }
 
 #endif /* Windows native MIDI support */

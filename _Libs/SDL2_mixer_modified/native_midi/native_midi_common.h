@@ -34,6 +34,8 @@
 #define MIDI_STATUS_PITCH_WHEEL 0xE
 #define MIDI_STATUS_SYSEX       0xF
 
+extern char *common_nm_error;
+
 /* We store the midi events in a linked list; this way it is
    easy to shuffle the tracks together later on; and we are
    flexible in the size of each elemnt.
