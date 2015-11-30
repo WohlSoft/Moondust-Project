@@ -251,8 +251,6 @@ int main(int argc, char *argv[])
     glLoadIdentity();//Reset modelview matrix
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
-    SDL_Event event; //  Events of SDL
-    while ( SDL_PollEvent(&event) ){}
 
     if(AppSettings.fullScreen) qDebug()<<"Toggle fullscreen...";
     PGE_Window::setFullScreen(AppSettings.fullScreen);
@@ -264,6 +262,7 @@ int main(int argc, char *argv[])
 
     WriteToLog(QtDebugMsg, "Showing window...");
     SDL_ShowWindow(PGE_Window::window);
+    SDL_PumpEvents();
 
     EpisodeState _game_state;
 

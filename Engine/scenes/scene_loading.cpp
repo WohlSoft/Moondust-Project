@@ -120,13 +120,17 @@ void LoadingScene::onKeyboardPressedSDL(SDL_Keycode code, Uint16)
     if(doExit) return;
     if((code==SDLK_LCTRL)||(code==SDLK_RCTRL)) return;
     if(code==SDLK_f) return;
+    if(code==SDLK_NUMLOCKCLEAR) return;
+    if(code==SDLK_CAPSLOCK) return;
+    if(code==SDLK_SCROLLLOCK) return;
+    qDebug()<<"LoadingScene: key pressed " << SDL_GetKeyName(code);
     exitFromScene();
 }
 
 void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
 {
     if(doExit) return;
-
+    qDebug()<<"LoadingScene: Mouse pressed";
     exitFromScene();
 }
 
