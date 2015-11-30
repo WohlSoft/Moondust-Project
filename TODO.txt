@@ -5,21 +5,30 @@ Editor
 - Add re-configurable hot-keys
 
 Engine
+- Replace QDialog-based config pack selection box with the own-drawn scene in the SDL Window
+- Make global "loaderCallback" function pointer to allow processing of level/world loader screen from side
+  without making of separated threads (which is not supported with single OpenGL context while texture loadings are in process)
 - Exclamation sign sprite over talkable NPC's
 + Split sense of "scenery" argument to "scenery" and "shared-animation"
 + Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
 + Question box
+- Fix a bug causes missing of custom lua-scripts declared in the custom npc.txt file
 
 Engine: Lua
 - Better Memory Management, either transfere ownership to C++ or use smart pointers.
 - setFramePos() NPC Animator function to provide ability jump to any frame position in sequence
+- effect-def based effect spawn function to allow easier and flexible way of effect spawning
++ Detectors API for NPCs
 
 Engine: New level physics
-- Support of speed-adding of items which makes stack
-- Detectors API for NPCs
 - Wall adheasing NPCs support 
-- Walkhable slopes
+* Walkhable slopes
 - Fix staying of NPC's on a top of other flying NPC's
+- Kill on crush
+- Layer motion engine
+- Complex effects scripts interpreter + bind of the effect-def into luna
++ Support of speed-adding of items which makes stack
+
 
 GIFs2PNG
 - Use editor's unmasking code insead of alphachannel
@@ -29,6 +38,8 @@ GIFs2PNG
 
 PGE Manager
 - Add getting of actual config packs list and showing up of the config pack info
+- Implement downloading & installing of config packs (which is much required for Android and Mac OS X
+  and for installer-less PGE packs to be user-friendly)
 
 Common
 - Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)
