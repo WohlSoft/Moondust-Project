@@ -35,11 +35,6 @@
 
 #include <common_features/graphics_funcs.h>
 
-#include <SDL2/SDL.h>
-#undef main
-
-
-
 RasterFont::RasterFont() : first_line_only("\n.*")
 {
     letter_width=0;
@@ -312,7 +307,9 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
+    #endif
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
     foreach(QChar cx, text)
@@ -657,7 +654,9 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+        #ifdef GL_GLEXT_PROTOTYPES
         glBlendEquation(GL_FUNC_ADD);
+        #endif
         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
         foreach(QChar cx, text)
@@ -1006,7 +1005,9 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+    #ifdef GL_GLEXT_PROTOTYPES
     glBlendEquation(GL_FUNC_ADD);
+    #endif
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
     PGE_PointF point;

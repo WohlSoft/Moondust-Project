@@ -19,10 +19,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#undef main
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
-#undef main
 
 #include <QString>
 
