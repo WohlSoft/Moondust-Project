@@ -6,7 +6,7 @@ SET SOURCEDIR=%CD%\..\..
 
 SET SEVENZIP=C:\Program Files\7-Zip
 IF NOT EXIST "%SEVENZIP%\7z.exe" SET SEVENZIP=C:\Program Files (x86)\7-Zip
-IF NOT EXIST "%SEVENZIP%\7z.exe" SET SEVENZIP=C:\Programs\7-Zip
+IF NOT EXIST "%SEVENZIP%\7z.exe" SET SEVENZIP=%ProgramFiles%\7-Zip
 
 SET GHREPO=D:\Developer\__GitHubRepos\PGE-Project
 
