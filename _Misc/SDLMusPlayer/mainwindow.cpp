@@ -291,3 +291,15 @@ void MainWindow::on_modulation_clicked(bool checked)
 }
 
 
+
+void MainWindow::on_trackID_editingFinished()
+{
+    if(Mix_PlayingMusic())
+    {
+        if(PGE_MusicPlayer::type==MUS_SPC)
+        {
+            Mix_HaltMusic();
+            on_play_clicked();
+        }
+    }
+}

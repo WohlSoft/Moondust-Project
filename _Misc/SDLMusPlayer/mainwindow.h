@@ -35,6 +35,7 @@ private slots:
     void on_tremolo_clicked(bool checked);
     void on_vibrato_clicked(bool checked);
     void on_modulation_clicked(bool checked);
+    void on_trackID_editingFinished();
 
 private:
     Ui::MainWindow *ui;
