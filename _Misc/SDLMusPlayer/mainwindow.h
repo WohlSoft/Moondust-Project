@@ -31,11 +31,11 @@ private slots:
     void on_play_clicked();
 
     void on_mididevice_currentIndexChanged(int index);
-    void on_fmBank_valueChanged(int arg1);
+    void on_fmbank_currentIndexChanged(int index);
     void on_tremolo_clicked(bool checked);
     void on_vibrato_clicked(bool checked);
-
     void on_modulation_clicked(bool checked);
+    void on_trackID_editingFinished();
 
 private:
     Ui::MainWindow *ui;

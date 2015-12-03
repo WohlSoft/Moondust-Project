@@ -613,7 +613,7 @@ void WorldScene::update()
 
         if(walk_direction==Walk_Idle)
         {
-            if(!lock_controls)
+            if(!lock_controls && (!controls_1.left || !controls_1.right) && (!controls_1.up|| !controls_1.down) )
             {
                 if(controls_1.left && (allow_left || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Left;
@@ -648,25 +648,28 @@ void WorldScene::update()
         {
             mapwalker_ani.manualTick(uTickf);
 
-            switch(walk_direction)
+            if((!controls_1.left || !controls_1.right) && (!controls_1.up|| !controls_1.down))
             {
-            case Walk_Left:
-                if(controls_1.right)
-                setDir(Walk_Right);
-                break;
-            case Walk_Right:
-                if(controls_1.left)
-                setDir(Walk_Left);
-                break;
-            case Walk_Up:
-                if(controls_1.down)
-                setDir(Walk_Down);
-                break;
-            case Walk_Down:
-                if(controls_1.up)
-                setDir(Walk_Up);
-                break;
-            default: break;
+                switch(walk_direction)
+                {
+                case Walk_Left:
+                    if(controls_1.right)
+                    setDir(Walk_Right);
+                    break;
+                case Walk_Right:
+                    if(controls_1.left)
+                    setDir(Walk_Left);
+                    break;
+                case Walk_Up:
+                    if(controls_1.down)
+                    setDir(Walk_Down);
+                    break;
+                case Walk_Down:
+                    if(controls_1.up)
+                    setDir(Walk_Up);
+                    break;
+                default: break;
+                }
             }
         }
 
@@ -699,7 +702,7 @@ void WorldScene::update()
 
     if(controls_1.jump || controls_1.alt_jump)
     {
-        if((!lock_controls) && (!isPauseMenu) && (gameState))
+        if((!doExit)&&(!lock_controls) && (!isPauseMenu) && (gameState))
         {
             if(!gameState->LevelFile.isEmpty())
             {
