@@ -40,12 +40,14 @@ $CurDir/upx-linux-x64 GIFs2PNG
 $CurDir/upx-linux-x64 LazyFixTool
 $CurDir/upx-linux-x64 pge_calibrator
 $CurDir/upx-linux-x64 pge_engine
+$CurDir/upx-linux-x64 pge_musplay
 cp pge_editor "$DeployDir/$PgePrjSD"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"
 cp LazyFixTool "$DeployDir/$PgePrjSD"
 cp pge_calibrator "$DeployDir/$PgePrjSD"
 cp pge_engine "$DeployDir/$PgePrjSD"
+cp pge_musplay "$DeployDir/$PgePrjSD"
 
 cp -a *.so* "$DeployDir/$PgePrjSD"
 cp -r ./languages "$DeployDir/$PgePrjSD"

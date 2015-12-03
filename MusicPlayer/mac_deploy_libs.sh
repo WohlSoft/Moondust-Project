@@ -1,3 +1,3 @@
 #/bin/bash
-../_Libs/macos_install_libs.sh pge_sdlmusplay
+../_Libs/macos_install_libs.sh pge_musplay
 

@@ -18,7 +18,7 @@ TEMPLATE = app
 
 include(../_common/dest_dir.pri)
 include (../_common/lib_destdir.pri)
-TARGET = pge_sdlmusplay
+TARGET = pge_musplay
 
 include(../_common/build_props.pri)
 
