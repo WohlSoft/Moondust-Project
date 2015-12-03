@@ -1,0 +1,35 @@
+//IDI_ICON1               ICON    DISCARDABLE     "cat_musplay.ico"
+
+#include <windows.h>
+#include "../version.h"
+
+VS_VERSION_INFO     VERSIONINFO
+FILEVERSION         _VF1, _VF2, _VF3, _VF4
+PRODUCTVERSION      _VP1, _VP2, _VP3, _VP4
+FILEFLAGSMASK       0x3fL
+FILEFLAGS           0
+FILEOS              VOS_NT_WINDOWS32
+FILETYPE            VFT_APP
+FILESUBTYPE         VFT2_UNKNOWN
+BEGIN
+BLOCK   "VarFileInfo"
+BEGIN
+    VALUE   "Translation",  0x409,  1200
+END
+BLOCK   "StringFileInfo"
+BEGIN
+    BLOCK   "040904b0"
+    BEGIN
+        VALUE   "CompanyName",      _COMPANY
+        VALUE   "FileDescription",  _FILE_DESC
+        VALUE   "FileVersion",      _FILE_VERSION _FILE_RELEASE
+        VALUE   "InternalName",     _INTERNAL_NAME
+        VALUE   "LegalCopyright",   _COPYRIGHT
+        VALUE   "OriginalFilename", _ORIGINAL_NAME
+        VALUE   "ProductName",      _PRODUCT_NAME
+        VALUE   "ProductVersion",   _VERSION _RELEASE
+    END
+END
+END
+
+

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>cat_musplay.ico</file>
+        <file>cat_musplay.icns</file>
+        <file>musicplayer.rc</file>
+    </qresource>
+</RCC>
+

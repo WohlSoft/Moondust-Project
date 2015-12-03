@@ -16,50 +16,50 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 TEMPLATE = app
 
-include(../../_common/dest_dir.pri)
-include (../../_common/lib_destdir.pri)
+include(../_common/dest_dir.pri)
+include (../_common/lib_destdir.pri)
 TARGET = pge_sdlmusplay
 
-include(../../_common/build_props.pri)
+include(../_common/build_props.pri)
 
 CONFIG += c++11
 CONFIG += thread
 
 win32:{
-    LIBS += -L$$PWD/../../_Libs/_builds/win32/lib
+    LIBS += -L$$PWD/../_Libs/_builds/win32/lib
     LIBS += -lSDL2main -lversion -lSDL2_mixer_ext
-    INCLUDEPATH += $$PWD/../../_Libs/_builds/win32/include
+    INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     static: {
         QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
         LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lFLAC -logg
     }
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
-    INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
+    LIBS += -L$$PWD/../_Libs/_builds/linux/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     CONFIG += unversioned_libname
 }
 android:{
-    LIBS += -L$$PWD/../../_Libs/_builds/android/lib
-    INCLUDEPATH += $$PWD/../../_Libs/_builds/android/include
+    LIBS += -L$$PWD/../_Libs/_builds/android/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/android/include
 
-    ANDROID_EXTRA_LIBS += $$PWD/../../_Libs/_builds/android/lib/libSDL2.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libvorbisfile.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libvorbis.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libvorbisenc.so \
-                          #$$PWD/../../_Libs/_builds/android/lib/libvorbisidec.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libogg.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libmad.so \
-                          $$PWD/../../_Libs/_builds/android/lib/libmodplug.so
+    ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
+                          #$$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
+                          $$PWD/../_Libs/_builds/android/lib/libogg.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmad.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 
 }
 
 macx:{
-    LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
-    INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 } else {
     LIBS += -lSDL2 -lSDL2_mixer_ext
