@@ -442,17 +442,17 @@
            <widget class="QComboBox" name="mididevice">
             <item>
              <property name="text">
-              <string>ADL Midi</string>
+              <string>ADL Midi (OPL Synth emulation)</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Timidity</string>
+              <string>Timidity (GUS-like wavetable MIDI Synth)</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Native midi</string>
+              <string>Native midi (Built-in MIDI of your OS)</string>
              </property>
             </item>
            </widget>
