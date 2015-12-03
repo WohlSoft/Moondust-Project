@@ -115,7 +115,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->adlmidi_xtra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
-    ui->gridLayout->setSizeConstraint(QLayout::SetFixedSize);
+    ui->centralWidget->window()->setWindowFlags(
+                Qt::WindowTitleHint|
+                Qt::WindowSystemMenuHint|
+                Qt::WindowCloseButtonHint);
+    this->updateGeometry();
+    this->window()->resize(100, 100);
 }
 
 MainWindow::~MainWindow()
@@ -134,6 +139,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 void MainWindow::openMusicByArg(QString musPath)
 {
     currentMusic=musPath;
+    Mix_HaltMusic();
     on_play_clicked();
 }
 
@@ -146,6 +152,7 @@ void MainWindow::dropEvent(QDropEvent *e)
         const QString &fileName = url.toLocalFile();
         currentMusic=fileName;
     }
+    Mix_HaltMusic();
     on_play_clicked();
     this->raise();
 }
@@ -156,48 +163,78 @@ void MainWindow::on_open_clicked()
                                                  (currentMusic.isEmpty() ? QApplication::applicationDirPath() : currentMusic), "All (*.*)");
     if(file.isEmpty()) return;
     currentMusic=file;
+    Mix_HaltMusic();
     on_play_clicked();
 }
 
 void MainWindow::on_stop_clicked()
 {
     PGE_MusicPlayer::MUS_stopMusic();
+    ui->play->setText(tr("Play"));
 }
 
 void MainWindow::on_play_clicked()
 {
+    if(Mix_PlayingMusic())
+    {
+        if(Mix_PausedMusic())
+        {
+            Mix_ResumeMusic();
+            ui->play->setText(tr("Pause"));
+            return;
+        }
+        else
+        {
+            Mix_PauseMusic();
+            ui->play->setText(tr("Resume"));
+            return;
+        }
+    }
+
+    ui->play->setText(tr("Play"));
     if(PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text()))
     {
         PGE_MusicPlayer::MUS_changeVolume(128);
         PGE_MusicPlayer::MUS_playMusic();
+        ui->play->setText(tr("Pause"));
     }
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
     ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
     ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
     ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
+
+    ui->gme_setup->setVisible(false);
+    ui->adlmidi_xtra->setVisible(false);
+    ui->midi_setup->setVisible(false);
+    ui->frame->setVisible(false);
+    this->window()->resize(100,100);
+    ui->frame->setVisible(true);
+    ui->gridLayout->update();
+
     switch(PGE_MusicPlayer::type)
     {
         case MUS_MID:
             ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex()==0);
             ui->midi_setup->setVisible(true);
-            ui->gme_setup->setVisible(false);
+            ui->frame->setVisible(true);
             break;
         case MUS_SPC:
-            ui->adlmidi_xtra->setVisible(false);
-            ui->midi_setup->setVisible(false);
             ui->gme_setup->setVisible(true);
+            ui->frame->setVisible(true);
             break;
         default:
-            ui->adlmidi_xtra->setVisible(false);
-            ui->midi_setup->setVisible(false);
-            ui->gme_setup->setVisible(false);
             break;
     }
-    this->window()->resize(minimumWidth(), minimumHeight());
+    this->window()->updateGeometry();
+    this->window()->resize(100,100);
 }
 
 void MainWindow::on_mididevice_currentIndexChanged(int index)
 {
+    ui->midi_setup->setVisible(false);
+    ui->adlmidi_xtra->setVisible(false);
+    this->window()->resize(100,100);
+    ui->midi_setup->setVisible(true);
     switch(index)
     {
         case 0: MIX_SetMidiDevice(MIDI_ADLMIDI);
@@ -213,12 +250,29 @@ void MainWindow::on_mididevice_currentIndexChanged(int index)
         ui->adlmidi_xtra->setVisible(true);
         break;
     }
-    this->window()->resize(minimumWidth(), minimumHeight());
+    this->window()->resize(100,100);
+
+    if(Mix_PlayingMusic())
+    {
+        if(PGE_MusicPlayer::type==MUS_MID)
+        {
+            Mix_HaltMusic();
+            on_play_clicked();
+        }
+    }
 }
 
-void MainWindow::on_fmBank_valueChanged(int arg1)
+void MainWindow::on_fmbank_currentIndexChanged(int index)
 {
-    MIX_ADLMIDI_setBankID(arg1);
+    MIX_ADLMIDI_setBankID(index);
+    if(Mix_PlayingMusic())
+    {
+        if(PGE_MusicPlayer::type==MUS_MID)
+        {
+            Mix_HaltMusic();
+            on_play_clicked();
+        }
+    }
 }
 
 void MainWindow::on_tremolo_clicked(bool checked)
@@ -235,3 +289,5 @@ void MainWindow::on_modulation_clicked(bool checked)
 {
     MIX_ADLMIDI_setScaleMod((int)checked);
 }
+
+
