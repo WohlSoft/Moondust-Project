@@ -5,17 +5,17 @@
 
 bool Binding_Core_GlobalFuncs_Settings::isFullscreenActive()
 {
-    return AppSettings.fullScreen;
+    return g_AppSettings.fullScreen;
 }
 
 int Binding_Core_GlobalFuncs_Settings::getScreenWidth()
 {
-    return AppSettings.ScreenWidth;
+    return g_AppSettings.ScreenWidth;
 }
 
 int Binding_Core_GlobalFuncs_Settings::getScreenHeight()
 {
-    return AppSettings.ScreenHeight;
+    return g_AppSettings.ScreenHeight;
 }
 
 //int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
@@ -25,22 +25,22 @@ int Binding_Core_GlobalFuncs_Settings::getScreenHeight()
 
 int Binding_Core_GlobalFuncs_Settings::getTicksPerSecond()
 {
-    return AppSettings.TicksPerSecond;
+    return g_AppSettings.TicksPerSecond;
 }
 
 bool Binding_Core_GlobalFuncs_Settings::useFrameSkip()
 {
-    return AppSettings.frameSkip;
+    return g_AppSettings.frameSkip;
 }
 
 int Binding_Core_GlobalFuncs_Settings::getSoundVolume()
 {
-    return AppSettings.volume_sound;
+    return g_AppSettings.volume_sound;
 }
 
 int Binding_Core_GlobalFuncs_Settings::getMusicVolume()
 {
-    return AppSettings.volume_music;
+    return g_AppSettings.volume_music;
 }
 
 bool Binding_Core_GlobalFuncs_Settings::isDebugInfoShown()
@@ -51,7 +51,7 @@ bool Binding_Core_GlobalFuncs_Settings::isDebugInfoShown()
 void Binding_Core_GlobalFuncs_Settings::setDebugInfoShown(bool debugInfoShown)
 {
     PGE_Window::showDebugInfo = debugInfoShown; //Actual usable flag is here!
-    AppSettings.showDebugInfo = debugInfoShown; //this flag holds to be saved/loaded from config file
+    g_AppSettings.showDebugInfo = debugInfoShown; //this flag holds to be saved/loaded from config file
                                                 //(but later I will move from PGE Window into settings to don't have this confusion)
 }
 

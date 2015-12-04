@@ -38,7 +38,7 @@
 #include "app_settings.h"
 #include <ui_app_settings.h>
 
-AppSettings::AppSettings(QWidget *parent) :
+g_AppSettings::g_AppSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AppSettings)
 {
@@ -81,12 +81,12 @@ AppSettings::AppSettings(QWidget *parent) :
     }
 }
 
-AppSettings::~AppSettings()
+g_AppSettings::~g_AppSettings()
 {
     delete ui;
 }
 
-void AppSettings::applySettings()
+void g_AppSettings::applySettings()
 {
     ui->autoPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->Animations->setChecked(GlobalSettings::LvlOpts.animationEnabled);
@@ -181,7 +181,7 @@ void AppSettings::applySettings()
     ui->defaults_eventtab_trigger->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
 }
 
-void AppSettings::on_setLogFile_clicked()
+void g_AppSettings::on_setLogFile_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Set log file"),
         ui->logFileName->text(), tr("Text files (*.txt *.log)"));
@@ -190,7 +190,7 @@ void AppSettings::on_setLogFile_clicked()
     ui->logFileName->setText(fileName);
 }
 
-void AppSettings::on_buttonBox_accepted()
+void g_AppSettings::on_buttonBox_accepted()
 {
     GlobalSettings::autoPlayMusic = ui->autoPlayMusic->isChecked();
     GlobalSettings::animatorItemsLimit = ui->itemsLisit->value();
@@ -272,7 +272,7 @@ void AppSettings::on_buttonBox_accepted()
     accept();
 }
 
-void AppSettings::on_AssociateFiles_clicked()
+void g_AppSettings::on_AssociateFiles_clicked()
 {
     bool success = Installer::associateFiles();
 

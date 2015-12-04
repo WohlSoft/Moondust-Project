@@ -23,20 +23,58 @@
 #include <SDL2/SDL.h>
 #include <controls/controller_key_map.h>
 
+/*!
+ * \brief A Joystick controller which reads key states from a joystick device
+ */
 class JoystickController : public Controller
 {
 public:
+    /*!
+     * \brief Constructor
+     */
     JoystickController();
-    ~JoystickController();
-    void setJoystickDevice(SDL_Joystick* jctrl);
-    SDL_Joystick* getJoystickDevice() const;
-    static bool bindJoystickKey(SDL_Joystick* joy, KM_Key &k);
 
+    /*!
+     * \brief Destructir
+     */
+    ~JoystickController();
+
+    /*!
+     * \brief Sets joystick device descriptor which will be used by this controller
+     * \param Joystick device descriptor
+     */
+    void setJoystickDevice(SDL_Joystick* jctrl);
+
+    /*!
+     * \brief Returns current joystick device descriptor
+     * \return Current joystic device descriptor currently associated with this controller. NULL if no joysticks was plugged
+     */
+    SDL_Joystick* getJoystickDevice() const;
+
+    /*!
+     * \brief Takes a state of specified joystick key
+     * \param key Output key state which will be copied from actual joystick key state
+     * \param mkey Joystick key info
+     */
     void updateKey(bool &key, KM_Key &mkey);
+
+    /*!
+     * \brief Read states of all control keys of a joystick device
+     */
     void update();
 
+
+    /*!
+     * \brief Detects a pressed key type and it's from a given joystick device and writes info into a given key description structure
+     * \param joy Josytick device descriptor
+     * \param k Joystick key description
+     * \return true if pressed key was been detected and returned through key description structure, false if no pressed keys
+     */
+    static bool bindJoystickKey(SDL_Joystick* joy, KM_Key &k);
+
 private:
-    SDL_Joystick* joystickController;
+    //! Joystick device descriptor
+    SDL_Joystick* m_joystickController;
 };
 
 #endif // CONTROLLER_JOYSTICK_H

@@ -44,7 +44,7 @@ void Controller::resetControls()
 
 void Controller::sendControls()
 {
-    foreach(ControllableObject* x, objects)
+    foreach(ControllableObject* x, m_objects)
         x->applyControls(keys);
 }
 
@@ -52,12 +52,12 @@ void Controller::update() {}
 
 void Controller::registerInControl(ControllableObject *obj)
 {
-    if(!objects.contains(obj))
-        objects.push_back(obj);
+    if(!m_objects.contains(obj))
+        m_objects.push_back(obj);
 }
 
 void Controller::removeFromControl(ControllableObject *obj)
 {
-    if(objects.contains(obj))
-        objects.remove(objects.indexOf(obj));
+    if(m_objects.contains(obj))
+        m_objects.remove(m_objects.indexOf(obj));
 }

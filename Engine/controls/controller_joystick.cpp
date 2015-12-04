@@ -22,7 +22,7 @@
 
 JoystickController::JoystickController() :
     Controller(),
-    joystickController(0)
+    m_joystickController(0)
 {
 //    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
 //    if(SDL_NumJoysticks() > 0){
@@ -48,12 +48,12 @@ JoystickController::~JoystickController()
 
 void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
 {
-    joystickController=jctrl;
+    m_joystickController=jctrl;
 }
 
 SDL_Joystick *JoystickController::getJoystickDevice() const
 {
-    return joystickController;
+    return m_joystickController;
 }
 
 void JoystickController::updateKey(bool &key, KM_Key &mkey)
@@ -62,7 +62,7 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
     switch(mkey.type)
     {
     case KeyMapJoyCtrls::JoyAxis:
-        val=SDL_JoystickGetAxis(joystickController, mkey.id);
+        val=SDL_JoystickGetAxis(m_joystickController, mkey.id);
             if(mkey.val>0)
                 key=(val>0);
             else if(mkey.val<0)
@@ -70,7 +70,7 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
             else key=false;
         break;
     case KeyMapJoyCtrls::JoyBallX:
-        SDL_JoystickGetBall(joystickController, mkey.id, &dx, &dy);
+        SDL_JoystickGetBall(m_joystickController, mkey.id, &dx, &dy);
         if(mkey.id>0)
             key=(dx>0);
         else if(mkey.id<0)
@@ -78,7 +78,7 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         else key=false;
         break;
     case KeyMapJoyCtrls::JoyBallY:
-        SDL_JoystickGetBall(joystickController, mkey.id, &dx, &dy);
+        SDL_JoystickGetBall(m_joystickController, mkey.id, &dx, &dy);
         if(mkey.id>0)
             key=(dy>0);
         else if(mkey.id<0)
@@ -86,11 +86,11 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         else key=false;
         break;
     case KeyMapJoyCtrls::JoyHat:
-        val=SDL_JoystickGetHat(joystickController, mkey.id);
+        val=SDL_JoystickGetHat(m_joystickController, mkey.id);
         key = (val==mkey.val);
         break;
     case KeyMapJoyCtrls::JoyButton:
-        key = SDL_JoystickGetButton(joystickController, mkey.id);
+        key = SDL_JoystickGetButton(m_joystickController, mkey.id);
         break;
     default:
         key=false;
@@ -100,7 +100,7 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
 
 void JoystickController::update()
 {
-    if(!joystickController)
+    if(!m_joystickController)
         return;
 
     SDL_PumpEvents();

@@ -104,15 +104,15 @@ LevelScene::LevelScene()
     /*********Fader*************/
 
     /*********Controller********/
-    player1Controller = AppSettings.openController(1);
-    player2Controller = AppSettings.openController(2);
+    player1Controller = g_AppSettings.openController(1);
+    player2Controller = g_AppSettings.openController(2);
     /*********Controller********/
 
     /*********Pause menu*************/
     initPauseMenu1();
     /*********Pause menu*************/
 
-    frameSkip=AppSettings.frameSkip;
+    frameSkip=g_AppSettings.frameSkip;
 
     errorMsg = "";
 
@@ -407,7 +407,7 @@ void LevelScene::update()
 void LevelScene::processEvents()
 {
     #ifndef __APPLE__
-    if(AppSettings.interprocessing)
+    if(g_AppSettings.interprocessing)
         qApp->processEvents();
     #endif
     player1Controller->update();

@@ -20,76 +20,69 @@
 
 #include "singleapplication.h"
 
-/**
- * @brief SingleApplication::SingleApplication
- *  Constructor. Checks and fires up LocalServer or closes the program
- *  if another instance already exists
- * @param argc
- * @param argv
- */
 SingleApplication::SingleApplication(QStringList &args)
 {
-  _shouldContinue = false; // By default this is not the main process
+    _shouldContinue = false; // By default this is not the main process
 
-  socket = new QUdpSocket();
-  server = NULL;
-  QUdpSocket acceptor;
-  acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
+    socket = new QUdpSocket();
+    server = NULL;
+    QUdpSocket acceptor;
+    acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
-  // Attempt to connect to the LocalServer
-  socket->connectToHost(QHostAddress::LocalHost, 58487);
-  QString isServerRuns;
-  if(socket->waitForConnected(100))
-  {
-      socket->write(QString("CMD:Is editor running?").toUtf8());
-      socket->flush();
-      if(acceptor.waitForReadyRead(100))
-      {
-          //QByteArray dataGram;//Yes, I'm runs!
-          QByteArray datagram;
-          datagram.resize(acceptor.pendingDatagramSize());
-          QHostAddress sender;
-          quint16 senderPort;
-          acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-          if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
-          {
-              isServerRuns="Yes!";
-          }
-      }
-  }
-
-  if(args.contains("--force-run", Qt::CaseInsensitive))
-  {
-      isServerRuns.clear();
-      args.removeAll("--force-run");
-  }
-  _arguments = args;
-
-  if(!isServerRuns.isEmpty())
-  {
-    QString str = QString("CMD:showUp");
-    QByteArray bytes;
-    for(int i=1; i<_arguments.size(); i++)
+    // Attempt to connect to the LocalServer
+    socket->connectToHost(QHostAddress::LocalHost, 58487);
+    QString isServerRuns;
+    if(socket->waitForConnected(100))
     {
-       str.append(QString("\n%1").arg(_arguments[i]));
+        socket->write(QString("CMD:Is editor running?").toUtf8());
+        socket->flush();
+        if(acceptor.waitForReadyRead(100))
+        {
+            //QByteArray dataGram;//Yes, I'm runs!
+            QByteArray datagram;
+            datagram.resize(acceptor.pendingDatagramSize());
+            QHostAddress sender;
+            quint16 senderPort;
+            acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+            if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
+            {
+                isServerRuns="Yes!";
+            }
+        }
     }
-    bytes = str.toUtf8();
-    socket->write(bytes);
-    socket->flush();
-    QThread::msleep(100);
-    socket->close();
-  }
-  else
-  {
-    // The attempt was insuccessful, so we continue the program
-    _shouldContinue = true;
-    server = new LocalServer();
-    server->start();
-    QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
-    QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
-    QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
-    QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
-  }
+
+    if(args.contains("--force-run", Qt::CaseInsensitive))
+    {
+        isServerRuns.clear();
+        args.removeAll("--force-run");
+    }
+    _arguments = args;
+
+    if(!isServerRuns.isEmpty())
+    {
+        QString str = QString("CMD:showUp");
+        QByteArray bytes;
+        for(int i=1; i<_arguments.size(); i++)
+        {
+            str.append(QString("\n%1").arg(_arguments[i]));
+        }
+        bytes = str.toUtf8();
+        socket->write(bytes);
+        socket->flush();
+        QThread::msleep(100);
+        socket->close();
+    }
+    else
+    {
+        // The attempt was insuccessful, so we continue the program
+        _shouldContinue = true;
+        server = new LocalServer();
+        server->start();
+        QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
+        QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
+        QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
+        QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
+    }
 }
 
 /**
@@ -98,19 +91,19 @@ SingleApplication::SingleApplication(QStringList &args)
  */
 SingleApplication::~SingleApplication()
 {
-  if(_shouldContinue)
-  {
-      emit stopServer();
-      if((server) && (!server->wait(5000)))
-      {
-          qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
-          server->terminate();
-          qDebug() << "Wait for nothing";
-          server->wait();
-          qDebug() << "Terminated!";
-      }
-  }
-  if(server) delete server;
+    if(_shouldContinue)
+    {
+        emit stopServer();
+        if((server) && (!server->wait(5000)))
+        {
+            qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
+            server->terminate();
+            qDebug() << "Wait for nothing";
+            server->wait();
+            qDebug() << "Terminated!";
+        }
+    }
+    if(server) delete server;
 }
 
 /**
@@ -134,7 +127,7 @@ QStringList SingleApplication::arguments()
  */
 void SingleApplication::slotShowUp()
 {
-  emit showUp();
+    emit showUp();
 }
 
 void SingleApplication::slotOpenFile(QString path)

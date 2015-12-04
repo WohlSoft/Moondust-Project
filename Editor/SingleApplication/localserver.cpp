@@ -52,12 +52,12 @@ void IntProcServer::doReadData()
 {
     while (hasPendingDatagrams())
     {
-            QByteArray datagram;
-            datagram.resize(pendingDatagramSize());
-            QHostAddress sender;
-            quint16 senderPort;
-            readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-            emit messageIn(QString::fromUtf8(datagram));
+        QByteArray datagram;
+        datagram.resize(pendingDatagramSize());
+        QHostAddress sender;
+        quint16 senderPort;
+        readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        emit messageIn(QString::fromUtf8(datagram));
     }
 }
 
@@ -98,8 +98,8 @@ LocalServer::LocalServer()
  */
 LocalServer::~LocalServer()
 {
-  ipServer->close();
-  delete ipServer;
+    ipServer->close();
+    delete ipServer;
 }
 
 
@@ -117,7 +117,7 @@ LocalServer::~LocalServer()
  */
 void LocalServer::run()
 {
-  exec();
+    exec();
 }
 
 /**
@@ -126,10 +126,10 @@ void LocalServer::run()
  */
 void LocalServer::exec()
 {
-  while(ipServer->isOpen())
-  {
-    msleep(100);
-  }
+    while(ipServer->isOpen())
+    {
+        msleep(100);
+    }
 }
 
 
@@ -138,7 +138,6 @@ void LocalServer::exec()
  * SLOTS
  * -------
  */
-
 void LocalServer::stopServer()
 {
     if(ipServer) ipServer->close();
@@ -153,19 +152,19 @@ void LocalServer::stopServer()
  */
 void LocalServer::slotOnData(QString data)
 {
-  qDebug() << data;
-  QStringList args = data.split('\n');
-  foreach(QString c, args)
-  {
-      if(c.startsWith("CMD:", Qt::CaseInsensitive))
-      {
-        onCMD(c);
-      }
-      else
-      {
-        emit dataReceived(c);
-      }
-  }
+    qDebug() << data;
+    QStringList args = data.split('\n');
+    foreach(QString c, args)
+    {
+        if(c.startsWith("CMD:", Qt::CaseInsensitive))
+        {
+            onCMD(c);
+        }
+        else
+        {
+            emit dataReceived(c);
+        }
+    }
 }
 
 
@@ -177,30 +176,30 @@ void LocalServer::slotOnData(QString data)
  */
 void LocalServer::onCMD(QString data)
 {
-  //  Trim the leading part from the command
-  if(data.startsWith("CMD:"))
-  {
-    data.remove("CMD:");
+    //  Trim the leading part from the command
+    if(data.startsWith("CMD:"))
+    {
+        data.remove("CMD:");
 
-    qDebug()<<"Accepted data: "+data;
+        qDebug()<<"Accepted data: "+data;
 
-    QStringList commands;
-    commands << "showUp";
-    commands << "CONNECT_TO_ENGINE";
-    commands << "ENGINE_CLOSED";
-    commands << "Is editor running?";
+        QStringList commands;
+        commands << "showUp";
+        commands << "CONNECT_TO_ENGINE";
+        commands << "ENGINE_CLOSED";
+        commands << "Is editor running?";
 
-    int cmdID = commands.indexOf(data);
+        int cmdID = commands.indexOf(data);
 
-    if((cmdID==3) || (MainWinConnect::pMainWin->continueLoad))
+        if((cmdID==3) || (MainWinConnect::pMainWin->continueLoad))
         switch(cmdID)
         {
             case 0:
             {
                 emit showUp();
                 MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
-                                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
-                                                          |Qt::WindowActive);
+                                             (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
+                                              |Qt::WindowActive);
                 if(MainWinConnect::pMainWin->isMinimized())
                 {
                     MainWinConnect::pMainWin->raise();
@@ -240,9 +239,10 @@ void LocalServer::onCMD(QString data)
                 break;
             }
             default:
-              emit acceptedCommand(data);
+                emit acceptedCommand(data);
         }
-  }
-  else
-      emit acceptedCommand(data);
+    }
+    else
+        emit acceptedCommand(data);
+
 }

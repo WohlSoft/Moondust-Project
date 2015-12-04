@@ -26,7 +26,7 @@
 
 #include <QSettings>
 
-GlobalSettings AppSettings;
+GlobalSettings g_AppSettings;
 
 GlobalSettings::GlobalSettings()
 {
@@ -66,13 +66,11 @@ void GlobalSettings::load()
 {
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
-    MaxFPS=setup.value("max-fps", MaxFPS).toUInt();
-        NumberLimiter::apply(MaxFPS, 65, 1000);
     //TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
     //    NumberLimiter::apply(TicksPerSecond, 65, 180);
     timeOfFrame=setup.value("phys-step-time", TicksPerSecond).toUInt();
         NumberLimiter::apply(timeOfFrame, 2, 15);
-    TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+    TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
 
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
@@ -131,7 +129,6 @@ void GlobalSettings::save()
 {
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
-        setup.setValue("max-fps", MaxFPS);
         setup.setValue("phys-step", TicksPerSecond);
         setup.setValue("phys-step-time", timeOfFrame);
         setup.setValue("show-debug-info", showDebugInfo);
@@ -165,7 +162,6 @@ void GlobalSettings::resetDefaults()
     ScreenWidth=800;
     ScreenHeight=600;
 
-    MaxFPS=250;
     TicksPerSecond=65;
     timeOfFrame=15;
     vsync=true;
@@ -197,7 +193,6 @@ void GlobalSettings::resetDefaults()
 void GlobalSettings::apply()
 {
     PGE_Window::TicksPerSecond=1000.0f/timeOfFrame;
-    PGE_Window::MaxFPS=MaxFPS;
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;
     PGE_Window::showDebugInfo=showDebugInfo;

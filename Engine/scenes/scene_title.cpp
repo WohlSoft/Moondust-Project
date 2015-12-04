@@ -158,7 +158,7 @@ TitleScene::~TitleScene()
 
 bool TitleScene::init()
 {
-    controller = AppSettings.openController(1);
+    controller = g_AppSettings.openController(1);
 
     if(!ConfigManager::music_lastIniFile.isEmpty())
     {
@@ -296,10 +296,10 @@ void TitleScene::processEvents()
 {
     if(PGE_Window::showDebugInfo)
     {
-        if(AppSettings.joysticks.size()>0)
+        if(g_AppSettings.joysticks.size()>0)
         {
             KM_Key jkey;
-            JoystickController::bindJoystickKey(AppSettings.joysticks.first(), jkey);
+            JoystickController::bindJoystickKey(g_AppSettings.joysticks.first(), jkey);
             debug_joy_keyval    =jkey.val,
             debug_joy_keyid     =jkey.id;
             debug_joy_keytype   =jkey.type;
@@ -356,7 +356,7 @@ void TitleScene::render()
                                   imgs[i].frmH, x.first, x.second);
     }
 
-    if(AppSettings.showDebugInfo)
+    if(g_AppSettings.showDebugInfo)
     {
         FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\nfader ratio %4 N%5 F%6 TKS-%7\nTICK: %8")
                                .arg(debug_joy_keyval)
@@ -466,5 +466,5 @@ void TitleScene::resetController()
 {
     if(controller)
         delete controller;
-    controller = AppSettings.openController(1);
+    controller = g_AppSettings.openController(1);
 }

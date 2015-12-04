@@ -328,8 +328,8 @@ void TitleScene::processMenu()
                 menu.setCurrentItem(4);
             break;
             case menu_options:
-            AppSettings.apply();
-            AppSettings.save();
+            g_AppSettings.apply();
+            g_AppSettings.save();
             PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
         default:
             if(menu.isKeyGrabbing())
@@ -372,11 +372,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addMenuItem("testboxes", "Test of message boxes");
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addMenuItem("videosetup", "Video settings");
-                menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
-                                    []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
-                menu.addIntMenuItem(&AppSettings.volume_sound, 0, 128, "vlm_sound", "Sound volume", false);
-                menu.addBoolMenuItem(&AppSettings.fullScreen, "full_screen", "Full Screen mode",
-                                     []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
+                menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
+                                    []()->void{ PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music); });
+                menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", "Sound volume", false);
+                menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", "Full Screen mode",
+                                     []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); }
                                      );
             break;
                 case menu_tests:
@@ -397,27 +397,27 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     case menu_videosettings:
                         menu.setPos(300, 350);
                         menu.setItemsNumber(5);
-                        menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
-                        menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
-                        menu.addBoolMenuItem(&AppSettings.vsync, "vsync", "Enable V-Sync",
+                        menu.addBoolMenuItem(&g_AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
+                        menu.addBoolMenuItem(&g_AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
+                        menu.addBoolMenuItem(&g_AppSettings.vsync, "vsync", "Enable V-Sync",
                                                  [this]()->void{
-                                                     PGE_Window::vsync=AppSettings.vsync;
-                                                     PGE_Window::toggleVSync(AppSettings.vsync);
-                                                     AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
+                                                     PGE_Window::vsync=g_AppSettings.vsync;
+                                                     PGE_Window::toggleVSync(g_AppSettings.vsync);
+                                                     g_AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
                                                  }
                                              );
                         //menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 16, "phys_step", "Frame time (ms.)", false,
+                        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 16, "phys_step", "Frame time (ms.)", false,
                                             [this]()->void{
                                                 if(!PGE_Window::vsync)
                                                 {
-                                                    PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
-                                                    PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;
-                                                    AppSettings.TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+                                                    PGE_Window::TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
+                                                    PGE_Window::TimeOfFrame=g_AppSettings.timeOfFrame;
+                                                    g_AppSettings.TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
                                                     //PGE_Window::TicksPerSecond =AppSettings.TicksPerSecond;
                                                     this->updateTickValue();
                                                 } else {
-                                                    AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
+                                                    g_AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
                                                 }
                                             }
                                             );
@@ -442,29 +442,29 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             ctrlSwitch = [this]()->void{
                                 setMenu(menu_controls_plr1);
                                 };
-                            mct_p = &AppSettings.player1_controller;
-                            if((*mct_p>=0)&&(*mct_p<AppSettings.player1_joysticks.size()))
+                            mct_p = &g_AppSettings.player1_controller;
+                            if((*mct_p>=0)&&(*mct_p<g_AppSettings.player1_joysticks.size()))
                             {
-                                if(*mct_p<AppSettings.joysticks.size())
-                                    jdev        = AppSettings.joysticks[*mct_p];
-                                mp_p         = &AppSettings.player1_joysticks[*mct_p];
+                                if(*mct_p<g_AppSettings.joysticks.size())
+                                    jdev        = g_AppSettings.joysticks[*mct_p];
+                                mp_p         = &g_AppSettings.player1_joysticks[*mct_p];
                             }
                             else
-                                mp_p = &AppSettings.player1_keyboard;
+                                mp_p = &g_AppSettings.player1_keyboard;
                         }
                         else{
                             ctrlSwitch = [this]()->void{
                                 setMenu(menu_controls_plr2);
                                 };
-                            mct_p  = &AppSettings.player2_controller;
-                            if((*mct_p>=0)&&(*mct_p<AppSettings.player2_joysticks.size()))
+                            mct_p  = &g_AppSettings.player2_controller;
+                            if((*mct_p>=0)&&(*mct_p<g_AppSettings.player2_joysticks.size()))
                             {
-                                if(*mct_p<AppSettings.joysticks.size())
-                                    jdev        = AppSettings.joysticks[*mct_p];
-                                mp_p = &AppSettings.player2_joysticks[*mct_p];
+                                if(*mct_p<g_AppSettings.joysticks.size())
+                                    jdev        = g_AppSettings.joysticks[*mct_p];
+                                mp_p = &g_AppSettings.player2_joysticks[*mct_p];
                             }
                             else
-                                mp_p = &AppSettings.player2_keyboard;
+                                mp_p = &g_AppSettings.player2_keyboard;
                         }
 
                             menu.setPos(300, 216);
@@ -474,10 +474,10 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             controller.value=-1;
                             controller.label="Keyboard";
                             ctrls.push_back(controller);
-                            for(int i=0;i<AppSettings.joysticks.size();i++)
+                            for(int i=0;i<g_AppSettings.joysticks.size();i++)
                             {
                                 controller.value=i;
-                                controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
+                                controller.label=QString("Joystick: %1").arg(SDL_JoystickName(g_AppSettings.joysticks[i]));
                                 ctrls.push_back(controller);
                             }
                             menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Input:", true, ctrlSwitch);
