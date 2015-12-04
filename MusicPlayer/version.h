@@ -33,12 +33,12 @@
 
 #define _FILE_DESC "Simple SDL2 Mixer X Music player"
 
-#define _INTERNAL_NAME "pge_sdlmusplay"
+#define _INTERNAL_NAME "pge_musplay"
 
 #ifdef _WIN32
-	#define _ORIGINAL_NAME "pge_sdlmusplay.exe" // for Windows platforms
+    #define _ORIGINAL_NAME "pge_musplay.exe" // for Windows platforms
 #else
-	#define _ORIGINAL_NAME "pge_sdlmusplay" // for any other platforms, however impossible, because RC is Windows-only file :P
+    #define _ORIGINAL_NAME "pge_musplay" // for any other platforms, however impossible, because RC is Windows-only file :P
 #endif
 
 //Uncomment this for enable detal logging

@@ -1,4 +1,4 @@
-//IDI_ICON1               ICON    DISCARDABLE     "cat_musplay.ico"
+IDI_ICON1               ICON    DISCARDABLE     "cat_musplay.ico"
 
 #include <windows.h>
 #include "../version.h"

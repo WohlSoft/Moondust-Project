@@ -65,6 +65,8 @@ macx:{
     LIBS += -lSDL2 -lSDL2_mixer_ext
 }
 
+RC_FILE = _resources/musicplayer.rc
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     SingleApplication/localserver.cpp \
@@ -73,9 +75,13 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
-    SingleApplication/singleapplication.h
+    SingleApplication/singleapplication.h \
+    version.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    _resources/musicplayer.qrc
 
 DISTFILES += \
     android/AndroidManifest.xml \
