@@ -26,14 +26,23 @@
 #include <QTcpSocket>
 #include <QLocalSocket>
 
+/*!
+ * \brief Interprocess connection proxy class
+ */
 class IntProcServer  : public QUdpSocket
 {
     Q_OBJECT
 public:
     explicit IntProcServer();
     ~IntProcServer();
+
 public slots:
+    /*!
+     * \brief UDP Socket state change event
+     * \param stat New state of socket
+     */
     void stateChanged(QAbstractSocket::SocketState stat);
+
 signals:
     void messageIn(QString msg);
 
@@ -42,34 +51,84 @@ protected slots:
     void displayError(QAbstractSocket::SocketError socketError);
 };
 
-
-
+/*!
+ * \brief Local server thread class
+ */
 class LocalServer : public QThread
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  LocalServer();
-  ~LocalServer();
-  void shut();
+    LocalServer();
+    ~LocalServer();
+    void shut();
 
 protected:
-  void run();
-  void exec();
+    /**
+     * -----------------------
+     * QThread requred methods
+     * -----------------------
+     */
+
+    /**
+     * @brief run
+     *  Initiate the thread.
+     */
+    void run();
+
+    /**
+     * @brief LocalServer::exec
+     *  Keeps the thread alive. Waits for incomming connections
+     */
+    void exec();
 
 signals:
-  void dataReceived(QString data);
-  void privateDataReceived(QString data);
-  void showUp();
-  void openFile(QString path);
-  void acceptedCommand(QString cmd);
+    /*!
+     * \brief Triggering when raw data was received by server
+     * \param data received rae data
+     */
+    void dataReceived(QString data);
+    /*!
+     * \brief Triggering when raw data was received by server
+     * \param data received rae data
+     */
+    void privateDataReceived(QString data);
+
+    /*!
+     * \brief Show up window command signal
+     */
+    void showUp();
+
+    /*!
+     * \brief File open incoming command
+     * \param path full file path to open
+     */
+    void openFile(QString path);
+
+    /*!
+     * \brief Accepted raw command signal
+     * \param cmd command line
+     */
+    void acceptedCommand(QString cmd);
 
 private slots:
-  void stopServer();
-  void slotOnData(QString data);
+    /**
+     * @brief Initialize stopping of server
+     */
+    void stopServer();
+
+    /**
+    * @brief LocalServer::slotOnData
+    *  Executed when data is received
+    * @param data
+    */
+    void slotOnData(QString data);
 
 private:
-  void onCMD(QString data);
-
+    /**
+     * @brief Parse accepted line and run necessary commands
+     * @param data Input data to parse
+     */
+    void onCMD(QString data);
 };
 
 #endif // LOCALSERVER_H

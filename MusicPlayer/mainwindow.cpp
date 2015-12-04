@@ -11,21 +11,35 @@
 #include <SDL2/SDL_mixer_ext.h>
 #undef main
 
+/*!
+ *  SDL Mixer wrapper
+ */
 namespace PGE_MusicPlayer
 {
+    Mix_Music *play_mus = NULL;
+    Mix_MusicType type  = MUS_NONE;
 
-static void error(QString msg)
-{
-    QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
-}
+    /*!
+     * \brief Spawn warning message box with specific text
+     * \param msg text to spawn in message box
+     */
+    static void error(QString msg)
+    {
+        QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
+    }
 
-Mix_Music *play_mus = NULL;
-static Mix_MusicType type;
-
+    /*!
+     * \brief Stop music playing
+     */
     void MUS_stopMusic()
     {
         Mix_HaltMusic();
     }
+
+    /*!
+     * \brief Get music title of current track
+     * \return music title of current music file
+     */
     QString MUS_getMusTitle()
     {
         if(play_mus)
@@ -33,6 +47,11 @@ static Mix_MusicType type;
         else
             return QString("[No music]");
     }
+
+    /*!
+     * \brief Get music artist tag text of current music track
+     * \return music artist tag text of current music track
+     */
     QString MUS_getMusArtist()
     {
         if(play_mus)
@@ -40,6 +59,11 @@ static Mix_MusicType type;
         else
             return QString("[Unknown Artist]");
     }
+
+    /*!
+     * \brief Get music album tag text of current music track
+     * \return music ablum tag text of current music track
+     */
     QString MUS_getMusAlbum()
     {
         if(play_mus)
@@ -47,6 +71,11 @@ static Mix_MusicType type;
         else
             return QString("[Unknown Album]");
     }
+
+    /*!
+     * \brief Get music copyright tag text of current music track
+     * \return music copyright tag text of current music track
+     */
     QString MUS_getMusCopy()
     {
         if(play_mus)
@@ -55,6 +84,9 @@ static Mix_MusicType type;
             return QString("");
     }
 
+    /*!
+     * \brief Start playing of currently opened music track
+     */
     void MUS_playMusic()
     {
         if(play_mus)
@@ -73,12 +105,21 @@ static Mix_MusicType type;
         //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
     }
 
+    /*!
+     * \brief Sets volume level of current music stream
+     * \param volume level of volume from 0 tp 128
+     */
     void MUS_changeVolume(int volume)
     {
         Mix_VolumeMusic(volume);
         qDebug() << QString("Mix_VolumeMusic: %1\n").arg(volume);
     }
 
+    /*!
+     * \brief Open music file
+     * \param musFile Full path to music file
+     * \return true if music file was successfully opened, false if loading was failed
+     */
     bool MUS_openFile(QString musFile)
     {
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}

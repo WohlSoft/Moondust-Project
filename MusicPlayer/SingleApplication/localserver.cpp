@@ -49,12 +49,12 @@ void IntProcServer::readData()
 {
     while (hasPendingDatagrams())
     {
-            QByteArray datagram;
-            datagram.resize(pendingDatagramSize());
-            QHostAddress sender;
-            quint16 senderPort;
-            readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-            emit messageIn(QString::fromUtf8(datagram));
+        QByteArray datagram;
+        datagram.resize(pendingDatagramSize());
+        QHostAddress sender;
+        quint16 senderPort;
+        readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        emit messageIn(QString::fromUtf8(datagram));
     }
 }
 
@@ -95,8 +95,8 @@ LocalServer::LocalServer()
  */
 LocalServer::~LocalServer()
 {
-  ipServer->close();
-  delete ipServer;
+    ipServer->close();
+    delete ipServer;
 }
 
 
@@ -107,26 +107,18 @@ LocalServer::~LocalServer()
  * QThread requred methods
  * -----------------------
  */
-
-/**
- * @brief run
- *  Initiate the thread.
- */
 void LocalServer::run()
 {
-  exec();
+    exec();
 }
 
-/**
- * @brief LocalServer::exec
- *  Keeps the thread alive. Waits for incomming connections
- */
+
 void LocalServer::exec()
 {
-  while(ipServer->isOpen())
-  {
-    msleep(100);
-  }
+    while(ipServer->isOpen())
+    {
+        msleep(100);
+    }
 }
 
 
@@ -135,78 +127,64 @@ void LocalServer::exec()
  * SLOTS
  * -------
  */
-
 void LocalServer::stopServer()
 {
     if(ipServer) ipServer->close();
 }
 
-
-
-/**
- * @brief LocalServer::slotOnData
- *  Executed when data is received
- * @param data
- */
 void LocalServer::slotOnData(QString data)
 {
-  qDebug() << data;
-  QStringList args = data.split('\n');
-  foreach(QString c, args)
-  {
-      if(c.startsWith("CMD:", Qt::CaseInsensitive))
-      {
-        onCMD(c);
-      }
-      else
-      {
-        emit dataReceived(c);
-      }
-  }
+    qDebug() << data;
+    QStringList args = data.split('\n');
+    foreach(QString c, args)
+    {
+        if(c.startsWith("CMD:", Qt::CaseInsensitive))
+        {
+            onCMD(c);
+        }
+        else
+        {
+            emit dataReceived(c);
+        }
+    }
 }
 
 
-
-/**
- * -------
- * Helper methods
- * -------
- */
 void LocalServer::onCMD(QString data)
 {
-  //  Trim the leading part from the command
-  if(data.startsWith("CMD:"))
-  {
-    data.remove("CMD:");
-
-    qDebug()<<"Accepted data: "+data;
-
-    QStringList commands;
-    commands << "showUp";
-    commands << "Is SDL2 Mixer X running?";
-
-    int cmdID = commands.indexOf(data);
-    switch(cmdID)
+    //  Trim the leading part from the command
+    if(data.startsWith("CMD:"))
     {
-        case 0:
+        data.remove("CMD:");
+
+        qDebug()<<"Accepted data: "+data;
+
+        QStringList commands;
+        commands << "showUp";
+        commands << "Is SDL2 Mixer X running?";
+
+        int cmdID = commands.indexOf(data);
+        switch(cmdID)
         {
-            emit showUp();
-            break;
+            case 0:
+            {
+                emit showUp();
+                break;
+            }
+            case 1:
+            {
+                QUdpSocket answer;
+                answer.connectToHost(QHostAddress::LocalHost, 58235);
+                answer.waitForConnected(100);
+                answer.write(QString("Yes, I'm runs!").toUtf8());
+                answer.waitForBytesWritten(100);
+                answer.flush();
+                break;
+            }
+            default:
+                emit acceptedCommand(data);
         }
-        case 1:
-        {
-            QUdpSocket answer;
-            answer.connectToHost(QHostAddress::LocalHost, 58235);
-            answer.waitForConnected(100);
-            answer.write(QString("Yes, I'm runs!").toUtf8());
-            answer.waitForBytesWritten(100);
-            answer.flush();
-            break;
-        }
-        default:
-          emit acceptedCommand(data);
     }
-  }
-  else
-      emit acceptedCommand(data);
+    else
+        emit acceptedCommand(data);
 }
