@@ -26,6 +26,10 @@
 #include "save_filedata.h"
 #include "smbx64_cnf_filedata.h"
 
+/*!
+ * \brief PGE File library class of static functions.
+ *        Library is buildable in both Qt and STL applications
+ */
 #ifdef PGE_FILES_QT
 class FileFormats: PGE_FILES_INHERED
 {
@@ -36,25 +40,71 @@ class FileFormats
 #endif
 
 public:
-    //File format read/write functions
+
+//File format read/write functions
+    /*!
+     * \brief Parses non-SMBX64 meta-data from additional *.meta files
+     *        there are contains data which impossible to save into SMBX64 LVL file
+     *        therefore it will be saved into additional *.meta file
+     * \param Raw-data Full raw file data contents
+     * \return Meta-data structure
+     */
     static MetaData         ReadNonSMBX64MetaData(PGESTRING RawData);
+
+    /*!
+     * \brief Generates raw data of non-SMBX meta-data file from Meta-data structure
+     * \param metaData Meta-data structure
+     * \return Full raw-data string
+     */
     static PGESTRING        WriteNonSMBX64MetaData(MetaData metaData);
 
-    /******************************Level files***********************************/
-    static LevelData        OpenLevelFile(PGESTRING filePath); //!< Open supported level file via direct path
+/******************************Level files***********************************/
+    /*!
+     * \brief Parses a level file with auto-detection of a file type (SMBX1...64 LVL or PGE-LVLX)
+     * \param filePath Full path to file which must be opened
+     * \return Level data structure
+     */
+    static LevelData        OpenLevelFile(PGESTRING filePath);
+    /*!
+     * \brief Parses a level file header only with auto-detection of a file type (SMBX1...64 LVL or PGE-LVLX)
+     * \param filePath Full path to file which must be opened
+     * \return Level data structure (with initialized header data only)
+     */
     static LevelData        OpenLevelFileHeader(PGESTRING filePath);
 
-    // SMBX64 LVL File
-    static LevelData        ReadSMBX64LvlFileHeader(PGESTRING filePath); //!< Read file header only
-    static LevelData        ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath=""); //!< Parse SMBX1-SMBX64 level
+// SMBX64 LVL File
+    /*!
+     * \brief Parses SMBX1...64 level file header and skips other part of a file
+     * \param filePath Full path to level file
+     * \return Level data structure (with initialized header data only)
+     */
+    static LevelData        ReadSMBX64LvlFileHeader(PGESTRING filePath);
+    /*!
+     * \brief Parses SMBX1...64 level file data
+     * \param RawData Full raw-data of the SMBX1...64 level file
+     * \param filePath Full path to the file (if empty, custom data in the episode and in the custom directories are will be inaccessible)
+     * \return Level data structure
+     */
+    static LevelData        ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath="");
+    /*!
+     * \brief Generates SMBX1...64 Level file data
+     * \param FileData Level data structure
+     * \param file_format SMBX file format version number (from 0 to 64) [Example of level in SMBX0 format is intro.dat included with SMBX 1.0]
+     * \return Full raw-data string
+     */
     static PGESTRING        WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
-    // PGE Extended Level File
+// PGE Extended Level File
+    /*!
+     * \brief Parses PGE-X Level file header
+     * \param filePath Full path to PGE-X Level file
+     * \return Level data structure (with initialized header data only)
+     */
     static LevelData        ReadExtendedLvlFileHeader(PGESTRING filePath); //!< Read file header only
     static LevelData        ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath=""); //!< Parse PGE-X level file
     static PGESTRING        WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
 
-    // Lvl Data
+// Lvl Data
     static LevelData        CreateLevelData(); //!< Generate empty level map
 
     static LevelNPC         CreateLvlNpc();
@@ -73,7 +123,7 @@ public:
     static void             smbx64LevelSortBGOs(LevelData &lvl);
 
 
-    /******************************World file***********************************/
+/******************************World file***********************************/
     static WorldData        OpenWorldFile(PGESTRING filePath);
     static WorldData        OpenWorldFileHeader(PGESTRING filePath);
 
@@ -107,18 +157,18 @@ public:
     static GamesaveData     CreateGameSaveData();
     static saveCharState    CreateSavCharacterState();
 
-    /****************************SMBX64 Config file********************************/
+/****************************SMBX64 Config file********************************/
     static SMBX64_ConfigFile ReadSMBX64ConfigFile(PGESTRING RawData);  //!< Parse SMBX1-SMBX64 Config file
     static PGESTRING        WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int file_format);
 
-    /******************************NPC.txt file***********************************/
+/******************************NPC.txt file***********************************/
     // SMBX64 NPC.TXT File
     static NPCConfigFile    ReadNpcTXTFile(PGESTRING file, bool IgnoreBad=false); //read
     static PGESTRING        WriteNPCTxtFile(NPCConfigFile FileData);                //write
 
     static NPCConfigFile    CreateEmpytNpcTXT();
 
-    /******************************common stuff***********************************/
+/******************************common stuff***********************************/
     enum ErrorCodes{
         Success=0,
         ERROR_NotExist,
