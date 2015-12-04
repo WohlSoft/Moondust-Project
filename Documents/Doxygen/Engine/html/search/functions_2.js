@@ -6,6 +6,8 @@ var searchData=
   ['controller',['Controller',['../class_controller.html#a95c56822d667e94b031451729ce069a9',1,'Controller']]],
   ['corefile',['coreFile',['../class_lua_engine.html#a97fe712ceefc698bea838fe98631dc93',1,'LuaEngine']]],
   ['count',['Count',['../class_r_tree.html#a813cdf63ce3e3e255821d9ba4bc9e7df',1,'RTree']]],
+  ['createleveldata',['CreateLevelData',['../class_file_formats.html#aaa52b56c92995c66ea700d5039a923fe',1,'FileFormats']]],
+  ['createworlddata',['CreateWorldData',['../class_file_formats.html#a73ad4345024fb25a7988d749f4f2123b',1,'FileFormats']]],
   ['currentitem',['currentItem',['../class_p_g_e___menu.html#a6f28adc48658a9c3cf1cdddb8152703c',1,'PGE_Menu']]],
   ['currentitemi',['currentItemI',['../class_p_g_e___menu.html#a820e56618993c37fd61fa2382b98dab5',1,'PGE_Menu']]]
 ];

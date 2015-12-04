@@ -1,6 +1,8 @@
 var searchData=
 [
+  ['gamecompleted',['gameCompleted',['../struct_gamesave_data.html#ae0a41fb9c14f71788e25e249692648c0',1,'GamesaveData']]],
   ['gameoverscene',['GameOverScene',['../class_game_over_scene.html',1,'']]],
+  ['gamesavedata',['GamesaveData',['../struct_gamesave_data.html',1,'']]],
   ['gens',['gens',['../structvaradic__util_1_1gens.html',1,'varadic_util']]],
   ['gens_3c_200_2c_20s_2e_2e_2e_20_3e',['gens&lt; 0, S... &gt;',['../structvaradic__util_1_1gens_3_010_00_01_s_8_8_8_01_4.html',1,'varadic_util']]],
   ['getat',['GetAt',['../class_r_tree.html#aab228fbd816b5e5c93666c37b47635f3',1,'RTree']]],

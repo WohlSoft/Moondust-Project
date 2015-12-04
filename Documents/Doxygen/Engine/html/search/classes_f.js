@@ -31,7 +31,12 @@ var searchData=
   ['pge_5ftexture',['PGE_Texture',['../struct_p_g_e___texture.html',1,'']]],
   ['pge_5fwindow',['PGE_Window',['../class_p_g_e___window.html',1,'']]],
   ['pgecolor',['PGEColor',['../struct_p_g_e_color.html',1,'']]],
+  ['pgefile',['PGEFile',['../class_p_g_e_file.html',1,'']]],
+  ['pgex_5fentry',['PGEX_Entry',['../struct_p_g_e_file_1_1_p_g_e_x___entry.html',1,'PGEFile']]],
+  ['pgex_5fitem',['PGEX_Item',['../struct_p_g_e_file_1_1_p_g_e_x___item.html',1,'PGEFile']]],
+  ['pgex_5fval',['PGEX_Val',['../struct_p_g_e_file_1_1_p_g_e_x___val.html',1,'PGEFile']]],
   ['playepisoderesult',['PlayEpisodeResult',['../struct_play_episode_result.html',1,'']]],
+  ['playerpoint',['PlayerPoint',['../struct_player_point.html',1,'']]],
   ['playerposdetector',['PlayerPosDetector',['../class_player_pos_detector.html',1,'']]],
   ['playerstate',['PlayerState',['../struct_player_state.html',1,'']]],
   ['playlevelresult',['PlayLevelResult',['../struct_play_level_result.html',1,'']]]

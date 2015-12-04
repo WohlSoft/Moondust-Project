@@ -24,6 +24,8 @@ var searchData=
   ['onkeyboardreleasedsdl',['onKeyboardReleasedSDL',['../class_scene.html#aa17fc6deb078eb81939d73d704f066e0',1,'Scene']]],
   ['onkeyinput',['onKeyInput',['../class_scene.html#a8b3b75a502813b95e0af9990c3137a57',1,'Scene']]],
   ['opencontroller',['openController',['../class_global_settings.html#ac2f9df3d1f05d812210b58487e52be08',1,'GlobalSettings']]],
+  ['openlevelfile',['OpenLevelFile',['../class_file_formats.html#afe0fa0fbdd9be79884d828be99228f3c',1,'FileFormats']]],
+  ['openlevelfileheader',['OpenLevelFileHeader',['../class_file_formats.html#adaf699c35808698c717548af2be1d630',1,'FileFormats']]],
   ['operator_2a',['operator*',['../class_r_tree_1_1_iterator.html#abb61d3a8396473b543cb15aa9002cfeb',1,'RTree::Iterator::operator*()'],['../class_r_tree_1_1_iterator.html#a45496ad72eba6929d40239ed711bf129',1,'RTree::Iterator::operator*() const ']]],
   ['operator_2b',['operator+',['../struct_vec3.html#a4667534eecaf26fafd53a7bca237e243',1,'Vec3']]],
   ['operator_2b_2b',['operator++',['../class_r_tree_1_1_iterator.html#ad578bac71cfc7d324b84595032feda21',1,'RTree::Iterator']]]

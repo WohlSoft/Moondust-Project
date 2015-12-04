@@ -12,9 +12,22 @@ var searchData=
   ['wldsceneryitem',['WldSceneryItem',['../class_wld_scenery_item.html',1,'']]],
   ['wldtileitem',['WldTileItem',['../class_wld_tile_item.html',1,'']]],
   ['worldadditionalimage',['WorldAdditionalImage',['../struct_world_additional_image.html',1,'']]],
+  ['worlddata',['WorldData',['../struct_world_data.html',1,'']]],
+  ['worldlevels',['WorldLevels',['../struct_world_levels.html',1,'']]],
   ['worldmapsetup',['WorldMapSetup',['../struct_world_map_setup.html',1,'']]],
+  ['worldmusic',['WorldMusic',['../struct_world_music.html',1,'']]],
   ['worldnode',['WorldNode',['../class_world_node.html',1,'']]],
+  ['worldpaths',['WorldPaths',['../struct_world_paths.html',1,'']]],
+  ['worldposx',['worldPosX',['../struct_gamesave_data.html#a4da55e5c7de8692be3a09669fcba5ac9',1,'GamesaveData']]],
+  ['worldposy',['worldPosY',['../struct_gamesave_data.html#a9afe32754d0b691d29e189fc27946190',1,'GamesaveData']]],
   ['worldscene',['WorldScene',['../class_world_scene.html',1,'']]],
   ['worldscene_5fmisc_5fimg',['WorldScene_misc_img',['../struct_world_scene__misc__img.html',1,'']]],
-  ['worldscene_5fportrait',['WorldScene_Portrait',['../class_world_scene___portrait.html',1,'']]]
+  ['worldscene_5fportrait',['WorldScene_Portrait',['../class_world_scene___portrait.html',1,'']]],
+  ['worldscenery',['WorldScenery',['../struct_world_scenery.html',1,'']]],
+  ['worldtiles',['WorldTiles',['../struct_world_tiles.html',1,'']]],
+  ['writeextendedlvlfile',['WriteExtendedLvlFile',['../class_file_formats.html#aeea217b0c3ac92d1d65d9b4b694b7545',1,'FileFormats']]],
+  ['writeextendedwldfile',['WriteExtendedWldFile',['../class_file_formats.html#a61af366ae732611bd43e17fb37f48344',1,'FileFormats']]],
+  ['writenonsmbx64metadata',['WriteNonSMBX64MetaData',['../class_file_formats.html#ae5316d42b754711508633e2774bcdf5e',1,'FileFormats']]],
+  ['writesmbx64lvlfile',['WriteSMBX64LvlFile',['../class_file_formats.html#a1a258fa27e44dca4aef2bdd908a41d12',1,'FileFormats']]],
+  ['writesmbx64wldfile',['WriteSMBX64WldFile',['../class_file_formats.html#a242900b9b5d45e2b9c9b6410f813761a',1,'FileFormats']]]
 ];

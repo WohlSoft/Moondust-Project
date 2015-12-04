@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c40ffb3a3854dbc0dc2cc9b22acb75c0.html">networking</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_248bc03ed1ebde008e36ee6517494ce3.html">networking</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -143,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">bool</span> do_acceptLevelData;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QString accepted_lvl_raw;  <span class="comment">// accept any raw data before will be accepted &#39;\n\n&#39;</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">bool</span> do_parseLevelData;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    LevelData accepted_lvl;    <span class="comment">// When accepted PARSE_LVLX\n\n, parse data and call signal</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="struct_level_data.html">LevelData</a> accepted_lvl;    <span class="comment">// When accepted PARSE_LVLX\n\n, parse data and call signal</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> levelIsLoad();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">bool</span> sendToEditor(QString command);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
@@ -173,6 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif // EDITOR_PIPE_H</span></div>
 <div class="ttc" id="class_editor_pipe_html_ab6394093ebb132216dc953fb4d2f4f3e"><div class="ttname"><a href="class_editor_pipe.html#ab6394093ebb132216dc953fb4d2f4f3e">EditorPipe::~EditorPipe</a></div><div class="ttdeci">~EditorPipe()</div><div class="ttdoc">EditorPipe::~LocalServer Destructor. </div><div class="ttdef"><b>Definition:</b> editor_pipe.cpp:121</div></div>
 <div class="ttc" id="class_int_proc_server_html"><div class="ttname"><a href="class_int_proc_server.html">IntProcServer</a></div><div class="ttdef"><b>Definition:</b> editor_pipe.h:17</div></div>
+<div class="ttc" id="struct_level_data_html"><div class="ttname"><a href="struct_level_data.html">LevelData</a></div><div class="ttdef"><b>Definition:</b> lvl_filedata.h:243</div></div>
 <div class="ttc" id="class_editor_pipe_html_a219456de58bd93ea918391d3bf38949f"><div class="ttname"><a href="class_editor_pipe.html#a219456de58bd93ea918391d3bf38949f">EditorPipe::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">run Initiate the thread. </div><div class="ttdef"><b>Definition:</b> editor_pipe.cpp:175</div></div>
 <div class="ttc" id="class_editor_pipe_html"><div class="ttname"><a href="class_editor_pipe.html">EditorPipe</a></div><div class="ttdef"><b>Definition:</b> editor_pipe.h:41</div></div>
 <div class="ttc" id="class_editor_pipe_html_a5e8c38c4e5119ebbd10f13231707acff"><div class="ttname"><a href="class_editor_pipe.html#a5e8c38c4e5119ebbd10f13231707acff">EditorPipe::exec</a></div><div class="ttdeci">void exec()</div><div class="ttdoc">EditorPipe::exec Keeps the thread alive. Waits for incomming connections. </div><div class="ttdef"><b>Definition:</b> editor_pipe.cpp:191</div></div>

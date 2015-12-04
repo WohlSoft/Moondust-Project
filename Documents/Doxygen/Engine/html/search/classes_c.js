@@ -7,5 +7,6 @@ var searchData=
   ['matrixanimatorframe',['MatrixAnimatorFrame',['../struct_matrix_animator_frame.html',1,'']]],
   ['menuboxsetup',['MenuBoxSetup',['../struct_menu_box_setup.html',1,'']]],
   ['menusetup',['MenuSetup',['../struct_menu_setup.html',1,'']]],
-  ['messageboxsetup',['MessageBoxSetup',['../struct_message_box_setup.html',1,'']]]
+  ['messageboxsetup',['MessageBoxSetup',['../struct_message_box_setup.html',1,'']]],
+  ['metadata',['MetaData',['../struct_meta_data.html',1,'']]]
 ];

@@ -20,5 +20,7 @@ var searchData=
   ['maxspeed_5fup',['MaxSpeed_up',['../structobj__player__physics.html#ac5e5a93092083dd2057d831dfecc521f',1,'obj_player_physics']]],
   ['maxspeed_5fwalk',['MaxSpeed_walk',['../structobj__player__physics.html#a5e224559b58db9bf0c1df7bd13c09319',1,'obj_player_physics']]],
   ['min_5fvel_5fx',['min_vel_x',['../struct_p_g_e___phys___object___phys.html#a9d67bf89e48bc65b9f148c3953cb5bf4',1,'PGE_Phys_Object_Phys']]],
-  ['min_5fvel_5fy',['min_vel_y',['../struct_p_g_e___phys___object___phys.html#a7be41aece9f5dc51cdc2ddfec688e8ef',1,'PGE_Phys_Object_Phys']]]
+  ['min_5fvel_5fy',['min_vel_y',['../struct_p_g_e___phys___object___phys.html#a7be41aece9f5dc51cdc2ddfec688e8ef',1,'PGE_Phys_Object_Phys']]],
+  ['musicfile',['musicFile',['../struct_gamesave_data.html#a213cf5d312067e0b52a1b166e354e012',1,'GamesaveData']]],
+  ['musicid',['musicID',['../struct_gamesave_data.html#ad579eca8852c7c78eb5c3ead24aaa266',1,'GamesaveData']]]
 ];

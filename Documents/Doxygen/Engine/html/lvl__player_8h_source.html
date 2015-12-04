@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_18b7cbd64894ab3853314e9eb7a6c424.html">scenes</a></li><li class="navelem"><a class="el" href="dir_9ba2f8bfc130654b9427e658574e386f.html">level</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_53f6d4e538114be617a93c6fb018cf4a.html">scenes</a></li><li class="navelem"><a class="el" href="dir_e2c5a4cdf6fb0ab9e71ce6edbc1d9043.html">level</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -139,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">bool</span> _doSafeSwitchCharacter;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">void</span> setPlayerPointInfo(PlayerPoint pt);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">void</span> setPlayerPointInfo(<a class="code" href="struct_player_point.html">PlayerPoint</a> pt);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">void</span> init();</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_l_v_l___player.html#a49aca2bb6204ff78510401a9676e0a10">update</a>(<span class="keywordtype">float</span> ticks);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">void</span> updateCamera();</div>
@@ -164,7 +164,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">int</span> playerID;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="structobj__player.html">obj_player</a> setup;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        PlayerPoint data;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="struct_player_point.html">PlayerPoint</a> data;</div>
 <div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_l_v_l___player.html#adc058edb42bf1e7b109d0940ece770a2">   77</a></span>&#160;        <a class="code" href="class_p_g_e___level_camera.html">PGE_LevelCamera</a> * <a class="code" href="class_l_v_l___player.html#adc058edb42bf1e7b109d0940ece770a2">camera</a>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> teleport(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y);</div>
@@ -277,7 +277,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <a class="code" href="class_event_queue.html">EventQueue&lt;LVL_Player &gt;</a> event_queue;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordtype">void</span>    processWarpChecking();</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        <span class="keywordtype">void</span>    <a class="code" href="class_l_v_l___player.html#aa575db39625ee75d0cc97c1ec0fad6f0">WarpTo</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">int</span> warpType, <span class="keywordtype">int</span> warpDirection=1);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordtype">void</span>    <a class="code" href="class_l_v_l___player.html#aa575db39625ee75d0cc97c1ec0fad6f0">WarpTo</a>(LevelDoor warp);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordtype">void</span>    <a class="code" href="class_l_v_l___player.html#aa575db39625ee75d0cc97c1ec0fad6f0">WarpTo</a>(<a class="code" href="struct_level_door.html">LevelDoor</a> warp);</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="comment">/*******************Warps*********************/</span>\</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="comment">/******************floating*******************/</span></div>
@@ -360,6 +360,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_l_v_l___player_html_a49aca2bb6204ff78510401a9676e0a10"><div class="ttname"><a href="class_l_v_l___player.html#a49aca2bb6204ff78510401a9676e0a10">LVL_Player::update</a></div><div class="ttdeci">void update(float ticks)</div><div class="ttdef"><b>Definition:</b> lvl_player_update.cpp:27</div></div>
 <div class="ttc" id="class_controllable_object_html"><div class="ttname"><a href="class_controllable_object.html">ControllableObject</a></div><div class="ttdoc">Provides controller input interface for a physical objects (for example, playable characters) ...</div><div class="ttdef"><b>Definition:</b> controllable_object.h:30</div></div>
 <div class="ttc" id="class_l_v_l___player_html_a0526dc7704069be47b4edafe4c50c40d"><div class="ttname"><a href="class_l_v_l___player.html#a0526dc7704069be47b4edafe4c50c40d">LVL_Player::foot_contacts_map</a></div><div class="ttdeci">QHash&lt; intptr_t, PGE_Phys_Object * &gt; foot_contacts_map</div><div class="ttdoc">staying on ground surfaces </div><div class="ttdef"><b>Definition:</b> lvl_player.h:149</div></div>
+<div class="ttc" id="struct_level_door_html"><div class="ttname"><a href="struct_level_door.html">LevelDoor</a></div><div class="ttdef"><b>Definition:</b> lvl_filedata.h:135</div></div>
 <div class="ttc" id="class_event_queue_html"><div class="ttname"><a href="class_event_queue.html">EventQueue&lt; LVL_Player &gt;</a></div></div>
 <div class="ttc" id="structobj__player_html"><div class="ttname"><a href="structobj__player.html">obj_player</a></div><div class="ttdef"><b>Definition:</b> obj_player.h:103</div></div>
 <div class="ttc" id="structobj__player__physics_html"><div class="ttname"><a href="structobj__player__physics.html">obj_player_physics</a></div><div class="ttdef"><b>Definition:</b> obj_player.h:31</div></div>
@@ -379,6 +380,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="structobj__player__state_html"><div class="ttname"><a href="structobj__player__state.html">obj_player_state</a></div><div class="ttdef"><b>Definition:</b> obj_player.h:75</div></div>
 <div class="ttc" id="class_matrix_animator_html"><div class="ttname"><a href="class_matrix_animator.html">MatrixAnimator</a></div><div class="ttdef"><b>Definition:</b> matrix_animator.h:40</div></div>
 <div class="ttc" id="class_p_g_e___phys___object_html"><div class="ttname"><a href="class_p_g_e___phys___object.html">PGE_Phys_Object</a></div><div class="ttdoc">The PGE_Phys_Object class. </div><div class="ttdef"><b>Definition:</b> lvl_base_object.h:51</div></div>
+<div class="ttc" id="struct_player_point_html"><div class="ttname"><a href="struct_player_point.html">PlayerPoint</a></div><div class="ttdef"><b>Definition:</b> lvl_filedata.h:48</div></div>
 <div class="ttc" id="class_l_v_l___warp_html"><div class="ttname"><a href="class_l_v_l___warp.html">LVL_Warp</a></div><div class="ttdef"><b>Definition:</b> lvl_warp.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
