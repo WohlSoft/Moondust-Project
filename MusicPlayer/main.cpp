@@ -9,6 +9,8 @@
 
 #include <QtDebug>
 #include <QMessageBox>
+#include <QDir>
+#include <QFileInfo>
 
 static void error(QString msg)
 {

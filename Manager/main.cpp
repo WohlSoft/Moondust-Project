@@ -3,6 +3,9 @@
 #include <common_features/app_path.h>
 #include "settings.h"
 
+#include <QDir>
+#include <QFileInfo>
+
 int main(int argc, char *argv[])
 {
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
