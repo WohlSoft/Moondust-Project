@@ -392,7 +392,7 @@ void PGE_MenuBoxBase::processLoader(float ticks)
 void PGE_MenuBoxBase::processBox(float)
 {
     #ifndef __APPLE__
-    if(AppSettings.interprocessing)
+    if(g_AppSettings.interprocessing)
         qApp->processEvents();
     #endif
     SDL_Event event;

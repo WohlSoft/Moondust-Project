@@ -117,8 +117,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    AppSettings.load();
-    AppSettings.apply();
+    g_AppSettings.load();
+    g_AppSettings.apply();
 
     //Init log writer
     LoadLogSettings();
@@ -129,8 +129,8 @@ int main(int argc, char *argv[])
     episode.character=0;
     episode.savefile="save1.savx";
     episode.worldfile="";
-    AppSettings.debugMode=false; //enable debug mode
-    AppSettings.interprocessing=false; //enable interprocessing
+    g_AppSettings.debugMode=false; //enable debug mode
+    g_AppSettings.interprocessing=false; //enable interprocessing
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -154,14 +154,14 @@ int main(int argc, char *argv[])
         else
         if(param == ("--debug"))
         {
-            AppSettings.debugMode=true;
+            g_AppSettings.debugMode=true;
             _flags.debugMode=true;
         }
         else
         if(param == ("--interprocessing"))
         {
             IntProc::init();
-            AppSettings.interprocessing=true;
+            g_AppSettings.interprocessing=true;
         }
         else
         {
@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
                 .arg( Mix_GetError() ), QMessageBox::Ok);
         exit(1);
     }
-    PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music);
+    PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music);
 
     WriteToLog(QtDebugMsg, "Build SFX index cache...");
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
@@ -243,8 +243,8 @@ int main(int argc, char *argv[])
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
 
     WriteToLog(QtDebugMsg, "Init joystics...");
-    AppSettings.initJoysticks();
-    AppSettings.loadJoystickSettings();
+    g_AppSettings.initJoysticks();
+    g_AppSettings.loadJoystickSettings();
 
     WriteToLog(QtDebugMsg, "Clear screen...");
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -252,8 +252,8 @@ int main(int argc, char *argv[])
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
 
-    if(AppSettings.fullScreen) qDebug()<<"Toggle fullscreen...";
-    PGE_Window::setFullScreen(AppSettings.fullScreen);
+    if(g_AppSettings.fullScreen) qDebug()<<"Toggle fullscreen...";
+    PGE_Window::setFullScreen(g_AppSettings.fullScreen);
     GlRenderer::resetViewport();
 
     //Init font manager
@@ -302,7 +302,7 @@ if(!fileToOpen.isEmpty())
     }
 }
 
-if(AppSettings.interprocessing) goto PlayLevel;
+if(g_AppSettings.interprocessing) goto PlayLevel;
 
 LoadingScreen:
 {
@@ -458,7 +458,7 @@ PlayWorldMap:
         goto ExitFromApplication;
     }
 
-    if(AppSettings.debugMode)
+    if(g_AppSettings.debugMode)
     {
         if(ExitCode==WldExit::EXIT_beginLevel)
         {
@@ -523,7 +523,7 @@ PlayLevel:
 
             if(_game_state.LevelFile.isEmpty())
             {
-                if(AppSettings.interprocessing && IntProc::isEnabled())
+                if(g_AppSettings.interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
                     if((!sceneResult) && (!lScene->isExiting()))
@@ -601,7 +601,7 @@ PlayLevel:
                    if(_game_state.LevelFile.isEmpty()) playAgain = false;
 
 
-                   if(AppSettings.debugMode)
+                   if(g_AppSettings.debugMode)
                    {
                        if(!fileToOpen.isEmpty())
                        {
@@ -658,13 +658,13 @@ PlayLevel:
                 playAgain = false;
             }
 
-            if(_flags.testLevel || AppSettings.debugMode)
+            if(_flags.testLevel || g_AppSettings.debugMode)
                 end_level_jump=RETURN_TO_EXIT;
 
             ConfigManager::unloadLevelConfigs();
             delete lScene;
 
-            if(AppSettings.interprocessing)
+            if(g_AppSettings.interprocessing)
                 goto ExitFromApplication;
     }
 
@@ -688,8 +688,8 @@ ExitFromApplication:
     PGE_MusPlayer::freeStream();
     PGE_Sounds::clearSoundBuffer();
     Mix_CloseAudio();
-    AppSettings.save();
-    AppSettings.closeJoysticks();
+    g_AppSettings.save();
+    g_AppSettings.closeJoysticks();
     IntProc::quit();
     FontManager::quit();
     PGE_Window::uninit();

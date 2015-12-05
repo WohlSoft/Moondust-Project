@@ -52,6 +52,7 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %CurDir%\upx.exe --compress-icons=0 pge_engine.exe
 %CurDir%\upx.exe --compress-icons=0 pge_manager.exe
 %CurDir%\upx.exe --compress-icons=0 pge_maintainer.exe
+%CurDir%\upx.exe --compress-icons=0 pge_musplay.exe
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
@@ -59,6 +60,7 @@ copy PNG2GIFs.exe "%DeployDir%\%PgePrjSD%"
 copy LazyFixTool.exe "%DeployDir%\%PgePrjSD%"
 copy pge_calibrator.exe "%DeployDir%\%PgePrjSD%"
 copy pge_engine.exe "%DeployDir%\%PgePrjSD%"
+copy pge_musplay.exe "%DeployDir%\%PgePrjSD%"
 
 copy *.dll "%DeployDir%\%PgePrjSD%"
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt2
@@ -137,6 +139,7 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\*Readme.txt"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\LazyFixTool.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\PNG2GIFs.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_calibrator.exe"
+SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
 echo Packing of editor data

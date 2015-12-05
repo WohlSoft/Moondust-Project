@@ -25,7 +25,7 @@
 
 GameOverScene::GameOverScene(): Scene(GameOver)
 {
-    player1Controller = AppSettings.openController(1);
+    player1Controller = g_AppSettings.openController(1);
 }
 
 GameOverScene::~GameOverScene()

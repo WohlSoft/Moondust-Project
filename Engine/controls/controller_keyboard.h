@@ -22,11 +22,25 @@
 #include "controller.h"
 #include <SDL2/SDL.h>
 
+/*!
+ * \brief A Keyboard controller which reads state of the keyboard device
+ */
 class KeyboardController : public Controller
 {
 public:
+    /*!
+     * \brief Constructor
+     */
     KeyboardController();
+
+    /*!
+     * \brief Destructor
+     */
     ~KeyboardController();
+
+    /*!
+     * \brief Read current state of keyboard controller
+     */
     void update();
 
 };

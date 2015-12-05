@@ -54,12 +54,14 @@ fi
 #$CurDir/upx-linux-x64 LazyFixTool
 #$CurDir/upx-linux-x64 pge_calibrator
 #$CurDir/upx-linux-x64 pge_engine
+#$CurDir/upx-linux-x64 pge_musplay
 cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"
 cp LazyFixTool "$DeployDir/$PgePrjSD"
 cp -a pge_calibrator.app "$DeployDir/$PgePrjSD/Character Calibrator.app"
 cp -a pge_engine.app "$DeployDir/$PgePrjSD/pge_engine.app"
+cp -a pge_musplay.app "$DeployDir/$PgePrjSD/pge_musplay.app"
 
 if [ -d "$DeployDir/$PgePrjSD/_Libs" ]; then
     rm -Rf "$DeployDir/$PgePrjSD/_Libs"

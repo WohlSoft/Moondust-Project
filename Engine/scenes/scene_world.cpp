@@ -63,12 +63,12 @@ WorldScene::WorldScene()
     mapwalker_offset_y=0;
 
     /*********Controller********/
-    player1Controller = AppSettings.openController(1);
+    player1Controller = g_AppSettings.openController(1);
     /*********Controller********/
 
     initPauseMenu1();
 
-    frameSkip=AppSettings.frameSkip;
+    frameSkip=g_AppSettings.frameSkip;
 
     /***********Number of Players*****************/
     numOfPlayers=1;

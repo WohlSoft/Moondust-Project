@@ -26,13 +26,13 @@ namespace Ui {
 class AppSettings;
 }
 
-class AppSettings : public QDialog
+class g_AppSettings : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AppSettings(QWidget *parent = 0);
-    ~AppSettings();
+    explicit g_AppSettings(QWidget *parent = 0);
+    ~g_AppSettings();
 
     void applySettings();
     static bool associateFiles();

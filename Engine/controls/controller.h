@@ -24,11 +24,26 @@
 #include "controllable_object.h"
 #include "controller_key_map.h"
 
+/*!
+ * \brief The Controller class provides proxy interface between controllable objects array and
+ *        physical controller (keyboard/joystick) or vitual controller (for example cut-scene actor
+ *        controller at lua-side)
+ */
 class Controller
 {
 public:
+    /*!
+     * \brief Constructor
+     */
     Controller();
+    /*!
+     * \brief Desctructor
+     */
     virtual ~Controller();
+
+    /*!
+     * \brief Control key command codes
+     */
     enum commands
     {
         key_start=0,
@@ -42,19 +57,57 @@ public:
         key_altjump,
         key_drop
     };
+
+    /*!
+     * \brief Initializes a control key states map with unpressed key states
+     * \return the initialized control key map structure with unpressed key states
+     */
     static controller_keys noKeys();
+
+    /*!
+     * \brief Accepts control keys map which will associates physical keys of control device and command code
+     * \param Control keys map
+     */
     virtual void setKeyMap(KeyMap map);
 
+    /*!
+     * \brief Sends "unpressed" control key states map to every registered controllable object
+     */
     void resetControls();
+
+    /*!
+     * \brief Sends current control key states map to every registered controllable object
+     */
     void sendControls();
 
+    /*!
+     * \brief Updates controllable object: read key states from controllable device
+     *        and apply gotten key states to every registered controllable object
+     */
     virtual void update();
+
+    /*!
+     * \brief Register controllable object to this controller.
+     * \param obj Pointer to controllable object
+     */
     void registerInControl(ControllableObject* obj);
+
+    /*!
+     * \brief Remove controllable object from this controller
+     * \param obj Pointer to controllable object which must be removed from this controller
+     */
     void removeFromControl(ControllableObject* obj);
 
-    KeyMap kmap;
+    //! Current state of control keys
     controller_keys keys;
-    QVector<ControllableObject* > objects;
+
+protected:
+    //! Current control keys map
+    KeyMap kmap;
+
+private:
+    //! Array of registered controllabl objects
+    QVector<ControllableObject* > m_objects;
 };
 
 #endif // CONTROLLER_H

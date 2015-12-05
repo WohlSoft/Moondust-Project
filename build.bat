@@ -13,6 +13,7 @@ if "%1"=="nopng2gifs" SET BuildArgs=%BuildArgs% CONFIG+=nopng2gifs
 if "%1"=="nolazyfixtool" SET BuildArgs=%BuildArgs% CONFIG+=nolazyfixtool
 if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
 if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% CONFIG+=nomaintainer
+if "%1"=="nomusicplayer" SET BuildArgs=%BuildArgs% CONFIG+=nomusicplayer
 shift
 if NOT "%1"=="" goto argsloop
 

@@ -31,6 +31,8 @@ kfile PNG2GIFs/Makefile
 kfile PNG2GIFs/Makefile*
 kfile PlayableCalibrator/Makefile
 kfile PlayableCalibrator/Makefile*
+kfile MusicPlayer/Makefile
+kfile MusicPlayer/Makefile*
 
 if [ $wasRemoved -eq 0 ]; then
 echo "Everything already clean!"

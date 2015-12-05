@@ -247,7 +247,7 @@ void PGE_TextInputBox::processLoader(float ticks)
 void PGE_TextInputBox::processBox(float tickTime)
 {
     #ifndef __APPLE__
-    if(AppSettings.interprocessing)
+    if(g_AppSettings.interprocessing)
         qApp->processEvents();
     #endif
     updateControllers();

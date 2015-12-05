@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>573</width>
+    <height>484</height>
+   </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Simple SDL2 Mixer X Music player</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>_resources/cat_musplay.ico</normaloff>_resources/cat_musplay.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="8" column="0" colspan="3">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="adlmidi_xtra">
+         <property name="title">
+          <string>ADLMIDI Extra Setup</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>ADL Midi bank ID:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="tremolo">
+            <property name="text">
+             <string>Tremolo</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="vibrato">
+            <property name="text">
+             <string>Vibrato</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="modulation">
+            <property name="text">
+             <string>Scalable modulation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="fmbank">
+            <property name="currentIndex">
+             <number>58</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>00 = AIL (Star Control 3, Albion, etc.)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>01 = Bisqwit (selection of 4op and 2op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>02 = HMI (Descent, Asterix)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>03 = HMI (Descent:: Int)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>04 = HMI (Descent:: Ham)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>05 = HMI (Descent:: Rick)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>06 = HMI (Descent 2)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>07 = HMI (Normality)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>08 = HMI (Shattered Steel)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>09 = HMI (Theme Park)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10 = HMI (3d Table Sports, Battle Arena Toshinden)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>11 = HMI (Aces of the Deep)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12 = HMI (Earthsiege)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>13 = HMI (Anvil of Dawn)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>14 = DMX (Doom:: partially pseudo 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>15 = DMX (Hexen, Heretic :: partially pseudo 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>16 = DMX (MUS Play       :: partially pseudo 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>17 = AIL (Pocahontas, Slob Zone 3d, Ultima 4, etc.)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>18 = AIL (Warcraft 2)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>19 = AIL (Syndicate)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>20 = AIL (Guilty, Orion Conspiracy :: 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>21 = AIL (Magic Carpet 2)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>22 = AIL (Nemesis)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>23 = AIL (Jagged Alliance)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24 = AIL (When Two Worlds War :: 4op, MISS INST)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>25 = AIL (Bards Tale Construction :: MISS INST)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>26 = AIL (Return to Zork)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>27 = AIL (Theme Hospital)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>28 = AIL (National Hockey League PA)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>29 = AIL (Inherit The Earth)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 = AIL (Inherit The Earth, file two)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>31 = AIL (Little Big Adventure :: 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>32 = AIL (Wreckin Crew)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>33 = AIL (Death Gate)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>34 = AIL (FIFA International Soccer)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>35 = AIL (Starship Invasion)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>36 = AIL (Super Street Fighter 2 :: 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>37 = AIL (Lords of the Realm :: MISS INST)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>38 = AIL (SimFarm, SimHealth :: 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>39 = AIL (SimFarm, Settlers, Serf City)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>40 = AIL (Caesar 2 :: partially 4op, MISS INST)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>41 = AIL (Syndicate Wars)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>42 = AIL (Bubble Bobble Feat. Rainbow Islands, Z)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>43 = AIL (Warcraft)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>44 = AIL (Terra Nova Strike Force Centuri :: partially 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45 = AIL (System Shock :: partially 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>46 = AIL (Advanced Civilization)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>47 = AIL (Battle Chess 4000 :: partially 4op, melodic only)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>48 = AIL (Ultimate Soccer Manager :: partially 4op)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>49 = AIL (Air Bucks, Blue And The Gray)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>50 = AIL (Ultima Underworld 2)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>51 = AIL (Kasparov's Gambit)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>52 = AIL (High Seas Trader :: MISSING INSTRUMENTS)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>53 = AIL (Master of Magic, Master of Orion 2 :: 4op, Std Perc)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>54 = AIL (Master of Magic, Master of Orion 2 :: 4op, Orch Perc)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>55 = SB (Action Soccer)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>56 = SB (3d Cyberpuck :: melodic only)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>57 = SB (Simon the Sorcerer :: melodic only)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>58 = OP3 (The Fat Man 2op set)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>59 = OP3 (The Fat Man 4op set)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>60 = OP3 (JungleVision 2op set :: melodic only)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>61 = OP3 (Wallace 2op set, Nitemare 3D :: melodic only)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>62 = TMB (Duke Nukem 3D)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>63 = TMB (Shadow Warrior)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>64 = DMX (Raptor)</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="gme_setup">
+         <property name="title">
+          <string>Game Music Emulators setup</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Track number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="trackID">
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="midi_setup">
+         <property name="title">
+          <string>MIDI Setup</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>MIDI Device:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="mididevice">
+            <item>
+             <property name="text">
+              <string>ADL Midi (OPL Synth emulation)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Timidity (GUS-like wavetable MIDI Synth)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Native midi (Built-in MIDI of your OS)</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QLabel" name="musTitle">
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(0, 0, 0); border-width: 1px</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QLabel" name="musArtist">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="3">
+     <widget class="QLabel" name="musCopyright">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QPushButton" name="open">
+      <property name="text">
+       <string>Open</string>
+      </property>
+      <property name="shortcut">
+       <string>Ctrl+O</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QPushButton" name="play">
+      <property name="text">
+       <string>Play</string>
+      </property>
+      <property name="shortcut">
+       <string>Space</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <widget class="QPushButton" name="stop">
+      <property name="text">
+       <string>Stop</string>
+      </property>
+      <property name="shortcut">
+       <string>.</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="3">
+     <widget class="QLabel" name="musAlbum">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Press &quot;Open&quot; or drag&amp;drop music file into this window</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

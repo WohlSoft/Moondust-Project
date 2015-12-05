@@ -355,7 +355,7 @@ void MainWindow::on_actionApplication_settings_triggered()
 {
     if(!continueLoad) return;
 
-    AppSettings * appSettings = new AppSettings(this);
+    g_AppSettings * appSettings = new g_AppSettings(this);
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));

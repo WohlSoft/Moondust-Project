@@ -24,5 +24,12 @@
 #include "../PGE_File_Formats/file_formats.h"
 #include <data_configs/obj_npc.h>
 
+/*!
+ * \brief Merges SMBX64-NPC.txt structure with default global NPC-configuration of specific NPC-ID and returns merged configuration
+ * \param global Default NPC configuration for specific NPC-ID
+ * \param local SMBX64-NPC.txt structure readen from a file
+ * \param captured size of image sprite
+ * \return merged NPC configuration
+ */
 obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
