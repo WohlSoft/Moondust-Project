@@ -3,9 +3,9 @@ InitDir=~+
 cd ..
 source ./_paths.sh
 CurDir=~+
-if [ -d "$SiteRootNFS/$LabDir/../_sources/devel/Content/help" ]; then
+if [ -d "$SiteRootNFS/help" ]; then
 echo "Syncing with laboratory..."
-	rsync -raz --progress "$SOURCEDIR/Content/help/" "$SiteRootNFS/$LabDir/../_sources/devel/Content/help"
+	rsync -raz --progress "$SOURCEDIR/Content/help/" "$SiteRootNFS/help"
 fi
 if [ -d "$SiteRootNFS/$LabDir" ]; then
 echo "Packing zip into laboratory..."
@@ -19,3 +19,4 @@ echo "All done!"
 echo ""
 cd $InitDir
 read -n 1
+
