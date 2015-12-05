@@ -90,7 +90,7 @@ struct cmdArgs
 int main(int argc, char *argv[])
 {
     srand( std::time(NULL) );
-    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
+    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
     QApplication a(argc, argv);
 
     ///Generating application path

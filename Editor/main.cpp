@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
-    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
+    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
     QApplication *a = new QApplication(argc, argv);
     QStringList args=a->arguments();
 

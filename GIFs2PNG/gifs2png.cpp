@@ -93,7 +93,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::addLibraryPath(".");
+    QCoreApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
     QCoreApplication a(argc, argv);
     QStringList filters;
     QDir imagesDir;
