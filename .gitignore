@@ -96,4 +96,11 @@ libSDL2_mixer.dylib
 /_Misc/PGEFilelib_QT_test/PGEFilelib_QT_test
 /_Misc/PGEFilelib_STL_test/PGEFilelib_STL_test
 
+#Doxygen-generated technical documentations
+/Documents/Doxygen/Engine/
+/Documents/Doxygen/Editor/
+/Documents/Doxygen/MusicPlayer/
+/Documents/Doxygen/PlayableCalibrator/
+/Documents/Doxygen/Manager/
+/Documents/Doxygen/Maintainer/
 
