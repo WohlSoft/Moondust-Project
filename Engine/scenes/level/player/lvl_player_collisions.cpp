@@ -311,6 +311,28 @@ void LVL_Player::updateCollisions()
     {
         posRect.setY(backupY);
     }
+
+    //Stomp all detected NPC's
+    while(!npcs_to_stomp.isEmpty())
+    {
+        LVL_Npc* npc = npcs_to_stomp.last();
+        npcs_to_stomp.pop_back();
+
+        //Avoid workarround "don't hurt while flying up"
+        if(bottom() > npc->top()) setPosY( npc->top() - height()-1 );
+
+        npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
+        this->bump(true);
+        //Reset floating state
+        floating_timer = floating_maxtime;
+        if(floating_isworks)
+        {
+            floating_isworks=false;
+            setGravityScale(climbing?0:physics_cur.gravity_scale);
+        }
+        kill_npc(npc, NPC_Stomped);
+    }
+
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
     #ifdef COLLIDE_DEBUG
@@ -775,35 +797,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             break;
                         }
 
-//                        PGE_RectF &r1=posRect;
-//                        PGE_RectF  rc = collided->posRect;
-//                        float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
-//                        float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
                         if(isCollideFloorToponly(*this, collided))
-//                                (
-//                                    (summSpeedY >= 0.0)
-//                                    &&
-//                                    (r1.bottom() < rc.top()+summSpeedYprv)
-//                                    &&
-//                                    (
-//                                         (r1.left()<rc.right()-1 ) &&
-//                                         (r1.right()>rc.left()+1 )
-//                                     )
-//                                 )
-//                                ||
-//                                (r1.bottom() <= rc.top())
-//                                )
                         {
-                            npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
-                            this->bump(true);
-                            //Reset floating state
-                            floating_timer = floating_maxtime;
-                            if(floating_isworks)
-                            {
-                                floating_isworks=false;
-                                setGravityScale(climbing?0:physics_cur.gravity_scale);
-                            }
-                            kill_npc(npc, NPC_Stomped);
+                            collided_bottom[(intptr_t)collided]=collided;//bottom of player
                         } else {
                             if( npc->posRect.collideRect(posRect))
                             {
@@ -812,7 +808,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                 //The bug occurs when the player is moving fast enough when they land on an enemy that they
                                 //partially enter the enemy before the collision is resolved, causing the engine to think
                                 //that the player is INSIDE the NPC, when they are actually only JUMPING on the NPC.
-                                if(npc->setup->hurt_player & (!npc->setup->kill_on_jump || colliding_ySpeed > -1.0f)) harm(1);
+                                if(npc->setup->hurt_player /*& (!npc->setup->kill_on_jump || colliding_ySpeed > -1.0f)*/) harm(1);
                             }
                         }
                         break;

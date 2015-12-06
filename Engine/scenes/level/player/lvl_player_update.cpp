@@ -533,7 +533,7 @@ void LVL_Player::update(float ticks)
 
     if(_stucked)
     {
-        posRect.setX(posRect.x()-_direction*2);
+        posRect.setX(posRect.x()-_direction*4);
         applyAccel(0, 0);
     }
 
