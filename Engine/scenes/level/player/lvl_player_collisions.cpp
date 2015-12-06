@@ -112,7 +112,8 @@ void LVL_Player::updateCollisions()
                     foot_contacts_map[(intptr_t)collided]=collided;
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     floor_blocks.push_back(npc);
-                    npcs_to_stomp.push_back(npc);
+                    if((npc->collide_player!=COLLISION_TOP) && (npc->setup->kill_on_jump))
+                        npcs_to_stomp.push_back(npc);
                     _floorY_vel+=npc->speedYsum();
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
@@ -700,7 +701,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             qDebug() << "Top of block";
                             #endif
                         } else {
-                            if( npc->posRect.collideRect(posRect))
+                            if( (bottom()>(npc->top()+2)) && npc->posRect.collideRect(posRect) )
                             {
                                if(npc->setup->hurt_player & !npc->setup->kill_on_jump) harm(1);
                             }
