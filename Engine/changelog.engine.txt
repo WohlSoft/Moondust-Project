@@ -2,6 +2,10 @@
 - Fixed crash on NPC placement with interprocessing
 - Sprite in real-time placing mode will be aligned to center of mouse rather left-top corner
 - Background color of screen padding no is always black
+- Fixed a detection of libraries paths (such as "platforms") while dynamically built PGE Apps are locating in the folder with non-ascii path
+- Player now can attack multiple NPC's at one stomp
+- Player now can safely walk from ridable NPC's without jumps
+- Removed workaround disables hurting of player while it flying up because player finally can safely stomp healthy NPC's
 
 0.2.4
 - Working paths system on world map! Now there are closed at episode start, but opens on level passes.
