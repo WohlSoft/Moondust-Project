@@ -16,6 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*!
+ * \file file_formats.h
+ *
+ * \brief PGE File Library
+ */
+
+
 #ifndef FILE_FORMATS_H
 #define FILE_FORMATS_H
 
@@ -388,33 +395,33 @@ public:
      */
     enum SMBX64_violations {
         //! File data is conforms to the SMBX64 Standard
-        SMBX64_FINE             =0,
+        SMBX64_FINE             = 0x000,
         //! File data structure has exited limit of section entries
-        SMBX64EXC_SECTIONS      =1<<0,
+        SMBX64EXC_SECTIONS      = 0x001,
         //! File data structure has exited limit of block entries
-        SMBX64EXC_BLOCKS        =1<<1,
+        SMBX64EXC_BLOCKS        = 0x002,
         //! File data structure has exited limit of Background Object entries
-        SMBX64EXC_BGOS          =1<<2,
+        SMBX64EXC_BGOS          = 0x004,
         //! File data structure has exited limit of NPC entries
-        SMBX64EXC_NPCS          =1<<3,
+        SMBX64EXC_NPCS          = 0x008,
         //! File data structure has exited limit of Water boxes entries
-        SMBX64EXC_WATERBOXES    =1<<4,
+        SMBX64EXC_WATERBOXES    = 0x010,
         //! File data structure has exited limit of Warp entries
-        SMBX64EXC_WARPS         =1<<5,
+        SMBX64EXC_WARPS         = 0x020,
         //! File data structure has exited limit of Layer entries
-        SMBX64EXC_LAYERS        =1<<6,
+        SMBX64EXC_LAYERS        = 0x040,
         //! File data structure has exited limit of Event entries
-        SMBX64EXC_EVENTS        =1<<7,
+        SMBX64EXC_EVENTS        = 0x080,
         //! File data structure has exited limit of Tile entries
-        SMBX64EXC_TILES         =1<<8,
+        SMBX64EXC_TILES         = 0x100,
         //! File data structure has exited limit of Scenery entries
-        SMBX64EXC_SCENERIES     =1<<9,
+        SMBX64EXC_SCENERIES     = 0x200,
         //! File data structure has exited limit of Path entries
-        SMBX64EXC_PATHS         =1<<10,
+        SMBX64EXC_PATHS         = 0x400,
         //! File data structure has exited limit of Level Entrance point entries
-        SMBX64EXC_LEVELS        =1<<11,
+        SMBX64EXC_LEVELS        = 0x800,
         //! File data structure has exited limit of Music Box entries
-        SMBX64EXC_MUSICBOXES    =1<<12
+        SMBX64EXC_MUSICBOXES    = 0x1000
     };
 
 //Check SMBX64 limits
