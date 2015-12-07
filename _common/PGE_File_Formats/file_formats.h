@@ -16,10 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*!
- * \file file_formats.h
- *
- * \brief PGE File Library
+/*! \file file_formats.h
+ *  \brief Main header of PGE File Library which includes all provided features set
  */
 
 

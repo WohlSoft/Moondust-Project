@@ -1,6 +1,10 @@
 #ifndef SMBX64_MACRO_H
 #define SMBX64_MACRO_H
 
+/*! \file smbx64_macro.h
+ *  \brief Contains helper macroses for making SMBX64 Standard format based parsers
+ */
+
 /*
   There are a special macroses used to organize
   SMBX64 specific file read functions.

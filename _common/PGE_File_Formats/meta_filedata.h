@@ -15,6 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/*!
+ * \file meta_filedata.h
+ * \brief Contains defition of the common meta-data structures and classes
+ */
 #ifndef META_FILEDATA_H
 #define META_FILEDATA_H
 

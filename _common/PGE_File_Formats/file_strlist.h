@@ -18,7 +18,6 @@
 
 /*!
  * \file file_strlist.h
- *
  * \brief Contains defition of a FileStringList class - a string container
  *        which automatically splits lines by line feeds
  */

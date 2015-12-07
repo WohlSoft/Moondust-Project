@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*!
+ * \file npc_filedata.h
+ * \brief Contains defition of the SMBX64-NPC.txt config data structure
+ */
+
 #ifndef NPC_FILEDATA_H
 #define NPC_FILEDATA_H
 

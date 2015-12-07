@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*! \file lvl_filedata.h
-    \brief Contains data structure definitions for a level file data
-*/
+/*!
+ *  \file lvl_filedata.h
+ *  \brief Contains data structure definitions for a level file data
+ */
 
 #ifndef LVL_FILEDATA_H
 #define LVL_FILEDATA_H

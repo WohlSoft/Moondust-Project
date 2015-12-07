@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*! \file smbx64.h
+ *  \brief Contains static class with SMBX64 standard file format fields validation and generation functions
+ */
+
 #ifndef SMBX64_H
 #define SMBX64_H
 

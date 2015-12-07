@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*!
+ *  \file wld_filedata.h
+ *  \brief Contains data structure definitions for a world map file data
+ */
+
 #ifndef WLD_FILEDATA_H
 #define WLD_FILEDATA_H
 
