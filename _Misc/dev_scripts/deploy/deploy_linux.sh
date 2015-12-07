@@ -21,6 +21,14 @@ $LRelease pge_editor.pro
 cp languages/*.qm $SOURCEDIR/bin/languages
 cp languages/*.png $SOURCEDIR/bin/languages
 
+#Delete junk translation file causes German Ok/Cancel translations in the dialogs
+if [ -f "$SOURCEDIR/bin/languages/qt_en.qm" ]; then
+	rm "$SOURCEDIR/bin/languages/qt_en.qm"
+fi
+if [ -f "$SOURCEDIR/bin/translations/qt_en.qm" ]; then
+	rm "$SOURCEDIR/bin/translations/qt_en.qm"
+fi
+
 echo "Preparing Linux deploy..."
 cd $SOURCEDIR/bin
 
