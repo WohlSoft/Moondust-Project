@@ -27,7 +27,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication::addLibraryPath(".");
+    QApplication::addLibraryPath( "." );
+    QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
+    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+
     QApplication a(argc, argv);
 
     AppPathManager::initAppPath();

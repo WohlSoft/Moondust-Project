@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*! \file smbx64_cnf_filedata.h
+ *  \brief Contains definition of SMBX Engine settings data structure
+ */
+
 #ifndef SMBX64_CNF_FILEDATA_H
 #define SMBX64_CNF_FILEDATA_H
 

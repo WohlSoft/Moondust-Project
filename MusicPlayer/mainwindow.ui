@@ -545,6 +545,17 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>open</tabstop>
+  <tabstop>play</tabstop>
+  <tabstop>stop</tabstop>
+  <tabstop>trackID</tabstop>
+  <tabstop>mididevice</tabstop>
+  <tabstop>fmbank</tabstop>
+  <tabstop>tremolo</tabstop>
+  <tabstop>vibrato</tabstop>
+  <tabstop>modulation</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

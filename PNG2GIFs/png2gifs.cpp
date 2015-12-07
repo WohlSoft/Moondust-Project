@@ -31,7 +31,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
+    QApplication::addLibraryPath( "." );
+    QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
+    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+
     QApplication a(argc, argv);
 
     QStringList filters;

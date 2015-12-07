@@ -9,6 +9,8 @@
 
 #include <QtDebug>
 #include <QMessageBox>
+#include <QDir>
+#include <QFileInfo>
 
 static void error(QString msg)
 {
@@ -17,6 +19,10 @@ static void error(QString msg)
 
 int main(int argc, char *argv[])
 {
+    QApplication::addLibraryPath( "." );
+    QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
+    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+
     QApplication a(argc, argv);
     QStringList args=a.arguments();
     SingleApplication *as = new SingleApplication(args);

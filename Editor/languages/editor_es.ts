@@ -5916,7 +5916,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="908"/>
         <source>Section 5 (Ctrl+5)</source>
-        <translation>Sección (Ctrl+5)</translation>
+        <translation>Sección 5 (Ctrl+5)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="930"/>

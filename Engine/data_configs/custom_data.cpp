@@ -49,16 +49,16 @@ QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
 
     QString target="";
 tryBackup:
-    if((QFile::exists(dirCustom) ) &&
-            (QFile::exists(dirCustom+"/" + srcName)) )
+    if((QFile::exists(m_dirCustom) ) &&
+            (QFile::exists(m_dirCustom+"/" + srcName)) )
     {
-        target = dirCustom+"/"+srcName;
+        target = m_dirCustom+"/"+srcName;
         if(isDefault) *isDefault = false;
     }
     else
-    if(QFile::exists(dirEpisode + "/" + srcName) )
+    if(QFile::exists(m_dirEpisode + "/" + srcName) )
     {
-        target = dirEpisode + "/" + srcName;
+        target = m_dirEpisode + "/" + srcName;
         if(isDefault) *isDefault = false;
     }
     else
@@ -68,7 +68,7 @@ tryBackup:
             srcName=backupName;
             goto tryBackup;
         }
-        target = mainStuffFullPath + name;
+        target = m_mainStuffFullPath + name;
         if(isDefault) *isDefault = true;
     }
 
@@ -77,8 +77,8 @@ tryBackup:
 
 void CustomDirManager::setCustomDirs(QString path, QString name, QString stuffPath)
 {
-    dirCustom = path + "/" + name;
-    dirEpisode = path;
-    mainStuffFullPath = stuffPath;
+    m_dirCustom = path + "/" + name;
+    m_dirEpisode = path;
+    m_mainStuffFullPath = stuffPath;
 }
 

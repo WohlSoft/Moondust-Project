@@ -1,5 +1,6 @@
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again
+- Fixed a detection of libraries paths (such as "platforms") while dynamically built PGE Apps are locating in the folder with non-ascii path
 
 Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation

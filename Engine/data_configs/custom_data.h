@@ -21,26 +21,44 @@
 
 #include <QString>
 
-///
-/// \brief The CustomDirManager class This is a capturer of custom files from level/world custom directories
-///
+/*!
+ * \brief This is a capturer of custom files from level/world custom directories
+ */
 class CustomDirManager
 {
 public:
+    /*!
+     * \brief Constructor
+     */
     CustomDirManager();
+    /*!
+     * \brief Constructor with pre-defined parameters
+     * \param path Full path to episode directory
+     * \param name Base file name of current file
+     * \param stuffPath Full path to default data folder
+     */
     CustomDirManager(QString path, QString name, QString stuffPath);
-    ///
-    /// \brief getCustomFile Get custom file path if exist.
-    /// \param name Target file name which need to found
-    /// \return empty string if not exist
-    ///
+    /*!
+     * \brief Get custom file path if exist.
+     * \param name Target file name which need to found
+     * \return empty string if not exist
+     */
     QString getCustomFile(QString name, bool *isDefault=0);
+    /*!
+     * \brief Sets paths where look for a requested files
+     * \param path Full path to episode directory
+     * \param name Base file name of current file
+     * \param stuffPath Full path to default data folder
+     */
     void setCustomDirs(QString path, QString name, QString stuffPath);
 
 private:
-    QString dirEpisode;
-    QString dirCustom;
-    QString mainStuffFullPath;
+    //! Full path to episode directory
+    QString m_dirEpisode;
+    //! Full path to file's custom stuff directory
+    QString m_dirCustom;
+    //! Full path to default data folder
+    QString m_mainStuffFullPath;
 
 };
 

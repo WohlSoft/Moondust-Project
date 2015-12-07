@@ -13,6 +13,10 @@ call "%SOURCEDIR%\_paths.bat"
 copy languages\*.qm %SOURCEDIR%\bin-w32\languages
 copy languages\*.png %SOURCEDIR%\bin-w32\languages
 
+rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
+if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
+if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
+
 echo "Preparing Windows deploy..."
 cd %SOURCEDIR%\bin-w32
 

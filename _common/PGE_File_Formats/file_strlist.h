@@ -16,6 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*!
+ * \file file_strlist.h
+ * \brief Contains defition of a FileStringList class - a string container
+ *        which automatically splits lines by line feeds
+ */
+
 #ifndef FILE_STRLIST_H
 #define FILE_STRLIST_H
 
@@ -32,6 +38,9 @@
 #define PGESTRINGList std::vector<std::string >
 #endif
 
+/*!
+ * \brief Provides string container automatically splited from entire file data
+ */
 #ifdef PGE_FILES_QT
 class FileStringList:public QObject
 {
@@ -42,17 +51,54 @@ class FileStringList
 #endif
 
 public:
+    /*!
+     * \brief Constructor
+     */
     FileStringList();
 
+    /*!
+     * \brief Constructor with pre-set data
+     * \param fileData file data which will be splited by line-feeds
+     */
     FileStringList(PGESTRING fileData);
+
+    /*!
+     * Destructor
+     */
     ~FileStringList();
 
+    /*!
+     * \brief Changes filedata and rebuilds list of lines
+     * \param fileData file data which will be splited by line-feeds
+     */
     void addData(PGESTRING fileData);
+
+    /*!
+     * \brief Returns current line contents and incements internal line counter
+     * \return contents of current line
+     */
     PGESTRING readLine();
+
+    /*!
+     * \brief Are all lines was gotten?
+     * \return true if internal line counter is equal or more than total number of lines
+     */
     bool isEOF();
+
+    /*!
+     * \brief Are all lines was gotten?
+     * \return true if internal line counter is equal or more than total number of lines
+     */
     bool atEnd();
 private:
+    /*!
+     * \brief Contains splited list of string lines
+     */
     PGESTRINGList buffer;
+
+    /*!
+     * \brief Internal counter of gotten lines
+     */
     long lineID;
 };
 

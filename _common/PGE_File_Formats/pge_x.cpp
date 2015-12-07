@@ -71,8 +71,8 @@ PGEFile::PGEFile(QObject *parent)
 PGEFile::PGEFile()
 #endif
 {
-    _lastError = "";
-    rawData = "";
+    m_lastError = "";
+    m_rawData = "";
 }
 
 #ifdef PGE_FILES_QT
@@ -82,15 +82,15 @@ PGEFile::PGEFile(PGEFile &pgeFile, QObject *parent)
 PGEFile::PGEFile(PGEFile &pgeFile)
 #endif
 {
-    rawData = pgeFile.rawData;
-    rawDataTree = pgeFile.rawDataTree;
-    _lastError = pgeFile._lastError;
+    m_rawData = pgeFile.m_rawData;
+    m_rawDataTree = pgeFile.m_rawDataTree;
+    m_lastError = pgeFile.m_lastError;
 }
 
 PGEFile::PGEFile(PGESTRING _rawData)
 {
-    rawData = _rawData;
-    _lastError = "";
+    m_rawData = _rawData;
+    m_lastError = "";
 }
 
 PGESTRING PGEFile::removeQuotes(PGESTRING str)
@@ -102,7 +102,7 @@ PGESTRING PGEFile::removeQuotes(PGESTRING str)
 
 void PGEFile::setRawData(PGESTRING _rawData)
 {
-    rawData = _rawData;
+    m_rawData = _rawData;
 }
 
 bool PGEFile::buildTreeFromRaw()
@@ -110,7 +110,7 @@ bool PGEFile::buildTreeFromRaw()
     PGEXSct PGEXsection;
 
     FileStringList in;
-    in.addData( rawData );
+    in.addData( m_rawData );
 
     //Read raw data sections
     bool sectionOpened=false;
@@ -130,25 +130,25 @@ bool PGEFile::buildTreeFromRaw()
             if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
             PGEXsection.second.push_back(data);
         }
-        rawDataTree.push_back(PGEXsection);
+        m_rawDataTree.push_back(PGEXsection);
     }
 
     if(sectionOpened)
     {
-        _lastError=PGESTRING("Section ["+PGEXsection.first+"] is not closed");
+        m_lastError=PGESTRING("Section ["+PGEXsection.first+"] is not closed");
         return false;
     }
 
     //Building tree
 
-    for(int z=0; z<(signed)rawDataTree.size(); z++)
+    for(int z=0; z<(signed)m_rawDataTree.size(); z++)
     {
         bool valid=true;
-        PGEX_Entry subTree = buildTree( rawDataTree[z].second, &valid );
+        PGEX_Entry subTree = buildTree( m_rawDataTree[z].second, &valid );
         if(valid)
         {   //Store like subtree
             subTree.type = PGEX_Struct;
-            subTree.name = rawDataTree[z].first;
+            subTree.name = m_rawDataTree[z].first;
             dataTree.push_back( subTree );
         }
         else
@@ -159,9 +159,9 @@ bool PGEFile::buildTreeFromRaw()
             subTree.subTree.clear();
             PGEX_Val dataValue;
                 dataValue.marker = "PlainText";
-                for(int i=0;i<(signed)rawDataTree[z].second.size();i++) dataValue.value += rawDataTree[z].second[i]+"\n";
+                for(int i=0;i<(signed)m_rawDataTree[z].second.size();i++) dataValue.value += m_rawDataTree[z].second[i]+"\n";
             dataItem.values.push_back(dataValue);
-            subTree.name = rawDataTree[z].first;
+            subTree.name = m_rawDataTree[z].first;
             subTree.type = PGEX_PlainText;
             subTree.data.push_back(dataItem);
             dataTree.push_back( subTree );
@@ -256,7 +256,7 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
 
 PGESTRING PGEFile::lastError()
 {
-    return _lastError;
+    return m_lastError;
 }
 
 
