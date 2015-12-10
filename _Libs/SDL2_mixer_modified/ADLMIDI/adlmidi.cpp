@@ -515,7 +515,8 @@ class MIDIplay
 public:
     std::string musTitle;
     fraction<long> InvDeltaTicks, Tempo;
-    bool loopStart, loopEnd;
+    bool loopStart, loopEnd, invalidLoop;
+    long loopStart_ticks, loopEnd_ticks;
     OPL3 opl;
 public:
     static unsigned long ReadBEInt(const void* buffer, unsigned nbytes)
@@ -830,6 +831,7 @@ public:
             }
         }
         loopStart = true;
+        invalidLoop = false;
 
         opl.Reset(); // Reset AdLib
         //opl.Reset(); // ...twice (just in case someone misprogrammed OPL3 previously)
@@ -1045,6 +1047,7 @@ private:
             }
         }
     }
+
     void HandleEvent(size_t tk)
     {
         unsigned char byte = TrackData[tk][CurrentPosition.track[tk].ptr++];
@@ -1065,7 +1068,7 @@ private:
             CurrentPosition.track[tk].ptr += length;
             if(evtype == 0x2F) { CurrentPosition.track[tk].status = -1; return; }
             if(evtype == 0x51) { Tempo = InvDeltaTicks * fraction<long>( (long) ReadBEInt(data.data(), data.size())); return; }
-            if(evtype == 6 && data == "loopStart") loopStart = true;
+            if(evtype == 6 && data == "loopStart") loopStart = false;
             if(evtype == 6 && data == "loopEnd"  ) loopEnd   = true;
             if(evtype == 9) current_device[tk] = ChooseDevice(data);
 //            if(evtype >= 1 && evtype <= 6)

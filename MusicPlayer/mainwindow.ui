@@ -401,6 +401,11 @@
               <string>64 = DMX (Raptor)</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>65 = SB (Modded GMOPL by Wohlstand)</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
