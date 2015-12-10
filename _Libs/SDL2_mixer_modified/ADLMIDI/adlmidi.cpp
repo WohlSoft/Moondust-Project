@@ -1300,7 +1300,7 @@ private:
                         break;
                     case 7: // Change volume
                         Ch[MidCh].volume = value;
-                        //NoteUpdate_All(MidCh, Upd_Volume);
+                        NoteUpdate_All(MidCh, Upd_Volume);
                         break;
                     case 64: // Enable/disable sustain
                         Ch[MidCh].sustain = value;
