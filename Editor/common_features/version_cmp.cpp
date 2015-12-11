@@ -33,8 +33,8 @@ int VersionCmp::str2ver(QString verSuffix)
 
 QString VersionCmp::compare(QString ver1, QString ver2)
 {
-    long vers1[5] = {0,0,0,0,0};
-    long vers2[5] = {0,0,0,0,0};
+    long vers1[6] = {0,0,0,0,0,0};
+    long vers2[6] = {0,0,0,0,0,0};
 
     QStringList ver1s = QString(ver1).replace('-', '.').split('.');
     QStringList ver2s = QString(ver2).replace('-', '.').split('.');
@@ -60,7 +60,7 @@ QString VersionCmp::compare(QString ver1, QString ver2)
         vers2[4]=RELEASE;
 
     int c=0;
-    while((!ver1s.isEmpty())&&(c<5))
+    while((!ver1s.isEmpty())&&(c<6))
     {
         vers1[c]=ver1s.first().toLong(&ok);
         if(!ok) return ver1;
@@ -68,7 +68,7 @@ QString VersionCmp::compare(QString ver1, QString ver2)
         c++;
     }
     c=0;
-    while((!ver2s.isEmpty())&&(c<5))
+    while((!ver2s.isEmpty())&&(c<6))
     {
         vers2[c]=ver2s.first().toLong(&ok);
         if(!ok) return ver1;
@@ -80,7 +80,7 @@ QString VersionCmp::compare(QString ver1, QString ver2)
     qreal ver1i=0.0;
     qreal ver2i=0.0;
 
-    for(int i=4; i>=0;i--)
+    for(int i=5; i>=0;i--)
     {
         ver1i += vers1[i]*mult;
         ver2i += vers2[i]*mult;
