@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
             QApplication::exit();
             return 0;
         } else if(arg=="--version") {
-            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE << std::endl;
+            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE "-" _BUILD_VER << std::endl;
             QApplication::quit();
             QApplication::exit();
             return 0;

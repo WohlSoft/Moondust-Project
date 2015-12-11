@@ -22,6 +22,12 @@
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 
+#ifdef GIT_VERSION
+#define _BUILD_VER GIT_VERSION
+#else
+#define _BUILD_VER "<empty>"
+#endif
+
 //Version of this program
 #define _FILE_VERSION "2.1.0.1"
 #define _FILE_RELEASE ""
