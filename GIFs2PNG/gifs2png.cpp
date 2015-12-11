@@ -18,6 +18,7 @@
  */
 
 #include <QCoreApplication>
+#include <QColor>
 #include <QImage>
 #include <QDir>
 #include <QDirIterator>
@@ -26,7 +27,7 @@
 #include <QFileInfo>
 #include "version.h"
 
-QImage setAlphaMask(QImage image, QImage mask)
+QImage mergeBitwiseAndOr(QImage image, QImage mask)
 {
     if(mask.isNull())
         return image;
@@ -34,17 +35,62 @@ QImage setAlphaMask(QImage image, QImage mask)
     if(image.isNull())
         return image;
 
-    QImage target = image;
-    QImage newmask = mask;
+    bool isWhiteMask = true;
+
+    QImage target;
+
+    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
+    target.fill(qRgb(128,128,128));
+
+    QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
+    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
 
     if(target.size()!= newmask.size())
     {
-        newmask = newmask.copy(0,0, target.width(), target.height());
+        newmask = newmask.copy(0, 0, target.width(), target.height());
     }
 
-    newmask.invertPixels();
+    QImage alphaChannel = image.alphaChannel();
 
-    target.setAlphaChannel(newmask);
+    for(int y=0; y< image.height(); y++ )
+        for(int x=0; x < image.width(); x++ )
+        {
+            QColor Fpix = QColor(image.pixel(x,y));
+            QColor Dpix = QColor(target.pixel(x,y));
+            QColor Spix = QColor(newmask.pixel(x,y));
+            QColor Npix;
+
+            Npix.setAlpha(255);
+            //AND
+            Npix.setRed( Dpix.red() & Spix.red());
+            Npix.setGreen( Dpix.green() & Spix.green());
+            Npix.setBlue( Dpix.blue() & Spix.blue());
+            //OR
+            Npix.setRed( Fpix.red() | Npix.red());
+            Npix.setGreen( Fpix.green() | Npix.green());
+            Npix.setBlue( Fpix.blue() | Npix.blue());
+
+            target.setPixel(x, y, Npix.rgba());
+
+            isWhiteMask &= ( (Spix.red()>240) //is almost White
+                             &&(Spix.green()>240)
+                             &&(Spix.blue()>240));
+
+            //Calculate alpha-channel level
+            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
+            if( (Spix.red()>240) //is almost White
+                            &&(Spix.green()>240)
+                            &&(Spix.blue()>240))
+            {
+                newAlpha = 0;
+            }
+
+            newAlpha = newAlpha+((Fpix.red() + Fpix.green() + Fpix.blue())/3);
+            if(newAlpha>255) newAlpha=255;
+
+            alphaChannel.setPixel(x,y, newAlpha);
+        }
+    target.setAlphaChannel(alphaChannel);
 
     return target;
 }
@@ -74,7 +120,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
     QImage image = QImage(path+q);
     QImage mask = QImage(path+imgFileM);
 
-    target = setAlphaMask(image, mask);
+    target = mergeBitwiseAndOr(image, mask);
 
     if(!target.isNull())
     {
