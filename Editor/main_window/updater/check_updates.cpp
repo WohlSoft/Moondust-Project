@@ -206,7 +206,6 @@ void UpdateChecker::httpFinished()
                                            .arg(DEVEL_LINK).arg(latest).arg(tr("Latest update is")));
             break;
         }
-
     }
 
     reply->deleteLater();

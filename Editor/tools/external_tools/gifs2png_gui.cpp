@@ -21,6 +21,7 @@
 
 #include <common_features/app_path.h>
 #include <dev_console/devconsole.h>
+#include <data_configs/configstatus.h>
 
 #include "gifs2png_gui.h"
 #include <ui_gifs2png_gui.h>
@@ -84,9 +85,11 @@ void gifs2png_gui::on_startTool_clicked()
         return;
     }
 
+
     QStringList args;
     if(ui->WalkSubDirs->isChecked()) args << "-W";
     if(ui->RemoveSource->isChecked()) args << "-R";
+    args << "--config=\""+ConfStatus::configPath+"\"";
     args << "--nopause";
     args << ui->inputDir->text();
     if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());

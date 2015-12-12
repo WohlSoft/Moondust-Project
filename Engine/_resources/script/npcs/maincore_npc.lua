@@ -1,8 +1,39 @@
 class 'luaNPC' (BaseNPC)
 
+function luaNPC:__setupEvents()
+    if(not self.isInvalid and self.controller)then
+        self.Has_onActivated = false
+        if(type(self.controller.onActivated) == "function")then
+            self.Has_onActivated = true
+        end
+
+        self.Has_onLoop = false
+        if(type(self.controller.onLoop) == "function")then
+            self.Has_onLoop = true
+        end
+
+        self.Has_onKill = false
+        if(type(self.controller.onKill) == "function")then
+            self.Has_onKill = true
+        end
+
+        self.Has_onHarm = false
+        if(type(self.controller.onHarm) == "function")then
+            self.Has_onHarm = true
+        end
+
+        self.Has_onTransform = false
+        if(type(self.controller.onTransform) == "function")then
+            self.Has_onTransform = true
+        end
+    end
+end
+
 -- Note: This function is useless, because we need the id data.
 function luaNPC:__init()
     BaseNPC.__init(self)
+
+    self:__setupEvents()
 end
 
 function luaNPC:baseReInit(theID)
@@ -16,6 +47,7 @@ function luaNPC:baseReInit(theID)
     else
         self.isInvalid = true
     end
+    self:__setupEvents()
 end
 
 
@@ -28,7 +60,7 @@ end
 
 function luaNPC:onActivated()
     if(not self.isInvalid and self.controller)then
-        if(type(self.controller.onActivated) == "function")then
+        if(self.Has_onActivated)then
             self.controller:onActivated()
         end
     end
@@ -37,7 +69,7 @@ end
 
 function luaNPC:onLoop(tickTime)
     if(not self.isInvalid and self.controller)then
-        if(type(self.controller.onLoop) == "function")then
+        if(self.Has_onLoop)then
             self.controller:onLoop(tickTime)
         end
     end
@@ -46,7 +78,7 @@ end
 
 function luaNPC:onKill(damageReason)
     if(not self.isInvalid and self.controller)then
-        if(type(self.controller.onKill) == "function")then
+        if(tself.Has_onKill)then
             self.controller:onKill(damageReason)
         end
     end
@@ -55,7 +87,7 @@ end
 
 function luaNPC:onHarm(damage, damageReason)
     if(not self.isInvalid and self.controller)then
-        if(type(self.controller.onHarm) == "function")then
+        if(self.Has_onHarm)then
             self.controller:onHarm(damage, damageReason)
         end
     end
@@ -64,7 +96,7 @@ end
 
 function luaNPC:onTransform(id)
     if(not self.isInvalid and self.controller)then
-        if(type(self.controller.onTransform) == "function")then
+        if(self.Has_onTransform)then
             self.controller:onTransform(id)
         end
     end

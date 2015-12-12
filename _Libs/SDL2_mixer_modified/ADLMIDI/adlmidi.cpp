@@ -515,7 +515,8 @@ class MIDIplay
 public:
     std::string musTitle;
     fraction<long> InvDeltaTicks, Tempo;
-    bool loopStart, loopEnd;
+    bool loopStart, loopEnd, invalidLoop;
+    long loopStart_ticks, loopEnd_ticks;
     OPL3 opl;
 public:
     static unsigned long ReadBEInt(const void* buffer, unsigned nbytes)
@@ -830,6 +831,7 @@ public:
             }
         }
         loopStart = true;
+        invalidLoop = false;
 
         opl.Reset(); // Reset AdLib
         //opl.Reset(); // ...twice (just in case someone misprogrammed OPL3 previously)
@@ -1045,6 +1047,7 @@ private:
             }
         }
     }
+
     void HandleEvent(size_t tk)
     {
         unsigned char byte = TrackData[tk][CurrentPosition.track[tk].ptr++];
@@ -1297,7 +1300,7 @@ private:
                         break;
                     case 7: // Change volume
                         Ch[MidCh].volume = value;
-                        //NoteUpdate_All(MidCh, Upd_Volume);
+                        NoteUpdate_All(MidCh, Upd_Volume);
                         break;
                     case 64: // Enable/disable sustain
                         Ch[MidCh].sustain = value;

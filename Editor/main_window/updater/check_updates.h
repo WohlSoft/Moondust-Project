@@ -59,8 +59,6 @@ private slots:
     void httpFinished();
     void httpReadyRead();
     void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
-    //void slotAuthenticationRequired(QNetworkReply*,QAuthenticator *);
-
     void runShadowUpdateCheck();
 
 #ifndef QT_NO_SSL
