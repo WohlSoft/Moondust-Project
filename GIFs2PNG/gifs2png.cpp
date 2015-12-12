@@ -408,6 +408,12 @@ int main(int argc, char *argv[])
       QTextStream(stdout) << QString("Input path:  "+path+"\n");
     QTextStream(stdout) << QString("Output path: "+OPath+"\n");
     QTextStream(stdout) <<"============================================================================\n";
+    if(!configPath.isEmpty())
+    {
+        QTextStream(stdout) <<"============================================================================\n";
+        QTextStream(stdout) <<QString("Used config pack: "+configPath+"\n");
+        QTextStream(stdout) <<"============================================================================\n";
+    }
     if(singleFiles) //By files
     {
         foreach(QString q, fileList)
