@@ -27,6 +27,102 @@
 #include <QFileInfo>
 #include "version.h"
 
+#include <QSettings>
+
+class ConfigPackMiniManager
+{
+public:
+    ConfigPackMiniManager() : m_is_using(false) {}
+    ~ConfigPackMiniManager() {}
+
+    void setConfigDir(QString config_dir)
+    {
+        if(config_dir.isEmpty()) return;
+
+        if(!QDir(config_dir).exists())
+            return;
+        if(!QFileInfo(config_dir+"/main.ini").exists())
+            return;
+
+        m_cp_root_path = QDir(config_dir).absolutePath()+"/";
+
+        QString main_ini = m_cp_root_path + "main.ini";
+        QSettings mainset(main_ini, QSettings::IniFormat);
+        mainset.setIniCodec("UTF-8");
+
+        QString customAppPath = QCoreApplication::applicationDirPath()+"/";
+
+        m_dir_list.clear();
+        m_dir_list.push_back(m_cp_root_path);
+
+        mainset.beginGroup("main");
+            customAppPath = mainset.value("application-path", customAppPath).toString();
+            customAppPath.replace('\\', '/');
+            m_cp_root_path = (mainset.value("application-dir", false).toBool() ?
+                            customAppPath + "/" : m_cp_root_path + "/data/" );
+            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-level", "data/graphics/level").toString() + "/");
+                appendDirList(m_dir_list.last());
+            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/");
+                appendDirList(m_dir_list.last());
+            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/");
+                appendDirList(m_dir_list.last());
+            m_dir_list.push_back( m_cp_root_path + mainset.value("custom-data", "data-custom").toString() + "/");
+                appendDirList(m_dir_list.last());
+        mainset.endGroup();
+
+        for(int i=0; i< m_dir_list.size(); i++)
+        {
+            m_dir_list[i].replace('\\', '/');
+            m_dir_list[i].remove("//");
+            if( !m_dir_list[i].endsWith('/') && !m_dir_list[i].endsWith('\\') )
+                m_dir_list[i].push_back('/');
+        }
+
+        m_is_using=true;
+    }
+
+    bool isUsing() { return m_is_using; }
+
+    void appendDirList(QString &dir)
+    {
+        QDir dirs(dir);
+        QStringList folders = dirs.entryList(QDir::NoDotAndDotDot|QDir::Dirs);
+        foreach(QString f, folders)
+        {
+            QString newpath=QString(dirs.absolutePath()+"/"+f).remove("//");
+            if(!m_dir_list.contains(newpath)) //Disallow duplicated entries
+                m_dir_list.push_back(newpath);
+        }
+    }
+
+    QString getFile(QString file, QString customPath)
+    {
+        if( !customPath.endsWith('/') && !customPath.endsWith('\\') )
+            customPath.push_back('/');
+
+        if(!m_is_using) return customPath+file;
+
+        if(QFileInfo(customPath+file).exists())
+            return customPath+file;
+
+        foreach(QString path, m_dir_list)
+        {
+            if(QFileInfo(path+file).exists())
+                return path+file;
+        }
+        return customPath+file;
+    }
+
+private:
+    bool        m_is_using;
+    QString     m_cp_root_path;
+    QString     m_custom_path;
+    QStringList m_dir_list;
+
+};
+
+
+
 QImage mergeBitwiseAndOr(QImage image, QImage mask)
 {
     if(mask.isNull())
@@ -95,7 +191,7 @@ QImage mergeBitwiseAndOr(QImage image, QImage mask)
     return target;
 }
 
-void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
+void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPackMiniManager &cnf)
 {
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
@@ -117,8 +213,12 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
     else
         return;
 
-    QImage image = QImage(path+q);
-    QImage mask = QImage(path+imgFileM);
+    QString maskPath = cnf.getFile(imgFileM, path);
+
+    QImage image(path+q);
+    QImage mask;
+
+    if(QFileInfo(maskPath).exists()) mask.load(maskPath);
 
     target = mergeBitwiseAndOr(image, mask);
 
@@ -137,6 +237,38 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
     QTextStream(stderr) << path+q+" - WRONG!\n";
 }
 
+bool isQuotesdString(QString in) // QUOTED STRING
+{
+    //This is INVERTED validator. If false - good, true - bad.
+    #define QStrGOOD true
+    #define QStrBAD false
+    int i=0;
+    for(i=0; i<(signed)in.size();i++)
+    {
+        if(i==0)
+        {
+            if(in[i]!='"') return QStrBAD;
+        } else if(i==(signed)in.size()-1) {
+            if(in[i]!='"') return QStrBAD;
+        } else if(in[i]=='"') return QStrBAD;
+        else if(in[i]=='"') return QStrBAD;
+    }
+    if(i==0) return QStrBAD; //This is INVERTED validator. If false - good, true - bad.
+    return QStrGOOD;
+}
+
+QString removeQuotes(QString str)
+{
+    QString target = str;
+    if(target.isEmpty())
+        return target;
+    if(target[0]==QChar('\"'))
+        target.remove(0,1);
+    if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
+        target.remove(target.size()-1,1);
+    return target;
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::addLibraryPath( "." );
@@ -151,6 +283,8 @@ int main(int argc, char *argv[])
     bool removeMode=false;
     QStringList fileList;
 
+    ConfigPackMiniManager config;
+
     bool nopause=false;
     bool walkSubDirs=false;
     bool cOpath=false;
@@ -158,6 +292,8 @@ int main(int argc, char *argv[])
 
     QString argPath;
     QString argOPath;
+
+    QString configPath;
 
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
@@ -198,6 +334,21 @@ int main(int argc, char *argv[])
         if(a.arguments().at(arg)=="--nopause")
         {
             nopause=true;
+        }
+        else
+        if(a.arguments().at(arg).startsWith("--config="))
+        {
+            QStringList tmp;
+            tmp = a.arguments().at(arg).split('=');
+            if(tmp.size()>1)
+            {
+                configPath = tmp.last();
+                if(isQuotesdString(configPath))
+                {
+                    configPath = removeQuotes(configPath);
+                    configPath = QDir(configPath).absolutePath();
+                }
+            }
         }
         else
         {
@@ -251,6 +402,8 @@ int main(int argc, char *argv[])
     QTextStream(stdout) <<"Converting images...\n";
     QTextStream(stdout) <<"============================================================================\n";
 
+    config.setConfigDir(configPath);
+
     if(!singleFiles)
       QTextStream(stdout) << QString("Input path:  "+path+"\n");
     QTextStream(stdout) << QString("Output path: "+OPath+"\n");
@@ -262,7 +415,7 @@ int main(int argc, char *argv[])
             path=QFileInfo(q).absoluteDir().path()+"/";
             QString fname = QFileInfo(q).fileName();
             if(cOpath) OPath=path;
-            doMagicIn(path, fname , OPath, removeMode);
+            doMagicIn(path, fname , OPath, removeMode, config);
         }
     }
     else
@@ -271,7 +424,7 @@ int main(int argc, char *argv[])
     if(!walkSubDirs) //By directories
         foreach(QString q, fileList)
         {
-            doMagicIn(path, q, OPath, removeMode);
+            doMagicIn(path, q, OPath, removeMode, config);
         }
         else
         {
@@ -286,7 +439,8 @@ int main(int argc, char *argv[])
                         continue;
 
                     if(cOpath) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
-                    doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode);
+
+                    doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode, config);
               }
 
 
@@ -296,7 +450,11 @@ int main(int argc, char *argv[])
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Done!\n\n";
 
-    if(!nopause) getchar();
+    if(!nopause)
+    {
+        QTextStream(stdout) <<"Press any key to exit...\n";
+        getchar();
+    }
 
     return 0;
 
@@ -312,6 +470,12 @@ DisplayHelp:
     QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
     QTextStream(stdout) <<" -R                  - Remove source images after succesfull converting\n";
     QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
+    QTextStream(stdout) <<"\n";
+    QTextStream(stdout) <<" --config=/path/to/config/pack\n";
+    QTextStream(stdout) <<"                     - Allow usage of default masks from specific PGE config pack\n";
+    QTextStream(stdout) <<"                       (Useful for a cases where designer wasn't placed mask image\n";
+    QTextStream(stdout) <<"                       to use default mask file from a config pack)\n";
+    QTextStream(stdout) <<" --nopause            - Don't pause application after proces fininshing (useful for a scrip integration)\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();
