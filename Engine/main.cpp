@@ -97,6 +97,10 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    #ifdef Q_OS_LINUX
+    a.setStyle("GTK");
+    #endif
+
     ///Generating application path
 
     //Init system paths

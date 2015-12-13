@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    #ifdef Q_OS_LINUX
+    a.setStyle("GTK");
+    #endif
+
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
         error(SDL_GetError());
 
