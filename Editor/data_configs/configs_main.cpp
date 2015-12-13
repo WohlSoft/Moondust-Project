@@ -107,9 +107,9 @@ void dataconfigs::loadBasics()
             } else {
                 ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
             }
-        #elif Q_OS_MACX
+        #elif __APPLE__
             ConfStatus::defaultTheme = "Breeze";
-        #elif Q_OS_WIN
+        #elif _WIN32
             if(QSysInfo::WindowsVersion==QSysInfo::WV_WINDOWS10)
                 ConfStatus::defaultTheme = "Breeze";
             else
