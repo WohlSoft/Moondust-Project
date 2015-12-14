@@ -148,6 +148,17 @@ void ItemScene::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     setSelected(true);//minor, but so dumb mistake was here: "this" instead of "true"
     QMenu ItemMenu;
 
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+            QAction *copyItemID = copyPreferences->addAction(tr("Scenery-ID: %1").arg(sceneData.id));
+                copyItemID->deleteLater();
+            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
+                copyPosXY->deleteLater();
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
+
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
@@ -166,6 +177,46 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         return;
     }
 
+    if(selected==copyItemID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(sceneData.id));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXY)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2;")
+                               .arg(sceneData.x)
+                               .arg(sceneData.y)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXYWH)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
+                               .arg(sceneData.x)
+                               .arg(sceneData.y)
+                               .arg(imageSize.width())
+                               .arg(imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(sceneData.x)
+                               .arg(sceneData.y)
+                               .arg(sceneData.x+imageSize.width())
+                               .arg(sceneData.y+imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
     if(selected==cutTile)
     {
         MainWinConnect::pMainWin->on_actionCut_triggered();

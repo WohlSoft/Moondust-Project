@@ -250,6 +250,18 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("NPC-%1").arg(npcData.id));
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("NPC-%1").arg(npcData.id));
         ItemMenu.addSeparator();
+
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+            QAction *copyItemID = copyPreferences->addAction(tr("NPC-ID: %1").arg(npcData.id));
+                copyItemID->deleteLater();
+            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
+                copyPosXY->deleteLater();
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
+
     QAction *copyNpc = ItemMenu.addAction(tr("Copy"));
     QAction *cutNpc = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
@@ -337,6 +349,46 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         delete npcList;
         if(!newData.npc.isEmpty())
             scene->addTransformHistory(newData, oldData);
+    }
+    else
+    if(selected==copyItemID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(npcData.id));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXY)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2;")
+                               .arg(npcData.x)
+                               .arg(npcData.y)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXYWH)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
+                               .arg(npcData.x)
+                               .arg(npcData.y)
+                               .arg(imageSize.width())
+                               .arg(imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(npcData.x)
+                               .arg(npcData.y)
+                               .arg(npcData.x+imageSize.width())
+                               .arg(npcData.y+imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==newNpc){

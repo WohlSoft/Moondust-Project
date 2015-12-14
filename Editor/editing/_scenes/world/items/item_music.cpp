@@ -173,6 +173,18 @@ void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     }
     QAction *play = ItemMenu.addAction(tr("Play this"));
         ItemMenu.addSeparator();
+
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+            QAction *copyItemID = copyPreferences->addAction(tr("World-Music-ID: %1").arg(musicData.id));
+                copyItemID->deleteLater();
+            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
+                copyPosXY->deleteLater();
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
+
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
@@ -199,6 +211,46 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, musicData.music_file);
         LvlMusPlay::updatePlayerState(true);
         MainWinConnect::pMainWin->setMusicButton(true);
+    }
+    else
+    if(selected==copyItemID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(musicData.id));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXY)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2;")
+                               .arg(musicData.x)
+                               .arg(musicData.y)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXYWH)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
+                               .arg(musicData.x)
+                               .arg(musicData.y)
+                               .arg(imageSize.width())
+                               .arg(imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(musicData.x)
+                               .arg(musicData.y)
+                               .arg(musicData.x+imageSize.width())
+                               .arg(musicData.y+imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==cutTile)

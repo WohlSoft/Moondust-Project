@@ -203,7 +203,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         ItemMenu.addSeparator();
     QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
         copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("Item ID: %1").arg(blockData.id));
+            QAction *copyItemID = copyPreferences->addAction(tr("Block-ID: %1").arg(blockData.id));
                 copyItemID->deleteLater();
             QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
                 copyPosXY->deleteLater();

@@ -210,7 +210,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
         copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("Item ID: %1").arg(bgoData.id));
+            QAction *copyItemID = copyPreferences->addAction(tr("BGO-ID: %1").arg(bgoData.id));
                 copyItemID->deleteLater();
             QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
                 copyPosXY->deleteLater();
