@@ -201,6 +201,16 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
     QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
         ItemMenu.addSeparator();
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+            QAction *copyItemID = copyPreferences->addAction(tr("Item ID: %1").arg(blockData.id));
+                copyItemID->deleteLater();
+            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
+                copyPosXY->deleteLater();
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
     QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
     QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
         ItemMenu.addSeparator();
@@ -217,10 +227,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         #endif
         return;
     }
-    //mouseEvent->accept();
 
-    //WriteToLog(QtDebugMsg, QString("Block ContextMenu");
 
+    if(selected==copyItemID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(blockData.id));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXY)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2;")
+                               .arg(blockData.x)
+                               .arg(blockData.y)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXYWH)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
+                               .arg(blockData.x)
+                               .arg(blockData.y)
+                               .arg(imageSize.width())
+                               .arg(imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(blockData.x)
+                               .arg(blockData.y)
+                               .arg(blockData.x+imageSize.width())
+                               .arg(blockData.y+imageSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
     if(selected==cutBlock)
     {
         MainWinConnect::pMainWin->on_actionCut_triggered();
