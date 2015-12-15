@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -152,7 +152,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string notr="true">&amp;?</string>
+     <string>Help</string>
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
@@ -394,12 +394,12 @@
    </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
    <addaction name="menuLevel"/>
    <addaction name="menuWorld"/>
    <addaction name="menuTest"/>
-   <addaction name="menuView"/>
-   <addaction name="menuTools"/>
    <addaction name="menuScript"/>
+   <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -646,7 +646,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -705,7 +705,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2724,6 +2724,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
  </resources>
