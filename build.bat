@@ -26,6 +26,8 @@ PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 
 cd %CD%\Editor
 %QtDir%\lrelease.exe *.pro
+cd ..\Engine
+%QtDir%\lrelease.exe *.pro
 cd ..
 
 rem build all components

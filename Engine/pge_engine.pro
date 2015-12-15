@@ -102,6 +102,20 @@ macx {
 
 RC_FILE = _resources/engine.rc
 
+android:{
+    LANGUAGES_TARGET=/assets/languages
+} else {
+    LANGUAGES_TARGET=$$DESTDIR/languages
+}
+translates.path = $$LANGUAGES_TARGET
+translates.files += $$PWD/languages/*.qm
+
+INSTALLS += translates
+
+TRANSLATIONS += languages/engine_en.ts \
+                languages/engine_ru.ts \
+                languages/engine_de.ts
+
 SOURCES += \
     main.cpp \
     graphics/graphics.cpp \

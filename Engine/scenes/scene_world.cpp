@@ -37,6 +37,7 @@
 #include <QPair>
 #include <QVector>
 #include <QFileInfo>
+#include <QApplication>
 #include <unordered_map>
 
 WorldScene::WorldScene()
@@ -478,15 +479,15 @@ void WorldScene::initPauseMenu1()
     _pauseMenu_opened=false;
     _pauseMenuID=1;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    _pauseMenu.construct(QApplication::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                          ConfigManager::setup_menu_box.box_padding,
                          ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     QStringList items;
-    items<<"Continue";
-    items<<"Save and continue";
-    items<<"Save and quit";
-    items<<"Quit without saving";
+    items<<QApplication::tr("Continue");
+    items<<QApplication::tr("Save and continue");
+    items<<QApplication::tr("Save and quit");
+    items<<QApplication::tr("Quit without saving");
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -498,13 +499,13 @@ void WorldScene::initPauseMenu2()
     _pauseMenu_opened=false;
     _pauseMenuID=2;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    _pauseMenu.construct(QApplication::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                          ConfigManager::setup_menu_box.box_padding,
                          ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     QStringList items;
-    items<<"Continue";
-    items<<"Quit";
+    items<<QApplication::tr("Continue");
+    items<<QApplication::tr("Quit");
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);

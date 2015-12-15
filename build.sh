@@ -50,8 +50,10 @@ fi
 cd Editor
 $LRelease *.pro
 checkState
+cd ../Engine
+$LRelease *.pro
+checkState
 cd ..
-
 #=======================================================================
 # build all components
 $QMake CONFIG+=release CONFIG-=debug

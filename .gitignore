@@ -60,7 +60,9 @@ Makefile.*
 
 #compiled translation
 editor_*.qm
-
+engine_*.qm
+#broken translation file
+qt_en.qm
 
 # ignore Qt-Makefile
 *.Debug
