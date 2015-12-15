@@ -110,9 +110,8 @@
         <translation>Функции средней клавиши мыши</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="320"/>
         <source>Duplicate selected items into mouse position</source>
-        <translation>Дублировать выделенное в текущую позицию</translation>
+        <translation type="vanished">Дублировать выделенное в текущую позицию</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
@@ -166,9 +165,8 @@
         <translation>Автораскрытие вкладок классических событий</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="430"/>
         <source>Autoscroll Section</source>
-        <translation>Автопрокрутка</translation>
+        <translation type="vanished">Автопрокрутка</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="437"/>
@@ -176,9 +174,8 @@
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="444"/>
         <source>Layer Visibility</source>
-        <translation>Видимость слоёв</translation>
+        <translation type="vanished">Видимость слоёв</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="451"/>
@@ -196,9 +193,8 @@
         <translation>Удерж. кнопок</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="472"/>
         <source>Section Settings</source>
-        <translation>Настройки секции</translation>
+        <translation type="vanished">Настройки секции</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="504"/>
@@ -303,6 +299,26 @@
         <location filename="../main_window/tools/app_settings.ui" line="709"/>
         <source>World item Toolbox</source>
         <translation>Панель объектов Карты Мира</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="320"/>
+        <source>Duplicate selected items onto cursor&apos;s position</source>
+        <translation>Дублировать выделенное в текущую позицию</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="430"/>
+        <source>Autoscroll section</source>
+        <translation>Автопрокрутка секции</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="444"/>
+        <source>Layer visibility</source>
+        <translation>Видимость слоёв</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="472"/>
+        <source>Section settings</source>
+        <translation>Настройки секции</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="768"/>
@@ -819,24 +835,20 @@ You can take any configuration package here:&lt;br&gt;%2</source>
         <translation type="vanished">Звуки (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="66"/>
         <source>Level Blocks (%1/%2)</source>
-        <translation>Уровень: блоки  (%1/%2)</translation>
+        <translation type="vanished">Уровень: блоки  (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="78"/>
         <source>Level Background objects (%1/%2)</source>
-        <translation>Уровень: Фоновые объекты (%1/%2)</translation>
+        <translation type="vanished">Уровень: Фоновые объекты (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Level Background images (%1/%2)</source>
-        <translation>Уровень: Фоновые изображения (%1/%2)</translation>
+        <translation type="vanished">Уровень: Фоновые изображения (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Level NPCs (%1/%2)</source>
-        <translation>Уровень: НИПы (%1/%2)</translation>
+        <translation type="vanished">Уровень: НИПы (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="114"/>
@@ -859,24 +871,60 @@ You can take any configuration package here:&lt;br&gt;%2</source>
         <translation>Звуки (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map Tiles (%1/%2)</source>
-        <translation>Карта мира: Плитки (%1/%2)</translation>
+        <translation type="vanished">Карта мира: Плитки (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Sceneries (%1/%2)</source>
+        <translation type="vanished">Карта мира: Декорации (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Paths (%1/%2)</source>
+        <translation type="vanished">Карта мира: Пути (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Levels (%1/%2)</source>
+        <translation type="vanished">Карта мира: Уровни (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="66"/>
+        <source>Level: Blocks (%1/%2)</source>
+        <translation>Уровень: Блоки (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="78"/>
+        <source>Level: Background objects (%1/%2)</source>
+        <translation>Уровень: Фоновые объекты (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="90"/>
+        <source>Level: Background images (%1/%2)</source>
+        <translation>Уровень: Фоновые изображения (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="102"/>
+        <source>Level: NPCs (%1/%2)</source>
+        <translation>Уровень: НИПы (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="161"/>
+        <source>World map: Terrian tiles (%1/%2)</source>
+        <translation>Карта мира: Ландшафтные плитки (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
-        <source>World map Sceneries (%1/%2)</source>
+        <source>World map: Scenery (%1/%2)</source>
         <translation>Карта мира: Декорации (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="186"/>
-        <source>World map Paths (%1/%2)</source>
-        <translation>Карта мира: Пути (%1/%2)</translation>
+        <source>World map: Path tiles (%1/%2)</source>
+        <translation>Карта мира: Дорожные плитки (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="199"/>
-        <source>World map Levels (%1/%2)</source>
-        <translation>Карта мира: Уровни (%1/%2)</translation>
+        <source>World map: Level entrance tiles (%1/%2)</source>
+        <translation>Карта мира: Плитки уровневых входов (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="211"/>
@@ -972,9 +1020,13 @@ Please save them first before doing anything else.</source>
         <translation>Пользовательский счётчик</translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add item ID&apos;s which will be in counter group</source>
-        <translation>Пожалуйста, добавьте ID элементов, которые будут в группе счётчика</translation>
+        <translation type="vanished">Пожалуйста, добавьте ID элементов, которые будут в группе счётчика</translation>
+    </message>
+    <message>
+        <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
+        <source>Please add the Item&apos;s ID which will be in this custom group:</source>
+        <translation>Пожалуйста, добавьте ID элементов, которые будут в группе счётчика:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
@@ -1013,9 +1065,13 @@ Please save them first before doing anything else.</source>
         <translation>НИП</translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
         <source>Tile</source>
-        <translation>Плитка</translation>
+        <translation type="vanished">Плитка</translation>
+    </message>
+    <message>
+        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
+        <source>Terrian tile</source>
+        <translation>Ландшафтная плитка</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
@@ -1067,8 +1123,12 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="169"/>
+        <source>Contents</source>
+        <translation>Содержание</translation>
+    </message>
+    <message>
         <source>Items</source>
-        <translation>Элементы</translation>
+        <translation type="vanished">Элементы</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="231"/>
@@ -2444,6 +2504,11 @@ Message limits: max line lenth is 28 characters</source>
         <translation>[всё]</translation>
     </message>
     <message>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
+        <source>Terrian tile</source>
+        <translation>Ландшафтная плитка</translation>
+    </message>
+    <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1263"/>
         <source>[Empty]</source>
@@ -2460,9 +2525,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>НИП</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
         <source>Tile</source>
-        <translation>Плитка</translation>
+        <translation type="vanished">Плитка</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="425"/>
@@ -5434,6 +5498,16 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Переключить секцию уровня</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="2150"/>
+        <source>Lock Terrian tiles</source>
+        <translation>Заблокировать все ландшафтные плитки</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2163"/>
+        <source>Lock Scenery tiles</source>
+        <translation>Заблокировать все декорации</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2241"/>
         <source>Apply</source>
         <translation>Принять</translation>
@@ -6079,14 +6153,12 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Настройки мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
         <source>Lock tiles</source>
-        <translation>Заблокировать все плитки</translation>
+        <translation type="vanished">Заблокировать все плитки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2163"/>
         <source>Lock Sceneries</source>
-        <translation>Заблокировать все декорации</translation>
+        <translation type="vanished">Заблокировать все декорации</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2176"/>
@@ -7920,14 +7992,14 @@ Configuration package loaded with errors.</source>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="56"/>
-        <location filename="../main_window/testing/testing.cpp" line="116"/>
-        <location filename="../main_window/testing/testing.cpp" line="176"/>
+        <location filename="../main_window/testing/testing.cpp" line="121"/>
+        <location filename="../main_window/testing/testing.cpp" line="193"/>
         <source>Engine is not found</source>
         <translation>Движок не найден</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="57"/>
-        <location filename="../main_window/testing/testing.cpp" line="117"/>
+        <location filename="../main_window/testing/testing.cpp" line="122"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
@@ -7937,26 +8009,28 @@ Please, check the application directory.</source>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="65"/>
+        <location filename="../main_window/testing/testing.cpp" line="130"/>
         <source>Engine already runned</source>
         <translation>Движок уже запущен</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="66"/>
+        <location filename="../main_window/testing/testing.cpp" line="131"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Уже запущенно тестирование другого уровня.
 Вы хотите прервать текущий процесс тестирования?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="131"/>
-        <location filename="../main_window/testing/testing.cpp" line="144"/>
-        <location filename="../main_window/testing/testing.cpp" line="208"/>
+        <location filename="../main_window/testing/testing.cpp" line="148"/>
+        <location filename="../main_window/testing/testing.cpp" line="161"/>
+        <location filename="../main_window/testing/testing.cpp" line="225"/>
         <source>Save file first</source>
         <translation>Сначала сохраните файл</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="132"/>
-        <location filename="../main_window/testing/testing.cpp" line="145"/>
+        <location filename="../main_window/testing/testing.cpp" line="149"/>
+        <location filename="../main_window/testing/testing.cpp" line="162"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation>Чтобы запустить тестирование сохранённого файла, сперва сохраните его на диск!
@@ -7967,7 +8041,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="vanished">Пустышка!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="177"/>
+        <location filename="../main_window/testing/testing.cpp" line="194"/>
         <source>Engine is not found: 
 %1
 Please, check the application directory.</source>
@@ -7976,71 +8050,71 @@ Please, check the application directory.</source>
 Пожалуйста, проверьте папку с приложением.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="209"/>
+        <location filename="../main_window/testing/testing.cpp" line="226"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>Сперва сохраните файл, чтобы запустить тест через SMBX!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="218"/>
+        <location filename="../main_window/testing/testing.cpp" line="235"/>
         <source>Incompatible file format</source>
         <translation>Несовместимый формат файла</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="219"/>
+        <location filename="../main_window/testing/testing.cpp" line="236"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation>Чтобы иметь возможность протестировать уровень в SMBX, файл должен быть сохранён в формат SMBX64!
 Иначе будет создан временный файл. Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="230"/>
-        <location filename="../main_window/testing/testing.cpp" line="277"/>
-        <location filename="../main_window/testing/testing.cpp" line="292"/>
-        <location filename="../main_window/testing/testing.cpp" line="307"/>
-        <location filename="../main_window/testing/testing.cpp" line="316"/>
-        <location filename="../main_window/testing/testing.cpp" line="358"/>
+        <location filename="../main_window/testing/testing.cpp" line="247"/>
+        <location filename="../main_window/testing/testing.cpp" line="294"/>
+        <location filename="../main_window/testing/testing.cpp" line="309"/>
+        <location filename="../main_window/testing/testing.cpp" line="324"/>
+        <location filename="../main_window/testing/testing.cpp" line="333"/>
+        <location filename="../main_window/testing/testing.cpp" line="375"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="231"/>
+        <location filename="../main_window/testing/testing.cpp" line="248"/>
         <source>Fail to create temp file %1</source>
         <translation>Ошибка создания временного файла %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="251"/>
+        <location filename="../main_window/testing/testing.cpp" line="268"/>
         <source>SMBX Level test</source>
         <translation>Тест уровня SMBX</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="252"/>
+        <location filename="../main_window/testing/testing.cpp" line="269"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation>Хотите ли Вы сохранить файл перед началом тестирования?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="278"/>
+        <location filename="../main_window/testing/testing.cpp" line="295"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation>SMBX с LunaDLL не запущен!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="293"/>
+        <location filename="../main_window/testing/testing.cpp" line="310"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation>Невозможно передать путь к файлу в LunaDLL: (%1)</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="308"/>
+        <location filename="../main_window/testing/testing.cpp" line="325"/>
         <source>Could not map view of file (%1).</source>
         <translation>Невозможно сопоставить просмотр файла (%1).</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="317"/>
+        <location filename="../main_window/testing/testing.cpp" line="334"/>
         <source>Too long path: </source>
         <translation>Слишком длинный путь: </translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="356"/>
-        <location filename="../main_window/testing/testing.cpp" line="359"/>
+        <location filename="../main_window/testing/testing.cpp" line="373"/>
+        <location filename="../main_window/testing/testing.cpp" line="376"/>
         <source>Failed to find SMBX Window</source>
         <translation>Окно SMBX не найдено</translation>
     </message>
@@ -9621,6 +9695,11 @@ The maximum number of Music Boxes is %2.</source>
         <translation>Сохранить</translation>
     </message>
     <message>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
+        <source>Terrian tile</source>
+        <translation>Ландшафтная плитка</translation>
+    </message>
+    <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="148"/>
         <source>Open</source>
         <translation>Открыть</translation>
@@ -9656,9 +9735,8 @@ The maximum number of Music Boxes is %2.</source>
         <translation>НИП</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
         <source>Tile</source>
-        <translation>Плитка</translation>
+        <translation type="vanished">Плитка</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="81"/>
@@ -10693,9 +10771,8 @@ Music boxes:		%5
         <translation>Поиск элементов на Карте Мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_search_box.ui" line="53"/>
         <source>Tile</source>
-        <translation>Плитка</translation>
+        <translation type="vanished">Плитка</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="74"/>
@@ -10768,12 +10845,21 @@ Music boxes:		%5
         <translation>Сбросить Поля Поиска</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_search_box.ui" line="159"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="225"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="333"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="344"/>
         <source>Search Tile</source>
         <translation>Искать  плитку</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_search_box.ui" line="53"/>
+        <source>Terrain tile</source>
+        <translation>Ландшафтная плитка</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_search_box.ui" line="159"/>
+        <source>Search Terrain Tile</source>
+        <translation>Искать ландшафтную плитку</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="167"/>
@@ -11225,9 +11311,13 @@ Do you want to save your changes?</source>
         <translation>Панель объектов карты мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
         <source>Tiles</source>
-        <translation>Плитки</translation>
+        <translation type="vanished">Плитки</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
+        <source>Terrain</source>
+        <translation>Ландшафт</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="127"/>
@@ -11288,32 +11378,40 @@ Do you want to save your changes?</source>
         <translation>Отключить персонажей:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="132"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="135"/>
+        <source>Credits of this episode (SMBX allows only 5 lines):</source>
+        <translation>Авторы этого эпизода (SMBX допускает только 5 строк):</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="148"/>
+        <source>Episode title:</source>
+        <translation>Название эпизода:</translation>
+    </message>
+    <message>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
-        <translation>Авторы этого мира (SMBX допускает только 5 строк):</translation>
+        <translation type="vanished">Авторы этого мира (SMBX допускает только 5 строк):</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="145"/>
         <source>World title:</source>
-        <translation>Название мира:</translation>
+        <translation type="vanished">Название мира:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="152"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="155"/>
         <source>Restart last level after fail</source>
         <translation>Перезап. посл. уровень после провала</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="159"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="162"/>
         <source>Hub-styled world (without world map)</source>
         <translation>Кооридоный мир (Без карты мира)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="166"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="169"/>
         <source>Total stars:</source>
         <translation>Всего звёзд:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="183"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="186"/>
         <source>Browse</source>
         <translation>Обзор</translation>
     </message>

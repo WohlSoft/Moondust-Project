@@ -39,7 +39,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Please add item ID's which will be in counter group</string>
+      <string>Please add the Item's ID which will be in this custom group:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter|Qt::AlignTop</set>

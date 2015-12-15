@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>316</height>
+    <height>322</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>265</width>
-    <height>316</height>
+    <height>322</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -46,11 +46,11 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="FindToolboxWLD">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="FindToolboxWLDPage1" native="true">
+      <widget class="QWidget" name="FindToolboxWLDPage1">
        <attribute name="title">
-        <string>Tile</string>
+        <string>Terrain tile</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_21">
         <property name="leftMargin">
@@ -156,13 +156,13 @@
         <item row="5" column="0" colspan="4">
          <widget class="QPushButton" name="FindStartTile">
           <property name="text">
-           <string>Search Tile</string>
+           <string>Search Terrain Tile</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxWLDPage2" native="true">
+      <widget class="QWidget" name="FindToolboxWLDPage2">
        <attribute name="title">
         <string>Scenery</string>
        </attribute>
@@ -276,7 +276,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxWLDPage3" native="true">
+      <widget class="QWidget" name="FindToolboxWLDPage3">
        <attribute name="title">
         <string>Path</string>
        </attribute>
@@ -390,7 +390,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxWLDPage4" native="true">
+      <widget class="QWidget" name="FindToolboxWLDPage4">
        <attribute name="title">
         <string>Level</string>
        </attribute>
@@ -629,7 +629,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxWLDPage5" native="true">
+      <widget class="QWidget" name="FindToolboxWLDPage5">
        <attribute name="title">
         <string>Music box</string>
        </attribute>

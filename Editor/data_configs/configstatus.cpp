@@ -63,7 +63,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level Blocks
     item = new QListWidgetItem;
-    item->setText(tr("Level Blocks (%1/%2)").arg(configs->main_block.size()).arg(ConfStatus::total_blocks));
+    item->setText(tr("Level: Blocks (%1/%2)").arg(configs->main_block.size()).arg(ConfStatus::total_blocks));
     if(configs->main_block.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -75,7 +75,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BGO
     item = new QListWidgetItem;
-    item->setText(tr("Level Background objects (%1/%2)").arg(configs->main_bgo.size()).arg(ConfStatus::total_bgo));
+    item->setText(tr("Level: Background objects (%1/%2)").arg(configs->main_bgo.size()).arg(ConfStatus::total_bgo));
     if(configs->main_bgo.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -87,7 +87,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BG
     item = new QListWidgetItem;
-    item->setText(tr("Level Background images (%1/%2)").arg(configs->main_bg.size()).arg(ConfStatus::total_bg));
+    item->setText(tr("Level: Background images (%1/%2)").arg(configs->main_bg.size()).arg(ConfStatus::total_bg));
     if(configs->main_bg.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -99,7 +99,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level NPC
     item = new QListWidgetItem;
-    item->setText(tr("Level NPCs (%1/%2)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
+    item->setText(tr("Level: NPCs (%1/%2)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
     if(configs->main_npc.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -156,9 +156,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
 
-    //World Tiles
+    //World map Terrian tiles
     item = new QListWidgetItem;
-    item->setText(tr("World map Tiles (%1/%2)").arg(configs->main_wtiles.size()).arg(ConfStatus::total_wtile));
+    item->setText(tr("World map: Terrian tiles (%1/%2)").arg(configs->main_wtiles.size()).arg(ConfStatus::total_wtile));
     if(configs->main_wtiles.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -168,9 +168,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
     ui->ItemsStatus->addItem(item);
 
-    //World Sceneries
+    //World map Scenery
     item = new QListWidgetItem;
-    item->setText(tr("World map Sceneries (%1/%2)").arg(configs->main_wscene.size()).arg(ConfStatus::total_wscene));
+    item->setText(tr("World map: Scenery (%1/%2)").arg(configs->main_wscene.size()).arg(ConfStatus::total_wscene));
     if(configs->main_wscene.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -181,9 +181,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
 
-    //World Sceneries
+    //World Paths
     item = new QListWidgetItem;
-    item->setText(tr("World map Paths (%1/%2)").arg(configs->main_wpaths.size()).arg(ConfStatus::total_wpath));
+    item->setText(tr("World map: Path tiles (%1/%2)").arg(configs->main_wpaths.size()).arg(ConfStatus::total_wpath));
     if(configs->main_wpaths.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -196,7 +196,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //World Levels
     item = new QListWidgetItem;
-    item->setText(tr("World map Levels (%1/%2)").arg(configs->main_wlevels.size()).arg(ConfStatus::total_wlvl));
+    item->setText(tr("World map: Level entrance tiles (%1/%2)").arg(configs->main_wlevels.size()).arg(ConfStatus::total_wlvl));
     if(configs->main_wlevels.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else

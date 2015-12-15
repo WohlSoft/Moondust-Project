@@ -109,9 +109,8 @@
         <translation>Mittleclick-Funktionen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="320"/>
         <source>Duplicate selected items into mouse position</source>
-        <translation>Dupliziere ausgewählte Items zu Mausposition</translation>
+        <translation type="vanished">Dupliziere ausgewählte Items zu Mausposition</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
@@ -157,7 +156,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="412"/>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschweigens</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="424"/>
@@ -165,19 +164,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="430"/>
-        <source>Autoscroll Section</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="437"/>
         <source>Common</source>
-        <translation type="unfinished">Allgemein</translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/app_settings.ui" line="444"/>
-        <source>Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="451"/>
@@ -195,9 +184,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="472"/>
         <source>Section Settings</source>
-        <translation type="unfinished">Bereich Einstellungen</translation>
+        <translation type="obsolete">Bereich Einstellungen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="504"/>
@@ -302,6 +290,26 @@
         <location filename="../main_window/tools/app_settings.ui" line="709"/>
         <source>World item Toolbox</source>
         <translation>Welt item Toolbox</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="320"/>
+        <source>Duplicate selected items onto cursor&apos;s position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="430"/>
+        <source>Autoscroll section</source>
+        <translation type="unfinished">Bereich Autoscroll</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="444"/>
+        <source>Layer visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="472"/>
+        <source>Section settings</source>
+        <translation type="unfinished">Bereichseinstellungen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="768"/>
@@ -875,24 +883,20 @@ Du kannst Konfigurationspacket hier herunterladen:&lt;br&gt;%2</translation>
         <translation type="vanished">Töne (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="66"/>
         <source>Level Blocks (%1/%2)</source>
-        <translation>Level Blöcke (%1/%2)</translation>
+        <translation type="vanished">Level Blöcke (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="78"/>
         <source>Level Background objects (%1/%2)</source>
-        <translation>Level Hintergrund Objekte (%1/%2)</translation>
+        <translation type="vanished">Level Hintergrund Objekte (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Level Background images (%1/%2)</source>
-        <translation>Level Hintergrundbilder (%1/%2)</translation>
+        <translation type="vanished">Level Hintergrundbilder (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Level NPCs (%1/%2)</source>
-        <translation>Level: NPC (%1/%2)</translation>
+        <translation type="vanished">Level: NPC (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="114"/>
@@ -915,24 +919,60 @@ Du kannst Konfigurationspacket hier herunterladen:&lt;br&gt;%2</translation>
         <translation>Töne (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map Tiles (%1/%2)</source>
-        <translation>Weltkarte Tiles (%1/%2)</translation>
+        <translation type="vanished">Weltkarte Tiles (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Sceneries (%1/%2)</source>
+        <translation type="vanished">Weltkarte Landschaftobjecte (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Paths (%1/%2)</source>
+        <translation type="vanished">Weltkarte Pfade (%1/%2)</translation>
+    </message>
+    <message>
+        <source>World map Levels (%1/%2)</source>
+        <translation type="vanished">Weltkarte Levels (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="66"/>
+        <source>Level: Blocks (%1/%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="78"/>
+        <source>Level: Background objects (%1/%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="90"/>
+        <source>Level: Background images (%1/%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="102"/>
+        <source>Level: NPCs (%1/%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="161"/>
+        <source>World map: Terrian tiles (%1/%2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
-        <source>World map Sceneries (%1/%2)</source>
-        <translation>Weltkarte Landschaftobjecte (%1/%2)</translation>
+        <source>World map: Scenery (%1/%2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="186"/>
-        <source>World map Paths (%1/%2)</source>
-        <translation>Weltkarte Pfade (%1/%2)</translation>
+        <source>World map: Path tiles (%1/%2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="199"/>
-        <source>World map Levels (%1/%2)</source>
-        <translation>Weltkarte Levels (%1/%2)</translation>
+        <source>World map: Level entrance tiles (%1/%2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="211"/>
@@ -1028,9 +1068,13 @@ Bitte speichere sie sofort ab!.</translation>
         <translation>Eigener Zähler</translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add item ID&apos;s which will be in counter group</source>
-        <translation>Bitte füg die item ID ein</translation>
+        <translation type="vanished">Bitte füg die item ID ein</translation>
+    </message>
+    <message>
+        <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
+        <source>Please add the Item&apos;s ID which will be in this custom group:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
@@ -1069,9 +1113,13 @@ Bitte speichere sie sofort ab!.</translation>
         <translation>NPC</translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
         <source>Tile</source>
-        <translation>Tile</translation>
+        <translation type="vanished">Tile</translation>
+    </message>
+    <message>
+        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
+        <source>Terrian tile</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
@@ -1123,8 +1171,12 @@ Bitte speichere sie sofort ab!.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="169"/>
+        <source>Contents</source>
+        <translation type="unfinished">Inhalt</translation>
+    </message>
+    <message>
         <source>Items</source>
-        <translation>Items</translation>
+        <translation type="vanished">Items</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="231"/>
@@ -2489,6 +2541,11 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <translation>[alle]</translation>
     </message>
     <message>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
+        <source>Terrian tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1263"/>
         <source>[Empty]</source>
@@ -2505,9 +2562,8 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <translation>NPC</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
         <source>Tile</source>
-        <translation>Tile</translation>
+        <translation type="vanished">Tile</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="425"/>
@@ -5456,6 +5512,16 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
         <translation>Level Bereich Umschalten</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="2150"/>
+        <source>Lock Terrian tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2163"/>
+        <source>Lock Scenery tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2241"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
@@ -6052,14 +6118,12 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
         <translation>Welteinstellungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
         <source>Lock tiles</source>
-        <translation>Sperre Tiles</translation>
+        <translation type="vanished">Sperre Tiles</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2163"/>
         <source>Lock Sceneries</source>
-        <translation>Sperre Umgebungsobjekte</translation>
+        <translation type="vanished">Sperre Umgebungsobjekte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2176"/>
@@ -7877,14 +7941,14 @@ Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="56"/>
-        <location filename="../main_window/testing/testing.cpp" line="116"/>
-        <location filename="../main_window/testing/testing.cpp" line="176"/>
+        <location filename="../main_window/testing/testing.cpp" line="121"/>
+        <location filename="../main_window/testing/testing.cpp" line="193"/>
         <source>Engine is not found</source>
         <translation>Engine nicht gefunden</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="57"/>
-        <location filename="../main_window/testing/testing.cpp" line="117"/>
+        <location filename="../main_window/testing/testing.cpp" line="122"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
@@ -7894,26 +7958,28 @@ Bitte überprüfe das Anwendungsordner.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="65"/>
+        <location filename="../main_window/testing/testing.cpp" line="130"/>
         <source>Engine already runned</source>
         <translation>Engine läuft schon</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="66"/>
+        <location filename="../main_window/testing/testing.cpp" line="131"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Die Engine testen schon ein anderes Level.
 Aktueller Test abbrechen?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="131"/>
-        <location filename="../main_window/testing/testing.cpp" line="144"/>
-        <location filename="../main_window/testing/testing.cpp" line="208"/>
+        <location filename="../main_window/testing/testing.cpp" line="148"/>
+        <location filename="../main_window/testing/testing.cpp" line="161"/>
+        <location filename="../main_window/testing/testing.cpp" line="225"/>
         <source>Save file first</source>
         <translation>Speichere Datei zuerst</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="132"/>
-        <location filename="../main_window/testing/testing.cpp" line="145"/>
+        <location filename="../main_window/testing/testing.cpp" line="149"/>
+        <location filename="../main_window/testing/testing.cpp" line="162"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation>Um das Testen zu starten speichere bitte vorher ab.
@@ -7926,78 +7992,78 @@ Settings will available soon.</source>
 Einstellungen werden bald zur Verfügung stehen!.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="177"/>
+        <location filename="../main_window/testing/testing.cpp" line="194"/>
         <source>Engine is not found: 
 %1
 Please, check the application directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="209"/>
+        <location filename="../main_window/testing/testing.cpp" line="226"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>Um mit SMBX das Testen zu starten muss die Datei zuerst gespeichert sein.!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="218"/>
+        <location filename="../main_window/testing/testing.cpp" line="235"/>
         <source>Incompatible file format</source>
         <translation>Nicht kompatibeles Format</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="219"/>
+        <location filename="../main_window/testing/testing.cpp" line="236"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation>Um das testen in SMBX zu starten, muss die Datei im SMBX64 Format abgespeichert werden.
 Dies wird eine temporäre Datei erstellen. Fortfahren?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="230"/>
-        <location filename="../main_window/testing/testing.cpp" line="277"/>
-        <location filename="../main_window/testing/testing.cpp" line="292"/>
-        <location filename="../main_window/testing/testing.cpp" line="307"/>
-        <location filename="../main_window/testing/testing.cpp" line="316"/>
-        <location filename="../main_window/testing/testing.cpp" line="358"/>
+        <location filename="../main_window/testing/testing.cpp" line="247"/>
+        <location filename="../main_window/testing/testing.cpp" line="294"/>
+        <location filename="../main_window/testing/testing.cpp" line="309"/>
+        <location filename="../main_window/testing/testing.cpp" line="324"/>
+        <location filename="../main_window/testing/testing.cpp" line="333"/>
+        <location filename="../main_window/testing/testing.cpp" line="375"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="231"/>
+        <location filename="../main_window/testing/testing.cpp" line="248"/>
         <source>Fail to create temp file %1</source>
         <translation>Konnte keine Temporäre Datei erstellen: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="251"/>
+        <location filename="../main_window/testing/testing.cpp" line="268"/>
         <source>SMBX Level test</source>
         <translation>SMBX Level test</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="252"/>
+        <location filename="../main_window/testing/testing.cpp" line="269"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation>Willst du die Datei bevor testen speichern?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="278"/>
+        <location filename="../main_window/testing/testing.cpp" line="295"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation>SMBX mit LunaDLL rennt nicht!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="293"/>
+        <location filename="../main_window/testing/testing.cpp" line="310"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation>Fehler beim Senden des Pfades zu LunaDLL: (%1)</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="308"/>
+        <location filename="../main_window/testing/testing.cpp" line="325"/>
         <source>Could not map view of file (%1).</source>
         <translation>Konnte Datei nicht mappen (%1).</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="317"/>
+        <location filename="../main_window/testing/testing.cpp" line="334"/>
         <source>Too long path: </source>
         <translation>Zu langer Pfad:</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="356"/>
-        <location filename="../main_window/testing/testing.cpp" line="359"/>
+        <location filename="../main_window/testing/testing.cpp" line="373"/>
+        <location filename="../main_window/testing/testing.cpp" line="376"/>
         <source>Failed to find SMBX Window</source>
         <translation>Konnte SMBX Fenster nicht finden</translation>
     </message>
@@ -9510,6 +9576,11 @@ The maximum number of Music Boxes is %2.</source>
         <translation>Speichern</translation>
     </message>
     <message>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
+        <source>Terrian tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="148"/>
         <source>Open</source>
         <translation>Öffnen</translation>
@@ -9545,9 +9616,8 @@ The maximum number of Music Boxes is %2.</source>
         <translation>NPC</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
         <source>Tile</source>
-        <translation>Tile</translation>
+        <translation type="vanished">Tile</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="81"/>
@@ -9871,7 +9941,7 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="79"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -10599,9 +10669,8 @@ Musicboxen:		%5</translation>
         <translation>Suche Items auf der Weltkarte</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_search_box.ui" line="53"/>
         <source>Tile</source>
-        <translation>Tile</translation>
+        <translation type="vanished">Tile</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="74"/>
@@ -10674,12 +10743,21 @@ Musicboxen:		%5</translation>
         <translation>Suchfelder Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_search_box.ui" line="159"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="225"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="333"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="344"/>
         <source>Search Tile</source>
         <translation>Suche Tile</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_search_box.ui" line="53"/>
+        <source>Terrain tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_search_box.ui" line="159"/>
+        <source>Search Terrain Tile</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="167"/>
@@ -11130,9 +11208,13 @@ Möchtest du die Änderungen speichern?</translation>
         <translation>Weltkarte Toolbox</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
         <source>Tiles</source>
-        <translation>Tiles</translation>
+        <translation type="vanished">Tiles</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="127"/>
@@ -11193,32 +11275,40 @@ Möchtest du die Änderungen speichern?</translation>
         <translation>Deaktiviere Charaktere:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="132"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="135"/>
+        <source>Credits of this episode (SMBX allows only 5 lines):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="148"/>
+        <source>Episode title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
-        <translation>Mitwirkende (SMBX erlaubt nur 5 Zeilen):</translation>
+        <translation type="vanished">Mitwirkende (SMBX erlaubt nur 5 Zeilen):</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="145"/>
         <source>World title:</source>
-        <translation>Welttitel:</translation>
+        <translation type="vanished">Welttitel:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="152"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="155"/>
         <source>Restart last level after fail</source>
         <translation>Starte letztes Level neu nach Tod</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="159"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="162"/>
         <source>Hub-styled world (without world map)</source>
         <translation>Hub-styled Welt (ohne Weltkarte)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="166"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="169"/>
         <source>Total stars:</source>
         <translation>Sterne insgesamt:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="183"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="186"/>
         <source>Browse</source>
         <translation>Durchsuchen</translation>
     </message>
