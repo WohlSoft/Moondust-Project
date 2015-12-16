@@ -31,6 +31,7 @@
 #include "common_features/graphics_funcs.h"
 #include "common_features/logger.h"
 #include "common_features/episode_state.h"
+#include "common_features/translator.h"
 
 #include <settings/global_settings.h>
 
@@ -59,8 +60,6 @@
 #include "scenes/scene_gameover.h"
 
 #include <QMessageBox>
-
-#include <QTranslator>
 
 #include <cstdlib>
 #include <ctime>
@@ -108,46 +107,8 @@ int main(int argc, char *argv[])
     //Init system paths
     AppPathManager::initAppPath();
 
-
-/*======================================Translation========================================*/
-    QTranslator     m_translator;   /**< contains the translations for this application */
-    QTranslator     m_translatorQt; /**< contains the translations for qt */
-    QString         m_currLang;     /**< contains the currently loaded language */
-    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
-
-    QString defaultLocale = QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-
-    m_langPath = ApplicationPath;
-    m_langPath.append("/languages");
-
-    m_currLang = defaultLocale;
-    QLocale locale = QLocale(m_currLang);
-    QLocale::setDefault(locale);
-
-    bool ok = m_translator.load(m_langPath + QString("/engine_%1.qm").arg(m_currLang));
-             WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
-    if(ok)
-       qApp->installTranslator(&m_translator);
-    else
-    {
-        m_currLang="en"; //set to English if no other translations are found
-        QLocale locale = QLocale(m_currLang);
-        QLocale::setDefault(locale);
-        ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-        if(ok)
-           qApp->installTranslator(&m_translator);
-    }
-    qDebug() << "Common Translation: " << ok;
-
-    ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-            WriteToLog(QtDebugMsg, QString("Qt Translation: %1").arg((int)ok));
-    if(ok)
-       qApp->installTranslator(&m_translatorQt);
-    qDebug() << "Qt Translation: " << ok;
-
-/*======================================Translation========================================*/
-
+    PGE_Translator translator;
+    translator.init(&a);
 
     foreach(QString arg, a.arguments())
     {
