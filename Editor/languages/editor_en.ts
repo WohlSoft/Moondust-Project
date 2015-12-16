@@ -967,9 +967,13 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
         <translation>Level: NPCs (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map: Terrian tiles (%1/%2)</source>
-        <translation>World map: Terrian tiles (%1/%2)</translation>
+        <translation type="vanished">World map: Terrian tiles (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="161"/>
+        <source>World map: Terrain tiles (%1/%2)</source>
+        <translation>World map: Terrain tiles (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
@@ -1129,9 +1133,13 @@ Please save them before doing anything else.</translation>
         <translation type="vanished">Tile</translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
         <source>Terrian tile</source>
-        <translation>Terrian tile</translation>
+        <translation type="vanished">Terrian tile</translation>
+    </message>
+    <message>
+        <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
+        <source>Terrain tile</source>
+        <translation>Terrain tile</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
@@ -2558,8 +2566,12 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
+        <source>Terrain tile</source>
+        <translation>Terrain tile</translation>
+    </message>
+    <message>
         <source>Terrian tile</source>
-        <translation>Terrian tile</translation>
+        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
@@ -5553,9 +5565,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Switch level section</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
         <source>Lock Terrian tiles</source>
-        <translation>Lock Terrian tiles</translation>
+        <translation type="vanished">Lock Terrian tiles</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2163"/>
@@ -6193,6 +6204,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2137"/>
         <source>World settings</source>
         <translation>World settings</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2150"/>
+        <source>Lock Terrain tiles</source>
+        <translation>Lock Terrain tiles</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -9691,6 +9707,20 @@ The maximum number of Music Boxes is %2.</translation>
         <source>1 Player settings</source>
         <translation>1 Player settings</translation>
     </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="61"/>
+        <source>WIP</source>
+        <translation>WIP</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="62"/>
+        <source>Hello!
+This dialog is not finished yet.
+Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
+        <translation>Hello!
+This dialog is not finished yet.
+Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</translation>
+    </message>
 </context>
 <context>
     <name>TilesetConfigureDialog</name>
@@ -9715,9 +9745,8 @@ The maximum number of Music Boxes is %2.</translation>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
         <source>Terrian tile</source>
-        <translation>Terrian tile</translation>
+        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="148"/>
@@ -9728,6 +9757,11 @@ The maximum number of Music Boxes is %2.</translation>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="127"/>
         <source>Clear</source>
         <translation>Clear</translation>
+    </message>
+    <message>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
+        <source>Terrain tile</source>
+        <translation>Terrain tile</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="94"/>

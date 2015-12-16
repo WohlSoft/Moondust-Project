@@ -833,7 +833,7 @@ Pegue quaisquer pacotes de configuração aqui:&lt;br&gt;%2</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="161"/>
-        <source>World map: Terrian tiles (%1/%2)</source>
+        <source>World map: Terrain tiles (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -995,7 +995,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
-        <source>Terrian tile</source>
+        <source>Terrain tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2403,7 +2403,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
-        <source>Terrian tile</source>
+        <source>Terrain tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4822,11 +4822,6 @@ Escolha qual da lista quer utilizar:</translation>
         <translation>Tela cheia</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
-        <source>Lock Terrian tiles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2163"/>
         <source>Lock Scenery tiles</source>
         <translation type="unfinished"></translation>
@@ -4922,6 +4917,11 @@ Escolha qual da lista quer utilizar:</translation>
         <location filename="../mainwindow.ui" line="633"/>
         <source>Resizing</source>
         <translation>Redimensionamento</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2150"/>
+        <source>Lock Terrain tiles</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2353"/>
@@ -7741,6 +7741,18 @@ The maximum number of Music Boxes is %2.</source>
         <source>1 Player settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="61"/>
+        <source>WIP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="62"/>
+        <source>Hello!
+This dialog is not finished yet.
+Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetConfigureDialog</name>
@@ -7758,6 +7770,11 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="134"/>
         <source>Save</source>
         <translation>Salvar</translation>
+    </message>
+    <message>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
+        <source>Terrain tile</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="148"/>
@@ -7822,11 +7839,6 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="76"/>
         <source>Scenery</source>
         <translation>Objetos de cenário</translation>
-    </message>
-    <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
-        <source>Terrian tile</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="86"/>

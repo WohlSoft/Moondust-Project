@@ -966,7 +966,7 @@ Puede tomar cualquier paquete aquí: %2</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="161"/>
-        <source>World map: Terrian tiles (%1/%2)</source>
+        <source>World map: Terrain tiles (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1128,7 +1128,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
-        <source>Terrian tile</source>
+        <source>Terrain tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2536,7 +2536,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
-        <source>Terrian tile</source>
+        <source>Terrain tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5488,11 +5488,6 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
-        <source>Lock Terrian tiles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2163"/>
         <source>Lock Scenery tiles</source>
         <translation type="unfinished"></translation>
@@ -6566,6 +6561,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="2137"/>
         <source>World settings</source>
         <translation>Opciones de Mundo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2150"/>
+        <source>Lock Terrain tiles</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -9563,6 +9563,18 @@ El máximo es %2.</translation>
         <source>1 Player settings</source>
         <translation>1er jugador</translation>
     </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="61"/>
+        <source>WIP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="62"/>
+        <source>Hello!
+This dialog is not finished yet.
+Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetConfigureDialog</name>
@@ -9591,11 +9603,6 @@ El máximo es %2.</translation>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
-        <source>Terrian tile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="148"/>
         <source>Open</source>
         <translation>Abrir</translation>
@@ -9604,6 +9611,11 @@ El máximo es %2.</translation>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="127"/>
         <source>Clear</source>
         <translation>Limpiar</translation>
+    </message>
+    <message>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
+        <source>Terrain tile</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="94"/>

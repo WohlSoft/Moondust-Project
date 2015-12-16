@@ -45,14 +45,14 @@ Enter to: %2</source>
     </message>
     <message>
         <location filename="../scenes/scene_gameover.cpp" line="54"/>
-        <location filename="../scenes/scene_world.cpp" line="486"/>
-        <location filename="../scenes/scene_world.cpp" line="506"/>
+        <location filename="../scenes/scene_world.cpp" line="487"/>
+        <location filename="../scenes/scene_world.cpp" line="507"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../scenes/scene_gameover.cpp" line="55"/>
-        <location filename="../scenes/scene_world.cpp" line="507"/>
+        <location filename="../scenes/scene_world.cpp" line="508"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -213,23 +213,23 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../scenes/scene_world.cpp" line="481"/>
-        <location filename="../scenes/scene_world.cpp" line="501"/>
+        <location filename="../scenes/scene_world.cpp" line="482"/>
+        <location filename="../scenes/scene_world.cpp" line="502"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../scenes/scene_world.cpp" line="487"/>
+        <location filename="../scenes/scene_world.cpp" line="488"/>
         <source>Save and continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../scenes/scene_world.cpp" line="488"/>
+        <location filename="../scenes/scene_world.cpp" line="489"/>
         <source>Save and quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../scenes/scene_world.cpp" line="489"/>
+        <location filename="../scenes/scene_world.cpp" line="490"/>
         <source>Quit without saving</source>
         <translation type="unfinished"></translation>
     </message>
