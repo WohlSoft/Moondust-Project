@@ -8756,54 +8756,44 @@ Do you want to save your changes?</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
         <source>Loading BGOs...</source>
-        <translation>Загружаются Фон.Объекты...</translation>
+        <translation type="vanished">Загружаются Фон.Объекты...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
         <source>Loading Backgrounds...</source>
-        <translation>Загружаются фоны...</translation>
+        <translation type="vanished">Загружаются фоны...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
         <source>Loading Blocks...</source>
-        <translation>Загружаются Блоки...</translation>
+        <translation type="vanished">Загружаются Блоки...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
         <source>Loading NPCs...</source>
-        <translation>Загружаются НИПы...</translation>
+        <translation type="vanished">Загружаются НИПы...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_music.cpp" line="118"/>
         <source>Loading Music...</source>
-        <translation>Загружается Музыка...</translation>
+        <translation type="vanished">Загружается Музыка...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_sound.cpp" line="69"/>
         <source>Loading Sound...</source>
-        <translation>Загружаются Звуки...</translation>
+        <translation type="vanished">Загружаются Звуки...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
         <source>Loading Level images...</source>
-        <translation>Загрузка изображений уровней...</translation>
+        <translation type="vanished">Загрузка изображений уровней...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
         <source>Loading Paths images...</source>
-        <translation>Зfгрузка изображений путей...</translation>
+        <translation type="vanished">Зfгрузка изображений путей...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
         <source>Loading Sceneries...</source>
-        <translation>Загрузка Декораций...</translation>
+        <translation type="vanished">Загрузка Декораций...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
         <source>Loading Tiles...</source>
-        <translation>Загрузка Плиток...</translation>
+        <translation type="vanished">Загрузка Плиток...</translation>
     </message>
     <message>
         <source>Crash</source>
@@ -8816,25 +8806,23 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
 Чтобы недопустить этого, пожалуйста, закройте ненужные программы чтобы освободить больше памяти.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="78"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался. 
 Причина: Недостаточно памяти!
 
 Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="84"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation>Извините, но PGE Editor сломался. 
+        <translation type="vanished">Извините, но PGE Editor сломался. 
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
@@ -8856,14 +8844,35 @@ Forum link: engine.wohlnet.ru/forum</source>
 Сылка форума: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="89"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Signal Segmentation Violation [SIGSERV]
 
 </source>
-        <translation>Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался. 
 Причина: Сигнал нарушения сегментирования [SIGSERV]
 </translation>
+    </message>
+    <message>
+        <source>File open error</source>
+        <translation type="vanished">Ошибка открытия файла</translation>
+    </message>
+    <message>
+        <source>File is not exist</source>
+        <translation type="vanished">Файл не существует</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the file</source>
+        <translation type="vanished">Невозможно прочитать файл</translation>
+    </message>
+    <message>
+        <source>Unknown values are presented</source>
+        <translation type="vanished">Обнаружены неизвестные значения</translation>
+    </message>
+    <message>
+        <source>Your file have an unknown values which will be removed
+ when you will save file</source>
+        <translation type="vanished">Ваш файл содержит неизвестные значения.
+Эти значения будут удалены при сохранении файла</translation>
     </message>
 </context>
 <context>
@@ -9343,44 +9352,41 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <source>Total stars</source>
         <translation>Всего звёзд</translation>
     </message>
-</context>
-<context>
-    <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
-        <source>File open error</source>
-        <translation>Ошибка открытия файла</translation>
+        <location filename="../common_features/crashhandler.cpp" line="78"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>Мы извиняемся, но редактор сломался. 
+Причина: Недостаточно памяти!
+
+Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
     </message>
     <message>
-        <source>Can&apos;t open the file.</source>
-        <translation type="vanished">Невозможно открыть файл!.</translation>
+        <location filename="../common_features/crashhandler.cpp" line="84"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: engine.wohlnet.ru/forum</source>
+        <translation>Извините, но PGE Editor сломался. 
+Причина: необработанное исключение
+
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+
+Ссылка форума: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
-        <source>Bad File</source>
-        <translation>Плохой файл</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="197"/>
-        <source>Bad file format
-File: %1
+        <location filename="../common_features/crashhandler.cpp" line="89"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Signal Segmentation Violation [SIGSERV]
+
 </source>
-        <translation>Плохой формат файла
-Файл: %1
+        <translation>Мы извиняемся, но редактор сломался. 
+Причина: Сигнал нарушения сегментирования [SIGSERV]
 </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <source>Line Number: %1
-</source>
-        <translation>Номер строки: %1
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="200"/>
-        <source>Line Data: %1</source>
-        <translation>Данные в строке: %1</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="344"/>
@@ -9411,6 +9417,87 @@ File: %1
         <location filename="../common_features/resizer/item_resizer.cpp" line="354"/>
         <source>Disable minimal size limit</source>
         <translation>Отключить ограничение размера</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
+        <source>Loading BGOs...</source>
+        <translation>Загружаются Фон.Объекты...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
+        <source>Loading Backgrounds...</source>
+        <translation>Загружаются фоны...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
+        <source>Loading Blocks...</source>
+        <translation>Загружаются Блоки...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
+        <source>Loading NPCs...</source>
+        <translation>Загружаются НИПы...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_music.cpp" line="118"/>
+        <source>Loading Music...</source>
+        <translation>Загружается Музыка...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_sound.cpp" line="69"/>
+        <source>Loading Sound...</source>
+        <translation>Загружаются Звуки...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
+        <source>Loading Level images...</source>
+        <translation>Загрузка изображений уровней...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
+        <source>Loading Paths images...</source>
+        <translation>Зfгрузка изображений путей...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
+        <source>Loading Sceneries...</source>
+        <translation>Загрузка Декораций...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
+        <source>Loading Tiles...</source>
+        <translation>Загрузка Плиток...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="196"/>
+        <source>Bad File</source>
+        <translation>Плохой файл</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="197"/>
+        <source>Bad file format
+File: %1
+</source>
+        <translation>Неверный формат файла
+Файл: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="199"/>
+        <source>Line Number: %1
+</source>
+        <translation>Номер строки: %1
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="200"/>
+        <source>Line Data: %1</source>
+        <translation>Данные в строке: %1</translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <source>File open error</source>
+        <translation>Ошибка открытия файла</translation>
     </message>
     <message>
         <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
@@ -9543,6 +9630,178 @@ The maximum number of Music Boxes is %2.</source>
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation>Во время сохранения карты мира в формат SMBX64 проихошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
+    </message>
+</context>
+<context>
+    <name>QTranslator</name>
+    <message>
+        <source>File open error</source>
+        <translation type="vanished">Ошибка открытия файла</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open the file.</source>
+        <translation type="vanished">Невозможно открыть файл!.</translation>
+    </message>
+    <message>
+        <source>Bad File</source>
+        <translation type="vanished">Плохой файл</translation>
+    </message>
+    <message>
+        <source>Bad file format
+File: %1
+</source>
+        <translation type="vanished">Плохой формат файла
+Файл: %1
+</translation>
+    </message>
+    <message>
+        <source>Line Number: %1
+</source>
+        <translation type="vanished">Номер строки: %1
+</translation>
+    </message>
+    <message>
+        <source>Line Data: %1</source>
+        <translation type="vanished">Данные в строке: %1</translation>
+    </message>
+    <message>
+        <source>Cut top here</source>
+        <translation type="vanished">Срезать  верх здесь</translation>
+    </message>
+    <message>
+        <source>Cut bottom here</source>
+        <translation type="vanished">Срезать низ здесь</translation>
+    </message>
+    <message>
+        <source>Cut left here</source>
+        <translation type="vanished">Срезать лево здесь</translation>
+    </message>
+    <message>
+        <source>Cut right here</source>
+        <translation type="vanished">Срезать право здесь</translation>
+    </message>
+    <message>
+        <source>Don&apos;t snap to grid</source>
+        <translation type="vanished">Не выравнивать по сетке</translation>
+    </message>
+    <message>
+        <source>Disable minimal size limit</source>
+        <translation type="vanished">Отключить ограничение размера</translation>
+    </message>
+    <message>
+        <source>File is not exist</source>
+        <translation type="vanished">Файл не существует</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the file</source>
+        <translation type="vanished">Невозможно прочитать файл</translation>
+    </message>
+    <message>
+        <source>Unknown values are presented</source>
+        <translation type="vanished">Обнаружены неизвестные значения</translation>
+    </message>
+    <message>
+        <source>Your file have an unknown values which will be removed
+ when you will save file</source>
+        <translation type="vanished">Ваш файл содержит неизвестные значения.
+Эти значения будут удалены при сохранении файла</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 section
+The maximum number of sections is %2.
+All boundaries and settings of more than 21 sections will be lost.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 секций
+Максимальное число секций -  %2.
+
+Все границы и настройки секций с номером старше 21 будут утеряны.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 blocks
+The maximum number of blocks is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 блоков
+Максимальное число блоков -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
+The maximum number of Background Objects is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
+Максимальное число фоновых объектов -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
+The maximum number of NPC&apos;s is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
+Максимальное число неигровых персонажей -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Warps
+The maximum number of Warps is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 проходов
+Максимальное число проходов -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
+The maximum number of Water Boxes is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
+Максимальное число водяных зон -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Layers
+The maximum number of Layers is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Слоёв
+Максимальное число слоёв -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Events
+The maximum number of Events is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Событий
+Максимальное число событий -  %2.</translation>
+    </message>
+    <message>
+        <source>A some issues are found on preparing to save SMBX64 Level file format:
+
+%1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
+        <translation type="vanished">Во время сохранения уровня в формат SMBX64 проихошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
+The maximum number of Tiles is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Плиток
+Максимальное число плиток -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
+The maximum number of Sceneries is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 декораций
+Максимальное число декораций -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Paths
+The maximum number of Paths is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 путей
+Максимальное число путей -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Levels
+The maximum number of Levels is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Уровней
+Максимальное число уровней -  %2.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
+The maximum number of Music Boxes is %2.</source>
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
+Максимальное число музыкальных шкатулок -  %2.</translation>
+    </message>
+    <message>
+        <source>A some issues are found on preparing to save SMBX64 World map file format:
+
+%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
+        <translation type="vanished">Во время сохранения карты мира в формат SMBX64 проихошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
     </message>

@@ -6490,85 +6490,6 @@ Do you want to save your changes?</source>
     </message>
 </context>
 <context>
-    <name>QApplication</name>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="78"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="84"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: engine.wohlnet.ru/forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="89"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Signal Segmentation Violation [SIGSERV]
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
-        <source>Loading BGOs...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
-        <source>Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
-        <source>Loading Blocks...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
-        <source>Loading NPCs...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_music.cpp" line="118"/>
-        <source>Loading Music...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_sound.cpp" line="69"/>
-        <source>Loading Sound...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
-        <source>Loading Level images...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
-        <source>Loading Paths images...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
-        <source>Loading Sceneries...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
-        <source>Loading Tiles...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QMessageBox</name>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="282"/>
@@ -7045,36 +6966,30 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
-        <source>File open error</source>
+        <location filename="../common_features/crashhandler.cpp" line="78"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
-        <source>Bad File</source>
+        <location filename="../common_features/crashhandler.cpp" line="84"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: engine.wohlnet.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="197"/>
-        <source>Bad file format
-File: %1
+        <location filename="../common_features/crashhandler.cpp" line="89"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Signal Segmentation Violation [SIGSERV]
+
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <source>Line Number: %1
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="200"/>
-        <source>Line Data: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7105,6 +7020,85 @@ File: %1
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="354"/>
         <source>Disable minimal size limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
+        <source>Loading BGOs...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
+        <source>Loading Backgrounds...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
+        <source>Loading Blocks...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
+        <source>Loading NPCs...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_music.cpp" line="118"/>
+        <source>Loading Music...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_sound.cpp" line="69"/>
+        <source>Loading Sound...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
+        <source>Loading Level images...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
+        <source>Loading Paths images...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
+        <source>Loading Sceneries...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
+        <source>Loading Tiles...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="196"/>
+        <source>Bad File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="197"/>
+        <source>Bad file format
+File: %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="199"/>
+        <source>Line Number: %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="200"/>
+        <source>Line Data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

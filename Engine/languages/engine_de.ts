@@ -2,7 +2,35 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>QApplication</name>
+    <name>QObject</name>
+    <message>
+        <location filename="../gui/pge_menuboxbase.cpp" line="527"/>
+        <location filename="../gui/pge_msgbox.cpp" line="357"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="412"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/pge_menuboxbase.cpp" line="545"/>
+        <location filename="../gui/pge_msgbox.cpp" line="375"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="430"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/pge_menuboxbase.cpp" line="564"/>
+        <location filename="../gui/pge_msgbox.cpp" line="394"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="449"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/pge_menuboxbase.cpp" line="583"/>
+        <location filename="../gui/pge_msgbox.cpp" line="413"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="468"/>
+        <source>Fatal</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
@@ -39,11 +67,16 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../scenes/scene_gameover.cpp" line="50"/>
-        <source>Game Over!</source>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="29"/>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="50"/>
+        <location filename="../scenes/scene_world.cpp" line="482"/>
+        <location filename="../scenes/scene_world.cpp" line="502"/>
+        <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="34"/>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="55"/>
         <location filename="../scenes/scene_gameover.cpp" line="54"/>
         <location filename="../scenes/scene_world.cpp" line="487"/>
         <location filename="../scenes/scene_world.cpp" line="507"/>
@@ -51,9 +84,37 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="35"/>
+        <location filename="../scenes/scene_world.cpp" line="488"/>
+        <source>Save and continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="36"/>
+        <location filename="../scenes/scene_world.cpp" line="489"/>
+        <source>Save and quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="37"/>
+        <source>Exit without saving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="56"/>
         <location filename="../scenes/scene_gameover.cpp" line="55"/>
         <location filename="../scenes/scene_world.cpp" line="508"/>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scenes/scene_gameover.cpp" line="50"/>
+        <source>Game Over!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scenes/scene_world.cpp" line="490"/>
+        <source>Quit without saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -210,90 +271,6 @@ Enter to: %2</source>
     <message>
         <location filename="../scenes/title/ttl_main_menu.cpp" line="623"/>
         <source>&lt;levels not found&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/scene_world.cpp" line="482"/>
-        <location filename="../scenes/scene_world.cpp" line="502"/>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/scene_world.cpp" line="488"/>
-        <source>Save and continue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/scene_world.cpp" line="489"/>
-        <source>Save and quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/scene_world.cpp" line="490"/>
-        <source>Quit without saving</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QTranslator</name>
-    <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="528"/>
-        <location filename="../gui/pge_msgbox.cpp" line="358"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="412"/>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="546"/>
-        <location filename="../gui/pge_msgbox.cpp" line="376"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="430"/>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="565"/>
-        <location filename="../gui/pge_msgbox.cpp" line="395"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="449"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="584"/>
-        <location filename="../gui/pge_msgbox.cpp" line="414"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="468"/>
-        <source>Fatal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="29"/>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="50"/>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="34"/>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="55"/>
-        <source>Continue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="35"/>
-        <source>Save and continue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="36"/>
-        <source>Save and quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="37"/>
-        <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="56"/>
-        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

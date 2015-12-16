@@ -8640,54 +8640,44 @@ Möchtest du die Änderungen speichern?</translation>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
         <source>Loading BGOs...</source>
-        <translation>Lade BGOs...</translation>
+        <translation type="vanished">Lade BGOs...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
         <source>Loading Backgrounds...</source>
-        <translation>Lade Hintergründe...</translation>
+        <translation type="vanished">Lade Hintergründe...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
         <source>Loading Blocks...</source>
-        <translation>Lade Blöcke...</translation>
+        <translation type="vanished">Lade Blöcke...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
         <source>Loading NPCs...</source>
-        <translation>Lade NPCs...</translation>
+        <translation type="vanished">Lade NPCs...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_music.cpp" line="118"/>
         <source>Loading Music...</source>
-        <translation>Lade Musik...</translation>
+        <translation type="vanished">Lade Musik...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_sound.cpp" line="69"/>
         <source>Loading Sound...</source>
-        <translation>Lade Töne...</translation>
+        <translation type="vanished">Lade Töne...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
         <source>Loading Level images...</source>
-        <translation>Lade Level Bilder...</translation>
+        <translation type="vanished">Lade Level Bilder...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
         <source>Loading Paths images...</source>
-        <translation>Lade Pfadbilder...</translation>
+        <translation type="vanished">Lade Pfadbilder...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
         <source>Loading Sceneries...</source>
-        <translation>Lade Umgebungsobjekte...</translation>
+        <translation type="vanished">Lade Umgebungsobjekte...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
         <source>Loading Tiles...</source>
-        <translation>Lade Tiles...</translation>
+        <translation type="vanished">Lade Tiles...</translation>
     </message>
     <message>
         <source>Crash</source>
@@ -8700,23 +8690,21 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
 Um dies zu verhindern, versuche unbenütze Programme zu schließen.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="78"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>PGE ist Abgestürzt. Grund: Kein freier Arbeitsspeicher! :(
+        <translation type="vanished">PGE ist Abgestürzt. Grund: Kein freier Arbeitsspeicher! :(
 Um dies zu verhindern, versuche unbenütze Programme zu schließen.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="84"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation>PGE ist Abgestürzt.
+        <translation type="vanished">PGE ist Abgestürzt.
 Grund: Unbearbeitete Ausnahme
 
 Bitte informieren uns beim Forum, so dass wir das Problem beheben könne. Danke
@@ -8738,13 +8726,25 @@ Bitte informieren uns beim Forum, so dass wir das Problem beheben könne. Danke
 Forum link: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="89"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Signal Segmentation Violation [SIGSERV]
 
 </source>
-        <translation>PGE ist Abgestürzt.
+        <translation type="vanished">PGE ist Abgestürzt.
 Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
+    </message>
+    <message>
+        <source>File open error</source>
+        <translation type="obsolete">Fehler beim Öffnen der Datei</translation>
+    </message>
+    <message>
+        <source>Unknown values are presented</source>
+        <translation type="obsolete">Unbekannter Wert</translation>
+    </message>
+    <message>
+        <source>Your file have an unknown values which will be removed
+ when you will save file</source>
+        <translation type="obsolete">Deine Datei hat unbekannte Werte die nun gelöscht werden wenn deine Datei gespeichert wird</translation>
     </message>
 </context>
 <context>
@@ -9224,44 +9224,38 @@ Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
         <source>Total stars</source>
         <translation>Sterne insgesamt</translation>
     </message>
-</context>
-<context>
-    <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
-        <source>File open error</source>
-        <translation>Fehler beim Öffnen der Datei</translation>
+        <location filename="../common_features/crashhandler.cpp" line="78"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>PGE ist Abgestürzt. Grund: Kein freier Arbeitsspeicher! :(
+Um dies zu verhindern, versuche unbenütze Programme zu schließen.</translation>
     </message>
     <message>
-        <source>Can&apos;t open the file.</source>
-        <translation type="vanished">Kann Datei nicht öffnen.</translation>
+        <location filename="../common_features/crashhandler.cpp" line="84"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: engine.wohlnet.ru/forum</source>
+        <translation>PGE ist Abgestürzt.
+Grund: Unbearbeitete Ausnahme
+
+Bitte informieren uns beim Forum, so dass wir das Problem beheben könne. Danke
+
+Forum link: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
-        <source>Bad File</source>
-        <translation>Schlechte Datei</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="197"/>
-        <source>Bad file format
-File: %1
+        <location filename="../common_features/crashhandler.cpp" line="89"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Signal Segmentation Violation [SIGSERV]
+
 </source>
-        <translation>Schlechter Dateiformat
-Datei: %1
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <source>Line Number: %1
-</source>
-        <translation>Zeilennummer: %1
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="200"/>
-        <source>Line Data: %1</source>
-        <translation>Zeilendaten: %1</translation>
+        <translation>PGE ist Abgestürzt.
+Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="344"/>
@@ -9292,6 +9286,88 @@ Datei: %1
         <location filename="../common_features/resizer/item_resizer.cpp" line="354"/>
         <source>Disable minimal size limit</source>
         <translation>Deaktiviere minimale größe</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
+        <source>Loading BGOs...</source>
+        <translation>Lade BGOs...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
+        <source>Loading Backgrounds...</source>
+        <translation>Lade Hintergründe...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
+        <source>Loading Blocks...</source>
+        <translation>Lade Blöcke...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
+        <source>Loading NPCs...</source>
+        <translation>Lade NPCs...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_music.cpp" line="118"/>
+        <source>Loading Music...</source>
+        <translation>Lade Musik...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_sound.cpp" line="69"/>
+        <source>Loading Sound...</source>
+        <translation>Lade Töne...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
+        <source>Loading Level images...</source>
+        <translation>Lade Level Bilder...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
+        <source>Loading Paths images...</source>
+        <translation>Lade Pfadbilder...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
+        <source>Loading Sceneries...</source>
+        <translation>Lade Umgebungsobjekte...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
+        <source>Loading Tiles...</source>
+        <translation>Lade Tiles...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="196"/>
+        <source>Bad File</source>
+        <translation>Schlechte Datei</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="197"/>
+        <source>Bad file format
+File: %1
+</source>
+        <translation>Schlechter Dateiformat
+Datei: %1
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="199"/>
+        <source>Line Number: %1
+</source>
+        <translation>Zeilennummer: %1
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="200"/>
+        <source>Line Data: %1</source>
+        <translation>Zeilendaten: %1</translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <source>File open error</source>
+        <translation>Fehler beim Öffnen der Datei</translation>
     </message>
     <message>
         <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
@@ -9406,6 +9482,72 @@ The maximum number of Music Boxes is %2.</source>
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QTranslator</name>
+    <message>
+        <source>File open error</source>
+        <translation type="vanished">Fehler beim Öffnen der Datei</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open the file.</source>
+        <translation type="vanished">Kann Datei nicht öffnen.</translation>
+    </message>
+    <message>
+        <source>Bad File</source>
+        <translation type="vanished">Schlechte Datei</translation>
+    </message>
+    <message>
+        <source>Bad file format
+File: %1
+</source>
+        <translation type="vanished">Schlechter Dateiformat
+Datei: %1
+</translation>
+    </message>
+    <message>
+        <source>Line Number: %1
+</source>
+        <translation type="vanished">Zeilennummer: %1
+</translation>
+    </message>
+    <message>
+        <source>Line Data: %1</source>
+        <translation type="vanished">Zeilendaten: %1</translation>
+    </message>
+    <message>
+        <source>Cut top here</source>
+        <translation type="vanished">Oben ausschneiden</translation>
+    </message>
+    <message>
+        <source>Cut bottom here</source>
+        <translation type="vanished">Unten ausschneiden</translation>
+    </message>
+    <message>
+        <source>Cut left here</source>
+        <translation type="vanished">Links ausschneiden</translation>
+    </message>
+    <message>
+        <source>Cut right here</source>
+        <translation type="vanished">Rehchts ausschneiden</translation>
+    </message>
+    <message>
+        <source>Don&apos;t snap to grid</source>
+        <translation type="vanished">Nicht auf Raster ausrichten</translation>
+    </message>
+    <message>
+        <source>Disable minimal size limit</source>
+        <translation type="vanished">Deaktiviere minimale größe</translation>
+    </message>
+    <message>
+        <source>Unknown values are presented</source>
+        <translation type="vanished">Unbekannter Wert</translation>
+    </message>
+    <message>
+        <source>Your file have an unknown values which will be removed
+ when you will save file</source>
+        <translation type="vanished">Deine Datei hat unbekannte Werte die nun gelöscht werden wenn deine Datei gespeichert wird</translation>
     </message>
 </context>
 <context>

@@ -21,7 +21,7 @@
 #include "smbx64.h"
 #ifdef PGE_EDITOR
 #include <QMessageBox>
-#include <QTranslator>
+#include <QApplication>
 #include <common_features/mainwinconnect.h>
 #endif
 
@@ -51,8 +51,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         FileData.ReadFileValid=false;
         errorString="File not exists: "+file;
         #ifdef PGE_EDITOR
-        QMessageBox::critical(MainWinConnect::pMainWin, QTranslator::tr("File open error"),
-        QTranslator::tr("File is not exist"), QMessageBox::Ok);
+        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
+        QObject::tr("File is not exist"), QMessageBox::Ok);
         #endif
         return FileData;
     }
@@ -62,8 +62,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         FileData.ReadFileValid=false;
         errorString="Can't open file to read: "+file;
         #ifdef PGE_EDITOR
-        QMessageBox::critical(MainWinConnect::pMainWin, QTranslator::tr("File open error"),
-        QTranslator::tr("Can't read the file"), QMessageBox::Ok);
+        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
+        QObject::tr("Can't read the file"), QMessageBox::Ok);
         #endif
         return FileData;
     }
@@ -629,8 +629,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     if(!IgnoreBad)
     {
         if(!unknownLines.isEmpty())
-        QMessageBox::warning(MainWinConnect::pMainWin, QTranslator::tr("Unknown values are presented"),
-                             QTranslator::tr("Your file have an unknown values which will be removed\n"
+        QMessageBox::warning(MainWinConnect::pMainWin, QObject::tr("Unknown values are presented"),
+                             QObject::tr("Your file have an unknown values which will be removed\n"
                                              " when you will save file")+QString("\n====================================\n%1").arg(unknownLines),
                              QMessageBox::Ok);
     }

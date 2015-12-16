@@ -72,7 +72,7 @@ bool ConfigManager::loadWorldTiles()
     tileset.endGroup();
 
 //    emit progressMax(tiles_total);
-//    emit progressTitle(QApplication::tr("Loading Tiles..."));
+//    emit progressTitle(QObject::tr("Loading Tiles..."));
 
     if(tiles_total==0)
     {

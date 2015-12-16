@@ -6790,80 +6790,28 @@ Do you want to save your changes?</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
         <source>Loading BGOs...</source>
-        <translation>caricando BGO...</translation>
+        <translation type="vanished">caricando BGO...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
         <source>Loading Backgrounds...</source>
-        <translation>caricando backrounds...</translation>
+        <translation type="vanished">caricando backrounds...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
         <source>Loading Blocks...</source>
-        <translation>caricando blocchi...</translation>
+        <translation type="vanished">caricando blocchi...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
         <source>Loading NPCs...</source>
-        <translation>caricando npc...</translation>
+        <translation type="vanished">caricando npc...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_music.cpp" line="118"/>
         <source>Loading Music...</source>
-        <translation>caricando musica...</translation>
+        <translation type="vanished">caricando musica...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_sound.cpp" line="69"/>
         <source>Loading Sound...</source>
-        <translation>caricando suoni...</translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
-        <source>Loading Level images...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
-        <source>Loading Paths images...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
-        <source>Loading Sceneries...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
-        <source>Loading Tiles...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="78"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="84"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: engine.wohlnet.ru/forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="89"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Signal Segmentation Violation [SIGSERV]
-
-</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">caricando suoni...</translation>
     </message>
 </context>
 <context>
@@ -7343,39 +7291,31 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
-        <source>File open error</source>
+        <location filename="../common_features/crashhandler.cpp" line="78"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
-        <source>Bad File</source>
-        <translation>file sbagliato</translation>
+        <location filename="../common_features/crashhandler.cpp" line="84"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: engine.wohlnet.ru/forum</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="197"/>
-        <source>Bad file format
-File: %1
+        <location filename="../common_features/crashhandler.cpp" line="89"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Signal Segmentation Violation [SIGSERV]
+
 </source>
-        <translation>format file sbagliato
-file: %1</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <source>Line Number: %1
-</source>
-        <translation>numero: %1
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="200"/>
-        <source>Line Data: %1</source>
-        <translation>data: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="344"/>
@@ -7405,6 +7345,87 @@ file: %1</translation>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="354"/>
         <source>Disable minimal size limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
+        <source>Loading BGOs...</source>
+        <translation type="unfinished">caricando BGO...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="184"/>
+        <source>Loading Backgrounds...</source>
+        <translation type="unfinished">caricando backrounds...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_block.cpp" line="87"/>
+        <source>Loading Blocks...</source>
+        <translation type="unfinished">caricando blocchi...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
+        <source>Loading NPCs...</source>
+        <translation type="unfinished">caricando npc...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_music.cpp" line="118"/>
+        <source>Loading Music...</source>
+        <translation type="unfinished">caricando musica...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_sound.cpp" line="69"/>
+        <source>Loading Sound...</source>
+        <translation type="unfinished">caricando suoni...</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_level.cpp" line="106"/>
+        <source>Loading Level images...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
+        <source>Loading Paths images...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
+        <source>Loading Sceneries...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
+        <source>Loading Tiles...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="196"/>
+        <source>Bad File</source>
+        <translation type="unfinished">file sbagliato</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="197"/>
+        <source>Bad file format
+File: %1
+</source>
+        <translation type="unfinished">format file sbagliato
+file: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="199"/>
+        <source>Line Number: %1
+</source>
+        <translation type="unfinished">numero: %1
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="200"/>
+        <source>Line Data: %1</source>
+        <translation type="unfinished">data: %1</translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7520,6 +7541,30 @@ The maximum number of Music Boxes is %2.</source>
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QTranslator</name>
+    <message>
+        <source>Bad File</source>
+        <translation type="vanished">file sbagliato</translation>
+    </message>
+    <message>
+        <source>Bad file format
+File: %1
+</source>
+        <translation type="vanished">format file sbagliato
+file: %1</translation>
+    </message>
+    <message>
+        <source>Line Number: %1
+</source>
+        <translation type="vanished">numero: %1
+</translation>
+    </message>
+    <message>
+        <source>Line Data: %1</source>
+        <translation type="vanished">data: %1</translation>
     </message>
 </context>
 <context>

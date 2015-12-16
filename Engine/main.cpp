@@ -477,7 +477,7 @@ PlayWorldMap:
     if(episode.worldfile.isEmpty())
     {
         sceneResult = false;
-        PGE_MsgBox::warn(QApplication::tr("No opened files"));
+        PGE_MsgBox::warn(QObject::tr("No opened files"));
     }
     else
     {
@@ -486,7 +486,7 @@ PlayWorldMap:
         if(!sceneResult)
         {
             SDL_Delay(50);
-            PGE_MsgBox::error(QApplication::tr("ERROR:\nFail to start world map\n\n"
+            PGE_MsgBox::error(QObject::tr("ERROR:\nFail to start world map\n\n"
                                             "%1")
                               .arg(wScene->getLastError()));
         }
@@ -513,7 +513,7 @@ PlayWorldMap:
     {
         if(ExitCode==WldExit::EXIT_beginLevel)
         {
-            PGE_MsgBox::warn(QApplication::tr("Start level\n%1")
+            PGE_MsgBox::warn(QObject::tr("Start level\n%1")
                           .arg(_game_state.LevelFile) );
             delete wScene;
             if(_game_state.isHubLevel) goto ExitFromApplication;
@@ -656,7 +656,7 @@ PlayLevel:
                    {
                        if(!fileToOpen.isEmpty())
                        {
-                           PGE_MsgBox::warn(QApplication::tr("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                           PGE_MsgBox::warn(QObject::tr("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
                                          .arg(fileToOpen).arg(entranceID));
                        }
                        playAgain = false;
@@ -701,7 +701,7 @@ PlayLevel:
                 {
                     end_level_jump = (_game_state.isEpisode)? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     playAgain = false;
-                    PGE_MsgBox::error(QApplication::tr("Level was closed with error.\n%1").arg(lScene->errorString()));
+                    PGE_MsgBox::error(QObject::tr("Level was closed with error.\n%1").arg(lScene->errorString()));
                 }
                 break;
             default:

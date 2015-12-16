@@ -32,7 +32,6 @@
 #include <QFontMetrics>
 #include <QMessageBox>
 #include <QApplication>
-#include <QTranslator>
 
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, QString _title, msgType _type,
@@ -525,7 +524,7 @@ void PGE_MenuBoxBase::info(QString msg)
     }
     else
     {
-        QMessageBox::information(NULL, QTranslator::tr("Information"), msg, QMessageBox::Ok);
+        QMessageBox::information(NULL, QObject::tr("Information"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_MenuBox::info(std::string msg)
@@ -543,7 +542,7 @@ void PGE_MenuBoxBase::warn(QString msg)
     }
     else
     {
-        QMessageBox::warning(NULL, QTranslator::tr("Warning"), msg, QMessageBox::Ok);
+        QMessageBox::warning(NULL, QObject::tr("Warning"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_MenuBox::warn(std::string msg)
@@ -562,7 +561,7 @@ void PGE_MenuBoxBase::error(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QTranslator::tr("Error"), msg, QMessageBox::Ok);
+        QMessageBox::critical(NULL, QObject::tr("Error"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_MenuBox::error(std::string msg)
@@ -581,7 +580,7 @@ void PGE_MenuBoxBase::fatal(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QTranslator::tr("Fatal"), msg, QMessageBox::Ok);
+        QMessageBox::critical(NULL, QObject::tr("Fatal"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_MenuBox::fatal(std::string msg)

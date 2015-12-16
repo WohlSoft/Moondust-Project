@@ -84,7 +84,7 @@ void dataconfigs::loadLevelBlocks()
     blockset.endGroup();
 
     emit progressMax(block_total);
-    emit progressTitle(QApplication::tr("Loading Blocks..."));
+    emit progressTitle(QObject::tr("Loading Blocks..."));
 
     ConfStatus::total_blocks = block_total;
 
