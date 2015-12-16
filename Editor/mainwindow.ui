@@ -2147,7 +2147,7 @@
      <normalon>:/images/lock_tile_cl.png</normalon>:/images/lock_tile_op.png</iconset>
    </property>
    <property name="text">
-    <string>Lock Terrian tiles</string>
+    <string>Lock Terrain tiles</string>
    </property>
   </action>
   <action name="actionLockScenes">

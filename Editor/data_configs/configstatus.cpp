@@ -156,9 +156,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
 
-    //World map Terrian tiles
+    //World map Terrain tiles
     item = new QListWidgetItem;
-    item->setText(tr("World map: Terrian tiles (%1/%2)").arg(configs->main_wtiles.size()).arg(ConfStatus::total_wtile));
+    item->setText(tr("World map: Terrain tiles (%1/%2)").arg(configs->main_wtiles.size()).arg(ConfStatus::total_wtile));
     if(configs->main_wtiles.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
