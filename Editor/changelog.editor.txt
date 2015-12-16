@@ -5,6 +5,7 @@ Editor 0.3.1.9
 - Use Bleeze theme on KDE, XFCE, OS X and on Windows 10
 - Fixed bug with multiselection item dialog where impossible to add NPC's into custom counter
 - Added ability to copy any parameters/metrics of any placed element
+- Added a good protection which avoids accidental running of multiple copies of engine for a testing
 
 Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation

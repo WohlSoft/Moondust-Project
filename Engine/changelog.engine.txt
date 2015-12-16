@@ -6,6 +6,7 @@
 - Player now can attack multiple NPC's at one stomp
 - Player now can safely walk from ridable NPC's without jumps
 - Removed workaround disables hurting of player while it flying up because player finally can safely stomp healthy NPC's
+- Added experimental translator to have able to retranslate engine too
 
 0.2.4
 - Working paths system on world map! Now there are closed at episode start, but opens on level passes.
