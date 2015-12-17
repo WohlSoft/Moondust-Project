@@ -34,17 +34,8 @@
 
 void CalibrationMain::createDirs()
 {
-    if(!QDir(ApplicationPath + "/calibrator").exists())
-        QDir().mkdir(ApplicationPath + "/calibrator");
     if(!QDir(ApplicationPath + "/calibrator/spriteconf").exists())
-        QDir().mkdir(ApplicationPath + "/calibrator/spriteconf");
-    if(!QDir(ApplicationPath + "/calibrator/templates").exists())
-        QDir().mkdir(ApplicationPath + "/calibrator/templates");
-
-    if(AppPathManager::userDirIsAvailable())
-    {
-        QDir().mkpath(AppPathManager::userAppDir() + "/calibrator/templates");
-    }
+        QDir().mkpath(ApplicationPath + "/calibrator/spriteconf");
 }
 
 void CalibrationMain::loadConfig(QString fileName)

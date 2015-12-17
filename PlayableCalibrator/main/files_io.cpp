@@ -90,7 +90,6 @@ void CalibrationMain::on_MakeTemplateB_clicked()
         }
     pa.end();
 
-    //createDirs();
     QFileInfo ourFile(currentFile);
     QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
     targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
