@@ -60,20 +60,25 @@ void MainWindow::on_action_doTest_triggered()
         return;
     }
 
-    if(IntEngine::isWorking())
+    if(engine_proc.state()==QProcess::Running)
     {
         if(QMessageBox::warning(this, tr("Engine already runned"),
                              tr("Engine is already testing another level.\n"
                                 "Do you want to abort current testing process?"),
-                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort)
-        {
-            IntEngine::quit();
+                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+            engine_proc.terminate();
+            engine_proc.close();
         }
         return;
     }
 
     if(activeChildWindow()==1)
     {
+        if(IntEngine::isWorking())
+        {
+            IntEngine::quit();
+        }
+
         //if(activeLvlEditWin()->isUntitled) return;
         LevelEdit* edit = activeLvlEditWin();
         if(!edit) return;
@@ -86,7 +91,7 @@ void MainWindow::on_action_doTest_triggered()
         IntEngine::setTestLvlBuffer(edit->LvlData);
 
         qDebug() << "Executing engine..." << command;
-        QProcess::startDetached(command, args);
+        engine_proc.start(command, args);
         qDebug() << "Started";
 
         //Stop music playback in the PGE!
@@ -120,6 +125,18 @@ void MainWindow::on_action_doSafeTest_triggered()
         return;
     }
 
+    if(engine_proc.state()==QProcess::Running)
+    {
+        if(QMessageBox::warning(this, tr("Engine already runned"),
+                             tr("Engine is already testing another level.\n"
+                                "Do you want to abort current testing process?"),
+                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+            engine_proc.terminate();
+            engine_proc.close();
+        }
+        return;
+    }
+
     QStringList args;
     args << "--debug";
     args << "--config=\""+configs.config_dir+"\"";
@@ -150,7 +167,7 @@ void MainWindow::on_action_doSafeTest_triggered()
         args << activeWldEditWin()->curFile;
     }
 
-    QProcess::startDetached(command, args);
+    engine_proc.start(command, args);
 
     //Stop music playback in the PGE Editor!
     on_actionPlayMusic_triggered(false);

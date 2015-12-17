@@ -81,7 +81,7 @@ void dataconfigs::loadWorldScene()
     sceneset.endGroup();
 
     emit progressMax(scenery_total);
-    emit progressTitle(QApplication::tr("Loading Sceneries..."));
+    emit progressTitle(QObject::tr("Loading Sceneries..."));
 
     ConfStatus::total_wscene= scenery_total;
 

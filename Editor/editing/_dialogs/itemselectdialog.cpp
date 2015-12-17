@@ -313,6 +313,19 @@ void ItemSelectDialog::setMultiSelect(bool _multiselect)
     ui->Sel_List_Path->setSelectionMode(mode);
     ui->Sel_List_Level->setSelectionMode(mode);
     ui->Sel_List_Music->setSelectionMode(mode);
+
+    if(_multiselect)//Clear selection on toggling multiselection
+    {
+        ui->Sel_List_Block->clearSelection();
+        ui->Sel_List_BGO->clearSelection();
+        ui->Sel_List_NPC->clearSelection();
+
+        ui->Sel_List_Tile->clearSelection();
+        ui->Sel_List_Scenery->clearSelection();
+        ui->Sel_List_Path->clearSelection();
+        ui->Sel_List_Level->clearSelection();
+        ui->Sel_List_Music->clearSelection();
+    }
 }
 
 void ItemSelectDialog::setWorldMapRootDir(QString dir)
@@ -1095,6 +1108,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 
     blockIDs = extractIDs(ui->Sel_List_Block);
     bgoIDs = extractIDs(ui->Sel_List_BGO);
+    npcIDs = extractIDs(ui->Sel_List_NPC);
     tileIDs = extractIDs(ui->Sel_List_Tile);
     sceneryIDs = extractIDs(ui->Sel_List_Scenery);
     pathIDs = extractIDs(ui->Sel_List_Path);

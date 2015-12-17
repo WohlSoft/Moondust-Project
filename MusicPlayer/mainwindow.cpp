@@ -159,7 +159,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->centralWidget->window()->setWindowFlags(
                 Qt::WindowTitleHint|
                 Qt::WindowSystemMenuHint|
-                Qt::WindowCloseButtonHint);
+                Qt::WindowCloseButtonHint|
+                Qt::WindowMinimizeButtonHint);
     this->updateGeometry();
     this->window()->resize(100, 100);
 }

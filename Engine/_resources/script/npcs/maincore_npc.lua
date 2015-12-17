@@ -78,7 +78,7 @@ end
 
 function luaNPC:onKill(damageReason)
     if(not self.isInvalid and self.controller)then
-        if(tself.Has_onKill)then
+        if(self.Has_onKill)then
             self.controller:onKill(damageReason)
         end
     end

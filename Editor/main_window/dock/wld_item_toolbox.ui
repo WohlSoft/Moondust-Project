@@ -25,12 +25,12 @@
     <height>200</height>
    </size>
   </property>
-   <property name="windowIcon">
+  <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"></string>
+   <string notr="true"/>
   </property>
   <property name="allowedAreas">
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -59,7 +59,7 @@
      <bool>true</bool>
     </property>
     <attribute name="title">
-     <string>Tiles</string>
+     <string>Terrain</string>
     </attribute>
     <layout class="QGridLayout" name="TilesG" columnstretch="0">
      <property name="leftMargin">

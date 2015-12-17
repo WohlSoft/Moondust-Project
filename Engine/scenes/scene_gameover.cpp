@@ -23,6 +23,8 @@
 #include <gui/pge_menubox.h>
 #include <settings/global_settings.h>
 
+#include <QApplication>
+
 GameOverScene::GameOverScene(): Scene(GameOver)
 {
     player1Controller = g_AppSettings.openController(1);
@@ -45,18 +47,18 @@ void GameOverScene::render()
 
 int GameOverScene::exec()
 {
-    PGE_QuestionBox continueOrQuit(this, "Game Over!", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    PGE_QuestionBox continueOrQuit(this, QObject::tr("Game Over!"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                                    ConfigManager::setup_menu_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
     QStringList items;
-    items<<"Continue";
-    items<<"Quit";
+    items<<QObject::tr("Continue");
+    items<<QObject::tr("Quit");
     continueOrQuit.addMenuItems(items);
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();
 
     if (continueOrQuit.answer() >= 0)
-        if (items[continueOrQuit.answer()] == "Continue")
+        if (continueOrQuit.answer() == 0)
             return GameOverSceneResult::CONTINUE;
 
     return GameOverSceneResult::QUIT;

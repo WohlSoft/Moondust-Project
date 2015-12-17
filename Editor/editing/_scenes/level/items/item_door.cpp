@@ -216,6 +216,16 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     Locked->setChecked( doorData.locked );
     Locked->deleteLater();
 
+    ItemMenu.addSeparator();
+
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
+                copyPosXY->deleteLater();
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
     /*
     ItemMenu.addSeparator();
     QAction *copyDoor = ItemMenu.addAction(tr("Copy"));
@@ -337,6 +347,40 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         }
         scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
         MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else
+    if(selected==copyPosXY)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2;")
+                               .arg(direction==D_Entrance ? doorData.ix : doorData.ox)
+                               .arg(direction==D_Entrance ? doorData.iy : doorData.oy)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosXYWH)
+    {
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
+                               .arg(direction==D_Entrance ? doorData.ix : doorData.ox)
+                               .arg(direction==D_Entrance ? doorData.iy : doorData.oy)
+                               .arg(itemSize.width())
+                               .arg(itemSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(direction==D_Entrance ? doorData.ix : doorData.ox)
+                               .arg(direction==D_Entrance ? doorData.iy : doorData.oy)
+                               .arg((direction==D_Entrance ? doorData.ix : doorData.ox)+itemSize.width())
+                               .arg((direction==D_Entrance ? doorData.iy : doorData.oy)+itemSize.height())
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==remove)

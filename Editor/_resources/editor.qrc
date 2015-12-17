@@ -13,7 +13,6 @@
         <file>images/section.png</file>
         <file>images/warp_exit.png</file>
         <file>images/warp_entrance.png</file>
-        <file>images/splash.png</file>
         <file alias="lvl16.png">images/level16.png</file>
         <file>images/mushroom16.png</file>
         <file>images/section16.png</file>
@@ -53,7 +52,6 @@
         <file alias="npc/proj.png">images/generator_proj.png</file>
         <file alias="npc/warp.png">images/generator_warp.png</file>
         <file alias="images/mac/mushroom.icns">mushroom.icns</file>
-        <file>splash.png</file>
         <file>images/events.png</file>
         <file>images/conf_bad.png</file>
         <file>images/conf_good.png</file>
@@ -101,12 +99,7 @@
         <file>images/pencil_16x16.png</file>
         <file>images/copy_16x16.png</file>
         <file alias="player.png">images/player_point.png</file>
-        <file>images/cat_beaten/cat_beaten_16.png</file>
-        <file>images/cat_beaten/cat_beaten_24.png</file>
-        <file>images/cat_beaten/cat_beaten_32.png</file>
-        <file>images/cat_beaten/cat_beaten_48.png</file>
         <file>images/cat_beaten/cat_beaten_128.png</file>
-        <file>images/cat_beaten/cat_beaten_256.png</file>
         <file>images/cur_flood_fill.png</file>
         <file>images/flood_fill.png</file>
         <file>images/properties.png</file>

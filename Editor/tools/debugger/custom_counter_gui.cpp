@@ -41,7 +41,7 @@ CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
     else
     if(MainWinConnect::pMainWin->activeChildWindow()==3)
     {
-        ui->ItemType->addItem(tr("Tile"), QVariant(int(ItemTypes::WLD_Tile)));
+        ui->ItemType->addItem(tr("Terrain tile"), QVariant(int(ItemTypes::WLD_Tile)));
         ui->ItemType->addItem(tr("Scenery"), QVariant(int(ItemTypes::WLD_Scenery)));
         ui->ItemType->addItem(tr("Path"), QVariant(int(ItemTypes::WLD_Path)));
         ui->ItemType->addItem(tr("Level"), QVariant(int(ItemTypes::WLD_Level)));

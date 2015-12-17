@@ -16,6 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef __linux__
+#include <QProcessEnvironment>
+#elif _WIN32
+#include <QSysInfo>
+#endif
+
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>
@@ -91,7 +97,26 @@ void dataconfigs::loadBasics()
     int Animations=0;
     guiset.beginGroup("gui");
         splash_logo =               guiset.value("editor-splash", "").toString();
-        ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
+        #ifdef __linux__
+            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+            QString envir = env.value("XDG_CURRENT_DESKTOP", "");
+            qApp->setStyle("GTK");
+            if(envir=="KDE" || envir=="XFCE")
+            {
+                ConfStatus::defaultTheme = "Breeze";
+            } else {
+                ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
+            }
+        #elif __APPLE__
+            ConfStatus::defaultTheme = "Breeze";
+        #elif _WIN32
+            if(QSysInfo::WindowsVersion==QSysInfo::WV_WINDOWS10)
+                ConfStatus::defaultTheme = "Breeze";
+            else
+                ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
+        #else
+            ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
+        #endif
         Animations     =            guiset.value("animations", 0).toInt();
     guiset.endGroup();
 

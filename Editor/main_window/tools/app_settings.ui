@@ -317,7 +317,7 @@
           <item>
            <widget class="QCheckBox" name="Editor_Mid_AllowDupe">
             <property name="text">
-             <string>Duplicate selected items into mouse position</string>
+             <string>Duplicate selected items onto cursor's position</string>
             </property>
            </widget>
           </item>
@@ -427,7 +427,7 @@
           <item row="0" column="1">
            <widget class="QCheckBox" name="defaults_eventtab_autoscroll">
             <property name="text">
-             <string>Autoscroll Section</string>
+             <string>Autoscroll section</string>
             </property>
            </widget>
           </item>
@@ -441,7 +441,7 @@
           <item row="0" column="0">
            <widget class="QCheckBox" name="defaults_eventtab_layviz">
             <property name="text">
-             <string>Layer Visibility</string>
+             <string>Layer visibility</string>
             </property>
            </widget>
           </item>
@@ -469,7 +469,7 @@
           <item row="1" column="1">
            <widget class="QCheckBox" name="defaults_eventtab_secset">
             <property name="text">
-             <string>Section Settings</string>
+             <string>Section settings</string>
             </property>
            </widget>
           </item>

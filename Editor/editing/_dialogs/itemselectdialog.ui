@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>7</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -288,7 +288,7 @@
        </widget>
        <widget class="QWidget" name="Sel_Tab_Tile">
         <attribute name="title">
-         <string>Tile</string>
+         <string>Terrain tile</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_5">
          <property name="leftMargin">

@@ -21,7 +21,6 @@
 #include <QDebug>
 #include <math.h>
 #include <QMenu>
-#include <QTranslator>
 
 #include <common_features/grid.h>
 #include <common_features/logger.h>
@@ -341,17 +340,17 @@ void ItemResizer::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
     if(event->button()==Qt::RightButton)
     {
         QMenu contextMenu;
-        QAction* crop_top =    contextMenu.addAction(QTranslator::tr("Cut top here"));
-        QAction* crop_bottom = contextMenu.addAction(QTranslator::tr("Cut bottom here"));
-        QAction* crop_left =   contextMenu.addAction(QTranslator::tr("Cut left here"));
-        QAction* crop_right =  contextMenu.addAction(QTranslator::tr("Cut right here"));
+        QAction* crop_top =    contextMenu.addAction(QObject::tr("Cut top here"));
+        QAction* crop_bottom = contextMenu.addAction(QObject::tr("Cut bottom here"));
+        QAction* crop_left =   contextMenu.addAction(QObject::tr("Cut left here"));
+        QAction* crop_right =  contextMenu.addAction(QObject::tr("Cut right here"));
         contextMenu.addSeparator();
 
-        QAction* no_grid =     contextMenu.addAction(QTranslator::tr("Don't snap to grid"));
+        QAction* no_grid =     contextMenu.addAction(QObject::tr("Don't snap to grid"));
         no_grid->setCheckable(true);
         no_grid->setChecked(_no_grid);
 
-        QAction* no_limit =     contextMenu.addAction(QTranslator::tr("Disable minimal size limit"));
+        QAction* no_limit =     contextMenu.addAction(QObject::tr("Disable minimal size limit"));
         no_limit->setCheckable(true);
         no_limit->setChecked(_no_limit);
 

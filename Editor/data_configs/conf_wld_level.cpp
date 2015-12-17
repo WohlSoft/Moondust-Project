@@ -103,7 +103,7 @@ void dataconfigs::loadWorldLevels()
     levelset.endGroup();
 
     emit progressMax(levels_total);
-    emit progressTitle(QApplication::tr("Loading Level images..."));
+    emit progressTitle(QObject::tr("Loading Level images..."));
 
     ConfStatus::total_wlvl = levels_total;
 

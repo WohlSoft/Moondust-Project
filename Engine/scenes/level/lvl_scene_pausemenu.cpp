@@ -19,22 +19,22 @@
 #include "../scene_level.h"
 
 #include <audio/pge_audio.h>
-#include <QTranslator>
+#include <QApplication>
 
 void LevelScene::initPauseMenu1()
 {
     _pauseMenu_opened=false;
     _pauseMenuID=1;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct(QTranslator::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    _pauseMenu.construct(QObject::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                          ConfigManager::setup_menu_box.box_padding,
                          ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     QStringList items;
-    items<<QTranslator::tr("Continue");
-    items<<QTranslator::tr("Save and continue");
-    items<<QTranslator::tr("Save and quit");
-    items<<QTranslator::tr("Exit without saving");
+    items<<QObject::tr("Continue");
+    items<<QObject::tr("Save and continue");
+    items<<QObject::tr("Save and quit");
+    items<<QObject::tr("Exit without saving");
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -47,13 +47,13 @@ void LevelScene::initPauseMenu2()
     _pauseMenu_opened=false;
     _pauseMenuID=2;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct(QTranslator::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    _pauseMenu.construct(QObject::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                          ConfigManager::setup_menu_box.box_padding,
                          ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     QStringList items;
-    items<<QTranslator::tr("Continue");
-    items<<QTranslator::tr("Quit");
+    items<<QObject::tr("Continue");
+    items<<QObject::tr("Quit");
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);

@@ -81,7 +81,7 @@ void dataconfigs::loadWorldTiles()
     tileset.endGroup();
 
     emit progressMax(tiles_total);
-    emit progressTitle(QApplication::tr("Loading Tiles..."));
+    emit progressTitle(QObject::tr("Loading Tiles..."));
 
     ConfStatus::total_wtile = tiles_total;
 

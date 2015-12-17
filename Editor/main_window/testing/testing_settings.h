@@ -17,6 +17,12 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
+    void showNotifyTmp();
+signals:
+    void windowShown();
+
+protected:
+    void showEvent(QShowEvent *event);
 
 private:
     Ui::TestingSettings *ui;

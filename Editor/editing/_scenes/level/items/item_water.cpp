@@ -209,9 +209,17 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         setAsQuicksand->setChecked(waterData.quicksand);
         setAsQuicksand->deleteLater();
 
+    ItemMenu.addSeparator()->deleteLater();
 
-    QAction *showRectangleValues = ItemMenu.addAction(tr("Show zone range data"));
-        showRectangleValues->deleteLater();
+    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
+        copyPreferences->deleteLater();
+
+            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+                copyPosXYWH->deleteLater();
+            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                copyPosLTRB->deleteLater();
+
+    ItemMenu.addSeparator()->deleteLater();
 
     QAction *resize = ItemMenu.addAction(tr("Resize"));
         resize->deleteLater();
@@ -274,27 +282,28 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(false));
     }
     else
-    if(selected==showRectangleValues)
+    if(selected==copyPosXYWH)
     {
-        QInputDialog rectangle;
-        rectangle.setInputMode(QInputDialog::TextInput);
-        rectangle.setOption(QInputDialog::NoButtons, true);
-        rectangle.setWindowTitle(tr("Physical environment range"));
-        rectangle.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-              QSize(400, 150), qApp->desktop()->availableGeometry()));
-        rectangle.setLabelText(tr("Rectangle X(left), Y(top), Width, Height, Right, Bottom"));
-        rectangle.setTextEchoMode(QLineEdit::Normal);
-        rectangle.setTextValue(
-                            QString("X=%1; Y=%2; W=%3; H=%4; Right: %5; Bottom %6;")
+        QApplication::clipboard()->setText(
+                            QString("X=%1; Y=%2; W=%3; H=%4;")
                                .arg(waterData.x)
                                .arg(waterData.y)
                                .arg(waterData.w)
                                .arg(waterData.h)
+                               );
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else
+    if(selected==copyPosLTRB)
+    {
+        QApplication::clipboard()->setText(
+                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+                               .arg(waterData.x)
+                               .arg(waterData.y)
                                .arg(waterData.x+waterData.w)
                                .arg(waterData.y+waterData.h)
                                );
-        rectangle.exec();
-
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==resize)

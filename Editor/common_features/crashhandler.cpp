@@ -75,18 +75,18 @@ CrashHandler::~CrashHandler()
 
 void CrashHandler::crashByFlood()
 {
-    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
+    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
                                         "To prevent this, try closing other uneccessary programs to free up more memory."));
 }
 
 void CrashHandler::crashByUnhandledException()
 {
-    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
+    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
 }
 
 void CrashHandler::crashBySIGSERV(int /*signalid*/)
 {
-    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n"));
+    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n"));
 }
 
 void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)

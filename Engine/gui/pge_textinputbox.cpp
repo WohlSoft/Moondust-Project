@@ -31,8 +31,8 @@
 #include <QFontMetrics>
 #include <QMessageBox>
 #include <QFileInfo>
-#include <QTranslator>
 #include <QApplication>
+
 
 PGE_TextInputBox::PGE_TextInputBox()
     : PGE_BoxBase(0)
@@ -409,7 +409,7 @@ void PGE_TextInputBox::info(QString msg)
     }
     else
     {
-        QMessageBox::information(NULL, QTranslator::tr("Information"), msg, QMessageBox::Ok);
+        QMessageBox::information(NULL, QObject::tr("Information"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::info(std::string msg)
@@ -427,7 +427,7 @@ void PGE_TextInputBox::warn(QString msg)
     }
     else
     {
-        QMessageBox::warning(NULL, QTranslator::tr("Warning"), msg, QMessageBox::Ok);
+        QMessageBox::warning(NULL, QObject::tr("Warning"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::warn(std::string msg)
@@ -446,7 +446,7 @@ void PGE_TextInputBox::error(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QTranslator::tr("Error"), msg, QMessageBox::Ok);
+        QMessageBox::critical(NULL, QObject::tr("Error"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::error(std::string msg)
@@ -465,7 +465,7 @@ void PGE_TextInputBox::fatal(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QTranslator::tr("Fatal"), msg, QMessageBox::Ok);
+        QMessageBox::critical(NULL, QObject::tr("Fatal"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::fatal(std::string msg)

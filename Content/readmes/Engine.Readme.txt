@@ -1,27 +1,59 @@
-This is a little test of developing engine part.
+--------Platform Game Engine----------
+This is a part of PGE Project which provides gameplay core implementation
+allows you to play levels and episodes.
 
-What's need to run level play:
+===Contents===
+- Requirements
+- Adding Episodes
+- Adding Levels
+- Defautl controlls
+- Engine reserved keys and key combinations
+     - Level specific commands
+     - World specific commands
+     - Common commands
+
 ==============================================
-Preparing:
+Requirements:
 ==============================================
-1) Download & unpack PGE Editor (need a libraries)
-2) Install any 'full' configuration package into editor
+- Operating system:
+  + Linux x86/x64 kernel version 2.6 and higher
+  + Windows XP and higher
+  + Mac OS X 10.7 and higher (Intel x64, Intel x86 and PowerPC are not supported!)
+- OpenGL 3.x compatible video card with 256 MB Video RAM
+- 512 MB RAM
+
 ==============================================
-Launching:
+Adding Episodes
 ==============================================
-3) Drag any SMBX LVL file or PGE LVLX file and drop them into engine .exe file
-   (like you drop file into folder icon) to run engine with opening of dropped file.
-----------------------------------------------
-4) Since v0.0.4, engine have a main menu.
-You can copy your levels into worlds folder or into %UserProfile%\.PGE_Project\worlds
-or into ~/.PGE_Project/worlds folder and you can play than levels from "Battle game" menu
+To add episode to be able play it with engine, find the "worlds" folder
+=== Linux ===
+On the UNIX-like operating system worlds folder can be found at home in the special folder
+        ~/.PGE_Project/worlds
+Note: If you have portable version, "worlds" folder will be in same folder with pge_engine application file
+
+=== Windows ===
+On the Windows Operating system it will have this path:
+        %UserProfile%\.PGE_Project\worlds
+Note: If you have portable version, "worlds" folder will be in same folder with pge_engine application file
+
+=== Mac OS X ===
+On the Mac OS X worlds folder always locating in the special folder:
+        ~/Library/Application Support/PGE Project
+Note: you will found a shortcut "Data folder" in the folder with PGE installation since you will launch PGE apps first time.
+
+==============================================
+Adding Levels
+==============================================
+Levels which are listing in the "Play level" menu are must be placed in the "worlds" folder without subfdolers
+while episodes are in their subfolders
+
 ==============================================
 Note: If you want have everything in SAME folder like in the SMBX, create "pge_engine.ini" file with next contents:
 ----------------------------
 [Main]
 force-portable=true
 ----------------------------
-and everything: worlds, screenshots, logs will be stored in same folder where pge_engine application is located.
+And everything: worlds, screenshots, logs will be stored in same folder where pge_engine application is located.
 [will not work with Mac version. Use "Data Directory" symlink to get data folder!]
 ==============================================
 
@@ -30,8 +62,9 @@ there are in dev-state: I fixing old mistakes, misses, adding new important feat
 should be presented in your ini files of each config pack. Else you may get wrongs and more bugs
 because wrong config settings.
 
+
 ==============================================
-Controlls: <can be cusetomized in the controllers menu>
+Defautl controlls: <can be cusetomized in the controllers menu>
 ==============================================
 Arrows:
 --------------------
@@ -44,6 +77,7 @@ A - (alt-jump) (Temporary, fly up, use it to get inaccessible heights without vi
 S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
     S+UP - destroy blocks over head,
     S+Down - destroy blocks under self)
+
 ==============================================
 Engine reserved keys and key combinations
 ==============================================

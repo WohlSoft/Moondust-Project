@@ -68,7 +68,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Tile</string>
+         <string>Terrain tile</string>
         </property>
        </item>
        <item>

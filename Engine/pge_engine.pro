@@ -102,6 +102,20 @@ macx {
 
 RC_FILE = _resources/engine.rc
 
+android:{
+    LANGUAGES_TARGET=/assets/languages
+} else {
+    LANGUAGES_TARGET=$$DESTDIR/languages
+}
+translates.path = $$LANGUAGES_TARGET
+translates.files += $$PWD/languages/*.qm
+
+INSTALLS += translates
+
+TRANSLATIONS += languages/engine_en.ts \
+                languages/engine_ru.ts \
+                languages/engine_de.ts
+
 SOURCES += \
     main.cpp \
     graphics/graphics.cpp \
@@ -279,7 +293,8 @@ SOURCES += \
     script/bindings/level/classes/luaclass_level_contact_detector.cpp \
     scenes/level/lvl_scene_interprocess.cpp \
     scenes/level/lvl_scene_pausemenu.cpp \
-    scenes/level/lvl_scene_garbage_collecting.cpp
+    scenes/level/lvl_scene_garbage_collecting.cpp \
+    common_features/translator.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -428,7 +443,8 @@ HEADERS  += \
     scenes/world/wld_pathopener.h \
     scenes/level/npc_detectors/lvl_dtc_contact.h \
     data_configs/spawn_effect_def.h \
-    script/bindings/level/classes/luaclass_level_contact_detector.h
+    script/bindings/level/classes/luaclass_level_contact_detector.h \
+    common_features/translator.h
 
 
 FORMS    += \

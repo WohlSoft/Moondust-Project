@@ -744,6 +744,10 @@ public:
     public slots:
         void on_actionRunTestSMBX_triggered();
 
+    private:
+        //! Engine application handler
+        QProcess engine_proc;
+
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
 public:

@@ -8,7 +8,6 @@
  */
 
 #ifdef PGE_FILES_QT
-#include <QTranslator>
 #include <QRegExp>
 #include <QFileInfo>
 #include <QFile>

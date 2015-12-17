@@ -81,7 +81,7 @@ void dataconfigs::loadWorldPaths()
     pathset.endGroup();
 
     emit progressMax(path_total);
-    emit progressTitle(QApplication::tr("Loading Paths images..."));
+    emit progressTitle(QObject::tr("Loading Paths images..."));
 
     ConfStatus::total_wpath= path_total;
 

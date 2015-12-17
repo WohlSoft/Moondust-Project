@@ -30,8 +30,6 @@
 
 #include <QFontMetrics>
 #include <QMessageBox>
-#include <QApplication>
-#include <QTranslator>
 
 
 PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, QString _title, msgType _type,
