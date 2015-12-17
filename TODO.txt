@@ -19,6 +19,7 @@ Engine: Lua
 - setFramePos() NPC Animator function to provide ability jump to any frame position in sequence
 - effect-def based effect spawn function to allow easier and flexible way of effect spawning
 + Detectors API for NPCs
+- Player-LUA events and allow external lua files like npc's are has
 
 Engine: New level physics
 - Wall adheasing NPCs support 
@@ -29,21 +30,17 @@ Engine: New level physics
 - Complex effects scripts interpreter + bind of the effect-def into luna
 + Support of speed-adding of items which makes stack
 
-
-GIFs2PNG
-- Use editor's unmasking code insead of alphachannel
-- Add support of looking for a masks in given data directory.
-  (some custom foreground are presented without mask image and uses default mask.
-  After conversion those images will be without transparency).
-
 PGE Manager
 - Add getting of actual config packs list and showing up of the config pack info
 - Implement downloading & installing of config packs (which is much required for Android and Mac OS X
   and for installer-less PGE packs to be user-friendly)
 
 Common
-- Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)
+- Reorganize PGE File Library to use classes with inhereting and polymorphism
 
+SDL Mixer X
+- Reorganize SDL2_Mixer_ext into C++, build classes to reduce code size
+- Resolve 44100 hz shit with adding a soxr code
 
 Completed works
 ============================================================
@@ -67,3 +64,11 @@ Engine
 Engine: New level physics
 + R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
 
+GIFs2PNG
++ Use editor's unmasking code insead of alphachannel
++ Add support of looking for a masks in given data directory.
+  (some custom foreground are presented without mask image and uses default mask.
+  After conversion those images will be without transparency).
+
+Common
++ Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)
