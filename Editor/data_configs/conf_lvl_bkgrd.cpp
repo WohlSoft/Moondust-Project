@@ -33,7 +33,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
         sbg.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
         if(sbg.name.isEmpty())
         {
-            addError(QString("%1 Item name isn't defined").arg(section));
+            addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
             valid=false;
             goto abort;
         }
