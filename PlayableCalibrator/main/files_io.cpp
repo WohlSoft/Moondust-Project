@@ -66,49 +66,49 @@ void CalibrationMain::OpenFile(QString fileName)
 //Made templates for test calibration
 void CalibrationMain::on_MakeTemplateB_clicked()
 {
-    QGraphicsScene * temp1 = new QGraphicsScene;
-    QGraphicsScene * temp2 = new QGraphicsScene;
+    QImage output(1000, 1000, QImage::Format_ARGB32);
+    output.fill(Qt::transparent);
 
-    createDirs();
-
-    QFileInfo ourFile(currentFile);
-    QString targetFile =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
-    QString targetFile2 =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
-
-    temp1->setBackgroundBrush(QBrush(Qt::black));
-    temp2->setBackgroundBrush(QBrush(Qt::white));
+    QPainter pa(&output);
+    pa.setPen(QPen(Qt::gray, 1));
+    for(int i=1; i<10;i++)
+    {
+        pa.drawLine(0, 100*i, 1000, 100*i );
+        pa.drawLine(100*i, 0, 100*i, 1000 );
+    }
+    pa.setPen(QPen(Qt::yellow, 1));
+    pa.setBrush(Qt::transparent);
 
     for(int i=0; i<10; i++)
         for(int j=0; j<10; j++)
         {
             if(framesX[i][j].used)
             {
-                temp1->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
-                               QPen(Qt::yellow, 1),Qt::transparent);
-                temp2->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
-                               QPen(Qt::black, 1),Qt::transparent);
+                pa.drawRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
+                            frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1);
             }
         }
+    pa.end();
 
-    QImage img1(1000,1000,QImage::Format_ARGB32_Premultiplied);
-    QImage img2(1000,1000,QImage::Format_ARGB32_Premultiplied);
-    QPainter p1(&img1);
-    QPainter p2(&img2);
-    temp1->render(&p1, QRectF(0,0,1000,1000),QRectF(0,0,1000,1000));
-    temp2->render(&p2, QRectF(0,0,1000,1000),QRectF(0,0,1000,1000));
-    p1.end();
-    p2.end();
+    //createDirs();
+    QFileInfo ourFile(currentFile);
+    QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
+    targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
+    if(targetFilePng.isEmpty()) return;
+//    QString targetFileGif1    =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
+//    QString targetFileGifMask =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    Graphics::toGif(img1, targetFile);
-    Graphics::toGif(img2, targetFile2);
-    //img1.save(targetFile);
-    //img2.save(targetFile2);
+
+//    QImage targetGif = output;
+//    QImage mask = targetGif.alphaChannel();
+//    mask.invertPixels();
+    QPixmap::fromImage(output).save(targetFilePng, "png");
+//    Graphics::toGif(targetGif, targetFileGif1);
+//    Graphics::toGif(mask, targetFileGifMask);
+
     QApplication::restoreOverrideCursor();
 
-    QMessageBox::information(this, tr("Saved"), tr("Sprite drawing templates saved in:\n")
-                             +targetFile+"\n"+targetFile2);
+    QMessageBox::information(this, tr("Saved"), tr("Hitbox map has been saved!"));
 
 }

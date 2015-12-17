@@ -166,7 +166,7 @@
       <string>Save config</string>
      </property>
      <property name="icon">
-      <iconset resource="../Editor/_resources/editor.qrc">
+      <iconset resource="_resourses/images.qrc">
        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
      </property>
     </widget>
@@ -250,7 +250,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <string>Useful for tests or for cration from scratch</string>
      </property>
      <property name="text">
-      <string>Generate &quot;Square Man&quot; template</string>
+      <string>Save hitbox map as image...</string>
      </property>
     </widget>
    </item>
@@ -266,7 +266,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <string>Open sprite</string>
      </property>
      <property name="icon">
-      <iconset resource="../Editor/_resources/editor.qrc">
+      <iconset resource="_resourses/images.qrc">
        <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
      </property>
     </widget>
@@ -580,7 +580,6 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Editor/_resources/editor.qrc"/>
   <include location="_resourses/images.qrc"/>
  </resources>
  <connections/>
