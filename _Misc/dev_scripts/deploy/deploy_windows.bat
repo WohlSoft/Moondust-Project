@@ -39,24 +39,24 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
 %QtDir%\windeployqt pge_maintainer.exe
-%CurDir%\upx.exe Qt5Core.dll
-%CurDir%\upx.exe Qt5Gui.dll
-%CurDir%\upx.exe D3Dcompiler_43.dll
-%CurDir%\upx.exe libGLESV2.dll
-%CurDir%\upx.exe Qt5Network.dll
-%CurDir%\upx.exe Qt5Widgets.dll
-%CurDir%\upx.exe libstdc++-6.dll
+%CurDir%\upx.exe -9 Qt5Core.dll
+%CurDir%\upx.exe -9 Qt5Gui.dll
+%CurDir%\upx.exe -9 D3Dcompiler_43.dll
+%CurDir%\upx.exe -9 libGLESV2.dll
+%CurDir%\upx.exe -9 Qt5Network.dll
+%CurDir%\upx.exe -9 Qt5Widgets.dll
+%CurDir%\upx.exe -9 libstdc++-6.dll
 :noDynamicQt1
 
-%CurDir%\upx.exe --compress-icons=0 pge_editor.exe
-%CurDir%\upx.exe --compress-icons=0 PNG2GIFs.exe
-%CurDir%\upx.exe --compress-icons=0 GIFs2PNG.exe
-%CurDir%\upx.exe --compress-icons=0 LazyFixTool.exe
-%CurDir%\upx.exe --compress-icons=0 pge_calibrator.exe
-%CurDir%\upx.exe --compress-icons=0 pge_engine.exe
-%CurDir%\upx.exe --compress-icons=0 pge_manager.exe
-%CurDir%\upx.exe --compress-icons=0 pge_maintainer.exe
-%CurDir%\upx.exe --compress-icons=0 pge_musplay.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_editor.exe
+%CurDir%\upx.exe -9 --compress-icons=0 PNG2GIFs.exe
+%CurDir%\upx.exe -9 --compress-icons=0 GIFs2PNG.exe
+%CurDir%\upx.exe -9 --compress-icons=0 LazyFixTool.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_calibrator.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_engine.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_manager.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_maintainer.exe
+%CurDir%\upx.exe -9 --compress-icons=0 pge_musplay.exe
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
