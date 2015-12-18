@@ -21,17 +21,17 @@
 #                       created 2015-11-26
 #----------------------------------------------------------------------------
 
-os:
-- osx
-
 language: cpp
 
+os:
+  - osx
+
 compiler:
-- clang++
+  - clang++
 
 env:
 # Default build. Release.
-- PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+  - PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 before_install:
 # ==============================================================================
@@ -40,34 +40,34 @@ before_install:
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
-- sudo mkdir -p /Users/StaticQt/
-- sudo chown -R travis /Users/StaticQt/
-- wget https://www.dropbox.com/s/7j9vb6890acgpi2/qt-5.5.1-static-osx-10.11.1.tar.gz?dl=1 -O /Users/StaticQt/qt-5.5.1-static-osx-10.11.1.tar.gz
-- Bak=~+
-- cd /Users/StaticQt/
-- tar -xf qt-5.5.1-static-osx-10.11.1.tar.gz
-- cd $Bak
+  - sudo mkdir -p /Users/StaticQt/
+    sudo chown -R travis /Users/StaticQt/
+    wget https://www.dropbox.com/s/7j9vb6890acgpi2/qt-5.5.1-static-osx-10.11.1.tar.gz?dl=1 -O /Users/StaticQt/qt-5.5.1-static-osx-10.11.1.tar.gz
+    Bak=~+
+    cd /Users/StaticQt/
+    tar -xf qt-5.5.1-static-osx-10.11.1.tar.gz
+    cd $Bak
 
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
-#- brew install qt5 #Don't install dynamic version of Qt 5 because we are have our pre-built static version of Qt
-- brew install lftp
-- brew install coreutils
-- brew install binutils
-- brew install gnu-sed
+# - brew install qt5 #Don't install dynamic version of Qt 5 because we are have our pre-built static version of Qt
+  - brew install lftp
+    brew install coreutils
+    brew install binutils
+    brew install gnu-sed
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-- echo "QMake=\"qmake\"" > _paths.sh
-- echo "LRelease=\"lrelease\"" >> _paths.sh
-- echo "" >> _paths.sh
-- chmod u+x _paths.sh
+  - echo "QMake=\"qmake\"" > _paths.sh
+    echo "LRelease=\"lrelease\"" >> _paths.sh
+    echo "" >> _paths.sh
+    chmod u+x _paths.sh
 
 # ==============================================================================
 # Building of dependencies of PGE
 # ==============================================================================
-- bash build_deps.sh no-pause
+  - bash build_deps.sh no-pause
 
 install: true
 
@@ -75,17 +75,17 @@ script:
 # ==============================================================================
 # Building of PGE
 # ==============================================================================
-- bash build.sh no-pause
+  - bash build.sh no-pause
 
 # ==============================================================================
 # Deploying of built PGE
 # ==============================================================================
-- cd _Misc/dev_scripts/deploy
-- bash deploy_osx.sh nopause
-- cd ../../..
+  - cd _Misc/dev_scripts/deploy
+    bash deploy_osx.sh nopause
+    cd ../../..
 
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-- lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword wohlnet.ru
+  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword wohlnet.ru
 
