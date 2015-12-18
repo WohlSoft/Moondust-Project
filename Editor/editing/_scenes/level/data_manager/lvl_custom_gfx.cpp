@@ -316,8 +316,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
             SimpleAnimator * aniBGO = new SimpleAnimator(
                         ((t_bgo.cur_image->isNull())?
-                                *t_bgo.cur_image :
-                                   bgoD->image),
+                                bgoD->image : *t_bgo.cur_image
+                                   ),
                                   t_bgo.animated,
                                   t_bgo.frames,
                                   t_bgo.framespeed
