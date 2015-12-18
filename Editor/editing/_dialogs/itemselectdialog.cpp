@@ -177,14 +177,14 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(bgoTab)
     {
-        foreach(obj_bgo bgoItem, conf->main_bgo)
+        for(QHash<int, obj_bgo>::iterator bg=conf->main_bgo.begin(); bg!=conf->main_bgo.end(); bg++) //Add user images
         {
-            //Add category
-            QPixmap tmpI = bgoItem.image;
+            obj_bgo *bgoD = &(*bg);
+            QPixmap tmpI = bgoD->image;
 
-            QListWidgetItem* item = new QListWidgetItem( bgoItem.name, ui->Sel_List_BGO );
+            QListWidgetItem* item = new QListWidgetItem( bgoD->name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgoItem.id) );
+            item->setData(3, QString::number(bgoD->id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_BGO->addItem(item);
         }
@@ -507,60 +507,34 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     {
         if(MainWinConnect::pMainWin->activeChildWindow()==1)
         {
-            long j=0;
-            bool isIndex=false;
+
             LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            foreach(UserBGOs bgo, edit->scene->uBGOs)
+            foreach(obj_bgo* bgo, edit->scene->custom_BGOs)
             {
-
-                //Check for index
-                if(bgo.id < (unsigned long)conf->index_bgo.size())
-                {
-                    if(bgo.id == conf->main_bgo[conf->index_bgo[bgo.id].i].id)
-                    {
-                        j = conf->index_bgo[bgo.id].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < conf->main_bgo.size(); i++)
-                    {
-                        if(conf->main_bgo[i].id == bgo.id)
-                        {
-                            j = 0;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
-
-
-                if(conf->main_bgo[j].animated)
-                    tmpI = bgo.image.copy(0,
-                                (int)round(bgo.image.height() / conf->main_bgo[j].frames)*conf->main_bgo[j].display_frame,
-                                bgo.image.width(),
-                                (int)round(bgo.image.height() / conf->main_bgo[j].frames));
+                if(bgo->animated)
+                    tmpI = bgo->cur_image->copy(0,
+                                (int)round(bgo->cur_image->height() / bgo->frames) * bgo->display_frame,
+                                bgo->cur_image->width(),
+                                (int)round(bgo->cur_image->height() / bgo->frames));
                 else
-                    tmpI = bgo.image;
+                    tmpI = *bgo->cur_image;
 
-                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo->id) );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo.id) );
+                item->setData(3, QString::number(bgo->id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );
             }
-
         }
 
     }
     else
     //set BGO item box from global array
-    foreach(obj_bgo bgoItem, conf->main_bgo)
+    for(QHash<int, obj_bgo>::iterator bg=conf->main_bgo.begin(); bg!=conf->main_bgo.end(); bg++) //Add user images
     {
+        obj_bgo &bgoItem = (*bg);
+
         //Add Group
         found = false;
         if(tmpList.size()!=0)

@@ -139,17 +139,18 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_Level)
-                for(int i = 0; i < dynamic_cast<LvlScene *>(scn)->uBGOs.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<LvlScene *>(scn)->index_bgo[
-                                dynamic_cast<LvlScene *>(scn)->uBGOs[i].id].i
-                                      );
+            {
+                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
+                for(int i = 0; i < sc->custom_BGOs.size(); ++i) {
+                    m_model->addPiece( sc->custom_BGOs[i]->id );
                 }
-
+            }
         }
         else
-        for(int i = 0; i < m_conf->main_bgo.size(); ++i){
-            m_model->addPiece(i);
+        for(QHash<int, obj_bgo>::iterator bg=m_conf->main_bgo.begin(); bg!=m_conf->main_bgo.end(); bg++) //Add user images
+        {
+            obj_bgo &bgoItem = (*bg);
+            m_model->addPiece(bgoItem.id);
         }
         break;
     }

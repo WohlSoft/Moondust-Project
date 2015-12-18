@@ -153,13 +153,13 @@ QString CustomCounterGUI::makeItemName(long item)
         break;
     case ItemTypes::LVL_BGO:
         {
-            int bI = MainWinConnect::configs->getBgoI(item);
-            if(bI<0)
+            obj_bgo& bgo = MainWinConnect::configs->main_bgo[item];
+            if(!bgo.isValid)
                 return QString("BGO-%1").arg(item);
             else
             {
-                if(!MainWinConnect::configs->main_bgo[bI].name.isEmpty())
-                    return MainWinConnect::configs->main_bgo[bI].name + QString(" (BGO-%1)").arg(item);
+                if(!bgo.name.isEmpty())
+                    return bgo.name + QString(" (BGO-%1)").arg(item);
                 else
                     return QString("BGO-%1").arg(item);
             }

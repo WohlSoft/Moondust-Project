@@ -233,15 +233,15 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             LevelEdit * edit = mw()->activeLvlEditWin();
 
             if((edit!=NULL) && (edit->sceneCreated))
-            foreach(UserBGOs bgo, edit->scene->uBGOs)
+            foreach(obj_bgo *bgo, edit->scene->custom_BGOs)
             {
                 tmpI = GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, &j),
+                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo->id, false, &j),
                             QSize(48,48));
 
-                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo->id) );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo.id) );
+                item->setData(3, QString::number(bgo->id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->BGOItemsList->addItem( item );
@@ -252,8 +252,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set BGO item box from global array
-    foreach(obj_bgo bgoItem, mw()->configs.main_bgo)
+    for(QHash<int, obj_bgo>::iterator bg=mw()->configs.main_bgo.begin(); bg!=mw()->configs.main_bgo.end(); bg++) //Add user images
     {
+        obj_bgo &bgoItem = (*bg);
         //Add Group
         found = false;
         if(tmpList.size()!=0)

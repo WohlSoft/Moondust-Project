@@ -200,6 +200,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 1: //bgos
     {
         long j;
+        obj_bgo& bgoC = pConfigs->main_bgo[itemID];
 
         tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
         if(tImg.isNull())
@@ -207,10 +208,15 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             tImg=uBgoImg;
         }
 
+        if(!bgoC.isValid)
+        {
+            bgoC=pConfigs->main_bgo[1];
+        }
 
-        LvlPlacingItems::gridSz=pConfigs->main_bgo[j].grid;
-        LvlPlacingItems::gridOffset = QPoint(pConfigs->main_bgo[j].offsetX,
-                                             pConfigs->main_bgo[j].offsetY);
+
+        LvlPlacingItems::gridSz=bgoC.grid;
+        LvlPlacingItems::gridOffset = QPoint(bgoC.offsetX,
+                                             bgoC.offsetY);
 
         if( (itemID != LvlPlacingItems::bgoSet.id) || (placingItem!=PLC_BGO) )
             LvlPlacingItems::bgoSet.layer = "Default";
@@ -218,7 +224,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::bgoSet.id = itemID;
 
         long w = tImg.width();
-        long h = tImg.height();//( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
+        long h = tImg.height();//( (bgoC.animated)?bgoC.frames:1);
 
         LvlPlacingItems::itemW = w;
         LvlPlacingItems::itemH = h;

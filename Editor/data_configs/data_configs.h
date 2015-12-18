@@ -118,7 +118,7 @@ public:
 
     //Level map items
     QHash<int, obj_BG > main_bg;
-    QList<obj_bgo > main_bgo;//Must be QHash<int, obj_bgo > main_bgo; !!!
+    QHash<int, obj_bgo > main_bgo;
     QList<obj_block > main_block;
     QList<obj_npc > main_npc;
     npc_Markers marker_npc;
@@ -167,7 +167,7 @@ public:
     // Get Item of Index
     long getNpcI(unsigned long itemID);
     long getBlockI(unsigned long itemID);
-    long getBgoI(unsigned long itemID);
+    //long getBgoI(unsigned long itemID);
 
     long getTileI(unsigned long itemID);
     long getSceneI(unsigned long itemID);

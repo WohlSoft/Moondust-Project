@@ -103,46 +103,35 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeLvlEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_bgo.size())
-                {
-                    j = scn->index_bgo[ItemID].i;
-                    animator = scn->index_bgo[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_bgo.size()) j=0;
+                obj_bgo & bgo= scn->uBGOs[ItemID];
+                long animator=bgo.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = bgo.id;
 
                 if(whole)
                     return scn->animates_BGO[animator]->wholeImage();
                 else
-                    return scn->animates_BGO[animator]->image(main->configs.main_bgo[j].display_frame);
+                    return scn->animates_BGO[animator]->image(bgo.display_frame);
             }
             else
             {
                 QPixmap tmpI;
-                long j=0;
 
-                //Check for index
-                j = main->configs.getBgoI(ItemID);
+                obj_bgo & bgo= main->configs.main_bgo[ItemID];
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = bgo.id;
 
-                if(j>=0)
+                if(bgo.isValid)
                 {
-                    if(j >= main->configs.main_bgo.size()) j=0;
-
-                    if((main->configs.main_bgo[j].animated)&&(!whole))
-                        tmpI = main->configs.main_bgo[j].image.copy(0,
-                                    (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames)*main->configs.main_bgo[j].display_frame,
-                                    main->configs.main_bgo[j].image.width(),
-                                    (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames));
+                    if((bgo.animated)&&(!whole))
+                        tmpI = bgo.image.copy(0,
+                                    (int)round(bgo.image.height() / bgo.frames) * bgo.display_frame,
+                                    bgo.image.width(),
+                                    (int)round(bgo.image.height() / bgo.frames));
                     else
-                        tmpI = main->configs.main_bgo[j].image;
+                        tmpI = bgo.image;
                 }
 
                 return tmpI;

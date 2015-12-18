@@ -33,12 +33,12 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     int i, total=0;
 
     UserBlocks uBlock;
-    UserBGOs uBGO;
     UserNPCs uNPC;
 
     bool WrongImagesDetected=false;
 
     uBGOs.clear();
+
     uBlocks.clear();
     uNPCs.clear();
     uBGs.clear();
@@ -281,61 +281,54 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
     //Load BGO
-    for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
+    for(QHash<int, obj_bgo>::iterator bg=pConfigs->main_bgo.begin(); bg!=pConfigs->main_bgo.end(); bg++) //Add user images
     {
+        loaded1 = false;
+        loaded2 = false;
+        obj_bgo *bgoD = &(*bg);
 
+        obj_bgo &t_bgo = uBGOs[bgoD->id]; //Allocate new BGO Config entry
+        QPixmap image_file;
         bool custom=false;
-            QString CustomFile=uLVL.getCustomFile(pConfigs->main_bgo[i].image_n);
-            if(!CustomFile.isEmpty())
+
+        bgoD->copyTo(t_bgo);//init configs
+
+            QString CustomImage=uLVL.getCustomFile(t_bgo.image_n);
+            if(!CustomImage.isEmpty())
             {
-                if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
+                if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask=uLVL.getCustomFile(pConfigs->main_bgo[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uBGO.mask = GraphicsHelps::loadPixmap( CustomMask );
-                    else
-                        uBGO.mask = pConfigs->main_bgo[i].mask;
-                    uBGO.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBGO.mask);
+                    QString CustomMask=uLVL.getCustomFile(t_bgo.mask_n);
+                    image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomImage),
+                                  CustomMask.isEmpty() ? bgoD->mask : GraphicsHelps::loadPixmap( CustomMask ));
                 } else {
-                    uBGO.image = GraphicsHelps::loadPixmap(CustomFile);
-                    uBGO.mask = QPixmap();
+                    image_file = GraphicsHelps::loadPixmap(CustomImage);
                 }
-                if(uBGO.image.isNull()) WrongImagesDetected=true;
-
-                uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uBGO.id = pConfigs->main_bgo[i].id;
-                uBGOs.push_back(uBGO);
-                custom=true;
-
-                //Apply index;
-                if(uBGO.id < (unsigned int)index_bgo.size())
+                if(image_file.isNull())
+                    WrongImagesDetected=true;
+                else
                 {
-                    index_bgo[uBGO.id].type = 1;
-                    index_bgo[uBGO.id].i = (uBGOs.size()-1);
+                    custom_images.push_back(image_file);
+                    t_bgo.cur_image = &custom_images.last();
                 }
+                custom=true;
             }
 
             SimpleAnimator * aniBGO = new SimpleAnimator(
-                        ((custom)?
-                             ((uBGOs.last().image.isNull())?
-                                uBgoImg:
-                                    uBGOs.last().image)
-                                 :
-                             ((pConfigs->main_bgo[i].image.isNull())?
-                                uBgoImg:
-                                   pConfigs->main_bgo[i].image)
-                             ),
-                                  pConfigs->main_bgo[i].animated,
-                                  pConfigs->main_bgo[i].frames,
-                                  pConfigs->main_bgo[i].framespeed
+                        ((t_bgo.cur_image->isNull())?
+                                *t_bgo.cur_image :
+                                   bgoD->image),
+                                  t_bgo.animated,
+                                  t_bgo.frames,
+                                  t_bgo.framespeed
                                   );
-            animates_BGO.push_back( aniBGO );
-            index_bgo[pConfigs->main_bgo[i].id].i = i;
-            index_bgo[pConfigs->main_bgo[i].id].ai = animates_BGO.size()-1;
-            #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
-            #endif
+                t_bgo.animator_id = animates_BGO.size();
+                animates_BGO.push_back( aniBGO );
+
+            if(custom)
+            {
+                custom_BGOs.push_back(&t_bgo);//Register BGO as customized
+            }
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);

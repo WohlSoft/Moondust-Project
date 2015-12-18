@@ -63,24 +63,23 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
-    long item_i = 0;
-    bool noimage=true;
+    bool is_found=true;
     long animator=0;
-    obj_bgo mergedSet;
+    obj_bgo *mergedSet;
 
-    getConfig_BGO(bgo.id, item_i, animator, mergedSet, &noimage);
+    getConfig_BGO(bgo.id, animator, mergedSet, &is_found);
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet.grid,
-                           QPoint(mergedSet.offsetX, mergedSet.offsetY));
+        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet->grid,
+                           QPoint(mergedSet->offsetX, mergedSet->offsetY));
         bgo.x = newPos.x();
         bgo.y = newPos.y();
     }
 
     ItemBGO *BGOItem = new ItemBGO(this);
-    BGOItem->setBGOData(bgo, &mergedSet, &animator);
+    BGOItem->setBGOData(bgo, mergedSet, &animator);
 
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }

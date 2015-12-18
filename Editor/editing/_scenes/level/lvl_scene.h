@@ -151,12 +151,18 @@ public:
     public:
         //Object Indexing:
         QList<blocksIndexes > index_blocks;
-        QList<bgoIndexes > index_bgo;
+        //QList<bgoIndexes > index_bgo;
         QList<npcIndexes > index_npc;
+
+        //! Common container of pre-loaded images
+        QList<QPixmap> custom_images;
 
         //Custom data containers
         QHash<int, obj_BG > uBGs;
-        QList<UserBGOs > uBGOs;
+
+        QHash<int, obj_bgo > uBGOs;
+        QList<obj_bgo* > custom_BGOs;
+
         QList<UserBlocks > uBlocks;
         QList<UserNPCs > uNPCs;
 
@@ -171,7 +177,7 @@ public:
         void stopAnimation();
 
         void getConfig_Block(unsigned long item_id, long &array_index, long &animator_id, obj_block &mergedSet, bool *ok=0);
-        void getConfig_BGO(unsigned long item_id, long &array_index, long &animator_id, obj_bgo &mergedSet, bool *ok=0);
+        void getConfig_BGO(unsigned long item_id, long &animator_id, obj_bgo* &mergedSet, bool *ok=0);
         void getConfig_NPC(unsigned long item_id, long &array_index, long &animator_id, obj_npc &mergedSet, bool *ok=0);
 
         // ///////////////////Init Level/////////////////////////

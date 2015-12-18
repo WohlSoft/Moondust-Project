@@ -21,37 +21,72 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getBgoI(unsigned long itemID)
+obj_bgo::obj_bgo()
 {
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_bgo.size())
-    {
-        j = index_bgo[itemID].i;
-
-        if(j < main_bgo.size())
-        {
-            if( main_bgo[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_bgo.size(); j++)
-        {
-            if(main_bgo[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
 }
+
+void obj_bgo::copyTo(obj_bgo &bgo)
+{
+    /* for internal usage */
+    bgo.isValid         = isValid;
+    bgo.animator_id     = animator_id;
+    bgo.cur_image       = cur_image;
+    if(cur_image==NULL)
+        bgo.cur_image   = &image;
+    bgo.frame_h         = frame_h;
+    /* for internal usage */
+
+    bgo.id              = id;
+    bgo.name            = name;
+    bgo.group           = group;
+    bgo.category        = category;
+    bgo.grid            = grid;
+    bgo.offsetX         = offsetX;
+    bgo.offsetY         = offsetY;
+    bgo.zOffset         = zOffset;
+    bgo.image_n         = image_n;
+    bgo.mask_n          = mask_n;
+    bgo.climbing        = climbing;
+    bgo.animated        = animated;
+    bgo.frames          = frames;
+    bgo.framespeed      = framespeed;
+    bgo.display_frame   = display_frame;
+}
+
+//long dataconfigs::getBgoI(unsigned long itemID)
+//{
+//    long j;
+//    bool found=false;
+
+//    if(itemID < (unsigned int)index_bgo.size())
+//    {
+//        j = index_bgo[itemID].i;
+
+//        if(j < main_bgo.size())
+//        {
+//            if( main_bgo[j].id == itemID)
+//                found=true;
+//        }
+//    }
+
+//    if(!found)
+//    {
+//        for(j=0; j < main_bgo.size(); j++)
+//        {
+//            if(main_bgo[j].id==itemID)
+//            {
+//                found=true;
+//                break;
+//            }
+//        }
+//    }
+
+//    if(!found) j=-1;
+//    return j;
+//}
 
 
 bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
@@ -123,6 +158,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
                            : sbgo.image.height());
 
     sbgo.display_frame = setup->value("display-frame", "0").toInt();
+    sbgo.isValid = true;//Mark BGO as valid object
 
     abort:
         setup->endGroup();
