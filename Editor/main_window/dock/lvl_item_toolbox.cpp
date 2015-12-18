@@ -252,9 +252,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set BGO item box from global array
-    for(QHash<int, obj_bgo>::iterator bg=mw()->configs.main_bgo.begin(); bg!=mw()->configs.main_bgo.end(); bg++) //Add user images
+    for(int i=1; i<mw()->configs.main_bgo.size(); i++)
     {
-        obj_bgo &bgoItem = (*bg);
+        obj_bgo &bgoItem = mw()->configs.main_bgo[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)

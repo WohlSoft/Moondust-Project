@@ -177,10 +177,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(bgoTab)
     {
-        for(QHash<int, obj_bgo>::iterator bg=conf->main_bgo.begin(); bg!=conf->main_bgo.end(); bg++) //Add user images
+        for(int i=1; i<conf->main_bgo.size(); i++) //Add user images
         {
-            obj_bgo *bgoD = &(*bg);
-            QPixmap tmpI = bgoD->image;
+            obj_bgo *bgoD = &conf->main_bgo[i];
+            QPixmap tmpI =  bgoD->image;
 
             QListWidgetItem* item = new QListWidgetItem( bgoD->name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
@@ -531,9 +531,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     }
     else
     //set BGO item box from global array
-    for(QHash<int, obj_bgo>::iterator bg=conf->main_bgo.begin(); bg!=conf->main_bgo.end(); bg++) //Add user images
+    for(int i=1; i<conf->main_bgo.size(); i++) //Add user images
     {
-        obj_bgo &bgoItem = (*bg);
+        obj_bgo &bgoItem = conf->main_bgo[i];
 
         //Add Group
         found = false;

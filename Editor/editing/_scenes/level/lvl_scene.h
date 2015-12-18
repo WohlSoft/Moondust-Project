@@ -160,7 +160,7 @@ public:
         //Custom data containers
         QHash<int, obj_BG > uBGs;
 
-        QHash<int, obj_bgo > uBGOs;
+        PGE_DataArray<obj_bgo > uBGOs;
         QList<obj_bgo* > custom_BGOs;
 
         QList<UserBlocks > uBlocks;

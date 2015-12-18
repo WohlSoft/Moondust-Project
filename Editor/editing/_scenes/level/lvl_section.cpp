@@ -163,7 +163,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
         }
     }
 
-    if((BG_Id>0) && (pConfigs->main_bg.contains(BG_Id)))
+    if(pConfigs->main_bg.contains(BG_Id))
         LvlData->sections[sctID].background = BG_Id;
     else
         LvlData->sections[sctID].background = 0;
