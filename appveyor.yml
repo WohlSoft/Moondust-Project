@@ -56,8 +56,8 @@ build_script:
   - build_deps.bat nopause
   - build.bat nopause noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
   - cd _Misc\dev_scripts\deploy\
-    deploy_windows_dynamic.bat nopause
-    cd ..\..\..\
+  - deploy_windows_dynamic.bat nopause
+  - cd ..\..\..\
   
 artifacts:
   - path: bin-w32\_packed\pge-project-dev-win32.zip
