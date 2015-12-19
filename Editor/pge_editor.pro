@@ -609,7 +609,8 @@ HEADERS  += defines.h \
     main_window/tip_of_day/tip_of_day.h \
     ../_common/data_functions/npctxt_manager.h \
     ../_common/data_functions/smbx64_validation_messages.h \
-    main_window/testing/testing_settings.h
+    main_window/testing/testing_settings.h \
+    common_features/data_array.h
 
 
 FORMS    += \

@@ -56,39 +56,6 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.display_frame   = display_frame;
 }
 
-//long dataconfigs::getBgoI(unsigned long itemID)
-//{
-//    long j;
-//    bool found=false;
-
-//    if(itemID < (unsigned int)index_bgo.size())
-//    {
-//        j = index_bgo[itemID].i;
-
-//        if(j < main_bgo.size())
-//        {
-//            if( main_bgo[j].id == itemID)
-//                found=true;
-//        }
-//    }
-
-//    if(!found)
-//    {
-//        for(j=0; j < main_bgo.size(); j++)
-//        {
-//            if(main_bgo[j].id==itemID)
-//            {
-//                found=true;
-//                break;
-//            }
-//        }
-//    }
-
-//    if(!found) j=-1;
-//    return j;
-//}
-
-
 bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
 {
     bool valid=true;
@@ -197,15 +164,7 @@ void dataconfigs::loadLevelBGO()
 
     ConfStatus::total_bgo = bgo_total;
 
-//    //creation of empty indexes of arrayElements
-//    bgoIndexes bgoIndex;
-//    for(i=0;i<=bgo_total; i++)
-//    {
-//        bgoIndex.i=i;
-//        bgoIndex.type=0;
-//        bgoIndex.smbx64_sp=0;
-//        index_bgo.push_back(bgoIndex);
-//    }
+    main_bgo.allocateSlots(bgo_total);
 
     if(ConfStatus::total_bgo==0)
     {
@@ -216,13 +175,10 @@ void dataconfigs::loadLevelBGO()
     for(i=1; i<=bgo_total; i++)
     {
         emit progressValue(i);
-
         if( loadLevelBGO(sbgo, QString("background-"+QString::number(i)), 0, "", &bgoset) )
         {
-            //index_bgo[i].i = i-1;
-            //index_bgo[i].smbx64_sp = setup->value("smbx64-sort-priority", "0").toLongLong();
             sbgo.id = i;
-            main_bgo[i] = sbgo;
+            main_bgo.storeElement(i, sbgo);
         }
 
         if( bgoset.status() != QSettings::NoError )
@@ -231,8 +187,8 @@ void dataconfigs::loadLevelBGO()
         }
     }
 
-    if((unsigned int)main_bgo.size()<bgo_total)
+    if((unsigned int)main_bgo.stored()<bgo_total)
     {
-        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.size()));
+        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.stored()));
     }
 }

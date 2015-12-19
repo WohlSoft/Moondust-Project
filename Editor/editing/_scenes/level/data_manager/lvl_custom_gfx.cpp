@@ -94,15 +94,15 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     if(!progress.wasCanceled())
         progress.setLabelText(
                     tr("Search User Backgrounds %1")
-                    .arg(QString::number(pConfigs->main_bg.size()) ) );
+                    .arg(QString::number(pConfigs->main_bg.stored()) ) );
 
     qApp->processEvents();
     //Load Backgrounds
-    for(QHash<int, obj_BG>::iterator bg=pConfigs->main_bg.begin(); bg!=pConfigs->main_bg.end(); bg++) //Add user images
+    for(int i=1; i<pConfigs->main_bg.size(); i++)
         {
             loaded1 = false;
             loaded2 = false;
-            obj_BG *bgD = &(*bg);
+            obj_BG *bgD = &pConfigs->main_bg[i];
             UserBGs uBG;
 
             QString CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".txt");
@@ -275,19 +275,20 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User BGOs %1")
-                    .arg(QString::number(pConfigs->main_bgo.size()) ) );
+                    .arg(QString::number(pConfigs->main_bgo.stored()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
     //Load BGO
-    for(QHash<int, obj_bgo>::iterator bg=pConfigs->main_bgo.begin(); bg!=pConfigs->main_bgo.end(); bg++) //Add user images
+    uBGOs.allocateSlots(pConfigs->main_bgo.total());
+    for(int i=1; i<pConfigs->main_bgo.size(); i++)
     {
         loaded1 = false;
         loaded2 = false;
-        obj_bgo *bgoD = &(*bg);
+        obj_bgo *bgoD = &pConfigs->main_bgo[i];
 
-        obj_bgo &t_bgo = uBGOs[bgoD->id]; //Allocate new BGO Config entry
+        obj_bgo t_bgo; //Allocate new BGO Config entry
         QPixmap image_file;
         bool custom=false;
 
@@ -329,6 +330,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 custom_BGOs.push_back(&t_bgo);//Register BGO as customized
             }
+            uBGOs.storeElement(i, t_bgo);
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);

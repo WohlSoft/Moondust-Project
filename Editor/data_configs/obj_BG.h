@@ -23,6 +23,18 @@
 #include <QPixmap>
 
 struct obj_BG{
+    obj_BG();
+
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+    QPixmap * cur_image_second;
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_BG &bg);
 
     unsigned long id;
     QString name;
@@ -57,3 +69,4 @@ struct obj_BG{
 };
 
 #endif // OBJ_BG_H
+

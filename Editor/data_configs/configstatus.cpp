@@ -75,11 +75,11 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BGO
     item = new QListWidgetItem;
-    item->setText(tr("Level: Background objects (%1/%2)").arg(configs->main_bgo.size()).arg(ConfStatus::total_bgo));
-    if(configs->main_bgo.size()==0)
+    item->setText(tr("Level: Background objects (%1/%2)").arg(configs->main_bgo.stored()).arg(ConfStatus::total_bgo));
+    if(configs->main_bgo.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_bgo.size()<ConfStatus::total_bgo)
+    if(configs->main_bgo.stored()<ConfStatus::total_bgo)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
@@ -87,11 +87,11 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BG
     item = new QListWidgetItem;
-    item->setText(tr("Level: Background images (%1/%2)").arg(configs->main_bg.size()).arg(ConfStatus::total_bg));
-    if(configs->main_bg.size()==0)
+    item->setText(tr("Level: Background images (%1/%2)").arg(configs->main_bg.stored()).arg(ConfStatus::total_bg));
+    if(configs->main_bg.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_bg.size()<ConfStatus::total_bg)
+    if(configs->main_bg.stored()<ConfStatus::total_bg)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));

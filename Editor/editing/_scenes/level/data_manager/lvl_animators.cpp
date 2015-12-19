@@ -32,10 +32,12 @@
 ///
 void LvlScene::buildAnimators()
 {
-    for(QHash<int, obj_bgo>::iterator bg=pConfigs->main_bgo.begin(); bg!=pConfigs->main_bgo.end(); bg++) //Add user images
+    uBGOs.clear();
+    uBGOs.allocateSlots(pConfigs->main_bgo.total());
+    for(int i=1; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
-        obj_bgo *bgoD = &(*bg);
-        obj_bgo &t_bgo = uBGOs[bgoD->id];
+        obj_bgo *bgoD = &pConfigs->main_bgo[i];
+        obj_bgo t_bgo;
         bgoD->copyTo(t_bgo);
 
         SimpleAnimator * aniBGO = new SimpleAnimator(
@@ -49,6 +51,7 @@ void LvlScene::buildAnimators()
 
         animates_BGO.push_back( aniBGO );
         t_bgo.animator_id = animates_BGO.size()-1;
+        uBGOs.storeElement(i, t_bgo);
     }
 
     int i;

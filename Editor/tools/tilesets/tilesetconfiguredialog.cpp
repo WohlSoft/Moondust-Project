@@ -147,9 +147,9 @@ void TilesetConfigureDialog::setUpItems(int type)
             }
         }
         else
-        for(QHash<int, obj_bgo>::iterator bg=m_conf->main_bgo.begin(); bg!=m_conf->main_bgo.end(); bg++) //Add user images
+        for(int i=1; i<m_conf->main_bgo.size(); i++)
         {
-            obj_bgo &bgoItem = (*bg);
+            obj_bgo &bgoItem = m_conf->main_bgo[i];
             m_model->addPiece(bgoItem.id);
         }
         break;

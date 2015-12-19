@@ -29,6 +29,7 @@
 #include <QDebug>
 
 #include <common_features/logger.h>
+#include <common_features/data_array.h>
 
 #include "obj_block.h"
 #include "obj_bgo.h"
@@ -117,8 +118,8 @@ public:
     QList<obj_playable_character > characters;
 
     //Level map items
-    QHash<int, obj_BG > main_bg;
-    QHash<int, obj_bgo > main_bgo;
+    PGE_DataArray<obj_BG > main_bg;
+    PGE_DataArray<obj_bgo > main_bgo;
     QList<obj_block > main_block;
     QList<obj_npc > main_npc;
     npc_Markers marker_npc;
