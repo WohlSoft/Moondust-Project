@@ -227,11 +227,11 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     }
     case ItemTypes::LVL_BGO:
     {
-        long tarIndex = m_conf->getBgoI(id);
-        if(tarIndex==-1)
+        obj_bgo& bgo = m_conf->main_bgo[id];
+        if(!bgo.isValid)
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, m_conf->main_bgo[tarIndex].id, false, NULL, scn),
+                    Items::getItemGFX(m_type, bgo.id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }

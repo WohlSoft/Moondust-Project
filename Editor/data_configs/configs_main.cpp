@@ -318,9 +318,9 @@ bool dataconfigs::loadconfigs()
     WriteToLog(QtDebugMsg, QString("Config status 1"));
     WriteToLog(QtDebugMsg, QString("-------------------------"));
     WriteToLog(QtDebugMsg, QString("Loaded blocks          %1/%2").arg(main_block.size()).arg(ConfStatus::total_blocks));
-    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.size()).arg(ConfStatus::total_bgo));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
     WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.size()).arg(ConfStatus::total_npc));
-    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.size()).arg(ConfStatus::total_bg));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
     WriteToLog(QtDebugMsg, QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
     WriteToLog(QtDebugMsg, QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
     WriteToLog(QtDebugMsg, QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
@@ -337,8 +337,8 @@ bool dataconfigs::check()
 {
     return
             (
-    (main_bgo.size()<=0)||
-    (main_bg.size()<=0)||
+    (main_bgo.stored()<=0)||
+    (main_bg.stored()<=0)||
     (main_block.size()<=0)||
     (main_npc.size()<=0)||
     (main_wtiles.size()<=0)||

@@ -166,9 +166,9 @@ void LvlSectionProps::initDefaults()
             }
 
 
-    for(QHash<int, obj_BG>::iterator bg=mw()->configs.main_bg.begin();bg!=mw()->configs.main_bg.end();bg++)
+    for(int i=1; i<mw()->configs.main_bg.size(); i++)
     {
-        obj_BG &bgD=*bg;
+        obj_BG &bgD=mw()->configs.main_bg[i];
         QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.name;
         QPixmap tmp = bgD.image.scaledToHeight(70);
@@ -368,7 +368,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
     if(lockSctSettingsProps) return;
 
-    if(mw()->configs.main_bg.size()==0)
+    if(mw()->configs.main_bg.stored()==0)
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));
         return;

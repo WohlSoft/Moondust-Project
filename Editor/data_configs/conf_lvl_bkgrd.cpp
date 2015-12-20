@@ -22,6 +22,28 @@
 
 #include "data_configs.h"
 
+obj_BG::obj_BG()
+{
+    isValid = false;
+    animator_id = 0;
+    cur_image = NULL;
+    cur_image_second = NULL;
+}
+
+void obj_BG::copyTo(obj_BG &bg)
+{
+    /* for internal usage */
+    bg.isValid         = isValid;
+    bg.animator_id     = animator_id;
+    bg.cur_image       = cur_image;
+    if(cur_image==NULL)
+        bg.cur_image   = &image;
+    if(cur_image_second==NULL)
+        bg.cur_image_second   = &image;
+    bg.frame_h         = frame_h;
+    /* for internal usage */
+}
+
 bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with, QString iniFile, QSettings *setup)
 {
     bool valid=true;
@@ -33,7 +55,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
         sbg.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
         if(sbg.name.isEmpty())
         {
-            addError(QString("%1 Item name isn't defined").arg(section));
+            addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
             valid=false;
             goto abort;
         }
@@ -149,6 +171,8 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
             sbg.image = sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
         }
 
+        sbg.isValid = true;
+
     abort:
         setup->endGroup();
         if(internal) delete setup;
@@ -184,6 +208,7 @@ void dataconfigs::loadLevelBackgrounds()
     emit progressTitle(QObject::tr("Loading Backgrounds..."));
 
     ConfStatus::total_bg = bg_total;
+    main_bg.allocateSlots(ConfStatus::total_bg);
 
     if(ConfStatus::total_bg==0)
     {
@@ -198,7 +223,7 @@ void dataconfigs::loadLevelBackgrounds()
         if( loadLevelBackground(sbg, QString("background2-"+QString::number(i)), 0, "", &bgset) )
         {
             sbg.id = i;
-            main_bg[i]=sbg;
+            main_bg.storeElement(i, sbg);
         }
 
         if( bgset.status() != QSettings::NoError )

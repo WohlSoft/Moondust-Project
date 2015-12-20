@@ -406,6 +406,11 @@
               <string>65 = SB (Modded GMOPL by Wohlstand)</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>66 = SB (Jammey O'Connel's bank)</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

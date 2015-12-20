@@ -29,6 +29,7 @@
 #include <QDebug>
 
 #include <common_features/logger.h>
+#include <common_features/data_array.h>
 
 #include "obj_block.h"
 #include "obj_bgo.h"
@@ -117,8 +118,8 @@ public:
     QList<obj_playable_character > characters;
 
     //Level map items
-    QHash<int, obj_BG > main_bg;
-    QList<obj_bgo > main_bgo;
+    PGE_DataArray<obj_BG > main_bg;
+    PGE_DataArray<obj_bgo > main_bgo;
     QList<obj_block > main_block;
     QList<obj_npc > main_npc;
     npc_Markers marker_npc;
@@ -167,7 +168,7 @@ public:
     // Get Item of Index
     long getNpcI(unsigned long itemID);
     long getBlockI(unsigned long itemID);
-    long getBgoI(unsigned long itemID);
+    //long getBgoI(unsigned long itemID);
 
     long getTileI(unsigned long itemID);
     long getSceneI(unsigned long itemID);
@@ -187,6 +188,7 @@ public:
     void loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
+    bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=0, QString iniFile="", QSettings *setup=0);
 signals:
     void progressValue(int);
     void progressMax(int);

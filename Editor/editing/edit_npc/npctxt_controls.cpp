@@ -709,27 +709,33 @@ void NpcEdit::updatePreview()
 
 void NpcEdit::loadImageFile()
 {
+
     QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
-
-    if(QFile::exists(imagePath + defaultNPC.image_n))
+    CustomDirManager fileDir(imagePath, "npcx");
+    QString CustomImage=fileDir.getCustomFile(defaultNPC.image_n);
+    if(!CustomImage.isEmpty())
     {
-        if(QFile::exists(imagePath + defaultNPC.mask_n))
-            npcMask = GraphicsHelps::loadPixmap( imagePath + defaultNPC.mask_n );
-        else
-            npcMask = defaultNPC.mask;
-
-        npcImage = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
-
+        if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+        {
+            QString CustomMask=fileDir.getCustomFile(defaultNPC.mask_n);
+            npcImage = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImage ),
+                          CustomMask.isEmpty() ? defaultNPC.mask : GraphicsHelps::loadPixmap( CustomMask ));
+        } else {
+            npcImage = GraphicsHelps::loadPixmap(CustomImage);
+        }
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+        WriteToLog(QtDebugMsg, QString("Loaded custom NPC image: %1").arg(CustomImage));
+        if(npcImage.isNull())
+        {
+            WriteToLog(QtDebugMsg, QString("Loading custom NPC Image was failed, using default image"));
+            npcImage = defaultNPC.image;
+        }
     }
     else
     {
         npcImage = defaultNPC.image;
         WriteToLog(QtDebugMsg, QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }
-
-    WriteToLog(QtDebugMsg, QString("path %1").arg(imagePath + defaultNPC.image_n));
-
 }
 
 void NpcEdit::refreshImageFile()

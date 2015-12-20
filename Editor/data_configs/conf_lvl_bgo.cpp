@@ -21,36 +21,116 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getBgoI(unsigned long itemID)
+obj_bgo::obj_bgo()
 {
-    long j;
-    bool found=false;
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
+}
 
-    if(itemID < (unsigned int)index_bgo.size())
+void obj_bgo::copyTo(obj_bgo &bgo)
+{
+    /* for internal usage */
+    bgo.isValid         = isValid;
+    bgo.animator_id     = animator_id;
+    bgo.cur_image       = cur_image;
+    if(cur_image==NULL)
+        bgo.cur_image   = &image;
+    bgo.frame_h         = frame_h;
+    /* for internal usage */
+
+    bgo.id              = id;
+    bgo.name            = name;
+    bgo.group           = group;
+    bgo.category        = category;
+    bgo.grid            = grid;
+    bgo.offsetX         = offsetX;
+    bgo.offsetY         = offsetY;
+    bgo.zOffset         = zOffset;
+    bgo.image_n         = image_n;
+    bgo.mask_n          = mask_n;
+    bgo.climbing        = climbing;
+    bgo.animated        = animated;
+    bgo.frames          = frames;
+    bgo.framespeed      = framespeed;
+    bgo.display_frame   = display_frame;
+}
+
+bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal=!setup;
+    QString tmpStr, errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    setup->beginGroup( section );
+
+
+    sbgo.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
+    if(sbgo.name=="")
     {
-        j = index_bgo[itemID].i;
-
-        if(j < main_bgo.size())
-        {
-            if( main_bgo[j].id == itemID)
-                found=true;
-        }
+        addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
+        goto abort;
     }
 
-    if(!found)
+    sbgo.group =    setup->value("group", "_NoGroup").toString();
+    sbgo.category = setup->value("category", "_Other").toString();
+    sbgo.grid =     setup->value("grid", default_grid).toInt();
+
     {
-        for(j=0; j < main_bgo.size(); j++)
-        {
-            if(main_bgo[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
+        tmpStr=setup->value("view", "background").toString();
+
+        if(tmpStr=="foreground2")
+            sbgo.view = 2;
+        else
+        if(tmpStr=="foreground")
+            sbgo.view = 1;
+        else
+        if(tmpStr=="background")
+            sbgo.view = 0;
+        else
+        if(tmpStr=="background2")
+            sbgo.view = -1;
+        else
+            sbgo.view = 0;
     }
 
-    if(!found) j=-1;
-    return j;
+    sbgo.offsetX =      setup->value("offset-x", "0").toInt();
+    sbgo.offsetY =      setup->value("offset-y", "0").toInt();
+    sbgo.zOffset =      setup->value("z-offset", "0").toInt();
+
+    sbgo.image_n =      setup->value("image", "").toString();
+    /***************Load image*******************/
+    GraphicsHelps::loadMaskedImage(bgoPath,
+       sbgo.image_n, sbgo.mask_n,
+       sbgo.image,   sbgo.mask,
+       errStr);
+
+    if(!errStr.isEmpty())
+    {
+        addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
+        goto abort;
+    }
+    /***************Load image*end***************/
+
+    sbgo.climbing =     (setup->value("climbing", "0").toString()=="1");
+    sbgo.animated =     (setup->value("animated", "0").toString()=="1");
+    sbgo.frames =        setup->value("frames", "1").toInt();
+    sbgo.framespeed =    setup->value("frame-speed", "125").toInt();
+
+    sbgo.frame_h =      (sbgo.animated?
+                             qRound(
+                                 qreal(sbgo.image.height())/
+                                 sbgo.frames)
+                           : sbgo.image.height());
+
+    sbgo.display_frame = setup->value("display-frame", "0").toInt();
+    sbgo.isValid = true;//Mark BGO as valid object
+
+    abort:
+        setup->endGroup();
+        if(internal) delete setup;
+    return valid;
 }
 
 
@@ -72,7 +152,7 @@ void dataconfigs::loadLevelBGO()
     bgoset.setIniCodec("UTF-8");
 
     main_bgo.clear();   //Clear old
-    index_bgo.clear();
+//    index_bgo.clear();
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();
@@ -84,15 +164,7 @@ void dataconfigs::loadLevelBGO()
 
     ConfStatus::total_bgo = bgo_total;
 
-    //creation of empty indexes of arrayElements
-        bgoIndexes bgoIndex;
-        for(i=0;i<=bgo_total; i++)
-        {
-            bgoIndex.i=i;
-            bgoIndex.type=0;
-            bgoIndex.smbx64_sp=0;
-            index_bgo.push_back(bgoIndex);
-        }
+    main_bgo.allocateSlots(bgo_total);
 
     if(ConfStatus::total_bgo==0)
     {
@@ -103,81 +175,11 @@ void dataconfigs::loadLevelBGO()
     for(i=1; i<=bgo_total; i++)
     {
         emit progressValue(i);
-        QString errStr;
-        bgoset.beginGroup( QString("background-"+QString::number(i)) );
-
-        sbgo.name = bgoset.value("name", "").toString();
-        if(sbgo.name=="")
+        if( loadLevelBGO(sbgo, QString("background-"+QString::number(i)), 0, "", &bgoset) )
         {
-            addError(QString("BGO-%1 Item name isn't defined").arg(i));
-            goto skipBGO;
+            sbgo.id = i;
+            main_bgo.storeElement(i, sbgo);
         }
-
-        sbgo.group =    bgoset.value("group", "_NoGroup").toString();
-        sbgo.category = bgoset.value("category", "_Other").toString();
-        sbgo.grid =     bgoset.value("grid", default_grid).toInt();
-
-        {
-            QString tmpStr=bgoset.value("view", "background").toString();
-
-            if(tmpStr=="foreground2")
-                sbgo.view = 2;
-            else
-            if(tmpStr=="foreground")
-                sbgo.view = 1;
-            else
-            if(tmpStr=="background")
-                sbgo.view = 0;
-            else
-            if(tmpStr=="background2")
-                sbgo.view = -1;
-            else
-                sbgo.view = 0;
-        }
-
-        sbgo.offsetX =      bgoset.value("offset-x", "0").toInt();
-        sbgo.offsetY =      bgoset.value("offset-y", "0").toInt();
-        sbgo.zOffset =      bgoset.value("z-offset", "0").toInt();
-
-        sbgo.image_n =      bgoset.value("image", "").toString();
-        /***************Load image*******************/
-        GraphicsHelps::loadMaskedImage(bgoPath,
-           sbgo.image_n, sbgo.mask_n,
-           sbgo.image,   sbgo.mask,
-           errStr);
-
-        if(!errStr.isEmpty())
-        {
-            addError(QString("BGO-%1 %2").arg(i).arg(errStr));
-            goto skipBGO;
-        }
-        /***************Load image*end***************/
-
-        sbgo.climbing =     (bgoset.value("climbing", "0").toString()=="1");
-        sbgo.animated =     (bgoset.value("animated", "0").toString()=="1");
-        sbgo.frames =        bgoset.value("frames", "1").toInt();
-        sbgo.framespeed =    bgoset.value("frame-speed", "125").toInt();
-
-        sbgo.frame_h =      (sbgo.animated?
-                                 qRound(
-                                     qreal(sbgo.image.height())/
-                                     sbgo.frames)
-                               : sbgo.image.height());
-
-        sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
-        sbgo.id = i;
-        main_bgo.push_back(sbgo);
-
-        /**********************Add to Index************************/
-        if(i <= (unsigned int)index_bgo.size())
-        {
-            index_bgo[i].i = i-1;
-            index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priority", "0").toLongLong();
-        }
-        /************Add to Index***************/
-
-        skipBGO:
-        bgoset.endGroup();
 
         if( bgoset.status() != QSettings::NoError )
         {
@@ -185,8 +187,8 @@ void dataconfigs::loadLevelBGO()
         }
     }
 
-    if((unsigned int)main_bgo.size()<bgo_total)
+    if((unsigned int)main_bgo.stored()<bgo_total)
     {
-        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.size()));
+        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.stored()));
     }
 }

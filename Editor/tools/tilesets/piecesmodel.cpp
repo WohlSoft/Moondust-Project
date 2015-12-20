@@ -70,11 +70,12 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==LEVELPIECE_BGO)
     {
-        pixmapNames.insert(pixmaps.size(), m_conf->main_bgo[index].name);
+        obj_bgo& bgo = m_conf->main_bgo[index];
+        pixmapNames.insert(pixmaps.size(), bgo.name);
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::LVL_BGO,
-                                    m_conf->main_bgo[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_bgo[index].id);
+                                    bgo.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), bgo.id);
     }
     else
     if(m_type==LEVELPIECE_NPC)

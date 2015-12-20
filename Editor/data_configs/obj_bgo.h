@@ -23,6 +23,17 @@
 #include <QPixmap>
 
 struct obj_bgo{
+    obj_bgo();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_bgo &bgo);
+
     //    [background-1]
     unsigned long id;
     //    name="Smallest bush"		;background name, default="background-%n"
