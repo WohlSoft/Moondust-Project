@@ -444,7 +444,8 @@ HEADERS  += \
     scenes/level/npc_detectors/lvl_dtc_contact.h \
     data_configs/spawn_effect_def.h \
     script/bindings/level/classes/luaclass_level_contact_detector.h \
-    common_features/translator.h
+    common_features/translator.h \
+    common_features/data_array.h
 
 
 FORMS    += \

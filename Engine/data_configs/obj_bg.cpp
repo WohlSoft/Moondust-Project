@@ -20,7 +20,7 @@
 #include <common_features/number_limiter.h>
 
 /*****Level BG************/
-QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
+PGE_DataArray<obj_BG>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
 QList<SimpleAnimator > ConfigManager::Animator_BG;
 /*****Level BG************/
@@ -165,6 +165,8 @@ bool ConfigManager::loadLevelBackG()
         bg_total = bgset.value("total", "0").toInt();
     bgset.endGroup();
 
+    lvl_bg_indexes.allocateSlots(bg_total);
+
     for(i=1; i<=bg_total; i++)
     {
         sbg.isInit = false;
@@ -180,7 +182,7 @@ bool ConfigManager::loadLevelBackG()
         if( loadLevelBackground(sbg, QString("background2-"+QString::number(i)), 0, "", &bgset) )
         {
             sbg.id = i;
-            lvl_bg_indexes[sbg.id] = sbg;
+            lvl_bg_indexes.storeElement(sbg.id, sbg);
         }
 
         if( bgset.status() != QSettings::NoError )

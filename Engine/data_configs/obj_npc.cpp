@@ -27,7 +27,7 @@
 #include <QDir>
 
 /*****Level NPC************/
-QMap<long, obj_npc>   ConfigManager::lvl_npc_indexes;
+PGE_DataArray<obj_npc>   ConfigManager::lvl_npc_indexes;
 NPC_GlobalSetup           ConfigManager::marker_npc;
 CustomDirManager ConfigManager::Dir_NPC;
 CustomDirManager ConfigManager::Dir_NPCScript;
@@ -92,6 +92,8 @@ bool ConfigManager::loadLevelNPC()
         PGE_MsgBox::error(PGESTRING("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"));
         return false;
     }
+
+    lvl_npc_indexes.allocateSlots(npc_total);
 
     for(i=1; i<= npc_total; i++)
     {
@@ -390,7 +392,7 @@ bool ConfigManager::loadLevelNPC()
 
 
         snpc.id = i;
-        lvl_npc_indexes[i] = snpc;
+        lvl_npc_indexes.storeElement(snpc.id, snpc);
 
     skipNPC:
     npcset.endGroup();
@@ -401,9 +403,9 @@ bool ConfigManager::loadLevelNPC()
         }
     }
 
-    if((unsigned int)lvl_npc_indexes.size()<npc_total)
+    if((unsigned int)lvl_npc_indexes.stored()<npc_total)
     {
-        PGE_MsgBox::warn(PGESTRING("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(lvl_npc_indexes.size()));
+        PGE_MsgBox::warn(PGESTRING("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(lvl_npc_indexes.stored()));
     }
     return true;
 }

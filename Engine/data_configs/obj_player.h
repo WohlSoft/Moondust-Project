@@ -21,6 +21,7 @@
 
 #include <graphics/graphics.h>
 #include <common_features/player_calibration.h>
+#include <common_features/data_array.h>
 
 #include <QString>
 #include <QPixmap>
@@ -74,7 +75,6 @@ struct obj_player_physics
 
 struct obj_player_state
 {
-    inline void make() {} //!< Dummy function
     int width;
     int height;
    bool duck_allow;
@@ -82,7 +82,7 @@ struct obj_player_state
     bool allow_floating;
       int floating_max_time;
     float floating_amplitude;
-    QHash<int, obj_player_physics > phys;
+    PGE_DataArray<obj_player_physics > phys;
     QString event_script;//!< LUA-Script with events
 
     obj_player_calibration sprite_setup;
@@ -102,10 +102,9 @@ struct obj_player_state
 /******************Definition of playable character*********************/
 struct obj_player
 {
-    inline void make();//!< Dummy function
     unsigned long id;
-        QString image_wld_n;
-        QString mask_wld_n;
+    QString image_wld_n;
+    QString mask_wld_n;
 
     int matrix_width;
     int matrix_height;
@@ -142,8 +141,8 @@ struct obj_player
     QList<int > wld_frames_left;
 /* World map */
 
-    QHash<int, obj_player_state > states;
-    QHash<int, obj_player_physics > phys_default;
+    PGE_DataArray<obj_player_state > states;
+    PGE_DataArray<obj_player_physics > phys_default;
 
     QString event_script;//!< Global player's LUA-Script with events
 

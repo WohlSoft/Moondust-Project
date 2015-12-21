@@ -9,9 +9,9 @@
 
 unsigned long ConfigManager::music_custom_id;
 unsigned long ConfigManager::music_w_custom_id;
-QHash<int, obj_music> ConfigManager::main_music_lvl;
-QHash<int, obj_music> ConfigManager::main_music_wld;
-QHash<int, obj_music> ConfigManager::main_music_spc;
+PGE_DataArray<obj_music> ConfigManager::main_music_lvl;
+PGE_DataArray<obj_music> ConfigManager::main_music_wld;
+PGE_DataArray<obj_music> ConfigManager::main_music_spc;
 
 
 bool ConfigManager::musicIniChanged()
@@ -111,6 +111,13 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     {
         PGE_MsgBox::fatal("ERROR LOADING music.ini: number of Special Music items not define, or empty config");
         return false;
+    }
+
+    if(!isCustom)
+    {
+        main_music_lvl.allocateSlots(music_lvl_total);
+        main_music_wld.allocateSlots(music_wld_total);
+        main_music_spc.allocateSlots(music_spc_total);
     }
 
     //World music
@@ -266,6 +273,9 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 
 QString ConfigManager::getWldMusic(unsigned long musicID, QString customMusic)
 {
+    if(musicID==0)
+        return "";
+    else
     if(musicID==music_w_custom_id)
         return customMusic;
     else
@@ -277,6 +287,9 @@ QString ConfigManager::getWldMusic(unsigned long musicID, QString customMusic)
 
 QString ConfigManager::getLvlMusic(unsigned long musicID, QString customMusic)
 {
+    if(musicID==0)
+        return "";
+    else
     if(musicID==music_custom_id)
         return customMusic;
     else
@@ -288,6 +301,9 @@ QString ConfigManager::getLvlMusic(unsigned long musicID, QString customMusic)
 
 QString ConfigManager::getSpecialMusic(unsigned long musicID)
 {
+    if(musicID==0)
+        return "";
+    else
     if(main_music_spc.contains(musicID))
         return main_music_spc[musicID].absPath;
     else

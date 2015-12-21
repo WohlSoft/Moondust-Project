@@ -22,7 +22,7 @@
 #include <common_features/number_limiter.h>
 
 /*****Level BGO************/
-QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
+PGE_DataArray<obj_bgo>   ConfigManager::lvl_bgo_indexes;
 CustomDirManager ConfigManager::Dir_BGO;
 QList<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
@@ -53,6 +53,7 @@ bool ConfigManager::loadLevelBGO()
         bgo_total = bgoset.value("total", "0").toInt();
     bgoset.endGroup();
 
+    lvl_bgo_indexes.allocateSlots(bgo_total);
 
     for(i=1; i<=bgo_total; i++)
     {
@@ -123,7 +124,7 @@ bool ConfigManager::loadLevelBGO()
             //lvl_bgo.push_back(sbgo);
 
             //Add to Index
-            lvl_bgo_indexes[sbgo.id] = sbgo;
+            lvl_bgo_indexes.storeElement(sbgo.id, sbgo);
 
         skipBGO:
         bgoset.endGroup();
@@ -134,10 +135,10 @@ bool ConfigManager::loadLevelBGO()
         }
     }
 
-    if((unsigned int)lvl_bgo_indexes.size()<bgo_total)
+    if((unsigned int)lvl_bgo_indexes.stored()<bgo_total)
     {
-        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.size()));
-        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.size()),
+        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()));
+        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

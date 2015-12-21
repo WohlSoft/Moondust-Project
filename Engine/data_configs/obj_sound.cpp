@@ -9,8 +9,8 @@
 #include <common_features/logger.h>
 #include <QtDebug>
 
-QHash<int, obj_sound > ConfigManager::main_sound;
-QHash<obj_sound_role::roles, long > ConfigManager::main_sound_table;
+PGE_DataArray<obj_sound > ConfigManager::main_sound;
+PGE_DataArray<long > ConfigManager::main_sound_table;
 
 QVector<obj_sound_index > ConfigManager::main_sfx_index;
 
@@ -55,18 +55,10 @@ void obj_sound_index::play()
 void ConfigManager::buildSoundIndex()
 {
     clearSoundIndex();
-
-    unsigned long max=0;
     int reserve_chans=0;
-    //find maximal value
-    for(QHash<int, obj_sound >::iterator it=main_sound.begin(); it!=main_sound.end(); it++)
-    {
-        if((*it).id>max)
-            max=(*it).id;
-    }
 
     //build array table
-    for(unsigned int i=1; i<=max;i++)
+    for(int i=1; i<main_sound.size();i++)
     {
         obj_sound_index sound;
         if(main_sound.contains(i))
@@ -145,6 +137,11 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
         PGE_MsgBox::error(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"));
         return false;
     }
+
+    if(!isCustom)
+    {
+        main_sound.allocateSlots(sound_total);
+    }
     //////////////////////////////
 
     //Sound
@@ -190,7 +187,7 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 else sound.channel=-1;
 
             sound.id = i;
-            main_sound[i] = sound;
+            main_sound.storeElement(i, sound);
         skipSoundFile:
 
         soundset.endGroup();
@@ -220,6 +217,8 @@ bool ConfigManager::loadSoundRolesTable()
     }
 
     main_sound_table.clear();
+    main_sound_table.allocateSlots(57);
+
     QSettings soundset(sound_ini, QSettings::IniFormat);
     soundset.setIniCodec("UTF-8");
     soundset.beginGroup("sound-roles");

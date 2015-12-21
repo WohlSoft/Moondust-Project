@@ -294,43 +294,54 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bgoD->copyTo(t_bgo);//init configs
 
-            QString CustomImage=uLVL.getCustomFile(t_bgo.image_n);
-            if(!CustomImage.isEmpty())
-            {
-                if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask=uLVL.getCustomFile(t_bgo.mask_n);
-                    image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomImage),
-                                  CustomMask.isEmpty() ? bgoD->mask : GraphicsHelps::loadPixmap( CustomMask ));
-                } else {
-                    image_file = GraphicsHelps::loadPixmap(CustomImage);
-                }
-                if(image_file.isNull())
-                    WrongImagesDetected=true;
-                else
-                {
-                    custom_images.push_back(image_file);
-                    t_bgo.cur_image = &custom_images.last();
-                }
-                custom=true;
-            }
+        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->id)+".ini");
+        if(CustomTxt.isEmpty())
+            CustomTxt=uLVL.getCustomFile("background-" + QString::number(bgoD->id)+".txt");
+        if(!CustomTxt.isEmpty())
+        {
+            pConfigs->loadLevelBGO(t_bgo, "background", bgoD, CustomTxt);
+            custom=true;
+        }
 
-            SimpleAnimator * aniBGO = new SimpleAnimator(
-                        ((t_bgo.cur_image->isNull())?
-                                bgoD->image : *t_bgo.cur_image
-                                   ),
-                                  t_bgo.animated,
-                                  t_bgo.frames,
-                                  t_bgo.framespeed
-                                  );
-                t_bgo.animator_id = animates_BGO.size();
-                animates_BGO.push_back( aniBGO );
-
-            if(custom)
+        QString CustomImage=uLVL.getCustomFile(t_bgo.image_n);
+        if(!CustomImage.isEmpty())
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                custom_BGOs.push_back(&t_bgo);//Register BGO as customized
+                QString CustomMask=uLVL.getCustomFile(t_bgo.mask_n);
+                image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomImage),
+                              CustomMask.isEmpty() ? bgoD->mask : GraphicsHelps::loadPixmap( CustomMask ));
+            } else {
+                image_file = GraphicsHelps::loadPixmap(CustomImage);
             }
-            uBGOs.storeElement(i, t_bgo);
+            if(image_file.isNull())
+                WrongImagesDetected=true;
+            else
+            {
+                custom_images.push_back(image_file);
+                t_bgo.cur_image = &custom_images.last();
+            }
+            custom=true;
+        }
+
+        SimpleAnimator * aniBGO = new SimpleAnimator(
+                    ((t_bgo.cur_image->isNull())?
+                            bgoD->image : *t_bgo.cur_image
+                               ),
+                              t_bgo.animated,
+                              t_bgo.frames,
+                              t_bgo.framespeed
+                              );
+            t_bgo.animator_id = animates_BGO.size();
+
+            animates_BGO.push_back( aniBGO );
+
+        uBGOs.storeElement(i, t_bgo);
+        if(custom)
+        {
+            custom_BGOs.push_back(&uBGOs[i]);//Register BGO as customized
+        }
+
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);

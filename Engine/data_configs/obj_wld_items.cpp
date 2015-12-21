@@ -22,25 +22,25 @@
 #include <common_features/graphics_funcs.h>
 
 /*****World Tiles************/
-QMap<long, obj_w_tile>   ConfigManager::wld_tiles;
+PGE_DataArray<obj_w_tile>   ConfigManager::wld_tiles;
 CustomDirManager         ConfigManager::Dir_Tiles;
 QList<SimpleAnimator >   ConfigManager::Animator_Tiles;
 /*****World Tiles************/
 
 /*****World Scenery************/
-QMap<long, obj_w_scenery>   ConfigManager::wld_scenery;
+PGE_DataArray<obj_w_scenery>   ConfigManager::wld_scenery;
 CustomDirManager         ConfigManager::Dir_Scenery;
 QList<SimpleAnimator >   ConfigManager::Animator_Scenery;
 /*****World Scenery************/
 
 /*****World Paths************/
-QMap<long, obj_w_path>   ConfigManager::wld_paths;
+PGE_DataArray<obj_w_path>   ConfigManager::wld_paths;
 CustomDirManager         ConfigManager::Dir_WldPaths;
 QList<SimpleAnimator >   ConfigManager::Animator_WldPaths;
 /*****World Paths************/
 
 /*****World Levels************/
-QMap<long, obj_w_level>  ConfigManager::wld_levels;
+PGE_DataArray<obj_w_level>  ConfigManager::wld_levels;
 CustomDirManager         ConfigManager::Dir_WldLevel;
 QList<SimpleAnimator >   ConfigManager::Animator_WldLevel;
 wld_levels_Markers       ConfigManager::marker_wlvl;
@@ -70,6 +70,8 @@ bool ConfigManager::loadWorldTiles()
     tileset.beginGroup("tiles-main");
         tiles_total = tileset.value("total", "0").toInt();
     tileset.endGroup();
+
+    wld_tiles.allocateSlots(tiles_total);
 
 //    emit progressMax(tiles_total);
 //    emit progressTitle(QObject::tr("Loading Tiles..."));
@@ -125,7 +127,7 @@ bool ConfigManager::loadWorldTiles()
 
 
         stile.id = i;
-        wld_tiles[stile.id] = stile;
+        wld_tiles.storeElement(stile.id, stile);
 
         skipTile:
         tileset.endGroup();
@@ -138,7 +140,7 @@ bool ConfigManager::loadWorldTiles()
         }
     }
 
-    if((unsigned int)wld_tiles.size()<tiles_total)
+    if((unsigned int)wld_tiles.stored()<tiles_total)
     {
         addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(wld_tiles.size()));
         PGE_MsgBox::warn(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(wld_tiles.size()));
@@ -173,6 +175,8 @@ bool ConfigManager::loadWorldScenery()
     sceneset.beginGroup("scenery-main");
         scenery_total = sceneset.value("total", "0").toInt();
     sceneset.endGroup();
+
+    wld_scenery.allocateSlots(scenery_total);
 
     if(scenery_total==0)
     {
@@ -221,7 +225,7 @@ bool ConfigManager::loadWorldScenery()
 
 
             sScene.id = i;
-            wld_scenery[sScene.id] = sScene;
+            wld_scenery.storeElement(sScene.id, sScene);
 
         skipScene:
         sceneset.endGroup();
@@ -234,10 +238,10 @@ bool ConfigManager::loadWorldScenery()
         }
     }
 
-    if((unsigned int)wld_scenery.size()<scenery_total)
+    if((unsigned int)wld_scenery.stored()<scenery_total)
     {
-        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(wld_scenery.size()));
-        PGE_MsgBox::warn(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(wld_scenery.size()));
+        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(wld_scenery.stored()));
+        PGE_MsgBox::warn(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(wld_scenery.stored()));
     }
     return true;
 }
@@ -274,6 +278,8 @@ bool ConfigManager::loadWorldPaths()
         PGE_MsgBox::fatal("ERROR LOADING wld_paths.ini: number of items not define, or empty config");
         return false;
     }
+
+    wld_paths.allocateSlots(path_total);
 
 
     sPath.isInit = false;
@@ -317,7 +323,7 @@ bool ConfigManager::loadWorldPaths()
 
 
             sPath.id = i;
-            wld_paths[sPath.id]=sPath;
+            wld_paths.storeElement(sPath.id, sPath);
 
         skipPath:
         pathset.endGroup();
@@ -330,10 +336,10 @@ bool ConfigManager::loadWorldPaths()
         }
     }
 
-    if((unsigned int)wld_paths.size()<path_total)
+    if((unsigned int)wld_paths.stored()<path_total)
     {
-        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.size()));
-        PGE_MsgBox::warn(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.size()));
+        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.stored()));
+        PGE_MsgBox::warn(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.stored()));
     }
     return false;
 }
@@ -373,6 +379,7 @@ bool ConfigManager::loadWorldLevels()
         PGE_MsgBox::fatal("ERROR LOADING wld_levels.ini: number of items not define, or empty config");
         return false;
     }
+    wld_levels.allocateSlots(levels_total);
 
     slevel.isInit = false;
     slevel.image = NULL;
@@ -413,7 +420,7 @@ bool ConfigManager::loadWorldLevels()
 
 
         slevel.id = i;
-        wld_levels[slevel.id]=slevel;
+        wld_levels.storeElement(slevel.id, slevel);
 
         skipLevel:
         levelset.endGroup();
@@ -426,10 +433,10 @@ bool ConfigManager::loadWorldLevels()
         }
     }
 
-    if((unsigned int)wld_levels.size()<levels_total)
+    if((unsigned int)wld_levels.stored()<levels_total)
     {
-        addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(wld_levels.size()));
-        PGE_MsgBox::warn(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(wld_levels.size()));
+        addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(wld_levels.stored()));
+        PGE_MsgBox::warn(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(wld_levels.stored()));
     }
     return true;
 }

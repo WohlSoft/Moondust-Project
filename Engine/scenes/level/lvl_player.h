@@ -79,7 +79,7 @@ class LVL_Player :
         void teleport(float x, float y);
         void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
-        QHash<int, obj_player_state > states;
+        PGE_DataArray<obj_player_state > states;
         int     characterID;
         int     stateID;
         obj_player_state state_cur;
@@ -98,7 +98,7 @@ class LVL_Player :
         //QQueue<LVL_Npc*> npc_queue;
 
         /*******************Environmept*********************/
-        QHash<int, obj_player_physics > physics;
+        PGE_DataArray<obj_player_physics > physics;
         QHash<int, int > environments_map;
 
         obj_player_physics physics_cur;

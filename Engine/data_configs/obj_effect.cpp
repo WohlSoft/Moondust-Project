@@ -20,7 +20,7 @@
 #include "../gui/pge_msgbox.h"
 
 /*****Level BGO************/
-QMap<long, obj_effect>   ConfigManager::lvl_effects_indexes;
+PGE_DataArray<obj_effect>   ConfigManager::lvl_effects_indexes;
 CustomDirManager ConfigManager::Dir_EFFECT;
 /*****Level BGO************/
 
@@ -51,6 +51,7 @@ bool ConfigManager::loadLevelEffects()
         effects_total = effectset.value("total", "0").toInt();
     effectset.endGroup();
 
+    lvl_effects_indexes.allocateSlots(effects_total);
 
     for(i=1; i<=effects_total; i++)
     {
@@ -93,7 +94,7 @@ bool ConfigManager::loadLevelEffects()
             seffect.id = i;
 
             //Add to Index
-            lvl_effects_indexes[seffect.id] = seffect;
+            lvl_effects_indexes.storeElement(seffect.id, seffect);
 
         skipEffect:
         effectset.endGroup();
@@ -104,10 +105,10 @@ bool ConfigManager::loadLevelEffects()
         }
     }
 
-    if((unsigned int)lvl_effects_indexes.size()<effects_total)
+    if((unsigned int)lvl_effects_indexes.stored()<effects_total)
     {
-        addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.size()));
-        PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.size()),
+        addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()));
+        PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

@@ -23,7 +23,7 @@
 #include <scenes/level/lvl_physenv.h>
 
 /*****Playable Characters************/
-QHash<int, obj_player > ConfigManager::playable_characters;
+PGE_DataArray<obj_player > ConfigManager::playable_characters;
 CustomDirManager ConfigManager::Dir_PlayerWld;
 CustomDirManager ConfigManager::Dir_PlayerLvl;
 /*****Playable Characters************/
@@ -177,6 +177,8 @@ bool ConfigManager::loadPlayableCharacters()
         return false;
     }
 
+    playable_characters.allocateSlots(players_total);
+
 
         for(i=1; i<=players_total; i++)
         {
@@ -226,11 +228,15 @@ bool ConfigManager::loadPlayableCharacters()
 
 
                 //default environment specific physics
-                    splayer.phys_default[LVL_PhysEnv::Env_Air].make();
+                splayer.phys_default.allocateSlots(LVL_PhysEnv::numOfEnvironments);
+
+                obj_player_physics physicsDef;
+                splayer.phys_default.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
+                splayer.phys_default.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
+                splayer.phys_default.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
+
                 loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Air], QString("character-%1-env-common-air").arg(i));
-                    splayer.phys_default[LVL_PhysEnv::Env_Water].make();
                 loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Water], QString("character-%1-env-common-water").arg(i));
-                    splayer.phys_default[LVL_PhysEnv::Env_Quicksand].make();
                 loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-common-quicksand").arg(i));
 
                 playerset.beginGroup( QString("character-%1-world").arg(i) );
@@ -265,7 +271,7 @@ bool ConfigManager::loadPlayableCharacters()
                     }
                 playerset.endGroup();
 
-
+                splayer.states.allocateSlots(total_states);
                 for(int j=1;j<=total_states;j++)
                 {
                     obj_player_state pstate;
@@ -303,20 +309,22 @@ bool ConfigManager::loadPlayableCharacters()
                         }
                     playerset.endGroup();
 
-                        pstate.phys[LVL_PhysEnv::Env_Air].make();
+
+                    pstate.phys.allocateSlots(LVL_PhysEnv::numOfEnvironments);
+                    pstate.phys.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
+                    pstate.phys.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
+                    pstate.phys.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
+
                     loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Air], QString("character-%1-env-%2-air").arg(i).arg(j));
-                        pstate.phys[LVL_PhysEnv::Env_Water].make();
                     loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Water], QString("character-%1-env-%2-water").arg(i).arg(j));
-                        splayer.phys_default[LVL_PhysEnv::Env_Quicksand].make();
                     loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-%2-quicksand").arg(i).arg(j));
 
-
-                    splayer.states[j] = pstate;
+                    splayer.states.storeElement(j, pstate);
                 }
             }//States
 
             splayer.id = i;
-            playable_characters[i] = splayer;
+            playable_characters.storeElement(i, splayer);
 
           skipPLAYER:
           if( playerset.status()!=QSettings::NoError)
@@ -331,10 +339,10 @@ bool ConfigManager::loadPlayableCharacters()
           }
        }
 
-       if((unsigned int)playable_characters.size() < players_total)
+       if((unsigned int)playable_characters.stored() < players_total)
        {
-           addError(QString("Not all characters are loaded! Total: %1, Loaded: %2)").arg(players_total).arg(playable_characters.size()), QtWarningMsg);
-           PGE_MsgBox msgBox(NULL, QString("Not all characters are loaded! Total: %1, Loaded: %2).\n\nGame can't be started!").arg(players_total).arg(playable_characters.size()),
+           addError(QString("Not all characters are loaded! Total: %1, Loaded: %2)").arg(players_total).arg(playable_characters.stored()), QtWarningMsg);
+           PGE_MsgBox msgBox(NULL, QString("Not all characters are loaded! Total: %1, Loaded: %2).\n\nGame can't be started!").arg(players_total).arg(playable_characters.stored()),
                              PGE_MsgBox::msg_error);
            msgBox.exec();
        }
