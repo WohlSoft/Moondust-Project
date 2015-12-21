@@ -200,7 +200,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 1: //bgos
     {
         long j;
-        obj_bgo& bgoC = pConfigs->main_bgo[itemID];
+        obj_bgo& bgoC = uBGOs[itemID];
 
         tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
         if(tImg.isNull())
