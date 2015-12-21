@@ -24,6 +24,7 @@
 #include "../common_features/simple_animator.h"
 #include "../common_features/npc_animator.h"
 #include "../common_features/matrix_animator.h"
+#include "../common_features/data_array.h"
 
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
@@ -183,9 +184,9 @@ public:
 
     static unsigned long music_custom_id;
     static unsigned long music_w_custom_id;
-    static QHash<int, obj_music> main_music_lvl;
-    static QHash<int, obj_music> main_music_wld;
-    static QHash<int, obj_music> main_music_spc;
+    static PGE_DataArray<obj_music> main_music_lvl;
+    static PGE_DataArray<obj_music> main_music_wld;
+    static PGE_DataArray<obj_music> main_music_spc;
 
     static bool loadDefaultSounds();
     static bool loadSound(QString rootPath, QString iniFile, bool isCustom=false);
@@ -193,8 +194,8 @@ public:
     static long getSoundByRole(obj_sound_role::roles role);
     static bool loadSoundRolesTable();
 
-    static QHash<int, obj_sound > main_sound;
-    static QHash<obj_sound_role::roles, long > main_sound_table;
+    static PGE_DataArray<obj_sound > main_sound;
+    static PGE_DataArray<long > main_sound_table;
     static void buildSoundIndex();
     static void clearSoundIndex();
     static QVector<obj_sound_index > main_sfx_index;
@@ -221,7 +222,7 @@ public:
     static bool loadLevelBlocks();
     static long getBlockTexture(long blockID);
     /*****************************/
-    static QMap<long, obj_block>   lvl_block_indexes;
+    static PGE_DataArray<obj_block>   lvl_block_indexes;
     static CustomDirManager Dir_Blocks;
     static QList<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
@@ -230,7 +231,7 @@ public:
     static bool loadLevelBGO();
     static long getBgoTexture(long bgoID);
     /*****************************/
-    static QMap<long, obj_bgo>   lvl_bgo_indexes;
+    static PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
     static CustomDirManager Dir_BGO;
     static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
@@ -240,7 +241,7 @@ public:
     static void loadNpcTxtConfig(long npcID);
     static long getNpcTexture(long npcID);
     /*****************************/
-    static QMap<long, obj_npc>   lvl_npc_indexes;
+    static PGE_DataArray<obj_npc>   lvl_npc_indexes;
     static NPC_GlobalSetup           marker_npc;
     static CustomDirManager Dir_NPC;
     static CustomDirManager Dir_NPCScript;
@@ -255,7 +256,7 @@ public:
     static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
-    static QMap<long, obj_BG>   lvl_bg_indexes;
+    static PGE_DataArray<obj_BG>   lvl_bg_indexes;
     static CustomDirManager Dir_BG;
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
@@ -266,7 +267,7 @@ public:
     static bool loadWorldTiles();
     static long getTileTexture(long tileID);
     /*****************************/
-    static QMap<long, obj_w_tile>   wld_tiles;
+    static PGE_DataArray<obj_w_tile>   wld_tiles;
     static CustomDirManager         Dir_Tiles;
     static QList<SimpleAnimator >   Animator_Tiles;
     /*****World Tiles************/
@@ -275,7 +276,7 @@ public:
     static bool loadWorldScenery();
     static long getSceneryTexture(long sceneryID);
     /*****************************/
-    static QMap<long, obj_w_scenery>   wld_scenery;
+    static PGE_DataArray<obj_w_scenery>   wld_scenery;
     static CustomDirManager         Dir_Scenery;
     static QList<SimpleAnimator >   Animator_Scenery;
     /*****World Scenery************/
@@ -284,7 +285,7 @@ public:
     static bool loadWorldPaths();
     static long getWldPathTexture(long pathID);
     /*****************************/
-    static QMap<long, obj_w_path>   wld_paths;
+    static PGE_DataArray<obj_w_path>   wld_paths;
     static CustomDirManager         Dir_WldPaths;
     static QList<SimpleAnimator >   Animator_WldPaths;
     /*****World Paths************/
@@ -293,7 +294,7 @@ public:
     static bool loadWorldLevels();
     static long getWldLevelTexture(long levelID);
     /*****************************/
-    static QMap<long, obj_w_level>   wld_levels;
+    static PGE_DataArray<obj_w_level>   wld_levels;
     static CustomDirManager         Dir_WldLevel;
     static QList<SimpleAnimator >   Animator_WldLevel;
     static wld_levels_Markers        marker_wlvl;
@@ -307,7 +308,7 @@ public:
     static bool loadLevelEffects();
     static long getEffectTexture(long effectID);
     /*****************************/
-    static QMap<long, obj_effect>   lvl_effects_indexes;
+    static PGE_DataArray<obj_effect>   lvl_effects_indexes;
     static CustomDirManager Dir_EFFECT;
     /*****Level Effects************/
 
@@ -319,7 +320,7 @@ public:
     static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
     static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
     /*****************************/
-    static QHash<int, obj_player > playable_characters;
+    static PGE_DataArray<obj_player > playable_characters;
     static CustomDirManager Dir_PlayerWld;
     static CustomDirManager Dir_PlayerLvl;
     /********Playable characters*******/

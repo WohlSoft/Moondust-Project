@@ -20,6 +20,7 @@
 #define PGE_DATAARRAY_H
 
 #include <cstdlib>
+#include <cstring>
 
 /*!
  * This is a simple dynamic array implementation made especially for PGE Configuration definitions storing

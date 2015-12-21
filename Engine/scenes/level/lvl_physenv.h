@@ -29,7 +29,7 @@ public:
     ~LVL_PhysEnv();
 
     void init();
-
+    static const int numOfEnvironments;
     enum EnvType
     {
         Env_Air=0,

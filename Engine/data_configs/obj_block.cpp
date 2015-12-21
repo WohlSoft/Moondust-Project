@@ -22,7 +22,7 @@
 #include <common_features/number_limiter.h>
 
 /*****Level blocks************/
-QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
+PGE_DataArray<obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager        ConfigManager::Dir_Blocks;
 QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
 /*****Level blocks************/
@@ -63,6 +63,8 @@ bool ConfigManager::loadLevelBlocks()
 
         return false;
     }
+
+    lvl_block_indexes.allocateSlots(block_total);
 
 
         for(i=1; i<=block_total; i++)
@@ -233,7 +235,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.id = i;
 
                 //Add to Index
-                lvl_block_indexes[sblock.id] = sblock;
+                lvl_block_indexes.storeElement(sblock.id, sblock);
 
             skipBLOCK:
             blockset.endGroup();
@@ -247,9 +249,9 @@ bool ConfigManager::loadLevelBlocks()
           }
        }
 
-       if((unsigned int)lvl_block_indexes.size()<block_total)
+       if((unsigned int)lvl_block_indexes.stored()<block_total)
        {
-           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.size()), QtWarningMsg);
+           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.stored()), QtWarningMsg);
        }
 
        return true;

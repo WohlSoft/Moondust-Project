@@ -282,24 +282,27 @@ long ConfigManager::getEffectTexture(long effectID)
 
 void ConfigManager::resetPlayableTexuresState()
 {
-    for(QHash<int, obj_player >::iterator x=playable_characters.begin() ; x!=playable_characters.end() ; x++ )
+    for(int i=0; i<playable_characters.size(); i++)
     {
-        for(QHash<int, obj_player_state >::iterator y=(*x).states.begin() ; y!=(*x).states.end() ; y++ )
+        obj_player&pl = playable_characters[i];
+        for(int j=0; j<pl.states.size(); j++ )
         {
-            (*y).isInit=false;
-            (*y).textureArrayId=0;
-            (*y).animator_ID=0;
+            obj_player_state&st=pl.states[j];
+            st.isInit=false;
+            st.textureArrayId=0;
+            st.animator_ID=0;
         }
     }
 }
 
 void ConfigManager::resetPlayableTexuresStateWld()
 {
-    for(QHash<int, obj_player >::iterator x=playable_characters.begin() ; x!=playable_characters.end() ; x++ )
+    for(int i=0; i<playable_characters.size(); i++)
     {
-        (*x).isInit_wld=false;
-        (*x).textureArrayId_wld=0;
-        (*x).animator_ID_wld=0;
+        obj_player&pl = playable_characters[i];
+        pl.isInit_wld=false;
+        pl.textureArrayId_wld=0;
+        pl.animator_ID_wld=0;
     }
 }
 

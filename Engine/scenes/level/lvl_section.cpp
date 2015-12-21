@@ -137,7 +137,7 @@ void LVL_Section::setBG(int bgID)
 {
     if(_background.isInit() && (bgID==_background.curBgId())) return;
 
-    if(ConfigManager::lvl_bg_indexes.contains(bgID))
+    if((bgID>0) && (ConfigManager::lvl_bg_indexes.contains(bgID)))
     {
         obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[bgID];
         _background.setBg(*bgSetup);

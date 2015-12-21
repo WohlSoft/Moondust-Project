@@ -19,6 +19,8 @@
 #include "lvl_physenv.h"
 #include "lvl_scene_ptr.h"
 
+const int LVL_PhysEnv::numOfEnvironments=3;
+
 LVL_PhysEnv::LVL_PhysEnv() : PGE_Phys_Object()
 {
     type = LVLPhysEnv;
