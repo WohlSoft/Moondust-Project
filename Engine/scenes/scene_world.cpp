@@ -354,20 +354,20 @@ bool WorldScene::init()
 
     for(int i=0; i<data.tiles.size(); i++)
     {
-        WldTileItem path(data.tiles[i]);
-        if(!path.init())
+        WldTileItem tile(data.tiles[i]);
+        if(!tile.init())
             continue;
-        wld_tiles << path;
-        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
+        wld_tiles << tile;
+        _indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.last()));
     }
 
     for(int i=0; i<data.scenery.size(); i++)
     {
-        WldSceneryItem path(data.scenery[i]);
-        if(!path.init())
+        WldSceneryItem scenery(data.scenery[i]);
+        if(!scenery.init())
             continue;
-        wld_sceneries << path;
-        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
+        wld_sceneries << scenery;
+        _indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.last()));
     }
 
     for(int i=0; i<data.paths.size(); i++)
@@ -381,21 +381,21 @@ bool WorldScene::init()
 
     for(int i=0; i<data.levels.size(); i++)
     {
-        WldLevelItem path(data.levels[i]);
-        if(!path.init())
+        WldLevelItem levelp(data.levels[i]);
+        if(!levelp.init())
             continue;
-        wld_levels << path;
-        _indexTable.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
+        wld_levels << levelp;
+        _indexTable.addNode(levelp.x+levelp.offset_x, levelp.y+levelp.offset_y, levelp.texture.w, levelp.texture.h, &(wld_levels.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
     {
-        WldMusicBoxItem path(data.music[i]);
-        path.r=0.5f;
-        path.g=0.5f;
-        path.b=1.f;
-        wld_musicboxes << path;
-        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_musicboxes.last()));
+        WldMusicBoxItem musicbox(data.music[i]);
+        musicbox.r=0.5f;
+        musicbox.g=0.5f;
+        musicbox.b=1.f;
+        wld_musicboxes << musicbox;
+        _indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.last()));
     }
 
     //Apply vizibility settings to elements
@@ -745,11 +745,15 @@ void WorldScene::update()
 }
 
 
-void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float cx, float cy)
+void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, long cx, long cy)
 {
     side=false;
-    foreach (WorldNode* x, nodes)
+    int size=nodes.size();
+    WorldNode**nodedata=nodes.data();
+
+    for(int i=0; i<size;i++)
     {
+        WorldNode*&x=nodedata[i];
         if(x->type==WorldNode::path)
         {
             side=x->collidePoint(cx, cy);
@@ -757,8 +761,8 @@ void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float c
             {
                 WldPathItem *u=dynamic_cast<WldPathItem *>(x);
                 if(u) side=u->vizible;
-            }
-            break;
+                if(side) break;
+            } else continue;
         }
 
         if(x->type==WorldNode::level)
@@ -768,8 +772,8 @@ void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float c
             {
                 WldLevelItem *u=dynamic_cast<WldLevelItem *>(x);
                 if(u) side=u->vizible;
-            }
-            break;
+                if(side) break;
+            } else continue;
         }
     }
 }

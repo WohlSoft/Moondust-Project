@@ -25,6 +25,7 @@
 #include <PGE_File_Formats/wld_filedata.h>
 #include <graphics/gl_renderer.h>
 #include <data_configs/config_manager.h>
+#include <common_features/RTree/RTree.h>
 
 class WorldNode
 {
@@ -136,16 +137,22 @@ public:
     TileBox(unsigned long size);
     ~TileBox();
     void addNode(long X, long Y, long W, long H, WorldNode* item);
-    QVector<WorldNode* > query(long X, long Y, QVector<WorldNode * > &list);
-    QVector<WorldNode* > query(long Left, long Top, long Right, long Bottom, QVector<WorldNode * > &list, bool z_sort=false);
+    void query(long X, long Y, QVector<WorldNode * > &list);
+    void query(long Left, long Top, long Right, long Bottom, QVector<WorldNode * > &list, bool z_sort=false);
     PGE_Point applyGrid(long x, long y);
     void clean();
 
     const long &grid();
     const long &grid_half();
+
+    void registerElement(WorldNode* item);
+    void registerElement(WorldNode *item, long X, long Y, long W, long H);
+    void unregisterElement(WorldNode* item);
+    typedef long RPoint[2];
 private:
     void sortElements(QVector<WorldNode * > &list);
-    std::unordered_map<long, std::unordered_map<long, QVector<WorldNode* > > > map;
+    typedef RTree<WorldNode*, long, 2, long > IndexTree;
+    IndexTree tree;
     long gridSize;
     long gridSize_h;
 };

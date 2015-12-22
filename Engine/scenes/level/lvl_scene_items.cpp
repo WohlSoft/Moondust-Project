@@ -28,6 +28,7 @@
 
 void LevelScene::placeBlock(LevelBlock blockData)
 {
+    if(blockData.id<=0) return;
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return;
 
@@ -40,6 +41,7 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
 LVL_Block * LevelScene::spawnBlock(LevelBlock blockData)
 {
+    if(blockData.id<=0) return NULL;
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return NULL;
     LVL_Block * block;
@@ -72,6 +74,7 @@ void LevelScene::destroyBlock(LVL_Block *&_block)
 
 void LevelScene::placeBGO(LevelBGO bgoData)
 {
+    if(bgoData.id<=0) return;
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return;
 
@@ -84,6 +87,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 LVL_Bgo* LevelScene::spawnBGO(LevelBGO bgoData)
 {
+    if(bgoData.id<=0) return NULL;
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return NULL;
     bgoData.array_id= ++data.blocks_array_id;
@@ -99,6 +103,7 @@ LVL_Bgo* LevelScene::spawnBGO(LevelBGO bgoData)
 
 void LevelScene::placeNPC(LevelNPC npcData)
 {
+    if(npcData.id<=0) return;
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;
 
@@ -116,6 +121,7 @@ void LevelScene::placeNPC(LevelNPC npcData)
 
 LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable)
 {
+    if(npcData.id<=0) return NULL;
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return NULL;
 
