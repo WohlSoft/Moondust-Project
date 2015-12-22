@@ -215,11 +215,11 @@ bool ConfigManager::unloadLevelConfigs()
 {
 
     ///Clear texture bank
-    while(!level_textures.isEmpty())
+    for(int i=0; i<level_textures.size(); i++)
     {
-        GlRenderer::deleteTexture( level_textures.last() );
-        level_textures.pop_back();
+        GlRenderer::deleteTexture( level_textures[i] );
     }
+    level_textures.clear();
 
     resetPlayableTexuresState();
 
@@ -246,11 +246,11 @@ bool ConfigManager::unloadWorldConfigs()
 {
 
     ///Clear texture bank
-    while(!world_textures.isEmpty())
+    for(int i=0; i<world_textures.size(); i++)
     {
-        GlRenderer::deleteTexture( world_textures.last() );
-        world_textures.pop_back();
+        GlRenderer::deleteTexture( world_textures[i] );
     }
+    world_textures.clear();
 
     resetPlayableTexuresState();
     resetPlayableTexuresStateWld();

@@ -170,22 +170,22 @@ LevelScene::~LevelScene()
 
     switch_blocks.clear();
     //destroy textures
+    int i=0;
     qDebug() << "clear level textures";
-    while(!textures_bank.isEmpty())
+    for(i=0; i<textures_bank.size(); i++)
     {
-        GlRenderer::deleteTexture( textures_bank[0] );
-        textures_bank.pop_front();
+        GlRenderer::deleteTexture( textures_bank[i] );
     }
+    textures_bank.clear();
 
     qDebug() << "Destroy cameras";
     cameras.clear();
 
     qDebug() << "Destroy players";
-    while(!players.isEmpty())
+    for(i=0; i<players.size(); i++)
     {
         LVL_Player* tmp;
-        tmp = players.last();
-        players.pop_back();
+        tmp = players[i];
         player1Controller->removeFromControl(tmp);
         if(tmp)
         {
@@ -195,21 +195,19 @@ LevelScene::~LevelScene()
     }
 
     qDebug() << "Destroy blocks";
-    while(!blocks.isEmpty())
+    for(i=0; i<blocks.size(); i++)
     {
         LVL_Block* tmp;
-        tmp = blocks.last();
-        blocks.pop_back();
+        tmp = blocks[i];
         layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
     qDebug() << "Destroy BGO";
-    while(!bgos.isEmpty())
+    for(i=0; i<bgos.size(); i++)
     {
         LVL_Bgo* tmp;
-        tmp = bgos.last();
-        bgos.pop_back();
+        tmp = bgos[i];
         layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
@@ -225,21 +223,19 @@ LevelScene::~LevelScene()
 
 
     qDebug() << "Destroy Warps";
-    while(!warps.isEmpty())
+    for(i=0; i<warps.size(); i++)
     {
         LVL_Warp* tmp;
-        tmp = warps.first();
-        warps.pop_front();
+        tmp = warps[i];
         layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
     qDebug() << "Destroy Physical Environment zones";
-    while(!physenvs.isEmpty())
+    for(i=0; i<physenvs.size(); i++)
     {
         LVL_PhysEnv* tmp;
-        tmp = physenvs.first();
-        physenvs.pop_front();
+        tmp = physenvs[i];
         layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }

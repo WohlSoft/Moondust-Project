@@ -158,17 +158,15 @@ WorldScene::~WorldScene()
 
     //destroy textures
     qDebug() << "clear world textures";
-    while(!textures_bank.isEmpty())
+    for(int i=0;i<textures_bank.size();i++)
     {
-        GlRenderer::deleteTexture(textures_bank[0]);
-        textures_bank.pop_front();
+        GlRenderer::deleteTexture(textures_bank[i]);
     }
 
     for(int i=0;i<imgs.size();i++)
     {
         GlRenderer::deleteTexture(imgs[i].t);
     }
-    imgs.clear();
 
     ConfigManager::unloadLevelConfigs();
     ConfigManager::unloadWorldConfigs();
