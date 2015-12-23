@@ -168,12 +168,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Blocks %1")
-                    .arg(QString::number(pConfigs->main_block.size()) ) );
+                    .arg(QString::number(pConfigs->main_block.stored()) ) );
         progress.setValue(progress.value()+1);
     }
+    uBlocks_new.allocateSlots(pConfigs->main_block.total());
     qApp->processEvents();
     //Load Blocks
-    for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
+    for(i=1; i<pConfigs->main_block.size(); i++) //Add user images
     {
 
         bool custom=false;

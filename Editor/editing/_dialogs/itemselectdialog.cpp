@@ -157,19 +157,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(blockTab)
     {
-        foreach(obj_block blockItem, conf->main_block)
+        for(int i=1; i<conf->main_block.size(); i++) //Add user images
         {
-            //Add category
+            obj_block *blockItem = &conf->main_block[i];
             QPixmap tmpI = GraphicsHelps::squareImage(
-                                blockItem.image.copy(0,
-                                             blockItem.frame_h*blockItem.display_frame,
-                                                blockItem.image.width(),
-                                                blockItem.frame_h),
+                                blockItem->image.copy(0,
+                                             blockItem->frame_h*blockItem->display_frame,
+                                                blockItem->image.width(),
+                                                blockItem->frame_h),
                                                       QSize(16,16));
 
-            QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
+            QListWidgetItem* item = new QListWidgetItem( blockItem->name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(blockItem.id) );
+            item->setData(3, QString::number(blockItem->id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Block->addItem(item);
         }
@@ -180,7 +180,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         for(int i=1; i<conf->main_bgo.size(); i++) //Add user images
         {
             obj_bgo *bgoD = &conf->main_bgo[i];
-            QPixmap tmpI =  bgoD->image;
+            QPixmap tmpI = GraphicsHelps::squareImage(
+                                bgoD->image.copy(0,
+                                             bgoD->frame_h*bgoD->display_frame,
+                                                bgoD->image.width(),
+                                                bgoD->frame_h),
+                                                      QSize(16,16));
 
             QListWidgetItem* item = new QListWidgetItem( bgoD->name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );

@@ -21,6 +21,76 @@
 
 #include "data_configs.h"
 
+
+obj_block::obj_block()
+{
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
+}
+
+
+void obj_block::copyTo(obj_block &block)
+{
+    /* for internal usage */
+    block.isValid         = isValid;
+    block.animator_id     = animator_id;
+    block.cur_image       = cur_image;
+    if(cur_image==NULL)
+        block.cur_image   = &image;
+    block.frame_h         = frame_h;
+    /* for internal usage */
+
+    block.id=id;
+    block.image_n=image_n;
+    block.mask_n=mask_n;
+    block.name=name;
+    //    grid=32				; 32 | 16 Default="32"
+    block.grid=grid;
+    block.group=group;
+    block.category=category;
+    block.sizable=sizable;
+    block.danger=danger;
+    block.collision=collision;
+    block.slopeslide=slopeslide;
+    block.phys_shape=phys_shape;
+    block.lava=lava;
+    block.destroyable=destroyable;
+    block.destroyable_by_bomb=destroyable_by_bomb;
+    block.destroyable_by_fireball=destroyable_by_fireball;
+    block.spawn=spawn; //split string by "-" in != "0"
+    block.spawn_obj=spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
+    block.spawn_obj_id=spawn_obj_id;
+    block.effect=effect;
+    block.bounce=bounce;
+    block.hitable=hitable;
+    block.transfororm_on_hit_into=transfororm_on_hit_into;
+    block.algorithm=algorithm;
+
+    block.view=view;
+    block.animated=animated;
+    block.animation_rev=animation_rev; //Reverse animation
+    block.animation_bid=animation_bid; //Bidirectional animation
+    block.frames=frames;
+    block.framespeed=framespeed;
+
+    block.frame_h=frame_h; //Hegth of the frame. Calculating automatically
+
+    block.display_frame=display_frame;
+
+    //Editor defaults
+    block.default_slippery=default_slippery; //Slippery flag
+    block.default_slippery_value=default_slippery_value;
+
+    block.default_invisible=default_invisible; //Invisible flag
+    block.default_invisible_value=default_invisible_value;
+
+    block.default_content=default_content; //Content value
+    block.default_content_value=default_content_value;
+
+}
+
+
 long dataconfigs::getBlockI(unsigned long itemID)
 {
     long j;
@@ -76,7 +146,7 @@ void dataconfigs::loadLevelBlocks()
     blockset.setIniCodec("UTF-8");
 
     main_block.clear();   //Clear old
-    index_blocks.clear();
+    //index_blocks.clear();
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
@@ -97,6 +167,7 @@ void dataconfigs::loadLevelBlocks()
         index_blocks.push_back(blockIndex);
     }
 
+    main_block.allocateSlots(block_total);
 
     if(ConfStatus::total_blocks==0)
     {
@@ -214,8 +285,9 @@ void dataconfigs::loadLevelBlocks()
                     sblock.default_content = (iTmp>=0);
                     sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
 
+                sblock.isValid = true;
                 sblock.id = i;
-                main_block.push_back(sblock);
+                main_block.storeElement(i, sblock);
 
                 /************Add to Index***************/
                 if(i < (unsigned int)index_blocks.size())
@@ -232,7 +304,7 @@ void dataconfigs::loadLevelBlocks()
           }
        }
 
-       if((unsigned int)main_block.size()<block_total)
+       if((unsigned int)main_block.stored()<block_total)
        {
            addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), QtWarningMsg);
        }

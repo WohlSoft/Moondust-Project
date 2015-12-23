@@ -163,6 +163,7 @@ public:
         PGE_DataArray<obj_bgo > uBGOs;
         QList<obj_bgo* > custom_BGOs;
 
+        PGE_DataArray<obj_block > uBlocks_new;
         QList<UserBlocks > uBlocks;
         QList<UserNPCs > uNPCs;
 

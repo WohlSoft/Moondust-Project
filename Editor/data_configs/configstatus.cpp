@@ -63,11 +63,11 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level Blocks
     item = new QListWidgetItem;
-    item->setText(tr("Level: Blocks (%1/%2)").arg(configs->main_block.size()).arg(ConfStatus::total_blocks));
-    if(configs->main_block.size()==0)
+    item->setText(tr("Level: Blocks (%1/%2)").arg(configs->main_block.stored()).arg(ConfStatus::total_blocks));
+    if(configs->main_block.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_block.size()<ConfStatus::total_blocks)
+    if(configs->main_block.stored()<ConfStatus::total_blocks)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));

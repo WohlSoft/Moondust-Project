@@ -42,46 +42,36 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeLvlEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_blocks.size())
-                {
-                    j = scn->index_blocks[ItemID].i;
-                    animator = scn->index_blocks[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_block.size()) j=0;
+                obj_block & block= scn->uBlocks[ItemID];
+                long animator=block.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = ItemID;
 
                 if(whole)
                     return scn->animates_Blocks[animator]->wholeImage();
                 else
-                    return scn->animates_Blocks[animator]->image(main->configs.main_block[j].display_frame);
+                    return scn->animates_Blocks[animator]->image(block.display_frame);
             }
             else
             {
                 QPixmap tmpI;
-                long j=0;
 
                 //Check for index
-                j = main->configs.getBlockI(ItemID);
+                obj_bgo & block= main->configs.main_block[ItemID];
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = ItemID;
 
-                if(j>=0)
+                if(block.isValid)
                 {
-                    if(j >= main->configs.main_block.size()) j=0;
-
-                    if((!whole)&&(main->configs.main_block[j].animated))
-                        tmpI = main->configs.main_block[j].image.copy(0,
-                                    (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames)*main->configs.main_block[j].display_frame,
-                                    main->configs.main_block[j].image.width(),
-                                    (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames));
+                    if((!whole)&&(block.animated))
+                        tmpI = block.image.copy(0,
+                                    (int)round(block.image.height() / block.frames)*block.display_frame,
+                                    block.image.width(),
+                                    (int)round(block.image.height() / block.frames));
                     else
-                        tmpI = main->configs.main_block[j].image;
+                        tmpI = block.image;
                 }
 
                 return tmpI;
