@@ -126,7 +126,7 @@ public:
 
     //Indexes
     QList<blocksIndexes > index_blocks;
-    QList<bgoIndexes > index_bgo;
+    //QList<bgoIndexes > index_bgo;
     QList<npcIndexes > index_npc;
 
     //World map items
@@ -167,7 +167,7 @@ public:
 
     // Get Item of Index
     long getNpcI(unsigned long itemID);
-    long getBlockI(unsigned long itemID);
+    //long getBlockI(unsigned long itemID);
     //long getBgoI(unsigned long itemID);
 
     long getTileI(unsigned long itemID);

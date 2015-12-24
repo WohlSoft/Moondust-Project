@@ -91,37 +91,37 @@ void obj_block::copyTo(obj_block &block)
 }
 
 
-long dataconfigs::getBlockI(unsigned long itemID)
-{
-    long j;
-    bool found=false;
+//long dataconfigs::getBlockI(unsigned long itemID)
+//{
+//    long j;
+//    bool found=false;
 
-    if(itemID < (unsigned int)index_blocks.size())
-    {
-        j = index_blocks[itemID].i;
+//    if(itemID < (unsigned int)index_blocks.size())
+//    {
+//        j = index_blocks[itemID].i;
 
-        if(j < main_block.size())
-        {
-            if( main_block[j].id == itemID)
-                found=true;
-        }
-    }
+//        if(j < main_block.size())
+//        {
+//            if( main_block[j].id == itemID)
+//                found=true;
+//        }
+//    }
 
-    if(!found)
-    {
-        for(j=0; j < main_block.size(); j++)
-        {
-            if(main_block[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
+//    if(!found)
+//    {
+//        for(j=0; j < main_block.size(); j++)
+//        {
+//            if(main_block[j].id==itemID)
+//            {
+//                found=true;
+//                break;
+//            }
+//        }
+//    }
 
-    if(!found) j=-1;
-    return j;
-}
+//    if(!found) j=-1;
+//    return j;
+//}
 
 
 static QString Temp01="";
@@ -159,13 +159,13 @@ void dataconfigs::loadLevelBlocks()
     ConfStatus::total_blocks = block_total;
 
     //creation of empty indexes of arrayElements
-    blocksIndexes blockIndex;
-    for(i=0;i<=block_total; i++)
-    {
-        blockIndex.i=i;
-        blockIndex.type=0;
-        index_blocks.push_back(blockIndex);
-    }
+//    blocksIndexes blockIndex;
+//    for(i=0;i<=block_total; i++)
+//    {
+//        blockIndex.i=i;
+//        blockIndex.type=0;
+//        index_blocks.push_back(blockIndex);
+//    }
 
     main_block.allocateSlots(block_total);
 

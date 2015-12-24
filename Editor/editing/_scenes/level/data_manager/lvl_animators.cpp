@@ -54,7 +54,8 @@ void LvlScene::buildAnimators()
         uBGOs.storeElement(i, t_bgo);
     }
 
-    int i;
+    uBlocks.clear();
+    uBlocks.allocateSlots(pConfigs->main_block.total());
     for(int i=1; i<pConfigs->main_block.size(); i++) //Add user images
     {
         obj_block *blockD = &pConfigs->main_block[i];
@@ -96,9 +97,9 @@ void LvlScene::buildAnimators()
         }
 
         SimpleAnimator * aniBlock = new SimpleAnimator(
-                         ((t_block.cur_image)?
-                                uBgoImg:
-                                t_block.image),
+                         ((t_block.cur_image->isNull())?
+                                uBlockImg:
+                                *t_block.cur_image),
                                 t_block.animated,
                                 t_block.frames,
                                 t_block.framespeed, frameFirst, frameLast,
@@ -107,13 +108,11 @@ void LvlScene::buildAnimators()
                               );
 
         animates_Blocks.push_back( aniBlock );
-        if(t_block.id < (unsigned int)index_blocks.size())
-        {
-            index_blocks[t_block.id].ai = animates_Blocks.size()-1;
-        }
+        t_block.animator_id = animates_Blocks.size()-1;
+        uBlocks.storeElement(i, t_block);
     }
 
-    for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
+    for(int i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
         AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
                          ((pConfigs->main_npc[i].image.isNull())?

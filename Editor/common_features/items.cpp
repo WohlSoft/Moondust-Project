@@ -58,7 +58,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 QPixmap tmpI;
 
                 //Check for index
-                obj_bgo & block= main->configs.main_block[ItemID];
+                obj_block & block= main->configs.main_block[ItemID];
 
                 if( confId != NULL)
                     * confId = ItemID;

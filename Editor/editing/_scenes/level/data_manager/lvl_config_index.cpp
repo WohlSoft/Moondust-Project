@@ -26,7 +26,7 @@ void LvlScene::getConfig_Block(unsigned long item_id, long &array_index, long &a
     found=t_block.isValid;
     array_index = item_id;
     animator_id = t_block.animator_id;
-    mergedSet = &t_block;
+    mergedSet = t_block;
     if(ok)
     {
         *ok = found;

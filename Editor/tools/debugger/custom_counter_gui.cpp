@@ -139,13 +139,13 @@ QString CustomCounterGUI::makeItemName(long item)
     {
     case ItemTypes::LVL_Block:
         {
-            int bI = MainWinConnect::configs->getBlockI(item);
-            if(bI<0)
+            obj_block&t_block = MainWinConnect::configs->main_block[item];
+            if(!t_block.isValid)
                 return QString("Block-%1").arg(item);
             else
             {
-                if(!MainWinConnect::configs->main_block[bI].name.isEmpty())
-                    return MainWinConnect::configs->main_block[bI].name + QString(" (Block-%1)").arg(item);
+                if(!t_block.name.isEmpty())
+                    return t_block.name + QString(" (Block-%1)").arg(item);
                 else
                     return QString("Block-%1").arg(item);
             }

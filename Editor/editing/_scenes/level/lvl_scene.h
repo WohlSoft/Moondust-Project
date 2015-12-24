@@ -150,7 +150,7 @@ public:
     // ///////////////////GFX Manager////////////////////////
     public:
         //Object Indexing:
-        QList<blocksIndexes > index_blocks;
+        //QList<blocksIndexes > index_blocks;
         //QList<bgoIndexes > index_bgo;
         QList<npcIndexes > index_npc;
 
@@ -163,8 +163,10 @@ public:
         PGE_DataArray<obj_bgo > uBGOs;
         QList<obj_bgo* > custom_BGOs;
 
-        PGE_DataArray<obj_block > uBlocks_new;
-        QList<UserBlocks > uBlocks;
+        PGE_DataArray<obj_block > uBlocks;
+        QList<obj_block* > custom_Blocks;
+
+        //QList<UserBlocks > uBlocks;
         QList<UserNPCs > uNPCs;
 
         //Animators
