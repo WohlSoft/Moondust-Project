@@ -19,7 +19,7 @@ Requirements:
   + Linux x86/x64 kernel version 2.6 and higher
   + Windows XP and higher
   + Mac OS X 10.7 and higher (Intel x64, Intel x86 and PowerPC are not supported!)
-- OpenGL 3.x compatible video card with 256 MB Video RAM
+- OpenGL 3.x compatible video card with 128 MB Video RAM and higher
 - 512 MB RAM
 
 ==============================================

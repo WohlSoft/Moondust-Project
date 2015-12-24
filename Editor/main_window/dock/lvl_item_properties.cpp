@@ -19,6 +19,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <defines.h>
+#include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/level/items/item_block.h>
@@ -251,44 +252,25 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.array_id));
 
-        bool found=false;
-        int j;
+        bool isLvlWin = ((mw()->activeChildWindow()==1)&&(mw()->activeLvlEditWin()));
 
-        //Check Index exists
-        if(block.id < (unsigned int)mw()->configs.index_blocks.size())
-        {
-            j = mw()->configs.index_blocks[block.id].i;
+        obj_block &t_block = isLvlWin ?
+                                mw()->activeLvlEditWin()->scene->uBlocks[block.id] :
+                                mw()->configs.main_block[block.id];
+        if(!t_block.isValid)
+            t_block = mw()->configs.main_block[1];
 
-            if(j<mw()->configs.main_block.size())
-            {
-            if(mw()->configs.main_block[j].id == block.id)
-                found=true;
-            }
-        }
-        //if Index found
-        if(!found)
-        {
-            for(j=0;j<mw()->configs.main_block.size();j++)
-            {
-                if(mw()->configs.main_block[j].id==block.id)
-                    break;
-            }
-        }
-        if(j >= mw()->configs.main_block.size())
-        {
-            j=0;
-        }
 
         if((blockPtr<0) && (!dont_reset_props))
         {
-            LvlPlacingItems::blockSet.invisible = mw()->configs.main_block[j].default_invisible_value;
-            block.invisible = mw()->configs.main_block[j].default_invisible_value;
+            LvlPlacingItems::blockSet.invisible = t_block.default_invisible_value;
+            block.invisible = t_block.default_invisible_value;
 
-            LvlPlacingItems::blockSet.slippery = mw()->configs.main_block[j].default_slippery_value;
-            block.slippery = mw()->configs.main_block[j].default_slippery_value;
+            LvlPlacingItems::blockSet.slippery = t_block.default_slippery_value;
+            block.slippery = t_block.default_slippery_value;
 
-            LvlPlacingItems::blockSet.npc_id = mw()->configs.main_block[j].default_content_value;
-            block.npc_id = mw()->configs.main_block[j].default_content_value;
+            LvlPlacingItems::blockSet.npc_id = t_block.default_content_value;
+            block.npc_id = t_block.default_content_value;
 
             LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             block.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
@@ -315,7 +297,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
-        ui->PROPS_BlockResize->setVisible( mw()->configs.main_block[j].sizable );
+        ui->PROPS_BlockResize->setVisible( t_block.sizable );
         ui->PROPS_BlockInvis->setChecked( block.invisible );
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
 

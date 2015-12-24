@@ -157,19 +157,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(blockTab)
     {
-        foreach(obj_block blockItem, conf->main_block)
+        for(int i=1; i<conf->main_block.size(); i++) //Add user images
         {
-            //Add category
+            obj_block *blockItem = &conf->main_block[i];
             QPixmap tmpI = GraphicsHelps::squareImage(
-                                blockItem.image.copy(0,
-                                             blockItem.frame_h*blockItem.display_frame,
-                                                blockItem.image.width(),
-                                                blockItem.frame_h),
+                                blockItem->image.copy(0,
+                                             blockItem->frame_h*blockItem->display_frame,
+                                                blockItem->image.width(),
+                                                blockItem->frame_h),
                                                       QSize(16,16));
 
-            QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
+            QListWidgetItem* item = new QListWidgetItem( blockItem->name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(blockItem.id) );
+            item->setData(3, QString::number(blockItem->id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Block->addItem(item);
         }
@@ -180,7 +180,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         for(int i=1; i<conf->main_bgo.size(); i++) //Add user images
         {
             obj_bgo *bgoD = &conf->main_bgo[i];
-            QPixmap tmpI =  bgoD->image;
+            QPixmap tmpI = GraphicsHelps::squareImage(
+                                bgoD->image.copy(0,
+                                             bgoD->frame_h*bgoD->display_frame,
+                                                bgoD->image.width(),
+                                                bgoD->frame_h),
+                                                      QSize(16,16));
 
             QListWidgetItem* item = new QListWidgetItem( bgoD->name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
@@ -380,44 +385,18 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     {
         if(MainWinConnect::pMainWin->activeChildWindow()==1)
         {
-            long j=0;
-            bool isIndex=false;
             LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            foreach(UserBlocks block, edit->scene->uBlocks)
+            for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
             {
+                obj_block &block=*edit->scene->custom_Blocks[i];
 
-                //Check for index
-                if(block.id < (unsigned long)conf->index_blocks.size())
-                {
-                    if(block.id == conf->main_block[conf->index_blocks[block.id].i].id)
-                    {
-                        j = conf->index_blocks[block.id].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < conf->main_block.size(); i++)
-                    {
-                        if(conf->main_block[i].id == block.id)
-                        {
-                            j = 0;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
-
-
-                if(conf->main_block[j].animated)
-                    tmpI = block.image.copy(0,
-                                (int)round(block.image.height() / conf->main_block[j].frames)*conf->main_block[j].display_frame,
-                                block.image.width(),
-                                (int)round(block.image.height() / conf->main_block[j].frames));
+                if(block.animated)
+                    tmpI = block.cur_image->copy(0,
+                                (int)round(block.cur_image->height() / block.frames) * block.display_frame,
+                                block.cur_image->width(),
+                                (int)round(block.cur_image->height() / block.frames));
                 else
-                    tmpI = block.image;
+                    tmpI = *block.cur_image;
 
                 item = new QListWidgetItem( QString("block-%1").arg(block.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -426,14 +405,14 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
                 ui->Sel_List_Block->addItem( item );
             }
-
         }
-
     }
     else
     //set Block item box from global conf
-    foreach(obj_block blockItem, conf->main_block)
+    for(int i=1;i<conf->main_block.size(); i++)
     {
+        obj_block &blockItem = conf->main_block[i];
+
         //Add Group
         found = false;
         if(tmpList.size()!=0)

@@ -37,9 +37,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     bool WrongImagesDetected=false;
 
+    uBlocks.clear();
     uBGOs.clear();
 
-    uBlocks.clear();
     uNPCs.clear();
     uBGs.clear();
 
@@ -168,51 +168,56 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Blocks %1")
-                    .arg(QString::number(pConfigs->main_block.size()) ) );
+                    .arg(QString::number(pConfigs->main_block.stored()) ) );
         progress.setValue(progress.value()+1);
     }
+    uBlocks.allocateSlots(pConfigs->main_block.total());
     qApp->processEvents();
     //Load Blocks
-    for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
+    for(i=1; i<pConfigs->main_block.size(); i++) //Add user images
     {
+        obj_block *blockD = &pConfigs->main_block[i];
+        obj_block t_block;
+        blockD->copyTo(t_block);
+        QPixmap image_file;
 
         bool custom=false;
 
-            QString CustomFile=uLVL.getCustomFile(pConfigs->main_block[i].image_n);
+            QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->id)+".ini");
+            if(CustomTxt.isEmpty())
+                CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->id)+".txt");
+            if(!CustomTxt.isEmpty())
+            {
+                //Not implemented yet!
+                //pConfigs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
+                //custom=true;
+            }
+
+            QString CustomFile=uLVL.getCustomFile(t_block.image_n);
             if(!CustomFile.isEmpty())
             {
                 if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask=uLVL.getCustomFile(pConfigs->main_block[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uBlock.mask = GraphicsHelps::loadPixmap( CustomMask );
-                    else
-                        uBlock.mask = pConfigs->main_block[i].mask;
-                    uBlock.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBlock.mask);
+                    QString CustomMask=uLVL.getCustomFile(t_block.mask_n);
+                    image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile),
+                                 CustomMask.isEmpty() ? blockD->mask : GraphicsHelps::loadPixmap( CustomMask ));
                 } else {
-                    uBlock.image = GraphicsHelps::loadPixmap(CustomFile);
-                    uBlock.mask = QPixmap();
+                    image_file = GraphicsHelps::loadPixmap(CustomFile);
                 }
-                if(uBlock.image.isNull()) WrongImagesDetected=true;
-
-                uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uBlock.id = pConfigs->main_block[i].id;
-                uBlocks.push_back(uBlock);
-                custom=true;
-
-                //Apply index;
-                if(uBlock.id < (unsigned int)index_blocks.size())
+                if(image_file.isNull())
+                    WrongImagesDetected=true;
+                else
                 {
-                    index_blocks[uBlock.id].type = 1;
-                    //index_blocks[uBlock.id].i = (uBlocks.size()-1);
+                    custom_images.push_back(image_file);
+                    t_block.cur_image = &custom_images.last();
                 }
+                custom=true;
             }
 
             int frameFirst;
             int frameLast;
 
-            switch(pConfigs->main_block[i].algorithm)
+            switch(t_block.algorithm)
             {
                 case 1: // Invisible block
                 {
@@ -240,25 +245,24 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 }
             }
             SimpleAnimator * aniBlock = new SimpleAnimator(
-                        ((custom)?
-                             ((uBlocks.last().image.isNull())?
-                                uBgoImg:
-                                    uBlocks.last().image)
-                                 :
-                             ((pConfigs->main_block[i].image.isNull())?
-                                uBgoImg:
-                                   pConfigs->main_block[i].image)
-                             ),
-                                  pConfigs->main_block[i].animated,
-                                  pConfigs->main_block[i].frames,
-                                  pConfigs->main_block[i].framespeed, frameFirst,frameLast,
-                                  pConfigs->main_block[i].animation_rev,
-                                  pConfigs->main_block[i].animation_bid
+                        ((t_block.cur_image->isNull())?
+                                blockD->image : *t_block.cur_image
+                                   ),
+                                  t_block.animated,
+                                  t_block.frames,
+                                  t_block.framespeed, frameFirst,frameLast,
+                                  t_block.animation_rev,
+                                  t_block.animation_bid
                                   );
 
+            t_block.animator_id = animates_Blocks.size();
             animates_Blocks.push_back( aniBlock );
-            index_blocks[pConfigs->main_block[i].id].i = i;
-            index_blocks[pConfigs->main_block[i].id].ai = animates_Blocks.size()-1;
+
+            uBlocks.storeElement(i, t_block);
+            if(custom)
+            {
+                custom_Blocks.push_back(&uBlocks[i]);//Register BGO as customized
+            }
 
             #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
@@ -284,10 +288,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     uBGOs.allocateSlots(pConfigs->main_bgo.total());
     for(int i=1; i<pConfigs->main_bgo.size(); i++)
     {
-        loaded1 = false;
-        loaded2 = false;
         obj_bgo *bgoD = &pConfigs->main_bgo[i];
-
         obj_bgo t_bgo; //Allocate new BGO Config entry
         QPixmap image_file;
         bool custom=false;

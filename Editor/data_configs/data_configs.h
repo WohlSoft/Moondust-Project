@@ -120,13 +120,13 @@ public:
     //Level map items
     PGE_DataArray<obj_BG > main_bg;
     PGE_DataArray<obj_bgo > main_bgo;
-    QList<obj_block > main_block;
+    PGE_DataArray<obj_block > main_block;
     QList<obj_npc > main_npc;
     npc_Markers marker_npc;
 
     //Indexes
     QList<blocksIndexes > index_blocks;
-    QList<bgoIndexes > index_bgo;
+    //QList<bgoIndexes > index_bgo;
     QList<npcIndexes > index_npc;
 
     //World map items
@@ -167,7 +167,7 @@ public:
 
     // Get Item of Index
     long getNpcI(unsigned long itemID);
-    long getBlockI(unsigned long itemID);
+    //long getBlockI(unsigned long itemID);
     //long getBgoI(unsigned long itemID);
 
     long getTileI(unsigned long itemID);

@@ -61,11 +61,12 @@ void PiecesModel::addPiece(const int &index)
 
     if(m_type==LEVELPIECE_BLOCK)
     {
-        pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
+        obj_block& block = m_conf->main_block[index];
+        pixmapNames.insert(pixmaps.size(), block.name);
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::LVL_Block,
-                                    m_conf->main_block[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
+                                    block.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), block.id);
     }
     else
     if(m_type==LEVELPIECE_BGO)

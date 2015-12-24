@@ -119,16 +119,15 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_Level)
-                for(int i = 0; i < dynamic_cast<LvlScene *>(scn)->uBlocks.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<LvlScene *>(scn)->index_blocks[
-                                dynamic_cast<LvlScene *>(scn)->uBlocks[i].id].i
-                                      );
+            {
+                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
+                for(int i = 0; i < sc->custom_Blocks.size(); ++i) {
+                    m_model->addPiece(sc->custom_Blocks[i]->id);
                 }
-
+            }
         }
         else
-        for(int i = 0; i < m_conf->main_block.size(); ++i){
+        for(int i = 1; i < m_conf->main_block.size(); ++i){
             m_model->addPiece(i);
         }
         break;

@@ -63,7 +63,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
-    while(!isOk.isFinished()) qApp->processEvents();
+    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(1); }
 
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);

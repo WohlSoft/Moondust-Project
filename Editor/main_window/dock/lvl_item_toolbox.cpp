@@ -137,8 +137,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             LevelEdit * edit = mw()->activeLvlEditWin();
 
             if((edit!=NULL) &&(edit->sceneCreated))
-            foreach(UserBlocks block, edit->scene->uBlocks)
+            for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
             {
+                obj_block &block = *edit->scene->custom_Blocks[i];
 
                 tmpI = GraphicsHelps::squareImage(
                             Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, &j),
@@ -155,8 +156,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set Block item box from global configs
-    foreach(obj_block blockItem, mw()->configs.main_block)
+    for(int i=1; i<mw()->configs.main_block.size(); i++)
     {
+        obj_block &blockItem =  mw()->configs.main_block[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)
@@ -233,15 +235,16 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             LevelEdit * edit = mw()->activeLvlEditWin();
 
             if((edit!=NULL) && (edit->sceneCreated))
-            foreach(obj_bgo *bgo, edit->scene->custom_BGOs)
+            for(int i=0; i<edit->scene->custom_BGOs.size(); i++)
             {
+                obj_bgo &bgo = *edit->scene->custom_BGOs[i];
                 tmpI = GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo->id, false, &j),
+                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, &j),
                             QSize(48,48));
 
-                item = new QListWidgetItem( QString("bgo-%1").arg(bgo->id) );
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo->id) );
+                item->setData(3, QString::number(bgo.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->BGOItemsList->addItem( item );

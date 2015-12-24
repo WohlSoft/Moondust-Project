@@ -357,11 +357,11 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
         }
 
-        foreach(UserBlocks x, s->uBlocks)
+        foreach(obj_block* x, s->custom_Blocks)
         {
             foreach(LevelBlock y, box->LvlData.blocks)
             {
-                if(y.id == x.id)
+                if(y.id == x->id)
                 {
 
                     QString image;
@@ -370,28 +370,24 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     QString transformTo_image;
                     QString transformTo_mask;
 
-                    long I = configs.getBlockI(x.id);
-                    if(I>=0)
-                    {
-                        image = levelCustomDirectory + "/" + configs.main_block[I].image_n;
-                        mask = levelCustomDirectory + "/" + configs.main_block[I].mask_n;
-                        transformTo = configs.main_block[I].transfororm_on_hit_into;
-                    }
+                    image = levelCustomDirectory + "/" + x->image_n;
+                    mask = levelCustomDirectory + "/" + x->mask_n;
+                    transformTo = x->transfororm_on_hit_into;
 
                     if(transformTo>0)
                     {
-                        I = configs.getBlockI(transformTo);
-                        if(I>=0)
+                        obj_block&t=configs.main_block[transformTo];
+                        if(t.isValid)
                         {
-                            transformTo_image = levelCustomDirectory + "/" + configs.main_block[I].image_n;
-                            transformTo_mask = levelCustomDirectory + "/" + configs.main_block[I].mask_n;
+                            transformTo_image = levelCustomDirectory + "/" + t.image_n;
+                            transformTo_mask = levelCustomDirectory + "/" + t.mask_n;
                         }
                     }
 
                     bool imageRemoved = !QFileInfo(image).exists();
                     bool maskRemoved = !QFileInfo(mask).exists();
-                    bool transformTo_img = !QFileInfo(transformTo_image).exists();;
-                    bool transformTo_msk = !QFileInfo(transformTo_mask).exists();;
+                    bool transformTo_img = !QFileInfo(transformTo_image).exists();
+                    bool transformTo_msk = !QFileInfo(transformTo_mask).exists();
 
                     for(int i=0; i < filesForRemove.size(); i++)
                     {

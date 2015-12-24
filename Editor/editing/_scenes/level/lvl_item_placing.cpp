@@ -89,6 +89,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 0: //blocks
         {
             long j;
+            obj_block &blockC = uBlocks[itemID];
 
             tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, &j);
 
@@ -97,7 +98,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 tImg = uBlockImg;
             }
 
-            LvlPlacingItems::gridSz=pConfigs->main_block[j].grid;
+            if(!blockC.isValid)
+            {
+                blockC=pConfigs->main_block[1];
+            }
+
+            LvlPlacingItems::gridSz=blockC.grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
             if( (itemID != LvlPlacingItems::blockSet.id) || (placingItem!=PLC_Block) )
@@ -111,7 +117,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             placingItem=PLC_Block;
 
             //Place sizable blocks in the square fill mode
-            if(pConfigs->main_block[j].sizable)
+            if(blockC.sizable)
             {
                 LvlPlacingItems::sizableBlock=true;
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
@@ -132,7 +138,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 flag.second=QString::number(LvlPlacingItems::blockSet.id);
             LvlPlacingItems::flags.push_back(flag);
 
-            if(pConfigs->main_block[j].sizable)
+            if(blockC.sizable)
             {
                 flag.first=ITEM_BLOCK_IS_SIZABLE;
                 flag.second = "sizable";
@@ -140,7 +146,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
 
                 flag.first = ITEM_BLOCK_SHAPE;
-                flag.second = QString::number(pConfigs->main_block[j].phys_shape);
+                flag.second = QString::number(blockC.phys_shape);
             LvlPlacingItems::flags.push_back(flag);
 
                 flag.first = ITEM_WIDTH;

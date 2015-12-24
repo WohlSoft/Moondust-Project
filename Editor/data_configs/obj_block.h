@@ -24,6 +24,17 @@
 
 struct obj_block
 {
+    obj_block();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_block &block);
+
     unsigned long id;
         QString image_n;
         QString mask_n;
