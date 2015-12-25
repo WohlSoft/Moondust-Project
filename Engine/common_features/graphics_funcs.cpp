@@ -29,7 +29,115 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
+#include <SDL2/SDL_image.h>
+
 #include <QtDebug>
+
+bool GraphicsHelps::initSDLImage()
+{
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
+        return false;
+    }
+    return true;
+}
+
+void GraphicsHelps::closeSDLImage()
+{
+    IMG_Quit();
+}
+
+
+SDL_Surface* GraphicsHelps::loadImage(QString file)
+{
+    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
+    if(img)
+    {
+        if(img->format->format!=SDL_PIXELFORMAT_RGBA8888)//!=
+        {
+            SDL_Surface* formattedSurf = SDL_ConvertSurfaceFormat(img,
+                                                                  SDL_PIXELFORMAT_RGBA8888,
+                                                                  0);
+            SDL_FreeSurface(img);
+            return formattedSurf;
+        }
+    }
+    return img;
+}
+
+
+void GraphicsHelps::putPixel(SDL_Surface * surface, int x, int y, Uint32 color)
+{
+    if( SDL_MUSTLOCK(surface) )
+            SDL_LockSurface(surface);
+
+    Uint8 * pixel = (Uint8*)surface->pixels;
+    pixel += (y * surface->pitch) + (x * sizeof(Uint32));
+    *((Uint32*)pixel) = color;
+
+    if( SDL_MUSTLOCK(surface) )
+        SDL_UnlockSurface(surface);
+}
+
+
+Uint32 GraphicsHelps::getPixel(SDL_Surface *surface, int x, int y)
+{
+    Uint8 * pixel = (Uint8*)surface->pixels;
+    pixel += (y * surface->pitch) + (x * sizeof(Uint32));
+    return *((Uint32*)pixel);
+}
+
+
+
+void GraphicsHelps::mergeWithMask(SDL_Surface *image, QString pathToMask)
+{
+    if(!image) return;
+    if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
+    SDL_Surface* mask = loadImage( pathToMask.toUtf8().data() );
+    if(!mask) return;//Nothing to do
+
+    for(int y=0; (y<image->h) && (y<mask->h); y++ )
+        for(int x=0; (x<image->w) && (x<mask->w); x++ )
+        {
+            PGE_Pix Fpix;
+            SDL_GetRGBA(getPixel(image, x, y), image->format,
+                        &Fpix.r, &Fpix.g, &Fpix.b, &Fpix.a);
+            PGE_Pix Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
+            PGE_Pix Spix;
+            SDL_GetRGBA(getPixel(mask, x, y), mask->format,
+                        &Spix.r, &Spix.g, &Spix.b, &Spix.a);
+            PGE_Pix Npix = {0x00, 0x00, 0x00, 0xFF};
+
+            Npix.r = (Dpix.r & Spix.r);
+            Npix.g = (Dpix.g & Spix.g);
+            Npix.b = (Dpix.b & Spix.b);
+            Npix.r = (Npix.r | Fpix.r);
+            Npix.g = (Npix.g | Fpix.g);
+            Npix.b = (Npix.b | Fpix.b);
+            int newAlpha= 255-
+                      ( ( Spix.r+
+                          Spix.g+
+                          Spix.b) / 3);
+            if( (Spix.r>240) //is almost White
+                            &&(Spix.g>240)
+                            &&(Spix.b>240))
+            {
+                newAlpha = 0;
+            }
+
+            newAlpha= newAlpha+( ( Fpix.r+
+                                   Fpix.g+
+                                   Fpix.b) / 3);
+            if(newAlpha > 255) newAlpha=255;
+            Npix.a = newAlpha;
+            putPixel(image, x, y,
+                 SDL_MapRGBA(image->format,
+                             Npix.r, Npix.g, Npix.b, Npix.a));
+        }
+    SDL_FreeSurface(mask);
+}
+
+
 
 QImage GraphicsHelps::setAlphaMask(QImage image, QImage mask)
 {
@@ -79,6 +187,7 @@ QImage GraphicsHelps::fromBMP(QString &file)
 //{
 //    return QPixmap::fromImage(loadQImage(file));
 //}
+
 
 QImage GraphicsHelps::loadQImage(QString file)
 {

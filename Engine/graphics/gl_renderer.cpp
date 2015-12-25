@@ -165,14 +165,17 @@ PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 
 void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
 {
-    QImage sourceImage;
+    //QImage sourceImage;
+    SDL_Surface * sourceImage;
+
     // Load the OpenGL texture
-    sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
+    //sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
+    sourceImage = GraphicsHelps::loadImage(path);
 
     //Don't load mask if PNG image is used
     if(path.endsWith(".png", Qt::CaseInsensitive)) maskPath.clear();
 
-    if(sourceImage.isNull())
+    if(!sourceImage)
     {
         WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
@@ -183,27 +186,28 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     //Apply Alpha mask
     if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
     {
-        QImage maskImage = GraphicsHelps::loadQImage(maskPath);
-        sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
+        //QImage maskImage = GraphicsHelps::loadQImage(maskPath);
+        //sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
+        GraphicsHelps::mergeWithMask(sourceImage, maskPath);
     }
 
-    sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
-    QRgb upperColor = sourceImage.pixel(0,0);
-    target.ColorUpper.r = float(qRed(upperColor))/255.0f;
-    target.ColorUpper.g = float(qGreen(upperColor))/255.0f;
-    target.ColorUpper.b = float(qBlue(upperColor))/255.0f;
+    //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
+    Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
+    target.ColorUpper.r = float((upperColor>>24)&0xFF)/255.0f;
+    target.ColorUpper.g = float((upperColor>>16)&0xFF)/255.0f;
+    target.ColorUpper.b = float((upperColor>>8)&0xFF)/255.0f;
 
-    QRgb lowerColor = sourceImage.pixel(0, sourceImage.height()-1);
-    target.ColorLower.r = float(qRed(lowerColor))/255.0f;
-    target.ColorLower.g = float(qGreen(lowerColor))/255.0f;
-    target.ColorLower.b = float(qBlue(lowerColor))/255.0f;
+    Uint8 lowerColor = GraphicsHelps::getPixel(sourceImage, 0, sourceImage->h-1);//sourceImage.pixel(0, sourceImage.height()-1);
+    target.ColorLower.r = float((lowerColor>>24)&0xFF)/255.0f;
+    target.ColorLower.g = float((lowerColor>>16)&0xFF)/255.0f;
+    target.ColorLower.b = float((lowerColor>>8)&0xFF)/255.0f;
 
     //qDebug() << path << sourceImage.size();
 
-    sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
+    //sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
-    target.format = GL_RGBA;
+    target.format = GL_ABGR_EXT;
 
     glEnable(GL_TEXTURE_2D);
     // Have OpenGL generate a texture object handle for us
@@ -213,15 +217,17 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
     // Edit the texture object's image data using the information SDL_Surface gives us
-    target.w = sourceImage.width();
-    target.h = sourceImage.height();
+    target.w = sourceImage->w;
+    target.h = sourceImage->h;
     // Set the texture's stretching properties
 
     // Bind the texture object
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
-         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+//    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
+//         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage->w, sourceImage->h,
+         0, target.format, GL_UNSIGNED_BYTE, sourceImage->pixels );
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -230,6 +236,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glDisable(GL_TEXTURE_2D);
 
     target.inited = true;
+
+    SDL_FreeSurface(sourceImage);
 
     return;
 }

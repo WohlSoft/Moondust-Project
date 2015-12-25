@@ -29,10 +29,23 @@
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
 
+struct PGE_Pix {
+    Uint8 r;
+    Uint8 g;
+    Uint8 b;
+    Uint8 a;
+};
 
 class GraphicsHelps
 {
 public:
+    static bool  initSDLImage();
+    static void  closeSDLImage();
+    static SDL_Surface *loadImage(QString file);
+    static void   putPixel(SDL_Surface *surface, int x, int y, Uint32 color);
+    static Uint32 getPixel(SDL_Surface *surface, int x, int y);
+    static void mergeWithMask(SDL_Surface *image, QString pathToMask);
+
     static QImage setAlphaMask(QImage image, QImage mask);
     static QImage fromBMP(QString& file);
     static QImage loadQImage(QString file);
