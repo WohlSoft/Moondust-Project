@@ -719,7 +719,7 @@ void NpcEdit::loadImageFile()
         {
             QString CustomMask=fileDir.getCustomFile(defaultNPC.mask_n);
             npcImage = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImage ),
-                          CustomMask.isEmpty() ? defaultNPC.mask : GraphicsHelps::loadPixmap( CustomMask ));
+                          CustomMask.isEmpty() ? defaultNPC.mask : GraphicsHelps::loadQImage( CustomMask ));
         } else {
             npcImage = GraphicsHelps::loadPixmap(CustomImage);
         }

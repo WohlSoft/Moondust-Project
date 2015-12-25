@@ -611,8 +611,6 @@ public:
 
         void on_actionAnimation_triggered(bool checked);
         void on_actionCollisions_triggered(bool checked);
-
-        void on_actionVBAlphaEmulate_toggled(bool arg1);
 // ////////////////////////////////////////////////////////
 
 

@@ -157,8 +157,6 @@ void MainWindow::setUiDefults()
 
     ui->actionExport_to_image_section->setVisible(false);
 
-    ui->actionVBAlphaEmulate->setChecked(GraphicsHelps::EnableBitBlitMerge);
-
     ui->centralWidget->cascadeSubWindows();
 
     ui->ResizingToolbar->setVisible(false);

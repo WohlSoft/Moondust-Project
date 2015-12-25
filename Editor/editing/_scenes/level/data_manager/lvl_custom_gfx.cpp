@@ -200,7 +200,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 {
                     QString CustomMask=uLVL.getCustomFile(t_block.mask_n);
                     image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile),
-                                 CustomMask.isEmpty() ? blockD->mask : GraphicsHelps::loadPixmap( CustomMask ));
+                                 CustomMask.isEmpty() ? blockD->mask : GraphicsHelps::loadQImage( CustomMask ));
                 } else {
                     image_file = GraphicsHelps::loadPixmap(CustomFile);
                 }
@@ -311,7 +311,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 QString CustomMask=uLVL.getCustomFile(t_bgo.mask_n);
                 image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomImage),
-                              CustomMask.isEmpty() ? bgoD->mask : GraphicsHelps::loadPixmap( CustomMask ));
+                              CustomMask.isEmpty() ? bgoD->mask : GraphicsHelps::loadQImage( CustomMask ));
             } else {
                 image_file = GraphicsHelps::loadPixmap(CustomImage);
             }

@@ -69,7 +69,7 @@ void WldScene::getConfig_Tile(unsigned long item_id, long &array_index, long &an
     mergedSet = pConfigs->main_wtiles[item_i];
 
     mergedSet.image = QPixmap(0,0);
-    mergedSet.mask = QPixmap(0,0);
+    mergedSet.mask = QImage(0,0, QImage::Format_ARGB32);
 
     if(ok)
     {
@@ -128,7 +128,7 @@ void WldScene::getConfig_Scenery(unsigned long item_id, long &array_index, long 
     mergedSet = pConfigs->main_wscene[item_i];
 
     mergedSet.image = QPixmap(0,0);
-    mergedSet.mask = QPixmap(0,0);
+    mergedSet.mask = QImage(0,0, QImage::Format_ARGB32);
 
     if(ok)
     {

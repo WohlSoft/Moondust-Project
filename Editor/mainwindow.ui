@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -272,7 +272,6 @@
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
-    <addaction name="actionVBAlphaEmulate"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -2453,17 +2452,6 @@
     <string>Import</string>
    </property>
   </action>
-  <action name="actionVBAlphaEmulate">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Enable GFX fix (reload of the file required)</string>
-   </property>
-   <property name="toolTip">
-    <string>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</string>
-   </property>
-  </action>
   <action name="actionBookmarkBox">
    <property name="checkable">
     <bool>true</bool>
@@ -2724,8 +2712,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
+  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>

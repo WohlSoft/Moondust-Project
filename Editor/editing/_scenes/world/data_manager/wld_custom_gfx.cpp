@@ -119,18 +119,18 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 {
                     QString CustomMask = uWLD.getCustomFile(pConfigs->main_wtiles[i].mask_n);
                     if(!CustomMask.isEmpty())
-                        uTile.mask = GraphicsHelps::loadPixmap( CustomMask );
+                        uTile.mask = GraphicsHelps::loadQImage( CustomMask );
                     else
                         uTile.mask = pConfigs->main_wtiles[i].mask;
-                    uTile.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uTile.mask);
+                    uTile.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadQImage( CustomImg ), uTile.mask);
                 } else {
                     uTile.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uTile.mask=QPixmap();
+                    uTile.mask=QImage();
                 }
 
                 if(uTile.image.isNull()) WrongImagesDetected=true;
 
-                uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+                uTile.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
 
                 uTile.id = pConfigs->main_wtiles[i].id;
                 uTiles.push_back(uTile);
@@ -197,17 +197,17 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 {
                     QString CustomMask = uWLD.getCustomFile(pConfigs->main_wscene[i].mask_n);
                     if(!CustomMask.isEmpty())
-                        uScenery.mask = GraphicsHelps::loadPixmap( CustomMask );
+                        uScenery.mask = GraphicsHelps::loadQImage( CustomMask );
                     else
                         uScenery.mask = pConfigs->main_wscene[i].mask;
-                    uScenery.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uScenery.mask);
+                    uScenery.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadQImage( CustomImg ), uScenery.mask);
                 } else {
                     uScenery.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uScenery.mask = QPixmap();
+                    uScenery.mask = QImage();
                 }
                 if(uScenery.image.isNull()) WrongImagesDetected=true;
 
-                uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+                uScenery.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
 
                 uScenery.id = pConfigs->main_wscene[i].id;
                 uScenes.push_back(uScenery);

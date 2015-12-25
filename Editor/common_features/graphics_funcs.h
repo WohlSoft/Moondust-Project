@@ -26,10 +26,10 @@
 class GraphicsHelps
 {
 public:
-    static QPixmap mergeToRGBA(QPixmap image, QPixmap mask);
-    static QImage mergeToRGBA_BitWise(QImage image, QImage mask);
-    static bool EnableBitBlitMerge;
-    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QPixmap &out_Mask, QString &out_errStr);
+    static QPixmap mergeToRGBA(QPixmap image, QImage mask);
+    static void mergeToRGBA_BitWise(QImage &image, QImage mask);
+    static void mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath);
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);
 
     static QImage fromBMP(QString& file);
     static QImage fromGIF(QString& file);
