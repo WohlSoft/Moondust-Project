@@ -175,7 +175,6 @@ void dataconfigs::loadLevelBlocks()
         return;
     }
 
-
         for(i=1; i<=block_total; i++)
         {
             emit progressValue(i);

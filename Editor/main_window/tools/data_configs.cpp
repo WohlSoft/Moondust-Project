@@ -30,15 +30,24 @@
 #include <main_window/dock/wld_item_toolbox.h>
 
 void MainWindow::on_actionLoad_configs_triggered()
-{
-    //Disable all animations to take speed-up
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+{   
+    if(ui->centralWidget->subWindowList().size()>0)
     {
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-            qobject_cast<LevelEdit *>(window->widget())->scene->stopAnimation();
-        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
+        QMessageBox::warning(this,
+                             tr("Configuration is busy"),
+                             tr("To reload configuration you should close all opened files first."),
+                             QMessageBox::Ok);
+        return;
     }
+
+//    //Disable all animations to take speed-up
+//    foreach( QMdiSubWindow *window, ui->centralWidget->subWindowList() )
+//    {
+//        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+//            qobject_cast<LevelEdit *>(window->widget())->scene->stopAnimation();
+//        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+//            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
+//    }
 
     QProgressDialog progress("Please wait...", tr("Abort"), 0,100, this);
     progress.setWindowTitle(tr("Reloading configurations"));
@@ -78,20 +87,20 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(!progress.wasCanceled())
         progress.close();
 
-    //Restore all animations states back
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
-    {
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-        {
-            if(qobject_cast<LevelEdit *>(window->widget())->scene->opts.animationEnabled)
-                qobject_cast<LevelEdit *>(window->widget())->scene->startAnimation();
-        }
-        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-        {
-            if(qobject_cast<WorldEdit *>(window->widget())->scene->opts.animationEnabled)
-                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
-        }
-    }
+//    //Restore all animations states back
+//    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+//    {
+//        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+//        {
+//            if(qobject_cast<LevelEdit *>(window->widget())->scene->opts.animationEnabled)
+//                qobject_cast<LevelEdit *>(window->widget())->scene->startAnimation();
+//        }
+//        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+//        {
+//            if(qobject_cast<WorldEdit *>(window->widget())->scene->opts.animationEnabled)
+//                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
+//        }
+//    }
 
     if(isOk.result())
     {
