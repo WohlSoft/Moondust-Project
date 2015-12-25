@@ -73,6 +73,7 @@ struct transformTask_block
 class LevelScene : public Scene
 {
     friend class LVL_EventEngine;
+    friend class PGE_LevelCamera;
 public:
     LevelScene();
     ~LevelScene();

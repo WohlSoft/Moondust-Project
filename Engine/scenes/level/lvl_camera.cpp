@@ -48,6 +48,15 @@ PGE_LevelCamera::PGE_LevelCamera()
     _autoscrollVelocityY_max=0.0f;
     _autoscrollVelocityX=0.0f;
     _autoscrollVelocityY=0.0f;
+
+    _objects_to_render_max=1000;
+    _objects_to_render=(PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
+    if(!_objects_to_render)
+    {
+        throw("Out of memory");
+    }
+    _objects_to_render_stored=0;
+    _objects_to_render_recent=0;
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
@@ -57,7 +66,7 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
 
     posRect = cam.posRect;
 
-    objects_to_render = cam.objects_to_render;
+    //objects_to_render = cam.objects_to_render;
 
     section = cam.section;
     cur_section = cam.cur_section;
@@ -69,10 +78,18 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
     _autoscrollVelocityY_max=cam._autoscrollVelocityY_max;
     _autoscrollVelocityX=cam._autoscrollVelocityX;
     _autoscrollVelocityY=cam._autoscrollVelocityY;
+
+    _objects_to_render_max = cam._objects_to_render_max;
+    _objects_to_render_stored = cam._objects_to_render_stored;
+    _objects_to_render_recent = cam._objects_to_render_recent;
+    _objects_to_render=(PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
+    memcpy(_objects_to_render, cam._objects_to_render, _objects_to_render_max);
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
-{}
+{
+    free(_objects_to_render);
+}
 
 void PGE_LevelCamera::init(float x, float y, float w, float h)
 {
@@ -125,94 +142,71 @@ void PGE_LevelCamera::setOffset(int x, int y)
 
 void PGE_LevelCamera::update(float ticks)
 {
-    objects_to_render.clear();
+    //objects_to_render.clear();
 
     if(!cur_section) return;
     fader.tickFader(ticks);
 
     if(isAutoscroll) processAutoscroll(ticks);
 
-    LvlSceneP::s->queryItems(posRect, &objects_to_render);
-
-    int contacts = 0;
-    for(int i=0; i<objects_to_render.size();i++)
+    //Check exists items and remove invizible
+    int offset=0;
+    for(int i=0; i<_objects_to_render_stored; i++)
     {
-        contacts++;
-        PGE_Phys_Object * visibleBody = objects_to_render[i];
-        bool renderable=false;
-        if(!visibleBody->isVisible())
+        if(offset > 0)
         {
-            objects_to_render.removeAt(i); i--; continue;
+            _objects_to_render[i] = _objects_to_render[i+offset];
         }
-        switch(visibleBody->type)
+        if(_objects_to_render[i]->_vizible_on_screen)
         {
-            case PGE_Phys_Object::LVLBlock:
-            case PGE_Phys_Object::LVLBGO:
-            case PGE_Phys_Object::LVLNPC:
-            case PGE_Phys_Object::LVLPlayer:
-            case PGE_Phys_Object::LVLEffect:
-                renderable=true;
-        }
-
-        if(visibleBody->type==PGE_Phys_Object::LVLNPC)
-        {
-            LVL_Npc *npc = dynamic_cast<LVL_Npc*>(visibleBody);
-            if(npc && npc->isVisible())
-            {
-                if(!npc->isActivated && !npc->wasDeactivated)
-                {
-                    npc->Activate();
-                    LvlSceneP::s->active_npcs.push_back(npc);
-                }
-                else
-                {
-                    if(npc->wasDeactivated)
-                        npc->activationTimeout=0;
-                    else
-                    {
-                        if(npc->is_activity)
-                            npc->activationTimeout = npc->setup->deactivetionDelay;
-                        else
-                            npc->activationTimeout = 150;
-                    }
-                }
-            }
-        }
-
-        if(!PGE_Window::showPhysicsDebug && !renderable)
-        {
-            objects_to_render.removeAt(i); i--;
+            _objects_to_render[i]->_vizible_on_screen=false;
+        } else {
+            _objects_to_render[i]->_render_list=false;
+            _objects_to_render[i]->_vizible_on_screen=false;
+            offset++;
+            _objects_to_render_stored--;
+            i--;
         }
     }
+    if(offset > 0)
+    {
+        _objects_to_render_recent=_objects_to_render_stored;
+    }
 
-    //Sort array
-    sortElements();
+    queryItems(posRect);
+
+    //Sort array if modified
+    if(_objects_to_render_recent!=_objects_to_render_stored)
+    {
+        sortElements();
+        _objects_to_render_recent=_objects_to_render_stored;
+    }
 }
 
 void PGE_LevelCamera::sortElements()
 {
-    if(objects_to_render.size()<=1) return; //Nothing to sort!
+    if(_objects_to_render_stored<=1) return; //Nothing to sort!
     QStack<int> beg;
     QStack<int> end;
     PGE_Phys_Object* piv;
     int i=0, L, R, swapv;
     beg.push_back(0);
-    end.push_back(objects_to_render.size());
+    end.push_back(_objects_to_render_stored);
     while (i>=0)
     {
         L=beg[i]; R=end[i]-1;
         if (L<R)
         {
-            piv=objects_to_render[L];
+            piv=_objects_to_render[L];
             while (L<R)
             {
-                while ((objects_to_render[R]->zIndex()>=piv->zIndex()) && (L<R)) R--;
-                if (L<R) objects_to_render[L++]=objects_to_render[R];
+                while ((_objects_to_render[R]->zIndex()>=piv->zIndex()) && (L<R)) R--;
+                if (L<R) _objects_to_render[L++]=_objects_to_render[R];
 
-                while ((objects_to_render[L]->zIndex()<=piv->zIndex()) && (L<R)) L++;
-                if (L<R) objects_to_render[R--]=objects_to_render[L];
+                while ((_objects_to_render[L]->zIndex()<=piv->zIndex()) && (L<R)) L++;
+                if (L<R) _objects_to_render[R--]=_objects_to_render[L];
             }
-            objects_to_render[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+            _objects_to_render[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
             if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
             {
                 swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;
@@ -240,9 +234,105 @@ void PGE_LevelCamera::resetLimits()
         cur_section->resetLimits();
 }
 
-PGE_RenderList &PGE_LevelCamera::renderObjects()
+//PGE_RenderList &PGE_LevelCamera::renderObjects()
+//{
+//    return objects_to_render;
+//}
+
+PGE_Phys_Object **PGE_LevelCamera::renderObjects_arr()
 {
-    return objects_to_render;
+    return _objects_to_render;
+}
+
+int PGE_LevelCamera::renderObjects_max()
+{
+    return _objects_to_render_max;
+}
+
+int PGE_LevelCamera::renderObjects_count()
+{
+    return _objects_to_render_stored;
+}
+
+void PGE_LevelCamera::setRenderObjects_count(int count)
+{
+    _objects_to_render_stored=count;
+    _objects_to_render_recent=count;
+}
+
+bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
+{
+    PGE_LevelCamera* list = static_cast<PGE_LevelCamera* >(arg);
+    if(list)
+    {
+        if(item)
+        {
+            item->_vizible_on_screen = true;
+            bool renderable=false;
+            if(!item->isVisible())
+            {
+                goto checkRenderability;
+            }
+            switch(item->type)
+            {
+                case PGE_Phys_Object::LVLBlock:
+                case PGE_Phys_Object::LVLBGO:
+                case PGE_Phys_Object::LVLNPC:
+                case PGE_Phys_Object::LVLPlayer:
+                case PGE_Phys_Object::LVLEffect:
+                    renderable=true;
+            }
+            if(item->type==PGE_Phys_Object::LVLNPC)
+            {
+                LVL_Npc *npc = dynamic_cast<LVL_Npc*>(item);
+                if(npc && npc->isVisible())
+                {
+                    if(!npc->isActivated && !npc->wasDeactivated)
+                    {
+                        npc->Activate();
+                        LvlSceneP::s->active_npcs.push_back(npc);
+                    }
+                    else
+                    {
+                        if(npc->wasDeactivated)
+                            npc->activationTimeout=0;
+                        else
+                        {
+                            if(npc->is_activity)
+                                npc->activationTimeout = npc->setup->deactivetionDelay;
+                            else
+                                npc->activationTimeout = 150;
+                        }
+                    }
+                }
+            }
+
+        checkRenderability:
+            if(renderable && !item->_render_list)
+            {
+                if(list->_objects_to_render_stored >= list->_objects_to_render_max-2)
+                {
+                    list->_objects_to_render_max += 1000;
+                    list->_objects_to_render=(PGE_Phys_Object**)realloc(list->_objects_to_render, sizeof(PGE_Phys_Object*)*list->_objects_to_render_max);
+                    if(!list->_objects_to_render)
+                    {
+                        throw("Memory overflow!");
+                    }
+                }
+                list->_objects_to_render[list->_objects_to_render_stored]=item;
+                list->_objects_to_render_stored++;
+                item->_render_list=true;
+            }
+        }
+    }
+    return true;
+}
+
+void PGE_LevelCamera::queryItems(PGE_RectF &zone)
+{
+    double lt[2] = { zone.left(),  zone.top() };
+    double rb[2] = { zone.right(), zone.bottom() };
+    LvlSceneP::s->tree.Search(lt, rb, _TreeSearchCallback, (void*)this);
 }
 
 void PGE_LevelCamera::resetAutoscroll()

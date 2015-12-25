@@ -37,6 +37,8 @@ class PGE_LevelCamera
 {
     friend class LVL_Background;
     friend class LVL_Section;
+    static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg);
+    void queryItems(PGE_RectF &zone);
 public:
     static const float _smbxTickTime;
     PGE_LevelCamera();
@@ -61,7 +63,11 @@ public:
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
-    PGE_RenderList &renderObjects();
+    //PGE_RenderList &renderObjects();
+    PGE_Phys_Object**renderObjects_arr();
+    int              renderObjects_max();
+    int              renderObjects_count();
+    void             setRenderObjects_count(int count);
 
     LevelSection* section;
     LVL_Section * cur_section;
@@ -88,7 +94,12 @@ public:
 private:
     void _applyLimits();
     void sortElements();
-    PGE_RenderList objects_to_render;
+    //PGE_RenderList     objects_to_render;
+
+    PGE_Phys_Object** _objects_to_render;
+    int               _objects_to_render_max;
+    int               _objects_to_render_stored;
+    int               _objects_to_render_recent;
 };
 
 #endif // LVL_CAMERA_H

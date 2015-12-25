@@ -32,8 +32,8 @@ float PGE_Phys_Object::SMBXTicksToTime(float ticks)
     return ticks*_smbxTickTime;
 }
 
-PGE_Phys_Object::PGE_Phys_Object()
-{
+PGE_Phys_Object::PGE_Phys_Object() : _vizible_on_screen(false), _render_list(false)
+{    
     _width_half = 0.0f;
     _height_half = 0.0f;
 

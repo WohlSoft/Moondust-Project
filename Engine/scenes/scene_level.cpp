@@ -428,8 +428,8 @@ void LevelScene::render()
 
         cam->drawBackground();
 
-        const int render_sz = cam->renderObjects().size();
-        PGE_Phys_Object** render_obj = cam->renderObjects().data();
+        int render_sz = cam->renderObjects_count();
+        PGE_Phys_Object** render_obj = cam->renderObjects_arr();
         for(int i=0; i<render_sz; i++)
         {
             switch(render_obj[i]->type)
@@ -453,10 +453,9 @@ void LevelScene::render()
 
         if(PGE_Window::showPhysicsDebug)
         {
-            for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+            for(int i=0; i<render_sz; i++)
             {
-                PGE_Phys_Object*&item=(*it);
-                item->renderDebug(cam->posX(), cam->posY());
+                render_obj[i]->renderDebug(cam->posX(), cam->posY());
             }
         }
 
