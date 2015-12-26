@@ -78,6 +78,7 @@ win32: {
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_image.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -framework -lSDL2_image -lpng -lz
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
