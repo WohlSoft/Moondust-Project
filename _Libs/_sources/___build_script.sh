@@ -264,6 +264,13 @@ else
         fi
         mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
 
+        HEADER_SEARCH_PATHS=$HEADER_SEARCH_PATHS $InstallTo/frameworks/SDL.framework/Headers
+        FRAMEWORK_SEARCH_PATHS=$FRAMEWORK_SEARCH_PATHS $InstallTo/frameworks
+        $Sed  -i 's/#include \"SDL.h\"/#include <SDL2\/SDL.h>/g' 'SDL_image.h'
+        $Sed  -i 's/#include \"SDL_version.h\"/#include <SDL2\/SDL_version.h>/g' 'SDL_image.h'
+        $Sed  -i 's/#include \"begin_code.h\"/#include <SDL2\/begin_code.h>/g' 'SDL_image.h'
+        $Sed  -i 's/#include \"close_code.h\"/#include <SDL2\/close_code.h>/g' 'SDL_image.h'
+
         xcodebuild -target Framework -project Xcode/SDL_image.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
 
         if [ $? -eq 0 ]
