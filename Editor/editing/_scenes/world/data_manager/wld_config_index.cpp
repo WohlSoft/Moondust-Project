@@ -187,7 +187,7 @@ void WldScene::getConfig_Path(unsigned long item_id, long &array_index, long &an
     mergedSet = pConfigs->main_wpaths[item_i];
 
     mergedSet.image = QPixmap(0,0);
-    mergedSet.mask = QPixmap(0,0);
+    mergedSet.mask = QImage(0,0, QImage::Format_ARGB32);
 
     if(ok)
     {
@@ -246,7 +246,7 @@ void WldScene::getConfig_Level(unsigned long item_id, long &array_index, long &a
     mergedSet = pConfigs->main_wlevels[item_i];
 
     mergedSet.image = QPixmap(0,0);
-    mergedSet.mask = QPixmap(0,0);
+    mergedSet.mask = QImage(0,0, QImage::Format_ARGB32);
 
     if(ok)
     {

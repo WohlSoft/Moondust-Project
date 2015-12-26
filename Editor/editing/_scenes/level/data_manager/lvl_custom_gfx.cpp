@@ -32,7 +32,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
 
-    UserBlocks uBlock;
     UserNPCs uNPC;
 
     bool WrongImagesDetected=false;
@@ -407,18 +406,18 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  {
                      QString CustomMask=uLVL.getCustomFile(pConfigs->main_npc[i].mask_n);
                      if(!CustomMask.isEmpty())
-                         uNPC.mask = GraphicsHelps::loadPixmap( CustomMask );
+                         uNPC.mask = GraphicsHelps::loadQImage( CustomMask );
                      else
                          uNPC.mask = pConfigs->main_npc[i].mask;
                      uNPC.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
                  } else {
                      uNPC.image = GraphicsHelps::loadPixmap( CustomImg );
-                     uNPC.mask = QPixmap();//Don't use bit mask for PNG sprites
+                     uNPC.mask = QImage();//Don't use bit mask for PNG sprites
                  }
 
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
-                 uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+                 uNPC.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
 
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;

@@ -20,7 +20,7 @@
 #define CUSTOM_DATA_H
 
 #include <QPixmap>
-#include <QBitmap>
+#include <QImage>
 
 #include <PGE_File_Formats/npc_filedata.h>
 #include <data_configs/obj_npc.h>
@@ -28,21 +28,7 @@
 struct UserIMGs
 {
     QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
-
-struct UserBGOs
-{
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
-
-struct UserBlocks
-{
-    QPixmap image;
-    QPixmap mask;
+    QImage mask;
     unsigned long id;
 };
 
@@ -50,7 +36,7 @@ struct UserNPCs
 {
     bool withImg;
     QPixmap image;
-    QPixmap mask;
+    QImage mask;
     unsigned long id;
 
     bool withTxt;
@@ -65,7 +51,6 @@ struct UserBGs
     unsigned long id;
     unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
 };
-
 
 ///
 /// \brief The CustomDirManager class This is a capturer of custom files from level/world custom directories

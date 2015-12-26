@@ -63,8 +63,7 @@ void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QStrin
         return;
     }
     mask=loadQImage(maskpath);
-
-    mergeToRGBA_BitWise(target, newmask);
+    mergeToRGBA_BitWise(target, mask);
     img.convertFromImage(target);
 }
 
