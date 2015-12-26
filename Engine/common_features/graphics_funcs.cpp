@@ -61,6 +61,8 @@ SDL_Surface* GraphicsHelps::loadImage(QString file)
             SDL_FreeSurface(img);
             return formattedSurf;
         }
+    } else {
+        qWarning()<<"Failed to load image:" << file << " Error string: "<< IMG_GetError();
     }
     return img;
 }

@@ -61,7 +61,7 @@ LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
 
 android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lGLESv2 -lGLESv1_CM -ldl -landroid
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2_image -lpng -lz -lGLESv2 -lGLESv1_CM -ldl -landroid
 
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
                           $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
@@ -78,11 +78,11 @@ win32: {
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -lSDL2_image -lpng -lz
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++||unix:!macx:!android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lglut -lGLU
+    LIBS += -lSDL2_mixer_ext -lSDL2_image -lpng -lz -lSDL2 -lglut -lGLU
 }
 
 contains(DEFINES, USE_LUA_JIT): {

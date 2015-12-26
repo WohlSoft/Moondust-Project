@@ -48,7 +48,7 @@ win32:{
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY HAVE_ZLIB_H
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -68,7 +68,7 @@ LIBS += -L../_builds/$$TARGETOS/lib
     LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
 }
 
-LIBS += -lmad -lm
+LIBS += -lmad -lm -lz
 
 linux-g++||unix:!macx:!android:{
     SDL2MixerH.path =  ../_builds/linux/include/SDL2
