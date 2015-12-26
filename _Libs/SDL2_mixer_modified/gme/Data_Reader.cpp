@@ -20,6 +20,10 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 
 #include "blargg_source.h"
 
+#ifdef HAVE_ZLIB_H
+#include "ZLib/zlib.h"
+#endif
+
 const char Data_Reader::eof_error [] = "Unexpected end of file";
 
 blargg_err_t Data_Reader::read( void* p, long s )
@@ -127,6 +131,11 @@ blargg_err_t Remaining_Reader::read( void* out, long count )
 	return in->read( (char*) out + first, second );
 }
 
+
+
+
+
+
 // Mem_File_Reader
 
 Mem_File_Reader::Mem_File_Reader( const void* p, long s ) :
@@ -157,6 +166,114 @@ blargg_err_t Mem_File_Reader::seek( long n )
 	pos = n;
 	return 0;
 }
+
+#if 0 //HAVE_ZLIB_H
+
+//TODO: Implement a support of GZIP-compressed range of memory
+
+// GZipMem_File_Reader
+GZipMem_File_Reader::GZipMem_File_Reader( const void* p, long s ) :
+    begin_compressed( (const char*) p ),
+    size_compressed_( s ),
+    isGZIP(false)
+{
+    if( (size_compressed_>4) && (get_be32( begin_compressed )==BLARGG_4CHAR(0x1f,0x8b,0x08, 0)) )
+    {
+        //Just a copy-pasta from ZLib howo. This crap is unfinished and Unbuildable
+        /*
+        #define CHUNK 16384
+        int ret;
+        unsigned have;
+        z_stream strm;
+        char in[CHUNK];
+        char out[CHUNK];
+        // allocate inflate state
+        strm.zalloc = Z_NULL;
+        strm.zfree = Z_NULL;
+        strm.opaque = Z_NULL;
+        strm.avail_in = 0;
+        strm.next_in = Z_NULL;
+        ret = inflateInit(&strm);
+        if (ret != Z_OK)
+            goto itisNonoGzip;
+        // decompress until deflate stream ends or end of file
+        do
+        {
+            strm.avail_in = fread(in, 1, CHUNK, source);
+            if (ferror(source)) {
+                (void)inflateEnd(&strm);
+                goto itisNonoGzip;
+            }
+            if (strm.avail_in == 0)
+                break;
+            strm.next_in = in;
+            // run inflate() on input until output buffer not full
+            do
+            {
+                strm.avail_out = CHUNK;
+                strm.next_out = out;
+                ret = inflate(&strm, Z_NO_FLUSH);
+                assert(ret != Z_STREAM_ERROR);  // state not clobbered
+                switch (ret) {
+                case Z_NEED_DICT:
+                    ret = Z_DATA_ERROR;     // and fall through
+                case Z_DATA_ERROR:
+                case Z_MEM_ERROR:
+                    (void)inflateEnd(&strm);
+                    return ret;
+                }
+                have = CHUNK - strm.avail_out;
+                if (fwrite(out, 1, have, dest) != have || ferror(dest)) {
+                    (void)inflateEnd(&strm);
+                    goto itisNonoGzip;
+                }
+            } while (strm.avail_out == 0);
+            // done when inflate() says it's done
+        } while (ret != Z_STREAM_END);
+        */
+    }
+    else
+    {
+        itisNonoGzip:
+        //Bind raw data if impossible to ucompress or if it is not a GZip
+        begin = begin_compressed;
+        size_ = size_compressed_;
+    }
+    pos = 0;
+}
+
+GZipMem_File_Reader::~GZipMem_File_Reader()
+{
+    if(isGZIP) free(begin);
+}
+
+long GZipMem_File_Reader::size() const { return size_; }
+
+long GZipMem_File_Reader::read_avail( void* p, long s )
+{
+    long r = remain();
+    if ( s > r )
+        s = r;
+    memcpy( p, begin + pos, s );
+    pos += s;
+    return s;
+}
+
+long GZipMem_File_Reader::tell() const { return pos; }
+
+blargg_err_t GZipMem_File_Reader::seek( long n )
+{
+    if ( n > size_ )
+        return eof_error;
+    pos = n;
+    return 0;
+}
+#endif
+
+
+
+
+
 
 // Callback_Reader
 
@@ -246,8 +363,6 @@ void Std_File_Reader::close()
 
 #ifdef HAVE_ZLIB_H
 
-#include "zlib.h"
-
 static const char* get_gzip_eof( const char* path, long* eof )
 {
 	FILE* file = fopen( path, "rb" );
@@ -255,7 +370,7 @@ static const char* get_gzip_eof( const char* path, long* eof )
 		return "Couldn't open file";
 	
 	unsigned char buf [4];
-	if ( fread( buf, 2, 1, file ) > 0 && buf [0] == 0x1F && buf [1] == 0x8B )
+    if ( fread( buf, 2, 1, file ) > 0 && buf [0] == 0x1F && buf [1] == 0x8B )
 	{
 		fseek( file, -4, SEEK_END );
 		fread( buf, 4, 1, file );

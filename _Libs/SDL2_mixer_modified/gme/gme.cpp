@@ -82,6 +82,7 @@ BLARGG_EXPORT const char* gme_identify_header( void const* header )
 		case BLARGG_4CHAR('S','A','P',0x0D): return "SAP";
 		case BLARGG_4CHAR('S','N','E','S'):  return "SPC";
 		case BLARGG_4CHAR('V','g','m',' '):  return "VGM";
+        case BLARGG_4CHAR(0x1f,0x8b,0x08, 0): return "VGZ";
 	}
 	return "";
 }

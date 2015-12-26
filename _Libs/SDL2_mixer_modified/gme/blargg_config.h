@@ -4,7 +4,7 @@
 #define BLARGG_CONFIG_H
 
 // Uncomment to use zlib for transparent decompression of gzipped files
-//#define HAVE_ZLIB_H
+#define HAVE_ZLIB_H
 
 // Uncomment and edit list to support only the listed game music types,
 // so that the others don't get linked in at all.

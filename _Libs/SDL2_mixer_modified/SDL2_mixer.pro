@@ -48,7 +48,7 @@ win32:{
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY HAVE_ZLIB_H
+USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -68,7 +68,7 @@ LIBS += -L../_builds/$$TARGETOS/lib
     LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
 }
 
-LIBS += -lmad -lm -lz
+LIBS += -lmad -lm
 
 linux-g++||unix:!macx:!android:{
     SDL2MixerH.path =  ../_builds/linux/include/SDL2
@@ -229,7 +229,18 @@ HEADERS += \
     ADLMIDI/adlmidi.h \
     ADLMIDI/dbopl.h \
     ADLMIDI/fraction.h \
-    music_midi_adl.h
+    music_midi_adl.h \
+    gme/ZLib/crc32.h \
+    gme/ZLib/deflate.h \
+    gme/ZLib/gzguts.h \
+    gme/ZLib/inffast.h \
+    gme/ZLib/inffixed.h \
+    gme/ZLib/inflate.h \
+    gme/ZLib/inftrees.h \
+    gme/ZLib/trees.h \
+    gme/ZLib/zconf.h \
+    gme/ZLib/zlib.h \
+    gme/ZLib/zutil.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -342,5 +353,20 @@ SOURCES += \
     ADLMIDI/dbopl.cpp \
     music_midi_adl.c \
     ADLMIDI/adlmidi.cpp \
-    ADLMIDI/adldata.cpp
+    ADLMIDI/adldata.cpp \
+    gme/ZLib/adler32.c \
+    gme/ZLib/compress.c \
+    gme/ZLib/crc32.c \
+    gme/ZLib/deflate.c \
+    gme/ZLib/gzclose.c \
+    gme/ZLib/gzlib.c \
+    gme/ZLib/gzread.c \
+    gme/ZLib/gzwrite.c \
+    gme/ZLib/infback.c \
+    gme/ZLib/inffast.c \
+    gme/ZLib/inflate.c \
+    gme/ZLib/inftrees.c \
+    gme/ZLib/trees.c \
+    gme/ZLib/uncompr.c \
+    gme/ZLib/zutil.c
 
