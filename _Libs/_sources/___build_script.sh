@@ -252,7 +252,7 @@ BuildSrc 'libpng-1.6.20' '--prefix='$InstallTo' --enable-shared=yes --enable-sta
 echo "=======SDL_Image========="
 #$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
 #$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
-BuildSrc 'SDL2_image-2.0.0' '--prefix='$InstallTo' --enable-shared=no --enable-static=yes --enable-bmp=yes --enable-gif=yes --enable-jpg=no --enable-jpg-shared=no --enable-lbm=no --enable-pcx=no --enable-png=yes --enable-png-shared=yes --enable-pnm=no --enable-tga=no --enable-tif=no --enable-tif-shared=no --enable-xcf=no --enable-xpm=no --enable-xv=no --enable-webp=no --enable-webp-shared=no'
+BuildSrc 'SDL2_image-2.0.0' '--prefix='$InstallTo' --disable-sdltest --enable-shared=no --enable-static=yes --enable-bmp=yes --enable-gif=yes --enable-jpg=no --enable-jpg-shared=no --enable-lbm=no --enable-pcx=no --enable-png=yes --enable-png-shared=yes --enable-pnm=no --enable-tga=no --enable-tif=no --enable-tif-shared=no --enable-xcf=no --enable-xpm=no --enable-xv=no --enable-webp=no --enable-webp-shared=no'
 
 ###########SDL2_mixer###########
 #cd SDL2_mixer-2.0.0
