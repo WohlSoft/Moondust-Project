@@ -55,7 +55,11 @@ if [ ! -d $curd"/bin/_Libs" ]; then
     if [ -d $curd"/bin/_Libs/SDL2.framework" ]; then
         rm -Rf $curd"/bin/_Libs/SDL2.framework"
     fi
+    if [ -d $curd"/bin/_Libs/SDL2_image.framework" ]; then
+        rm -Rf $curd"/bin/_Libs/SDL2_image.framework"
+    fi
     cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" $curd"/bin/_Libs"
+    cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
     cp -a $SCRDIR/_builds/macos/lib/*.dylib $curd"/bin/_Libs"
 fi
 
@@ -100,6 +104,7 @@ done
 echo "Installing libs for $TARGET_APP..."
 fetchPathsForApp # Fetch for executable
 relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the space
+relocateLibraryInCurrentApp "@rpath/" SDL2_image.framework/Versions/A/SDL2_image #note the space
 
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.dylib"
 fetchPathsForLib #fetch for our dylib
