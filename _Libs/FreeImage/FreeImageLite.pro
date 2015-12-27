@@ -8,19 +8,24 @@ DEFINES += VER_MAJOR=3 VER_MINOR=17.0 FREEIMAGE_LITE
 
 QMAKE_CFLAGS += -std=c99 -O3 -fPIC -fexceptions -fvisibility=hidden
 
-QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable \
+QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \
-                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable \
+                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-sign-compare -Wno-unused-value \
-                -Wno-type-limits -Wno-maybe-uninitialized -Wno-old-style-declaration
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable \
+                -Wno-type-limits -Wno-old-style-declaration
+QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function \
-                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable \
+                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter  \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-unused-value \
-                -Wno-type-limits -Wno-maybe-uninitialized -Wno-reorder
-macx: QMAKE_CXXFLAGS += -Wno-header-guard
+                -Wno-type-limits -Wno-reorder
+macx:{
+ QMAKE_CFLAGS+= -Wno-unused-const-variable -Wno-uninitialized
+ QMAKE_CXXFLAGS += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
+}
 !macx:{
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+ QMAKE_CFLAGS+= -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+ QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
 include (../../_common/lib_destdir.pri)
@@ -60,7 +65,7 @@ macx:{
     LIBS += -L../_builds/macos/lib
     INCLUDEPATH += ../_builds/macos/include
     QMAKE_CFLAGS += -Os -fexceptions -fvisibility=hidden
-    QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
+    QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -stdlib=libc++ -Wc++11-narrowing
     DEFINES += NO_LCMS __ANSI__ DISABLE_PERF_MEASUREMENT
 } else {
     #LIBS += -lSDL2
