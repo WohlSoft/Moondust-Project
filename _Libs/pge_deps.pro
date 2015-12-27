@@ -3,10 +3,11 @@ include(../_common/dest_dir.pri)
 
 TEMPLATE = subdirs
 CONFIG -= app_bundle
-SUBDIRS = SDL2MixerModded OOLua
+SUBDIRS = SDL2MixerModded FreeImageLite OOLua
 
 #PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 SDL2MixerModded.file = SDL2_mixer_modified/SDL2_mixer.pro
+FreeImageLite.file = FreeImage/FreeImageLite.pro
 OOLua.file = oolua/project/oolua.pro
 
 !android:!macx:{

@@ -36,15 +36,51 @@ struct PGE_Pix {
     Uint8 a;
 };
 
+/*!
+ * \brief Helpful graphical functions which are doing various work: I/O, Front+Mask blending, etc.
+ */
+struct FIBITMAP;
 class GraphicsHelps
 {
 public:
+    /*!
+     * \brief Initializes FreeImage
+     * \return always true
+     */
     static bool  initSDLImage();
+    /*!
+     * \brief DeInitializes FreeImage
+     */
     static void  closeSDLImage();
-    static SDL_Surface *loadImage(QString file);
+    /*!
+     * \brief Loads image from a disk
+     * \param file full or relative path to the file
+     * \param convertTo32bit need to convert image into 32bit RGBA
+     * \return FreeImage descriptor to loaded image
+     */
+    static FIBITMAP *loadImage(QString file, bool convertTo32bit=true);
+    /*!
+     * \brief Loads image from application resources
+     * \param file in-resource path to the file
+     * \return FreeImage descriptor to loaded image
+     */
+    static FIBITMAP *loadImageRC(QString file);
+
+    /*
     static void   putPixel(SDL_Surface *surface, int x, int y, Uint32 color);
     static Uint32 getPixel(SDL_Surface *surface, int x, int y);
-    static void mergeWithMask(SDL_Surface *image, QString pathToMask);
+    */
+
+    /*!
+     * \brief Merges mask and foreground image with bit blitting algorithm
+     * 1) draw mask over grey-filled image with bitwise AND per each pixel (white pixels are will not change background)
+     * 2) draw foreground over same image with bitwise OR per each pixel (black pixels are will not change background)
+     * 3) Calculate alpha-channel level dependent to black-white difference on the mask and on the foreground:
+     *    white on the mask is a full transparency, black - is a solid pixels area.
+     * \param image
+     * \param pathToMask
+     */
+    static void mergeWithMask(FIBITMAP *image, QString pathToMask);
 
     static QImage setAlphaMask(QImage image, QImage mask);
     static QImage fromBMP(QString& file);

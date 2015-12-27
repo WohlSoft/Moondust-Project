@@ -29,45 +29,80 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
-#include <SDL2/SDL_image.h>
+//#include <SDL2/SDL_image.h>
+#include <FreeImageLite.h>
 
 #include <QtDebug>
 
 bool GraphicsHelps::initSDLImage()
 {
-    int imgFlags = IMG_INIT_PNG;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-        return false;
-    }
+    FreeImage_Initialise();
+//    int imgFlags = IMG_INIT_PNG;
+//    if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
+//        return false;
+//    }
     return true;
 }
 
 void GraphicsHelps::closeSDLImage()
 {
-    IMG_Quit();
+    FreeImage_DeInitialise();
+    //IMG_Quit();
 }
 
 
-SDL_Surface* GraphicsHelps::loadImage(QString file)
+FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
-    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
-    if(img)
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
+    if(!img) { return NULL; }
+    if(convertTo32bit)
     {
-        if(img->format->format!=SDL_PIXELFORMAT_RGBA8888)//!=
-        {
-            SDL_Surface* formattedSurf = SDL_ConvertSurfaceFormat(img,
-                                                                  SDL_PIXELFORMAT_RGBA8888,
-                                                                  0);
-            SDL_FreeSurface(img);
-            return formattedSurf;
-        }
-    } else {
-        qWarning()<<"Failed to load image:" << file << " Error string: "<< IMG_GetError();
+        FIBITMAP* temp;
+        temp = FreeImage_ConvertTo32Bits(img);
+        if(!temp) { return NULL; }
+        FreeImage_Unload(img);
+        img = temp;
     }
+//    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
+//    if(img)
+//    {
+//        if(img->format->format!=SDL_PIXELFORMAT_RGBA8888)//!=
+//        {
+//            SDL_Surface* formattedSurf = SDL_ConvertSurfaceFormat(img,
+//                                                                  SDL_PIXELFORMAT_RGBA8888,
+//                                                                  0);
+//            SDL_FreeSurface(img);
+//            return formattedSurf;
+//        }
+//    } else {
+//        qWarning()<<"Failed to load image:" << file << " Error string: "<< IMG_GetError();
+//    }
     return img;
 }
 
+FIBITMAP* GraphicsHelps::loadImageRC(QString file)
+{
+    QFile _file(file);
+    _file.open(QIODevice::ReadOnly);
+    QByteArray data=_file.readAll();
+    FIMEMORY x; x.data=data.data();
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory( &x, data.size() );
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_LoadFromMemory(formato, &x, 0);
+    if(!img) { return NULL; }
 
+    FIBITMAP* temp;
+    temp = FreeImage_ConvertTo32Bits(img);
+    if(!temp) { return NULL; }
+    FreeImage_Unload(img);
+    img = temp;
+
+    return img;
+}
+
+/*
 void GraphicsHelps::putPixel(SDL_Surface * surface, int x, int y, Uint32 color)
 {
     if( SDL_MUSTLOCK(surface) )
@@ -88,55 +123,63 @@ Uint32 GraphicsHelps::getPixel(SDL_Surface *surface, int x, int y)
     pixel += (y * surface->pitch) + (x * sizeof(Uint32));
     return *((Uint32*)pixel);
 }
+*/
 
 
-
-void GraphicsHelps::mergeWithMask(SDL_Surface *image, QString pathToMask)
+void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
 {
     if(!image) return;
     if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
-    SDL_Surface* mask = loadImage( pathToMask.toUtf8().data() );
+    FIBITMAP* mask = loadImage( pathToMask );
     if(!mask) return;//Nothing to do
 
-    for(int y=0; (y<image->h) && (y<mask->h); y++ )
-        for(int x=0; (x<image->w) && (x<mask->w); x++ )
-        {
-            PGE_Pix Fpix;
-            SDL_GetRGBA(getPixel(image, x, y), image->format,
-                        &Fpix.r, &Fpix.g, &Fpix.b, &Fpix.a);
-            PGE_Pix Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
-            PGE_Pix Spix;
-            SDL_GetRGBA(getPixel(mask, x, y), mask->format,
-                        &Spix.r, &Spix.g, &Spix.b, &Spix.a);
-            PGE_Pix Npix = {0x00, 0x00, 0x00, 0xFF};
+    unsigned int img_w = FreeImage_GetWidth(image);
+    unsigned int img_h = FreeImage_GetHeight(image);
+    unsigned int mask_w = FreeImage_GetWidth(mask);
+    unsigned int mask_h = FreeImage_GetHeight(mask);
 
-            Npix.r = (Dpix.r & Spix.r);
-            Npix.g = (Dpix.g & Spix.g);
-            Npix.b = (Dpix.b & Spix.b);
-            Npix.r = (Npix.r | Fpix.r);
-            Npix.g = (Npix.g | Fpix.g);
-            Npix.b = (Npix.b | Fpix.b);
+    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++ )
+    {
+        for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
+        {
+            RGBQUAD Fpix;
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+//            SDL_GetRGBA(getPixel(image, x, y), image->format,
+//                        &Fpix.r, &Fpix.g, &Fpix.b, &Fpix.a);
+            RGBQUAD Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
+            RGBQUAD Spix;
+            FreeImage_GetPixelColor(mask, x, y, &Spix);
+//            SDL_GetRGBA(getPixel(mask, x, y), mask->format,
+//                        &Spix.r, &Spix.g, &Spix.b, &Spix.a);
+            RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};
+
+            Npix.rgbRed = (Dpix.rgbRed & Spix.rgbRed);
+            Npix.rgbGreen = (Dpix.rgbGreen & Spix.rgbGreen);
+            Npix.rgbBlue = (Dpix.rgbBlue & Spix.rgbBlue);
+            Npix.rgbRed = (Npix.rgbRed | Fpix.rgbRed);
+            Npix.rgbGreen = (Npix.rgbGreen | Fpix.rgbGreen);
+            Npix.rgbBlue = (Npix.rgbBlue | Fpix.rgbBlue);
             int newAlpha= 255-
-                      ( ( Spix.r+
-                          Spix.g+
-                          Spix.b) / 3);
-            if( (Spix.r>240) //is almost White
-                            &&(Spix.g>240)
-                            &&(Spix.b>240))
+                      ( ( int(Spix.rgbRed)+
+                          int(Spix.rgbGreen)+
+                          int(Spix.rgbBlue) ) / 3);
+            if(  (Spix.rgbRed>240u) //is almost White
+               &&(Spix.rgbGreen>240u)
+               &&(Spix.rgbBlue>240u))
             {
                 newAlpha = 0;
             }
 
-            newAlpha= newAlpha+( ( Fpix.r+
-                                   Fpix.g+
-                                   Fpix.b) / 3);
+            newAlpha= newAlpha+( ( int(Fpix.rgbRed)+
+                                   int(Fpix.rgbGreen)+
+                                   int(Fpix.rgbBlue) ) / 3);
             if(newAlpha > 255) newAlpha=255;
-            Npix.a = newAlpha;
-            putPixel(image, x, y,
-                 SDL_MapRGBA(image->format,
-                             Npix.r, Npix.g, Npix.b, Npix.a));
+            Npix.rgbReserved = newAlpha;
+
+            FreeImage_SetPixelColor(image, x, y, &Npix);
         }
-    SDL_FreeSurface(mask);
+    }
+    FreeImage_Unload(mask);
 }
 
 

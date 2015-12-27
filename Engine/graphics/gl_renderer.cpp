@@ -36,6 +36,8 @@
     #endif
 #endif
 
+#include <FreeImageLite.h>
+
 #include <audio/pge_audio.h>
 
 #include <QDir>
@@ -153,7 +155,30 @@ bool GlRenderer::uninit()
 
 void GlRenderer::initDummyTexture()
 {
-    loadTextureP(_dummyTexture, "://images/_broken.png");
+    //loadTextureP(_dummyTexture, "://images/_broken.png");
+    //FIBITMAP* sourceImage;
+    QImage image = GraphicsHelps::convertToGLFormat(QImage("://images/_broken.png")).mirrored(false, true);
+    //sourceImage = GraphicsHelps::loadImageRC("://images/_broken.png");
+    int w = image.width();//FreeImage_GetWidth(sourceImage);
+    int h = image.height();//FreeImage_GetHeight(sourceImage);
+    //FreeImage_FlipVertical(sourceImage);
+    _dummyTexture.nOfColors = 4;
+    _dummyTexture.format = GL_BGRA;
+    _dummyTexture.w = w;
+    _dummyTexture.h = h;
+    GLubyte* textura= (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
+
+    glEnable(GL_TEXTURE_2D);
+    glGenTextures( 1, &(_dummyTexture.texture) );
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture );
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture );
+    glTexImage2D(GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glDisable(GL_TEXTURE_2D);
+    _dummyTexture.inited = true;
+    //FreeImage_Unload(sourceImage);
 }
 
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
@@ -166,7 +191,8 @@ PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
 {
     //QImage sourceImage;
-    SDL_Surface * sourceImage;
+    //SDL_Surface * sourceImage;
+    FIBITMAP* sourceImage;
 
     // Load the OpenGL texture
     //sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
@@ -191,23 +217,47 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
     }
 
-    //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
-    Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
-    target.ColorUpper.r = float((upperColor>>24)&0xFF)/255.0f;
-    target.ColorUpper.g = float((upperColor>>16)&0xFF)/255.0f;
-    target.ColorUpper.b = float((upperColor>>8)&0xFF)/255.0f;
+    int w = FreeImage_GetWidth(sourceImage);
+    int h = FreeImage_GetHeight(sourceImage);
 
-    Uint8 lowerColor = GraphicsHelps::getPixel(sourceImage, 0, sourceImage->h-1);//sourceImage.pixel(0, sourceImage.height()-1);
-    target.ColorLower.r = float((lowerColor>>24)&0xFF)/255.0f;
-    target.ColorLower.g = float((lowerColor>>16)&0xFF)/255.0f;
-    target.ColorLower.b = float((lowerColor>>8)&0xFF)/255.0f;
+    if((w<=0) || (h<=0))
+    {
+        FreeImage_Unload(sourceImage);
+        WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
+            .arg(path).arg("Zero image size!"));
+        target = _dummyTexture;
+        return;
+    }
+
+    //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
+    //Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
+    //target.ColorUpper.r = float((upperColor>>24)&0xFF)/255.0f;
+    //target.ColorUpper.g = float((upperColor>>16)&0xFF)/255.0f;
+    //target.ColorUpper.b = float((upperColor>>8)&0xFF)/255.0f;
+    RGBQUAD upperColor;
+    FreeImage_GetPixelColor(sourceImage, 0, 0, &upperColor);
+    target.ColorUpper.r = upperColor.rgbRed;
+    target.ColorUpper.b = upperColor.rgbBlue;
+    target.ColorUpper.g = upperColor.rgbGreen;
+
+    //Uint8 lowerColor = GraphicsHelps::getPixel(sourceImage, 0, sourceImage->h-1);//sourceImage.pixel(0, sourceImage.height()-1);
+    //target.ColorLower.r = float((lowerColor>>24)&0xFF)/255.0f;
+    //target.ColorLower.g = float((lowerColor>>16)&0xFF)/255.0f;
+    //target.ColorLower.b = float((lowerColor>>8)&0xFF)/255.0f;
+    RGBQUAD lowerColor;
+    FreeImage_GetPixelColor(sourceImage, 0, h-1, &lowerColor);
+    target.ColorUpper.r = upperColor.rgbRed;
+    target.ColorUpper.b = upperColor.rgbBlue;
+    target.ColorUpper.g = upperColor.rgbGreen;
+
+    FreeImage_FlipVertical(sourceImage);
 
     //qDebug() << path << sourceImage.size();
 
     //sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
-    target.format = GL_ABGR_EXT;
+    target.format = GL_BGRA;
 
     glEnable(GL_TEXTURE_2D);
     // Have OpenGL generate a texture object handle for us
@@ -217,17 +267,19 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
     // Edit the texture object's image data using the information SDL_Surface gives us
-    target.w = sourceImage->w;
-    target.h = sourceImage->h;
+    target.w = w;
+    target.h = h;
     // Set the texture's stretching properties
+
+    GLubyte* textura= (GLubyte*)FreeImage_GetBits(sourceImage);
 
     // Bind the texture object
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
 //    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
 //         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage->w, sourceImage->h,
-         0, target.format, GL_UNSIGNED_BYTE, sourceImage->pixels );
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, w, h,
+           0, target.format, GL_UNSIGNED_BYTE, textura );
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -237,7 +289,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     target.inited = true;
 
-    SDL_FreeSurface(sourceImage);
+    //SDL_FreeSurface(sourceImage);
+    FreeImage_Unload(sourceImage);
 
     return;
 }
@@ -299,7 +352,7 @@ void GlRenderer::makeShot()
 
     uchar* pixels = new uchar[4*w*h];
     glLoadIdentity();
-    glReadPixels(offset_x, offset_y, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(offset_x, offset_y, w, h, GL_BGR, GL_UNSIGNED_BYTE, pixels);
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
@@ -313,8 +366,23 @@ int GlRenderer::makeShot_action(void *_pixels)
 {
     PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
 
-    QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
-    shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
+    FIBITMAP* shotImg = FreeImage_ConvertFromRawBits((BYTE*)shoot->pixels, shoot->w, shoot->h, 3*shoot->w, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    if(!shotImg)
+    {
+        delete []shoot->pixels;
+        shoot->pixels=NULL;
+        delete []shoot;
+        return 0;
+    }
+
+    if((shoot->w!=window_w)||(shoot->h!=window_h))
+    {
+        FreeImage_Rescale(shotImg, window_w, window_h);
+    }
+    FreeImage_ConvertTo32Bits(shotImg);
+
+    //QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
+    //shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
     if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
@@ -324,8 +392,15 @@ int GlRenderer::makeShot_action(void *_pixels)
             .arg(date.year()).arg(date.month()).arg(date.day())
             .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
 
-    qDebug() << saveTo << shotImg.width() << shotImg.height();
-    shotImg.save(saveTo, "PNG");
+    qDebug() << saveTo << shoot->w << shoot->h;
+    //shotImg.save(saveTo, "PNG");
+    if(FreeImage_HasPixels(shotImg) == FALSE) {
+        qWarning() <<"Can't save screenshot: no pixel data!";
+    } else {
+        FreeImage_Save(FIF_PNG, shotImg, saveTo.toUtf8().data(), PNG_Z_BEST_COMPRESSION);
+    }
+
+    FreeImage_Unload(shotImg);
 
     delete []shoot->pixels;
     shoot->pixels=NULL;
