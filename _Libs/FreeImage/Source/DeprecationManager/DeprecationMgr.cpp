@@ -23,7 +23,7 @@
 #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
 #endif 
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include <windows.h>
 #endif // _WIN32
 #include "FreeImage.h"
@@ -36,7 +36,7 @@ DeprecationMgr::DeprecationMgr() {
 }
 
 DeprecationMgr::~DeprecationMgr() {
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 	if (!m_functions.empty()) {
 		OutputDebugString( "*************************************************************************************\n" );
 		OutputDebugString( "This is a warning, because you use one or more deprecated functions.\nContinuing to use these functions might eventually render your program uncompilable.\nThe following functions are deprecated:\n\n" );
@@ -70,7 +70,7 @@ DeprecationMgr::GetInstance() {
 
 void
 DeprecationMgr::AddDeprecatedFunction(const char *old_function_name, const char *new_function_name, const void *frame_ptr) {
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 	int *preturn = (int *)frame_ptr + 1; // usual return address @ [ebp+4]
 	int called_from = IsBadReadPtr(preturn, 4) ? 0 : *preturn;
 

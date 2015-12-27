@@ -26,7 +26,7 @@
 #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
 #endif
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include <windows.h>
 #include <io.h>
 #else
@@ -192,7 +192,7 @@ PluginList::IsEmpty() const {
 
 PluginList::~PluginList() {
 	for (map<int, PluginNode *>::iterator i = m_plugin_map.begin(); i != m_plugin_map.end(); ++i) {
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 		if ((*i).second->m_instance != NULL) {
 			FreeLibrary((HINSTANCE)(*i).second->m_instance);
 		}
@@ -283,7 +283,7 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
             #endif
 			// external plugin initialization
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 			if (!load_local_plugins_only) {
 				int count = 0;
 				char buffer[MAX_PATH + 200];
@@ -519,7 +519,7 @@ FreeImage_RegisterLocalPlugin(FI_InitProc proc_address, const char *format, cons
 	return s_plugins->AddNode(proc_address, NULL, format, description, extension, regexpr);
 }
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 FREE_IMAGE_FORMAT DLL_CALLCONV
 FreeImage_RegisterExternalPlugin(const char *path, const char *format, const char *description, const char *extension, const char *regexpr) {
 	if (path != NULL) {

@@ -3,10 +3,11 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG -= dll
 CONFIG += static
+CONFIG += c++11
 
 DEFINES += VER_MAJOR=3 VER_MINOR=17.0 FREEIMAGE_LITE
 
-QMAKE_CFLAGS += -std=c99 -O3 -fPIC -fexceptions -fvisibility=hidden
+QMAKE_CFLAGS += -std=c99
 
 QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \
@@ -40,18 +41,21 @@ RC_FILE = FreeImage.rc
 INCLUDEPATH += $$PWD/Source
 
 win32:{
-    LIBS += -L../_builds/win32/lib -lws2_32
+    LIBS += -L../_builds/win32/lib #-lws2_32
     INCLUDEPATH += ../_builds/win32/include
-    DEFINES += WINVER=0x0500 OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB FREEIMAGE_EXPORTS DISABLE_PERF_MEASUREMENT
+    DEFINES += WINVER=0x0500
+    #DEFINES += FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
+    DEFINES += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
     QMAKE_CXXFLAGS += -include stdexcept
     QMAKE_LFLAGS += -Wl,--subsystem,windows:5.0,--major-os-version,5
-    QMAKE_CFLAGS += -O3 -fexceptions
-    QMAKE_CXXFLAGS += -O3 -fexceptions -Wno-ctor-dtor-privacy
+    QMAKE_CFLAGS += -g2 -fexceptions
+    QMAKE_CXXFLAGS += -g2 -fexceptions -Wno-ctor-dtor-privacy
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
     INCLUDEPATH += ../_builds/linux/include
     CONFIG += unversioned_libname
+    #-O3 -fPIC -fexceptions -fvisibility=hidden
     QMAKE_CFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden
     QMAKE_CXXFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
     DEFINES += OPJ_STATIC NO_LCMS NO_JASPER DISABLE_PERF_MEASUREMENT __ANSI__
