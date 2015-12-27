@@ -323,6 +323,7 @@ bool LevelScene::init_items()
                         (float)y,
                         (float)width, (float)height
                     );
+        camera.setRenderObjectsCacheEnabled(i==0);
         camera.changeSection(t_sct, true);
         camera.setPos(x-camera.w()/2 + d.width()/2,
                       y-camera.h()/2 + d.height()/2);

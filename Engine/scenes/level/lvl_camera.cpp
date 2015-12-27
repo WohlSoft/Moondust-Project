@@ -57,6 +57,7 @@ PGE_LevelCamera::PGE_LevelCamera()
     }
     _objects_to_render_stored=0;
     _objects_to_render_recent=0;
+    _disable_cache_mode=false;
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
@@ -84,6 +85,7 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
     _objects_to_render_recent = cam._objects_to_render_recent;
     _objects_to_render=(PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
     memcpy(_objects_to_render, cam._objects_to_render, _objects_to_render_max);
+    _disable_cache_mode=cam._disable_cache_mode;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -149,28 +151,34 @@ void PGE_LevelCamera::update(float ticks)
 
     if(isAutoscroll) processAutoscroll(ticks);
 
-    //Check exists items and remove invizible
-    int offset=0;
-    for(int i=0; i<_objects_to_render_stored; i++)
+    if(_disable_cache_mode)
     {
+        _objects_to_render_stored=0;
+        _objects_to_render_recent=0;
+    } else {
+        //Check exists items and remove invizible
+        int offset=0;
+        for(int i=0; i<_objects_to_render_stored; i++)
+        {
+            if(offset > 0)
+            {
+                _objects_to_render[i] = _objects_to_render[i+offset];
+            }
+            if(_objects_to_render[i]->_vizible_on_screen)
+            {
+                _objects_to_render[i]->_vizible_on_screen=false;
+            } else {
+                _objects_to_render[i]->_render_list=false;
+                _objects_to_render[i]->_vizible_on_screen=false;
+                offset++;
+                _objects_to_render_stored--;
+                i--;
+            }
+        }
         if(offset > 0)
         {
-            _objects_to_render[i] = _objects_to_render[i+offset];
+            _objects_to_render_recent=_objects_to_render_stored;
         }
-        if(_objects_to_render[i]->_vizible_on_screen)
-        {
-            _objects_to_render[i]->_vizible_on_screen=false;
-        } else {
-            _objects_to_render[i]->_render_list=false;
-            _objects_to_render[i]->_vizible_on_screen=false;
-            offset++;
-            _objects_to_render_stored--;
-            i--;
-        }
-    }
-    if(offset > 0)
-    {
-        _objects_to_render_recent=_objects_to_render_stored;
     }
 
     queryItems(posRect);
@@ -260,6 +268,11 @@ void PGE_LevelCamera::setRenderObjects_count(int count)
     _objects_to_render_recent=count;
 }
 
+void PGE_LevelCamera::setRenderObjectsCacheEnabled(bool enabled)
+{
+    _disable_cache_mode=!enabled;
+}
+
 bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 {
     PGE_LevelCamera* list = static_cast<PGE_LevelCamera* >(arg);
@@ -267,7 +280,10 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
     {
         if(item)
         {
-            item->_vizible_on_screen = true;
+            if(!list->_disable_cache_mode)
+            {
+                item->_vizible_on_screen = true;
+            }
             bool renderable=false;
             if(!item->isVisible())
             {
@@ -308,7 +324,7 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
             }
 
         checkRenderability:
-            if(renderable && !item->_render_list)
+            if(renderable && (!item->_render_list || list->_disable_cache_mode))
             {
                 if(list->_objects_to_render_stored >= list->_objects_to_render_max-2)
                 {
@@ -321,7 +337,10 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                 }
                 list->_objects_to_render[list->_objects_to_render_stored]=item;
                 list->_objects_to_render_stored++;
-                item->_render_list=true;
+                if(!list->_disable_cache_mode)
+                {
+                    item->_render_list=true;
+                }
             }
         }
     }

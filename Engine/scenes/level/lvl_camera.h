@@ -68,6 +68,7 @@ public:
     int              renderObjects_max();
     int              renderObjects_count();
     void             setRenderObjects_count(int count);
+    void             setRenderObjectsCacheEnabled(bool enabled);
 
     LevelSection* section;
     LVL_Section * cur_section;
@@ -95,11 +96,11 @@ private:
     void _applyLimits();
     void sortElements();
     //PGE_RenderList     objects_to_render;
-
     PGE_Phys_Object** _objects_to_render;
     int               _objects_to_render_max;
     int               _objects_to_render_stored;
     int               _objects_to_render_recent;
+    bool              _disable_cache_mode;
 };
 
 #endif // LVL_CAMERA_H
