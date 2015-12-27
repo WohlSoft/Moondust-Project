@@ -25,7 +25,7 @@
 
 # include "global.h"
 
-# include <string.h>
+//# include <string.h>
 # include <mad.h>
 
 # include "mad_resample.h"
