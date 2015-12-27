@@ -44,7 +44,7 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
-LIBS += -L$$PWD/../_Libs/_builds/commonlibs
+#LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 DEFINES += PGE_ENGINE USE_LUA_JIT PGE_FILES_QT
 
 

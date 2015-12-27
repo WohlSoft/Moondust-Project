@@ -60,8 +60,8 @@ macx:{
     LIBS += -L../_builds/macos/lib
     INCLUDEPATH += ../_builds/macos/include
     QMAKE_CFLAGS += -Os -fexceptions -fvisibility=hidden
-    QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden
-    DEFINES += NO_LCMS
+    QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
+    DEFINES += NO_LCMS __ANSI__ DISABLE_PERF_MEASUREMENT
 } else {
     #LIBS += -lSDL2
 }
