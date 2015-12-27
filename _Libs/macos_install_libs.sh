@@ -55,11 +55,11 @@ if [ ! -d $curd"/bin/_Libs" ]; then
     if [ -d $curd"/bin/_Libs/SDL2.framework" ]; then
         rm -Rf $curd"/bin/_Libs/SDL2.framework"
     fi
-    if [ -d $curd"/bin/_Libs/SDL2_image.framework" ]; then
-        rm -Rf $curd"/bin/_Libs/SDL2_image.framework"
-    fi
+    #if [ -d $curd"/bin/_Libs/SDL2_image.framework" ]; then
+    #    rm -Rf $curd"/bin/_Libs/SDL2_image.framework"
+    #fi
     cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" $curd"/bin/_Libs"
-    cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
+    #cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
     cp -a $SCRDIR/_builds/macos/lib/*.dylib $curd"/bin/_Libs"
 fi
 
@@ -130,20 +130,20 @@ EXECUTABLE_PATH="_Libs/libmad.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libmodplug.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libz.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libz.1.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libz.1.2.8.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libpng.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libpng16.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libpng16.16.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libpng16.16.20.0.dylib"
-fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libz.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libz.1.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libz.1.2.8.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libpng.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libpng16.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libpng16.16.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libpng16.16.20.0.dylib"
+#fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libFLAC.8.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
