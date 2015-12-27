@@ -108,12 +108,12 @@ relocateLibraryInCurrentApp "@rpath/" SDL2_image.framework/Versions/A/SDL2_image
 
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.0.dylib"
-fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.0.dylib"
+#fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libogg.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libvorbis.dylib"

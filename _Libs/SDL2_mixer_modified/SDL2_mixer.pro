@@ -28,7 +28,9 @@ win32:{
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
     INCLUDEPATH += ../_builds/linux/include
+    CONFIG += plugin
     CONFIG += unversioned_libname
+    CONFIG += skip_target_version_ext
 }
 android:{
     LIBS += -L../_builds/android/lib
@@ -37,8 +39,9 @@ android:{
 macx:{
     LIBS += -L../_builds/macos/lib
     INCLUDEPATH += ../_builds/macos/include
-    LIBS += -F../_builds/macos/frameworks -framework SDL2
     INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    CONFIG += plugin
 } else {
     LIBS += -lSDL2
 }
