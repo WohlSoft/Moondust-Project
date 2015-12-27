@@ -40,7 +40,7 @@ RC_FILE = FreeImage.rc
 INCLUDEPATH += $$PWD/Source
 
 win32:{
-    LIBS += -L../_builds/win32/lib -lws2_32
+    LIBS += -L../_builds/win32/lib #-lws2_32
     INCLUDEPATH += ../_builds/win32/include
     DEFINES += WINVER=0x0500 OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB FREEIMAGE_EXPORTS DISABLE_PERF_MEASUREMENT
     QMAKE_CXXFLAGS += -include stdexcept
