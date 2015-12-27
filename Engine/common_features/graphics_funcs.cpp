@@ -29,7 +29,9 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
-//#include <SDL2/SDL_image.h>
+#ifdef _WIN32
+#define FREEIMAGE_LIB
+#endif
 #include <FreeImageLite.h>
 
 #include <QtDebug>

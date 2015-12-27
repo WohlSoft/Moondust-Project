@@ -36,6 +36,9 @@
     #endif
 #endif
 
+#ifdef _WIN32
+#define FREEIMAGE_LIB
+#endif
 #include <FreeImageLite.h>
 
 #include <audio/pge_audio.h>

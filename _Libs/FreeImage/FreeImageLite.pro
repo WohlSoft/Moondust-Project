@@ -43,13 +43,13 @@ INCLUDEPATH += $$PWD/Source
 win32:{
     LIBS += -L../_builds/win32/lib #-lws2_32
     INCLUDEPATH += ../_builds/win32/include
-    DEFINES += WINVER=0x0500
+    #DEFINES += WINVER=0x0500
     #DEFINES += FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
-    DEFINES += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
-    QMAKE_CXXFLAGS += -include stdexcept
-    QMAKE_LFLAGS += -Wl,--subsystem,windows:5.0,--major-os-version,5
-    QMAKE_CFLAGS += -g2 -fexceptions
-    QMAKE_CXXFLAGS += -g2 -fexceptions -Wno-ctor-dtor-privacy
+    DEFINES += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB #__ANSI__ DISABLE_PERF_MEASUREMENT
+    #QMAKE_CXXFLAGS += -include stdexcept
+    #QMAKE_LFLAGS += -Wl,--subsystem,windows:5.0,--major-os-version,5
+    #QMAKE_CFLAGS += -g2 -fexceptions
+    #QMAKE_CXXFLAGS += -g2 -fexceptions -Wno-ctor-dtor-privacy
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
@@ -172,7 +172,6 @@ SOURCES += \
     Source/FreeImage/BitmapAccess.cpp \
     Source/FreeImage/ColorLookup.cpp \
     Source/FreeImage/FreeImage.cpp \
-    Source/FreeImage/FreeImageC.c \
     Source/FreeImage/FreeImageIO.cpp \
     Source/FreeImage/GetType.cpp \
     Source/FreeImage/MemoryIO.cpp \

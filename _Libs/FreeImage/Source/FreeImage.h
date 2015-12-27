@@ -783,7 +783,7 @@ typedef void (DLL_CALLCONV *FI_InitProc)(Plugin *plugin, int format_id);
 #define FI_RESCALE_OMIT_METADATA	0x02	//! do not copy metadata to the rescaled image
 
 
-#ifdef __cplusplus
+#if defined(__cplusplus) && !defined(__MINGW32__)
 extern "C" {
 #endif
 
@@ -1151,7 +1151,7 @@ DLL_API FIBITMAP *DLL_CALLCONV FreeImage_MultigridPoissonSolver(FIBITMAP *Laplac
 #pragma option pop
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus) && !defined(__MINGW32__)
 }
 #endif
 
