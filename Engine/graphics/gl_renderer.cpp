@@ -364,9 +364,10 @@ void GlRenderer::makeShot()
 
 int GlRenderer::makeShot_action(void *_pixels)
 {
-    PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
+    PGE_GL_shoot *shoot = (PGE_GL_shoot*)_pixels;
 
-    FIBITMAP* shotImg = FreeImage_ConvertFromRawBits((BYTE*)shoot->pixels, shoot->w, shoot->h, 3*shoot->w, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    FIBITMAP* shotImg = FreeImage_ConvertFromRawBits((BYTE*)shoot->pixels, shoot->w, shoot->h,
+                                     3*shoot->w+shoot->w%4, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
     if(!shotImg)
     {
         delete []shoot->pixels;
@@ -375,11 +376,33 @@ int GlRenderer::makeShot_action(void *_pixels)
         return 0;
     }
 
+    FIBITMAP* temp;
+    temp = FreeImage_ConvertTo32Bits(shotImg);
+    if(!temp)
+    {
+        FreeImage_Unload(shotImg);
+        delete []shoot->pixels;
+        shoot->pixels=NULL;
+        delete []shoot;
+        return 0;
+    }
+    FreeImage_Unload(shotImg);
+    shotImg = temp;
+
     if((shoot->w!=window_w)||(shoot->h!=window_h))
     {
-        FreeImage_Rescale(shotImg, window_w, window_h);
+        FIBITMAP* temp;
+        temp = FreeImage_Rescale(shotImg, window_w, window_h, FILTER_BOX);
+        if(!temp) {
+            FreeImage_Unload(shotImg);
+            delete []shoot->pixels;
+            shoot->pixels=NULL;
+            delete []shoot;
+            return 0;
+        }
+        FreeImage_Unload(shotImg);
+        shotImg = temp;
     }
-    FreeImage_ConvertTo32Bits(shotImg);
 
     //QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
     //shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
