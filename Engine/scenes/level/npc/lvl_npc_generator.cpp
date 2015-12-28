@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 void LVL_Npc::updateGenerator(float tickTime)
 {
@@ -34,9 +34,9 @@ void LVL_Npc::updateGenerator(float tickTime)
         def.y=round(posY());
         def.generator=false;
         def.layer="Spawned NPCs";
-        LvlSceneP::s->spawnNPC(def,
-                               (LevelScene::NpcSpawnType)generatorType,
-                               (LevelScene::NpcSpawnDirection)generatorDirection, false);
+        _scene->spawnNPC(def,
+                        (LevelScene::NpcSpawnType)generatorType,
+                        (LevelScene::NpcSpawnDirection)generatorDirection, false);
     }
 
 }

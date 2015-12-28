@@ -18,7 +18,7 @@
 
 #include "../lvl_npc.h"
 #include "../lvl_section.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 void LVL_Npc::update(float tickTime)
 {
@@ -105,6 +105,6 @@ void LVL_Npc::update(float tickTime)
     try{
         lua_onLoop(tickTime);
     } catch (luabind::error& e) {
-        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        _scene->getLuaEngine()->postLateShutdownError(e);
     }
 }

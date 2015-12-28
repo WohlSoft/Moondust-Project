@@ -5,6 +5,7 @@
 #include <common_features/rectf.h>
 #include <QHash>
 
+class LevelScene;
 class InAreaDetector : public BasicDetector
 {
 public:

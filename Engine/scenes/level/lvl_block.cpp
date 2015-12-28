@@ -19,11 +19,11 @@
 #include "lvl_block.h"
 #include "../../data_configs/config_manager.h"
 
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 #include <audio/pge_audio.h>
 #include <graphics/gl_renderer.h>
 
-LVL_Block::LVL_Block() : PGE_Phys_Object()
+LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLBlock;
 
@@ -57,7 +57,7 @@ LVL_Block::~LVL_Block()
 void LVL_Block::init()
 {
     if(_isInited) return;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     _isInited=true;
 }
@@ -73,7 +73,7 @@ void LVL_Block::transformTo(long id, int type)
         t.id=id;
         t.type=type;
 
-        LvlSceneP::s->block_transforms.push_back(t);
+        _scene->block_transforms.push_back(t);
     }
     if(type==1)//Other NPC
     {
@@ -96,8 +96,8 @@ void LVL_Block::transformTo_x(long id)
         if(setup->switch_Block &&
                 ( ((setup->switch_ID != newSetup->switch_ID) && (newSetup->switch_Block)) || (!newSetup->switch_Block) ) )
         {
-            if(LvlSceneP::s->switch_blocks.contains(setup->switch_ID))
-                LvlSceneP::s->switch_blocks[setup->switch_ID].removeAll(this);
+            if(_scene->switch_blocks.contains(setup->switch_ID))
+                _scene->switch_blocks[setup->switch_ID].removeAll(this);
         }
     } else
         newSetup = &ConfigManager::lvl_block_indexes[data.id];
@@ -173,9 +173,9 @@ void LVL_Block::transformTo_x(long id)
     // Register switch block
     if(setup->switch_Block)
     {
-        if(!LvlSceneP::s->switch_blocks.contains(setup->switch_ID) )
-            LvlSceneP::s->switch_blocks[setup->switch_ID].clear();
-        LvlSceneP::s->switch_blocks[setup->switch_ID].push_back(this);
+        if(!_scene->switch_blocks.contains(setup->switch_ID) )
+            _scene->switch_blocks[setup->switch_ID].clear();
+        _scene->switch_blocks[setup->switch_ID].push_back(this);
     }
 
     collide_npc=collide_player;
@@ -478,7 +478,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             npcDef.y=data.y-(hitDirection==up?data.h:(-data.h*2));
 
             LVL_Npc * npc;
-            npc = LvlSceneP::s->spawnNPC(npcDef,
+            npc = _scene->spawnNPC(npcDef,
                                         (npcSet.block_spawn_type==0)?
                                              LevelScene::GENERATOR_WARP:
                                              LevelScene::GENERATOR_APPEAR,
@@ -503,7 +503,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(setup->switch_Button)
     {
         triggerEvent=true;
-        LvlSceneP::s->toggleSwitch(setup->switch_ID);
+        _scene->toggleSwitch(setup->switch_ID);
     }
 
     if(setup->hitable)
@@ -521,13 +521,13 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(triggerEvent && (!data.event_hit.isEmpty()))
     {
-        LvlSceneP::s->events.triggerEvent(data.event_hit);
+        _scene->events.triggerEvent(data.event_hit);
     }
 
     if(doFade)
     {
         if(!isFading())
-            LvlSceneP::s->fading_blocks.push_back(this);
+            _scene->fading_blocks.push_back(this);
         fadeOffset=0.f;
         setFade(5, 1.0f, 0.07f);
     }
@@ -552,17 +552,17 @@ void LVL_Block::destroy(bool playEffect)
         PGE_Audio::playSound(setup->destroy_sound_id);
     destroyed=true;
     QString oldLayer=data.layer;
-    LvlSceneP::s->layers.removeRegItem(data.layer, this);
+    _scene->layers.removeRegItem(data.layer, this);
     data.layer="Destroyed Blocks";
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
     if(!data.event_destroy.isEmpty())
     {
-        LvlSceneP::s->events.triggerEvent(data.event_destroy);
+        _scene->events.triggerEvent(data.event_destroy);
     }
     if(!data.event_emptylayer.isEmpty())
     {
-        if(LvlSceneP::s->layers.isEmpty(oldLayer))
-            LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
+        if(_scene->layers.isEmpty(oldLayer))
+            _scene->events.triggerEvent(data.event_emptylayer);
     }
 }
 

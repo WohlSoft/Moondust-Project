@@ -26,14 +26,14 @@
 #include <audio/SdlMusPlayer.h>
 #include <graphics/gl_renderer.h>
 
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 
 #include <QtDebug>
 #include <QStack>
 
 const float PGE_LevelCamera::_smbxTickTime=1000.0f/65.f;
 
-PGE_LevelCamera::PGE_LevelCamera()
+PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 {
     posRect.setWidth(800);
     posRect.setHeight(600);
@@ -60,7 +60,7 @@ PGE_LevelCamera::PGE_LevelCamera()
     _disable_cache_mode=false;
 }
 
-PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
+PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene)
 {
     offset_x=cam.offset_x;
     offset_y=cam.offset_y;
@@ -109,12 +109,12 @@ int PGE_LevelCamera::h()
     return posRect.height();
 }
 
-qreal PGE_LevelCamera::posX()
+double PGE_LevelCamera::posX()
 {
     return posRect.x()+offset_x;
 }
 
-qreal PGE_LevelCamera::posY()
+double PGE_LevelCamera::posY()
 {
     return posRect.y()+offset_y;
 }
@@ -182,6 +182,32 @@ void PGE_LevelCamera::update(float ticks)
     }
 
     queryItems(posRect);
+
+    while(!npcs_to_activate.empty())
+    {
+        LVL_Npc *npc = dynamic_cast<LVL_Npc*>(npcs_to_activate.front());
+        if(npc && npc->isVisible())
+        {
+            if(!npc->isActivated && !npc->wasDeactivated)
+            {
+                npc->Activate();
+                _scene->active_npcs.push_back(npc);
+            }
+            else
+            {
+                if(npc->wasDeactivated)
+                    npc->activationTimeout=0;
+                else
+                {
+                    if(npc->is_activity)
+                        npc->activationTimeout = npc->setup->deactivetionDelay;
+                    else
+                        npc->activationTimeout = 150;
+                }
+            }
+        }
+        npcs_to_activate.pop();
+    }
 
     //Sort array if modified
     if(_objects_to_render_recent!=_objects_to_render_stored)
@@ -291,38 +317,15 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
             }
             switch(item->type)
             {
+                case PGE_Phys_Object::LVLNPC:
+                    list->npcs_to_activate.push(item);
                 case PGE_Phys_Object::LVLBlock:
                 case PGE_Phys_Object::LVLBGO:
-                case PGE_Phys_Object::LVLNPC:
                 case PGE_Phys_Object::LVLPlayer:
                 case PGE_Phys_Object::LVLEffect:
                 case PGE_Phys_Object::LVLPhysEnv:
                 case PGE_Phys_Object::LVLWarp:
                     renderable=true;
-            }
-            if(item->type==PGE_Phys_Object::LVLNPC)
-            {
-                LVL_Npc *npc = dynamic_cast<LVL_Npc*>(item);
-                if(npc && npc->isVisible())
-                {
-                    if(!npc->isActivated && !npc->wasDeactivated)
-                    {
-                        npc->Activate();
-                        LvlSceneP::s->active_npcs.push_back(npc);
-                    }
-                    else
-                    {
-                        if(npc->wasDeactivated)
-                            npc->activationTimeout=0;
-                        else
-                        {
-                            if(npc->is_activity)
-                                npc->activationTimeout = npc->setup->deactivetionDelay;
-                            else
-                                npc->activationTimeout = 150;
-                        }
-                    }
-                }
             }
 
         checkRenderability:
@@ -353,7 +356,7 @@ void PGE_LevelCamera::queryItems(PGE_RectF &zone)
 {
     double lt[2] = { zone.left(),  zone.top() };
     double rb[2] = { zone.right(), zone.bottom() };
-    LvlSceneP::s->tree.Search(lt, rb, _TreeSearchCallback, (void*)this);
+    _scene->tree.Search(lt, rb, _TreeSearchCallback, (void*)this);
 }
 
 void PGE_LevelCamera::resetAutoscroll()
@@ -476,7 +479,7 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
 bool LevelScene::isVizibleOnScreen(PGE_RectF &rect)
 {
     PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
-    for(LevelScene::LVL_CameraList::iterator it=LvlSceneP::s->cameras.begin();it!=LvlSceneP::s->cameras.end();it++)
+    for(LevelScene::LVL_CameraList::iterator it=cameras.begin();it!=cameras.end();it++)
     {
         screen.setPos((*it).posX(), (*it).posY());
         if(screen.collideRect(rect)) return true;
@@ -487,7 +490,7 @@ bool LevelScene::isVizibleOnScreen(PGE_RectF &rect)
 bool LevelScene::isVizibleOnScreen(double x, double y, double w, double h)
 {
     PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
-    for(LevelScene::LVL_CameraList::iterator it=LvlSceneP::s->cameras.begin();it!=LvlSceneP::s->cameras.end();it++)
+    for(LevelScene::LVL_CameraList::iterator it=cameras.begin();it!=cameras.end();it++)
     {
         screen.setPos((*it).posX(), (*it).posY());
         if(screen.collideRect(x, y, w, h)) return true;

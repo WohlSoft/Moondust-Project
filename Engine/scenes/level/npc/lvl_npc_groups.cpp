@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 /********************WIP***************************
    Joint NPC Group provides shared activation. Each NPC of this group
@@ -58,7 +58,7 @@ void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, L
     Q_UNUSED(leader);
     QVector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = posRect.withMargin(2.0);
-    LvlSceneP::s->queryItems(posRectC, &bodies);
+    _scene->queryItems(posRectC, &bodies);
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
     {
         PGE_Phys_Object* item=*it;

@@ -1,5 +1,5 @@
 #include "lvl_dtc_inarea.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 InAreaDetector::InAreaDetector(LVL_Npc *parent, PGE_RectF range, int filters)
     : BasicDetector(parent)
@@ -42,7 +42,7 @@ void InAreaDetector::processDetector()
     detectedNPC.clear();
 
     QVector<PGE_Phys_Object*> bodies;
-    LvlSceneP::s->queryItems(_trapZone, &bodies);
+    _scene->queryItems(_trapZone, &bodies);
 
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
     {

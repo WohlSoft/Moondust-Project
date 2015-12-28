@@ -23,7 +23,7 @@
 #include "../lvl_physenv.h"
 #include "../lvl_warp.h"
 
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
 #include <common_features/maths.h>
@@ -359,7 +359,7 @@ void LVL_Player::_collideUnduck()
     posRectC.setLeft(posRectC.left()+1.0f);
     posRectC.setRight(posRectC.right()-1.0f);
     posRectC.setBottom(posRectC.bottom()+ (ducking ? 0.0:(-posRect.height()/2.0))+4.0 );
-    LvlSceneP::s->queryItems(posRectC, &bodies);
+    _scene->queryItems(posRectC, &bodies);
 
     forceCollideCenter=true;
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )

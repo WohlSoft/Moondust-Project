@@ -21,9 +21,11 @@ class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
 {
 public:
-    LVL_Npc();
+    LVL_Npc(LevelScene *_parent=NULL);
     virtual ~LVL_Npc();
     void init();
+
+    void setScenePointer(LevelScene* _pointer);
 
     LevelNPC getData();
 

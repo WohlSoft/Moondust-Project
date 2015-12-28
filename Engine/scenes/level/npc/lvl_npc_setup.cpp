@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 #include <common_features/maths.h>
 #include <data_configs/config_manager.h>
 
@@ -41,12 +41,18 @@ void LVL_Npc::init()
         try{
             lua_onInit();
         } catch (luabind::error& e) {
-            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+            _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 
     _isInited=true;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
+}
+
+void LVL_Npc::setScenePointer(LevelScene *_pointer)
+{
+    _scene = _pointer;
+    detector_player_pos._scene = _pointer;
 }
 
 LevelNPC LVL_Npc::getData()
@@ -80,7 +86,7 @@ void LVL_Npc::transformTo(long id, int type)
     //        t.id=id;
     //        t.type=type;
 
-        //LvlSceneP::s->block_transforms.push_back(t);
+        //_scene->block_transforms.push_back(t);
     }
     if(type==1)//Other NPC
     {

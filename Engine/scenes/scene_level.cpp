@@ -36,8 +36,6 @@
 #include <audio/SdlMusPlayer.h>
 #include <settings/global_settings.h>
 
-#include "level/lvl_scene_ptr.h"
-
 #include <QApplication>
 #include <QtDebug>
 
@@ -51,7 +49,9 @@ int           debug_TimeCounted=0;
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
 {
-    LvlSceneP::s = this;
+    tree.RemoveAll();
+    layers._scene=this;
+    events._scene=this;
 
     data = FileFormats::CreateLevelData();
     data.ReadFileValid = false;
@@ -164,8 +164,6 @@ LevelScene::~LevelScene()
     //Reset modelview matrix
     glLoadIdentity();
 
-    LvlSceneP::s = NULL;
-
     layers.members.clear();
 
     switch_blocks.clear();
@@ -189,6 +187,7 @@ LevelScene::~LevelScene()
         player1Controller->removeFromControl(tmp);
         if(tmp)
         {
+            tmp->unregister();
             if(!tmp->isLuaPlayer)
                 delete tmp;
         }
@@ -200,7 +199,7 @@ LevelScene::~LevelScene()
         LVL_Block* tmp;
         tmp = blocks[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy BGO";
@@ -209,11 +208,22 @@ LevelScene::~LevelScene()
         LVL_Bgo* tmp;
         tmp = bgos[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy NPC";
-    npcs.clear();
+    for(i=0; i<npcs.size(); i++)
+    {
+        LVL_Npc* tmp;
+        tmp = npcs[i];
+        if(tmp)
+        {
+            tmp->unregister();
+            if(!tmp->isLuaNPC)
+                delete tmp;
+        }
+    }
+    //npcs.clear();
 //    while(!npcs.isEmpty())
 //    {
 //        LVL_Npc* tmp;
@@ -228,7 +238,7 @@ LevelScene::~LevelScene()
         LVL_Warp* tmp;
         tmp = warps[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy Physical Environment zones";
@@ -237,7 +247,7 @@ LevelScene::~LevelScene()
         LVL_PhysEnv* tmp;
         tmp = physenvs[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy sections";
@@ -383,9 +393,9 @@ void LevelScene::update()
 
         /***************Collect garbage****************/
         if(!dead_npcs.isEmpty())
-            LvlSceneP::s->collectGarbageNPCs();
+            collectGarbageNPCs();
         if(!dead_players.isEmpty())
-            LvlSceneP::s->collectGarbagePlayers();
+            collectGarbagePlayers();
         /**********************************************/
 
         //update cameras

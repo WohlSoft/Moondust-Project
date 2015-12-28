@@ -9,7 +9,7 @@
 class Binding_Level_ClassWrapper_LVL_NPC : public LVL_Npc, public luabind::wrap_base
 {
 public:
-    Binding_Level_ClassWrapper_LVL_NPC();
+    Binding_Level_ClassWrapper_LVL_NPC(LevelScene *_parent=NULL);
     virtual ~Binding_Level_ClassWrapper_LVL_NPC();
 
     virtual void lua_onActivated();

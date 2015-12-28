@@ -18,9 +18,9 @@
 
 #include "lvl_layer_engine.h"
 #include <data_configs/config_manager.h>
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 
-LVL_LayerEngine::LVL_LayerEngine() : members()
+LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) : _scene(_parent), members()
 {}
 
 void LVL_LayerEngine::hide(QString layer, bool smoke)
@@ -32,7 +32,7 @@ void LVL_LayerEngine::hide(QString layer, bool smoke)
         lyr[i]->hide();
         if(smoke)
         {
-            LvlSceneP::s->launchStaticEffectC(10,
+            _scene->launchStaticEffectC(10,
                                               lyr[i]->posCenterX(),
                                               lyr[i]->posCenterY(),
                                               1, 0, 0, 0, 0);
@@ -49,7 +49,7 @@ void LVL_LayerEngine::show(QString layer,bool smoke)
         lyr[i]->show();
         if(smoke)
         {
-            LvlSceneP::s->launchStaticEffectC(10,
+            _scene->launchStaticEffectC(10,
                                               lyr[i]->posCenterX(),
                                               lyr[i]->posCenterY(),
                                               1, 0, 0, 0, 0);
@@ -68,7 +68,7 @@ void LVL_LayerEngine::toggle(QString layer, bool smoke)
         if(show) lyr[i]->show(); else lyr[i]->hide();
         if(smoke)
         {
-            LvlSceneP::s->launchStaticEffectC(10,
+            _scene->launchStaticEffectC(10,
                                               lyr[i]->posCenterX(),
                                               lyr[i]->posCenterY(),
                                               1, 0, 0, 0, 0);

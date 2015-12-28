@@ -41,7 +41,7 @@ class LVL_Player :
         public ControllableObject
 {
     public:
-        LVL_Player();
+        LVL_Player(LevelScene *_parent=NULL);
         virtual ~LVL_Player();
         void setCharacter(int CharacterID, int _stateID);
         void setCharacterSafe(int CharacterID, int _stateID);

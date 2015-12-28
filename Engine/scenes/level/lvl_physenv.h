@@ -25,7 +25,7 @@
 class LVL_PhysEnv : public PGE_Phys_Object
 {
 public:
-    LVL_PhysEnv();
+    LVL_PhysEnv(LevelScene *_parent=NULL);
     ~LVL_PhysEnv();
 
     void init();

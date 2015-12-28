@@ -20,6 +20,7 @@
 #define BASICDETECTOR_H
 
 class LVL_Npc;
+class LevelScene;
 class BasicDetector
 {
     friend class LVL_Npc;
@@ -33,6 +34,7 @@ public:
 protected:
     bool _detected;
     LVL_Npc* _parentNPC;
+    LevelScene *_scene;
 };
 
 #endif // BASICDETECTOR_H

@@ -1,5 +1,5 @@
 #include "lvl_dtc_player_pos.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 PlayerPosDetector::PlayerPosDetector(LVL_Npc *parent):
     BasicDetector(parent)
@@ -30,9 +30,9 @@ void PlayerPosDetector::processDetector()
     if(!_parentNPC) return;
 
     float d=0.0f;
-    for(int i=0; i<LvlSceneP::s->players.size(); i++)
+    for(int i=0; i<_scene->players.size(); i++)
     {
-        LVL_Player *p = LvlSceneP::s->players[i];
+        LVL_Player *p = _scene->players[i];
         float d1=distance(p);
         if((d1<d)||(i==0))
         {

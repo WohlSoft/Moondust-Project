@@ -17,7 +17,7 @@
  */
 
 #include "lvl_base_object.h"
-#include <scenes/level/lvl_scene_ptr.h>
+#include <scenes/scene_level.h>
 #include <graphics/gl_renderer.h>
 #include <common_features/maths.h>
 
@@ -32,11 +32,11 @@ float PGE_Phys_Object::SMBXTicksToTime(float ticks)
     return ticks*_smbxTickTime;
 }
 
-PGE_Phys_Object::PGE_Phys_Object() :
+PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     _vizible_on_screen(false),
     _render_list(false),
+    _scene(_parent),
     _is_registered(false),
-    _registered_ptr(NULL),
     _posX(0.0),
     _posY(0.0),
     _width(1.0),
@@ -89,19 +89,18 @@ PGE_Phys_Object::PGE_Phys_Object() :
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    unregisterFromTree();
+    if(_is_registered) _scene->unregisterElement(this);
 }
 
 void PGE_Phys_Object::registerInTree()
 {
-    if(!_is_registered) LvlSceneP::s->registerElement(this);
-    _registered_ptr=this;
+    if(!_is_registered) _scene->registerElement(this);
     _is_registered=true;
 }
 
 void PGE_Phys_Object::unregisterFromTree()
 {
-    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
+    if(_is_registered) _scene->unregisterElement(this);
     _is_registered=false;
 }
 
@@ -320,30 +319,28 @@ void PGE_Phys_Object::setGravityAccel(float acl)
 
 void PGE_Phys_Object::_syncPosition()
 {
-    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
+    if(_is_registered) _scene->unregisterElement(this);
     _posX= posRect.x();
     _posY= posRect.y();
-    LvlSceneP::s->registerElement(this);
-    _registered_ptr=this;
+    _scene->registerElement(this);
     _is_registered=true;
 }
 
 void PGE_Phys_Object::_syncPositionAndSize()
 {
-    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
+    if(_is_registered) _scene->unregisterElement(this);
     _posX= posRect.x();
     _posY= posRect.y();
     _width=_realWidth;
     _height=_realHeight;
-    LvlSceneP::s->registerElement(this);
-    _registered_ptr=this;
+    _scene->registerElement(this);
     _is_registered=true;
 }
 
 void PGE_Phys_Object::_syncSection(bool sync_position)
 {
-    int sID = LvlSceneP::s->findNearestSection(posX(), posY());
-    LVL_Section *sct = LvlSceneP::s->getSection(sID);
+    int sID = _scene->findNearestSection(posX(), posY());
+    LVL_Section *sct = _scene->getSection(sID);
     if(sct)
     {
         setParentSection(sct);
@@ -391,7 +388,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
     colliding_ySpeed = Maths::max(fabs(_velocityY+_velocityY_add), fabs(_velocityY_prev+_velocityY_add))
             * Maths::sgn(speedY()+_velocityY_add)*(ticks/_smbxTickTime);
 
-    float G = phys_setup.gravityScale * LvlSceneP::s->globalGravity;
+    float G = phys_setup.gravityScale * _scene->globalGravity;
     float accelCof=ticks/1000.0f;
 
     if(_accelX!=0)
@@ -458,7 +455,7 @@ void PGE_Phys_Object::updateCollisions()
 
     QVector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = posRect.withMargin(2.0);
-    LvlSceneP::s->queryItems(posRectC, &bodies);
+    _scene->queryItems(posRectC, &bodies);
 
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
     {

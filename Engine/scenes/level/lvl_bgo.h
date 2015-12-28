@@ -29,7 +29,7 @@
 class LVL_Bgo : public PGE_Phys_Object
 {
 public:
-    LVL_Bgo();
+    LVL_Bgo(LevelScene *_parent=NULL);
     ~LVL_Bgo();
     void init();
 

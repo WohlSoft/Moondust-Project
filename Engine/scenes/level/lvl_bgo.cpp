@@ -20,9 +20,8 @@
 #include "../../data_configs/config_manager.h"
 #include <graphics/gl_renderer.h>
 #include "../scene_level.h"
-#include "lvl_scene_ptr.h"
 
-LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
+LVL_Bgo::LVL_Bgo(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLBGO;
     data=FileFormats::CreateLvlBgo();
@@ -41,7 +40,7 @@ void LVL_Bgo::init()
     collide_player=COLLISION_NONE;
     collide_npc = COLLISION_NONE;
     _isInited=true;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
 }
 
 void LVL_Bgo::transformTo_x(long id)

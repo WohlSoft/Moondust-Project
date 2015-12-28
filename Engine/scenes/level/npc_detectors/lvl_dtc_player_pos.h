@@ -5,7 +5,7 @@
 #include <common_features/pointf.h>
 
 class LVL_Player;
-
+class LevelScene;
 class PlayerPosDetector : public BasicDetector
 {
 public:

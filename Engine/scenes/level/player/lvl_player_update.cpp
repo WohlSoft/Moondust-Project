@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../../scene_level.h"
 #include "../lvl_player.h"
-#include "../lvl_scene_ptr.h"
 #include "../lvl_section.h"
 
 #include <audio/pge_audio.h>
@@ -506,7 +506,7 @@ void LVL_Player::update(float ticks)
             {
                 setLocked(true);
                 _no_render=true;
-                LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
+                _scene->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
         }
@@ -544,7 +544,7 @@ void LVL_Player::update(float ticks)
     try {
         lua_onLoop();
     } catch (luabind::error& e) {
-        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        _scene->getLuaEngine()->postLateShutdownError(e);
     }
     updateCamera();
 }

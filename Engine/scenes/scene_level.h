@@ -359,9 +359,13 @@ public:
    float globalGravity;
    void processPhysics(float ticks);
 
+   typedef PGE_Phys_Object* PhysObjPtr;
+private:
+   typedef RTree<PhysObjPtr, double, 2, double > IndexTree;
+
 public:
-    void registerElement(PGE_Phys_Object* item);
-    void unregisterElement(PGE_Phys_Object* item);
+    void registerElement(PhysObjPtr item);
+    void unregisterElement(PhysObjPtr item);
     typedef double RPoint[2];
     void queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object* > *resultList);
     void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
@@ -371,7 +375,6 @@ public:
     LVL_NpcsArray& getActiveNpcs();
 
 private:
-    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;
 
     QList<PGE_Texture > textures_bank;

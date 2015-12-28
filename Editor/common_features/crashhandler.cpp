@@ -34,6 +34,7 @@
 
 #include "common_features/mainwinconnect.h"
 #include <common_features/app_path.h>
+#include <common_features/logger.h>
 
 QString CrashHandler::getStacktrace()
 {
@@ -97,6 +98,9 @@ void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
         DevConsole::closeIfPossible();
 
     crashMsg += QString("\n\n") + getStacktrace();
+
+    //Also save crash report into log file
+    WriteToLog(QtFatalMsg, crashMsg, true);
 
     CrashHandler* crsh = new CrashHandler(crashMsg);
     crsh->exec();

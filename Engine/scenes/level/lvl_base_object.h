@@ -58,12 +58,14 @@ class PGE_Phys_Object
     bool         _vizible_on_screen;
     //! Tells, does this object stored into the render list
     bool         _render_list;
+public:
+    //! Pointer of the parent scene
+    LevelScene*  _scene;
 protected:
     //! Is this object registered in the R-Tree?
     bool             _is_registered;
-    PGE_Phys_Object* _registered_ptr;
 public:
-    PGE_Phys_Object();
+    PGE_Phys_Object(LevelScene *_parent=NULL);
     virtual ~PGE_Phys_Object();
     void registerInTree();
     void unregisterFromTree();

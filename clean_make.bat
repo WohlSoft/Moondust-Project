@@ -3,6 +3,8 @@ del _Libs\MakeFile
 del _Libs\MakeFile*
 del _Libs\SDL2_mixer_modified\MakeFile
 del _Libs\SDL2_mixer_modified\MakeFile*
+del _Libs\FreeImage\MakeFile
+del _Libs\FreeImage\MakeFile*
 del _Libs\luabind\_project\MakeFile
 del _Libs\luabind\_project\MakeFile*
 del _Libs\oolua\project\MakeFile

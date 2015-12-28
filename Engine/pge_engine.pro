@@ -148,7 +148,6 @@ SOURCES += \
     scenes/level/lvl_bgo.cpp \
     data_configs/obj_bg.cpp \
     scenes/level/lvl_warp.cpp \
-    scenes/level/lvl_scene_ptr.cpp \
     scenes/level/lvl_scene_items.cpp \
     scenes/level/lvl_scene_sections.cpp \
     scenes/level/lvl_scene_timers.cpp \
@@ -330,7 +329,6 @@ HEADERS  += \
     data_configs/obj_bg.h \
     version.h \
     scenes/level/lvl_warp.h \
-    scenes/level/lvl_scene_ptr.h \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
     fontman/font_manager.h \

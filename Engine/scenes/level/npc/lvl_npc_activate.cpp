@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 void LVL_Npc::Activate()
 {
@@ -36,13 +36,13 @@ void LVL_Npc::Activate()
     isActivated=true;
 
     if(!data.event_activate.isEmpty())
-        LvlSceneP::s->events.triggerEvent(data.event_activate);
+        _scene->events.triggerEvent(data.event_activate);
 
     if(isLuaNPC){
         try{
             lua_onActivated();
         } catch (luabind::error& e) {
-            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+            _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 }

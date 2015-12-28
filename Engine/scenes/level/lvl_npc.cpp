@@ -17,9 +17,11 @@
  */
 
 #include "lvl_npc.h"
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 
-LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
+LVL_Npc::LVL_Npc(LevelScene *_parent) :
+    PGE_Phys_Object(_parent),
+    detector_player_pos(this)
 {
     type = LVLNPC;
     _npc_id = 0;
