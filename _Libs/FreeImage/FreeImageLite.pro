@@ -56,9 +56,10 @@ linux-g++||unix:!macx:!android:{
     INCLUDEPATH += ../_builds/linux/include
     CONFIG += unversioned_libname
     #-O3 -fPIC -fexceptions -fvisibility=hidden
-    QMAKE_CFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden
-    QMAKE_CXXFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
-    DEFINES += OPJ_STATIC NO_LCMS NO_JASPER DISABLE_PERF_MEASUREMENT __ANSI__
+    #QMAKE_CFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden
+    #QMAKE_CXXFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
+    DEFINES += FREEIMAGE_LIB
+    #DEFINES += OPJ_STATIC NO_LCMS NO_JASPER DISABLE_PERF_MEASUREMENT __ANSI__
 }
 android:{
     LIBS += -L../_builds/android/lib
