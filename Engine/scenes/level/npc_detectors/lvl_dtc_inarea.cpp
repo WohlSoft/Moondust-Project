@@ -72,7 +72,7 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Npc* n= dynamic_cast<LVL_Npc*>(visibleBody);
                     if(!n) continue;
-                    detectedNPC[n->data.id]=1;
+                    detectedNPC[n->_npc_id]=1;
                     break;
                 }
             case PGE_Phys_Object::LVLBlock:  if((_filters&F_BLOCK)==0) continue;

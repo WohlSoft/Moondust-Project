@@ -86,7 +86,7 @@ int LVL_Npc::lua_activate_neighbours()
         if(body==this) continue;
         if(!body->isVisible()) continue;
         if(body->killed) continue;
-        if(body->data.id!=data.id) continue;
+        if(body->_npc_id!=_npc_id) continue;
         if(!body->isActivated)
         {
             body->Activate();
@@ -118,7 +118,6 @@ LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawna
 
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
-
     if(!detectors.contains(&detector_player_pos))
         detectors.push_back(&detector_player_pos);
     return &detector_player_pos;

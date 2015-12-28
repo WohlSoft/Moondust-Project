@@ -145,7 +145,7 @@ void LVL_Npc::kill(int damageReason)
 void LVL_Npc::unregister()
 {
     killed=true;
-    LvlSceneP::s->unregisterElement(this);
+    unregisterFromTree();
     LvlSceneP::s->dead_npcs.push_back(this);
     LvlSceneP::s->layers.removeRegItem(data.layer, this);
 }

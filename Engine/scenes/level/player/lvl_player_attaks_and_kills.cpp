@@ -214,8 +214,9 @@ void LVL_Player::unregister()
     if(LvlSceneP::s->player1Controller) LvlSceneP::s->player1Controller->removeFromControl(this);
     if(LvlSceneP::s->player2Controller) LvlSceneP::s->player2Controller->removeFromControl(this);
 
+    unregisterFromTree();
+
     //Store into death list
-    LvlSceneP::s->unregisterElement(this);
     LvlSceneP::s->dead_players.push_back(this);
 }
 

@@ -38,7 +38,6 @@ void LVL_Bgo::init()
 {
     if(_isInited) return;
     transformTo_x(data.id);
-    setPos(data.x, data.y);
     collide_player=COLLISION_NONE;
     collide_npc = COLLISION_NONE;
     _isInited=true;
@@ -97,6 +96,8 @@ void LVL_Bgo::transformTo_x(long id)
         animated = setup->animated;
         animator_ID = setup->animator_ID;
     }
+    if(!_isInited)
+        posRect.setPos(data.x, data.y);
     setSize(texture.w, texture.h);
 }
 

@@ -32,8 +32,21 @@ float PGE_Phys_Object::SMBXTicksToTime(float ticks)
     return ticks*_smbxTickTime;
 }
 
-PGE_Phys_Object::PGE_Phys_Object() : _vizible_on_screen(false), _render_list(false)
-{    
+PGE_Phys_Object::PGE_Phys_Object() :
+    _vizible_on_screen(false),
+    _render_list(false),
+    _is_registered(false),
+    _registered_ptr(NULL),
+    _posX(0.0),
+    _posY(0.0),
+    _width(1.0),
+    _height(1.0),
+    _width_half(0.5),
+    _height_half(0.5),
+    _realWidth(1.0),
+    _realHeight(1.0),
+    type(LVLUnknown)
+{
     _width_half = 0.0f;
     _height_half = 0.0f;
 
@@ -76,7 +89,20 @@ PGE_Phys_Object::PGE_Phys_Object() : _vizible_on_screen(false), _render_list(fal
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
+    unregisterFromTree();
+}
+
+void PGE_Phys_Object::registerInTree()
+{
+    if(!_is_registered) LvlSceneP::s->registerElement(this);
+    _registered_ptr=this;
+    _is_registered=true;
+}
+
+void PGE_Phys_Object::unregisterFromTree()
+{
+    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
+    _is_registered=false;
 }
 
 double PGE_Phys_Object::posX()
@@ -294,23 +320,27 @@ void PGE_Phys_Object::setGravityAccel(float acl)
 
 void PGE_Phys_Object::_syncPosition()
 {
-    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
+    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
     _posX= posRect.x();
     _posY= posRect.y();
-    if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+    LvlSceneP::s->registerElement(this);
+    _registered_ptr=this;
+    _is_registered=true;
 }
 
 void PGE_Phys_Object::_syncPositionAndSize()
 {
-    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
+    if(_is_registered) LvlSceneP::s->unregisterElement(_registered_ptr);
     _posX= posRect.x();
     _posY= posRect.y();
     _width=_realWidth;
     _height=_realHeight;
-    if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+    LvlSceneP::s->registerElement(this);
+    _registered_ptr=this;
+    _is_registered=true;
 }
 
-void PGE_Phys_Object::_syncSection()
+void PGE_Phys_Object::_syncSection(bool sync_position)
 {
     int sID = LvlSceneP::s->findNearestSection(posX(), posY());
     LVL_Section *sct = LvlSceneP::s->getSection(sID);
@@ -318,7 +348,7 @@ void PGE_Phys_Object::_syncSection()
     {
         setParentSection(sct);
     }
-    _syncPosition();
+    if(sync_position) _syncPosition();
 }
 
 void PGE_Phys_Object::renderDebug(float _camX, float _camY)

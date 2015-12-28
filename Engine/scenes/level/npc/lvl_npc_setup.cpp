@@ -35,8 +35,8 @@ void LVL_Npc::init()
     phys_setup.max_vel_y=   ConfigManager::marker_npc.phs_max_fall_speed;
 
     transformTo_x(data.id);
-    setPos(data.x, data.y);
-    _syncSection();
+    setDirection(data.direct);
+
     if(isLuaNPC && !data.generator){
         try{
             lua_onInit();
@@ -91,7 +91,7 @@ void LVL_Npc::transformTo(long id, int type)
 void LVL_Npc::setDefaults()
 {
     if(!setup) return;
-    setDirection(data.direct);
+    setDirection(_direction);//Re-apply offset preferences
     motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
     is_scenery  = setup->scenery;
     is_activity = setup->activity;
@@ -103,13 +103,17 @@ void LVL_Npc::transformTo_x(long id)
 {
     if(_isInited)
     {
-        if(data.id==(unsigned)abs(id)) return;
+        if(_npc_id==abs(id)) return;
+        if(id<=0) return;
         if(!ConfigManager::lvl_npc_indexes.contains(id))
             return;
         setup = &ConfigManager::lvl_npc_indexes[id];
+        _npc_id=id;
+    } else {
+        _npc_id=id;
+        posRect.setPos(data.x, data.y);
+        _syncSection(false);
     }
-
-    data.id=id;
 
     double targetZ = 0;
     if(setup->foreground)
@@ -125,7 +129,7 @@ void LVL_Npc::transformTo_x(long id)
     LevelScene::zCounter += 0.00000001;
     z_index += LevelScene::zCounter;
 
-    long tID = ConfigManager::getNpcTexture(data.id);
+    long tID = ConfigManager::getNpcTexture(_npc_id);
     if( tID >= 0 )
     {
         texId = ConfigManager::level_textures[tID].texture;
@@ -137,7 +141,22 @@ void LVL_Npc::transformTo_x(long id)
     warpFrameW = texture.w;
     warpFrameH = texture.h;
 
-    setSize(setup->width, setup->height);
+    if(_isInited)
+    {
+        PGE_RectF old=posRect;
+        posRect.setSize(setup->width, setup->height);
+        posRect.setPos(old.center().x()-(posRect.width()/2),
+                       old.bottom()-posRect.height());
+    }
+    else
+    {
+        posRect.setSize(setup->width, setup->height);
+    }
+    _realWidth=setup->width;
+    _realHeight=setup->height;
+    _width_half = _realWidth/2.0f;
+    _height_half = _realHeight/2.0f;
+    _syncPositionAndSize();
 
     if(data.generator)
     {
@@ -162,7 +181,6 @@ void LVL_Npc::transformTo_x(long id)
     disableBlockCollision=!setup->collision_with_blocks;
     disableNpcCollision  = setup->no_npc_collions;
 
-    setDirection(_direction);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
 
@@ -198,6 +216,6 @@ void LVL_Npc::transformTo_x(long id)
 
     if(_isInited)
     {
-        lua_onTransform(data.id);
+        lua_onTransform(_npc_id);
     }
 }

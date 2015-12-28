@@ -164,7 +164,7 @@ void PGE_LevelCamera::update(float ticks)
             {
                 _objects_to_render[i] = _objects_to_render[i+offset];
             }
-            if(_objects_to_render[i]->_vizible_on_screen)
+            if(_objects_to_render[i]->_vizible_on_screen && _objects_to_render[i]->isVisible())
             {
                 _objects_to_render[i]->_vizible_on_screen=false;
             } else {
@@ -278,7 +278,7 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
     PGE_LevelCamera* list = static_cast<PGE_LevelCamera* >(arg);
     if(list)
     {
-        if(item)
+        if( item )
         {
             if(!list->_disable_cache_mode)
             {
@@ -296,6 +296,8 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                 case PGE_Phys_Object::LVLNPC:
                 case PGE_Phys_Object::LVLPlayer:
                 case PGE_Phys_Object::LVLEffect:
+                case PGE_Phys_Object::LVLPhysEnv:
+                case PGE_Phys_Object::LVLWarp:
                     renderable=true;
             }
             if(item->type==PGE_Phys_Object::LVLNPC)

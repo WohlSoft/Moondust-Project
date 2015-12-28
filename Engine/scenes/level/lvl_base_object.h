@@ -58,9 +58,15 @@ class PGE_Phys_Object
     bool         _vizible_on_screen;
     //! Tells, does this object stored into the render list
     bool         _render_list;
+protected:
+    //! Is this object registered in the R-Tree?
+    bool             _is_registered;
+    PGE_Phys_Object* _registered_ptr;
 public:
     PGE_Phys_Object();
     virtual ~PGE_Phys_Object();
+    void registerInTree();
+    void unregisterFromTree();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
     double posCenterX(); //!< Centered Position X
@@ -105,7 +111,7 @@ public:
 
     void _syncPosition();
     void _syncPositionAndSize();
-    void _syncSection();
+    void _syncSection(bool sync_position=true);
     void renderDebug(float _camX, float _camY);
 
     void iterateStep(float ticks);

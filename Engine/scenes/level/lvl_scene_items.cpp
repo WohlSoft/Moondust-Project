@@ -80,6 +80,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
+    if(!bgo) throw("Out of memory [new LVL_Bgo place]");
     bgo->data = bgoData;
     bgo->init();
     bgos.push_back(bgo);
@@ -93,13 +94,12 @@ LVL_Bgo* LevelScene::spawnBGO(LevelBGO bgoData)
     bgoData.array_id= ++data.blocks_array_id;
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
+    if(!bgo) throw("Out of memory [new LVL_Bgo] spawn");
     bgo->data = bgoData;
     bgo->init();
     bgos.push_back(bgo);
     return bgo;
 }
-
-
 
 void LevelScene::placeNPC(LevelNPC npcData)
 {
@@ -203,6 +203,8 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     }else{
         player = new LVL_Player();
     }
+
+    if(!player) throw("Out of memory [new LVL_Player] addPlayer");
 
     if(players.size()==0)
         player->camera = &cameras.first();

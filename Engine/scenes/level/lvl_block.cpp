@@ -59,7 +59,6 @@ void LVL_Block::init()
     if(_isInited) return;
     LvlSceneP::s->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
-    setPos(data.x, data.y);
     _isInited=true;
 }
 
@@ -137,6 +136,10 @@ void LVL_Block::transformTo_x(long id)
         data.h = (texture.h/setup->frames);
     }
 
+    if(!_isInited)
+    {
+        posRect.setPos(data.x, data.y);
+    }
     setSize(data.w, data.h);
 
     sizable = setup->sizable;

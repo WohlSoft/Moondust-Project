@@ -66,7 +66,7 @@ void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, L
         LVL_Npc*body=dynamic_cast<LVL_Npc*>(item);
         if(!body) continue;
         if(!body->isVisible()) continue;
-        if(body->data.id != data.id) continue;
+        if(body->_npc_id != _npc_id) continue;
         if(!body->buddies_list)
         {
             body->buddies_list=list;
