@@ -8,6 +8,8 @@
 - Removed workaround disables hurting of player while it flying up because player finally can safely stomp healthy NPC's
 - Added experimental translator to have able to retranslate engine too
 - Optimized memory usage and increased performace
+- Now PGE Engine uses FreeImage library to load graphics
+- Finally resolved a troubles with a lazily-made graphics, all masked-gif based graphics are merging via bit-blit algorithm
 
 0.2.4
 - Working paths system on world map! Now there are closed at episode start, but opens on level passes.
