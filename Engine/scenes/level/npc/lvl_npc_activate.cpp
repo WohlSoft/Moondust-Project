@@ -59,13 +59,21 @@ void LVL_Npc::deActivate()
     if(!is_shared_animation)
         animator.stop();
 
-    if(!keep_position_on_despawn) {
-        setDefaults();
-        setPos(data.x, data.y);
-        if((signed)data.id!=_npc_id) transformTo_x(data.id);//Transform NPC into initial form
-        setDirection(data.direct);
-        if(!reSpawnable) unregister();
-        setPaused(true);
+    if(!keep_position_on_despawn)
+    {
+        if(!reSpawnable)
+        {
+            unregister();
+        } else {
+            if((signed)data.id!=_npc_id)
+            {
+                transformTo_x(data.id); //Transform NPC back into initial form
+            }
+            setDefaults();
+            setPos(data.x, data.y);
+            setDirection(data.direct);
+            setPaused(true);
+        }
     }
 }
 
