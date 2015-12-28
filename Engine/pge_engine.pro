@@ -294,7 +294,8 @@ SOURCES += \
     scenes/level/lvl_scene_interprocess.cpp \
     scenes/level/lvl_scene_pausemenu.cpp \
     scenes/level/lvl_scene_garbage_collecting.cpp \
-    common_features/translator.cpp
+    common_features/translator.cpp \
+    common_features/file_mapper.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -444,7 +445,8 @@ HEADERS  += \
     data_configs/spawn_effect_def.h \
     script/bindings/level/classes/luaclass_level_contact_detector.h \
     common_features/translator.h \
-    common_features/data_array.h
+    common_features/data_array.h \
+    common_features/file_mapper.h
 
 
 FORMS    += \

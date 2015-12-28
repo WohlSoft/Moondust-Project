@@ -29,6 +29,8 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
+#include <common_features/file_mapper.h>
+
 #ifdef _WIN32
 #define FREEIMAGE_LIB
 #endif
@@ -55,10 +57,28 @@ void GraphicsHelps::closeSDLImage()
 
 FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
+    #if  defined(__unix__) || defined(_WIN32)
+    PGE_FileMapper fileMap;
+    if( !fileMap.open_file(file.toUtf8().data()) )
+    {
+        return NULL;
+    }
+
+    FIMEMORY *imgMEM = FreeImage_OpenMemory((BYTE*)fileMap.data, fileMap.size);
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
+    fileMap.close_file();
+    if(!img) {
+        return NULL;
+    }
+    #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
     if(formato  == FIF_UNKNOWN) { return NULL; }
     FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
     if(!img) { return NULL; }
+    #endif
     if(convertTo32bit)
     {
         FIBITMAP* temp;
