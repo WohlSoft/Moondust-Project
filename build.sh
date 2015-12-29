@@ -56,7 +56,11 @@ checkState
 cd ..
 #=======================================================================
 # build all components
-$QMake CONFIG+=release CONFIG-=debug
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    $QMake CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m)
+else
+    $QMake CONFIG+=release CONFIG-=debug
+fi
 checkState
 
 #=======================================================================

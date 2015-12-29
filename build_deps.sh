@@ -94,7 +94,7 @@ fi
 
 if [[ "$1" == "no-libs" ]]; then
 	echo "Building of tag.gz libraries skiped"
-	echo "Building SDL2_mixer, OOLua and Box2D..."
+	echo "Building SDL2_mixer_ext, LuaBIND and FreeImage..."
 else
 	buildLibs
 fi
