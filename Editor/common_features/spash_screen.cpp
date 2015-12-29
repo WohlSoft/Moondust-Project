@@ -11,6 +11,8 @@
 #define RatioHeight
 #endif
 
+#include <tgmath.h>
+
 EditorSpashScreen::EditorSpashScreen()
 {
     opacity=1;
