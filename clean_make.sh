@@ -33,6 +33,10 @@ kfile PNG2GIFs/Makefile
 kfile PNG2GIFs/Makefile*
 kfile PlayableCalibrator/Makefile
 kfile PlayableCalibrator/Makefile*
+kfile Manager/Makefile
+kfile Manager/Makefile*
+kfile Maintainer/Makefile
+kfile Maintainer/Makefile*
 kfile MusicPlayer/Makefile
 kfile MusicPlayer/Makefile*
 

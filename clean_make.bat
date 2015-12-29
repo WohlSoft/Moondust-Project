@@ -19,8 +19,12 @@ del LazyFixTool\MakeFile
 del LazyFixTool\MakeFile*
 del PNG2GIFs\MakeFile
 del PNG2GIFs\MakeFile*
-del MusicPlayer\MakeFile
-del MusicPlayer\MakeFile*
 del PlayableCalibrator\MakeFile
 del PlayableCalibrator\MakeFile*
+del Manager\MakeFile
+del Manager\MakeFile*
+del Maintainer\MakeFile
+del Maintainer\MakeFile*
+del MusicPlayer\MakeFile
+del MusicPlayer\MakeFile*
 pause
