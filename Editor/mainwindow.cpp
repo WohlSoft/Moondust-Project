@@ -118,6 +118,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
     splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
     splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
+    splash.connect(&configs, SIGNAL(progressPartsTotal(int)), &splash, SLOT(progressPartsMax(int)));
+    splash.connect(&configs, SIGNAL(progressPartNumber(int)), &splash, SLOT(progressPartsVal(int)));
 
     /*********************Loading of config pack**********************/
     // Do the loading in a thread
@@ -159,11 +161,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     continueLoad = true;
 
+    splash.progressTitle(tr("Loading theme..."));
+
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
 #ifdef Q_OS_MACX
     ui->menuBar->setEnabled(true);
 #endif
+
+    splash.progressTitle(tr("Initializing dock widgets..."));
 
     //Apply objects into tools
     dock_LvlSectionProps->initDefaults();
@@ -172,6 +178,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     dock_LvlEvents->reloadSoundsList();
     dock_WldItemProps->WldLvlExitTypeListReset();
     dock_TilesetBox->setTileSetBox(true);
+
+    splash.progressTitle(tr("Finishing loading..."));
 }
 
 MainWindow::~MainWindow()

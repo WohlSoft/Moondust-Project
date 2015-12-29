@@ -31,16 +31,24 @@ void dataconfigs::loadTilesets()
 
     if(QDir(tileset_dir).exists())
     {
+        emit progressPartNumber(10);
+        emit progressMax(100);
+        emit progressValue(0);
+        emit progressTitle(QObject::tr("Loading Tilesets..."));
+
         filters.clear();
         filters << "*.tileset.ini";
         QDir tilesetDir(tileset_dir);
         tilesetDir.setSorting(QDir::Name);
         tilesetDir.setNameFilters(filters);
         QStringList files = tilesetDir.entryList(filters);
-        foreach(QString file, files)
+
+        emit progressMax(files.size());
+        for(int i=0;i<files.size(); i++)
         {
+            emit progressValue(i);
             SimpleTileset xxx;
-            if(tileset::OpenSimpleTileset(tileset_dir + file, xxx))
+            if(tileset::OpenSimpleTileset(tileset_dir + files[i], xxx))
             {
                 main_tilesets.push_back(xxx);
             }
@@ -49,6 +57,11 @@ void dataconfigs::loadTilesets()
 
     if(QDir(tileset_grp_dir).exists())
     {
+        emit progressPartNumber(11);
+        emit progressMax(100);
+        emit progressValue(0);
+        emit progressTitle(QObject::tr("Loading Tileset groups..."));
+
         filters.clear();
         filters << "*.tsgrp.ini";
         QDir tilesetDir(tileset_grp_dir);
@@ -56,10 +69,12 @@ void dataconfigs::loadTilesets()
         tilesetDir.setNameFilters(filters);
 
         QStringList files = tilesetDir.entryList(filters);
-        foreach(QString file, files)
+        emit progressMax(files.size());
+        for(int i=0;i<files.size(); i++)
         {
+            emit progressValue(i);
             SimpleTilesetGroup xxx;
-            if(TilesetGroupEditor::OpenSimpleTilesetGroup(tileset_grp_dir + file, xxx))
+            if(TilesetGroupEditor::OpenSimpleTilesetGroup(tileset_grp_dir + files[i], xxx))
             {
                 main_tilesets_grp.push_back(xxx);
             }

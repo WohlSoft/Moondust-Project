@@ -193,6 +193,9 @@ bool dataconfigs::loadconfigs()
         return false;
     }
 
+    emit progressPartsTotal(12);
+    emit progressPartNumber(0);
+
     QString main_ini = config_dir + "main.ini";
     QSettings mainset(main_ini, QSettings::IniFormat);
     mainset.setIniCodec("UTF-8");
@@ -232,6 +235,8 @@ bool dataconfigs::loadconfigs()
 
 
     characters.clear();
+
+    emit progressPartNumber(0);
 
     mainset.beginGroup("characters");
         int characters_q = mainset.value("characters", 0).toInt();
@@ -310,6 +315,10 @@ bool dataconfigs::loadconfigs()
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
+
+    emit progressMax(100);
+    emit progressValue(100);
+    emit progressTitle(QObject::tr("Finishing loading..."));
 
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/

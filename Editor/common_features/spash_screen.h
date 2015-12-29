@@ -30,10 +30,15 @@ public slots:
     void progressMax(int val);
     void progressTitle(QString val);
 
+    void progressPartsMax(int val);
+    void progressPartsVal(int val);
+
 private:
     void construct();
     void rebuildLabel();
     QString _label_str;
+    double  _parts_max;
+    double  _parts_val;
     double  _label_val;
     double  _label_max;
     int     _percents;

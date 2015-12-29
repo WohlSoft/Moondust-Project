@@ -193,6 +193,8 @@ signals:
     void progressValue(int);
     void progressMax(int);
     void progressTitle(QString);
+    void progressPartsTotal(int);
+    void progressPartNumber(int);
 
 private:
 

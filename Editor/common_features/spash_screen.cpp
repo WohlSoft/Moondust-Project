@@ -53,6 +53,17 @@ void EditorSpashScreen::drawContents(QPainter *painter)
         x.setHeight(animations[i].second.image().height() RatioHeight);
         painter->drawPixmap(x, animations[i].second.image());
     }
+
+    painter->setBrush(QBrush(Qt::black));
+    QPen progressLine_bar( QBrush(Qt::black), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen( progressLine_bar );
+    painter->drawRect(0, rect().height()-5, rect().width(), 4);
+
+    painter->setBrush(QBrush(Qt::green));
+    painter->setPen(Qt::transparent);
+    painter->drawRect(0, rect().height()-4,
+                        (int)round(double(rect().width()) *( (double)_percents/100.0)), 2);
+
     QPainterPath path;
     painter->setPen(Qt::white);
     path.addText(rect().x()+20, rect().bottom()-20, QFont("Times", 8, -1, true), _label);
@@ -108,7 +119,6 @@ void EditorSpashScreen::progressValue(int val)
 void EditorSpashScreen::progressMax(int val)
 {
     _label_max=val;
-    rebuildLabel();
 }
 
 void EditorSpashScreen::progressTitle(QString val)
@@ -117,11 +127,26 @@ void EditorSpashScreen::progressTitle(QString val)
     rebuildLabel();
 }
 
+void EditorSpashScreen::progressPartsMax(int val)
+{
+    _parts_max=val;
+    rebuildLabel();
+}
+
+void EditorSpashScreen::progressPartsVal(int val)
+{
+    _parts_val=val;
+}
+
 void EditorSpashScreen::construct()
 {
     _label_val=0.0;
     _label_max=100.0;
     _percents=0;
+
+    _parts_max=1.0;
+    _parts_val=0.0;
+
     buffer=this->pixmap();
 
     #ifdef Q_OS_ANDROID
@@ -148,7 +173,8 @@ void EditorSpashScreen::construct()
 
 void EditorSpashScreen::rebuildLabel()
 {
-    _percents = (int)round((_label_val/_label_max)*100.0);
+    double onePice= ((_parts_val<_parts_max) ? (_label_val/_label_max) : 0.0);
+    _percents = (int)round( ( (_parts_val+onePice)/_parts_max )*100.0 );
     _label = QString("%1% - %2").arg(_percents).arg(_label_str);
 }
 
