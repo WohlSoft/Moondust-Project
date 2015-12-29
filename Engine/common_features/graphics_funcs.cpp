@@ -33,6 +33,7 @@ extern "C"{
 
 #ifdef _WIN32
 #define FREEIMAGE_LIB
+#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
 #endif
 #include <FreeImageLite.h>
 
@@ -64,7 +65,7 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
         return NULL;
     }
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory((BYTE*)fileMap.data, fileMap.size);
+    FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)fileMap.data, (unsigned int)fileMap.size);
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
     if(formato  == FIF_UNKNOWN) { return NULL; }
     FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);

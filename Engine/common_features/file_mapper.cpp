@@ -100,16 +100,16 @@ bool PGE_FileMapper::open_file(std::string path)
     }
     size = sb.st_size;
 #elif _WIN32
-    m_File = CreateFileA(path, GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    m_File = CreateFileA(path.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (m_File == INVALID_HANDLE_VALUE)
     {
         m_error="Failed to open file "+path;
         return false;
     }
 
-    size = GetFileSize(File, NULL);
+    size = GetFileSize(m_File, NULL);
 
-    m_Map = CreateFileMapping(File, NULL, PAGE_READONLY, 0, NULL, NULL);
+    m_Map = CreateFileMapping(m_File, NULL, PAGE_READONLY, 0, 0, NULL);
     if( m_Map == NULL )
     {
         CloseHandle(m_File);
@@ -144,14 +144,14 @@ bool PGE_FileMapper::close_file()
             return false;
         }
         #elif _WIN32
-        if (object.Address != NULL)
-            UnmapViewOfFile(object.Address);
+        if (m_Address != NULL)
+            UnmapViewOfFile(m_Address);
 
-        if (object.Map != NULL)
-            CloseHandle(object.Map);
+        if (m_Map != NULL)
+            CloseHandle(m_Map);
 
-        if (object.File != INVALID_HANDLE_VALUE)
-            CloseHandle(object.File);
+        if (m_File != INVALID_HANDLE_VALUE)
+            CloseHandle(m_File);
         #endif
         m_path.clear();
     }
