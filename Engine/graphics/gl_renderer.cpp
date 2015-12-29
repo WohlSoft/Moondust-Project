@@ -51,17 +51,23 @@
 
 #include <sstream>
 
+#ifdef ANDROID
+    #define GLU_ErrorFunc "<unknown error>"
+#else
+    #define GLU_ErrorFunc (char*)gluErrorString( error )
+#endif
+
 // Macro inserting the arguments
 #define GLERRORCHECK() _GLErrorCheck(__FILE__, __LINE__, __FUNCTION__)
 
 // Error checking function
 static inline void _GLErrorCheck(const char* fn, int line, const char* func) {
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR) {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
         std::ostringstream errMsg;
         errMsg << "OpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
         errMsg << "\r\n";
-        errMsg << "Error code: "<< err << " (0x" << std::hex << (unsigned int)err << ")";
+        errMsg << "Error code: "<< GLU_ErrorFunc << " (0x" << std::hex << (unsigned int)error << ")";
         QMessageBox::warning(nullptr, "OpenGL Error", errMsg.str().c_str());
     }
 }
@@ -97,38 +103,37 @@ bool GlRenderer::init()
         return false;
 
     // Initializing OpenGL
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+    glMatrixMode( GL_PROJECTION ); GLERRORCHECK();
+
+    glLoadIdentity(); GLERRORCHECK();
+
+    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
     //Initialize Modelview Matrix
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
+    glMatrixMode( GL_MODELVIEW ); GLERRORCHECK();
+
+    glLoadIdentity(); GLERRORCHECK();
 
     //Initialize clear color
-    glClearColor( 0.f, 0.f, 0.f, 1.f );
+    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
 
     glEnable( GL_TEXTURE_2D ); // Need this to display a texture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); GLERRORCHECK();
 
-    glDisable( GL_DEPTH_TEST );
-    glDepthFunc(GL_NEVER);// Ignore depth values (Z) to cause drawing bottom to top
+    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
+    glDepthFunc(GL_NEVER); GLERRORCHECK();// Ignore depth values (Z) to cause drawing bottom to top
 
-    glDisable( GL_LIGHTING );
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glDisable( GL_LIGHTING ); GLERRORCHECK();
+    glEnable(GL_BLEND); GLERRORCHECK();
+
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
 
     //Check for error
     GLenum error = glGetError();
     if( error != GL_NO_ERROR )
     {
-        #ifdef ANDROID
-            #define GLU_ErrorFunc "<unknown error>"
-        #else
-            #define GLU_ErrorFunc (char*)gluErrorString( error )
-        #endif
         QMessageBox::critical(NULL, "OpenGL Error",
             QString("Error initializing OpenGL!\n%1")
             .arg( GLU_ErrorFunc ), QMessageBox::Ok);
@@ -136,7 +141,8 @@ bool GlRenderer::init()
        return false;
     }
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GLERRORCHECK();
+
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
@@ -171,15 +177,15 @@ void GlRenderer::initDummyTexture()
     _dummyTexture.h = h;
     GLubyte* textura= (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
 
-    glEnable(GL_TEXTURE_2D);
-    glGenTextures( 1, &(_dummyTexture.texture) );
-    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture );
-    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture );
-    glTexImage2D(GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+    glGenTextures( 1, &(_dummyTexture.texture) ); GLERRORCHECK();
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
+    glTexImage2D(GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST ); GLERRORCHECK();
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST ); GLERRORCHECK();
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); GLERRORCHECK();
+    glDisable(GL_TEXTURE_2D); GLERRORCHECK();
     _dummyTexture.inited = true;
     //FreeImage_Unload(sourceImage);
 }
