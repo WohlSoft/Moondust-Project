@@ -28,7 +28,9 @@ win32:{
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
     INCLUDEPATH += ../_builds/linux/include
+    CONFIG += plugin
     CONFIG += unversioned_libname
+    CONFIG += skip_target_version_ext
 }
 android:{
     LIBS += -L../_builds/android/lib
@@ -37,8 +39,9 @@ android:{
 macx:{
     LIBS += -L../_builds/macos/lib
     INCLUDEPATH += ../_builds/macos/include
-    LIBS += -F../_builds/macos/frameworks -framework SDL2
     INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    CONFIG += plugin
 } else {
     LIBS += -lSDL2
 }
@@ -48,7 +51,7 @@ win32:{
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC SPC_MORE_ACCURACY #NO_OLDNAMES
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -229,7 +232,18 @@ HEADERS += \
     ADLMIDI/adlmidi.h \
     ADLMIDI/dbopl.h \
     ADLMIDI/fraction.h \
-    music_midi_adl.h
+    music_midi_adl.h \
+    gme/ZLib/crc32.h \
+    gme/ZLib/deflate.h \
+    gme/ZLib/gzguts.h \
+    gme/ZLib/inffast.h \
+    gme/ZLib/inffixed.h \
+    gme/ZLib/inflate.h \
+    gme/ZLib/inftrees.h \
+    gme/ZLib/trees.h \
+    gme/ZLib/zconf.h \
+    gme/ZLib/zlib.h \
+    gme/ZLib/zutil.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -342,5 +356,20 @@ SOURCES += \
     ADLMIDI/dbopl.cpp \
     music_midi_adl.c \
     ADLMIDI/adlmidi.cpp \
-    ADLMIDI/adldata.cpp
+    ADLMIDI/adldata.cpp \
+    gme/ZLib/adler32.c \
+    gme/ZLib/compress.c \
+    gme/ZLib/crc32.c \
+    gme/ZLib/deflate.c \
+    gme/ZLib/gzclose.c \
+    gme/ZLib/gzlib.c \
+    gme/ZLib/gzread.c \
+    gme/ZLib/gzwrite.c \
+    gme/ZLib/infback.c \
+    gme/ZLib/inffast.c \
+    gme/ZLib/inflate.c \
+    gme/ZLib/inftrees.c \
+    gme/ZLib/trees.c \
+    gme/ZLib/uncompr.c \
+    gme/ZLib/zutil.c
 

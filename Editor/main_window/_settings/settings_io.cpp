@@ -71,7 +71,6 @@ void MainWindow::loadSettings()
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
-        GraphicsHelps::EnableBitBlitMerge = settings.value("enable-gfx-fix", "true").toBool();
 
         GlobalSettings::LvlItemDefaults.npc_direction=settings.value("defaults-npc-directuin", -1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_type=settings.value("defaults-npc-gen-type", 1).toInt();
@@ -275,7 +274,6 @@ void MainWindow::saveSettings()
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
-    settings.setValue("enable-gfx-fix", GraphicsHelps::EnableBitBlitMerge);
 
     settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
     settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);

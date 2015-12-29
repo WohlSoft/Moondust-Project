@@ -204,7 +204,9 @@ void dataconfigs::loadLevelBackgrounds()
         total_data +=bg_total;
     bgset.endGroup();
 
+    emit progressPartNumber(0);
     emit progressMax(bg_total);
+    emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Backgrounds..."));
 
     ConfStatus::total_bg = bg_total;

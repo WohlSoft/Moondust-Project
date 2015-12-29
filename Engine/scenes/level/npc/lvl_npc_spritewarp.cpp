@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 #include <common_features/number_limiter.h>
 
 void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction, bool resizedBody)

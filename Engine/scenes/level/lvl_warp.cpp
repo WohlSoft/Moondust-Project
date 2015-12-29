@@ -17,9 +17,9 @@
  */
 
 #include "lvl_warp.h"
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 
-LVL_Warp::LVL_Warp() : PGE_Phys_Object()
+LVL_Warp::LVL_Warp(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
      type = LVLWarp;
 }
@@ -33,5 +33,5 @@ void LVL_Warp::init()
     setPos(data.ix, data.iy);
     collide_player = COLLISION_NONE;
     collide_npc = COLLISION_NONE;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
 }

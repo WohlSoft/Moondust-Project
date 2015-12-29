@@ -58,8 +58,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     // Config manager
     ConfigManager *cmanager;
-    cmanager = new ConfigManager(this);
-    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager = new ConfigManager(NULL);
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowStaysOnTopHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
     currentConfigDir = configPath;
@@ -104,7 +104,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.setDisabled(true);
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
 
-
     for(int a=0; a<configs.animations.size();a++)
     {
         //QPoint pt(416,242);
@@ -115,6 +114,12 @@ MainWindow::MainWindow(QMdiArea *parent) :
                             configs.animations[a].frames,
                             configs.animations[a].speed);
     }
+
+    splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
+    splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
+    splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
+    splash.connect(&configs, SIGNAL(progressPartsTotal(int)), &splash, SLOT(progressPartsMax(int)));
+    splash.connect(&configs, SIGNAL(progressPartNumber(int)), &splash, SLOT(progressPartsVal(int)));
 
     /*********************Loading of config pack**********************/
     // Do the loading in a thread
@@ -156,11 +161,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     continueLoad = true;
 
+    splash.progressTitle(tr("Loading theme..."));
+
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
 #ifdef Q_OS_MACX
     ui->menuBar->setEnabled(true);
 #endif
+
+    splash.progressTitle(tr("Initializing dock widgets..."));
 
     //Apply objects into tools
     dock_LvlSectionProps->initDefaults();
@@ -169,6 +178,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     dock_LvlEvents->reloadSoundsList();
     dock_WldItemProps->WldLvlExitTypeListReset();
     dock_TilesetBox->setTileSetBox(true);
+
+    splash.progressTitle(tr("Finishing loading..."));
 }
 
 MainWindow::~MainWindow()

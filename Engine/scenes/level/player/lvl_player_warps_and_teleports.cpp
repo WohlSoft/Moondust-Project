@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_player.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
 
@@ -379,7 +379,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             {
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this, warp]()->void{
-                          LvlSceneP::s->lastWarpID=warp.array_id;
+                          _scene->lastWarpID=warp.array_id;
                           exitFromLevel(warp.lname, warp.warpto,
                                         warp.world_x, warp.world_y);
                                   }, 200);
@@ -387,8 +387,8 @@ void LVL_Player::WarpTo(LevelDoor warp)
             }
             else
             {
-                int sID = LvlSceneP::s->findNearestSection(warp.ox, warp.oy);
-                if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+                int sID = _scene->findNearestSection(warp.ox, warp.oy);
+                if(camera->section->id != _scene->levelData()->sections[sID].id)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
@@ -432,7 +432,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             {
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this, warp]()->void{
-                          LvlSceneP::s->lastWarpID=warp.array_id;
+                          _scene->lastWarpID=warp.array_id;
                           exitFromLevel(warp.lname, warp.warpto,
                                         warp.world_x, warp.world_y);
                                   }, 200);
@@ -441,8 +441,8 @@ void LVL_Player::WarpTo(LevelDoor warp)
             }
             else
             {
-                int sID = LvlSceneP::s->findNearestSection(warp.ox, warp.oy);
-                if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+                int sID = _scene->findNearestSection(warp.ox, warp.oy);
+                if(camera->section->id != _scene->levelData()->sections[sID].id)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
@@ -468,12 +468,12 @@ void LVL_Player::WarpTo(LevelDoor warp)
 
 void LVL_Player::teleport(float x, float y)
 {
-    if(!LvlSceneP::s) return;
+    if(!_scene) return;
 
     this->setPos(x, y);
 
-    int sID = LvlSceneP::s->findNearestSection(x, y);
-    LVL_Section* t_sct = LvlSceneP::s->getSection(sID);
+    int sID = _scene->findNearestSection(x, y);
+    LVL_Section* t_sct = _scene->getSection(sID);
 
     if(t_sct)
     {
@@ -494,19 +494,19 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
     isAlive = false;
     if(!levelFile.isEmpty())
     {
-        LvlSceneP::s->warpToLevelFile =
-                LvlSceneP::s->levelData()->path+"/"+levelFile;
-        LvlSceneP::s->warpToArrayID = targetWarp;
+        _scene->warpToLevelFile =
+                _scene->levelData()->path+"/"+levelFile;
+        _scene->warpToArrayID = targetWarp;
     }
     else
     {
         if((wX != -1)&&( wY != -1))
         {
-            LvlSceneP::s->warpToWorld=true;
-            LvlSceneP::s->warpToWorldXY.setX(wX);
-            LvlSceneP::s->warpToWorldXY.setY(wY);
+            _scene->warpToWorld=true;
+            _scene->warpToWorldXY.setX(wX);
+            _scene->warpToWorldXY.setY(wY);
         }
     }
-    LvlSceneP::s->setExiting(2000, LvlExit::EXIT_Warp);
+    _scene->setExiting(2000, LvlExit::EXIT_Warp);
 }
 

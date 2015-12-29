@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_player.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
@@ -46,7 +46,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 
 
     QVector<PGE_Phys_Object*> bodies;
-    LvlSceneP::s->queryItems(attackZone, &bodies);
+    _scene->queryItems(attackZone, &bodies);
     int contacts = 0;
 
     QList<LVL_Block *> target_blocks;
@@ -82,7 +82,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         x->hit();
         if(!x->destroyed)
         {
-            LvlSceneP::s->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
+            _scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
         }
         x->destroyed=true;
@@ -94,7 +94,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(x->isKilled()) continue;
         if(x->isGenerator) continue;
         x->doHarm(LVL_Npc::DAMAGE_BY_PLAYER_ATTACK);
-        LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
+        _scene->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
         kill_npc(x, NPC_Kicked);
     }
 }
@@ -145,12 +145,12 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
             PGE_Audio::playSound(snd);
         }
         /***********************Reset and unplug controllers************************/
-        LvlSceneP::s->player1Controller->resetControls();
-        LvlSceneP::s->player1Controller->sendControls();
-        LvlSceneP::s->player1Controller->removeFromControl(this);
-        LvlSceneP::s->player2Controller->resetControls();
-        LvlSceneP::s->player2Controller->sendControls();
-        LvlSceneP::s->player2Controller->removeFromControl(this);
+        _scene->player1Controller->resetControls();
+        _scene->player1Controller->sendControls();
+        _scene->player1Controller->removeFromControl(this);
+        _scene->player2Controller->resetControls();
+        _scene->player2Controller->sendControls();
+        _scene->player2Controller->removeFromControl(this);
         /***********************Reset and unplug controllers*end********************/
         if(target->setup->exit_walk_direction<0)
             keys.left=true;
@@ -158,7 +158,7 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         if(target->setup->exit_walk_direction>0)
             keys.right=true;
         isExiting=true;
-        LvlSceneP::s->setExiting(target->setup->exit_delay, target->setup->exit_code);
+        _scene->setExiting(target->setup->exit_delay, target->setup->exit_code);
     }
 }
 
@@ -200,7 +200,7 @@ void LVL_Player::kill(deathReason reason)
     setPaused(true);
     if(kill_reason==DEAD_burn)
     {
-        LvlSceneP::s->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
+        _scene->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
                                           posCenterX(),
                                           posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
@@ -211,12 +211,13 @@ void LVL_Player::unregister()
 {
     isAlive = false;
     //Unregister controllers
-    if(LvlSceneP::s->player1Controller) LvlSceneP::s->player1Controller->removeFromControl(this);
-    if(LvlSceneP::s->player2Controller) LvlSceneP::s->player2Controller->removeFromControl(this);
+    if(_scene->player1Controller) _scene->player1Controller->removeFromControl(this);
+    if(_scene->player2Controller) _scene->player2Controller->removeFromControl(this);
+
+    unregisterFromTree();
 
     //Store into death list
-    LvlSceneP::s->unregisterElement(this);
-    LvlSceneP::s->dead_players.push_back(this);
+    _scene->dead_players.push_back(this);
 }
 
 

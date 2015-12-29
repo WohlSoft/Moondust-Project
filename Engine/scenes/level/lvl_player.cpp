@@ -19,7 +19,7 @@
 #include "lvl_player.h"
 #include "lvl_physenv.h"
 
-LVL_Player::LVL_Player() : PGE_Phys_Object()
+LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     camera = NULL;
 

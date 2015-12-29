@@ -48,8 +48,14 @@ void dataconfigs::loadRotationTable()
         return;
     }
 
+    emit progressPartNumber(12);
+    emit progressMax(groups.size());
+    emit progressValue(0);
+    emit progressTitle(QObject::tr("Loading rotation rules table..."));
+
     for(i=0; i<(unsigned)groups.size(); i++)
     {
+        emit progressValue(i);
         if(groups[i]=="main")
             continue;
 

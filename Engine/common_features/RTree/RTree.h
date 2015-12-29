@@ -464,6 +464,7 @@ RTREE_QUAL::RTree()
   };
 
   m_root = AllocNode();
+  m_root->m_count = 0;
   m_root->m_level = 0;
   m_unitSphereVolume = (ELEMTYPEREAL)UNIT_SPHERE_VOLUMES[NUMDIMS];
 }
@@ -804,7 +805,7 @@ void RTREE_QUAL::RemoveAllRec(Node* a_node)
 RTREE_TEMPLATE
 typename RTREE_QUAL::Node* RTREE_QUAL::AllocNode()
 {
-  Node* newNode;
+  Node* newNode = NULL;
 #ifdef RTREE_DONT_USE_MEMPOOLS
   newNode = new Node;
 #else // RTREE_DONT_USE_MEMPOOLS
@@ -848,6 +849,7 @@ void RTREE_QUAL::FreeListNode(ListNode* a_listNode)
   delete a_listNode;
 #else // RTREE_DONT_USE_MEMPOOLS
   // EXAMPLE
+  (void)a_listNode;
 #endif // RTREE_DONT_USE_MEMPOOLS
 }
 
@@ -943,7 +945,7 @@ RTREE_TEMPLATE
 bool RTREE_QUAL::InsertRect(const Branch& a_branch, Node** a_root, int a_level)
 {
   ASSERT(a_root);
-  ASSERT(a_level >= 0 && a_level <= (*a_root)->m_level);
+  ASSERT((a_level >= 0) && (a_level <= (*a_root)->m_level));
 #ifdef _DEBUG
   for(int index=0; index < NUMDIMS; ++index)
   {
@@ -957,6 +959,7 @@ bool RTREE_QUAL::InsertRect(const Branch& a_branch, Node** a_root, int a_level)
   {
     // Grow tree taller and new root
     Node* newRoot = AllocNode();
+    newRoot->m_count = 0;
     newRoot->m_level = (*a_root)->m_level + 1;
 
     Branch branch;

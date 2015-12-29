@@ -31,7 +31,7 @@
 class LVL_Block : public PGE_Phys_Object
 {
 public:
-    LVL_Block();
+    LVL_Block(LevelScene *_parent=NULL);
     ~LVL_Block();
     void init();
 

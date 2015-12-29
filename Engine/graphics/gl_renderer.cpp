@@ -36,6 +36,11 @@
     #endif
 #endif
 
+#ifdef _WIN32
+#define FREEIMAGE_LIB
+#endif
+#include <FreeImageLite.h>
+
 #include <audio/pge_audio.h>
 
 #include <QDir>
@@ -46,17 +51,23 @@
 
 #include <sstream>
 
+#ifdef ANDROID
+    #define GLU_ErrorFunc "<unknown error>"
+#else
+    #define GLU_ErrorFunc (char*)gluErrorString( error )
+#endif
+
 // Macro inserting the arguments
 #define GLERRORCHECK() _GLErrorCheck(__FILE__, __LINE__, __FUNCTION__)
 
 // Error checking function
 static inline void _GLErrorCheck(const char* fn, int line, const char* func) {
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR) {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
         std::ostringstream errMsg;
         errMsg << "OpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
         errMsg << "\r\n";
-        errMsg << "Error code: "<< err << " (0x" << std::hex << (unsigned int)err << ")";
+        errMsg << "Error code: "<< GLU_ErrorFunc << " (0x" << std::hex << (unsigned int)error << ")";
         QMessageBox::warning(nullptr, "OpenGL Error", errMsg.str().c_str());
     }
 }
@@ -92,38 +103,37 @@ bool GlRenderer::init()
         return false;
 
     // Initializing OpenGL
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+    glMatrixMode( GL_PROJECTION ); GLERRORCHECK();
+
+    glLoadIdentity(); GLERRORCHECK();
+
+    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
     //Initialize Modelview Matrix
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
+    glMatrixMode( GL_MODELVIEW ); GLERRORCHECK();
+
+    glLoadIdentity(); GLERRORCHECK();
 
     //Initialize clear color
-    glClearColor( 0.f, 0.f, 0.f, 1.f );
+    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
 
     glEnable( GL_TEXTURE_2D ); // Need this to display a texture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); GLERRORCHECK();
 
-    glDisable( GL_DEPTH_TEST );
-    glDepthFunc(GL_NEVER);// Ignore depth values (Z) to cause drawing bottom to top
+    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
+    glDepthFunc(GL_NEVER); GLERRORCHECK();// Ignore depth values (Z) to cause drawing bottom to top
 
-    glDisable( GL_LIGHTING );
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glDisable( GL_LIGHTING ); GLERRORCHECK();
+    glEnable(GL_BLEND); GLERRORCHECK();
+
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
 
     //Check for error
     GLenum error = glGetError();
     if( error != GL_NO_ERROR )
     {
-        #ifdef ANDROID
-            #define GLU_ErrorFunc "<unknown error>"
-        #else
-            #define GLU_ErrorFunc (char*)gluErrorString( error )
-        #endif
         QMessageBox::critical(NULL, "OpenGL Error",
             QString("Error initializing OpenGL!\n%1")
             .arg( GLU_ErrorFunc ), QMessageBox::Ok);
@@ -131,7 +141,8 @@ bool GlRenderer::init()
        return false;
     }
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GLERRORCHECK();
+
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
@@ -153,7 +164,30 @@ bool GlRenderer::uninit()
 
 void GlRenderer::initDummyTexture()
 {
-    loadTextureP(_dummyTexture, "://images/_broken.png");
+    //loadTextureP(_dummyTexture, "://images/_broken.png");
+    //FIBITMAP* sourceImage;
+    QImage image = GraphicsHelps::convertToGLFormat(QImage("://images/_broken.png")).mirrored(false, true);
+    //sourceImage = GraphicsHelps::loadImageRC("://images/_broken.png");
+    int w = image.width();//FreeImage_GetWidth(sourceImage);
+    int h = image.height();//FreeImage_GetHeight(sourceImage);
+    //FreeImage_FlipVertical(sourceImage);
+    _dummyTexture.nOfColors = 4;
+    _dummyTexture.format = GL_BGRA;
+    _dummyTexture.w = w;
+    _dummyTexture.h = h;
+    GLubyte* textura= (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
+
+    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+    glGenTextures( 1, &(_dummyTexture.texture) ); GLERRORCHECK();
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
+    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
+    glTexImage2D(GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST ); GLERRORCHECK();
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST ); GLERRORCHECK();
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); GLERRORCHECK();
+    glDisable(GL_TEXTURE_2D); GLERRORCHECK();
+    _dummyTexture.inited = true;
+    //FreeImage_Unload(sourceImage);
 }
 
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
@@ -165,14 +199,18 @@ PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 
 void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
 {
-    QImage sourceImage;
+    //QImage sourceImage;
+    //SDL_Surface * sourceImage;
+    FIBITMAP* sourceImage;
+
     // Load the OpenGL texture
-    sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
+    //sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
+    sourceImage = GraphicsHelps::loadImage(path);
 
     //Don't load mask if PNG image is used
     if(path.endsWith(".png", Qt::CaseInsensitive)) maskPath.clear();
 
-    if(sourceImage.isNull())
+    if(!sourceImage)
     {
         WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
@@ -183,27 +221,52 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     //Apply Alpha mask
     if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
     {
-        QImage maskImage = GraphicsHelps::loadQImage(maskPath);
-        sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
+        //QImage maskImage = GraphicsHelps::loadQImage(maskPath);
+        //sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
+        GraphicsHelps::mergeWithMask(sourceImage, maskPath);
     }
 
-    sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
-    QRgb upperColor = sourceImage.pixel(0,0);
-    target.ColorUpper.r = float(qRed(upperColor))/255.0f;
-    target.ColorUpper.g = float(qGreen(upperColor))/255.0f;
-    target.ColorUpper.b = float(qBlue(upperColor))/255.0f;
+    int w = FreeImage_GetWidth(sourceImage);
+    int h = FreeImage_GetHeight(sourceImage);
 
-    QRgb lowerColor = sourceImage.pixel(0, sourceImage.height()-1);
-    target.ColorLower.r = float(qRed(lowerColor))/255.0f;
-    target.ColorLower.g = float(qGreen(lowerColor))/255.0f;
-    target.ColorLower.b = float(qBlue(lowerColor))/255.0f;
+    if((w<=0) || (h<=0))
+    {
+        FreeImage_Unload(sourceImage);
+        WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
+            .arg(path).arg("Zero image size!"));
+        target = _dummyTexture;
+        return;
+    }
+
+    //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
+    //Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
+    //target.ColorUpper.r = float((upperColor>>24)&0xFF)/255.0f;
+    //target.ColorUpper.g = float((upperColor>>16)&0xFF)/255.0f;
+    //target.ColorUpper.b = float((upperColor>>8)&0xFF)/255.0f;
+    RGBQUAD upperColor;
+    FreeImage_GetPixelColor(sourceImage, 0, 0, &upperColor);
+    target.ColorUpper.r = upperColor.rgbRed;
+    target.ColorUpper.b = upperColor.rgbBlue;
+    target.ColorUpper.g = upperColor.rgbGreen;
+
+    //Uint8 lowerColor = GraphicsHelps::getPixel(sourceImage, 0, sourceImage->h-1);//sourceImage.pixel(0, sourceImage.height()-1);
+    //target.ColorLower.r = float((lowerColor>>24)&0xFF)/255.0f;
+    //target.ColorLower.g = float((lowerColor>>16)&0xFF)/255.0f;
+    //target.ColorLower.b = float((lowerColor>>8)&0xFF)/255.0f;
+    RGBQUAD lowerColor;
+    FreeImage_GetPixelColor(sourceImage, 0, h-1, &lowerColor);
+    target.ColorUpper.r = upperColor.rgbRed;
+    target.ColorUpper.b = upperColor.rgbBlue;
+    target.ColorUpper.g = upperColor.rgbGreen;
+
+    FreeImage_FlipVertical(sourceImage);
 
     //qDebug() << path << sourceImage.size();
 
-    sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
+    //sourceImage = GraphicsHelps::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
-    target.format = GL_RGBA;
+    target.format = GL_BGRA;
 
     glEnable(GL_TEXTURE_2D);
     // Have OpenGL generate a texture object handle for us
@@ -213,15 +276,19 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
     // Edit the texture object's image data using the information SDL_Surface gives us
-    target.w = sourceImage.width();
-    target.h = sourceImage.height();
+    target.w = w;
+    target.h = h;
     // Set the texture's stretching properties
+
+    GLubyte* textura= (GLubyte*)FreeImage_GetBits(sourceImage);
 
     // Bind the texture object
     glBindTexture( GL_TEXTURE_2D, target.texture );
 
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
-         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+//    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
+//         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, w, h,
+           0, target.format, GL_UNSIGNED_BYTE, textura );
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -230,6 +297,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glDisable(GL_TEXTURE_2D);
 
     target.inited = true;
+
+    //SDL_FreeSurface(sourceImage);
+    FreeImage_Unload(sourceImage);
 
     return;
 }
@@ -291,7 +361,7 @@ void GlRenderer::makeShot()
 
     uchar* pixels = new uchar[4*w*h];
     glLoadIdentity();
-    glReadPixels(offset_x, offset_y, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(offset_x, offset_y, w, h, GL_BGR, GL_UNSIGNED_BYTE, pixels);
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
@@ -303,10 +373,48 @@ void GlRenderer::makeShot()
 
 int GlRenderer::makeShot_action(void *_pixels)
 {
-    PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
+    PGE_GL_shoot *shoot = (PGE_GL_shoot*)_pixels;
 
-    QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
-    shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
+    FIBITMAP* shotImg = FreeImage_ConvertFromRawBits((BYTE*)shoot->pixels, shoot->w, shoot->h,
+                                     3*shoot->w+shoot->w%4, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    if(!shotImg)
+    {
+        delete []shoot->pixels;
+        shoot->pixels=NULL;
+        delete []shoot;
+        return 0;
+    }
+
+    FIBITMAP* temp;
+    temp = FreeImage_ConvertTo32Bits(shotImg);
+    if(!temp)
+    {
+        FreeImage_Unload(shotImg);
+        delete []shoot->pixels;
+        shoot->pixels=NULL;
+        delete []shoot;
+        return 0;
+    }
+    FreeImage_Unload(shotImg);
+    shotImg = temp;
+
+    if((shoot->w!=window_w)||(shoot->h!=window_h))
+    {
+        FIBITMAP* temp;
+        temp = FreeImage_Rescale(shotImg, window_w, window_h, FILTER_BOX);
+        if(!temp) {
+            FreeImage_Unload(shotImg);
+            delete []shoot->pixels;
+            shoot->pixels=NULL;
+            delete []shoot;
+            return 0;
+        }
+        FreeImage_Unload(shotImg);
+        shotImg = temp;
+    }
+
+    //QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
+    //shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
     if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
@@ -316,8 +424,15 @@ int GlRenderer::makeShot_action(void *_pixels)
             .arg(date.year()).arg(date.month()).arg(date.day())
             .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
 
-    qDebug() << saveTo << shotImg.width() << shotImg.height();
-    shotImg.save(saveTo, "PNG");
+    qDebug() << saveTo << shoot->w << shoot->h;
+    //shotImg.save(saveTo, "PNG");
+    if(FreeImage_HasPixels(shotImg) == FALSE) {
+        qWarning() <<"Can't save screenshot: no pixel data!";
+    } else {
+        FreeImage_Save(FIF_PNG, shotImg, saveTo.toUtf8().data(), PNG_Z_BEST_COMPRESSION);
+    }
+
+    FreeImage_Unload(shotImg);
 
     delete []shoot->pixels;
     shoot->pixels=NULL;

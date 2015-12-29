@@ -36,8 +36,11 @@ public:
     float timeDelayLeft;
 };
 
+class LevelScene;
 class LVL_EventEngine
 {
+    friend class LevelScene;
+    LevelScene * _scene;
 public:
     LVL_EventEngine();
     ~LVL_EventEngine();

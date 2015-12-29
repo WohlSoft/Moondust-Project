@@ -100,11 +100,15 @@ bool PGE_Window::init(QString WindowTitle)
         return false;
     }
 
+    GraphicsHelps::initSDLImage();
+    if(!checkSDLError()) return false;
+
 #ifdef Q_OS_MACX
     QImage icon(":/icon/cat_256.png");
 #else
     QImage icon(":/icon/cat_16.png");
 #endif
+
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
     WriteToLog(QtDebugMsg, "Create OpenGL context...");
@@ -167,6 +171,7 @@ bool PGE_Window::uninit()
     GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
     //SDL_GL_DeleteContext(glcontext_background);
+    GraphicsHelps::closeSDLImage();
     SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;

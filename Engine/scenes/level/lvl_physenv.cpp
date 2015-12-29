@@ -17,11 +17,11 @@
  */
 
 #include "lvl_physenv.h"
-#include "lvl_scene_ptr.h"
+#include "../scene_level.h"
 
 const int LVL_PhysEnv::numOfEnvironments=3;
 
-LVL_PhysEnv::LVL_PhysEnv() : PGE_Phys_Object()
+LVL_PhysEnv::LVL_PhysEnv(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLPhysEnv;
     env_type = Env_Water;
@@ -37,6 +37,6 @@ void LVL_PhysEnv::init()
     env_type = data.quicksand ? Env_Quicksand : Env_Water;
     collide_player = COLLISION_NONE;
     collide_npc = COLLISION_NONE;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
+    _scene->layers.registerItem(data.layer, this);
 }
 

@@ -54,9 +54,13 @@ void LvlScene::buildAnimators()
         uBGOs.storeElement(i, t_bgo);
     }
 
-    int i;
-    for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
+    uBlocks.clear();
+    uBlocks.allocateSlots(pConfigs->main_block.total());
+    for(int i=1; i<pConfigs->main_block.size(); i++) //Add user images
     {
+        obj_block *blockD = &pConfigs->main_block[i];
+        obj_block t_block;
+        blockD->copyTo(t_block);
         #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("Block Animator ID: %1").arg(i));
         #endif
@@ -64,7 +68,7 @@ void LvlScene::buildAnimators()
         int frameFirst;
         int frameLast;
 
-        switch(pConfigs->main_block[i].algorithm)
+        switch(t_block.algorithm)
         {
             case 1: // Invisible block
             {
@@ -93,24 +97,22 @@ void LvlScene::buildAnimators()
         }
 
         SimpleAnimator * aniBlock = new SimpleAnimator(
-                         ((pConfigs->main_block[i].image.isNull())?
-                                uBgoImg:
-                                pConfigs->main_block[i].image),
-                                pConfigs->main_block[i].animated,
-                                pConfigs->main_block[i].frames,
-                                pConfigs->main_block[i].framespeed, frameFirst, frameLast,
-                                pConfigs->main_block[i].animation_rev,
-                                pConfigs->main_block[i].animation_bid
+                         ((t_block.cur_image->isNull())?
+                                uBlockImg:
+                                *t_block.cur_image),
+                                t_block.animated,
+                                t_block.frames,
+                                t_block.framespeed, frameFirst, frameLast,
+                                t_block.animation_rev,
+                                t_block.animation_bid
                               );
 
         animates_Blocks.push_back( aniBlock );
-        if(pConfigs->main_block[i].id < (unsigned int)index_blocks.size())
-        {
-            index_blocks[pConfigs->main_block[i].id].ai = animates_Blocks.size()-1;
-        }
+        t_block.animator_id = animates_Blocks.size()-1;
+        uBlocks.storeElement(i, t_block);
     }
 
-    for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
+    for(int i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
         AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
                          ((pConfigs->main_npc[i].image.isNull())?

@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_player.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
 #include <data_configs/config_manager.h>
@@ -119,17 +119,17 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         float b = posRect.bottom();
         setSize(state_cur.width, ducking?state_cur.duck_height:state_cur.height);
         setPos(cx-_width/2, b-_height);
-        PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
+        PlayerState x = _scene->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
         x._chsetup.state = stateID;
-        LvlSceneP::s->getGameState()->setPlayerState(playerID, x);
+        _scene->getGameState()->setPlayerState(playerID, x);
         _collideUnduck();
 
         #ifdef COLLIDE_DEBUG
         //Freeze time to check out what happening at moment
         //GlRenderer::makeShot();
-        //LvlSceneP::s->isTimeStopped=true;
+        //_scene->isTimeStopped=true;
         #endif
     }
 }
@@ -167,7 +167,7 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
 {
     data = pt;
     playerID=pt.id;
-    PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
+    PlayerState x = _scene->getGameState()->getPlayerState(playerID);
     characterID = x.characterID;
     stateID     = x._chsetup.state;
     if(_isInited) setCharacter(characterID, stateID);

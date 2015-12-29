@@ -213,15 +213,15 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     switch (m_type) {
     case ItemTypes::LVL_Block:
     {
-        long tarIndex = m_conf->getBlockI(id);
-        if(tarIndex==-1)
+        obj_block& block = m_conf->main_block[id];
+        if(!block.isValid)
         {
             QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
             xxx.fill(Qt::red);
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, m_conf->main_block[tarIndex].id, false, NULL, scn),
+                    Items::getItemGFX(m_type, block.id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -229,7 +229,11 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     {
         obj_bgo& bgo = m_conf->main_bgo[id];
         if(!bgo.isValid)
-            return QPixmap(m_baseSize, m_baseSize);
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
         return GraphicsHelps::squareImage(
                     Items::getItemGFX(m_type, bgo.id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));

@@ -37,28 +37,25 @@ void LevelScene::unregisterElement(PGE_Phys_Object *item)
 }
 
 
-namespace LevelScene_space
+static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 {
-    bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
+    PGE_RenderList* list = static_cast<PGE_RenderList* >(arg);
+    if(list)
     {
-        PGE_RenderList* list = static_cast<PGE_RenderList* >(arg);
-        if(list)
-        {
-            if(item) (*list).push_back(item);
-        }
-        return true;
+        if(item) (*list).push_back(item);
     }
+    return true;
 }
 
 void LevelScene::queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object *> *resultList)
 {
-    RPoint lt={zone.left(), zone.top()};
-    RPoint rb={zone.right(), zone.bottom()};
-    tree.Search(lt, rb, LevelScene_space::_TreeSearchCallback, (void*)resultList);
+    RPoint lt = { zone.left(),  zone.top() };
+    RPoint rb = { zone.right(), zone.bottom() };
+    tree.Search(lt, rb, _TreeSearchCallback, (void*)resultList);
 }
 
 void LevelScene::queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList)
 {
-    PGE_RectF zone=PGE_RectF(x, y, 1, 1);
+    PGE_RectF zone = PGE_RectF(x, y, 1, 1);
     queryItems(zone, resultList);
 }

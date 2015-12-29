@@ -25,7 +25,7 @@
 class LVL_Warp : public PGE_Phys_Object
 {
 public:
-    LVL_Warp();
+    LVL_Warp(LevelScene *_parent=NULL);
     ~LVL_Warp();
     void init();
 

@@ -21,66 +21,17 @@
 
 void LvlScene::getConfig_Block(unsigned long item_id, long &array_index, long &animator_id, obj_block &mergedSet, bool *ok)
 {
-    bool noimage=true, found=false;
-    long j, item_i=0;
-    long animator=0;
-
-    //Check Index exists
-    if(item_id < (unsigned long)index_blocks.size())
-    {
-        j = index_blocks[item_id].i;
-        item_i = j;
-        animator = index_blocks[item_id].ai;
-
-        if(j<pConfigs->main_block.size())
-        {
-            if(pConfigs->main_block[j].id == item_id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_block.size();j++)
-        {
-            if(pConfigs->main_block[j].id == item_id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_block.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
-
-    array_index = item_i;
-    animator_id = animator;
-
-    mergedSet = pConfigs->main_block[item_i];
-
-    mergedSet.image = QPixmap(0,0);
-    mergedSet.mask = QPixmap(0,0);
-
+    bool found=false;
+    obj_block &t_block = uBlocks[item_id];
+    found=t_block.isValid;
+    array_index = item_id;
+    animator_id = t_block.animator_id;
+    mergedSet = t_block;
     if(ok)
     {
-        *ok = noimage;
+        *ok = found;
     }
 }
-
-
-
-
 
 void LvlScene::getConfig_BGO(unsigned long item_id, long &animator_id, obj_bgo *&mergedSet, bool *ok)
 {

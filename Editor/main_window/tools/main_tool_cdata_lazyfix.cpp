@@ -36,7 +36,6 @@ void lazyFixTool_doMagicIn(QString path, QString q, QString OPath)
     if(isMask.exactMatch(q))
         return;
 
-    QImage target;
     QString imgFileM;
     QStringList tmp = q.split(".", QString::SkipEmptyParts);
     if(tmp.size()==2)
@@ -89,23 +88,20 @@ void lazyFixTool_doMagicIn(QString path, QString q, QString OPath)
     if(mask.isNull()) //Skip null masks
         return;
 
-    target = GraphicsHelps::mergeToRGBA_BitWise(image, mask);
+    GraphicsHelps::mergeToRGBA_BitWise(image, mask);
 
-    if(!target.isNull())
+    if(!image.isNull())
     {
         //fix
         if(image.size()!= mask.size())
             mask = mask.copy(0,0, image.width(), image.height());
 
-        mask = target.alphaChannel();
+        mask = image.alphaChannel();
         mask.invertPixels();
 
         //Save after fix
         //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
-        QString saveTo;
-
-
-        saveTo = QString(OPath+(tmp[0].toLower())+".gif");
+        QString saveTo = OPath+(tmp[0].toLower())+".gif";
 
         //overwrite source image (convert BMP to GIF)
         if(!GraphicsHelps::toGif(image, saveTo ) ) //Write gif

@@ -4,6 +4,8 @@
 #include <gui/pge_msgbox.h>
 #include <common_features/app_path.h>
 
+#include <common_features/file_mapper.h>
+
 /***********************************PGE_MusPlayer********************************************/
 bool PGE_MusPlayer::isLoaded=false;
 Mix_Music *PGE_MusPlayer::play_mus = NULL;
@@ -279,7 +281,16 @@ Mix_Chunk *PGE_Sounds::SND_OpenSnd(QString sndFile)
     Mix_Chunk* tmpChunk = NULL;
     if(!chunksBuffer.contains(filePath))
     {
+        #if  defined(__unix__) || defined(_WIN32)
+        PGE_FileMapper fileMap;
+        if( fileMap.open_file(sndFile.toUtf8().data()) )
+        {
+            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+            fileMap.close_file();
+        }
+        #else
         tmpChunk = Mix_LoadWAV( sndFile.toUtf8() );
+        #endif
         if(!tmpChunk) {
             PGE_MsgBox::warn(QString("OpenSFX: Mix_LoadWAV: %1\n%2").arg(sndFile).arg(Mix_GetError()));
         }

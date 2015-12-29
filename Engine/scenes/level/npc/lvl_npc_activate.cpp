@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 void LVL_Npc::Activate()
 {
@@ -36,13 +36,13 @@ void LVL_Npc::Activate()
     isActivated=true;
 
     if(!data.event_activate.isEmpty())
-        LvlSceneP::s->events.triggerEvent(data.event_activate);
+        _scene->events.triggerEvent(data.event_activate);
 
     if(isLuaNPC){
         try{
             lua_onActivated();
         } catch (luabind::error& e) {
-            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+            _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 }
@@ -59,11 +59,21 @@ void LVL_Npc::deActivate()
     if(!is_shared_animation)
         animator.stop();
 
-    if(!keep_position_on_despawn) {
-        setDefaults();
-        setPos(data.x, data.y);
-        if(!reSpawnable) unregister();
-        setPaused(true);
+    if(!keep_position_on_despawn)
+    {
+        if(!reSpawnable)
+        {
+            unregister();
+        } else {
+            if((signed)data.id!=_npc_id)
+            {
+                transformTo_x(data.id); //Transform NPC back into initial form
+            }
+            setDefaults();
+            setPos(data.x, data.y);
+            setDirection(data.direct);
+            setPaused(true);
+        }
     }
 }
 

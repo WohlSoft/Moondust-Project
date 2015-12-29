@@ -43,16 +43,32 @@ struct PGE_Phys_Object_Phys
 };
 
 class LVL_Section;
+class LevelScene;
 class LVL_Block;
+class PGE_LevelCamera;
 ///
 /// \brief The PGE_Phys_Object class
 ///
 /// Is a base of any physical objects
 class PGE_Phys_Object
 {
+    friend class PGE_LevelCamera;
+    friend class LevelScene;
+    //! Tells, does this object was catched by camera since recent render action
+    bool         _vizible_on_screen;
+    //! Tells, does this object stored into the render list
+    bool         _render_list;
 public:
-    PGE_Phys_Object();
+    //! Pointer of the parent scene
+    LevelScene*  _scene;
+protected:
+    //! Is this object registered in the R-Tree?
+    bool             _is_registered;
+public:
+    PGE_Phys_Object(LevelScene *_parent=NULL);
     virtual ~PGE_Phys_Object();
+    void registerInTree();
+    void unregisterFromTree();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
     double posCenterX(); //!< Centered Position X
@@ -97,7 +113,7 @@ public:
 
     void _syncPosition();
     void _syncPositionAndSize();
-    void _syncSection();
+    void _syncSection(bool sync_position=true);
     void renderDebug(float _camX, float _camY);
 
     void iterateStep(float ticks);

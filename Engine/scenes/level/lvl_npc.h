@@ -21,12 +21,15 @@ class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
 {
 public:
-    LVL_Npc();
+    LVL_Npc(LevelScene *_parent=NULL);
     virtual ~LVL_Npc();
     void init();
 
+    void setScenePointer(LevelScene* _pointer);
+
     LevelNPC getData();
 
+    int _npc_id;//Current NPC-ID
     LevelNPC data; //Local settings
     PGE_PointF offset;
     PGE_Size frameSize;
@@ -258,7 +261,7 @@ public:
     inline long special2() { return data.special_data2; }
     inline void setSpecial2(long s) { data.special_data2=s; }
     inline bool isBoss() { return data.is_boss; }
-    inline int getID() { return data.id; }
+    inline int getID() { return _npc_id; }
     inline long getHealth() { return health; }
     inline void setHealth(int _health) { health=_health; }
     inline bool getCollideWithBlocks() { return !disableBlockCollision; }

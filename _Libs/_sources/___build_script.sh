@@ -100,6 +100,10 @@ cp ../libmad-0.15.1b.patched_configure.txt .
 cp ../libmad-0.15.1b.patched_osx_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
+#UnArch "zlib-1.2.8"
+#UnArch "libpng-1.6.20"
+#UnArch "SDL2_image-2.0.0"
+
 #############################Build libraries#####################
 
 ###########SDL2###########
@@ -235,6 +239,57 @@ fi
         cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
     fi
 cd ..
+
+############ZLib###########
+#echo "=======ZLib========="
+#BuildSrc 'zlib-1.2.8' '--prefix='$InstallTo' --64 --static --shared'
+
+###########LibPNG###########
+#echo "=======LibPNG========="
+#BuildSrc 'libpng-1.6.20' '--prefix='$InstallTo' --enable-shared=yes --enable-static=yes'
+
+###########SDL_Image###########
+#echo "=======SDL_Image========="
+##$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
+##$Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
+#if [[ "$OurOS" != "macos" ]]; then
+#        BuildSrc 'SDL2_image-2.0.0' '--prefix='$InstallTo' --disable-sdltest --enable-shared=no --enable-static=yes --enable-bmp=yes --enable-gif=yes --enable-jpg=no --enable-jpg-shared=no --enable-lbm=no --enable-pcx=no --enable-png=yes --enable-png-shared=yes --enable-pnm=no --enable-tga=no --enable-tif=no --enable-tif-shared=no --enable-xcf=no --enable-xpm=no --enable-xv=no --enable-webp=no --enable-webp-shared=no'
+#else
+#            #on Mac OS X build via X-Code
+#    cd "SDL2_image-2.0.0"
+#        UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
+#        if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
+#            #Deletion of old builds
+#            rm -Rf $UNIVERSAL_OUTPUTFOLDER
+#        fi
+#        mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
+#
+#        HEADER_SEARCH_PATHS="$HEADER_SEARCH_PATHS $InstallTo/frameworks/SDL.framework/Headers/"
+#        FRAMEWORK_SEARCH_PATHS="$FRAMEWORK_SEARCH_PATHS $InstallTo/frameworks"
+#        $Sed  -i 's/#include \"SDL.h\"/#include <SDL2\/SDL.h>/g' 'SDL_image.h'
+#        $Sed  -i 's/#include \"SDL_version.h\"/#include <SDL2\/SDL_version.h>/g' 'SDL_image.h'
+#        $Sed  -i 's/#include \"begin_code.h\"/#include <SDL2\/begin_code.h>/g' 'SDL_image.h'
+#        $Sed  -i 's/#include \"close_code.h\"/#include <SDL2\/close_code.h>/g' 'SDL_image.h'
+#
+#        xcodebuild -target Framework -project Xcode/SDL_image.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
+#
+#        if [ $? -eq 0 ]
+#        then
+#          echo "[good]"
+#        else
+#          errorofbuild
+#        fi
+#
+#        #move out built framework from "Release" folder
+#        mv -f $InstallTo/frameworks/Release/SDL2_image.framework $InstallTo/frameworks/
+#        rm -Rf $InstallTo/frameworks/Release
+#
+#        #make RIGHT headers organization in the SDL Framework
+#        mkdir -p -- ${InstallTo}/frameworks/SDL2_image.framework/Headers/SDL2
+#        mv ${InstallTo}/frameworks/SDL2_image.framework/Headers/*.h ${InstallTo}/frameworks/SDL2_image.framework/Headers/SDL2
+#
+#    cd ..
+#fi
 
 ###########SDL2_mixer###########
 #cd SDL2_mixer-2.0.0

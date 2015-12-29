@@ -28,7 +28,7 @@ struct obj_w_tile{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QPixmap mask;
+        QImage mask;
         unsigned long row;
         unsigned long col;
 
@@ -47,7 +47,7 @@ struct obj_w_scenery{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QPixmap mask;
+        QImage mask;
     unsigned int grid;
     QString group;
     QString category;
@@ -63,7 +63,7 @@ struct obj_w_level{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QPixmap mask;
+        QImage mask;
     unsigned int grid;
     QString group;
     QString category;
@@ -79,7 +79,7 @@ struct obj_w_path{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QPixmap mask;
+        QImage mask;
         unsigned long row;
         unsigned long col;
     unsigned int grid;

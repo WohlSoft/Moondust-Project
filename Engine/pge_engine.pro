@@ -44,7 +44,7 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
-LIBS += -L$$PWD/../_Libs/_builds/commonlibs
+#LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 DEFINES += PGE_ENGINE USE_LUA_JIT PGE_FILES_QT
 
 
@@ -61,7 +61,7 @@ LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
 
 android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lGLESv2 -lGLESv1_CM -ldl -landroid
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lfreeimagelite -lGLESv2 -lGLESv1_CM -ldl -landroid
 
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
                           $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
@@ -74,15 +74,16 @@ android: {
                           $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 win32: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32 -lfreeimagelite
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+    #INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_image.framework/Headers
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -lfreeimagelite
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++||unix:!macx:!android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lglut -lGLU
+    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 -lglut -lGLU
 }
 
 contains(DEFINES, USE_LUA_JIT): {
@@ -147,7 +148,6 @@ SOURCES += \
     scenes/level/lvl_bgo.cpp \
     data_configs/obj_bg.cpp \
     scenes/level/lvl_warp.cpp \
-    scenes/level/lvl_scene_ptr.cpp \
     scenes/level/lvl_scene_items.cpp \
     scenes/level/lvl_scene_sections.cpp \
     scenes/level/lvl_scene_timers.cpp \
@@ -294,7 +294,8 @@ SOURCES += \
     scenes/level/lvl_scene_interprocess.cpp \
     scenes/level/lvl_scene_pausemenu.cpp \
     scenes/level/lvl_scene_garbage_collecting.cpp \
-    common_features/translator.cpp
+    common_features/translator.cpp \
+    common_features/file_mapper.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -329,7 +330,6 @@ HEADERS  += \
     data_configs/obj_bg.h \
     version.h \
     scenes/level/lvl_warp.h \
-    scenes/level/lvl_scene_ptr.h \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
     fontman/font_manager.h \
@@ -445,7 +445,8 @@ HEADERS  += \
     data_configs/spawn_effect_def.h \
     script/bindings/level/classes/luaclass_level_contact_detector.h \
     common_features/translator.h \
-    common_features/data_array.h
+    common_features/data_array.h \
+    common_features/file_mapper.h
 
 
 FORMS    += \

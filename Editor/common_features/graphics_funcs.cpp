@@ -32,9 +32,7 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
-bool GraphicsHelps::EnableBitBlitMerge=true;
-
-QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QPixmap mask)
+QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QImage mask)
 {
     if(mask.isNull())
         return image;
@@ -43,55 +41,57 @@ QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QPixmap mask)
         return image;
 
     QImage target = image.toImage();
-    QImage newmask = mask.toImage();
-
-    if(target.size()!= newmask.size())
-    {
-        newmask = newmask.copy(0,0, target.width(), target.height());
-    }
-
-    if(EnableBitBlitMerge)
-        target = mergeToRGBA_BitWise(target, newmask);
-    else
-        {
-                newmask.invertPixels();
-                target.setAlphaChannel(newmask);
-        }
+    if(target.format()!=QImage::Format_ARGB32)
+        target=target.convertToFormat(QImage::Format_ARGB32);
+    mergeToRGBA_BitWise(target, mask);
     return QPixmap::fromImage(target);
 }
 
-//Implementation of Bitwise merging of bit-mask to RGBA image
-QImage GraphicsHelps::mergeToRGBA_BitWise(QImage image, QImage mask)
+void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath)
 {
-    if(mask.isNull())
-        return image;
-
-    if(image.isNull())
-        return image;
-
-    bool isWhiteMask = true;
+    if(path.isNull())
+        return;
 
     QImage target;
+    target=loadQImage(path);
+    if(target.format()!=QImage::Format_ARGB32)
+        target=target.convertToFormat(QImage::Format_ARGB32);
 
-    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
-    target.fill(qRgb(128,128,128));
-
-    QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
-    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
-
-    if(target.size()!= newmask.size())
+    if( maskpath.isNull() )
     {
-        newmask = newmask.copy(0, 0, target.width(), target.height());
+        img.convertFromImage(target);
+        return;
     }
+    mask=loadQImage(maskpath);
+    mergeToRGBA_BitWise(target, mask);
+    img.convertFromImage(target);
+}
 
-    QImage alphaChannel = image.alphaChannel();
+//Implementation of Bitwise merging of bit-mask to RGBA image
+void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
+{
+    if(mask.isNull())
+        return;
 
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
+    if(image.isNull())
+        return;
+
+    //bool isWhiteMask = true;
+    //QImage target(image.width(), image.height(), QImage::Format_ARGB32);
+
+    //QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
+    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
+//    if(target.size()!= mask.size())
+//    {
+//        mask = mask.copy(0, 0, target.width(), target.height());
+//    }
+
+    for(int y=0; (y< image.height()) && (y < mask.height()); y++ )
+        for(int x=0; (x < image.width()) && (x<mask.width()); x++ )
         {
             QColor Fpix = QColor(image.pixel(x,y));
-            QColor Dpix = QColor(target.pixel(x,y));
-            QColor Spix = QColor(newmask.pixel(x,y));
+            QColor Dpix = QColor(qRgb(128,128,128));
+            QColor Spix = QColor(mask.pixel(x,y));
             QColor Npix;
 
             Npix.setAlpha(255);
@@ -104,11 +104,9 @@ QImage GraphicsHelps::mergeToRGBA_BitWise(QImage image, QImage mask)
             Npix.setGreen( Fpix.green() | Npix.green());
             Npix.setBlue( Fpix.blue() | Npix.blue());
 
-            target.setPixel(x, y, Npix.rgba());
-
-            isWhiteMask &= ( (Spix.red()>240) //is almost White
-                             &&(Spix.green()>240)
-                             &&(Spix.blue()>240));
+//            isWhiteMask &= ( (Spix.red()>240) //is almost White
+//                             &&(Spix.green()>240)
+//                             &&(Spix.blue()>240));
 
             //Calculate alpha-channel level
             int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
@@ -121,16 +119,14 @@ QImage GraphicsHelps::mergeToRGBA_BitWise(QImage image, QImage mask)
 
             newAlpha = newAlpha+((Fpix.red() + Fpix.green() + Fpix.blue())/3);
             if(newAlpha>255) newAlpha=255;
+            Npix.setAlpha(newAlpha);
 
-            alphaChannel.setPixel(x,y, newAlpha);
+            image.setPixel(x, y, Npix.rgba());
         }
-    target.setAlphaChannel(alphaChannel);
-
-    return target;
 }
 
 
-void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QPixmap &out_Mask, QString &out_errStr)
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr)
 {
     if( in_imgName.isEmpty() )
     {
@@ -158,12 +154,9 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
     if(i==0)
     {
         out_maskName = "";
-        out_Mask = QPixmap();
     }
-    else
-        out_Mask = QPixmap(rootDir + out_maskName);
 
-    out_Img = GraphicsHelps::mergeToRGBA(QPixmap(rootDir+in_imgName), out_Mask);
+    GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
     if(out_Img.isNull())
     {
         out_errStr="Broken image file "+rootDir+in_imgName;

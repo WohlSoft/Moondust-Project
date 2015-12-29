@@ -2,7 +2,7 @@
 
 #include <script/lua_global.h>
 
-Binding_Level_ClassWrapper_LVL_NPC::Binding_Level_ClassWrapper_LVL_NPC() : LVL_Npc()
+Binding_Level_ClassWrapper_LVL_NPC::Binding_Level_ClassWrapper_LVL_NPC(LevelScene *_parent) : LVL_Npc(_parent)
 {
     isLuaNPC = true;
 }

@@ -81,7 +81,7 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
 
     //Indexes
-    index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
+    //index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     //index_bgo = pConfigs->index_bgo;
     index_npc = pConfigs->index_npc;
 
@@ -219,6 +219,7 @@ LvlScene::~LvlScene()
 {
     if(messageBox) delete messageBox;
     custom_BGOs.clear();
+    custom_Blocks.clear();
     uBGs.clear();
     uBGOs.clear();
     uBlocks.clear();

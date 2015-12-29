@@ -282,6 +282,8 @@ void MainWindow::on_actionSCT_Delete_triggered()
             edit->scene->drawSpace();
             edit->LvlData.modified=true;
 
+            int deletedSection = edit->LvlData.CurSection;
+
             bool switched=false;
             //find nearly not empty section
             for(int i=0;i<edit->LvlData.sections.size();i++)
@@ -301,6 +303,10 @@ void MainWindow::on_actionSCT_Delete_triggered()
 
             if(!switched)
                 SetCurrentLevelSection(0);
+
+            //Pop last section entry if possible
+            if(deletedSection > 20 && edit->LvlData.sections.size()>21)
+                edit->LvlData.sections.pop_back();
 
             edit->scene->Debugger_updateItemList();
 

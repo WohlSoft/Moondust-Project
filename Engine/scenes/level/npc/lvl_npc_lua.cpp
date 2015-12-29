@@ -18,7 +18,7 @@
 
 #include "../lvl_npc.h"
 #include <script/lua_engine.h>
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
 {
@@ -74,7 +74,7 @@ int LVL_Npc::lua_activate_neighbours()
 {
     QVector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = posRect.withMargin(2.0);
-    LvlSceneP::s->queryItems(posRectC, &bodies);
+    _scene->queryItems(posRectC, &bodies);
 
     int found=0;
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
@@ -86,11 +86,11 @@ int LVL_Npc::lua_activate_neighbours()
         if(body==this) continue;
         if(!body->isVisible()) continue;
         if(body->killed) continue;
-        if(body->data.id!=data.id) continue;
+        if(body->_npc_id!=_npc_id) continue;
         if(!body->isActivated)
         {
             body->Activate();
-            LvlSceneP::s->active_npcs.push_back(body);
+            _scene->active_npcs.push_back(body);
             found++;
         }
     }
@@ -111,14 +111,13 @@ LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawna
     def.event_die = "";
     def.event_talk = "";
     def.event_emptylayer = "";
-    return LvlSceneP::s->spawnNPC(def,
+    return _scene->spawnNPC(def,
                            (LevelScene::NpcSpawnType)sp_type,
                            (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
 }
 
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
-
     if(!detectors.contains(&detector_player_pos))
         detectors.push_back(&detector_player_pos);
     return &detector_player_pos;

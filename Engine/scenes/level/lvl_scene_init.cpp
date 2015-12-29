@@ -317,12 +317,13 @@ bool LevelScene::init_items()
         int x=cameraStart.x();
         int y=cameraStart.y();
         //Init Cameras
-        PGE_LevelCamera camera;
+        PGE_LevelCamera camera(this);
         camera.init(
                         (float)x,
                         (float)y,
                         (float)width, (float)height
                     );
+        camera.setRenderObjectsCacheEnabled(i==0);
         camera.changeSection(t_sct, true);
         camera.setPos(x-camera.w()/2 + d.width()/2,
                       y-camera.h()/2 + d.height()/2);
@@ -358,7 +359,7 @@ bool LevelScene::init_items()
         if(data.doors[i].lvl_i) continue;
 
         LVL_Warp * warpP;
-        warpP = new LVL_Warp();
+        warpP = new LVL_Warp(this);
         //warpP->worldPtr = world;
         warpP->data = data.doors[i];
         warpP->init();
@@ -380,7 +381,7 @@ bool LevelScene::init_items()
         if(!isLevelContinues) return false;//!< quit from game if window was closed
 
         LVL_PhysEnv * physesP;
-        physesP = new LVL_PhysEnv();
+        physesP = new LVL_PhysEnv(this);
         //physesP->worldPtr = world;
         physesP->data = data.physez[i];
         physesP->init();

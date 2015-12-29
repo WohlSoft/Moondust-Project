@@ -114,7 +114,9 @@ void dataconfigs::loadMusic()
         total_data +=music_spc_total;
     musicset.endGroup();
 
+    emit progressPartNumber(8);
     emit progressMax(music_lvl_total+music_wld_total+music_spc_total);
+    emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Music..."));
 
     ConfStatus::total_music_lvl = music_lvl_total;

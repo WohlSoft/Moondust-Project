@@ -28,11 +28,13 @@
 
 void LevelScene::placeBlock(LevelBlock blockData)
 {
+    if(blockData.id<=0) return;
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return;
 
     LVL_Block * block;
-    block = new LVL_Block();
+    block = new LVL_Block(this);
+    if(!block) throw("Out of memory [new LVL_Block place]");
     block->data = blockData;
     block->init();
     blocks.push_back(block);
@@ -40,11 +42,13 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
 LVL_Block * LevelScene::spawnBlock(LevelBlock blockData)
 {
+    if(blockData.id<=0) return NULL;
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return NULL;
     LVL_Block * block;
     blockData.array_id= ++data.blocks_array_id;
-    block = new LVL_Block();
+    block = new LVL_Block(this);
+    if(!block) throw("Out of memory [new LVL_Block spawn]");
     block->data = blockData;
     block->init();
     blocks.push_back(block);
@@ -72,11 +76,13 @@ void LevelScene::destroyBlock(LVL_Block *&_block)
 
 void LevelScene::placeBGO(LevelBGO bgoData)
 {
+    if(bgoData.id<=0) return;
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return;
 
     LVL_Bgo * bgo;
-    bgo = new LVL_Bgo();
+    bgo = new LVL_Bgo(this);
+    if(!bgo) throw("Out of memory [new LVL_Bgo place]");
     bgo->data = bgoData;
     bgo->init();
     bgos.push_back(bgo);
@@ -84,21 +90,22 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 LVL_Bgo* LevelScene::spawnBGO(LevelBGO bgoData)
 {
+    if(bgoData.id<=0) return NULL;
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return NULL;
     bgoData.array_id= ++data.blocks_array_id;
     LVL_Bgo * bgo;
-    bgo = new LVL_Bgo();
+    bgo = new LVL_Bgo(this);
+    if(!bgo) throw("Out of memory [new LVL_Bgo] spawn");
     bgo->data = bgoData;
     bgo->init();
     bgos.push_back(bgo);
     return bgo;
 }
 
-
-
 void LevelScene::placeNPC(LevelNPC npcData)
 {
+    if(npcData.id<=0) return;
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;
 
@@ -107,8 +114,9 @@ void LevelScene::placeNPC(LevelNPC npcData)
     if(!npc)
         return;
 
+    npc->setScenePointer(this);
     npc->setup = curNpcData;
-    npc->data = npcData;
+    npc->data  = npcData;
     npc->init();
 
     npcs.push_back(npc);
@@ -116,6 +124,7 @@ void LevelScene::placeNPC(LevelNPC npcData)
 
 LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable)
 {
+    if(npcData.id<=0) return NULL;
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return NULL;
 
@@ -125,6 +134,7 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
         return NULL;
 
     npcData.array_id= ++data.npc_array_id;
+    npc->setScenePointer(this);
     npc->setup = curNpcData;
     npc->reSpawnable=reSpawnable;
     npc->data = npcData;
@@ -193,10 +203,13 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     if(luaEngine.isValid()){
         player = luaEngine.createLuaPlayer();
         if(player == nullptr)
-            player = new LVL_Player();
+            player = new LVL_Player(this);
     }else{
-        player = new LVL_Player();
+        player = new LVL_Player(this);
     }
+
+    if(!player) throw("Out of memory [new LVL_Player] addPlayer");
+    player->_scene=this;
 
     if(players.size()==0)
         player->camera = &cameras.first();

@@ -162,7 +162,9 @@ void dataconfigs::loadLevelBGO()
         total_data +=bgo_total;
     bgoset.endGroup();
 
+    emit progressPartNumber(1);
     emit progressMax(bgo_total);
+    emit progressValue(0);
     emit progressTitle(QObject::tr("Loading BGOs..."));
 
     ConfStatus::total_bgo = bgo_total;

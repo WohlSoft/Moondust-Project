@@ -19,6 +19,8 @@ kfile ServerLib/ServerAPP/Makefile
 kfile ServerLib/ServerAPP/Makefile*
 kfile _Libs/SDL2_mixer_modified/Makefile
 kfile _Libs/SDL2_mixer_modified/Makefile*
+kfile _Libs/FreeImage/Makefile
+kfile _Libs/FreeImage/Makefile*
 kfile Editor/Makefile
 kfile Editor/Makefile*
 kfile Engine/Makefile
@@ -31,6 +33,10 @@ kfile PNG2GIFs/Makefile
 kfile PNG2GIFs/Makefile*
 kfile PlayableCalibrator/Makefile
 kfile PlayableCalibrator/Makefile*
+kfile Manager/Makefile
+kfile Manager/Makefile*
+kfile Maintainer/Makefile
+kfile Maintainer/Makefile*
 kfile MusicPlayer/Makefile
 kfile MusicPlayer/Makefile*
 

@@ -36,8 +36,6 @@
 #include <audio/SdlMusPlayer.h>
 #include <settings/global_settings.h>
 
-#include "level/lvl_scene_ptr.h"
-
 #include <QApplication>
 #include <QtDebug>
 
@@ -51,7 +49,9 @@ int           debug_TimeCounted=0;
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
 {
-    LvlSceneP::s = this;
+    tree.RemoveAll();
+    layers._scene=this;
+    events._scene=this;
 
     data = FileFormats::CreateLevelData();
     data.ReadFileValid = false;
@@ -164,58 +164,66 @@ LevelScene::~LevelScene()
     //Reset modelview matrix
     glLoadIdentity();
 
-    LvlSceneP::s = NULL;
-
     layers.members.clear();
 
     switch_blocks.clear();
     //destroy textures
+    int i=0;
     qDebug() << "clear level textures";
-    while(!textures_bank.isEmpty())
+    for(i=0; i<textures_bank.size(); i++)
     {
-        GlRenderer::deleteTexture( textures_bank[0] );
-        textures_bank.pop_front();
+        GlRenderer::deleteTexture( textures_bank[i] );
     }
+    textures_bank.clear();
 
     qDebug() << "Destroy cameras";
     cameras.clear();
 
     qDebug() << "Destroy players";
-    while(!players.isEmpty())
+    for(i=0; i<players.size(); i++)
     {
         LVL_Player* tmp;
-        tmp = players.last();
-        players.pop_back();
+        tmp = players[i];
         player1Controller->removeFromControl(tmp);
         if(tmp)
         {
+            tmp->unregister();
             if(!tmp->isLuaPlayer)
                 delete tmp;
         }
     }
 
     qDebug() << "Destroy blocks";
-    while(!blocks.isEmpty())
+    for(i=0; i<blocks.size(); i++)
     {
         LVL_Block* tmp;
-        tmp = blocks.last();
-        blocks.pop_back();
+        tmp = blocks[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy BGO";
-    while(!bgos.isEmpty())
+    for(i=0; i<bgos.size(); i++)
     {
         LVL_Bgo* tmp;
-        tmp = bgos.last();
-        bgos.pop_back();
+        tmp = bgos[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy NPC";
-    npcs.clear();
+    for(i=0; i<npcs.size(); i++)
+    {
+        LVL_Npc* tmp;
+        tmp = npcs[i];
+        if(tmp)
+        {
+            tmp->unregister();
+            if(!tmp->isLuaNPC)
+                delete tmp;
+        }
+    }
+    //npcs.clear();
 //    while(!npcs.isEmpty())
 //    {
 //        LVL_Npc* tmp;
@@ -225,23 +233,21 @@ LevelScene::~LevelScene()
 
 
     qDebug() << "Destroy Warps";
-    while(!warps.isEmpty())
+    for(i=0; i<warps.size(); i++)
     {
         LVL_Warp* tmp;
-        tmp = warps.first();
-        warps.pop_front();
+        tmp = warps[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy Physical Environment zones";
-    while(!physenvs.isEmpty())
+    for(i=0; i<physenvs.size(); i++)
     {
         LVL_PhysEnv* tmp;
-        tmp = physenvs.first();
-        physenvs.pop_front();
+        tmp = physenvs[i];
         layers.removeRegItem(tmp->data.layer, tmp);
-        if(tmp) delete tmp;
+        if(tmp) { tmp->unregisterFromTree(); delete tmp;}
     }
 
     qDebug() << "Destroy sections";
@@ -387,9 +393,9 @@ void LevelScene::update()
 
         /***************Collect garbage****************/
         if(!dead_npcs.isEmpty())
-            LvlSceneP::s->collectGarbageNPCs();
+            collectGarbageNPCs();
         if(!dead_players.isEmpty())
-            LvlSceneP::s->collectGarbagePlayers();
+            collectGarbagePlayers();
         /**********************************************/
 
         //update cameras
@@ -432,8 +438,8 @@ void LevelScene::render()
 
         cam->drawBackground();
 
-        const int render_sz = cam->renderObjects().size();
-        PGE_Phys_Object** render_obj = cam->renderObjects().data();
+        int render_sz = cam->renderObjects_count();
+        PGE_Phys_Object** render_obj = cam->renderObjects_arr();
         for(int i=0; i<render_sz; i++)
         {
             switch(render_obj[i]->type)
@@ -457,10 +463,9 @@ void LevelScene::render()
 
         if(PGE_Window::showPhysicsDebug)
         {
-            for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+            for(int i=0; i<render_sz; i++)
             {
-                PGE_Phys_Object*&item=(*it);
-                item->renderDebug(cam->posX(), cam->posY());
+                render_obj[i]->renderDebug(cam->posX(), cam->posY());
             }
         }
 

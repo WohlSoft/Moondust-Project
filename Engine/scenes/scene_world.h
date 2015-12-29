@@ -155,7 +155,7 @@ private:
     bool    allow_down;
     void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
     void    updateCenter();
-    void    fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, float cx, float cy);
+    static void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, long cx, long cy);
     void    initElementsVisibility();
     void    saveElementsVisibility();
 

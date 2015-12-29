@@ -22,10 +22,13 @@
 #include <QHash>
 #include "lvl_base_object.h"
 
+class LevelScene;
 class LVL_LayerEngine
 {
+    friend class LevelScene;
+    LevelScene * _scene;
 public:
-    LVL_LayerEngine();
+    LVL_LayerEngine(LevelScene *_parent=NULL);
     void hide(QString layer, bool smoke=true);
     void show(QString layer, bool smoke=true);
     void toggle(QString layer, bool smoke=true);

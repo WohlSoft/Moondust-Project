@@ -3,6 +3,8 @@ del _Libs\MakeFile
 del _Libs\MakeFile*
 del _Libs\SDL2_mixer_modified\MakeFile
 del _Libs\SDL2_mixer_modified\MakeFile*
+del _Libs\FreeImage\MakeFile
+del _Libs\FreeImage\MakeFile*
 del _Libs\luabind\_project\MakeFile
 del _Libs\luabind\_project\MakeFile*
 del _Libs\oolua\project\MakeFile
@@ -19,4 +21,10 @@ del PNG2GIFs\MakeFile
 del PNG2GIFs\MakeFile*
 del PlayableCalibrator\MakeFile
 del PlayableCalibrator\MakeFile*
+del Manager\MakeFile
+del Manager\MakeFile*
+del Maintainer\MakeFile
+del Maintainer\MakeFile*
+del MusicPlayer\MakeFile
+del MusicPlayer\MakeFile*
 pause

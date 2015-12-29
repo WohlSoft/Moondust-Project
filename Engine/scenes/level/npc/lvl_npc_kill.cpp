@@ -17,7 +17,7 @@
  */
 
 #include "../lvl_npc.h"
-#include "../lvl_scene_ptr.h"
+#include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
 
@@ -40,7 +40,7 @@ void LVL_Npc::harm(int damage, int damageReason)
     try {
         lua_onHarm(damage, damageReason);
     } catch (luabind::error& e) {
-        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        _scene->getLuaEngine()->postLateShutdownError(e);
     }
 
     health -= damage;
@@ -71,13 +71,13 @@ void LVL_Npc::harm(int damage, int damageReason)
 void LVL_Npc::talkWith()
 {
     if(data.msg.isEmpty()) return;
-    PGE_MsgBox msgX(LvlSceneP::s, data.msg, PGE_MsgBox::msg_info, PGE_Point(-1,-1),
+    PGE_MsgBox msgX(_scene, data.msg, PGE_MsgBox::msg_info, PGE_Point(-1,-1),
                ConfigManager::setup_message_box.box_padding,
                ConfigManager::setup_message_box.sprite);
     msgX.exec();
     if(!data.event_talk.isEmpty())
     {
-        LvlSceneP::s->events.triggerEvent(data.event_talk);
+        _scene->events.triggerEvent(data.event_talk);
     }
 }
 
@@ -89,13 +89,13 @@ void LVL_Npc::kill(int damageReason)
     try{
         lua_onKill(damageReason);
     } catch (luabind::error& e) {
-        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        _scene->getLuaEngine()->postLateShutdownError(e);
     }
 
 
     //Pre-unregistring event
     if(!data.event_die.isEmpty())
-        LvlSceneP::s->events.triggerEvent(data.event_die);
+        _scene->events.triggerEvent(data.event_die);
 
     unregister();
 
@@ -103,12 +103,12 @@ void LVL_Npc::kill(int damageReason)
     {
         case DAMAGE_STOMPED:
             if(setup->effect_1>0)
-                LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+                _scene->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
         case DAMAGE_LAVABURN:
             if(ConfigManager::marker_npc.eff_lava_burn>0)
             {
-                LvlSceneP::s->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
+                _scene->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
                                                   posCenterX(),
                                                   posCenterY(), 1, 0, 0, 0, 0, _direction);
             }
@@ -116,7 +116,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_PITFALL: break;
         default:
             if(setup->effect_2>0)
-                LvlSceneP::s->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+                _scene->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
             break;
     }
 
@@ -136,8 +136,8 @@ void LVL_Npc::kill(int damageReason)
     //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())
     {
-        if(LvlSceneP::s->layers.isEmpty(data.layer))
-            LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
+        if(_scene->layers.isEmpty(data.layer))
+            _scene->events.triggerEvent(data.event_emptylayer);
     }
 
 }
@@ -145,8 +145,8 @@ void LVL_Npc::kill(int damageReason)
 void LVL_Npc::unregister()
 {
     killed=true;
-    LvlSceneP::s->unregisterElement(this);
-    LvlSceneP::s->dead_npcs.push_back(this);
-    LvlSceneP::s->layers.removeRegItem(data.layer, this);
+    unregisterFromTree();
+    _scene->dead_npcs.push_back(this);
+    _scene->layers.removeRegItem(data.layer, this);
 }
 
