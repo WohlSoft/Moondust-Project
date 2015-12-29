@@ -66,6 +66,7 @@ void dataconfigs::loadSound()
     soundset.endGroup();
 
     emit progressMax(sound_total);
+    emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Sound..."));
 
     ConfStatus::total_sound = sound_total;

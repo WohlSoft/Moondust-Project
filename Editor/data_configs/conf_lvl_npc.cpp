@@ -93,6 +93,7 @@ void dataconfigs::loadLevelNPC()
     npcset.endGroup();
 
     emit progressMax(npc_total);
+    emit progressValue(0);
     emit progressTitle(QObject::tr("Loading NPCs..."));
 
     ConfStatus::total_npc = npc_total;

@@ -22,7 +22,12 @@ EditorSpashScreen::EditorSpashScreen()
 EditorSpashScreen::EditorSpashScreen(QPixmap &pixmap)
 {
     opacity=1;
-    setPixmap(pixmap);
+    QPixmap newx(pixmap.width(), pixmap.height()+50);
+    newx.fill(QColor(Qt::transparent));
+    QPainter x(&newx);
+    x.drawPixmap(0,0, pixmap.width(), pixmap.height(), pixmap);
+    x.end();
+    setPixmap(newx);
     construct();
 }
 
@@ -46,6 +51,11 @@ void EditorSpashScreen::drawContents(QPainter *painter)
         x.setHeight(animations[i].second.image().height() RatioHeight);
         painter->drawPixmap(x, animations[i].second.image());
     }
+    QPainterPath path;
+    painter->setPen(Qt::white);
+    path.addText(rect().x()+20, rect().bottom()-20, QFont("Times", 8, -1, true), _label);
+    painter->strokePath(path, QPen(QColor(Qt::black), 4));
+    painter->fillPath(path, QBrush(Qt::white));
 }
 
 void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int speed)
@@ -87,8 +97,29 @@ void EditorSpashScreen::opacityUP()
     repaint();
 }
 
+void EditorSpashScreen::progressValue(int val)
+{
+    _label_val=val;
+    rebuildLabel();
+}
+
+void EditorSpashScreen::progressMax(int val)
+{
+    _label_max=val;
+    rebuildLabel();
+}
+
+void EditorSpashScreen::progressTitle(QString val)
+{
+    _label_str=val;
+    rebuildLabel();
+}
+
 void EditorSpashScreen::construct()
 {
+    _label_val=0.0;
+    _label_max=100.0;
+    _percents=0;
     buffer=this->pixmap();
 
     #ifdef Q_OS_ANDROID
@@ -111,5 +142,11 @@ void EditorSpashScreen::construct()
     scaler.setTimerType(Qt::PreciseTimer);
     scaler.setInterval(64);
     connect(&scaler, SIGNAL(timeout()), this, SLOT(opacityUP()));
+}
+
+void EditorSpashScreen::rebuildLabel()
+{
+    _percents = (int)round((_label_val/_label_max)*100.0);
+    _label = QString("%1% - %2").arg(_percents).arg(_label_str);
 }
 

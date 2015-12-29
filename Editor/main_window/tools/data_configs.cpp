@@ -87,6 +87,11 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(!progress.wasCanceled())
         progress.close();
 
+    progress.disconnect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
+    progress.disconnect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
+    progress.disconnect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
+
+
 //    //Restore all animations states back
 //    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
 //    {

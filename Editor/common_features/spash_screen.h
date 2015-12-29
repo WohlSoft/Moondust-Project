@@ -25,9 +25,20 @@ public:
     void startAnimations();
 private slots:
     void opacityUP();
+public slots:
+    void progressValue(int val);
+    void progressMax(int val);
+    void progressTitle(QString val);
 
 private:
     void construct();
+    void rebuildLabel();
+    QString _label_str;
+    double  _label_val;
+    double  _label_max;
+    int     _percents;
+    QString _label;
+
     QVector<SplashPiece > animations;
     qreal opacity;
     qreal width_ratio;

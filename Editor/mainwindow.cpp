@@ -104,7 +104,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.setDisabled(true);
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
 
-
     for(int a=0; a<configs.animations.size();a++)
     {
         //QPoint pt(416,242);
@@ -115,6 +114,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
                             configs.animations[a].frames,
                             configs.animations[a].speed);
     }
+
+    splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
+    splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
+    splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
 
     /*********************Loading of config pack**********************/
     // Do the loading in a thread
