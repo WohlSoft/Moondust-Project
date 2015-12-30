@@ -245,9 +245,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     //target.ColorUpper.b = float((upperColor>>8)&0xFF)/255.0f;
     RGBQUAD upperColor;
     FreeImage_GetPixelColor(sourceImage, 0, 0, &upperColor);
-    target.ColorUpper.r = upperColor.rgbRed;
-    target.ColorUpper.b = upperColor.rgbBlue;
-    target.ColorUpper.g = upperColor.rgbGreen;
+    target.ColorUpper.r = float(upperColor.rgbRed)/255.0f;
+    target.ColorUpper.b = float(upperColor.rgbBlue)/255.0f;
+    target.ColorUpper.g = float(upperColor.rgbGreen)/255.0f;
 
     //Uint8 lowerColor = GraphicsHelps::getPixel(sourceImage, 0, sourceImage->h-1);//sourceImage.pixel(0, sourceImage.height()-1);
     //target.ColorLower.r = float((lowerColor>>24)&0xFF)/255.0f;
@@ -255,9 +255,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     //target.ColorLower.b = float((lowerColor>>8)&0xFF)/255.0f;
     RGBQUAD lowerColor;
     FreeImage_GetPixelColor(sourceImage, 0, h-1, &lowerColor);
-    target.ColorUpper.r = upperColor.rgbRed;
-    target.ColorUpper.b = upperColor.rgbBlue;
-    target.ColorUpper.g = upperColor.rgbGreen;
+    target.ColorLower.r = float(lowerColor.rgbRed)/255.0f;
+    target.ColorLower.b = float(lowerColor.rgbBlue)/255.0f;
+    target.ColorLower.g = float(lowerColor.rgbGreen)/255.0f;
 
     FreeImage_FlipVertical(sourceImage);
 
