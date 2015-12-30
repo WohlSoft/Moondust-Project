@@ -308,7 +308,7 @@ void LuaEngine::loadMultiRet(QFile *file)
     int errorCode = luautil_loadlua(L, luaCode.toLocal8Bit().data(), luaCode.length(), luaCode.section('/', -1).section('\\', -1).toLocal8Bit().data());
     //If we get an error, then handle it
     if(errorCode){
-        qWarning() << "Got lua error, reporting...";
+        qWarning() << "Got lua error, reporting... [loadMultiRet] " << file->fileName();
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
         m_lateShutdown = true;
         shutdown();
