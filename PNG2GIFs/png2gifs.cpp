@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
     bool nopause=false;
     bool cOpath=false;
     bool singleFiles=false;
+    bool useWindowsArgStyle=false;
 
     QString argPath;
     QString argOPath;
@@ -60,6 +61,12 @@ int main(int argc, char *argv[])
     QRegExp isPng = QRegExp("*.png");
     isPng.setPatternSyntax(QRegExp::Wildcard);
 
+    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
+    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
+#ifdef Q_OS_WIN
+    useWindowsArgStyle=true;
+#endif
+
     if(a.arguments().size()==1)
     {
         PNG2GIFsGUI png2gifs_gui;
@@ -69,30 +76,36 @@ int main(int argc, char *argv[])
 
     for(int arg=0; arg<a.arguments().size(); arg++)
     {
-        if(a.arguments().at(arg)=="--help")
+        if(QString(a.arguments().at(arg)).toLower()=="--help")
         {
             goto DisplayHelp;
         }
         else
-        if(a.arguments().at(arg)=="-R")
+        if((QString(a.arguments().at(arg)).toLower()==("-r")) | (QString(a.arguments().at(arg)).toLower()=="/r"))
         {
             removeSource=true;
         }
         else
-        if(a.arguments().at(arg)=="-W")
+        if((QString(a.arguments().at(arg)).toLower()=="-d") | (QString(a.arguments().at(arg)).toLower()=="/d"))
         {
             walkSubDirs=true;
         }
         else
-        if(a.arguments().at(arg)=="--nopause")
+        if(QString(a.arguments().at(arg)).toLower()=="--nopause")
         {
             nopause=true;
         }
         else
         {
             //if begins from "-O"
-            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-'&& a.arguments().at(arg).at(1)=='O')
-              {  argOPath=a.arguments().at(arg); argOPath.remove(0,2); }
+            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-' && QChar(a.arguments().at(arg).at(1)).toLower()=='o')
+            {
+                argOPath=a.arguments().at(arg);
+                argOPath.remove(0,2);
+                //check if user put a space between "-O" and the path and remove it
+                if(a.arguments().at(arg).at(0)==' ')
+                    argOPath.remove(0,1);
+            }
             else
             {
                 if(isPng.exactMatch(a.arguments().at(arg)))
@@ -196,13 +209,26 @@ DisplayHelp:
     QTextStream(stdout) <<"This utility will convert PNG images into GIF with masks format:\n";
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Syntax:\n\n";
-    QTextStream(stdout) <<"   PNG2GIFs [--help] [-R] file1.png [file2.png] [...] [-O/path/to/out]\n";
-    QTextStream(stdout) <<"   PNG2GIFs [--help] [-W] [-R] /path/to/folder [-O/path/to/out]\n\n";
-    QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" /path/to/folder     - path to a directory with PNG files\n";
-    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the pairs of GIF images will be saved\n";
-    QTextStream(stdout) <<" -R                  - Remove source images after successful conversion\n";
-    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
+    if(useWindowsArgStyle)
+    {
+        QTextStream(stdout) <<"   PNG2GIFs [--help] [/R] file1.png [file2.png] [...] /O [output path]\n";
+        QTextStream(stdout) <<"   PNG2GIFs [--help] [/D] [/R] [input path] /O [output path]\n\n";
+        QTextStream(stdout) <<" --help              - Display this help\n";
+        QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
+        QTextStream(stdout) <<" /O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
+        QTextStream(stdout) <<" /R                  - Remove source images after successful conversion\n";
+        QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
+    }
+    else
+    {
+        QTextStream(stdout) <<"   PNG2GIFs [--help] [-R] file1.png [file2.png] [...] -O [output path]\n";
+        QTextStream(stdout) <<"   PNG2GIFs [--help] [-D] [-R] [input path] -O [output path]\n\n";
+        QTextStream(stdout) <<" --help              - Display this help\n";
+        QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
+        QTextStream(stdout) <<" -O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
+        QTextStream(stdout) <<" -R                  - Remove source images after successful conversion\n";
+        QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
+    }
     QTextStream(stdout) <<"\n\n";
 
     getchar();
@@ -211,10 +237,10 @@ DisplayHelp:
     return 0;
 WrongInputPath:
     QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Wrong input path!\n";
+    QTextStream(stdout) <<"Invalid input path!\n";
     goto DisplayHelp;
 WrongOutputPath:
     QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Wrong output path!\n";
+    QTextStream(stdout) <<"Invalid output path!\n";
     goto DisplayHelp;
 }
