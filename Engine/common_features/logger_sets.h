@@ -21,6 +21,9 @@
 
 #include <QString>
 #include <QtMsgHandler>
+#include <QFile>
+#include <QTextStream>
+#include <memory>
 
 class LogWriter
 {
@@ -28,6 +31,9 @@ public:
     static QString DebugLogFile;
     static QtMsgType logLevel;
     static bool   enabled;
+    static bool   _file_is_opened;
+    static std::shared_ptr<QFile>  _out_file;
+    static std::shared_ptr<QTextStream>  _out_stream;
 
     static void WriteToLog(QtMsgType type, QString msg);
     static void LoadLogSettings();

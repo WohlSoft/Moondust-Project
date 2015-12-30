@@ -18,6 +18,8 @@
 
 #include "file_mapper.h"
 
+#include "util.h"
+
 #ifdef __unix__
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -100,7 +102,9 @@ bool PGE_FileMapper::open_file(std::string path)
     }
     size = sb.st_size;
 #elif _WIN32
-    m_File = CreateFileA(path.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    std::wstring wpath;
+    charsets_utils::UTF8Str_To_WStr(wpath, path);
+    m_File = CreateFileW(wpath.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (m_File == INVALID_HANDLE_VALUE)
     {
         m_error="Failed to open file "+path;
@@ -109,7 +113,7 @@ bool PGE_FileMapper::open_file(std::string path)
 
     size = GetFileSize(m_File, NULL);
 
-    m_Map = CreateFileMapping(m_File, NULL, PAGE_READONLY, 0, 0, NULL);
+    m_Map = CreateFileMappingW(m_File, NULL, PAGE_READONLY, 0, 0, NULL);
     if( m_Map == NULL )
     {
         CloseHandle(m_File);

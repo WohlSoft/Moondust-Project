@@ -25,6 +25,7 @@
 #include <qcombobox.h>
 #include <QListWidget>
 #include <qtablewidget.h>
+#include <string>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -77,6 +78,17 @@ namespace luabind_utils {
         }
         return container;
     }
+}
+
+namespace charsets_utils {
+    /*!
+     * \brief returns length of UTF8 string line
+     * \param Input 8-bit string in UTF8 codepage
+     * \return number of characters (not a bytes!)
+     */
+    size_t utf8len(const char *s);
+    int UTF8Str_To_WStr(std::wstring &dest, const std::string  &source);
+    int WStr_To_UTF8Str(std::string  &dest, const std::wstring &source);
 }
 
 #endif // UTIL_H

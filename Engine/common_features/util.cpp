@@ -22,6 +22,10 @@
 #include <QWidgetItem>
 #include <QFileInfo>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
 {
     QString toSearch;
@@ -137,4 +141,40 @@ QString util::resolveRelativeOrAbsolute(const QString& path, const QStringList &
         }
     }
     return "";
+}
+
+
+
+
+size_t charsets_utils::utf8len(const char *s)
+{
+    size_t len = 0;
+    while(*s)
+        len += (*(s++)&0xC0)!=0x80;
+    return len;
+}
+
+
+int charsets_utils::UTF8Str_To_WStr(std::wstring &dest, const std::string &source)
+{
+    #ifdef _WIN32
+    dest.resize(utf8len(source.c_str()));
+    return MultiByteToWideChar(CP_UTF8, 0, source.c_str(), source.length(), (wchar_t*)dest.c_str(), source.length());
+    #else
+    (void)dest; (void)source;
+    return utf8len(source.c_str());
+    #endif
+}
+
+int charsets_utils::WStr_To_UTF8Str(std::string &dest, const std::wstring &source)
+{
+    #ifdef _WIN32
+    int dest_len = WideCharToMultiByte(CP_UTF8, 0, source.c_str(), source.length(), (LPSTR)dest.c_str(), 0, NULL, NULL);
+    dest.resize(dest_len);
+    WideCharToMultiByte(CP_UTF8, 0, source.c_str(), source.length(), (LPSTR)dest.c_str(), dest_len, NULL, NULL);
+    return dest_len;
+    #else
+    (void)dest; (void)source;
+    return source.size();
+    #endif
 }
