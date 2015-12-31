@@ -80,6 +80,4 @@ void dataconfigs::loadTilesets()
             }
         }
     }
-
-
 }

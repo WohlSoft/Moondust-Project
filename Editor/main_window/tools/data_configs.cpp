@@ -28,6 +28,7 @@
 
 #include <main_window/dock/lvl_item_toolbox.h>
 #include <main_window/dock/wld_item_toolbox.h>
+#include <main_window/dock/tileset_item_box.h>
 
 void MainWindow::on_actionLoad_configs_triggered()
 {   
@@ -70,9 +71,14 @@ void MainWindow::on_actionLoad_configs_triggered()
     progress.connect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
     progress.connect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
 
+    dock_TilesetBox->lockTilesetBox=true;
+    dock_TilesetBox->clearTilesetGroups();
+
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
     while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(1); }
+
+    dock_TilesetBox->lockTilesetBox=false;
 
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);
