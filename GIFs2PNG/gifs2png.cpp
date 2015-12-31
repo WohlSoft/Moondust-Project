@@ -332,7 +332,8 @@ int main(int argc, char *argv[])
             removeMode=true;
         }
         else
-        if((QString(a.arguments().at(arg)).toLower()=="-d") | (QString(a.arguments().at(arg)).toLower()=="/d"))
+        if((QString(a.arguments().at(arg)).toLower()=="-d") | (QString(a.arguments().at(arg)).toLower()=="/d")
+                | (QString(a.arguments().at(arg)).toLower()=="-w") | (QString(a.arguments().at(arg)).toLower()=="/w"))
         {
             walkSubDirs=true;
         }
