@@ -23,7 +23,7 @@
 #----------------------------------------------------------------------------
 
 QT       += gui widgets network concurrent
-QT       -= opengl
+QT       -= opengl dbus svg testlib
 
 win32: {
 QT += winextras

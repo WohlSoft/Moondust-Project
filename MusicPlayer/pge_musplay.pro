@@ -5,6 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui widgets network
+QT       -= opengl angle svg dbus opengl winextras
+
+QTPLUGIN =
 
 CONFIG += static
 
