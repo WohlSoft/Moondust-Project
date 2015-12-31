@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
     bool nopause=false;
     bool cOpath=false;
     bool singleFiles=false;
-    bool useWindowsArgStyle=false;
 
     QString argPath;
     QString argOPath;
@@ -60,12 +59,6 @@ int main(int argc, char *argv[])
 
     QRegExp isPng = QRegExp("*.png");
     isPng.setPatternSyntax(QRegExp::Wildcard);
-
-    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
-    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
-#ifdef Q_OS_WIN
-    useWindowsArgStyle=true;
-#endif
 
     if(a.arguments().size()==1)
     {
@@ -206,30 +199,30 @@ int main(int argc, char *argv[])
     return 0;
 
 DisplayHelp:
+    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
+    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
+
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"This utility will convert PNG images into GIF with masks format:\n";
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Syntax:\n\n";
-    if(useWindowsArgStyle)
-    {
-        QTextStream(stdout) <<"   PNG2GIFs [--help] [/R] file1.png [file2.png] [...] /O [output path]\n";
-        QTextStream(stdout) <<"   PNG2GIFs [--help] [/D] [/R] [input path] /O [output path]\n\n";
-        QTextStream(stdout) <<" --help              - Display this help\n";
-        QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
-        QTextStream(stdout) <<" /O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
-        QTextStream(stdout) <<" /R                  - Remove source images after successful conversion\n";
-        QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
-    }
-    else
-    {
-        QTextStream(stdout) <<"   PNG2GIFs [--help] [-R] file1.png [file2.png] [...] -O [output path]\n";
-        QTextStream(stdout) <<"   PNG2GIFs [--help] [-D] [-R] [input path] -O [output path]\n\n";
-        QTextStream(stdout) <<" --help              - Display this help\n";
-        QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
-        QTextStream(stdout) <<" -O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
-        QTextStream(stdout) <<" -R                  - Remove source images after successful conversion\n";
-        QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
-    }
+#ifdef Q_OS_WIN
+    QTextStream(stdout) <<"   PNG2GIFs [--help] [/R] file1.png [file2.png] [...] /O [output path]\n";
+    QTextStream(stdout) <<"   PNG2GIFs [--help] [/D] [/R] [input path] /O [output path]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
+    QTextStream(stdout) <<" /O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
+    QTextStream(stdout) <<" /R                  - Remove source images after successful conversion\n";
+    QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
+#else
+    QTextStream(stdout) <<"   PNG2GIFs [--help] [-R] file1.png [file2.png] [...] -O [output path]\n";
+    QTextStream(stdout) <<"   PNG2GIFs [--help] [-D] [-R] [input path] -O [output path]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" [input path]        - path to an image directory or a PNG file\n";
+    QTextStream(stdout) <<" -O [output path]    - path to a directory where the pairs of GIF images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after successful conversion\n";
+    QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
+#endif
     QTextStream(stdout) <<"\n\n";
 
     getchar();

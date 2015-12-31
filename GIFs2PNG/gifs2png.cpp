@@ -289,7 +289,6 @@ int main(int argc, char *argv[])
     bool walkSubDirs=false;
     bool cOpath=false;
     bool singleFiles=false;
-    bool useWindowsArgStyle=false;
 
     QString argPath;
     QString argOPath;
@@ -308,12 +307,6 @@ int main(int argc, char *argv[])
 
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
-
-    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
-    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
-#ifdef Q_OS_WIN
-    useWindowsArgStyle=true;
-#endif
 
     if(a.arguments().size()==1)
     {
@@ -478,30 +471,30 @@ int main(int argc, char *argv[])
     return 0;
 
 DisplayHelp:
+    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
+    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
+
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"This utility will merge GIF images and their masks into solid PNG images:\n";
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Syntax:\n\n";
-    if(useWindowsArgStyle)
-    {
-        QTextStream(stdout) <<"   GIFs2PNG [--help] [/R] file1.gif [file2.gif] [...] [/O path/to/output]\n";
-        QTextStream(stdout) <<"   GIFs2PNG [--help] [/D] [/R] path/to/input [/O path/to/output]\n\n";
-        QTextStream(stdout) <<" --help              - Display this help\n";
-        QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
-        QTextStream(stdout) <<" /O path/to/output   - path to a directory where the PNG images will be saved\n";
-        QTextStream(stdout) <<" /R                  - Remove source images after a succesful conversion\n";
-        QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
-    }
-    else
-    {
-        QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O path/to/output]\n";
-        QTextStream(stdout) <<"   GIFs2PNG [--help] [-D] [-R] path/to/input [-O path/to/output]\n\n";
-        QTextStream(stdout) <<" --help              - Display this help\n";
-        QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
-        QTextStream(stdout) <<" -O path/to/output   - path to a directory where the PNG images will be saved\n";
-        QTextStream(stdout) <<" -R                  - Remove source images after a succesful conversion\n";
-        QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
-    }
+#ifdef Q_OS_WIN
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [/R] file1.gif [file2.gif] [...] [/O path/to/output]\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [/D] [/R] path/to/input [/O path/to/output]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
+    QTextStream(stdout) <<" /O path/to/output   - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" /R                  - Remove source images after a succesful conversion\n";
+    QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
+#else
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O path/to/output]\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [-D] [-R] path/to/input [-O path/to/output]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
+    QTextStream(stdout) <<" -O path/to/output   - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after a succesful conversion\n";
+    QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
+#endif
     QTextStream(stdout) <<"\n";
     QTextStream(stdout) <<" --config=/path/to/config/pack\n";
     QTextStream(stdout) <<"                     - Allow usage of default masks from specific PGE config pack\n";
