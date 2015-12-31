@@ -90,7 +90,7 @@ public:
         foreach(QString f, folders)
         {
             QString newpath=QString(dirs.absolutePath()+"/"+f).remove("//");
-            if(!m_dir_list.contains(newpath)) //Disallow duplicated entries
+            if(!m_dir_list.contains(newpath)) //Disallow duplicate entries
                 m_dir_list.push_back(newpath);
         }
     }
@@ -308,7 +308,6 @@ int main(int argc, char *argv[])
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
 
-
     if(a.arguments().size()==1)
     {
         goto DisplayHelp;
@@ -316,27 +315,28 @@ int main(int argc, char *argv[])
 
     for(int arg=0; arg<a.arguments().size(); arg++)
     {
-        if(a.arguments().at(arg)=="--help")
+        if(QString(a.arguments().at(arg)).toLower()=="--help")
         {
             goto DisplayHelp;
         }
         else
-        if(a.arguments().at(arg)=="-R")
+        if((QString(a.arguments().at(arg)).toLower()==("-r")) | (QString(a.arguments().at(arg)).toLower()=="/r"))
         {
             removeMode=true;
         }
         else
-        if(a.arguments().at(arg)=="-W")
+        if((QString(a.arguments().at(arg)).toLower()=="-d") | (QString(a.arguments().at(arg)).toLower()=="/d")
+                | (QString(a.arguments().at(arg)).toLower()=="-w") | (QString(a.arguments().at(arg)).toLower()=="/w"))
         {
             walkSubDirs=true;
         }
         else
-        if(a.arguments().at(arg)=="--nopause")
+        if(QString(a.arguments().at(arg)).toLower()=="--nopause")
         {
             nopause=true;
         }
         else
-        if(a.arguments().at(arg).startsWith("--config="))
+        if(QString(a.arguments().at(arg)).toLower().startsWith("--config="))
         {
             QStringList tmp;
             tmp = a.arguments().at(arg).split('=');
@@ -353,8 +353,14 @@ int main(int argc, char *argv[])
         else
         {
             //if begins from "-O"
-            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-'&& a.arguments().at(arg).at(1)=='O')
-              {  argOPath=a.arguments().at(arg); argOPath.remove(0,2); }
+            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-' && QChar(a.arguments().at(arg).at(1)).toLower()=='o')
+            {
+                argOPath=a.arguments().at(arg);
+                argOPath.remove(0,2);
+                //check if user put a space between "-O" and the path and remove it
+                if(a.arguments().at(arg).at(0)==' ')
+                    argOPath.remove(0,1);
+            }
             else
             {
                 if(isMask.exactMatch(a.arguments().at(arg)))
@@ -465,23 +471,35 @@ int main(int argc, char *argv[])
     return 0;
 
 DisplayHelp:
+    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
+    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
+
     QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"This utility will merge GIF images and his mask into solid PNG image:\n";
+    QTextStream(stdout) <<"This utility will merge GIF images and their masks into solid PNG images:\n";
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Syntax:\n\n";
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O/path/to/out]\n";
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [-W] [-R] /path/to/folder [-O/path/to/out]\n\n";
+#ifdef Q_OS_WIN
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [/R] file1.gif [file2.gif] [...] [/O path/to/output]\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [/D] [/R] path/to/input [/O path/to/output]\n\n";
     QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" /path/to/folder     - path to a directory with pairs of GIF files\n";
-    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
-    QTextStream(stdout) <<" -R                  - Remove source images after succesfull converting\n";
-    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
+    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
+    QTextStream(stdout) <<" /O path/to/output   - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" /R                  - Remove source images after a succesful conversion\n";
+    QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
+#else
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O path/to/output]\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] [-D] [-R] path/to/input [-O path/to/output]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
+    QTextStream(stdout) <<" -O path/to/output   - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after a succesful conversion\n";
+    QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
+#endif
     QTextStream(stdout) <<"\n";
     QTextStream(stdout) <<" --config=/path/to/config/pack\n";
     QTextStream(stdout) <<"                     - Allow usage of default masks from specific PGE config pack\n";
-    QTextStream(stdout) <<"                       (Useful for a cases where designer wasn't placed mask image\n";
-    QTextStream(stdout) <<"                       to use default mask file from a config pack)\n";
-    QTextStream(stdout) <<" --nopause            - Don't pause application after proces fininshing (useful for a scrip integration)\n";
+    QTextStream(stdout) <<"                       (Useful for cases where the GFX designer didn't make a mask image)\n";
+    QTextStream(stdout) <<" --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();
