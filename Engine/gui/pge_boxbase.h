@@ -57,8 +57,8 @@ protected:
     float uTickf;
     int   uTick;
 
-    void drawTexture(int left, int top, int right, int bottom, int border=32);
-    void drawTexture(PGE_Rect _rect, int border=32);
+    void drawTexture(int left, int top, int right, int bottom, int border=32, float opacity=1.0f);
+    void drawTexture(PGE_Rect _rect, int border=32, float opacity=1.0f);
     bool _textureUsed;
     void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
     PGE_Texture styleTexture;

@@ -53,11 +53,11 @@ CreditsScene::CreditsScene() : Scene(Credits), luaEngine(this)
 
 CreditsScene::~CreditsScene()
 {
-    glDisable(GL_TEXTURE_2D);
+    //glDisable(GL_TEXTURE_2D);
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
 
     GlRenderer::deleteTexture( background );
 
@@ -189,7 +189,7 @@ void CreditsScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
 
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 

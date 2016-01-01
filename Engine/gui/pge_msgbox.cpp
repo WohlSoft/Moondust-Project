@@ -152,7 +152,7 @@ void PGE_MsgBox::render()
     {
         if(_textureUsed)
         {
-            drawTexture(_sizeRect);
+            drawTexture(_sizeRect, 32, fader_opacity);
         }
         else
         {
@@ -173,7 +173,9 @@ void PGE_MsgBox::render()
             drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
                         _sizeRect.center().y()-(height + padding)*fader_opacity,
                         _sizeRect.center().x()+(width + padding)*fader_opacity,
-                        _sizeRect.center().y()+(height + padding)*fader_opacity);
+                        _sizeRect.center().y()+(height + padding)*fader_opacity,
+                        32,
+                        fader_opacity);
         }
         else
         {
@@ -181,7 +183,10 @@ void PGE_MsgBox::render()
                                    _sizeRect.center().y() - (height+padding)*fader_opacity,
                                      _sizeRect.center().x() + (width+padding)*fader_opacity,
                                    _sizeRect.center().y() + (height+padding)*fader_opacity,
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
+                                   bg_color.red()/255.0f,
+                                   bg_color.green()/255.0f,
+                                   bg_color.blue()/255.0f,
+                                   fader_opacity);
         }
     }
 }

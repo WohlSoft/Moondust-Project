@@ -200,12 +200,8 @@ void LVL_Block::render(double camX, double camY)
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_Blocks[animator_ID].image();
 
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    glBindTexture( GL_TEXTURE_2D, texId );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    GlRenderer::BindTexture(&texture);
+    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     if(sizable)
     {
@@ -344,8 +340,7 @@ void LVL_Block::render(double camX, double camY)
     {
         GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), x.first, x.second );
     }
-
-    glDisable(GL_TEXTURE_2D);
+    GlRenderer::UnBindTexture();
 }
 
 bool LVL_Block::isInited()

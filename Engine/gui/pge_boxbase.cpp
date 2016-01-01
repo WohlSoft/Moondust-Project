@@ -1,5 +1,4 @@
 #include "pge_boxbase.h"
-
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
 #include <common_features/graphics_funcs.h>
@@ -68,7 +67,7 @@ void PGE_BoxBase::render()
     else
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glLoadIdentity();
+        //glLoadIdentity();
     }
 }
 
@@ -131,35 +130,23 @@ void PGE_BoxBase::updateTickValue()
     if(uTickf<=0) uTickf=1.0;
 }
 
-void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border)
+void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border, float opacity)
 {
     PGE_Rect x;
     x.setLeft(left);
     x.setTop(top);
     x.setRight(right);
     x.setBottom(bottom);
-    drawTexture(x, border);
+    drawTexture(x, border, opacity);
 }
 
-void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
+void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
 {
     if(_textureUsed)
     {
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture(GL_TEXTURE_2D, styleTexture.texture);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-        #ifdef GL_GLEXT_PROTOTYPES
-        glBlendEquation(GL_FUNC_ADD);
-        GLERRORCHECK();
-        #endif
-        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+        GlRenderer::BindTexture(&styleTexture);
+        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
 
         int w = _rect.width();
         int h = _rect.height();
@@ -291,11 +278,8 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
          //4 Left-bottom
         drawPiece(_rect, PGE_RectF(0, h-y+dY, x-dX, y-dY), PGE_RectF(0, styleTexture.h-y+dY, x-dX, y-dY));
 
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-        glBindTexture( GL_TEXTURE_2D, 0 );
-        glDisable(GL_TEXTURE_2D);
+        GlRenderer::UnBindTexture();
+        //glDisable(GL_TEXTURE_2D);
     }
 }
 
@@ -311,26 +295,40 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
     blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
     blockG.setBottomRight( GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ) );
 
-    GLfloat Vertices[] = {
-        (float)blockG.left(),  (float)blockG.top(), 0,
-        (float)blockG.right(), (float)blockG.top(), 0,
-        (float)blockG.right(), (float)blockG.bottom(), 0,
-        (float)blockG.left(),  (float)blockG.bottom(), 0
-    };
-    GLfloat TexCoord[] = {
-        (float)tx.left(), (float)tx.top(),
-        (float)tx.right(),(float)tx.top(),
-        (float)tx.right(),(float)tx.bottom(),
-        (float)tx.left(), (float)tx.bottom()
-    };
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
-    glVertexPointer(3, GL_FLOAT, 0, Vertices);
-    //GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
-    //GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
-    //GLERRORCHECK();
+    GlRenderer::renderTextureCur( target.x()+block.x(),
+                                  target.y()+block.y(),
+                                  block.width(),
+                                  block.height(),
+                                  tx.top(),
+                                  tx.bottom(),
+                                  tx.left(),
+                                  tx.right() );
+//    GLfloat Vertices[] = {
+//        (float)blockG.left(),  (float)blockG.top(), 0,
+//        (float)blockG.right(), (float)blockG.top(), 0,
+//        (float)blockG.right(), (float)blockG.bottom(), 0,
+//        (float)blockG.left(),  (float)blockG.bottom(), 0
+//    };
+//    GLfloat TexCoord[] = {
+//        (float)tx.left(), (float)tx.top(),
+//        (float)tx.right(),(float)tx.top(),
+//        (float)tx.right(),(float)tx.bottom(),
+//        (float)tx.left(), (float)tx.bottom()
+//    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
+
+//    GLfloat Colors[] = { 1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f, };
+
+//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }

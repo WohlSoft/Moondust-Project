@@ -105,7 +105,7 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
             case QtCriticalMsg:
                 qCritical() << msg; break;
             case QtFatalMsg:
-                qFatal(msg.toUtf8().data()); break;
+                qFatal((const char*)msg.toUtf8().data()); break;
             default: break;
         }
         return;
@@ -145,6 +145,7 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
     }
 
     *_out_stream.get() << txt << "\n";
+    *_out_stream.get()->flush();
 
 }
 
@@ -152,6 +153,23 @@ void LogWriter::logMessageHandler(QtMsgType type,
                   const QMessageLogContext& context,
                              const QString& msg)
 {
+    if(!_file_is_opened)
+    {
+        switch (type)
+        {
+            case QtDebugMsg:
+                qDebug() << msg; break;
+            case QtWarningMsg:
+                qWarning() << msg; break;
+            case QtCriticalMsg:
+                qCritical() << msg; break;
+            case QtFatalMsg:
+                qFatal((const char*)msg.toUtf8().data()); break;
+            default: break;
+        }
+        return;
+    }
+
     switch (type)
     {
         case QtDebugMsg:
@@ -206,11 +224,13 @@ void LogWriter::logMessageHandler(QtMsgType type,
                     .arg(lMessage.constData());
     }
 
-    QFile outFile(DebugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-    outFile.close();
+    *_out_stream.get() << txt << "\n";
+    *_out_stream.get()->flush();
+//    QFile outFile(DebugLogFile);
+//    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+//    QTextStream ts(&outFile);
+//    ts << txt << endl;
+//    outFile.close();
 }
 
 
@@ -222,4 +242,12 @@ void LoadLogSettings()
 void WriteToLog(QtMsgType type, QString msg)
 {
     LogWriter::WriteToLog(type, msg);
+}
+
+void CloseLog()
+{
+    LogWriter::_out_file.get()->close();
+    LogWriter::_out_stream.reset();
+    LogWriter::_out_file.reset();
+    LogWriter::_file_is_opened=false;
 }

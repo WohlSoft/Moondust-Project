@@ -70,7 +70,9 @@ bool PGE_Window::init(QString WindowTitle)
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 //  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
 //  SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
 //  SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      0);
@@ -115,6 +117,9 @@ bool PGE_Window::init(QString WindowTitle)
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     if(!checkSDLError()) return false;
 
+    SDL_GL_MakeCurrent(window, glcontext);
+    if(!checkSDLError()) return false;
+
     WriteToLog(QtDebugMsg, "Toggle vsync...");
     toggleVSync(vsync);
     IsInit=true;
@@ -150,7 +155,13 @@ void PGE_Window::toggleVSync(bool vsync)
        SDL_GL_SetSwapInterval(1);
        TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
        TicksPerSecond=1000.0f/TimeOfFrame;
-       checkSDLError();
+       if(checkSDLError()) {
+           g_AppSettings.timeOfFrame=TimeOfFrame;
+           g_AppSettings.TicksPerSecond=TicksPerSecond;
+       } else {
+           TimeOfFrame=g_AppSettings.timeOfFrame;
+           TicksPerSecond=g_AppSettings.TicksPerSecond;
+       }
    } else {
        SDL_GL_SetSwapInterval(0);
    }
@@ -204,7 +215,7 @@ void PGE_Window::clean()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
     glFlush();
     rePaint();
 }

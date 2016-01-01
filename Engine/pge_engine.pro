@@ -75,7 +75,7 @@ android: {
                           $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 win32: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32 -lfreeimagelite
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lfreeimagelite
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
@@ -84,7 +84,8 @@ macx: {
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++||unix:!macx:!android: {
-    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 -lglut -lGLU
+    LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
+    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 
 contains(DEFINES, USE_LUA_JIT): {
@@ -447,7 +448,8 @@ HEADERS  += \
     script/bindings/level/classes/luaclass_level_contact_detector.h \
     common_features/translator.h \
     common_features/data_array.h \
-    common_features/file_mapper.h
+    common_features/file_mapper.h \
+    graphics/gl_debug.h
 
 
 FORMS    += \

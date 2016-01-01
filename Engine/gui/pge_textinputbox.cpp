@@ -165,7 +165,7 @@ void PGE_TextInputBox::render()
     {
         if(_textureUsed)
         {
-            drawTexture(_sizeRect);
+            drawTexture(_sizeRect, 32, fader_opacity);
         }
         else
         {
@@ -186,7 +186,8 @@ void PGE_TextInputBox::render()
             drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
                         _sizeRect.center().y()-(height + padding)*fader_opacity,
                         _sizeRect.center().x()+(width + padding)*fader_opacity,
-                        _sizeRect.center().y()+(height + padding)*fader_opacity);
+                        _sizeRect.center().y()+(height + padding)*fader_opacity,
+                        32, fader_opacity);
         }
         else
         {

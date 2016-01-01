@@ -40,7 +40,7 @@ void LevelScene::drawLoader()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
 
 
     GlRenderer::renderRect(0,0,PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, 1.0f);
