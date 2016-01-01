@@ -105,7 +105,7 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
             case QtCriticalMsg:
                 qCritical() << msg; break;
             case QtFatalMsg:
-                qFatal((const char*)msg.toUtf8().data()); break;
+                qCritical() << msg; break;
             default: break;
         }
         return;
@@ -145,7 +145,7 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
     }
 
     *_out_stream.get() << txt << "\n";
-    *_out_stream.get()->flush();
+    _out_stream.get()->flush();
 
 }
 
@@ -164,7 +164,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
             case QtCriticalMsg:
                 qCritical() << msg; break;
             case QtFatalMsg:
-                qFatal((const char*)msg.toUtf8().data()); break;
+                qCritical() << msg; break;
             default: break;
         }
         return;
@@ -225,7 +225,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
     }
 
     *_out_stream.get() << txt << "\n";
-    *_out_stream.get()->flush();
+    _out_stream.get()->flush();
 //    QFile outFile(DebugLogFile);
 //    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 //    QTextStream ts(&outFile);
