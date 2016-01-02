@@ -89,6 +89,7 @@ void handle_signal(int signal)
 {
     // Find out which signal we're handling
     switch (signal) {
+        #ifndef _WIN32  //Unsupported signals by Windows
         case SIGHUP:
             WriteToLog(QtWarningMsg, "Terminal was closed");
             exit(signal);
@@ -96,21 +97,10 @@ void handle_signal(int signal)
         case SIGQUIT:
             WriteToLog(QtWarningMsg, "<Quit command>");
             exit(signal);
-        case SIGILL:
-            WriteToLog(QtWarningMsg, "<Wrong CPU Instruction>");
-            QMessageBox::critical(NULL, QObject::tr("Wrong CPU Instruction!"),
-                         QObject::tr("Engine was crashed because a wrong CPU instruction"));
-            exit(signal);
         case SIGKILL:
             WriteToLog(QtWarningMsg, "<killed>");
             QMessageBox::critical(NULL, QObject::tr("Killed!"),
                          QObject::tr("Engine was killed by mad maniac :-P"));
-            exit(signal);
-            break;
-        case SIGFPE:
-            WriteToLog(QtWarningMsg, "<wrong arithmetical operation>");
-            QMessageBox::critical(NULL, QObject::tr("Wrong arithmetical operation"),
-                          QObject::tr("Engine was crashed because wrong arithmetical opreation!"));
             exit(signal);
             break;
         case SIGALRM:
@@ -122,6 +112,18 @@ void handle_signal(int signal)
         case SIGURG:
         case SIGUSR1:
         case SIGUSR2:
+            break;
+        case SIGILL:
+            WriteToLog(QtWarningMsg, "<Wrong CPU Instruction>");
+            QMessageBox::critical(NULL, QObject::tr("Wrong CPU Instruction!"),
+                         QObject::tr("Engine was crashed because a wrong CPU instruction"));
+            exit(signal);
+        #endif
+        case SIGFPE:
+            WriteToLog(QtWarningMsg, "<wrong arithmetical operation>");
+            QMessageBox::critical(NULL, QObject::tr("Wrong arithmetical operation"),
+                          QObject::tr("Engine was crashed because wrong arithmetical opreation!"));
+            exit(signal);
             break;
         case SIGABRT:
             WriteToLog(QtWarningMsg, "<Aborted!>");
@@ -150,15 +152,17 @@ void initSigs()
 {
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
+    #ifndef _WIN32 //Unsupported signals by Windows
     signal(SIGHUP, &handle_signal);
     signal(SIGQUIT, &handle_signal);
-    signal(SIGILL, &handle_signal);
     signal(SIGKILL, &handle_signal);
-    signal(SIGFPE, &handle_signal);
     signal(SIGALRM, &handle_signal);
     signal(SIGURG, &handle_signal);
     signal(SIGUSR1, &handle_signal);
     signal(SIGUSR2, &handle_signal);
+    #endif
+    signal(SIGILL, &handle_signal);
+    signal(SIGFPE, &handle_signal);
     signal(SIGSEGV, &handle_signal);
     signal(SIGINT, &handle_signal);
     signal(SIGABRT, &handle_signal);
