@@ -4235,7 +4235,7 @@ const adldata adl[4254] =
     { 0x0F0F000,0x2C78780, 0x00,0x0A, 0xE,+0 }, // 4219: b65PP54; b66PP54; Tamborin
     { 0x067FD00,0x086F641, 0x0A,0x0D, 0x6,+0 }, // 4220: b65PP56; b66PP56; CowBell
     { 0x60070E0,0x6F4A4A0, 0x00,0x1B, 0xC,+0 }, // 4221: b65PP58; b66PP58; VibeSlap
-    { 0x064DD03,0x205FD02, 0x1D,0x03, 0x8,+0 }, // 4222: b65PP59; b66PP59; Ride1
+    { 0x064DD03,0x205ED02, 0x1D,0x03, 0x8,+0 }, // 4222: b65PP59; b66PP59; Ride1
     { 0x1F8F830,0x0B6F511, 0x21,0x08, 0x0,+0 }, // 4223: b65PP60; b66PP60; HiBongo
     { 0x1F8F830,0x0A6F511, 0x1E,0x08, 0x0,+0 }, // 4224: b65PP61; b66PP61; LoBongo
     { 0x248EB00,0x078F700, 0x95,0x0D, 0x0,+0 }, // 4225: b65PP62; b66PP62; MTHCongo
@@ -4246,7 +4246,7 @@ const adldata adl[4254] =
     { 0x387FD00,0x0F6E622, 0x00,0x08, 0x0,+0 }, // 4230: b65PP67; b66PP67; HiAgogo
     { 0x387FD00,0x0F6F522, 0x00,0x08, 0x0,+0 }, // 4231: b65PP68; b66PP68; LoAgogo
     { 0x0FEF025,0x2586C03, 0x00,0x93, 0xE,+0 }, // 4232: b65PP69; b66PP69; Cabasa
-    { 0x4F77720,0x2F87811, 0x11,0x13, 0x1,+0 }, // 4233: b65PP70; b66PP70; Maracas
+    { 0x4F77720,0x2F86811, 0x11,0x13, 0x1,+0 }, // 4233: b65PP70; b66PP70; Maracas
     { 0x3F77723,0x2F68623, 0x04,0x0A, 0xC,+0 }, // 4234: b65PP71; b66PP71; StWhistl
     { 0x3F76623,0x2F68623, 0x04,0x0A, 0xC,+0 }, // 4235: b65PP72; b66PP72; LgWhistl
     { 0x1F97869,0x0F9D721, 0xC0,0x00, 0xE,+0 }, // 4236: b65PP73; b66PP73; StGuiro
@@ -20950,7 +20950,7 @@ const struct adlinsdata adlins[4203] =
     // fades to 20% at 0.6s, keyoff fades to 20% in 0.6s.
     {4221,4221, 35, 0,    593,   593 }, // 4169: b65PP58; b66PP58; VibeSlap
 
-    // Amplitude begins at  834.1, peaks  881.3 at 0.0s,
+    // Amplitude begins at  844.8, peaks  882.9 at 0.0s,
     // fades to 20% at 0.4s, keyoff fades to 20% in 0.4s.
     {4222,4222, 35, 0,    386,   386 }, // 4170: b65PP59; b66PP59; Ride1
 
@@ -20994,9 +20994,9 @@ const struct adlinsdata adlins[4203] =
     // fades to 20% at 0.1s, keyoff fades to 20% in 0.1s.
     {4232,4232, 35, 0,    100,   100 }, // 4180: b65PP69; b66PP69; Cabasa
 
-    // Amplitude begins at    4.8, peaks  278.5 at 0.0s,
+    // Amplitude begins at    0.6, peaks  273.6 at 0.0s,
     // fades to 20% at 0.1s, keyoff fades to 20% in 0.1s.
-    {4233,4233, 35, 0,     86,    86 }, // 4181: b65PP70; b66PP70; Maracas
+    {4233,4233, 35, 0,    100,   100 }, // 4181: b65PP70; b66PP70; Maracas
 
     // Amplitude begins at   21.7, peaks  489.3 at 0.0s,
     // fades to 20% at 0.2s, keyoff fades to 20% in 0.2s.

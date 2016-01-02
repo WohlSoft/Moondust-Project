@@ -1,4 +1,4 @@
-0.2.4.1
+0.2.5
 - Fixed crash on NPC placement with interprocessing
 - Sprite in real-time placing mode will be aligned to center of mouse rather left-top corner
 - Background color of screen padding no is always black
