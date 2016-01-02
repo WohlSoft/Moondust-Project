@@ -167,7 +167,7 @@ void GlRenderer::initDummyTexture()
     GLubyte* textura= (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
 
     //glEnable(GL_TEXTURE_2D); GLERRORCHECK();
-    glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
+    //glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
     glGenTextures( 1, &(_dummyTexture.texture) ); GLERRORCHECK();
     glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
     glTexImage2D( GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
@@ -298,7 +298,7 @@ GLuint GlRenderer::QImage2Texture(QImage *img)
     QImage text_image = GraphicsHelps::convertToGLFormat(*img);//.mirrored(false, true);
 
     GLuint texture=0;
-    glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
+    //glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
     glGenTextures(1, &texture);  GLERRORCHECK();
     //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glBindTexture(GL_TEXTURE_2D, texture);  GLERRORCHECK();
