@@ -6,8 +6,8 @@
 - Player now can attack multiple NPC's at one stomp
 - Player now can safely walk from ridable NPC's without jumps
 - Removed workaround disables hurting of player while it flying up because player finally can safely stomp healthy NPC's
-- Added experimental translator to have able to retranslate engine too
-- Optimized memory usage and increased performace
+- Added experimental translator to have able to retranslated engine too
+- Optimized memory usage and increased performance
 - Now PGE Engine uses FreeImage library to load graphics
 - Finally resolved a troubles with a lazily-made graphics, all masked-gif based graphics are merging via bit-blit algorithm
 

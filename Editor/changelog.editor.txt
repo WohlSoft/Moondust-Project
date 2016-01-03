@@ -1,9 +1,9 @@
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again
 - Fixed a detection of libraries paths (such as "platforms") while dynamically built PGE Apps are locating in the folder with non-ascii path
-- Added support of config pack's folder binding GIFs2PNG GUI (non-exist masks are will be retreived from current config pack!)
+- Added support of config pack's folder binding GIFs2PNG GUI (non-exist masks are will be retrieved from current config pack!)
 - Use Bleeze theme on KDE, XFCE, OS X and on Windows 10
-- Fixed bug with multiselection item dialog where impossible to add NPC's into custom counter
+- Fixed bug with multi-selection item dialog where impossible to add NPC's into custom counter
 - Added ability to copy any parameters/metrics of any placed element
 - Added a good protection which avoids accidental running of multiple copies of engine for a testing
 
