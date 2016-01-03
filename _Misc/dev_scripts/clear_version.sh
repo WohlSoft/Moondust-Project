@@ -17,6 +17,7 @@ killf()
     done
 }
 
+killf pge_editor/_release/.obj/main.o
 killf pge_editor/_release/.obj/aboutdialog.o
 killf pge_editor/_release/.obj/check_updates.o
 killf pge_editor/_release/.obj/moc_aboutdialog.o

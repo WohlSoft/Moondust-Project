@@ -29,6 +29,17 @@
 
 struct obj_npc
 {
+    obj_npc();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_npc &npc);
+
     unsigned long id;   //    [npc-1]
     QString name;       //    name="Goomba"
     QString group;      //    group="Enemy" 		;The sort category

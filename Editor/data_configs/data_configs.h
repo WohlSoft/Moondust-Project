@@ -121,11 +121,11 @@ public:
     PGE_DataArray<obj_BG > main_bg;
     PGE_DataArray<obj_bgo > main_bgo;
     PGE_DataArray<obj_block > main_block;
-    QList<obj_npc > main_npc;
+    PGE_DataArray<obj_npc > main_npc;
     npc_Markers marker_npc;
 
     //Indexes
-    QList<blocksIndexes > index_blocks;
+    //QList<blocksIndexes > index_blocks;
     //QList<bgoIndexes > index_bgo;
     QList<npcIndexes > index_npc;
 

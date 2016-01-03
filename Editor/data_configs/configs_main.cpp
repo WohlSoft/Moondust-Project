@@ -328,7 +328,7 @@ bool dataconfigs::loadconfigs()
     WriteToLog(QtDebugMsg, QString("-------------------------"));
     WriteToLog(QtDebugMsg, QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
     WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
-    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.size()).arg(ConfStatus::total_npc));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
     WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
     WriteToLog(QtDebugMsg, QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
     WriteToLog(QtDebugMsg, QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));

@@ -290,10 +290,10 @@ void dataconfigs::loadLevelBlocks()
                 sblock.id = i;
                 main_block.storeElement(i, sblock);
 
-                /************Add to Index***************/
+                /************Add to Index***************
                 if(i < (unsigned int)index_blocks.size())
                     index_blocks[i].i = i-1;
-                /************Add to Index***************/
+                ************Add to Index***************/
 
             skipBLOCK:
             blockset.endGroup();

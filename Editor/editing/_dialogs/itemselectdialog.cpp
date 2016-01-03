@@ -197,8 +197,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(npcTab)
     {
-        foreach(obj_npc npcItem, conf->main_npc)
+        for(int i=1; i<conf->main_npc.size(); i++) //Add user images
         {
+            obj_npc &npcItem = conf->main_npc[i];
             //Add category
             QPixmap tmpI = GraphicsHelps::squareImage(
                         npcItem.image.copy(0,npcItem.gfx_h*npcItem.display_frame, npcItem.image.width(), npcItem.gfx_h ),
@@ -608,8 +609,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     }
     else
     //set NPC item box from global config
-    foreach(obj_npc npcItem, conf->main_npc)
+    for(int i=1; i<conf->main_npc.size(); i++) //Add user images
     {
+        obj_npc &npcItem = conf->main_npc[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)

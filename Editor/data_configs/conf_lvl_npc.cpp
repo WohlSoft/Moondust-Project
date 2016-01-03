@@ -21,37 +21,42 @@
 
 #include "data_configs.h"
 
+obj_npc::obj_npc()
+{
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
+}
+
+void obj_npc::copyTo(obj_npc &npc)
+{
+    /* for internal usage */
+    npc.isValid         = isValid;
+    npc.animator_id     = animator_id;
+    npc.cur_image       = cur_image;
+    if(cur_image==NULL)
+        npc.cur_image   = &image;
+    npc.gfx_h           = gfx_h;
+    /* for internal usage */
+
+    npc.id              = id;
+    npc.name            = name;
+    npc.group           = group;
+    npc.category        = category;
+    npc.grid            = grid;
+    npc.image_n         = image_n;
+    npc.mask_n          = mask_n;
+    npc.frames          = frames;
+    npc.framespeed      = framespeed;
+    npc.display_frame   = display_frame;
+}
+
 long dataconfigs::getNpcI(unsigned long itemID)
 {
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_npc.size())
-    {
-        j = index_npc[itemID].gi;
-
-        if(j < main_npc.size())
-        {
-            if( main_npc[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_npc.size(); j++)
-        {
-            if(main_npc[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-
-    return j;
+    if((itemID>0) && main_npc.contains(itemID))
+        return itemID;
+    else
+        return -1;
 }
 
 
@@ -98,6 +103,8 @@ void dataconfigs::loadLevelNPC()
     emit progressTitle(QObject::tr("Loading NPCs..."));
 
     ConfStatus::total_npc = npc_total;
+
+    main_npc.allocateSlots(npc_total);
 
     /************Allocation of empty indexes of arrayElements*************/
     npcIndexes npcIndex;
@@ -382,7 +389,7 @@ void dataconfigs::loadLevelNPC()
 
 
         snpc.id = i;
-        main_npc.push_back(snpc);
+        main_npc.storeElement(i, snpc);
         /************Add to Index**************/
         if(i < (unsigned int)index_npc.size())
         {
@@ -401,9 +408,8 @@ void dataconfigs::loadLevelNPC()
         }
     }
 
-    if((unsigned int)main_npc.size()<npc_total)
+    if((unsigned int)main_npc.stored()<npc_total)
     {
-        addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.size()), QtWarningMsg);
+        addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.stored()), QtWarningMsg);
     }
-
 }
