@@ -347,10 +347,10 @@ int main(int argc, char *argv[])
     WriteToLog(QtDebugMsg, "Initialization of Audio subsystem...");
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
-        QMessageBox::critical(NULL, "Audio subsystem Error",
-            QString("Unable to load audio sub-system!\n%1")
+        QMessageBox::warning(NULL, "Audio subsystem Error",
+            QString("Unable to load audio sub-system!\n%1\n\nContinuing without sound...")
                 .arg( Mix_GetError() ), QMessageBox::Ok);
-        exit(1);
+        //exit(1);
     }
     PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music);
 
