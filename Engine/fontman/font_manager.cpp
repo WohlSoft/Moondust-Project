@@ -142,9 +142,16 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
 
     if(!QFileInfo(root+texFile).exists())
+    {
+        qWarning() <<"Failed to load font texture! file not exists: " << (root+texFile);
         return;
+    }
     PGE_Texture fontTexture;
     GlRenderer::loadTextureP(fontTexture, root+texFile);
+    if(!fontTexture.inited)
+    {
+        qWarning() <<"Failed to load font texture! Invalid image!";
+    }
     textures.push_back(fontTexture);
 
     if((letter_width==0)||(letter_height==0))
