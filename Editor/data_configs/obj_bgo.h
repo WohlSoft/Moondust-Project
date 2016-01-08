@@ -27,6 +27,7 @@ struct obj_bgo{
     bool isValid;
     unsigned long animator_id;
     QPixmap * cur_image;
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     /*!
      * \brief Quickly copies all properties except images
@@ -34,35 +35,32 @@ struct obj_bgo{
      */
     void copyTo(obj_bgo &bgo);
 
-    //    [background-1]
     unsigned long id;
-    //    name="Smallest bush"		;background name, default="background-%n"
     QString name;
-    //    group="scenery"			;Background group, default="All about my pigeon"
     QString group;
-    //    category="scenery"		;Background categoty, default="Scenery"
     QString category;
-    //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
-    //    view=background			; background2 | background | foreground | foreground2, default="background"
-    int view; //-1, 0, 1, 2
+
+    enum ZLayerEnum {
+        z_background_2 =-1,
+        z_background_1 = 0,
+        z_foreground_1 = 1,//Default
+        z_foreground_2 = 2
+    };
+    int zLayer; //-1, 0, 1, 2
     int offsetX;
     int offsetY;
     int zOffset;
-    //    image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
+
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QImage mask;
-    //    climbing=0			; default = 0
+    QImage  mask;
+
     bool climbing;
-    //    animated = 0			; default = 0 - no
     bool animated;
-    //    frames = 1			; default = 1
     unsigned int frames;
-    //    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
     unsigned int framespeed;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     unsigned int display_frame;
 };

@@ -587,7 +587,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
     if(mergedSet)
     {
         localProps = (*mergedSet);
-        zMode       = localProps.view;
+        zMode       = localProps.zLayer;
         zOffset     = localProps.zOffset;
         gridSize    = localProps.grid;
         gridOffsetX = localProps.offsetX;

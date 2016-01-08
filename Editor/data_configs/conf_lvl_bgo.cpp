@@ -44,11 +44,15 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.group           = group;
     bgo.category        = category;
     bgo.grid            = grid;
+
+    bgo.zLayer          = zLayer;
     bgo.offsetX         = offsetX;
     bgo.offsetY         = offsetY;
     bgo.zOffset         = zOffset;
+
     bgo.image_n         = image_n;
     bgo.mask_n          = mask_n;
+
     bgo.climbing        = climbing;
     bgo.animated        = animated;
     bgo.frames          = frames;
@@ -81,18 +85,18 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
         tmpStr=setup->value("view", "background").toString();
 
         if(tmpStr=="foreground2")
-            sbgo.view = 2;
+            sbgo.zLayer = obj_bgo::z_foreground_2;
         else
         if(tmpStr=="foreground")
-            sbgo.view = 1;
+            sbgo.zLayer = obj_bgo::z_foreground_1;
         else
         if(tmpStr=="background")
-            sbgo.view = (merge_with ? merge_with->view : 0);
+            sbgo.zLayer = (merge_with ? merge_with->zLayer : obj_bgo::z_background_1);
         else
         if(tmpStr=="background2")
-            sbgo.view = -1;
+            sbgo.zLayer = obj_bgo::z_background_2;
         else
-            sbgo.view = 0;
+            sbgo.zLayer = obj_bgo::z_background_1;
     }
 
     sbgo.offsetX =      setup->value("offset-x", (merge_with? merge_with->offsetX : 0)).toInt();
