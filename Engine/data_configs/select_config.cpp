@@ -88,6 +88,7 @@ SelectConfig::SelectConfig(QWidget *parent) :
 
         guiset.beginGroup("gui");
             splash_logo = guiset.value("editor-splash", "").toString();
+            splash_logo = guiset.value("engine-icon", /* show splash if alternate icon is not defined */ splash_logo).toString();
             themePack = guiset.value("default-theme", "").toString();
         guiset.endGroup();
 
