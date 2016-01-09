@@ -36,5 +36,5 @@ killf LazyFixTool/_release/.obj/qrc_lazyfix_tool.o
 killf LazyFixTool/_release/.obj/LazyFixTool.o
 
 echo "Removed all objects which contains version numbers"
-read -n 1
+if [[ "$1" != "nopause" ]]; then read -n 1; fi
 

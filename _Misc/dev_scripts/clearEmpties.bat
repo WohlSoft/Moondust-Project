@@ -7,3 +7,4 @@ echo.
 echo Empty object files was removed!
 echo.
 IF NOT '%1'=='nopause' pause
+

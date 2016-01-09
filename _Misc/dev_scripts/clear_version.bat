@@ -21,6 +21,5 @@ for /R %SOURCEDIR%\bin-w32\_build_x32 %%f in (qrc_lazyfix_tool.o) do if exist "%
 for /R %SOURCEDIR%\bin-w32\_build_x32 %%f in (LazyFixTool.o) do if exist "%%~ff" del /q "%%~ff" && echo "%%~ff deleted!"
 
 echo Removed all objects which contains version numbers
-pause
-
+IF NOT '%1'=='nopause' pause
 

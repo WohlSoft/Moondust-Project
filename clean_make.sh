@@ -1,5 +1,5 @@
-#/bin/bash
-set bak = ~+
+#!/bin/bash
+bak=~+
 cd $PWD
 wasRemoved=0
 
@@ -45,5 +45,5 @@ echo "Everything already clean!"
 fi
 
 cd $bak
-read -n 1
+if [[ "$1" != "nopause" ]]; then read -n 1; fi
 
