@@ -142,6 +142,16 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeLvlEditWin()->scene;
 
+                obj_npc & npc= scn->uNPCs[ItemID];
+                long animator=npc.animator_id;
+                if( confId != NULL)
+                    * confId = npc.id;
+
+                if(whole)
+                    return scn->animates_NPC[animator]->wholeImage();
+                else
+                    return scn->animates_NPC[animator]->image(-1, npc.display_frame);
+                /*
                 long j=0;
                 long animator=0;
                 if(ItemID < (unsigned int)scn->index_npc.size())
@@ -159,14 +169,31 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     return scn->animates_NPC[animator]->wholeImage();
                 else
                     return scn->animates_NPC[animator]->image(-1, main->configs.main_npc[j].display_frame);
+                 */
             }
             else
             {
-                int j=0;
-                bool noimage=true;
+                /*int j=0;
+                bool noimage=true;*/
                 QPixmap tImg;
                 //Check Index exists
+                obj_npc & npc= main->configs.main_npc[ItemID];
 
+                if( confId != NULL)
+                     *confId = npc.id;
+
+                if(npc.isValid)
+                {
+                    if(!whole)
+                        tImg = npc.image.copy(0,
+                                    (int)round(npc.gfx_h / npc.frames) * npc.display_frame,
+                                    npc.image.width(),
+                                    (int)round(npc.gfx_h / npc.frames));
+                    else
+                        tImg = npc.image;
+                }
+
+                /*
                 j= main->configs.getNpcI(ItemID);
 
                 if(j>=0)
@@ -186,9 +213,8 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 {
                     if(!whole)
                         tImg= tImg.copy(0, main->configs.main_npc[j].gfx_h*main->configs.main_npc[j].display_frame, main->configs.main_npc[j].image.width(), main->configs.main_npc[j].gfx_h );
-                }
+                }*/
                 return tImg;
-
             }
             break;
         }

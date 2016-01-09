@@ -626,14 +626,10 @@ void ItemNPC::transformTo(long target_id)
         return;
 
     if(target_id<1) return;
+    if((!scene->uNPCs.contains(target_id))) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_npc mergedSet;
-
-    scene->getConfig_NPC(target_id, item_i, animator, mergedSet, &noimage);
-    if(noimage) return;
+    obj_npc &mergedSet = scene->uNPCs[target_id];
+    long animator = mergedSet.animator_id;
 
     npcData.id = target_id;
 

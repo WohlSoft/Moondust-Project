@@ -333,7 +333,6 @@ SOURCES += main.cpp\
     common_features/resizer/corner_grabber.cpp \
     data_configs/conf_rotation_tables.cpp \
     editing/_scenes/level/items/lvl_base_item.cpp \
-    editing/_scenes/level/data_manager/lvl_config_index.cpp \
     editing/_scenes/world/data_manager/wld_config_index.cpp \
     editing/_scenes/world/items/wld_base_item.cpp \
     main_window/help.cpp \

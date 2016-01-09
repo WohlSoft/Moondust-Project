@@ -167,13 +167,13 @@ QString CustomCounterGUI::makeItemName(long item)
         break;
     case ItemTypes::LVL_NPC:
         {
-            int bI = MainWinConnect::configs->getNpcI(item);
-            if(bI<0)
+            if(!MainWinConnect::configs->main_npc.contains(item))
                 return QString("NPC-%1").arg(item);
             else
             {
-                if(!MainWinConnect::configs->main_npc[bI].name.isEmpty())
-                    return MainWinConnect::configs->main_npc[bI].name + QString(" (NPC-%1)").arg(item);
+                obj_npc& t_npc = MainWinConnect::configs->main_npc[item];
+                if(!t_npc.name.isEmpty())
+                    return t_npc.name + QString(" (NPC-%1)").arg(item);
                 else
                     return QString("NPC-%1").arg(item);
             }

@@ -596,17 +596,9 @@ void NpcEdit::loadPreview()
     obj_npc targetNPC;
 
     //npcData.id = npc_id;
-    bool found = false;
-    foreach(obj_npc npc, pConfigs->main_npc)
-    {
-        if(npc.id == npc_id){
-            targetNPC = npc;
-            found = true;
-            break;
-        }
-    }
+    targetNPC=pConfigs->main_npc[npc_id];
 
-    if(!found)
+    if(! targetNPC.isValid )
     {
         WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> Array Entry not found"));
         return;

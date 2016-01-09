@@ -211,9 +211,8 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
     //Mark stars
     for(int q=0; q< LvlData.npc.size(); q++)
     {
-        int id = MainWinConnect::pMainWin->configs.getNpcI(LvlData.npc[q].id);
-        if(id<0) continue;
-        LvlData.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[id].is_star;
+        if(LvlData.npc[q].id<=0) continue;
+        LvlData.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[LvlData.npc[q].id].is_star;
         if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
             LvlData.npc[q].is_star=false;
     }

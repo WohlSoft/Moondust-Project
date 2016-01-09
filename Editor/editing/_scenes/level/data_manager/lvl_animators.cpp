@@ -112,24 +112,25 @@ void LvlScene::buildAnimators()
         uBlocks.storeElement(i, t_block);
     }
 
+    uNPCs.clear();
+    uNPCs.allocateSlots(pConfigs->main_npc.total());
     for(int i=1; i<pConfigs->main_npc.size(); i++) //Add user images
     {
-        obj_bgo &npcD = &pConfigs->main_npc[i];
+        obj_npc &npcD = pConfigs->main_npc[i];
+        obj_npc t_npc;
+        npcD.copyTo(t_npc);
+
         AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
-                         ((npcD.image.isNull())?
+                         ((t_npc.cur_image->isNull())?
                                 uNpcImg:
-                               npcD.image),
-                              npcD
+                               *t_npc.cur_image),
+                              t_npc
                               );
 
         animates_NPC.push_back( aniNPC );
-        //uNPCs.storeElement(i, t_npc);
-        if(npcD.id < (unsigned int)index_npc.size())
-        {
-            npcD.animator_id = animates_NPC.size()-1;
-        }
+        t_npc.animator_id = animates_NPC.size()-1;
+        uNPCs.storeElement(i, t_npc);
     }
-
 }
 
 

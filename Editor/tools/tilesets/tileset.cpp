@@ -213,39 +213,36 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     switch (m_type) {
     case ItemTypes::LVL_Block:
     {
-        obj_block& block = m_conf->main_block[id];
-        if(!block.isValid)
+        if(!m_conf->main_block.contains(id))
         {
             QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
             xxx.fill(Qt::red);
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, block.id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
     case ItemTypes::LVL_BGO:
     {
-        obj_bgo& bgo = m_conf->main_bgo[id];
-        if(!bgo.isValid)
+        if(!m_conf->main_bgo.contains(id))
         {
             QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
             xxx.fill(Qt::red);
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, bgo.id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
     case ItemTypes::LVL_NPC:
     {
-        long tarIndex = m_conf->getNpcI(id);
-        if(tarIndex==-1)
+        if(!m_conf->main_npc.contains(id))
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, m_conf->main_npc[tarIndex].id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }

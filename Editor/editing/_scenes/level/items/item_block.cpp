@@ -570,17 +570,11 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 void ItemBlock::transformTo(long target_id)
 {
     if(target_id<1) return;
+    if(!scene->uBlocks.contains(target_id))
+        return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_block mergedSet;
-
-    //Get block settings
-    scene->getConfig_Block(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_block &mergedSet = scene->uBlocks[target_id];
+    long animator = mergedSet.animator_id;
 
     blockData.id = target_id;
     setBlockData(blockData, &mergedSet, &animator);

@@ -260,33 +260,35 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
             {
                 LevelEdit * e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
                 if(e)
-                if(!customCounters[i].items.isEmpty())
                 {
-                    //Deep search of NPC's
-                    for(int j=0;j<e->LvlData.npc.size();j++)
+                    if(!customCounters[i].items.isEmpty())
                     {
-                        foreach(long q, customCounters[i].items)
+                        //Deep search of NPC's
+                        for(int j=0;j<e->LvlData.npc.size();j++)
                         {
-                            //check as regular NPC
-                            if(e->LvlData.npc[j].id==(unsigned)q) {countItems++; break;}
-                            //check as NPC-Container
-                            int nI = mw()->configs.getNpcI(e->LvlData.npc[j].id);
-                            if(nI>=0)
+                            foreach(long q, customCounters[i].items)
                             {
-                                if(mw()->configs.main_npc[nI].container)
-                                    if(e->LvlData.npc[j].special_data==q) {countItems++; break;}
+                                //check as regular NPC
+                                if(e->LvlData.npc[j].id==(unsigned)q) {countItems++; break;}
+                                //check as NPC-Container
+                                if( (e->LvlData.npc[j].id>0)&& e->scene->uNPCs.contains(e->LvlData.npc[j].id) )
+                                {
+                                    obj_npc &t_npc = e->scene->uNPCs[ e->LvlData.npc[j].id ];
+                                    if(t_npc.container) {
+                                        if(e->LvlData.npc[j].special_data==q) {countItems++; break;}
+                                    }
+                                }
                             }
                         }
-                    }
-                    //find all NPC's in blocks
-                    for(int j=0;j<e->LvlData.blocks.size();j++)
-                    {
-                        foreach(long q, customCounters[i].items)
+                        //find all NPC's in blocks
+                        for(int j=0;j<e->LvlData.blocks.size();j++)
                         {
-                            if((unsigned)q==mw()->configs.marker_npc.coin_in_block) {
-                                if(e->LvlData.blocks[j].npc_id<0)
-                                    { countItems+=e->LvlData.blocks[j].npc_id*-1; break;} }
-                            else if(e->LvlData.blocks[j].npc_id==q) {countItems++; break;}
+                            foreach(long q, customCounters[i].items)
+                            {
+                                if((unsigned)q==mw()->configs.marker_npc.coin_in_block) {
+                                    if(e->LvlData.blocks[j].npc_id<0) { countItems+=e->LvlData.blocks[j].npc_id*-1; break; }
+                                } else if(e->LvlData.blocks[j].npc_id==q) {countItems++; break; }
+                            }
                         }
                     }
                 }

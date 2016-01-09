@@ -385,7 +385,7 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
 
     DefaultNPCData = FileFormats::CreateEmpytNpcTXT();
 
-    if((npc_id==0)||(npc_id > (unsigned long)pConfigs->main_npc.size()))
+    if((npc_id==0)||(npc_id > (unsigned long)pConfigs->main_npc.stored()))
     {
         DefaultNPCData.gfxoffsetx=0;
         DefaultNPCData.gfxoffsety=0;
@@ -425,69 +425,48 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
     }
     else
     {
-        bool found=false;
-        int j;
+        obj_npc &t_npc = pConfigs->main_npc[npc_id];
 
-        //Check Index exists
-        if(npc_id < (unsigned int)pConfigs->index_npc.size())
-        {
-            j = pConfigs->index_npc[npc_id].i;
-            if(pConfigs->main_npc[j].id == npc_id)
-                found=true;
-        }
-
-        //if Index found
-        if(!found)
-        {
-            for(j=0;j<pConfigs->main_npc.size();j++)
-            {
-                if(pConfigs->main_npc[j].id==npc_id)
-                {
-                   break; //Found!
-                }
-            }
-        }
-
-        DefaultNPCData.gfxoffsetx=pConfigs->main_npc[j].gfx_offset_x;
-        DefaultNPCData.gfxoffsety=pConfigs->main_npc[j].gfx_offset_y;
-        DefaultNPCData.width=pConfigs->main_npc[j].width;
-        DefaultNPCData.height=pConfigs->main_npc[j].height;
-        DefaultNPCData.gfxwidth=pConfigs->main_npc[j].gfx_w;
-        DefaultNPCData.gfxheight=pConfigs->main_npc[j].gfx_h;
-        DefaultNPCData.score=pConfigs->main_npc[j].score;
-        DefaultNPCData.playerblock=(int)pConfigs->main_npc[j].block_player;
-        DefaultNPCData.playerblocktop=(int)pConfigs->main_npc[j].block_player_top;
-        DefaultNPCData.npcblock=(int)pConfigs->main_npc[j].block_npc;
-        DefaultNPCData.npcblocktop=(int)pConfigs->main_npc[j].block_player_top;
-        DefaultNPCData.grabside=(int)pConfigs->main_npc[j].grab_side;
-        DefaultNPCData.grabtop=(int)pConfigs->main_npc[j].grab_top;
+        DefaultNPCData.gfxoffsetx=t_npc.gfx_offset_x;
+        DefaultNPCData.gfxoffsety=t_npc.gfx_offset_y;
+        DefaultNPCData.width=t_npc.width;
+        DefaultNPCData.height=t_npc.height;
+        DefaultNPCData.gfxwidth=t_npc.gfx_w;
+        DefaultNPCData.gfxheight=t_npc.gfx_h;
+        DefaultNPCData.score=t_npc.score;
+        DefaultNPCData.playerblock=(int)t_npc.block_player;
+        DefaultNPCData.playerblocktop=(int)t_npc.block_player_top;
+        DefaultNPCData.npcblock=(int)t_npc.block_npc;
+        DefaultNPCData.npcblocktop=(int)t_npc.block_player_top;
+        DefaultNPCData.grabside=(int)t_npc.grab_side;
+        DefaultNPCData.grabtop=(int)t_npc.grab_top;
         DefaultNPCData.jumphurt=(int)(
-                    (pConfigs->main_npc[j].hurt_player)
+                    (t_npc.hurt_player)
                                       &&
-                                      (!pConfigs->main_npc[j].kill_on_jump));
-        DefaultNPCData.nohurt=(int)(!pConfigs->main_npc[j].hurt_player);
-        DefaultNPCData.noblockcollision=(int)(!pConfigs->main_npc[j].collision_with_blocks);
-        DefaultNPCData.cliffturn=(int)pConfigs->main_npc[j].turn_on_cliff_detect;
-        DefaultNPCData.noyoshi=(int)(!pConfigs->main_npc[j].can_be_eaten);
-        DefaultNPCData.foreground=(int)pConfigs->main_npc[j].foreground;
+                                      (!t_npc.kill_on_jump));
+        DefaultNPCData.nohurt=(int)(!t_npc.hurt_player);
+        DefaultNPCData.noblockcollision=(int)(!t_npc.collision_with_blocks);
+        DefaultNPCData.cliffturn=(int)t_npc.turn_on_cliff_detect;
+        DefaultNPCData.noyoshi=(int)(!t_npc.can_be_eaten);
+        DefaultNPCData.foreground=(int)t_npc.foreground;
         DefaultNPCData.speed=1;
-        DefaultNPCData.nofireball=(int)(!pConfigs->main_npc[j].kill_by_fireball);
-        DefaultNPCData.nogravity=(int)(!pConfigs->main_npc[j].gravity);
-        DefaultNPCData.frames=pConfigs->main_npc[j].frames;
+        DefaultNPCData.nofireball=(int)(!t_npc.kill_by_fireball);
+        DefaultNPCData.nogravity=(int)(!t_npc.gravity);
+        DefaultNPCData.frames=t_npc.frames;
         DefaultNPCData.framespeed=8;
-        DefaultNPCData.framestyle=pConfigs->main_npc[j].framestyle;
-        DefaultNPCData.noiceball=(int)(!pConfigs->main_npc[j].freeze_by_iceball);
+        DefaultNPCData.framestyle=t_npc.framestyle;
+        DefaultNPCData.noiceball=(int)(!t_npc.freeze_by_iceball);
         //Extended
-        DefaultNPCData.nohammer=(int)(!pConfigs->main_npc[j].kill_hammer);
-        DefaultNPCData.noshell=(int)(!pConfigs->main_npc[j].kill_by_npc);
-        DefaultNPCData.name=pConfigs->main_npc[j].name;
-        DefaultNPCData.health=pConfigs->main_npc[j].health;
-        DefaultNPCData.script=pConfigs->main_npc[j].algorithm_script;
-        DefaultNPCData.image=pConfigs->main_npc[j].image_n;
-        DefaultNPCData.grid=pConfigs->main_npc[j].grid;
-        DefaultNPCData.grid_offset_x=pConfigs->main_npc[j].grid_offset_x;
-        DefaultNPCData.grid_offset_y=pConfigs->main_npc[j].grid_offset_y;
-        DefaultNPCData.grid_align=pConfigs->main_npc[j].grid_attach_style;
+        DefaultNPCData.nohammer=(int)(!t_npc.kill_hammer);
+        DefaultNPCData.noshell=(int)(!t_npc.kill_by_npc);
+        DefaultNPCData.name=t_npc.name;
+        DefaultNPCData.health=t_npc.health;
+        DefaultNPCData.script=t_npc.algorithm_script;
+        DefaultNPCData.image=t_npc.image_n;
+        DefaultNPCData.grid=t_npc.grid;
+        DefaultNPCData.grid_offset_x=t_npc.grid_offset_x;
+        DefaultNPCData.grid_offset_y=t_npc.grid_offset_y;
+        DefaultNPCData.grid_align=t_npc.grid_attach_style;
     }
 }
 

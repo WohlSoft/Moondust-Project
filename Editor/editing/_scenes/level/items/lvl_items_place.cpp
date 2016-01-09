@@ -33,12 +33,8 @@
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_block mergedSet;
-
-    getConfig_Block(block.id, item_i, animator, mergedSet, &noimage);
+    obj_block &mergedSet = uBlocks[block.id];
+    long animator = mergedSet.animator_id;
 
     QPoint newPos = QPoint(block.x, block.y);
     if(toGrid)
@@ -63,23 +59,20 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
-    bool is_found=true;
-    long animator=0;
-    obj_bgo *mergedSet;
-
-    getConfig_BGO(bgo.id, animator, mergedSet, &is_found);
+    obj_bgo &mergedSet = uBGOs[bgo.id];
+    long animator = mergedSet.animator_id;
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet->grid,
-                           QPoint(mergedSet->offsetX, mergedSet->offsetY));
+        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet.grid,
+                           QPoint(mergedSet.offsetX, mergedSet.offsetY));
         bgo.x = newPos.x();
         bgo.y = newPos.y();
     }
 
     ItemBGO *BGOItem = new ItemBGO(this);
-    BGOItem->setBGOData(bgo, mergedSet, &animator);
+    BGOItem->setBGOData(bgo, &mergedSet, &animator);
 
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
@@ -93,12 +86,8 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
-    long item_i = 0;
-    bool noimage=true;
-    long animator=0;
-    obj_npc mergedSet;
-
-    getConfig_NPC(npc.id, item_i, animator, mergedSet, &noimage);
+    obj_npc &mergedSet = uNPCs[npc.id];
+    long animator = mergedSet.animator_id;
 
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)

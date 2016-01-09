@@ -207,7 +207,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
         long j;
         obj_bgo& bgoC = uBGOs[itemID];
-
         tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
         if(tImg.isNull())
         {
@@ -299,11 +298,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     }
     case 2: //npcs
     {
-        long j, animator;
-        obj_npc mergedSet;
-
-        getConfig_NPC(itemID, j, animator, mergedSet);
-
+        obj_npc &mergedSet = uNPCs[itemID];
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
 
         if( (itemID != LvlPlacingItems::npcSet.id) || (placingItem!=PLC_NPC) )

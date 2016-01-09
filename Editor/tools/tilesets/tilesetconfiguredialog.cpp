@@ -148,8 +148,7 @@ void TilesetConfigureDialog::setUpItems(int type)
         else
         for(int i=1; i<m_conf->main_bgo.size(); i++)
         {
-            obj_bgo &bgoItem = m_conf->main_bgo[i];
-            m_model->addPiece(bgoItem.id);
+            m_model->addPiece(i);
         }
         break;
     }
@@ -159,14 +158,16 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_Level)
-                for(int x=0; x < dynamic_cast<LvlScene *>(scn)->index_npc.size(); x++)
-                {
-                    if(dynamic_cast<LvlScene *>(scn)->index_npc[x].type==1)
-                        m_model->addPiece( dynamic_cast<LvlScene *>(scn)->index_npc[x].gi-1);
+            {
+                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
+                for(int i = 0; i < sc->custom_NPCs.size(); ++i) {
+                    m_model->addPiece( sc->custom_NPCs[i]->id );
                 }
+            }
         }
         else
-        for(int i = 0; i < m_conf->main_npc.size(); ++i){
+        for(int i = 1; i < m_conf->main_npc.size(); ++i)
+        {
             m_model->addPiece(i);
         }
         break;

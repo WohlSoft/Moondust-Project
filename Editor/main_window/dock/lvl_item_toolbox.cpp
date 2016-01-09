@@ -334,17 +334,15 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             //bool isIndex=false;
             LevelEdit * edit = mw()->activeLvlEditWin();
             if((edit!=NULL)&&(edit->sceneCreated))
-            foreach(UserNPCs npc, edit->scene->uNPCs)
+            for(int i=0; i<edit->scene->custom_NPCs.size(); i++)
             {
+                obj_npc &npc = *edit->scene->custom_NPCs[i];
 
                 tmpI = GraphicsHelps::squareImage(
                             Items::getItemGFX(ItemTypes::LVL_NPC, npc.id),
                             QSize(48,48));
 
-                item = new QListWidgetItem( npc.withTxt ?
-                                    ((npc.sets.en_name)? npc.merged.name : QString("npc-%1").arg(npc.id))
-                                     : QString("npc-%1").arg(npc.id)
-                                                );
+                item = new QListWidgetItem( npc.name.isEmpty() ? QString("npc-%1").arg(npc.id) : npc.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(npc.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -356,8 +354,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set NPC item box from global config
-    foreach(obj_npc npcItem, mw()->configs.main_npc)
+    for(int i=1; i < mw()->configs.main_npc.size(); i++)
     {
+        obj_npc &npcItem=mw()->configs.main_npc[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)

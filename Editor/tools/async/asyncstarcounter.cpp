@@ -119,12 +119,10 @@ int AsyncStarCounter::checkNextLevel(QString FilePath)
         //Mark all stars
         for(int q=0; q< getLevelHead.npc.size(); q++)
         {
-           int id = m_configs->getNpcI(getLevelHead.npc[q].id);
-           if(id<0) continue;
-           getLevelHead.npc[q].is_star = m_configs->main_npc[id].is_star;
+           if(!m_configs->main_npc.contains(getLevelHead.npc[q].id)) continue;
+           getLevelHead.npc[q].is_star = m_configs->main_npc[getLevelHead.npc[q].id].is_star;
            if((getLevelHead.npc[q].is_star)&&(!getLevelHead.npc[q].friendly))
                 foundStars++;
-
         }
         starCount += foundStars;//getLevelHead.stars;
 

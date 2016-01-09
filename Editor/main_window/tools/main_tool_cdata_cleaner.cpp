@@ -444,16 +444,16 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
 
 
-        foreach(UserNPCs x, s->uNPCs)
+        foreach(obj_npc *x, s->custom_NPCs)
         {
             QList<unsigned long > usedIDs;
 
             //Used in level
             foreach(LevelNPC y, box->LvlData.npc)
             {
-                if(y.id==x.id)
+                if(y.id==x->id)
                 {
-                    usedIDs.push_back(x.id);
+                    usedIDs.push_back(x->id);
                     break;
                 }
             }
@@ -466,9 +466,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 {
                     if(y.id == z)
                     {
-                        if(y.special_data == (signed)x.id)
+                        if(y.special_data == (signed)x->id)
                         {
-                            usedIDs.push_back(x.id);
+                            usedIDs.push_back(x->id);
                             found=true;
                         }
                         break;
@@ -480,9 +480,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //included into blocks
             foreach(LevelBlock y, box->LvlData.blocks)
             {
-                if((y.npc_id>0) && ((unsigned long)y.npc_id == x.id))
+                if((y.npc_id>0) && ((unsigned long)y.npc_id == x->id))
                 {
-                    usedIDs.push_back(x.id);
+                    usedIDs.push_back(x->id);
                     break;
                 }
             }
@@ -492,20 +492,11 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 QString image;
                 QString mask;
                 QString textConfig;
-                long I = configs.getNpcI(npcID);
-                if(I>=0)
+                if( (npcID>0) && configs.main_npc.contains(npcID) )
                 {
-                    if(x.withTxt)
-                    {
-                        image = levelCustomDirectory + "/" + x.merged.image_n;
-                        mask = levelCustomDirectory + "/" + x.merged.mask_n;
-                    }
-                    else
-                    {
-                        image = levelCustomDirectory + "/" + configs.main_npc[I].image_n;
-                        mask = levelCustomDirectory + "/" + configs.main_npc[I].mask_n;
-                    }
-                    textConfig = levelCustomDirectory + "/npc-"+QString::number(x.id)+".txt";
+                    image = levelCustomDirectory + "/" + x->image_n;
+                    mask = levelCustomDirectory + "/" + x->mask_n;
+                    textConfig = levelCustomDirectory + "/npc-"+QString::number(npcID)+".txt";
                 }
 
                 bool imageRemoved = !QFileInfo(image).exists();

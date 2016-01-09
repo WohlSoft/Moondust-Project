@@ -349,7 +349,7 @@ bool dataconfigs::check()
     (main_bgo.stored()<=0)||
     (main_bg.stored()<=0)||
     (main_block.stored()<=0)||
-    (main_npc.size()<=0)||
+    (main_npc.stored()<=0)||
     (main_wtiles.size()<=0)||
     (main_wscene.size()<=0)||
     (main_wpaths.size()<=0)||

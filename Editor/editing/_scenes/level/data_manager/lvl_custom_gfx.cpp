@@ -38,8 +38,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     uBlocks.clear();
     uBGOs.clear();
-
     uNPCs.clear();
+
     uBGs.clear();
 
     bool loaded1, loaded2;
@@ -243,10 +243,10 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     break;
                 }
             }
+
             SimpleAnimator * aniBlock = new SimpleAnimator(
                         ((t_block.cur_image->isNull())?
-                                blockD->image : *t_block.cur_image
-                                   ),
+                                uBlockImg : *t_block.cur_image),
                                   t_block.animated,
                                   t_block.frames,
                                   t_block.framespeed, frameFirst,frameLast,
@@ -326,7 +326,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         SimpleAnimator * aniBGO = new SimpleAnimator(
                     ((t_bgo.cur_image->isNull())?
-                            bgoD->image : *t_bgo.cur_image
+                            uBgoImg : *t_bgo.cur_image
                                ),
                               t_bgo.animated,
                               t_bgo.frames,
@@ -362,95 +362,88 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     qApp->processEvents();
 
     //Load NPC
-    for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
-    {
-        if((!progress.wasCanceled()) && (i%100==0))
-        {
-            progress.setLabelText(
-                        tr("Search User NPCs %1")
-                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()) ) );
-        }
+    uNPCs.allocateSlots(pConfigs->main_npc.total());
+    NPCConfigFile sets;
 
-             uNPC.withImg = false;
-             uNPC.withTxt = false;
+    for(i=1; i<pConfigs->main_npc.size(); i++) //Add user images
+    {
+        obj_npc *npcD = &pConfigs->main_npc[i];
+        obj_npc t_npc; //Allocate new NPC Config entry
+        QPixmap image_file;
+        bool custom=false;
+        bool cimage=false;
+        bool npctxt=false;
+
+        npcD->copyTo(t_npc);//init configs
 
              QSize capturedS = QSize(0,0);
 
-             if(!pConfigs->main_npc[i].image.isNull())
-                 capturedS = pConfigs->main_npc[i].image.size();
+             if(!t_npc.cur_image->isNull())
+                 capturedS = t_npc.cur_image->size();
 
              // /////////////////////// Looking for user's NPC.txt ////////////////////////////
              // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
-             QString CustomTxt=uLVL.getCustomFile("npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
+             QString CustomTxt=uLVL.getCustomFile("npc-" + QString::number(t_npc.id)+".txt");
              if(!CustomTxt.isEmpty())
              {
                 QFile file(CustomTxt);
                 if(file.open(QIODevice::ReadOnly))
                 {
                     file.close();
-                    uNPC.sets = FileFormats::ReadNpcTXTFile(CustomTxt, true);
-                    uNPC.id = pConfigs->main_npc[i].id;
-                    uNPC.withTxt = true;
+                    sets = FileFormats::ReadNpcTXTFile(CustomTxt, true);
+                    npctxt = true;
+                    custom = true;
                 }
              }
-             QString imgFileName = (uNPC.withTxt && uNPC.sets.en_image) ? uNPC.sets.image : pConfigs->main_npc[i].image_n;
+             QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.image_n;
 
              // ///////////////////////Looking for user's GFX
-             QString CustomImg=uLVL.getCustomFile(imgFileName);
-             if(CustomImg.isEmpty())
-                CustomImg=uLVL.getCustomFile(pConfigs->main_npc[i].image_n);
+             QString CustomImage=uLVL.getCustomFile(imgFileName);
+             if(CustomImage.isEmpty())
+                CustomImage=uLVL.getCustomFile(t_npc.image_n);
 
-             if(!CustomImg.isEmpty())
+             if(!CustomImage.isEmpty())
              {
-                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
+                 if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
                  {
-                     QString CustomMask=uLVL.getCustomFile(pConfigs->main_npc[i].mask_n);
-                     if(!CustomMask.isEmpty())
-                         uNPC.mask = GraphicsHelps::loadQImage( CustomMask );
-                     else
-                         uNPC.mask = pConfigs->main_npc[i].mask;
-                     uNPC.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
+                     QString CustomMask=uLVL.getCustomFile(t_npc.mask_n);
+                     image_file = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomImage),
+                                   CustomMask.isEmpty() ? npcD->mask : GraphicsHelps::loadQImage( CustomMask ));
                  } else {
-                     uNPC.image = GraphicsHelps::loadPixmap( CustomImg );
-                     uNPC.mask = QImage();//Don't use bit mask for PNG sprites
+                     image_file = GraphicsHelps::loadPixmap(CustomImage);
                  }
 
-                 if(uNPC.image.isNull()) WrongImagesDetected=true;
-
-                 uNPC.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
-
-                 uNPC.id = pConfigs->main_npc[i].id;
-                 uNPC.withImg = true;
+                 if(image_file.isNull())
+                 {
+                     WrongImagesDetected=true;
+                 } else {
+                     custom_images.push_back(image_file);
+                     t_npc.cur_image = &custom_images.last();
+                     capturedS = QSize(t_npc.cur_image->width(), t_npc.cur_image->height());
+                 }
+                 cimage=true;
+                 custom=true;
              }
 
-             if(uNPC.withImg)
-             {
-                 capturedS = QSize(uNPC.image.width(), uNPC.image.height());
-             }
-
-             if(uNPC.withTxt)
+             if(npctxt)
              {  //Merge global and user's settings from NPC.txt file
-                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
+                 t_npc = mergeNPCConfigs(t_npc, sets, capturedS);
              }
              else
              {
-                 if(uNPC.withImg)
+                 if(cimage)
                  {
                      NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
-
                      autoConf.gfxwidth = capturedS.width();
-
-                     uNPC.merged = mergeNPCConfigs(
-                                 pConfigs->main_npc[i],
+                     t_npc = mergeNPCConfigs(
+                                 t_npc,
                                  autoConf, capturedS);
                  }
-
              }
 
              //Apply only if custom config or image was found
-             if((uNPC.withImg)||(uNPC.withTxt))
+             if(custom)
              {
-                 uNPCs.push_back(uNPC);
                  //Apply index;
                  if(uNPC.id < (unsigned int)index_npc.size())
                  {
@@ -460,25 +453,24 @@ void LvlScene::loadUserData(QProgressDialog &progress)
              }
 
              AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
-                         ((uNPC.withImg)?
-                              ((uNPCs.last().image.isNull())?
-                                 uNpcImg:
-                                     uNPCs.last().image)
-                                  :
-                              ((pConfigs->main_npc[i].image.isNull())?
-                                 uNpcImg:
-                                    pConfigs->main_npc[i].image)
-                              ),
-                                 ((uNPC.withTxt)? uNPCs.last().merged : pConfigs->main_npc[i])
-                                   );
+                         ((t_npc.cur_image->isNull())?
+                              uNpcImg:
+                              *t_npc.cur_image),
+                         t_npc );
+
+             t_npc.animator_id = animates_NPC.size();
              animates_NPC.push_back( aniNPC );
-             index_npc[pConfigs->main_npc[i].id].ai = animates_NPC.size()-1;
+
+             uNPCs.storeElement(i, t_npc);
+             if(custom)
+             {
+                 custom_NPCs.push_back(&uNPCs[i]);
+             }
 
          qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
          if(progress.wasCanceled())
-             /*progress.setValue(progress.value()+1);
-         else*/ return;
-     }
+             return;
+    }
 
     progress.setValue(progress.value()+1);
     qApp->processEvents();
@@ -499,95 +491,20 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
 QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
 {
-    bool noimage=true, found=false;
-    bool isUser=false, isUserTxt=false;
-    int j, q;
-    QPixmap tempI;
+    bool found=false;
+    found = (npcID>0) && uNPCs.contains(npcID);
+
+    if(!found)
+    {
+        return uNpcImg;
+    }
+
     int gfxH = 0;
-    obj_npc merged;
+    obj_npc &merged = uNPCs[npcID];
+    found = merged.isValid;
+    gfxH  = merged.gfx_h;
 
-    //Check Index exists
-    if(npcID < (unsigned int)index_npc.size())
-    {
-        j = index_npc[npcID].gi;
-        if(j<pConfigs->main_npc.size())
-        {
-            if(pConfigs->main_npc[j].id == npcID)
-                found=true;
-        }
-    }
-
-    //if Index found
-    if(found)
-    {   //get neccesary element directly
-        if(index_npc[npcID].type==1)
-        {
-            isUser=true;
-            if(uNPCs[index_npc[npcID].i].withImg)
-            {
-                noimage=false;
-                tempI = uNPCs[index_npc[npcID].i].image;
-            }
-            if(uNPCs[index_npc[npcID].i].withTxt)
-            {
-                gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
-                merged = uNPCs[index_npc[npcID].i].merged;
-            }
-            else
-            {
-                gfxH = pConfigs->main_npc[index_npc[npcID].gi].height;
-                merged = pConfigs->main_npc[index_npc[npcID].gi];
-            }
-        }
-
-        if(!noimage)
-        {
-            tempI = pConfigs->main_npc[(isUser) ? index_npc[npcID].gi : index_npc[npcID].i].image;
-            noimage=false;
-        }
-
-    }
-    else
-    {
-        //found neccesary element in arrays and select
-        for(q=0;q<uNPCs.size();q++)
-        {
-            if(uNPCs[q].id == npcID)
-            {
-                if(uNPCs[q].withImg)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tempI = uNPCs[q].image;
-                }
-                if(uNPCs[q].withTxt)
-                {
-                    isUserTxt = true;
-                    gfxH = uNPCs[q].merged.gfx_h;
-                    merged = uNPCs[q].merged;
-                }
-                break;
-            }
-        }
-
-        for(j=0;j<pConfigs->main_npc.size();j++)
-        {
-            if(pConfigs->main_npc[j].id==npcID)
-            {
-                noimage=false;
-                if(!isUser)
-                    tempI = pConfigs->main_npc[j].image;
-                if(!isUserTxt)
-                {
-                    gfxH =  pConfigs->main_npc[j].gfx_h;
-                    merged = pConfigs->main_npc[j];
-                }
-                break;
-            }
-        }
-    }
-
-    if((noimage)||(tempI.isNull()))
+    if(merged.cur_image->isNull())
     {
         return uNpcImg;
     }
@@ -599,7 +516,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
         {
             frame=merged.custom_ani_fl;
         }
-        return tempI.copy(0,frame*gfxH, tempI.width(), gfxH );
+        return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
     }
     else
     {
@@ -627,7 +544,6 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
             }
 
         }
-        return tempI.copy(0,frame*gfxH, tempI.width(), gfxH );
+        return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
     }
-
 }

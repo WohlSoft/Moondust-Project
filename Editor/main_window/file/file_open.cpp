@@ -387,14 +387,10 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 statistics += QString("Mounted transport: <unknown>");break;
             }
 
-            if(FileData.characterStates[i].itemID>0)
+            if( (FileData.characterStates[i].itemID>0) && configs.main_npc.contains(FileData.characterStates[i].itemID) )
             {
-              int item= configs.getNpcI(FileData.characterStates[i].itemID);
-              if(item>=0)
-              {
-                statistics += QString("%2Has item: %1").arg(configs.main_npc[item].name)
-                        .arg(FileData.characterStates[i].mountType>0?",    ":"");
-              }
+                statistics += QString("%2Has item: %1").arg(configs.main_npc[FileData.characterStates[i].itemID].name)
+                                .arg(FileData.characterStates[i].mountType>0?",    ":"");
             }
 
         if(i<FileData.characterStates.size()-1)

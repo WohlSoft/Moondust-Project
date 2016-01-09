@@ -591,8 +591,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             //long j=0;
             //bool isIndex=false;
             LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            foreach(UserNPCs npc, edit->scene->uNPCs)
+            for(int i=0; i<edit->scene->custom_NPCs.size();i++)
             {
+                obj_npc& npc = *edit->scene->custom_NPCs[i];
 
                 tmpI = GraphicsHelps::squareImage(edit->scene->getNPCimg(npc.id),QSize(16,16));
 

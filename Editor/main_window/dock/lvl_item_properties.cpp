@@ -420,34 +420,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.array_id));
 
-        bool found=false;
-        int j;
-
-        //Check Index exists
-        if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-        {
-            j = mw()->configs.index_npc[npc.id].i;
-
-            if(j<mw()->configs.main_npc.size())
-            {
-            if(mw()->configs.main_npc[j].id == npc.id)
-                found=true;
-            }
-        }
-        //if Index found
-        if(!found)
-        {
-            for(j=0;j<mw()->configs.main_npc.size();j++)
-            {
-                if(mw()->configs.main_npc[j].id==npc.id)
-                    break;
-            }
-        }
-
-        if(j >= mw()->configs.main_npc.size())
-        {
-            j=0;
-        }
+        obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
         ui->PROPS_NPCContaiter->hide();
         ui->PROPS_NpcContainsLabel->hide();
@@ -471,19 +444,19 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             LvlPlacingItems::npcSet.msg="";
             npc.msg="";
 
-            LvlPlacingItems::npcSet.friendly = mw()->configs.main_npc[j].default_friendly_value;
-            npc.friendly = mw()->configs.main_npc[j].default_friendly_value;
+            LvlPlacingItems::npcSet.friendly = t_npc.default_friendly_value;
+            npc.friendly = t_npc.default_friendly_value;
 
-            LvlPlacingItems::npcSet.nomove = mw()->configs.main_npc[j].default_nomovable_value;
-            npc.nomove = mw()->configs.main_npc[j].default_nomovable_value;
+            LvlPlacingItems::npcSet.nomove = t_npc.default_nomovable_value;
+            npc.nomove = t_npc.default_nomovable_value;
 
-            LvlPlacingItems::npcSet.is_boss = mw()->configs.main_npc[j].default_boss_value;
-            npc.is_boss = mw()->configs.main_npc[j].default_boss_value;
+            LvlPlacingItems::npcSet.is_boss = t_npc.default_boss_value;
+            npc.is_boss = t_npc.default_boss_value;
 
-            if(mw()->configs.main_npc[j].default_special)
+            if(t_npc.default_special)
             {
-                LvlPlacingItems::npcSet.special_data = mw()->configs.main_npc[j].default_special_value;
-                npc.special_data = mw()->configs.main_npc[j].default_special_value;
+                LvlPlacingItems::npcSet.special_data = t_npc.default_special_value;
+                npc.special_data = t_npc.default_special_value;
             }
             LvlPlacingItems::npcSet.special_data2 = 0;
             npc.special_data2 = 0;
@@ -525,20 +498,20 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
 
-        if(mw()->configs.main_npc[j].direct_alt_title!="")
-            ui->PROPS_NpcDir->setTitle(mw()->configs.main_npc[j].direct_alt_title);
+        if(t_npc.direct_alt_title!="")
+            ui->PROPS_NpcDir->setTitle(t_npc.direct_alt_title);
         else
             ui->PROPS_NpcDir->setTitle( tr("Direction") );
 
-        if(mw()->configs.main_npc[j].direct_alt_left!="")
-            ui->PROPS_NPCDirLeft->setText( mw()->configs.main_npc[j].direct_alt_left );
+        if(t_npc.direct_alt_left!="")
+            ui->PROPS_NPCDirLeft->setText( t_npc.direct_alt_left );
         else
             ui->PROPS_NPCDirLeft->setText( tr("Left") );
 
-        ui->PROPS_NPCDirRand->setEnabled( !mw()->configs.main_npc[j].direct_disable_random );
+        ui->PROPS_NPCDirRand->setEnabled( !t_npc.direct_disable_random );
 
-        if(mw()->configs.main_npc[j].direct_alt_right!="")
-            ui->PROPS_NPCDirRight->setText( mw()->configs.main_npc[j].direct_alt_right );
+        if(t_npc.direct_alt_right!="")
+            ui->PROPS_NPCDirRight->setText( t_npc.direct_alt_right );
         else
             ui->PROPS_NPCDirRight->setText( tr("Right") );
 
@@ -556,19 +529,19 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         }
 
         //; 0 combobox, 1 - spin, 2 - npc-id
-        if( mw()->configs.main_npc[j].special_option )
+        if( t_npc.special_option )
         {
             ui->line_6->show();
-            switch(mw()->configs.main_npc[j].special_type)
+            switch(t_npc.special_type)
             {
             case 0:
                 ui->PROPS_NPCBoxLabel->show();
-                ui->PROPS_NPCBoxLabel->setText(mw()->configs.main_npc[j].special_name);
+                ui->PROPS_NPCBoxLabel->setText(t_npc.special_name);
                 ui->PROPS_NPCSpecialBox->show();
 
                 if((newItem)&&(!dont_reset_props))
                 {//Reset value to min, if it out of range
-                    if((npc.special_data>=mw()->configs.main_npc[j].special_combobox_opts.size())||
+                    if((npc.special_data>=t_npc.special_combobox_opts.size())||
                         (npc.special_data<0))
                     {
                        LvlPlacingItems::npcSet.special_data=0;
@@ -579,16 +552,16 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
                 }
 
                 ui->PROPS_NPCSpecialBox->clear();
-                for(int i=0; i < mw()->configs.main_npc[j].special_combobox_opts.size(); i++)
+                for(int i=0; i < t_npc.special_combobox_opts.size(); i++)
                 {
-                    ui->PROPS_NPCSpecialBox->addItem( mw()->configs.main_npc[j].special_combobox_opts[i] );
+                    ui->PROPS_NPCSpecialBox->addItem( t_npc.special_combobox_opts[i] );
                     if(i==npc.special_data) ui->PROPS_NPCSpecialBox->setCurrentIndex(i);
                 }
 
                 break;
             case 1:
                 ui->PROPS_NpcSpinLabel->show();
-                ui->PROPS_NpcSpinLabel->setText( mw()->configs.main_npc[j].special_name );
+                ui->PROPS_NpcSpinLabel->setText( t_npc.special_name );
                 ui->PROPS_NPCSpecialSpin->show();
 
                 if((npcPtr<0)&&(!dont_reset_props))
@@ -599,24 +572,24 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
                 if((newItem)&&(!dont_reset_props))
                 { //Reset value to min, if it out of range
-                    if((npc.special_data>mw()->configs.main_npc[j].special_spin_max)||
-                       (npc.special_data<mw()->configs.main_npc[j].special_spin_max))
+                    if((npc.special_data>t_npc.special_spin_max)||
+                       (npc.special_data<t_npc.special_spin_max))
                     {
-                       LvlPlacingItems::npcSet.special_data = mw()->configs.main_npc[j].special_spin_min;
-                       npc.special_data = mw()->configs.main_npc[j].special_spin_min;
+                       LvlPlacingItems::npcSet.special_data = t_npc.special_spin_min;
+                       npc.special_data = t_npc.special_spin_min;
                     }
                 }
 
-                npcSpecSpinOffset = mw()->configs.main_npc[j].special_spin_value_offset;
-                ui->PROPS_NPCSpecialSpin->setMinimum( mw()->configs.main_npc[j].special_spin_min + npcSpecSpinOffset );
-                ui->PROPS_NPCSpecialSpin->setMaximum( mw()->configs.main_npc[j].special_spin_max + npcSpecSpinOffset );
+                npcSpecSpinOffset = t_npc.special_spin_value_offset;
+                ui->PROPS_NPCSpecialSpin->setMinimum( t_npc.special_spin_min + npcSpecSpinOffset );
+                ui->PROPS_NPCSpecialSpin->setMaximum( t_npc.special_spin_max + npcSpecSpinOffset );
 
                 ui->PROPS_NPCSpecialSpin->setValue( npc.special_data + npcSpecSpinOffset );
                 LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
 
                 break;
             case 2:
-                if(mw()->configs.main_npc[j].container)
+                if(t_npc.container)
                 {
                     ui->PROPS_NpcContainsLabel->show();
                     ui->PROPS_NPCContaiter->show();
@@ -844,62 +817,35 @@ void LvlItemProperties::npc_refreshMinHeight()
 
 void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem, bool dont_reset_props)
 {
-    bool found=false;
-    int j;
-
-    //Check Index exists
-    if(npcID < mw()->configs.index_npc.size())
-    {
-        j = mw()->configs.index_npc[npcID].i;
-
-        if(j<mw()->configs.main_npc.size())
-        {
-        if(mw()->configs.main_npc[j].id == (unsigned int)npcID)
-            found=true;
-        }
-    }
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<mw()->configs.main_npc.size();j++)
-        {
-            if(mw()->configs.main_npc[j].id==(unsigned int)npcID)
-                break;
-        }
-    }
-
-    if(j >= mw()->configs.main_npc.size())
-    {
-        j=0;
-    }
+    obj_npc &t_npc = mw()->configs.main_npc[npcID];
 
     ui->PROPS_NpcSpecial2title->hide();
     ui->PROPS_NPCSpecial2Spin->hide();
     ui->PROPS_NPCSpecial2Box->hide();
     ui->Line_Special2_sep->hide();
 
-    if((mw()->configs.main_npc[j].special_option_2)&&
-            ((mw()->configs.main_npc[j].special_2_npc_spin_required.isEmpty())||
-             (mw()->configs.main_npc[j].special_2_npc_box_required.isEmpty())||
-             (mw()->configs.main_npc[j].special_2_npc_spin_required.contains(spcOpts))||
-             (mw()->configs.main_npc[j].special_2_npc_box_required.contains(spcOpts)))
+    if((t_npc.special_option_2)&&
+            ((t_npc.special_2_npc_spin_required.isEmpty())||
+             (t_npc.special_2_npc_box_required.isEmpty())||
+             (t_npc.special_2_npc_spin_required.contains(spcOpts))||
+             (t_npc.special_2_npc_box_required.contains(spcOpts)))
             )
     {
         if(
-                ((mw()->configs.main_npc[j].special_2_npc_box_required.isEmpty())&&
-                 (mw()->configs.main_npc[j].special_2_type==0))
+                ((t_npc.special_2_npc_box_required.isEmpty())&&
+                 (t_npc.special_2_type==0))
                 ||
-                (mw()->configs.main_npc[j].special_2_npc_box_required.contains(spcOpts))
+                (t_npc.special_2_npc_box_required.contains(spcOpts))
           )
         {
             ui->Line_Special2_sep->show();
             ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(mw()->configs.main_npc[j].special_2_name);
+            ui->PROPS_NpcSpecial2title->setText(t_npc.special_2_name);
 
             ui->PROPS_NPCSpecial2Box->show();
             if((newItem)&&(!dont_reset_props))
             {//Reset value to min, if it out of range
-                if((spcOpts2>=mw()->configs.main_npc[j].special_2_combobox_opts.size())||
+                if((spcOpts2>=t_npc.special_2_combobox_opts.size())||
                     (spcOpts2<0))
                 {
                    LvlPlacingItems::npcSet.special_data2=0;
@@ -908,38 +854,38 @@ void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, lon
             }
 
             ui->PROPS_NPCSpecial2Box->clear();
-            for(int i=0; i < mw()->configs.main_npc[j].special_2_combobox_opts.size(); i++)
+            for(int i=0; i < t_npc.special_2_combobox_opts.size(); i++)
             {
-                ui->PROPS_NPCSpecial2Box->addItem( mw()->configs.main_npc[j].special_2_combobox_opts[i] );
+                ui->PROPS_NPCSpecial2Box->addItem( t_npc.special_2_combobox_opts[i] );
                 if(i==spcOpts2) ui->PROPS_NPCSpecial2Box->setCurrentIndex(i);
             }
         }
         else
         if(
-                ((mw()->configs.main_npc[j].special_2_npc_spin_required.isEmpty())
-                 &&(mw()->configs.main_npc[j].special_2_type==1))||
-                (mw()->configs.main_npc[j].special_2_npc_spin_required.contains(spcOpts))
+                ((t_npc.special_2_npc_spin_required.isEmpty())
+                 &&(t_npc.special_2_type==1))||
+                (t_npc.special_2_npc_spin_required.contains(spcOpts))
           )
         {
             ui->Line_Special2_sep->show();
             ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(mw()->configs.main_npc[j].special_2_name);
+            ui->PROPS_NpcSpecial2title->setText(t_npc.special_2_name);
 
             ui->PROPS_NPCSpecial2Spin->show();
             if((newItem)&&(!dont_reset_props))
             { //Reset value to min, if it out of range
-                if((spcOpts2>mw()->configs.main_npc[j].special_2_spin_max)||
-                   (spcOpts2<mw()->configs.main_npc[j].special_2_spin_max))
+                if((spcOpts2>t_npc.special_2_spin_max)||
+                   (spcOpts2<t_npc.special_2_spin_max))
                 {
-                   LvlPlacingItems::npcSet.special_data2 = mw()->configs.main_npc[j].special_2_spin_min;
-                   spcOpts2 = mw()->configs.main_npc[j].special_2_spin_min;
+                   LvlPlacingItems::npcSet.special_data2 = t_npc.special_2_spin_min;
+                   spcOpts2 = t_npc.special_2_spin_min;
                 }
             }
 
-            npcSpecSpinOffset_2 = mw()->configs.main_npc[j].special_2_spin_value_offset;
+            npcSpecSpinOffset_2 = t_npc.special_2_spin_value_offset;
 
-            ui->PROPS_NPCSpecial2Spin->setMinimum( mw()->configs.main_npc[j].special_2_spin_min + npcSpecSpinOffset_2 );
-            ui->PROPS_NPCSpecial2Spin->setMaximum( mw()->configs.main_npc[j].special_2_spin_max + npcSpecSpinOffset_2 );
+            ui->PROPS_NPCSpecial2Spin->setMinimum( t_npc.special_2_spin_min + npcSpecSpinOffset_2 );
+            ui->PROPS_NPCSpecial2Spin->setMaximum( t_npc.special_2_spin_max + npcSpecSpinOffset_2 );
 
             ui->PROPS_NPCSpecial2Spin->setValue( spcOpts2 + npcSpecSpinOffset_2 );
         }
@@ -1724,39 +1670,12 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
             {
                 LevelNPC npc = ((ItemNPC*)item)->npcData;
 
-                bool found=false;
-                int j;
+                obj_npc &t_npc = mw()->configs.main_npc[npc.id];
 
-                //Check Index exists
-                if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-                {
-                    j = mw()->configs.index_npc[npc.id].i;
-
-                    if(j<mw()->configs.main_npc.size())
-                    {
-                    if(mw()->configs.main_npc[j].id == npc.id)
-                        found=true;
-                    }
-                }
-                //if Index found
-                if(!found)
-                {
-                    for(j=0;j<mw()->configs.main_npc.size();j++)
-                    {
-                        if(mw()->configs.main_npc[j].id==npc.id)
-                            break;
-                    }
-                }
-
-                if(j >= mw()->configs.main_npc.size())
-                {
-                    j=0;
-                }
-
-                if(mw()->configs.main_npc[j].special_type != 1) //wrong type, go to next one
+                if(t_npc.special_type != 1) //wrong type, go to next one
                     continue;
 
-                if(mw()->configs.main_npc[j].special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
+                if(t_npc.special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
@@ -1877,36 +1796,9 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
                 {
                     LevelNPC npc = ((ItemNPC*)item)->npcData;
 
-                    bool found=false;
-                    int j;
+                    obj_npc &t_npc = mw()->configs.main_npc[npc.id];
 
-                    //Check Index exists
-                    if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-                    {
-                        j = mw()->configs.index_npc[npc.id].i;
-
-                        if(j<mw()->configs.main_npc.size())
-                        {
-                        if(mw()->configs.main_npc[j].id == npc.id)
-                            found=true;
-                        }
-                    }
-                    //if Index found
-                    if(!found)
-                    {
-                        for(j=0;j<mw()->configs.main_npc.size();j++)
-                        {
-                            if(mw()->configs.main_npc[j].id==npc.id)
-                                break;
-                        }
-                    }
-
-                    if(j >= mw()->configs.main_npc.size())
-                    {
-                        j=0;
-                    }
-
-                    if(mw()->configs.main_npc[j].special_type != 2) //wrong type, go to next one
+                    if(t_npc.special_type != 2) //wrong type, go to next one
                         continue;
 
                     selData.npc.push_back(((ItemNPC *)item)->npcData);
@@ -1943,36 +1835,9 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
             {
                 LevelNPC npc = ((ItemNPC*)item)->npcData;
 
-                bool found=false;
-                int j;
+                obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
-                //Check Index exists
-                if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-                {
-                    j = mw()->configs.index_npc[npc.id].i;
-
-                    if(j<mw()->configs.main_npc.size())
-                    {
-                    if(mw()->configs.main_npc[j].id == npc.id)
-                        found=true;
-                    }
-                }
-                //if Index found
-                if(!found)
-                {
-                    for(j=0;j<mw()->configs.main_npc.size();j++)
-                    {
-                        if(mw()->configs.main_npc[j].id==npc.id)
-                            break;
-                    }
-                }
-
-                if(j >= mw()->configs.main_npc.size())
-                {
-                    j=0;
-                }
-
-                if(mw()->configs.main_npc[j].special_type != 0) //wrong type, go to next one
+                if(t_npc.special_type != 0) //wrong type, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
@@ -2006,39 +1871,12 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
             {
                 LevelNPC npc = ((ItemNPC*)item)->npcData;
 
-                bool found=false;
-                int j;
+                obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
-                //Check Index exists
-                if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-                {
-                    j = mw()->configs.index_npc[npc.id].i;
-
-                    if(j<mw()->configs.main_npc.size())
-                    {
-                    if(mw()->configs.main_npc[j].id == npc.id)
-                        found=true;
-                    }
-                }
-                //if Index found
-                if(!found)
-                {
-                    for(j=0;j<mw()->configs.main_npc.size();j++)
-                    {
-                        if(mw()->configs.main_npc[j].id==npc.id)
-                            break;
-                    }
-                }
-
-                if(j >= mw()->configs.main_npc.size())
-                {
-                    j=0;
-                }
-
-                if(mw()->configs.main_npc[j].special_2_type != 1) //wrong type, go to next one
+                if(t_npc.special_2_type != 1) //wrong type, go to next one
                     continue;
 
-                if(mw()->configs.main_npc[j].special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
+                if(t_npc.special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
@@ -2072,36 +1910,9 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
             {
                 LevelNPC npc = ((ItemNPC*)item)->npcData;
 
-                bool found=false;
-                int j;
+                obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
-                //Check Index exists
-                if(npc.id < (unsigned int)mw()->configs.index_npc.size())
-                {
-                    j = mw()->configs.index_npc[npc.id].i;
-
-                    if(j<mw()->configs.main_npc.size())
-                    {
-                    if(mw()->configs.main_npc[j].id == npc.id)
-                        found=true;
-                    }
-                }
-                //if Index found
-                if(!found)
-                {
-                    for(j=0;j<mw()->configs.main_npc.size();j++)
-                    {
-                        if(mw()->configs.main_npc[j].id==npc.id)
-                            break;
-                    }
-                }
-
-                if(j >= mw()->configs.main_npc.size())
-                {
-                    j=0;
-                }
-
-                if(mw()->configs.main_npc[j].special_2_type != 0) //wrong type, go to next one
+                if(t_npc.special_2_type != 0) //wrong type, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->npcData);

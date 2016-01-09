@@ -651,18 +651,14 @@ void ItemBGO::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool is_found=true;
-    long animator=0;
-    obj_bgo *mergedSet;
-
-    //Get BGO settings
-    scene->getConfig_BGO((unsigned long)target_id, animator, mergedSet, &is_found);
-
-    if(is_found)
+    if(!scene->uBGOs.contains(target_id))
         return;//Don't transform, target item is not found
 
+    obj_bgo &mergedSet = scene->uBGOs[target_id];
+    long animator = mergedSet.animator_id;
+
     bgoData.id = target_id;
-    setBGOData(bgoData, mergedSet, &animator);
+    setBGOData(bgoData, &mergedSet, &animator);
     arrayApply();
 
     if(!scene->opts.animationEnabled)

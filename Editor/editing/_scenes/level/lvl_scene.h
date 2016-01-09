@@ -167,7 +167,9 @@ public:
         QList<obj_block* > custom_Blocks;
 
         //QList<UserBlocks > uBlocks;
-        QList<UserNPCs > uNPCs;
+        //QList<UserNPCs > uNPCs;
+        PGE_DataArray<obj_npc > uNPCs;
+        QList<obj_npc* > custom_NPCs;
 
         //Animators
         QList<SimpleAnimator * > animates_BGO;
@@ -178,10 +180,6 @@ public:
 
         void startAnimation();
         void stopAnimation();
-
-        void getConfig_Block(unsigned long item_id, long &array_index, long &animator_id, obj_block &mergedSet, bool *ok=0);
-        void getConfig_BGO(unsigned long item_id, long &animator_id, obj_bgo* &mergedSet, bool *ok=0);
-        void getConfig_NPC(unsigned long item_id, long &array_index, long &animator_id, obj_npc &mergedSet, bool *ok=0);
 
         // ///////////////////Init Level/////////////////////////
         void loadUserData(QProgressDialog &progress);  //!< Load custom graphics and item settings
