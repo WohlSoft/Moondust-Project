@@ -5,40 +5,40 @@ wasRemoved=0
 
 kfile()
 {
-	if [ -f $1 ]; then
-		rm $1
-		echo "file $1 removed"
+	if [ -f "$1/Makefile" ]; then
+		rm "$1/Makefile"
+		echo "file $1/Makefile removed"
+		wasRemoved=1
+	fi
+	if [ -f "$1/Makefile*" ]; then
+		rm "$1/Makefile*"
+		echo "file $1/Makefile* removed"
+		wasRemoved=1
+	fi
+	if [ -f "$1/object_script*" ]; then
+		rm "$1/object_script*"
+		echo "file $1/object_script* removed"
 		wasRemoved=1
 	fi
 }
 
-kfile Makefile
-kfile ServerLib/ServerAPI/Makefile
-kfile ServerLib/ServerAPI/Makefile*
-kfile ServerLib/ServerAPP/Makefile
-kfile ServerLib/ServerAPP/Makefile*
-kfile _Libs/SDL2_mixer_modified/Makefile
-kfile _Libs/SDL2_mixer_modified/Makefile*
-kfile _Libs/FreeImage/Makefile
-kfile _Libs/FreeImage/Makefile*
-kfile Editor/Makefile
-kfile Editor/Makefile*
-kfile Engine/Makefile
-kfile Engine/Makefile*
-kfile GIFs2PNG/Makefile
-kfile GIFs2PNG/Makefile*
-kfile LazyFixTool/Makefile
-kfile LazyFixTool/Makefile*
-kfile PNG2GIFs/Makefile
-kfile PNG2GIFs/Makefile*
-kfile PlayableCalibrator/Makefile
-kfile PlayableCalibrator/Makefile*
-kfile Manager/Makefile
-kfile Manager/Makefile*
-kfile Maintainer/Makefile
-kfile Maintainer/Makefile*
-kfile MusicPlayer/Makefile
-kfile MusicPlayer/Makefile*
+kfile .
+kfile ServerLib/ServerAPI
+kfile ServerLib/ServerAPP
+kfile _Libs
+kfile _Libs/SDL2_mixer_modified
+kfile _Libs/FreeImage
+kfile _Libs/luabind/_project
+kfile _Libs/oolua/_project
+kfile Editor
+kfile Engine
+kfile GIFs2PNG
+kfile LazyFixTool
+kfile PNG2GIFs
+kfile PlayableCalibrator
+kfile Manager
+kfile Maintainer
+kfile MusicPlayer
 
 if [ $wasRemoved -eq 0 ]; then
 echo "Everything already clean!"
