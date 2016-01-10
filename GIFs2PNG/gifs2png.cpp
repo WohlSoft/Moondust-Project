@@ -18,8 +18,6 @@
  */
 
 #include <QCoreApplication>
-#include <QColor>
-#include <QImage>
 #include <QDir>
 #include <QDirIterator>
 #include <QString>
@@ -27,168 +25,101 @@
 #include <QFileInfo>
 #include "version.h"
 
-#include <QSettings>
+#define FREEIMAGE_LIB
+#include <FreeImageLite.h>
 
-class ConfigPackMiniManager
+#include "common_features/config_manager.h"
+
+#include "common_features/file_mapper.h"
+
+FIBITMAP* loadImage(QString file, bool convertTo32bit=true)
 {
-public:
-    ConfigPackMiniManager() : m_is_using(false) {}
-    ~ConfigPackMiniManager() {}
-
-    void setConfigDir(QString config_dir)
+    #if  defined(__unix__) || defined(_WIN32)
+    PGE_FileMapper fileMap;
+    if( !fileMap.open_file(file.toUtf8().data()) )
     {
-        if(config_dir.isEmpty()) return;
-
-        if(!QDir(config_dir).exists())
-            return;
-        if(!QFileInfo(config_dir+"/main.ini").exists())
-            return;
-
-        m_cp_root_path = QDir(config_dir).absolutePath()+"/";
-
-        QString main_ini = m_cp_root_path + "main.ini";
-        QSettings mainset(main_ini, QSettings::IniFormat);
-        mainset.setIniCodec("UTF-8");
-
-        QString customAppPath = QCoreApplication::applicationDirPath()+"/";
-
-        m_dir_list.clear();
-        m_dir_list.push_back(m_cp_root_path);
-
-        mainset.beginGroup("main");
-            customAppPath = mainset.value("application-path", customAppPath).toString();
-            customAppPath.replace('\\', '/');
-            m_cp_root_path = (mainset.value("application-dir", false).toBool() ?
-                            customAppPath + "/" : m_cp_root_path + "/data/" );
-            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-level", "data/graphics/level").toString() + "/");
-                appendDirList(m_dir_list.last());
-            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/");
-                appendDirList(m_dir_list.last());
-            m_dir_list.push_back( m_cp_root_path + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/");
-                appendDirList(m_dir_list.last());
-            m_dir_list.push_back( m_cp_root_path + mainset.value("custom-data", "data-custom").toString() + "/");
-                appendDirList(m_dir_list.last());
-        mainset.endGroup();
-
-        for(int i=0; i< m_dir_list.size(); i++)
-        {
-            m_dir_list[i].replace('\\', '/');
-            m_dir_list[i].remove("//");
-            if( !m_dir_list[i].endsWith('/') && !m_dir_list[i].endsWith('\\') )
-                m_dir_list[i].push_back('/');
-        }
-
-        m_is_using=true;
+        return NULL;
     }
 
-    bool isUsing() { return m_is_using; }
-
-    void appendDirList(QString &dir)
-    {
-        QDir dirs(dir);
-        QStringList folders = dirs.entryList(QDir::NoDotAndDotDot|QDir::Dirs);
-        foreach(QString f, folders)
-        {
-            QString newpath=QString(dirs.absolutePath()+"/"+f).remove("//");
-            if(!m_dir_list.contains(newpath)) //Disallow duplicate entries
-                m_dir_list.push_back(newpath);
-        }
+    FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)fileMap.data, (unsigned int)fileMap.size);
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
+    fileMap.close_file();
+    if(!img) {
+        return NULL;
     }
-
-    QString getFile(QString file, QString customPath)
+    #else
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
+    if(!img) { return NULL; }
+    #endif
+    if(convertTo32bit)
     {
-        if( !customPath.endsWith('/') && !customPath.endsWith('\\') )
-            customPath.push_back('/');
-
-        if(!m_is_using) return customPath+file;
-
-        if(QFileInfo(customPath+file).exists())
-            return customPath+file;
-
-        foreach(QString path, m_dir_list)
-        {
-            if(QFileInfo(path+file).exists())
-                return path+file;
-        }
-        return customPath+file;
+        FIBITMAP* temp;
+        temp = FreeImage_ConvertTo32Bits(img);
+        if(!temp) { return NULL; }
+        FreeImage_Unload(img);
+        img = temp;
     }
+    return img;
+}
 
-private:
-    bool        m_is_using;
-    QString     m_cp_root_path;
-    QString     m_custom_path;
-    QStringList m_dir_list;
-
-};
-
-
-
-QImage mergeBitwiseAndOr(QImage image, QImage mask)
+void mergeBitBltToRGBA(FIBITMAP *image, QString pathToMask)
 {
-    if(mask.isNull())
-        return image;
+    if(!image) return;
+    if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
+    FIBITMAP* mask = loadImage( pathToMask );
+    if(!mask) return;//Nothing to do
 
-    if(image.isNull())
-        return image;
+    unsigned int img_w = FreeImage_GetWidth(image);
+    unsigned int img_h = FreeImage_GetHeight(image);
+    unsigned int mask_w = FreeImage_GetWidth(mask);
+    unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    bool isWhiteMask = true;
-
-    QImage target;
-
-    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
-    target.fill(qRgb(128,128,128));
-
-    QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
-    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
-
-    if(target.size()!= newmask.size())
+    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++ )
     {
-        newmask = newmask.copy(0, 0, target.width(), target.height());
-    }
-
-    QImage alphaChannel = image.alphaChannel();
-
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
+        for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
         {
-            QColor Fpix = QColor(image.pixel(x,y));
-            QColor Dpix = QColor(target.pixel(x,y));
-            QColor Spix = QColor(newmask.pixel(x,y));
-            QColor Npix;
+            RGBQUAD Fpix;
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
 
-            Npix.setAlpha(255);
-            //AND
-            Npix.setRed( Dpix.red() & Spix.red());
-            Npix.setGreen( Dpix.green() & Spix.green());
-            Npix.setBlue( Dpix.blue() & Spix.blue());
-            //OR
-            Npix.setRed( Fpix.red() | Npix.red());
-            Npix.setGreen( Fpix.green() | Npix.green());
-            Npix.setBlue( Fpix.blue() | Npix.blue());
+            RGBQUAD Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
 
-            target.setPixel(x, y, Npix.rgba());
+            RGBQUAD Spix;
+            FreeImage_GetPixelColor(mask, x, y, &Spix);
 
-            isWhiteMask &= ( (Spix.red()>240) //is almost White
-                             &&(Spix.green()>240)
-                             &&(Spix.blue()>240));
+            RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};
 
-            //Calculate alpha-channel level
-            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
-            if( (Spix.red()>240) //is almost White
-                            &&(Spix.green()>240)
-                            &&(Spix.blue()>240))
+            Npix.rgbRed = (Dpix.rgbRed & Spix.rgbRed);
+            Npix.rgbGreen = (Dpix.rgbGreen & Spix.rgbGreen);
+            Npix.rgbBlue = (Dpix.rgbBlue & Spix.rgbBlue);
+            Npix.rgbRed = (Npix.rgbRed | Fpix.rgbRed);
+            Npix.rgbGreen = (Npix.rgbGreen | Fpix.rgbGreen);
+            Npix.rgbBlue = (Npix.rgbBlue | Fpix.rgbBlue);
+            int newAlpha= 255-
+                      ( ( int(Spix.rgbRed)+
+                          int(Spix.rgbGreen)+
+                          int(Spix.rgbBlue) ) / 3);
+            if(  (Spix.rgbRed>240u) //is almost White
+               &&(Spix.rgbGreen>240u)
+               &&(Spix.rgbBlue>240u))
             {
                 newAlpha = 0;
             }
 
-            newAlpha = newAlpha+((Fpix.red() + Fpix.green() + Fpix.blue())/3);
-            if(newAlpha>255) newAlpha=255;
+            newAlpha= newAlpha+( ( int(Fpix.rgbRed)+
+                                   int(Fpix.rgbGreen)+
+                                   int(Fpix.rgbBlue) ) / 3);
+            if(newAlpha > 255) newAlpha=255;
+            Npix.rgbReserved = newAlpha;
 
-            alphaChannel.setPixel(x,y, newAlpha);
+            FreeImage_SetPixelColor(image, x, y, &Npix);
         }
-    target.setAlphaChannel(alphaChannel);
-
-    return target;
+    }
+    FreeImage_Unload(mask);
 }
 
 void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPackMiniManager &cnf)
@@ -205,7 +136,6 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPa
     if(isMask.exactMatch(q))
         return;
 
-    QImage target;
     QString imgFileM;
     QStringList tmp = q.split(".", QString::SkipEmptyParts);
     if(tmp.size()==2)
@@ -215,26 +145,37 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPa
 
     QString maskPath = cnf.getFile(imgFileM, path);
 
-    QImage image(path+q);
-    QImage mask;
-
-    if(QFileInfo(maskPath).exists()) mask.load(maskPath);
-
-    target = mergeBitwiseAndOr(image, mask);
-
-    if(!target.isNull())
+    FIBITMAP* image=loadImage(path+q);
+    if(!image)
     {
-        target.save(OPath+tmp[0]+".png");
+        QTextStream(stderr) << path+q+" - CAN'T OPEN!\n";
+        return;
+    }
+
+    if(QFileInfo(maskPath).exists())
+    {
+        //mask.load(maskPath);
+        mergeBitBltToRGBA(image, maskPath);
+    }
+
+    if(image)
+    {
         QTextStream(stdout) << path+q <<"\n";
-        QTextStream(stdout) << OPath+tmp[0]+".png" <<"\n";
-        if(removeMode)
+        if(FreeImage_Save(FIF_PNG, image, QString(OPath+tmp[0]+".png").toLocal8Bit().data()))
         {
-            QFile::remove( path+q );
-            QFile::remove( path+imgFileM );
+            if(removeMode) // Detele old files
+            {
+                QFile::remove( path+q );
+                QFile::remove( path+imgFileM );
+            }
+            QTextStream(stdout) << OPath+tmp[0]+".png" <<"\n";
         }
+        FreeImage_Unload(image);
     }
     else
-    QTextStream(stderr) << path+q+" - WRONG!\n";
+    {
+        QTextStream(stderr) << path+q+" - WRONG!\n";
+    }
 }
 
 bool isQuotesdString(QString in) // QUOTED STRING
@@ -282,6 +223,8 @@ int main(int argc, char *argv[])
     QString OPath;
     bool removeMode=false;
     QStringList fileList;
+
+    FreeImage_Initialise();
 
     ConfigPackMiniManager config;
 

@@ -21,8 +21,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       -= opengl
+QT       += core
+QT       -= opengl gui
 
 include(../_common/dest_dir.pri)
 include(../_common/build_props.pri)
@@ -31,18 +31,29 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 DEFINES += QT_NO_TRANSLATION
 
+TEMPLATE = app
 TARGET = GIFs2PNG
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
 CONFIG   -= import_plugins
 
-TEMPLATE = app
+QTPLUGIN =
+QTPLUGIN.platforms = qminimal
+
+include ($$PWD/../_common/lib_destdir.pri)
+
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+LIBS += -lfreeimagelite
+
 
 RC_FILE = _resources/gifs2png.rc
 
 SOURCES += \
-    gifs2png.cpp
+    gifs2png.cpp \
+    common_features/config_manager.cpp \
+    common_features/file_mapper.cpp
 
 RESOURCES += \
     _resources/gifs2png.qrc
@@ -51,4 +62,7 @@ OTHER_FILES += \
     _resources/gifs2png.rc
 
 HEADERS += \
-    version.h
+    version.h \
+    common_features/config_manager.h \
+    common_features/file_mapper.h
+
