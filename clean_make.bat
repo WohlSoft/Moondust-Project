@@ -3,7 +3,7 @@ SET wasRemoved=0
 
 call :kfile .
 call :kfile ServerLib\ServerAPI
-call :kfile ServerLib\ServerAPP
+call :kfile ServerLib\ServerApp
 call :kfile _Libs
 call :kfile _Libs\SDL2_mixer_modified
 call :kfile _Libs\FreeImage
