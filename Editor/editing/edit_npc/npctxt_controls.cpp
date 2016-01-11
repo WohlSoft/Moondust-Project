@@ -21,6 +21,7 @@
 #include <common_features/graphics_funcs.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/npctxt_manager.h>
+#include <common_features/themes.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>
@@ -576,49 +577,46 @@ void NpcEdit::on_DirectRight_clicked()
 
 void NpcEdit::loadPreview()
 {
-    if(npc_id==0) return;
-
     if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
     if(physics==NULL) physics = new QGraphicsRectItem();
-
     PreviewScene->setSceneRect(0,0, ui->PreviewBox->width()-20, ui->PreviewBox->height()-20);
-
     if(npcPreview==NULL)
     {
         npcPreview = new ItemNPC(true);
         npcPreview->setScenePoint();
     }
+
+    if((npc_id<=0)||(!pConfigs->main_npc.contains(npc_id)))
+    {
+        npc_id=1;
+        WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> NPC Entry not found"));
+        npcImage = Themes::Image(Themes::dummy_npc);
+        pConfigs->main_npc[1].copyTo(defaultNPC);
+        defaultNPC.frames=1;
+        defaultNPC.cur_image=&npcImage;
+    }
+    else
+    {
+        pConfigs->main_npc[npc_id].copyTo(defaultNPC);
+        WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.id).arg(defaultNPC.name));
+        if(isUntitled)
+            npcImage = *defaultNPC.cur_image;
+        else
+            loadImageFile();
+    }
+
+    obj_npc targetNPC;
+    targetNPC = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+
     LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;
     npcData.x = 10;
     npcData.y = 10;
-    npcPreview->setNpcData(npcData);
-    obj_npc targetNPC;
+    npcPreview->setNpcData(npcData, &targetNPC);
 
-    //npcData.id = npc_id;
-    targetNPC=pConfigs->main_npc[npc_id];
-
-    if(! targetNPC.isValid )
-    {
-        WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> Array Entry not found"));
-        return;
-    }
-    else
-    {
-        WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Array Entry already loaded"));
-    }
-
-
-    defaultNPC = targetNPC;
-
-    targetNPC = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
     npcPreview->localProps = targetNPC;
 
-    loadImageFile();
     npcPreview->setMainPixmap(npcImage);
-
-    PreviewScene->addItem(npcPreview);
-
     npcPreview->setAnimation(npcPreview->localProps.frames,
                           npcPreview->localProps.framespeed,
                           npcPreview->localProps.framestyle,
@@ -633,6 +631,8 @@ void NpcEdit::loadPreview()
     npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
     npcPreview->setZValue(1);
 
+    PreviewScene->addItem(npcPreview);
+
     if(npcPreview->localProps.frames>1)
     {
         npcPreview->setData(4, "animated");
@@ -643,11 +643,11 @@ void NpcEdit::loadPreview()
     physics->setBrush(Qt::transparent);
     physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
 
-    PreviewScene->addItem(physics);
-
     physics->setZValue(777);
     ui->PreviewBox->setScene(PreviewScene);
     ui->PreviewBox->setBackgroundBrush(Qt::white);
+
+    PreviewScene->addItem(physics);
 
     npcPreview->setPos(
                 (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
@@ -669,8 +669,6 @@ void NpcEdit::updatePreview()
 
     npcPreview->localProps = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
 
-    //update PhysicsBox
-    //update Dir
     npcPreview->AnimationStop();
     npcPreview->setMainPixmap(npcImage);
     npcPreview->setAnimation(npcPreview->localProps.frames,
@@ -701,17 +699,17 @@ void NpcEdit::updatePreview()
 
 void NpcEdit::loadImageFile()
 {
-
     QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
     CustomDirManager fileDir(imagePath, "npcx");
     QString CustomImage=fileDir.getCustomFile(defaultNPC.image_n);
+
     if(!CustomImage.isEmpty())
     {
         if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
         {
             QString CustomMask=fileDir.getCustomFile(defaultNPC.mask_n);
             npcImage = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImage ),
-                          CustomMask.isEmpty() ? defaultNPC.mask : GraphicsHelps::loadQImage( CustomMask ));
+                          CustomMask.isEmpty() ? pConfigs->main_npc[npc_id].mask : GraphicsHelps::loadQImage( CustomMask ));
         } else {
             npcImage = GraphicsHelps::loadPixmap(CustomImage);
         }
@@ -720,12 +718,14 @@ void NpcEdit::loadImageFile()
         if(npcImage.isNull())
         {
             WriteToLog(QtDebugMsg, QString("Loading custom NPC Image was failed, using default image"));
-            npcImage = defaultNPC.image;
+            if(defaultNPC.cur_image)
+                npcImage = *defaultNPC.cur_image;
         }
     }
     else
     {
-        npcImage = defaultNPC.image;
+        if(defaultNPC.cur_image)
+            npcImage = *defaultNPC.cur_image;
         WriteToLog(QtDebugMsg, QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }
 }

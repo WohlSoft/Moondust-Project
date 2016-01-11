@@ -26,6 +26,16 @@
 #include "npcedit.h"
 #include <ui_npcedit.h>
 
+static int FileName_to_npcID(QString filename)
+{
+    QStringList tmp = filename.split(QChar('-'));
+
+    if((tmp.size()==2) && (!SMBX64::uInt(tmp[1])))
+        return tmp[1].toInt();
+
+    return 0;
+}
+
 void NpcEdit::newFile(unsigned long npcID)
 {
     npc_id = npcID;
@@ -66,18 +76,9 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
     QFileInfo fileI(fileName);
 
     //Get NPC-ID from FileName
-    QStringList tmp = fileI.baseName().split(QChar('-'));
-    if(tmp.size()==2)
-        if(!SMBX64::uInt(tmp[1]))
-        {
-            npc_id = tmp[1].toInt();
-            setDefaultData( tmp[1].toInt() );
-            ui->CurrentNPCID->setText( tmp[1] );
-        }
-        else
-            setDefaultData(0);
-    else
-        setDefaultData(0);
+    npc_id = FileName_to_npcID(fileI.baseName());
+    setDefaultData(npc_id);
+    ui->CurrentNPCID->setText( QString::number(npc_id) );
 
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
@@ -142,14 +143,29 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
     }
     file.close();
 
+    QFileInfo fileI(fileName);
+    unsigned int old_npc_id = npc_id;
+    npc_id = FileName_to_npcID(fileI.baseName());
+    setDefaultData(npc_id);
+    ui->CurrentNPCID->setText( QString::number(npc_id) );
+
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 
     documentNotModified();
 
-    refreshImageFile();
-    updatePreview();
-    if(addToRecent){
+    if(old_npc_id == npc_id)
+    {
+        refreshImageFile();
+        updatePreview();
+    }
+    else
+    {
+        loadPreview();
+    }
+
+    if(addToRecent)
+    {
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
