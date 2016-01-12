@@ -95,6 +95,8 @@ private slots:
      */
     void on_trackID_editingFinished();
 
+    void on_recordWav_clicked(bool checked);
+
 private:
     //! UI form class pointer
     Ui::MainWindow *ui;

@@ -11,6 +11,8 @@
 #include <SDL2/SDL_mixer_ext.h>
 #undef main
 
+#include "wave_writer.h"
+
 /*!
  *  SDL Mixer wrapper
  */
@@ -145,6 +147,36 @@ namespace PGE_MusicPlayer
                 "Unknown");
         return true;
     }
+
+    static bool wavOpened=false;
+
+    // make a music play function
+    // it expects udata to be a pointer to an int
+    void myMusicPlayer(void */*udata*/, Uint8 *stream, int len)
+    {
+        wave_write( (short*)stream, len/2 );
+    }
+
+    void startWavRecording(QString target)
+    {
+        if(wavOpened) return;
+        if(!play_mus) return;
+
+        /* Record 20 seconds to wave file */
+        wave_open( 44100, target.toLocal8Bit().data() );
+        wave_enable_stereo();
+        Mix_SetPostMix(myMusicPlayer, NULL);
+        wavOpened=true;
+    }
+
+    void stopWavRecording()
+    {
+        if(!wavOpened) return;
+        wave_close();
+        Mix_SetPostMix(NULL, NULL);
+        wavOpened=false;
+    }
+
 }
 
 
@@ -343,5 +375,20 @@ void MainWindow::on_trackID_editingFinished()
             Mix_HaltMusic();
             on_play_clicked();
         }
+    }
+}
+
+void MainWindow::on_recordWav_clicked(bool checked)
+{
+    if(checked)
+    {
+        on_stop_clicked();
+        QFileInfo twav(currentMusic);
+        PGE_MusicPlayer::stopWavRecording();
+        PGE_MusicPlayer::startWavRecording(twav.absoluteDir().absolutePath()+"/"+twav.baseName()+".wav");
+        on_play_clicked();
+    } else {
+        on_stop_clicked();
+        PGE_MusicPlayer::stopWavRecording();
     }
 }

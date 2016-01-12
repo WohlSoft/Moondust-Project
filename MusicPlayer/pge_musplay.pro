@@ -74,12 +74,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
-    main_sdl_android.c
+    main_sdl_android.c \
+    wave_writer.c
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
-    version.h
+    version.h \
+    wave_writer.h
 
 FORMS    += mainwindow.ui
 
