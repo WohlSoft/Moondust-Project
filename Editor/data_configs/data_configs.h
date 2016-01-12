@@ -145,7 +145,7 @@ public:
     //Common items
     unsigned long music_custom_id;
     unsigned long music_w_custom_id;
-    QList<obj_music > main_music_lvl;
+    PGE_DataArray<obj_music > main_music_lvl;
     QList<obj_music > main_music_wld;
     QList<obj_music > main_music_spc;
 

@@ -111,11 +111,11 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //MUSIC
     item = new QListWidgetItem;
-    item->setText(tr("Music (level) (%1/%2)").arg(configs->main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
-    if(configs->main_music_lvl.size()==0)
+    item->setText(tr("Music (level) (%1/%2)").arg(configs->main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
+    if(configs->main_music_lvl.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_music_lvl.size()<ConfStatus::total_music_lvl)
+    if(configs->main_music_lvl.stored()<ConfStatus::total_music_lvl)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));

@@ -22,20 +22,10 @@
 
 long dataconfigs::getMusLvlI(unsigned long itemID)
 {
-    long j;
-    bool found=false;
+    if((itemID>0) && main_music_lvl.contains(itemID))
+        return itemID;
 
-    for(j=0; j < main_music_lvl.size(); j++)
-    {
-        if(main_music_lvl[j].id==itemID)
-        {
-            found=true;
-            break;
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
+    return -1;
 }
 
 long dataconfigs::getMusWldI(unsigned long itemID)
@@ -200,6 +190,7 @@ void dataconfigs::loadMusic()
         }
     }
 
+    main_music_lvl.allocateSlots(music_lvl_total);
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
@@ -219,7 +210,7 @@ void dataconfigs::loadMusic()
                 goto skipLvlMusic;
             }
             smusic_lvl.id = i;
-            main_music_lvl.push_back(smusic_lvl);
+            main_music_lvl.storeElement(i, smusic_lvl);
         skipLvlMusic:
         musicset.endGroup();
 

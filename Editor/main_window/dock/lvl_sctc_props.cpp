@@ -200,7 +200,7 @@ void LvlSectionProps::initDefaults()
         mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.id));
     }
 
-    for(i=0; i< mw()->configs.main_music_lvl.size();i++)
+    for(i=1; i< mw()->configs.main_music_lvl.size(); i++)
     {
         ui->LVLPropsMusicNumber->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
         mw()->dock_LvlEvents->cbox_sct_mus()->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
