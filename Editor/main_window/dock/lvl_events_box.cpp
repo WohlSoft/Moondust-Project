@@ -291,8 +291,9 @@ void LvlEventsBox::reloadSoundsList()
 
     if(mw()->configs.check()) return;
 
-    foreach(obj_sound snd, mw()->configs.main_sound )
+    for(int i=1; i<mw()->configs.main_sound.size(); i++ )
     {
+        obj_sound &snd = mw()->configs.main_sound[i];
         if(!snd.hidden)
             ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
     }

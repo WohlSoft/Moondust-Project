@@ -262,8 +262,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         ui->WLD_MusicList->addItem( item );
     };
 
-    foreach(obj_music musicItem, mw()->configs.main_music_wld)
+    for(int i=0;i<mw()->configs.main_music_wld.size(); i++)
     {
+            obj_music &musicItem=mw()->configs.main_music_wld[i];
             item = new QListWidgetItem();
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
             item->setText( (musicItem.id==mw()->configs.music_w_custom_id)? customWLabel : musicItem.name );

@@ -30,38 +30,16 @@ long dataconfigs::getMusLvlI(unsigned long itemID)
 
 long dataconfigs::getMusWldI(unsigned long itemID)
 {
-    long j;
-    bool found=false;
-
-    for(j=0; j < main_music_wld.size(); j++)
-    {
-        if(main_music_wld[j].id==itemID)
-        {
-            found=true;
-            break;
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
+    if((itemID>0) && main_music_wld.contains(itemID))
+        return itemID;
+    return -1;
 }
 
 long dataconfigs::getMusSpcI(unsigned long itemID)
 {
-    long j;
-    bool found=false;
-
-    for(j=0; j < main_music_spc.size(); j++)
-    {
-        if(main_music_spc[j].id==itemID)
-        {
-            found=true;
-            break;
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
+    if((itemID>0) && main_music_spc.contains(itemID))
+        return itemID;
+    return -1;
 }
 
 
@@ -129,6 +107,7 @@ void dataconfigs::loadMusic()
         addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), QtCriticalMsg);
     }
 
+    main_music_wld.allocateSlots(music_wld_total);
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
@@ -148,7 +127,7 @@ void dataconfigs::loadMusic()
                 goto skipWldMusic;
             }
             smusic_wld.id = i;
-            main_music_wld.push_back(smusic_wld);
+            main_music_wld.storeElement(i, smusic_wld);
         skipWldMusic:
         musicset.endGroup();
 
@@ -159,6 +138,7 @@ void dataconfigs::loadMusic()
         }
     }
 
+    main_music_spc.allocateSlots(music_spc_total);
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
@@ -178,7 +158,7 @@ void dataconfigs::loadMusic()
                 goto skipSpcMusic;
             }
             smusic_spc.id = i;
-            main_music_spc.push_back(smusic_spc);
+            main_music_spc.storeElement(i, smusic_spc);
 
         skipSpcMusic:
         musicset.endGroup();

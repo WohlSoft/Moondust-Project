@@ -240,7 +240,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(musicTab)
     {
-        foreach (obj_music musicItem, conf->main_music_wld) {
+        for(int i=1; i<conf->main_music_wld.size(); i++)
+        {
+            obj_music &musicItem = conf->main_music_wld[i];
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id), ui->Sel_List_Music);
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png") ) );
@@ -917,8 +919,9 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
-    foreach(obj_music musicItem, conf->main_music_wld)
+    for(int i=1; i<conf->main_music_wld.size(); i++)
     {
+            obj_music &musicItem = conf->main_music_wld[i];
             item = new QListWidgetItem();
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
             item->setText( musicItem.name );

@@ -122,22 +122,22 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
     item = new QListWidgetItem;
-    item->setText(tr("Music (world) (%1/%2)").arg(configs->main_music_wld.size()).arg(ConfStatus::total_music_wld));
-    if(configs->main_music_wld.size()==0)
+    item->setText(tr("Music (world) (%1/%2)").arg(configs->main_music_wld.stored()).arg(ConfStatus::total_music_wld));
+    if(configs->main_music_wld.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_music_wld.size()<ConfStatus::total_music_wld)
+    if(configs->main_music_wld.stored()<ConfStatus::total_music_wld)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
     ui->ItemsStatus->addItem(item);
 
     item = new QListWidgetItem;
-    item->setText(tr("Music (special) (%1/%2)").arg(configs->main_music_spc.size()).arg(ConfStatus::total_music_spc));
-    if(configs->main_music_spc.size()==0)
+    item->setText(tr("Music (special) (%1/%2)").arg(configs->main_music_spc.stored()).arg(ConfStatus::total_music_spc));
+    if(configs->main_music_spc.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_music_spc.size()<ConfStatus::total_music_spc)
+    if(configs->main_music_spc.stored()<ConfStatus::total_music_spc)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
@@ -145,11 +145,11 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //SOUND
     item = new QListWidgetItem;
-    item->setText(tr("Sounds (%1/%2)").arg(configs->main_sound.size()).arg(ConfStatus::total_sound));
-    if(configs->main_sound.size()==0)
+    item->setText(tr("Sounds (%1/%2)").arg(configs->main_sound.stored()).arg(ConfStatus::total_sound));
+    if(configs->main_sound.stored()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
-    if(configs->main_sound.size()<ConfStatus::total_sound)
+    if(configs->main_sound.stored()<ConfStatus::total_sound)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));

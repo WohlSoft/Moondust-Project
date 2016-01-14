@@ -456,15 +456,15 @@ void ItemMusic::transformTo(int musicID, QString musicFile)
 {
     int j = scene->pConfigs->getMusWldI(musicID);
     if(j>=0)
-        {
-            musicTitle =
-                    (scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
-                        musicFile:
-                        scene->pConfigs->main_music_wld[j].name;
+    {
+        musicTitle =
+                (scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
+                    musicFile:
+                    scene->pConfigs->main_music_wld[j].name;
 
-            musicData.id         = musicID;
-            musicData.music_file = musicFile;
-            arrayApply();
-        }
+        musicData.id         = musicID;
+        musicData.music_file = musicFile;
+        arrayApply();
+    }
 }
 

@@ -22,20 +22,9 @@
 
 long dataconfigs::getSndI(unsigned long itemID)
 {
-    long j;
-    bool found=false;
-
-    for(j=0; j < main_sound.size(); j++)
-    {
-        if(main_sound[j].id==itemID)
-        {
-            found=true;
-            break;
-        }
-    }
-
-    if(!found) j=0;
-    return j;
+    if((itemID>0) && main_sound.contains(itemID))
+        return itemID;
+    return 0;
 }
 
 void dataconfigs::loadSound()
@@ -80,6 +69,7 @@ void dataconfigs::loadSound()
     }
     //////////////////////////////
 
+    main_sound.allocateSlots(sound_total);
     //Sound
     for(i=1; i<=sound_total; i++)
     {
@@ -100,7 +90,7 @@ void dataconfigs::loadSound()
             }
             sound.hidden = soundset.value("hidden", "0").toBool();
             sound.id = i;
-            main_sound.push_back(sound);
+            main_sound.storeElement(i, sound);
         skipSoundFile:
         soundset.endGroup();
 

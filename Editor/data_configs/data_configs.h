@@ -146,10 +146,10 @@ public:
     unsigned long music_custom_id;
     unsigned long music_w_custom_id;
     PGE_DataArray<obj_music > main_music_lvl;
-    QList<obj_music > main_music_wld;
-    QList<obj_music > main_music_spc;
+    PGE_DataArray<obj_music > main_music_wld;
+    PGE_DataArray<obj_music > main_music_spc;
 
-    QVector<obj_sound > main_sound;
+    PGE_DataArray<obj_sound > main_sound;
 
     //Tilesets
     QList<SimpleTileset >      main_tilesets;
