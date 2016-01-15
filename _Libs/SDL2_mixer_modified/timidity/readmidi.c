@@ -943,7 +943,7 @@ MidiEvent *read_midi_file(SDL_RWops *mrw, int32 *count, int32 *sp)
   int32 len, divisions;
   int16 format, tracks, divisions_tmp;
   int i;
-  char tmp[4];
+  char tmp[24];
 
   rw = mrw;
   event_count=0;

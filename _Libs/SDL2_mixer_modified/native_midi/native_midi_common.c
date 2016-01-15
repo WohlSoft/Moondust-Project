@@ -301,9 +301,14 @@ static int ReadMIDIFile(MIDIFile *mididata, SDL_RWops *src)
     /* Make sure this is really a MIDI file */
     SDL_RWseek(src, 0, RW_SEEK_SET);
     SDL_RWread(src, &ID, 1, 4);
-    //if (BE_LONG(ID) != 'MThd')
-    if(BE_LONG(ID) != (Uint32)0x4D546864)
+    switch(BE_LONG(ID))
     {
+    case (Uint32)0x4D546864://'MThd'
+        break;
+    case (Uint32)0x52494646://'RIFF'
+        SDL_RWseek(src, 24, RW_SEEK_SET);
+        break;
+    default:
         common_nm_error=(char*)"Wrong magic number!";
         return 0;
     }
