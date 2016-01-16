@@ -297,7 +297,8 @@ SOURCES += \
     scenes/level/lvl_scene_pausemenu.cpp \
     scenes/level/lvl_scene_garbage_collecting.cpp \
     common_features/translator.cpp \
-    common_features/file_mapper.cpp
+    common_features/file_mapper.cpp \
+    common_features/md5.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -449,7 +450,8 @@ HEADERS  += \
     common_features/translator.h \
     common_features/data_array.h \
     common_features/file_mapper.h \
-    graphics/gl_debug.h
+    graphics/gl_debug.h \
+    common_features/md5.h
 
 
 FORMS    += \

@@ -25,6 +25,12 @@
 #include <scenes/scene_level.h>
 
 #include <QStringList>
+#include <common_features/md5.h>
+
+static inline QString md5hash(QString word)
+{
+    return QString::fromStdString(md5(word.toStdString()));
+}
 
 bool PGE_Debugger::cheat_allowed=true;
 bool PGE_Debugger::cheat_pagangod=false;
@@ -32,6 +38,15 @@ bool PGE_Debugger::cheat_chucknorris=false;
 bool PGE_Debugger::cheat_superman=false;
 
 bool PGE_Debugger::cheat_worldfreedom=false;
+
+static inline void showMsg(Scene *parent, const char*msg)
+{
+    PGE_MsgBox msgBox(parent, msg,
+                      PGE_MsgBox::msg_warn);
+    if(!ConfigManager::setup_message_box.sprite.isEmpty())
+        msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+    msgBox.exec();
+}
 
 void PGE_Debugger::executeCommand(Scene *parent)
 {
@@ -52,31 +67,53 @@ void PGE_Debugger::executeCommand(Scene *parent)
         ///////////////////////////////////////////////
         ////////////////Common commands////////////////
         ///////////////////////////////////////////////
-        if(inputBox.inputText()=="redigitiscool") {
-            PGE_MsgBox msgBox(parent, "Redigit is no more cool,\nSorry!",
-                              PGE_MsgBox::msg_warn);
-            if(!ConfigManager::setup_message_box.sprite.isEmpty())
-                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
-            msgBox.exec();
+        QString input = inputBox.inputText().toLower();
+        QString hash  = md5hash(input);
+        qDebug() << input << hash;
+
+        if(input=="redigitiscool") {
+            showMsg(parent, "Redigit is no more cool,\nSorry!\n\n"
+                                      "If you wanna a super-secret code, look at SMBX Forums: "
+                                      "it's automatically appears when you try to quote old code!");
+        } else
+        if(input=="wohlstandiscool") {
+            showMsg(parent, "You flatter me!");
+        } else
+        if(input=="kevsoftiscool") {
+            showMsg(parent, "Thanks! You got hacked now!");
+        } else
+        if(input=="raocowiscool") {
+            showMsg(parent, "Oh, man! Thanks a lot!");
+        } else
+        if(input=="joeyiscool") {
+            showMsg(parent, "Don't try to guess code, or I'll ban you on SMBX Forums!");
+        } else
+        if(hash.toLower()=="0f89f93d5e6338d384c5d6bddb69e715") {
+            showMsg(parent, "Congratulation!\nYou found a secret code!");
+            cheatfound=true;
+            cheat_chucknorris=true;
+            cheat_superman=true;
+            cheat_pagangod=true;
+            en=true;
         } else
         if(parent->type()==Scene::Level) {
             ///////////////////////////////////////////////
             ////////////Level specific commands////////////
             ///////////////////////////////////////////////
-            if(inputBox.inputText()=="donthurtme") {
+            if(input=="donthurtme") {
                 cheat_pagangod=!cheat_pagangod;
                 en=cheat_pagangod;
                 cheatfound=true;
-            } else if(inputBox.inputText()=="chucknorris") {
+            } else if(input=="chucknorris") {
                 cheat_chucknorris=!cheat_chucknorris;
                 en=cheat_chucknorris;
                 cheatfound=true;
-            } else if(inputBox.inputText()=="iamsuperman") {
+            } else if(input=="iamsuperman") {
                 cheat_superman=!cheat_superman;
                 en=cheat_superman;
                 cheatfound=true;
-            } else if(inputBox.inputText().startsWith("iwishexitas")) {
-                QStringList args=inputBox.inputText().split(' ');
+            } else if(input.startsWith("iwishexitas")) {
+                QStringList args=input.split(' ');
                 if(args.size()==2)
                 {
                     bool ok=false;
@@ -94,7 +131,7 @@ void PGE_Debugger::executeCommand(Scene *parent)
             ///////////////////////////////////////////////
             //////////World map specific commands//////////
             ///////////////////////////////////////////////
-            if(inputBox.inputText()=="illparkwhereiwant") {
+            if(input=="illparkwhereiwant") {
                 cheat_worldfreedom=!cheat_worldfreedom;
                 en=cheat_worldfreedom;
                 cheatfound=true;
