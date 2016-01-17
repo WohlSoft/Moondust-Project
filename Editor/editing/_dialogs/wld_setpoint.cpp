@@ -53,6 +53,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 
 WLD_SetPoint::~WLD_SetPoint()
 {
+    if(scene) delete scene;
     delete ui;
 }
 
@@ -419,6 +420,7 @@ void WLD_SetPoint::unloadData()
 
     WriteToLog(QtDebugMsg, "!<-Delete scene->!");
     delete scene;
+    scene = NULL;
     sceneCreated=false;
     WriteToLog(QtDebugMsg, "!<-Deleted->!");
 }
@@ -461,6 +463,7 @@ void WLD_SetPoint::on_buttonBox_clicked(QAbstractButton *button)
     }
     else
     {
+        unloadData();
         QDialog::reject();
     }
 }
