@@ -216,6 +216,8 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 
 void MainWindow::openMusicByArg(QString musPath)
 {
+    if(ui->recordWav->isChecked()) return;
+
     currentMusic=musPath;
     ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
