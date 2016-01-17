@@ -59,6 +59,8 @@ private:
 
 #ifdef _WIN32
 #include <StackWalker/StackWalker.h>
+#include <sstream>
+/*
 #include <tlhelp32.h>
 
 class StackTracer : public StackWalker
@@ -99,7 +101,7 @@ protected:
         theOutput += szText;
     }
 };
-
+*/
 #endif
 
 #endif // CRASHHANDLER_H
