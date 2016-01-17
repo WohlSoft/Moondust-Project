@@ -235,6 +235,7 @@ void MainWindow::dropEvent(QDropEvent *e)
         const QString &fileName = url.toLocalFile();
         currentMusic=fileName;
     }
+    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
     on_play_clicked();
     this->raise();
