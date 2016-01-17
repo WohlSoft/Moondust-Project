@@ -39,8 +39,9 @@
 QString CrashHandler::getStacktrace()
 {
     #ifdef _WIN32
-        StackTracer tracer;
-        tracer.runStackTracerForAllThreads();
+        //StackTracer tracer;
+        //tracer.runStackTracerForAllThreads();
+        //return tracer.theOutput();
         dbg::stack s;
         std::stringstream out;
         std::copy(s.begin(), s.end(), std::ostream_iterator<dbg::stack_frame>(out, "\n"));
