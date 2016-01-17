@@ -21,7 +21,7 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <dbghelp.h>
-#elif (__linux__ && !(__ANDROID__))
+#elif ((__linux__) && !(__ANDROID__) || __APPLE__)
     #include <execinfo.h>
     #include <unistd.h>
 #endif
