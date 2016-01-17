@@ -121,10 +121,10 @@ void PNG2GIFsGUI::doConversion(PNG2GIFsGUI *ptr)
     foreach(QString q, ptr->ConversionTask)
     {
         QString OPath=ptr->ui->targetPath->text();
-        if(!OPath.endsWith('/')) OPath.append('/');
         QString path=QFileInfo(q).absoluteDir().path()+"/";
         QString fname = QFileInfo(q).fileName();
         if(OPath.isEmpty()) OPath=path;
+        if(!OPath.endsWith('/')) OPath.append('/');
         switch(doMagicIn(path, fname, OPath))
         {
             case CNV_SUCCESS:answers_success++;break;

@@ -35,7 +35,11 @@ CONFIG   -= import_plugins
 
 TEMPLATE = app
 
-#QMAKE_CFLAGS += -Wno-sign-compare
+static: win32||linux-g++: {
+QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
+}
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 

@@ -33,6 +33,12 @@ INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 TARGET = pge_maintainer
 TEMPLATE = app
 
+static: win32||linux-g++: {
+QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
+}
+
 DEFINES += PGE_FILES_QT
 
 SOURCES += main.cpp\

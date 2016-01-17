@@ -17,6 +17,12 @@ QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
+static: win32||linux-g++: {
+QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
+}
+
 TEMPLATE = app
 
 include(../_common/dest_dir.pri)
