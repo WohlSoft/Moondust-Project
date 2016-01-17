@@ -58,8 +58,8 @@ private:
 };
 
 #ifdef _WIN32
-#include <StackWalker/StackWalker.h>
-#include <sstream>
+//#include <StackWalker/StackWalker.h>
+//#include <sstream>
 /*
 #include <tlhelp32.h>
 
