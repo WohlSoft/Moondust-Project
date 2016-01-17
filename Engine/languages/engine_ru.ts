@@ -241,40 +241,130 @@ Enter to: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="527"/>
-        <location filename="../gui/pge_msgbox.cpp" line="357"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="412"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="528"/>
+        <location filename="../gui/pge_msgbox.cpp" line="362"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="413"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="545"/>
-        <location filename="../gui/pge_msgbox.cpp" line="375"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="430"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="546"/>
+        <location filename="../gui/pge_msgbox.cpp" line="380"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="431"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="564"/>
-        <location filename="../gui/pge_msgbox.cpp" line="394"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="449"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="565"/>
+        <location filename="../gui/pge_msgbox.cpp" line="399"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="450"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="583"/>
-        <location filename="../gui/pge_msgbox.cpp" line="413"/>
-        <location filename="../gui/pge_textinputbox.cpp" line="468"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="584"/>
+        <location filename="../gui/pge_msgbox.cpp" line="418"/>
+        <location filename="../gui/pge_textinputbox.cpp" line="469"/>
         <source>Fatal</source>
         <translation>Авария</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="480"/>
+        <location filename="../main.cpp" line="74"/>
+        <source>Unhandled exception!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="75"/>
+        <source>Engine was crashed because accepted unhandled exception!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="82"/>
+        <source>Out of memory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="83"/>
+        <source>Engine was crashed because out of memory! Try to close other applications and restart game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="102"/>
+        <source>Killed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="103"/>
+        <source>Engine was killed by mad maniac :-P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="108"/>
+        <source>Time out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="109"/>
+        <source>Engine was abourted because alarm() time out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="118"/>
+        <source>Wrong CPU Instruction!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="119"/>
+        <source>Engine was crashed because a wrong CPU instruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="124"/>
+        <source>Wrong arithmetical operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="125"/>
+        <source>Engine was crashed because wrong arithmetical opreation!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="130"/>
+        <source>Aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="131"/>
+        <source>Engine was been aborted because critical error was occouped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="135"/>
+        <source>Segmentation fault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="136"/>
+        <source>Engine was crashed because Segmentation fault. Run debug with built in debug mode and retry your recent action to take more detail info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="142"/>
+        <source>Interrupt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="143"/>
+        <source>Engine was interrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="547"/>
         <source>No opened files</source>
         <translation>Нет открытых файлов</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="489"/>
+        <location filename="../main.cpp" line="556"/>
         <source>ERROR:
 Fail to start world map
 
@@ -285,14 +375,14 @@ Fail to start world map
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="516"/>
+        <location filename="../main.cpp" line="583"/>
         <source>Start level
 %1</source>
         <translation>Запуск уровняl
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="659"/>
+        <location filename="../main.cpp" line="726"/>
         <source>Warp exit
 
 Exit to:
@@ -307,7 +397,7 @@ Enter to: %2</source>
 Вход в: %2</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="704"/>
+        <location filename="../main.cpp" line="771"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Уровень быз завершён с ошибкой.
@@ -316,8 +406,8 @@ Enter to: %2</source>
     <message>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="29"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="50"/>
-        <location filename="../scenes/scene_world.cpp" line="482"/>
-        <location filename="../scenes/scene_world.cpp" line="502"/>
+        <location filename="../scenes/scene_world.cpp" line="480"/>
+        <location filename="../scenes/scene_world.cpp" line="500"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
@@ -325,20 +415,20 @@ Enter to: %2</source>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="34"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="55"/>
         <location filename="../scenes/scene_gameover.cpp" line="54"/>
-        <location filename="../scenes/scene_world.cpp" line="487"/>
-        <location filename="../scenes/scene_world.cpp" line="507"/>
+        <location filename="../scenes/scene_world.cpp" line="485"/>
+        <location filename="../scenes/scene_world.cpp" line="505"/>
         <source>Continue</source>
         <translation>Продолжить</translation>
     </message>
     <message>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="35"/>
-        <location filename="../scenes/scene_world.cpp" line="488"/>
+        <location filename="../scenes/scene_world.cpp" line="486"/>
         <source>Save and continue</source>
         <translation>Сохр. и продолжить</translation>
     </message>
     <message>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="36"/>
-        <location filename="../scenes/scene_world.cpp" line="489"/>
+        <location filename="../scenes/scene_world.cpp" line="487"/>
         <source>Save and quit</source>
         <translation>Сохр. и выйти</translation>
     </message>
@@ -350,7 +440,7 @@ Enter to: %2</source>
     <message>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="56"/>
         <location filename="../scenes/scene_gameover.cpp" line="55"/>
-        <location filename="../scenes/scene_world.cpp" line="508"/>
+        <location filename="../scenes/scene_world.cpp" line="506"/>
         <source>Quit</source>
         <translation>Выйти</translation>
     </message>
@@ -360,7 +450,7 @@ Enter to: %2</source>
         <translation>Игра окончена!</translation>
     </message>
     <message>
-        <location filename="../scenes/scene_world.cpp" line="490"/>
+        <location filename="../scenes/scene_world.cpp" line="488"/>
         <source>Quit without saving</source>
         <translation>Выйти без сохранения</translation>
     </message>
