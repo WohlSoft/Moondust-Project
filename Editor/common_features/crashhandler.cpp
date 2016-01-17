@@ -42,12 +42,12 @@ QString CrashHandler::getStacktrace()
         StackTracer tracer;
         tracer.runStackTracerForAllThreads();
         return tracer.theOutput;
-    #elif (__linux__ && !(__ANDROID__))
+    #elif ((__linux__) && !(__ANDROID__) || __APPLE__)
         void *array[400];
         size_t size;
 
         char **strings;
-        size = backtrace(array, 10);
+        size = backtrace(array, 400);
 
         strings = backtrace_symbols(array, size);
 
@@ -85,25 +85,50 @@ void CrashHandler::crashByUnhandledException()
     doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
 }
 
-void CrashHandler::crashBySIGSERV(int /*signalid*/)
+void CrashHandler::crashBySIGNAL(int signalid)
 {
-    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n"));
+    QString sigtype="Signal Segmentation Violation [SIGSEGV]";
+    switch(signalid)
+    {
+        #ifndef _WIN32  //Unsupported signals by Windows
+        case SIGHUP:   sigtype = QObject::tr("Terminal was closed [SIGHUP]"); break;
+        case SIGQUIT:  sigtype = QObject::tr("Quit command [SIGQUIT]"); break;
+        case SIGKILL:  sigtype = QObject::tr("Editor was killed by mad maniac :-P [SIGKILL]"); break;
+        case SIGALRM:  sigtype = QObject::tr("Editor was abourted because alarm() time out! [SIGALRM]"); break;
+        case SIGURG:
+        case SIGUSR1:
+        case SIGUSR2: return;
+        case SIGILL:   sigtype = QObject::tr("Terminal was closed [SIGHUP]"); break;
+        #endif
+        case SIGFPE:  sigtype = QObject::tr("Wrong CPU Instruction [SIGFPE]"); break;
+        case SIGABRT: sigtype = QObject::tr("Aborted! [SIGABRT]"); break;
+        case SIGSEGV: sigtype = QObject::tr("Signal Segmentation Violation [SIGSEGV]"); break;
+        case SIGINT:  sigtype = QObject::tr("Interrupted! [SIGINT]"); break;
+        default: break;
+    }
+    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: %1\n\n").arg(sigtype));
 }
 
 void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
 {
-    attemptCrashsave();
-
-    if(DevConsole::isConsoleShown())
-        DevConsole::closeIfPossible();
-
+    //Write crash message into the log file first
     crashMsg += QString("\n\n") + getStacktrace();
-
     //Also save crash report into log file
     WriteToLog(QtFatalMsg, crashMsg, true);
 
+    //Then, emergency save all opened files into reserve folder
+    attemptCrashsave();
+
+    //Close console box if possible
+    if(DevConsole::isConsoleShown())
+        DevConsole::closeIfPossible();
+
+    MainWinConnect::pMainWin->hide();
+
+    //And now, spawn dialog box with stack trance
     CrashHandler* crsh = new CrashHandler(crashMsg);
     crsh->exec();
+    delete crsh;
 
     exit(EXIT_FAILURE);
 }
@@ -203,7 +228,20 @@ void CrashHandler::initCrashHandlers()
 {
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
-    signal(SIGSEGV, &crashBySIGSERV);
+    #ifndef _WIN32 //Unsupported signals by Windows
+    signal(SIGHUP, &crashBySIGNAL);
+    signal(SIGQUIT, &crashBySIGNAL);
+    signal(SIGKILL, &crashBySIGNAL);
+    signal(SIGALRM, &crashBySIGNAL);
+    signal(SIGURG, &crashBySIGNAL);
+    signal(SIGUSR1, &crashBySIGNAL);
+    signal(SIGUSR2, &crashBySIGNAL);
+    #endif
+    signal(SIGILL, &crashBySIGNAL);
+    signal(SIGFPE, &crashBySIGNAL);
+    signal(SIGSEGV, &crashBySIGNAL);
+    signal(SIGINT, &crashBySIGNAL);
+    signal(SIGABRT, &crashBySIGNAL);
 }
 
 void CrashHandler::on_pgeForumButton_clicked()

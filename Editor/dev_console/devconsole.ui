@@ -193,11 +193,12 @@ border-width: 2px;</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>plainTextEdit</tabstop>
-  <tabstop>button_send</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>button_clearAllLogs</tabstop>
   <tabstop>edit_command</tabstop>
+  <tabstop>button_send</tabstop>
+  <tabstop>button_clearAllLogs</tabstop>
+  <tabstop>button_cl_sysLog</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>plainTextEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../_resources/editor.qrc"/>

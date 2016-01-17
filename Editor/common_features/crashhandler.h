@@ -36,7 +36,7 @@ public:
     //Crash Handlers
     static void crashByFlood();
     static void crashByUnhandledException();
-    static void crashBySIGSERV(int signalid);
+    static void crashBySIGNAL(int signalid);
 
     static void doCrashScreenAndCleanup(QString crashMsg);
 

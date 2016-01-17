@@ -26,8 +26,11 @@
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(195, 0, 0);</string>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>You might want to report this data to developers or post it at:</string>
      </property>
     </widget>
    </item>
@@ -52,7 +55,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</string>
+      <string>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</string>
      </property>
     </widget>
    </item>
@@ -76,7 +79,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QPushButton" name="pgeForumButton">
      <property name="text">
-      <string>PGE Forum</string>
+      <string>PGE Forum (http://engine.wohlnet.ru/forum/)</string>
      </property>
     </widget>
    </item>
