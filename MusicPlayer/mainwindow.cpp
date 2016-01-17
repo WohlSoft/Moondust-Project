@@ -195,10 +195,14 @@ MainWindow::MainWindow(QWidget *parent) :
                 Qt::WindowMinimizeButtonHint);
     this->updateGeometry();
     this->window()->resize(100, 100);
+    this->connect(&blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
+    blink_state=false;
 }
 
 MainWindow::~MainWindow()
 {
+    on_stop_clicked();
+    Mix_CloseAudio();
     delete ui;
 }
 
@@ -213,6 +217,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 void MainWindow::openMusicByArg(QString musPath)
 {
     currentMusic=musPath;
+    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
     on_play_clicked();
 }
@@ -222,6 +227,10 @@ void MainWindow::dropEvent(QDropEvent *e)
     this->raise();
     this->setFocus(Qt::ActiveWindowFocusReason);
 
+    if(ui->recordWav->isChecked())
+    {
+        return;
+    }
     foreach (const QUrl &url, e->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
         currentMusic=fileName;
@@ -229,6 +238,7 @@ void MainWindow::dropEvent(QDropEvent *e)
     Mix_HaltMusic();
     on_play_clicked();
     this->raise();
+    e->accept();
 }
 
 void MainWindow::on_open_clicked()
@@ -237,6 +247,7 @@ void MainWindow::on_open_clicked()
                                                  (currentMusic.isEmpty() ? QApplication::applicationDirPath() : currentMusic), "All (*.*)");
     if(file.isEmpty()) return;
     currentMusic=file;
+    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
     on_play_clicked();
 }
@@ -245,6 +256,16 @@ void MainWindow::on_stop_clicked()
 {
     PGE_MusicPlayer::MUS_stopMusic();
     ui->play->setText(tr("Play"));
+    if(ui->recordWav->isChecked())
+    {
+        ui->recordWav->setChecked(false);
+        PGE_MusicPlayer::stopWavRecording();
+        ui->open->setEnabled(true);
+        ui->play->setEnabled(true);
+        ui->frame->setEnabled(true);
+        blinker.stop();
+        ui->recordWav->setStyleSheet("");
+    }
 }
 
 void MainWindow::on_play_clicked()
@@ -382,13 +403,32 @@ void MainWindow::on_recordWav_clicked(bool checked)
 {
     if(checked)
     {
-        on_stop_clicked();
+        PGE_MusicPlayer::MUS_stopMusic();
+        ui->play->setText(tr("Play"));
         QFileInfo twav(currentMusic);
         PGE_MusicPlayer::stopWavRecording();
         PGE_MusicPlayer::startWavRecording(twav.absoluteDir().absolutePath()+"/"+twav.baseName()+".wav");
         on_play_clicked();
+        ui->open->setEnabled(false);
+        ui->play->setEnabled(false);
+        ui->frame->setEnabled(false);
+        blinker.start(500);
     } else {
         on_stop_clicked();
         PGE_MusicPlayer::stopWavRecording();
+        ui->open->setEnabled(true);
+        ui->play->setEnabled(true);
+        ui->frame->setEnabled(true);
+        blinker.stop();
+        ui->recordWav->setStyleSheet("");
     }
+}
+
+void MainWindow::_blink_red()
+{
+    blink_state=!blink_state;
+    if(blink_state)
+        ui->recordWav->setStyleSheet("background-color : red; color : black;");
+    else
+        ui->recordWav->setStyleSheet("background-color : black; color : red;");
 }

@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -95,9 +96,22 @@ private slots:
      */
     void on_trackID_editingFinished();
 
+    /*!
+     * \brief Triggers when 'record wav' checkbox was toggled
+     * \param checked
+     */
     void on_recordWav_clicked(bool checked);
 
+    /*!
+     * \brief Changes color of "Recording WAV" label between black and red
+     */
+    void _blink_red();
+
 private:
+    //! Controlls blinking of the wav-recording label
+    QTimer blinker;
+    bool   blink_state;
+
     //! UI form class pointer
     Ui::MainWindow *ui;
 };
