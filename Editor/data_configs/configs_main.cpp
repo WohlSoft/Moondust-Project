@@ -47,7 +47,7 @@ long ConfStatus::total_sound=0;
 QString ConfStatus::configName="";
 QString ConfStatus::configPath="";
 
-QString ConfStatus::condigDataPath="";
+QString ConfStatus::configDataPath="";
 #ifdef _WIN32
 QString ConfStatus::SmbxEXE_Name="";
 #endif
@@ -213,7 +213,7 @@ bool dataconfigs::loadconfigs()
         data_dir = (mainset.value("application-dir", false).toBool() ?
                         customAppPath + "/" : config_dir + "data/" );
 
-        ConfStatus::condigDataPath = data_dir;
+        ConfStatus::configDataPath = data_dir;
 
         ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
         #ifdef _WIN32

@@ -356,7 +356,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
     #ifdef DUMMY_WORLD_GENERATION
     if(activeChildWindow()==1)
     {
-        QString smbxPath = ConfStatus::condigDataPath;
+        QString smbxPath = ConfStatus::configDataPath;
         if(!QFile(smbxPath+ConfStatus::SmbxEXE_Name).exists())
         {
             QMessageBox::warning(this, tr("SMBX Directory wasn't configured right"),

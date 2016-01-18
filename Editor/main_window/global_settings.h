@@ -146,7 +146,7 @@ public:
     static QString defaultTheme;
     static QString configPath;
 
-    static QString condigDataPath;
+    static QString configDataPath;
     #ifdef _WIN32
     static QString SmbxEXE_Name;
     #endif
