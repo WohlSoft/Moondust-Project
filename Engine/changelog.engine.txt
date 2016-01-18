@@ -1,3 +1,6 @@
+0.2.5.1
+- Fixed custom folder confusion caused with dot-contained file names
+
 0.2.5
 - Fixed crash on NPC placement with interprocessing
 - Sprite in real-time placing mode will be aligned to center of mouse rather left-top corner

@@ -236,7 +236,7 @@ void EngineClient::sendLevelData(LevelData _data)
 
     QString sendLvlx;
     if(!_data.path.isEmpty())
-        sendLvlx = QString("SEND_LVLX: %1/%2\n\n").arg(_data.path).arg(_data.filename);
+        sendLvlx = QString("SEND_LVLX: %1/%2\n\n").arg(_data.path).arg(_data.filename+".lvlx");
     else
         sendLvlx = QString("SEND_LVLX: %1/%2\n\n").arg(ApplicationPath).arg("_untitled.lvlx");
 

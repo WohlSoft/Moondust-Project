@@ -1,3 +1,8 @@
+Editor 0.3.1.10
+- Fixed custom folder confusion caused with dot-contained file names
+- Level list dialog now looks for level files in sub directories (is possible to collect levels into sub-directories to don't flood episode root folder)
+- Better testing through SMBX on Windows version
+
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again
 - Fixed a detection of libraries paths (such as "platforms") while dynamically built PGE Apps are locating in the folder with non-ascii path

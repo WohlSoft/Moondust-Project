@@ -24,6 +24,7 @@
 #include <main_window/dock/lvl_layers_box.h>
 #include <main_window/dock/wld_settings_box.h>
 #include <common_features/bool_reseter.h>
+#include <common_features/util.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -198,7 +199,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             return;
         }
         WriteToLog(QtDebugMsg, "File was read!");
-        FileData.filename = in_1.baseName();
+        FileData.filename = util::getBaseFilename(in_1.fileName());
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
 

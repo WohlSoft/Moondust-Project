@@ -327,8 +327,9 @@ void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
     if (filePath.isEmpty())
         return;
 
-    lastFileName = QFileInfo(filePath).baseName();
-    lastFullPath = QFileInfo(filePath).absoluteFilePath();
+    QFileInfo finfo(filePath);
+    lastFileName = finfo.baseName();
+    lastFullPath = finfo.absoluteFilePath();
 
     ui->delete_me->setVisible(false);
 

@@ -146,6 +146,10 @@ public:
     static QString defaultTheme;
     static QString configPath;
 
+    static QString configDataPath;
+    #ifdef _WIN32
+    static QString SmbxEXE_Name;
+    #endif
 };
 
 #endif // GLOBAL_SETTINGS_H

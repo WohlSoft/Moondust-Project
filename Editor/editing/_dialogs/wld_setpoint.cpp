@@ -17,6 +17,7 @@
  */
 
 #include <common_features/app_path.h>
+#include <common_features/util.h>
 
 #include "wld_setpoint.h"
 #include <ui_wld_setpoint.h>
@@ -432,10 +433,11 @@ QWidget *WLD_SetPoint::gViewPort()
 
 void WLD_SetPoint::setCurrentFile(const QString &fileName)
 {
-    curFile = QFileInfo(fileName).canonicalFilePath();
+    QFileInfo info(fileName);
+    curFile = info.canonicalFilePath();
     isUntitled = false;
-    WldData.path = QFileInfo(fileName).absoluteDir().absolutePath();
-    WldData.filename = QFileInfo(fileName).baseName();
+    WldData.path = info.absoluteDir().absolutePath();
+    WldData.filename = util::getBaseFilename(info.fileName());
     WldData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);

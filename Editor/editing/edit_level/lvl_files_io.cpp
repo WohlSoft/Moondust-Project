@@ -183,8 +183,10 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
         if(makeCustomFolder)
         {
-            QDir dir = fileName.section("/",0,-2);
-            dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
+            QFileInfo finfo(fileName);
+            finfo.absoluteDir().mkpath(finfo.absoluteDir().absolutePath()+
+                                      "/"+util::getBaseFilename(finfo.fileName())
+                                      );
         }
         isNotDone=false;
     }
@@ -234,9 +236,10 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         LvlData.smbx64strict = false; //Disable strict mode
     }
     // //////////////////////////////////////////////////////////////////////
-    GlobalSettings::savePath = QFileInfo(fileName).path();
-    LvlData.path = QFileInfo(fileName).path();
-    LvlData.filename = QFileInfo(fileName).baseName();
+    QFileInfo finfo(fileName);
+    GlobalSettings::savePath = finfo.path();
+    LvlData.path = finfo.path();
+    LvlData.filename = util::getBaseFilename(finfo.fileName());
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
@@ -574,10 +577,11 @@ void LevelEdit::closeEvent(QCloseEvent *event)
 
 void LevelEdit::setCurrentFile(const QString &fileName)
 {
-    curFile = QFileInfo(fileName).canonicalFilePath();
+    QFileInfo info(fileName);
+    curFile = info.canonicalFilePath();
     isUntitled = false;
-    LvlData.path = QFileInfo(fileName).absoluteDir().absolutePath();
-    LvlData.filename = QFileInfo(fileName).baseName();
+    LvlData.path = info.absoluteDir().absolutePath();
+    LvlData.filename = util::getBaseFilename(info.fileName());
     LvlData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
