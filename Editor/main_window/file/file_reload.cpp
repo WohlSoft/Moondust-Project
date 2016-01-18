@@ -24,6 +24,7 @@
 #include <main_window/dock/lvl_item_toolbox.h>
 #include <main_window/dock/wld_settings_box.h>
 #include <common_features/bool_reseter.h>
+#include <common_features/util.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -252,8 +253,9 @@ void MainWindow::on_actionReload_triggered()
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
-        FileData.filename = QFileInfo(filePath).baseName();
-        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
+        QFileInfo finfo(filePath);
+        FileData.filename = util::getBaseFilename(finfo.fileName());
+        FileData.path = finfo.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeWldEditWin()->WldData.modified = false;
 

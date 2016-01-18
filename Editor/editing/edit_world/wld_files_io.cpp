@@ -537,10 +537,11 @@ void WorldEdit::closeEvent(QCloseEvent *event)
 
 void WorldEdit::setCurrentFile(const QString &fileName)
 {
-    curFile = QFileInfo(fileName).canonicalFilePath();
+    QFileInfo info(fileName);
+    curFile = info.canonicalFilePath();
     isUntitled = false;
-    WldData.path = QFileInfo(fileName).absoluteDir().absolutePath();
-    WldData.filename = QFileInfo(fileName).baseName();
+    WldData.path = info.absoluteDir().absolutePath();
+    WldData.filename = util::getBaseFilename(info.fileName());
     WldData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);

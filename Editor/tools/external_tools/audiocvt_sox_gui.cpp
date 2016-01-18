@@ -272,7 +272,7 @@ retry_queue:
     if(ui->convertoTo->currentWidget()==ui->dont_change)
     {
         QFileInfo original(current_musFileNew);
-        current_musFileOld = original.canonicalPath() + "/" + original.baseName() + "-backup";
+        current_musFileOld = original.canonicalPath() + "/" + util::getBaseFilename(original.fileName()) + "-backup";
         if (!original.completeSuffix().isEmpty())
             current_musFileOld += "." + original.completeSuffix();
         renameToBak=true;
@@ -280,7 +280,7 @@ retry_queue:
     else
     {
         QFileInfo original(current_musFileNew);
-        current_musFileOld = original.canonicalPath() + "/" + original.baseName() + "-backup";
+        current_musFileOld = original.canonicalPath() + "/" + util::getBaseFilename(original.baseName()) + "-backup";
         if (!original.completeSuffix().isEmpty())
             current_musFileOld += "." + original.completeSuffix();
         renameToBak=true;

@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #endif
 
+
 namespace PGE_FileFormats_misc
 {
 #ifndef PGE_FILES_QT
@@ -313,12 +314,15 @@ namespace PGE_FileFormats_misc
       skipFilename:
 
        //Take base file name
-        for(i=0;i<(signed)_filename.size();i++)
+        _basename=_filename;
+        for(i=_basename.size()-1; i>0; i--)
         {
-            if(_filename[i]=='.') break;
-            _basename.push_back(_filename[i]);
+            if(_basename[i]=='.')
+            {
+                _basename.resize(i);
+                break;
+            }
         }
-
     }
 }
 

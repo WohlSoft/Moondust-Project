@@ -38,6 +38,7 @@ public:
     static bool contains(const QComboBox* b, const QString &s);
     static QString filePath(QString s);
     static void DialogToCenter(QDialog *dialog, bool CloseButtonOnly=false);
+    static QString getBaseFilename(QString str);
 };
 
 #endif // UTIL_H

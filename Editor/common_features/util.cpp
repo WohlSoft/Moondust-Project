@@ -127,5 +127,19 @@ void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
     if(CloseButtonOnly)
         dialog->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     dialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-    dialog->size(), qApp->desktop()->availableGeometry(0)));
+                                            dialog->size(), qApp->desktop()->availableGeometry(0)));
+}
+
+QString util::getBaseFilename(QString str)
+{
+    //why >0 and not >=0? Because >=0 means that possible to have empty basename (with zero length, like .htaccess)
+    for(int i=str.size()-1; i>0; i--)
+    {
+        if(str[i]=='.')
+        {
+            str.resize(i);
+            break;
+        }
+    }
+    return str;
 }
