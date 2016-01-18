@@ -134,6 +134,8 @@ bool ConfigManager::loadBasics()
             return false;
         }
 
+        data_dir = QDir(data_dir).absolutePath()+"/";
+
         QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
         QString version = mainset.value("pge-engine-version", "0.0").toString();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();

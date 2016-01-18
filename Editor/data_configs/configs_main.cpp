@@ -220,6 +220,7 @@ bool dataconfigs::loadconfigs()
             return false;
         }
 
+        data_dir = QDir(data_dir).absolutePath()+"/";
         ConfStatus::configDataPath = data_dir;
 
         ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
