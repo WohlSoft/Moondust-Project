@@ -37,6 +37,7 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <QDesktopWidget>
+#include <cstring>
 #endif
 
 void MainWindow::on_action_doTest_triggered()
@@ -215,15 +216,311 @@ void MainWindow::on_action_testSettings_triggered()
     testingSetup.exec();
 }
 
+
+
+
+#define DUMMY_WORLD_GENERATION
+
+//#define SHARED_FILEPATH_SENDING
 //#define DO_WINAPI_TRICKS
 
 #if defined(Q_OS_WIN) && defined(DO_WINAPI_TRICKS)
 static QWidget *test=NULL;
 #endif
 
+#if defined(Q_OS_WIN) && defined(DUMMY_WORLD_GENERATION)
+enum LunaLoaderResult {
+    LUNALOADER_OK = 0,
+    LUNALOADER_CREATEPROCESS_FAIL,
+    LUNALOADER_PATCH_FAIL
+};
+
+static void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD target) {
+    DWORD* dwordAddr = (DWORD*)&patch[patchOffset+1];
+    *dwordAddr = (DWORD)target - (DWORD)(patchAddr + patchOffset + 5);
+}
+
+static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX, const wchar_t *cmdLineArgs, const wchar_t *workingDir) {
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+    memset(&si, 0, sizeof(si));
+    memset(&pi, 0, sizeof(pi));
+
+    // Prepare command line
+    size_t pos = 0;
+    std::wstring quotedPathToSMBX(pathToSMBX);
+    while ((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos) {
+        quotedPathToSMBX.replace(pos, 1, L"\\\"");
+        pos += 2;
+    }
+    std::wstring strCmdLine = (
+        std::wstring(L"\"") + quotedPathToSMBX + std::wstring(L"\" ") +
+        std::wstring(cmdLineArgs)
+        );
+    uint32_t cmdLineMemoryLen = sizeof(wchar_t) * (strCmdLine.length() + 1); // Include null terminator
+    wchar_t* cmdLine = (wchar_t*)malloc(cmdLineMemoryLen);
+    std::memcpy(cmdLine, strCmdLine.c_str(), cmdLineMemoryLen);
+
+    // Create process
+    if (!CreateProcessW(pathToSMBX, // Launch smbx.exe
+        cmdLine,          // Command line
+        NULL,             // Process handle not inheritable
+        NULL,             // Thread handle not inheritable
+        FALSE,            // Set handle inheritance to FALSE
+        CREATE_SUSPENDED, // Create in suspended state
+        NULL,             // Use parent's environment block
+        workingDir,       // Use parent's starting directory
+        &si,              // Pointer to STARTUPINFO structure
+        &pi)              // Pointer to PROCESS_INFORMATION structure
+        )
+    {
+        free(cmdLine); cmdLine = NULL;
+        return LUNALOADER_CREATEPROCESS_FAIL;
+    }
+    free(cmdLine); cmdLine = NULL;
+
+    // Patch 1 (jump to Patch 2)
+    uintptr_t LoaderPatchAddr1 = 0x40BDD8;
+    unsigned char LoaderPatch1[] =
+    {
+        0xE9, 0x00, 0x00, 0x00, 0x00  // 0x40BDD8 JMP <Patch2>
+    };
+
+    // Patch 2 (loads LunaDll.dll)
+    unsigned char LoaderPatch2[] =
+    {
+        0x68, 0x64, 0x6C, 0x6C, 0x00, // 00 PUSH "dll\0"
+        0x68, 0x44, 0x6C, 0x6C, 0x2E, // 05 PUSH "Dll."
+        0x68, 0x4C, 0x75, 0x6E, 0x61, // 0A PUSH "Luna"
+        0x54,                         // 0F PUSH ESP
+        0xE8, 0x00, 0x00, 0x00, 0x00, // 10 CALL LoadLibraryA
+        0x83, 0xC4, 0x0C,             // 15 ADD ESP, 0C
+        0x68, 0x6C, 0xC1, 0x40, 0x00, // 18 PUSH 40C16C (this inst used to be at 0x40BDD8)
+        0xE9, 0x00, 0x00, 0x00, 0x00, // 1D JMP 40BDDD
+        0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90
+    };
+
+    // Allocate space for Patch 2
+    DWORD LoaderPatchAddr2 = (DWORD)VirtualAllocEx(
+        pi.hProcess,           // Target process
+        NULL,                  // Don't request any particular address
+        sizeof(LoaderPatch2),  // Length of Patch 2
+        MEM_COMMIT,            // Type of memory allocation
+        PAGE_READWRITE         // Memory protection type
+        );
+    if (LoaderPatchAddr2 == (DWORD)NULL) {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Set Patch1 Addresses
+    setJmpAddr(LoaderPatch1, LoaderPatchAddr1, 0x00, LoaderPatchAddr2);
+
+    // Set Patch2 Addresses
+    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x10, (DWORD)&LoadLibraryA);
+    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x1D, LoaderPatchAddr1 + 5);
+
+    // Patch the entry point...
+    if (WriteProcessMemory(pi.hProcess, (void*)LoaderPatchAddr1, LoaderPatch1, sizeof(LoaderPatch1), NULL) == 0 ||
+        WriteProcessMemory(pi.hProcess, (void*)LoaderPatchAddr2, LoaderPatch2, sizeof(LoaderPatch2), NULL) == 0)
+    {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Change Patch2 memory protection type
+    DWORD TmpDword = 0;
+    if (VirtualProtectEx(
+        pi.hProcess,
+        (void*)LoaderPatchAddr2,
+        sizeof(LoaderPatch2),
+        PAGE_EXECUTE,
+        &TmpDword
+    ) == 0) {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Resume the main program thread
+    ResumeThread(pi.hThread);
+
+    // Close handles
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+
+    return LUNALOADER_OK;
+}
+#endif
+
+
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
  #ifdef Q_OS_WIN
+    #ifdef DUMMY_WORLD_GENERATION
+    if(activeChildWindow()==1)
+    {
+        QString smbxPath = ConfStatus::condigDataPath;
+        if(!QFile(smbxPath+ConfStatus::SmbxEXE_Name).exists())
+        {
+            QMessageBox::warning(this, tr("SMBX Directory wasn't configured right"),
+            tr("%1 not found!\nTo run testing via SMBX you should have right SMBX Integration configuration package!")
+                                 .arg(smbxPath+ConfStatus::SmbxEXE_Name),
+            QMessageBox::Ok);
+            return;
+        }
+
+        QString tempPath = smbxPath+"/worlds/";
+        QString tempName = "tmp.PgeWorld.DeleteMe";
+        QString newEpisode = tempPath+tempName+"/";
+
+        LevelEdit* ed = activeLvlEditWin();
+
+        QDir dummyWorld(newEpisode);
+        if(dummyWorld.exists(newEpisode))
+        {
+            //Clean-up old stuff
+            dummyWorld.removeRecursively();
+        }
+        dummyWorld.mkpath(newEpisode);
+
+        ed->saveSMBX64LVL(newEpisode+"/templevel.lvl", true);
+        if(!ed->isUntitled)
+        {
+            QString episodePath = ed->LvlData.path;
+            QString customPath = ed->LvlData.path+"/"+ed->LvlData.filename;
+
+            //Copy available custom stuff into temp directory
+            QDir episodeDir(episodePath);
+            QDir customDir(customPath);
+
+            QStringList fileters;
+            fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png";
+            episodeDir.setNameFilters(fileters);
+            customDir.setNameFilters(fileters);
+
+
+            //Copy images and scripts from episode folder
+            QStringList files = episodeDir.entryList(QDir::Files);
+            foreach(QString filex, files)
+            {
+                QFile::copy(episodePath+"/"+filex, newEpisode+filex);
+            }
+
+
+
+            //Copy images and scripts from custom folder
+            files = customDir.entryList(QDir::Files);
+            customDir.mkdir(newEpisode+"templevel");
+            foreach(QString filex, files)
+            {
+                QFile::copy(customPath+"/"+filex, newEpisode+"templevel/"+filex);
+            }
+
+
+            //Copy custom musics if possible
+            foreach(LevelSection sec, ed->LvlData.sections)
+            {
+                if(!sec.music_file.isEmpty())
+                {
+                    QFile mus(episodePath+"/"+sec.music_file);
+                    if(mus.exists())
+                    {
+                        QFileInfo inf(newEpisode+sec.music_file);
+                        if(!inf.absoluteDir().exists())
+                        {
+                            inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
+                        }
+                        mus.copy(newEpisode+sec.music_file);
+                    }
+                }
+            }
+        }
+
+        WorldData worldmap = FileFormats::CreateWorldData();
+        worldmap.EpisodeTitle = "_temp_episode_pge";
+        worldmap.IntroLevel_file = "templevel.lvl";
+        worldmap.restartlevel = true;
+
+        QFile file(newEpisode+"/tempworld.wld");
+        if(!file.open(QFile::WriteOnly))
+        {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(newEpisode+"/tempworld.wld")
+                                 .arg(file.errorString()));
+            return;
+        }
+
+        QString raw = FileFormats::WriteSMBX64WldFile(worldmap, 64);
+        for(int i=0; i<raw.size(); i++)
+        {
+            if(raw[i]=='\n')
+            {
+                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+                const char bytes[2] = {0x0D, 0x0A};
+                file.write((const char*)(&bytes), 2);
+            }
+            else
+            {
+                const char byte[1] = {raw[i].toLatin1()};
+                file.write((const char*)(&byte), 1);
+            }
+        }
+        file.close();
+
+        QString command=smbxPath+ConfStatus::SmbxEXE_Name;
+        QStringList params;
+
+        if(!QFile(smbxPath+"LunaDll.dll").exists())
+        {
+            QMessageBox::warning(this, tr("Vanilia SMBX detected!"),
+            tr("%2 not found!\nYou have a Vanilia SMBX!\nThat means, impossible to launch level testing automatically.\n"
+               "To launch a level testing, start a game and select playing of the %1 episode.")
+                                 .arg("\"_temp_episode_pge\"")
+                                 .arg(smbxPath+"LunaDll.dll"),
+            QMessageBox::Ok);
+
+            QProcess::startDetached(command, params, smbxPath);
+
+            return;
+        }
+
+        command.replace('/', '\\');
+        params << "--patch";
+        params << "--game";
+
+        QDir smbxConfig(smbxPath+"/config/");
+        smbxConfig.mkpath(smbxPath+"/config/");
+
+        QFile autostart(smbxPath+"/config/autostart.ini");
+        QString autostartTempEpisode = "[autostart]\n"
+                "do-autostart: true\n"
+                "episode-name: %1\n"
+                "singleplayer: true\n"
+                "# 1 = Mario/Demo\n"
+                "# 2 = Luigi/Iris\n"
+                "# 3 = Peach/Kood\n"
+                "# 4 = Toad/Raocow\n"
+                "# 5 = Link/Sheath\n"
+                "character-player1: 1\n"
+                "character-player2: 2\n"
+                "save-slot: 1\n";
+
+        autostart.open(QIODevice::WriteOnly|QIODevice::Text);
+        QTextStream autostart_out(&autostart);
+        autostart_out << autostartTempEpisode.arg(worldmap.EpisodeTitle);
+        autostart_out.flush();
+        autostart.close();
+
+        QString argString;
+        for (int i=0; i<params.length(); i++) {
+            if (i > 0) {
+                argString += " ";
+            }
+            argString += params[i];
+        }
+
+        LunaLoaderRun(command.toStdWString().c_str(), argString.toStdWString().c_str(), smbxPath.toStdWString().c_str());
+    }
+    #endif
+    #ifdef SHARED_FILEPATH_SENDING
     if(activeChildWindow()==1)
     {
         if(activeLvlEditWin()->isUntitled)
@@ -408,6 +705,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 QMessageBox::Ok);
         }
     }
+    #endif //SHARED_FILEPATH_SENDING
 #else
     DevConsole::log("Requires Windows OS!");
 #endif
