@@ -215,6 +215,12 @@ void MainWindow::on_action_testSettings_triggered()
     testingSetup.exec();
 }
 
+//#define DO_WINAPI_TRICKS
+
+#if defined(Q_OS_WIN) && defined(DO_WINAPI_TRICKS)
+static QWidget *test=NULL;
+#endif
+
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
  #ifdef Q_OS_WIN
@@ -260,6 +266,31 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
         if(smbxWind)
         {
+            #ifdef DO_WINAPI_TRICKS
+            test = new QWidget();
+            test->setAttribute(Qt::WA_DeleteOnClose, true);
+            test->setWindowTitle("Embedded SMBX Editor box");
+            ui->centralWidget->addSubWindow(test);
+            test->show();
+            test->update();
+            qApp->processEvents();
+
+            // Change the parent so the calc window belongs to our apps main window
+            SetParent(smbxWind, (HWND)test->winId());
+            // Update the style so the calc window is embedded in our main window
+            LONG lExStyle = GetWindowLong(smbxWind, GWL_STYLE);
+            //lExStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE | WS_CAPTION);
+            SetWindowLong(smbxWind, GWL_STYLE, lExStyle | WS_CHILD);
+    //        LONG lExStyle = GetWindowLong(calcHwnd, GWL_EXSTYLE);
+    //        lExStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE | WS_CAPTION);
+    //        SetWindowLong(calcHwnd, GWL_EXSTYLE, lExStyle);
+
+            // We need to update the position as well since changing the parent does not
+            // adjust it automatically.
+            //SetWindowPos(smbxWind, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
+            //SetWindowTheme(calcHwnd,L"",L"");
+            #endif
+
             fullPathToLevel.replace('/', '\\');
 
             if(activeLvlEditWin()->LvlData.modified)
