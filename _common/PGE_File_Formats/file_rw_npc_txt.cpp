@@ -573,7 +573,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        else
        if(Params[0]=="grid")
         {
-           if(!SMBX64::uInt(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
@@ -584,7 +584,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        else
        if(Params[0]=="gridoffsetx")
         {
-           if(!SMBX64::uInt(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
@@ -595,7 +595,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        else
        if(Params[0]=="gridoffsety")
         {
-           if(!SMBX64::uInt(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
@@ -606,7 +606,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        else
        if(Params[0]=="gridalign")
         {
-           if(!SMBX64::uInt(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
