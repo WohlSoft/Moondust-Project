@@ -1,5 +1,6 @@
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
+- Level list dialog now looks for level files in sub directories (is possible to collect levels into sub-directories to don't flood episode root folder)
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

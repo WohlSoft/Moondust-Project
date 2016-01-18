@@ -21,29 +21,18 @@
 #include "levelfilelist.h"
 #include <ui_levelfilelist.h>
 
+#include <QtConcurrent>
+
 LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelFileList)
 {
-    QStringList filters;
-    QDir levelDir(Folder);
-    filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
-    levelDir.setSorting(QDir::Name);
-    levelDir.setNameFilters(filters);
+    parentFolder=Folder;
+    lastCurrentFile=current;
+
     ui->setupUi(this);
-    ui->FileList->insertItems(levelDir.entryList().size(), levelDir.entryList(filters) );
-
-    // Select current item
-    for(int i=0; i<ui->FileList->count(); i++)
-    {
-        if(ui->FileList->item(i)->text()==current)
-        {
-            ui->FileList->item(i)->setSelected(true);
-            ui->FileList->scrollToItem(ui->FileList->item(i));
-         break;
-        }
-    }
-
+    connect(this, SIGNAL(itemAdded(QString)), this, SLOT(addItem(QString)));
+    fileWalker = QtConcurrent::run(this, &LevelFileList::buildLevelList);
 }
 
 LevelFileList::~LevelFileList()
@@ -51,6 +40,38 @@ LevelFileList::~LevelFileList()
     delete ui;
 }
 
+void LevelFileList::buildLevelList()
+{
+    QDir musicDir(parentFolder);
+    QStringList filters;
+    filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
+
+    musicDir.setSorting(QDir::Name);
+    musicDir.setNameFilters(filters);
+    QDirIterator dirsList(parentFolder, filters,
+                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                          QDirIterator::Subdirectories);
+    while(dirsList.hasNext())
+    {
+        dirsList.next();
+        emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
+        if(fileWalker.isCanceled()) break;
+    }
+}
+
+void LevelFileList::addItem(QString item)
+{
+    ui->FileList->addItem(item);
+    if(lastCurrentFile==item)
+    {
+        QList<QListWidgetItem*> list=ui->FileList->findItems(item, Qt::MatchFixedString);
+        if(!list.isEmpty())
+        {
+            list.first()->setSelected(true);
+            ui->FileList->scrollToItem(list.first());
+        }
+    }
+}
 
 void LevelFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 {

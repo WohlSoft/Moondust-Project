@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QFuture>
 
 namespace Ui {
 class LevelFileList;
@@ -17,13 +18,23 @@ public:
     ~LevelFileList();
     QString SelectedFile;
 
+    void buildLevelList();
+    QString parentFolder;
+    QString lastCurrentFile;
+
 private slots:
+    void addItem(QString item);
+
     void on_FileList_itemDoubleClicked(QListWidgetItem *item);
 
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
+signals:
+    void itemAdded(QString item);
+
 private:
+    QFuture<void> fileWalker;
     Ui::LevelFileList *ui;
 };
 
