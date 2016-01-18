@@ -124,6 +124,16 @@ bool ConfigManager::loadBasics()
         bool appDir = mainset.value("application-dir", false).toBool();
         data_dir = (appDir ? customAppPath + "/" : config_dir + "data/" );
 
+        if(!QDir(data_dir).exists())//Check as absolute
+            data_dir = ApplicationPath+"/"+data_dir;
+        if(!QDir(data_dir).exists())//Check as relative
+        {
+            QMessageBox::critical(NULL, "Config error",
+                                  QString("Config data path not exists: %1").arg(data_dir),
+                                  QMessageBox::Ok);
+            return false;
+        }
+
         QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
         QString version = mainset.value("pge-engine-version", "0.0").toString();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();

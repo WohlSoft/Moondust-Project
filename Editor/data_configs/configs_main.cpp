@@ -210,8 +210,15 @@ bool dataconfigs::loadconfigs()
     mainset.beginGroup("main");
         customAppPath = mainset.value("application-path", ApplicationPath).toString();
         customAppPath.replace('\\', '/');
-        data_dir = (mainset.value("application-dir", false).toBool() ?
-                        customAppPath + "/" : config_dir + "data/" );
+        bool lookAppDir = mainset.value("application-dir", false).toBool();
+        data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/" );
+        if(!QDir(data_dir).exists())//Check as absolute
+            data_dir = ApplicationPath+"/"+data_dir;
+        if(!QDir(data_dir).exists())//Check as relative
+        {
+            WriteToLog(QtCriticalMsg, QString("Config data path not exists: %1").arg(data_dir));
+            return false;
+        }
 
         ConfStatus::configDataPath = data_dir;
 
@@ -241,6 +248,7 @@ bool dataconfigs::loadconfigs()
     if( mainset.status() != QSettings::NoError )
     {
         WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
+        return false;
     }
 
 
