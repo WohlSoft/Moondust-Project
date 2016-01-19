@@ -745,6 +745,12 @@ public:
     private:
         //! Engine application handler
         QProcess engine_proc;
+        //! Mutex which helps to avoid multiple launches of engine
+        QMutex   engine_mutex;
+        #ifdef _WIN32
+        //! LunaLoader process information
+        PROCESS_INFORMATION m_luna_pi;
+        #endif
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////

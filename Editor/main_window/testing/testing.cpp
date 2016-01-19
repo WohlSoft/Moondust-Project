@@ -52,6 +52,9 @@ void MainWindow::on_action_doTest_triggered()
     command = ApplicationPath+"/pge_engine";
     #endif
 
+    QMutexLocker mlocker(&engine_mutex);
+    Q_UNUSED(mlocker);
+
     if(!QFileInfo(command).exists())
     {
         QMessageBox::warning(this, tr("Engine is not found"),
@@ -93,6 +96,7 @@ void MainWindow::on_action_doTest_triggered()
 
         qDebug() << "Executing engine..." << command;
         engine_proc.start(command, args);
+        engine_proc.waitForStarted();
         qDebug() << "Started";
 
         //Stop music playback in the PGE!
@@ -116,6 +120,9 @@ void MainWindow::on_action_doSafeTest_triggered()
     #else
     command = ApplicationPath+"/pge_engine";
     #endif
+
+    QMutexLocker mlocker(&engine_mutex);
+    Q_UNUSED(mlocker);
 
     if(!QFileInfo(command).exists())
     {
@@ -169,6 +176,7 @@ void MainWindow::on_action_doSafeTest_triggered()
     }
 
     engine_proc.start(command, args);
+    engine_proc.waitForStarted();
 
     //Stop music playback in the PGE Editor!
     on_actionPlayMusic_triggered(false);
@@ -180,6 +188,9 @@ void MainWindow::on_action_doSafeTest_triggered()
 void MainWindow::on_action_Start_Engine_triggered()
 {
     QString command;
+
+    QMutexLocker mlocker(&engine_mutex);
+    Q_UNUSED(mlocker);
 
     #ifdef _WIN32
     command = ApplicationPath+"/pge_engine.exe";
@@ -240,9 +251,11 @@ static void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD
     *dwordAddr = (DWORD)target - (DWORD)(patchAddr + patchOffset + 5);
 }
 
-static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX, const wchar_t *cmdLineArgs, const wchar_t *workingDir) {
+static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
+                                      const wchar_t *cmdLineArgs,
+                                      const wchar_t *workingDir,
+                                      PROCESS_INFORMATION &pi) {
     STARTUPINFO si;
-    PROCESS_INFORMATION pi;
     memset(&si, 0, sizeof(si));
     memset(&pi, 0, sizeof(pi));
 
@@ -343,7 +356,7 @@ static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX, const wchar_t *
 
     // Close handles
     CloseHandle(pi.hThread);
-    CloseHandle(pi.hProcess);
+    //CloseHandle(pi.hProcess); //Don't close it because needed to catch already-running SMBX Engine
 
     return LUNALOADER_OK;
 }
@@ -352,6 +365,9 @@ static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX, const wchar_t *
 
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
+    QMutexLocker mlocker(&engine_mutex);
+    Q_UNUSED(mlocker);
+
  #ifdef Q_OS_WIN
     #ifdef DUMMY_WORLD_GENERATION
     if(activeChildWindow()==1)
@@ -364,6 +380,21 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                                  .arg(smbxPath+ConfStatus::SmbxEXE_Name),
             QMessageBox::Ok);
             return;
+        }
+
+        DWORD lpExitCode=0;
+        if(GetExitCodeProcess(m_luna_pi.hProcess, &lpExitCode))
+        {
+            if(lpExitCode==STILL_ACTIVE)
+            {
+                if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
+                                     tr("SMBX Engine is already testing another level.\n"
+                                        "Do you want to abort current testing process?"),
+                                     QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+                    TerminateProcess(m_luna_pi.hProcess, lpExitCode);
+                }
+                return;
+            }
         }
 
         QString tempPath = smbxPath+"/worlds/";
@@ -477,7 +508,9 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                                  .arg(smbxPath+"LunaDll.dll"),
             QMessageBox::Ok);
 
-            QProcess::startDetached(command, params, smbxPath);
+            engine_proc.setWorkingDirectory(smbxPath);
+            engine_proc.start(command, params);
+            engine_proc.waitForStarted();
 
             return;
         }
@@ -517,7 +550,34 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             argString += params[i];
         }
 
-        LunaLoaderRun(command.toStdWString().c_str(), argString.toStdWString().c_str(), smbxPath.toStdWString().c_str());
+        LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
+                                             argString.toStdWString().c_str(),
+                                             smbxPath.toStdWString().c_str(),
+                                             m_luna_pi);
+
+        if(res==LUNALOADER_OK)
+        {
+            //Stop music playback in the PGE!
+            on_actionPlayMusic_triggered(false);
+            setMusicButton(false);
+            PGE_MusPlayer::MUS_stopMusic();
+        } else {
+            QString luna_error="Unknown error";
+
+            switch(res)
+            {
+            case LUNALOADER_CREATEPROCESS_FAIL:
+                luna_error=tr("process execution is failed.");
+            case LUNALOADER_PATCH_FAIL:
+                luna_error=tr("patching is failed.");
+            default:
+                break;
+            }
+
+            QMessageBox::warning(this, tr("Failed to launch LunaLUA-SMBX!"),
+            tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
+            QMessageBox::Ok);
+        }
     }
     #endif
     #ifdef SHARED_FILEPATH_SENDING
