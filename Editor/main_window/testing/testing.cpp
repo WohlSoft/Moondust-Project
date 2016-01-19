@@ -391,7 +391,10 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                                      tr("SMBX Engine is already testing another level.\n"
                                         "Do you want to abort current testing process?"),
                                      QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+                    WaitForSingleObject(m_luna_pi.hProcess, 100);
                     TerminateProcess(m_luna_pi.hProcess, lpExitCode);
+                    CloseHandle(m_luna_pi.hProcess);
+
                 }
                 return;
             }
