@@ -212,9 +212,10 @@ bool dataconfigs::loadconfigs()
         customAppPath.replace('\\', '/');
         bool lookAppDir = mainset.value("application-dir", false).toBool();
         data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/" );
-        if(!QDir(data_dir).exists())//Check as absolute
+        if(QDir(ApplicationPath+"/"+data_dir).exists()) //Check as relative
             data_dir = ApplicationPath+"/"+data_dir;
-        if(!QDir(data_dir).exists())//Check as relative
+        else
+        if(!QDir(data_dir).exists()) //Check as absolute
         {
             WriteToLog(QtCriticalMsg, QString("Config data path not exists: %1").arg(data_dir));
             return false;

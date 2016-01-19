@@ -124,9 +124,10 @@ bool ConfigManager::loadBasics()
         bool appDir = mainset.value("application-dir", false).toBool();
         data_dir = (appDir ? customAppPath + "/" : config_dir + "data/" );
 
-        if(!QDir(data_dir).exists())//Check as absolute
+        if(QDir(ApplicationPath+"/"+data_dir).exists())//Check as relative
             data_dir = ApplicationPath+"/"+data_dir;
-        if(!QDir(data_dir).exists())//Check as relative
+        else
+        if(!QDir(data_dir).exists())//Check as absolute
         {
             QMessageBox::critical(NULL, "Config error",
                                   QString("Config data path not exists: %1").arg(data_dir),
