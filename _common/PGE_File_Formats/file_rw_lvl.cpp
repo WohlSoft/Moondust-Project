@@ -333,12 +333,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
          if(ge(3))
          {
              nextLine(); wBoolVar(npcdata.generator, line); //Generator enabled
-             npcdata.generator_direct = -1;
+             npcdata.generator_direct = 1;
              npcdata.generator_type = 1;
 
              if(npcdata.generator)
              {
-                 nextLine(); UIntVar(npcdata.generator_direct, line); //Generator direction
+                 nextLine(); SIntVar(npcdata.generator_direct, line); //Generator direction (1, 2, 3, 4)
+                 if(npcdata.generator_direct<0) npcdata.generator_direct = 1;//Fix of old accidental mistake causes -1 value
                  nextLine(); UIntVar(npcdata.generator_type, line);   //Generator type [1] Warp, [2] Projectile
                  nextLine(); UIntVar(npcdata.generator_period, line); //Generator period ( sec*10 ) [1-600]
              }
