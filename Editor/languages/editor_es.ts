@@ -302,22 +302,22 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="320"/>
         <source>Duplicate selected items onto cursor&apos;s position</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar elementos seleccionados en la posición del mouse</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="430"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished">Autodesplazamiento</translation>
+        <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="444"/>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Visibilidad de capa</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="472"/>
         <source>Section settings</source>
-        <translation type="unfinished">Opciones de sección</translation>
+        <translation>Opciones de sección</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="768"/>
@@ -947,42 +947,42 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="66"/>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques de nivel (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="78"/>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetos de fondo del nivel (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imágenes de fondo del nivel (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNJs del nivel (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejos del mapa (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Decoraciones del mapa (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="186"/>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejos del mapa (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="199"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveles del mapa (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="211"/>
@@ -1040,12 +1040,12 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="33"/>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tal vez desee reportar esta información a los desarrolladores o publíquela en:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="58"/>
         <source>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ups, el editor PGE tuvo un problema :(&lt;br&gt;Información detallada:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1054,7 +1054,7 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="82"/>
         <source>PGE Forum (http://engine.wohlnet.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Foros de PGE: (http://engine.wohlnet.ru/forum/)</translation>
     </message>
     <message>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
@@ -1096,7 +1096,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add the Item&apos;s ID which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor añada el ID del elemento que estará en el grupo:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
@@ -1141,7 +1141,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
@@ -1194,7 +1194,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="169"/>
         <source>Contents</source>
-        <translation type="unfinished">Contenidos</translation>
+        <translation>Contenidos</translation>
     </message>
     <message>
         <source>Items</source>
@@ -1647,27 +1647,27 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="211"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="213"/>
         <source>BGO-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de ODF: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="215"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="217"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="219"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="222"/>
@@ -1715,7 +1715,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="440"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="452"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -1768,27 +1768,27 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
         <source>Block-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de Bloque: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="208"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="210"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="212"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="235"/>
@@ -1796,7 +1796,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="257"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="269"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
@@ -1930,22 +1930,22 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="221"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="223"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="225"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="227"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="242"/>
@@ -1957,7 +1957,7 @@ Límites: longitud máxima de 27 caracteres</translation>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="371"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="383"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="238"/>
@@ -1990,27 +1990,27 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="173"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="175"/>
         <source>Level-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de nivel: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="177"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="179"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="181"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="184"/>
@@ -2048,7 +2048,7 @@ Límites: longitud máxima de 27 caracteres</translation>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="339"/>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="351"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -2098,27 +2098,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="177"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="179"/>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de música: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="181"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="183"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="185"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="188"/>
@@ -2151,7 +2151,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="241"/>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="253"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -2214,27 +2214,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
         <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de PNJ: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="258"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="260"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="262"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="321"/>
@@ -2252,7 +2252,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="379"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="391"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
     <message>
         <source>Not movable</source>
@@ -2309,27 +2309,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="152"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="154"/>
         <source>Path-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta de ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="156"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="158"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="160"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="163"/>
@@ -2362,7 +2362,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="206"/>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="218"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -2398,27 +2398,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="151"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="153"/>
         <source>Scenery-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de Decoración: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="155"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="157"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="159"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="162"/>
@@ -2451,7 +2451,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="205"/>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="217"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -2549,7 +2549,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
@@ -2622,27 +2622,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="146"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="148"/>
         <source>Tile-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de azulejo: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="150"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="152"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="154"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="157"/>
@@ -2675,7 +2675,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="200"/>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="212"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
 </context>
 <context>
@@ -2708,23 +2708,23 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="214"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferencias</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="217"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: X, Y, Ancho, Altura</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="219"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición: Izquierda, Arriba, Derecha, Abajo</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="294"/>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="306"/>
         <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las preferencias se copiaron: %1</translation>
     </message>
     <message>
         <source>Show zone range data</source>
@@ -5501,7 +5501,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../mainwindow.ui" line="2162"/>
         <source>Lock Scenery tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloquear decoraciones</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2240"/>
@@ -5848,7 +5848,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="155"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="217"/>
@@ -6576,7 +6576,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="2149"/>
         <source>Lock Terrain tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloquear azulejos de terreno</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -7372,12 +7372,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/tools/data_configs.cpp" line="38"/>
         <source>Configuration is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>La configuración está saturada</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs.cpp" line="39"/>
         <source>To reload configuration you should close all opened files first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para recargar configuración primero debe cerrar todos los archivos.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs.cpp" line="118"/>
@@ -8233,17 +8233,17 @@ Vea en %1 para más información.</translation>
     <message>
         <location filename="../mainwindow.cpp" line="164"/>
         <source>Loading theme...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando tema...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="172"/>
         <source>Initializing dock widgets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Instalando dock widgets...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="182"/>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizando carga...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs.cpp" line="127"/>
@@ -9295,42 +9295,42 @@ Foro: engine.wohlnet.ru/forum</translation>
         <location filename="../common_features/crashhandler.cpp" line="94"/>
         <location filename="../common_features/crashhandler.cpp" line="101"/>
         <source>Terminal was closed [SIGHUP]</source>
-        <translation type="unfinished"></translation>
+        <translation>La terminal se cerró [SIGHUP]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="95"/>
         <source>Quit command [SIGQUIT]</source>
-        <translation type="unfinished"></translation>
+        <translation>Comando Salir [SIGQUIT]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="96"/>
         <source>Editor was killed by mad maniac :-P [SIGKILL]</source>
-        <translation type="unfinished"></translation>
+        <translation>El editor fue matado por un loco maníaco :P [SIGKILL]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="97"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
-        <translation type="unfinished"></translation>
+        <translation>El editor abortó porque pasó el tiempo de alarm() [SIGALRM]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="103"/>
         <source>Wrong CPU Instruction [SIGFPE]</source>
-        <translation type="unfinished"></translation>
+        <translation>Instrucción de CPU incorrecta [SIGFPE]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="104"/>
         <source>Aborted! [SIGABRT]</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Abortado! [SIGABRT]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="105"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
-        <translation type="unfinished"></translation>
+        <translation>Violación de segmentación de señal [SIGSEGV]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="106"/>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Interrumpido! [SIGINT]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="109"/>
@@ -9338,7 +9338,10 @@ Foro: engine.wohlnet.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Lo lamentamos, pero el editor ha colapsado.
+Razón: %1
+
+</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
@@ -9596,22 +9599,22 @@ El máximo es %2.</translation>
     <message>
         <location filename="../data_configs/conf_rotation_tables.cpp" line="54"/>
         <source>Loading rotation rules table...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando tabla de reglas de rotación...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_tilesets.cpp" line="37"/>
         <source>Loading Tilesets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando azulejos...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_tilesets.cpp" line="63"/>
         <source>Loading Tileset groups...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar grupo de Tileset...</translation>
     </message>
     <message>
         <location filename="../data_configs/configs_main.cpp" line="321"/>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizando carga...</translation>
     </message>
 </context>
 <context>
@@ -9926,14 +9929,16 @@ El máximo es %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.cpp" line="61"/>
         <source>WIP</source>
-        <translation type="unfinished"></translation>
+        <translation>WIP</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.cpp" line="62"/>
         <source>Hello!
 This dialog is not finished yet.
 Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Hola!
+Este diálogo aún no se ha terminado.
+Esas preferencias no van a tener efecto en un proceso de prueba hasta que se terminen. Disculpe.</translation>
     </message>
 </context>
 <context>
@@ -9975,7 +9980,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="94"/>
@@ -11118,12 +11123,12 @@ Cajas de música:		%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="53"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="159"/>
         <source>Search Terrain Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar azulejos de terreno</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="167"/>
@@ -11573,7 +11578,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="127"/>
@@ -11636,12 +11641,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="135"/>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
-        <translation type="unfinished"></translation>
+        <translation>Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="148"/>
         <source>Episode title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Título:</translation>
     </message>
     <message>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
@@ -11763,27 +11768,27 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="186"/>
         <source>Set log file</source>
-        <translation type="unfinished">Establecer archivo</translation>
+        <translation>Establecer archivo</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="187"/>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished">Archivos de texto (*.txt *.log)</translation>
+        <translation>Archivos de texto (*.txt *.log)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="280"/>
         <source>Success</source>
-        <translation type="unfinished">Éxito</translation>
+        <translation>Éxito</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="280"/>
         <source>All file associations have been set</source>
-        <translation type="unfinished">Todas las asociaciones se hicieron</translation>
+        <translation>Todas las asociaciones se hicieron</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="282"/>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
