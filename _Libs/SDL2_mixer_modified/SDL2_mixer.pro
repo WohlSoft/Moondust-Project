@@ -84,7 +84,12 @@ LIBS += -L../_builds/$$TARGETOS/lib
     }
     #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
-        LIBS += -Wl,-Bstatic -lFLAC -lvorbisfile -lvorbis -logg -lmad -Wl,-Bdynamic
+        macx: {
+        LIBS += -static
+        } else {
+        LIBS += -Wl,-Bstatic
+        }
+        LIBS += -lFLAC -lvorbisfile -lvorbis -logg -lmad -Wl,-Bdynamic
     }
 } else {
     LIBS += -lvorbisfile -lvorbis -logg #-lvorbisidec
