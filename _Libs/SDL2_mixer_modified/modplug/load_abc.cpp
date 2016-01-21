@@ -469,8 +469,9 @@ static MMFILE *mmfopen(const char *name, const char *mode)
 		fclose(fp);
 		return NULL;
 	}
+    size_t dummy; (void)dummy;
 	fseek(fp, 0, SEEK_SET);
-	fread(&mmfile[1],1,len,fp);
+    dummy = fread(&mmfile[1],1,len,fp);
 	fclose(fp);
 	mmfile->mm = (char *)&mmfile[1];
 	mmfile->sz = len;

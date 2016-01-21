@@ -39,10 +39,12 @@ linux-g++||unix:!macx:!android:{
     CONFIG += plugin
     CONFIG += unversioned_libname
     CONFIG += skip_target_version_ext
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 android:{
     LIBS += -L../_builds/android/lib
     INCLUDEPATH += ../_builds/android/include
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 macx:{
     LIBS += -L../_builds/macos/lib
@@ -50,6 +52,7 @@ macx:{
     INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F../_builds/macos/frameworks -framework SDL2
     CONFIG += plugin
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 } else {
     !win32: LIBS += -lSDL2
 }
@@ -73,19 +76,21 @@ LIBS += -L../_builds/$$TARGETOS/lib
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -lSDL2 -lmad -lFLAC -lvorbisfile -lvorbis -logg -static-libgcc -static-libstdc++ -static -lpthread
+            LIBS += -static -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad -static-libgcc -static-libstdc++ -static -lpthread
         } else {
-            LIBS += -lSDL2.dll -lmad -lFLAC -lvorbisfile -lvorbis -logg
+            LIBS += -lSDL2.dll -lFLAC -lvorbisfile -lvorbis -logg -lmad
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
-    } else {
-        LIBS += -lvorbisfile -lvorbis -lFLAC -logg
+    }
+    #linux-g++||unix:!macx:!android: {
+    linux-g++||macx||unix:!android:{
+        LIBS += -Wl,-Bstatic -lFLAC -lvorbisfile -lvorbis -logg -lmad -Wl,-Bdynamic
     }
 } else {
     LIBS += -lvorbisfile -lvorbis -logg #-lvorbisidec
 }
 
-LIBS += -lmad -lm
+LIBS += -lm
 
 linux-g++||unix:!macx:!android:{
     SDL2MixerH.path =  ../_builds/linux/include/SDL2
