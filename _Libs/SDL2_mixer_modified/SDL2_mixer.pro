@@ -89,7 +89,10 @@ LIBS += -L../_builds/$$TARGETOS/lib
         } else {
         LIBS += -Wl,-Bstatic
         }
-        LIBS += -lFLAC -lvorbisfile -lvorbis -logg -lmad -Wl,-Bdynamic
+        LIBS += -lFLAC -lvorbisfile -lvorbis -logg -lmad
+        !macx: {
+        LIBS += -Wl,-Bdynamic
+        }
     }
 } else {
     LIBS += -lvorbisfile -lvorbis -logg #-lvorbisidec
