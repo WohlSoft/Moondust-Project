@@ -24,7 +24,7 @@
 #ifdef MODPLUG_HEADER
 #include MODPLUG_HEADER
 #else
-#include <libmodplug/modplug.h>
+#include "modplug/modplug.h"
 #endif
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
