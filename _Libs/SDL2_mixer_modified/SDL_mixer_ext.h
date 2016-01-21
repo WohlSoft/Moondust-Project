@@ -31,6 +31,16 @@
 #include <SDL2/SDL_version.h>
 #include "begin_code.h"
 
+#if defined(FORCE_STDCALLS) && defined(_WIN32)
+#ifdef SDLCALL
+#undef SDLCALL
+#endif
+#define SDLCALL   __stdcall
+#define SDLCALLCC __stdcall
+#else
+#define SDLCALLCC
+#endif
+
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
 extern "C" {

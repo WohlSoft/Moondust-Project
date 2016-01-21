@@ -15,6 +15,9 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 include (../../_common/lib_destdir.pri)
 TARGET = SDL2_mixer_ext
+win32:enable-stdcalls:{ #Useful for VB6 usage
+    TARGET = SDL2_mixer_ext_vb6
+}
 include(../../_common/build_props.pri)
 DESTDIR = ../_builds/$$TARGETOS/lib
 
@@ -24,6 +27,11 @@ win32:{
     LIBS += -lmingw32 -lSDL2main -mwindows
     INCLUDEPATH += ../_builds/win32/include
     DEFINES += USE_NATIVE_MIDI
+    enable-stdcalls:{ #Useful for VB6 usage
+        TARGET = SDL2_mixer_ext_vb6
+        QMAKE_LFLAGS += -Wl,--add-stdcall-alias
+        DEFINES +=FORCE_STDCALLS
+    }
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib

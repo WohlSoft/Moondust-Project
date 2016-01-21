@@ -1442,9 +1442,9 @@ static void set_amplitudes(int channels, int angle, int room_angle)
     speaker_amplitude[5] = 255;
 }
 
-int Mix_SetPosition(int channel, Sint16 angle, Uint8 distance);
+int SDLCALLCC Mix_SetPosition(int channel, Sint16 angle, Uint8 distance);
 
-int Mix_SetPanning(int channel, Uint8 left, Uint8 right)
+int SDLCALLCC Mix_SetPanning(int channel, Uint8 left, Uint8 right)
 {
     Mix_EffectFunc_t f = NULL;
     int channels;
@@ -1509,7 +1509,7 @@ int Mix_SetPanning(int channel, Uint8 left, Uint8 right)
 }
 
 
-int Mix_SetDistance(int channel, Uint8 distance)
+int SDLCALLCC Mix_SetDistance(int channel, Uint8 distance)
 {
     Mix_EffectFunc_t f = NULL;
     Uint16 format;
@@ -1555,7 +1555,7 @@ int Mix_SetDistance(int channel, Uint8 distance)
 }
 
 
-int Mix_SetPosition(int channel, Sint16 angle, Uint8 distance)
+int SDLCALLCC Mix_SetPosition(int channel, Sint16 angle, Uint8 distance)
 {
     Mix_EffectFunc_t f = NULL;
     Uint16 format;
