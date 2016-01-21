@@ -24,7 +24,7 @@
 #ifdef MODPLUG_HEADER
 #include MODPLUG_HEADER
 #else
-#include <libmodplug/modplug.h>
+#include "modplug/modplug.h"
 #endif
 
 typedef struct {
@@ -37,7 +37,7 @@ typedef struct {
     void (*ModPlug_Seek)(ModPlugFile* file, int millisecond);
     void (*ModPlug_GetSettings)(ModPlug_Settings* settings);
     void (*ModPlug_SetSettings)(const ModPlug_Settings* settings);
-    void (*ModPlug_SetMasterVolume)(ModPlugFile* file,unsigned int cvol) ;
+    void (*ModPlug_SetMasterVolume)(ModPlugFile* file,unsigned int cvol);
 } modplug_loader;
 
 extern modplug_loader modplug;

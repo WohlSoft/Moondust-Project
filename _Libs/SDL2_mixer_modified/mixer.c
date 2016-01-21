@@ -1538,10 +1538,17 @@ int SDLCALLCC Mix_UnregisterAllEffects(int channel)
 
 #define SDL_INIT_AUDIO          0x00000010
 extern DECLSPEC int SDL_Init(Uint32 flags);
+extern DECLSPEC void SDL_Quit();
+extern DECLSPEC const char * SDL_GetError(void);
 
 __declspec(dllexport) int __stdcall SDL_InitAudio(void)
 {
     return SDL_Init(SDL_INIT_AUDIO);
+}
+
+__declspec(dllexport) void __stdcall SDL_QuitVB6(void)
+{
+    SDL_Quit();
 }
 
 __declspec(dllexport) int __stdcall Mix_InitVB6(void)
@@ -1557,6 +1564,11 @@ __declspec(dllexport) int __stdcall Mix_OpenAudioVB6(int frequency, int format, 
 __declspec(dllexport) Mix_Chunk * __stdcall Mix_LoadWAV_VB6(const char*file)
 {
     return Mix_LoadWAV_RW(SDL_RWFromFile(file, "rb"), 1);
+}
+
+__declspec(dllexport) const char* __stdcall SDL_GetErrorVB6(void)
+{
+    return SDL_GetError();
 }
 
 #endif
