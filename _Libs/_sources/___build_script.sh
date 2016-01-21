@@ -145,7 +145,7 @@ BuildOGG()
         echo "=========OGG==========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
-        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 
         #if [[ "$OurOS" == "macos" ]]; then
             #install libOGG
@@ -172,7 +172,7 @@ BuildVORBIS()
         echo "============VORBIS=========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
-        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildFLAC()
@@ -185,7 +185,7 @@ BuildFLAC()
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
-        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --enable-static=yes --enable-shared --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --enable-static=yes --enable-shared=no --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 #BuildMikMOD()
