@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='../bin/SDL2.dll'
+dlname=''
 
 # Names of this library.
-library_names='libSDL2.dll.a'
+library_names=''
 
 # The name of the static archive.
 old_library='libSDL2.a'
@@ -17,15 +17,15 @@ old_library='libSDL2.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
+dependency_libs=' -lpthread -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
 # Version information for libSDL2.
-current=2
-age=2
-revision=1
+current=4
+age=4
+revision=0
 
 # Is this an already installed library?
 installed=yes
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib'
+libdir='C:/_Repos/PGE-Project/_Libs/_sources/SDL/SDL-b2fd76446eee/lib'

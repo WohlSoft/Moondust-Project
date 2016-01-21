@@ -107,29 +107,29 @@ relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the s
 relocateLibraryInCurrentApp "@rpath/" SDL2_image.framework/Versions/A/SDL2_image #note the space
 
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.dylib"
-fetchPathsForLib #fetch for our dylib
+etchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.0.dylib"
 #fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libogg.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbis.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbisenc.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libvorbisfile.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libFLAC.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libFLAC++.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libmad.dylib"
-fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libmodplug.dylib"
-fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libogg.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbis.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbisenc.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libvorbisfile.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libFLAC.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libFLAC++.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libmad.dylib"
+#fetchPathsForLib #fetch for our dylib
+#EXECUTABLE_PATH="_Libs/libmodplug.dylib"
+#fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libz.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libz.1.dylib"

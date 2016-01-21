@@ -89,7 +89,7 @@ static void _Eff_reversestereo8(int chan, void *stream, int len, void *udata)
 }
 
 
-int Mix_SetReverseStereo(int channel, int flip)
+int SDLCALLCC Mix_SetReverseStereo(int channel, int flip)
 {
     Mix_EffectFunc_t f = NULL;
     int channels;

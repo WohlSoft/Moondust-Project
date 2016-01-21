@@ -24,6 +24,8 @@ _Libs/_builds/win32/lib/SDL2_mixer.dll
 _Libs/_builds/win32/bin/SDL2_mixer.dll
 _Libs/_builds/win32/lib/SDL2_mixer_ext.dll
 _Libs/_builds/win32/bin/SDL2_mixer_ext.dll
+_Libs/_builds/win32/bin/SDL2_mixer_ext_vb6.dll
+_Libs/_builds/win32/lib/SDL2_mixer_ext_vb6.dll
 _Libs/_builds/win32/lib/libfreeimage.a
 _Libs/_builds/win32/lib/libfreeimagelite.a
 _Libs/_builds/win32/lib/libluabind.a
@@ -31,6 +33,7 @@ _Libs/_builds/win32/lib/libSDL2_mixer.a
 _Libs/_builds/win32/lib/libSDL2_mixer.la
 _Libs/_builds/win32/lib/libSDL2_mixer_ext.a
 _Libs/_builds/win32/lib/libSDL2_mixer_ext.la
+_Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.a
 #Mac OS's junk
 .DS_Store
 

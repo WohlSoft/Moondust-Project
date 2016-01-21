@@ -93,7 +93,7 @@ BuildSrc()
 
 BuildSDL()
 {
-        LatestSDL='SDL-dbcbdc2940ef'
+        LatestSDL='SDL-b2fd76446eee'
         UnArch $LatestSDL
 
         ###########SDL2###########
@@ -134,7 +134,7 @@ BuildSDL()
         fi
 
         #apply fix of SDL2 bug
-        cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
+        #cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 }
 
 BuildOGG()
@@ -145,7 +145,7 @@ BuildOGG()
         echo "=========OGG==========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
-        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
+        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 
         #if [[ "$OurOS" == "macos" ]]; then
             #install libOGG
@@ -172,7 +172,7 @@ BuildVORBIS()
         echo "============VORBIS=========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
-        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
+        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildFLAC()
@@ -185,7 +185,7 @@ BuildFLAC()
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
-        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --prefix='$InstallTo
+        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --enable-static=yes --enable-shared=no --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 #BuildMikMOD()
@@ -205,7 +205,7 @@ BuildMODPLUG()
         echo "==========MODPLUG=========="
         $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
         $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
-        BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
+        BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildMAD()
@@ -231,9 +231,9 @@ BuildMAD()
         $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
         $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
         if [[ "$OurOS" == "macos" ]]; then
-            BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --prefix='$InstallTo
+            BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
         else
-            BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+            BuildSrc 'libmad-0.15.1b' '--enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
         fi
 }
 
@@ -362,12 +362,11 @@ BuildSDL
 BuildOGG
 BuildVORBIS
 BuildFLAC
-BuildMODPLUG
+#BuildMODPLUG
 BuildMAD
 BuildLUAJIT
 #BuildGLEW
 
 echo Libraries installed into $InstallTo
-
 
 

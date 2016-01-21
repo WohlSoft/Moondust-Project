@@ -15,6 +15,9 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 include (../../_common/lib_destdir.pri)
 TARGET = SDL2_mixer_ext
+win32:enable-stdcalls:{ #Useful for VB6 usage
+    TARGET = SDL2_mixer_ext_vb6
+}
 include(../../_common/build_props.pri)
 DESTDIR = ../_builds/$$TARGETOS/lib
 
@@ -24,6 +27,11 @@ win32:{
     LIBS += -lmingw32 -lSDL2main -mwindows
     INCLUDEPATH += ../_builds/win32/include
     DEFINES += USE_NATIVE_MIDI
+    enable-stdcalls:{ #Useful for VB6 usage
+        TARGET = SDL2_mixer_ext_vb6
+        QMAKE_LFLAGS += -Wl,--add-stdcall-alias
+        DEFINES +=FORCE_STDCALLS
+    }
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L../_builds/linux/lib
@@ -31,10 +39,12 @@ linux-g++||unix:!macx:!android:{
     CONFIG += plugin
     CONFIG += unversioned_libname
     CONFIG += skip_target_version_ext
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 android:{
     LIBS += -L../_builds/android/lib
     INCLUDEPATH += ../_builds/android/include
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 macx:{
     LIBS += -L../_builds/macos/lib
@@ -42,8 +52,9 @@ macx:{
     INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F../_builds/macos/frameworks -framework SDL2
     CONFIG += plugin
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 } else {
-    LIBS += -lSDL2
+    !win32: LIBS += -lSDL2
 }
 
 win32:{
@@ -52,7 +63,7 @@ win32:{
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
 USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC SPC_MORE_ACCURACY #NO_OLDNAMES
-DEFINES += MODPLUG_MUSIC
+DEFINES += MODPLUG_MUSIC MODPLUG_STATIC MODPLUG_BUILD=1 PIC _REENTRANT
 
 android: {
 DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP MID_MUSIC USE_ADL_MIDI GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY #OGG_USE_TREMOR
@@ -63,15 +74,28 @@ LIBS += -L../_builds/$$TARGETOS/lib
 
 !android:{
     win32:{
-        LIBS += -lvorbisfile.dll -lvorbis.dll -lmodplug.dll -lFLAC.dll -logg.dll -static-libgcc -static-libstdc++ -static -lpthread
-    } else {
-        LIBS += -lvorbisfile -lvorbis -lmodplug -lFLAC -logg
+        DEFINES -= UNICODE _UNICODE
+        enable-stdcalls: {
+            LIBS += -static -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad -static-libgcc -static-libstdc++ -static -lpthread
+        } else {
+            LIBS += -lSDL2.dll -lFLAC -lvorbisfile -lvorbis -logg -lmad
+        }
+        LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
+    }
+    #linux-g++||unix:!macx:!android: {
+    linux-g++||macx||unix:!android:{
+        macx: {
+        LIBS += -static
+        } else {
+        LIBS += -Wl,-Bstatic
+        }
+        LIBS += -lFLAC -lvorbisfile -lvorbis -logg -lmad -Wl,-Bdynamic
     }
 } else {
-    LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
+    LIBS += -lvorbisfile -lvorbis -logg #-lvorbisidec
 }
 
-LIBS += -lmad -lm
+LIBS += -lm
 
 linux-g++||unix:!macx:!android:{
     SDL2MixerH.path =  ../_builds/linux/include/SDL2
@@ -243,7 +267,14 @@ HEADERS += \
     gme/ZLib/trees.h \
     gme/ZLib/zconf.h \
     gme/ZLib/zlib.h \
-    gme/ZLib/zutil.h
+    gme/ZLib/zutil.h \
+    modplug/config.h \
+    modplug/it_defs.h \
+    modplug/load_pat.h \
+    modplug/modplug.h \
+    modplug/sndfile.h \
+    modplug/stdafx.h \
+    modplug/tables.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -371,5 +402,39 @@ SOURCES += \
     gme/ZLib/inftrees.c \
     gme/ZLib/trees.c \
     gme/ZLib/uncompr.c \
-    gme/ZLib/zutil.c
+    gme/ZLib/zutil.c \
+    modplug/fastmix.cpp \
+    modplug/load_669.cpp \
+    modplug/load_abc.cpp \
+    modplug/load_amf.cpp \
+    modplug/load_ams.cpp \
+    modplug/load_dbm.cpp \
+    modplug/load_dmf.cpp \
+    modplug/load_dsm.cpp \
+    modplug/load_far.cpp \
+    modplug/load_it.cpp \
+    modplug/load_j2b.cpp \
+    modplug/load_mdl.cpp \
+    modplug/load_med.cpp \
+    modplug/load_mid.cpp \
+    modplug/load_mod.cpp \
+    modplug/load_mt2.cpp \
+    modplug/load_mtm.cpp \
+    modplug/load_okt.cpp \
+    modplug/load_pat.cpp \
+    modplug/load_psm.cpp \
+    modplug/load_ptm.cpp \
+    modplug/load_s3m.cpp \
+    modplug/load_stm.cpp \
+    modplug/load_ult.cpp \
+    modplug/load_umx.cpp \
+    modplug/load_wav.cpp \
+    modplug/load_xm.cpp \
+    modplug/mmcmp.cpp \
+    modplug/modplug.cpp \
+    modplug/snd_dsp.cpp \
+    modplug/snd_flt.cpp \
+    modplug/snd_fx.cpp \
+    modplug/sndfile.cpp \
+    modplug/sndmix.cpp
 

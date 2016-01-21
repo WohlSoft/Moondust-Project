@@ -5,13 +5,13 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libmodplug-1.dll'
+dlname='../bin/libmodplug-1.dll'
 
 # Names of this library.
 library_names='libmodplug.dll.a'
 
 # The name of the static archive.
-old_library=''
+old_library='libmodplug.a'
 
 # Linker flags that can not go in dependency_libs.
 inherited_linker_flags=''
@@ -28,7 +28,7 @@ age=0
 revision=0
 
 # Is this an already installed library?
-installed=no
+installed=yes
 
 # Should we warn about portability when linking against -modules?
 shouldnotlink=no
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/usr/local/lib'
+libdir='C:/_Repos/PGE-Project/_Libs/_builds/win32/lib'
