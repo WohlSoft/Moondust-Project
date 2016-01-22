@@ -208,12 +208,12 @@ struct NPCConfigFile
     //! Is custom grid offset X field using?
     bool en_grid_offset_x;
     //! Custom grid offset X field
-    unsigned int grid_offset_x;
+    int grid_offset_x;
 
     //! Is custom grid offset Y field using?
     bool en_grid_offset_y;
     //! Custom grid offset Y field
-    unsigned int grid_offset_y;
+    int grid_offset_y;
 
     //! Is custom grid align style field using?
     bool en_grid_align;

@@ -577,30 +577,42 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
-               FileData.grid = toInt(Params[1]);
-               FileData.en_grid=true;
+               if(Params[1].size()>7)
+                   FileData.grid=32;
+               else {
+                   FileData.grid = toInt(Params[1]);
+                   FileData.en_grid=true;
+               }
            }
         }
        else
        if(Params[0]=="gridoffsetx")
         {
-           if(SMBX64::uInt(Params[1]))
+           if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be signed integer!>\n";
            } else {
-               FileData.grid_offset_x = toInt(Params[1]);
-               FileData.en_grid_offset_x=true;
+               if(Params[1].size()>7)
+                   FileData.grid_offset_x=0;
+               else {
+                   FileData.grid_offset_x = toInt(Params[1]);
+                   FileData.en_grid_offset_x=true;
+               }
            }
         }
        else
        if(Params[0]=="gridoffsety")
         {
-           if(SMBX64::uInt(Params[1]))
+           if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be signed integer!>\n";
            } else {
-               FileData.grid_offset_y = toInt(Params[1]);
-               FileData.en_grid_offset_y=true;
+               if(Params[1].size()>7)
+                   FileData.grid_offset_y=0;
+               else {
+                   FileData.grid_offset_y = toInt(Params[1]);
+                   FileData.en_grid_offset_y=true;
+               }
            }
         }
        else
@@ -610,8 +622,12 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            {
                unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
            } else {
-               FileData.grid_align = toInt(Params[1]);
-               FileData.en_grid_align=true;
+               if(Params[1].size()>7)
+                   FileData.grid_offset_y=0;
+               else {
+                   FileData.grid_align = toInt(Params[1]);
+                   FileData.en_grid_align=true;
+               }
            }
         }
        else
