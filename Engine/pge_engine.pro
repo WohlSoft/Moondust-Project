@@ -81,7 +81,7 @@ android: {
                           $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 win32: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lfreeimagelite
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lversion -lopengl32 -lfreeimagelite
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers

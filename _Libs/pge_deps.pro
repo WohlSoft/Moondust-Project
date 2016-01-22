@@ -25,7 +25,7 @@ deplibs.files += $$PWD/_builds/linux/lib/*.so
 }
 win32: {
 deplibs.files += $$PWD/_builds/win32/bin/*.dll
-deplibs.files += $$PWD/_builds/win32/lib/*.dll
+deplibs.files += $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
 }
 
 !macx: {

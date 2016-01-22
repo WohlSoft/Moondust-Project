@@ -1,11 +1,11 @@
-prefix=/d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux
+prefix=C:/_Repos/PGE-Project/_Libs/_builds/win32
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: FLAC++
 Description: Free Lossless Audio Codec Library (C++ API)
-Version: 1.3.0
+Version: 1.3.1
 Requires.private: flac
 Libs: -L${libdir} -lFLAC++
 Cflags: -I${includedir}

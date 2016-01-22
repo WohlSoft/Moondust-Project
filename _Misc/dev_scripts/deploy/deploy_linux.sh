@@ -48,6 +48,8 @@ $CurDir/upx-linux-x64 GIFs2PNG
 $CurDir/upx-linux-x64 LazyFixTool
 $CurDir/upx-linux-x64 pge_calibrator
 $CurDir/upx-linux-x64 pge_engine
+$CurDir/upx-linux-x64 pge_manager
+$CurDir/upx-linux-x64 pge_maintainer
 $CurDir/upx-linux-x64 pge_musplay
 cp pge_editor "$DeployDir/$PgePrjSD"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"

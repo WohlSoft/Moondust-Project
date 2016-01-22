@@ -39,8 +39,7 @@ win32:{
     LIBS += -lSDL2main -lversion -lSDL2_mixer_ext
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     static: {
-        QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
-        LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lFLAC -logg
+        QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
     }
 }
 linux-g++||unix:!macx:!android:{

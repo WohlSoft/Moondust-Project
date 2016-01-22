@@ -39,6 +39,9 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
 %QtDir%\windeployqt pge_maintainer.exe
+rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
+if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
+if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
 %CurDir%\upx.exe -9 Qt5Core.dll
 %CurDir%\upx.exe -9 Qt5Gui.dll
 %CurDir%\upx.exe -9 D3Dcompiler_43.dll

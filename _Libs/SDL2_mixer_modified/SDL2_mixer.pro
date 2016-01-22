@@ -76,9 +76,9 @@ LIBS += -L../_builds/$$TARGETOS/lib
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad -static-libgcc -static-libstdc++ -static -lpthread
+            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread
         } else {
-            LIBS += -lSDL2.dll -lFLAC -lvorbisfile -lvorbis -logg -lmad
+            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
     }
@@ -89,7 +89,7 @@ LIBS += -L../_builds/$$TARGETOS/lib
         } else {
         LIBS += -Wl,-Bstatic
         }
-        LIBS += -lFLAC -lvorbisfile -lvorbis -logg -lmad
+        LIBS += -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
         !macx: {
         LIBS += -Wl,-Bdynamic
         }
