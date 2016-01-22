@@ -7,13 +7,11 @@
 = any damages caused by usage of this wrapper.                  =
 =================================================================
 
-1) All DLLs in the "dlls" directory, and there are all required for your project
+1) SDL2_mixer_ext_vb6.dll in the "dlls" directory is required
 2) Working pre-built example in the "build" folder
-3) All DLLs are non-COM!
-4) To have your project working, you should include:
-- modSDL2.bas
-- modSDL2_mixer_ext_vb6.bas
-5) Specificatino of official SDL Mixer is here: https://www.libsdl.org/projects/SDL_mixer/docs/index.html
+3) It's going as non-COM!
+4) To have your project working, you should include modSDL2_mixer_ext_vb6.bas
+5) Specification of official SDL Mixer is here: https://www.libsdl.org/projects/SDL_mixer/docs/index.html
 
 Functions are has similar name and arguments. BUT, some exceptions:
 - Pointers to Mix_Music* and Mix_Chunk* are presented as Long variable

@@ -435,5 +435,6 @@ SOURCES += \
     modplug/snd_flt.cpp \
     modplug/snd_fx.cpp \
     modplug/sndfile.cpp \
-    modplug/sndmix.cpp
+    modplug/sndmix.cpp \
+    vb6_sdl_binds.c
 

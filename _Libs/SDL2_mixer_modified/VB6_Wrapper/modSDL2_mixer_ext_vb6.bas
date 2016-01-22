@@ -34,6 +34,10 @@ Const MIX_DEFAULT_CHANNELS As Long = 2
 Const MIX_MAX_VOLUME As Long = 128
 Const MIX_EFFECTSMAXSPEED As String = "MIX_EFFECTSMAXSPEED"
 
+Const RW_SEEK_SET As Long = 0 '/**< Seek from the beginning of data */
+Const RW_SEEK_CUR As Long = 1 '/**< Seek relative to current read point */
+Const RW_SEEK_END As Long = 2 '/**< Seek relative to the end of data */
+
 Public Type SDL_AudioSpec
         freq As Long
         format As Long
@@ -87,8 +91,12 @@ End Enum
 Public Declare Function Mix_Init Lib "SDL2_mixer_ext_vb6.dll" Alias "Mix_InitVB6" () As Long
 'Public Declare Function Mix_Init Lib "SDL2_mixer_ext_vb6.dll" (ByVal flags As Long) As Long
 
+''''''''''''''''''''''''''''SDL Functions'''''''''''''''''''''''''''''''''''''''''
 'This function calls SDL_Init(SDL_INIT_AUDIO)
 Public Declare Function SDL_InitAudio Lib "SDL2_mixer_ext_vb6.dll" () As Long
+Public Declare Sub SDL_Quit Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_QuitVB6" ()
+Public Declare Function SDL_GetError Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_GetErrorVB6" () As String
+''''''''''''''''''''''''''''SDL Functions'''END'''''''''''''''''''''''''''''''''''
 
 'void Mix_Quit(void);
 'Unloads libraries loaded with Mix_Init
@@ -118,6 +126,29 @@ Public Declare Function Mix_LoadMUS Lib "SDL2_mixer_ext_vb6.dll" (ByVal file As 
 'Mix_Chunk * Mix_LoadWAV(const char* file);
 Public Declare Function Mix_LoadWAV Lib "SDL2_mixer_ext_vb6.dll" Alias "Mix_LoadWAV_VB6" (ByVal file As String) As Long
 
+'Mix_Chunk * Mix_LoadWAV_RW(SDL_RWops *src, int freesrc);
+'       rwops - an SDL_rwops structure pointer (in VB is a Long value!)
+'       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
+Public Declare Function Mix_LoadWAV_RW Lib "SDL2_mixer_ext_vb6.dll" (ByVal rwops As Long, ByVal freesrc As Long) As Long
+
+'/* Load a music file from an SDL_RWop object (Ogg and MikMod specific currently)
+' Matt Campbell (matt@campbellhome.dhs.org) April 2000 */
+'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW(SDL_RWops *src, int freesrc);
+'       rwops - an SDL_rwops structure pointer (in VB is a Long value!)
+'       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
+Public Declare Function Mix_LoadMUS_RW Lib "SDL2_mixer_ext_vb6.dll" _
+                        (ByVal rwops As Long, ByVal freesrc As Long) As Long
+
+'/* Load a music file from an SDL_RWop object assuming a specific format */
+'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc);
+Public Declare Function Mix_LoadMUSType_RW Lib "SDL2_mixer_ext_vb6.dll" _
+                        (ByVal rwops As Long, ByVal mustype As Mix_MusicType, ByVal freesrc As Long) As Long
+
+'/* Load a wave file of the mixer format from a memory buffer */
+'extern DECLSPEC Mix_Chunk * SDLCALL Mix_QuickLoad_WAV(Uint8 *mem);
+
+'/* Load raw audio data of the mixer format from a memory buffer */
+'extern DECLSPEC Mix_Chunk * SDLCALL Mix_QuickLoad_RAW(Uint8 *mem, Uint32 len);
 
 
 'Free an audio chunk previously loaded
@@ -396,3 +427,53 @@ Public Declare Function MIX_ADLMIDI_setVibrato Lib "SDL2_mixer_ext_vb6.dll" (ByV
 Public Declare Function MIX_ADLMIDI_getScaleMod Lib "SDL2_mixer_ext_vb6.dll" () As Long
 'void MIX_ADLMIDI_setScaleMod(int sc);
 Public Declare Function MIX_ADLMIDI_setScaleMod Lib "SDL2_mixer_ext_vb6.dll" (ByVal sc As Long) As Long
+
+'int MIX_SetMidiDevice(int device);
+' Allows you to toggle MIDI Device (change applying only on reopening of MIDI file)
+Public Declare Function MIX_SetMidiDevice Lib "SDL2_mixer_ext_vb6.dll" (ByVal MIDIDevice As Mix_MIDI_Device) As Long
+
+'/*****************SDL RWops AIP*****************/
+
+'SDL_RWops * SDL_RWFromFileVB6(const char *file, const char *mode)
+Public Declare Function SDL_RWFromFile Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWFromFileVB6" _
+                    (ByVal filename As String, ByVal mode As String) As Long
+
+'SDL_RWops * SDL_RWFromMemVB6(void *mem, int size)
+Public Declare Function SDL_RWFromMem Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWFromMemVB6" _
+                    (ByRef mem As Any, ByVal size As Long) As Long
+                    
+'SDL_RWops * SDL_AllocRWVB6(void)
+Public Declare Function SDL_AllocRW Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_AllocRWVB6" () As Long
+
+'void SDL_FreeRWVB6(SDL_RWops * area)
+Public Declare Sub SDL_FreeRW Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_FreeRWVB6" _
+                    (ByVal rwops As Long)
+
+'int SDL_RWsizeVB6(SDL_RWops * ctx)
+Public Declare Function SDL_RWsize Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWseekVB6" _
+                    (ByVal rwops As Long) As Long
+                    
+'int SDL_RWseekVB6(SDL_RWops * ctx, int offset, int whence)
+Public Declare Function SDL_RWseek Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWseekVB6" _
+                    (ByVal rwops As Long, ByVal offset As Long, ByVal whence As Long) As Long
+                    
+'int SDL_RWtellVB6(SDL_RWops * ctx)
+Public Declare Function SDL_RWtell Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWtellVB6" _
+                    (ByVal rwops As Long) As Long
+
+'int SDL_RWreadVB6(SDL_RWops * ctx, void*ptr, int size, int maxnum)
+Public Declare Function SDL_RWread Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWreadVB6" _
+                    (ByVal rwops As Long, ByRef ptr As Any, ByVal size As Long, ByVal max As Long) As Long
+
+'int SDL_RWwriteVB6(SDL_RWops * ctx, void* ptr, int size, int maxnum)
+Public Declare Function SDL_RWwrite Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWwriteVB6" _
+                    (ByVal rwops As Long, ByRef ptr As Any, ByVal size As Long, ByVal max As Long) As Long
+
+'int SDL_RWcloseVB6(SDL_RWops * ctx)
+Public Declare Function SDL_RWclose Lib "SDL2_mixer_ext_vb6.dll" Alias "SDL_RWcloseVB6" _
+                    (ByVal rwops As Long) As Long
+
+
+
+
+
