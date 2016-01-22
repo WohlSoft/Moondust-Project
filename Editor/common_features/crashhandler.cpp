@@ -274,6 +274,7 @@ void CrashHandler::checkCrashsaves()
 
 void CrashHandler::initCrashHandlers()
 {
+#ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
     #ifndef _WIN32 //Unsupported signals by Windows
@@ -290,6 +291,7 @@ void CrashHandler::initCrashHandlers()
     signal(SIGSEGV, &crashBySIGNAL);
     signal(SIGINT, &crashBySIGNAL);
     signal(SIGABRT, &crashBySIGNAL);
+#endif
 }
 
 void CrashHandler::on_pgeForumButton_clicked()

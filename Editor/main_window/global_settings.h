@@ -149,6 +149,7 @@ public:
     static QString configDataPath;
     #ifdef _WIN32
     static QString SmbxEXE_Name;
+    static bool    SmbxTest_By_Default;
     #endif
 };
 

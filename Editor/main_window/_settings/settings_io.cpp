@@ -47,7 +47,6 @@ void MainWindow::loadSettings()
 #define FloatDocks_inv true
 #endif
 
-
     settings.beginGroup("Main");
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
         GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();

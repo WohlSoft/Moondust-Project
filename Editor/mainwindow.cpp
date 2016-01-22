@@ -169,6 +169,17 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->menuBar->setEnabled(true);
 #endif
 
+#ifdef Q_OS_WIN
+    if(ConfStatus::SmbxTest_By_Default)
+    {
+        ui->action_doTest->setShortcut(QStringLiteral(""));
+        ui->action_doTest->setShortcutContext(Qt::WindowShortcut);
+
+        ui->actionRunTestSMBX->setShortcut(QStringLiteral("F5"));
+        ui->actionRunTestSMBX->setShortcutContext(Qt::WindowShortcut);
+    }
+#endif
+
     splash.progressTitle(tr("Initializing dock widgets..."));
 
     //Apply objects into tools

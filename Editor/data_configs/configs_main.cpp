@@ -50,6 +50,7 @@ QString ConfStatus::configPath="";
 QString ConfStatus::configDataPath="";
 #ifdef _WIN32
 QString ConfStatus::SmbxEXE_Name="";
+bool    ConfStatus::SmbxTest_By_Default=false;
 #endif
 
 QString ConfStatus::defaultTheme="";
@@ -226,7 +227,8 @@ bool dataconfigs::loadconfigs()
 
         ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
         #ifdef _WIN32
-        ConfStatus::SmbxEXE_Name = mainset.value("smbx-exe-name", "smbx.exe").toString();
+        ConfStatus::SmbxEXE_Name        = mainset.value("smbx-exe-name", "smbx.exe").toString();
+        ConfStatus::SmbxTest_By_Default = mainset.value("smbx-test-by-default", false).toBool();
         #endif
 
         dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";

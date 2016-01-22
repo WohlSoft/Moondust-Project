@@ -33,7 +33,10 @@ contains(TEMPLATE, lib) {
 GIT_VERSION = $$system(git --git-dir $$PWD/../.git --work-tree $$PWD/../ describe --always)
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
 
-debug: BUILDTP=debug
+debug: {
+BUILDTP=debug
+DEFINES += DEBUG_BUILD=1
+}
 release: BUILDTP=release
 OBJECTS_DIR = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
 MOC_DIR     = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
