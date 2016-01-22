@@ -38,6 +38,7 @@
 #include <windows.h>
 #include <QDesktopWidget>
 #include <cstring>
+#include <QDirIterator>
 #endif
 
 void MainWindow::on_action_doTest_triggered()
@@ -437,16 +438,30 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 QFile::copy(episodePath+"/"+filex, newEpisode+filex);
             }
 
-
-
             //Copy images and scripts from custom folder
-            files = customDir.entryList(QDir::Files);
-            customDir.mkdir(newEpisode+"templevel");
-            foreach(QString filex, files)
+            customDir.setSorting(QDir::NoSort);
+            QDirIterator dirsList(customPath, fileters,
+                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                                  QDirIterator::Subdirectories);
+            while(dirsList.hasNext())
             {
-                QFile::copy(customPath+"/"+filex, newEpisode+"templevel/"+filex);
+                dirsList.next();
+                QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
+                QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
+                QString relNewPath = newEpisode+"templevel/"+relativeDir;
+                QDir newRelDir(relNewPath);
+                if(!newRelDir.exists())
+                    newRelDir.mkpath(relNewPath);
+                QFile::copy(customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
             }
 
+//            //Copy images and scripts from custom folder
+//            files = customDir.entryList(QDir::Files);
+//            customDir.mkdir(newEpisode+"templevel");
+//            foreach(QString filex, files)
+//            {
+//                QFile::copy(customPath+"/"+filex, newEpisode+"templevel/"+filex);
+//            }
 
             //Copy custom musics if possible
             foreach(LevelSection sec, ed->LvlData.sections)
