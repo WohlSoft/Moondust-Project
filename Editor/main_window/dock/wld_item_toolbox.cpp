@@ -262,7 +262,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         ui->WLD_MusicList->addItem( item );
     };
 
-    for(int i=0;i<mw()->configs.main_music_wld.size(); i++)
+    for(int i=1;i<mw()->configs.main_music_wld.size(); i++)
     {
             obj_music &musicItem=mw()->configs.main_music_wld[i];
             item = new QListWidgetItem();
