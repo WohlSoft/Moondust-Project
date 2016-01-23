@@ -207,6 +207,6 @@ inline void Spc_Dsp::disable_surround( bool disable )
 
 #define SPC_NO_COPY_STATE_FUNCS 1
 
-#define SPC_LESS_ACCURATE 1
+//#define SPC_LESS_ACCURATE 1
 
 #endif
