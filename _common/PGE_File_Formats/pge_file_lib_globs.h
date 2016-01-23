@@ -56,6 +56,7 @@
 #include <QPair>
 #include <QMap>
 #include <QObject>
+#include <QUrl>
 #include <tgmath.h>
 #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 #include <QSize>
@@ -83,6 +84,8 @@ inline double toDouble(PGESTRING str){ return str.toDouble(); }
 inline PGESTRING removeSpaces(PGESTRING src) { return src.remove(' '); }
 template<typename T>
 PGESTRING fromNum(T num) { return QString::number(num); }
+#define PGE_URLENC(src) QUrl::toPercentEncoding(src).data()
+#define PGE_URLDEC(src) QUrl::fromPercentEncoding(src.toUtf8())
 #else
 #include <string>
 #include <vector>
@@ -113,6 +116,8 @@ namespace PGE_FileFormats_misc
     void replaceAll(std::string& str, const std::string& from, const std::string& to);
     void RemoveSub(std::string& sInput, const std::string& sub);
     bool hasEnding (std::string const &fullString, std::string const &ending);
+    PGESTRING url_encode(const std::string &sSrc);
+    PGESTRING url_decode(const std::string &sSrc);
 }
 #define PGE_SPLITSTR(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
 inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
@@ -129,7 +134,18 @@ inline double toDouble(PGESTRING str){ return std::atof(str.c_str()); }
 inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSSTR(src, " "); }
 template<typename T>
 PGESTRING fromNum(T num) { std::ostringstream n; n<<num; return n.str(); }
+#define PGE_URLENC(src) PGE_FileFormats_misc::url_encode(src)
+#define PGE_URLDEC(src) PGE_FileFormats_misc::url_decode(src)
 #endif
+
+inline bool PGE_StartsWith(PGESTRING src, PGESTRING with)
+{
+#ifdef PGE_FILES_QT
+    return src.startsWith(with, Qt::CaseSensitive);
+#else
+    return !src.compare(0, with.size(), with);
+#endif
+}
 
 /*!
  * Misc I/O classes used by PGE File Library internally
@@ -266,6 +282,11 @@ namespace PGE_FileFormats_misc
          * \return string contains gotten line
          */
         PGESTRING readLine();
+        /*!
+         * \brief Reads whole line before line feed character or before first unquoted comma
+         * \return string contains gotten line
+         */
+        PGESTRING readCVSLine();
         /*!
          * \brief Reads all data from a file at current position of carriage
          * \return

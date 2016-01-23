@@ -32,6 +32,7 @@ LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
     errorString.clear();
     PGE_FileFormats_misc::TextFileInput file;
     LevelData data;
+    QString firstLine;
     if(!file.open(filePath))
     {
         data.ReadFileValid = false;
@@ -40,14 +41,23 @@ LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
         data.ERROR_linenum=-1;
         return data;
     }
+    firstLine = file.readLine();
     file.close();
 
     PGE_FileFormats_misc::FileInfo in_1(filePath);
 
     if(in_1.suffix() == "lvl")
-        {   //Read SMBX LVL File
-            file.open(filePath, false);
-            data = ReadSMBX64LvlFile( file.readAll(), filePath );
+        {
+            if(PGE_StartsWith(firstLine, "SMBXFile"))
+            {
+                //Read SMBX65-38A LVL File
+                file.open(filePath, false);
+                data = ReadSMBX65by38ALvlFile( file.readAll(), filePath );
+            } else {
+                //Read SMBX LVL File
+                file.open(filePath, false);
+                data = ReadSMBX64LvlFile( file.readAll(), filePath );
+            }
         }
     else
         {   //Read PGE LVLX File
@@ -62,10 +72,30 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
     errorString.clear();
     LevelData data;
 
+    PGE_FileFormats_misc::TextFileInput file;
+    QString firstLine;
+    if(!file.open(filePath))
+    {
+        data.ReadFileValid = false;
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
+        return data;
+    }
+    firstLine = file.readLine();
+    file.close();
+
     PGE_FileFormats_misc::FileInfo in_1(filePath);
     if(in_1.suffix() == "lvl")
-        {   //Read SMBX LVL File
-            data = ReadSMBX64LvlFileHeader( filePath );
+        {
+            if(PGE_StartsWith(firstLine, "SMBXFile"))
+            {
+                //Read SMBX65-38A LVL File
+                data = ReadSMBX65by38ALvlFileHeader( filePath );
+            } else {
+                //Read SMBX LVL File
+                data = ReadSMBX64LvlFileHeader( filePath );
+            }
         }
     else
         {   //Read PGE LVLX File

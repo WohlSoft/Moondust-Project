@@ -392,6 +392,7 @@ SOURCES += main.cpp\
     main_window/dock/lvl_events_box.cpp \
     ../_common/PGE_File_Formats/file_formats.cpp \
     ../_common/PGE_File_Formats/file_rw_lvl.cpp \
+    ../_common/PGE_File_Formats/file_rw_lvl_38a.cpp \
     ../_common/PGE_File_Formats/file_rw_lvlx.cpp \
     ../_common/PGE_File_Formats/file_rw_meta.cpp \
     ../_common/PGE_File_Formats/file_rw_npc_txt.cpp \

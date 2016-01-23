@@ -16,7 +16,6 @@
 #include <QTextStream>
 #include <QtDebug>
 #else
-#include <regex>
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>

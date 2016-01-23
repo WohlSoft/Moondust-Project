@@ -99,6 +99,27 @@ public:
      */
     static PGESTRING        WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
+// SMBX65-38A LVL File
+    /*!
+     * \brief Parses SMBX65-38A level file header and skips other part of a file
+     * \param filePath Full path to level file
+     * \return Level data structure (with initialized header data only)
+     */
+    static LevelData        ReadSMBX65by38ALvlFileHeader(PGESTRING filePath);
+    /*!
+     * \brief Parses SMBX1...64 level file data
+     * \param RawData Raw data string in the SMBX1...64 level format
+     * \param filePath Full path to the file (if empty, custom data in the episode and in the custom directories are will be inaccessible)
+     * \return Level data structure
+     */
+    static LevelData        ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath="");
+    /*!
+     * \brief Generates SMBX65-38A Level file data
+     * \param FileData Level data structure
+     * \param file_format SMBX file format version number (from 0 to 64) [Example of level in SMBX0 format is intro.dat included with SMBX 1.0]
+     * \return Raw data string in the SMBX65-38A level format
+     */
+    static PGESTRING        WriteSMBX65by38ALvlFile(LevelData FileData, int file_format=65);  //!< Generate SMBX65-38A level raw data
 
 
 // PGE Extended Level File

@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     ../../_common/PGE_File_Formats/save_filedata.cpp \
     ../../_common/PGE_File_Formats/smbx64.cpp \
     ../../_common/PGE_File_Formats/smbx64_cnf_filedata.cpp \
-    ../../_common/PGE_File_Formats/wld_filedata.cpp
+    ../../_common/PGE_File_Formats/wld_filedata.cpp \
+    ../../_common/PGE_File_Formats/file_rw_lvl_38a.cpp
 
 HEADERS += \
     ../../_common/PGE_File_Formats/file_formats.h \
