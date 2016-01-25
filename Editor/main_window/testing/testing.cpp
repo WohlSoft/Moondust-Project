@@ -427,8 +427,22 @@ void MainWindow::on_actionRunTestSMBX_triggered()
 
             QStringList fileters;
             fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png";
+            QStringList fileters_cdir;
+            fileters_cdir << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.mp3"
+                          //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
+                          << "*.ogg" << "*.flac"
+                          //Uncompressed audio data
+                          << "*.wav" << "*.voc" << "*.aiff"
+                          //MIDI
+                          << "*.mid"
+                          //MikMod (Modules)
+                          << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
+                          << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
+                          << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
+                          //GAME EMU
+                          << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz";
             episodeDir.setNameFilters(fileters);
-            customDir.setNameFilters(fileters);
+            customDir.setNameFilters(fileters_cdir);
 
 
             //Copy images and scripts from episode folder
@@ -440,7 +454,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
 
             //Copy images and scripts from custom folder
             customDir.setSorting(QDir::NoSort);
-            QDirIterator dirsList(customPath, fileters,
+            QDirIterator dirsList(customPath, fileters_cdir,
                                   QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
                                   QDirIterator::Subdirectories);
             while(dirsList.hasNext())
