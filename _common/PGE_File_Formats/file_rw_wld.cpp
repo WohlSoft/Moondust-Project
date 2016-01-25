@@ -30,7 +30,7 @@
 WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
 {
     SMBX64_FileBegin();
-
+    int str_count=0;
     errorString.clear();
     WorldData FileData;
     FileData = CreateWorldData();
@@ -60,9 +60,10 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
     else file_format=toInt(line);
 
     nextLine();
-    if( SMBX64::qStr(line) ) //Episode name
+    FileData.EpisodeTitle = removeQuotes(line);
+    /*if( SMBX64::qStr(line) ) //Episode name
         goto badfile;
-    else FileData.EpisodeTitle = removeQuotes(line);
+    else FileData.EpisodeTitle = removeQuotes(line);*/
 
     if(ge(55))
     {
@@ -122,11 +123,35 @@ badfile:
     return FileData;
 }
 
+bool FileFormats::ReadSMBX64WldFileF(PGESTRING  filePath, WorldData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadSMBX64WldFile(file, FileData);
+}
+
+bool FileFormats::ReadSMBX64WldFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  WorldData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadSMBX64WldFile(file, FileData);
+}
+
 WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 {
-    SMBX64_File(RawData);
+    WorldData FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
+    ReadSMBX64WldFile(file, FileData);
+    return FileData;
+}
 
-    WorldData FileData = CreateWorldData();
+
+//WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
+bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldData &FileData)
+{
+    SMBX64_FileBegin();
+    PGESTRING filePath = in.getFilePath();
+    //SMBX64_File( RawData );
+
+    FileData = CreateWorldData();
 
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
@@ -202,7 +227,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////Tiles Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while( (line!="next") && (!in.eof()) )
     {
         tile = CreateWldTile();
                     SIntVar(tile.x,line);//Tile x
@@ -219,7 +244,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////Scenery Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while( (line!="next")  && (!in.eof()) )
     {
         scen = CreateWldScenery();
                     SIntVar(scen.x,line);//Scenery x
@@ -237,7 +262,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////Paths Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while( (line!="next") && (!in.eof()) )
     {
         pathitem = CreateWldPath();
                     SIntVar(pathitem.x,line);//Path x
@@ -255,7 +280,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////LevelBox Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while( (line!="next")  && (!in.eof()) )
     {
         lvlitem = CreateWldLevel();
 
@@ -297,7 +322,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////MusicBox Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while( (line != "next") && (line !="") && (!in.eof()) )
     {
         musicbox = CreateWldMusicbox();
                     SIntVar(musicbox.x,line);//MusicBox x
@@ -313,26 +338,24 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
         nextLine();
     }
 
-
     nextLine(); // Read last line
 
-    if((line!="")&&(!in.isEOF()))
-        goto badfile;
-
+    /*if((line!="")&&(!in.eof()))
+        goto badfile;*/
 
 FileData.ReadFileValid=true;
 
-return FileData;
+return true;
 
 badfile:    //If file format not corrects
     if(file_format>0)
         FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
     else
         FileData.ERROR_info="It is not an SMBX world map file";
-    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linenum = in.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-return FileData;
+return false;
 }
 
 

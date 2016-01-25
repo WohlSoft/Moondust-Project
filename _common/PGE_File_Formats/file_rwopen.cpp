@@ -32,37 +32,41 @@ LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
     errorString.clear();
     PGE_FileFormats_misc::TextFileInput file;
     LevelData data;
-    QString firstLine;
+    PGESTRING firstLine;
     if(!file.open(filePath))
     {
         data.ReadFileValid = false;
         data.ERROR_info="Can't open file";
         data.ERROR_linedata="";
         data.ERROR_linenum=-1;
+        errorString = data.ERROR_info;
         return data;
     }
-    firstLine = file.readLine();
+    firstLine = file.read(8);
     file.close();
 
     PGE_FileFormats_misc::FileInfo in_1(filePath);
 
     if(in_1.suffix() == "lvl")
         {
-            if(PGE_StartsWith(firstLine, "SMBXFile"))
+            if( PGE_StartsWith(firstLine, "SMBXFile") )
             {
                 //Read SMBX65-38A LVL File
                 file.open(filePath, false);
-                data = ReadSMBX65by38ALvlFile( file.readAll(), filePath );
+                if(!ReadSMBX65by38ALvlFile( file, data ))
+                    errorString = data.ERROR_info;
             } else {
                 //Read SMBX LVL File
                 file.open(filePath, false);
-                data = ReadSMBX64LvlFile( file.readAll(), filePath );
+                if(!ReadSMBX64LvlFile( file, data ))
+                    errorString = data.ERROR_info;
             }
         }
     else
         {   //Read PGE LVLX File
             file.open(filePath, true);
-            data = ReadExtendedLvlFile( file.readAll(), filePath );
+            if(!ReadExtendedLvlFile( file, data ))
+                errorString = data.ERROR_info;
         }
     return data;
 }
@@ -73,7 +77,7 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
     LevelData data;
 
     PGE_FileFormats_misc::TextFileInput file;
-    QString firstLine;
+    PGESTRING firstLine;
     if(!file.open(filePath))
     {
         data.ReadFileValid = false;

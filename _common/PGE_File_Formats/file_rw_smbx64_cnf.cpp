@@ -27,13 +27,32 @@
 #include <QDir>
 #endif
 
+bool FileFormats::ReadSMBX64ConfigFileF(PGESTRING  filePath, SMBX64_ConfigFile &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadSMBX64ConfigFile(file, FileData);
+}
+
+bool FileFormats::ReadSMBX64ConfigFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  SMBX64_ConfigFile &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadSMBX64ConfigFile(file, FileData);
+}
 
 SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(PGESTRING RawData)
 {
-    errorString.clear();
-    SMBX64_File( RawData );
-
     SMBX64_ConfigFile FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, "");
+    ReadSMBX64ConfigFile(file, FileData);
+    return FileData;
+}
+
+//SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(PGESTRING RawData)
+bool FileFormats::ReadSMBX64ConfigFile(PGE_FileFormats_misc::TextInput &in, SMBX64_ConfigFile &FileData)
+{
+    SMBX64_FileBegin();
+    errorString.clear();
+    //SMBX64_File( RawData );
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     nextLine(); UIntVar(file_format, line);//File format number
@@ -72,17 +91,17 @@ SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(PGESTRING RawData)
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
     badfile:    //If file format is not correct
     if(file_format>0)
         FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
     else
         FileData.ERROR_info="It is not an SMBX game settings file";
-    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linenum=in.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 

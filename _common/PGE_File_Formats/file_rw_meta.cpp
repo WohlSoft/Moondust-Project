@@ -27,7 +27,7 @@
 #include <QMessageBox>
 #endif
 
-MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData)
+MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 {
     PGESTRING errorString;
     int str_count=0;        //Line Counter

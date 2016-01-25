@@ -57,6 +57,12 @@ struct LevelSection
     unsigned int background;
     //! Enable lock of walking to left direction
     bool lock_left_scroll;
+    //! Enable lock of walking to right direction
+    bool lock_right_scroll;
+    //! Enable lock of walking to up direction
+    bool lock_up_scroll;
+    //! Enable lock of walking to down direction
+    bool lock_down_scroll;
     //! Sets default physical environment of this section is - water
     bool underwater;
     //! Custom music file which will be playd if music ID defined to "Custom" music id

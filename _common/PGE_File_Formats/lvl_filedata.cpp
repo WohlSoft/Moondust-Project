@@ -398,6 +398,9 @@ LevelSection FileFormats::CreateLvlSection()
     dummySection.OffScreenEn=false;
     dummySection.background=0;
     dummySection.lock_left_scroll=false;
+    dummySection.lock_right_scroll=false;
+    dummySection.lock_up_scroll=false;
+    dummySection.lock_down_scroll=false;
     dummySection.underwater=false;
     dummySection.music_file="";
     dummySection.PositionX = -10;
@@ -439,10 +442,119 @@ PlayerPoint FileFormats::CreateLvlPlayerPoint(int id)
     return dummyPlayer;
 }
 
-LevelData FileFormats::CreateLevelData()
+void FileFormats::CreateLevelHeader(LevelData &NewFileData)
 {
-    LevelData NewFileData;
+    NewFileData.ReadFileValid = true;
+    NewFileData.modified = true;
+    NewFileData.untitled = true;
+    NewFileData.smbx64strict = false;
 
+    NewFileData.CurSection=0;
+    NewFileData.playmusic=0;
+
+    NewFileData.LevelName = "";
+    NewFileData.stars = 0;
+
+    NewFileData.bgo_array_id = 1;
+    NewFileData.blocks_array_id = 1;
+    NewFileData.doors_array_id = 1;
+    NewFileData.events_array_id = 1;
+    NewFileData.layers_array_id = 1;
+    NewFileData.npc_array_id = 1;
+    NewFileData.physenv_array_id = 1;
+
+    //Meta-data
+    #ifdef PGE_EDITOR
+    NewFileData.metaData.script = NULL;
+    #endif
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_linenum=-1;
+}
+
+void FileFormats::LevelAddInternalEvents(LevelData &FileData)
+{
+    LevelLayer layers;
+    LevelSMBX64Event events;
+
+    layers= CreateLvlLayer();
+
+    //Append system layers if not exist
+    bool def=false,desb=false,spawned=false;
+
+    for(int lrID=0; lrID<(signed)FileData.layers.size();lrID++)
+    {
+        LevelLayer &lr=FileData.layers[lrID];
+        if(lr.name=="Default") def=true;
+        else
+        if(lr.name=="Destroyed Blocks") desb=true;
+        else
+        if(lr.name=="Spawned NPCs") spawned=true;
+    }
+
+    if(!def)
+    {
+        layers.hidden = false;
+        layers.name = "Default";
+        FileData.layers.push_back(layers);
+    }
+    if(!desb)
+    {
+        layers.hidden = true;
+        layers.name = "Destroyed Blocks";
+        FileData.layers.push_back(layers);
+    }
+    if(!spawned)
+    {
+        layers.hidden = false;
+        layers.name = "Spawned NPCs";
+        FileData.layers.push_back(layers);
+    }
+
+    //Append system events if not exist
+    //Level - Start
+    //P Switch - Start
+    //P Switch - End
+    bool lstart=false, pstart=false, pend=false;
+    for(int evID=0; evID<(signed)FileData.events.size(); evID++)
+    {
+        LevelSMBX64Event &ev=FileData.events[evID];
+        if(ev.name=="Level - Start") lstart=true;
+        else
+        if(ev.name=="P Switch - Start") pstart=true;
+        else
+        if(ev.name=="P Switch - End") pend=true;
+    }
+
+    events = CreateLvlEvent();
+
+    if(!lstart)
+    {
+        events.array_id = FileData.events_array_id;
+        FileData.events_array_id++;
+
+        events.name = "Level - Start";
+        FileData.events.push_back(events);
+    }
+    if(!pstart)
+    {
+        events.array_id = FileData.events_array_id;
+        FileData.events_array_id++;
+
+        events.name = "P Switch - Start";
+        FileData.events.push_back(events);
+    }
+    if(!pend)
+    {
+        events.array_id = FileData.events_array_id;
+        FileData.events_array_id++;
+
+        events.name = "P Switch - End";
+        FileData.events.push_back(events);
+    }
+}
+
+void FileFormats::CreateLevelData(LevelData &NewFileData)
+{
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
@@ -469,6 +581,7 @@ LevelData FileFormats::CreateLevelData()
     NewFileData.metaData.ReadFileValid=true;
     NewFileData.metaData.ERROR_linenum=-1;
 
+    NewFileData.sections.clear();
     //Create Section array
     LevelSection section;
     for(int i=0; i<21;i++)
@@ -478,6 +591,8 @@ LevelData FileFormats::CreateLevelData()
         NewFileData.sections.push_back( section );
     }
 
+    NewFileData.players.clear();
+
     //Create players array
     //PlayerPoint players = dummyLvlPlayerPoint();
     //    for(int i=0; i<2;i++)
@@ -486,6 +601,13 @@ LevelData FileFormats::CreateLevelData()
     //        NewFileData.players.push_back(players);
     //    }
 
+    NewFileData.blocks.clear();
+    NewFileData.bgo.clear();
+    NewFileData.npc.clear();
+    NewFileData.doors.clear();
+    NewFileData.physez.clear();
+
+    NewFileData.layers.clear();
 
     //Create system layers
         //Default
@@ -511,6 +633,7 @@ LevelData FileFormats::CreateLevelData()
         layers.array_id = NewFileData.layers_array_id++;
         NewFileData.layers.push_back(layers);
 
+    NewFileData.events.clear();
     //Create system events
         //Level - Start
         //P Switch - Start
@@ -535,9 +658,13 @@ LevelData FileFormats::CreateLevelData()
 
         events.name = "P Switch - End";
         NewFileData.events.push_back(events);
+}
 
-
-return NewFileData;
+LevelData FileFormats::CreateLevelData()
+{
+    LevelData NewFileData;
+    CreateLevelData(NewFileData);
+    return NewFileData;
 }
 
 

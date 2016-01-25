@@ -38,8 +38,7 @@
 //for Header readers.
 //Use it if you want read file partially
 //(you must create QTextStream in(&fstream); !!!)
-#define SMBX64_FileBegin() int str_count=0;/*Line Counter*/\
-                           int file_format=0;   /*File format number*/\
+#define SMBX64_FileBegin() int file_format=0;   /*File format number*/\
                            PGESTRING line;      /*Current Line data*/
 
 //for entire data readers.
@@ -49,14 +48,14 @@
                          SMBX64_FileBegin()
 
 //Jump to next line
-#define nextLine() str_count++;line = in.readLine();
+#define nextLine() line = in.readCVSLine();
 
 #define parseLine(validate, target, converted) if( validate ) \
                                                 goto badfile;\
                                                  else target=converted;
 
 //ValueTypes
-#define strVar(target, line) parseLine( SMBX64::qStr(line), target, SMBX64::StrToStr(line))
+#define strVar(target, line) parseLine( false/*SMBX64::qStr(line)*/, target, SMBX64::StrToStr(line))
 #define UIntVar(target, line) parseLine( SMBX64::uInt(line), target, toInt(line))
 #define SIntVar(target, line) parseLine( SMBX64::sInt(line), target, toInt(line))
 #define wBoolVar(target, line) parseLine( SMBX64::wBool(line), target, SMBX64::wBoolR(line))

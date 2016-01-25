@@ -33,14 +33,37 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
+
+bool FileFormats::ReadSMBX64SavFileF(PGESTRING  filePath, GamesaveData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadSMBX64SavFile(file, FileData);
+}
+
+bool FileFormats::ReadSMBX64SavFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  GamesaveData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadSMBX64SavFile(file, FileData);
+}
+
 GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePath)
 {
+    GamesaveData FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
+    ReadSMBX64SavFile(file, FileData);
+    return FileData;
+}
+
+bool FileFormats::ReadSMBX64SavFile(PGE_FileFormats_misc::TextInput &in, GamesaveData &FileData)
+{
+    SMBX64_FileBegin();
+    PGESTRING filePath = in.getFilePath();
     errorString.clear();
-    SMBX64_File( RawData );
+    //SMBX64_File( RawData );
 
     int i;                  //counters
     int arrayIdCounter=0;
-    GamesaveData FileData;
+    //GamesaveData FileData;
     FileData = CreateGameSaveData();
 
     FileData.untitled = false;
@@ -79,14 +102,14 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     nextLine(); UIntVar(FileData.musicID, line);//ID of music
     nextLine();
-    if(line=="" || in.isEOF()) goto successful;
+    if(line=="" || in.eof()) goto successful;
 
     if(ge(56)) { wBoolVar(FileData.gameCompleted, line);}//Game was complited
 
     arrayIdCounter=1;
 
     nextLine();
-    while((line!="\"next\"")&&(!IsNULL(line)))
+    while((line!="next")&&(!in.eof()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
@@ -100,7 +123,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     arrayIdCounter=1;
     nextLine();
-    while((line!="\"next\"")&&(!IsNULL(line)))
+    while((line!="next")&&(!in.eof()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
@@ -114,7 +137,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     arrayIdCounter=1;
     nextLine();
-    while((line!="\"next\"")&&(!IsNULL(line)))
+    while((line!="next")&&(!in.eof()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
@@ -129,7 +152,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     if(ge(7))
     {
         nextLine();
-        while((line!="\"next\"")&&(!IsNULL(line)))
+        while((line!="next")&&(!IsNULL(line)))
         {
             starOnLevel gottenStar;
             gottenStar.first="";
@@ -146,7 +169,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     if(ge(21))
     {
         nextLine();
-        if(line=="" || in.isEOF()) goto successful;
+        if(line=="" || in.eof()) goto successful;
         UIntVar(FileData.totalStars, line);//Total Number of stars
     }
 
@@ -154,17 +177,17 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     ///////////////////////////////////////EndFile///////////////////////////////////////
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
     badfile:    //If file format is not correct
     if(file_format>0)
         FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
     else
         FileData.ERROR_info="It is not an SMBX game save file";
-    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linenum=in.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 

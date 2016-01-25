@@ -36,7 +36,7 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     LevelData FileData;
-    FileData = CreateLevelData();
+    CreateLevelHeader(FileData);
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, false))
@@ -50,14 +50,12 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 
     inf.seek(0, PGE_FileFormats_misc::TextFileInput::begin);
     SMBX64_FileBegin();
-
-    #define nextLineH() str_count++;line = inf.readLine();
+    #define nextLineH() line = inf.readCVSLine();
 
     nextLineH();   //Read first line
     if( SMBX64::uInt(line) ) //File format number
         goto badfile;
-
-    else file_format=toInt(line);
+    else file_format = toInt(line);
 
     if(file_format >= 17)
     {
@@ -71,8 +69,9 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     {
         nextLineH();   //Read third line
         if( SMBX64::qStr(line) ) //LevelTitle
-            goto badfile;
-        else FileData.LevelName = removeQuotes(line); //remove quotes
+            FileData.LevelName = line;
+        else
+            FileData.LevelName = removeQuotes(line); //remove quotes
     } else FileData.LevelName="";
 
     FileData.CurSection=0;
@@ -84,34 +83,59 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 badfile:
     FileData.ReadFileValid=false;
     FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
-    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linenum=inf.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
     return FileData;
 }
 
+bool FileFormats::ReadSMBX64LvlFileF(PGESTRING  filePath, LevelData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadSMBX64LvlFile(file, FileData);
+}
+
+bool FileFormats::ReadSMBX64LvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadSMBX64LvlFile(file, FileData);
+}
+
 LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 {
+    LevelData FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
+    ReadSMBX64LvlFile(file, FileData);
+    return FileData;
+}
+
+bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
+{
+    SMBX64_FileBegin();
+    PGESTRING filePath = in.getFilePath();
     errorString.clear();
-    SMBX64_File( RawData );
+    //SMBX64_File( RawData );
 
     int i;                  //counters
-    LevelData FileData;
-        FileData.LevelName="";
-        FileData.stars=0;
-        FileData.CurSection=0;
-        FileData.playmusic=0;
+    CreateLevelData(FileData);
+    FileData.LevelName="";
+    FileData.stars=0;
+    FileData.CurSection=0;
+    FileData.playmusic=0;
 
-        //Enable strict mode for SMBX LVL file format
-        FileData.smbx64strict = true;
+    //Enable strict mode for SMBX LVL file format
+    FileData.smbx64strict = true;
 
-        //Begin all ArrayID's here;
-        FileData.blocks_array_id = 1;
-        FileData.bgo_array_id = 1;
-        FileData.npc_array_id = 1;
-        FileData.doors_array_id = 1;
-        FileData.physenv_array_id = 1;
-        FileData.layers_array_id = 1;
-        FileData.events_array_id = 1;
+    //Begin all ArrayID's here;
+    FileData.blocks_array_id = 1;
+    FileData.bgo_array_id = 1;
+    FileData.npc_array_id = 1;
+    FileData.doors_array_id = 1;
+    FileData.physenv_array_id = 1;
+    FileData.layers_array_id = 1;
+    FileData.events_array_id = 1;
+
+    FileData.layers.clear();
+    FileData.events.clear();
 
     LevelSection section;
     int sct;
@@ -173,7 +197,10 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
         if(ge(2)) {nextLine(); strVar(section.music_file, line);}//Custom Music
 
         section.id = i;
-    FileData.sections.push_back(section); //Add Section in main array
+        if(i < (signed)FileData.sections.size())
+            FileData.sections[i]=section;//Replace if already exists
+        else
+            FileData.sections.push_back(section); //Add Section in main array
     }
 
     if(lt(8))
@@ -199,7 +226,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////Block Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while(line!="next")
     {
         blocks = CreateLvlBlock();
 
@@ -250,10 +277,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
     nextLine();
     }
 
-
     ////////////BGO Data//////////
     nextLine();
-    while(line!="\"next\"")
+    while(line!="next")
     {
         bgodata = CreateLvlBgo();
 
@@ -282,7 +308,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////NPC Data//////////
      nextLine();
-     while(line!="\"next\"")
+     while(line!="next")
      {
          npcdata = CreateLvlNpc();
 
@@ -348,7 +374,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
          if(ge(5))
          {
              nextLine();
-             strVarMultiLine(npcdata.msg, line)//Message
+             //strVarMultiLine(npcdata.msg, line)//Message
+             strVar(npcdata.msg, line)//Message
          }
 
          if(ge(6))
@@ -395,7 +422,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 
     ////////////Warp and Doors Data//////////
     nextLine();
-    while( ((line!="\"next\"")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!line.PGESTRINGisEmpty())))
+    while( ((line!="next")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!in.eof())))
     {
         doors = CreateLvlWarp();
         doors.isSetIn=true;
@@ -441,7 +468,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
     if(file_format>=29)
     {
         nextLine();
-        while(line!="\"next\"")
+        while(line!="next")
         {
             waters = CreateLvlPhysEnv();
 
@@ -466,7 +493,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
     if(ge(10)) {
         ////////////Layers Data//////////
         nextLine();
-        while((line!="\"next\"")&&(!in.isEOF())&&(!line.PGESTRINGisEmpty()))
+        while((line!="next")&&(!in.eof())&&(!line.PGESTRINGisEmpty()))
         {
 
                           strVar(layers.name, line);     //Layer name
@@ -483,7 +510,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 
         ////////////Events Data//////////
         nextLine();
-        while((line!="")&&(!in.isEOF())&&(!line.PGESTRINGisEmpty()))
+        while((line!="")&&(!in.eof())&&(!line.PGESTRINGisEmpty()))
         {
             events = CreateLvlEvent();
 
@@ -492,7 +519,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
             if(ge(11))
             {
                 nextLine();
-                strVarMultiLine(events.msg, line)//Event message
+                //strVarMultiLine(events.msg, line)//Event message
+                strVar(events.msg, line)//Event message
             }
 
             if(ge(14)){ nextLine(); UIntVar(events.sound_id, line);}
@@ -575,96 +603,22 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
         }
     }
 
-    {
-        //Add system layers if not exist
-        bool def=false,desb=false,spawned=false;
+    LevelAddInternalEvents(FileData);
 
-        for(int lrID=0; lrID<(signed)FileData.layers.size();lrID++)
-        {
-            LevelLayer &lr=FileData.layers[lrID];
-            if(lr.name=="Default") def=true;
-            else
-            if(lr.name=="Destroyed Blocks") desb=true;
-            else
-            if(lr.name=="Spawned NPCs") spawned=true;
-        }
-
-        if(!def)
-        {
-            layers.hidden = false;
-            layers.name = "Default";
-            FileData.layers.push_back(layers);
-        }
-        if(!desb)
-        {
-            layers.hidden = true;
-            layers.name = "Destroyed Blocks";
-            FileData.layers.push_back(layers);
-        }
-        if(!spawned)
-        {
-            layers.hidden = false;
-            layers.name = "Spawned NPCs";
-            FileData.layers.push_back(layers);
-        }
-
-        //Add system events if not exist
-        //Level - Start
-        //P Switch - Start
-        //P Switch - End
-        bool lstart=false, pstart=false, pend=false;
-        for(int evID=0; evID<(signed)FileData.events.size(); evID++)
-        {
-            LevelSMBX64Event &ev=FileData.events[evID];
-            if(ev.name=="Level - Start") lstart=true;
-            else
-            if(ev.name=="P Switch - Start") pstart=true;
-            else
-            if(ev.name=="P Switch - End") pend=true;
-        }
-
-        events = CreateLvlEvent();
-
-        if(!lstart)
-        {
-            events.array_id = FileData.events_array_id;
-            FileData.events_array_id++;
-
-            events.name = "Level - Start";
-            FileData.events.push_back(events);
-        }
-        if(!pstart)
-        {
-            events.array_id = FileData.events_array_id;
-            FileData.events_array_id++;
-
-            events.name = "P Switch - Start";
-            FileData.events.push_back(events);
-        }
-        if(!pend)
-        {
-            events.array_id = FileData.events_array_id;
-            FileData.events_array_id++;
-
-            events.name = "P Switch - End";
-            FileData.events.push_back(events);
-        }
-
-    }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
     badfile:    //If file format is not correct
         if(file_format>0)
             FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
         else
             FileData.ERROR_info="It is not an SMBX level file";
-        FileData.ERROR_linenum=str_count;
+        FileData.ERROR_linenum = in.getCurrentLineNumber();
         FileData.ERROR_linedata=line;
         FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 

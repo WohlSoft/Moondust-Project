@@ -13,6 +13,7 @@
 namespace PGE_FileFormats_misc
 {
 #ifndef PGE_FILES_QT
+
     void split(std::vector<std::string>& dest, const std::string& str, std::string separator)
     {
         #ifdef _MSC_VER
@@ -54,6 +55,55 @@ namespace PGE_FileFormats_misc
             return false;
         }
     }
+
+    const char HEX2DEC[256] =
+    {
+        /*       0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F */
+        /* 0 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 1 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 2 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 3 */  0, 1, 2, 3,  4, 5, 6, 7,  8, 9,-1,-1, -1,-1,-1,-1,
+
+        /* 4 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 5 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 6 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 7 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+
+        /* 8 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* 9 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* A */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* B */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+
+        /* C */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* D */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* E */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
+        /* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
+    };
+
+    // Only alphanum is safe.
+    const char SAFE[256] =
+    {
+        /*      0 1 2 3  4 5 6 7  8 9 A B  C D E F */
+        /* 0 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* 1 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* 2 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* 3 */ 1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0,
+
+        /* 4 */ 0,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
+        /* 5 */ 1,1,1,1, 1,1,1,1, 1,1,1,0, 0,0,0,0,
+        /* 6 */ 0,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
+        /* 7 */ 1,1,1,1, 1,1,1,1, 1,1,1,0, 0,0,0,0,
+
+        /* 8 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* 9 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* A */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* B */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+
+        /* C */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* D */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* E */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+        /* F */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
+    };
 
     PGESTRING url_encode(const std::string & sSrc)
     {
@@ -138,7 +188,153 @@ namespace PGE_FileFormats_misc
         #endif
     }
 
-    TextFileInput::TextFileInput()
+
+    /*****************BASE TEXT I/O CLASS***************************/
+    TextInput::TextInput() : _lineNumber(0) {}
+    TextInput::~TextInput(){}
+    PGESTRING TextInput::read(long){ return ""; }
+    PGESTRING TextInput::readLine() { return "";}
+    PGESTRING TextInput::readCVSLine() { return ""; }
+    PGESTRING TextInput::readAll() { return ""; }
+    bool TextInput::eof() { return true; }
+    long long TextInput::tell() { return 0; }
+    void TextInput::seek(long long, TextInput::positions) {}
+    PGESTRING TextInput::getFilePath() { return _filePath; }
+    void TextInput::setFilePath(PGESTRING path) { _filePath=path; }
+    long TextInput::getCurrentLineNumber() { return _lineNumber; }
+    /*****************BASE TEXT I/O CLASS***************************/
+
+
+    /*****************RAW TEXT I/O CLASS***************************/
+    RawTextInput::RawTextInput() : TextInput(), _pos(0), _data(0), _isEOF(true) {}
+
+    RawTextInput::RawTextInput(PGESTRING *rawString, PGESTRING filepath) : TextInput(), _pos(0), _data(0), _isEOF(true)
+    {
+        open(rawString, filepath);
+    }
+
+    RawTextInput::~RawTextInput() {}
+
+    bool RawTextInput::open(PGESTRING *rawString, PGESTRING filepath)
+    {
+        if(!rawString) return false;
+        _data = rawString;
+        _filePath = filepath;
+        _pos = 0;
+        _isEOF = _data->size()==0;
+        _lineNumber = 0;
+        return true;
+    }
+
+    void RawTextInput::close()
+    {
+        _isEOF=true;
+        _data=NULL;
+        _filePath.clear();
+        _pos=0;
+        _lineNumber = 0;
+    }
+
+    PGESTRING RawTextInput::read(long len)
+    {
+        if(!_data) return "";
+        if(_isEOF) return "";
+        if( (_pos+len) >=(signed)_data->size())
+        {
+            len = _data->size()-_pos;
+            _isEOF=true;
+        }
+        PGESTRING buf(len + 1, '\0');
+        #ifdef PGE_FILES_QT
+        buf = _data->mid(_pos, len);
+        #else
+        buf = _data->substr(_pos, len);
+        #endif
+        _pos += len;
+        return buf;
+    }
+
+    PGESTRING RawTextInput::readLine()
+    {
+        if(!_data) return "";
+        if(_isEOF) return "";
+        PGESTRING buffer;
+        PGEChar cur;
+        do{
+            cur = (*_data)[(int)_pos++];
+            if(_pos>=(signed)_data->size())
+                { _pos = _data->size(); _isEOF=true; }
+            if((cur!='\r') && (cur!='\n')) buffer.push_back(cur);
+        } while((cur != '\n') && (cur!=',') && !_isEOF);
+        _lineNumber++;
+        return buffer;
+    }
+
+    PGESTRING RawTextInput::readCVSLine()
+    {
+        if(!_data) return "";
+        if(_isEOF) return "";
+        bool quoteIsOpen=false;
+        PGESTRING buffer;
+        PGEChar cur;
+        do{
+            cur = (*_data)[(int)_pos++];
+            if(_pos>=(signed)_data->size())
+                { _pos = _data->size(); _isEOF=true; }
+            if(cur == '\"')
+                quoteIsOpen = !quoteIsOpen;
+            else
+            {
+                if((cur != '\r') && (((cur!='\n')&&(cur!=',')) || ( quoteIsOpen )) )
+                    buffer.push_back(cur);
+                if(cur == '\n') _lineNumber++;
+            }
+        } while( (((cur != '\n')&&(cur!=','))||quoteIsOpen ) && (!_isEOF) );
+        return buffer;
+    }
+
+    PGESTRING RawTextInput::readAll()
+    {
+        if(!_data) return "";
+        return *_data;
+    }
+
+    bool RawTextInput::eof()
+    {
+        return _isEOF;
+    }
+
+    long long RawTextInput::tell()
+    {
+        return _pos;
+    }
+
+    void RawTextInput::seek(long long pos, TextInput::positions relativeTo)
+    {
+        if(!_data) return;
+        switch(relativeTo)
+        {
+        case current:
+            _pos += pos;
+        case end:
+            _pos = _data->size()+pos;
+        case begin:
+        default:
+            _pos = pos;
+        }
+        if(_pos<0) _pos = 0;
+        if(_pos>=(signed)_data->size())
+            { _pos = _data->size(); _isEOF=true; }
+        else
+            _isEOF=false;
+    }
+    /*****************RAW TEXT I/O CLASS***************************/
+
+
+
+    /*****************FILE TEXT I/O CLASS***************************/
+
+    TextFileInput::TextFileInput() : TextInput()
     {}
 
     TextFileInput::TextFileInput(PGESTRING filePath, bool utf8)
@@ -152,12 +348,17 @@ namespace PGE_FileFormats_misc
         file.close();
         #else
         if(stream)
+        {
             stream.close();
+            stream.clear();
+        }
         #endif
     }
 
     bool TextFileInput::open(PGESTRING filePath, bool utf8)
     {
+        _filePath = filePath;
+        _lineNumber = 0;
         #ifdef PGE_FILES_QT
         bool state=false;
         file.setFileName(filePath);
@@ -181,10 +382,13 @@ namespace PGE_FileFormats_misc
 
     void TextFileInput::close()
     {
+        _filePath.clear();
+        _lineNumber = 0;
         #ifdef PGE_FILES_QT
         file.close();
         #else
         stream.close();
+        stream.clear();
         #endif
     }
 
@@ -213,6 +417,7 @@ namespace PGE_FileFormats_misc
         if(out.size()==0) return "";
         if(out[out.size()-1]=='\r')
             out.erase(out.size()-1, 1);
+        _lineNumber++;
         return out;
         #endif
     }
@@ -226,16 +431,31 @@ namespace PGE_FileFormats_misc
         if(!file.isOpen()) return "";
         do{
             cur = stream.read(1);
-        } while( (!quoteIsOpen) && (cur != "\n") && (cur!=",") && !stream.atEnd() );
+            if(cur=="\"")
+                quoteIsOpen=!quoteIsOpen;
+            else
+            {
+                if((cur!="\r") && (((cur!="\n")&&(cur!=",")) ||(quoteIsOpen)) )
+                    buffer.push_back(cur);
+                if(cur == "\n") _lineNumber++;
+            }
+        } while( (((cur != "\n")&&(cur!=","))||quoteIsOpen ) && !stream.atEnd() );
         return buffer;
         #else
         if(!stream) return "";
-        std::string out;
-        std::getline(stream, out);
-        if(out.size()==0) return "";
-        if(out[out.size()-1]=='\r')
-            out.erase(out.size()-1, 1);
-        return out;
+        char cur;
+        do{
+            cur = stream.get();
+            if(cur=='\"')
+                quoteIsOpen = !quoteIsOpen;
+            else
+            {
+                if((cur != '\r') && (((cur!='\n')&&(cur!=',')) || ( quoteIsOpen )) )
+                    buffer.push_back(cur);
+                if(cur == '\n') _lineNumber++;
+            }
+        } while( ( ((cur != '\n')&&(cur != ','))||quoteIsOpen ) && (!stream.eof()) );
+        return buffer;
         #endif
     }
 
@@ -291,8 +511,12 @@ namespace PGE_FileFormats_misc
             default: s=std::ios_base::beg; break;
         }
         stream.seekg(pos, s);
-#endif
+        #endif
     }
+    /*****************FILE TEXT I/O CLASS***************************/
+
+
+
 
     FileInfo::FileInfo()
     {}
@@ -415,5 +639,7 @@ namespace PGE_FileFormats_misc
             }
         }
     }
+
+
 }
 

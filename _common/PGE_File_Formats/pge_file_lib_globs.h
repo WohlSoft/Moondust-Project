@@ -224,10 +224,8 @@ namespace PGE_FileFormats_misc
         PGESTRING _dirpath;
     };
 
-    /*!
-     * \brief Provides cross-platform text file reading interface
-     */
-    class TextFileInput
+
+    class TextInput
     {
     public:
         /*!
@@ -241,6 +239,54 @@ namespace PGE_FileFormats_misc
             //! Relative to end of file
             end
         };
+
+        TextInput();
+        virtual ~TextInput();
+        virtual PGESTRING read(long len);
+        virtual PGESTRING readLine();
+        virtual PGESTRING readCVSLine();
+        virtual PGESTRING readAll();
+        virtual bool eof();
+        virtual long long tell();
+        virtual void seek(long long pos, positions relativeTo);
+        virtual PGESTRING getFilePath();
+        virtual void setFilePath(PGESTRING path);
+        virtual long getCurrentLineNumber();
+    protected:
+        PGESTRING _filePath;
+        long  _lineNumber;
+    };
+
+
+    class RawTextInput: public TextInput
+    {
+    public:
+        RawTextInput();
+        RawTextInput(PGESTRING *rawString, PGESTRING filepath="");
+        virtual ~RawTextInput();
+        bool open(PGESTRING *rawString, PGESTRING filepath="");
+        void close();
+        virtual PGESTRING read(long len);
+        virtual PGESTRING readLine();
+        virtual PGESTRING readCVSLine();
+        virtual PGESTRING readAll();
+        virtual bool eof();
+        virtual long long tell();
+        virtual void seek(long long _pos, positions relativeTo);
+    private:
+        long long _pos;
+        PGESTRING* _data;
+        bool _isEOF;
+    };
+
+
+
+    /*!
+     * \brief Provides cross-platform text file reading interface
+     */
+    class TextFileInput: public TextInput
+    {
+    public:
         /*!
          * \brief Checks is requested file exist
          * \param filePath Full or relative path to the file
@@ -260,7 +306,7 @@ namespace PGE_FileFormats_misc
         /*!
          * \brief Destructor
          */
-        ~TextFileInput();
+        virtual ~TextFileInput();
         /*!
          * \brief Opening of the file
          * \param filePath Full or relative path to the file

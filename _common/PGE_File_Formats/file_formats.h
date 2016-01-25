@@ -54,7 +54,7 @@ public:
      * \param Raw-data Full raw file data contents
      * \return Meta-data structure
      */
-    static MetaData         ReadNonSMBX64MetaData(PGESTRING RawData);
+    static MetaData         ReadNonSMBX64MetaData(PGESTRING &RawData);
 
     /*!
      * \brief Generates raw data of non-SMBX meta-data file from Meta-data structure
@@ -84,13 +84,21 @@ public:
      * \return Level data structure (with initialized header data only)
      */
     static LevelData        ReadSMBX64LvlFileHeader(PGESTRING filePath);
-    /*!
+
+   /*!
      * \brief Parses SMBX1...64 level file data
      * \param RawData Raw data string in the SMBX1...64 level format
      * \param filePath Full path to the file (if empty, custom data in the episode and in the custom directories are will be inaccessible)
      * \return Level data structure
      */
     static LevelData        ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath="");
+
+    static bool ReadSMBX64LvlFileF(PGESTRING  filePath, LevelData &FileData);
+    static bool ReadSMBX64LvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
+    static bool ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
+
+    //TextInput
+
     /*!
      * \brief Generates SMBX1...64 Level file data
      * \param FileData Level data structure
@@ -113,6 +121,12 @@ public:
      * \return Level data structure
      */
     static LevelData        ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath="");
+
+    static bool ReadSMBX65by38ALvlFileF(PGESTRING  filePath, LevelData &FileData);
+    static bool ReadSMBX65by38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
+    static bool ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
+
+
     /*!
      * \brief Generates SMBX65-38A Level file data
      * \param FileData Level data structure
@@ -138,6 +152,11 @@ public:
      */
     static LevelData        ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath="");
 
+    static bool ReadExtendedLvlFileF(PGESTRING  filePath, LevelData &FileData);
+    static bool ReadExtendedLvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
+    static bool ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
+
+
     /*!
      * \brief Generates PGE-X Level file
      * \param FileData Level data structure
@@ -151,6 +170,16 @@ public:
      * \return Level data structure
      */
     static LevelData        CreateLevelData();
+    /*!
+     * \brief Initializes blank level data structure
+     * \param NewFileData blank level data structure
+     */
+    static void CreateLevelData(LevelData &NewFileData);
+    /*!
+     * \brief Initializes header only of the blank level data structure
+     * \param NewFileData blank level data structure
+     */
+    static void CreateLevelHeader(LevelData &NewFileData);
     /*!
      * \brief Initializes Level specific NPC entry structure with default properties
      * \return Initialized with default properties level specific NPC entry structure
@@ -196,6 +225,12 @@ public:
      * \return Initialized with default properties level specific Section Settings entry structure
      */
     static LevelSection     CreateLvlSection();
+
+    /*!
+     * \brief Appends internal layers and events if not exists
+     * \param FileData initalized and filled level file
+     */
+    static void LevelAddInternalEvents(LevelData &FileData);
 
     /*!
      * \brief Optimizing level data for SMBX64 Standard requirements
@@ -248,6 +283,11 @@ public:
      * \return World data structure
      */
     static WorldData        ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath);
+
+    static bool ReadSMBX64WldFileF(PGESTRING  filePath, WorldData &FileData);
+    static bool ReadSMBX64WldFileRaw(PGESTRING &rawdata, PGESTRING  filePath, WorldData &FileData);
+    static bool ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldData /*output*/ &FileData);
+
     /*!
      * \brief Generates raw data string in SMBX1...64 World map format
      * \param FileData World map data structure
@@ -319,6 +359,11 @@ public:
      */
     static GamesaveData     ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePath);
 
+    static bool ReadSMBX64SavFileF(PGESTRING  filePath, GamesaveData &FileData);
+    static bool ReadSMBX64SavFileRaw(PGESTRING &rawdata, PGESTRING  filePath, GamesaveData &FileData);
+    static bool ReadSMBX64SavFile(PGE_FileFormats_misc::TextInput &in, GamesaveData /*output*/ &FileData);
+
+
     /*!
      * \brief Parses PGE-X Game save file from raw data string
      * \param RawData raw data string in PGE-X game save format
@@ -352,6 +397,11 @@ public:
      * \return SMBX Engine specific config structure
      */
     static SMBX64_ConfigFile ReadSMBX64ConfigFile(PGESTRING RawData);
+
+    static bool ReadSMBX64ConfigFileF(PGESTRING  filePath, SMBX64_ConfigFile &FileData);
+    static bool ReadSMBX64ConfigFileRaw(PGESTRING &rawdata, PGESTRING  filePath, SMBX64_ConfigFile &FileData);
+    static bool ReadSMBX64ConfigFile(PGE_FileFormats_misc::TextInput &in, SMBX64_ConfigFile /*output*/ &FileData);
+
     /*!
      * \brief Generates SMBX Engine specific config file raw data string
      * \param FileData SMBX Engine specific config structure
@@ -469,6 +519,7 @@ public:
     static PGESTRING        removeQuotes(PGESTRING str);
     //! String which contains info about last happened error
     static PGESTRING        errorString;
+
 };
 
 #endif // FILE_FORMATS_H

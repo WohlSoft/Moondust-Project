@@ -39,7 +39,7 @@
 NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
     PGESTRING errorString;
-    int str_count=0;        //Line Counter
+    //int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
     PGESTRINGList Params;
@@ -69,7 +69,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     }
 
     //Read NPC.TXT File config
-    #define NextLine(line) str_count++;line = inf.readLine();
+    #define NextLine(line) line = inf.readCVSLine();
 
     NextLine(line)
     while(!IsNULL(line))
@@ -93,7 +93,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        {
            if(!IgnoreBad)
            {
-               unknownLines += fromNum(str_count)+": "+line+" <wrong syntax!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <wrong syntax!>\n";
                NextLine(line)
                continue;
            }
@@ -108,7 +108,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be signed intger!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
@@ -123,7 +123,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be signed intger!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
@@ -139,7 +139,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -154,7 +154,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -170,7 +170,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -185,7 +185,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -200,7 +200,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -215,7 +215,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -232,7 +232,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -247,7 +247,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -262,7 +262,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -277,7 +277,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -292,7 +292,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -307,7 +307,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -322,7 +322,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -337,7 +337,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -352,7 +352,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -367,7 +367,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -382,7 +382,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -397,7 +397,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -412,7 +412,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sFloat(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be signed floating point number!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed floating point number!>\n";
            }
            else
            {
@@ -427,7 +427,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -442,7 +442,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -457,7 +457,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -472,7 +472,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -487,7 +487,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be from 0 to 3!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be from 0 to 3!>\n";
            }
            else
            {
@@ -502,7 +502,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+              unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -520,7 +520,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -535,7 +535,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -575,7 +575,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         {
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned integer!>\n";
            } else {
                if(Params[1].size()>7)
                    FileData.grid=32;
@@ -590,7 +590,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         {
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be signed integer!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed integer!>\n";
            } else {
                if(Params[1].size()>7)
                    FileData.grid_offset_x=0;
@@ -605,7 +605,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         {
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be signed integer!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed integer!>\n";
            } else {
                if(Params[1].size()>7)
                    FileData.grid_offset_y=0;
@@ -620,7 +620,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         {
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned integer!>\n";
            } else {
                if(Params[1].size()>7)
                    FileData.grid_offset_y=0;
@@ -635,7 +635,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
               //errStr = "Unknown value";
               //if(!IgnoreBad) goto badfile;
            //Store unknown value into warning
-           unknownLines += fromNum(str_count)+": "+line+"\n";
+           unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+"\n";
        }
 
     NextLine(line)
@@ -657,7 +657,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 
 //No more need
     //badfile:    //If file format not corrects
-    //BadFileMsg(inf.fileName(), str_count, line+"\n"+Params[0]+"\nReason: "+errStr);
+    //BadFileMsg(inf.fileName(), inf.getCurrentLineNumber(), line+"\n"+Params[0]+"\nReason: "+errStr);
     //FileData.ReadFileValid=false;
     //return FileData;
 }

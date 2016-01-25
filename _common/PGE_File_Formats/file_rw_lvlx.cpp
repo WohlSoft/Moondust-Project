@@ -133,12 +133,33 @@ badfile:
     return FileData;
 }
 
+bool FileFormats::ReadExtendedLvlFileF(PGESTRING  filePath, LevelData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, true);
+    return ReadExtendedLvlFile(file, FileData);
+}
+
+bool FileFormats::ReadExtendedLvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadExtendedLvlFile(file, FileData);
+}
+
 LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath)
 {
-    PGESTRING errorString;
-    PGEX_FileBegin();
-
     LevelData FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
+    ReadSMBX64LvlFile(file, FileData);
+    return FileData;
+}
+
+//LevelData FileFormats::ReadExtendedLvlFile(PGESTRING &RawData, PGESTRING filePath)
+bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
+{
+    PGESTRING errorString;
+    PGESTRING filePath = in.getFilePath();
+    PGESTRING line;  /*Current Line data*/
+    //LevelData FileData;
     FileData = CreateLevelData();
 
     //Add path data
@@ -164,7 +185,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     LevelSMBX64Event event;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    PGEX_FileParseTree(RawData);
+    PGEX_FileParseTree(in.readAll());
 
     PGEX_FetchSection() //look sections
     {
@@ -800,16 +821,16 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
 
     errorString.clear(); //If no errors, clear string;
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
     badfile:    //If file format is not correct
 
     FileData.ERROR_info=errorString;
-    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linenum=in.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
 
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 

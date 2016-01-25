@@ -1,4 +1,4 @@
-          PGE File Library v 0.3.1.7
+          PGE File Library v 0.3.1.9
 ==================================================
 This library is a part of PGE Project.
 ==================================================
@@ -13,6 +13,9 @@ This library is a part of PGE Project.
 *.wldx  PGE-X World File               -  Read/Write
 *.savx  PGE-X Game save File           -  Read/Write
 *.meta  PGE-X non-SMBX64 Meta File     -  Read/Write
+*.lvl   SMBX 65-38A Level File         -  Read/Write
+*.wld   SMBX 65-38A World File         -  Read/Write
+*.sav   SMBX 65-38A Game save File     -  Read/Write
 
 ==================================================
 Use library with this header:

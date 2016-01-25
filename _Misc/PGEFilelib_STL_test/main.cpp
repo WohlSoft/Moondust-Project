@@ -76,6 +76,35 @@ int main()
     fout<<FileFormats::WriteSMBX64LvlFile(level, 1);
     fout.close();
 
+
+    printLine();
+    cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
+    level=FileFormats::ReadSMBX65by38ALvlFileHeader("test_65-38a.lvl");
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level);
+    }
+
+
+
+    printLine();
+    cout << "\n\nSMBX65-38A Level Read test:" << endl;
+    level=FileFormats::OpenLevelFile("test_65-38a.lvl");
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level);
+    }
+
+
+
     printLine();
     cout << "\n\nPGE-X Level Read Header test:" << endl;
     level=FileFormats::ReadExtendedLvlFileHeader("test.lvlx");
@@ -167,7 +196,7 @@ int main()
     fout.close();
 
 
-    PGE_FileFormats_misc::FileInfo x("melw.shit.LvlVX");
+    PGE_FileFormats_misc::FileInfo x("shit.txt");
     cout << "\n\n\n";
     cout << "Name: " << x.filename() << endl;
     cout << "FPat: " << x.fullPath() << endl;

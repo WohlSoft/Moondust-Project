@@ -65,6 +65,32 @@ int main(int argc, char *argv[])
         printLevelInfo(level,cout);
     }
 
+
+    printLine(cout);
+    cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
+    level=FileFormats::ReadSMBX65by38ALvlFileHeader("test_65-38a.lvl");
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nSMBX65-38A Level Read test:" << endl;
+    level=FileFormats::OpenLevelFile("test_65-38a.lvl");
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+
     printLine(cout);
     cout << "\n\nPGE-X Level Read Header test:" << endl;
     level=FileFormats::ReadExtendedLvlFileHeader("test.lvlx");
