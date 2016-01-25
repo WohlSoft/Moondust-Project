@@ -423,6 +423,9 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_BoolVal("CSV", lvl_section.wrap_v)//Connect sides vertically
                     PGEX_BoolVal("OE", lvl_section.OffScreenEn)//Offscreen exit
                     PGEX_BoolVal("SR", lvl_section.lock_left_scroll)//Right-way scroll only (No Turn-back)
+                    PGEX_BoolVal("SL", lvl_section.lock_right_scroll)//Left-way scroll only (No Turn-forward)
+                    PGEX_BoolVal("SD", lvl_section.lock_up_scroll)//Down-way scroll only (No Turn-forward)
+                    PGEX_BoolVal("SU", lvl_section.lock_down_scroll)//Up-way scroll only (No Turn-forward)
                     PGEX_BoolVal("UW", lvl_section.underwater)//Underwater bit
                 }
                 lvl_section.PositionX=lvl_section.size_left-10;
@@ -1009,6 +1012,12 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
             if(FileData.sections[i].lock_left_scroll)
                 TextData += PGEFile::value("SR", PGEFile::BoolS(FileData.sections[i].lock_left_scroll));  // Right-way scroll only (No Turn-back)
+            if(FileData.sections[i].lock_right_scroll)
+                TextData += PGEFile::value("SL", PGEFile::BoolS(FileData.sections[i].lock_right_scroll));  // Left-way scroll only (No Turn-back)
+            if(FileData.sections[i].lock_up_scroll)
+                TextData += PGEFile::value("SD", PGEFile::BoolS(FileData.sections[i].lock_up_scroll));  // Down-way scroll only (No Turn-back)
+            if(FileData.sections[i].lock_down_scroll)
+                TextData += PGEFile::value("SU", PGEFile::BoolS(FileData.sections[i].lock_down_scroll));  // Up-way scroll only (No Turn-back)
             if(FileData.sections[i].underwater)
                 TextData += PGEFile::value("UW", PGEFile::BoolS(FileData.sections[i].underwater));  // Underwater bit
             //TextData += PGEFile::value("SL", PGEFile::BoolS(FileData.sections[i].noforward));  // Left-way scroll only (No Turn-forward)
@@ -1155,6 +1164,10 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("GT", PGEFile::IntS(FileData.npc[i].generator_type));  // Generator type
                 TextData += PGEFile::value("GD", PGEFile::IntS(FileData.npc[i].generator_direct));  // Generator direct
                 TextData += PGEFile::value("GM", PGEFile::IntS(FileData.npc[i].generator_period));  // Generator time
+                if(FileData.npc[i].generator_direct>0)
+                {
+                    //FIXME!!! put custom-angle, branches, angle-range and initial-speed values!
+                }
             }
 
             if(!FileData.npc[i].msg.PGESTRINGisEmpty())

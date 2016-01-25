@@ -181,6 +181,7 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src)
     }
 }
 
+/***********  Pre-defined values dependent to NPC Generator Effect field value  **************/
 
 /*  FIELD to Types/Directions conversion table
 0	1	2	3	4 <- types ___ directions
@@ -195,13 +196,16 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src)
 0	15	0	0	27      11
 0	16	0	0	28      12
 */
+
 static const int SMBX65_NpcGeneratorTypes[29] =
   //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
   { 0,0,0,0,0,1,1,1,1,0,0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4};
 
 static const int SMBX65_NpcGeneratorDirections[29] =
   //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
-  { 0,0,0,0,0,1,1,1,1,0,0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4};
+  { 0,0,0,0,0,1,2,3,4,0,0, 0, 0, 9, 10,11,12, 1, 2, 3, 4, 0, 0, 0, 0,9, 10,11,12};
+
+/**********************************************************************************************/
 
 
 //LevelData FileFormats::ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath)
@@ -751,8 +755,9 @@ readLineAgain:
                                 //              c3=0
                                     case 2:
                                         if( SMBX64::sInt(dLine) )
-                                        goto badfile;
-                                        else {
+                                            goto badfile;
+                                        else
+                                        {
                                             int gentype=toInt(dLine);
                                             switch(gentype)
                                             {
@@ -760,13 +765,53 @@ readLineAgain:
                                                     npcdata.generator_type   = LevelNPC::NPC_GENERATOR_APPEAR;
                                                     npcdata.generator_direct = LevelNPC::NPC_GEN_CENTER;
                                                 break;
+                                                default:
+                                                if(gentype<29)
+                                                {
+                                                    npcdata.generator_type   = SMBX65_NpcGeneratorTypes[gentype];
+                                                    npcdata.generator_direct = SMBX65_NpcGeneratorDirections[gentype];
+                                                } else {
+                                                    npcdata.generator_type   = LevelNPC::NPC_GENERATOR_APPEAR;
+                                                    npcdata.generator_direct = LevelNPC::NPC_GEN_CENTER;
+                                                }
+                                            }
+                                            //Convert value into SMBX64 and PGEX compatible
+                                            switch(npcdata.generator_type)
+                                            {
+                                                case 0:npcdata.generator_type   = LevelNPC::NPC_GENERATPR_PROJECTILE; break;
+                                                case 1:npcdata.generator_type   = LevelNPC::NPC_GENERATOR_WARP; break;
+                                                case 4:npcdata.generator_type   = LevelNPC::NPC_GENERATOR_APPEAR; break;
                                             }
                                         }
                                     break;
                                 //    c4=generator direction[angle][when c3=0]
+                                    case 3:
+                                        {
+                                            if( SMBX64::sFloat(cLine) )
+                                                goto badfile;
+                                            else npcdata.generator_custom_angle = toFloat(cLine);
+                                        } break;
                                 //    c5=batch[when c3=0][MAX=32]
+                                    case 4:
+                                        {
+                                            if( SMBX64::sFloat(cLine) )
+                                                goto badfile;
+                                            else npcdata.generator_branches = (long)fabs(round(toFloat(cLine)));
+                                        } break;
                                 //    c6=angle range[when c3=0]
+                                    case 5:
+                                        {
+                                            if( SMBX64::sFloat(cLine) )
+                                                goto badfile;
+                                            else npcdata.generator_angle_range = fabs(toFloat(cLine));
+                                        } break;
                                 //    c7=speed[when c3=0][float]
+                                    case 6:
+                                        {
+                                            if( SMBX64::sFloat(cLine) )
+                                                goto badfile;
+                                            else npcdata.generator_initial_speed = toFloat(cLine);
+                                        } break;
                                 }
                             }
                     } break;

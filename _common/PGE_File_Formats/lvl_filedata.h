@@ -254,6 +254,14 @@ struct LevelNPC
     int generator_type;
     //! Generator's delay between each shoot in deci-seconds
     int generator_period;
+    //! Generator's custom angle in degrees (applying if generator direction is equal to 0 [center])
+    double generator_custom_angle;
+    //! Generator's branches (how much need spawn at one loop) (applying if generator direction is equal to 0 [center])
+    int generator_branches;
+    //! Generator's range of multi-shooting (how much need spawn at one loop) (applying if generator direction is equal to 0 [center])
+    double generator_angle_range;
+    //! Generator's initial NPC's speed (how much need spawn at one loop) (applying if generator direction is equal to 0 [center])
+    double generator_initial_speed;
     //! Talking message. If not empty, NPC will be talkable
     PGESTRING msg;
     //! NPC will not communicate and will not collide with playable characters

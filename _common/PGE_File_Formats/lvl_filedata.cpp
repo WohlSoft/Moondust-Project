@@ -222,6 +222,10 @@ LevelNPC    FileFormats::CreateLvlNpc()
     dummyNPC.generator_type=1;
     dummyNPC.generator_direct=1;
     dummyNPC.generator_period=20;
+    dummyNPC.generator_custom_angle=0.0;
+    dummyNPC.generator_branches=1;
+    dummyNPC.generator_angle_range=360.0;
+    dummyNPC.generator_initial_speed=10.0;
     dummyNPC.msg="";
     dummyNPC.friendly=false;
     dummyNPC.nomove=false;
