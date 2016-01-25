@@ -84,7 +84,20 @@ readLineAgain:
                     {
                         FileData.LevelName = PGE_URLDEC(cLine);
                     } break;
+                //param3=a filename, when player died, the player will be sent to this level.
+                case 3:
+                    {
+                        FileData.open_level_on_fail = PGE_URLDEC(cLine);
+                    } break;
+                //param4=normal entrance / to warp [0-WARPMAX]
+                case 4:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else FileData.open_level_on_fail_warpID = toInt(cLine);
+                    } break;
                 }
+
             }
         } else goto readLineAgain;
     }
@@ -168,6 +181,29 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src)
     }
 }
 
+
+/*  FIELD to Types/Directions conversion table
+0	1	2	3	4 <- types ___ directions
+                          /
+0	0	0	0	0       0
+0	5	0	0	17      1
+0	6	0	0	18      2
+0	7	0	0	19      3
+0	8	0	0	20  	4
+0	13	0	0	25      9
+0	14	0	0	26      10
+0	15	0	0	27      11
+0	16	0	0	28      12
+*/
+static const int SMBX65_NpcGeneratorTypes[29] =
+  //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+  { 0,0,0,0,0,1,1,1,1,0,0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4};
+
+static const int SMBX65_NpcGeneratorDirections[29] =
+  //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+  { 0,0,0,0,0,1,1,1,1,0,0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4};
+
+
 //LevelData FileFormats::ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath)
 bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
 {
@@ -250,8 +286,18 @@ readLineAgain:
                     {
                         FileData.LevelName = PGE_URLDEC(cLine);
                     } break;
-                    //param3=a filename, when player died, the player will be sent to this level.
-                    //param4=normal entrance / to warp [0-WARPMAX]
+                //param3=a filename, when player died, the player will be sent to this level.
+                case 3:
+                    {
+                        FileData.open_level_on_fail = PGE_URLDEC(cLine);
+                    } break;
+                //param4=normal entrance / to warp [0-WARPMAX]
+                case 4:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else FileData.open_level_on_fail_warpID = toInt(cLine);
+                    } break;
                 }
             }
         }
@@ -489,14 +535,15 @@ readLineAgain:
                     SplitCSVStr(bevents, cLine);
                     for(int j=0; j<(signed)bevents.size(); j++)
                         {
+                            PGESTRING &dLine=bevents[j];
                             switch(j)
                             {
                             //    e1=block destory event name[***urlencode!***]
-                                case 0: blocks.event_destroy=PGE_URLDEC(cLine); break;
+                                case 0: blocks.event_destroy=PGE_URLDEC(dLine); break;
                             //    e2=block hit event name[***urlencode!***]
-                                case 1: blocks.event_hit=PGE_URLDEC(cLine); break;
+                                case 1: blocks.event_hit=PGE_URLDEC(dLine); break;
                             //    e3=no more object in layer event name[***urlencode!***]4
-                                case 2: blocks.event_emptylayer=PGE_URLDEC(cLine); break;
+                                case 2: blocks.event_emptylayer=PGE_URLDEC(dLine); break;
                             }
                         }
                     } break;
@@ -560,42 +607,178 @@ readLineAgain:
             FileData.bgo.push_back(bgodata);
         }
 
-        //next line: npcs
-        //N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
-        //layer=layer name["" == "Default"][***urlencode!***]
-        //id=npc id
-        //x=npc position x
-        //y=npc position y
-        //b1=[-1]left [0]random [1]right
-        //b2=friendly npc
-        //b3=don't move npc
-        //b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
-        //sp=special option
-        //    [***urlencode!***]
-        //    e1=death event
-        //    e2=talk event
-        //    e3=activate event
-        //    e4=no more object in layer event
-        //    e5=grabed event
-        //    e6=next frame event
-        //    e7=touch event
-        //    a1=layer name to attach
-        //    a2=variable name to send
-        //c1=generator enable
-        //    [if c1!=0]
-        //    c2=generator period[1 frame]
-        //    c3=generator effect
-        //        c3-1[1=warp][0=projective][4=no effect]
-        //        c3-2[0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]
-        //            if (c3-2)!=0
-        //            c3=4*(c3-1)+(c3-2)
-        //            else
-        //            c3=0
-        //    c4=generator direction[angle][when c3=0]
-        //    c5=batch[when c3=0][MAX=32]
-        //    c6=angle range[when c3=0]
-        //    c7=speed[when c3=0][float]
-        //msg=message by this npc talkative[***urlencode!***]
+        else
+        if(currentLine[0]=="N")//NPC
+        {
+            //T|layer|id|x|y
+            npcdata = CreateLvlNpc();
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                //next line: npcs
+                //N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //layer=layer name["" == "Default"][***urlencode!***]
+                case 1:
+                    {
+                        npcdata.layer=(cLine==""?"Default":PGE_URLDEC(cLine));
+                    } break;
+                //id=npc id
+                case 2:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else npcdata.id=toInt(cLine);
+                    } break;
+                //x=npc position x
+                case 3:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else npcdata.x=(long)round(toFloat(cLine));
+                    } break;
+                //y=npc position y
+                case 4:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else npcdata.y=(long)round(toFloat(cLine));
+                    } break;
+
+                //b1=[-1]left [0]random [1]right
+                //b2=friendly npc
+                //b3=don't move npc
+                //b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
+                case 5:
+                    {
+                        PGESTRINGList physparams;
+                        SplitCSVStr(physparams, cLine);
+                        for(int j=0; j<(signed)physparams.size(); j++)
+                            {
+                                PGESTRING &dLine=physparams[j];
+                                switch(j)
+                                {
+                                //b1=[-1]left [0]random [1]right
+                                    case 0:
+                                        if( SMBX64::sInt(dLine) )
+                                        goto badfile;
+                                        else npcdata.direct=toInt(dLine);
+                                    break;
+                                //b2=friendly npc
+                                    case 1:
+                                        npcdata.friendly = ((dLine!="")&&(dLine!="0"));
+                                    break;
+                                //b3=don't move npc
+                                    case 2:
+                                        npcdata.nomove = ((dLine!="")&&(dLine!="0"));
+                                        break;
+                                //b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
+                                    case 3:
+                                        //this field is useless here, ignore it
+                                        //on file save it can be quickly re-calculated
+                                        break;
+                                }
+                            }
+                    } break;
+
+                //sp=special option
+                case 6:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else npcdata.special_data = (int)round(toFloat(cLine));
+                    } break;
+
+                //Event slots
+                case 7:
+                    {
+                    PGESTRINGList nevents;
+                    SplitCSVStr(nevents, cLine);
+                    for(int j=0; j<(signed)nevents.size(); j++)
+                        {
+                            PGESTRING &dLine=nevents[j];
+                            switch(j) //    [***urlencode!***]
+                            {
+                            //    e1=death event
+                                case 0: npcdata.event_die=PGE_URLDEC(dLine); break;
+                            //    e2=talk event
+                                case 1: npcdata.event_talk=PGE_URLDEC(dLine); break;
+                            //    e3=activate event
+                                case 2: npcdata.event_activate=PGE_URLDEC(dLine); break;
+                            //    e4=no more object in layer event
+                                case 3: npcdata.event_emptylayer=PGE_URLDEC(dLine); break;
+                            //    e5=grabed event
+                                case 4: npcdata.event_grab=PGE_URLDEC(dLine); break;
+                            //    e6=next frame event
+                                case 5: npcdata.event_nextframe=PGE_URLDEC(dLine); break;
+                            //    e7=touch event
+                                case 6: npcdata.event_touch=PGE_URLDEC(dLine); break;
+                            //    a1=layer name to attach
+                                case 7: npcdata.attach_layer=PGE_URLDEC(dLine); break;
+                            //    a2=variable name to send
+                                case 8: npcdata.send_it_to_variable=PGE_URLDEC(dLine); break;
+                            }
+                        }
+                    } break;
+
+                case 8:
+                    {
+                        PGESTRINGList nevents;
+                        SplitCSVStr(nevents, cLine);
+                        for(int j=0; j<(signed)nevents.size(); j++)
+                            {
+                                PGESTRING &dLine=nevents[j];
+                                if((j>0)&&(!npcdata.generator)) break;
+                                switch(j)
+                                {
+                                //c1=generator enable
+                                    case 0: npcdata.generator = ((cLine!="")&&(cLine!="0")); break;
+                                //[if c1!=0]
+                                //    c2=generator period[1 frame]
+                                    case 1:
+                                        if( SMBX64::sInt(dLine) )
+                                        goto badfile;
+                                        else npcdata.generator_period = (toFloat(dLine)/65.0)*100;
+                                    break;
+                                //    c3=generator effect
+                                //        c3-1[1=warp][0=projective][4=no effect]
+                                //        c3-2[0=center][1=up][2=left][3=down][4=right]
+                                //            [9=up+left][10=left+down][11=down+right][12=right+up]
+                                //            if (c3-2)!=0
+                                //              c3=4*(c3-1)+(c3-2)
+                                //            else
+                                //              c3=0
+                                    case 2:
+                                        if( SMBX64::sInt(dLine) )
+                                        goto badfile;
+                                        else {
+                                            int gentype=toInt(dLine);
+                                            switch(gentype)
+                                            {
+                                                case 0:
+                                                    npcdata.generator_type   = LevelNPC::NPC_GENERATOR_APPEAR;
+                                                    npcdata.generator_direct = LevelNPC::NPC_GEN_CENTER;
+                                                break;
+                                            }
+                                        }
+                                    break;
+                                //    c4=generator direction[angle][when c3=0]
+                                //    c5=batch[when c3=0][MAX=32]
+                                //    c6=angle range[when c3=0]
+                                //    c7=speed[when c3=0][float]
+                                }
+                            }
+                    } break;
+                //msg=message by this npc talkative[***urlencode!***]
+                case 9:
+                    {
+                        npcdata.msg=PGE_URLDEC(cLine);
+                    } break;
+                }
+            }
+            FileData.npc.push_back(npcdata);
+        }
 
         //next line: waters
         //Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event

@@ -215,8 +215,41 @@ struct LevelNPC
     long special_data2;
     //! Makes a generator of this NPC
     bool generator;
+    /*!
+     * \brief List of NPC Generator directions
+     */
+    enum GeneratorDirection
+    {
+        //! Custom NPC Generator direction
+        NPC_GEN_CENTER=0,
+        //! Up NPC Generator direction
+        NPC_GEN_UP=1,
+        //! Left NPC Generator direction
+        NPC_GEN_LEFT=2,
+        //! Down NPC Generator direction
+        NPC_GEN_DOWN=3,
+        //! Right NPC Generator direction
+        NPC_GEN_RIGHT = 4,
+        //! Up-Left NPC Generator direction
+        NPC_GEN_UP_LEFT = 9,
+        //! Left-Down NPC Generator direction
+        NPC_GEN_LEFT_DOWN = 10,
+        //! Down-Right NPC Generator direction
+        NPC_GEN_DOWN_RIGHT = 11,
+        //! Right-Up NPC Generator direction
+        NPC_GEN_RIGHT_UP = 12,
+    };
     //! Generator direction [1] up, [2] left, [3] down, [4] right
     int generator_direct;
+    /*!
+     * \brief NPC Generator types list
+     */
+    enum GeneratorTypes
+    {
+        NPC_GENERATOR_APPEAR=0,
+        NPC_GENERATOR_WARP=1,
+        NPC_GENERATPR_PROJECTILE=2
+    };
     //! Generator type 0 - instant appearence, 1 - warp, 2 - projectile shoot
     int generator_type;
     //! Generator's delay between each shoot in deci-seconds
@@ -239,8 +272,16 @@ struct LevelNPC
     PGESTRING event_talk;
     //! Trigger event on destroying of this block and at sametime parent layer has no more other objects
     PGESTRING event_emptylayer;
+    //! Trigger event when player will grab this NPC
+    PGESTRING event_grab;
+    //! Trigger event every game logic loop
+    PGESTRING event_nextframe;
+    //! Trigger event when player will touch this NPC
+    PGESTRING event_touch;
     //! Attach layer to this NPC. All memberes of this layer are will follow to motion of this NPC.
     PGESTRING attach_layer;
+    //! Variable name where NPC-ID will be written
+    PGESTRING send_it_to_variable;
 
 /*
  * Editor-only parameters which are not saving into file
@@ -271,11 +312,39 @@ struct LevelDoor
     long oy;
     //! [Editing only, is not saving into file] is exit point placed to the level
     bool isSetOut;
-
+    /*!
+     * \brief List of possible entrance directions
+     */
+    enum EntranceDirectopn
+    {
+        ENTRANCE_UP=1,
+        ENTRANCE_LEFT=2,
+        ENTRANCE_DOWN=3,
+        ENTRANCE_RIGHT=4
+    };
     //! Direction of entrance point: [3] down, [1] up, [2] left, [4] right (not same as exit!)
     int idirect;
+    /*!
+     * \brief List of possible exit direction values
+     */
+    enum ExitDirectopn
+    {
+        EXIT_DOWN=1,
+        EXIT_RIGHT=2,
+        EXIT_UP=3,
+        EXIT_LEFT=4
+    };
     //! Direction of exit point: [1] down [3] up [4] left [2] right (not same as entrance!)
     int odirect;
+    /*!
+     * \brief Type of warp: Instant teleport, pipe or door
+     */
+    enum WarpType
+    {
+        WARP_INSTANT=0,
+        WARP_PIPE=1,
+        WARP_DOOR=2
+    };
     //! Warp type: [1] pipe, [2] door, [0] instant
     int type;
     //! Target level filename (Exit from this leven and enter to target level)
@@ -475,6 +544,10 @@ struct LevelData
 
     //! Understandable name of the level
     PGESTRING LevelName;
+    //! If not empty, start this level when player was failed
+    PGESTRING open_level_on_fail;
+    //! Target WarpID (0 - regular entrance, >=1 - WarpID of entrance)
+    unsigned int open_level_on_fail_warpID;
 
 /*
  * Level data

@@ -566,6 +566,9 @@ void FileFormats::CreateLevelData(LevelData &NewFileData)
     NewFileData.LevelName = "";
     NewFileData.stars = 0;
 
+    NewFileData.open_level_on_fail = "";
+    NewFileData.open_level_on_fail_warpID = 0;
+
     NewFileData.bgo_array_id = 1;
     NewFileData.blocks_array_id = 1;
     NewFileData.doors_array_id = 1;

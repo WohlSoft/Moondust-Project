@@ -56,7 +56,7 @@
 LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 {
     LevelData FileData;
-    FileData = CreateLevelData();
+    CreateLevelHeader(FileData);
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, true))
@@ -113,6 +113,22 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
                 else
                     goto badfile;
             }
+            else
+            if(data[i][0]=="DL") //Open Level on player's fail
+            {
+                if(PGEFile::IsQStr(data[i][1]))
+                    FileData.open_level_on_fail = PGEFile::X2STR(data[i][1]);
+                else
+                    goto badfile;
+            }
+            else
+            if(data[i][0]=="DE") //Target WarpID of fail-level entrace
+            {
+                if(PGEFile::IsIntU(data[i][1]))
+                    FileData.open_level_on_fail_warpID = toInt(data[i][1]);
+                else
+                    goto badfile;
+            }
         }
     }
 
@@ -160,7 +176,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
     PGESTRING filePath = in.getFilePath();
     PGESTRING line;  /*Current Line data*/
     //LevelData FileData;
-    FileData = CreateLevelData();
+    CreateLevelData(FileData);
 
     //Add path data
     if(filePath.size() > 0)
@@ -202,6 +218,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_ValueBegin()
                     PGEX_StrVal("TL", FileData.LevelName) //Level Title
                     PGEX_UIntVal("SZ", FileData.stars) //Starz number
+                    PGEX_StrVal("DL", FileData.open_level_on_fail) //Open level on fail
+                    PGEX_UIntVal("DE", FileData.open_level_on_fail_warpID) //Open level's warpID on fail
                 }
             }
         }//HEADER
@@ -573,10 +591,14 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_BoolVal("BS", npcdata.is_boss) //Enable boss mode!
                     PGEX_StrVal("LR", npcdata.layer) //Layer
                     PGEX_StrVal("LA", npcdata.attach_layer) //Attach Layer
+                    PGEX_StrVal("SV", npcdata.send_it_to_variable) //Send ID to variable
                     PGEX_StrVal("EA", npcdata.event_activate) //Event slot "Activated"
                     PGEX_StrVal("ED", npcdata.event_die) //Event slot "Death/Take/Destroy"
                     PGEX_StrVal("ET", npcdata.event_talk) //Event slot "Talk"
                     PGEX_StrVal("EE", npcdata.event_emptylayer) //Event slot "Layer is empty"
+                    PGEX_StrVal("EG", npcdata.event_grab)//Event slot "On grab"
+                    PGEX_StrVal("EO", npcdata.event_touch)//Event slot "On touch"
+                    PGEX_StrVal("EF", npcdata.event_nextframe)//Evemt slot "Trigger every frame"
                 }
 
                 npcdata.array_id = FileData.npc_array_id++;
@@ -853,11 +875,18 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     }
 
     //HEAD section
-    if( (!FileData.LevelName.PGESTRINGisEmpty())||(FileData.stars>0) )
+    if( (!FileData.LevelName.PGESTRINGisEmpty())||
+        (FileData.stars>0) ||
+        (!FileData.open_level_on_fail.PGESTRINGisEmpty())||
+        (FileData.open_level_on_fail_warpID>0))
     {
         TextData += "HEAD\n";
         TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
         TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
+        if(FileData.open_level_on_fail.PGESTRINGisEmpty())
+            TextData += PGEFile::value("DL", PGEFile::qStrS(FileData.open_level_on_fail)); // Open level on fail
+        if(FileData.open_level_on_fail_warpID>0)
+            TextData += PGEFile::value("DE", PGEFile::IntS(FileData.open_level_on_fail_warpID));    // Open WarpID of level on fail
         TextData += "\n";
         TextData += "HEAD_END\n";
     }
@@ -1143,6 +1172,8 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             if(!FileData.npc[i].attach_layer.PGESTRINGisEmpty())
                 TextData += PGEFile::value("LA", PGEFile::qStrS(FileData.npc[i].attach_layer));  // Attach layer
+            if(!FileData.npc[i].send_it_to_variable.PGESTRINGisEmpty())
+                TextData += PGEFile::value("SV", PGEFile::qStrS(FileData.npc[i].send_it_to_variable)); //Send ID to variable
 
             //Event slots
             if(!FileData.npc[i].event_activate.PGESTRINGisEmpty())
@@ -1153,7 +1184,12 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("ET", PGEFile::qStrS(FileData.npc[i].event_talk));
             if(!FileData.npc[i].event_emptylayer.PGESTRINGisEmpty())
                 TextData += PGEFile::value("EE", PGEFile::qStrS(FileData.npc[i].event_emptylayer));
-
+            if(!FileData.npc[i].event_grab.PGESTRINGisEmpty())
+                TextData += PGEFile::value("EG", PGEFile::qStrS(FileData.npc[i].event_grab));
+            if(!FileData.npc[i].event_touch.PGESTRINGisEmpty())
+                TextData += PGEFile::value("EO", PGEFile::qStrS(FileData.npc[i].event_touch));
+            if(!FileData.npc[i].event_touch.PGESTRINGisEmpty())
+                TextData += PGEFile::value("EF", PGEFile::qStrS(FileData.npc[i].event_nextframe));
             TextData += "\n";
         }
 
