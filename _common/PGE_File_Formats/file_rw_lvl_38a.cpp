@@ -691,7 +691,17 @@ readLineAgain:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else npcdata.special_data = (int)round(toFloat(cLine));
+                        else
+                        {
+                            npcdata.special_data = (int)round(toFloat(cLine));
+                            switch(npcdata.id)
+                            {
+                            case 15: case 39: case 86: //Bind "Is Boss" flag for supported NPC's
+                                npcdata.is_boss = (bool)npcdata.special_data;
+                                npcdata.special_data = 0;
+                            default: break;
+                            }
+                        }
                     } break;
 
                 //Event slots
@@ -825,31 +835,72 @@ readLineAgain:
             FileData.npc.push_back(npcdata);
         }
 
-        //next line: waters
-        //Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
-        //layer=layer name["" == "Default"][***urlencode!***]
-        //x=position x
-        //y=position y
-        //w=width
-        //h=height
-        //b1=liquid type
-        //    01-Water[friction=0.5]
-        //    02-Quicksand[friction=0.1]
-        //    03-Custom Water
-        //    04-Gravitational Field
-        //    05-Event Once
-        //    06-Event Always
-        //    07-NPC Event Once
-        //    08-NPC Event Always
-        //    09-Click Event
-        //    10-Collision Script
-        //    11-Click Script
-        //    12-Collision Event
-        //b2=friction
-        //b3=Acceleration Direction
-        //b4=Acceleration
-        //b5=Maximum Velocity
-        //event=touch event
+        else
+        if(currentLine[0]=="T")//next line: waters
+        {
+            //Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
+            waters = CreateLvlPhysEnv();
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //    layer=layer name["" == "Default"][***urlencode!***]
+                case 1:
+                    {
+                        waters.layer=(cLine==""?"Default":PGE_URLDEC(cLine));
+                    } break;
+                //x=position x
+                case 2:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else waters.x=(long)round(toFloat(cLine));
+                    } break;
+                //y=position y
+                case 3:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else waters.y=(long)round(toFloat(cLine));
+                    } break;
+                //w=width
+                case 4:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else waters.w=(long)round(toFloat(cLine));
+                    } break;
+                //h=height
+                case 5:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else waters.h=(long)round(toFloat(cLine));
+                    } break;
+                //b1=liquid type
+                //    01-Water[friction=0.5]
+                //    02-Quicksand[friction=0.1]
+                //    03-Custom Water
+                //    04-Gravitational Field
+                //    05-Event Once
+                //    06-Event Always
+                //    07-NPC Event Once
+                //    08-NPC Event Always
+                //    09-Click Event
+                //    10-Collision Script
+                //    11-Click Script
+                //    12-Collision Event
+                //b2=friction
+                //b3=Acceleration Direction
+                //b4=Acceleration
+                //b5=Maximum Velocity
+                //event=touch event
+                }
+            }
+            FileData.physez.push_back(waters);
+        }
+
 
         //next line: warps
         //W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc|lik|liid|noexit|wx|wy|le|we

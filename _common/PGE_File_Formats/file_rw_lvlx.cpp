@@ -588,6 +588,10 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_SIntVal("GT", npcdata.generator_type) //Generator type
                     PGEX_SIntVal("GD", npcdata.generator_direct) //Generator direction
                     PGEX_UIntVal("GM", npcdata.generator_period) //Generator period
+                    PGEX_FloatVal("GA", npcdata.generator_custom_angle) //Generator custom angle
+                    PGEX_UIntVal("GB",  npcdata.generator_branches) //Generator number of branches
+                    PGEX_FloatVal("GR", npcdata.generator_angle_range) //Generator angle range
+                    PGEX_FloatVal("GS", npcdata.generator_initial_speed) //Generator custom initial speed
                     PGEX_StrVal("MG", npcdata.msg) //Message
                     PGEX_BoolVal("FD", npcdata.friendly) //Friendly
                     PGEX_BoolVal("NM", npcdata.nomove) //Don't move
@@ -886,7 +890,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
         TextData += "HEAD\n";
         TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
         TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
-        if(FileData.open_level_on_fail.PGESTRINGisEmpty())
+        if(!FileData.open_level_on_fail.PGESTRINGisEmpty())
             TextData += PGEFile::value("DL", PGEFile::qStrS(FileData.open_level_on_fail)); // Open level on fail
         if(FileData.open_level_on_fail_warpID>0)
             TextData += PGEFile::value("DE", PGEFile::IntS(FileData.open_level_on_fail_warpID));    // Open WarpID of level on fail
@@ -1164,9 +1168,12 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("GT", PGEFile::IntS(FileData.npc[i].generator_type));  // Generator type
                 TextData += PGEFile::value("GD", PGEFile::IntS(FileData.npc[i].generator_direct));  // Generator direct
                 TextData += PGEFile::value("GM", PGEFile::IntS(FileData.npc[i].generator_period));  // Generator time
-                if(FileData.npc[i].generator_direct>0)
+                if(FileData.npc[i].generator_direct==0)
                 {
-                    //FIXME!!! put custom-angle, branches, angle-range and initial-speed values!
+                    TextData += PGEFile::value("GA", PGEFile::FloatS(FileData.npc[i].generator_custom_angle));  // Generator custom angle
+                    TextData += PGEFile::value("GB", PGEFile::IntS(FileData.npc[i].generator_branches));  // Generator branches
+                    TextData += PGEFile::value("GR", PGEFile::FloatS(FileData.npc[i].generator_angle_range));  // Generator angle range
+                    TextData += PGEFile::value("GS", PGEFile::FloatS(FileData.npc[i].generator_initial_speed));  // Generator initial speed
                 }
             }
 
