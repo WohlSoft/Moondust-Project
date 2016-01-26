@@ -64,7 +64,7 @@ void ItemWater::construct()
     waterData.h=32;
     waterData.x=this->pos().x();
     waterData.y=this->pos().y();
-    waterData.quicksand=false;
+    waterData.env_type = LevelPhysEnv::ENV_WATER;
 
     setData(ITEM_TYPE, "Water");
     setData(ITEM_IS_ITEM, 1);
@@ -199,15 +199,28 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QMenu * WaterType = ItemMenu.addMenu(tr("Environment type"));
         WaterType->deleteLater();
 
-    QAction *setAsWater = WaterType->addAction(tr("Water"));
-        setAsWater->setCheckable(true);
-        setAsWater->setChecked(!waterData.quicksand);
-        setAsWater->deleteLater();
+    #define CONTEXT_MENU_ITEM_CHK(name, enable, label, checked_condition)\
+        name = WaterType->addAction(tr(label));\
+        name->setCheckable(true);\
+        name->setEnabled(enable);\
+        name->setChecked(checked_condition);\
+        name->deleteLater(); typeID++;
 
-    QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
-        setAsQuicksand->setCheckable(true);
-        setAsQuicksand->setChecked(waterData.quicksand);
-        setAsQuicksand->deleteLater();
+    QAction *envTypes[12]; int typeID=0;
+
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Water",        waterData.env_type==LevelPhysEnv::ENV_WATER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Quicksand",    waterData.env_type==LevelPhysEnv::ENV_QUICKSAND);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Custom liquid", waterData.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Gravitational Field", waterData.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Touch Event (Once)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Touch Event (Every frame)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "NPC Touch Event (Once)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "NPC Touch Event (Every frame)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Mouse click Event", waterData.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Collision script", waterData.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Mouse click Script", waterData.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Collision Event", waterData.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Air chamber", waterData.env_type==LevelPhysEnv::ENV_AIR);
 
     ItemMenu.addSeparator()->deleteLater();
 
@@ -254,34 +267,6 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else
-    if(selected==setAsWater)
-    {
-        LevelData modData;
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-        {
-            if(SelItem->data(ITEM_TYPE).toString()=="Water")
-            {
-                modData.physez.push_back(((ItemWater *)SelItem)->waterData);
-                ((ItemWater *)SelItem)->setType(0);
-            }
-        }
-        scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
-    }
-    else
-    if(selected==setAsQuicksand)
-    {
-        LevelData modData;
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-        {
-            if(SelItem->data(ITEM_TYPE).toString()=="Water")
-            {
-                modData.physez.push_back(((ItemWater *)SelItem)->waterData);
-                ((ItemWater *)SelItem)->setType(1);
-            }
-        }
-        scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(false));
-    }
-    else
     if(selected==copyPosXYWH)
     {
         QApplication::clipboard()->setText(
@@ -322,6 +307,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     }
     else
     {
+        bool found=false;
         //Fetch layers menu
         foreach(QAction * lItem, layerItems)
         {
@@ -329,8 +315,30 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 //FOUND!!!
                 scene->setLayerToSelected(lItem->data().toString());
+                found=true;
                 break;
             }//Find selected layer's item
+        }
+
+        if(!found)
+        {
+            for(int i=0; i<typeID; i++)
+            {
+                if(selected == envTypes[i])
+                {
+                    LevelData modData;
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(ITEM_TYPE).toString()=="Water")
+                        {
+                            modData.physez.push_back(((ItemWater *)SelItem)->waterData);
+                            ((ItemWater *)SelItem)->setType(i);
+                        }
+                    }
+                    scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+                    found = true;
+                }
+            }
         }
     }
 }
@@ -440,13 +448,13 @@ void ItemWater::setType(int tp)
     switch(tp)
     {
     case 1://Quicksand
-        waterData.quicksand=true;
+        waterData.env_type=true;
         _pen.setColor(Qt::yellow);
         this->setPen(_pen);
         break;
     case 0://Water
     default:
-        waterData.quicksand=false;
+        waterData.env_type=false;
         _pen.setColor(Qt::green);
         this->setPen(_pen);
         break;
@@ -500,7 +508,7 @@ void ItemWater::drawWater()
     setData(ITEM_WIDTH, (int)waterData.w);
     setData(ITEM_HEIGHT, (int)waterData.h);
 
-    setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
+    setPen(QPen(((waterData.env_type)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
 
     QVector<QPointF > points;
     points.clear();

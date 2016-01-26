@@ -34,7 +34,13 @@ void LVL_PhysEnv::init()
 {
     setSize(data.w, data.h);
     setPos(data.x, data.y);
-    env_type = data.quicksand ? Env_Quicksand : Env_Water;
+    switch(data.env_type)
+    {
+        case LevelPhysEnv::ENV_WATER:       env_type = Env_Water; break;
+        case LevelPhysEnv::ENV_QUICKSAND:   env_type = Env_Quicksand; break;
+        case LevelPhysEnv::ENV_AIR:         env_type = Env_Air; break;
+        default:                            env_type = Env_SameAsAround;
+    }
     collide_player = COLLISION_NONE;
     collide_npc = COLLISION_NONE;
     _scene->layers.registerItem(data.layer, this);

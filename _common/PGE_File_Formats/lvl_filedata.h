@@ -367,8 +367,12 @@ struct LevelDoor
     long world_x;
     //! Target World map Н coordinate
     long world_y;
-    //! Stars required to be allowed for enter into this warp
+    //! Stars/Leeks required to be allowed for enter into this warp
     int stars;
+    //! Message if player has no necessary stars/leeks collected
+    PGESTRING stars_msg;
+    //! Don't show stars number in the target level
+    bool star_num_hide;
     //! Name of a parent layer. Default value is "Default"
     PGESTRING layer;
     //! [Unused] resrved boolean flag, always false
@@ -379,6 +383,14 @@ struct LevelDoor
     bool allownpc;
     //! Player need to carry a key to be allowed to enter into this warp
     bool locked;
+    //! Player need to explode lock with a bomb to enter into this warp
+    bool need_a_bomb;
+    //! Hide the entry scene
+    bool hide_entry_scene;
+    //! Allows player to move through this warp carried NPC's to another level
+    bool allownpc_interlevel;
+    //! Trigger event on enter
+    PGESTRING event_enter;
 
 /*
  * Editor-only parameters which are not saving into file
@@ -404,11 +416,36 @@ struct LevelPhysEnv
     long w;
     //! [Unused] reserved long integer value, always 0
     long unknown;
+
+    enum EnvTypes{
+        ENV_WATER                   = 0,
+        ENV_QUICKSAND               = 1,
+        ENV_CUSTOM_LIQUID           = 2,
+        ENV_GRAVITATIONAL_FIELD     = 3,
+        ENV_TOUCH_EVENT_ONCE_PLAYER = 4,
+        ENV_TOUCH_EVENT_PLAYER      = 5,
+        ENV_TOUCH_EVENT_ONCE_NPC    = 6,
+        ENV_TOUCH_EVENT_NPC         = 7,
+        ENV_CLICK_EVENT             = 8,
+        ENV_COLLISION_SCRIPT        = 9,
+        ENV_CLICK_SCRIPT            = 10,
+        ENV_COLLISION_EVENT         = 11,
+        ENV_AIR                     = 12
+    };
     //! Enable quicksand physical environment, overwise water physical environment
-    bool quicksand;
+    int env_type;
     //! Name of a parent layer. Default value is "Default"
     PGESTRING layer;
-
+    //! Custom liquid friction (works with "custom liquid" type)
+    double friction;
+    //! Acceleration direction (works with "custom liquid" type)
+    double accel_direct;
+    //! Acceleration (works with "custom liquid" type)
+    double accel;
+    //! Max velocity (works with "custom liquid" type)
+    double max_velocity;
+    //! Touch event (or script) name
+    PGESTRING touch_event;
 /*
  * Editor-only parameters which are not saving into file
  */
@@ -532,6 +569,28 @@ struct LevelSMBX64Event
 };
 
 /*!
+ * \brief Level Variable entry
+ */
+struct LevelVariable {
+    PGESTRING name;
+    PGESTRING value;
+};
+
+/*!
+ * \brief Level Script entry
+ */
+struct LevelScript {
+    enum ScriptLangs {
+        LANG_LUA = 0,
+        LANG_AUTOCODE = 1,
+        LANG_TEASCRIPT
+    };
+    PGESTRING name;
+    PGESTRING scrupt;
+    int       language;
+};
+
+/*!
  * \brief Level data structure. Contains all available settings and element lists on the level.
  */
 struct LevelData
@@ -600,6 +659,9 @@ struct LevelData
     PGELIST<LevelSMBX64Event > events;
     //! Last used Event's array ID
     unsigned int events_array_id;
+
+    PGELIST<LevelVariable> variables;
+    PGELIST<LevelScript>   scripts;
 
     //! Meta-data: Position bookmarks, Auto-Script configuration, etc., Crash meta-data, etc.
     MetaData metaData;

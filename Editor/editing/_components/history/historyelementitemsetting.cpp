@@ -736,7 +736,7 @@ void HistoryElementItemSetting::historyRedoSettingsChangeNPCNPC(const LevelNPC &
 
 void HistoryElementItemSetting::historyUndoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item)
 {
-    ((ItemWater*)item)->setType(sourcePhysEnv.quicksand ? 1 : 0);
+    ((ItemWater*)item)->setType(sourcePhysEnv.env_type);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsTypeWater(const LevelPhysEnv &/*sourcePhysEnv*/, QGraphicsItem *item)

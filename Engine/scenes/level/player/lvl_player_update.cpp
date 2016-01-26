@@ -124,7 +124,7 @@ void LVL_Player::update(float ticks)
             newEnv = x;
         }
 
-        if(last_environment != newEnv)
+        if( (newEnv!=LVL_PhysEnv::Env_SameAsAround) && (last_environment != newEnv) )
         {
             qDebug()<<"Enter to environment" << newEnv;
             environment = newEnv;

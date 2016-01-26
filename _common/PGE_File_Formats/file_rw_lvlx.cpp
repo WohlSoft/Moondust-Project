@@ -627,12 +627,17 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                 PGEX_Values() //Look markers and values
                 {
                     PGEX_ValueBegin()
-                    PGEX_UIntVal("ET", physiczone.quicksand) //Environment type
+                    PGEX_UIntVal("ET", physiczone.env_type) //Environment type
                     PGEX_SIntVal("X",  physiczone.x) //X position
                     PGEX_SIntVal("Y",  physiczone.y) //Y position
                     PGEX_UIntVal("W",  physiczone.w) //Width
                     PGEX_UIntVal("H",  physiczone.h) //Height
                     PGEX_StrVal ("LR", physiczone.layer) //Layer
+                    PGEX_FloatVal("FR",physiczone.friction) //Friction
+                    PGEX_FloatVal("AD",physiczone.accel_direct) //Custom acceleration direction
+                    PGEX_FloatVal("AC",physiczone.accel) //Custom acceleration
+                    PGEX_FloatVal("MV",physiczone.max_velocity) //Maximal velocity
+                    PGEX_StrVal("ET",  physiczone.touch_event) //Touch event/script
                 }
                 physiczone.array_id = FileData.physenv_array_id++;
                 physiczone.index = FileData.physez.size();
@@ -1224,7 +1229,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
         for(i=0;i<(signed)FileData.physez.size();i++)
         {
-            TextData += PGEFile::value("ET", PGEFile::IntS(FileData.physez[i].quicksand?1:0));
+            TextData += PGEFile::value("ET", PGEFile::IntS(FileData.physez[i].env_type?1:0));
 
             //Position
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.physez[i].x));  // Physic Env X
@@ -1234,8 +1239,18 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += PGEFile::value("W", PGEFile::IntS(FileData.physez[i].w));  // Physic Env Width
             TextData += PGEFile::value("H", PGEFile::IntS(FileData.physez[i].h));  // Physic Env Height
 
-            if(FileData.physez[i].layer!=defPhys.layer) //Write only if not default
+            if(FileData.physez[i].env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID)
+                TextData += PGEFile::value("FR", PGEFile::FloatS(FileData.physez[i].friction)); //Friction
+            if(FileData.physez[i].accel_direct>=0.0)
+                TextData += PGEFile::value("AD", PGEFile::FloatS(FileData.physez[i].accel_direct)); //Acceleration direction
+            if(FileData.physez[i].accel!=0.0)
+                TextData += PGEFile::value("AC", PGEFile::FloatS(FileData.physez[i].accel)); //Acceleration
+            if(FileData.physez[i].max_velocity != 0.0)
+                TextData += PGEFile::value("MV", PGEFile::FloatS(FileData.physez[i].max_velocity)); //Max-velocity
+            if(FileData.physez[i].layer != defPhys.layer) //Write only if not default
                 TextData += PGEFile::value("LR", PGEFile::qStrS(FileData.physez[i].layer));  // Layer
+            if(FileData.physez[i].touch_event.PGESTRINGisEmpty())
+                TextData += PGEFile::value("ET", PGEFile::qStrS(FileData.physez[i].touch_event));  // Touch event slot
             TextData += "\n";
         }
 

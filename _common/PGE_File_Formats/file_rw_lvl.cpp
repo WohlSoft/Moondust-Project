@@ -269,8 +269,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
             nextLine(); strVar(blocks.event_hit, line);
             nextLine(); strVar(blocks.event_emptylayer, line); }
 
-        blocks.array_id = FileData.blocks_array_id;
-        FileData.blocks_array_id++;
+        blocks.array_id = FileData.blocks_array_id++;
         blocks.index = FileData.blocks.size(); //Apply element index
     FileData.blocks.push_back(blocks); //AddBlock into array
 
@@ -295,9 +294,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
             bgodata.smbx64_sp = 80;
         }
 
-        bgodata.array_id = FileData.bgo_array_id;
-        FileData.bgo_array_id++;
-
+        bgodata.array_id = FileData.bgo_array_id++;
         bgodata.index = FileData.bgo.size(); //Apply element index
 
     FileData.bgo.push_back(bgodata); //Add Background object into array
@@ -410,9 +407,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
          if(ge(14)) {nextLine(); strVar(npcdata.event_emptylayer, line);} //No more objects in layer event
          if(ge(63)) {nextLine(); strVar(npcdata.attach_layer, line);} //Layer name to attach
 
-         npcdata.array_id = FileData.npc_array_id;
-         FileData.npc_array_id++;
-
+         npcdata.array_id = FileData.npc_array_id++;
          npcdata.index = FileData.npc.size(); //Apply element index
 
     FileData.npc.push_back(npcdata); //Add NPC into array
@@ -456,8 +451,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
         if(ge(25)) { nextLine(); wBoolVar(doors.allownpc, line); }   //Allow carried items
         if(ge(26)) { nextLine(); wBoolVar(doors.locked, line); }     //Locked
 
-        doors.array_id = FileData.doors_array_id;
-        FileData.doors_array_id++;
+        doors.array_id = FileData.doors_array_id++;
         doors.index = FileData.doors.size(); //Apply element index
 
     FileData.doors.push_back(doors); //Add NPC into array
@@ -477,12 +471,10 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
             nextLine(); UIntVar(waters.w, line);
             nextLine(); UIntVar(waters.h, line);
             nextLine(); UIntVar(waters.unknown, line); //Unused value
-            if(ge(62)) { nextLine(); wBoolVar(waters.quicksand, line);}
+            if(ge(62)) { nextLine(); wBoolVar(waters.env_type, line);}
             nextLine(); strVar(waters.layer, line);
 
-            waters.array_id = FileData.physenv_array_id;
-            FileData.physenv_array_id++;
-
+            waters.array_id = FileData.physenv_array_id++;
             waters.index = FileData.physez.size(); //Apply element index
 
         FileData.physez.push_back(waters); //Add Water area into array
@@ -501,8 +493,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
 
             layers.locked = false;
 
-            layers.array_id = FileData.layers_array_id;
-            FileData.layers_array_id++;
+            layers.array_id = FileData.layers_array_id++;
 
         FileData.layers.push_back(layers); //Add Water area into array
         nextLine();
@@ -595,8 +586,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); SIntVar(events.scroll_section, line); //Scroll section x, (in file value is x-1)
             }
 
-            events.array_id = FileData.events_array_id;
-            FileData.events_array_id++;
+            events.array_id = FileData.events_array_id++;
 
         FileData.events.push_back(events);
         nextLine();
@@ -933,8 +923,8 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             TextData += SMBX64::IntS(FileData.physez[i].h);
             TextData += SMBX64::IntS(FileData.physez[i].unknown);
             if(file_format>=62)
-            TextData += SMBX64::BoolS(FileData.physez[i].quicksand);
-            TextData += SMBX64::qStrS(FileData.physez[i].layer);
+            TextData += SMBX64::BoolS( FileData.physez[i].env_type != LevelPhysEnv::ENV_WATER );
+            TextData += SMBX64::qStrS( FileData.physez[i].layer );
         }
     }
 

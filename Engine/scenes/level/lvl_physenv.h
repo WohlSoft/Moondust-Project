@@ -32,7 +32,8 @@ public:
     static const int numOfEnvironments;
     enum EnvType
     {
-        Env_Air=0,
+        Env_SameAsAround = -1,
+        Env_Air = 0,
         Env_Water,
         Env_Quicksand
     };

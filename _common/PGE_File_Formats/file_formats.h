@@ -227,6 +227,21 @@ public:
     static LevelSection     CreateLvlSection();
 
     /*!
+     * \brief Initalizes Level specific Variable entry
+     * \param vname name of variable
+     * \return Initialized with default properties level specific Variable entry
+     */
+    static LevelVariable    CreateLvlVariable(PGESTRING vname);
+
+    /*!
+     * \brief Initalizes Level specific Script Entry
+     * \param name name of script
+     * \param lang language code of script (Lua, Luna-Autocode or Tea-Script)
+     * \return Initialized with default properties level specific Script entry
+     */
+    static LevelScript      CreateLvlScript(PGESTRING name, int lang=LevelScript::LANG_LUA);
+
+    /*!
      * \brief Appends internal layers and events if not exists
      * \param FileData initalized and filled level file
      */

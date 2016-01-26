@@ -263,11 +263,17 @@ LevelDoor  FileFormats::CreateLvlWarp()
     dummyDoor.world_x = -1;
     dummyDoor.world_y = -1;
     dummyDoor.stars = 0;
+    dummyDoor.stars_msg = "";
+    dummyDoor.star_num_hide = false;
     dummyDoor.layer = "Default";
     dummyDoor.unknown = false;
     dummyDoor.novehicles = false;
     dummyDoor.allownpc = false;
     dummyDoor.locked = false;
+    dummyDoor.need_a_bomb = false;
+    dummyDoor.hide_entry_scene = false;
+    dummyDoor.allownpc_interlevel = false;
+    dummyDoor.event_enter = "";
 
     dummyDoor.array_id = 0;
     dummyDoor.index = 0;
@@ -327,8 +333,13 @@ LevelPhysEnv FileFormats::CreateLvlPhysEnv()
     dummyWater.w = 0;
     dummyWater.h = 0;
     dummyWater.unknown = 0;
-    dummyWater.quicksand = false;
+    dummyWater.env_type = LevelPhysEnv::ENV_WATER;
     dummyWater.layer = "Default";
+    dummyWater.friction = 0.5;
+    dummyWater.accel_direct=-1;
+    dummyWater.accel = 0.0;
+    dummyWater.max_velocity = 0.0;
+    dummyWater.touch_event = "";
 
     dummyWater.array_id = 0;
     dummyWater.index = 0;
@@ -386,6 +397,22 @@ LevelSMBX64Event FileFormats::CreateLvlEvent()
     return dummyEvent;
 }
 
+LevelVariable FileFormats::CreateLvlVariable(PGESTRING vname)
+{
+    LevelVariable var;
+    var.name=vname;
+    var.value="";
+    return var;
+}
+
+LevelScript FileFormats::CreateLvlScript(PGESTRING name, int lang)
+{
+    LevelScript scr;
+    scr.language = lang;
+    scr.name = name;
+    scr.scrupt = "";
+    return scr;
+}
 
 LevelSection FileFormats::CreateLvlSection()
 {

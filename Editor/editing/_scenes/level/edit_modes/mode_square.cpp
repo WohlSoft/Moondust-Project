@@ -163,7 +163,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         {
         case LvlScene::PLC_Water:
             {
-                LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+                LvlPlacingItems::waterSet.env_type = LvlPlacingItems::waterType;
 
                 LvlPlacingItems::waterSet.x = s->cursor->scenePos().x();
                 LvlPlacingItems::waterSet.y = s->cursor->scenePos().y();

@@ -237,16 +237,18 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
     FileData.events.clear();
 
     LevelSection section;
-    PlayerPoint players;
-    LevelBlock blocks;
+    PlayerPoint playerdata;
+    LevelBlock blockdata;
     LevelBGO bgodata;
     LevelNPC npcdata;
-    LevelDoor doors;
+    LevelDoor doordata;
     LevelPhysEnv waters;
-    LevelLayer layers;
-    LevelSMBX64Event events;
-    LevelEvent_layers events_layers;
-    LevelEvent_Sets events_sets;
+    LevelLayer layerdata;
+    LevelSMBX64Event eventdata;
+    LevelEvent_layers event_layers;
+    LevelEvent_Sets event_sets;
+    LevelVariable vardata;
+    LevelScript scriptdata;
 
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
@@ -310,7 +312,7 @@ readLineAgain:
         else
         if(currentLine[0]=="P1")//Player 1 point
         {
-            players = CreateLvlPlayerPoint(1);
+            playerdata = CreateLvlPlayerPoint(1);
             for(int i=1;i<(signed)currentLine.size();i++)
             {
                 PGESTRING &cLine=currentLine[i];
@@ -320,24 +322,24 @@ readLineAgain:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else players.x=(int)toFloat(cLine);
+                        else playerdata.x=(int)toFloat(cLine);
                     } break;
                 case 2://Pos Y
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else players.y=(int)toFloat(cLine);
+                        else playerdata.y=(int)toFloat(cLine);
                     } break;
                 }
             }
-            FileData.players.push_back(players);
+            FileData.players.push_back(playerdata);
         }
 
 
         else
         if(currentLine[0]=="P2")//Player 2 point
         {
-            players = CreateLvlPlayerPoint(2);
+            playerdata = CreateLvlPlayerPoint(2);
             for(int i=1;i<(signed)currentLine.size();i++)
             {
                 PGESTRING &cLine=currentLine[i];
@@ -347,17 +349,17 @@ readLineAgain:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else players.x=(int)toFloat(cLine);
+                        else playerdata.x=(int)toFloat(cLine);
                     } break;
                 case 2://Pos Y
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else players.y=(int)toFloat(cLine);
+                        else playerdata.y=(int)toFloat(cLine);
                     } break;
                 }
             }
-            FileData.players.push_back(players);
+            FileData.players.push_back(playerdata);
         }
 
 
@@ -477,7 +479,7 @@ readLineAgain:
         if(currentLine[0]=="B")//Blocks
         {
             //B|layer|id|x|y|contain|b1|b2|e1,e2,e3|w|h
-            blocks = CreateLvlBlock();
+            blockdata = CreateLvlBlock();
             for(int i=1;i<(signed)currentLine.size();i++)
             {
                 PGESTRING &cLine=currentLine[i];
@@ -486,28 +488,28 @@ readLineAgain:
                 //    layer=layer name["" == "Default"][***urlencode!***]
                 case 1:
                     {
-                        blocks.layer=(cLine==""?"Default":PGE_URLDEC(cLine));
+                        blockdata.layer=(cLine==""?"Default":PGE_URLDEC(cLine));
                     } break;
                 //    id=block id
                 case 2:
                     {
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
-                        else blocks.id=toInt(cLine);
+                        else blockdata.id=toInt(cLine);
                     } break;
                 //    x=block position x
                 case 3:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else blocks.x=(long)round(toFloat(cLine));
+                        else blockdata.x=(long)round(toFloat(cLine));
                     } break;
                 //    y=block position y
                 case 4:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else blocks.y=(long)round(toFloat(cLine));
+                        else blockdata.y=(long)round(toFloat(cLine));
                     } break;
                 //    contain=containing npc number
                 //        [1001-1000+NPCMAX] npc-id
@@ -520,18 +522,18 @@ readLineAgain:
                         else
                         {
                             long npcid=toInt(cLine);
-                            blocks.npc_id=((npcid<1000) ? -1*npcid : npcid-1000 );
+                            blockdata.npc_id=((npcid<1000) ? -1*npcid : npcid-1000 );
                         }
                     } break;
                 //    b1=slippery[0=false !0=true]
                 case 6:
                     {
-                        blocks.slippery=(cLine!="0");
+                        blockdata.slippery=(cLine!="0");
                     } break;
                 //    b2=invisible[0=false !0=true]
                 case 7:
                     {
-                        blocks.invisible=(cLine!="0");
+                        blockdata.invisible=(cLine!="0");
                     } break;
                 case 8:
                     {
@@ -543,11 +545,11 @@ readLineAgain:
                             switch(j)
                             {
                             //    e1=block destory event name[***urlencode!***]
-                                case 0: blocks.event_destroy=PGE_URLDEC(dLine); break;
+                                case 0: blockdata.event_destroy=PGE_URLDEC(dLine); break;
                             //    e2=block hit event name[***urlencode!***]
-                                case 1: blocks.event_hit=PGE_URLDEC(dLine); break;
+                                case 1: blockdata.event_hit=PGE_URLDEC(dLine); break;
                             //    e3=no more object in layer event name[***urlencode!***]4
-                                case 2: blocks.event_emptylayer=PGE_URLDEC(dLine); break;
+                                case 2: blockdata.event_emptylayer=PGE_URLDEC(dLine); break;
                             }
                         }
                     } break;
@@ -556,18 +558,19 @@ readLineAgain:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else blocks.w=(long)round(toFloat(cLine));
+                        else blockdata.w=(long)round(toFloat(cLine));
                     } break;
                 //    h=height
                 case 10:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else blocks.h=(long)round(toFloat(cLine));
+                        else blockdata.h=(long)round(toFloat(cLine));
                     } break;
                 }
             }
-            FileData.blocks.push_back(blocks);
+            blockdata.array_id = FileData.blocks_array_id++;
+            FileData.blocks.push_back(blockdata);
         }
 
         else
@@ -608,6 +611,7 @@ readLineAgain:
                     } break;
                 }
             }
+            bgodata.array_id = FileData.bgo_array_id++;
             FileData.bgo.push_back(bgodata);
         }
 
@@ -832,11 +836,12 @@ readLineAgain:
                     } break;
                 }
             }
+            npcdata.array_id = FileData.npc_array_id++;
             FileData.npc.push_back(npcdata);
         }
 
         else
-        if(currentLine[0]=="T")//next line: waters
+        if(currentLine[0]=="Q")//next line: waters
         {
             //Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
             waters = CreateLvlPhysEnv();
@@ -878,62 +883,283 @@ readLineAgain:
                             goto badfile;
                         else waters.h=(long)round(toFloat(cLine));
                     } break;
-                //b1=liquid type
-                //    01-Water[friction=0.5]
-                //    02-Quicksand[friction=0.1]
-                //    03-Custom Water
-                //    04-Gravitational Field
-                //    05-Event Once
-                //    06-Event Always
-                //    07-NPC Event Once
-                //    08-NPC Event Always
-                //    09-Click Event
-                //    10-Collision Script
-                //    11-Click Script
-                //    12-Collision Event
-                //b2=friction
-                //b3=Acceleration Direction
-                //b4=Acceleration
-                //b5=Maximum Velocity
+
+                case 6:
+                    {
+                        PGESTRINGList nevents;
+                        SplitCSVStr(nevents, cLine);
+                        for(int j=0; j<(signed)nevents.size(); j++)
+                            {
+                                PGESTRING &dLine=nevents[j];
+                                switch(j)
+                                {
+                                    //b1=liquid type
+                                    //    01-Water[friction=0.5]
+                                    //    02-Quicksand[friction=0.1]
+                                    //    03-Custom Water
+                                    //    04-Gravitational Field
+                                    //    05-Event Once
+                                    //    06-Event Always
+                                    //    07-NPC Event Once
+                                    //    08-NPC Event Always
+                                    //    09-Click Event
+                                    //    10-Collision Script
+                                    //    11-Click Script
+                                    //    12-Collision Event
+                                    //    13-Air chamber
+                                    case 0:
+                                        {
+                                            if( SMBX64::sFloat(dLine) )
+                                                goto badfile;
+                                            else waters.env_type = (int)round(toFloat(dLine))-1;
+                                        } break;
+                                    //b2=friction
+                                    case 1:
+                                        {
+                                            if( SMBX64::sFloat(dLine) )
+                                                goto badfile;
+                                            else waters.friction = toFloat(dLine);
+                                        } break;
+                                    //b3=Acceleration Direction
+                                    case 2:
+                                        {
+                                            if( SMBX64::sFloat(dLine) )
+                                                goto badfile;
+                                            else waters.accel_direct = toFloat(dLine);
+                                        } break;
+                                    //b4=Acceleration
+                                    case 3:
+                                        {
+                                            if( SMBX64::sFloat(dLine) )
+                                                goto badfile;
+                                            else waters.accel = toFloat(dLine);
+                                        } break;
+                                    //b5=Maximum Velocity
+                                    case 4:
+                                        {
+                                            if( SMBX64::sFloat(cLine) )
+                                                goto badfile;
+                                            else waters.accel = toFloat(cLine);
+                                        } break;
+                                }
+                            }
+                    } break;
                 //event=touch event
+                case 7:
+                    {
+                        waters.touch_event = PGE_URLDEC(cLine);
+                    } break;
                 }
             }
+            waters.array_id = FileData.physenv_array_id++;
             FileData.physez.push_back(waters);
         }
 
+        else
+        if(currentLine[0]=="W")//next line: warps
+        {
+            //W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc|lik|liid|noexit|wx|wy|le|we
+            doordata = CreateLvlWarp();
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                case 1:
+                    {
+                        doordata.layer=(cLine==""?"Default":PGE_URLDEC(cLine));
+                    } break;
+                //x=entrance position x
+                case 2:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.ix=(long)round(toFloat(cLine));
+                    } break;
+                //y=entrance postion y
+                case 3:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.iy=(long)round(toFloat(cLine));
+                    } break;
+                //ex=exit position x
+                case 4:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.ox=(long)round(toFloat(cLine));
+                    } break;
+                //ey=exit position y
+                case 5:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.oy=(long)round(toFloat(cLine));
+                    } break;
+                //type=[1=pipe][2=door][0=instant]
+                case 6:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.type = toInt(cLine);
+                    } break;
+                //enterd=entrance direction[1=up 2=left 3=down 4=right]
+                case 7:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.idirect = toInt(cLine);
+                    } break;
+                //exitd=exit direction[1=up 2=left 3=down 4=right]
+                case 8:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.odirect = toInt(cLine);
+                    } break;
 
-        //next line: warps
-        //W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc|lik|liid|noexit|wx|wy|le|we
-        //layer=layer name["" == "Default"][***urlencode!***]
-        //x=entrance position x
-        //y=entrance postion y
-        //ex=exit position x
-        //ey=exit position y
-        //type=[1=pipe][2=door][0=instant]
-        //enterd=entrance direction[1=up 2=left 3=down 4=right]
-        //exitd=exit direction[1=up 2=left 3=down 4=right]
-        //sn=need stars for enter
-        //msg=a message when you have not enough stars
-        //hide=hide the star number in this warp
-        //locked=locked
-        //noyoshi=no yoshi
-        //canpick=allow npc
-        //bomb=need a bomb
-        //hide=hide the entry scene
-        //anpc=allow npc interlevel
-        //lik=warp to level[***urlencode!***]
-        //liid=normal enterance / to warp[0-WARPMAX]
-        //noexit=level entrance
-        //wx=warp to x on world map
-        //wy=warp to y on world map
-        //le=level exit
-        //we=warp event[***urlencode!***]
+                case 9:
+                    {
+                    PGESTRINGList bevents;
+                    SplitCSVStr(bevents, cLine);
+                    for(int j=0; j<(signed)bevents.size(); j++)
+                        {
+                            PGESTRING &dLine=bevents[j];
+                            switch(j)
+                            {
+                            //sn=need stars for enter
+                            case 0:
+                                {
+                                    if( SMBX64::sInt(dLine) )
+                                        goto badfile;
+                                    else doordata.stars = toInt(dLine);
+                                } break;
+                            //msg=a message when you have not enough stars
+                            case 1:
+                                {
+                                    doordata.stars_msg=PGE_URLDEC(cLine);
+                                } break;
+                            //hide=hide the star number in this warp
+                            case 2:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.star_num_hide = (dLine!="0");
+                                } break;
+                            }
+                        }
+                    } break;
+                case 10:
+                    {
+                    PGESTRINGList bevents;
+                    SplitCSVStr(bevents, cLine);
+                    for(int j=0; j<(signed)bevents.size(); j++)
+                        {
+                            PGESTRING &dLine=bevents[j];
+                            switch(j)
+                            {
+                            //locked=locked
+                            case 0:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.locked = (bool)toInt(dLine);
+                                } break;
+                            //noyoshi=no yoshi
+                            case 1:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.novehicles = (bool)toInt(dLine);
+                                } break;
+                            //canpick=allow npc
+                            case 2:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.allownpc = (bool)toInt(dLine);
+                                } break;
+                            //bomb=need a bomb
+                            case 3:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.need_a_bomb = (bool)toInt(dLine);
+                                } break;
+                            //hide=hide the entry scene
+                            case 4:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.hide_entry_scene = (bool)toInt(dLine);
+                                } break;
+                            //anpc=allow npc interlevel
+                            case 5:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.allownpc_interlevel = (bool)toInt(dLine);
+                                } break;
+                            }
+                        }
+                    } break;
+                //lik=warp to level[***urlencode!***]
+                case 11:
+                    {
+                        doordata.lname=PGE_URLDEC(cLine);
+                    } break;
+                //liid=normal enterance / to warp[0-WARPMAX]
+                case 12:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.warpto = toInt(cLine);
+                    } break;
+                //noexit=level entrance
+                case 13:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.lvl_i = (bool)toInt(cLine);
+                    } break;
+                //wx=warp to x on world map
+                case 14:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.world_x = (long)round(toFloat(cLine));
+                    } break;
+                //wy=warp to y on world map
+                case 15:
+                    {
+                        if( SMBX64::sFloat(cLine) )
+                            goto badfile;
+                        else doordata.world_y = (long)round(toFloat(cLine));
+                    } break;
+                //le=level exit
+                case 16:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else doordata.lvl_o = (bool)toInt(cLine);
+                    } break;
+                //we=warp event[***urlencode!***]
+                case 17:
+                    {
+                        doordata.event_enter=PGE_URLDEC(cLine);
+                    } break;
+                }
+            }
+            doordata.array_id = FileData.doors_array_id++;
+            FileData.doors.push_back(doordata);
+        }
 
         else
         if(currentLine[0]=="L")//Layers
         {
             //L|name|status
-            layers = CreateLvlLayer();
+            layerdata = CreateLvlLayer();
             for(int i=1;i<(signed)currentLine.size();i++)
             {
                 PGESTRING &cLine=currentLine[i];
@@ -942,16 +1168,17 @@ readLineAgain:
                 //    layer=layer name["" == "Default"][***urlencode!***]
                 case 1:
                     {
-                        layers.name=PGE_URLDEC(cLine);
+                        layerdata.name=PGE_URLDEC(cLine);
                     } break;
                 //    status=is hidden layer
                 case 2:
                     {
-                        layers.hidden = (cLine!="0");
+                        layerdata.hidden = (cLine!="0");
                     } break;
                 }
             }
-            FileData.layers.push_back(layers);
+            layerdata.array_id = FileData.layers_array_id++;
+            FileData.layers.push_back(layerdata);
         }
 
         //next line: events
@@ -1044,23 +1271,90 @@ readLineAgain:
         //    apievent=the id of apievent
         //    scriptname=script name[***urlencode!***]
 
-        LevelAddInternalEvents(FileData);
+        else
+        if(currentLine[0]=="V")//next line: variables
+        {
+            //V|name|value
+            vardata = CreateLvlVariable("var");
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //name=variable name[***urlencode!***]
+                case 1:
+                    {
+                        vardata.name=PGE_URLDEC(cLine);
+                    } break;
+                //value=initial value of the variable
+                case 2:
+                    {
+                        if( SMBX64::uInt(cLine) )
+                            goto badfile;
+                        else vardata.value = cLine; /*save variable value as string
+                                                      because in PGE is planned to have
+                                                      variables to be universal*/
+                    } break;
+                }
+            }
+            FileData.variables.push_back(vardata);
+        }
 
-        //next line: variables
-        //V|name|value
-        //name=variable name[***urlencode!***]
-        //value=initial value of the variable
+        else
+        if(currentLine[0]=="S") //next line: scripts
+        {
+            //S|name|script
+            scriptdata = CreateLvlScript("doScript", LevelScript::LANG_TEASCRIPT);
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //name=name of script[***urlencode!***]
+                case 1:
+                    {
+                        scriptdata.name=PGE_URLDEC(cLine);
+                    } break;
+                //script=script[***base64encode!***][utf-8]
+                case 2:
+                    {
+                        scriptdata.scrupt=PGE_BASE64DEC(cLine);
+                    } break;
+                }
+            }
+            FileData.variables.push_back(vardata);
+        }
 
-
-        //next line: scripts
-        //S|name|script
-        //Su|name|scriptu
-        //name=name of script[***urlencode!***]
-        //script=script[***base64encode!***][utf-8]
-        //scriptu=script[***base64encode!***][unicode]
+        else
+        if(currentLine[0]=="Su") //next line: scripts (saved as unicode)
+        {
+            //Su|name|scriptu
+            scriptdata = CreateLvlScript("doScript", LevelScript::LANG_TEASCRIPT);
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //name=name of script[***urlencode!***]
+                case 1:
+                    {
+                        scriptdata.name=PGE_URLDEC(cLine);
+                    } break;
+                //scriptu=script[***base64encode!***][unicode]
+                case 2:
+                    {
+                        //scriptdata.scrupt=PGE_BASE64DEC_W(cLine);//for STD-based version need to convert string into UTF8!
+                        scriptdata.scrupt=PGE_BASE64DEC(cLine);
+                    } break;
+                }
+            }
+            FileData.variables.push_back(vardata);
+        }
 
         goto readLineAgain;
     }
+
+    LevelAddInternalEvents(FileData);
 
     FileData.CurSection=0;
     FileData.playmusic=0;
