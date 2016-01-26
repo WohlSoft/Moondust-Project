@@ -410,7 +410,7 @@ LevelScript FileFormats::CreateLvlScript(PGESTRING name, int lang)
     LevelScript scr;
     scr.language = lang;
     scr.name = name;
-    scr.scrupt = "";
+    scr.script = "";
     return scr;
 }
 

@@ -469,7 +469,7 @@ readLineAgain:
             section.size_right=(long)round(x+w);
             section.size_bottom=(long)round(y+h);
 
-            if((unsigned)section.id <= FileData.sections.size())
+            if(section.id <= (signed)FileData.sections.size())
                 FileData.sections[section.id-1]=section;//Replace if already exists
             else
                 FileData.sections.push_back(section); //Add Section in main array
@@ -1318,7 +1318,7 @@ readLineAgain:
                 //script=script[***base64encode!***][utf-8]
                 case 2:
                     {
-                        scriptdata.scrupt=PGE_BASE64DEC(cLine);
+                        scriptdata.script=PGE_BASE64DEC(cLine);
                     } break;
                 }
             }
@@ -1344,11 +1344,11 @@ readLineAgain:
                 case 2:
                     {
                         //scriptdata.scrupt=PGE_BASE64DEC_W(cLine);//for STD-based version need to convert string into UTF8!
-                        scriptdata.scrupt=PGE_BASE64DEC(cLine);
+                        scriptdata.script=PGE_BASE64DEC_W(cLine);
                     } break;
                 }
             }
-            FileData.variables.push_back(vardata);
+            FileData.scripts.push_back(scriptdata);
         }
 
         goto readLineAgain;

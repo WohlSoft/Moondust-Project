@@ -5,6 +5,8 @@
 #ifndef PGE_FILES_QT
 #include <limits.h> /* PATH_MAX */
 #include <sstream>
+#include <string>
+#include "charsetconvert.h"
 #else
 #include <QFileInfo>
 #endif
@@ -185,19 +187,48 @@ namespace PGE_FileFormats_misc
         return (isalnum(c) || (c == '+') || (c == '/'));
     }
 
+    #ifdef PGE_FILES_QT
     std::string  base64_encodeW(std::wstring &source)
     {
-        return base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
+
     }
 
-    std::wstring base64_decodeW(PGESTRING &source)
+    std::wstring base64_decodeW(std::string  &source)
+    {
+
+    }
+    #else
+
+    std::string  base64_encodeW(std::string &source)
+    {
+        SI_ConvertW<wchar_t> utf8(true);
+        size_t new_len = utf8.SizeFromStore(source.c_str(), source.length());
+        std::wstring t;
+        t.resize(new_len);
+        if(utf8.ConvertFromStore(source.c_str(), source.length(), (wchar_t*)t.c_str(), new_len))
+        {
+            return base64_encode(reinterpret_cast<const unsigned char*>(t.c_str()), t.size());
+        }
+        return "";
+    }
+
+    std::string base64_decodeW(std::string &source)
     {
         std::string out=base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
-        return std::wstring((wchar_t*)out.c_str());
+        std::wstring outw((wchar_t*)out.c_str());
+        SI_ConvertW<wchar_t> utf8(true);
+        size_t new_len = utf8.SizeToStore(outw.c_str());
+        std::string out2;
+        out2.resize(new_len+1); out2[new_len] = '\0';
+        if(utf8.ConvertToStore(outw.c_str(), (char*)out2.c_str(), new_len))
+        {
+            return out;
+        }
+        return "";
     }
+    #endif
 
-
-    std::string base64_encode(PGESTRING &source)
+    std::string base64_encode(std::string &source)
     {
         return base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
     }

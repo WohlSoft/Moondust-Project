@@ -16,6 +16,17 @@ void printLevelInfo(LevelData &lvl)
     cout<<"Physical EnvZones: "<< lvl.physez.size() << "\n";
     cout<<"Layers: "<< lvl.layers.size() << "\n";
     cout<<"Events: "<< lvl.events.size() << "\n";
+    cout<<"Variables: "<< lvl.variables.size() << "\n";
+    if(lvl.scripts.size()>(size_t)0)
+    {
+        cout<< "Test of script printing" << "\n";
+        for(size_t i=0; i<lvl.scripts.size(); i++)
+        {
+            cout<< "===========" << lvl.scripts[i].name << "============" << "\n";
+            cout<<lvl.scripts[i].script << "\n";
+        }
+        cout<< "==================================" << "\n";
+    }
 }
 
 void printWorldInfo(WorldData &lvl)

@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     ../../_common/PGE_File_Formats/smbx64.cpp \
     ../../_common/PGE_File_Formats/smbx64_cnf_filedata.cpp \
     ../../_common/PGE_File_Formats/wld_filedata.cpp \
-    ../../_common/PGE_File_Formats/file_rw_lvl_38a.cpp
+    ../../_common/PGE_File_Formats/file_rw_lvl_38a.cpp \
+    ../../_common/PGE_File_Formats/ConvertUTF.c
 
 HEADERS += \
     ../../_common/PGE_File_Formats/file_formats.h \
@@ -46,5 +47,7 @@ HEADERS += \
     ../../_common/PGE_File_Formats/smbx64.h \
     ../../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
     ../../_common/PGE_File_Formats/smbx64_macro.h \
-    ../../_common/PGE_File_Formats/wld_filedata.h
+    ../../_common/PGE_File_Formats/wld_filedata.h \
+    ../../_common/PGE_File_Formats/ConvertUTF.h \
+    ../../_common/PGE_File_Formats/charsetconvert.h
 

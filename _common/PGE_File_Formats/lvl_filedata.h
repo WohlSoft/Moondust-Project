@@ -586,7 +586,7 @@ struct LevelScript {
         LANG_TEASCRIPT
     };
     PGESTRING name;
-    PGESTRING scrupt;
+    PGESTRING script;
     int       language;
 };
 
