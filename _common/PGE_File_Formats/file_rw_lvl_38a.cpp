@@ -1174,7 +1174,7 @@ readLineAgain:
                 //    status=is hidden layer
                 case 2:
                     {
-                        layerdata.hidden = (cLine!="0");
+                        layerdata.hidden = (cLine=="0");
                     } break;
                 }
             }

@@ -311,7 +311,7 @@ void EditorPipe::icomingData(QString in)
     {
         qDebug() << "do Parse LVLX: >>"<< in;
         do_parseLevelData=true;
-        accepted_lvl = FileFormats::ReadExtendedLvlFile(accepted_lvl_raw, accepted_lvl_path);
+        FileFormats::ReadExtendedLvlFileRaw(accepted_lvl_raw, accepted_lvl_path, accepted_lvl);
         IntProc::state="LVLX is valid: %1";
         IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
         qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
@@ -323,16 +323,21 @@ void EditorPipe::icomingData(QString in)
         qDebug() << "do Parse LVLX: >>"<< in;
         do_parseLevelData=true;
         QFile temp(accepted_lvl_raw.remove("\n"));
+        //if( FileFormats::ReadExtendedLvlFileF(accepted_lvl_raw.remove("\n"), accepted_lvl) )
         if(temp.open(QFile::ReadOnly|QFile::Text))
         {
             QTextStream x(&temp);
-            accepted_lvl = FileFormats::ReadExtendedLvlFile(x.readAll(), accepted_lvl_path);
+            QString raw=x.readAll();
+            FileFormats::ReadExtendedLvlFileRaw(raw, accepted_lvl_path, accepted_lvl);
             IntProc::state="LVLX is valid: %1";
             IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
             qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
         }
         else
         {
+            IntProc::state="LVLX is valid: %1";
+            IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
+            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
             qDebug()<<"ERROR: Can't open temp file";
             accepted_lvl.ReadFileValid = false;
         }

@@ -1235,7 +1235,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
         for(i=0;i<(signed)FileData.physez.size();i++)
         {
-            TextData += PGEFile::value("ET", PGEFile::IntS(FileData.physez[i].env_type?1:0));
+            TextData += PGEFile::value("ET", PGEFile::IntS(FileData.physez[i].env_type));
 
             //Position
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.physez[i].x));  // Physic Env X

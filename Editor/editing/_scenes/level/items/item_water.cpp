@@ -50,7 +50,7 @@ void ItemWater::construct()
     waterSize = QSize(32,32);
     penWidth=2;
 
-    _color.setRgb(Qt::darkBlue);
+    _color=QColor(Qt::darkBlue);
     _pen = QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
     _pen.setWidth(penWidth);
     _pen.setCapStyle(Qt::FlatCap);
@@ -450,43 +450,43 @@ void ItemWater::updateColor()
     {
     case LevelPhysEnv::ENV_WATER:
     default:
-        _color.setRgb(Qt::green);
+        _color=QColor(Qt::green);
         break;
     case LevelPhysEnv::ENV_QUICKSAND:
-        _color.setRgb(Qt::yellow);
+        _color=QColor(Qt::yellow);
         break;
     case LevelPhysEnv::ENV_CUSTOM_LIQUID:
-        _color.setRgb(Qt::darkGreen);
+        _color=QColor(Qt::darkGreen);
         break;
     case LevelPhysEnv::ENV_AIR:
-        _color.setRgb(Qt::blue);
+        _color=QColor(Qt::blue);
         break;
     case LevelPhysEnv::ENV_GRAVITATIONAL_FIELD:
-        _color.setRgb(Qt::cyan);
+        _color=QColor(Qt::cyan);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER:
-        _color.setRgb(Qt::darkRed);
+        _color=QColor(Qt::darkRed);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER:
-        _color.setRgb(Qt::red);
+        _color=QColor(Qt::red);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC:
-        _color.setRgb(Qt::darkMagenta);
+        _color=QColor(Qt::darkMagenta);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_NPC:
-        _color.setRgb(Qt::magenta);
+        _color=QColor(Qt::magenta);
         break;
     case LevelPhysEnv::ENV_CLICK_EVENT:
-        _color.setRgb(Qt::darkCyan);
+        _color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_CLICK_SCRIPT:
-        _color.setRgb(Qt::darkCyan);
+        _color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_COLLISION_EVENT:
-        _color.setRgb(Qt::darkCyan);
+        _color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_COLLISION_SCRIPT:
-        _color.setRgb(Qt::darkCyan);
+        _color=QColor(Qt::darkCyan);
         break;
     }
     _pen.setColor(_color);
