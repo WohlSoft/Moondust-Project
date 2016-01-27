@@ -50,7 +50,8 @@ void ItemWater::construct()
     waterSize = QSize(32,32);
     penWidth=2;
 
-    _pen = QPen(Qt::darkBlue, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    _color.setRgb(Qt::darkBlue);
+    _pen = QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
     _pen.setWidth(penWidth);
     _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
@@ -206,7 +207,7 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         name->setChecked(checked_condition);\
         name->deleteLater(); typeID++;
 
-    QAction *envTypes[12]; int typeID=0;
+    QAction *envTypes[13]; int typeID=0;
 
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Water",        waterData.env_type==LevelPhysEnv::ENV_WATER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Quicksand",    waterData.env_type==LevelPhysEnv::ENV_QUICKSAND);
@@ -324,7 +325,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             for(int i=0; i<typeID; i++)
             {
-                if(selected == envTypes[i])
+                if(selected==envTypes[i])
                 {
                     LevelData modData;
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
@@ -337,6 +338,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                     }
                     scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
                     found = true;
+                    break;
                 }
             }
         }
@@ -442,23 +444,59 @@ QPoint ItemWater::sourcePos()
     return QPoint(waterData.x, waterData.y);
 }
 
+void ItemWater::updateColor()
+{
+    switch(waterData.env_type)
+    {
+    case LevelPhysEnv::ENV_WATER:
+    default:
+        _color.setRgb(Qt::green);
+        break;
+    case LevelPhysEnv::ENV_QUICKSAND:
+        _color.setRgb(Qt::yellow);
+        break;
+    case LevelPhysEnv::ENV_CUSTOM_LIQUID:
+        _color.setRgb(Qt::darkGreen);
+        break;
+    case LevelPhysEnv::ENV_AIR:
+        _color.setRgb(Qt::blue);
+        break;
+    case LevelPhysEnv::ENV_GRAVITATIONAL_FIELD:
+        _color.setRgb(Qt::cyan);
+        break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER:
+        _color.setRgb(Qt::darkRed);
+        break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER:
+        _color.setRgb(Qt::red);
+        break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC:
+        _color.setRgb(Qt::darkMagenta);
+        break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_NPC:
+        _color.setRgb(Qt::magenta);
+        break;
+    case LevelPhysEnv::ENV_CLICK_EVENT:
+        _color.setRgb(Qt::darkCyan);
+        break;
+    case LevelPhysEnv::ENV_CLICK_SCRIPT:
+        _color.setRgb(Qt::darkCyan);
+        break;
+    case LevelPhysEnv::ENV_COLLISION_EVENT:
+        _color.setRgb(Qt::darkCyan);
+        break;
+    case LevelPhysEnv::ENV_COLLISION_SCRIPT:
+        _color.setRgb(Qt::darkCyan);
+        break;
+    }
+    _pen.setColor(_color);
+}
 
 void ItemWater::setType(int tp)
 {
-    switch(tp)
-    {
-    case 1://Quicksand
-        waterData.env_type=true;
-        _pen.setColor(Qt::yellow);
-        this->setPen(_pen);
-        break;
-    case 0://Water
-    default:
-        waterData.env_type=false;
-        _pen.setColor(Qt::green);
-        this->setPen(_pen);
-        break;
-    }
+    waterData.env_type=tp;
+    updateColor();
+    this->setPen(_pen);
     arrayApply();
 }
 
@@ -491,6 +529,7 @@ void ItemWater::setWaterData(LevelPhysEnv inD)
     setPos(waterData.x, waterData.y);
     setData(ITEM_ID, QString::number(0) );
     setData(ITEM_ARRAY_ID, QString::number(waterData.array_id) );
+    updateColor();
     drawWater();
     scene->unregisterElement(this);
     scene->registerElement(this);
@@ -508,7 +547,7 @@ void ItemWater::drawWater()
     setData(ITEM_WIDTH, (int)waterData.w);
     setData(ITEM_HEIGHT, (int)waterData.h);
 
-    setPen(QPen(((waterData.env_type)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
+    setPen(QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
 
     QVector<QPointF > points;
     points.clear();

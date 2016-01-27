@@ -76,6 +76,8 @@ public:
     int getGridSize();
     QPoint sourcePos();
 
+    void updateColor();
+
     LevelPhysEnv waterData;
 
     int gridSize;
@@ -85,6 +87,7 @@ public:
     int penWidth;
 
     QPen _pen;
+    QColor _color;
 
     //Locks
     bool isLocked;
