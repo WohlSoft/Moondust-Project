@@ -637,7 +637,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_FloatVal("AD",physiczone.accel_direct) //Custom acceleration direction
                     PGEX_FloatVal("AC",physiczone.accel) //Custom acceleration
                     PGEX_FloatVal("MV",physiczone.max_velocity) //Maximal velocity
-                    PGEX_StrVal("ET",  physiczone.touch_event) //Touch event/script
+                    PGEX_StrVal("EO",  physiczone.touch_event) //Touch event/script
                 }
                 physiczone.array_id = FileData.physenv_array_id++;
                 physiczone.index = FileData.physez.size();
@@ -1255,8 +1255,8 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("MV", PGEFile::FloatS(FileData.physez[i].max_velocity)); //Max-velocity
             if(FileData.physez[i].layer != defPhys.layer) //Write only if not default
                 TextData += PGEFile::value("LR", PGEFile::qStrS(FileData.physez[i].layer));  // Layer
-            if(FileData.physez[i].touch_event.PGESTRINGisEmpty())
-                TextData += PGEFile::value("ET", PGEFile::qStrS(FileData.physez[i].touch_event));  // Touch event slot
+            if(!FileData.physez[i].touch_event.PGESTRINGisEmpty())
+                TextData += PGEFile::value("EO", PGEFile::qStrS(FileData.physez[i].touch_event));  // Touch event slot
             TextData += "\n";
         }
 
