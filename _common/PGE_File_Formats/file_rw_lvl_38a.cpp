@@ -165,7 +165,8 @@ void SplitCSVStr(PGESTRINGList &dst, PGESTRING &Src)
     }
 }
 
-void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src)
+#define SMBX65_SplitSubLine(dst, src) SMBX65_SplitLine(dst, Src, '/')
+void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src, char sep='|')
 {
     dst.clear();
     for(int i=0; i<(signed)Src.size(); )
@@ -176,7 +177,7 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src)
         {
             cur=Src[i++];
             if(cur!='|') Buffer.push_back(cur);
-        } while( (i<(signed)Src.size()) && (cur!='|') );
+        } while( (i<(signed)Src.size()) && (cur!=sep) );
         dst.push_back(Buffer);
     }
 }
@@ -1092,7 +1093,7 @@ readLineAgain:
                                 {
                                     if( SMBX64::uInt(dLine) )
                                         goto badfile;
-                                    else doordata.hide_entry_scene = (bool)toInt(dLine);
+                                    else doordata.hide_entering_scene = (bool)toInt(dLine);
                                 } break;
                             //anpc=allow npc interlevel
                             case 5:
@@ -1181,95 +1182,143 @@ readLineAgain:
             FileData.layers.push_back(layerdata);
         }
 
-        //next line: events
-        //E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
-        //name=event name[***urlencode!***]
-        //msg=show message after start event
-        //ea=val,syntax
-        //    val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
-        //    syntax=condidtion expression[***urlencode!***]
-        //el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn
-        //    b=no smoke[0=false !0=true]
-        //    [***urlencode!***]
-        //    s(n)=show layer
-        //    l(n)=hide layer
-        //    t(n)=toggle layer
-        //elm=elm1/elm2...elmn
-        //    elm(n)=layername,horizontal syntax,vertical syntax,way
-        //    layername=layer name for movement[***urlencode!***]
-        //    horizontal syntax,vertical syntax[***urlencode!***][syntax]
-        //    way=[0=by speed][1=by Coordinate]
-        //epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
-        //    b1=enable player controls
-        //    b2=drop
-        //    b3=alt run
-        //    b4=run
-        //    b5=jump
-        //    b6=alt jump
-        //    b7=up
-        //    b8=down
-        //    b9=left
-        //    b10=right
-        //    b11=start
-        //    b12=lock keyboard
-        //eps=esection/ebackground/emusic
-        //    esection=es1:es2...esn
-        //    ebackground=eb1:eb2...ebn
-        //    emusic=em1:em2...emn
-        //        es=id,x,y,w,h,auto,sx,sy
-        //            id=section id
-        //            x=left x coordinates for section [id][***urlencode!***][syntax]
-        //            y=top y coordinates for section [id][***urlencode!***][syntax]
-        //            w=width for section [id][***urlencode!***][syntax]
-        //            h=height for section [id][***urlencode!***][syntax]
-        //            auto=enable autoscroll controls[0=false !0=true]
-        //            sx=move screen horizontal syntax[***urlencode!***][syntax]
-        //            sy=move screen vertical syntax[***urlencode!***][syntax]
-        //        eb=id,btype,backgroundid
-        //            id=section id
-        //            btype=[0=don't change][1=default][2=custom]
-        //            backgroundid=[when btype=2]custom background id
-        //        em=id,mtype,musicid,customfile
-        //            id=section id
-        //            mtype=[0=don't change][1=default][2=custom]
-        //            musicid=[when mtype=2]custom music id
-        //            customfile=[when mtype=3]custom music file name[***urlencode!***]
-        //eef=sound/endgame/ce1/ce2...cen
-        //    sound=play sound number
-        //    endgame=[0=none][1=bowser defeat]
-        //    ce(n)=id,x,y,sx,sy,grv,fsp,life
-        //        id=effect id
-        //        x=effect position x[***urlencode!***][syntax]
-        //        y=effect position y[***urlencode!***][syntax]
-        //        sx=effect horizontal speed[***urlencode!***][syntax]
-        //        sy=effect vertical speed[***urlencode!***][syntax]
-        //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
-        //        fsp=frame speed of effect generated
-        //        life=effect existed over this time will be destroyed.
-        //ecn=cn1/cn2...cnn
-        //    cn(n)=id,x,y,sx,sy,sp
-        //        id=npc id
-        //        x=npc position x[***urlencode!***][syntax]
-        //        y=npc position y[***urlencode!***][syntax]
-        //        sx=npc horizontal speed[***urlencode!***][syntax]
-        //        sy=npc vertical speed[***urlencode!***][syntax]
-        //        sp=advanced settings of generated npc
-        //evc=vc1/vc2...vcn
-        //    vc(n)=name,newvalue
-        //        name=variable name[***urlencode!***]
-        //        newvalue=new value[***urlencode!***][syntax]
-        //ene=nextevent/timer/apievent/scriptname
-        //    nextevent=name,delay
-        //        name=trigger event name[***urlencode!***]
-        //        delay=trigger delay[1 frame]
-        //    timer=enable,count,interval,type,show
-        //        enable=enable the game timer controlling[0=false !0=true]
-        //        count=set the time left of the game timer
-        //        interval=set the time count interval of the game timer
-        //        type=to choose the way timer counts[0=counting down][1=counting up]
-        //        show=to choose whether the game timer is showed in hud[0=false !0=true]
-        //    apievent=the id of apievent
-        //    scriptname=script name[***urlencode!***]
+        else
+        if(currentLine[0]=="E")//next line: events
+        {
+            //E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
+            eventdata = CreateLvlEvent();
+            for(int i=1;i<(signed)currentLine.size();i++)
+            {
+                PGESTRING &cLine=currentLine[i];
+                switch(i)
+                {
+                //    layer=layer name["" == "Default"][***urlencode!***]
+                case 1:
+                    {
+                        eventdata.name=PGE_URLDEC(cLine);
+                    } break;
+                //    status=is hidden layer
+                case 2:
+                    {
+                        eventdata.msg=PGE_URLDEC(cLine);
+                    } break;
+                //ea=val,syntax
+                case 3:
+                    {
+                    //    val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
+                    //    syntax=condidtion expression[***urlencode!***]
+                    } break;
+                //el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn
+                case 4:
+                    {
+                    //    b=no smoke[0=false !0=true]
+                    //    [***urlencode!***]
+                    //    s(n)=show layer
+                    //    l(n)=hide layer
+                    //    t(n)=toggle layer
+                    } break;
+                //elm=elm1/elm2...elmn
+                case 5:
+                    {
+                    //    elm(n)=layername,horizontal syntax,vertical syntax,way
+                    //    layername=layer name for movement[***urlencode!***]
+                    //    horizontal syntax,vertical syntax[***urlencode!***][syntax]
+                    //    way=[0=by speed][1=by Coordinate]
+                    } break;
+                //epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
+                case 6:
+                    {
+                    //    b1=enable player controls
+                    //    b2=drop
+                    //    b3=alt run
+                    //    b4=run
+                    //    b5=jump
+                    //    b6=alt jump
+                    //    b7=up
+                    //    b8=down
+                    //    b9=left
+                    //    b10=right
+                    //    b11=start
+                    //    b12=lock keyboard
+                    } break;
+                //eps=esection/ebackground/emusic
+                case 7:
+                    {
+                    //    esection=es1:es2...esn
+                    //    ebackground=eb1:eb2...ebn
+                    //    emusic=em1:em2...emn
+                    //        es=id,x,y,w,h,auto,sx,sy
+                    //            id=section id
+                    //            x=left x coordinates for section [id][***urlencode!***][syntax]
+                    //            y=top y coordinates for section [id][***urlencode!***][syntax]
+                    //            w=width for section [id][***urlencode!***][syntax]
+                    //            h=height for section [id][***urlencode!***][syntax]
+                    //            auto=enable autoscroll controls[0=false !0=true]
+                    //            sx=move screen horizontal syntax[***urlencode!***][syntax]
+                    //            sy=move screen vertical syntax[***urlencode!***][syntax]
+                    //        eb=id,btype,backgroundid
+                    //            id=section id
+                    //            btype=[0=don't change][1=default][2=custom]
+                    //            backgroundid=[when btype=2]custom background id
+                    //        em=id,mtype,musicid,customfile
+                    //            id=section id
+                    //            mtype=[0=don't change][1=default][2=custom]
+                    //            musicid=[when mtype=2]custom music id
+                    //            customfile=[when mtype=3]custom music file name[***urlencode!***]
+                    } break;
+                //eef=sound/endgame/ce1/ce2...cen
+                case 8:
+                    {
+                    //    sound=play sound number
+                    //    endgame=[0=none][1=bowser defeat]
+                    //    ce(n)=id,x,y,sx,sy,grv,fsp,life
+                    //        id=effect id
+                    //        x=effect position x[***urlencode!***][syntax]
+                    //        y=effect position y[***urlencode!***][syntax]
+                    //        sx=effect horizontal speed[***urlencode!***][syntax]
+                    //        sy=effect vertical speed[***urlencode!***][syntax]
+                    //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
+                    //        fsp=frame speed of effect generated
+                    //        life=effect existed over this time will be destroyed.
+                    } break;
+                //ecn=cn1/cn2...cnn
+                case 9:
+                    {
+                    //    cn(n)=id,x,y,sx,sy,sp
+                    //        id=npc id
+                    //        x=npc position x[***urlencode!***][syntax]
+                    //        y=npc position y[***urlencode!***][syntax]
+                    //        sx=npc horizontal speed[***urlencode!***][syntax]
+                    //        sy=npc vertical speed[***urlencode!***][syntax]
+                    //        sp=advanced settings of generated npc
+                    } break;
+                //evc=vc1/vc2...vcn
+                case 10:
+                    {
+                    //    vc(n)=name,newvalue
+                    //        name=variable name[***urlencode!***]
+                    //        newvalue=new value[***urlencode!***][syntax]
+                    } break;
+                //ene=nextevent/timer/apievent/scriptname
+                case 11:
+                    {
+                    //    nextevent=name,delay
+                    //        name=trigger event name[***urlencode!***]
+                    //        delay=trigger delay[1 frame]
+                    //    timer=enable,count,interval,type,show
+                    //        enable=enable the game timer controlling[0=false !0=true]
+                    //        count=set the time left of the game timer
+                    //        interval=set the time count interval of the game timer
+                    //        type=to choose the way timer counts[0=counting down][1=counting up]
+                    //        show=to choose whether the game timer is showed in hud[0=false !0=true]
+                    //    apievent=the id of apievent
+                    //    scriptname=script name[***urlencode!***]
+                    } break;
+                }
+            }
+            eventdata.array_id = FileData.events_array_id++;
+            FileData.events.push_back(eventdata);
+        }
 
         else
         if(currentLine[0]=="V")//next line: variables
@@ -1344,7 +1393,7 @@ readLineAgain:
                 case 2:
                     {
                         //scriptdata.scrupt=PGE_BASE64DEC_W(cLine);//for STD-based version need to convert string into UTF8!
-                        scriptdata.script=PGE_BASE64DEC_W(cLine);
+                        scriptdata.script=PGE_BASE64DEC_A(cLine);
                     } break;
                 }
             }

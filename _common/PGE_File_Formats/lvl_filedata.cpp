@@ -271,7 +271,7 @@ LevelDoor  FileFormats::CreateLvlWarp()
     dummyDoor.allownpc = false;
     dummyDoor.locked = false;
     dummyDoor.need_a_bomb = false;
-    dummyDoor.hide_entry_scene = false;
+    dummyDoor.hide_entering_scene = false;
     dummyDoor.allownpc_interlevel = false;
     dummyDoor.event_enter = "";
 

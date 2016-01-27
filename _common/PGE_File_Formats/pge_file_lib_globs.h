@@ -91,13 +91,19 @@ namespace PGE_FileFormats_misc
     std::string  base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
     std::string  base64_encode(std::string const& source);
     std::string  base64_decode(std::string const& encoded_string);
-    std::string  base64_encodeW(const std::wstring &source);
-    std::wstring base64_decodeW(const std::string  &source);
+    QString      base64_encode(QString &source);
+    QString      base64_decode(QString &source);
+    QString      base64_encodeW(QString &source);
+    QString      base64_decodeW(QString &source);
+    QString      base64_encodeA(QString &source);
+    QString      base64_decodeA(QString &source);
 }
-#define PGE_BASE64ENC(src)   QString::fromStdString(PGE_FileFormats_misc::base64_encode(src.toStdString()))
-#define PGE_BASE64DEC(src)   QString::fromStdString(PGE_FileFormats_misc::base64_decode(src.toStdString()))
-#define PGE_BASE64ENC_W(src) QString::fromStdString(PGE_FileFormats_misc::base64_encodeW(src.toStdWString()))
-#define PGE_BASE64DEC_W(src) src.fromStdWString(PGE_FileFormats_misc::base64_decodeW(src.toStdString()))
+#define PGE_BASE64ENC(src)   PGE_FileFormats_misc::base64_encode(src)
+#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_encode(src)
+#define PGE_BASE64ENC_W(src) PGE_FileFormats_misc::base64_encodeW(src)
+#define PGE_BASE64DEC_W(src) PGE_FileFormats_misc::base64_decodeW(src)
+#define PGE_BASE64ENC_A(src) PGE_FileFormats_misc::base64_encodeA(src)
+#define PGE_BASE64DEC_A(src) PGE_FileFormats_misc::base64_decodeA(src)
 #else
 #include <string>
 #include <vector>
@@ -134,7 +140,9 @@ namespace PGE_FileFormats_misc
     std::string base64_encode(std::string const& source);
     std::string base64_decode(std::string const& encoded_string);
     std::string base64_encodeW(std::string &source);
-    std::string base64_decodeW(std::string  &source);
+    std::string base64_decodeW(std::string &source);
+    std::string base64_encodeA(std::string &source);
+    std::string base64_decodeA(std::string &source);
 }
 #define PGE_SPLITSTR(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
 inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
@@ -154,9 +162,11 @@ PGESTRING fromNum(T num) { std::ostringstream n; n<<num; return n.str(); }
 #define PGE_URLENC(src) PGE_FileFormats_misc::url_encode(src)
 #define PGE_URLDEC(src) PGE_FileFormats_misc::url_decode(src)
 #define PGE_BASE64ENC(src)   PGE_FileFormats_misc::base64_encode(src)
-#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_decode(src);
+#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_decode(src)
 #define PGE_BASE64ENC_W(src) PGE_FileFormats_misc::base64_encodeW(src)
-#define PGE_BASE64DEC_W(src) PGE_FileFormats_misc::base64_decodeW(src);
+#define PGE_BASE64DEC_W(src) PGE_FileFormats_misc::base64_decodeW(src)
+#define PGE_BASE64ENC_A(src) PGE_FileFormats_misc::base64_encodeA(src)
+#define PGE_BASE64DEC_A(src) PGE_FileFormats_misc::base64_decodeA(src)
 #endif
 
 inline bool PGE_StartsWith(PGESTRING src, PGESTRING with)

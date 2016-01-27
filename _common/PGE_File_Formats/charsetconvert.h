@@ -8,6 +8,7 @@
 
 #include <wchar.h>
 #include "ConvertUTF.h"
+#include <cstdlib>
 
 /**
  * Converts UTF-8 to a wchar_t (or equivalent) using the Unicode reference
@@ -97,14 +98,14 @@ public:
             // at http://www.unicode.org/Public/PROGRAMS/CVTUTF/
             ConversionResult retval;
             const UTF8 * pUtf8 = (const UTF8 *) a_pInputData;
-            if (sizeof(wchar_t) == sizeof(UTF32)) {
+            if (sizeof(SI_CHAR) == sizeof(UTF32)) {
                 UTF32 * pUtf32 = (UTF32 *) a_pOutputData;
                 retval = ConvertUTF8toUTF32(
                     &pUtf8, pUtf8 + a_uInputDataLen,
                     &pUtf32, pUtf32 + a_uOutputDataSize,
                     lenientConversion);
             }
-            else if (sizeof(wchar_t) == sizeof(UTF16)) {
+            else if (sizeof(SI_CHAR) == sizeof(UTF16)) {
                 UTF16 * pUtf16 = (UTF16 *) a_pOutputData;
                 retval = ConvertUTF8toUTF16(
                     &pUtf8, pUtf8 + a_uInputDataLen,

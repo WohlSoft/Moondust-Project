@@ -667,15 +667,21 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_UIntVal("OD", door.odirect) //Output direction
                     PGEX_SIntVal("WX", door.world_x) //Target world map point
                     PGEX_SIntVal("WY", door.world_y) //Target world map point
-                    PGEX_StrVal("LF", door.lname) //Target level file
+                    PGEX_StrVal ("LF", door.lname) //Target level file
                     PGEX_UIntVal("LI", door.warpto) //Target level file's input warp
                     PGEX_BoolVal("ET", door.lvl_i) //Level Entrance
                     PGEX_BoolVal("EX", door.lvl_o) //Level exit
                     PGEX_UIntVal("SL", door.stars) //Stars limit
+                    PGEX_StrVal ("SM", door.stars_msg) //Message about stars/leeks
                     PGEX_BoolVal("NV", door.novehicles) //No Vehicles
+                    PGEX_BoolVal("SH", door.star_num_hide) //Don't show stars number
                     PGEX_BoolVal("AI", door.allownpc) //Allow grabbed items
                     PGEX_BoolVal("LC", door.locked) //Door is locked
+                    PGEX_BoolVal("LB", door.need_a_bomb) //Door is blocked, need bomb to unlock
+                    PGEX_BoolVal("HS", door.hide_entering_scene) //Don't show entering scene
+                    PGEX_BoolVal("AL", door.allownpc_interlevel) //Allow NPC's inter-level
                     PGEX_StrVal ("LR", door.layer) //Layer
+                    PGEX_StrVal ("EE", door.event_enter) //On-Enter event slot
                 }
 
                 door.isSetIn = ( !door.lvl_i );

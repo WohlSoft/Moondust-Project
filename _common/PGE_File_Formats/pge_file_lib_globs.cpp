@@ -188,16 +188,54 @@ namespace PGE_FileFormats_misc
     }
 
     #ifdef PGE_FILES_QT
-    std::string  base64_encodeW(const std::wstring &source)
+    /*
+#define PGE_BASE64ENC_W(src) QString::fromStdString(PGE_FileFormats_misc::base64_encodeW(src.toStdWString()))
+#define PGE_BASE64DEC_W(src) src.fromStdWString(PGE_FileFormats_misc::base64_decodeW(src.toStdString()))
+    */
+    QString      base64_encodeW(QString &source)
     {
-        return base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
+        return QString::fromStdString(
+                    base64_encode(reinterpret_cast<const unsigned char*>(source.utf16()),
+                                  source.size()*sizeof(unsigned short))
+                                     );
     }
 
-    std::wstring base64_decodeW(const std::string &source)
+    QString      base64_decodeW(QString &source)
     {
-        std::string out=base64_decode(source);
-        return std::wstring((wchar_t*)out.c_str());
+        std::string sout=base64_decode(source.toStdString());
+        QString out;
+        out.setUtf16(reinterpret_cast<const unsigned short*>(sout.data()), sout.size()/2 );
+        return out;
     }
+    QString      base64_encodeA(QString &source)
+    {
+        return QString::fromStdString(
+                    base64_encode(reinterpret_cast<const unsigned char*>(source.toLocal8Bit().data()),
+                                  source.size())
+                                     );
+    }
+
+    QString      base64_decodeA(QString &source)
+    {
+        std::string sout=base64_decode(source.toStdString());
+        return QString::fromLocal8Bit(sout.data(), sout.size());
+    }
+
+    QString      base64_encode(QString &source)
+    {
+        std::string out(source.toUtf8().data());
+        return QString::fromStdString(
+                    base64_encode(reinterpret_cast<const unsigned char*>(out.data()),
+                                  out.size())
+                                     );
+    }
+
+    QString      base64_decode(QString &source)
+    {
+        std::string sout=base64_decode(source.toStdString());
+        return QString::fromUtf8(sout.data(), sout.size());
+    }
+
     #else
     std::string  base64_encodeW(std::string &source)
     {
@@ -215,10 +253,13 @@ namespace PGE_FileFormats_misc
     std::string base64_decodeW(std::string &source)
     {
         std::string out=base64_decode(source);
-        for(size_t i=0; i<out.size(); i++)
-             printf("%i ", (int)out[i]);
-        printf("%s", out.c_str());
-
+        FILE* x = fopen("test.txt", "ab");
+//        for(size_t i=0; i<out.size(); i++)
+//             printf("%i ", (int)out[i]);
+//        printf("%s", out.c_str());
+        fwrite((void*)out.c_str(), sizeof(char), out.size(), x);
+        fflush(x);
+        fclose(x);
         std::wstring outw((wchar_t*)out.c_str());
         SI_ConvertW<wchar_t> utf8(true);
         size_t new_len = outw.length()*2;//utf8.SizeToStore(outw.c_str());
@@ -229,6 +270,16 @@ namespace PGE_FileFormats_misc
             return out2;
         }
         return "<fail to convert charset>";
+    }
+
+    std::string base64_encodeA(std::string &source)
+    {
+        return base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
+    }
+
+    std::string base64_decodeA(std::string &source)
+    {
+        return base64_decode(source);
     }
     #endif
 

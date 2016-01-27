@@ -386,7 +386,7 @@ struct LevelDoor
     //! Player need to explode lock with a bomb to enter into this warp
     bool need_a_bomb;
     //! Hide the entry scene
-    bool hide_entry_scene;
+    bool hide_entering_scene;
     //! Allows player to move through this warp carried NPC's to another level
     bool allownpc_interlevel;
     //! Trigger event on enter
