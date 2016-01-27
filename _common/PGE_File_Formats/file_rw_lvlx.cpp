@@ -1317,6 +1317,12 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(FileData.doors[i].stars>0)
                 TextData += PGEFile::value("SL", PGEFile::IntS(FileData.doors[i].stars));  // Need a stars
 
+            if(!FileData.doors[i].stars_msg.PGESTRINGisEmpty())
+                TextData += PGEFile::value("SM", PGEFile::qStrS(FileData.doors[i].stars_msg));  // Message for start requirement
+
+            if(FileData.doors[i].star_num_hide)
+                TextData += PGEFile::value("SH", PGEFile::BoolS(FileData.doors[i].star_num_hide));  // Don't show number of stars
+
             if(FileData.doors[i].novehicles)
                 TextData += PGEFile::value("NV", PGEFile::BoolS(FileData.doors[i].novehicles));  // Deny Vehicles
 
@@ -1326,8 +1332,20 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(FileData.doors[i].locked)
                 TextData += PGEFile::value("LC", PGEFile::BoolS(FileData.doors[i].locked));  // Locked door
 
+            if(FileData.doors[i].need_a_bomb)
+                TextData += PGEFile::value("LB", PGEFile::BoolS(FileData.doors[i].need_a_bomb));  //Need a bomb to open door
+
+            if(FileData.doors[i].hide_entering_scene)
+                TextData += PGEFile::value("HS", PGEFile::BoolS(FileData.doors[i].hide_entering_scene));  //Hide entrance scene
+
+            if(FileData.doors[i].allownpc_interlevel)
+                TextData += PGEFile::value("AL", PGEFile::BoolS(FileData.doors[i].allownpc_interlevel));  //Allow Items inter-level
+
             if(FileData.doors[i].layer!=defDoor.layer) //Write only if not default
                 TextData += PGEFile::value("LR", PGEFile::qStrS(FileData.doors[i].layer));  // Layer
+
+            if(!FileData.doors[i].event_enter.PGESTRINGisEmpty()) //Write only if not default
+                TextData += PGEFile::value("EE", PGEFile::qStrS(FileData.doors[i].event_enter));  // On-Enter event
 
             TextData += "\n";
         }
