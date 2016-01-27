@@ -95,5 +95,5 @@ after_success:
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword wohlnet.ru
+  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword $FTPServer
 
