@@ -91,8 +91,8 @@ namespace PGE_FileFormats_misc
     std::string  base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
     std::string  base64_encode(std::string const& source);
     std::string  base64_decode(std::string const& encoded_string);
-    std::string  base64_encodeW(std::wstring &source);
-    std::wstring base64_decodeW(std::string  &source);
+    std::string  base64_encodeW(const std::wstring &source);
+    std::wstring base64_decodeW(const std::string  &source);
 }
 #define PGE_BASE64ENC(src)   QString::fromStdString(PGE_FileFormats_misc::base64_encode(src.toStdString()))
 #define PGE_BASE64DEC(src)   QString::fromStdString(PGE_FileFormats_misc::base64_decode(src.toStdString()))

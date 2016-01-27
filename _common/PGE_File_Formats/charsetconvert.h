@@ -1,6 +1,8 @@
 #ifndef CHARSETCONVERT_H
 #define CHARSETCONVERT_H
 
+#define SI_NO_MBSTOWCS_NULL
+
 #define SI_Case     SI_GenericCase
 #define SI_NoCase   SI_GenericNoCase
 
@@ -26,6 +28,14 @@ public:
         return *this;
     }
 
+    static size_t utf8len(const char *s)
+    {
+        size_t len = 0;
+        while(*s)
+            len += (*(s++)&0xC0)!=0x80;
+        return len;
+    }
+
     /** Calculate the number of SI_CHAR required for converting the input
      * from the storage format. The storage format is always UTF-8 or MBCS.
      *
@@ -46,10 +56,7 @@ public:
         //SI_ASSERT(a_uInputDataLen != (size_t) -1);
 
         if (m_bStoreIsUtf8) {
-            // worst case scenario for UTF-8 to wchar_t is 1 char -> 1 wchar_t
-            // so we just return the same number of characters required as for
-            // the source text.
-            return a_uInputDataLen;
+            return utf8len(a_pInputData);
         }
 
 #if defined(SI_NO_MBSTOWCS_NULL) || (!defined(_MSC_VER) && !defined(_linux))
@@ -129,7 +136,8 @@ public:
         if (m_bStoreIsUtf8) {
             // worst case scenario for wchar_t to UTF-8 is 1 wchar_t -> 6 char
             size_t uLen = 0;
-            while (a_pInputData[uLen]) {
+            while (a_pInputData[uLen])
+            {
                 ++uLen;
             }
             return (6 * uLen) + 1;
@@ -177,14 +185,14 @@ public:
             // at http://www.unicode.org/Public/PROGRAMS/CVTUTF/
             ConversionResult retval;
             UTF8 * pUtf8 = (UTF8 *) a_pOutputData;
-            if (sizeof(wchar_t) == sizeof(UTF32)) {
+            if (sizeof(SI_CHAR) == sizeof(UTF32)) {
                 const UTF32 * pUtf32 = (const UTF32 *) a_pInputData;
                 retval = ConvertUTF32toUTF8(
                     &pUtf32, pUtf32 + uInputLen,
                     &pUtf8, pUtf8 + a_uOutputDataSize,
                     lenientConversion);
             }
-            else if (sizeof(wchar_t) == sizeof(UTF16)) {
+            else if (sizeof(SI_CHAR) == sizeof(UTF16)) {
                 const UTF16 * pUtf16 = (const UTF16 *) a_pInputData;
                 retval = ConvertUTF16toUTF8(
                     &pUtf16, pUtf16 + uInputLen,
