@@ -355,7 +355,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User NPCs %1")
-                    .arg(QString::number(pConfigs->main_npc.size()) ) );
+                    .arg(QString::number(pConfigs->main_npc.stored()) ) );
 
         progress.setValue(progress.value()+1);
     }
