@@ -26,6 +26,8 @@
 
 #include <dev_console/devconsole.h>
 
+#include "crashhandler.h"
+
 #include "app_path.h"
 #include "logger_sets.h"
 
@@ -137,7 +139,7 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
         txt = QString("Critical: %1").arg(msg);
     break;
     case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
+        txt = QString("Fatal: %1\n\nStack trace:\n%2").arg(msg).arg(CrashHandler::getStacktrace());
         break;
     default:
         txt = QString("Info: %1").arg(msg);
@@ -194,11 +196,12 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(lMessage.constData());
         break;
         case QtFatalMsg:
-        txt = QString("Fatal: (%1:%2, %3): %4")
+        txt = QString("Fatal: (%1:%2, %3): %4\n\nStack trace:\n%5")
                 .arg(context.file)
                 .arg(context.line)
                 .arg(context.function)
-                .arg(lMessage.constData());
+                .arg(lMessage.constData())
+                .arg(CrashHandler::getStacktrace());
         break;
         default:
         txt = QString("Info: (%1:%2, %3): %4")

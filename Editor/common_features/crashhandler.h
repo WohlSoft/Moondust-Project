@@ -47,13 +47,13 @@ public:
 
     static void initCrashHandlers();
 
+    static QString getStacktrace();
 
 private slots:
     void on_pgeForumButton_clicked();
     void on_exitButton_clicked();
 
 private:
-    static QString getStacktrace();
     Ui::CrashHandler *ui;
 };
 
