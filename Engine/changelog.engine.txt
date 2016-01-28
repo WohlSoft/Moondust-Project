@@ -1,5 +1,6 @@
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
+- Added more physical environment zones types, include air chambers for underwater sections
 
 0.2.5
 - Fixed crash on NPC placement with interprocessing
