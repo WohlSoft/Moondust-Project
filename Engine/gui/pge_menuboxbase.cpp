@@ -482,6 +482,7 @@ void PGE_MenuBoxBase::initControllers()
 
 void PGE_MenuBoxBase::updateControllers()
 {
+    SDL_PumpEvents();
     if(_ctrl1)
     {
         _ctrl1->update();

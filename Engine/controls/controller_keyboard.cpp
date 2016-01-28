@@ -38,7 +38,6 @@ KeyboardController::~KeyboardController()
 
 void KeyboardController::update()
 {
-    //SDL_PumpEvents();
     const Uint8* state = SDL_GetKeyboardState(NULL);
 
     keys.jump=state[kmap.jump.val];

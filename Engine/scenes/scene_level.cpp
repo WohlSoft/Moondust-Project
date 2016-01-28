@@ -416,9 +416,10 @@ void LevelScene::processEvents()
     if(g_AppSettings.interprocessing)
         qApp->processEvents();
     #endif
+    //SDL_PumpEvents();
+    Scene::processEvents();
     player1Controller->update();
     player2Controller->update();
-    Scene::processEvents();
 }
 
 void LevelScene::render()

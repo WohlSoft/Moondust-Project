@@ -294,6 +294,7 @@ LuaEngine *TitleScene::getLuaEngine()
 
 void TitleScene::processEvents()
 {
+    SDL_PumpEvents();
     if(PGE_Window::showDebugInfo)
     {
         if(g_AppSettings.joysticks.size()>0)

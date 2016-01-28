@@ -1196,9 +1196,9 @@ LuaEngine *WorldScene::getLuaEngine()
 
 void WorldScene::processEvents()
 {
+    Scene::processEvents();
     player1Controller->update();
     controls_1 = player1Controller->keys;
-    Scene::processEvents();
 }
 
 int WorldScene::exec()
