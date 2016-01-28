@@ -103,7 +103,7 @@ void JoystickController::update()
     if(!m_joystickController)
         return;
 
-    SDL_PumpEvents();
+    //SDL_PumpEvents();
     SDL_JoystickUpdate();
 
     updateKey(keys.jump, kmap.jump);
@@ -126,7 +126,7 @@ void JoystickController::update()
 bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
 {
     int val=0, dx=0, dy=0;
-    SDL_PumpEvents();
+    //SDL_PumpEvents();
     SDL_JoystickUpdate();
 
     for(int i=0; i<SDL_JoystickNumBalls(joy);i++)

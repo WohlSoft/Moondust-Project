@@ -447,7 +447,7 @@ bool LevelScene::init()
         {
             drawLoader();
             PGE_Window::rePaint();
-            SDL_PumpEvents();
+            //SDL_PumpEvents();
             SDL_Delay(20);
         }
     stopLoaderAnimation();

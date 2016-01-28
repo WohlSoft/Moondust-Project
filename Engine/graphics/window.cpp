@@ -178,7 +178,7 @@ bool PGE_Window::uninit()
     }
 
     SDL_HideWindow(window);
-    SDL_PumpEvents();
+    //SDL_PumpEvents();
     GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
     //SDL_GL_DeleteContext(glcontext_background);
