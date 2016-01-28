@@ -191,7 +191,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 		play_mus=NULL;
     }
 
-    play_mus = Mix_LoadMUS( musFile.toUtf8() );
+    play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
 
     if(!play_mus)
 	{

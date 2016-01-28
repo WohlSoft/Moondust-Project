@@ -598,9 +598,19 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
     Mix_MusicType type;
 
     if( music_file ) SDL_free(music_file);
-
         music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
         strcpy(music_file, (char*)file);
+        #ifdef _WIN32
+        if(music_file)
+        {
+            int i=0;
+            for(i=0; music_file[i] != '\0'; i++)
+            {
+                if(music_file[i]=='\\')
+                    music_file[i]='/';
+            }
+        }
+        #endif
         gme_track_number=0;
         int hasTrackNum=0;
         int i, j;

@@ -125,7 +125,7 @@ namespace PGE_MusicPlayer
     bool MUS_openFile(QString musFile)
     {
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
-        play_mus = Mix_LoadMUS( musFile.toUtf8() );
+        play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
         if(!play_mus) {
             error(QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError()));
             return false;
