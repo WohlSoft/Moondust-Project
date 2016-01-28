@@ -1,7 +1,8 @@
 @echo off
+
 SET wasRemoved=0
 
-call :kfile .
+call :kfile %CD%
 call :kfile ServerLib\ServerAPI
 call :kfile ServerLib\ServerApp
 call :kfile _Libs
@@ -22,13 +23,14 @@ call :kfile MusicPlayer
 if %wasRemoved%==0 echo Everything already clean!
 
 IF NOT '%1'=='nopause' pause
+GOTO :EOF
 goto ExitX
 
 :kfile
+
     IF EXIST "%1\MakeFile" del "%1\MakeFile" && SET wasRemoved=1 && echo file %1\MakeFile removed
     IF EXIST "%1\MakeFile*" del "%1\MakeFile*" && SET wasRemoved=1 && echo file %1\MakeFile* removed
     IF EXIST "%1\object_script*" del "%1\object_script*" && SET wasRemoved=1 && echo file %1\object_script* removed
 	GOTO :EOF
 
 :ExitX
-
