@@ -314,6 +314,13 @@ bool LevelScene::init_items()
 
         int sID = findNearestSection(cameraStart.x(), cameraStart.y());
         LVL_Section *t_sct = getSection(sID);
+        if(!t_sct)
+        {
+            _errorString = QObject::tr("Fatal error: Impossible to find start section.\n"
+                                       "Are you placed player start point (or entrance warp point) too far off of the section(s)?");
+            return false;
+        }
+
         int x=cameraStart.x();
         int y=cameraStart.y();
         //Init Cameras
