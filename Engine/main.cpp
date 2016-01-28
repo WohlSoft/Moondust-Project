@@ -18,20 +18,16 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QElapsedTimer>
-#include <QFileInfo>
 #include <QDir>
-
 #include <QtDebug>
 
-#include <iostream>
 #include "version.h"
 
 #include "common_features/app_path.h"
-#include "common_features/graphics_funcs.h"
 #include "common_features/logger.h"
 #include "common_features/episode_state.h"
 #include "common_features/translator.h"
+#include "common_features/crash_handler.h"
 
 #include <settings/global_settings.h>
 
@@ -39,7 +35,6 @@
 #include "data_configs/config_manager.h"
 
 #include "graphics/window.h"
-#include "graphics/gl_renderer.h"
 
 #include <audio/SdlMusPlayer.h>
 
@@ -47,8 +42,8 @@
 #include <PGE_File_Formats/smbx64.h>
 #include "fontman/font_manager.h"
 #include "gui/pge_msgbox.h"
+
 #include "networking/intproc.h"
-#include "graphics/graphics.h"
 
 #include <settings/global_settings.h>
 
@@ -61,113 +56,10 @@
 
 #include <QMessageBox>
 
-#include <cstdlib>
+//#include <cstdlib>
 #include <ctime>
 #include <iostream>
 
-/* Signals Begin */
-#include <signal.h>
-
-void crashByUnhandledException()
-{
-    WriteToLog(QtWarningMsg, "<Unhandled exception!>");
-    QMessageBox::critical(NULL, QObject::tr("Unhandled exception!"),
-                 QObject::tr("Engine was crashed because accepted unhandled exception!"));
-    exit(-1);
-}
-
-void crashByFlood()
-{
-    WriteToLog(QtWarningMsg, "<Out of memory!>");
-    QMessageBox::critical(NULL, QObject::tr("Out of memory!"),
-                 QObject::tr("Engine was crashed because out of memory! Try to close other applications and restart game."));
-    exit(-1);
-}
-
-
-void handle_signal(int signal)
-{
-    // Find out which signal we're handling
-    switch (signal) {
-        #ifndef _WIN32  //Unsupported signals by Windows
-        case SIGHUP:
-            WriteToLog(QtWarningMsg, "Terminal was closed");
-            exit(signal);
-            break;
-        case SIGQUIT:
-            WriteToLog(QtWarningMsg, "<Quit command>");
-            exit(signal);
-        case SIGKILL:
-            WriteToLog(QtWarningMsg, "<killed>");
-            QMessageBox::critical(NULL, QObject::tr("Killed!"),
-                         QObject::tr("Engine was killed by mad maniac :-P"));
-            exit(signal);
-            break;
-        case SIGALRM:
-            WriteToLog(QtWarningMsg, "<alarm() time out!>");
-            QMessageBox::critical(NULL, QObject::tr("Time out!"),
-                          QObject::tr("Engine was abourted because alarm() time out!"));
-            exit(signal);
-            break;
-        case SIGURG:
-        case SIGUSR1:
-        case SIGUSR2:
-            break;
-        case SIGILL:
-            WriteToLog(QtWarningMsg, "<Wrong CPU Instruction>");
-            QMessageBox::critical(NULL, QObject::tr("Wrong CPU Instruction!"),
-                         QObject::tr("Engine was crashed because a wrong CPU instruction"));
-            exit(signal);
-        #endif
-        case SIGFPE:
-            WriteToLog(QtWarningMsg, "<wrong arithmetical operation>");
-            QMessageBox::critical(NULL, QObject::tr("Wrong arithmetical operation"),
-                          QObject::tr("Engine was crashed because wrong arithmetical opreation!"));
-            exit(signal);
-            break;
-        case SIGABRT:
-            WriteToLog(QtWarningMsg, "<Aborted!>");
-            QMessageBox::critical(NULL, QObject::tr("Aborted"),
-                          QObject::tr("Engine was been aborted because critical error was occouped."));
-            exit(signal);
-        case SIGSEGV:
-            WriteToLog(QtWarningMsg, "<Segmentation fault crash!>");
-            QMessageBox::critical(NULL, QObject::tr("Segmentation fault"),
-                          QObject::tr("Engine was crashed because Segmentation fault. Run debug with built in debug mode "
-                                      "and retry your recent action to take more detail info."));
-            exit(signal);
-            break;
-        case SIGINT:
-            WriteToLog(QtWarningMsg, "<Interrupted!>");
-            QMessageBox::critical(NULL, QObject::tr("Interrupt"),
-                          QObject::tr("Engine was interrupted"));
-            exit(0);
-            break;
-        default:
-            return;
-    }
-}
-
-void initSigs()
-{
-    std::set_new_handler(&crashByFlood);
-    std::set_terminate(&crashByUnhandledException);
-    #ifndef _WIN32 //Unsupported signals by Windows
-    signal(SIGHUP, &handle_signal);
-    signal(SIGQUIT, &handle_signal);
-    signal(SIGKILL, &handle_signal);
-    signal(SIGALRM, &handle_signal);
-    signal(SIGURG, &handle_signal);
-    signal(SIGUSR1, &handle_signal);
-    signal(SIGUSR2, &handle_signal);
-    #endif
-    signal(SIGILL, &handle_signal);
-    signal(SIGFPE, &handle_signal);
-    signal(SIGSEGV, &handle_signal);
-    signal(SIGINT, &handle_signal);
-    signal(SIGABRT, &handle_signal);
-}
-/* Signals End */
 
 enum Level_returnTo
 {
@@ -194,7 +86,7 @@ struct cmdArgs
 
 int main(int argc, char *argv[])
 {
-    initSigs();
+    CrashHandler::initSigs();
 
     srand( std::time(NULL) );
 
@@ -812,9 +704,8 @@ ExitFromApplication:
     FontManager::quit();
     PGE_Window::uninit();
     qDebug()<<"<Application closed>";
-    a.quit();
     CloseLog();
-
+    a.quit();
     return 0;
 }
 

@@ -301,7 +301,8 @@ SOURCES += \
     scenes/level/lvl_scene_garbage_collecting.cpp \
     common_features/translator.cpp \
     common_features/file_mapper.cpp \
-    common_features/md5.cpp
+    common_features/md5.cpp \
+    common_features/crash_handler.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -454,7 +455,8 @@ HEADERS  += \
     common_features/data_array.h \
     common_features/file_mapper.h \
     graphics/gl_debug.h \
-    common_features/md5.h
+    common_features/md5.h \
+    common_features/crash_handler.h
 
 
 FORMS    += \
