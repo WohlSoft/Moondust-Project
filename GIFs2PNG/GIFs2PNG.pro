@@ -29,11 +29,7 @@ include(../_common/build_props.pri)
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
-static: win32||linux-g++: {
-QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
-}
+include(../_common/strip_garbage.pri)
 
 DEFINES += QT_NO_TRANSLATION
 

@@ -29,11 +29,7 @@ QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-static: win32||linux-g++: {
-QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
-}
+include(../_common/strip_garbage.pri)
 
 include(../_common/dest_dir.pri)
 include(../_common/build_props.pri)
