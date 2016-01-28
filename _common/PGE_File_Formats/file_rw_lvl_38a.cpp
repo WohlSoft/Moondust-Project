@@ -29,8 +29,10 @@
                            PGESTRING line;      /*Current Line data*/
 
 //Jump to next line
-#define nextLine() line = in.readCVSLine();
-
+#ifdef nextLine
+#undef nextLine
+#endif
+#define nextLine() line = in.readLine();
 
 LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
 {
@@ -380,7 +382,8 @@ readLineAgain:
                     {
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
-                        else section.id=toInt(cLine);
+                        else section.id=(toInt(cLine)-1);
+                        if(section.id<0) section.id = 0;
                     } break;
                 //"x=Left size[-left/+right]
                 case 2:
@@ -401,14 +404,16 @@ readLineAgain:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else w=toFloat(cLine);
+                        else w = toFloat(cLine);
+                        if(w<800.0) w=800.0;
                     } break;
                 //"h=height of the section[if (h < 600) h = 600]
                 case 5:
                     {
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
-                        else h=toFloat(cLine);
+                        else h = toFloat(cLine);
+                        if(h<600.0) h=600.0;
                     } break;
                 //"b1=under water?[0=false !0=true]
                 case 6:
@@ -464,14 +469,17 @@ readLineAgain:
                 }
             }
 
+            section.size_left = (long)round(x);
+            section.size_top = (long)round(y);
+            section.size_right = (long)round(x+w);
+            section.size_bottom = (long)round(y+h);
 
-            section.size_left=(long)round(x);
-            section.size_top=(long)round(y);
-            section.size_right=(long)round(x+w);
-            section.size_bottom=(long)round(y+h);
+            //Very important data! I'ts a camera position in the editor!
+            section.PositionX = section.size_left-10;
+            section.PositionY = section.size_top-10;
 
-            if(section.id <= (signed)FileData.sections.size())
-                FileData.sections[section.id-1]=section;//Replace if already exists
+            if(section.id < (signed)FileData.sections.size())
+                FileData.sections[section.id]=section;//Replace if already exists
             else
                 FileData.sections.push_back(section); //Add Section in main array
         }
@@ -496,7 +504,7 @@ readLineAgain:
                     {
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
-                        else blockdata.id=toInt(cLine);
+                        else blockdata.id = toInt(cLine);
                     } break;
                 //    x=block position x
                 case 3:
@@ -523,7 +531,7 @@ readLineAgain:
                         else
                         {
                             long npcid=toInt(cLine);
-                            blockdata.npc_id=((npcid<1000) ? -1*npcid : npcid-1000 );
+                            blockdata.npc_id = ((npcid<1000) ? -1*npcid : npcid-1000 );
                         }
                     } break;
                 //    b1=slippery[0=false !0=true]
@@ -668,11 +676,11 @@ readLineAgain:
                                 PGESTRING &dLine=physparams[j];
                                 switch(j)
                                 {
-                                //b1=[-1]left [0]random [1]right
+                                //b1=[1]left [0]random [-1]right
                                     case 0:
                                         if( SMBX64::sInt(dLine) )
                                         goto badfile;
-                                        else npcdata.direct=toInt(dLine);
+                                        else npcdata.direct = -1 * toInt(dLine);//Convert into SMBX64/PGE-X Compatible form
                                     break;
                                 //b2=friendly npc
                                     case 1:
@@ -752,7 +760,7 @@ readLineAgain:
                                 switch(j)
                                 {
                                 //c1=generator enable
-                                    case 0: npcdata.generator = ((cLine!="")&&(cLine!="0")); break;
+                                    case 0: npcdata.generator = ( (dLine != "") && (dLine!="0") ); break;
                                 //[if c1!=0]
                                 //    c2=generator period[1 frame]
                                     case 1:
@@ -802,30 +810,30 @@ readLineAgain:
                                 //    c4=generator direction[angle][when c3=0]
                                     case 3:
                                         {
-                                            if( SMBX64::sFloat(cLine) )
+                                            if( SMBX64::sFloat(dLine) )
                                                 goto badfile;
-                                            else npcdata.generator_custom_angle = toFloat(cLine);
+                                            else npcdata.generator_custom_angle = toFloat(dLine);
                                         } break;
                                 //    c5=batch[when c3=0][MAX=32]
                                     case 4:
                                         {
-                                            if( SMBX64::sFloat(cLine) )
+                                            if( SMBX64::sFloat(dLine) )
                                                 goto badfile;
-                                            else npcdata.generator_branches = (long)fabs(round(toFloat(cLine)));
+                                            else npcdata.generator_branches = (long)fabs(round(toFloat(dLine)));
                                         } break;
                                 //    c6=angle range[when c3=0]
                                     case 5:
                                         {
-                                            if( SMBX64::sFloat(cLine) )
+                                            if( SMBX64::sFloat(dLine) )
                                                 goto badfile;
-                                            else npcdata.generator_angle_range = fabs(toFloat(cLine));
+                                            else npcdata.generator_angle_range = fabs(toFloat(dLine));
                                         } break;
                                 //    c7=speed[when c3=0][float]
                                     case 6:
                                         {
-                                            if( SMBX64::sFloat(cLine) )
+                                            if( SMBX64::sFloat(dLine) )
                                                 goto badfile;
-                                            else npcdata.generator_initial_speed = toFloat(cLine);
+                                            else npcdata.generator_initial_speed = toFloat(dLine);
                                         } break;
                                 }
                             }
@@ -938,9 +946,9 @@ readLineAgain:
                                     //b5=Maximum Velocity
                                     case 4:
                                         {
-                                            if( SMBX64::sFloat(cLine) )
+                                            if( SMBX64::sFloat(dLine) )
                                                 goto badfile;
-                                            else waters.accel = toFloat(cLine);
+                                            else waters.accel = toFloat(dLine);
                                         } break;
                                 }
                             }
@@ -1017,7 +1025,13 @@ readLineAgain:
                     {
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
-                        else doordata.odirect = toInt(cLine);
+                        else switch(toInt(cLine))//Convert into SMBX64/PGE-X Compatible form
+                                {
+                                    case 1: doordata.odirect = LevelDoor::EXIT_UP;break;
+                                    case 2: doordata.odirect = LevelDoor::EXIT_LEFT;break;
+                                    case 3: doordata.odirect = LevelDoor::EXIT_DOWN;break;
+                                    case 4: doordata.odirect = LevelDoor::EXIT_RIGHT;break;
+                                }
                     } break;
 
                 case 9:
@@ -1039,7 +1053,7 @@ readLineAgain:
                             //msg=a message when you have not enough stars
                             case 1:
                                 {
-                                    doordata.stars_msg=PGE_URLDEC(cLine);
+                                    doordata.stars_msg=PGE_URLDEC(dLine);
                                 } break;
                             //hide=hide the star number in this warp
                             case 2:
@@ -1123,6 +1137,7 @@ readLineAgain:
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
                         else doordata.lvl_i = (bool)toInt(cLine);
+                        doordata.isSetIn = ((doordata.lvl_i)?false:true);
                     } break;
                 //wx=warp to x on world map
                 case 14:
@@ -1144,6 +1159,7 @@ readLineAgain:
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
                         else doordata.lvl_o = (bool)toInt(cLine);
+                        doordata.isSetOut = (((doordata.lvl_o)?false:true) || (doordata.lvl_i));
                     } break;
                 //we=warp event[***urlencode!***]
                 case 17:
