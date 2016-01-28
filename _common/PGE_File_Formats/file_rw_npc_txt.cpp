@@ -97,6 +97,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                NextLine(line)
                continue;
            }
+           if(Params.size()<2)
+           {
+               NextLine(line);
+               continue;
+           }
        }
 
        Params[0] = PGESTR_Simpl(Params[0]);
@@ -550,7 +555,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.name = removeQuotes(Params[1]);
            else
                FileData.name = Params[1];
-               FileData.en_name=true;
+               FileData.en_name=!FileData.name.isEmpty();
         }
        else
        if(Params[0]=="image")
@@ -559,7 +564,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.image = removeQuotes(Params[1]);
            else
                FileData.image= Params[1];
-               FileData.en_image=true;
+               FileData.en_image=!FileData.image.isEmpty();
         }
        else
        if(Params[0]=="script")
@@ -568,7 +573,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.script = removeQuotes(Params[1]);
            else
                FileData.script= Params[1];
-               FileData.en_script=true;
+               FileData.en_script=!FileData.script.isEmpty();
         }
        else
        if(Params[0]=="grid")
@@ -797,15 +802,15 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     {
         TextData += "noshell=" + fromNum((int)FileData.noshell) +"\n";
     }
-    if(FileData.en_name)
+    if(FileData.en_name && !FileData.name.isEmpty())
     {
         TextData += "name=" + SMBX64::qStrS(FileData.name);
     }
-    if(FileData.en_image)
+    if(FileData.en_image && !FileData.image.isEmpty())
     {
         TextData += "image=" + SMBX64::qStrS(FileData.image);
     }
-    if(FileData.en_script)
+    if(FileData.en_script && !FileData.script.isEmpty())
     {
         TextData += "script=" + SMBX64::qStrS(FileData.script);
     }
