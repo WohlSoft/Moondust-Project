@@ -182,8 +182,8 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
     {
         section = CreateLvlSection();
 
-        nextLine(); SIntVar(section.size_left, line); section.PositionX=toInt(line)-10; //left
-        nextLine(); SIntVar(section.size_top,  line); section.PositionY=toInt(line)-10; //top
+        nextLine(); SIntVar(section.size_left, line);
+        nextLine(); SIntVar(section.size_top,  line);
         nextLine(); SIntVar(section.size_bottom, line); //bottom
         nextLine(); SIntVar(section.size_right, line);  //right
 
@@ -195,6 +195,10 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
         if(ge(1)) {nextLine(); wBoolVar(section.lock_left_scroll, line);} //Don't walk to left (no turn back)
         if(ge(30)){nextLine(); wBoolVar(section.underwater, line);}//Underwater
         if(ge(2)) {nextLine(); strVar(section.music_file, line);}//Custom Music
+
+        //Very important data! I'ts a camera position in the editor!
+        section.PositionX=section.size_left-10; //left
+        section.PositionY=section.size_top-10; //top
 
         section.id = i;
         if(i < (signed)FileData.sections.size())
