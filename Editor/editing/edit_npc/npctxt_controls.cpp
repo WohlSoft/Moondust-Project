@@ -537,7 +537,7 @@ void NpcEdit::on_Name_textEdited(const QString &arg1)
     documentWasModified();
     NpcData.name=arg1;
 }
-
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_En_Health_clicked(bool checked)
 {
@@ -552,7 +552,7 @@ void NpcEdit::on_Health_valueChanged(int arg1)
     NpcData.health=arg1;
 }
 
-
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_En_GridSize_clicked(bool checked)
 {
@@ -563,9 +563,10 @@ void NpcEdit::on_En_GridSize_clicked(bool checked)
 }
 void NpcEdit::on_GridSize_valueChanged(int arg1)
 {
-
+    documentWasModified();
+    NpcData.grid=arg1;
 }
-
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_En_GridOffsetX_clicked(bool checked)
 {
@@ -576,8 +577,11 @@ void NpcEdit::on_En_GridOffsetX_clicked(bool checked)
 }
 void NpcEdit::on_GridOffsetX_valueChanged(int arg1)
 {
-
+    documentWasModified();
+    NpcData.grid_offset_x=arg1;
 }
+
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_En_GridOffsetY_clicked(bool checked)
 {
@@ -588,8 +592,11 @@ void NpcEdit::on_En_GridOffsetY_clicked(bool checked)
 }
 void NpcEdit::on_GridOffsetY_valueChanged(int arg1)
 {
-
+    documentWasModified();
+    NpcData.grid_offset_y=arg1;
 }
+
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_En_AlignAt_clicked(bool checked)
 {
@@ -600,10 +607,11 @@ void NpcEdit::on_En_AlignAt_clicked(bool checked)
 }
 void NpcEdit::on_AlignAt_currentIndexChanged(int index)
 {
-
+    documentWasModified();
+    NpcData.grid_align=index;
 }
 
-
+////////////////////////////////////////////////////////////////
 
 void NpcEdit::on_DirectLeft_clicked()
 {

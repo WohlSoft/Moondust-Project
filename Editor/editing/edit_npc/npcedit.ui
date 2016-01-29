@@ -37,7 +37,7 @@
    <string>NPC Configuration edit</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../Engine/_resources/engine.qrc">
+   <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -84,8 +84,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1116</width>
-        <height>617</height>
+        <width>1114</width>
+        <height>615</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,10" columnstretch="25,25,25,25">
@@ -718,12 +718,12 @@
            <widget class="QComboBox" name="AlignAt">
             <item>
              <property name="text">
-              <string>Middle of cell</string>
+              <string>Middle of cell by center</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Edge of cell</string>
+              <string>Edge of cell by center</string>
              </property>
             </item>
            </widget>
@@ -1101,7 +1101,7 @@ border-color: rgb(132, 132, 132);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../../Engine/_resources/engine.qrc"/>
+  <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

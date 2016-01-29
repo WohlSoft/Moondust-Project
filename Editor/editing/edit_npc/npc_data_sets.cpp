@@ -417,14 +417,14 @@ void NpcEdit::setDataBoxes()
         ui->GridOffsetY->setValue(StartNPCData.grid_offset_y);
 
     ui->En_AlignAt->setChecked(StartNPCData.en_grid_align);
-    ui->En_AlignAt->setEnabled(StartNPCData.en_grid_align);
+    ui->AlignAt->setEnabled(StartNPCData.en_grid_align);
     if(!StartNPCData.en_grid_align)
     {
-        ui->GridOffsetY->setValue(DefaultNPCData.grid_align);
-        NpcData.grid_offset_y=DefaultNPCData.grid_align;
+        ui->AlignAt->setCurrentIndex(DefaultNPCData.grid_align);
+        NpcData.grid_align=DefaultNPCData.grid_align;
     }
     else
-        ui->GridOffsetY->setValue(StartNPCData.en_grid_align);
+        ui->AlignAt->setCurrentIndex(StartNPCData.grid_align);
 }
 
 void NpcEdit::setDefaultData(unsigned long npc_id)
