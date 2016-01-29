@@ -532,8 +532,6 @@ void NpcEdit::on_En_Name_clicked(bool checked)
 
     documentWasModified();
 }
-
-
 void NpcEdit::on_Name_textEdited(const QString &arg1)
 {
     documentWasModified();
@@ -548,13 +546,62 @@ void NpcEdit::on_En_Health_clicked(bool checked)
     NpcData.en_health=checked;
     documentNotModified();
 }
-
 void NpcEdit::on_Health_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.health=arg1;
 }
 
+
+
+void NpcEdit::on_En_GridSize_clicked(bool checked)
+{
+    ui->GridSize->setEnabled(checked);
+    ui->grid_label->setEnabled(checked);
+    NpcData.en_grid=checked;
+    documentNotModified();
+}
+void NpcEdit::on_GridSize_valueChanged(int arg1)
+{
+
+}
+
+
+void NpcEdit::on_En_GridOffsetX_clicked(bool checked)
+{
+    ui->GridOffsetX->setEnabled(checked);
+    ui->gridoffsetx_label->setEnabled(checked);
+    NpcData.en_grid_offset_x=checked;
+    documentNotModified();
+}
+void NpcEdit::on_GridOffsetX_valueChanged(int arg1)
+{
+
+}
+
+void NpcEdit::on_En_GridOffsetY_clicked(bool checked)
+{
+    ui->GridOffsetY->setEnabled(checked);
+    ui->gridoffsety_label->setEnabled(checked);
+    NpcData.en_grid_offset_y=checked;
+    documentNotModified();
+}
+void NpcEdit::on_GridOffsetY_valueChanged(int arg1)
+{
+
+}
+
+void NpcEdit::on_En_AlignAt_clicked(bool checked)
+{
+    ui->AlignAt->setEnabled(checked);
+    ui->alignat_label->setEnabled(checked);
+    NpcData.en_grid_align=checked;
+    documentNotModified();
+}
+void NpcEdit::on_AlignAt_currentIndexChanged(int index)
+{
+
+}
 
 
 

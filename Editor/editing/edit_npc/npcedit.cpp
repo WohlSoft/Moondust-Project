@@ -61,3 +61,4 @@ void NpcEdit::closeEvent(QCloseEvent *event)
     }
 }
 
+

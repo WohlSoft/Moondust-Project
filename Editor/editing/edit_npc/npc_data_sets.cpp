@@ -378,6 +378,53 @@ void NpcEdit::setDataBoxes()
     }
     else
         ui->Health->setValue(StartNPCData.health);
+
+    ui->En_GridSize->setChecked(StartNPCData.en_grid);
+    ui->GridSize->setEnabled(StartNPCData.en_grid);
+    if(!StartNPCData.en_grid)
+    {
+        ui->GridSize->setValue(DefaultNPCData.grid);
+        NpcData.grid=DefaultNPCData.grid;
+    }
+    else
+        ui->GridSize->setValue(StartNPCData.grid);
+
+    int offsetMin = -1*(abs(ui->GridSize->value())/2)+1;
+    int offsetMax = (abs(ui->GridSize->value())/2)-1;
+    ui->GridOffsetX->setMinimum(offsetMin);
+    ui->GridOffsetX->setMaximum(offsetMax);
+    ui->GridOffsetY->setMinimum(offsetMin);
+    ui->GridOffsetY->setMaximum(offsetMax);
+
+    ui->En_GridOffsetX->setChecked(StartNPCData.en_grid_offset_x);
+    ui->GridOffsetX->setEnabled(StartNPCData.en_grid_offset_x);
+    if(!StartNPCData.en_grid_offset_x)
+    {
+        ui->GridOffsetX->setValue(DefaultNPCData.grid_offset_x);
+        NpcData.grid_offset_x=DefaultNPCData.grid_offset_x;
+    }
+    else
+        ui->GridOffsetX->setValue(StartNPCData.grid_offset_x);
+
+    ui->En_GridOffsetY->setChecked(StartNPCData.en_grid_offset_y);
+    ui->GridOffsetY->setEnabled(StartNPCData.en_grid_offset_y);
+    if(!StartNPCData.en_grid_offset_y)
+    {
+        ui->GridOffsetY->setValue(DefaultNPCData.grid_offset_y);
+        NpcData.grid_offset_y=DefaultNPCData.grid_offset_y;
+    }
+    else
+        ui->GridOffsetY->setValue(StartNPCData.grid_offset_y);
+
+    ui->En_AlignAt->setChecked(StartNPCData.en_grid_align);
+    ui->En_AlignAt->setEnabled(StartNPCData.en_grid_align);
+    if(!StartNPCData.en_grid_align)
+    {
+        ui->GridOffsetY->setValue(DefaultNPCData.grid_align);
+        NpcData.grid_offset_y=DefaultNPCData.grid_align;
+    }
+    else
+        ui->GridOffsetY->setValue(StartNPCData.en_grid_align);
 }
 
 void NpcEdit::setDefaultData(unsigned long npc_id)
@@ -464,8 +511,8 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.script=t_npc.algorithm_script;
         DefaultNPCData.image=t_npc.image_n;
         DefaultNPCData.grid=t_npc.grid;
-        DefaultNPCData.grid_offset_x=t_npc.grid_offset_x;
-        DefaultNPCData.grid_offset_y=t_npc.grid_offset_y;
+        DefaultNPCData.grid_offset_x=0;
+        DefaultNPCData.grid_offset_y=0;
         DefaultNPCData.grid_align=t_npc.grid_attach_style;
     }
 }

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1063</width>
-    <height>448</height>
+    <width>1118</width>
+    <height>619</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,7 +37,7 @@
    <string>NPC Configuration edit</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../../Engine/_resources/engine.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -84,8 +84,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1090</width>
-        <height>427</height>
+        <width>1116</width>
+        <height>617</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,10" columnstretch="25,25,25,25">
@@ -379,6 +379,137 @@
           <string>Graphics</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,8,80,10">
+          <item row="8" column="0" colspan="4">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Alignment in the editor:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="2" colspan="2">
+           <widget class="QLabel" name="grid_label">
+            <property name="text">
+             <string>Grid size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="En_GridOffsetX">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSpinBox" name="GridSize">
+            <property name="minimum">
+             <number>-100000</number>
+            </property>
+            <property name="maximum">
+             <number>100000</number>
+            </property>
+            <property name="value">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="En_GridSize">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QLabel" name="framestyle_label">
+            <property name="text">
+             <string>Frame style</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1" colspan="3">
+           <widget class="QCheckBox" name="IsForeground">
+            <property name="text">
+             <string>Foreground</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QLabel" name="gwidth_label">
+            <property name="text">
+             <string>Width</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="En_GFXw">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1" colspan="2">
+           <widget class="QComboBox" name="FrameStyle">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>Single sprite</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left-Right direction</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left-Right-Grabbed</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="15" column="0" colspan="4">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="Framespeed">
+            <property name="suffix">
+             <string/>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2" colspan="2">
+           <widget class="QLabel" name="frames_label">
+            <property name="text">
+             <string>Frames</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="En_Framestyle">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="1">
            <widget class="QSpinBox" name="GFXh">
             <property name="enabled">
@@ -398,19 +529,6 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QSpinBox" name="Framespeed">
-            <property name="suffix">
-             <string/>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>16</number>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
            <widget class="QCheckBox" name="En_Frames">
             <property name="text">
@@ -418,24 +536,10 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2" colspan="2">
-           <widget class="QLabel" name="frames_label">
+          <item row="3" column="2" colspan="2">
+           <widget class="QLabel" name="gheight_label">
             <property name="text">
-             <string>Frames</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="En_Framestyle">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="En_Framespeed">
-            <property name="text">
-             <string/>
+             <string>Height</string>
             </property>
            </widget>
           </item>
@@ -452,6 +556,13 @@
             </property>
            </widget>
           </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="En_Framespeed">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="2" colspan="2">
            <widget class="QLabel" name="framespeed_label">
             <property name="text">
@@ -459,10 +570,24 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2" colspan="2">
-           <widget class="QLabel" name="gheight_label">
+          <item row="1" column="2" colspan="2">
+           <widget class="QLabel" name="offsety_label">
             <property name="text">
-             <string>Height</string>
+             <string>offset y</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="en_GFXOffsetX">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="en_GFXOffsetY">
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -489,34 +614,6 @@
            <widget class="QCheckBox" name="En_GFXh">
             <property name="text">
              <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2" colspan="2">
-           <widget class="QLabel" name="offsety_label">
-            <property name="text">
-             <string>offset y</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="en_GFXOffsetY">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="en_GFXOffsetX">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" colspan="2">
-           <widget class="QLabel" name="offsetx_label">
-            <property name="text">
-             <string>offset x</string>
             </property>
            </widget>
           </item>
@@ -562,68 +659,81 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1" colspan="2">
-           <widget class="QComboBox" name="FrameStyle">
-            <property name="currentIndex">
-             <number>0</number>
+          <item row="0" column="2" colspan="2">
+           <widget class="QLabel" name="offsetx_label">
+            <property name="text">
+             <string>offset x</string>
             </property>
-            <item>
-             <property name="text">
-              <string>Single sprite</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Left-Right direction</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Left-Right-Grabbed</string>
-             </property>
-            </item>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="En_GFXw">
+          <item row="10" column="1">
+           <widget class="QSpinBox" name="GridOffsetX">
+            <property name="minimum">
+             <number>-100000</number>
+            </property>
+            <property name="maximum">
+             <number>100000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="2" colspan="2">
+           <widget class="QLabel" name="gridoffsetx_label">
+            <property name="text">
+             <string>Grid offset X</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QSpinBox" name="GridOffsetY">
+            <property name="minimum">
+             <number>-100000</number>
+            </property>
+            <property name="maximum">
+             <number>100000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QCheckBox" name="En_GridOffsetY">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-          <item row="6" column="3">
-           <widget class="QLabel" name="framestyle_label">
+          <item row="11" column="2" colspan="2">
+           <widget class="QLabel" name="gridoffsety_label">
             <property name="text">
-             <string>Frame style</string>
+             <string>Grid offset Y</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1" colspan="3">
-           <widget class="QCheckBox" name="IsForeground">
+          <item row="12" column="0">
+           <widget class="QCheckBox" name="En_AlignAt">
             <property name="text">
-             <string>Foreground</string>
+             <string/>
             </property>
            </widget>
           </item>
-          <item row="2" column="2" colspan="2">
-           <widget class="QLabel" name="gwidth_label">
-            <property name="text">
-             <string>Width</string>
-            </property>
+          <item row="12" column="1" colspan="2">
+           <widget class="QComboBox" name="AlignAt">
+            <item>
+             <property name="text">
+              <string>Middle of cell</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Edge of cell</string>
+             </property>
+            </item>
            </widget>
           </item>
-          <item row="8" column="0" colspan="4">
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="12" column="3">
+           <widget class="QLabel" name="alignat_label">
+            <property name="text">
+             <string>Align at</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -991,7 +1101,7 @@ border-color: rgb(132, 132, 132);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

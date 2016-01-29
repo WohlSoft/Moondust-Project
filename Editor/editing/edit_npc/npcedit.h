@@ -140,6 +140,18 @@ private slots:
     void on_En_Health_clicked(bool checked);
     void on_Health_valueChanged(int arg1);
 
+    void on_En_GridSize_clicked(bool checked);
+    void on_GridSize_valueChanged(int arg1);
+
+    void on_En_GridOffsetX_clicked(bool checked);
+    void on_GridOffsetX_valueChanged(int arg1);
+
+    void on_En_GridOffsetY_clicked(bool checked);
+    void on_GridOffsetY_valueChanged(int arg1);
+
+    void on_En_AlignAt_clicked(bool checked);
+    void on_AlignAt_currentIndexChanged(int index);
+
 private:
     Ui::NpcEdit *ui;
 
