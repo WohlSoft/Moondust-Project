@@ -17,15 +17,15 @@ QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 TEMPLATE = app
 
-include(../_common/dest_dir.pri)
-include (../_common/lib_destdir.pri)
+include($$PWD/../_common/dest_dir.pri)
+include($$PWD/../_common/lib_destdir.pri)
 TARGET = pge_musplay
 
-include(../_common/build_props.pri)
+include($$PWD/../_common/build_props.pri)
 
 CONFIG += c++11
 CONFIG += thread
@@ -72,7 +72,7 @@ macx:{
 RC_FILE = _resources/musicplayer.rc
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
     main_sdl_android.c \

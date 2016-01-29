@@ -25,20 +25,20 @@ QT       += core gui widgets concurrent
 CONFIG += c++11
 CONFIG += thread
 
-include(../_common/dest_dir.pri)
-include(../_common/build_props.pri)
+include($$PWD/../_common/dest_dir.pri)
+include($$PWD/../_common/build_props.pri)
 
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 
 TARGET = pge_maintainer
 TEMPLATE = app
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 DEFINES += PGE_FILES_QT
 
 SOURCES += main.cpp\
-        main_window.cpp \
+    main_window.cpp \
     ../_common/PGE_File_Formats/file_formats.cpp \
     ../_common/PGE_File_Formats/file_rw_lvl.cpp \
     ../_common/PGE_File_Formats/file_rw_lvl_38a.cpp \

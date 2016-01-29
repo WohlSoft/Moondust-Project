@@ -1,5 +1,5 @@
 
-include(../_common/dest_dir.pri)
+include($$PWD/../_common/dest_dir.pri)
 
 TEMPLATE = subdirs
 CONFIG -= app_bundle

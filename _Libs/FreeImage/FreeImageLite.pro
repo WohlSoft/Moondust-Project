@@ -29,10 +29,10 @@ macx:{
  QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-include (../../_common/lib_destdir.pri)
+include ($$PWD/../../_common/lib_destdir.pri)
 TARGET = freeimagelite
-include(../../_common/build_props.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
+include($$PWD/../../_common/build_props.pri)
+DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
 
 MAKEFILE = Makefile.FreeImageLITE
 
@@ -41,8 +41,8 @@ RC_FILE = FreeImage.rc
 INCLUDEPATH += $$PWD/Source
 
 win32:{
-    LIBS += -L../_builds/win32/lib #-lws2_32
-    INCLUDEPATH += ../_builds/win32/include
+    LIBS += -L$$PWD/../_builds/win32/lib #-lws2_32
+    INCLUDEPATH += $$PWD/../_builds/win32/include
     #DEFINES += WINVER=0x0500
     #DEFINES += FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
     DEFINES += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB #__ANSI__ DISABLE_PERF_MEASUREMENT
@@ -52,8 +52,8 @@ win32:{
     #QMAKE_CXXFLAGS += -g2 -fexceptions -Wno-ctor-dtor-privacy
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L../_builds/linux/lib
-    INCLUDEPATH += ../_builds/linux/include
+    LIBS += -L$$PWD/../_builds/linux/lib
+    INCLUDEPATH += $$PWD/../_builds/linux/include
     CONFIG += unversioned_libname
     #-O3 -fPIC -fexceptions -fvisibility=hidden
     #QMAKE_CFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden
@@ -62,13 +62,13 @@ linux-g++||unix:!macx:!android:{
     #DEFINES += OPJ_STATIC NO_LCMS NO_JASPER DISABLE_PERF_MEASUREMENT __ANSI__
 }
 android:{
-    LIBS += -L../_builds/android/lib
-    INCLUDEPATH += ../_builds/android/include
+    LIBS += -L$$PWD/../_builds/android/lib
+    INCLUDEPATH += $$PWD/../_builds/android/include
     warning("NOT PORTED YET!")
 }
 macx:{
-    LIBS += -L../_builds/macos/lib
-    INCLUDEPATH += ../_builds/macos/include
+    LIBS += -L$$PWD/../_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_builds/macos/include
     QMAKE_CFLAGS += -Os -fexceptions -fvisibility=hidden
     QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -stdlib=libc++ -Wc++11-narrowing
     DEFINES += NO_LCMS __ANSI__ DISABLE_PERF_MEASUREMENT
@@ -76,7 +76,7 @@ macx:{
     #LIBS += -lSDL2
 }
 
-LIBS += -L../_builds/$$TARGETOS/lib
+LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
 
 #!android:{
 #    win32:{
@@ -88,26 +88,26 @@ LIBS += -L../_builds/$$TARGETOS/lib
 #    LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
 #}
 
-FreeImageH.path =  ../_builds/$$TARGETOS/include
+FreeImageH.path =  $$PWD/../_builds/$$TARGETOS/include
 FreeImageH.files += Source/FreeImageLite.h
 
 linux-g++||unix:!macx:!android:{
-    FreeImageSO.path = ../_builds/linux/lib
-    FreeImageSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    FreeImageSO.path = $$PWD/../_builds/linux/lib
+    FreeImageSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.so*
     INSTALLS =  FreeImageSO
 }
 macx:{
-    FreeImageSO.path = ../_builds/macos/lib
-    FreeImageSO.files += ../_builds/sdl2_mixer_mod/*.dylib*
+    FreeImageSO.path = $$PWD/../_builds/macos/lib
+    FreeImageSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.dylib*
 }
 android:{
-    FreeImageSO.path = ../_builds/android/lib
-    FreeImageSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    FreeImageSO.path = $$PWD/../_builds/android/lib
+    FreeImageSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.so*
     INSTALLS =  FreeImageSO
 }
 win32: {
-    FreeImageSO.path = ../_builds/win32/bin
-    FreeImageSO.files += ../_builds/win32/lib/*.dll
+    FreeImageSO.path = $$PWD/../_builds/win32/bin
+    FreeImageSO.files += $$PWD/../_builds/win32/lib/*.dll
     INSTALLS =  FreeImageSO
 }
 INSTALLS = FreeImageH FreeImageSO

@@ -21,10 +21,10 @@ warning("LuaJIT is not connected!!!")
 
 LIBS += -lluajit-5.1
 
-include (../../../_common/lib_destdir.pri)
-DESTDIR = ../../_builds/$$TARGETOS/lib
+include ($$PWD/../../../_common/lib_destdir.pri)
+DESTDIR = $$PWD/../../_builds/$$TARGETOS/lib
 
-include(../../../_common/build_props.pri)
+include($$PWD/../../../_common/build_props.pri)
 INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include \
                $$PWD/../../_builds/$$TARGETOS/include/luajit-2.0/
 

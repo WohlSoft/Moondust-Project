@@ -23,14 +23,14 @@
 
 QT       += gui widgets
 
-include(../_common/dest_dir.pri)
+include($$PWD/../_common/dest_dir.pri)
 
 android:{
     LANGUAGES_TARGET=/assets/languages
 } else {
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
-include(../_common/build_props.pri)
+include($$PWD/../_common/build_props.pri)
 
 TARGET = pge_calibrator
 TEMPLATE = app
@@ -46,10 +46,10 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 QMAKE_CFLAGS += -Wno-sign-compare
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 SOURCES += main.cpp\
-        calibrationmain.cpp \
+    calibrationmain.cpp \
     frame_matrix/matrix.cpp \
     about/about.cpp \
     animator/animate.cpp \

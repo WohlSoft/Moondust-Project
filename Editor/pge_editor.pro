@@ -31,7 +31,7 @@ QT += winextras
 QT -= winextras
 }
 
-include(../_common/dest_dir.pri)
+include($$PWD/../_common/dest_dir.pri)
 
 android:{
     LANGUAGES_TARGET=/assets/languages
@@ -39,7 +39,7 @@ android:{
     LANGUAGES_TARGET=$$DESTDIR/languages
 }
 
-include(../_common/build_props.pri)
+include($$PWD/../_common/build_props.pri)
 
 translates.path = $$LANGUAGES_TARGET
 translates.files += $$PWD/languages/*.qm

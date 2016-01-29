@@ -22,10 +22,10 @@ macx: DEFINES += OOLUA_USE_EXCEPTIONS=1 OOLUA_STORE_LAST_ERROR=0 MAC_BUILD
 
 DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
 
-include (../../../_common/lib_destdir.pri)
+include ($$PWD/../../../_common/lib_destdir.pri)
 DESTDIR = ../_builds/$$TARGETOS/lib
 
-include(../../../_common/build_props.pri)
+include($$PWD/../../../_common/build_props.pri)
 
 SOURCES += \
     ../class_from_stack.cpp \

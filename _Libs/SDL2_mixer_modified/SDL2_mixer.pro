@@ -13,19 +13,18 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-include (../../_common/lib_destdir.pri)
+include ($$PWD/../../_common/lib_destdir.pri)
 TARGET = SDL2_mixer_ext
 win32:enable-stdcalls:{ #Useful for VB6 usage
     TARGET = SDL2_mixer_ext_vb6
 }
-include(../../_common/build_props.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
-
+include($$PWD/../../_common/build_props.pri)
+DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
 
 win32:{
-    LIBS += -L../_builds/win32/lib
+    LIBS += -L$$PWD/../_builds/win32/lib
     LIBS += -lmingw32 -lSDL2main -mwindows
-    INCLUDEPATH += ../_builds/win32/include
+    INCLUDEPATH += $$PWD/../_builds/win32/include
     DEFINES += USE_NATIVE_MIDI
     enable-stdcalls:{ #Useful for VB6 usage
         TARGET = SDL2_mixer_ext_vb6
@@ -34,23 +33,23 @@ win32:{
     }
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L../_builds/linux/lib
-    INCLUDEPATH += ../_builds/linux/include
+    LIBS += -L$$PWD/../_builds/linux/lib
+    INCLUDEPATH += $$PWD/../_builds/linux/include
     CONFIG += plugin
     CONFIG += unversioned_libname
     CONFIG += skip_target_version_ext
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 android:{
-    LIBS += -L../_builds/android/lib
-    INCLUDEPATH += ../_builds/android/include
+    LIBS += -L$$PWD/../_builds/android/lib
+    INCLUDEPATH += $$PWD/../_builds/android/include
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 macx:{
-    LIBS += -L../_builds/macos/lib
-    INCLUDEPATH += ../_builds/macos/include
-    INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    LIBS += -L$$PWD/../_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_builds/macos/include
+    INCLUDEPATH += $$PWD/../_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2
     CONFIG += plugin
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 } else {
@@ -70,7 +69,7 @@ DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP MID_MUSIC USE_ADL_MIDI GME_MUSIC NO_
 DEFINES -= FLAC_MUSIC #temopary with no FLAC, because I wasn't built it because compilation bug
 }
 
-LIBS += -L../_builds/$$TARGETOS/lib
+LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
 
 !android:{
     win32:{
@@ -97,41 +96,39 @@ LIBS += -L../_builds/$$TARGETOS/lib
 LIBS += -lm
 
 linux-g++||unix:!macx:!android:{
-    SDL2MixerH.path =  ../_builds/linux/include/SDL2
+    SDL2MixerH.path =  $$PWD/../_builds/linux/include/SDL2
 }
 android: {
-    SDL2MixerH.path =  ../_builds/android/include/SDL2
+    SDL2MixerH.path =  $$PWD/../_builds/android/include/SDL2
 }
 win32: {
-    SDL2MixerH.path =  ../_builds/win32/include/SDL2
+    SDL2MixerH.path =  $$PWD/../_builds/win32/include/SDL2
 }
 macx: {
-    SDL2MixerH.path =  ../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
+    SDL2MixerH.path =  $$PWD/../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
 }
 SDL2MixerH.files += SDL_mixer_ext.h
 
 linux-g++||unix:!macx:!android:{
-    SDL2MixerSO.path = ../_builds/linux/lib
-    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    SDL2MixerSO.path = $$PWD/../_builds/linux/lib
+    SDL2MixerSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.so*
     INSTALLS =  SDL2MixerSO
 }
 macx:{
-    SDL2MixerSO.path = ../_builds/macos/lib
-    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib*
+    SDL2MixerSO.path = $$PWD/../_builds/macos/lib
+    SDL2MixerSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.dylib*
 }
 android:{
-    SDL2MixerSO.path = ../_builds/android/lib
-    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    SDL2MixerSO.path = $$PWD/../_builds/android/lib
+    SDL2MixerSO.files += $$PWD/../_builds/sdl2_mixer_mod/*.so*
     INSTALLS =  SDL2MixerSO
 }
 win32: {
-    SDL2MixerSO.path = ../_builds/win32/bin
-    SDL2MixerSO.files += ../_builds/win32/lib/*.dll
+    SDL2MixerSO.path = $$PWD/../_builds/win32/bin
+    SDL2MixerSO.files += $$PWD/../_builds/win32/lib/*.dll
     INSTALLS =  SDL2MixerSO
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
-
-
 
 HEADERS += \
     begin_code.h \

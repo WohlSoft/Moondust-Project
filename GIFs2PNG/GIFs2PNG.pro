@@ -24,12 +24,12 @@
 QT       += core
 QT       -= opengl gui
 
-include(../_common/dest_dir.pri)
-include(../_common/build_props.pri)
+include($$PWD/../_common/dest_dir.pri)
+include($$PWD/../_common/build_props.pri)
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 DEFINES += QT_NO_TRANSLATION
 

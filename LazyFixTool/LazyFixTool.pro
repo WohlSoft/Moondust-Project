@@ -24,8 +24,8 @@
 
 QT       += core gui
 
-include(../_common/dest_dir.pri)
-include(../_common/build_props.pri)
+include($$PWD/../_common/dest_dir.pri)
+include($$PWD/../_common/build_props.pri)
 
 TARGET = LazyFixTool
 CONFIG   += console
@@ -35,7 +35,7 @@ CONFIG   -= import_plugins
 
 TEMPLATE = app
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 

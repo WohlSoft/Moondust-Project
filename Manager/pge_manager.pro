@@ -29,7 +29,7 @@ QT += winextras
 QT -= winextras
 }
 
-include(../_common/dest_dir.pri)
+include($$PWD/../_common/dest_dir.pri)
 
 TARGET = pge_manager
 TEMPLATE = app
@@ -40,11 +40,11 @@ CONFIG += static
 CONFIG += thread
 
 !macx: {
-QMAKE_CXXFLAGS += -static -static-libgcc
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_CXXFLAGS += -static -static-libgcc
+    QMAKE_LFLAGS   += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-include(../_common/strip_garbage.pri)
+include($$PWD/../_common/strip_garbage.pri)
 
 android:{
     LANGUAGES_TARGET=/assets/languages
@@ -52,12 +52,12 @@ android:{
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
 
-include(../_common/build_props.pri)
+include($$PWD/../_common/build_props.pri)
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     common_features/app_path.cpp \
     config_packs.cpp \
     settings.cpp \
