@@ -325,3 +325,23 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
         }
 }
 
+void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
+{
+    QGraphicsScene::drawForeground(painter, rect);
+    //Experimental stuff (grid dawing)
+    #ifdef DEBUG_BUILD
+    int gridSize=pConfigs->default_grid;
+    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+
+    QVarLengthArray<QLineF, 100> lines;
+    for (qreal x = left; x < rect.right(); x += gridSize)
+        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+    for (qreal y = top; y < rect.bottom(); y += gridSize)
+        lines.append(QLineF(rect.left(), y, rect.right(), y));
+
+    painter->setOpacity(0.2);
+    painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
+    painter->drawLines(lines.data(), lines.size());
+    #endif
+}

@@ -124,6 +124,7 @@ void LevelEdit::setAutoUpdateTimer(int ms)
                 this,
                 SLOT( updateScene()) );
     updateTimer->start(ms);
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 }
 
 void LevelEdit::stopAutoUpdateTimer()
@@ -133,4 +134,5 @@ void LevelEdit::stopAutoUpdateTimer()
         updateTimer->stop();
         delete updateTimer;
     }
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 }

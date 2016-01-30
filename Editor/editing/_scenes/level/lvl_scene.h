@@ -145,7 +145,8 @@ public:
         void openProps();               //!< Open properties box of selected items
         void Debugger_updateItemList(); //!< Refresh debugger box
 
-
+    protected:
+        void drawForeground(QPainter *painter, const QRectF &rect);
 
     // ///////////////////GFX Manager////////////////////////
     public:
@@ -535,7 +536,6 @@ public:
 // ///////Please move them into it's category/////////////////////
 
 public:
-
 
 protected:
 
