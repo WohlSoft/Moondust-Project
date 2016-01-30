@@ -158,6 +158,7 @@ void IntEngine::sendLevelBuffer()
 void IntEngine::setTestLvlBuffer(LevelData &buffer)
 {
     testBuffer = buffer;
+    testBuffer.metaData.script = NULL;//avoid editor crash after file reloading
 }
 
 void IntEngine::destroyEngine()
