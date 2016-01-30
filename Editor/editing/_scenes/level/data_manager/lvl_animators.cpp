@@ -161,22 +161,27 @@ void LvlScene::startAnimation()
     {
         npcA->start();
     }
+    _edit->setAutoUpdateTimer(31);
 }
 
 void LvlScene::stopAnimation()
 {
-    foreach(SimpleAnimator * bgoA, animates_BGO)
+    int i=0;
+    int size=animates_BGO.size();
+    for(i=0;i<size; i++)
     {
-        bgoA->stop();
+        animates_BGO[i]->stop();
     }
-    foreach(SimpleAnimator * blockA, animates_Blocks)
+    size=animates_Blocks.size();
+    for(i=0;i<size; i++)
     {
-        blockA->stop();
+        animates_Blocks[i]->stop();
     }
-    foreach(AdvNpcAnimator * npcA, animates_NPC)
+    size=animates_NPC.size();
+    for(i=0;i<size; i++)
     {
-        npcA->stop();
+        animates_NPC[i]->stop();
     }
-
+    _edit->stopAutoUpdateTimer();
     update();
 }

@@ -43,13 +43,13 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
     GlobalSettings::LvlOpts.animationEnabled = checked;
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        LevelEdit *e=activeLvlEditWin(); if(!e) return;
+        LvlScene  *s=e->scene; if(!s) return;
         if(GlobalSettings::LvlOpts.animationEnabled)
-        {
-            activeLvlEditWin()->scene->startAnimation();
-        }
+            s->startAnimation();
         else
-            activeLvlEditWin()->scene->stopAnimation();
+            s->stopAnimation();
+        s->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
     }
     else
     if (activeChildWindow()==3)

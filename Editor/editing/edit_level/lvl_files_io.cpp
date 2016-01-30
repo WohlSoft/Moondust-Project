@@ -70,8 +70,12 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
 
-    if(options.animationEnabled) scene->startAnimation();
-    setAutoUpdateTimer(31);
+    if(options.animationEnabled)
+    {
+        scene->startAnimation();
+    } else {
+        stopAutoUpdateTimer();
+    }
     return true;
 }
 
@@ -312,7 +316,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         if(!silent)
         {
             if(QMessageBox::question(this, tr("The SMBX64 limit has been exceeded"),
-             tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'overflow' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No)
+             tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'Subscript out of range' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No)
             {
                 if(!silent)
                     QApplication::restoreOverrideCursor();
@@ -461,7 +465,12 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::restoreOverrideCursor();
 
-    setAutoUpdateTimer(31);
+    if(options.animationEnabled)
+    {
+        scene->startAnimation();
+    } else {
+        stopAutoUpdateTimer();
+    }
 
     setCurrentFile(curFName);
     LvlData.modified = modifystate;

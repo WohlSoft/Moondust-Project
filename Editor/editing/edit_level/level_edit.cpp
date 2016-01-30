@@ -50,6 +50,7 @@ LevelEdit::LevelEdit(QWidget *parent) :
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);
 
     ui->graphicsView->horizontalScrollBar()->setSingleStep(32);
     ui->graphicsView->horizontalScrollBar()->setTracking(true);
@@ -104,14 +105,26 @@ void LevelEdit::dropEvent(QDropEvent *e)
         emit forceReload();
 }
 
-
+static int renderTime=0;
 void LevelEdit::updateScene()
 {
+    if(renderTime>32)
+    {
+        renderTime-=32;
+        return;
+    }
+
+    QElapsedTimer t; t.start();
+
     if(scene->opts.animationEnabled)
     {
         QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
         scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
+        ui->graphicsView->viewport()->update();
+        update();
     }
+
+    renderTime+=t.elapsed();
 }
 
 void LevelEdit::setAutoUpdateTimer(int ms)
@@ -119,12 +132,13 @@ void LevelEdit::setAutoUpdateTimer(int ms)
     if(updateTimer!=NULL)
         delete updateTimer;
     updateTimer = new QTimer;
-    connect(
+    updateTimer->connect(
                 updateTimer, SIGNAL(timeout()),
                 this,
                 SLOT( updateScene()) );
-    updateTimer->start(ms);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+    renderTime = 0;
+    updateTimer->start(ms);
 }
 
 void LevelEdit::stopAutoUpdateTimer()
@@ -133,6 +147,8 @@ void LevelEdit::stopAutoUpdateTimer()
     {
         updateTimer->stop();
         delete updateTimer;
+        updateTimer=NULL;
     }
-    ui->graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    renderTime = 0;
 }
