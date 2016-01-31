@@ -111,15 +111,15 @@ void ItemPath::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         mouseEvent->accept(); return;
     }
 
-    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+    if( mouseEvent->button()==Qt::LeftButton )
         mouseLeft=false;
 
-    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+    if( mouseEvent->button()==Qt::MiddleButton )
         mouseMid=false;
 
-    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    if( mouseEvent->button()==Qt::RightButton )
     {
-        if(!scene->IsMoved) callContext=true;
+        callContext=true;
         mouseRight=false;
     }
 

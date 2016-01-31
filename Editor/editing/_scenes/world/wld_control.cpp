@@ -133,7 +133,7 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(MouseMoveEventOnly)
     {
-        QGraphicsScene::mousePressEvent(mouseEvent);
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
         MouseMoveEventOnly = false;
         return;
     }
@@ -166,7 +166,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(MouseReleaseEventOnly)
     {
-        QGraphicsScene::mousePressEvent(mouseEvent);
+        QGraphicsScene::mouseReleaseEvent(mouseEvent);
         MouseReleaseEventOnly = false;
         return;
     }
