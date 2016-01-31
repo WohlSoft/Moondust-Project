@@ -19,13 +19,13 @@
 #ifndef UPDATER_LINKS_H
 #define UPDATER_LINKS_H
 
-#define STABLE_LINK "http://engine.wohlnet.ru/#links"
-#define DEVEL_LINK "http://engine.wohlnet.ru/docs/_laboratory/"
+#define STABLE_LINK "http://wohlsoft.ru/PGE/#links"
+#define DEVEL_LINK "http://wohlsoft.ru/docs/_laboratory/"
 
 //#define STABLE_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_stable.txt"
 //#define DEVEL_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_dev.txt"
-#define STABLE_CHECK "http://engine.wohlnet.ru/docs/_laboratory/_versions/editor_stable.txt"
-#define DEVEL_CHECK "http://engine.wohlnet.ru/docs/_laboratory/_versions/editor_dev.txt"
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_stable.txt"
+#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_dev.txt"
 
 #endif // UPDATER_LINKS_H
 
