@@ -9,6 +9,10 @@
 #include <common_features/logger.h>
 #include <QtDebug>
 
+#ifdef DEBUG_BUILD
+#include <QElapsedTimer>
+#endif
+
 PGE_DataArray<obj_sound > ConfigManager::main_sound;
 PGE_DataArray<long > ConfigManager::main_sound_table;
 
@@ -19,6 +23,9 @@ bool ConfigManager::soundIniChanged()
 {
     bool s=sound_lastIniFile_changed;
     sound_lastIniFile_changed=false;
+    #ifdef DEBUG_BUILD
+    WriteToLog(QtDebugMsg, QString("Last Sounds.INI was changed: %1").arg(s));
+    #endif
     return s;
 }
 
@@ -57,14 +64,20 @@ void ConfigManager::buildSoundIndex()
     clearSoundIndex();
     int reserve_chans=0;
 
+    #ifdef DEBUG_BUILD
+    QElapsedTimer loadingTime;
+    loadingTime.start();
+    #endif
+
     //build array table
+    main_sfx_index.resize(main_sound.size());
     for(int i=1; i<main_sound.size();i++)
     {
         obj_sound_index sound;
         if(main_sound.contains(i))
         {
             obj_sound snd = main_sound[i];
-            sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8());
+            sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
             sound.path = snd.absPath;
             if(!sound.chunk)
                 qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
@@ -74,9 +87,11 @@ void ConfigManager::buildSoundIndex()
         }
         main_sfx_index.push_back(sound);
     }
-
+    #ifdef DEBUG_BUILD
+    WriteToLog(QtDebugMsg, QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
     qDebug() << "Reserved audio channels: "<< Mix_ReserveChannels(reserve_chans);
     qDebug() << "SFX Index entries: " << main_sfx_index.size();
+    #endif
 }
 
 void ConfigManager::clearSoundIndex()

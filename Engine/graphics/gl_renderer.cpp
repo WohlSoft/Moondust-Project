@@ -57,6 +57,10 @@
 #include <QMessageBox>
 #include <QtDebug>
 
+#ifdef DEBUG_BUILD
+#include <QElapsedTimer>
+#endif
+
 bool GlRenderer::_isReady=false;
 SDL_Thread *GlRenderer::thread = NULL;
 
@@ -183,12 +187,29 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         return;
     }
 
+    #ifdef DEBUG_BUILD
+    QElapsedTimer totalTime;
+    QElapsedTimer maskMergingTime;
+    QElapsedTimer bindingTime;
+    QElapsedTimer unloadTime;
+    totalTime.start();
+    int  maskElapsed=0;
+    int bindElapsed=0;
+    int unloadElapsed=0;
+    #endif
+
     //Apply Alpha mask
     if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
     {
+        #ifdef DEBUG_BUILD
+        maskMergingTime.start();
+        #endif
         //QImage maskImage = GraphicsHelps::loadQImage(maskPath);
         //sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
+        #ifdef DEBUG_BUILD
+        maskElapsed = maskMergingTime.elapsed();
+        #endif
     }
 
     int w = FreeImage_GetWidth(sourceImage);
@@ -202,6 +223,10 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         target = _dummyTexture;
         return;
     }
+
+    #ifdef DEBUG_BUILD
+    bindingTime.start();
+    #endif
 
     //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
     //Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
@@ -254,8 +279,26 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     target.inited = true;
 
+    #ifdef DEBUG_BUILD
+    bindElapsed=bindingTime.elapsed();
+    unloadTime.start();
+    #endif
+
     //SDL_FreeSurface(sourceImage);
     FreeImage_Unload(sourceImage);
+
+    #ifdef DEBUG_BUILD
+    unloadElapsed=unloadTime.elapsed();
+    #endif
+
+    #ifdef DEBUG_BUILD
+    WriteToLog(QtDebugMsg, QString("Mask merging of %1 passed in %2 milliseconds").arg(path).arg(maskElapsed));
+    WriteToLog(QtDebugMsg, QString("Binding time of %1 passed in %2 milliseconds").arg(path).arg(bindElapsed));
+    WriteToLog(QtDebugMsg, QString("Unload time of %1 passed in %2 milliseconds").arg(path).arg(unloadElapsed));
+    WriteToLog(QtDebugMsg, QString("Total Loading of texture %1 passed in %2 milliseconds (%3x%4)")
+               .arg(path).arg(totalTime.elapsed())
+               .arg(w).arg(h));
+    #endif
 
     return;
 }

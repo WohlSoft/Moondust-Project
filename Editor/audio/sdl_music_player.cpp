@@ -207,7 +207,7 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
         if(mp3Play) { mp3Play->stop(); delete mp3Play; mp3Play=NULL; }
         #elif USE_SDL_MIXER
         if(sound) { Mix_FreeChunk(sound); sound=NULL; }
-        sound = Mix_LoadWAV(sndFile.toUtf8() );
+        sound = Mix_LoadWAV(sndFile.toUtf8().data() );
         if(!sound)
             qDebug() << QString("Mix_LoadWAV: %1").arg(SDL_GetError());
         else

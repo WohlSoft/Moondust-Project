@@ -29,6 +29,11 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
+#ifdef DEBUG_BUILD
+#include <common_features/logger.h>
+#include <QElapsedTimer>
+#endif
+
 #include <common_features/file_mapper.h>
 
 #ifdef _WIN32
@@ -58,6 +63,13 @@ void GraphicsHelps::closeSDLImage()
 
 FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
+    #ifdef DEBUG_BUILD
+    QElapsedTimer loadingTime;
+    QElapsedTimer fReadTime;
+    QElapsedTimer imgConvTime;
+    loadingTime.start();
+    fReadTime.start();
+    #endif
     #if  defined(__unix__) || defined(_WIN32)
     PGE_FileMapper fileMap;
     if( !fileMap.open_file(file.toUtf8().data()) )
@@ -80,14 +92,30 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
     if(!img) { return NULL; }
     #endif
+    #ifdef DEBUG_BUILD
+    int fReadTimeElapsed=fReadTime.elapsed();
+    int imgConvertElapsed=0;
+    #endif
     if(convertTo32bit)
     {
+        #ifdef DEBUG_BUILD
+        imgConvTime.start();
+        #endif
         FIBITMAP* temp;
         temp = FreeImage_ConvertTo32Bits(img);
         if(!temp) { return NULL; }
         FreeImage_Unload(img);
         img = temp;
+        #ifdef DEBUG_BUILD
+        imgConvertElapsed=imgConvTime.elapsed();
+        #endif
     }
+
+    #ifdef DEBUG_BUILD
+    WriteToLog(QtDebugMsg, QString("File read of texture %1 passed in %2 milliseconds").arg(file).arg(fReadTimeElapsed));
+    WriteToLog(QtDebugMsg, QString("Conv to 32-bit of %1 passed in %2 milliseconds").arg(file).arg(imgConvertElapsed));
+    WriteToLog(QtDebugMsg, QString("Total Loading of image %1 passed in %2 milliseconds").arg(file).arg(loadingTime.elapsed()));
+    #endif
 //    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
 //    if(img)
 //    {
@@ -153,7 +181,7 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
 {
     if(!image) return;
     if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
-    FIBITMAP* mask = loadImage( pathToMask );
+    FIBITMAP* mask = loadImage( pathToMask, true );
     if(!mask) return;//Nothing to do
 
     unsigned int img_w = FreeImage_GetWidth(image);
@@ -161,45 +189,44 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
     unsigned int mask_w = FreeImage_GetWidth(mask);
     unsigned int mask_h = FreeImage_GetHeight(mask);
 
+    BYTE *img_bits  = FreeImage_GetBits(image);
+    BYTE *mask_bits = FreeImage_GetBits(mask);
+
+    BYTE *FPixP=img_bits;
+    BYTE *SPixP=mask_bits;
+
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};   //Destination pixel color
+    short newAlpha=255;//Calculated destination alpha-value
+
     for(unsigned int y=0; (y<img_h) && (y<mask_h); y++ )
     {
         for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
         {
-            RGBQUAD Fpix;
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-//            SDL_GetRGBA(getPixel(image, x, y), image->format,
-//                        &Fpix.r, &Fpix.g, &Fpix.b, &Fpix.a);
-            RGBQUAD Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
-            RGBQUAD Spix;
-            FreeImage_GetPixelColor(mask, x, y, &Spix);
-//            SDL_GetRGBA(getPixel(mask, x, y), mask->format,
-//                        &Spix.r, &Spix.g, &Spix.b, &Spix.a);
-            RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};
+            Npix.rgbBlue =  ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
+            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
+            Npix.rgbRed =   ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
 
-            Npix.rgbRed = (Dpix.rgbRed & Spix.rgbRed);
-            Npix.rgbGreen = (Dpix.rgbGreen & Spix.rgbGreen);
-            Npix.rgbBlue = (Dpix.rgbBlue & Spix.rgbBlue);
-            Npix.rgbRed = (Npix.rgbRed | Fpix.rgbRed);
-            Npix.rgbGreen = (Npix.rgbGreen | Fpix.rgbGreen);
-            Npix.rgbBlue = (Npix.rgbBlue | Fpix.rgbBlue);
-            int newAlpha= 255-
-                      ( ( int(Spix.rgbRed)+
-                          int(Spix.rgbGreen)+
-                          int(Spix.rgbBlue) ) / 3);
-            if(  (Spix.rgbRed>240u) //is almost White
-               &&(Spix.rgbGreen>240u)
-               &&(Spix.rgbBlue>240u))
+            newAlpha= 255-( ( short(SPixP[FI_RGBA_RED])+
+                          short(SPixP[FI_RGBA_GREEN])+
+                          short(SPixP[FI_RGBA_BLUE]) ) / 3);
+
+            if(  (SPixP[FI_RGBA_RED]>240u) //is almost White
+               &&(SPixP[FI_RGBA_GREEN]>240u)
+               &&(SPixP[FI_RGBA_BLUE]>240u))
             {
                 newAlpha = 0;
             }
 
-            newAlpha= newAlpha+( ( int(Fpix.rgbRed)+
-                                   int(Fpix.rgbGreen)+
-                                   int(Fpix.rgbBlue) ) / 3);
-            if(newAlpha > 255) newAlpha=255;
-            Npix.rgbReserved = newAlpha;
+            newAlpha += ( ( short(FPixP[FI_RGBA_RED])+
+                                   short(FPixP[FI_RGBA_GREEN])+
+                                   short(FPixP[FI_RGBA_BLUE])) / 3);
 
-            FreeImage_SetPixelColor(image, x, y, &Npix);
+            if(newAlpha > 255) newAlpha=255;
+            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
+            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
+            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
+            FPixP[FI_RGBA_ALPHA] = (BYTE)newAlpha;
+            FPixP+=4; SPixP+=4;
         }
     }
     FreeImage_Unload(mask);
