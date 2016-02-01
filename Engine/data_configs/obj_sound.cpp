@@ -7,6 +7,7 @@
 #include <SDL2/SDL_mixer_ext.h>
 #include <QVector>
 #include <common_features/logger.h>
+#include <common_features/file_mapper.h>
 #include <QtDebug>
 
 #ifdef DEBUG_BUILD
@@ -77,7 +78,16 @@ void ConfigManager::buildSoundIndex()
         if(main_sound.contains(i))
         {
             obj_sound snd = main_sound[i];
+            #if  defined(__unix__) || defined(_WIN32)
+            PGE_FileMapper fileMap;
+            if( fileMap.open_file(snd.absPath.toUtf8().data()) )
+            {
+                sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+                fileMap.close_file();
+            }
+            #else
             sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+            #endif
             sound.path = snd.absPath;
             if(!sound.chunk)
                 qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
