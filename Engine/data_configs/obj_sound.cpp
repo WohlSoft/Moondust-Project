@@ -7,6 +7,7 @@
 #include <SDL2/SDL_mixer_ext.h>
 #include <QVector>
 #include <common_features/logger.h>
+#include <common_features/file_mapper.h>
 #include <QtDebug>
 
 #ifdef DEBUG_BUILD
@@ -56,7 +57,7 @@ void obj_sound_index::play()
     if(chunk)
         Mix_PlayChannel(channel, chunk, 0);
     else
-        qDebug() << "obj_sound_index::play() Null chunk!";
+        qDebug() << "obj_sound_index::play() Null chunk!, file path:" << path;
 }
 
 void ConfigManager::buildSoundIndex()
@@ -70,14 +71,23 @@ void ConfigManager::buildSoundIndex()
     #endif
 
     //build array table
-    main_sfx_index.resize(main_sound.size());
+    main_sfx_index.resize(main_sound.size()-1);
     for(int i=1; i<main_sound.size();i++)
     {
         obj_sound_index sound;
         if(main_sound.contains(i))
         {
             obj_sound snd = main_sound[i];
+            #if  defined(__unix__) || defined(_WIN32)
+            PGE_FileMapper fileMap;
+            if( fileMap.open_file(snd.absPath.toUtf8().data()) )
+            {
+                sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+                fileMap.close_file();
+            }
+            #else
             sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+            #endif
             sound.path = snd.absPath;
             if(!sound.chunk)
                 qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
@@ -85,7 +95,7 @@ void ConfigManager::buildSoundIndex()
                 reserve_chans += (snd.channel>=0?1:0);
             sound.channel = snd.channel;
         }
-        main_sfx_index.push_back(sound);
+        main_sfx_index[i-1]=sound;
     }
     #ifdef DEBUG_BUILD
     WriteToLog(QtDebugMsg, QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));

@@ -289,7 +289,7 @@ Mix_Chunk *PGE_Sounds::SND_OpenSnd(QString sndFile)
             fileMap.close_file();
         }
         #else
-        tmpChunk = Mix_LoadWAV( sndFile.toUtf8() );
+        tmpChunk = Mix_LoadWAV( sndFile.toUtf8().data() );
         #endif
         if(!tmpChunk) {
             PGE_MsgBox::warn(QString("OpenSFX: Mix_LoadWAV: %1\n%2").arg(sndFile).arg(Mix_GetError()));

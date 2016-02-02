@@ -563,21 +563,24 @@ int SDLCALLCC Mix_QuerySpec(int *frequency, Uint16 *format, int *channels)
     return(audio_opened);
 }
 
+//Hey, it's VERY inaccurate :P it's SHIT, not an MP3 detection, because I has lot's of MP3 files with null headers :P
 static int detect_mp3(Uint8 *magic)
 {
     if ( strncmp((char *)magic, "ID3", 3) == 0 ) {
         return 1;
     }
+//Inaccurate, MP3 sometimes would has NULL header :P.
 
-    /* Detection code lifted from SMPEG */
-    if(((magic[0] & 0xff) != 0xff) || // No sync bits
-       ((magic[1] & 0xf0) != 0xf0) || //
-       ((magic[2] & 0xf0) == 0x00) || // Bitrate is 0
-       ((magic[2] & 0xf0) == 0xf0) || // Bitrate is 15
-       ((magic[2] & 0x0c) == 0x0c) || // Frequency is 3
-       ((magic[1] & 0x06) == 0x00)) { // Layer is 4
-        return(0);
-    }
+//    /* Detection code lifted from SMPEG */
+//    if(((magic[0] & 0xff) != 0xff) || // No sync bits
+//       ((magic[1] & 0xf0) != 0xf0) || //
+//       ((magic[2] & 0xf0) == 0x00) || // Bitrate is 0
+//       ((magic[2] & 0xf0) == 0xf0) || // Bitrate is 15
+//       ((magic[2] & 0x0c) == 0x0c) || // Frequency is 3
+//       ((magic[1] & 0x06) == 0x00)) { // Layer is 4
+//        return(0);
+//    }
+
     return 1;
 }
 
