@@ -43,12 +43,16 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
 	SMPEG* mp3;
 	SMPEG_Info info;
 #elif defined(MP3_MAD_MUSIC)
-	mad_data *mp3_mad;
+    mad_data *mp3_mad = NULL;//Sam, you forgot to initialize this :P
 #endif
 	long samplesize;
 	int read_len;
 	const Uint32 chunk_len = 4096;
 	int err = 0;
+    int errisset = 0;
+    char *errStr=NULL;
+
+    #define LoadMP3Err(err) if(!errisset){ errStr=(char*)err; Mix_SetError(err); errisset=1;}
 
 	if ((!src) || (!spec) || (!audio_buf) || (!audio_len))
 	{
@@ -60,12 +64,12 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
 		*audio_len = 0;
 		*audio_buf = (Uint8*) SDL_malloc(chunk_len);
 		err = (*audio_buf == NULL);
-	}
+    }
 
 	if (!err)
 	{
 		err = ((Mix_Init(MIX_INIT_MP3) & MIX_INIT_MP3) == 0);
-	}
+    } else LoadMP3Err("Out of memory")
 
 	if (!err)
 	{
@@ -76,7 +80,7 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
         mp3_mad = mad_openFileRW(src, spec, freesrc);
 		err = (mp3_mad == NULL);
 #endif
-	}
+    } else LoadMP3Err("Can't initialize MP3")
 
 #if defined(MP3_MUSIC)
 	if (!err)
@@ -108,54 +112,71 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
 
         mad_start(mp3_mad);
 
+        Uint8 *tempBuff=(Uint8*)SDL_malloc(chunk_len);
+        err = (tempBuff==NULL);
 		/* read once for audio length */
-		while ((read_len = mad_getSamples(mp3_mad, *audio_buf, chunk_len)) > 0)
-		{
-			*audio_len += read_len;
-		}
+        int hits=0;
+        int left=0;
 
-		mad_stop(mp3_mad);
+        if(!err)
+        {
+            while (mad_isPlaying(mp3_mad))
+            {
+                left=mad_getSamples(mp3_mad, tempBuff, chunk_len);
+                if(left>=0) {
+                    read_len = chunk_len-left;
+                    *audio_buf = (Uint8*)SDL_realloc(*audio_buf, *audio_len+read_len);
+                    err=(*audio_buf==NULL);
+                    if(!err) {
+                        memcpy(*audio_buf+*audio_len, tempBuff, read_len);
+                        *audio_len += read_len;
+                    }
+                }
+                hits++;
+            }
+        }
+        SDL_free(tempBuff);
+        mad_stop(mp3_mad);
 
 #endif
-
 		err = (read_len < 0);
-	}
+    } else LoadMP3Err("Can't open file (mayby not exists or you has no permissions)")
 
-	if (!err)
-	{
-		/* reallocate, if needed */
-		if ((*audio_len > 0) && (*audio_len != chunk_len))
-		{
-			*audio_buf = (Uint8*) SDL_realloc(*audio_buf, *audio_len);
-			err = (*audio_buf == NULL);
-		}
-	}
+//	if (!err)
+//	{
+//		/* reallocate, if needed */
+//		if ((*audio_len > 0) && (*audio_len != chunk_len))
+//		{
+//			*audio_buf = (Uint8*) SDL_realloc(*audio_buf, *audio_len);
+//			err = (*audio_buf == NULL);
+//		}
+//    } else LoadMP3Err("Error ocouped while reading samples")
 
-	if (!err)
-	{
-		/* read again for audio buffer, if needed */
-		if (*audio_len > chunk_len)
-		{
-#if defined(MP3_MUSIC)
-			smpeg.SMPEG_rewind(mp3);
-			smpeg.SMPEG_play(mp3);
-			err = (*audio_len != smpeg.SMPEG_playAudio(mp3, *audio_buf, *audio_len));
-			smpeg.SMPEG_stop(mp3);
-#elif defined(MP3_MAD_MUSIC)
-			mad_seek(mp3_mad, 0);
-			mad_start(mp3_mad);
-            err = ((signed)*audio_len != mad_getSamples(mp3_mad, *audio_buf, *audio_len));
-			mad_stop(mp3_mad);
-#endif
-		}
-	}
+//	if (!err)
+//	{
+//		/* read again for audio buffer, if needed */
+//		if (*audio_len > chunk_len)
+//		{
+//#if defined(MP3_MUSIC)
+//			smpeg.SMPEG_rewind(mp3);
+//			smpeg.SMPEG_play(mp3);
+//			err = (*audio_len != smpeg.SMPEG_playAudio(mp3, *audio_buf, *audio_len));
+//			smpeg.SMPEG_stop(mp3);
+//#elif defined(MP3_MAD_MUSIC)
+//			mad_seek(mp3_mad, 0);
+//			mad_start(mp3_mad);
+//            err = ((signed)*audio_len != mad_getSamples(mp3_mad, *audio_buf, *audio_len));
+//			mad_stop(mp3_mad);
+//#endif
+//		}
+//    }
 
 	if (!err)
 	{
 		/* Don't return a buffer that isn't a multiple of samplesize */
 		samplesize = ((spec->format & 0xFF)/8)*spec->channels;
 		*audio_len &= ~(samplesize-1);
-	}
+    } else LoadMP3Err("Error ocouped while reading samples")
 
 #if defined(MP3_MUSIC)
 	if (mp3)
@@ -185,10 +206,9 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
 		{
 			SDL_free(*audio_buf); *audio_buf = NULL;
 		}
-		*audio_len = 0;
+        *audio_len = 0;
 		spec = NULL;
 	}
-
 	return spec;
 }
 

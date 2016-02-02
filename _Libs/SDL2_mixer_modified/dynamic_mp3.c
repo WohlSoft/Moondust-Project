@@ -177,5 +177,7 @@ void Mix_QuitMP3()
     --smpeg.loaded;
 }
 #endif /* MP3_DYNAMIC */
-
+#else
+int  Mix_InitMP3() {return 0;}
+void Mix_QuitMP3() {}
 #endif /* MP3_MUSIC */
