@@ -102,17 +102,23 @@ void ConfigManager::buildSoundIndex()
     qDebug() << "Reserved audio channels: "<< Mix_ReserveChannels(reserve_chans);
     qDebug() << "SFX Index entries: " << main_sfx_index.size();
     #endif
+    SDL_ClearError();
 }
 
 void ConfigManager::clearSoundIndex()
 {
     Mix_ReserveChannels(0);
-    while(!main_sfx_index.isEmpty())
+
+    if(main_sfx_index.isEmpty()) return;
+
+    int size = main_sfx_index.size();
+    obj_sound_index * d = main_sfx_index.data();
+    for(int i=0; i<size; i++)
     {
-        if(main_sfx_index.last().chunk)
-            Mix_FreeChunk(main_sfx_index.last().chunk);
-        main_sfx_index.pop_back();
+        if(d[i].chunk)
+            Mix_FreeChunk(d[i].chunk);
     }
+    main_sfx_index.clear();
 }
 
 
