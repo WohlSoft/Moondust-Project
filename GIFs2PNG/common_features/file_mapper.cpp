@@ -73,33 +73,24 @@ int charsets_utils::WStr_To_UTF8Str(std::string &dest, const std::wstring &sourc
     #endif
 }
 
-
-PGE_FileMapper::PGE_FileMapper()
-{
-    size = 0;
-    data = NULL;
-
+PGE_FileMapper::PGE_FileMapper() :
     #ifdef _WIN32
-    m_File = NULL;
-    m_Map = NULL;
-    m_Address = NULL;
+        m_File(NULL),m_Map(NULL),m_Address(NULL),
     #endif
-}
+        data(NULL),size(0)
+{}
 
 PGE_FileMapper::PGE_FileMapper(std::string file)
 {
     open_file(file);
 }
 
-PGE_FileMapper::PGE_FileMapper(const PGE_FileMapper &fm)
-{
-    size = 0;
-    data = NULL;
+PGE_FileMapper::PGE_FileMapper(const PGE_FileMapper &fm) :
     #ifdef _WIN32
-    m_File = NULL;
-    m_Map = NULL;
-    m_Address = NULL;
+        m_File(NULL),m_Map(NULL),m_Address(NULL),
     #endif
+        data(NULL),size(0)
+{
     if(fm.data)
     {
         open_file(fm.m_path);
@@ -193,15 +184,25 @@ bool PGE_FileMapper::close_file()
         }
         #elif _WIN32
         if (m_Address != NULL)
-            UnmapViewOfFile(m_Address);
+        {
+            try{ UnmapViewOfFile(m_Address); } catch(void */*e*/) {}
+            m_Address=NULL;
+        }
 
         if (m_Map != NULL)
-            CloseHandle(m_Map);
+        {
+            try{ CloseHandle(m_Map); } catch(void */*e*/) {}
+            m_Map=NULL;
+        }
 
         if (m_File != INVALID_HANDLE_VALUE)
-            CloseHandle(m_File);
+        {
+            try{ CloseHandle(m_File);} catch(void*/*e*/) {}
+            m_File = NULL;
+        }
         #endif
         m_path.clear();
+        data = NULL;
     }
     return true;
 }
@@ -218,4 +219,3 @@ std::string PGE_FileMapper::error()
 {
     return m_error;
 }
-
