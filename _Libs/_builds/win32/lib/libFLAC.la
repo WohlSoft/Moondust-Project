@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='../bin/libFLAC-8.dll'
+dlname=''
 
 # Names of this library.
-library_names='libFLAC.dll.a'
+library_names=''
 
 # The name of the static archive.
 old_library='libFLAC.a'
@@ -17,7 +17,7 @@ old_library='libFLAC.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L=C:/_Repos/PGE-Project/_Libs/_builds/win32/lib /d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib/libogg.la'
+dependency_libs=' -L/c/_Repos/PGE-Project/_Libs/_builds/win32/lib /d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib/libogg.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='C:/_Repos/PGE-Project/_Libs/_builds/win32/lib'
+libdir='/c/_Repos/PGE-Project/_Libs/_builds/win32/lib'
