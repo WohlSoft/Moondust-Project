@@ -193,9 +193,7 @@ int SDLCALLCC Mix_Init(int flags)
             result |= MIX_INIT_MP3;
         }
 #elif MP3_MAD_MUSIC
-        if ((initialized & MIX_INIT_MP3) || Mix_InitMP3() == 0) {
-            result |= MIX_INIT_MP3;
-        }
+        result |= MIX_INIT_MP3;
 #else
         Mix_SetError("Mixer not built with MP3 support");
 #endif
