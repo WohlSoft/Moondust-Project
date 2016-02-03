@@ -232,6 +232,7 @@ void MainWindow::on_action_testSettings_triggered()
 
 
 #define DUMMY_WORLD_GENERATION
+//#define USE_DIRECT_LEVELTEST_LUNALUA_0_7_3 //Until Rednaxela will implement full level testing thing
 
 //#define SHARED_FILEPATH_SENDING
 //#define DO_WINAPI_TRICKS
@@ -548,31 +549,41 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         }
 
         command.replace('/', '\\');
-        params << "--patch";
-        params << "--game";
 
         QDir smbxConfig(smbxPath+"/config/");
         smbxConfig.mkpath(smbxPath+"/config/");
 
-        QFile autostart(smbxPath+"/config/autostart.ini");
-        QString autostartTempEpisode = "[autostart]\n"
-                "do-autostart: true\n"
-                "episode-name: %1\n"
-                "singleplayer: true\n"
-                "# 1 = Mario/Demo\n"
-                "# 2 = Luigi/Iris\n"
-                "# 3 = Peach/Kood\n"
-                "# 4 = Toad/Raocow\n"
-                "# 5 = Link/Sheath\n"
-                "character-player1: 1\n"
-                "character-player2: 2\n"
-                "save-slot: 1\n";
+        #ifdef USE_DIRECT_LEVELTEST_LUNALUA_0_7_3
+        if(ed->isUntitled || ed->curFile.endsWith(".lvlx"))
+        {
+        #endif
+            params << "--patch";
+            params << "--game";
 
-        autostart.open(QIODevice::WriteOnly|QIODevice::Text);
-        QTextStream autostart_out(&autostart);
-        autostart_out << autostartTempEpisode.arg(worldmap.EpisodeTitle);
-        autostart_out.flush();
-        autostart.close();
+            QFile autostart(smbxPath+"/config/autostart.ini");
+            QString autostartTempEpisode = "[autostart]\n"
+                    "do-autostart: true\n"
+                    "episode-name: %1\n"
+                    "singleplayer: true\n"
+                    "# 1 = Mario/Demo\n"
+                    "# 2 = Luigi/Iris\n"
+                    "# 3 = Peach/Kood\n"
+                    "# 4 = Toad/Raocow\n"
+                    "# 5 = Link/Sheath\n"
+                    "character-player1: 1\n"
+                    "character-player2: 2\n"
+                    "save-slot: 1\n";
+
+            autostart.open(QIODevice::WriteOnly|QIODevice::Text);
+            QTextStream autostart_out(&autostart);
+            autostart_out << autostartTempEpisode.arg(worldmap.EpisodeTitle);
+            autostart_out.flush();
+            autostart.close();
+        #ifdef USE_DIRECT_LEVELTEST_LUNALUA_0_7_3
+        } else {
+            params << "--testLevel=\""+ed->curFile+"\"";
+        }
+        #endif
 
         QString argString;
         for (int i=0; i<params.length(); i++) {
