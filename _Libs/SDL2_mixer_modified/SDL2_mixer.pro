@@ -267,7 +267,9 @@ HEADERS += \
     modplug/modplug.h \
     modplug/sndfile.h \
     modplug/stdafx.h \
-    modplug/tables.h
+    modplug/tables.h \
+    resample/sox_resample.h \
+    resample/libresample/resample.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -305,7 +307,6 @@ SOURCES += \
     timidity/output.c \
     timidity/playmidi.c \
     timidity/readmidi.c \
-    timidity/resample.c \
     timidity/sdl_a.c \
     timidity/sdl_c.c \
     timidity/tables.c \
@@ -429,5 +430,9 @@ SOURCES += \
     modplug/snd_fx.cpp \
     modplug/sndfile.cpp \
     modplug/sndmix.cpp \
-    vb6_sdl_binds.c
+    vb6_sdl_binds.c \
+    resample/sox_resample.c \
+    resample/libresample/resample.c \
+    timidity/resample_timidity.c
+
 

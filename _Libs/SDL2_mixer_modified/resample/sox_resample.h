@@ -1,15 +1,21 @@
 # ifndef RESAMPLE_H
 # define RESAMPLE_H
 
-#include "soxr/soxr.h"
+#include "libresample/resample.h"
 
 struct SoxResampler {
     int rate_in;
     int rate_out;
     int channels;
-    soxr_t soxr;
-    soxr_error_t error;
+    double factor;
+    struct rs_data *soxr;
 };
+
+struct SoxResampler *SoxResamplerINIT(int rate_in, int rate_out, unsigned int channels, int buffSize);
+
+int SoxResamplerProcess(struct SoxResampler * res, char *input, int in_len, char*output, int *outlen);
+
+void SoxResamplerFree(struct SoxResampler * res);
 
 
 # endif

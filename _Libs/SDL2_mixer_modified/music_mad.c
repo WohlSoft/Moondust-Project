@@ -26,13 +26,9 @@
 
 #include "music_mad.h"
 
-//#define MAX_RESAMPLEFACTOR	6
-//#define MAX_NSAMPLES		(1152 * MAX_RESAMPLEFACTOR)
+#include "resample/sox_resample.h"
 
-//int mad_doResample=0;
 unsigned int mad_target_samplerate=44100;
-//struct resample_state mad_resampler_state_left;
-//struct resample_state mad_resampler_state_right;
 
 mad_data *
 mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
@@ -57,6 +53,8 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
     mp3_mad->mus_album = NULL;
     mp3_mad->mus_artist = NULL;
     mp3_mad->mus_copyright = NULL;
+
+    mp3_mad->_resampler = NULL;
 
     mad_target_samplerate=mixer->freq;
   }
@@ -84,6 +82,9 @@ mad_closeFile(mad_data *mp3_mad)
   }
   if( mp3_mad->mus_copyright ) {
       SDL_free( mp3_mad->mus_copyright );
+  }
+  if( mp3_mad->_resampler ) {
+      SoxResamplerFree( mp3_mad->_resampler );
   }
   SDL_free(mp3_mad);
 }
@@ -213,55 +214,26 @@ static void
 decode_frame(mad_data *mp3_mad) {
   struct mad_pcm *pcm;
   unsigned int nchannels, nsamples;
-  //unsigned int srclenght=0;
+
   mad_fixed_t *left_ch, *right_ch;
   unsigned char *out;
-  //int ret;
 
   mad_synth_frame(&mp3_mad->synth, &mp3_mad->frame);
   pcm = &mp3_mad->synth.pcm;
   out = mp3_mad->output_buffer + mp3_mad->output_end;
 
-  #ifdef DebugMAD
-  writeToLogMad("a", 1, "");
-  #endif
-
-  //mad_doResample=0;
   if ((mp3_mad->status & MS_cvt_decoded) == 0)
   {
     mp3_mad->status |= MS_cvt_decoded;
 
-//    if(mp3_mad->frame.header.samplerate > mad_target_samplerate)
-//    {
-//        mad_doResample=1;
-//        if(
-//        (mad_resample_init(&mad_resampler_state_left, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1) ||
-//        (mad_resample_init(&mad_resampler_state_right, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1))
-//            mad_doResample=0;
-//        else
-//            mp3_mad->frame.header.samplerate = mad_target_samplerate;
-//    }
-//    else
-//    {
-//        mad_doResample=0;
-//        mp3_mad->frame.header.samplerate = mad_target_samplerate;
-//    }
-    //mad_doResample=0;
+    /*Temporary don't resample any MP3's*/
     mp3_mad->frame.header.samplerate = mad_target_samplerate;
 
-    #ifdef DebugMAD
-    writeToLogMad("a", 2, "");
-    #endif
-
-    /* The first frame determines some key properties of the stream.
+        /* The first frame determines some key properties of the stream.
        In particular, it tells us enough to set up the convert
        structure now. */
-
     SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, pcm->channels,
     mp3_mad->frame.header.samplerate, mp3_mad->mixer.format, mp3_mad->mixer.channels, mp3_mad->mixer.freq);
-    #ifdef DebugMAD
-    writeToLogMad("a", 3, "");
-    #endif
   }
 
   /* pcm->samplerate contains the sampling frequency */
@@ -269,70 +241,11 @@ decode_frame(mad_data *mp3_mad) {
   left_ch   = pcm->samples[0];
   right_ch  = pcm->samples[1];
 
-  #ifdef DebugMAD
-  writeToLogMad("a", 4, "");
-  #endif
-
-//  if(mad_doResample!=0)
-//  {
-//      nchannels = pcm->channels;
-//      #ifdef DebugMAD
-//      writeToLogMad("a", 5, "");
-//      #endif
-//      nsamples = mad_resample_block(&mad_resampler_state_left, pcm->length,
-//              pcm->samples[0],
-//                left_ch);
-//      if(nchannels == 2)
-//      {
-//            mad_resample_block(&mad_resampler_state_right, pcm->length,
-//                    pcm->samples[1],
-//                    right_ch);
-//      }
-
-//      #ifdef DebugMAD
-//      writeToLogMad("a", 6, "");
-
-//      writeToLogMad("a", pcm->length, "");
-//      writeToLogMad("a", nsamples, "");
-//      #endif
-
-//      if(nsamples>0)
-//      {
-//          //srclenght = pcm->length;
-//          pcm->length = nsamples;
-//          mp3_mad->frame.header.samplerate = mad_target_samplerate;
-//      }
-//      #ifdef DebugMAD
-//      writeToLogMad("a", 7, "");
-//      #endif
-//  }
-//  else
-//  {
-//      //srclenght = pcm->length;
-//      nsamples  = pcm->length;
-//  }
   nsamples  = pcm->length;
-//  resample_finish(left_ch);
-//  resample_finish(right_ch);
-
-  #ifdef DebugMAD
-  writeToLogMad("a", 8, "");
-  #endif
-
-  //if(nsamples>srclenght)
-  //{
-      //SDL_free(mp3_mad->output_buffer);
-      //mp3_mad->output_buffer = (unsigned char)malloc(sizeof(unsigned char)*nsamples*4);
-      //out=mp3_mad->output_buffer;
-  //}
-
-  //mp3_mad->cvt.buf = (Uint8*)malloc(sizeof(Uint8));
-  //out=mp3_mad->cvt.buf;
 
   while (nsamples--)
   {
     signed int sample;
-
     /* output sample(s) in 16-bit signed little-endian PCM */
     sample = scale(*left_ch++);
     *out++ = ((sample >> 0) & 0xff);
@@ -344,16 +257,7 @@ decode_frame(mad_data *mp3_mad) {
       *out++ = ((sample >> 8) & 0xff);
     }
   }
-
-  #ifdef DebugMAD
-  writeToLogMad("a", 9, "");
-  writeToLogMad("a", (int)out, " out");
-  writeToLogMad("a", (int)mp3_mad->output_buffer, " mp3_mad->output_buffer");
-  #endif
   mp3_mad->output_end = out - mp3_mad->output_buffer;
-  #ifdef DebugMAD
-  writeToLogMad("a", (int)mp3_mad->output_end, " mp3_mad->output_end");
-  #endif
   /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
 }
 
@@ -382,50 +286,53 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
              end-of-file.  Stop. */
           SDL_memset(out, 0, bytes_remaining);
           mp3_mad->status &= ~MS_playing;
-          #ifdef DebugMAD
-          writeToLogMad("a", -2, "");
-          #endif
           return bytes_remaining;
         }
       } else {
         decode_frame(mp3_mad);
 
-        #ifdef DebugMAD
-        writeToLogMad("a", 10, "");
-        #endif
         /* Now convert the frame data to the appropriate format for
            output. */
         mp3_mad->cvt.buf = mp3_mad->output_buffer;
         mp3_mad->cvt.len = mp3_mad->output_end;
 
-        #ifdef DebugMAD
-                writeToLogMad("a", (int)out, " out");
-                writeToLogMad("a", (int)mp3_mad->output_buffer, " mp3_mad->output_buffer");
-                writeToLogMad("a", (int)mp3_mad->output_end, " mp3_mad->output_end");
-
-                writeToLogMad("a", len, " len");
-                writeToLogMad("a", mp3_mad->cvt.len, " mp3_mad->cvt.len");
-
-                writeToLogMad("a", 11, "");
-        #endif
         if(mp3_mad->cvt.len_ratio>0)
             mp3_mad->output_end = (int)(mp3_mad->output_end * mp3_mad->cvt.len_ratio);
 
-        #ifdef DebugMAD
-                writeToLogMad("a", 12, "");
-                writeToLogMad("a", mp3_mad->output_end, " mp3_mad->output_end");
-                writeToLogMad("a", mp3_mad->cvt.needed, " mp3_mad->cvt.needed");
-                writeToLogMad("a", mp3_mad->cvt.len, " mp3_mad->cvt.len");
-                writeToLogMad("a", mp3_mad->cvt.len_cvt, " mp3_mad->len_cvt");
-                writeToLogMad("a", mp3_mad->cvt.len_mult, " mp3_mad->len_mult");
-        #endif
-
         /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
-        if(mp3_mad->cvt.needed>=0)
+        /*
+        if((mp3_mad->cvt.needed>0) && (mp3_mad->frame.header.samplerate != mad_target_samplerate))
         {
-            SDL_ConvertAudio(&mp3_mad->cvt);
+            int     num_bytes_out=
+                    (int) ( (double)(mp3_mad->cvt.len)*((double)mad_target_samplerate/(double)mp3_mad->frame.header.samplerate));
+            if(mp3_mad->_resampler==NULL)
+            {
+                mp3_mad->_resampler=SoxResamplerINIT(mp3_mad->frame.header.samplerate,
+                                                     mad_target_samplerate, mp3_mad->synth.pcm.channels, num_bytes_out);
+            }
+            if(mp3_mad->_resampler)
+            {
+                Uint8*  outBuff = (Uint8*)malloc(sizeof(Uint8)*num_bytes_out);
+                if(outBuff)
+                {
+                    mp3_mad->cvt.len_ratio = mp3_mad->_resampler->factor;
+                    mp3_mad->cvt.rate_incr = mp3_mad->_resampler->factor;
+                    Uint8* inBuff = (Uint8*)(mp3_mad->output_buffer+mp3_mad->output_begin);
+
+                    int obytes=0;
+                    SoxResamplerProcess( mp3_mad->_resampler, inBuff, num_bytes, outBuff, &obytes );
+
+                    Uint8* copyTo = mp3_mad->output_buffer+num_bytes_out-1;
+                    while( num_bytes_out-- )
+                    {
+                        *copyTo++ = *outBuff++;
+                    }
+                    mp3_mad->output_end = copyTo - mp3_mad->output_buffer;
+                }
+            }
+            //SDL_ConvertAudio(&mp3_mad->cvt);
         }
-        else
+        else*/
         {
             mp3_mad->cvt.len_cvt = mp3_mad->cvt.len;
             mp3_mad->cvt.len_mult = 1;
@@ -433,27 +340,14 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
             mp3_mad->cvt.needed = 0;
             mp3_mad->cvt.rate_incr = 1.0;
         }
-        #ifdef DebugMAD
-        writeToLogMad("a", 13, "");
-        #endif
       }
     }
 
     num_bytes = mp3_mad->output_end - mp3_mad->output_begin;
 
-    #ifdef DebugMAD
-    writeToLogMad("a", num_bytes, " num_bytes");
-    writeToLogMad("a", bytes_remaining, " bytes_remaining");
-    #endif
-
     if (bytes_remaining < num_bytes) {
       num_bytes = bytes_remaining;
     }
-
-    #ifdef DebugMAD
-        writeToLogMad("a", 14, "");
-        writeToLogMad("a", num_bytes, " num_bytes");
-    #endif
         if(num_bytes>=0)
         {
             if (mp3_mad->volume == MIX_MAX_VOLUME) {

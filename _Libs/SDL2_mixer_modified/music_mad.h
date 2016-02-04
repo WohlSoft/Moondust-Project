@@ -40,6 +40,8 @@ enum {
   MS_cvt_decoded  = 0x0200,
 };
 
+struct SoxResampler;
+
 typedef struct {
   SDL_RWops *src;
   int freesrc;
@@ -61,6 +63,7 @@ typedef struct {
   char *mus_artist;
   char *mus_album;
   char *mus_copyright;
+  struct SoxResampler* _resampler;
 } mad_data;
 
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);
