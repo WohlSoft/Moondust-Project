@@ -25,15 +25,14 @@
 #include <stdio.h>
 
 #include "music_mad.h"
-#include "resample/mad_resample.h"
 
-#define MAX_RESAMPLEFACTOR	6
-#define MAX_NSAMPLES		(1152 * MAX_RESAMPLEFACTOR)
+//#define MAX_RESAMPLEFACTOR	6
+//#define MAX_NSAMPLES		(1152 * MAX_RESAMPLEFACTOR)
 
-int mad_doResample=0;
+//int mad_doResample=0;
 unsigned int mad_target_samplerate=44100;
-struct resample_state mad_resampler_state_left;
-struct resample_state mad_resampler_state_right;
+//struct resample_state mad_resampler_state_left;
+//struct resample_state mad_resampler_state_right;
 
 mad_data *
 mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
@@ -232,21 +231,23 @@ decode_frame(mad_data *mp3_mad) {
   {
     mp3_mad->status |= MS_cvt_decoded;
 
-    if(mp3_mad->frame.header.samplerate > mad_target_samplerate)
-    {
-        mad_doResample=1;
-        if(
-        (mad_resample_init(&mad_resampler_state_left, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1) ||
-        (mad_resample_init(&mad_resampler_state_right, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1))
-            mad_doResample=0;
-        else
-            mp3_mad->frame.header.samplerate = mad_target_samplerate;
-    }
-    else
-    {
-        mad_doResample=0;
-        mp3_mad->frame.header.samplerate = mad_target_samplerate;
-    }
+//    if(mp3_mad->frame.header.samplerate > mad_target_samplerate)
+//    {
+//        mad_doResample=1;
+//        if(
+//        (mad_resample_init(&mad_resampler_state_left, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1) ||
+//        (mad_resample_init(&mad_resampler_state_right, mp3_mad->frame.header.samplerate, mad_target_samplerate) == -1))
+//            mad_doResample=0;
+//        else
+//            mp3_mad->frame.header.samplerate = mad_target_samplerate;
+//    }
+//    else
+//    {
+//        mad_doResample=0;
+//        mp3_mad->frame.header.samplerate = mad_target_samplerate;
+//    }
+    //mad_doResample=0;
+    mp3_mad->frame.header.samplerate = mad_target_samplerate;
 
     #ifdef DebugMAD
     writeToLogMad("a", 2, "");
@@ -272,46 +273,47 @@ decode_frame(mad_data *mp3_mad) {
   writeToLogMad("a", 4, "");
   #endif
 
-  if(mad_doResample!=0)
-  {
-      nchannels = pcm->channels;
-      #ifdef DebugMAD
-      writeToLogMad("a", 5, "");
-      #endif
-      nsamples = mad_resample_block(&mad_resampler_state_left, pcm->length,
-              pcm->samples[0],
-                left_ch);
-      if(nchannels == 2)
-      {
-            mad_resample_block(&mad_resampler_state_right, pcm->length,
-                    pcm->samples[1],
-                    right_ch);
-      }
+//  if(mad_doResample!=0)
+//  {
+//      nchannels = pcm->channels;
+//      #ifdef DebugMAD
+//      writeToLogMad("a", 5, "");
+//      #endif
+//      nsamples = mad_resample_block(&mad_resampler_state_left, pcm->length,
+//              pcm->samples[0],
+//                left_ch);
+//      if(nchannels == 2)
+//      {
+//            mad_resample_block(&mad_resampler_state_right, pcm->length,
+//                    pcm->samples[1],
+//                    right_ch);
+//      }
 
-      #ifdef DebugMAD
-      writeToLogMad("a", 6, "");
+//      #ifdef DebugMAD
+//      writeToLogMad("a", 6, "");
 
-      writeToLogMad("a", pcm->length, "");
-      writeToLogMad("a", nsamples, "");
-      #endif
+//      writeToLogMad("a", pcm->length, "");
+//      writeToLogMad("a", nsamples, "");
+//      #endif
 
-      if(nsamples>0)
-      {
-          //srclenght = pcm->length;
-          pcm->length = nsamples;
-          mp3_mad->frame.header.samplerate = mad_target_samplerate;
-      }
-      #ifdef DebugMAD
-      writeToLogMad("a", 7, "");
-      #endif
-  }
-  else
-  {
-      //srclenght = pcm->length;
-      nsamples  = pcm->length;
-  }
-  resample_finish(left_ch);
-  resample_finish(right_ch);
+//      if(nsamples>0)
+//      {
+//          //srclenght = pcm->length;
+//          pcm->length = nsamples;
+//          mp3_mad->frame.header.samplerate = mad_target_samplerate;
+//      }
+//      #ifdef DebugMAD
+//      writeToLogMad("a", 7, "");
+//      #endif
+//  }
+//  else
+//  {
+//      //srclenght = pcm->length;
+//      nsamples  = pcm->length;
+//  }
+  nsamples  = pcm->length;
+//  resample_finish(left_ch);
+//  resample_finish(right_ch);
 
   #ifdef DebugMAD
   writeToLogMad("a", 8, "");

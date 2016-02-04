@@ -6,7 +6,7 @@
 #include "music_gme.h"
 
 #include "gme/gme.h"
-#include "resample/mad_resample.h"
+#include "resample/sox_resample.h"
 
 #include <stdio.h>
 
@@ -21,13 +21,7 @@
 static int current_output_channels;
 static Uint16 current_output_format;
 
-static int music_swap8;
-static int music_swap16;
-
-Music_Emu* game_emu=NULL;
-
-int gme_is_playing=-1;
-int gme_t_sample_rate=44100;
+static int gme_t_sample_rate = 44100;
 
 /* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
@@ -38,60 +32,18 @@ static SDL_AudioSpec mixer;
 
 int GME_init(SDL_AudioSpec *mixerfmt)
 {
-    if(game_emu)
-    {
-        return 0;
-    }
-
     gme_t_sample_rate = mixerfmt->freq;
 
     current_output_channels = mixerfmt->channels;
     current_output_format = mixerfmt->format;
 
-    music_swap8 = 0;
-    music_swap16 = 0;
-
     mixer = *mixerfmt;
 
-    switch (mixerfmt->format) {
-
-        case AUDIO_U8:
-        case AUDIO_S8: {
-            if ( mixerfmt->format == AUDIO_S8 ) {
-                music_swap8 = 1;
-            }
-        }
-        break;
-
-        case AUDIO_S16LSB:
-        case AUDIO_S16MSB: {
-            /* See if we need to correct MikMod mixing */
-        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                    if ( mixerfmt->format == AUDIO_S16MSB ) {
-        #else
-                    if ( mixerfmt->format == AUDIO_S16LSB ) {
-        #endif
-                music_swap16 = 1;
-            }
-        }
-        break;
-
-        default: {
-            Mix_SetError("Unknown hardware audio format");
-            return -1;
-        }
-    }
     return 0;
 }
 
 /* Uninitialize the music players */
-void GME_exit(void)
-{
-    if (game_emu) {
-        gme_delete( game_emu );
-        game_emu=NULL;
-    }
-}
+void GME_exit(void) {}
 
 /* Set the volume for a MOD stream */
 void GME_setvolume(struct MUSIC_GME *music, int volume)
@@ -135,6 +87,8 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
             return NULL;
         }
 
+        Music_Emu* game_emu;
+
         char *err = (char*)gme_open_data( bytes, spcsize, &game_emu, gme_t_sample_rate );
         //spc_load_spc( snes_spc, bytes, spcsize );
         free(bytes);
@@ -155,6 +109,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         }
 
         struct MUSIC_GME *spcSpec = (struct MUSIC_GME*)malloc(sizeof(struct MUSIC_GME));
+        spcSpec->game_emu=game_emu;
         spcSpec->playing=0;
         spcSpec->gme_t_sample_rate=mixer.freq;
         spcSpec->volume=MIX_MAX_VOLUME;
@@ -163,9 +118,11 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         spcSpec->mus_album=NULL;
         spcSpec->mus_copyright=NULL;
         gme_info_t *musInfo;
-        err = (char*)gme_track_info(game_emu, &musInfo, trackNum);
+        err = (char*)gme_track_info(spcSpec->game_emu, &musInfo, trackNum);
         if(err!=0)
         {
+            gme_delete(spcSpec->game_emu);
+            free(spcSpec);
             Mix_SetError("GAME-EMU: %s", err);
             return NULL;
         }
@@ -189,10 +146,6 @@ struct MUSIC_GME *GME_new_RW(struct SDL_RWops *src, int freesrc, int trackNum)
 {
     struct MUSIC_GME *gmeMusic;
 
-    GME_exit();
-
-    gme_is_playing=-1;
-
     gmeMusic = GME_LoadSongRW(src, trackNum);
     if (!gmeMusic)
     {
@@ -210,7 +163,6 @@ void GME_play(struct MUSIC_GME *music)
 {
     if(music)
         music->playing=1;
-    gme_is_playing=1;
 }
 
 /* Return non-zero if a stream is currently playing */
@@ -219,39 +171,25 @@ int GME_playing(struct MUSIC_GME *music)
     if(music)
         return music->playing;
     else
-        return gme_is_playing;
+        return -1;
 }
 
 /* Play some of a stream previously started with GME_play() */
 int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len)
 {
     if(music==NULL) return 1;
-    if(game_emu==NULL) return 1;
-    if(gme_is_playing==-1) return 1;
+    if(music->game_emu==NULL) return 1;
+    if(music->playing==-1) return 1;
 
     short buf[len];
-    Uint8 dstt[len];
-    int new_len = len/2;
-    gme_play( game_emu, new_len, buf );
-
-    //Spliting channels
-    int i,j;
-    //float p, q, r;
-    for(i=0, j=0; i<len; i+=4, j+=2)
-    {
-        //left[i] =buf[j];
-        //right[i]=buf[j+1];
-        dstt[i] = buf[j]&0xff;
-        dstt[i+1]= (buf[j]>>8)&0xff;
-        dstt[i+2] = buf[j+1]&0xff;
-        dstt[i+3] = (buf[j+1]>>8)&0xff;
-    }
+    gme_play( music->game_emu, len/2, buf );
+    Uint8*src = (Uint8*)buf;
 
     if ( music->volume == MIX_MAX_VOLUME )
     {
-        SDL_memcpy(stream, &dstt, len);
+        SDL_memcpy(stream, src, len);
     } else {
-        SDL_MixAudio(stream, dstt, len, music->volume);
+        SDL_MixAudio(stream, src, len, music->volume);
     }
     return 0;
 }
@@ -261,35 +199,37 @@ void GME_stop(struct MUSIC_GME *music)
 {
     if(music)
         music->playing=-1;
-    gme_is_playing=-1;
 }
 
 /* Close the given Game Music Emulators stream */
 void GME_delete(struct MUSIC_GME *music)
 {
-    if( music->mus_title )
-    {
-        SDL_free(music->mus_title);
-    }
-    if( music->mus_artist)
-    {
-        SDL_free(music->mus_artist);
-    }
-    if( music->mus_album)
-    {
-        SDL_free(music->mus_album);
-    }
-    if( music->mus_copyright)
-    {
-        SDL_free(music->mus_copyright);
-    }
-
     if(music)
     {
+        if( music->mus_title )
+        {
+            SDL_free(music->mus_title);
+        }
+        if( music->mus_artist)
+        {
+            SDL_free(music->mus_artist);
+        }
+        if( music->mus_album)
+        {
+            SDL_free(music->mus_album);
+        }
+        if( music->mus_copyright)
+        {
+            SDL_free(music->mus_copyright);
+        }
+        if (music->game_emu)
+        {
+            gme_delete( music->game_emu );
+            music->game_emu=NULL;
+        }
         music->playing=-1;
         free(music);
-    }    
-    GME_exit();
+    }
 }
 
 /* Jump (seek) to a given position (time is in seconds) */
@@ -297,7 +237,7 @@ void GME_jump_to_time(struct MUSIC_GME *music, double time)
 {
     if(music)
     {
-        gme_seek(game_emu, (int)round(time*1000));
+        gme_seek(music->game_emu, (int)round(time*1000));
     }
 }
 

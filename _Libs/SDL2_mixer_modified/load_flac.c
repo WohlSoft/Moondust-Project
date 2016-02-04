@@ -284,7 +284,7 @@ SDL_AudioSpec *Mix_LoadFLAC_RW (SDL_RWops *src, int freesrc,
         goto done;
     }
 
-    init_status = flac.FLAC__stream_decoder_init_stream (decoder,
+    init_status = flac.FLAC__stream_decoder_init_stream(decoder,
                                 flac_read_load_cb, flac_seek_load_cb,
                                 flac_tell_load_cb, flac_length_load_cb,
                                 flac_eof_load_cb, flac_write_load_cb,

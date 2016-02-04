@@ -43,9 +43,15 @@
 
 inline void ProcessPlugins(int n) {}
 
+#ifndef strncasecmp
 #define strncasecmp(a,b,c)  strncmp(a,b,c)
+#endif
+#ifndef strcasecmp
 #define strcasecmp(a,b) strcmp(a,b)
+#endif
+#ifndef strnicmp
 #define strnicmp(a,b,c)		strncasecmp(a,b,c)
+#endif
 #define HAVE_SINF 1
 
 #ifndef isblank

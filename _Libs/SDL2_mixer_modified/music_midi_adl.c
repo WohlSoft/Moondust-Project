@@ -11,13 +11,8 @@
 #include <stdio.h>
 
 /* Reference for converting mikmod output to 4/6 channels */
-static int current_output_channels;
+static int    current_output_channels;
 static Uint16 current_output_format;
-
-static int music_swap8;
-static int music_swap16;
-
-struct ADL_MIDIPlayer* adl_midiplayer=NULL;
 
 static int adlmidi_tremolo = 1;
 static int adlmidi_vibrato = 1;
@@ -28,11 +23,11 @@ static int adlmidi_bank = 58;
 int adlmidi_is_playing=-1;
 int adlmidi_t_sample_rate=44100;
 
-
 int ADLMIDI_getBankID()
 {
     return adlmidi_bank;
 }
+
 void ADLMIDI_setBankID(int bnk)
 {
     adlmidi_bank = bnk;
@@ -51,6 +46,7 @@ int ADLMIDI_getVibrato()
 {
     return adlmidi_vibrato;
 }
+
 void ADLMIDI_setVibrato(int vib)
 {
     adlmidi_vibrato = vib;
@@ -74,60 +70,18 @@ static SDL_AudioSpec mixer;
 
 int ADLMIDI_init(SDL_AudioSpec *mixerfmt)
 {
-    if(adl_midiplayer)
-    {
-        return 0;
-    }
-
     adlmidi_t_sample_rate = mixerfmt->freq;
 
     current_output_channels = mixerfmt->channels;
     current_output_format = mixerfmt->format;
 
-    music_swap8 = 0;
-    music_swap16 = 0;
-
     mixer = *mixerfmt;
 
-    switch (mixerfmt->format) {
-
-        case AUDIO_U8:
-        case AUDIO_S8: {
-            if ( mixerfmt->format == AUDIO_S8 ) {
-                music_swap8 = 1;
-            }
-        }
-        break;
-
-        case AUDIO_S16LSB:
-        case AUDIO_S16MSB: {
-            /* See if we need to correct MikMod mixing */
-        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                    if ( mixerfmt->format == AUDIO_S16MSB ) {
-        #else
-                    if ( mixerfmt->format == AUDIO_S16LSB ) {
-        #endif
-                music_swap16 = 1;
-            }
-        }
-        break;
-
-        default: {
-            Mix_SetError("Unknown hardware audio format");
-            return -1;
-        }
-    }
     return 0;
 }
 
 /* Uninitialize the music players */
-void ADLMIDI_exit(void)
-{
-    if (adl_midiplayer) {
-        adl_close( adl_midiplayer );
-        adl_midiplayer=NULL;
-    }
-}
+void ADLMIDI_exit(void) {}
 
 /* Set the volume for a MOD stream */
 void ADLMIDI_setvolume(struct MUSIC_MIDIADL *music, int volume)
@@ -171,6 +125,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
             return NULL;
         }
 
+        struct ADL_MIDIPlayer* adl_midiplayer=NULL;
         adl_midiplayer= adl_init(adlmidi_t_sample_rate);
 
         adl_setHVibrato(adl_midiplayer, adlmidi_vibrato);
@@ -188,6 +143,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         }
 
         struct MUSIC_MIDIADL *adlMidi = (struct MUSIC_MIDIADL*)malloc(sizeof(struct MUSIC_MIDIADL));
+        adlMidi->adlmidi = adl_midiplayer;
         adlMidi->playing=0;
         adlMidi->gme_t_sample_rate=mixer.freq;
         adlMidi->volume=MIX_MAX_VOLUME;
@@ -224,7 +180,6 @@ void ADLMIDI_play(struct MUSIC_MIDIADL *music)
 {
     if(music)
         music->playing=1;
-    adlmidi_is_playing=1;
 }
 
 /* Return non-zero if a stream is currently playing */
@@ -233,39 +188,40 @@ int ADLMIDI_playing(struct MUSIC_MIDIADL *music)
     if(music)
         return music->playing;
     else
-        return adlmidi_is_playing;
+        return -1;
 }
 
 /* Play some of a stream previously started with ADLMIDI_play() */
 int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
 {
     if(music==NULL) return 0;
-    if(adl_midiplayer==NULL) return 0;
-    if(adlmidi_is_playing==-1) return 0;
-    len -= len%2;//Only ODD sample requests
-    if(len<0) return 0;
+    if(music->adlmidi==NULL) return 0;
+    if(music->playing==-1) return 0;
+    len -= len%2;//Avoid non-odd sample requests
+    if( len<0 ) return 0;
 
-    int gottenLen=0;
     int buf[len];
-    Uint8 dstt[len];
-    int new_len = len/2;
-    gottenLen=adl_play( adl_midiplayer, new_len, buf );
-    if(gottenLen<=0) return 0;
-
-    int i,j;
-    for(i=0, j=0; i<(gottenLen*2); i+=4, j+=2)
+    int gottenLen = adl_play( music->adlmidi, len/2, buf );
+    if(gottenLen<=0)
     {
-        dstt[i] = buf[j]&0xff;
-        dstt[i+1]= (buf[j]>>8)&0xff;
-        dstt[i+2] = buf[j+1]&0xff;
-        dstt[i+3] = (buf[j+1]>>8)&0xff;
+        return 0;
+    }
+    int dest_len = gottenLen*2;
+    Uint8 dst[len];
+    short* dout = (short*)dst;
+    int*   din  =  buf;
+    int i;
+    for(i=0; i<dest_len; i+=2)
+    {
+        *dout = (short)(*din);
+         dout++; din++;
     }
 
-    if ( music->volume == MIX_MAX_VOLUME )
+    if( music->volume == MIX_MAX_VOLUME )
     {
-        SDL_memcpy(stream, &dstt, (gottenLen*2));
+        SDL_memcpy( stream, &dst, dest_len );
     } else {
-        SDL_MixAudio(stream, dstt, (gottenLen*2), music->volume);
+        SDL_MixAudio( stream, dst, dest_len, music->volume);
     }
     return len-(gottenLen*2);
 }
@@ -274,22 +230,26 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
 void ADLMIDI_stop(struct MUSIC_MIDIADL *music)
 {
     if(music)
+    {
         music->playing=-1;
-    adlmidi_is_playing=-1;
-    adl_reset(adl_midiplayer);
+        adl_reset(music->adlmidi);
+    }
 }
 
 /* Close the given Game Music Emulators stream */
 void ADLMIDI_delete(struct MUSIC_MIDIADL *music)
 {
-    if( music->mus_title )
-    {
-        SDL_free(music->mus_title);
-    }
     if(music)
     {
+        if( music->mus_title )
+        {
+            SDL_free(music->mus_title);
+        }
         music->playing=-1;
-        free(music);
+        if(music->adlmidi)
+            adl_close( music->adlmidi );
+        music->adlmidi = NULL;
+        free( music );
     }
     ADLMIDI_exit();
 }

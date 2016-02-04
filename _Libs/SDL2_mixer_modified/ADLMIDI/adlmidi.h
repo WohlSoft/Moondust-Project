@@ -47,6 +47,12 @@ struct ADL_MIDIPlayer {
     double mindelay;
     double maxdelay;
 
+    /*For internal usage*/
+    int stored_samples; //num of collected samples
+    int backup_samples[1024]; //Backup sample storage.
+    int backup_samples_size; //Backup sample storage.
+    /*For internal usage*/
+
     void *adl_midiPlayer;
     unsigned long PCM_RATE;
 };

@@ -62,7 +62,7 @@ win32:{
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
 USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC SPC_MORE_ACCURACY #NO_OLDNAMES
-DEFINES += MODPLUG_MUSIC MODPLUG_STATIC MODPLUG_BUILD=1 PIC _REENTRANT
+DEFINES += MODPLUG_MUSIC MODPLUG_STATIC MODPLUG_BUILD=1 PIC _REENTRANT _USE_MATH_DEFINES SOXR_LIB
 
 android: {
 DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP MID_MUSIC USE_ADL_MIDI GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY #OGG_USE_TREMOR
@@ -167,9 +167,6 @@ HEADERS += \
     timidity/resample.h \
     timidity/tables.h \
     timidity/timidity.h \
-    resample/audio.h \
-    resample/global.h \
-    resample/mad_resample.h \
     SDL_mixer_ext.h \
     libid3tag/compat.h \
     libid3tag/crc.h \
@@ -313,7 +310,6 @@ SOURCES += \
     timidity/sdl_c.c \
     timidity/tables.c \
     timidity/timidity.c \
-    resample/mad_resample.c \
     timidity/ctrlmode.c \
     dynamic_mod.c \
     libid3tag/compat.c \

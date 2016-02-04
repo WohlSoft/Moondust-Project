@@ -26,10 +26,12 @@
 
 #ifdef USE_ADL_MIDI
 
-/* This file supports Game Music Emulator music streams */
+struct ADL_MIDIPlayer;
 
+/* This structure supports ADLMIDI-based MIDI music streams */
 struct MUSIC_MIDIADL
 {
+    struct ADL_MIDIPlayer* adlmidi;
     int playing;
     int volume;
     int gme_t_sample_rate;

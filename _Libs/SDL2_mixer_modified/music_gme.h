@@ -26,10 +26,13 @@
 
 #ifdef GME_MUSIC
 
-/* This file supports Game Music Emulator music streams */
+/* First parameter of most gme_ functions is a pointer to the Music_Emu */
+typedef struct Music_Emu Music_Emu;
 
+/* This file supports Game Music Emulator music streams */
 struct MUSIC_GME
 {
+    Music_Emu* game_emu;
     int playing;
     int volume;
     int gme_t_sample_rate;

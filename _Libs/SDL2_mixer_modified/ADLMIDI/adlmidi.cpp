@@ -1846,47 +1846,6 @@ int adlRefreshNumCards(ADL_MIDIPlayer* device)
     return 0;
 }
 
-struct Mixx
-{
-    static int requested_len;  //size of target buffer
-    static int stored_samples; //num of collected samples
-    static int backup_samples[1024]; //Backup sample storage.
-    static int backup_samples_size; //Backup sample storage.
-    //If requested number of samples less than 512 bytes, backup will be stored
-
-    static int *_len;
-    static int *_out;
-    static void SendStereoAudio(unsigned long count, int* samples)
-    {
-        if(!count) return;
-        stored_samples=0;
-        size_t pos=(*_len);
-        for(unsigned long p = 0; p < count; ++p)
-            for(unsigned w=0; w<2; ++w)
-            {
-                int out=samples[p*2+w];
-                int offset=pos+p*2+w;
-                if(offset<requested_len)
-                    _out[offset] = out;
-                else
-                {
-                    backup_samples[backup_samples_size]=out;
-                    backup_samples_size++; stored_samples++;
-                }
-            }
-    }
-
-};
-
-int  Mixx::requested_len=0;
-int  Mixx::stored_samples=0;
-int  Mixx::backup_samples[1024];
-int  Mixx::backup_samples_size=0;
-int *Mixx::_len=NULL;
-int *Mixx::_out=NULL;
-
-
-
 /*---------------------------EXPORTS---------------------------*/
 
 ADLMIDI_EXPORT struct ADL_MIDIPlayer* adl_init(long sample_rate)
@@ -1908,6 +1867,10 @@ ADLMIDI_EXPORT struct ADL_MIDIPlayer* adl_init(long sample_rate)
     _device->carry=0.0;
     _device->mindelay = 1.0 / (double)_device->PCM_RATE;
     _device->maxdelay = 512.0 / (double)_device->PCM_RATE;
+
+    _device->stored_samples=0;
+    _device->backup_samples_size=0;
+
     _device->adl_midiPlayer = (void*)new MIDIplay;
     ((MIDIplay*)_device->adl_midiPlayer)->opl._parent=_device;
     ((MIDIplay*)_device->adl_midiPlayer)->opl.NumCards=_device->NumCards;
@@ -1917,7 +1880,7 @@ ADLMIDI_EXPORT struct ADL_MIDIPlayer* adl_init(long sample_rate)
     ((MIDIplay*)_device->adl_midiPlayer)->opl.HighVibratoMode=(bool)_device->HighVibratoMode;
     ((MIDIplay*)_device->adl_midiPlayer)->opl.AdlPercussionMode=(bool)_device->AdlPercussionMode;
     ((MIDIplay*)_device->adl_midiPlayer)->opl.ScaleModulators=(bool)_device->ScaleModulators;
-    ((MIDIplay*)(_device->adl_midiPlayer))->ChooseDevice("");
+    ((MIDIplay*)(_device->adl_midiPlayer))->ChooseDevice("");    
     adlRefreshNumCards(_device);
     return _device;
 }
@@ -2006,9 +1969,10 @@ ADLMIDI_EXPORT void adl_setLoopEnabled(ADL_MIDIPlayer *device, int loopEn)
 
 ADLMIDI_EXPORT int adl_openFile(ADL_MIDIPlayer *device, char *filePath)
 {
-    Mixx::backup_samples_size=0;
     if(device && device->adl_midiPlayer)
     {
+        device->stored_samples=0;
+        device->backup_samples_size=0;
         if(!((MIDIplay *)device->adl_midiPlayer)->LoadMIDI(filePath))
         {
             ADLMIDI_ErrorString="ADL MIDI: Can't load file";
@@ -2021,9 +1985,10 @@ ADLMIDI_EXPORT int adl_openFile(ADL_MIDIPlayer *device, char *filePath)
 
 ADLMIDI_EXPORT int adl_openData(ADL_MIDIPlayer* device, void *mem, long size)
 {
-    Mixx::backup_samples_size=0;
     if(device && device->adl_midiPlayer)
     {
+        device->stored_samples=0;
+        device->backup_samples_size=0;
         if(!((MIDIplay *)device->adl_midiPlayer)->LoadMIDI(mem, size))
         {
             ADLMIDI_ErrorString="ADL MIDI: Can't load data from memory";
@@ -2048,8 +2013,10 @@ ADLMIDI_EXPORT const char *adl_getMusicTitle(ADL_MIDIPlayer *device)
 
 ADLMIDI_EXPORT void adl_close(ADL_MIDIPlayer *device)
 {
-    Mixx::backup_samples_size=0;
-    if(device->adl_midiPlayer) delete ((MIDIplay*)(device->adl_midiPlayer));
+    if(device->adl_midiPlayer)
+    {
+        delete ((MIDIplay*)(device->adl_midiPlayer));
+    }
     device->adl_midiPlayer = NULL;
     free(device);
     device=NULL;
@@ -2058,9 +2025,41 @@ ADLMIDI_EXPORT void adl_close(ADL_MIDIPlayer *device)
 ADLMIDI_EXPORT void adl_reset(ADL_MIDIPlayer *device)
 {
     if(!device) return;
-    Mixx::backup_samples_size=0;
+    device->stored_samples=0;
+    device->backup_samples_size=0;
     ((MIDIplay*)device->adl_midiPlayer)->opl.Reset();
 }
+
+inline static void SendStereoAudio(ADL_MIDIPlayer*device,
+                                int&    samples_requested,
+                      unsigned long&    in_size,
+                                int*    _in,
+                                int     out_pos,
+                                int*    _out)
+{
+    if(!in_size) return;
+    device->stored_samples=0;
+    int out;
+    int offset;
+    for(unsigned long p = 0; p < in_size; ++p)
+    {
+        for(unsigned w=0; w<2; ++w)
+        {
+            out    = _in[p*2+w];
+            offset = out_pos+p*2+w;
+            if(offset<samples_requested)
+            {
+                _out[offset] = out;
+            }
+            else
+            {
+                device->backup_samples[device->backup_samples_size]=out;
+                device->backup_samples_size++; device->stored_samples++;
+            }
+        }
+    }
+}
+
 
 ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
 {
@@ -2069,31 +2068,29 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
     if(device->QuitFlag) return 0;
 
     int gotten_len=0;
-    Mixx::requested_len=sampleCount;
-    Mixx::_len=&gotten_len;
-    Mixx::_out=out;
 
     unsigned long n_samples=512;
     unsigned long n_samples_2=n_samples*2;
-    while(sampleCount>0)
+    int left = sampleCount;
+    while(left>0)
     {
-        if(Mixx::backup_samples_size>0)
+        if(device->backup_samples_size>0)
         { //Send reserved samples if exist
             int ate=0;
-            while((ate<Mixx::backup_samples_size) && (ate<sampleCount))
+            while((ate<device->backup_samples_size) && (ate<left))
             {
-                out[ate]=Mixx::backup_samples[ate]; ate++;
+                out[ate]=device->backup_samples[ate]; ate++;
             }
-            sampleCount-=ate;
+            left-=ate;
             gotten_len+=ate;
-            if(ate<Mixx::backup_samples_size)
+            if(ate<device->backup_samples_size)
             {
                 for(int j=0;
                         j<ate;
                         j++)
-                    Mixx::backup_samples[(ate-1)-j]=Mixx::backup_samples[(Mixx::backup_samples_size-1)-j];
+                    device->backup_samples[(ate-1)-j]=device->backup_samples[(device->backup_samples_size-1)-j];
             }
-            Mixx::backup_samples_size-=ate;
+            device->backup_samples_size-=ate;
         } else {
             const double eat_delay = device->delay < device->maxdelay ? device->delay : device->maxdelay;
             device->delay -= eat_delay;
@@ -2106,44 +2103,41 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
                 device->SkipForward -= 1;
             else
             {
-                sampleCount-=n_samples_2;
+                left -= n_samples_2;
+                int buf[n_samples*2];
+                unsigned long in_count=n_samples;
+
                 if(device->NumCards == 1)
                 {
-                    ((MIDIplay*)(device->adl_midiPlayer))->opl.cards[0].Generate(0, Mixx::SendStereoAudio, n_samples);
+                    ((MIDIplay*)(device->adl_midiPlayer))->opl.cards[0].GenerateArr(buf, &in_count);
+                    /* Process it */
+                    SendStereoAudio(device, sampleCount, in_count, buf, gotten_len, out);
                 }
                 else if(n_samples > 0)
                 {
-                    /* Mix together the audio from different cards */
-                    static std::vector<int> sample_buf;
-                    sample_buf.clear();
-                    sample_buf.resize(n_samples*2);
-                    struct Mix
-                    {
-                        static void AddStereoAudio(unsigned long count, int* samples)
-                        {
-                            for(unsigned long a=0; a<count*2; ++a)
-                                sample_buf[a] += samples[a];
-                        }
-                    };
+                    int in[n_samples*2];
+
+                    //fill buffer with zeros
+                    for(unsigned long a=0; a<(in_count*2); ++a) buf[a] = 0;
+
+                    unsigned long in_count = n_samples;
                     for(unsigned card = 0; card < device->NumCards; ++card)
                     {
-                        ((MIDIplay*)(device->adl_midiPlayer))->opl.cards[card].Generate(
-                            0,
-                            Mix::AddStereoAudio,
-                            n_samples);
+                        ((MIDIplay*)(device->adl_midiPlayer))->opl.cards[card].GenerateArr( in, &in_count );
+                        for(unsigned long a=0; a<(in_count*2); ++a)
+                            buf[a] += in[a];
                     }
+
                     /* Process it */
-                    Mixx::SendStereoAudio(n_samples, &sample_buf[0]);
+                    SendStereoAudio(device, sampleCount, in_count, buf, gotten_len, out);
                 }
-                gotten_len += (n_samples*2)-Mixx::stored_samples;
+                gotten_len += (n_samples*2)-device->stored_samples;
             }
             device->delay = ((MIDIplay*)device->adl_midiPlayer)->Tick(eat_delay, device->mindelay);
         }
     }
     return gotten_len;
 }
-
-
 
 
 #ifdef ADLMIDI_buildAsApp
