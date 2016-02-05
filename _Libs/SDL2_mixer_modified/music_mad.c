@@ -227,13 +227,19 @@ decode_frame(mad_data *mp3_mad) {
     mp3_mad->status |= MS_cvt_decoded;
 
     /*Temporary don't resample any MP3's*/
-    mp3_mad->frame.header.samplerate = mad_target_samplerate;
+    //int resampleNeed=(mp3_mad->frame.header.samplerate!=mad_target_samplerate);
 
         /* The first frame determines some key properties of the stream.
        In particular, it tells us enough to set up the convert
        structure now. */
+    //int framerate_source=mp3_mad->frame.header.samplerate;
+    //mp3_mad->frame.header.samplerate = mad_target_samplerate;
+
     SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, pcm->channels,
     mp3_mad->frame.header.samplerate, mp3_mad->mixer.format, mp3_mad->mixer.channels, mp3_mad->mixer.freq);
+
+    //mp3_mad->frame.header.samplerate=framerate_source;
+    //mp3_mad->cvt.needed = resampleNeed;
   }
 
   /* pcm->samplerate contains the sampling frequency */
@@ -280,8 +286,10 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
       /* We need to get a new frame. */
       mp3_mad->output_begin = 0;
       mp3_mad->output_end = 0;
-      if (!read_next_frame(mp3_mad)) {
-        if ((mp3_mad->status & MS_error_flags) != 0) {
+      if (!read_next_frame(mp3_mad))
+      {
+        if ((mp3_mad->status & MS_error_flags) != 0)
+        {
           /* Couldn't read a frame; either an error condition or
              end-of-file.  Stop. */
           SDL_memset(out, 0, bytes_remaining);
@@ -300,39 +308,44 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
             mp3_mad->output_end = (int)(mp3_mad->output_end * mp3_mad->cvt.len_ratio);
 
         /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
-        /*
-        if((mp3_mad->cvt.needed>0) && (mp3_mad->frame.header.samplerate != mad_target_samplerate))
+
+        if( mp3_mad->cvt.needed>0 )
         {
-            int     num_bytes_out=
-                    (int) ( (double)(mp3_mad->cvt.len)*((double)mad_target_samplerate/(double)mp3_mad->frame.header.samplerate));
+            /*
+            int num_bytes_out =
+            (int) ( (double)(mp3_mad->cvt.len)*((double)mad_target_samplerate/(double)mp3_mad->frame.header.samplerate));
             if(mp3_mad->_resampler==NULL)
             {
-                mp3_mad->_resampler=SoxResamplerINIT(mp3_mad->frame.header.samplerate,
-                                                     mad_target_samplerate, mp3_mad->synth.pcm.channels, num_bytes_out);
+                mp3_mad->_resampler = SoxResamplerINIT(mp3_mad->frame.header.samplerate,
+                                                       mad_target_samplerate, mp3_mad->synth.pcm.channels, num_bytes_out);
             }
-            if(mp3_mad->_resampler)
+            if(mp3_mad->_resampler && num_bytes_out>0)
             {
-                Uint8*  outBuff = (Uint8*)malloc(sizeof(Uint8)*num_bytes_out);
-                if(outBuff)
+                Uint8 outBuff[num_bytes_out];
+                mp3_mad->cvt.len_ratio = mp3_mad->_resampler->factor;
+                mp3_mad->cvt.rate_incr = mp3_mad->_resampler->factor;
+                Uint8* inBuff = (Uint8*)(mp3_mad->output_buffer+mp3_mad->output_begin);
+
+                int obytes=0;
+                SoxResamplerProcess( mp3_mad->_resampler, inBuff, num_bytes, &outBuff, &obytes );
+                mp3_mad->cvt.len_cvt = obytes;
+
+                Uint8* copyTo = mp3_mad->output_buffer+mp3_mad->output_begin;
+                Uint8* copyFrom=outBuff;
+                while( num_bytes_out-- )
                 {
-                    mp3_mad->cvt.len_ratio = mp3_mad->_resampler->factor;
-                    mp3_mad->cvt.rate_incr = mp3_mad->_resampler->factor;
-                    Uint8* inBuff = (Uint8*)(mp3_mad->output_buffer+mp3_mad->output_begin);
-
-                    int obytes=0;
-                    SoxResamplerProcess( mp3_mad->_resampler, inBuff, num_bytes, outBuff, &obytes );
-
-                    Uint8* copyTo = mp3_mad->output_buffer+num_bytes_out-1;
-                    while( num_bytes_out-- )
-                    {
-                        *copyTo++ = *outBuff++;
-                    }
-                    mp3_mad->output_end = copyTo - mp3_mad->output_buffer;
+                    *copyTo++ = *copyFrom++;
                 }
-            }
-            //SDL_ConvertAudio(&mp3_mad->cvt);
+                mp3_mad->output_end = copyTo - mp3_mad->output_buffer;
+            }*/
+            SDL_ConvertAudio(&mp3_mad->cvt);
+            //double Ration_______did = mp3_mad->cvt.rate_incr;
+            //double Ration__shouldBe = (double)mad_target_samplerate/(double)mp3_mad->frame.header.samplerate;
+            //mp3_mad->cvt.len_cvt = mp3_mad->cvt.len;
+            //SDL_Upsample_S16LSB_2c_kokoko(&mp3_mad->cvt, mp3_mad->cvt.src_format);
+            mp3_mad->output_end = mp3_mad->cvt.len_cvt;
         }
-        else*/
+        else
         {
             mp3_mad->cvt.len_cvt = mp3_mad->cvt.len;
             mp3_mad->cvt.len_mult = 1;
@@ -344,6 +357,11 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
     }
 
     num_bytes = mp3_mad->output_end - mp3_mad->output_begin;
+
+//    FILE * outshit = fopen("C:/_Repos/PGE-Project/bin-w32/outshit.raw", "ab");
+//    fwrite((char*)(mp3_mad->output_buffer + mp3_mad->output_begin), 1, num_bytes, outshit);
+//    fflush(outshit);
+//    fclose(outshit);
 
     if (bytes_remaining < num_bytes) {
       num_bytes = bytes_remaining;
