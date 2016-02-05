@@ -427,7 +427,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             QDir customDir(customPath);
 
             QStringList fileters;
-            fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png";
+            fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.bmp";
             QStringList fileters_cdir;
             fileters_cdir << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.mp3"
                           //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
@@ -444,7 +444,6 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                           << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz";
             episodeDir.setNameFilters(fileters);
             customDir.setNameFilters(fileters_cdir);
-
 
             //Copy images and scripts from episode folder
             QStringList files = episodeDir.entryList(QDir::Files);
