@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
         error(SDL_GetError());
 
-    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MODPLUG )==-1)
+    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MODPLUG )==-1)
         error(Mix_GetError());
 
     qDebug() << QString(a.applicationDirPath()+"/timidity/");

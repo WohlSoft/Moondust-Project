@@ -598,6 +598,12 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
     Mix_MusicType type;
 
     if( music_file ) SDL_free(music_file);
+        if(!file)
+        {
+            music_file = NULL;
+            Mix_SetError("Null filename!");
+            return NULL;
+        }
         music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
         strcpy(music_file, (char*)file);
         #ifdef _WIN32
@@ -624,6 +630,11 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
                 trackNum[i]=music_file[i];
                 if(music_file[i]=='|')
                 {
+                    if(i==0)
+                    {
+                        Mix_SetError("Empty filename!");
+                        return NULL;//Avoid empty file paths!
+                    }
                     music_file[i]='\0';
                     i++;
                     break;
@@ -634,9 +645,17 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             if(j<(signed)strlen(file)) trackNum[j]='\0';
             gme_track_number=atoi(trackNum);
         }
-        music_filename = strrchr(music_file, '/');
 
-    char *ext = strrchr(music_filename, '.');
+        if(strstr(music_file, "/"))
+        {
+            music_filename = strrchr(music_file, '/');
+        }
+
+        char *ext = "";
+        if(strstr(music_filename, "."))
+        {
+            ext = strrchr(music_filename, '.');
+        }
 
     //Install next MIDI device
     mididevice_current = mididevice_next;
@@ -661,7 +680,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
 #endif
 
     src = SDL_RWFromFile(music_file, "rb");
-    if ( src == NULL ) {
+    if( src == NULL ) {
         Mix_SetError("Couldn't open '%s'", music_file);
         return NULL;
     }

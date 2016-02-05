@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
         WriteToLog(QtWarningMsg, QString("Error of loading SDL: %1").arg(SDL_GetError()));
     }
 
-    if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG)<0)
+    if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MODPLUG|MIX_INIT_MP3|MIX_INIT_OGG)<0)
     {
         WriteToLog(QtWarningMsg, QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
     }
