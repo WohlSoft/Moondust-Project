@@ -97,6 +97,9 @@ if [[ "$1" == "no-libs" ]]; then
 	echo "Building SDL2_mixer_ext, LuaBIND and FreeImage..."
 else
 	buildLibs
+    if [[ "$1" == "libs-only" ]]; then
+        exit 0
+    fi
 fi
 
 cd "$PrjPath/_Libs"

@@ -59,7 +59,9 @@ BuildSrc()
 # $1 - dir name   #2 additional props
 
     cd $1
-    ./configure $2
+    #Build debug version of SDL
+    #CFLAGS='-O0 -g' ./configure $2
+    ./configure $2  
     if [ $? -eq 0 ]
     then
       echo "[good]"
