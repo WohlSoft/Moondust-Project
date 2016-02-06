@@ -482,15 +482,24 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             {
                 if(!sec.music_file.isEmpty())
                 {
-                    QFile mus(episodePath+"/"+sec.music_file);
+                    QString musFile=sec.music_file;
+                    for(int i=0;i<musFile.size();i++)
+                    {
+                        if(musFile[i]=='|')
+                        {
+                            musFile.remove(i, musFile.size()-i);
+                        }
+                    }
+                    QString MusicFileName=episodePath+"/"+musFile;
+                    QFile mus(MusicFileName);
                     if(mus.exists())
                     {
-                        QFileInfo inf(newEpisode+sec.music_file);
+                        QFileInfo inf(newEpisode+musFile);
                         if(!inf.absoluteDir().exists())
                         {
                             inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
                         }
-                        mus.copy(newEpisode+sec.music_file);
+                        mus.copy(newEpisode+musFile);
                     }
                 }
             }
