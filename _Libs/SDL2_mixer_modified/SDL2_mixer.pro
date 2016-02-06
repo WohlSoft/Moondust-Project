@@ -268,8 +268,7 @@ HEADERS += \
     modplug/sndfile.h \
     modplug/stdafx.h \
     modplug/tables.h \
-    resample/sox_resample.h \
-    resample/libresample/resample.h
+    resample/my_resample.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -431,8 +430,7 @@ SOURCES += \
     modplug/sndfile.cpp \
     modplug/sndmix.cpp \
     vb6_sdl_binds.c \
-    resample/sox_resample.c \
-    resample/libresample/resample.c \
-    timidity/resample_timidity.c
+    timidity/resample_timidity.c \
+    resample/my_resample.c
 
 

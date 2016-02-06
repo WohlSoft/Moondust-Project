@@ -36,6 +36,7 @@ struct MUSIC_MIDIADL
     int volume;
     int gme_t_sample_rate;
     char *mus_title;
+    SDL_AudioCVT cvt;
 };
 
 /*Setup editing functions (changes applying on file reopening)*/

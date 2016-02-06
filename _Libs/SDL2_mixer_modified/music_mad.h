@@ -25,6 +25,7 @@
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
 #include "SDL_mixer_ext.h"
+#include "resample/my_resample.h"
 
 #define MAD_INPUT_BUFFER_SIZE   (5*8192)
 #define MAD_OUTPUT_BUFFER_SIZE  8192
@@ -44,6 +45,8 @@ struct SoxResampler;
 
 typedef struct {
   SDL_RWops *src;
+  //! Begin position at begin of file, 0 by default, It exists here, because need to don't feed libMAD with ID3s which causes junk at begin!
+  int src_begin_pos;
   int freesrc;
   struct mad_stream stream;
   struct mad_frame frame;
@@ -63,8 +66,10 @@ typedef struct {
   char *mus_artist;
   char *mus_album;
   char *mus_copyright;
-  struct SoxResampler* _resampler;
+  struct MyResampler resample;
 } mad_data;
+
+void mad_fetchID3Tags(mad_data *mp3_mad, char* filePath);
 
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);
 void mad_closeFile(mad_data *mp3_mad);

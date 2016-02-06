@@ -96,6 +96,8 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         music->mus_album=NULL;
         music->mus_copyright=NULL;
 
+        MyResample_zero(&music->resample);
+
         music->loop         = -1;
         music->loop_start   =  0;
         music->loop_end     =  0;
@@ -171,7 +173,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             (music->loop_end > 0)&&
             (music->loop_start < music->loop_end) &&
             (music->loop_start < ov_pcm_total(&music->vf,-1))&&
-            (music->loop_end < ov_pcm_total(&music->vf,-1)) )
+            (music->loop_end <= ov_pcm_total(&music->vf,-1)) )
         {
             music->loop=1;
             vorbis_info *vi;
@@ -216,13 +218,14 @@ static void OGG_getsome(OGG_music *music)
     len = vorbis.ov_read(&music->vf, data, sizeof(data), &section);
 #else
     len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
-    ogg_int64_t pcmpos=ov_pcm_tell(&music->vf);
-    if( (music->loop==1) && ( pcmpos > music->loop_end ) )
+#endif
+    ogg_int64_t pcmpos = ov_pcm_tell(&music->vf);
+    if( (music->loop==1) && ( pcmpos >= music->loop_end ) )
     {
         len -= ((pcmpos-music->loop_end)*music->loop_len_ch)*2;
         ov_pcm_seek(&music->vf, music->loop_start);
     }
-#endif
+
     if ( len <= 0 ) {
         if ( len == 0 ) {
             music->playing = 0;
@@ -234,21 +237,39 @@ static void OGG_getsome(OGG_music *music)
         vorbis_info *vi;
 
         vi = vorbis.ov_info(&music->vf, -1);
-        SDL_BuildAudioCVT(cvt, AUDIO_S16, vi->channels, vi->rate,
-                               mixer.format,mixer.channels,mixer.freq);
+        MyResample_init(&music->resample,
+                        vi->rate,
+                        mixer.freq,
+                        vi->channels,
+                        AUDIO_S16);
+        SDL_BuildAudioCVT(cvt,
+                          AUDIO_S16,
+                          vi->channels,
+                          mixer.freq/*vi->rate HACK: Don't use SDL's resamplers*/,
+                          mixer.format,
+                          mixer.channels,
+                          mixer.freq);
         if ( cvt->buf ) {
             SDL_free(cvt->buf);
         }
-        cvt->buf = (Uint8 *)SDL_malloc(sizeof(data)*cvt->len_mult);
+        cvt->buf = (Uint8 *)SDL_malloc(sizeof(data) * cvt->len_mult * music->resample.ratio);
         music->section = section;
     }
+
     if ( cvt->buf ) {
-        SDL_memcpy(cvt->buf, data, len);
-        if ( cvt->needed ) {
-            cvt->len = len;
-            SDL_ConvertAudio(cvt);
+        if( music->resample.needed ) {
+            MyResample_addSource(&music->resample, data, len);
+            MyResample_Process(&music->resample);
+            SDL_memcpy(cvt->buf, music->resample.buf, music->resample.buf_len);
+            cvt->len = music->resample.buf_len;
+            cvt->len_cvt = music->resample.buf_len;
         } else {
+            cvt->len = len;
             cvt->len_cvt = len;
+            SDL_memcpy(cvt->buf, data, len);
+        }
+        if ( cvt->needed ) {
+            SDL_ConvertAudio(cvt);
         }
         music->len_available = music->cvt.len_cvt;
         music->snd_available = music->cvt.buf;

@@ -100,7 +100,7 @@ extern void adl_reset(struct ADL_MIDIPlayer*device);
 extern void adl_close(struct ADL_MIDIPlayer *device);
 
 /*Take a sample buffer*/
-extern int  adl_play(struct ADL_MIDIPlayer*device, int sampleCount, int out []);
+extern int  adl_play(struct ADL_MIDIPlayer*device, int sampleCount, short out[]);
 
 #ifdef __cplusplus
      }

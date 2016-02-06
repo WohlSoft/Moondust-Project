@@ -65,14 +65,12 @@
 #endif
 #ifdef MP3_MAD_MUSIC
 #include "music_mad.h"
-#include "libid3tag/id3tag.h"
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
 #ifdef _WIN32
 typedef _off_t off_t;
 #endif
-#include <FLAC/metadata.h>
 #endif
 #ifdef GME_MUSIC
 #include "music_gme.h"
@@ -597,7 +595,9 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
     Mix_Music *music;
     Mix_MusicType type;
 
-    if( music_file ) SDL_free(music_file);
+    if( music_file )
+        SDL_free(music_file);
+    music_file = NULL;
         if(!file)
         {
             music_file = NULL;
@@ -738,6 +738,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
     if ( music == NULL && Mix_GetError()[0] == '\0' ) {
         Mix_SetError("Unrecognized music format");
     }
+
     return music;
 }
 
@@ -806,55 +807,9 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
         music->data.flac = FLAC_new_RW(src, freesrc);
         if (music->data.flac) {
             music->error = 0;
-            FLAC__StreamMetadata *tags=NULL;
-            if(FLAC__metadata_get_tags(music_file, &tags))
-            {
-                int num=tags->data.vorbis_comment.num_comments;
-                int doValue=0;
-                for(int i=0;i<num;i++)
-                {
-                    FLAC__uint32 len=tags->data.vorbis_comment.comments[i].length;
-                    FLAC__byte* ent=tags->data.vorbis_comment.comments[i].entry;
-                    char argument[len+1];
-                    char value[len+1];
-                    for(int j=0, k=0; j<=(signed)len; j++, k++)
-                    {
-                        if(doValue==0)
-                        {
-                            argument[j]=(char)ent[j];
-                            if(argument[j]=='=')
-                            {
-                                argument[j]='\0';
-                                doValue=1;
-                                k=-1;
-                            }
-                        } else {
-                            value[k]=(char)ent[j];
-                        }
-                    }
-                    int isMusicTitle = strcasecmp(argument, "TITLE");
-                    if(isMusicTitle==0) {
-                        music->data.flac->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
-                        strcpy(music->data.flac->mus_title, value);
-                    }
-                    isMusicTitle = strcasecmp(argument, "ARTIST");
-                    if(isMusicTitle==0) {
-                        music->data.flac->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
-                        strcpy(music->data.flac->mus_artist, value);
-                    }
-                    isMusicTitle = strcasecmp(argument, "ALBUM");
-                    if(isMusicTitle==0) {
-                        music->data.flac->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
-                        strcpy(music->data.flac->mus_album, value);
-                    }
-                    isMusicTitle = strcasecmp(argument, "COPYRIGHT");
-                    if(isMusicTitle==0) {
-                        music->data.flac->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
-                        strcpy(music->data.flac->mus_copyright, value);
-                    }
-                    doValue=0;
-                }
-            }
+            FLAC_fetchTags(music->data.flac, music_file);
+        } else {
+            Mix_SetError("Could not initialize FLAC stream.");
         }
         break;
 #endif
@@ -881,60 +836,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
         music->data.mp3_mad = mad_openFileRW(src, &used_mixer, freesrc);
         if (music->data.mp3_mad) {
             music->error = 0;
-            struct id3_file *tags = id3_file_open(music_file, ID3_FILE_MODE_READONLY);
-            if( tags ) {
-                struct id3_tag  *tag= id3_file_tag(tags);
-                //Search for given frame by frame id
-                struct id3_frame *pFrame = id3_tag_findframe(tag,ID3_FRAME_TITLE,0);
-                if ( pFrame != NULL )
-                {
-                    union id3_field field = pFrame->fields[1];
-                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
-                    id3_latin1_t *pStrLatinl;
-                    if ( pTemp != NULL ) {
-                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
-                        music->data.mp3_mad->mus_title=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
-                        strcpy(music->data.mp3_mad->mus_title, (char*)pStrLatinl);
-                    }
-                }
-                pFrame = id3_tag_findframe(tag,ID3_FRAME_ARTIST,0);
-                if ( pFrame != NULL )
-                {
-                    union id3_field field = pFrame->fields[1];
-                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
-                    id3_latin1_t *pStrLatinl;
-                    if ( pTemp != NULL ) {
-                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
-                        music->data.mp3_mad->mus_artist=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
-                        strcpy(music->data.mp3_mad->mus_artist, (char*)pStrLatinl);
-                    }
-                }
-                pFrame = id3_tag_findframe(tag,ID3_FRAME_ALBUM,0);
-                if ( pFrame != NULL )
-                {
-                    union id3_field field = pFrame->fields[1];
-                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
-                    id3_latin1_t *pStrLatinl;
-                    if ( pTemp != NULL ) {
-                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
-                        music->data.mp3_mad->mus_album=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
-                        strcpy(music->data.mp3_mad->mus_album, (char*)pStrLatinl);
-                    }
-                }
-                pFrame = id3_tag_findframe(tag, "TCOP",0);
-                if ( pFrame != NULL )
-                {
-                    union id3_field field = pFrame->fields[1];
-                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
-                    id3_latin1_t *pStrLatinl;
-                    if ( pTemp != NULL ) {
-                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
-                        music->data.mp3_mad->mus_copyright=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
-                        strcpy(music->data.mp3_mad->mus_copyright, (char*)pStrLatinl);
-                    }
-                }
-                id3_file_close(tags);
-            }
+            mad_fetchID3Tags(music->data.mp3_mad, music_file);
         } else {
             Mix_SetError("Could not initialize MPEG stream.");
         }
@@ -1040,7 +942,6 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #endif
         break;
 #endif
-
     default:
         Mix_SetError("Unrecognized music format");
         break;

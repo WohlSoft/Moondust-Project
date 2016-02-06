@@ -6,7 +6,7 @@
 #include "music_gme.h"
 
 #include "gme/gme.h"
-#include "resample/sox_resample.h"
+#include "resample/my_resample.h"
 
 #include <stdio.h>
 
@@ -136,6 +136,12 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         strcpy(spcSpec->mus_copyright, musInfo->copyright);
         gme_free_info( musInfo );
 
+        SDL_BuildAudioCVT(&spcSpec->cvt, AUDIO_S16, 2,
+                          mixer.freq,
+                          mixer.format,
+                          mixer.channels,
+                          mixer.freq);
+
         return spcSpec;
     }
     return NULL;
@@ -180,18 +186,33 @@ int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len)
     if(music==NULL) return 1;
     if(music->game_emu==NULL) return 1;
     if(music->playing==-1) return 1;
+    if( len<0 ) return 0;
+    int srgArraySize = len/music->cvt.len_ratio;
+    short buf[srgArraySize];
+    int srcLen = (int)((double)(len/2)/music->cvt.len_ratio);
 
-    short buf[len];
-    gme_play( music->game_emu, len/2, buf );
-    Uint8*src = (Uint8*)buf;
+    char *err = (char*)gme_play( music->game_emu, srcLen, buf );
+    if( err != NULL)
+    {
+        Mix_SetError("GAME-EMU: %s", err);
+        return 0;
+    }
+    int dest_len = srcLen*2;
+
+    if( music->cvt.needed ) {
+        music->cvt.len = dest_len;
+        music->cvt.buf = (Uint8*)buf;
+        SDL_ConvertAudio(&music->cvt);
+        dest_len = music->cvt.len_cvt;
+    }
 
     if ( music->volume == MIX_MAX_VOLUME )
     {
-        SDL_memcpy(stream, src, len);
+        SDL_memcpy(stream, (Uint8*)buf, dest_len);
     } else {
-        SDL_MixAudio(stream, src, len, music->volume);
+        SDL_MixAudio(stream, (Uint8*)buf, dest_len, music->volume);
     }
-    return 0;
+    return len-dest_len;
 }
 
 /* Stop playback of a stream previously started with GME_play() */

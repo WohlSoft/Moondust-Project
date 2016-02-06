@@ -32,6 +32,8 @@
 #include "dynamic_flac.h"
 #include "music_flac.h"
 
+#include <FLAC/metadata.h>
+
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
 
@@ -48,6 +50,59 @@ int FLAC_init(SDL_AudioSpec *mixerfmt)
 void FLAC_setvolume(FLAC_music *music, int volume)
 {
     music->volume = volume;
+}
+
+void FLAC_fetchTags(FLAC_music *music, char *filePath)
+{
+    FLAC__StreamMetadata *tags=NULL;
+    if(FLAC__metadata_get_tags(filePath, &tags))
+    {
+        int num=tags->data.vorbis_comment.num_comments;
+        int doValue=0;
+        for(int i=0;i<num;i++)
+        {
+            FLAC__uint32 len=tags->data.vorbis_comment.comments[i].length;
+            FLAC__byte* ent=tags->data.vorbis_comment.comments[i].entry;
+            char argument[len+1];
+            char value[len+1];
+            for(int j=0, k=0; j<=(signed)len; j++, k++)
+            {
+                if(doValue==0)
+                {
+                    argument[j]=(char)ent[j];
+                    if(argument[j]=='=')
+                    {
+                        argument[j]='\0';
+                        doValue=1;
+                        k=-1;
+                    }
+                } else {
+                    value[k]=(char)ent[j];
+                }
+            }
+            int isMusicTitle = strcasecmp(argument, "TITLE");
+            if(isMusicTitle==0) {
+                music->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_title, value);
+            }
+            isMusicTitle = strcasecmp(argument, "ARTIST");
+            if(isMusicTitle==0) {
+                music->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_artist, value);
+            }
+            isMusicTitle = strcasecmp(argument, "ALBUM");
+            if(isMusicTitle==0) {
+                music->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_album, value);
+            }
+            isMusicTitle = strcasecmp(argument, "COPYRIGHT");
+            if(isMusicTitle==0) {
+                music->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_copyright, value);
+            }
+            doValue=0;
+        }
+    }
 }
 
 static FLAC__StreamDecoderReadStatus flac_read_music_cb(
@@ -328,6 +383,7 @@ FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
         music->mus_artist = NULL;
         music->mus_album = NULL;
         music->mus_copyright = NULL;
+        MyResample_zero(&music->resample);
 
         init_stage++; // stage 1!
 
@@ -456,23 +512,42 @@ static void FLAC_getsome(FLAC_music *music)
     }
     cvt = &music->cvt;
     if (music->section < 0) {
-        SDL_BuildAudioCVT (cvt, AUDIO_S16, (Uint8)music->flac_data.channels,
-                        (int)music->flac_data.sample_rate, mixer.format,
-                        mixer.channels, mixer.freq);
+
+        MyResample_init(&music->resample,
+                        (int)music->flac_data.sample_rate,
+                        mixer.freq,
+                        (int)music->flac_data.channels,
+                        AUDIO_S16);
+
+        SDL_BuildAudioCVT(cvt,
+                          AUDIO_S16,
+                          (Uint8)music->flac_data.channels,
+                          mixer.freq/*(int)music->flac_data.sample_rate HACK: Don't use SDL's resamplers*/,
+                          mixer.format,
+                          mixer.channels,
+                          mixer.freq);
+
         if (cvt->buf) {
             SDL_free (cvt->buf);
         }
-        cvt->buf = (Uint8 *)SDL_malloc (music->flac_data.data_len * cvt->len_mult);
+        cvt->buf = (Uint8 *)SDL_malloc (music->flac_data.data_len * cvt->len_mult * music->resample.ratio);
         music->section = 0;
     }
+
     if (cvt->buf) {
-        SDL_memcpy (cvt->buf, music->flac_data.data, music->flac_data.data_read);
-        if (cvt->needed) {
+        if( music->resample.needed ) {
+            MyResample_addSource(&music->resample, music->flac_data.data, music->flac_data.data_read);
+            MyResample_Process(&music->resample);
+            SDL_memcpy(cvt->buf, music->resample.buf, music->resample.buf_len);
+            cvt->len = music->resample.buf_len;
+            cvt->len_cvt = music->resample.buf_len;
+        } else {
             cvt->len = music->flac_data.data_read;
-            SDL_ConvertAudio (cvt);
-        }
-        else {
             cvt->len_cvt = music->flac_data.data_read;
+            SDL_memcpy(cvt->buf, music->flac_data.data, music->flac_data.data_read);
+        }
+        if ( cvt->needed ) {
+            SDL_ConvertAudio (cvt);
         }
         music->len_available = music->cvt.len_cvt;
         music->snd_available = music->cvt.buf;

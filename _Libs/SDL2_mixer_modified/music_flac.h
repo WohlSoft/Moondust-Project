@@ -28,6 +28,8 @@
 
 #include <FLAC/stream_decoder.h>
 
+#include "resample/my_resample.h"
+
 typedef struct {
     FLAC__uint64 sample_size;
     unsigned sample_rate;
@@ -60,6 +62,7 @@ typedef struct {
     char* mus_artist;
     char* mus_album;
     char* mus_copyright;
+    struct MyResampler resample;
 } FLAC_music;
 
 /* Initialize the FLAC player, with the given mixer settings
@@ -69,6 +72,9 @@ extern int FLAC_init(SDL_AudioSpec *mixer);
 
 /* Set the volume for a FLAC stream */
 extern void FLAC_setvolume(FLAC_music *music, int volume);
+
+/* Fetches meta-tags from a file */
+extern void FLAC_fetchTags(FLAC_music *music, char *filePath);
 
 /* Load an FLAC stream from an SDL_RWops object */
 extern FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc);

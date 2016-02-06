@@ -23,6 +23,8 @@
 
 /* This file supports streaming WAV files */
 
+#include "resample/my_resample.h"
+
 typedef struct {
     SDL_bool active;
     Uint32 start;
@@ -40,6 +42,7 @@ typedef struct {
     SDL_AudioCVT cvt;
     int numloops;
     WAVLoopPoint *loops;
+    struct MyResampler resample;
 } WAVStream;
 
 /* Initialize the WAVStream player, with the given mixer settings

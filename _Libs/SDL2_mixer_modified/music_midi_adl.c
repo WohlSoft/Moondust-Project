@@ -149,6 +149,8 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         adlMidi->volume=MIX_MAX_VOLUME;
         adlMidi->mus_title=NULL;
 
+        SDL_BuildAudioCVT(&adlMidi->cvt, AUDIO_S16, 2, mixer.freq, mixer.format, mixer.channels, mixer.freq);
+
         return adlMidi;
     }
     return NULL;
@@ -197,33 +199,32 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     if(music==NULL) return 0;
     if(music->adlmidi==NULL) return 0;
     if(music->playing==-1) return 0;
-    len -= len%2;//Avoid non-odd sample requests
     if( len<0 ) return 0;
+    int srgArraySize = len/music->cvt.len_ratio;
+    short buf[srgArraySize];
+    int srcLen = (int)((double)(len/2)/music->cvt.len_ratio);
 
-    int buf[len];
-    int gottenLen = adl_play( music->adlmidi, len/2, buf );
+    int gottenLen = adl_play( music->adlmidi, srcLen, buf );
     if(gottenLen<=0)
     {
         return 0;
     }
     int dest_len = gottenLen*2;
-    Uint8 dst[len];
-    short* dout = (short*)dst;
-    int*   din  =  buf;
-    int i;
-    for(i=0; i<dest_len; i+=2)
-    {
-        *dout = (short)(*din);
-         dout++; din++;
+
+    if( music->cvt.needed ) {
+        music->cvt.len = dest_len;
+        music->cvt.buf = (Uint8*)buf;
+        SDL_ConvertAudio(&music->cvt);
+        dest_len = music->cvt.len_cvt;
     }
 
     if( music->volume == MIX_MAX_VOLUME )
     {
-        SDL_memcpy( stream, &dst, dest_len );
+        SDL_memcpy( stream, (Uint8*)buf, dest_len );
     } else {
-        SDL_MixAudio( stream, dst, dest_len, music->volume);
+        SDL_MixAudio( stream, (Uint8*)buf, dest_len, music->volume);
     }
-    return len-(gottenLen*2);
+    return len-dest_len;
 }
 
 /* Stop playback of a stream previously started with ADLMIDI_play() */

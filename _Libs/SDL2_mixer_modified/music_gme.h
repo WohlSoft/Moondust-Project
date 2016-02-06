@@ -40,6 +40,7 @@ struct MUSIC_GME
     char *mus_artist;
     char *mus_album;
     char *mus_copyright;
+    SDL_AudioCVT cvt;
 };
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings

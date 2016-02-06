@@ -2035,7 +2035,7 @@ inline static void SendStereoAudio(ADL_MIDIPlayer*device,
                       unsigned long&    in_size,
                                 int*    _in,
                                 int     out_pos,
-                                int*    _out)
+                                short*    _out)
 {
     if(!in_size) return;
     device->stored_samples=0;
@@ -2049,7 +2049,7 @@ inline static void SendStereoAudio(ADL_MIDIPlayer*device,
             offset = out_pos+p*2+w;
             if(offset<samples_requested)
             {
-                _out[offset] = out;
+                _out[offset] = (short)out;
             }
             else
             {
@@ -2061,9 +2061,10 @@ inline static void SendStereoAudio(ADL_MIDIPlayer*device,
 }
 
 
-ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
+ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, short *out)
 {
     if(!device) return 0;
+    sampleCount -= sampleCount%2;//Avoid non-odd sample requests
     if(sampleCount<0) return 0;
     if(device->QuitFlag) return 0;
 
@@ -2079,7 +2080,7 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer*device, int sampleCount, int *out)
             int ate=0;
             while((ate<device->backup_samples_size) && (ate<left))
             {
-                out[ate]=device->backup_samples[ate]; ate++;
+                out[ate]=(short)device->backup_samples[ate]; ate++;
             }
             left-=ate;
             gotten_len+=ate;
