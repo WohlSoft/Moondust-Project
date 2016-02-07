@@ -199,6 +199,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
     LevelPhysEnv physiczone;
     LevelLayer layer;
     LevelSMBX64Event event;
+    LevelVariable variable;
+    LevelScript script;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     PGEX_FileParseTree(in.readAll());
@@ -856,6 +858,55 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                 }
             }
         }//EVENTS_CLASSIC
+
+        ///////////////////VARIABLES//////////////////////
+        PGEX_Section("VARIABLES")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
+            {
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
+                variable = CreateLvlVariable("unknown");
+                PGEX_Values() //Look markers and values
+                {
+                    PGEX_ValueBegin()
+                    PGEX_StrVal("N", variable.name) //Variable name
+                    PGEX_StrVal("V", variable.value) //Variable value
+                }
+                FileData.variables.push_back(variable);
+            }
+        }//VARIABLES
+
+        ///////////////////SCRIPTS//////////////////////
+        PGEX_Section("SCRIPTS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
+            {
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
+                script = CreateLvlScript("unknown", LevelScript::LANG_LUA);
+                PGEX_Values() //Look markers and values
+                {
+                    PGEX_ValueBegin()
+                    PGEX_StrVal ("N", script.name) //Variable name
+                    PGEX_SIntVal ("L", script.language) //Variable name
+                    PGEX_StrVal("S", script.script) //Script text
+                }
+
+                switch(script.language)
+                {
+                    case LevelScript::LANG_LUA:
+                    case LevelScript::LANG_TEASCRIPT:
+                    case LevelScript::LANG_AUTOCODE:
+                        break;
+                    default:
+                        script.language=LevelScript::LANG_LUA;//LUA by default if any other language code!
+                }
+
+                FileData.variables.push_back(variable);
+            }
+        }//SCRIPTS
+
     }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
@@ -1481,6 +1532,35 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += "\n";
         }
         TextData += "EVENTS_CLASSIC_END\n";
+
+        //VARIABLES section
+        if(!FileData.variables.empty())
+        {
+            TextData += "VARIABLES\n";
+            for(i=0;i<(signed)FileData.variables.size();i++)
+            {
+                TextData += PGEFile::value("N", PGEFile::qStrS(FileData.variables[i].name));  // Variable name
+                if(!FileData.variables[i].value.PGESTRINGisEmpty())
+                    TextData += PGEFile::value("V", PGEFile::qStrS(FileData.variables[i].value));  // Value
+                TextData += "\n";
+            }
+            TextData += "VARIABLES_END\n";
+        }
+
+        //SCRIPTS section
+        if(!FileData.scripts.empty())
+        {
+            TextData += "SCRIPTS\n";
+            for(i=0;i<(signed)FileData.scripts.size();i++)
+            {
+                TextData += PGEFile::value("N", PGEFile::qStrS(FileData.scripts[i].name));  // Variable name
+                TextData += PGEFile::value("L", PGEFile::IntS(FileData.scripts[i].language));// Code of language
+                if(!FileData.scripts[i].script.PGESTRINGisEmpty())
+                    TextData += PGEFile::value("S", PGEFile::qStrS(FileData.scripts[i].script));  // Script text
+                TextData += "\n";
+            }
+            TextData += "SCRIPTS_END\n";
+        }
     }
 
     return TextData;
