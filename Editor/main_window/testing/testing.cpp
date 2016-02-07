@@ -411,6 +411,9 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         QDir dummyWorld(newEpisode);
         if(dummyWorld.exists(newEpisode))
         {
+            QString testFolder=newEpisode+"templevel/";
+            RemoveDirectoryW(testFolder.toStdWString().c_str());//Remove symblic link if possible
+
             //Clean-up old stuff
             dummyWorld.removeRecursively();
         }
@@ -420,7 +423,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         if(!ed->isUntitled)
         {
             QString episodePath = ed->LvlData.path;
-            QString customPath = ed->LvlData.path+"/"+ed->LvlData.filename;
+            QString customPath  = ed->LvlData.path+"/"+ed->LvlData.filename;
 
             //Copy available custom stuff into temp directory
             QDir episodeDir(episodePath);
@@ -442,27 +445,27 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                           << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
                           //GAME EMU
                           << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz"
-                          << "*.anim";//Rockythechao's extensions
+                          //Rockythechao's extensions
+                          << "*.anim";
             episodeDir.setNameFilters(fileters);
             customDir.setNameFilters(fileters_cdir);
 
             //***********************Attempt to make symbolic link*******************************/
             bool needToCopyEverything=true;
+            typedef BOOL *(WINAPI *FUNK_OF_SYMLINKS) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
             HMODULE hKernel32 = NULL;
-            BOOL (WINAPI *fCreateSymbolicLink) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
-            hKernel32 = LoadLibrary("KERNEL32.DLL");
+            FUNK_OF_SYMLINKS fCreateSymbolicLink = NULL;
+            hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
             if(hKernel32)
             {
-                fCreateSymbolicLink = GetProcAddress(hKernel32, "CreateSymbolicLinkW");
+                fCreateSymbolicLink = (FUNK_OF_SYMLINKS)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
                 if(fCreateSymbolicLink) //Try to make a symblic link
                 {
                     QString newPath=newEpisode+"templevel/";
-                    if(fCreateSymbolicLinkW(newPath.toStdWString().c_str(),
-                                            customPath.toStdWString().c_str(),
-                                            0x1))
+                    if(fCreateSymbolicLink((TCHAR*)newPath.toStdWString().c_str(),
+                                           (TCHAR*)customPath.toStdWString().c_str(), 0x1))
                         needToCopyEverything = false;
                 }
-                FreeLibrary(hKernel32);
             }
             //************Copy images and scripts from episode folder**********************/
             QStringList files = episodeDir.entryList(QDir::Files);
@@ -472,6 +475,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             }
 
             //********************Copy images and scripts from custom folder*****************/
+            //***************for case where impossible to make a symbolic link***************/
             if(needToCopyEverything)
             {
                 customDir.setSorting(QDir::NoSort);
@@ -490,6 +494,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                     QFile::copy(customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
                 }
             }
+            /*********************************************************************************/
 
             //Copy custom musics if possible
             foreach(LevelSection sec, ed->LvlData.sections)
@@ -506,11 +511,13 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                     }
                 }
                 QString MusicFileName=episodePath+"/"+musFile;
+                QString MusicNewPath=newEpisode+musFile;
+
                 QFile mus(MusicFileName);
-                if(!mus.exists())
+                if(!mus.exists(MusicFileName))
                     continue;
 
-                QFileInfo inf(newEpisode+musFile);
+                QFileInfo inf(MusicNewPath);
                 if(!needToCopyEverything)
                 {
                     if(inf.absoluteDir().absolutePath().contains((newEpisode+"templevel/"), Qt::CaseInsensitive))
@@ -520,7 +527,20 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 {
                     inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
                 }
-                mus.copy(newEpisode+musFile);
+                if(!needToCopyEverything)
+                {
+                   if(fCreateSymbolicLink((TCHAR*)MusicNewPath.toStdWString().c_str(),
+                                          (TCHAR*)MusicFileName.toStdWString().c_str(), 0x0)==0)
+                   {
+                       mus.copy(MusicNewPath);//Copy file if impossible to make symbolic link to it
+                   }
+                } else {
+                    mus.copy(MusicNewPath);
+                }
+            }
+            if(hKernel32)
+            {
+                FreeLibrary(hKernel32);
             }
         }
 
