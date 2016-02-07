@@ -1208,12 +1208,12 @@ readLineAgain:
                 PGESTRING &cLine=currentLine[i];
                 switch(i)
                 {
-                //    layer=layer name["" == "Default"][***urlencode!***]
+                //    name=event name[***urlencode!***]
                 case 1:
                     {
                         eventdata.name=PGE_URLDEC(cLine);
                     } break;
-                //    status=is hidden layer
+                //    msg=spawn message
                 case 2:
                     {
                         eventdata.msg=PGE_URLDEC(cLine);
