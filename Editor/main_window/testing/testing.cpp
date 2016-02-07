@@ -441,67 +441,86 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                           << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
                           << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
                           //GAME EMU
-                          << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz";
+                          << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz"
+                          << "*.anim";//Rockythechao's extensions
             episodeDir.setNameFilters(fileters);
             customDir.setNameFilters(fileters_cdir);
 
-            //Copy images and scripts from episode folder
+            //***********************Attempt to make symbolic link*******************************/
+            bool needToCopyEverything=true;
+            HMODULE hKernel32 = NULL;
+            BOOL (WINAPI *fCreateSymbolicLink) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
+            hKernel32 = LoadLibrary("KERNEL32.DLL");
+            if(hKernel32)
+            {
+                fCreateSymbolicLink = GetProcAddress(hKernel32, "CreateSymbolicLinkW");
+                if(fCreateSymbolicLink) //Try to make a symblic link
+                {
+                    QString newPath=newEpisode+"templevel/";
+                    if(fCreateSymbolicLinkW(newPath.toStdWString().c_str(),
+                                            customPath.toStdWString().c_str(),
+                                            0x1))
+                        needToCopyEverything = false;
+                }
+                FreeLibrary(hKernel32);
+            }
+            //************Copy images and scripts from episode folder**********************/
             QStringList files = episodeDir.entryList(QDir::Files);
             foreach(QString filex, files)
             {
                 QFile::copy(episodePath+"/"+filex, newEpisode+filex);
             }
 
-            //Copy images and scripts from custom folder
-            customDir.setSorting(QDir::NoSort);
-            QDirIterator dirsList(customPath, fileters_cdir,
-                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                                  QDirIterator::Subdirectories);
-            while(dirsList.hasNext())
+            //********************Copy images and scripts from custom folder*****************/
+            if(needToCopyEverything)
             {
-                dirsList.next();
-                QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
-                QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
-                QString relNewPath = newEpisode+"templevel/"+relativeDir;
-                QDir newRelDir(relNewPath);
-                if(!newRelDir.exists())
-                    newRelDir.mkpath(relNewPath);
-                QFile::copy(customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
+                customDir.setSorting(QDir::NoSort);
+                QDirIterator dirsList(customPath, fileters_cdir,
+                                      QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                                      QDirIterator::Subdirectories);
+                while(dirsList.hasNext())
+                {
+                    dirsList.next();
+                    QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
+                    QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
+                    QString relNewPath = newEpisode+"templevel/"+relativeDir;
+                    QDir newRelDir(relNewPath);
+                    if(!newRelDir.exists())
+                        newRelDir.mkpath(relNewPath);
+                    QFile::copy(customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
+                }
             }
-
-//            //Copy images and scripts from custom folder
-//            files = customDir.entryList(QDir::Files);
-//            customDir.mkdir(newEpisode+"templevel");
-//            foreach(QString filex, files)
-//            {
-//                QFile::copy(customPath+"/"+filex, newEpisode+"templevel/"+filex);
-//            }
 
             //Copy custom musics if possible
             foreach(LevelSection sec, ed->LvlData.sections)
             {
-                if(!sec.music_file.isEmpty())
+                if(sec.music_file.isEmpty())
+                    continue;
+
+                QString musFile=sec.music_file;
+                for(int i=0;i<musFile.size();i++)
                 {
-                    QString musFile=sec.music_file;
-                    for(int i=0;i<musFile.size();i++)
+                    if(musFile[i]=='|')
                     {
-                        if(musFile[i]=='|')
-                        {
-                            musFile.remove(i, musFile.size()-i);
-                        }
-                    }
-                    QString MusicFileName=episodePath+"/"+musFile;
-                    QFile mus(MusicFileName);
-                    if(mus.exists())
-                    {
-                        QFileInfo inf(newEpisode+musFile);
-                        if(!inf.absoluteDir().exists())
-                        {
-                            inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
-                        }
-                        mus.copy(newEpisode+musFile);
+                        musFile.remove(i, musFile.size()-i);
                     }
                 }
+                QString MusicFileName=episodePath+"/"+musFile;
+                QFile mus(MusicFileName);
+                if(!mus.exists())
+                    continue;
+
+                QFileInfo inf(newEpisode+musFile);
+                if(!needToCopyEverything)
+                {
+                    if(inf.absoluteDir().absolutePath().contains((newEpisode+"templevel/"), Qt::CaseInsensitive))
+                        continue; //Don't copy musics to the same directory!
+                }
+                if(!inf.absoluteDir().exists())
+                {
+                    inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
+                }
+                mus.copy(newEpisode+musFile);
             }
         }
 
