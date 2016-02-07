@@ -40,7 +40,7 @@ Common
 
 SDL Mixer X
 - Reorganize SDL2_Mixer_ext into C++, build classes to reduce code size
-- Resolve 44100 hz shit with adding a soxr code
++ Resolve 44100 hz shit with adding separated resampling code
 
 Completed works
 ============================================================

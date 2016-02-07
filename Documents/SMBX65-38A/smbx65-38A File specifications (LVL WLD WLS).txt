@@ -72,7 +72,7 @@ next line: npcs
 	id=npc id
 	x=npc position x
 	y=npc position y	
-	b1=[-1]left [0]random [1]right
+	b1=[1]left [0]random [-1]right
 	b2=friendly npc
 	b3=don't move npc
 	b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
