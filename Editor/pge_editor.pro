@@ -113,6 +113,8 @@ macx: {
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 
+LIBS += -lfreeimagelite
+
 contains(DEFINES, USE_QMEDIAPLAYER): {
     QT += multimedia
 }
@@ -414,7 +416,8 @@ SOURCES += main.cpp\
     main_window/tip_of_day/tip_of_day.cpp \
     ../_common/data_functions/npctxt_manager.cpp \
     ../_common/data_functions/smbx64_validation_messages.cpp \
-    main_window/testing/testing_settings.cpp
+    main_window/testing/testing_settings.cpp \
+    common_features/file_mapper.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -609,7 +612,8 @@ HEADERS  += defines.h \
     ../_common/data_functions/npctxt_manager.h \
     ../_common/data_functions/smbx64_validation_messages.h \
     main_window/testing/testing_settings.h \
-    common_features/data_array.h
+    common_features/data_array.h \
+    common_features/file_mapper.h
 
 
 FORMS    += \

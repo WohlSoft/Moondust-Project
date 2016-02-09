@@ -29,7 +29,7 @@ CustomDirManager::CustomDirManager(QString path, QString name)
     setCustomDirs(path, name);
 }
 
-QString CustomDirManager::getCustomFile(QString name)
+QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirectory)
 {
     if(name.isEmpty()) return "";
     QString backupName;
@@ -48,7 +48,7 @@ QString CustomDirManager::getCustomFile(QString name)
         backupName.replace(backupName.size()-3, 3, "gif");
     }
 
-    QString target="";
+    QString target = "";
 tryBackup:
     if((QFile::exists(dirCustom) ) &&
             (QFile::exists(dirCustom+"/" + name)) )
@@ -59,6 +59,11 @@ tryBackup:
     if(QFile::exists(dirEpisode + "/" + name) )
     {
         target = dirEpisode + "/" + name;
+    }
+    else
+    if((!ignoreDefaultDirectory) && (!defaultDirectory.isEmpty()) && (QFile::exists(defaultDirectory + "/" + name)))
+    {
+        target = defaultDirectory + "/" + name;
     }
 
     if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName!=name))
@@ -74,6 +79,11 @@ void CustomDirManager::setCustomDirs(QString path, QString name)
 {
     dirCustom = path + "/" + name;
     dirEpisode = path;
+}
+
+void CustomDirManager::setDefaultDir(QString dPath)
+{
+    defaultDirectory = dPath;
 }
 
 void CustomDirManager::createDirIfNotExsist()

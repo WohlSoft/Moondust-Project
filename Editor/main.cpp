@@ -40,6 +40,12 @@
 
 #include "mainwindow.h"
 
+#ifdef _WIN32
+#define FREEIMAGE_LIB 1
+//#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
+#endif
+#include <FreeImageLite.h>
+
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
@@ -128,6 +134,8 @@ int main(int argc, char *argv[])
     }
     #endif
 
+    FreeImage_Initialise();
+
     int ret=0;
     //Init Main Window class
     MainWindow *w = new MainWindow;
@@ -173,6 +181,9 @@ int main(int argc, char *argv[])
 QuitFromEditor:
         WriteToLog(QtDebugMsg, "Closing interprocess communicator...");
     IntEngine::destroy();
+
+    FreeImage_DeInitialise();
+
     #ifdef USE_SDL_MIXER
         WriteToLog(QtDebugMsg, "Free music buffer...");
     PGE_MusPlayer::MUS_freeStream();

@@ -19,18 +19,125 @@
 #include <QPixmap>
 #include <QImage>
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
-#include <QtDebug>
 #include <memory>
 
 #include <common_features/logger.h>
 
 #include "graphics_funcs.h"
 
+#include <common_features/file_mapper.h>
+
 #include <EasyBMP/EasyBMP.h>
 extern "C"{
 #include <giflib/gif_lib.h>
 }
+
+#ifdef _WIN32
+#define FREEIMAGE_LIB 1
+//#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
+#endif
+#include <FreeImageLite.h>
+
+#include <QtDebug>
+
+
+FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
+{
+    #if  defined(__unix__) || defined(_WIN32)
+    PGE_FileMapper fileMap;
+    if( !fileMap.open_file(file.toUtf8().data()) )
+    {
+        return NULL;
+    }
+
+    FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)fileMap.data, (unsigned int)fileMap.size);
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
+    fileMap.close_file();
+    if(!img) {
+        return NULL;
+    }
+    #else
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+    if(formato  == FIF_UNKNOWN) { return NULL; }
+    FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
+    if(!img) { return NULL; }
+    #endif
+    if(convertTo32bit)
+    {
+        FIBITMAP* temp;
+        temp = FreeImage_ConvertTo32Bits(img);
+        if(!temp) { return NULL; }
+        FreeImage_Unload(img);
+        img = temp;
+    }
+
+    return img;
+}
+
+void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
+{
+    if(!image) return;
+    if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
+    FIBITMAP* mask = loadImage( pathToMask, true );
+    if(!mask) return;//Nothing to do
+
+    unsigned int img_w = FreeImage_GetWidth(image);
+    unsigned int img_h = FreeImage_GetHeight(image);
+    unsigned int mask_w = FreeImage_GetWidth(mask);
+    unsigned int mask_h = FreeImage_GetHeight(mask);
+
+    BYTE *img_bits  = FreeImage_GetBits(image);
+    BYTE *mask_bits = FreeImage_GetBits(mask);
+
+    BYTE *FPixP = img_bits;
+    BYTE *SPixP = mask_bits;
+
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};   //Destination pixel color
+    short newAlpha=255;//Calculated destination alpha-value
+
+    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++ )
+    {
+        for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
+        {
+            Npix.rgbBlue =  ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
+            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
+            Npix.rgbRed =   ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
+
+            newAlpha= 255-( ( short(SPixP[FI_RGBA_RED])+
+                          short(SPixP[FI_RGBA_GREEN])+
+                          short(SPixP[FI_RGBA_BLUE]) ) / 3);
+
+            if(  (SPixP[FI_RGBA_RED]>240u) //is almost White
+               &&(SPixP[FI_RGBA_GREEN]>240u)
+               &&(SPixP[FI_RGBA_BLUE]>240u))
+            {
+                newAlpha = 0;
+            }
+
+            newAlpha += ( ( short(FPixP[FI_RGBA_RED])+
+                                   short(FPixP[FI_RGBA_GREEN])+
+                                   short(FPixP[FI_RGBA_BLUE])) / 3);
+
+            if(newAlpha > 255) newAlpha=255;
+            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
+            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
+            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
+            FPixP[FI_RGBA_ALPHA] = (BYTE)newAlpha;
+            FPixP+=4; SPixP+=4;
+        }
+    }
+    FreeImage_Unload(mask);
+}
+
+
+
+
+
 
 QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QImage mask)
 {
@@ -298,42 +405,30 @@ QPixmap GraphicsHelps::loadPixmap(QString file)
 
 QImage GraphicsHelps::loadQImage(QString file)
 {
-    QFile img(file);
-    if(!img.exists())
-        return QImage();
-    if(!img.open(QIODevice::ReadOnly))
-        return QImage();
+    if(file.startsWith(':'))
+    {//Load from resources!
 
-    QByteArray mg=img.read(5); //Get magic number!
-    if(mg.size()<2) // too short!
-        return QImage();
-    char *magic = mg.data();
-    img.close();
-
-    //Detect PNG 89 50 4e 47
-    if( (magic[0]=='\x89')&&(magic[1]=='\x50')&&(magic[2]=='\x4e')&&(magic[3]=='\x47') )
-    {
         QImage image = QImage( file );
         return image;
-    } else
-    //Detect GIF 47 49 46 38
-    if( (magic[0]=='\x47')&&(magic[1]=='\x49')&&(magic[2]=='\x46')&&(magic[3]=='\x38') )
-    {
-        QImage image = QImage( file );
-        //QImage image = fromGIF( file );
-        return image;
-    }
-    else
-    //Detect BMP 42 4d
-    if( (magic[0]=='\x42')&&(magic[1]=='\x4d') )
-    {
-        QImage image = fromBMP( file );
-        return image;
-    }
 
-    //Another formats, supported by Qt :P
-    QImage image = QImage( file );
-    return image;
+    } else {//Load via FreeImage
+
+        FIBITMAP* img = loadImage(file, true);
+        if(img)
+        {
+            uchar *bits = FreeImage_GetBits(img);
+            int width = FreeImage_GetWidth(img);
+            int height = FreeImage_GetHeight(img);
+            QImage target(bits, width, height, QImage::Format_ARGB32,
+                 (QImageCleanupFunction)&FreeImage_Unload, (void*)img);
+            //FreeImage_Unload(img);
+            return target;
+
+        } else {
+            return QImage();
+        }
+    }
+    return QImage();
 }
 
 QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )

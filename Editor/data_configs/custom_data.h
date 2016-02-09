@@ -65,14 +65,16 @@ public:
     /// \param name Target file name which need to found
     /// \return empty string if not exist
     ///
-    QString getCustomFile(QString name);
+    QString getCustomFile(QString name, bool ignoreDefaultDirectory=false);
     void setCustomDirs(QString path, QString name);
+    void setDefaultDir(QString dPath);
     void createDirIfNotExsist();
     void import(QStringList &files, bool local = true);
 
 private:
     QString dirEpisode;
     QString dirCustom;
+    QString defaultDirectory;
 
 };
 

@@ -23,9 +23,13 @@
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
 
+struct FIBITMAP;
 class GraphicsHelps
 {
 public:
+    static FIBITMAP *loadImage(QString file, bool convertTo32bit);
+    static void mergeWithMask(FIBITMAP *image, QString pathToMask);
+
     static QPixmap mergeToRGBA(QPixmap image, QImage mask);
     static void mergeToRGBA_BitWise(QImage &image, QImage mask);
     static void mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath);
