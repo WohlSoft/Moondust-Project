@@ -39,7 +39,6 @@ struct obj_block
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QImage mask;
     QString name;
     //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;

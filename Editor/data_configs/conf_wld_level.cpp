@@ -139,7 +139,7 @@ void dataconfigs::loadWorldLevels()
         /***************Load image*******************/
         GraphicsHelps::loadMaskedImage(wlvlPath,
            slevel.image_n, slevel.mask_n,
-           slevel.image,   slevel.mask,
+           slevel.image,
            errStr);
 
         if(!errStr.isEmpty())

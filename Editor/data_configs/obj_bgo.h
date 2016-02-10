@@ -55,7 +55,6 @@ struct obj_bgo{
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QImage  mask;
 
     bool climbing;
     bool animated;

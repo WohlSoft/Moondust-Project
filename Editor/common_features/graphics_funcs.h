@@ -34,11 +34,15 @@ public:
     static void mergeToRGBA_BitWise(QImage &image, QImage mask);
     static void mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
 
     static QImage fromBMP(QString& file);
     static QImage fromGIF(QString& file);
     static QPixmap loadPixmap(QString file);
     static QImage loadQImage(QString file);
+
+    static void loadQImage(QImage &target, QString file, QString maskPath = "");
+
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static QPixmap drawDegitFont(int number);
 

@@ -117,7 +117,7 @@ void dataconfigs::loadWorldPaths()
             /***************Load image*******************/
             GraphicsHelps::loadMaskedImage(pathPath,
                sPath.image_n, sPath.mask_n,
-               sPath.image,   sPath.mask,
+               sPath.image,
                errStr);
 
             if(!errStr.isEmpty())

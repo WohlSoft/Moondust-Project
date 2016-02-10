@@ -117,7 +117,7 @@ void dataconfigs::loadWorldTiles()
         /***************Load image*******************/
         GraphicsHelps::loadMaskedImage(tilePath,
            stile.image_n, stile.mask_n,
-           stile.image,   stile.mask,
+           stile.image,
            errStr);
 
         if(!errStr.isEmpty())

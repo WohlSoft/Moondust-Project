@@ -29,7 +29,6 @@ obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
 
 #if defined(PGE_EDITOR)
     merged.image = QPixmap();   //Clear image values
-    merged.mask = QImage();
 #endif
 
     merged.name = (local.en_name)?local.name:global.name;

@@ -47,7 +47,6 @@ struct obj_npc
     QString image_n;    //    image="npc-1.gif"		;NPC Image file
     QString mask_n;
     QPixmap image;
-    QImage  mask;
     QString algorithm_script;   //    ; Filename of the lua algorithm
     unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC

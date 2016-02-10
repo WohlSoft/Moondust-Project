@@ -200,7 +200,7 @@ void dataconfigs::loadLevelBlocks()
                 /***************Load image*******************/
                 GraphicsHelps::loadMaskedImage(blockPath,
                    sblock.image_n, sblock.mask_n,
-                   sblock.image,   sblock.mask,
+                   sblock.image,
                    errStr);
 
                 if(!errStr.isEmpty())

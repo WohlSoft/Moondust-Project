@@ -109,7 +109,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     {
         GraphicsHelps::loadMaskedImage(bgoPath,
            sbgo.image_n, sbgo.mask_n,
-           sbgo.image,   sbgo.mask,
+           sbgo.image,
            errStr);
 
         if(!errStr.isEmpty())

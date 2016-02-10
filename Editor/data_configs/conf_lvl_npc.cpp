@@ -243,7 +243,7 @@ void dataconfigs::loadLevelNPC()
         /***************Load image*******************/
         GraphicsHelps::loadMaskedImage(npcPath,
            snpc.image_n, snpc.mask_n,
-           snpc.image,   snpc.mask,
+           snpc.image,
            errStr);
 
         if(!errStr.isEmpty())

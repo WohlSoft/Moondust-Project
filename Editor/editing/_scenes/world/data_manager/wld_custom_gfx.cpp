@@ -33,6 +33,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     UserIMGs uScenery;
     UserIMGs uPath;
     UserIMGs uLevel;
+    QImage tempImg;
 
     bool WrongImagesDetected=false;
 
@@ -47,7 +48,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     CustomDirManager uWLD(WldData->path, WldData->filename);
 
     //Load custom rotation rules
-    QString rTableFile = uWLD.getCustomFile("rotation_table.ini");
+    QString rTableFile = uWLD.getCustomFile("rotation_table.ini", true);
     if(!rTableFile.isEmpty())
     {
         QSettings rTableINI(rTableFile, QSettings::IniFormat);
@@ -106,31 +107,27 @@ void WldScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
 
-
+    uWLD.setDefaultDir(pConfigs->getTilePath());
     //Load Tiles
     for(i=0; i<pConfigs->main_wtiles.size(); i++) //Add user images
     {
         bool custom=false;
 
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wtiles[i].image_n);
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wtiles[i].image_n, true);
             if(!CustomImg.isEmpty())
             {
                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wtiles[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uTile.mask = GraphicsHelps::loadQImage( CustomMask );
-                    else
-                        uTile.mask = pConfigs->main_wtiles[i].mask;
-                    uTile.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uTile.mask);
+                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wtiles[i].mask_n, false);
+                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
                 } else {
-                    uTile.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uTile.mask=QImage();
-                }
+                    GraphicsHelps::loadQImage(tempImg, CustomImg);
+                }                
 
-                if(uTile.image.isNull()) WrongImagesDetected=true;
-
-                uTile.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
+                if(tempImg.isNull())
+                    WrongImagesDetected=true;
+                else
+                    uTile.image=std::move(QPixmap::fromImage(tempImg));
 
                 uTile.id = pConfigs->main_wtiles[i].id;
                 uTiles.push_back(uTile);
@@ -184,30 +181,26 @@ void WldScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
 
-
+    uWLD.setDefaultDir(pConfigs->getScenePath());
     //Load Sceneries
     for(i=0; i<pConfigs->main_wscene.size(); i++) //Add user images
     {
 
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wscene[i].image_n);
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wscene[i].image_n, true);
             if(!CustomImg.isEmpty())
             {
                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wscene[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uScenery.mask = GraphicsHelps::loadQImage( CustomMask );
-                    else
-                        uScenery.mask = pConfigs->main_wscene[i].mask;
-                    uScenery.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uScenery.mask);
+                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wscene[i].mask_n, false);
+                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
                 } else {
-                    uScenery.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uScenery.mask = QImage();
+                    GraphicsHelps::loadQImage(tempImg, CustomImg);
                 }
-                if(uScenery.image.isNull()) WrongImagesDetected=true;
-
-                uScenery.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
+                if(tempImg.isNull())
+                    WrongImagesDetected=true;
+                else
+                    uScenery.image=std::move(QPixmap::fromImage(tempImg));
 
                 uScenery.id = pConfigs->main_wscene[i].id;
                 uScenes.push_back(uScenery);
@@ -255,30 +248,26 @@ void WldScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
 
-
-    //Load Tiles
+    uWLD.setDefaultDir(pConfigs->getPathPath());
+    //Load Path tiles
     for(i=0; i<pConfigs->main_wpaths.size(); i++) //Add user images
     {
 
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n);
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n, true);
             if( !CustomImg.isEmpty() )
             {
                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uPath.mask = GraphicsHelps::loadQImage( CustomMask );
-                    else
-                        uPath.mask = pConfigs->main_wpaths[i].mask;
-                    uPath.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uPath.mask);
+                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].mask_n, false);
+                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
                 } else {
-                    uPath.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uPath.mask = QImage();
+                    GraphicsHelps::loadQImage(tempImg, CustomImg);
                 }
-                if(uPath.image.isNull()) WrongImagesDetected=true;
-
-                uPath.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
+                if(tempImg.isNull())
+                    WrongImagesDetected=true;
+                else
+                    uPath.image=std::move(QPixmap::fromImage(tempImg));
 
                 uPath.id = pConfigs->main_wpaths[i].id;
                 uPaths.push_back(uPath);
@@ -326,30 +315,26 @@ void WldScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
 
-
-    //Load Tiles
+    uWLD.setDefaultDir(pConfigs->getWlvlPath());
+    //Load Level tiles
     for(i=0; i<pConfigs->main_wlevels.size(); i++) //Add user images
     {
 
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wlevels[i].image_n);
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wlevels[i].image_n, true);
             if(!CustomImg.isEmpty())
             {
                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
                 {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wlevels[i].mask_n);
-                    if(!CustomMask.isEmpty())
-                        uLevel.mask = GraphicsHelps::loadQImage( CustomMask );
-                    else
-                        uLevel.mask = pConfigs->main_wlevels[i].mask;
-                    uLevel.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uLevel.mask);
+                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wlevels[i].mask_n, false);
+                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
                 } else {
-                    uLevel.image = GraphicsHelps::loadPixmap( CustomImg );
-                    uLevel.mask = QImage();
+                    GraphicsHelps::loadQImage(tempImg, CustomImg);
                 }
-                if(uLevel.image.isNull()) WrongImagesDetected=true;
-
-                uLevel.mask = QImage(); //!< Clear mask for save RAM space (for Huge images)
+                if(tempImg.isNull())
+                    WrongImagesDetected=true;
+                else
+                    uLevel.image=std::move(QPixmap::fromImage(tempImg));
 
                 uLevel.id = pConfigs->main_wlevels[i].id;
                 uLevels.push_back(uLevel);

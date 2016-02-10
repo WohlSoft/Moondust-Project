@@ -196,6 +196,15 @@ signals:
     void progressPartsTotal(int);
     void progressPartNumber(int);
 
+    inline QString getBgoPath()  {return bgoPath;}
+    inline QString getBGPath()   {return BGPath;}
+    inline QString getBlockPath(){return blockPath;}
+    inline QString getNpcPath()  {return npcPath;}
+
+    inline QString getTilePath() {return tilePath;}
+    inline QString getScenePath(){return scenePath;}
+    inline QString getPathPath() {return pathPath;}
+    inline QString getWlvlPath() {return wlvlPath;}
 private:
 
     //Buffers

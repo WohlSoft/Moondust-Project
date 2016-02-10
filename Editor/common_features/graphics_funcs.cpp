@@ -232,8 +232,11 @@ void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
         }
 }
 
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage&, QString &out_errStr){
+    loadMaskedImage(rootDir, in_imgName, out_maskName, out_Img, out_errStr);
+}
 
-void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr)
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr)
 {
     if( in_imgName.isEmpty() )
     {
@@ -247,7 +250,7 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
         return;
     }
 
-    out_maskName=in_imgName;
+    out_maskName = in_imgName;
     int i = out_maskName.size()-1;
     for( ;i>0; i--)
     {
@@ -258,18 +261,23 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
         }
     }
 
+    QImage target;
+
     if(i==0)
     {
         out_maskName = "";
+        loadQImage(target, rootDir+in_imgName);
+    } else {
+        loadQImage(target, rootDir+in_imgName, rootDir+out_maskName);
     }
+    //GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
+    out_Img = std::move(QPixmap::fromImage(target));
 
-    GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
     if(out_Img.isNull())
     {
         out_errStr="Broken image file "+rootDir+in_imgName;
         return;
     }
-
     out_errStr = "";
 }
 
@@ -286,8 +294,8 @@ QImage GraphicsHelps::fromBMP(QString &file)
 
     QImage bmpImg(tarBMP.TellWidth(),tarBMP.TellHeight(),QImage::Format_RGB666);
 
-    for(int x = 0; x < tarBMP.TellWidth(); x++){
-        for(int y = 0; y < tarBMP.TellHeight(); y++){
+    for(int x = 0; x < tarBMP.TellWidth(); x++) {
+        for(int y = 0; y < tarBMP.TellHeight(); y++) {
             RGBApixel pixAt = tarBMP.GetPixel(x,y);
             bmpImg.setPixel(x,y,qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
         }
@@ -416,12 +424,22 @@ QImage GraphicsHelps::loadQImage(QString file)
         FIBITMAP* img = loadImage(file, true);
         if(img)
         {
-            uchar *bits = FreeImage_GetBits(img);
+            BYTE *bits = FreeImage_GetBits(img);
             int width = FreeImage_GetWidth(img);
             int height = FreeImage_GetHeight(img);
-            QImage target(bits, width, height, QImage::Format_ARGB32,
-                 (QImageCleanupFunction)&FreeImage_Unload, (void*)img);
-            //FreeImage_Unload(img);
+            QImage target(width, height, QImage::Format_ARGB32);
+
+            for(int y = height-1; y >=0; y--) {
+                for(int x = 0; x < width; x++) {
+                    target.setPixel(x, y, qRgba(bits[FI_RGBA_RED],
+                                                bits[FI_RGBA_GREEN],
+                                                bits[FI_RGBA_BLUE],
+                                                bits[FI_RGBA_ALPHA]));
+                    bits += 4;
+                }
+            }
+
+            FreeImage_Unload(img);
             return target;
 
         } else {
@@ -430,6 +448,43 @@ QImage GraphicsHelps::loadQImage(QString file)
     }
     return QImage();
 }
+
+void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
+{
+    if(file.startsWith(':'))
+    {//Load from resources!
+
+        target = QImage( file );
+        return;
+
+    } else {//Load via FreeImage
+
+        FIBITMAP* img = loadImage(file, true);
+        if(img)
+        {
+            mergeWithMask(img, maskPath);
+            BYTE *bits = FreeImage_GetBits(img);
+            int width = FreeImage_GetWidth(img);
+            int height = FreeImage_GetHeight(img);
+            target = QImage(width, height, QImage::Format_ARGB32);
+            for(int y = height-1; y >=0; y--) {
+                for(int x = 0; x < width; x++) {
+                    target.setPixel(x, y, qRgba(bits[FI_RGBA_RED],
+                                                bits[FI_RGBA_GREEN],
+                                                bits[FI_RGBA_BLUE],
+                                                bits[FI_RGBA_ALPHA]));
+                    bits += 4;
+                }
+            }
+            FreeImage_Unload(img);
+            return;
+
+        } else {
+            return;
+        }
+    }
+}
+
 
 QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
 {
