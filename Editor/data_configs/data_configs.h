@@ -189,12 +189,6 @@ public:
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
     bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=0, QString iniFile="", QSettings *setup=0);
-signals:
-    void progressValue(int);
-    void progressMax(int);
-    void progressTitle(QString);
-    void progressPartsTotal(int);
-    void progressPartNumber(int);
 
     inline QString getBgoPath()  {return bgoPath;}
     inline QString getBGPath()   {return BGPath;}
@@ -205,6 +199,14 @@ signals:
     inline QString getScenePath(){return scenePath;}
     inline QString getPathPath() {return pathPath;}
     inline QString getWlvlPath() {return wlvlPath;}
+
+signals:
+    void progressValue(int);
+    void progressMax(int);
+    void progressTitle(QString);
+    void progressPartsTotal(int);
+    void progressPartNumber(int);
+
 private:
 
     //Buffers
