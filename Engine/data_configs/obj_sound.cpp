@@ -48,9 +48,17 @@ obj_sound::obj_sound()
 
 obj_sound_index::obj_sound_index()
 {
+    need_reload=false;
     chunk=NULL;
     channel=-1;
 }
+
+void obj_sound_index::setPath(QString _path)
+{
+    need_reload=(path!=_path);
+    path=_path;
+}
+
 
 void obj_sound_index::play()
 {
@@ -62,46 +70,82 @@ void obj_sound_index::play()
 
 void ConfigManager::buildSoundIndex()
 {
-    clearSoundIndex();
     int reserve_chans=0;
+    bool newBuild=main_sfx_index.isEmpty();
 
     #ifdef DEBUG_BUILD
     QElapsedTimer loadingTime;
     loadingTime.start();
     #endif
 
-    //build array table
-    main_sfx_index.resize(main_sound.size()-1);
-    for(int i=1; i<main_sound.size();i++)
+    if(newBuild)
     {
-        obj_sound_index sound;
-        if(main_sound.contains(i))
+        //build array table
+        main_sfx_index.resize(main_sound.size()-1);
+        for(int i=1; i<main_sound.size();i++)
         {
-            obj_sound snd = main_sound[i];
-            #if  defined(__unix__) || defined(_WIN32)
-            PGE_FileMapper fileMap;
-            if( fileMap.open_file(snd.absPath.toUtf8().data()) )
+            obj_sound_index sound;
+            if(main_sound.contains(i))
             {
-                sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
-                fileMap.close_file();
+                obj_sound &snd = main_sound[i];
+                #if  defined(__unix__) || defined(_WIN32)
+                PGE_FileMapper fileMap;
+                if( fileMap.open_file(snd.absPath.toUtf8().data()) )
+                {
+                    sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+                    fileMap.close_file();
+                }
+                #else
+                sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+                #endif
+                sound.path = snd.absPath;
+                if(!sound.chunk)
+                    qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
+                else
+                    reserve_chans += (snd.channel>=0?1:0);
+                sound.channel = snd.channel;
             }
-            #else
-            sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
-            #endif
-            sound.path = snd.absPath;
-            if(!sound.chunk)
-                qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
-            else
-                reserve_chans += (snd.channel>=0?1:0);
-            sound.channel = snd.channel;
+            main_sfx_index[i-1]=sound;
         }
-        main_sfx_index[i-1]=sound;
+    } else {
+        for(int i=1; (i<main_sound.size())&&(i<=main_sfx_index.size()); i++)
+        {
+            if(main_sound.contains(i))
+            {
+                obj_sound_index &sound = main_sfx_index[i-1];
+                obj_sound &snd = main_sound[i];
+                sound.setPath(snd.absPath);
+                if(sound.need_reload)
+                {
+                    #if  defined(__unix__) || defined(_WIN32)
+                    PGE_FileMapper fileMap;
+                    if( fileMap.open_file(snd.absPath.toUtf8().data()) )
+                    {
+                        sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+                        fileMap.close_file();
+                    }
+                    #else
+                    sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+                    #endif
+                }
+                if(!sound.chunk)
+                    qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
+                else
+                    reserve_chans += (snd.channel>=0?1:0);
+                sound.channel = snd.channel;
+            }
+        }
     }
+
     #ifdef DEBUG_BUILD
     WriteToLog(QtDebugMsg, QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
     qDebug() << "Reserved audio channels: "<< Mix_ReserveChannels(reserve_chans);
     qDebug() << "SFX Index entries: " << main_sfx_index.size();
     #endif
+    if(reserve_chans>32)
+    {
+        Mix_AllocateChannels(reserve_chans+32);
+    }
     SDL_ClearError();
 }
 
@@ -157,9 +201,14 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
         main_sound.clear();   //Clear old
     }
 
-    soundset.beginGroup("sound-main");
-        sound_total = soundset.value("total", "0").toInt();
-    soundset.endGroup();
+    if(!isCustom)
+    {
+        soundset.beginGroup("sound-main");
+            sound_total = soundset.value("total", "0").toInt();
+        soundset.endGroup();
+    } else {
+        sound_total = main_sound.total();
+    }
 
     if(sound_total==0)
     {
@@ -185,8 +234,10 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
                     addError(QString("Sound-%1 Item name isn't defined").arg(i));
+                    goto skipSoundFile;
+                } else {
+                    sound.name = "sound-"+QString::number(i);
                 }
-                goto skipSoundFile;
             }
             sound.file = soundset.value("file", "").toString();
             if(sound.file.isEmpty())
@@ -208,7 +259,6 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipSoundFile;
             }
-
             reserveChannel = soundset.value("single-channel", "0").toBool();
             if(reserveChannel)
                 sound.channel = cur_channel++;

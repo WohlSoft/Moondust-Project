@@ -84,7 +84,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
         main_music_lvl.clear();   //Clear old
         main_music_wld.clear();   //Clear old
         main_music_spc.clear();   //Clear old
-    }
 
     musicset.beginGroup("music-main");
         music_lvl_total = musicset.value("total-level", "0").toInt();
@@ -94,6 +93,11 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
         music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
         music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
     musicset.endGroup();
+    } else {
+        music_lvl_total = main_music_lvl.total();
+        music_wld_total = main_music_wld.total();
+        music_spc_total = main_music_spc.total();
+    }
 
     //////////////////////////////
 
@@ -131,8 +135,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
                     addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
+                    goto skipWldMusic;
+                } else {
+                    smusic_wld.name="world-music-"+QString::number(i);
                 }
-                goto skipWldMusic;
             }
 
             smusic_wld.file = musicset.value("file", "").toString();
@@ -180,8 +186,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
                     addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
+                    goto skipSpcMusic;
+                } else {
+                    smusic_spc.name="special-music-"+QString::number(i);
                 }
-                goto skipSpcMusic;
             }
             smusic_spc.file = musicset.value("file", "").toString();
             if(smusic_spc.file.isEmpty())
@@ -225,8 +233,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
                     addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
+                    goto skipLvlMusic;
+                } else {
+                    smusic_lvl.name="level-music-"+QString::number(i);
                 }
-                goto skipLvlMusic;
             }
 
             smusic_lvl.file = musicset.value("file", "").toString();

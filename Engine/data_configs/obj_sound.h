@@ -10,8 +10,10 @@ struct obj_sound_index
 {
     obj_sound_index();
     QString path;
+    bool need_reload;
     Mix_Chunk *chunk;
     int channel;
+    void setPath(QString _path);
     void play(); //!< play sound
 };
 

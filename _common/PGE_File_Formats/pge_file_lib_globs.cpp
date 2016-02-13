@@ -640,7 +640,7 @@ namespace PGE_FileFormats_misc
                     buffer.push_back(cur);
                 if(cur == "\n") _lineNumber++;
             }
-        } while( (((cur != "\n")&&(cur!=","))||quoteIsOpen ) && !stream.atEnd() );
+        } while( (((cur != "\n")&&(cur!=","))||quoteIsOpen) && !stream.atEnd() );
         return buffer;
         #else
         if(!stream) return "";
@@ -655,7 +655,7 @@ namespace PGE_FileFormats_misc
                     buffer.push_back(cur);
                 if(cur == '\n') _lineNumber++;
             }
-        } while( ( ((cur != '\n')&&(cur != ','))||quoteIsOpen ) && (!stream.eof()) );
+        } while( ( ((cur != '\n')&&(cur != ','))||quoteIsOpen) && (!stream.eof()) );
         return buffer;
         #endif
     }
