@@ -54,10 +54,10 @@ void MainWindow::loadSettings()
         GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
         GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", "true").toBool();
-        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", "false").toBool();
+        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", "true").toBool();
         GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
-        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
-        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
+        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "true").toBool();
+        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "true").toBool();
         GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
 
         GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", "true").toBool();
