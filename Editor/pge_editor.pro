@@ -22,7 +22,7 @@
 #
 #----------------------------------------------------------------------------
 
-QT       += gui widgets network concurrent
+QT       += gui widgets network concurrent qml
 QT       -= opengl dbus svg testlib
 
 win32: {
