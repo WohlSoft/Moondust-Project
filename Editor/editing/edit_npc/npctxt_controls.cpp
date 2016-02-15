@@ -667,31 +667,16 @@ void NpcEdit::loadPreview()
     npcData.id = npc_id;
     npcData.x = 10;
     npcData.y = 10;
+    npcData.direct = direction;
     npcPreview->setNpcData(npcData, &targetNPC);
-
-    npcPreview->localProps = targetNPC;
-
-    npcPreview->setMainPixmap(npcImage);
-    npcPreview->setAnimation(npcPreview->localProps.frames,
-                          npcPreview->localProps.framespeed,
-                          npcPreview->localProps.framestyle,
-                          direction,
-                          npcPreview->localProps.custom_animate,
-                          npcPreview->localProps.custom_ani_fl,
-                          npcPreview->localProps.custom_ani_el,
-                          npcPreview->localProps.custom_ani_fr,
-                          npcPreview->localProps.custom_ani_er);
-
     npcPreview->setFlag(QGraphicsItem::ItemIsSelectable, false);
     npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
     npcPreview->setZValue(1);
-
     PreviewScene->addItem(npcPreview);
 
     if(npcPreview->localProps.frames>1)
     {
         npcPreview->setData(4, "animated");
-        npcPreview->AnimationStart();
     }
 
     physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
@@ -713,8 +698,10 @@ void NpcEdit::loadPreview()
                 (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
                 );
 
-
-    //npcPreview
+    npcPreview->_internal_animator->connect(npcPreview->_internal_animator,
+                                            SIGNAL(onFrame()),
+                                            PreviewScene,
+                                            SLOT(update()));
 }
 
 void NpcEdit::updatePreview()
@@ -722,24 +709,15 @@ void NpcEdit::updatePreview()
     if(!physics || !npcPreview)
         return;
 
-    npcPreview->localProps = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
-
-    npcPreview->AnimationStop();
-    npcPreview->setMainPixmap(npcImage);
-    npcPreview->setAnimation(npcPreview->localProps.frames,
-                          npcPreview->localProps.framespeed,
-                          npcPreview->localProps.framestyle,
-                          direction,
-                          npcPreview->localProps.custom_animate,
-                          npcPreview->localProps.custom_ani_fl,
-                          npcPreview->localProps.custom_ani_el,
-                          npcPreview->localProps.custom_ani_fr,
-                          npcPreview->localProps.custom_ani_er,
-                          true, true);
-    npcPreview->AnimationStart();
+    obj_npc merged = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    LevelNPC npcData = FileFormats::CreateLvlNpc();
+    npcData.id = npc_id;
+    npcData.x = 10;
+    npcData.y = 10;
+    npcData.direct = direction;
+    npcPreview->setNpcData(npcData, &merged);
 
     physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
-
     npcPreview->setPos(
                 (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
                 (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
@@ -749,6 +727,7 @@ void NpcEdit::updatePreview()
                 (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
                 );
 
+    PreviewScene->update();
 }
 
 
@@ -777,6 +756,7 @@ void NpcEdit::loadImageFile()
                 npcImage = *defaultNPC.cur_image;
         } else {
             npcImage=std::move(QPixmap::fromImage(tempImg));
+            defaultNPC.cur_image = &npcImage;
         }
     }
     else
@@ -790,6 +770,6 @@ void NpcEdit::loadImageFile()
 void NpcEdit::refreshImageFile()
 {
     loadImageFile();
-    npcPreview->AnimationStop();
+    //npcPreview->AnimationStop();
     npcPreview->setMainPixmap(npcImage);
 }

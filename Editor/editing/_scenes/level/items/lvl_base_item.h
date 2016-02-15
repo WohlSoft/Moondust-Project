@@ -21,12 +21,25 @@
 
 #include <QString>
 #include <QPoint>
+#include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 
-class LvlBaseItem
+class LvlScene;
+
+class LvlBaseItem: public QObject,
+                   public QGraphicsItem
 {
+    Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
+
+private:
+    void construct();
 public:
-    LvlBaseItem();
+    LvlBaseItem(QGraphicsItem *parent=0);
+    LvlBaseItem(LvlScene *parentScene, QGraphicsItem *parent=0);
     virtual ~LvlBaseItem();
+
+    virtual void setScenePoint(LvlScene *theScene);
 
     ///
     /// \brief arrayApply();
@@ -72,6 +85,33 @@ public:
     /// \return registred position of item
     ///
     virtual QPoint sourcePos();
+
+    //!
+    //! \brief Implementation of context menu for current item type
+    //! \param mouseEvent
+    //!
+    virtual void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
+
+    int gridSize;
+    int gridOffsetX;
+    int gridOffsetY;
+
+    //Locks
+    bool isLocked;
+    void setLocked(bool lock);
+    virtual bool itemTypeIsLocked();
+
+protected:
+    long animatorID;
+    QRectF imageSize;
+    bool animated;
+    LvlScene * scene;
+
+    bool mouseLeft;
+    bool mouseMid;
+    bool mouseRight;
+    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 };
 
 #endif // LVLBASEITEM_H

@@ -26,14 +26,14 @@
 #include "item_door.h"
 #include "../newlayerbox.h"
 
-ItemWater::ItemWater(QGraphicsPolygonItem *parent)
-    : QGraphicsPolygonItem(parent)
+ItemWater::ItemWater(QGraphicsItem *parent)
+    : LvlBaseItem(parent)
 {
     construct();
 }
 
-ItemWater::ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent)
-    : QGraphicsPolygonItem(parent)
+ItemWater::ItemWater(LvlScene *parentScene, QGraphicsItem *parent)
+    : LvlBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
@@ -46,7 +46,6 @@ ItemWater::ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent)
 
 void ItemWater::construct()
 {
-    isLocked=false;
     waterSize = QSize(32,32);
     penWidth=2;
 
@@ -56,8 +55,8 @@ void ItemWater::construct()
     _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
 
-    this->setPen(_pen);
-    this->setBrush(QBrush(Qt::NoBrush));
+    //this->setPen(_pen);
+    //this->setBrush(QBrush(Qt::NoBrush));
 
     gridSize=16;
 
@@ -68,14 +67,9 @@ void ItemWater::construct()
     waterData.env_type = LevelPhysEnv::ENV_WATER;
 
     setData(ITEM_TYPE, "Water");
-    setData(ITEM_IS_ITEM, 1);
     setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
     setData(ITEM_WIDTH, (int)waterData.w);
     setData(ITEM_HEIGHT, (int)waterData.h);
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
 }
 
 ItemWater::~ItemWater()
@@ -83,80 +77,6 @@ ItemWater::~ItemWater()
     scene->unregisterElement(this);
 }
 
-
-void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-
-    QGraphicsPolygonItem::mousePressEvent(mouseEvent);
-}
-
-void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_water)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
-
-}
 
 void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -493,11 +413,18 @@ void ItemWater::updateColor()
     _pen.setColor(_color);
 }
 
+bool ItemWater::itemTypeIsLocked()
+{
+    if(!scene)
+        return false;
+    return scene->lock_water;
+}
+
 void ItemWater::setType(int tp)
 {
     waterData.env_type=tp;
     updateColor();
-    this->setPen(_pen);
+    //this->setPen(_pen);
     arrayApply();
 }
 
@@ -538,51 +465,57 @@ void ItemWater::setWaterData(LevelPhysEnv inD)
 
 void ItemWater::drawWater()
 {
-    long x, y, h, w;
+//    long x, y, h, w;
 
-    x = 1;
-    y = 1;
-    w = waterData.w-penWidth;
-    h = waterData.h-penWidth;
-
-    setData(ITEM_WIDTH, (int)waterData.w);
+//    x = 1;
+//    y = 1;
+//    w = waterData.w-penWidth;
+//    h = waterData.h-penWidth;
+    setData(ITEM_WIDTH,  (int)waterData.w);
     setData(ITEM_HEIGHT, (int)waterData.h);
+    _pen=QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    //setPen(_pen);
+//    QVector<QPointF > points;
+//    points.clear();
 
-    setPen(QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
+//    points.push_back(QPointF(x+3, y));
+//    points.push_back(QPointF(x+w, y));
+//    points.push_back(QPointF(x+w,y+h));
+//    points.push_back(QPointF(x, y+h));
+//    points.push_back(QPointF(x, y+3));
 
-    QVector<QPointF > points;
-    points.clear();
+//    points.push_back(QPointF(x, y+h));
+//    points.push_back(QPointF(x+w,y+h));
+//    points.push_back(QPointF(x+w, y));
+//    points.push_back(QPointF(x+3, y));
 
-    points.push_back(QPointF(x+3, y));
-    points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x+w,y+h));
-    points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x, y+3));
-
-    points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x+w,y+h));
-    points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x+3, y));
-
-    this->setPolygon( QPolygonF(points) );
+//    this->setPolygon( QPolygonF(points) );
 }
-
-
-void ItemWater::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
-
 
 QRectF ItemWater::boundingRect() const
 {
-    return QRectF(-1,-1,waterSize.width()+penWidth,waterSize.height()+penWidth);
+    return QRectF(-1,-1,
+                  waterSize.width()+penWidth,
+                  waterSize.height()+penWidth);
 }
 
-void ItemWater::setScenePoint(LvlScene *theScene)
+void ItemWater::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    scene = theScene;
+    painter->setPen(_pen);
+    painter->setBrush(Qt::NoBrush);
+
+    long h, w;
+    w = waterData.w-penWidth;
+    h = waterData.h-penWidth;
+
+    painter->drawRect(1, 1, w, h);
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(1,1,w,h);
+        painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
+        painter->drawRect(1,1,w,h);
+    }
 }
+
 

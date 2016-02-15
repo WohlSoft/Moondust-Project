@@ -37,12 +37,8 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemBGO : public QObject,
-                public QGraphicsItem,
-                public LvlBaseItem
+class ItemBGO : public LvlBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
     ItemBGO(QGraphicsItem *parent=0);
     ItemBGO(LvlScene *parentScene, QGraphicsItem *parent=0);
@@ -52,14 +48,12 @@ private:
 public:
 
     void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
-    void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     //////Animation////////
     void setAnimator(long aniID);
-
 
     void setLayer(QString layer);
     void setZMode(int mode, qreal offset, bool init=false);
@@ -77,31 +71,11 @@ public:
     LevelBGO bgoData;
     obj_bgo localProps;
 
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
     int zMode;
     qreal zOffset;
 
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
-
+    bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *event );
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private:
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-    LvlScene * scene;
 
 };
 

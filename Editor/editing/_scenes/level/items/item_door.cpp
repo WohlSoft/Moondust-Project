@@ -29,14 +29,14 @@
 #include "../newlayerbox.h"
 
 
-ItemDoor::ItemDoor(QGraphicsRectItem *parent)
-    : QGraphicsRectItem(parent)
+ItemDoor::ItemDoor(QGraphicsItem *parent)
+    : LvlBaseItem(parent)
 {
     construct();
 }
 
-ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent)
-    : QGraphicsRectItem(parent)
+ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsItem *parent)
+    : LvlBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
@@ -47,16 +47,12 @@ ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent)
 
 void ItemDoor::construct()
 {
-    isLocked=false;
+    gridSize=16;
     itemSize = QSize(32,32);
     this->setData(ITEM_WIDTH, 32);
     this->setData(ITEM_HEIGHT, 32);
-    doorLabel=NULL;
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
-    this->setData(ITEM_IS_ITEM, 1);
+    grp = NULL;
+    doorLabel = NULL;
 }
 
 ItemDoor::~ItemDoor()
@@ -67,78 +63,6 @@ ItemDoor::~ItemDoor()
 }
 
 
-void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsRectItem::mousePressEvent(mouseEvent);
-}
-
-
-void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_door)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
-}
 
 void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -567,6 +491,12 @@ QPoint ItemDoor::sourcePos()
         return QPoint(doorData.ox, doorData.oy);
 }
 
+bool ItemDoor::itemTypeIsLocked()
+{
+    if(!scene)
+        return false;
+    return scene->lock_door;
+}
 
 void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 {
@@ -584,31 +514,13 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     ox = doorData.ox;
     oy = doorData.oy;
 
-    //    QFont font1, font2;
-    //    font1.setWeight(50);
-    //    font1.setBold(1);
-    //    font1.setPointSize(14);
-
-    //    font2.setWeight(14);
-    //    font2.setBold(0);
-    //    font2.setPointSize(12);
-
-    setRect(1, 1, itemSize.width()-2, itemSize.height()-2);
-
-    //doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
     doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(doorData.array_id));
 
     if(direction==D_Entrance)
     {
         doorData.isSetIn=true;
-        setBrush(QBrush(cEnter));
-        setPen(QPen(QBrush(QColor(qRgb(0xff,0x00,0x7f))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-
-        //doorLabel_shadow->setDefaultTextColor(Qt::black);
-        //doorLabel_shadow->setFont(font1);
-        //doorLabel_shadow->setPos(ix-4, iy-7);
-        //doorLabel->setDefaultTextColor(Qt::white);
-        //doorLabel->setFont(font2);
+        _brush = QBrush(cEnter);
+        _pen = QPen(QBrush(QColor(qRgb(0xff,0x00,0x7f))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
         doorLabel->setPos(ix+2, iy+2);
 
         setPos(ix, iy);
@@ -617,26 +529,18 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     else
     {
         doorData.isSetOut=true;
-        setBrush(QBrush(cExit));
-        setPen( QPen(QBrush(QColor(qRgb(0xc4,0x00,0x62))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin) );
-
-        //doorLabel_shadow->setDefaultTextColor(Qt::black);
-        //doorLabel_shadow->setFont(font1);
-        //doorLabel_shadow->setPos(ox+10, oy+8);
-        //doorLabel->setDefaultTextColor(Qt::white);
-        //doorLabel->setFont(font2);
+        _brush = QBrush(cExit);
+        _pen = QPen(QBrush(QColor(qRgb(0xc4,0x00,0x62))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
         doorLabel->setPos(ox+16, oy+16);
 
         setPos(ox, oy);
         setData(ITEM_TYPE, "Door_exit"); // ObjType
     }
     grp->addToGroup(doorLabel);
-    //grp->addToGroup(doorLabel_shadow);
 
     this->setFlag(QGraphicsItem::ItemIsSelectable, (!scene->lock_door));
     this->setFlag(QGraphicsItem::ItemIsMovable, (!scene->lock_door));
 
-    //doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
     doorLabel->setZValue(scene->Z_sys_door+0.0000002);
 
     this->setData(ITEM_ID, QString::number(0) );
@@ -653,22 +557,30 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     scene->registerElement(this);
 }
 
-void ItemDoor::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
-
-
 QRectF ItemDoor::boundingRect() const
 {
     return QRectF(-1,-1,itemSize.width()+2,itemSize.height()+2);
 }
 
+void ItemDoor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+    painter->setBrush(_brush);
+    painter->setPen(_pen);
+    painter->drawRect(1, 1, itemSize.width()-2, itemSize.height()-2);
+
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(1,1,itemSize.width()-2,itemSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
+        painter->drawRect(1,1,itemSize.width()-2,itemSize.height()-2);
+    }
+}
+
 void ItemDoor::setScenePoint(LvlScene *theScene)
 {
-    scene = theScene;
+    LvlBaseItem::setScenePoint(theScene);
+    if(grp) delete grp;
     grp = new QGraphicsItemGroup(this);
     doorLabel = NULL;
 }

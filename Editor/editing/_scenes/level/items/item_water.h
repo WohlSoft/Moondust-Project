@@ -37,15 +37,11 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemWater : public QObject,
-                  public QGraphicsPolygonItem,
-                  public LvlBaseItem
+class ItemWater : public LvlBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemWater(QGraphicsPolygonItem *parent=0);
-    ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent=0);
+    ItemWater(QGraphicsItem *parent=0);
+    ItemWater(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemWater();
 private:
     void construct();
@@ -58,13 +54,10 @@ public:
     void setType(int tp);
     void setWaterData(LevelPhysEnv inD);
 
-    void setScenePoint(LvlScene *theScene);
-
-    void setLocked(bool lock);
-
     void drawWater();
 
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
     void setLayer(QString layer);
 
@@ -89,20 +82,8 @@ public:
     QPen _pen;
     QColor _color;
 
-    //Locks
-    bool isLocked;
-
+    bool itemTypeIsLocked();
     void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
-
-private:
-    LvlScene * scene;
 };
 
 #endif // ITEM_WATER_H

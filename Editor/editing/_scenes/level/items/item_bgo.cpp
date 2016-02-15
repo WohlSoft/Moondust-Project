@@ -30,14 +30,13 @@
 #include "item_door.h"
 #include "../newlayerbox.h"
 
-ItemBGO::ItemBGO(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+ItemBGO::ItemBGO(QGraphicsItem *parent) : LvlBaseItem(parent)
 {
     construct();
 }
 
 ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : LvlBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
@@ -49,99 +48,14 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
 void ItemBGO::construct()
 {
     gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
-    isLocked=false;
-
-    animatorID=-1;
-    imageSize = QRectF(0,0,10,10);
-
     zMode = LevelBGO::ZDefault;
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
     setData(ITEM_TYPE, "BGO");
-    setData(ITEM_IS_ITEM, 1);
 }
 
 
 ItemBGO::~ItemBGO()
 {
     scene->unregisterElement(this);
-}
-
-
-void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsItem::mousePressEvent(mouseEvent);
-}
-
-void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_bgo)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
 }
 
 
@@ -573,13 +487,12 @@ QPoint ItemBGO::sourcePos()
     return QPoint(bgoData.x, bgoData.y);
 }
 
-void ItemBGO::setLocked(bool lock)
+bool ItemBGO::itemTypeIsLocked()
 {
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
+    if(!scene)
+        return false;
+    return scene->lock_bgo;
 }
-
 
 void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 {
@@ -691,13 +604,6 @@ void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
     }
 }
-
-
-void ItemBGO::setScenePoint(LvlScene *theScene)
-{
-    scene = theScene;
-}
-
 
 ////////////////Animation///////////////////
 

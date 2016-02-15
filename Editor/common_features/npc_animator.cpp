@@ -19,8 +19,30 @@
 #include "logger.h"
 #include "npc_animator.h"
 
-AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
+AdvNpcAnimator::AdvNpcAnimator():
+    timer(NULL)
+{}
+
+AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config):
+    timer(NULL)
 {
+    buildAnimator(sprite, config);
+}
+
+AdvNpcAnimator::~AdvNpcAnimator()
+{
+    if(timer)
+        delete timer;
+}
+
+void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
+{
+    if(timer)
+    {
+        timer->stop();
+        delete timer;
+    }
+    frames.clear();
 
     mainImage = sprite;
     setup = config;
@@ -40,8 +62,6 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
     frameLastL=-1; //to unlimited frameset
     frameFirstR=0; //from first frame
     frameLastR=-1; //to unlimited frameset
-
-    timer=NULL;
 
     animated = true;
     framesQ = setup.frames;
@@ -173,11 +193,8 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
 
     //curDirect  = dir;
     //setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
-
-
-    if(timer) delete timer;
     timer = new QTimer(this);
-    connect(
+    timer->connect(
                 timer, SIGNAL(timeout()),
                 this,
                 SLOT( nextFrame() ) );
@@ -187,11 +204,6 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
     createAnimationFrames();
     setFrameL(frameFirstL);
     setFrameR(frameFirstR);
-}
-
-AdvNpcAnimator::~AdvNpcAnimator()
-{
-    delete timer;
 }
 
 QPixmap AdvNpcAnimator::image(int dir, int frame)
@@ -341,6 +353,8 @@ void AdvNpcAnimator::nextFrame()
             }
     }
     setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+
+    emit onFrame();
 }
 
 void AdvNpcAnimator::createAnimationFrames()

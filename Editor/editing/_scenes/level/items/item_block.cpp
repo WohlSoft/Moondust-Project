@@ -32,13 +32,13 @@
 #include "../newlayerbox.h"
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : LvlBaseItem(parent)
 {
     construct();
 }
 
 ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : LvlBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
@@ -49,20 +49,8 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
 
 void ItemBlock::construct()
 {
-    animated = false;
-    animatorID=-1;
-    imageSize = QRectF(0,0,10,10);
-
     gridSize=32;
-
-    isLocked=false;
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
     setData(ITEM_TYPE, "Block");
-    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -71,80 +59,6 @@ ItemBlock::~ItemBlock()
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
     scene->unregisterElement(this);
-}
-
-
-void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        mouseEvent->accept();
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsItem::mousePressEvent(mouseEvent);
-}
-
-void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_block)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
 }
 
 void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
@@ -796,22 +710,19 @@ void ItemBlock::setAnimator(long aniID)
     setMainPixmap();
 }
 
-
 //global Pointers
 void ItemBlock::setScenePoint(LvlScene *theScene)
 {
-    scene = theScene;
+    LvlBaseItem::setScenePoint(theScene);
     grp = new QGraphicsItemGroup(this);
     includedNPC = NULL;
 }
 
-
-
-void ItemBlock::setLocked(bool lock)
+bool ItemBlock::itemTypeIsLocked()
 {
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
+    if(!scene)
+        return false;
+    return scene->lock_block;
 }
 
 //sizable Block formula

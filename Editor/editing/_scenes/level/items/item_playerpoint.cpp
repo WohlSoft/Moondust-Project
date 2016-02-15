@@ -21,13 +21,13 @@
 #include "item_playerpoint.h"
 
 ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent)
-    : QGraphicsPixmapItem(parent)
+    : LvlBaseItem(parent)
 {
     construct();
 }
 
 ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
-    : QGraphicsPixmapItem(parent)
+    : LvlBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
@@ -37,88 +37,31 @@ ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
 
 void ItemPlayerPoint::construct()
 {
-    scene=NULL;
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
+    _offset_x=0;
+    _offset_y=0;
     setData(ITEM_TYPE, "playerPoint");
-    setData(ITEM_IS_ITEM, 1);
+}
+
+QRectF ItemPlayerPoint::boundingRect() const
+{
+    return QRectF(_offset_x, _offset_y, currentImage.width(), currentImage.height());
+}
+
+void ItemPlayerPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+    painter->drawPixmap(_offset_x, _offset_y, _cur.width(), _cur.height(), _cur);
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(_offset_x+1, _offset_y+1,_cur.width()-2,_cur.height()-2);
+        painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
+        painter->drawRect(_offset_x+1, _offset_y+1,_cur.width()-2,_cur.height()-2);
+    }
 }
 
 ItemPlayerPoint::~ItemPlayerPoint()
 {
     scene->unregisterElement(this);
-}
-
-
-
-void ItemPlayerPoint::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
-}
-
-void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsPixmapItem::mouseReleaseEvent(mouseEvent);
-
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        contextMenu(mouseEvent);
-    }
 }
 
 void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -136,7 +79,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     this->setSelected(1);
-    ItemMenu.clear();
+    QMenu ItemMenu;
 
     bool isLvlx = !scene->LvlData->smbx64strict;
 
@@ -206,13 +149,11 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 void ItemPlayerPoint::changeDirection(int dir)
 {
     pointData.direction = dir;
-
-    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
     if(pointData.direction<0)
-        setPixmap(mirrowed);
+        _cur=QPixmap::fromImage(currentImage.toImage().mirrored(true, false));
     else
-        setPixmap(currentImage);
-
+        _cur=currentImage;
+    update();
     arrayApply();
 }
 
@@ -258,17 +199,14 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
         currentImage = Themes::Image(Themes::player_point); break;
     }
 
-    this->setOffset(qRound(qreal(pnt.w-currentImage.width())/2.0), pnt.h-currentImage.height() );
+    _offset_x = qRound(qreal(pnt.w-currentImage.width())/2.0);
+    _offset_y = pnt.h-currentImage.height();
 
     this->setData(ITEM_WIDTH, (int)pnt.w);
     this->setData(ITEM_HEIGHT, (int)pnt.h);
 
-    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
-    if(pointData.direction<0)
-        setPixmap(mirrowed);
-    else
-        setPixmap(currentImage);
-
+    //Apply new image
+    changeDirection(pointData.direction);
 }
 
 
@@ -323,10 +261,4 @@ int ItemPlayerPoint::getGridSize()
 QPoint ItemPlayerPoint::sourcePos()
 {
     return QPoint(pointData.x, pointData.y);
-}
-
-
-void ItemPlayerPoint::setScenePoint(LvlScene *theScene)
-{
-    scene = theScene;
 }

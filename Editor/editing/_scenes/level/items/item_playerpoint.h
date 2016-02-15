@@ -26,12 +26,8 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemPlayerPoint : public QObject,
-                        public QGraphicsPixmapItem,
-                        public LvlBaseItem
+class ItemPlayerPoint : public LvlBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = 0);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = 0);
@@ -39,6 +35,9 @@ public:
 private:
     void construct();
 public:
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
     void changeDirection(int dir);
 
@@ -50,7 +49,6 @@ public:
     int getGridSize();
     QPoint sourcePos();
 
-    void setScenePoint(LvlScene *theScene);
     void setPointData(PlayerPoint pnt, bool init=false);
 
     PlayerPoint pointData;
@@ -58,17 +56,10 @@ public:
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
+    int _offset_x;
+    int _offset_y;
     QPixmap currentImage;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * mouseEvent);
-
-private:
-    QMenu ItemMenu;
-    LvlScene * scene;
-
+    QPixmap _cur;
 };
 
 #endif // ITEM_PLAYERPOINT_H

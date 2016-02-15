@@ -37,12 +37,8 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemBlock : public QObject,
-                  public QGraphicsItem,
-                  public LvlBaseItem
+class ItemBlock : public LvlBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
     ItemBlock(LvlScene *parentScene, QGraphicsItem *parent=0);
     ItemBlock(QGraphicsItem *parent=0);
@@ -82,37 +78,14 @@ public:
     LevelBlock blockData;
     obj_block localProps;
 
-    int gridSize;
-
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
-
+    bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private slots:
-
 private:
-
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-
-
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
     QPixmap currentImage;
     bool sizable;
-    LvlScene * scene;
     QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
 };
 

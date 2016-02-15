@@ -30,15 +30,15 @@
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
-ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemNPC::ItemNPC(bool noScene, QGraphicsItem *parent)
+    : LvlBaseItem(parent)
 {
     DisableScene = noScene;
     construct();
 }
 
-ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsItem *parent)
+    : LvlBaseItem(parentScene, parent)
 {
     DisableScene=false;
     construct();
@@ -50,131 +50,40 @@ ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent)
 
 void ItemNPC::construct()
 {
-    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+    _offset_x=0;
+    _offset_y=0;
+    //setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     generatorArrow = NULL;
     includedNPC = NULL;
     animated = false;
-    aniDirect=false;
-    aniBiDirect=false;
     curDirect = -1;
-    frameStep = 1;
     gridSize = 1;
-    frameSize=1;
 
     extAnimator=false;
     animatorID=-1;
     imageSize = QRectF(0,0,10,10);
 
-    CurrentFrame=0; //Real frame
-    frameCurrent=0; //Timer frame
-
     imgOffsetX=0;
     imgOffsetY=0;
 
-    frameFirst=0; //from first frame
-    frameLast=-1; //to unlimited frameset
-    //image = new QGraphicsPixmapItem;
+    _internal_animator = NULL;
 
-    isLocked=false;
-
-    timer=NULL;
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
-    setData(ITEM_TYPE, "NPC"); // ObjType
-    setData(ITEM_IS_ITEM, 1);
+    setData(ITEM_TYPE, "NPC");
 }
-
-
 
 
 ItemNPC::~ItemNPC()
 {
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
-    if(timer) delete timer;
     if(!DisableScene) scene->unregisterElement(this);
-}
-
-
-
-void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(!DisableScene)
-        if(scene->DrawMode)
-        {
-            unsetCursor();
-            ungrabMouse();
-            this->setSelected(false);
-            return;
-        }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
-}
-
-void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-    if(DisableScene) return;
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_npc)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
+    if(_internal_animator) delete _internal_animator;
 }
 
 void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    if(DisableScene) return;
+
     scene->contextMenuOpened = true; //bug protector
 
     //Remove selection from non-block items
@@ -582,40 +491,14 @@ void ItemNPC::changeDirection(int dir)
 {
     npcData.direct = dir;
 
-    if(!extAnimator)
+    direction = dir;
+    if(direction==0) //if direction=random
     {
-        setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
-        localProps.custom_animate,
-            localProps.custom_ani_fl,
-            localProps.custom_ani_el,
-            localProps.custom_ani_fr,
-            localProps.custom_ani_er,
-        true);
+        direction=((0==qrand()%2)?-1:1); //set randomly 1 or -1
     }
-    else
-    {
-
-        direction = dir;
-        if(direction==0) //if direction=random
-        {
-            direction=((0==qrand()%2)?-1:1); //set randomly 1 or -1
-        }
-        curDirect = direction;
-
-        imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
-        imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y);
-
-        setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
-
-        offseted = imageSize;
-        offseted.setLeft(offseted.left()+this->offset().x());
-        offseted.setTop(offseted.top()+this->offset().y());
-        offseted.setRight(offseted.right()+this->offset().x());
-        offseted.setBottom(offseted.bottom()+this->offset().y());
-
-        update();
-
-    }
+    curDirect = direction;
+    refreshOffsets();
+    update();
 
     arrayApply();
 }
@@ -874,32 +757,41 @@ QPoint ItemNPC::sourcePos()
 
 void ItemNPC::setMainPixmap(const QPixmap &pixmap)
 {
-    mainImage = pixmap;
-    this->setPixmap(mainImage);
-    double BurriedOffset = 0;
+    if(_internal_animator) {
+        _internal_animator->buildAnimator((QPixmap&)pixmap, localProps);
+    }
     imageSize = pixmap.rect();
-
-    if(!DisableScene)
-        BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
-
-    imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
-    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
-                             - BurriedOffset);
-
-    //grid_attach_style
-
-    setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
-
-    offseted = imageSize;
-    offseted.setLeft(offseted.left()+this->offset().x());
-    offseted.setTop(offseted.top()+this->offset().y());
-    offseted.setRight(offseted.right()+this->offset().x());
-    offseted.setBottom(offseted.bottom()+this->offset().y());
+    refreshOffsets();
 }
 
 void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
 {
     npcData = inD;
+
+    if(DisableScene)
+    {
+        if(mergedSet)
+        {
+            localProps = (*mergedSet);
+        }
+        if(localProps.cur_image)
+        {
+            if(!_internal_animator)
+                _internal_animator = new AdvNpcAnimator(*localProps.cur_image, localProps);
+            else
+                _internal_animator->buildAnimator(*localProps.cur_image, localProps);
+            _internal_animator->start();
+            imageSize = QRectF(0,0,
+                        _internal_animator->image(-1).width(),
+                        _internal_animator->image(-1).height()
+                        );
+            animated = true;
+            extAnimator=false;
+        }
+        changeDirection(npcData.direct);
+        return;
+    }
+
     if(!scene) return;
 
     if(mergedSet)
@@ -953,37 +845,39 @@ QRectF ItemNPC::boundingRect() const
 }
 
 
-void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     if(!extAnimator)
     {
-        QGraphicsPixmapItem::paint(painter,option, widget); return;
+        if(_internal_animator)
+            painter->drawPixmap(offseted, _internal_animator->image(curDirect), _internal_animator->image(curDirect).rect());
+        else
+            painter->drawRect(QRect(0,0,32,32));
+    } else {
+        if(animatorID<0)
+        {
+            painter->drawRect(QRect(imgOffsetX,imgOffsetY,1,1));
+            return;
+        }
+
+        if(scene->animates_NPC.size()>animatorID)
+            painter->drawPixmap(offseted, scene->animates_NPC[animatorID]->image(curDirect), scene->animates_NPC[animatorID]->image(curDirect).rect());
+        else
+            painter->drawRect(QRect(0,0,32,32));
+
+        if(this->isSelected())
+        {
+            painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+            painter->drawRect(offseted.x()+1,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+            painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
+            painter->drawRect(offseted.x()+1/*imgOffsetX+1+(offset().x()/2)*/,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+        }
     }
-
-    if(animatorID<0)
-    {
-        painter->drawRect(QRect(imgOffsetX,imgOffsetY,1,1));
-        return;
-    }
-
-    if(scene->animates_NPC.size()>animatorID)
-        painter->drawPixmap(offseted, scene->animates_NPC[animatorID]->image(curDirect), scene->animates_NPC[animatorID]->image(curDirect).rect());
-    else
-        painter->drawRect(QRect(0,0,32,32));
-
-    if(this->isSelected())
-    {
-        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(offseted.x()+1,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
-        painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
-        painter->drawRect(offseted.x()+1/*imgOffsetX+1+(offset().x()/2)*/,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
-    }
-
 }
 
 void ItemNPC::setScenePoint(LvlScene *theScene)
 {
-    scene = theScene;
+    LvlBaseItem::setScenePoint(theScene);
     grp = new QGraphicsItemGroup(this);
 }
 
@@ -1005,285 +899,29 @@ void ItemNPC::setAnimator(long aniID)
     extAnimator = true;
     animated = true;
 
-    double BurriedOffset = 0;
-    if(!DisableScene)
-        BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
+    //setPixmap(QPixmap(imageSize.width(), imageSize.height()));
 
+    refreshOffsets();
+}
+
+bool ItemNPC::itemTypeIsLocked()
+{
+    if(!scene)
+        return false;
+    return scene->lock_npc;
+}
+
+void ItemNPC::refreshOffsets()
+{
     imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
-    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
-                             - BurriedOffset);
+    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y);
 
-    setPixmap(QPixmap(imageSize.width(),
-                      imageSize.height()));
-
-    setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+    _offset_x=imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect);
+    _offset_y=imgOffsetY;
 
     offseted = imageSize;
-    offseted.setLeft(offseted.left()+this->offset().x());
-    offseted.setTop(offseted.top()+this->offset().y());
-    offseted.setRight(offseted.right()+this->offset().x());
-    offseted.setBottom(offseted.bottom()+this->offset().y());
-}
-
-////////////////Animation///////////////////
-
-void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direct,
-                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit, bool updFrames)
-{
-    animated = true;
-    framesQ = frames;
-    frameSpeed = framespeed;
-    frameStyle = framestyle;
-    direction = direct;
-    frameStep = 1;
-
-    frameSequance = false;
-
-    aniBiDirect = localProps.ani_bidir;
-    customAniAlg = localProps.custom_ani_alg;
-
-    customAnimate = customAni;
-
-    custom_frameFL = frFL;//first left
-    custom_frameEL = frEL;//end left
-    custom_frameFR = frFR;//first right
-    custom_frameER = frER;//enf right
-
-    bool refreshFrames = updFrames;
-    if(localProps.gfx_h!=frameSize) refreshFrames = true;
-    if(localProps.gfx_w!=frameWidth) refreshFrames = true;
-
-    frameSize = localProps.gfx_h; // height of one frame
-    frameWidth = localProps.gfx_w; //width of target image
-
-    frameHeight = mainImage.height(); // Height of target image
-
-    //Protectors
-    if(frameSize<=0) frameSize=1;
-    if(frameSize>mainImage.height()) frameSize = mainImage.height();
-
-    if(frameWidth<=0) frameWidth=1;
-    if(frameWidth>mainImage.width()) frameWidth = mainImage.width();
-
-    int dir=direction;
-
-    if(direction==0) //if direction=random
-    {
-        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
-    }
-
-    if(localProps.ani_directed_direct)
-        aniDirect = (dir==-1) ^ (localProps.ani_direct);
-    else
-        aniDirect = localProps.ani_direct;
-
-    if(customAnimate) // User defined spriteSet (example: boss)
-    {
-        switch(dir)
-        {
-        case -1: //left
-            frameFirst = custom_frameFL;
-            switch(customAniAlg)
-            {
-            case 2:
-                frameSequance = true;
-                frames_list = localProps.frames_left;
-                frameFirst = 0;
-                frameLast = frames_list.size()-1;
-                break;
-            case 1:
-                frameStep = custom_frameEL;
-                frameLast = -1; break;
-            case 0:
-            default:
-                frameLast = custom_frameEL; break;
-            }
-            break;
-        case 1: //Right
-            frameFirst = custom_frameFR;
-            switch(customAniAlg)
-            {
-            case 2:
-                frameSequance = true;
-                frames_list = localProps.frames_right;
-                frameFirst = 0;
-                frameLast = frames_list.size()-1; break;
-            case 1:
-                frameStep = custom_frameER;
-                frameLast = -1; break;
-            case 0:
-            default:
-                frameLast = custom_frameER; break;
-            }
-            break;
-        default: break;
-        }
-    }
-    else
-    {
-        switch(frameStyle)
-        {
-        case 2: //Left-Right-upper sprite
-            framesQ = frames*4;
-            switch(dir)
-            {
-            case -1: //left
-                frameFirst = 0;
-                frameLast = (int)(framesQ-(framesQ/4)*3)-1;
-                break;
-            case 1: //Right
-                frameFirst = (int)(framesQ-(framesQ/4)*3);
-                frameLast = (int)(framesQ/2)-1;
-                break;
-            default: break;
-            }
-            break;
-
-        case 1: //Left-Right sprite
-            framesQ=frames*2;
-            switch(dir)
-            {
-            case -1: //left
-                frameFirst = 0;
-                frameLast = (int)(framesQ / 2)-1;
-                break;
-            case 1: //Right
-                frameFirst = (int)(framesQ / 2);
-                frameLast = framesQ-1;
-                break;
-            default: break;
-            }
-
-            break;
-
-        case 0: //Single sprite
-        default:
-            frameFirst = 0;
-            frameLast = framesQ-1;
-            break;
-        }
-    }
-
-    curDirect  = dir;
-    setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
-
-    if(!edit)
-    {
-        if(timer) delete timer;
-        timer = new QTimer(this);
-        connect(
-                    timer, SIGNAL(timeout()),
-                    this,
-                    SLOT( nextFrame() ) );
-    }
-
-    if(refreshFrames) createAnimationFrames();
-
-    setFrame(frameFirst);
-}
-
-void ItemNPC::createAnimationFrames()
-{
-    frames.clear();
-    for(int i=0; (frameSize*i < frameHeight); i++)
-    {
-        frames.push_back( mainImage.copy(QRect(0, frameSize*i, frameWidth, frameSize )) );
-    }
-
-    WriteToLog(QtDebugMsg, QString("NPC -> created animation frames %1").arg(frames.size()));
-}
-
-void ItemNPC::AnimationStart()
-{
-    if(!animated) return;
-    if((frameLast>0)&&((frameLast-frameFirst)<=0)) return; //Don't start singleFrame animation
-
-    frameCurrent = frameFirst;
-    timer->start(frameSpeed);
-}
-
-void ItemNPC::AnimationStop()
-{
-    if(!animated) return;
-    timer->stop();
-    setFrame(frameFirst);
-}
-
-void ItemNPC::draw()
-{
-    //currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-}
-
-QPoint ItemNPC::fPos() const
-{
-    return framePos;
-}
-
-void ItemNPC::setFrame(int y)
-{
-    if(frames.isEmpty()) return;
-    //frameCurrent = frameSize * y;
-    CurrentFrame = y;
-    //Out of range protection
-    if( CurrentFrame >= frames.size()) CurrentFrame = (frameFirst<frames.size()) ? frameFirst : 0;
-    if( CurrentFrame < frameFirst) CurrentFrame = (frameLast<0)? frames.size()-1 : frameLast;
-
-    this->setPixmap(frames[CurrentFrame]);
-}
-
-void ItemNPC::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
-
-void ItemNPC::nextFrame()
-{
-
-    if(!aniDirect)
-    {
-        //frameCurrent += frameSize * frameStep;
-        frameCurrent += frameStep;
-
-        if ( ((frameCurrent >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
-             ((frameCurrent > frameLast )&&(frameLast>=0)) )
-            {
-                if(!aniBiDirect)
-                {
-                     frameCurrent = frameFirst;
-                    //frameCurrent = frameFirst * frameSize;
-                    //framePos.setY( frameFirst * frameSize );
-                }
-                else
-                {
-                    frameCurrent -= frameStep*2;
-                    aniDirect=!aniDirect;
-                    //framePos.setY( framePos.y() - frameSize*frameStep );
-                }
-            }
-    }
-    else
-    {
-        //frameCurrent -= frameSize * frameStep;
-        frameCurrent -= frameStep;
-
-        if ( frameCurrent < frameFirst )
-            {
-                if(!aniBiDirect)
-                {
-                    frameCurrent = ((frameLast==-1)? frames.size()-1 : frameLast);
-                    //frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
-                    //framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
-                }
-                else
-                {
-                    frameCurrent+=frameStep*2;
-                    aniDirect=!aniDirect;
-                    //frameCurrent += frameSize*frameStep*2;
-                    //framePos.setY( framePos.y() + frameSize*frameStep );
-                }
-            }
-    }
-    setFrame( frameSequance ? frames_list[frameCurrent] : frameCurrent);
+    offseted.setLeft(offseted.left()+_offset_x);
+    offseted.setTop(offseted.top()+_offset_y);
+    offseted.setRight(offseted.right()+_offset_x);
+    offseted.setBottom(offseted.bottom()+_offset_y);
 }

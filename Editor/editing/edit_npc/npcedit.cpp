@@ -47,14 +47,15 @@ NpcEdit::~NpcEdit()
     MainWinConnect::pMainWin->updateMenus(true);
 }
 
-
-
 void NpcEdit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
         if(physics) delete physics;
         if(npcPreview) delete npcPreview;
-        if(PreviewScene) delete PreviewScene;
+        if(PreviewScene)
+        {
+            delete PreviewScene;
+        }
         event->accept();
     } else {
         event->ignore();

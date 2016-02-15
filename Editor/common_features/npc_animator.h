@@ -32,8 +32,11 @@ class AdvNpcAnimator : public QObject
 {
     Q_OBJECT
 public:
+    AdvNpcAnimator();
     AdvNpcAnimator(QPixmap &sprite, obj_npc &config);
     ~AdvNpcAnimator();
+
+    void buildAnimator(QPixmap &sprite, obj_npc &config);
 
     QPixmap image(int dir, int frame=-1);
     QPixmap wholeImage();
@@ -45,6 +48,8 @@ public:
     void stop();
 
     int speed;
+signals:
+    void onFrame();
 
 private slots:
     void nextFrame();

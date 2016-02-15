@@ -37,15 +37,11 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemNPC : public QObject,
-                public QGraphicsPixmapItem,
-                public LvlBaseItem
+class ItemNPC : public LvlBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent=0);
-    ItemNPC(bool noScene=false, QGraphicsPixmapItem *parent=0);
+    ItemNPC(LvlScene *parentScene, QGraphicsItem *parent=0);
+    ItemNPC(bool noScene=false, QGraphicsItem *parent=0);
     ~ItemNPC();
 private:
     void construct();
@@ -57,17 +53,10 @@ public:
     void setScenePoint(LvlScene *theScene=NULL);
 
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
-    QPixmap mainImage;
+    AdvNpcAnimator* _internal_animator;
 
-    //////Animation////////
-    void setAnimation(int frames, int framespeed, int framestyle, int direct,
-               bool customAnimate=false, int frFL=0, int frEL=-1, int frFR=0, int frER=-1,
-               bool edit=false, bool updFrames=false);
-    void AnimationStart();
-    void AnimationStop();
-    void draw();
     void setFriendly(bool fri);
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
@@ -88,32 +77,22 @@ public:
     int getGridSize();
     QPoint sourcePos();
 
-    QPoint fPos() const;
     void setFrame(int);
     LevelNPC npcData;
     obj_npc localProps;
 
     int imgOffsetX;
     int imgOffsetY;
-    int gridSize;
     bool no_npc_collions;
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
+    int _offset_x;
+    int _offset_y;
+
+    void refreshOffsets();
 
     void setAnimator(long aniID);
 
+    bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * mouseEvent);
-
-private slots:
-    void nextFrame();
 
 private:
 
@@ -127,48 +106,12 @@ private:
     QGraphicsItem * includedNPC;
     QGraphicsPixmapItem * generatorArrow;
 
-
-    QVector<QPixmap> frames; //Whole image
-    void createAnimationFrames();
-    int CurrentFrame;
-
     QRectF offseted;
 
-
     bool animated;
-    int frameSpeed;
-    int frameStyle;
     int direction;
 
-    bool aniDirect;
-    bool aniBiDirect;
-
     int curDirect;
-    int frameStep;
-
-    bool customAnimate;
-    int customAniAlg; //custom animation algorythm 0 - forward, 1 - frameJump
-    int custom_frameFL;//first left
-    int custom_frameEL;//end left / jump step
-    int custom_frameFR;//first right
-    int custom_frameER;//enf right / jump step
-
-    bool frameSequance;
-    QList<int> frames_list;     //Current frame srquence
-
-    LvlScene * scene;
-    int frameCurrent;
-    QTimer * timer;
-    QPoint framePos;
-    int framesQ;
-    int frameSize; // size of one frame
-    int frameWidth; // sprite width
-    int frameHeight; //sprite height
-    QPixmap currentImage;
-
-    //Animation alhorithm
-    int frameFirst;
-    int frameLast;
 
 };
 
