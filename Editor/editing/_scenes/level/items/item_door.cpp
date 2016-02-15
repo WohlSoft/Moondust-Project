@@ -82,16 +82,13 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
     openLvl->deleteLater();
 
-    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
-        LayerName->deleteLater();
-
+    /*************Layers*******************/
+    QMenu * LayerName =     ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
 
-    QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+    QAction * newLayer =    LayerName->addAction(tr("Add to new layer..."));
         LayerName->addSeparator()->deleteLater();;
-        newLayer->deleteLater();
-
     foreach(LevelLayer layer, scene->LvlData->layers)
     {
         //Skip system layers
@@ -102,78 +99,56 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
         setLayer->setChecked( layer.name==doorData.layer );
-        setLayer->deleteLater();
         layerItems.push_back(setLayer);
     }
-
-    ItemMenu.addSeparator()->deleteLater();;
+    ItemMenu.addSeparator();
+    /*************Layers*end***************/
 
     QAction *jumpTo=NULL;
     if(this->data(ITEM_TYPE).toString()=="Door_enter")
     {
-        jumpTo = ItemMenu.addAction(tr("Jump to exit"));
+        jumpTo =                ItemMenu.addAction(tr("Jump to exit"));
         jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
-        jumpTo->deleteLater();
     }
     else
     if(this->data(ITEM_TYPE).toString()=="Door_exit")
     {
-        jumpTo = ItemMenu.addAction(tr("Jump to entrance"));
+        jumpTo =                ItemMenu.addAction(tr("Jump to entrance"));
         jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
-        jumpTo->deleteLater();
     }
+                                ItemMenu.addSeparator();
+    QAction * NoTransport =     ItemMenu.addAction(tr("No Vehicles"));
+        NoTransport->setCheckable(true);
+        NoTransport->setChecked( doorData.novehicles );
 
-    ItemMenu.addSeparator()->deleteLater();
+    QAction * AllowNPC =        ItemMenu.addAction(tr("Allow NPC"));
+        AllowNPC->setCheckable(true);
+        AllowNPC->setChecked( doorData.allownpc );
 
+    QAction * Locked =          ItemMenu.addAction(tr("Locked"));
+        Locked->setCheckable(true);
+        Locked->setChecked( doorData.locked );
 
-    QAction * NoTransport = ItemMenu.addAction(tr("No Vehicles"));
-    NoTransport->setCheckable(true);
-    NoTransport->setChecked( doorData.novehicles );
-    NoTransport->deleteLater();
-
-    QAction * AllowNPC = ItemMenu.addAction(tr("Allow NPC"));
-    AllowNPC->setCheckable(true);
-    AllowNPC->setChecked( doorData.allownpc );
-    AllowNPC->deleteLater();
-
-    QAction * Locked = ItemMenu.addAction(tr("Locked"));
-    Locked->setCheckable(true);
-    Locked->setChecked( doorData.locked );
-    Locked->deleteLater();
-
+    /*************Copy Preferences*******************/
     ItemMenu.addSeparator();
+    QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
+    QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+    QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+    /*************Copy Preferences*end***************/
 
-    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
-        copyPreferences->deleteLater();
-            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
-                copyPosXY->deleteLater();
-            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
-                copyPosXYWH->deleteLater();
-            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
-                copyPosLTRB->deleteLater();
-    /*
-    ItemMenu.addSeparator();
-    QAction *copyDoor = ItemMenu.addAction(tr("Copy"));
-        copyDoor->setDisabled(true);
-    QAction *cutDoor = ItemMenu.addAction(tr("Cut"));
-        cutDoor->setDisabled(true);
-    */
+                                ItemMenu.addSeparator();
+    QAction *remove =           ItemMenu.addAction(tr("Remove"));
 
-    ItemMenu.addSeparator()->deleteLater();;
-        QAction *remove = ItemMenu.addAction(tr("Remove"));
-        remove->deleteLater();
+                                ItemMenu.addSeparator();
+    QAction *props =            ItemMenu.addAction(tr("Properties..."));
 
-    ItemMenu.addSeparator()->deleteLater();;
-        QAction *props = ItemMenu.addAction(tr("Properties..."));
-        props->deleteLater();
-
-QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /*****************Waiting for answer************************/
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /***********************************************************/
 
     if(!selected)
-    {
-        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
         return;
-    }
 
     if(selected==openLvl)
     {
@@ -229,12 +204,12 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
+                if(SelItem->data(ITEM_TYPE).toString()=="Door_exit") {
                     LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
-                }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
+                } else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
                     LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                     door.isSetOut = false;
                     door.isSetIn = true;

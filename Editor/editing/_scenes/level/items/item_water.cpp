@@ -55,9 +55,6 @@ void ItemWater::construct()
     _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
 
-    //this->setPen(_pen);
-    //this->setBrush(QBrush(Qt::NoBrush));
-
     gridSize=16;
 
     waterData.w=32;
@@ -89,18 +86,15 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(true);
     }
 
-    this->setSelected(1);
+    this->setSelected(true);
     QMenu ItemMenu;
 
+    /*************Layers*******************/
     QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
-    LayerName->deleteLater();
-
     QAction *setLayer;
     QList<QAction *> layerItems;
-
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator()->deleteLater();
-        newLayer->deleteLater();
+    LayerName->addSeparator();
 
     foreach(LevelLayer layer, scene->LvlData->layers)
     {
@@ -112,21 +106,19 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
         setLayer->setChecked( layer.name==waterData.layer );
-        setLayer->deleteLater();
         layerItems.push_back(setLayer);
     }
-
     ItemMenu.addSeparator();
+    /*************Layers*end***************/
 
-    QMenu * WaterType = ItemMenu.addMenu(tr("Environment type"));
+    QMenu * WaterType =     ItemMenu.addMenu(tr("Environment type"));
         WaterType->deleteLater();
 
     #define CONTEXT_MENU_ITEM_CHK(name, enable, label, checked_condition)\
         name = WaterType->addAction(tr(label));\
         name->setCheckable(true);\
         name->setEnabled(enable);\
-        name->setChecked(checked_condition);\
-        name->deleteLater(); typeID++;
+        name->setChecked(checked_condition); typeID++;
 
     QAction *envTypes[13]; int typeID=0;
 
@@ -144,48 +136,37 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Collision Event", waterData.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Air chamber", waterData.env_type==LevelPhysEnv::ENV_AIR);
 
-    ItemMenu.addSeparator()->deleteLater();
+    ItemMenu.addSeparator();
 
-    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
-        copyPreferences->deleteLater();
+    QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+    QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+                                ItemMenu.addSeparator();
 
-            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
-                copyPosXYWH->deleteLater();
-            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
-                copyPosLTRB->deleteLater();
-
-    ItemMenu.addSeparator()->deleteLater();
-
-    QAction *resize = ItemMenu.addAction(tr("Resize"));
+    QAction *resize =           ItemMenu.addAction(tr("Resize"));
         resize->deleteLater();
 
-    ItemMenu.addSeparator()->deleteLater();
-    QAction *copyWater = ItemMenu.addAction(tr("Copy"));
-        copyWater->deleteLater();
-    QAction *cutWater = ItemMenu.addAction(tr("Cut"));
-        cutWater->deleteLater();
+                                ItemMenu.addSeparator();
+    QAction *copyWater =        ItemMenu.addAction(tr("Copy"));
+    QAction *cutWater =         ItemMenu.addAction(tr("Cut"));
+                                ItemMenu.addSeparator();
+    QAction *remove =           ItemMenu.addAction(tr("Remove"));
 
-    ItemMenu.addSeparator()->deleteLater();
-    QAction *remove = ItemMenu.addAction(tr("Remove"));
-        remove->deleteLater();
-
-QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /*****************Waiting for answer************************/
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /***********************************************************/
 
     if(!selected)
-    {
-        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
         return;
-    }
+
 
     if(selected==cutWater)
     {
-        //scene->doCut = true ;
         MainWinConnect::pMainWin->on_actionCut_triggered();
     }
     else
     if(selected==copyWater)
     {
-        //scene->doCopy = true ;
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else

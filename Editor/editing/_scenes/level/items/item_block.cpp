@@ -74,13 +74,13 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 
     this->setSelected(true);
     QMenu ItemMenu;
-    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
 
+    /*************Layers*******************/
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
-
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-    LayerName->addSeparator()->deleteLater();;
+                         LayerName->addSeparator()->deleteLater();;
 
     foreach(LevelLayer layer, scene->LvlData->layers)
     {
@@ -94,54 +94,50 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         setLayer->setChecked( layer.name==blockData.layer );
         layerItems.push_back(setLayer);
     }
+    ItemMenu.addSeparator();
+    /*************Layers*end***************/
 
-        ItemMenu.addSeparator();
-
-    QAction *invis = ItemMenu.addAction(tr("Invisible"));
+    QAction *invis =           ItemMenu.addAction(tr("Invisible"));
         invis->setCheckable(1);
         invis->setChecked( blockData.invisible );
 
-    QAction *slipp = ItemMenu.addAction(tr("Slippery"));
+    QAction *slipp =           ItemMenu.addAction(tr("Slippery"));
         slipp->setCheckable(1);
         slipp->setChecked( blockData.slippery );
 
-    QAction *resize = ItemMenu.addAction(tr("Resize"));
+    QAction *resize =          ItemMenu.addAction(tr("Resize"));
         resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
+                               ItemMenu.addSeparator();
 
-        ItemMenu.addSeparator();
-    QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
-        ItemMenu.addSeparator();
-    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *chNPC =           ItemMenu.addAction(tr("Change included NPC..."));
+                               ItemMenu.addSeparator();
+    QAction *transform =       ItemMenu.addAction(tr("Transform into"));
     QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(blockData.id));
-    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
-    QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
-        ItemMenu.addSeparator();
-    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
-        copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("Block-ID: %1").arg(blockData.id));
-                copyItemID->deleteLater();
-            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
-                copyPosXY->deleteLater();
-            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
-                copyPosXYWH->deleteLater();
-            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
-                copyPosLTRB->deleteLater();
-    QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
-    QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
-        ItemMenu.addSeparator();
-    QAction *remove = ItemMenu.addAction( tr("Remove") );
-        ItemMenu.addSeparator();
-    QAction *props = ItemMenu.addAction(tr("Properties..."));
+    QAction *transform_all =   ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
+    QAction *makemsgevent =    ItemMenu.addAction(tr("Make message box..."));
+                               ItemMenu.addSeparator();
 
-QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /*************Copy Preferences*******************/
+    QMenu * copyPreferences =  ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyItemID =      copyPreferences->addAction(tr("Block-ID: %1").arg(blockData.id));
+    QAction *copyPosXY =       copyPreferences->addAction(tr("Position: X, Y"));
+    QAction *copyPosXYWH =     copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+    QAction *copyPosLTRB =     copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+    /*************Copy Preferences*end***************/
+
+    QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
+    QAction *cutBlock =  ItemMenu.addAction( tr("Cut") );
+                         ItemMenu.addSeparator();
+    QAction *remove =    ItemMenu.addAction( tr("Remove") );
+                         ItemMenu.addSeparator();
+    QAction *props =     ItemMenu.addAction(tr("Properties..."));
+
+    /*****************Waiting for answer************************/
+    QAction *selected =  ItemMenu.exec(mouseEvent->screenPos());
+    /***********************************************************/
 
     if(!selected)
-    {
-        #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-        #endif
         return;
-    }
 
 
     if(selected==copyItemID)
@@ -388,7 +384,6 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==remove)
     {
-        //scene->contextMenuOpened = false;
         scene->removeSelectedLvlItems();
     }
     else

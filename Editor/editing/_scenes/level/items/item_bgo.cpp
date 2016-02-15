@@ -72,13 +72,12 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     this->setSelected(1);
     QMenu ItemMenu;
 
+    /*************Layers*******************/
     QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
-
     QAction *setLayer;
     QList<QAction *> layerItems;
-
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator();
+    LayerName->addSeparator()->deleteLater();
 
     foreach(LevelLayer layer, scene->LvlData->layers)
     {
@@ -93,77 +92,69 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         layerItems.push_back(setLayer);
     }
     ItemMenu.addSeparator();
+    /*************Layers*end***************/
 
     bool isLvlx = !scene->LvlData->smbx64strict;
 
-    QAction *ZOffset = ItemMenu.addAction(tr("Change Z-Offset..."));
+    QAction *ZOffset =          ItemMenu.addAction(tr("Change Z-Offset..."));
         ZOffset->setEnabled(isLvlx);
-    QMenu *ZMode = ItemMenu.addMenu(tr("Z-Layer"));
+    QMenu *ZMode =              ItemMenu.addMenu(tr("Z-Layer"));
         ZMode->setEnabled(isLvlx);
 
-    QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
+    QAction *ZMode_bg2 =        ZMode->addAction(tr("Background-2"));
         ZMode_bg2->setCheckable(true);
         ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
-    QAction *ZMode_bg1 = ZMode->addAction(tr("Background"));
+    QAction *ZMode_bg1 =        ZMode->addAction(tr("Background"));
         ZMode_bg1->setCheckable(true);
         ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
-    QAction *ZMode_def = ZMode->addAction(tr("Default"));
+    QAction *ZMode_def =        ZMode->addAction(tr("Default"));
         ZMode_def->setCheckable(true);
         ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
-    QAction *ZMode_fg1 = ZMode->addAction(tr("Foreground"));
+    QAction *ZMode_fg1 =        ZMode->addAction(tr("Foreground"));
         ZMode_fg1->setCheckable(true);
         ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
-    QAction *ZMode_fg2 = ZMode->addAction(tr("Foreground-2"));
+    QAction *ZMode_fg2 =        ZMode->addAction(tr("Foreground-2"));
         ZMode_fg2->setCheckable(true);
         ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
+                                ItemMenu.addSeparator();
+
+    QAction *transform =        ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all_s =  ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BGO-%1").arg(bgoData.id));
+    QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("BGO-%1").arg(bgoData.id));
         ItemMenu.addSeparator();
 
-    QAction *transform = ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BGO-%1").arg(bgoData.id));
-    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BGO-%1").arg(bgoData.id));
-        ItemMenu.addSeparator();
+    /*************Copy Preferences*******************/
+    QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyItemID =       copyPreferences->addAction(tr("BGO-ID: %1").arg(bgoData.id));
+    QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
+    QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+    QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
+    /*************Copy Preferences*end***************/
 
-    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
-        copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("BGO-ID: %1").arg(bgoData.id));
-                copyItemID->deleteLater();
-            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
-                copyPosXY->deleteLater();
-            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
-                copyPosXYWH->deleteLater();
-            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
-                copyPosLTRB->deleteLater();
+    QAction *copyBGO =          ItemMenu.addAction(tr("Copy"));
+    QAction *cutBGO =           ItemMenu.addAction(tr("Cut"));
+                                ItemMenu.addSeparator();
+    QAction *remove =           ItemMenu.addAction(tr("Remove"));
+        remove->deleteLater();
+                                ItemMenu.addSeparator();
+    QAction *props =            ItemMenu.addAction(tr("Properties..."));
+        props->deleteLater();
 
-    QAction *copyBGO = ItemMenu.addAction(tr("Copy"));
-    copyBGO->deleteLater();
-    QAction *cutBGO = ItemMenu.addAction(tr("Cut"));
-    cutBGO->deleteLater();
-    ItemMenu.addSeparator()->deleteLater();
-    QAction *remove = ItemMenu.addAction(tr("Remove"));
-    remove->deleteLater();
-    ItemMenu.addSeparator()->deleteLater();
-    QAction *props = ItemMenu.addAction(tr("Properties..."));
-    props->deleteLater();
-
-QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /*****************Waiting for answer************************/
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    /***********************************************************/
 
     if(!selected)
-    {
-        #ifdef _DEBUG_
-        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-        #endif
         return;
-    }
+
 
     if(selected==cutBGO)
     {
-        //scene->doCut = true ;
         MainWinConnect::pMainWin->on_actionCut_triggered();
     }
     else
     if(selected==copyBGO)
     {
-        //scene->doCopy = true ;
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else
@@ -172,75 +163,75 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         scene->removeSelectedLvlItems();
     }
     else
-        if(selected==ZMode_bg2)
+    if(selected==ZMode_bg2)
+    {
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            LevelData selData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
-                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                }
+                selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
         }
-        else
-        if(selected==ZMode_bg1)
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
+    }
+    else
+    if(selected==ZMode_bg1)
+    {
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            LevelData selData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
-                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                }
+                selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
         }
-        else
-        if(selected==ZMode_def)
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
+    }
+    else
+    if(selected==ZMode_def)
+    {
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            LevelData selData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
-                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                }
+                selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
         }
-        else
-        if(selected==ZMode_fg1)
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
+    }
+    else
+    if(selected==ZMode_fg1)
+    {
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            LevelData selData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
-                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                }
+                selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
         }
-        else
-        if(selected==ZMode_fg2)
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
+    }
+    else
+    if(selected==ZMode_fg2)
+    {
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            LevelData selData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
-                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                }
+                selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
         }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
+    }
     else
     if(selected==ZOffset)
     {
