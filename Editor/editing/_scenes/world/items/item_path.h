@@ -19,40 +19,20 @@
 #ifndef ItemPath_H
 #define ItemPath_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <math.h>
-#include <QMenu>
-
 #include <PGE_File_Formats/wld_filedata.h>
 
 #include "../wld_scene.h"
 #include "wld_base_item.h"
 
-class ItemPath : public QObject,
-                 public QGraphicsItem,
-                 public WldBaseItem
+class ItemPath : public WldBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+    void construct();
 public:
     ItemPath(QGraphicsItem *parent=0);
     ItemPath(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemPath();
-private:
-    void construct();
-public:
 
     void setPathData(WorldPaths inD, obj_w_path *mergedSet=0, long *animator_id=0);
-    void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -68,36 +48,14 @@ public:
     void removeFromArray();
 
     void returnBack();
-    int getGridSize();
     QPoint sourcePos();
 
-    WorldPaths pathData;
-    obj_w_path localProps;
+    WorldPaths m_data;
+    obj_w_path m_localProps;
 
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
-
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
+    bool itemTypeIsLocked();
 
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private:
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-    WldScene * scene;
-
 };
 
 #endif // ItemPath_H

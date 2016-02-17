@@ -95,7 +95,7 @@ void HistoryElementLayerChanged::historyUndoChangeLayerBlocks(const LevelBlock &
 
     ItemBlock* targetItem = (ItemBlock*)item;
     QString oldLayer = sourceBlock.layer;
-    targetItem->blockData.layer = oldLayer;
+    targetItem->m_data.layer = oldLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == oldLayer)
@@ -117,7 +117,7 @@ void HistoryElementLayerChanged::historyUndoChangeLayerBGO(const LevelBGO &sourc
 
     ItemBGO* targetItem = (ItemBGO*)item;
     QString oldLayer = sourceBGO.layer;
-    targetItem->bgoData.layer = oldLayer;
+    targetItem->m_data.layer = oldLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == oldLayer)
@@ -139,7 +139,7 @@ void HistoryElementLayerChanged::historyUndoChangeLayerNPC(const LevelNPC &sourc
 
     ItemNPC* targetItem = (ItemNPC*)item;
     QString oldLayer = sourceNPC.layer;
-    targetItem->npcData.layer = oldLayer;
+    targetItem->m_data.layer = oldLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == oldLayer)
@@ -161,7 +161,7 @@ void HistoryElementLayerChanged::historyUndoChangeLayerWater(const LevelPhysEnv 
 
     ItemWater* targetItem = (ItemWater*)item;
     QString oldLayer = sourcePhysEnv.layer;
-    targetItem->waterData.layer = oldLayer;
+    targetItem->m_data.layer = oldLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == oldLayer)
@@ -183,7 +183,7 @@ void HistoryElementLayerChanged::historyUndoChangeLayerDoor(const LevelDoor &sou
 
     ItemDoor* targetItem = (ItemDoor*)item;
     QString oldLayer = sourceDoor.layer;
-    targetItem->doorData.layer = oldLayer;
+    targetItem->m_data.layer = oldLayer;
     foreach (LevelLayer lr, lvlScene->LvlData->layers) {
         if(lr.name == oldLayer)
         {
@@ -203,7 +203,7 @@ void HistoryElementLayerChanged::historyRedoChangeLayerBlocks(const LevelBlock &
         return;
 
     ItemBlock* targetItem = (ItemBlock*)item;
-    targetItem->blockData.layer = m_newLayerName;
+    targetItem->m_data.layer = m_newLayerName;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == m_newLayerName)
@@ -224,7 +224,7 @@ void HistoryElementLayerChanged::historyRedoChangeLayerBGO(const LevelBGO &/*sou
         return;
 
     ItemBGO* targetItem = (ItemBGO*)item;
-    targetItem->bgoData.layer = m_newLayerName;
+    targetItem->m_data.layer = m_newLayerName;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == m_newLayerName)
@@ -245,7 +245,7 @@ void HistoryElementLayerChanged::historyRedoChangeLayerNPC(const LevelNPC &/*sou
         return;
 
     ItemNPC* targetItem = (ItemNPC*)item;
-    targetItem->npcData.layer = m_newLayerName;
+    targetItem->m_data.layer = m_newLayerName;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == m_newLayerName)
@@ -266,7 +266,7 @@ void HistoryElementLayerChanged::historyRedoChangeLayerWater(const LevelPhysEnv 
         return;
 
     ItemWater* targetItem = (ItemWater*)item;
-    targetItem->waterData.layer = m_newLayerName;
+    targetItem->m_data.layer = m_newLayerName;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
     {
         if(lr.name == m_newLayerName)
@@ -287,7 +287,7 @@ void HistoryElementLayerChanged::historyRedoChangeLayerDoor(const LevelDoor &/*s
         return;
 
     ItemDoor* targetItem = (ItemDoor*)item;
-    targetItem->doorData.layer = m_newLayerName;
+    targetItem->m_data.layer = m_newLayerName;
     foreach (LevelLayer lr, lvlScene->LvlData->layers) {
         if(lr.name == m_newLayerName)
         {

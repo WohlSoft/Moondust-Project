@@ -38,51 +38,51 @@ ItemWater::ItemWater(LvlScene *parentScene, QGraphicsItem *parent)
     construct();
     if(!parentScene) return;
     setScenePoint(parentScene);
-    scene->addItem(this);
-    gridSize = scene->pConfigs->default_grid/2;
-    setZValue(scene->Z_sys_PhysEnv);
-    setLocked(scene->lock_water);
+    m_scene->addItem(this);
+    m_gridSize = m_scene->pConfigs->default_grid/2;
+    setZValue(m_scene->Z_sys_PhysEnv);
+    setLocked(m_scene->lock_water);
 }
 
 void ItemWater::construct()
 {
-    waterSize = QSize(32,32);
-    penWidth=2;
+    m_waterSize = QSize(32,32);
+    m_penWidth=2;
 
-    _color=QColor(Qt::darkBlue);
-    _pen = QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-    _pen.setWidth(penWidth);
-    _pen.setCapStyle(Qt::FlatCap);
-    _pen.setJoinStyle(Qt::MiterJoin);
+    m_color=QColor(Qt::darkBlue);
+    m_pen = QPen(m_color, m_penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    m_pen.setWidth(m_penWidth);
+    m_pen.setCapStyle(Qt::FlatCap);
+    m_pen.setJoinStyle(Qt::MiterJoin);
 
-    gridSize=16;
+    m_gridSize=16;
 
-    waterData.w=32;
-    waterData.h=32;
-    waterData.x=this->pos().x();
-    waterData.y=this->pos().y();
-    waterData.env_type = LevelPhysEnv::ENV_WATER;
+    m_data.w=32;
+    m_data.h=32;
+    m_data.x=this->pos().x();
+    m_data.y=this->pos().y();
+    m_data.env_type = LevelPhysEnv::ENV_WATER;
 
     setData(ITEM_TYPE, "Water");
     setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    setData(ITEM_WIDTH, (int)waterData.w);
-    setData(ITEM_HEIGHT, (int)waterData.h);
+    setData(ITEM_WIDTH, (int)m_data.w);
+    setData(ITEM_HEIGHT, (int)m_data.h);
 }
 
 ItemWater::~ItemWater()
 {
-    scene->unregisterElement(this);
+    m_scene->unregisterElement(this);
 }
 
 
 void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    scene->contextMenuOpened = true; //bug protector
+    m_scene->contextMenuOpened = true; //bug protector
 
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
-        scene->clearSelection();
+        m_scene->clearSelection();
         this->setSelected(true);
     }
 
@@ -90,13 +90,13 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QMenu ItemMenu;
 
     /*************Layers*******************/
-    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator();
 
-    foreach(LevelLayer layer, scene->LvlData->layers)
+    foreach(LevelLayer layer, m_scene->LvlData->layers)
     {
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -105,7 +105,7 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
-        setLayer->setChecked( layer.name==waterData.layer );
+        setLayer->setChecked( layer.name==m_data.layer );
         layerItems.push_back(setLayer);
     }
     ItemMenu.addSeparator();
@@ -122,19 +122,19 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     QAction *envTypes[13]; int typeID=0;
 
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Water",        waterData.env_type==LevelPhysEnv::ENV_WATER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Quicksand",    waterData.env_type==LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Custom liquid", waterData.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Gravitational Field", waterData.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Touch Event (Once)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Touch Event (Every frame)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "NPC Touch Event (Once)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "NPC Touch Event (Every frame)", waterData.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Mouse click Event", waterData.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Collision script", waterData.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Mouse click Script", waterData.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Collision Event", waterData.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !scene->LvlData->smbx64strict, "Air chamber", waterData.env_type==LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Water",        m_data.env_type==LevelPhysEnv::ENV_WATER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Quicksand",    m_data.env_type==LevelPhysEnv::ENV_QUICKSAND);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Custom liquid", m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Gravitational Field", m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Touch Event (Once)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Touch Event (Every frame)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "NPC Touch Event (Once)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "NPC Touch Event (Every frame)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Mouse click Event", m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Collision script", m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Mouse click Script", m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Collision Event", m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Air chamber", m_data.env_type==LevelPhysEnv::ENV_AIR);
 
     ItemMenu.addSeparator();
 
@@ -174,10 +174,10 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(waterData.x)
-                               .arg(waterData.y)
-                               .arg(waterData.w)
-                               .arg(waterData.h)
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_data.w)
+                               .arg(m_data.h)
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -186,27 +186,27 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         QApplication::clipboard()->setText(
                             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(waterData.x)
-                               .arg(waterData.y)
-                               .arg(waterData.x+waterData.w)
-                               .arg(waterData.y+waterData.h)
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_data.x+m_data.w)
+                               .arg(m_data.y+m_data.h)
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==resize)
     {
-        scene->setPhysEnvResizer(this, true);
+        m_scene->setPhysEnvResizer(this, true);
     }
     else
     if(selected==remove)
     {
-        scene->removeSelectedLvlItems();
+        m_scene->removeSelectedLvlItems();
     }
     else
     if(selected==newLayer)
     {
-        scene->setLayerToSelected();
+        m_scene->setLayerToSelected();
     }
     else
     {
@@ -217,7 +217,7 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             if(selected==lItem)
             {
                 //FOUND!!!
-                scene->setLayerToSelected(lItem->data().toString());
+                m_scene->setLayerToSelected(lItem->data().toString());
                 found=true;
                 break;
             }//Find selected layer's item
@@ -230,15 +230,15 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 if(selected==envTypes[i])
                 {
                     LevelData modData;
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
                     {
                         if(SelItem->data(ITEM_TYPE).toString()=="Water")
                         {
-                            modData.physez.push_back(((ItemWater *)SelItem)->waterData);
+                            modData.physez.push_back(((ItemWater *)SelItem)->m_data);
                             ((ItemWater *)SelItem)->setType(i);
                         }
                     }
-                    scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+                    m_scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
                     found = true;
                     break;
                 }
@@ -250,11 +250,11 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 ///////////////////MainArray functions/////////////////////////////
 void ItemWater::setLayer(QString layer)
 {
-    foreach(LevelLayer lr, scene->LvlData->layers)
+    foreach(LevelLayer lr, m_scene->LvlData->layers)
     {
         if(lr.name==layer)
         {
-            waterData.layer = layer;
+            m_data.layer = layer;
             this->setVisible(!lr.hidden);
             arrayApply();
         break;
@@ -266,14 +266,14 @@ void ItemWater::arrayApply()
 {
     bool found=false;
 
-    waterData.x = qRound(this->scenePos().x());
-    waterData.y = qRound(this->scenePos().y());
-    this->setData(ITEM_WIDTH, (int)waterData.w);
-    this->setData(ITEM_HEIGHT, (int)waterData.h);
+    m_data.x = qRound(this->scenePos().x());
+    m_data.y = qRound(this->scenePos().y());
+    this->setData(ITEM_WIDTH, (int)m_data.w);
+    this->setData(ITEM_HEIGHT, (int)m_data.h);
 
-    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
+    if(m_data.index < (unsigned int)m_scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
+        if(m_data.array_id == m_scene->LvlData->physez[m_data.index].array_id)
         {
             found=true;
         }
@@ -282,30 +282,30 @@ void ItemWater::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->physez[waterData.index] = waterData; //apply current bgoData
+        m_scene->LvlData->physez[m_data.index] = m_data; //apply current bgoData
     }
     else
-    for(int i=0; i<scene->LvlData->physez.size(); i++)
+    for(int i=0; i<m_scene->LvlData->physez.size(); i++)
     { //after find it into array
-        if(scene->LvlData->physez[i].array_id == waterData.array_id)
+        if(m_scene->LvlData->physez[i].array_id == m_data.array_id)
         {
-            waterData.index = i;
-            scene->LvlData->physez[i] = waterData;
+            m_data.index = i;
+            m_scene->LvlData->physez[i] = m_data;
             break;
         }
     }
 
     //Update R-tree innex
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 void ItemWater::removeFromArray()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
+    if(m_data.index < (unsigned int)m_scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
+        if(m_data.array_id == m_scene->LvlData->physez[m_data.index].array_id)
         {
             found=true;
         }
@@ -313,14 +313,14 @@ void ItemWater::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->physez.removeAt(waterData.index);
+        m_scene->LvlData->physez.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<scene->LvlData->physez.size(); i++)
+    for(int i=0; i<m_scene->LvlData->physez.size(); i++)
     {
-        if(scene->LvlData->physez[i].array_id == waterData.array_id)
+        if(m_scene->LvlData->physez[i].array_id == m_data.array_id)
         {
-            scene->LvlData->physez.removeAt(i); break;
+            m_scene->LvlData->physez.removeAt(i); break;
         }
     }
 }
@@ -328,82 +328,72 @@ void ItemWater::removeFromArray()
 
 void ItemWater::returnBack()
 {
-    this->setPos(waterData.x, waterData.y);
-}
-
-QPoint ItemWater::gridOffset()
-{
-    return QPoint(0, 0);
-}
-
-int ItemWater::getGridSize()
-{
-    return gridSize;
+    this->setPos(m_data.x, m_data.y);
 }
 
 QPoint ItemWater::sourcePos()
 {
-    return QPoint(waterData.x, waterData.y);
+    return QPoint(m_data.x, m_data.y);
 }
 
 void ItemWater::updateColor()
 {
-    switch(waterData.env_type)
+    switch(m_data.env_type)
     {
     case LevelPhysEnv::ENV_WATER:
     default:
-        _color=QColor(Qt::green);
+        m_color=QColor(Qt::green);
         break;
     case LevelPhysEnv::ENV_QUICKSAND:
-        _color=QColor(Qt::yellow);
+        m_color=QColor(Qt::yellow);
         break;
     case LevelPhysEnv::ENV_CUSTOM_LIQUID:
-        _color=QColor(Qt::darkGreen);
+        m_color=QColor(Qt::darkGreen);
         break;
     case LevelPhysEnv::ENV_AIR:
-        _color=QColor(Qt::blue);
+        m_color=QColor(Qt::blue);
         break;
     case LevelPhysEnv::ENV_GRAVITATIONAL_FIELD:
-        _color=QColor(Qt::cyan);
+        m_color=QColor(Qt::cyan);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER:
-        _color=QColor(Qt::darkRed);
+        m_color=QColor(Qt::darkRed);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER:
-        _color=QColor(Qt::red);
+        m_color=QColor(Qt::red);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC:
-        _color=QColor(Qt::darkMagenta);
+        m_color=QColor(Qt::darkMagenta);
         break;
     case LevelPhysEnv::ENV_TOUCH_EVENT_NPC:
-        _color=QColor(Qt::magenta);
+        m_color=QColor(Qt::magenta);
         break;
     case LevelPhysEnv::ENV_CLICK_EVENT:
-        _color=QColor(Qt::darkCyan);
+        m_color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_CLICK_SCRIPT:
-        _color=QColor(Qt::darkCyan);
+        m_color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_COLLISION_EVENT:
-        _color=QColor(Qt::darkCyan);
+        m_color=QColor(Qt::darkCyan);
         break;
     case LevelPhysEnv::ENV_COLLISION_SCRIPT:
-        _color=QColor(Qt::darkCyan);
+        m_color=QColor(Qt::darkCyan);
         break;
     }
-    _pen.setColor(_color);
+    m_pen.setColor(m_color);
 }
 
 bool ItemWater::itemTypeIsLocked()
 {
-    if(!scene)
+    if(!m_scene)
         return false;
-    return scene->lock_water;
+    return m_scene->lock_water;
 }
 
 void ItemWater::setType(int tp)
 {
-    waterData.env_type=tp;
+    m_data.env_type=tp;
     updateColor();
     //this->setPen(_pen);
     arrayApply();
@@ -411,21 +401,21 @@ void ItemWater::setType(int tp)
 
 void ItemWater::setRectSize(QRect rect)
 {
-    waterData.x = rect.x();
-    waterData.y = rect.y();
-    waterData.w = rect.width();
-    waterData.h = rect.height();
-    waterSize = rect.size();
-    setPos(waterData.x, waterData.y);
+    m_data.x = rect.x();
+    m_data.y = rect.y();
+    m_data.w = rect.width();
+    m_data.h = rect.height();
+    m_waterSize = rect.size();
+    setPos(m_data.x, m_data.y);
     drawWater();
     arrayApply();
 }
 
 void ItemWater::setSize(QSize sz)
 {
-    waterSize = sz;
-    waterData.w = sz.width();
-    waterData.h = sz.height();
+    m_waterSize = sz;
+    m_data.w = sz.width();
+    m_data.h = sz.height();
     drawWater();
     arrayApply();
 }
@@ -433,15 +423,15 @@ void ItemWater::setSize(QSize sz)
 
 void ItemWater::setWaterData(LevelPhysEnv inD)
 {
-    waterData = inD;
-    waterSize = QSize(waterData.w, waterData.h);
-    setPos(waterData.x, waterData.y);
+    m_data = inD;
+    m_waterSize = QSize(m_data.w, m_data.h);
+    setPos(m_data.x, m_data.y);
     setData(ITEM_ID, QString::number(0) );
-    setData(ITEM_ARRAY_ID, QString::number(waterData.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
     updateColor();
     drawWater();
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 void ItemWater::drawWater()
@@ -452,9 +442,9 @@ void ItemWater::drawWater()
 //    y = 1;
 //    w = waterData.w-penWidth;
 //    h = waterData.h-penWidth;
-    setData(ITEM_WIDTH,  (int)waterData.w);
-    setData(ITEM_HEIGHT, (int)waterData.h);
-    _pen=QPen(_color, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    setData(ITEM_WIDTH,  (int)m_data.w);
+    setData(ITEM_HEIGHT, (int)m_data.h);
+    m_pen=QPen(m_color, m_penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
     //setPen(_pen);
 //    QVector<QPointF > points;
 //    points.clear();
@@ -476,18 +466,18 @@ void ItemWater::drawWater()
 QRectF ItemWater::boundingRect() const
 {
     return QRectF(-1,-1,
-                  waterSize.width()+penWidth,
-                  waterSize.height()+penWidth);
+                  m_waterSize.width()+m_penWidth,
+                  m_waterSize.height()+m_penWidth);
 }
 
 void ItemWater::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    painter->setPen(_pen);
+    painter->setPen(m_pen);
     painter->setBrush(Qt::NoBrush);
 
     long h, w;
-    w = waterData.w-penWidth;
-    h = waterData.h-penWidth;
+    w = m_data.w-m_penWidth;
+    h = m_data.h-m_penWidth;
 
     painter->drawRect(1, 1, w, h);
     if(this->isSelected())

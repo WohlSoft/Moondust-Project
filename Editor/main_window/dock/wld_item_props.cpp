@@ -232,8 +232,8 @@ void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->setPath(checked);
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->setShowSmallPathBG(checked);
             }
         }
         edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(checked));
@@ -259,8 +259,8 @@ void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->setbPath(checked);
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->setShowBigPathBG(checked);
             }
         }
         edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(checked));
@@ -287,7 +287,7 @@ void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel*)item)->alwaysVisible(checked);
             }
         }
@@ -315,8 +315,8 @@ void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.gamestart = checked;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.gamestart = checked;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -347,8 +347,8 @@ void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.lvlfile = ui->WLD_PROPS_LVLFile->text();
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.lvlfile = ui->WLD_PROPS_LVLFile->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -379,8 +379,8 @@ void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.title = ui->WLD_PROPS_LVLTitle->text();
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.title = ui->WLD_PROPS_LVLTitle->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -407,8 +407,8 @@ void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.entertowarp = arg1;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.entertowarp = arg1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -484,8 +484,8 @@ void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.top_exit = index-1;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.top_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -512,8 +512,8 @@ void WLD_ItemProps::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.left_exit = index-1;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.left_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -541,8 +541,8 @@ void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.right_exit = index-1;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.right_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -570,8 +570,8 @@ void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.bottom_exit = index-1;
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.bottom_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -604,8 +604,8 @@ void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
@@ -637,8 +637,8 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
         {
             if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
+                selData.levels.push_back(((ItemLevel *) item)->m_data);
+                ((ItemLevel*)item)->m_data.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
                 ((ItemLevel*)item)->arrayApply();
             }
         }

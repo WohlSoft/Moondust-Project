@@ -282,9 +282,9 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
 
         if((*it)->data(ITEM_TYPE).toString()=="Block")
         {
-            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            if(((ItemBlock *)(*it))->m_data.layer==layerName)
             {
-                delData.blocks.push_back(((ItemBlock *)(*it))->blockData);
+                delData.blocks.push_back(((ItemBlock *)(*it))->m_data);
                 ((ItemBlock *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -294,9 +294,9 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         else
         if((*it)->data(ITEM_TYPE).toString()=="BGO")
         {
-            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            if(((ItemBGO *)(*it))->m_data.layer==layerName)
             {
-                delData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+                delData.bgo.push_back(((ItemBGO *)(*it))->m_data);
                 ((ItemBGO *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -305,9 +305,9 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         else
         if((*it)->data(ITEM_TYPE).toString()=="NPC")
         {
-            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            if(((ItemNPC *)(*it))->m_data.layer==layerName)
             {
-                delData.npc.push_back(((ItemNPC *)(*it))->npcData);
+                delData.npc.push_back(((ItemNPC *)(*it))->m_data);
                 ((ItemNPC *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -316,9 +316,9 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            if(((ItemWater *)(*it))->m_data.layer==layerName)
             {
-                delData.physez.push_back(((ItemWater *)(*it))->waterData);
+                delData.physez.push_back(((ItemWater *)(*it))->m_data);
                 ((ItemWater *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -327,17 +327,17 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         else
         if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
         {
-            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
                 if(((*it)->data(0).toString()=="Door_enter")){
-                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     delData.doors.push_back(tData);
                 }
                 else
                 if(((*it)->data(0).toString()=="Door_exit")){
-                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
                     delData.doors.push_back(tData);
@@ -399,7 +399,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
 
         if((*it)->data(ITEM_TYPE).toString()=="Block")
         {
-            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            if(((ItemBlock *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -408,7 +408,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
         else
         if((*it)->data(ITEM_TYPE).toString()=="BGO")
         {
-            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            if(((ItemBGO *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -416,7 +416,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
         else
         if((*it)->data(ITEM_TYPE).toString()=="NPC")
         {
-            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            if(((ItemNPC *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -424,7 +424,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            if(((ItemWater *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -432,7 +432,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
         else
         if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
         {
-            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -455,45 +455,45 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
 
         if((*it)->data(ITEM_TYPE).toString()=="Block")
         {
-            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            if(((ItemBlock *)(*it))->m_data.layer==layerName)
             {
-                ((ItemBlock *)(*it))->blockData.layer = newLayerName;
+                ((ItemBlock *)(*it))->m_data.layer = newLayerName;
                 ((ItemBlock *)(*it))->arrayApply();
             }
         }
         else
         if((*it)->data(ITEM_TYPE).toString()=="BGO")
         {
-            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            if(((ItemBGO *)(*it))->m_data.layer==layerName)
             {
-                ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
+                ((ItemBGO *)(*it))->m_data.layer = newLayerName;
                 ((ItemBGO *)(*it))->arrayApply();
             }
         }
         else
         if((*it)->data(ITEM_TYPE).toString()=="NPC")
         {
-            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            if(((ItemNPC *)(*it))->m_data.layer==layerName)
             {
-                ((ItemNPC *)(*it))->npcData.layer = newLayerName;
+                ((ItemNPC *)(*it))->m_data.layer = newLayerName;
                 ((ItemNPC *)(*it))->arrayApply();
             }
         }
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            if(((ItemWater *)(*it))->m_data.layer==layerName)
             {
-                ((ItemWater *)(*it))->waterData.layer = newLayerName;
+                ((ItemWater *)(*it))->m_data.layer = newLayerName;
                 ((ItemWater *)(*it))->arrayApply();
             }
         }
         else
         if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
         {
-            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
-                ((ItemDoor *)(*it))->doorData.layer = newLayerName;
+                ((ItemDoor *)(*it))->m_data.layer = newLayerName;
                 ((ItemDoor *)(*it))->arrayApply();
             }
         }
@@ -537,10 +537,10 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
 
         if((*it)->data(ITEM_TYPE).toString()=="Block")
         {
-            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            if(((ItemBlock *)(*it))->m_data.layer==layerName)
             {
-                modData.blocks.push_back(((ItemBlock *)(*it))->blockData);
-                ((ItemBlock *)(*it))->blockData.layer = newLayerName;
+                modData.blocks.push_back(((ItemBlock *)(*it))->m_data);
+                ((ItemBlock *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemBlock *)(*it))->arrayApply();
             }
@@ -549,10 +549,10 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         else
         if((*it)->data(ITEM_TYPE).toString()=="BGO")
         {
-            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            if(((ItemBGO *)(*it))->m_data.layer==layerName)
             {
-                modData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
-                ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
+                modData.bgo.push_back(((ItemBGO *)(*it))->m_data);
+                ((ItemBGO *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemBGO *)(*it))->arrayApply();
 
@@ -561,10 +561,10 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         else
         if((*it)->data(ITEM_TYPE).toString()=="NPC")
         {
-            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            if(((ItemNPC *)(*it))->m_data.layer==layerName)
             {
-                modData.npc.push_back(((ItemNPC *)(*it))->npcData);
-                ((ItemNPC *)(*it))->npcData.layer = newLayerName;
+                modData.npc.push_back(((ItemNPC *)(*it))->m_data);
+                ((ItemNPC *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemNPC *)(*it))->arrayApply();
             }
@@ -572,10 +572,10 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            if(((ItemWater *)(*it))->m_data.layer==layerName)
             {
-                modData.physez.push_back(((ItemWater *)(*it))->waterData);
-                ((ItemWater *)(*it))->waterData.layer = newLayerName;
+                modData.physez.push_back(((ItemWater *)(*it))->m_data);
+                ((ItemWater *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemWater *)(*it))->arrayApply();
             }
@@ -583,20 +583,20 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         else
         if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
         {
-            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
                 if((*it)->data(ITEM_TYPE).toString()=="Door_enter"){
-                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     modData.doors.push_back(tData);
                 }else if((*it)->data(ITEM_TYPE).toString()=="Door_exit"){
-                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
                     modData.doors.push_back(tData);
                 }
-                ((ItemDoor *)(*it))->doorData.layer = newLayerName;
+                ((ItemDoor *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemDoor *)(*it))->arrayApply();
             }

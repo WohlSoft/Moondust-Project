@@ -19,10 +19,13 @@
 #ifndef LVLBASEITEM_H
 #define LVLBASEITEM_H
 
-#include <QString>
-#include <QPoint>
 #include <QGraphicsItem>
+#include <QGraphicsScene>
+#include <QPoint>
+#include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QMenu>
+#include <math.h>
 
 class LvlScene;
 
@@ -92,24 +95,24 @@ public:
     //!
     virtual void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
 
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
+    int m_gridSize;
+    int m_gridOffsetX;
+    int m_gridOffsetY;
 
     //Locks
-    bool isLocked;
+    bool m_locked;
     void setLocked(bool lock);
     virtual bool itemTypeIsLocked();
 
 protected:
-    long animatorID;
-    QRectF imageSize;
-    bool animated;
-    LvlScene * scene;
+    long        m_animatorID;
+    QRectF      m_imageSize;
+    bool        m_animated;
+    LvlScene *  m_scene;
 
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
+    bool m_mouseLeft;
+    bool m_mouseMid;
+    bool m_mouseRight;
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 };

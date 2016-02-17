@@ -20,130 +20,60 @@
 #include <common_features/mainwinconnect.h>
 #include "item_point.h"
 
-ItemPoint::ItemPoint(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+void ItemPoint::construct()
 {
-    gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
-    isLocked=false;
-
-    animatorID=-1;
-    scene=NULL;
-    imageSize = QRectF(0,0,32,32);
     this->setData(ITEM_WIDTH, QString::number(32));
     this->setData(ITEM_HEIGHT, QString::number(32));
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
 }
 
+ItemPoint::ItemPoint(QGraphicsItem *parent)
+    : WldBaseItem(parent)
+{
+    construct();
+}
+
+ItemPoint::ItemPoint(WldScene *scenePoint, QGraphicsItem *parent)
+    : WldBaseItem(scenePoint, parent)
+{
+    construct();
+}
 
 ItemPoint::~ItemPoint()
 {}
 
-void ItemPoint::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsItem::mousePressEvent(mouseEvent);
-}
-
-
-void ItemPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    //bool callContext=false;
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
-        mouseLeft=false;
-
-    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
-        mouseMid=false;
-
-    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
-    {
-        //if(!scene->IsMoved) callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-}
-
-void ItemPoint::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
-{
-    QGraphicsItem::contextMenuEvent(event);
-}
-
 QRectF ItemPoint::boundingRect() const
 {
-    return imageSize;
+    return m_imageSize;
 }
 
 void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    if(scene==NULL)
+    if(m_scene==NULL)
     {
         painter->setPen(QPen(QBrush(Qt::yellow), 2, Qt::SolidLine));
         painter->setBrush(Qt::yellow);
         painter->setOpacity(0.5);
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setOpacity(1);
         painter->setBrush(Qt::transparent);
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
     else
     {
-       painter->drawPixmap(scene->pointAnimation->image().rect(), scene->pointAnimation->image(), scene->pointAnimation->image().rect());
+       painter->drawPixmap(m_scene->pointAnimation->image().rect(), m_scene->pointAnimation->image(), m_scene->pointAnimation->image().rect());
     }
 
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
 }
 
-void ItemPoint::setScenePoint(WldScene *theScene)
+bool ItemPoint::itemTypeIsLocked()
 {
-    scene = theScene;
+    return true;
 }
 

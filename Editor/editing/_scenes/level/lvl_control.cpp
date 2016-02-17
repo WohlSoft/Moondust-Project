@@ -287,19 +287,19 @@ void LvlScene::openProps()
         if(items.first()->data(ITEM_TYPE).toString()=="Block")
         {
             MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenBlock(dynamic_cast<ItemBlock *>(items.first())->blockData);
+                    OpenBlock(dynamic_cast<ItemBlock *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="BGO")
         {
             MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenBGO(dynamic_cast<ItemBGO *>(items.first())->bgoData);
+                    OpenBGO(dynamic_cast<ItemBGO *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="NPC")
         {
             MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenNPC(dynamic_cast<ItemNPC *>(items.first())->npcData);
+                    OpenNPC(dynamic_cast<ItemNPC *>(items.first())->m_data);
         }
         else
         MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();

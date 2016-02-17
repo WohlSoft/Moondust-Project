@@ -44,65 +44,45 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
 
     QPoint sourcePos=QPoint(0,0);
     QPoint sourcePosMax=QPoint(0,0);
-    int gridSize=0,gridSizeMax=0, offsetX=0, offsetY=0, offsetXMax=0, offsetYMax=0;//, gridX, gridY, i=0;
+    QPoint offset(0,0);
+    QPoint offsetMax(0,0);
+    int gridSize=0, gridSizeMax=0;//, gridX, gridY, i=0;
     QGraphicsItem * lead = NULL;
-    //QGraphicsItemGroup *tmp = NULL;
     QString ObjType;
 
     foreach(QGraphicsItem * it, items)
     {
         if(!it) continue;
-        offsetX=0;
-        offsetY=0;
-        ObjType = it->data(0).toString();
-        if( ObjType == "TILE")
+        offset.setX(0);
+        offset.setY(0);
+        ObjType = it->data(ITEM_TYPE).toString();
+        if( ObjType == "TILE" ||
+            ObjType == "SCENERY" ||
+            ObjType == "PATH" ||
+            ObjType == "LEVEL" ||
+            ObjType == "MUSICBOX")
         {
-            sourcePos = QPoint(  dynamic_cast<ItemTile *>(it)->tileData.x, dynamic_cast<ItemTile *>(it)->tileData.y);
-            gridSize = dynamic_cast<ItemTile *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "SCENERY")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemScene *>(it)->sceneData.x, dynamic_cast<ItemScene *>(it)->sceneData.y);
-            gridSize = dynamic_cast<ItemScene *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "PATH")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemPath *>(it)->pathData.x, dynamic_cast<ItemPath *>(it)->pathData.y);
-            gridSize = dynamic_cast<ItemPath *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "LEVEL")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemLevel *>(it)->levelData.x, dynamic_cast<ItemLevel *>(it)->levelData.y);
-            gridSize = dynamic_cast<ItemLevel *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "MUSICBOX")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemMusic *>(it)->musicData.x, dynamic_cast<ItemMusic *>(it)->musicData.y);
-            gridSize = dynamic_cast<ItemMusic *>(it)->gridSize;
+            offset    = dynamic_cast<WldBaseItem *>(it)->gridOffset();
+            sourcePos = dynamic_cast<WldBaseItem *>(it)->sourcePos();
+            gridSize  = dynamic_cast<WldBaseItem *>(it)->getGridSize();
         }
 
         if(gridSize>gridSizeMax)
         {
-            offsetXMax = offsetX;
-            offsetYMax = offsetY;
+            offsetMax = offset;
             gridSizeMax = gridSize;
             sourcePosMax = sourcePos;
             lead = it;
         }
     }
 
-    QPoint offset;
     if(lead)
     {
         if( sourcePosMax==lead->scenePos().toPoint() && !force )
             return;
 
         offset=lead->scenePos().toPoint();
-        lead->setPos(QPointF(applyGrid(lead->scenePos().toPoint(), gridSizeMax, QPoint(offsetXMax,offsetYMax) ) ) );
+        lead->setPos(QPointF(applyGrid(lead->scenePos().toPoint(), gridSizeMax, QPoint(offsetMax.x(),offsetMax.y()) ) ) );
 
         offset.setX( offset.x() - lead->scenePos().toPoint().x() );
         offset.setY( offset.y() - lead->scenePos().toPoint().y() );
@@ -124,52 +104,35 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     }
 }
 
+
 void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
 {
     if(items.size()==0)
         return;
 
     QPoint sourcePos=QPoint(0,0);
-    int gridSize=0,offsetX=0, offsetY=0;//, gridX, gridY, i=0;
+    QPoint offset;
+    int gridSize=0;//, gridX, gridY, i=0;
     QString ObjType;
 
     foreach(QGraphicsItem * it, items)
     {
         if(!it) continue;
-        offsetX=0;
-        offsetY=0;
-        ObjType = it->data(0).toString();
-        if( ObjType == "TILE")
+        offset.setX(0);
+        offset.setY(0);
+        ObjType = it->data(ITEM_TYPE).toString();
+        if( ObjType == "TILE" ||
+            ObjType == "SCENERY" ||
+            ObjType == "PATH" ||
+            ObjType == "LEVEL" ||
+            ObjType == "MUSICBOX")
         {
-            sourcePos = QPoint(  dynamic_cast<ItemTile *>(it)->tileData.x, dynamic_cast<ItemTile *>(it)->tileData.y);
-            gridSize = dynamic_cast<ItemTile *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "SCENERY")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemScene *>(it)->sceneData.x, dynamic_cast<ItemScene *>(it)->sceneData.y);
-            gridSize = dynamic_cast<ItemScene *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "PATH")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemPath *>(it)->pathData.x, dynamic_cast<ItemPath *>(it)->pathData.y);
-            gridSize = dynamic_cast<ItemPath *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "LEVEL")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemLevel *>(it)->levelData.x, dynamic_cast<ItemLevel *>(it)->levelData.y);
-            gridSize = dynamic_cast<ItemLevel *>(it)->gridSize;
-        }
-        else
-        if( ObjType == "MUSICBOX")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemMusic *>(it)->musicData.x, dynamic_cast<ItemMusic *>(it)->musicData.y);
-            gridSize = dynamic_cast<ItemMusic *>(it)->gridSize;
+            offset   =  dynamic_cast<WldBaseItem *>(it)->gridOffset();
+            sourcePos = dynamic_cast<WldBaseItem *>(it)->sourcePos();
+            gridSize =  dynamic_cast<WldBaseItem *>(it)->getGridSize();
         }
 
-        it->setPos( QPointF(Grid::applyGrid(it->pos().toPoint(), gridSize, QPoint(offsetX, offsetY))) );
+        it->setPos( QPointF(Grid::applyGrid(it->pos().toPoint(), gridSize, QPoint(offset.x(), offset.y()))) );
         if( sourcePos != it->scenePos() )
             applyArrayForItem(it);
     }

@@ -674,14 +674,14 @@ void NpcEdit::loadPreview()
     npcPreview->setZValue(1);
     PreviewScene->addItem(npcPreview);
 
-    if(npcPreview->localProps.frames>1)
+    if(npcPreview->m_localProps.frames>1)
     {
         npcPreview->setData(4, "animated");
     }
 
     physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
     physics->setBrush(Qt::transparent);
-    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+    physics->setRect(0,0, npcPreview->m_localProps.width, npcPreview->m_localProps.height);
 
     physics->setZValue(777);
     ui->PreviewBox->setScene(PreviewScene);
@@ -690,12 +690,12 @@ void NpcEdit::loadPreview()
     PreviewScene->addItem(physics);
 
     npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
                 );
     physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
                 );
 
     npcPreview->_internal_animator->connect(npcPreview->_internal_animator,
@@ -717,14 +717,14 @@ void NpcEdit::updatePreview()
     npcData.direct = direction;
     npcPreview->setNpcData(npcData, &merged);
 
-    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+    physics->setRect(0,0, npcPreview->m_localProps.width, npcPreview->m_localProps.height);
     npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
                 );
     physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
                 );
 
     PreviewScene->update();

@@ -127,9 +127,9 @@ void LvlScene::hideWarpsAndDoors(bool visible)
 
     foreach (QGraphicsItem* i, items()) {
         if(i->data(ITEM_TYPE).toString()=="Water"){
-            i->setVisible(!localLayers[((ItemWater*)i)->waterData.layer].hidden && visible);
+            i->setVisible(!localLayers[((ItemWater*)i)->m_data.layer].hidden && visible);
         }else if(i->data(ITEM_TYPE).toString()=="Door_exit" || i->data(ITEM_TYPE).toString()=="Door_enter"){
-            i->setVisible(!localLayers[((ItemDoor*)i)->doorData.layer].hidden && visible);
+            i->setVisible(!localLayers[((ItemDoor*)i)->m_data.layer].hidden && visible);
         }
     }
 }
@@ -151,7 +151,7 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemBlock *>(tmp)->blockData.layer == layer.name)
+                if( dynamic_cast<ItemBlock *>(tmp)->m_data.layer == layer.name)
                 {
                     dynamic_cast<ItemBlock *>(tmp)->setVisible( !layer.hidden ); break;
                 }
@@ -163,7 +163,7 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemBGO *>(tmp)->bgoData.layer == layer.name)
+                if( dynamic_cast<ItemBGO *>(tmp)->m_data.layer == layer.name)
                 {
                     dynamic_cast<ItemBGO *>(tmp)->setVisible( !layer.hidden ); break;
                 }
@@ -175,7 +175,7 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemNPC *>(tmp)->npcData.layer == layer.name)
+                if( dynamic_cast<ItemNPC *>(tmp)->m_data.layer == layer.name)
                 {
                     dynamic_cast<ItemNPC *>(tmp)->setVisible( !layer.hidden ); break;
                 }
@@ -187,7 +187,7 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemWater *>(tmp)->waterData.layer == layer.name)
+                if( dynamic_cast<ItemWater *>(tmp)->m_data.layer == layer.name)
                 {
                     dynamic_cast<ItemWater *>(tmp)->setVisible( !layer.hidden ); break;
                 }
@@ -199,7 +199,7 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemDoor *>(tmp)->doorData.layer == layer.name)
+                if( dynamic_cast<ItemDoor *>(tmp)->m_data.layer == layer.name)
                 {
                     dynamic_cast<ItemDoor *>(tmp)->setVisible( !layer.hidden ); break;
                 }
@@ -323,32 +323,32 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
-                    modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->blockData);
-                    dynamic_cast<ItemBlock *>(SelItem)->blockData.layer = lr.name;
+                    modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->m_data);
+                    dynamic_cast<ItemBlock *>(SelItem)->m_data.layer = lr.name;
                     dynamic_cast<ItemBlock *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemBlock *>(SelItem)->arrayApply();
                 }
                 else
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
-                    modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->bgoData);
-                    dynamic_cast<ItemBGO *>(SelItem)->bgoData.layer = lr.name;
+                    modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->m_data);
+                    dynamic_cast<ItemBGO *>(SelItem)->m_data.layer = lr.name;
                     dynamic_cast<ItemBGO *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemBGO *>(SelItem)->arrayApply();
                 }
                 else
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                 {
-                    modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->npcData);
-                    dynamic_cast<ItemNPC *>(SelItem)->npcData.layer = lr.name;
+                    modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->m_data);
+                    dynamic_cast<ItemNPC *>(SelItem)->m_data.layer = lr.name;
                     dynamic_cast<ItemNPC *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemNPC *>(SelItem)->arrayApply();
                 }
                 else
                 if(SelItem->data(ITEM_TYPE).toString()=="Water")
                 {
-                    modData.physez.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
-                    dynamic_cast<ItemWater *>(SelItem)->waterData.layer = lr.name;
+                    modData.physez.push_back(dynamic_cast<ItemWater *>(SelItem)->m_data);
+                    dynamic_cast<ItemWater *>(SelItem)->m_data.layer = lr.name;
                     dynamic_cast<ItemWater *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemWater *>(SelItem)->arrayApply();
                 }
@@ -357,19 +357,19 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                         (SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                 {
                     if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->m_data;
                         tDoor.isSetOut = true;
                         tDoor.isSetIn = false;
                         modData.doors.push_back(tDoor);
                     }
                     else
                     if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->m_data;
                         tDoor.isSetOut = false;
                         tDoor.isSetIn = true;
                         modData.doors.push_back(tDoor);
                     }
-                    dynamic_cast<ItemDoor *>(SelItem)->doorData.layer = lr.name;
+                    dynamic_cast<ItemDoor *>(SelItem)->m_data.layer = lr.name;
                     dynamic_cast<ItemDoor *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemDoor *>(SelItem)->arrayApply();
                 }

@@ -264,7 +264,7 @@ void WldScene::openProps()
         if(items.first()->data(0).toString()=="LEVEL")
         {
             MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps(0,
-                          ((ItemLevel *)items.first())->levelData,
+                          ((ItemLevel *)items.first())->m_data,
                           false);
         }
         else

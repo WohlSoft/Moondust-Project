@@ -19,8 +19,6 @@
 #ifndef ITEM_PLAYERPOINT_H
 #define ITEM_PLAYERPOINT_H
 
-#include <QGraphicsPixmapItem>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -28,13 +26,11 @@
 
 class ItemPlayerPoint : public LvlBaseItem
 {
+    void construct();
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = 0);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = 0);
     ~ItemPlayerPoint();
-private:
-    void construct();
-public:
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
@@ -45,21 +41,18 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
     QPoint sourcePos();
 
     void setPointData(PlayerPoint pnt, bool init=false);
-
-    PlayerPoint pointData;
-
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
+    PlayerPoint m_data;
+
 protected:
-    int _offset_x;
-    int _offset_y;
-    QPixmap currentImage;
-    QPixmap _cur;
+    int m_offset_x;
+    int m_offset_y;
+    QPixmap m_currentImage;
+    QPixmap m_cur;
 };
 
 #endif // ITEM_PLAYERPOINT_H

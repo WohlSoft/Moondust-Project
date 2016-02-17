@@ -25,148 +25,58 @@
 #include "item_music.h"
 
 ItemMusic::ItemMusic(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : WldBaseItem(parent)
 {
     construct();
 }
 
 ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : WldBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
     setScenePoint(parentScene);
-    scene->addItem(this);
-    this->setZValue(scene->musicZ);
-    gridSize = scene->pConfigs->default_grid;
-    imageSize = QRectF(0, 0, gridSize, gridSize);
-    setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
-    setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
+    m_scene->addItem(this);
+    this->setZValue(m_scene->musicZ);
+    m_gridSize = m_scene->pConfigs->default_grid;
+    m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
+    setData(ITEM_WIDTH,  QString::number( m_gridSize ) ); //width
+    setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height
 }
 
 void ItemMusic::construct()
 {
-    gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
-    isLocked=false;
-
-    animatorID=-1;
-    musicTitle = "";
-    scene=NULL;
-    imageSize = QRectF(0, 0, gridSize, gridSize);
+    m_musicTitle = "";
+    m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
 
     setData(ITEM_TYPE, "MUSICBOX");
-    setData(ITEM_IS_ITEM, 1);
-
-    setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
-    setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
+    setData(ITEM_WIDTH, QString::number( m_gridSize ) ); //width
+    setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height
 }
 
 ItemMusic::~ItemMusic()
 {
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
-    scene->unregisterElement(this);
-}
-
-
-
-void ItemMusic::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
-    {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
-    }
-
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsItem::mousePressEvent(mouseEvent);
-}
-
-void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_musbox)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-
-    }
+    m_scene->unregisterElement(this);
 }
 
 void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    scene->contextMenuOpened = true;
+    m_scene->contextMenuOpened = true;
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
-        scene->clearSelection();
+        m_scene->clearSelection();
         this->setSelected(true);
     }
 
     this->setSelected(true);
     QMenu ItemMenu;
 
-    if(!musicTitle.isEmpty())
+    if(!m_musicTitle.isEmpty())
     {
-        QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
+        QAction *title = ItemMenu.addAction(QString("[%1]").arg(m_musicTitle));
         title->setEnabled(false);
-    }else if(musicData.id==0)
+    }else if(m_data.id==0)
     {
         QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
         title->setEnabled(false);
@@ -176,7 +86,7 @@ void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
         copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("World-Music-ID: %1").arg(musicData.id));
+            QAction *copyItemID = copyPreferences->addAction(tr("World-Music-ID: %1").arg(m_data.id));
                 copyItemID->deleteLater();
             QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
                 copyPosXY->deleteLater();
@@ -190,8 +100,8 @@ void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         ItemMenu.addSeparator();
     QAction *transform = ItemMenu.addAction(tr("Transform into"));
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("MUSIC-%1%2")
-                                                .arg(musicData.id)
-                                                .arg( musicData.music_file.isEmpty()?"":" ("+musicData.music_file+")" ) );
+                                                .arg(m_data.id)
+                                                .arg( m_data.music_file.isEmpty()?"":" ("+m_data.music_file+")" ) );
         ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
 
@@ -207,15 +117,15 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
     if(selected==play)
     {
-        scene->_edit->currentMusic = musicData.id;
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, musicData.music_file);
+        m_scene->_edit->currentMusic = m_data.id;
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, m_data.id, m_data.music_file);
         LvlMusPlay::updatePlayerState(true);
         MainWinConnect::pMainWin->setMusicButton(true);
     }
     else
     if(selected==copyItemID)
     {
-        QApplication::clipboard()->setText(QString("%1").arg(musicData.id));
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
@@ -223,8 +133,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2;")
-                               .arg(musicData.x)
-                               .arg(musicData.y)
+                               .arg(m_data.x)
+                               .arg(m_data.y)
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -233,10 +143,10 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(musicData.x)
-                               .arg(musicData.y)
-                               .arg(imageSize.width())
-                               .arg(imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_imageSize.width())
+                               .arg(m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -245,10 +155,10 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(musicData.x)
-                               .arg(musicData.y)
-                               .arg(musicData.x+imageSize.width())
-                               .arg(musicData.y+imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_data.x+m_imageSize.width())
+                               .arg(m_data.y+m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -270,7 +180,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         int transformTO;
         QString transformTO_file;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
         util::DialogToCenter(itemList, true);
 
@@ -280,14 +190,14 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             bool sameID=false;
             transformTO   = itemList->musicID;
             transformTO_file = itemList->musicFile;
-            unsigned long oldID = musicData.id;
+            unsigned long oldID = m_data.id;
 
             if(selected==transform)
-                our_items=scene->selectedItems();
+                our_items=m_scene->selectedItems();
             else
             if(selected==transform_all)
             {
-                our_items=scene->items();
+                our_items=m_scene->items();
                 sameID=true;
             }
 
@@ -295,23 +205,23 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="MUSICBOX")
                 {
-                    if((!sameID)||(((ItemMusic *) SelItem)->musicData.id==oldID))
+                    if((!sameID)||(((ItemMusic *) SelItem)->m_data.id==oldID))
                     {
-                        oldData.music.push_back( ((ItemMusic *) SelItem)->musicData );
+                        oldData.music.push_back( ((ItemMusic *) SelItem)->m_data );
                         ((ItemMusic *) SelItem)->transformTo(transformTO, transformTO_file);
-                        newData.music.push_back( ((ItemMusic *) SelItem)->musicData );
+                        newData.music.push_back( ((ItemMusic *) SelItem)->m_data );
                     }
                 }
             }
         }
         delete itemList;
         if(!newData.music.isEmpty())
-            scene->addTransformHistory(newData, oldData);
+            m_scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
     {
-        scene->removeSelectedWldItems();
+        m_scene->removeSelectedWldItems();
     }
 }
 
@@ -334,12 +244,12 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 void ItemMusic::arrayApply()
 {
     bool found=false;
-    musicData.x = qRound(this->scenePos().x());
-    musicData.y = qRound(this->scenePos().y());
+    m_data.x = qRound(this->scenePos().x());
+    m_data.y = qRound(this->scenePos().y());
 
-    if(musicData.index < (unsigned int)scene->WldData->music.size())
+    if(m_data.index < (unsigned int)m_scene->WldData->music.size())
     { //Check index
-        if(musicData.array_id == scene->WldData->music[musicData.index].array_id)
+        if(m_data.array_id == m_scene->WldData->music[m_data.index].array_id)
         {
             found=true;
         }
@@ -348,28 +258,28 @@ void ItemMusic::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->WldData->music[musicData.index] = musicData; //apply current musicData
+        m_scene->WldData->music[m_data.index] = m_data; //apply current musicData
     }
     else
-    for(int i=0; i<scene->WldData->music.size(); i++)
+    for(int i=0; i<m_scene->WldData->music.size(); i++)
     { //after find it into array
-        if(scene->WldData->music[i].array_id == musicData.array_id)
+        if(m_scene->WldData->music[i].array_id == m_data.array_id)
         {
-            musicData.index = i;
-            scene->WldData->music[i] = musicData;
+            m_data.index = i;
+            m_scene->WldData->music[i] = m_data;
             break;
         }
     }
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 void ItemMusic::removeFromArray()
 {
     bool found=false;
-    if(musicData.index < (unsigned int)scene->WldData->music.size())
+    if(m_data.index < (unsigned int)m_scene->WldData->music.size())
     { //Check index
-        if(musicData.array_id == scene->WldData->music[musicData.index].array_id)
+        if(m_data.array_id == m_scene->WldData->music[m_data.index].array_id)
         {
             found=true;
         }
@@ -377,93 +287,88 @@ void ItemMusic::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->music.removeAt(musicData.index);
+        m_scene->WldData->music.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<scene->WldData->music.size(); i++)
+    for(int i=0; i<m_scene->WldData->music.size(); i++)
     {
-        if(scene->WldData->music[i].array_id == musicData.array_id)
+        if(m_scene->WldData->music[i].array_id == m_data.array_id)
         {
-            scene->WldData->music.removeAt(i); break;
+            m_scene->WldData->music.removeAt(i); break;
         }
     }
 }
 
 void ItemMusic::returnBack()
 {
-    setPos(musicData.x, musicData.y);
-}
-
-int ItemMusic::getGridSize()
-{
-    return gridSize;
+    setPos(m_data.x, m_data.y);
 }
 
 QPoint ItemMusic::sourcePos()
 {
-    return QPoint(musicData.x, musicData.y);
+    return QPoint(m_data.x, m_data.y);
+}
+
+bool ItemMusic::itemTypeIsLocked()
+{
+    return m_scene->lock_musbox;
 }
 
 void ItemMusic::setMusicData(WorldMusic inD)
 {
-    musicData = inD;
-    setPos(musicData.x, musicData.y);
-    setData(ITEM_ID, QString::number(musicData.id) );
-    setData(ITEM_ARRAY_ID, QString::number(musicData.array_id) );
+    m_data = inD;
+    setPos(m_data.x, m_data.y);
+    setData(ITEM_ID, QString::number(m_data.id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
 
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 
 QRectF ItemMusic::boundingRect() const
 {
-    return imageSize;
+    return m_imageSize;
 }
 
 void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    if(scene==NULL)
+    if(m_scene==NULL)
     {
         painter->setPen(QPen(QBrush(Qt::yellow), 2, Qt::SolidLine));
         painter->setBrush(Qt::yellow);
         painter->setOpacity(0.5);
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setOpacity(1);
         painter->setBrush(Qt::transparent);
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
     else
     {
-       painter->drawPixmap(scene->musicBoxImg.rect(), scene->musicBoxImg, scene->musicBoxImg.rect());
+       painter->drawPixmap(m_scene->musicBoxImg.rect(), m_scene->musicBoxImg, m_scene->musicBoxImg.rect());
     }
 
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
-}
-
-void ItemMusic::setScenePoint(WldScene *theScene)
-{
-    scene = theScene;
 }
 
 void ItemMusic::transformTo(int musicID, QString musicFile)
 {
-    int j = scene->pConfigs->getMusWldI(musicID);
+    int j = m_scene->pConfigs->getMusWldI(musicID);
     if(j>=0)
     {
-        musicTitle =
-                (scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
+        m_musicTitle =
+                (m_scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
                     musicFile:
-                    scene->pConfigs->main_music_wld[j].name;
+                    m_scene->pConfigs->main_music_wld[j].name;
 
-        musicData.id         = musicID;
-        musicData.music_file = musicFile;
+        m_data.id         = musicID;
+        m_data.music_file = musicFile;
         arrayApply();
     }
 }

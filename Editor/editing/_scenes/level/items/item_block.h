@@ -19,19 +19,6 @@
 #ifndef ITEM_BLOCK_H
 #define ITEM_BLOCK_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -39,14 +26,12 @@
 
 class ItemBlock : public LvlBaseItem
 {
+    void construct();
 public:
     ItemBlock(LvlScene *parentScene, QGraphicsItem *parent=0);
     ItemBlock(QGraphicsItem *parent=0);
     ~ItemBlock();
-private:
-    void construct();
 
-public:
     void setMainPixmap(/*const QPixmap &pixmap*/);
     void setBlockData(LevelBlock inD, obj_block *mergedSet=0, long *animator=0);
     void setScenePoint(LvlScene *theScene);
@@ -71,22 +56,20 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
     QPoint sourcePos();
 
-    LevelBlock blockData;
-    obj_block localProps;
+    LevelBlock  m_data;
+    obj_block   m_localProps;
 
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    QGraphicsItemGroup * grp;
-    QGraphicsItem * includedNPC;
-    QPixmap currentImage;
-    bool sizable;
-    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
+    QGraphicsItemGroup * m_grp;
+    QGraphicsItem *      m_includedNPC;
+    QPixmap              m_currentImage;
+    bool                 m_sizable;
+    void drawSizableBlock(int w, int h, QPixmap srcimg);
 };
 
 #endif // ITEM_BLOCK_H

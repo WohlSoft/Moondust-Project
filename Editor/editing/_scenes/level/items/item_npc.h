@@ -19,19 +19,6 @@
 #ifndef ITEM_NPC_H
 #define ITEM_NPC_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -39,14 +26,12 @@
 
 class ItemNPC : public LvlBaseItem
 {
+    void construct();
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsItem *parent=0);
     ItemNPC(bool noScene=false, QGraphicsItem *parent=0);
     ~ItemNPC();
-private:
-    void construct();
 
-public:
     void setMainPixmap(const QPixmap &pixmap);
     void setNpcData(LevelNPC inD, obj_npc *mergedSet=0, long *animator_id=0);
     void setContextMenu(QMenu &menu);
@@ -73,19 +58,15 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
     QPoint sourcePos();
 
-    void setFrame(int);
-    LevelNPC npcData;
-    obj_npc localProps;
+    LevelNPC    m_data;
+    obj_npc     m_localProps;
 
-    int imgOffsetX;
-    int imgOffsetY;
-    bool no_npc_collions;
-    int _offset_x;
-    int _offset_y;
+    int m_imgOffsetX;
+    int m_imgOffsetY;
+    int m_offset_x;
+    int m_offset_y;
 
     void refreshOffsets();
 
@@ -95,24 +76,19 @@ public:
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+    bool    m_extAnimator;
+    long    m_animatorID;
+    QRectF  m_imageSize;
 
-    bool extAnimator;
-    long animatorID;
-    QRectF imageSize;
+    bool    m_DisableScene;
 
-    bool DisableScene;
+    QGraphicsItemGroup *    m_grp;
+    QGraphicsItem *         m_includedNPC;
+    QGraphicsPixmapItem *   m_generatorArrow;
 
-    QGraphicsItemGroup * grp;
-    QGraphicsItem * includedNPC;
-    QGraphicsPixmapItem * generatorArrow;
-
-    QRectF offseted;
-
-    bool animated;
-    int direction;
-
-    int curDirect;
-
+    QRectF  m_offseted;
+    bool    m_animated;
+    int     m_direction;
 };
 
 #endif // ITEM_NPC_H

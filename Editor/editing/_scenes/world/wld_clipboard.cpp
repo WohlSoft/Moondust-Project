@@ -44,7 +44,7 @@ WorldData WldScene::copy(bool cut)
             if( ObjType == "TILE")
             {
                 ItemTile* sourceTile = (ItemTile*)(*it);
-                copyData.tiles.push_back(sourceTile->tileData);
+                copyData.tiles.push_back(sourceTile->m_data);
                 if(cut){
                     sourceTile->removeFromArray();
                     removeItem(*it);
@@ -55,7 +55,7 @@ WorldData WldScene::copy(bool cut)
             if( ObjType == "SCENERY")
             {
                 ItemScene* sourceScene = (ItemScene *)(*it);
-                copyData.scenery.push_back(sourceScene->sceneData);
+                copyData.scenery.push_back(sourceScene->m_data);
                 if(cut){
                     sourceScene->removeFromArray();
                     removeItem(*it);
@@ -66,7 +66,7 @@ WorldData WldScene::copy(bool cut)
             if( ObjType == "PATH")
             {
                 ItemPath* sourcePath = (ItemPath *)(*it);
-                copyData.paths.push_back(sourcePath->pathData);
+                copyData.paths.push_back(sourcePath->m_data);
                 if(cut){
                     sourcePath->removeFromArray();
                     removeItem(*it);
@@ -77,7 +77,7 @@ WorldData WldScene::copy(bool cut)
             if( ObjType == "LEVEL")
             {
                 ItemLevel* sourceLevel = (ItemLevel *)(*it);
-                copyData.levels.push_back(sourceLevel->levelData);
+                copyData.levels.push_back(sourceLevel->m_data);
                 if(cut){
                     sourceLevel->removeFromArray();
                     removeItem(*it);
@@ -88,7 +88,7 @@ WorldData WldScene::copy(bool cut)
             if( ObjType == "MUSICBOX")
             {
                 ItemMusic* sourceMusic = (ItemMusic *)(*it);
-                copyData.music.push_back(sourceMusic->musicData);
+                copyData.music.push_back(sourceMusic->m_data);
                 if(cut){
                     sourceMusic->removeFromArray();
                     removeItem(*it);

@@ -975,26 +975,26 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
         if((*it)->data(0).toString()=="Block")
         {
             bool isMod=false;
-            if( ((ItemBlock *)(*it))->blockData.event_destroy ==  eventName)
-                {((ItemBlock *)(*it))->blockData.event_destroy = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->blockData.event_hit ==  eventName)
-                {((ItemBlock *)(*it))->blockData.event_hit = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->blockData.event_emptylayer ==  eventName)
-                {((ItemBlock *)(*it))->blockData.event_emptylayer = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->m_data.event_destroy ==  eventName)
+                {((ItemBlock *)(*it))->m_data.event_destroy = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->m_data.event_hit ==  eventName)
+                {((ItemBlock *)(*it))->m_data.event_hit = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->m_data.event_emptylayer ==  eventName)
+                {((ItemBlock *)(*it))->m_data.event_emptylayer = newEventName; isMod=true;}
             if(isMod){ ((ItemBlock *)(*it))->arrayApply(); }
         }
         else
         if((*it)->data(0).toString()=="NPC")
         {
             bool isMod=false;
-            if( ((ItemNPC *)(*it))->npcData.event_activate ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_activate = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->npcData.event_die ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_die = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->npcData.event_talk ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_talk = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->npcData.event_emptylayer ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_emptylayer = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->m_data.event_activate ==  eventName)
+                {((ItemNPC *)(*it))->m_data.event_activate = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->m_data.event_die ==  eventName)
+                {((ItemNPC *)(*it))->m_data.event_die = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->m_data.event_talk ==  eventName)
+                {((ItemNPC *)(*it))->m_data.event_talk = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->m_data.event_emptylayer ==  eventName)
+                {((ItemNPC *)(*it))->m_data.event_emptylayer = newEventName; isMod=true;}
             if(isMod) {((ItemNPC *)(*it))->arrayApply();}
         }
     }

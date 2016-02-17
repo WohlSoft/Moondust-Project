@@ -78,14 +78,14 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
                 if(!npc) continue;
                 for(int j=0; j<_found_garbage.size();j++)
                 {
-                    if(npc->npcData.array_id==_found_garbage[j].array_id)
+                    if(npc->m_data.array_id==_found_garbage[j].array_id)
                     {
                         if(help) //Select & jump
                         {
                             npc->setSelected(true);
                             jumpTo=npc->scenePos();
                         } else { //Delete actual NPC
-                            removedItems.npc.push_back(npc->npcData);
+                            removedItems.npc.push_back(npc->m_data);
                             npc->removeFromArray();
                             delete npc;
                         }

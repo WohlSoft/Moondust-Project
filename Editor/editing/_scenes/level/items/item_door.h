@@ -19,19 +19,6 @@
 #ifndef ITEM_DOOR_H
 #define ITEM_DOOR_H
 
-#include <QGraphicsItem>
-#include <QGraphicsRectItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -39,13 +26,11 @@
 
 class ItemDoor : public LvlBaseItem
 {
+    void construct();
 public:
     ItemDoor(QGraphicsItem *parent=0);
     ItemDoor(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemDoor();
-private:
-    void construct();
-public:
 
     void setDoorData(LevelDoor inD, int doorDir, bool init=false);
     void setScenePoint(LvlScene *theScene);
@@ -65,24 +50,19 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
     QPoint sourcePos();
 
-    LevelDoor doorData;
-
-    QSize itemSize;
+    LevelDoor   m_data;
+    QSize       m_itemSize;
 
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    QBrush _brush;
-    QPen   _pen;
-    QGraphicsItemGroup * grp;
-    QGraphicsPixmapItem * doorLabel;
-    //QGraphicsTextItem * doorLabel_shadow;
-
+    QBrush m_brush;
+    QPen   m_pen;
+    QGraphicsItemGroup *    m_grp;
+    QGraphicsPixmapItem *   m_doorLabel;
 };
 
 #endif // ITEM_DOOR_H

@@ -45,7 +45,7 @@ LevelData LvlScene::copy(bool cut)
             if( ObjType == "Block")
             {
                 ItemBlock* sourceBlock = (ItemBlock *)(*it);
-                copyData.blocks.push_back(sourceBlock->blockData);
+                copyData.blocks.push_back(sourceBlock->m_data);
                 if(cut){
                     sourceBlock->removeFromArray();
                     delete (*it);
@@ -55,7 +55,7 @@ LevelData LvlScene::copy(bool cut)
             if( ObjType == "BGO")
             {
                 ItemBGO* sourceBGO = (ItemBGO *)(*it);
-                copyData.bgo.push_back(sourceBGO->bgoData);
+                copyData.bgo.push_back(sourceBGO->m_data);
                 if(cut){
                     sourceBGO->removeFromArray();
                     delete (*it);
@@ -65,7 +65,7 @@ LevelData LvlScene::copy(bool cut)
             if( ObjType == "NPC")
             {
                 ItemNPC* sourceNPC = (ItemNPC *)(*it);
-                copyData.npc.push_back(sourceNPC->npcData);
+                copyData.npc.push_back(sourceNPC->m_data);
                 if(cut){
                     sourceNPC->removeFromArray();
                     delete (*it);
@@ -75,7 +75,7 @@ LevelData LvlScene::copy(bool cut)
             if( ObjType == "Water")
             {
                 ItemWater* sourceWater = (ItemWater *)(*it);
-                copyData.physez.push_back(sourceWater->waterData);
+                copyData.physez.push_back(sourceWater->m_data);
                 if(cut){
                     sourceWater->removeFromArray();
                     delete (*it);

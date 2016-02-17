@@ -19,42 +19,22 @@
 #ifndef ItemLevel_H
 #define ItemLevel_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/wld_filedata.h>
 
 #include "../wld_scene.h"
 #include "wld_base_item.h"
 
-class ItemLevel : public QObject,
-                  public QGraphicsItem,
-                  public WldBaseItem
+class ItemLevel : public WldBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+    void construct();
 public:
     ItemLevel(QGraphicsItem *parent=0);
     ItemLevel(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemLevel();
-private:
-    void construct();
-public:
 
     void setLevelData(WorldLevels inD, obj_w_level *mergedSet=0,
                       long *animator_id=0, long *path_id=0, long *bPath_id=0
                       );
-    void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -69,59 +49,43 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    void returnBack();
-    int getGridSize();
+    void   returnBack();
     QPoint sourcePos();
 
-    void setPath(bool p);
-    void setbPath(bool p);
+    void setShowSmallPathBG(bool p);
+    void setShowBigPathBG(bool p);
 
     void alwaysVisible(bool v);
 
-    WorldLevels levelData;
-    obj_w_level localProps;
+    WorldLevels m_data;
+    obj_w_level m_localProps;
 
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
-    int imgOffsetX;
-    int imgOffsetY;
-
-    int imgOffsetXp;
-    int imgOffsetYp;
-
-    int imgOffsetXbp;
-    int imgOffsetYbp;
-
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
-
+    bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
 private:
+    //! Offset X of renderable image of a "small path background"
+    int     m_imgOffsetXp;
+    //! Offset Y of renderable image of a "small path background"
+    int     m_imgOffsetYp;
 
-    QRectF imageSizeTarget;
+    //! Offset X of renderable image of a "big path background"
+    int     m_imgOffsetXbp;
+    //! Offset Y of renderable image of a "big path background"
+    int     m_imgOffsetYbp;
 
-    long animatorID;
-    QRectF imageSize;
+    //! Maximal size of renderable area (include all additional background images)
+    QRectF  m_imageSizeTarget;
 
-    long pathID;
-    QRectF imageSizeP;
+    //! ID of a "small path background" image (one of Level Entrances ID's)
+    long    m_pathID;
+    //! Size of a "small path background" renderable image
+    QRectF  m_imageSizeP;
 
-    long bPathID;
-    QRectF imageSizeBP;
-
-    bool animated;
-    WldScene * scene;
-
+    //! ID of a "big path background" image (one of Level Entrances ID's)
+    long    m_bPathID;
+    //! Size of a "big path background" renderable image
+    QRectF  m_imageSizeBP;
 };
 
 #endif // ItemLevel_H

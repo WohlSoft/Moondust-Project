@@ -167,7 +167,7 @@ void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
     QPoint newPos = QPoint(musicbox.x, musicbox.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(musicbox.x, musicbox.y), MusicBoxItem->gridSize);
+        newPos = applyGrid(QPoint(musicbox.x, musicbox.y), MusicBoxItem->getGridSize());
         musicbox.x = newPos.x();
         musicbox.y = newPos.y();
     }
@@ -175,7 +175,7 @@ void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
     MusicBoxItem->setMusicData(musicbox);
     if(j>=0)
     {
-        MusicBoxItem->musicTitle =
+        MusicBoxItem->m_musicTitle =
                 (pConfigs->music_w_custom_id==musicbox.id) ?
                     musicbox.music_file:
                     pConfigs->main_music_wld[j].name;

@@ -19,40 +19,20 @@
 #ifndef ItemTile_H
 #define ItemTile_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/wld_filedata.h>
 
 #include "../wld_scene.h"
 #include "wld_base_item.h"
 
-class ItemTile : public QObject,
-                 public QGraphicsItem,
-                 public WldBaseItem
+class ItemTile : public WldBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+    void construct();
 public:
     ItemTile(QGraphicsItem *parent=0);
     ItemTile(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemTile();
-private:
-    void construct();
-public:
 
     void setTileData(WorldTiles inD, obj_w_tile *mergedSet=0, long *animator_id=0);
-    void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -68,34 +48,14 @@ public:
     void removeFromArray();
 
     void returnBack();
-    int getGridSize();
     QPoint sourcePos();
 
-    WorldTiles tileData;
-    obj_w_tile localProps;
+    WorldTiles m_data;
+    obj_w_tile m_localProps;
 
-    int gridSize;
-
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
+    bool itemTypeIsLocked();
 
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private:
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-    WldScene * scene;
-
 };
 
 #endif // ItemTile_H

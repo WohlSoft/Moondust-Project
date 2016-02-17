@@ -18,40 +18,20 @@
 #ifndef ITEM_MUSIC_H
 #define ITEM_MUSIC_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/wld_filedata.h>
 
 #include "../wld_scene.h"
 #include "wld_base_item.h"
 
-class ItemMusic : public QObject,
-                  public QGraphicsItem,
-                  public WldBaseItem
+class ItemMusic : public WldBaseItem
 {
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+    void construct();
 public:
     ItemMusic(QGraphicsItem *parent=0);
     ItemMusic(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemMusic();
-private:
-    void construct();
-public:
 
     void setMusicData(WorldMusic inD);
-    void setScenePoint(WldScene *theScene);
     void transformTo(int musicID, QString musicFile);
 
     QRectF boundingRect() const;
@@ -61,36 +41,14 @@ public:
     void removeFromArray();
 
     void returnBack();
-    int getGridSize();
     QPoint sourcePos();
 
-    WorldMusic musicData;
-    QString musicTitle;
+    WorldMusic  m_data;
+    QString     m_musicTitle;
 
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
-
-    //Locks
-    bool isLocked;
-    void setLocked(bool lock);
+    bool itemTypeIsLocked();
 
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
-
-protected:
-    bool mouseLeft;
-    bool mouseMid;
-    bool mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private:
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-    WldScene * scene;
-
 };
 
 

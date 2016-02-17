@@ -19,19 +19,6 @@
 #ifndef ITEM_BGO_H
 #define ITEM_BGO_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -39,13 +26,11 @@
 
 class ItemBGO : public LvlBaseItem
 {
+    void construct();
 public:
     ItemBGO(QGraphicsItem *parent=0);
     ItemBGO(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemBGO();
-private:
-    void construct();
-public:
 
     void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
 
@@ -63,16 +48,14 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
-    QPoint sourcePos();
+    void    returnBack();
+    QPoint  sourcePos();
 
-    LevelBGO bgoData;
-    obj_bgo localProps;
+    LevelBGO    m_data;
+    obj_bgo     m_localProps;
 
-    int zMode;
-    qreal zOffset;
+    int         m_zMode;
+    qreal       m_zOffset;
 
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *event );

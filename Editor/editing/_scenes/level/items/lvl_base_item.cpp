@@ -22,14 +22,14 @@
 LvlBaseItem::LvlBaseItem(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
-    scene=NULL;
+    m_scene=NULL;
     construct();
 }
 
 LvlBaseItem::LvlBaseItem(LvlScene *parentScene, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
-    scene=parentScene;
+    m_scene=parentScene;
     construct();
 }
 
@@ -38,17 +38,17 @@ LvlBaseItem::~LvlBaseItem()
 
 void LvlBaseItem::construct()
 {
-    gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
-    isLocked=false;
+    m_gridSize=32;
+    m_gridOffsetX=0;
+    m_gridOffsetY=0;
+    m_locked=false;
 
-    animatorID=-1;
-    imageSize = QRectF(0,0,10,10);
+    m_animatorID=-1;
+    m_imageSize = QRectF(0,0,10,10);
 
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
+    m_mouseLeft=false;
+    m_mouseMid=false;
+    m_mouseRight=false;
 
     setData(ITEM_IS_ITEM, 1);
 }
@@ -69,12 +69,12 @@ void LvlBaseItem::setLayer(QString layer)
 
 int LvlBaseItem::getGridSize()
 {
-    return 1;
+    return m_gridSize;
 }
 
 QPoint LvlBaseItem::gridOffset()
 {
-    return QPoint(0,0);
+    return QPoint(m_gridOffsetX, m_gridOffsetY);
 }
 
 QPoint LvlBaseItem::sourcePos()
@@ -91,7 +91,7 @@ void LvlBaseItem::setLocked(bool lock)
 {
     this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
     this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
+    m_locked = lock;
 }
 
 bool LvlBaseItem::itemTypeIsLocked()
@@ -101,7 +101,7 @@ bool LvlBaseItem::itemTypeIsLocked()
 
 void LvlBaseItem::setScenePoint(LvlScene *theScene)
 {
-    scene = theScene;
+    m_scene = theScene;
 }
 
 void LvlBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -111,7 +111,7 @@ void LvlBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         QGraphicsItem::mousePressEvent(mouseEvent); return;
     }
 
-    if(scene->DrawMode)
+    if(m_scene->DrawMode)
     {
         unsetCursor();
         ungrabMouse();
@@ -120,18 +120,18 @@ void LvlBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         return;
     }
     //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
+    if((m_mouseLeft)||(m_mouseMid)||(m_mouseRight))
     {
         mouseEvent->accept();
         return;
     }
 
     if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
+        m_mouseLeft=true;
     if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
+        m_mouseMid=true;
     if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
+        m_mouseRight=true;
 
     QGraphicsItem::mousePressEvent(mouseEvent);
 }
@@ -141,11 +141,11 @@ void LvlBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     int multimouse=0;
     bool callContext=false;
 
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
+    if(((m_mouseMid)||(m_mouseRight))&&( m_mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
         multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
+    if( (((m_mouseLeft)||(m_mouseRight)))&&( m_mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
         multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
+    if((((m_mouseLeft)||(m_mouseMid)))&&( m_mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
         multimouse++;
     if(multimouse>0)
     {
@@ -153,23 +153,23 @@ void LvlBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
+        m_mouseLeft=false;
 
     if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
+        m_mouseMid=false;
 
     if( mouseEvent->button()==Qt::RightButton )
     {
         callContext=true;
-        mouseRight=false;
+        m_mouseRight=false;
     }
 
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
 
     /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
+    if((callContext)&&(!m_scene->contextMenuOpened))
     {
-        if((!itemTypeIsLocked())&&(!scene->DrawMode)&&(!isLocked))
+        if((!itemTypeIsLocked())&&(!m_scene->DrawMode)&&(!m_locked))
         {
             contextMenu(mouseEvent);
         }

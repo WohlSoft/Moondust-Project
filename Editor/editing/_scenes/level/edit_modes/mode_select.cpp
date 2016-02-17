@@ -101,19 +101,19 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 if(itp=="Block")
                 {
                     ItemBlock* blk= qgraphicsitem_cast<ItemBlock*>(it);
-                    if(blk) LvlPlacingItems::blockSet=blk->blockData;
+                    if(blk) LvlPlacingItems::blockSet=blk->m_data;
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true); return;
                 }
                 else if(itp=="BGO")
                 {
                     ItemBGO* blk= qgraphicsitem_cast<ItemBGO*>(it);
-                    if(blk) LvlPlacingItems::bgoSet=blk->bgoData;
+                    if(blk) LvlPlacingItems::bgoSet=blk->m_data;
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true); return;
                 }
                 else if(itp=="NPC")
                 {
                     ItemNPC* blk= qgraphicsitem_cast<ItemNPC*>(it);
-                    if(blk) LvlPlacingItems::npcSet=blk->npcData;
+                    if(blk) LvlPlacingItems::npcSet=blk->m_data;
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true); return;
                 }
             }
@@ -228,44 +228,44 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
                 //Applay move into main array
-                historySourceBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->blockData);
+                historySourceBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->m_data);
                 //dynamic_cast<ItemBlock *>(*it)->blockData.x = (long)(*it)->scenePos().x();
                 //dynamic_cast<ItemBlock *>(*it)->blockData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBlock *>(*it)->arrayApply();
-                historyBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->blockData);
+                historyBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->m_data);
                 s->LvlData->modified = true;
             }
             else
             if( ObjType == "BGO")
             {
                 //Applay move into main array
-                historySourceBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->bgoData);
+                historySourceBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->m_data);
                 //dynamic_cast<ItemBGO *>(*it)->bgoData.x = (long)(*it)->scenePos().x();
                 //dynamic_cast<ItemBGO *>(*it)->bgoData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBGO *>(*it)->arrayApply();
-                historyBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->bgoData);
+                historyBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->m_data);
                 s->LvlData->modified = true;
             }
             else
             if( ObjType == "NPC")
             {
                 //Applay move into main array
-                historySourceBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->npcData);
+                historySourceBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->m_data);
                 //dynamic_cast<ItemNPC *>(*it)->npcData.x = (long)(*it)->scenePos().x();
                 //dynamic_cast<ItemNPC *>(*it)->npcData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemNPC *>(*it)->arrayApply();
-                historyBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->npcData);
+                historyBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->m_data);
                 s->LvlData->modified = true;
             }
             else
             if( ObjType == "Water")
             {
                 //Applay move into main array
-                historySourceBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                historySourceBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->m_data);
                 //dynamic_cast<ItemWater *>(*it)->waterData.x = (long)(*it)->scenePos().x();
                 //dynamic_cast<ItemWater *>(*it)->waterData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemWater *>(*it)->arrayApply();
-                historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->m_data);
                 s->LvlData->modified = true;
             }
             else
@@ -273,21 +273,21 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //Applay move into main array
                 //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->m_data;
                 oldDoorData.isSetIn = true;
                 oldDoorData.isSetOut = false;
                 historySourceBuffer.doors.push_back(oldDoorData);
-                dynamic_cast<ItemDoor *>(*it)->doorData.ix = (long)(*it)->scenePos().x();
-                dynamic_cast<ItemDoor *>(*it)->doorData.iy = (long)(*it)->scenePos().y();
-                if(( dynamic_cast<ItemDoor *>(*it)->doorData.lvl_i)||
-                     dynamic_cast<ItemDoor *>(*it)->doorData.lvl_o)
+                dynamic_cast<ItemDoor *>(*it)->m_data.ix = (long)(*it)->scenePos().x();
+                dynamic_cast<ItemDoor *>(*it)->m_data.iy = (long)(*it)->scenePos().y();
+                if(( dynamic_cast<ItemDoor *>(*it)->m_data.lvl_i)||
+                     dynamic_cast<ItemDoor *>(*it)->m_data.lvl_o)
                 {
-                    dynamic_cast<ItemDoor *>(*it)->doorData.ox = (long)(*it)->scenePos().x();
-                    dynamic_cast<ItemDoor *>(*it)->doorData.oy = (long)(*it)->scenePos().y();
+                    dynamic_cast<ItemDoor *>(*it)->m_data.ox = (long)(*it)->scenePos().x();
+                    dynamic_cast<ItemDoor *>(*it)->m_data.oy = (long)(*it)->scenePos().y();
                 }
 
                 dynamic_cast<ItemDoor *>(*it)->arrayApply();
-                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->m_data;
                 newDoorData.isSetIn = true;
                 newDoorData.isSetOut = false;
                 historyBuffer.doors.push_back(newDoorData);
@@ -299,20 +299,20 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //Applay move into main array
                 //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->m_data;
                 oldDoorData.isSetIn = false;
                 oldDoorData.isSetOut = true;
                 historySourceBuffer.doors.push_back(oldDoorData);
-                dynamic_cast<ItemDoor *>(*it)->doorData.ox = (long)(*it)->scenePos().x();
-                dynamic_cast<ItemDoor *>(*it)->doorData.oy = (long)(*it)->scenePos().y();
-                if(( dynamic_cast<ItemDoor *>(*it)->doorData.lvl_i)||
-                     dynamic_cast<ItemDoor *>(*it)->doorData.lvl_o)
+                dynamic_cast<ItemDoor *>(*it)->m_data.ox = (long)(*it)->scenePos().x();
+                dynamic_cast<ItemDoor *>(*it)->m_data.oy = (long)(*it)->scenePos().y();
+                if(( dynamic_cast<ItemDoor *>(*it)->m_data.lvl_i)||
+                     dynamic_cast<ItemDoor *>(*it)->m_data.lvl_o)
                 {
-                    dynamic_cast<ItemDoor *>(*it)->doorData.ix = (long)(*it)->scenePos().x();
-                    dynamic_cast<ItemDoor *>(*it)->doorData.iy = (long)(*it)->scenePos().y();
+                    dynamic_cast<ItemDoor *>(*it)->m_data.ix = (long)(*it)->scenePos().x();
+                    dynamic_cast<ItemDoor *>(*it)->m_data.iy = (long)(*it)->scenePos().y();
                 }
                 dynamic_cast<ItemDoor *>(*it)->arrayApply();
-                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->m_data;
                 newDoorData.isSetIn = false;
                 newDoorData.isSetOut = true;
                 historyBuffer.doors.push_back(newDoorData);
@@ -322,11 +322,11 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(ObjType == "playerPoint" )
             {
-                 historySourceBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->pointData);
+                 historySourceBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->m_data);
                  //dynamic_cast<ItemPlayerPoint *>(*it)->pointData.x =(long)(*it)->scenePos().x();
                  //dynamic_cast<ItemPlayerPoint *>(*it)->pointData.y =(long)(*it)->scenePos().y();
                  dynamic_cast<ItemPlayerPoint *>(*it)->arrayApply();
-                 historyBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->pointData);
+                 historyBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->m_data);
             }
         }////////////////////////SECOND FETCH///////////////////////
 
@@ -380,47 +380,47 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
 
     if( ObjType == "NPC")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
-        gridSize = dynamic_cast<ItemNPC *>(it)->gridSize;
-        offsetX = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_x;
-        offsetY = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_y;
+        sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->m_data.x, dynamic_cast<ItemNPC *>(it)->m_data.y);
+        gridSize = dynamic_cast<ItemNPC *>(it)->m_gridSize;
+        offsetX = dynamic_cast<ItemNPC *>(it)->m_localProps.grid_offset_x;
+        offsetY = dynamic_cast<ItemNPC *>(it)->m_localProps.grid_offset_y;
     }
     else
     if( ObjType == "Block")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemBlock *>(it)->blockData.x, dynamic_cast<ItemBlock *>(it)->blockData.y);
-        gridSize = dynamic_cast<ItemBlock *>(it)->gridSize;
+        sourcePos = QPoint(  dynamic_cast<ItemBlock *>(it)->m_data.x, dynamic_cast<ItemBlock *>(it)->m_data.y);
+        gridSize = dynamic_cast<ItemBlock *>(it)->m_gridSize;
         //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
     }
     else
     if( ObjType == "BGO")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemBGO *>(it)->bgoData.x, dynamic_cast<ItemBGO *>(it)->bgoData.y);
-        gridSize = dynamic_cast<ItemBGO *>(it)->gridSize;
-        offsetX = dynamic_cast<ItemBGO *>(it)->gridOffsetX;
-        offsetY = dynamic_cast<ItemBGO *>(it)->gridOffsetY;
+        sourcePos = QPoint(  dynamic_cast<ItemBGO *>(it)->m_data.x, dynamic_cast<ItemBGO *>(it)->m_data.y);
+        gridSize = dynamic_cast<ItemBGO *>(it)->m_gridSize;
+        offsetX = dynamic_cast<ItemBGO *>(it)->m_gridOffsetX;
+        offsetY = dynamic_cast<ItemBGO *>(it)->m_gridOffsetY;
     }
     else
     if( ObjType == "Water")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->waterData.x, dynamic_cast<ItemWater *>(it)->waterData.y);
+        sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->m_data.x, dynamic_cast<ItemWater *>(it)->m_data.y);
         gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
     }
     else
     if( ObjType == "Door_enter")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ix, dynamic_cast<ItemDoor *>(it)->doorData.iy);
+        sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ix, dynamic_cast<ItemDoor *>(it)->m_data.iy);
         gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
     }
     else
     if( ObjType == "Door_exit"){
-        sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ox, dynamic_cast<ItemDoor *>(it)->doorData.oy);
+        sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ox, dynamic_cast<ItemDoor *>(it)->m_data.oy);
         gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
     }
     else
     if( ObjType == "playerPoint" )
     {
         gridSize = 2 ;
-        sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
+        sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->m_data.x, dynamic_cast<ItemPlayerPoint *>(it)->m_data.y);
     }
 }

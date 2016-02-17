@@ -217,55 +217,55 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
            if( ObjType == "TILE")
            {
                //Applay move into main array
-               historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
-               ((ItemTile *)(*it))->tileData.x = (long)(*it)->scenePos().x();
-               ((ItemTile *)(*it))->tileData.y = (long)(*it)->scenePos().y();
+               historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
+               ((ItemTile *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+               ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemTile *)(*it))->arrayApply();
-               historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
+               historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
                s->WldData->modified = true;
            }
            else
            if( ObjType == "SCENERY")
            {
                //Applay move into main array
-               historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
-               ((ItemScene *)(*it))->sceneData.x = (long)(*it)->scenePos().x();
-               ((ItemScene *)(*it))->sceneData.y = (long)(*it)->scenePos().y();
+               historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
+               ((ItemScene *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+               ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemScene *)(*it))->arrayApply();
-               historyBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
+               historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
                s->WldData->modified = true;
            }
            else
            if( ObjType == "PATH")
            {
                //Applay move into main array
-               historySourceBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
-               ((ItemPath *)(*it))->pathData.x = (long)(*it)->scenePos().x();
-               ((ItemPath *)(*it))->pathData.y = (long)(*it)->scenePos().y();
+               historySourceBuffer.paths.push_back(((ItemPath*)(*it))->m_data);
+               ((ItemPath *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+               ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemPath *)(*it))->arrayApply();
-               historyBuffer.paths.push_back(((ItemPath *)(*it))->pathData);
+               historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
                s->WldData->modified = true;
            }
            else
            if( ObjType == "LEVEL")
            {
                //Applay move into main array
-               historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
-               ((ItemLevel *)(*it))->levelData.x = (long)(*it)->scenePos().x();
-               ((ItemLevel *)(*it))->levelData.y = (long)(*it)->scenePos().y();
+               historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
+               ((ItemLevel *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+               ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemLevel *)(*it))->arrayApply();
-               historyBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
+               historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
                s->WldData->modified = true;
            }
            else
            if( ObjType == "MUSICBOX")
            {
                //Applay move into main array
-               historySourceBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-               ((ItemMusic *)(*it))->musicData.x = (long)(*it)->scenePos().x();
-               ((ItemMusic *)(*it))->musicData.y = (long)(*it)->scenePos().y();
+               historySourceBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
+               ((ItemMusic *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+               ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemMusic *)(*it))->arrayApply();
-               historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+               historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
                s->WldData->modified = true;
            }
 
@@ -313,43 +313,16 @@ void WLD_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     offsetX = 0;
     offsetY = 0;
 
-    if( ObjType == "TILE")
+    if( ObjType == "TILE" ||
+        ObjType == "SCENERY" ||
+        ObjType == "PATH" ||
+        ObjType == "LEVEL" ||
+        ObjType == "MUSICBOX" )
     {
-        sourcePos = QPoint(  ((ItemTile *)it)->tileData.x, ((ItemTile *)it)->tileData.y);
-        gridSize = ((ItemTile *)it)->gridSize;
-        offsetX = 0;
-        offsetY = 0;
-    }
-    else
-    if( ObjType == "SCENERY")
-    {
-        sourcePos = QPoint(  ((ItemScene *)it)->sceneData.x, ((ItemScene *)it)->sceneData.y);
-        gridSize = ((ItemScene *)it)->gridSize;
-        offsetX = 0;
-        offsetY = 0;
-    }
-    else
-    if( ObjType == "PATH")
-    {
-        sourcePos = QPoint(  ((ItemPath *)it)->pathData.x, ((ItemPath *)it)->pathData.y);
-        gridSize = ((ItemPath *)it)->gridSize;
-        offsetX = 0;
-        offsetY = 0;
-    }
-    else
-    if( ObjType == "LEVEL")
-    {
-        sourcePos = QPoint(  ((ItemLevel *)it)->levelData.x, ((ItemLevel*)it)->levelData.y);
-        gridSize = ((ItemLevel *)it)->gridSize;
-        offsetX = 0;
-        offsetY = 0;
-    }
-    else
-    if( ObjType == "MUSICBOX")
-    {
-        sourcePos = QPoint(  ((ItemMusic *)it)->musicData.x, ((ItemMusic*)it)->musicData.y);
-        gridSize = ((ItemMusic *)it)->gridSize;
-        offsetX = 0;
-        offsetY = 0;
+        sourcePos = ((WldBaseItem *)it)->sourcePos();
+        gridSize =  ((WldBaseItem *)it)->getGridSize();
+        QPoint p =  ((WldBaseItem *)it)->gridOffset();
+        offsetX = p.x();
+        offsetY = p.y();
     }
 }

@@ -319,27 +319,27 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             //skip locked items
             if((it->data(ITEM_TYPE).toString()=="Block"))
             {
-                if((lock_block)|| dynamic_cast<ItemBlock*>(it)->isLocked) continue;
+                if((lock_block)|| dynamic_cast<ItemBlock*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="BGO"))
             {
-                if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->isLocked) continue;
+                if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="NPC"))
             {
-                if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->isLocked) continue;
+                if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="Water"))
             {
-                if((lock_water)|| dynamic_cast<ItemWater*>(it)->isLocked) continue;
+                if((lock_water)|| dynamic_cast<ItemWater*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="Door_enter")||(it->data(ITEM_TYPE).toString()=="Door_exit"))
             {
-                if((lock_door)|| dynamic_cast<ItemDoor*>(it)->isLocked) continue;
+                if((lock_door)|| dynamic_cast<ItemDoor*>(it)->m_locked) continue;
             }
 
             if( (

@@ -158,7 +158,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
     if(found)
     {
-        player->pointData = plr;
+        player->m_data = plr;
         player->setPos(plr.x, plr.y);
         player->arrayApply();
     }

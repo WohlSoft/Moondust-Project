@@ -44,31 +44,31 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     parentScene->addItem(this);
-    setLocked(scene->lock_block);
+    setLocked(m_scene->lock_block);
 }
 
 void ItemBlock::construct()
 {
-    gridSize=32;
+    m_gridSize=32;
     setData(ITEM_TYPE, "Block");
 }
 
 
 ItemBlock::~ItemBlock()
 {
-    if(includedNPC!=NULL) delete includedNPC;
-    if(grp!=NULL) delete grp;
-    scene->unregisterElement(this);
+    if(m_includedNPC!=NULL) delete m_includedNPC;
+    if(m_grp!=NULL) delete m_grp;
+    m_scene->unregisterElement(this);
 }
 
 void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 {
-    scene->contextMenuOpened=true;
+    m_scene->contextMenuOpened=true;
 
     //Remove selection from non-block items
     if(!this->isSelected())
     {
-        scene->clearSelection();
+        m_scene->clearSelection();
         this->setSelected(true);
     }
 
@@ -76,13 +76,13 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     QMenu ItemMenu;
 
     /*************Layers*******************/
-    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
                          LayerName->addSeparator()->deleteLater();;
 
-    foreach(LevelLayer layer, scene->LvlData->layers)
+    foreach(LevelLayer layer, m_scene->LvlData->layers)
     {
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -91,7 +91,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
-        setLayer->setChecked( layer.name==blockData.layer );
+        setLayer->setChecked( layer.name==m_data.layer );
         layerItems.push_back(setLayer);
     }
     ItemMenu.addSeparator();
@@ -99,11 +99,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 
     QAction *invis =           ItemMenu.addAction(tr("Invisible"));
         invis->setCheckable(1);
-        invis->setChecked( blockData.invisible );
+        invis->setChecked( m_data.invisible );
 
     QAction *slipp =           ItemMenu.addAction(tr("Slippery"));
         slipp->setCheckable(1);
-        slipp->setChecked( blockData.slippery );
+        slipp->setChecked( m_data.slippery );
 
     QAction *resize =          ItemMenu.addAction(tr("Resize"));
         resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
@@ -112,14 +112,14 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     QAction *chNPC =           ItemMenu.addAction(tr("Change included NPC..."));
                                ItemMenu.addSeparator();
     QAction *transform =       ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(blockData.id));
-    QAction *transform_all =   ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
+    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(m_data.id));
+    QAction *transform_all =   ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(m_data.id));
     QAction *makemsgevent =    ItemMenu.addAction(tr("Make message box..."));
                                ItemMenu.addSeparator();
 
     /*************Copy Preferences*******************/
     QMenu * copyPreferences =  ItemMenu.addMenu(tr("Copy preferences"));
-    QAction *copyItemID =      copyPreferences->addAction(tr("Block-ID: %1").arg(blockData.id));
+    QAction *copyItemID =      copyPreferences->addAction(tr("Block-ID: %1").arg(m_data.id));
     QAction *copyPosXY =       copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =     copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
     QAction *copyPosLTRB =     copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
@@ -142,7 +142,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 
     if(selected==copyItemID)
     {
-        QApplication::clipboard()->setText(QString("%1").arg(blockData.id));
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
@@ -150,8 +150,8 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2;")
-                               .arg(blockData.x)
-                               .arg(blockData.y)
+                               .arg(m_data.x)
+                               .arg(m_data.y)
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -160,10 +160,10 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(blockData.x)
-                               .arg(blockData.y)
-                               .arg(imageSize.width())
-                               .arg(imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_imageSize.width())
+                               .arg(m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -172,10 +172,10 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     {
         QApplication::clipboard()->setText(
                             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(blockData.x)
-                               .arg(blockData.y)
-                               .arg(blockData.x+imageSize.width())
-                               .arg(blockData.y+imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_data.x+m_imageSize.width())
+                               .arg(m_data.y+m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -196,7 +196,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK, 0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * blockList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_BLOCK, 0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
         util::DialogToCenter(blockList, true);
 
@@ -205,14 +205,14 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
             QList<QGraphicsItem *> our_items;
             bool sameID=false;
             transformTO = blockList->blockID;
-            unsigned long oldID = blockData.id;
+            unsigned long oldID = m_data.id;
 
             if(selected==transform)
-                our_items=scene->selectedItems();
+                our_items=m_scene->selectedItems();
             else
             if(selected==transform_all)
             {
-                our_items=scene->items();
+                our_items=m_scene->items();
                 sameID=true;
             }
             else if(selected==transform_all_s)
@@ -222,13 +222,13 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                                tr("Please select, how far items out of section should be removed too (in pixels)"),
                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
-                LevelSection &s=scene->LvlData->sections[scene->LvlData->CurSection];
+                LevelSection &s=m_scene->LvlData->sections[m_scene->LvlData->CurSection];
                 QRectF section;
                 section.setLeft(s.size_left-mg);
                 section.setTop(s.size_top-mg);
                 section.setRight(s.size_right+mg);
                 section.setBottom(s.size_bottom+mg);
-                our_items=scene->items(section, Qt::IntersectsItemShape);
+                our_items=m_scene->items(section, Qt::IntersectsItemShape);
                 sameID=true;
             }
 
@@ -237,11 +237,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
-                    if((!sameID)||(((ItemBlock *) SelItem)->blockData.id==oldID))
+                    if((!sameID)||(((ItemBlock *) SelItem)->m_data.id==oldID))
                     {
-                        oldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                        oldData.blocks.push_back( ((ItemBlock *) SelItem)->m_data );
                         ((ItemBlock *) SelItem)->transformTo(transformTO);
-                        newData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                        newData.blocks.push_back( ((ItemBlock *) SelItem)->m_data );
                     }
                 }
             }
@@ -250,7 +250,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         delete blockList;
 
         if(!newData.blocks.isEmpty())
-            scene->addTransformHistory(newData, oldData);
+            m_scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==makemsgevent)
@@ -259,11 +259,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         QString msgText;
 
 
-        if(blockData.event_hit.isEmpty())
+        if(m_data.event_hit.isEmpty())
         {
             bool ok=false;
             typeEventAgain:
-            eventName = QInputDialog::getText(scene->_edit, tr("Event name"),
+            eventName = QInputDialog::getText(m_scene->_edit, tr("Event name"),
                                               tr("Please enter the name of event:"),
                                               QLineEdit::Normal, QString(), &ok);
             if(eventName.isEmpty() && ok)
@@ -275,10 +275,10 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                 if(msgBox.exec()==QDialog::Accepted)
                 {
                     msgText = msgBox.currentText;
-                    if(scene->LvlData->eventIsExist(eventName))
+                    if(m_scene->LvlData->eventIsExist(eventName))
                     {
                         int count=0;
-                        while(scene->LvlData->eventIsExist(QString(eventName+" %1").arg(count)))
+                        while(m_scene->LvlData->eventIsExist(QString(eventName+" %1").arg(count)))
                             count++;
 
                         eventName = QString(eventName+" %1").arg(count);
@@ -287,28 +287,28 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                         LevelSMBX64Event msgEvent = FileFormats::CreateLvlEvent();
                         msgEvent.name = eventName;
                         msgEvent.msg = msgText;
-                        msgEvent.array_id = ++scene->LvlData->events_array_id;
-                    scene->LvlData->events.push_back(msgEvent);
+                        msgEvent.array_id = ++m_scene->LvlData->events_array_id;
+                    m_scene->LvlData->events.push_back(msgEvent);
                         LevelData historyOldData;
-                        historyOldData.blocks.push_back(blockData);
-                    blockData.event_hit = eventName;
+                        historyOldData.blocks.push_back(m_data);
+                    m_data.event_hit = eventName;
                     arrayApply();
 
-                    scene->addAddEventHistory(msgEvent);
-                    scene->addChangeSettingsHistory(historyOldData, HistorySettings::SETTING_EV_HITED, QVariant(eventName));
+                    m_scene->addAddEventHistory(msgEvent);
+                    m_scene->addChangeSettingsHistory(historyOldData, HistorySettings::SETTING_EV_HITED, QVariant(eventName));
 
                     MainWinConnect::pMainWin->setEventsBox();
                     MainWinConnect::pMainWin->EventListsSync();
 
-                    QMessageBox::information(scene->_edit, tr("Event has been created"),
+                    QMessageBox::information(m_scene->_edit, tr("Event has been created"),
                                  tr("Message event has been created!"), QMessageBox::Ok);
                 }
             }
         }
         else
-            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is used"),
+            QMessageBox::warning(m_scene->_edit, tr("'Hit' event slot is used"),
                          tr("Sorry, but 'Hit' event slot already used by '%1' event.")
-                                 .arg(blockData.event_hit), QMessageBox::Ok);
+                                 .arg(m_data.event_hit), QMessageBox::Ok);
 
     }
     else
@@ -316,43 +316,43 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     {
         //apply to all selected items.
         LevelData selData;
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
             if(SelItem->data(ITEM_TYPE).toString()=="Block")
             {
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
                 ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
             }
         }
-        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
+        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
     }
     else
     if(selected==slipp)
     {
         //apply to all selected items.
         LevelData selData;
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
             if(SelItem->data(ITEM_TYPE).toString()=="Block")
             {
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
                 ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
             }
         }
-        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
+        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
     }
     else
     if(selected==resize)
     {
-        scene->setBlockResizer(this, true);
+        m_scene->setBlockResizer(this, true);
     }
     else
     if(selected==chNPC)
     {
         LevelData selData;
-        ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
-                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                   (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id),
+        ItemSelectDialog * npcList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_NPC,
+                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (m_data.npc_id < 0 && m_data.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                   (m_data.npc_id <0 && m_data.npc_id != 0 ? m_data.npc_id *-1 : m_data.npc_id),
                                                           0,0,0,0,0,MainWinConnect::pMainWin);
         npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
@@ -367,34 +367,34 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                     selected_npc = npcList->npcID;
             }
 
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
                     //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
                     //((ItemBlock *) SelItem)->arrayApply();
-                    selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                    selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
                     ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
                 }
             }
-            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
+            m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
         }
         delete npcList;
     }
     else
     if(selected==remove)
     {
-        scene->removeSelectedLvlItems();
+        m_scene->removeSelectedLvlItems();
     }
     else
     if(selected==props)
     {
-        scene->openProps();
+        m_scene->openProps();
     }
     else
     if(selected==newLayer)
     {
-        scene->setLayerToSelected();
+        m_scene->setLayerToSelected();
     }
     else
     {
@@ -404,7 +404,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
             if(selected==lItem)
             {
                 //FOUND!!!
-                scene->setLayerToSelected(lItem->data().toString());
+                m_scene->setLayerToSelected(lItem->data().toString());
                 break;
             }//Find selected layer's item
         }
@@ -413,13 +413,13 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 
 void ItemBlock::setSlippery(bool slip)
 {
-    blockData.slippery=slip;
+    m_data.slippery=slip;
     arrayApply(); //Apply changes into array
 }
 
 void ItemBlock::setInvisible(bool inv)
 {
-    blockData.invisible=inv;
+    m_data.invisible=inv;
     if(inv)
         this->setOpacity(0.5);
     else
@@ -431,11 +431,11 @@ void ItemBlock::setInvisible(bool inv)
 
 void ItemBlock::setLayer(QString layer)
 {
-    foreach(LevelLayer lr, scene->LvlData->layers)
+    foreach(LevelLayer lr, m_scene->LvlData->layers)
     {
         if(lr.name==layer)
         {
-            blockData.layer = layer;
+            m_data.layer = layer;
             this->setVisible(!lr.hidden);
             arrayApply();
         break;
@@ -445,234 +445,224 @@ void ItemBlock::setLayer(QString layer)
 
 void ItemBlock::setIncludedNPC(int npcID, bool init)
 {
-    if(includedNPC!=NULL)
+    if(m_includedNPC!=NULL)
     {
-        grp->removeFromGroup(includedNPC);
-        scene->removeItem(includedNPC);
-        delete includedNPC;
-        includedNPC = NULL;
+        m_grp->removeFromGroup(m_includedNPC);
+        m_scene->removeItem(m_includedNPC);
+        delete m_includedNPC;
+        m_includedNPC = NULL;
     }
     if(npcID==0)
     {
-        if(!init) blockData.npc_id = 0;
+        if(!init) m_data.npc_id = 0;
         if(!init) arrayApply();
         return;
     }
 
-    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 0)? (npcID) : scene->pConfigs->marker_npc.coin_in_block ) ) );
-    includedNPC = scene->addPixmap( npcImg );
+    QPixmap npcImg = QPixmap( m_scene->getNPCimg( ((npcID > 0)? (npcID) : m_scene->pConfigs->marker_npc.coin_in_block ) ) );
+    m_includedNPC = m_scene->addPixmap( npcImg );
 
-    includedNPC->setPos(
+    m_includedNPC->setPos(
                 (
-                    blockData.x+((blockData.w-npcImg.width())/2)
+                    m_data.x+((m_data.w-npcImg.width())/2)
                  ),
                 (
-                    blockData.y+((blockData.h-npcImg.height())/2)
+                    m_data.y+((m_data.h-npcImg.height())/2)
                  ));
-    includedNPC->setZValue(scene->Z_Block + 10);
-    includedNPC->setOpacity(qreal(0.6));
-    grp->addToGroup(includedNPC);
+    m_includedNPC->setZValue(m_scene->Z_Block + 10);
+    m_includedNPC->setOpacity(qreal(0.6));
+    m_grp->addToGroup(m_includedNPC);
 
-    if(!init) blockData.npc_id = npcID;
+    if(!init) m_data.npc_id = npcID;
     if(!init) arrayApply();
 }
 
 void ItemBlock::transformTo(long target_id)
 {
     if(target_id<1) return;
-    if(!scene->uBlocks.contains(target_id))
+    if(!m_scene->uBlocks.contains(target_id))
         return;
 
-    obj_block &mergedSet = scene->uBlocks[target_id];
+    obj_block &mergedSet = m_scene->uBlocks[target_id];
     long animator = mergedSet.animator_id;
 
-    blockData.id = target_id;
-    setBlockData(blockData, &mergedSet, &animator);
+    m_data.id = target_id;
+    setBlockData(m_data, &mergedSet, &animator);
     arrayApply();
 
-    if(!scene->opts.animationEnabled)
-        scene->update();
+    if(!m_scene->opts.animationEnabled)
+        m_scene->update();
 }
 
 ///////////////////MainArray functions/////////////////////////////
 void ItemBlock::arrayApply()
 {
     bool found=false;
-    blockData.x = qRound(this->scenePos().x());
-    blockData.y = qRound(this->scenePos().y());
+    m_data.x = qRound(this->scenePos().x());
+    m_data.y = qRound(this->scenePos().y());
     if(this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
-        this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
-    if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
+        this->setZValue( m_scene->Z_blockSizable + ((double)m_data.y / (double) 100000000000) + 1 - ((double)m_data.w * (double)0.0000000000000001) );
+    if(m_data.index < (unsigned int)m_scene->LvlData->blocks.size())
     { //Check index
-        if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
+        if(m_data.array_id == m_scene->LvlData->blocks[m_data.index].array_id)
             found=true;
     }
 
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->blocks[blockData.index] = blockData; //apply current blockdata
+        m_scene->LvlData->blocks[m_data.index] = m_data; //apply current blockdata
     }
     else
-    for(int i=0; i<scene->LvlData->blocks.size(); i++)
+    for(int i=0; i<m_scene->LvlData->blocks.size(); i++)
     { //after find it into array
-        if(scene->LvlData->blocks[i].array_id == blockData.array_id)
+        if(m_scene->LvlData->blocks[i].array_id == m_data.array_id)
         {
-            blockData.index = i;
-            scene->LvlData->blocks[i] = blockData;
+            m_data.index = i;
+            m_scene->LvlData->blocks[i] = m_data;
             break;
         }
     }
     //Update R-tree innex
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 void ItemBlock::removeFromArray()
 {
     bool found=false;
-    if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
+    if(m_data.index < (unsigned int)m_scene->LvlData->blocks.size())
     { //Check index
-        if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
+        if(m_data.array_id == m_scene->LvlData->blocks[m_data.index].array_id)
             found=true;
     }
     if(found)
     { //directlry
-        scene->LvlData->blocks.removeAt(blockData.index);
+        m_scene->LvlData->blocks.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<scene->LvlData->blocks.size(); i++)
+    for(int i=0; i<m_scene->LvlData->blocks.size(); i++)
     {
-        if(scene->LvlData->blocks[i].array_id == blockData.array_id)
+        if(m_scene->LvlData->blocks[i].array_id == m_data.array_id)
         {
-            scene->LvlData->blocks.removeAt(i); break;
+            m_scene->LvlData->blocks.removeAt(i); break;
         }
     }
 }
 
 void ItemBlock::returnBack()
 {
-    this->setPos(blockData.x, blockData.y);
-}
-
-QPoint ItemBlock::gridOffset()
-{
-    return QPoint(0,0);
-}
-
-int ItemBlock::getGridSize()
-{
-    return gridSize;
+    this->setPos(m_data.x, m_data.y);
 }
 
 QPoint ItemBlock::sourcePos()
 {
-    return QPoint(blockData.x, blockData.y);
+    return QPoint(m_data.x, m_data.y);
 }
 
 
 void ItemBlock::setMainPixmap() // Init Sizable block
 {
-    if(sizable)
+    if(m_sizable)
     {
-        currentImage = drawSizableBlock(blockData.w, blockData.h, scene->animates_Blocks[animatorID]->wholeImage());
-        imageSize = QRectF(0,0, blockData.w, blockData.h);
+        drawSizableBlock(m_data.w, m_data.h, m_scene->animates_Blocks[m_animatorID]->wholeImage());
+        m_imageSize = QRectF(0,0, m_data.w, m_data.h);
     }
 }
 
 void ItemBlock::setBlockSize(QRect rect)
 {
-    if(sizable)
+    if(m_sizable)
     {
-        blockData.x = rect.x();
-        blockData.y = rect.y();
-        blockData.w = rect.width();
-        blockData.h = rect.height();
-        currentImage = drawSizableBlock(blockData.w, blockData.h, scene->animates_Blocks[animatorID]->wholeImage());
-        this->setPos(blockData.x, blockData.y);
+        m_data.x = rect.x();
+        m_data.y = rect.y();
+        m_data.w = rect.width();
+        m_data.h = rect.height();
+        drawSizableBlock(m_data.w, m_data.h, m_scene->animates_Blocks[m_animatorID]->wholeImage());
+        this->setPos(m_data.x, m_data.y);
     }
-    imageSize = QRectF(0,0, blockData.w, blockData.h);
-    this->setData(ITEM_WIDTH, QVariant((int)blockData.w));
-    this->setData(ITEM_HEIGHT, QVariant((int)blockData.h));
-    setIncludedNPC(blockData.npc_id);
+    m_imageSize = QRectF(0,0, m_data.w, m_data.h);
+    this->setData(ITEM_WIDTH, QVariant((int)m_data.w));
+    this->setData(ITEM_HEIGHT, QVariant((int)m_data.h));
+    setIncludedNPC(m_data.npc_id);
     arrayApply();
-    scene->update();
+    m_scene->update();
 }
 
 
 void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animator)
 {
-    if(!scene) return;
+    if(!m_scene) return;
 
-    blockData = inD;
+    m_data = inD;
 
     if(mergedSet)
     {
-        localProps = (*mergedSet);
-        sizable = localProps.sizable;
-        gridSize = localProps.grid;
+        m_localProps = (*mergedSet);
+        m_sizable = m_localProps.sizable;
+        m_gridSize = m_localProps.grid;
 
-        if(localProps.sizable)
+        if(m_localProps.sizable)
         {
-            setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000)
-                     + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
+            setZValue( m_scene->Z_blockSizable + ((double)m_data.y/(double)100000000000)
+                     + 1 - ((double)m_data.w * (double)0.0000000000000001) ); // applay sizable block Z
 
             setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
         }
         else
         {
-            if(localProps.view==1)
-                setZValue(scene->Z_BlockFore); // applay lava block Z
+            if(m_localProps.view==1)
+                setZValue(m_scene->Z_BlockFore); // applay lava block Z
             else
-                setZValue(scene->Z_Block); // applay standart block Z
+                setZValue(m_scene->Z_Block); // applay standart block Z
 
             setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
         }
-        setData(ITEM_BLOCK_SHAPE, localProps.phys_shape);
+        setData(ITEM_BLOCK_SHAPE, m_localProps.phys_shape);
     }
 
     if(animator)
         setAnimator((*animator));
 
-    setPos(blockData.x, blockData.y);
+    setPos(m_data.x, m_data.y);
 
-    if(blockData.invisible)
+    if(m_data.invisible)
         setOpacity(qreal(0.5));
 
-    setIncludedNPC(blockData.npc_id, true);
+    setIncludedNPC(m_data.npc_id, true);
 
-    imageSize = QRectF(0,0,blockData.w, blockData.h);
+    m_imageSize = QRectF(0,0,m_data.w, m_data.h);
 
-    setData(ITEM_ID, QString::number(blockData.id) );
-    setData(ITEM_ARRAY_ID, QString::number(blockData.array_id) );
-    setData(ITEM_WIDTH, QString::number(blockData.w) ); //width
-    setData(ITEM_HEIGHT, QString::number(blockData.h) ); //height
+    setData(ITEM_ID, QString::number(m_data.id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_WIDTH, QString::number(m_data.w) ); //width
+    setData(ITEM_HEIGHT, QString::number(m_data.h) ); //height
 
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 
 QRectF ItemBlock::boundingRect() const
 {
-    return imageSize;
+    return m_imageSize;
 }
 
 void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
-    if(animatorID<0)
+    if(m_animatorID<0)
     {
         painter->setPen(QPen(QBrush(Qt::red), 1, Qt::DotLine));
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
 
-    if(scene->animates_Blocks.size()>animatorID)
+    if(m_scene->animates_Blocks.size()>m_animatorID)
     {
-        if(sizable)
-            painter->drawPixmap(imageSize, currentImage, imageSize);
+        if(m_sizable)
+            painter->drawPixmap(m_imageSize, m_currentImage, m_imageSize);
         else
-            painter->drawPixmap(imageSize, scene->animates_Blocks[animatorID]->image(), imageSize);
+            painter->drawPixmap(m_imageSize, m_scene->animates_Blocks[m_animatorID]->image(), m_imageSize);
     }
     else
         painter->drawRect(QRect(0,0,32,32));
@@ -680,28 +670,28 @@ void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*optio
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
 
 }
 
 void ItemBlock::setAnimator(long aniID)
 {
-    if(aniID<scene->animates_Blocks.size())
-    imageSize = QRectF(0,0,
-                scene->animates_Blocks[aniID]->image().width(),
-                scene->animates_Blocks[aniID]->image().height()
+    if(aniID<m_scene->animates_Blocks.size())
+    m_imageSize = QRectF(0,0,
+                m_scene->animates_Blocks[aniID]->image().width(),
+                m_scene->animates_Blocks[aniID]->image().height()
                 );
-    if(!sizable)
+    if(!m_sizable)
     {
-        blockData.w = qRound(imageSize.width()); //width
-        blockData.h = qRound(imageSize.height()); //height
-        setData(ITEM_WIDTH, QVariant((int)blockData.w));
-        setData(ITEM_HEIGHT, QVariant((int)blockData.h));
+        m_data.w = qRound(m_imageSize.width()); //width
+        m_data.h = qRound(m_imageSize.height()); //height
+        setData(ITEM_WIDTH, QVariant((int)m_data.w));
+        setData(ITEM_HEIGHT, QVariant((int)m_data.h));
     }
-    animatorID = aniID;
+    m_animatorID = aniID;
     setMainPixmap();
 }
 
@@ -709,24 +699,24 @@ void ItemBlock::setAnimator(long aniID)
 void ItemBlock::setScenePoint(LvlScene *theScene)
 {
     LvlBaseItem::setScenePoint(theScene);
-    grp = new QGraphicsItemGroup(this);
-    includedNPC = NULL;
+    m_grp = new QGraphicsItemGroup(this);
+    m_includedNPC = NULL;
 }
 
 bool ItemBlock::itemTypeIsLocked()
 {
-    if(!scene)
+    if(!m_scene)
         return false;
-    return scene->lock_block;
+    return m_scene->lock_block;
 }
 
 //sizable Block formula
-QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
+void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 {
     int x,y, i, j;
     int hc, wc;
 
-    QPixmap img(w, h);
+    m_currentImage=QPixmap(w, h);
 
     x = qRound(qreal(srcimg.width())/3);  // Width of one piece
     y = qRound(qreal(srcimg.height())/3); // Height of one piece

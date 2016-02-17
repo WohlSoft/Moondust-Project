@@ -454,22 +454,22 @@ void HistoryElementItemSetting::processLevelRedo()
 
 void HistoryElementItemSetting::historyUndoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->setPath(sourceLevel.pathbg);
+    ((ItemLevel*)item)->setShowSmallPathBG(sourceLevel.pathbg);
 }
 
 void HistoryElementItemSetting::historyRedoSettingPathBackgroundLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->setPath(m_modData.toBool());
+    ((ItemLevel*)item)->setShowSmallPathBG(m_modData.toBool());
 }
 
 void HistoryElementItemSetting::historyUndoSettingBigPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->setbPath(sourceLevel.bigpathbg);
+    ((ItemLevel*)item)->setShowBigPathBG(sourceLevel.bigpathbg);
 }
 
 void HistoryElementItemSetting::historyRedoSettingBigPathBackgroundLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->setbPath(m_modData.toBool());
+    ((ItemLevel*)item)->setShowBigPathBG(m_modData.toBool());
 }
 
 void HistoryElementItemSetting::historyUndoSettingAlwaysVisibleLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
@@ -484,121 +484,121 @@ void HistoryElementItemSetting::historyRedoSettingAlwaysVisibleLevel(const World
 
 void HistoryElementItemSetting::historyUndoSettingGameStartPointLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gamestart = sourceLevel.gamestart;
+    ((ItemLevel*)item)->m_data.gamestart = sourceLevel.gamestart;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingGameStartPointLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gamestart = m_modData.toBool();
+    ((ItemLevel*)item)->m_data.gamestart = m_modData.toBool();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingLevelfileLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.lvlfile = sourceLevel.lvlfile;
+    ((ItemLevel*)item)->m_data.lvlfile = sourceLevel.lvlfile;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingLevelfileLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.lvlfile = m_modData.toString();
+    ((ItemLevel*)item)->m_data.lvlfile = m_modData.toString();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingLeveltitleLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.title = sourceLevel.title;
+    ((ItemLevel*)item)->m_data.title = sourceLevel.title;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingLeveltitleLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.title = m_modData.toString();
+    ((ItemLevel*)item)->m_data.title = m_modData.toString();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingDoorIDLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.entertowarp = sourceLevel.entertowarp;
+    ((ItemLevel*)item)->m_data.entertowarp = sourceLevel.entertowarp;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingDoorIDLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.entertowarp = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.entertowarp = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathByTopLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.top_exit = sourceLevel.top_exit;
+    ((ItemLevel*)item)->m_data.top_exit = sourceLevel.top_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingPathByTopLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.top_exit = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.top_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathByRightLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.right_exit = sourceLevel.right_exit;
+    ((ItemLevel*)item)->m_data.right_exit = sourceLevel.right_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingPathByRightLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.right_exit = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.right_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathByBottomLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.bottom_exit = sourceLevel.bottom_exit;
+    ((ItemLevel*)item)->m_data.bottom_exit = sourceLevel.bottom_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingPathByBottomLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.bottom_exit = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.bottom_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathByLeftLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.left_exit = sourceLevel.left_exit;
+    ((ItemLevel*)item)->m_data.left_exit = sourceLevel.left_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingPathByLeftLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.left_exit = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.left_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingGotoXLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gotox = sourceLevel.gotox;
+    ((ItemLevel*)item)->m_data.gotox = sourceLevel.gotox;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingGotoXLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gotox = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.gotox = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gotoy = sourceLevel.gotoy;
+    ((ItemLevel*)item)->m_data.gotoy = sourceLevel.gotoy;
     ((ItemLevel*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingGotoYLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
 {
-    ((ItemLevel*)item)->levelData.gotoy = m_modData.toInt();
+    ((ItemLevel*)item)->m_data.gotoy = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
@@ -632,22 +632,22 @@ void HistoryElementItemSetting::historyRedoSettingsSlipperyBlock(const LevelBloc
 
 void HistoryElementItemSetting::historyUndoSettingsZLayerBgo(const LevelBGO &sourceBgo, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->setZMode(sourceBgo.z_mode, ((ItemBGO*)item)->bgoData.z_offset);
+    ((ItemBGO*)item)->setZMode(sourceBgo.z_mode, ((ItemBGO*)item)->m_data.z_offset);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsZLayerBgo(const LevelBGO &/*sourceBgo*/, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->setZMode(m_modData.toInt(), ((ItemBGO*)item)->bgoData.z_offset);
+    ((ItemBGO*)item)->setZMode(m_modData.toInt(), ((ItemBGO*)item)->m_data.z_offset);
 }
 
 void HistoryElementItemSetting::historyUndoSettingsZOffsetBgo(const LevelBGO &sourceBgo, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->bgoData.z_mode, sourceBgo.z_offset);
+    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->m_data.z_mode, sourceBgo.z_offset);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsZOffsetBgo(const LevelBGO &/*sourceBgo*/, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->bgoData.z_mode, m_modData.toReal());
+    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->m_data.z_mode, m_modData.toReal());
 }
 
 
@@ -746,37 +746,37 @@ void HistoryElementItemSetting::historyRedoSettingsTypeWater(const LevelPhysEnv 
 
 void HistoryElementItemSetting::historyUndoSettingsNoYoshiDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.novehicles = !m_modData.toBool();
+    ((ItemDoor*)item)->m_data.novehicles = !m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsNoYoshiDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.novehicles = m_modData.toBool();
+    ((ItemDoor*)item)->m_data.novehicles = m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsAllowNPCDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.allownpc = !m_modData.toBool();
+    ((ItemDoor*)item)->m_data.allownpc = !m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsAllowNPCDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.allownpc = m_modData.toBool();
+    ((ItemDoor*)item)->m_data.allownpc = m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsLockedDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.locked = !m_modData.toBool();
+    ((ItemDoor*)item)->m_data.locked = !m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsLockedDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
-    ((ItemDoor*)item)->doorData.locked = m_modData.toBool();
+    ((ItemDoor*)item)->m_data.locked = m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 
@@ -812,132 +812,132 @@ void HistoryElementItemSetting::historyRedoSettingsDirectionGeneratorNPC(const L
 
 void HistoryElementItemSetting::historyUndoSettingsTimeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.generator_period = sourceNPC.generator_period;
+    ((ItemNPC*)item)->m_data.generator_period = sourceNPC.generator_period;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsTimeGeneratorNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.generator_period = m_modData.toInt();
+    ((ItemNPC*)item)->m_data.generator_period = m_modData.toInt();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsAttachLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.attach_layer = sourceNPC.attach_layer;
+    ((ItemNPC*)item)->m_data.attach_layer = sourceNPC.attach_layer;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsAttachLayerNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.attach_layer = m_modData.toString();
+    ((ItemNPC*)item)->m_data.attach_layer = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsDestroyedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_destroy = sourceBlock.event_destroy;
+    ((ItemBlock*)item)->m_data.event_destroy = sourceBlock.event_destroy;
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsDestroyedEventBlocks(const LevelBlock &/*sourceBlock*/, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_destroy = m_modData.toString();
+    ((ItemBlock*)item)->m_data.event_destroy = m_modData.toString();
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsHitedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_hit = sourceBlock.event_hit;
+    ((ItemBlock*)item)->m_data.event_hit = sourceBlock.event_hit;
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsHitedEventBlocks(const LevelBlock &/*sourceBlock*/, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_hit = m_modData.toString();
+    ((ItemBlock*)item)->m_data.event_hit = m_modData.toString();
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsLayerEmptyEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_emptylayer = sourceBlock.event_emptylayer;
+    ((ItemBlock*)item)->m_data.event_emptylayer = sourceBlock.event_emptylayer;
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsLayerEmptyEventBlocks(const LevelBlock &/*sourceBlock*/, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_emptylayer = m_modData.toString();
+    ((ItemBlock*)item)->m_data.event_emptylayer = m_modData.toString();
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsLayerEmptyEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_emptylayer = sourceNPC.event_emptylayer;
+    ((ItemNPC*)item)->m_data.event_emptylayer = sourceNPC.event_emptylayer;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsLayerEmptyEventNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_emptylayer = m_modData.toString();
+    ((ItemNPC*)item)->m_data.event_emptylayer = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsActivateEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_activate = sourceNPC.event_activate;
+    ((ItemNPC*)item)->m_data.event_activate = sourceNPC.event_activate;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsActivateEventNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_activate = m_modData.toString();
+    ((ItemNPC*)item)->m_data.event_activate = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsDeathEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_die = sourceNPC.event_die;
+    ((ItemNPC*)item)->m_data.event_die = sourceNPC.event_die;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsDeathEventNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_die = m_modData.toString();
+    ((ItemNPC*)item)->m_data.event_die = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsTalkEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_talk = sourceNPC.event_talk;
+    ((ItemNPC*)item)->m_data.event_talk = sourceNPC.event_talk;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsTalkEventNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_talk = m_modData.toString();
+    ((ItemNPC*)item)->m_data.event_talk = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsSpecialDataNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.special_data = sourceNPC.special_data;
+    ((ItemNPC*)item)->m_data.special_data = sourceNPC.special_data;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsSpecialDataNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.special_data = m_modData.toInt();
+    ((ItemNPC*)item)->m_data.special_data = m_modData.toInt();
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsSortingBGO(const LevelBGO &sourceBGO, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->bgoData.smbx64_sp = sourceBGO.smbx64_sp;
+    ((ItemBGO*)item)->m_data.smbx64_sp = sourceBGO.smbx64_sp;
     ((ItemBGO*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsSortingBGO(const LevelBGO &/*sourceBGO*/, QGraphicsItem *item)
 {
-    ((ItemBGO*)item)->bgoData.smbx64_sp = (long)m_modData.toLongLong();
+    ((ItemBGO*)item)->m_data.smbx64_sp = (long)m_modData.toLongLong();
     ((ItemBGO*)item)->arrayApply();
 }

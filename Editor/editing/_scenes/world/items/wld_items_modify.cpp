@@ -59,27 +59,27 @@ void WldScene::collectDataFromItem(WorldData &dataToStore, QGraphicsItem *item)
     QString ObjType = item->data(ITEM_TYPE).toString();
     if( ObjType == "TILE")
     {
-        dataToStore.tiles << dynamic_cast<ItemTile *>(item)->tileData;
+        dataToStore.tiles << dynamic_cast<ItemTile *>(item)->m_data;
     }
     else
     if( ObjType == "SCENERY")
     {
-        dataToStore.scenery << dynamic_cast<ItemScene *>(item)->sceneData;
+        dataToStore.scenery << dynamic_cast<ItemScene *>(item)->m_data;
     }
     else
     if( ObjType == "PATH")
     {
-        dataToStore.paths << dynamic_cast<ItemPath *>(item)->pathData;
+        dataToStore.paths << dynamic_cast<ItemPath *>(item)->m_data;
     }
     else
     if( ObjType == "LEVEL")
     {
-        dataToStore.levels << dynamic_cast<ItemLevel *>(item)->levelData;
+        dataToStore.levels << dynamic_cast<ItemLevel *>(item)->m_data;
     }
     else
     if( ObjType == "MUSICBOX" )
     {
-        dataToStore.music << dynamic_cast<ItemMusic *>(item)->musicData;
+        dataToStore.music << dynamic_cast<ItemMusic *>(item)->m_data;
     }
 }
 
@@ -183,7 +183,7 @@ void WldScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString()=="TILE")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_tile_arrayID) break;
-                overwritedItems.tiles.push_back( ((ItemTile *)xxx)->tileData );
+                overwritedItems.tiles.push_back( ((ItemTile *)xxx)->m_data );
                 ((ItemTile *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -191,7 +191,7 @@ void WldScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString()=="SCENERY")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_scene_arrayID) break;
-                overwritedItems.scenery.push_back( ((ItemScene *)xxx)->sceneData );
+                overwritedItems.scenery.push_back( ((ItemScene *)xxx)->m_data );
                 ((ItemScene *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -199,7 +199,7 @@ void WldScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString()=="PATH")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_path_arrayID) break;
-                overwritedItems.paths.push_back( ((ItemPath *)xxx)->pathData );
+                overwritedItems.paths.push_back( ((ItemPath *)xxx)->m_data );
                 ((ItemPath *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -207,7 +207,7 @@ void WldScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_level_arrayID) break;
-                overwritedItems.levels.push_back( ((ItemLevel *)xxx)->levelData );
+                overwritedItems.levels.push_back( ((ItemLevel *)xxx)->m_data );
                 ((ItemLevel *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -215,7 +215,7 @@ void WldScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString()=="MUSICBOX")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_musicbox_arrayID) break;
-                overwritedItems.music.push_back( ((ItemMusic *)xxx)->musicData );
+                overwritedItems.music.push_back( ((ItemMusic *)xxx)->m_data );
                 ((ItemMusic *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -369,7 +369,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             //remove data from main array before deletion item from scene
             if( objType=="TILE" )
             {
-                historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
+                historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
                 ((ItemTile *)(*it))->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
@@ -377,7 +377,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             else
             if( objType=="SCENERY" )
             {
-                historyBuffer.scenery.push_back(((ItemScene*)(*it))->sceneData);
+                historyBuffer.scenery.push_back(((ItemScene*)(*it))->m_data);
                 ((ItemScene *)(*it))->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
@@ -385,7 +385,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             else
             if( objType=="PATH" )
             {
-                historyBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
+                historyBuffer.paths.push_back(((ItemPath*)(*it))->m_data);
                 ((ItemPath *)(*it))->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
@@ -393,7 +393,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             else
             if( objType=="LEVEL" )
             {
-                historyBuffer.levels.push_back(((ItemLevel*)(*it))->levelData);
+                historyBuffer.levels.push_back(((ItemLevel*)(*it))->m_data);
                 ((ItemLevel *)(*it))->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
@@ -401,7 +401,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             else
             if( objType=="MUSICBOX" )
             {
-                historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
+                historyBuffer.music.push_back(((ItemMusic*)(*it))->m_data);
                 ((ItemMusic *)(*it))->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;

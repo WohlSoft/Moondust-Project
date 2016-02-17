@@ -168,8 +168,8 @@ void WldScene::hidePathAndLevels(bool visible)
         if(i->data(0).toString()=="LEVEL")
         {
             i->setVisible( visible ||
-                        ((ItemLevel *)i)->levelData.gamestart ||
-                        ((ItemLevel *)i)->levelData.alwaysVisible );
+                        ((ItemLevel *)i)->m_data.gamestart ||
+                        ((ItemLevel *)i)->m_data.alwaysVisible );
         }
     }
 }
@@ -278,8 +278,8 @@ void WldScene::setLocked(int type, bool lock)
             {
                 ItemTile *gi= qgraphicsitem_cast<ItemTile*>(*it);
                 if(!gi)continue;
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
             }
             break;
         case 2://Scenery
@@ -287,8 +287,8 @@ void WldScene::setLocked(int type, bool lock)
             {
                 ItemScene *gi= qgraphicsitem_cast<ItemScene*>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemScene *)(*it))->isLocked() ) ));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemScene *)(*it))->isLocked() ) ));
             }
             break;
         case 3://Paths
@@ -296,8 +296,8 @@ void WldScene::setLocked(int type, bool lock)
             {
                 ItemPath *gi= qgraphicsitem_cast<ItemPath*>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
             }
             break;
         case 4://Levels
@@ -305,17 +305,17 @@ void WldScene::setLocked(int type, bool lock)
             {
                 ItemLevel *gi= qgraphicsitem_cast<ItemLevel*>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
             }
             break;
         case 5://Musicboxes
             if((*it)->data(0).toString()=="MUSICBOX")
             {
-                ItemMusic *gi= qgraphicsitem_cast<ItemMusic*>(*it);
+                ItemMusic *gi = qgraphicsitem_cast<ItemMusic*>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
             }
             break;
         default: break;

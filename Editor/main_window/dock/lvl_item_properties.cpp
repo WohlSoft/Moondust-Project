@@ -964,7 +964,7 @@ void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="Block")
             {
-                selData.blocks.push_back(((ItemBlock *) item)->blockData);
+                selData.blocks.push_back(((ItemBlock *) item)->m_data);
                 ((ItemBlock*)item)->setInvisible(checked);
             }
         }
@@ -992,7 +992,7 @@ void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
         {
             if((item->data(ITEM_TYPE).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
-                selData.blocks.push_back(((ItemBlock *) item)->blockData);
+                selData.blocks.push_back(((ItemBlock *) item)->m_data);
                 ((ItemBlock*)item)->setSlippery(checked);
             }
         }
@@ -1020,7 +1020,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
         {
             if((targetItem->data(ITEM_TYPE).toString()=="Block")&&((targetItem->data(ITEM_ARRAY_ID).toInt()==blockPtr)))
             {
-                npcID = ((ItemBlock*)targetItem)->blockData.npc_id;
+                npcID = ((ItemBlock*)targetItem)->m_data.npc_id;
                 break;
             }
         }
@@ -1073,7 +1073,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
                 {
                     //((ItemBlock *)item)->blockData.npc_id = selected_npc;
                     //((ItemBlock *)item)->arrayApply();
-                    selData.blocks.push_back(((ItemBlock *) item)->blockData);
+                    selData.blocks.push_back(((ItemBlock *) item)->m_data);
                     ((ItemBlock *)item)->setIncludedNPC(selected_npc);
                     //break;
                 }
@@ -1107,7 +1107,7 @@ void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &a
         {
             if(item->data(ITEM_TYPE).toString()=="Block")
             {
-                modData.blocks.push_back(((ItemBlock*)item)->blockData);
+                modData.blocks.push_back(((ItemBlock*)item)->m_data);
                 ((ItemBlock*)item)->setLayer(arg1);
                 //break;
             }
@@ -1142,11 +1142,11 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QStri
         {
             if((item->data(ITEM_TYPE).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
-                modData.blocks.push_back(((ItemBlock*)item)->blockData);
+                modData.blocks.push_back(((ItemBlock*)item)->m_data);
                 if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
-                    ((ItemBlock*)item)->blockData.event_destroy = arg1;
+                    ((ItemBlock*)item)->m_data.event_destroy = arg1;
                 else
-                    ((ItemBlock*)item)->blockData.event_destroy = "";
+                    ((ItemBlock*)item)->m_data.event_destroy = "";
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
@@ -1183,11 +1183,11 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString
         {
             if((item->data(ITEM_TYPE).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
-                modData.blocks.push_back(((ItemBlock*)item)->blockData);
+                modData.blocks.push_back(((ItemBlock*)item)->m_data);
                 if(ui->PROPS_BlkEventHited->currentIndex()>0)
-                    ((ItemBlock*)item)->blockData.event_hit = arg1;
+                    ((ItemBlock*)item)->m_data.event_hit = arg1;
                 else
-                    ((ItemBlock*)item)->blockData.event_hit = "";
+                    ((ItemBlock*)item)->m_data.event_hit = "";
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
@@ -1224,11 +1224,11 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
         {
             if((item->data(ITEM_TYPE).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
-                modData.blocks.push_back(((ItemBlock*)item)->blockData);
+                modData.blocks.push_back(((ItemBlock*)item)->m_data);
                 if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
-                    ((ItemBlock*)item)->blockData.event_emptylayer = arg1;
+                    ((ItemBlock*)item)->m_data.event_emptylayer = arg1;
                 else
-                    ((ItemBlock*)item)->blockData.event_emptylayer = "";
+                    ((ItemBlock*)item)->m_data.event_emptylayer = "";
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
@@ -1271,7 +1271,7 @@ void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                modData.bgo.push_back(((ItemBGO*)item)->bgoData);
+                modData.bgo.push_back(((ItemBGO*)item)->m_data);
                 ((ItemBGO*)item)->setLayer(arg1);
                 //break;
             }
@@ -1317,8 +1317,8 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                selData.bgo.push_back(((ItemBGO*)item)->bgoData);
-                ((ItemBGO*)item)->setZMode(zMode, ((ItemBGO*)item)->bgoData.z_offset);
+                selData.bgo.push_back(((ItemBGO*)item)->m_data);
+                ((ItemBGO*)item)->setZMode(zMode, ((ItemBGO*)item)->m_data.z_offset);
                 //((ItemBGO*)item)->arrayApply();
                 //break;
             }
@@ -1347,8 +1347,8 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                selData.bgo.push_back(((ItemBGO*)item)->bgoData);
-                ((ItemBGO*)item)->setZMode( ((ItemBGO*)item)->bgoData.z_mode, arg1);
+                selData.bgo.push_back(((ItemBGO*)item)->m_data);
+                ((ItemBGO*)item)->setZMode( ((ItemBGO*)item)->m_data.z_mode, arg1);
                 //((ItemBGO*)item)->arrayApply();
                 //break;
             }
@@ -1376,8 +1376,8 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                selData.bgo.push_back(((ItemBGO*)item)->bgoData);
-                ((ItemBGO*)item)->bgoData.smbx64_sp = arg1;
+                selData.bgo.push_back(((ItemBGO*)item)->m_data);
+                ((ItemBGO*)item)->m_data.smbx64_sp = arg1;
                 ((ItemBGO*)item)->arrayApply();
                 //break;
             }
@@ -1415,7 +1415,7 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->changeDirection(-1);
                 //break;
             }
@@ -1449,7 +1449,7 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->changeDirection(0);
 
                 //break;
@@ -1483,7 +1483,7 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->changeDirection(1);
                 //break;
             }
@@ -1513,7 +1513,7 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setFriendly(checked);
                 //break;
             }
@@ -1541,7 +1541,7 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setNoMovable(checked);
                 //break;
             }
@@ -1568,7 +1568,7 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setLegacyBoss(checked);
                 //break;
             }
@@ -1601,8 +1601,8 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         {
             if(SelItem->data(ITEM_TYPE).toString()=="NPC")
             {
-                message = ((ItemNPC *) SelItem)->npcData.msg;
-                friendly = ((ItemNPC *) SelItem)->npcData.friendly; break;
+                message = ((ItemNPC *) SelItem)->m_data.msg;
+                friendly = ((ItemNPC *) SelItem)->m_data.friendly; break;
             }
         }
     }
@@ -1626,7 +1626,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             foreach(QGraphicsItem * SelItem, items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC"){
-                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
                     ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
                     ((ItemNPC *) SelItem)->setFriendly( msgBox->isFriendlyChecked() );
                 }
@@ -1668,7 +1668,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                LevelNPC npc = ((ItemNPC*)item)->npcData;
+                LevelNPC npc = ((ItemNPC*)item)->m_data;
 
                 obj_npc &t_npc = mw()->configs.main_npc[npc.id];
 
@@ -1678,8 +1678,8 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
                 if(t_npc.special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
                     continue;
 
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->npcData.special_data = arg1 - npcSpecSpinOffset;
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->m_data.special_data = arg1 - npcSpecSpinOffset;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -1749,9 +1749,9 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
         {
             if((targetItem->data(ITEM_TYPE).toString()=="NPC")&&((targetItem->data(2).toInt()==npcPtr)))
             {
-                contID = ((ItemNPC*)targetItem)->npcData.id;
-                npcID = ((ItemNPC*)targetItem)->npcData.special_data;
-                spcData2 = ((ItemNPC*)targetItem)->npcData.special_data2;
+                contID = ((ItemNPC*)targetItem)->m_data.id;
+                npcID = ((ItemNPC*)targetItem)->m_data.special_data;
+                spcData2 = ((ItemNPC*)targetItem)->m_data.special_data2;
                 break;
             }
         }
@@ -1794,14 +1794,14 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
             {
                 if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==blockPtr))*/)
                 {
-                    LevelNPC npc = ((ItemNPC*)item)->npcData;
+                    LevelNPC npc = ((ItemNPC*)item)->m_data;
 
                     obj_npc &t_npc = mw()->configs.main_npc[npc.id];
 
                     if(t_npc.special_type != 2) //wrong type, go to next one
                         continue;
 
-                    selData.npc.push_back(((ItemNPC *)item)->npcData);
+                    selData.npc.push_back(((ItemNPC *)item)->m_data);
                     ((ItemNPC *)item)->setIncludedNPC(selected_npc);
                 }
             }
@@ -1833,15 +1833,15 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                LevelNPC npc = ((ItemNPC*)item)->npcData;
+                LevelNPC npc = ((ItemNPC*)item)->m_data;
 
                 obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
                 if(t_npc.special_type != 0) //wrong type, go to next one
                     continue;
 
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->npcData.special_data = index;
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->m_data.special_data = index;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -1869,7 +1869,7 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                LevelNPC npc = ((ItemNPC*)item)->npcData;
+                LevelNPC npc = ((ItemNPC*)item)->m_data;
 
                 obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
@@ -1879,8 +1879,8 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
                 if(t_npc.special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
                     continue;
 
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->npcData.special_data2 = arg1 - npcSpecSpinOffset_2;
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->m_data.special_data2 = arg1 - npcSpecSpinOffset_2;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -1908,15 +1908,15 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                LevelNPC npc = ((ItemNPC*)item)->npcData;
+                LevelNPC npc = ((ItemNPC*)item)->m_data;
 
                 obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 
                 if(t_npc.special_2_type != 0) //wrong type, go to next one
                     continue;
 
-                selData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->npcData.special_data2 = index;
+                selData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->m_data.special_data2 = index;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -1974,16 +1974,16 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setGenerator(checked,
-                 ((ItemNPC*)item)->npcData.generator_direct,
-                 ((ItemNPC*)item)->npcData.generator_type
+                 ((ItemNPC*)item)->m_data.generator_direct,
+                 ((ItemNPC*)item)->m_data.generator_type
                  );
                 LvlItemPropsLock=true;
-                ui->PROPS_NPCGenType->setCurrentIndex( (((ItemNPC*)item)->npcData.generator_type)-1);
-                ui->PROPS_NPCGenTime->setValue( (double)(((ItemNPC*)item)->npcData.generator_period)/10);
+                ui->PROPS_NPCGenType->setCurrentIndex( (((ItemNPC*)item)->m_data.generator_type)-1);
+                ui->PROPS_NPCGenTime->setValue( (double)(((ItemNPC*)item)->m_data.generator_period)/10);
 
-                switch(((ItemNPC*)item)->npcData.generator_direct)
+                switch(((ItemNPC*)item)->m_data.generator_direct)
                 {
                 case 2:
                     ui->PROPS_NPCGenLeft->setChecked(true);
@@ -2028,9 +2028,9 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
-                 ((ItemNPC*)item)->npcData.generator_direct,
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
+                 ((ItemNPC*)item)->m_data.generator_direct,
                  index+1
                  );
             }
@@ -2057,8 +2057,8 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->npcData.generator_period = qRound(arg1*10);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->m_data.generator_period = qRound(arg1*10);
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -2085,10 +2085,10 @@ void LvlItemProperties::on_PROPS_NPCGenUp_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
                  1,
-                 ((ItemNPC*)item)->npcData.generator_type
+                 ((ItemNPC*)item)->m_data.generator_type
                  );
             }
         }
@@ -2115,10 +2115,10 @@ void LvlItemProperties::on_PROPS_NPCGenLeft_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
                  2,
-                 ((ItemNPC*)item)->npcData.generator_type
+                 ((ItemNPC*)item)->m_data.generator_type
                  );
             }
         }
@@ -2144,10 +2144,10 @@ void LvlItemProperties::on_PROPS_NPCGenDown_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
                  3,
-                 ((ItemNPC*)item)->npcData.generator_type
+                 ((ItemNPC*)item)->m_data.generator_type
                  );
             }
         }
@@ -2172,10 +2172,10 @@ void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
         {
             if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
-                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
                  4,
-                 ((ItemNPC*)item)->npcData.generator_type
+                 ((ItemNPC*)item)->m_data.generator_type
                  );
             }
         }
@@ -2203,7 +2203,7 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setLayer(arg1);
             }
         }
@@ -2233,14 +2233,14 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QStrin
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
                 {
-                    ((ItemNPC*)item)->npcData.attach_layer = arg1;
+                    ((ItemNPC*)item)->m_data.attach_layer = arg1;
                 }
                 else
                 {
-                    ((ItemNPC*)item)->npcData.attach_layer = "";
+                    ((ItemNPC*)item)->m_data.attach_layer = "";
                 }
                 ((ItemNPC*)item)->arrayApply();
             }
@@ -2279,11 +2279,11 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QStr
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 if(ui->PROPS_NpcEventActivate->currentIndex()>0)
-                    ((ItemNPC*)item)->npcData.event_activate = arg1;
+                    ((ItemNPC*)item)->m_data.event_activate = arg1;
                 else
-                    ((ItemNPC*)item)->npcData.event_activate = "";
+                    ((ItemNPC*)item)->m_data.event_activate = "";
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -2318,11 +2318,11 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 if(ui->PROPS_NpcEventDeath->currentIndex()>0)
-                    ((ItemNPC*)item)->npcData.event_die = arg1;
+                    ((ItemNPC*)item)->m_data.event_die = arg1;
                 else
-                    ((ItemNPC*)item)->npcData.event_die = "";
+                    ((ItemNPC*)item)->m_data.event_die = "";
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -2357,11 +2357,11 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString 
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 if(ui->PROPS_NpcEventTalk->currentIndex()>0)
-                    ((ItemNPC*)item)->npcData.event_talk = arg1;
+                    ((ItemNPC*)item)->m_data.event_talk = arg1;
                 else
-                    ((ItemNPC*)item)->npcData.event_talk = "";
+                    ((ItemNPC*)item)->m_data.event_talk = "";
                 ((ItemNPC*)item)->arrayApply();
             }
         }
@@ -2397,11 +2397,11 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
         {
             if(item->data(ITEM_TYPE).toString()=="NPC")
             {
-                modData.npc.push_back(((ItemNPC*)item)->npcData);
+                modData.npc.push_back(((ItemNPC*)item)->m_data);
                 if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
-                    ((ItemNPC*)item)->npcData.event_emptylayer = arg1;
+                    ((ItemNPC*)item)->m_data.event_emptylayer = arg1;
                 else
-                    ((ItemNPC*)item)->npcData.event_emptylayer = "";
+                    ((ItemNPC*)item)->m_data.event_emptylayer = "";
                 ((ItemNPC*)item)->arrayApply();
             }
         }

@@ -24,157 +24,65 @@
 #include "item_tile.h"
 
 ItemTile::ItemTile(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : WldBaseItem(parent)
 {
     construct();
 
 }
 
 ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : WldBaseItem(parentScene, parent)
 {
     construct();
     if(!parentScene) return;
-    setScenePoint(parentScene);
-    scene->addItem(this);
-    setZValue(scene->tileZ);
+    m_scene->addItem(this);
+    setZValue(m_scene->tileZ);
 }
 
 void ItemTile::construct()
 {
-    gridSize=32;
-    isLocked=false;
-
-    animatorID=-1;
-    imageSize = QRectF(0,0,10,10);
-
-    mouseLeft=false;
-    mouseMid=false;
-    mouseRight=false;
-
     setData(ITEM_TYPE, "TILE");
-    setData(ITEM_IS_ITEM, 1);
 }
 
 ItemTile::~ItemTile()
 {
-    scene->unregisterElement(this);
-}
-
-
-
-void ItemTile::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
-
-    //Discard multi-mouse keys
-    if((mouseLeft)||(mouseMid)||(mouseRight))
-    {
-        mouseEvent->accept();
-        return;
-    }
-
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        mouseLeft=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        mouseMid=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        mouseRight=true;
-
-    QGraphicsItem::mousePressEvent(mouseEvent);
-}
-
-void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    int multimouse=0;
-    bool callContext=false;
-    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
-        multimouse++;
-    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
-        multimouse++;
-    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
-        multimouse++;
-    if(multimouse>0)
-    {
-        mouseEvent->accept(); return;
-    }
-
-    if( mouseEvent->button()==Qt::LeftButton )
-        mouseLeft=false;
-
-    if( mouseEvent->button()==Qt::MiddleButton )
-        mouseMid=false;
-
-    if( mouseEvent->button()==Qt::RightButton )
-    {
-        callContext=true;
-        mouseRight=false;
-    }
-
-    QGraphicsItem::mouseReleaseEvent(mouseEvent);
-
-
-    /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!scene->contextMenuOpened))
-    {
-        if((!scene->lock_tile)&&(!scene->DrawMode)&&(!isLocked))
-        {
-            contextMenu(mouseEvent);
-        }
-    }
+    m_scene->unregisterElement(this);
 }
 
 void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    scene->contextMenuOpened = true; //bug protector
+    m_scene->contextMenuOpened = true; //bug protector
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
-        scene->clearSelection();
+        m_scene->clearSelection();
         this->setSelected(true);
     }
 
     setSelected(true);
     QMenu ItemMenu;
 
-    QMenu * copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
-        copyPreferences->deleteLater();
-            QAction *copyItemID = copyPreferences->addAction(tr("Tile-ID: %1").arg(tileData.id));
-                copyItemID->deleteLater();
-            QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
-                copyPosXY->deleteLater();
-            QAction *copyPosXYWH = copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
-                copyPosXYWH->deleteLater();
-            QAction *copyPosLTRB = copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
-                copyPosLTRB->deleteLater();
+    QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyItemID =       copyPreferences->addAction(tr("Tile-ID: %1").arg(m_data.id));
+    QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
+    QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
+    QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
 
-    QAction *copyTile = ItemMenu.addAction(tr("Copy"));
-    QAction *cutTile = ItemMenu.addAction(tr("Cut"));
-        ItemMenu.addSeparator();
-    QAction *transform = ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("TILE-%1").arg(tileData.id));
-        ItemMenu.addSeparator();
-    QAction *remove = ItemMenu.addAction(tr("Remove"));
+    QAction *copyTile =         ItemMenu.addAction(tr("Copy"));
+    QAction *cutTile =          ItemMenu.addAction(tr("Cut"));
+                                ItemMenu.addSeparator();
+    QAction *transform =        ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("TILE-%1").arg(m_data.id));
+                                ItemMenu.addSeparator();
+    QAction *remove =           ItemMenu.addAction(tr("Remove"));
 
-QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    QAction *selected =         ItemMenu.exec(mouseEvent->screenPos());
 
-    if(!selected)
-    {
-        #ifdef _DEBUG_
-        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-        #endif
-        return;
-    }
+    if(!selected) return;
 
     if(selected==copyItemID)
     {
-        QApplication::clipboard()->setText(QString("%1").arg(tileData.id));
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
@@ -182,8 +90,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2;")
-                               .arg(tileData.x)
-                               .arg(tileData.y)
+                               .arg(m_data.x)
+                               .arg(m_data.y)
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -192,10 +100,10 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(tileData.x)
-                               .arg(tileData.y)
-                               .arg(imageSize.width())
-                               .arg(imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_imageSize.width())
+                               .arg(m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -204,10 +112,10 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     {
         QApplication::clipboard()->setText(
                             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(tileData.x)
-                               .arg(tileData.y)
-                               .arg(tileData.x+imageSize.width())
-                               .arg(tileData.y+imageSize.height())
+                               .arg(m_data.x)
+                               .arg(m_data.y)
+                               .arg(m_data.x+m_imageSize.width())
+                               .arg(m_data.y+m_imageSize.height())
                                );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -228,7 +136,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
         util::DialogToCenter(itemList, true);
 
@@ -237,14 +145,14 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             QList<QGraphicsItem *> our_items;
             bool sameID=false;
             transformTO = itemList->tileID;
-            unsigned long oldID = tileData.id;
+            unsigned long oldID = m_data.id;
 
             if(selected==transform)
-                our_items=scene->selectedItems();
+                our_items=m_scene->selectedItems();
             else
             if(selected==transform_all)
             {
-                our_items=scene->items();
+                our_items=m_scene->items();
                 sameID=true;
             }
 
@@ -252,23 +160,23 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="TILE")
                 {
-                    if((!sameID)||(((ItemTile *) SelItem)->tileData.id==oldID))
+                    if((!sameID)||(((ItemTile *) SelItem)->m_data.id==oldID))
                     {
-                        oldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
+                        oldData.tiles.push_back( ((ItemTile *) SelItem)->m_data );
                         ((ItemTile *) SelItem)->transformTo(transformTO);
-                        newData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
+                        newData.tiles.push_back( ((ItemTile *) SelItem)->m_data );
                     }
                 }
             }
         }
         delete itemList;
         if(!newData.tiles.isEmpty())
-            scene->addTransformHistory(newData, oldData);
+            m_scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
     {
-       scene->removeSelectedWldItems();
+       m_scene->removeSelectedWldItems();
     }
 }
 
@@ -298,28 +206,28 @@ void ItemTile::transformTo(long target_id)
     obj_w_tile mergedSet;
 
     //Get Tile settings
-    scene->getConfig_Tile(target_id, item_i, animator, mergedSet, &noimage);
+    m_scene->getConfig_Tile(target_id, item_i, animator, mergedSet, &noimage);
 
     if(noimage)
         return;//Don't transform, target item is not found
 
-    tileData.id = target_id;
-    setTileData(tileData, &mergedSet, &animator);
+    m_data.id = target_id;
+    setTileData(m_data, &mergedSet, &animator);
     arrayApply();
 
-    if(!scene->opts.animationEnabled)
-        scene->update();
+    if(!m_scene->opts.animationEnabled)
+        m_scene->update();
 }
 
 void ItemTile::arrayApply()
 {
     bool found=false;
-    tileData.x = qRound(this->scenePos().x());
-    tileData.y = qRound(this->scenePos().y());
+    m_data.x = qRound(this->scenePos().x());
+    m_data.y = qRound(this->scenePos().y());
 
-    if(tileData.index < (unsigned int)scene->WldData->tiles.size())
+    if(m_data.index < (unsigned int)m_scene->WldData->tiles.size())
     { //Check index
-        if(tileData.array_id == scene->WldData->tiles[tileData.index].array_id)
+        if(m_data.array_id == m_scene->WldData->tiles[m_data.index].array_id)
         {
             found=true;
         }
@@ -328,28 +236,28 @@ void ItemTile::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->WldData->tiles[tileData.index] = tileData; //apply current tileData
+        m_scene->WldData->tiles[m_data.index] = m_data; //apply current tileData
     }
     else
-    for(int i=0; i<scene->WldData->tiles.size(); i++)
+    for(int i=0; i<m_scene->WldData->tiles.size(); i++)
     { //after find it into array
-        if(scene->WldData->tiles[i].array_id == tileData.array_id)
+        if(m_scene->WldData->tiles[i].array_id == m_data.array_id)
         {
-            tileData.index = i;
-            scene->WldData->tiles[i] = tileData;
+            m_data.index = i;
+            m_scene->WldData->tiles[i] = m_data;
             break;
         }
     }
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 void ItemTile::removeFromArray()
 {
     bool found=false;
-    if(tileData.index < (unsigned int)scene->WldData->tiles.size())
+    if(m_data.index < (unsigned int)m_scene->WldData->tiles.size())
     { //Check index
-        if(tileData.array_id == scene->WldData->tiles[tileData.index].array_id)
+        if(m_data.array_id == m_scene->WldData->tiles[m_data.index].array_id)
         {
             found=true;
         }
@@ -357,100 +265,94 @@ void ItemTile::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->tiles.removeAt(tileData.index);
+        m_scene->WldData->tiles.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<scene->WldData->tiles.size(); i++)
+    for(int i=0; i<m_scene->WldData->tiles.size(); i++)
     {
-        if(scene->WldData->tiles[i].array_id == tileData.array_id)
+        if(m_scene->WldData->tiles[i].array_id == m_data.array_id)
         {
-            scene->WldData->tiles.removeAt(i); break;
+            m_scene->WldData->tiles.removeAt(i); break;
         }
     }
 }
 
 void ItemTile::returnBack()
 {
-    setPos(tileData.x, tileData.y);
-}
-
-int ItemTile::getGridSize()
-{
-    return gridSize;
+    setPos(m_data.x, m_data.y);
 }
 
 QPoint ItemTile::sourcePos()
 {
-    return QPoint(tileData.x, tileData.y);
+    return QPoint(m_data.x, m_data.y);
+}
+
+bool ItemTile::itemTypeIsLocked()
+{
+    return m_scene->lock_tile;
 }
 
 
 void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator_id)
 {
-    tileData = inD;
-    setPos(tileData.x, tileData.y);
+    m_data = inD;
+    setPos(m_data.x, m_data.y);
 
     if(mergedSet)
     {
-        localProps = *mergedSet;
-        gridSize = localProps.grid;
+        m_localProps = *mergedSet;
+        m_gridSize = m_localProps.grid;
     }
     if(animator_id)
         setAnimator(*animator_id);
 
-    setData(ITEM_ID, QString::number(tileData.id) );
-    setData(ITEM_ARRAY_ID, QString::number(tileData.array_id) );
+    setData(ITEM_ID, QString::number(m_data.id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
 
-    scene->unregisterElement(this);
-    scene->registerElement(this);
+    m_scene->unregisterElement(this);
+    m_scene->registerElement(this);
 }
 
 
 QRectF ItemTile::boundingRect() const
 {
-    return imageSize;
+    return m_imageSize;
 }
 
 void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    if(animatorID<0)
+    if(m_animatorID<0)
     {
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
-    if(scene->animates_Tiles.size()>animatorID)
-        painter->drawPixmap(imageSize, scene->animates_Tiles[animatorID]->image(), imageSize);
+    if(m_scene->animates_Tiles.size()>m_animatorID)
+        painter->drawPixmap(m_imageSize, m_scene->animates_Tiles[m_animatorID]->image(), m_imageSize);
     else
         painter->drawRect(QRect(0,0,32,32));
 
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
         painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
-        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
     }
 }
-
-void ItemTile::setScenePoint(WldScene *theScene)
-{
-    scene = theScene;
-}
-
 
 ////////////////Animation///////////////////
 
 void ItemTile::setAnimator(long aniID)
 {
-    if(aniID<scene->animates_Tiles.size())
-    imageSize = QRectF(0,0,
-                scene->animates_Tiles[aniID]->image().width(),
-                scene->animates_Tiles[aniID]->image().height()
+    if(aniID<m_scene->animates_Tiles.size())
+    m_imageSize = QRectF(0,0,
+                m_scene->animates_Tiles[aniID]->image().width(),
+                m_scene->animates_Tiles[aniID]->image().height()
                 );
 
-    setData(ITEM_WIDTH, QString::number(qRound(imageSize.width())) ); //width
-    setData(ITEM_HEIGHT, QString::number(qRound(imageSize.height())) ); //height
+    setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())) ); //width
+    setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())) ); //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
-    animatorID = aniID;
+    m_animatorID = aniID;
 }

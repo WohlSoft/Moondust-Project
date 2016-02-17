@@ -19,19 +19,6 @@
 #ifndef ITEM_WATER_H
 #define ITEM_WATER_H
 
-#include <QGraphicsItem>
-#include <QGraphicsPolygonItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QString>
-#include <QPoint>
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QTimer>
-#include <QMenu>
-#include <math.h>
-
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
@@ -39,14 +26,11 @@
 
 class ItemWater : public LvlBaseItem
 {
+    void construct();
 public:
     ItemWater(QGraphicsItem *parent=0);
     ItemWater(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemWater();
-private:
-    void construct();
-
-public:
 
     void setSize(QSize sz);
     void setRectSize(QRect rect);
@@ -64,26 +48,22 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    void returnBack();
-    QPoint gridOffset();
-    int getGridSize();
-    QPoint sourcePos();
+    void    returnBack();
+    QPoint  sourcePos();
 
-    void updateColor();
-
-    LevelPhysEnv waterData;
-
-    int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
-    QSize waterSize;
-    int penWidth;
-
-    QPen _pen;
-    QColor _color;
+    LevelPhysEnv m_data;
 
     bool itemTypeIsLocked();
     void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
+
+private:
+    void updateColor();
+
+    QSize       m_waterSize;
+    int         m_penWidth;
+
+    QPen        m_pen;
+    QColor      m_color;
 };
 
 #endif // ITEM_WATER_H
