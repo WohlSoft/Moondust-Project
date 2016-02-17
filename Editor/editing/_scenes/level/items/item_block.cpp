@@ -727,8 +727,8 @@ void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     int pWidth = srcimg.width()-x2;//Width of center piece
     int pHeight = srcimg.height()-y2;//Height of center piece
 
-    img.fill(Qt::transparent);
-    QPainter szblock(&img);
+    m_currentImage.fill(Qt::transparent);
+    QPainter szblock(&m_currentImage);
 
     int fLnt = 0; // Free Lenght
     int fWdt = 0; // Free Width
@@ -837,5 +837,4 @@ void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     szblock.drawPixmap(0, h-y+dY, x-dX, y-dY, srcimg.copy(QRect(0, srcimg.height()-y+dY, x-dX, y-dY)) );
 
     szblock.end();
-    return img;
 }
