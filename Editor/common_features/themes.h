@@ -76,7 +76,8 @@ public:
         accept,
         cancel,
 
-        square_fill,
+        rect_fill,
+        circle_fill,
         line_tool,
         flood_fill,
         overwrite_mode,

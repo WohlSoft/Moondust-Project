@@ -141,7 +141,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 resetEditmodeButtons();
                 ui->PlacingToolbar->setVisible(true);
                     ui->actionOverwriteMode->setVisible(true);
-                    ui->actionSquareFill->setVisible(true);
+                    ui->actionRectFill->setVisible(true);
+                    ui->actionCircleFill->setVisible(true);
                     ui->actionLine->setVisible(true);
                     ui->actionFill->setVisible(true);
                     ui->actionFloodSectionOnly->setVisible(true);
@@ -154,15 +155,15 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
-                //LvlPlacingItems::squareFillingMode = false;
-                ui->actionSquareFill->setChecked(false);
-                ui->actionSquareFill->setEnabled(true);
+                ui->actionRectFill->setChecked(false);
+                ui->actionRectFill->setEnabled(true);
 
-                //LvlPlacingItems::lineMode = false;
+                ui->actionCircleFill->setChecked(false);
+                ui->actionCircleFill->setEnabled(true);
+
                 ui->actionLine->setChecked(false);
                 ui->actionLine->setEnabled(true);
 
-                //LvlPlacingItems::floodFillingMode = false;
                 ui->actionFill->setChecked(false);
                 ui->actionFill->setEnabled(true);
 
@@ -229,7 +230,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                    ui->action_Placing_ShowProperties->setChecked(true);
                    ui->action_Placing_ShowProperties->setEnabled(true);
 
-                   ui->actionSquareFill->setEnabled(false);
+                   ui->actionRectFill->setEnabled(false);
+                   ui->actionCircleFill->setEnabled(false);
                    ui->actionFill->setEnabled(false);
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
@@ -274,7 +276,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                  ui->PlacingToolbar->setVisible(true);
                      ui->actionOverwriteMode->setVisible(true);
-                     ui->actionSquareFill->setVisible(true);
+                     ui->actionRectFill->setVisible(true);
+                     ui->actionCircleFill->setVisible(true);
                      ui->actionLine->setVisible(true);
                      ui->actionFill->setVisible(true);
                      ui->actionFloodSectionOnly->setVisible(true);
@@ -286,15 +289,15 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                  WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 
-                 //WldPlacingItems::squarefillingMode = false;
-                 ui->actionSquareFill->setChecked(false);
-                 ui->actionSquareFill->setEnabled(true);
+                 ui->actionRectFill->setChecked(false);
+                 ui->actionRectFill->setEnabled(true);
 
-                 //WldPlacingItems::lineMode = false;
+                 ui->actionCircleFill->setChecked(false);
+                 ui->actionCircleFill->setEnabled(true);
+
                  ui->actionLine->setChecked(false);
                  ui->actionLine->setEnabled(true);
 
-                 //WldPlacingItems::floodFillingMode = false;
                  ui->actionFill->setChecked(false);
                  ui->actionFill->setEnabled(true);
 
@@ -341,7 +344,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                     }
                 case ItemTypes::WLD_MusicBox:
                     {
-                        ui->actionSquareFill->setEnabled(false);
+                        ui->actionRectFill->setEnabled(false);
+                        ui->actionCircleFill->setEnabled(false);
                         ui->actionLine->setEnabled(false);
                         ui->actionFill->setEnabled(false);
                         activeWldEditWin()->scene->setItemPlacer(4, itemID);

@@ -37,11 +37,11 @@ void MainWindow::resetEditmodeButtons()
 
     ui->PlacingToolbar->setVisible(false);
         ui->actionOverwriteMode->setVisible(false);
-        ui->actionSquareFill->setVisible(false);
+        ui->actionRectFill->setVisible(false);
+        ui->actionCircleFill->setVisible(false);
         ui->actionLine->setVisible(false);
         ui->actionFill->setVisible(false);
         ui->actionFloodSectionOnly->setVisible(false);
-
 
     ui->ResizingToolbar->setVisible(false);
 
@@ -109,7 +109,6 @@ void MainWindow::on_actionEriser_triggered()
     {
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
     }
-
 }
 
 

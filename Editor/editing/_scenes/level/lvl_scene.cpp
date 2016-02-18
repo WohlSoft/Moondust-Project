@@ -150,7 +150,7 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
 
     //Editing mode
-    EditingMode = 0;
+    EditingMode = MODE_Selecting;
     EraserEnabled = false;
     PasteFromBuffer = false;
     disableMoveItems = false;

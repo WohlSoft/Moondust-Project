@@ -402,7 +402,8 @@ public:
 // //////////////// Placing tools /////////////////////////
     public slots:
         void SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props=false);
-        void on_actionSquareFill_triggered(bool checked);
+        void on_actionRectFill_triggered(bool checked);
+        void on_actionCircleFill_triggered(bool checked);
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
         void on_actionFill_triggered(bool checked);
@@ -758,6 +759,7 @@ public:
 public slots:
     protected:
     private slots:
+
 
 signals:
     void closeEditor();

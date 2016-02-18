@@ -85,7 +85,8 @@ void Themes::init()
     icons_map[accept]       = QIcon(":/images/resize_accept.png");
     icons_map[cancel]       = QIcon(":/images/resize_cancel.png");
 
-    icons_map[square_fill]  = QIcon(":/images/square_fill.png");
+    icons_map[rect_fill]  = QIcon(":/images/square_fill.png");
+    icons_map[circle_fill]  = QIcon(":/images/circle_fill.png");
     icons_map[line_tool]    = QIcon(":/images/line_fill.png");
     icons_map[flood_fill]    = QIcon(":/images/flood_fill.png");
     icons_map[overwrite_mode]= QIcon(":/images/overwrite.png");
@@ -358,7 +359,8 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("edit-place");
-        loadIcon(guiset,"square-fill", square_fill );
+        loadIcon(guiset,"square-fill", rect_fill );
+        loadIcon(guiset,"circle-fill", circle_fill );
         loadIcon(guiset,"line-tool", line_tool );
         loadIcon(guiset,"flood-fill", flood_fill );
         loadIcon(guiset,"overwrite-mode", overwrite_mode );

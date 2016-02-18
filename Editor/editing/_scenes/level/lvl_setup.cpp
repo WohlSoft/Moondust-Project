@@ -54,8 +54,12 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         switchMode("Placing");
         break;
 
-    case MODE_DrawSquare:
+    case MODE_DrawRect:
         switchMode("Square");
+        break;
+
+    case MODE_DrawCircle:
+        switchMode("Circle");
         break;
 
     case MODE_Line:

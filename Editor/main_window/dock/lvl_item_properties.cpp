@@ -931,8 +931,8 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
 //    if(LvlItemPropsLock) return;
 //    if(LockItemProps) return;
 
-//    on_actionSquareFill_triggered(checked);
-//    ui->actionSquareFill->setChecked(checked);
+//    on_actionRectFill_triggered(checked);
+//    ui->actionRectFill->setChecked(checked);
 //}
 
 
@@ -941,8 +941,8 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
 //    if(LvlItemPropsLock) return;
 //    if(LockItemProps) return;
 
-//    on_actionSquareFill_triggered(checked);
-//    ui->actionSquareFill->setChecked(checked);
+//    on_actionRectFill_triggered(checked);
+//    ui->actionRectFill->setChecked(checked);
 //}
 
 

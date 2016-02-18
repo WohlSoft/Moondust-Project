@@ -16,46 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WLD_ITEM_PLACING_H
-#define WLD_ITEM_PLACING_H
+#ifndef LVL_MODE_CIRCLE_H
+#define LVL_MODE_CIRCLE_H
 
-#include <QPoint>
+#include <common_features/edit_mode_base.h>
 
-#include <PGE_File_Formats/wld_filedata.h>
-
-class WldPlacingItems
+class LVL_ModeCircle : public EditMode
 {
 public:
-    static WorldTiles TileSet;
-    static WorldScenery SceneSet;
-    static WorldPaths PathSet;
-    static WorldLevels LevelSet;
-    static WorldMusic MusicSet;
+    LVL_ModeCircle(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeCircle();
+    void set();
+    void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
 
-    enum PlaceMode
-    {
-        PMODE_Brush=0,
-        PMODE_Rect,
-        PMODE_Circle,
-        PMODE_Line,
-        PMODE_FloodFill
-    };
-    static PlaceMode placingMode;
+    void keyPress(QKeyEvent *keyEvent);
+    void keyRelease(QKeyEvent *keyEvent);
 
-    static bool overwriteMode;
+private:
+    QPointF drawStartPos;
 
-    static int c_offset_x;
-    static int c_offset_y;
-
-    static int itemW;
-    static int itemH;
-
-    static int gridSz;
-    static QPoint gridOffset;
-
-    static QList<QPair<int, QVariant > > flags;
 };
 
-typedef QPair<int, QVariant > dataFlag_w;
-
-#endif // ITEM_PLACING_H
+#endif // LVL_MODE_CIRCLE_H

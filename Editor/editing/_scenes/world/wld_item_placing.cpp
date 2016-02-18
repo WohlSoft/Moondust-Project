@@ -121,7 +121,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
             setSquareDrawer(); return;
         }
@@ -214,7 +214,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
             setSquareDrawer(); return;
         }
@@ -304,7 +304,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
             setSquareDrawer(); return;
         }
@@ -400,7 +400,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
             setSquareDrawer(); return;
         }

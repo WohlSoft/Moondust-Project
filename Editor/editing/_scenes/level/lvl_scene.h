@@ -340,7 +340,8 @@ public:
             MODE_HandScroll,
             MODE_Erasing,
             MODE_PlacingNew,
-            MODE_DrawSquare,
+            MODE_DrawRect,
+            MODE_DrawCircle,
             MODE_PasteFromClip,
             MODE_Resizing,
             MODE_SelectingOnly,
@@ -379,7 +380,8 @@ public:
         void setItemPlacer(int itemType, unsigned long itemID=1, int dType=0);
         void updateCursoredNpcDirection();
 
-        void setSquareDrawer();
+        void setRectDrawer();
+        void setCircleDrawer();
         void setLineDrawer();
         void setFloodFiller();
 

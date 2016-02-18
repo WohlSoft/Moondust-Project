@@ -121,7 +121,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             {
                 LvlPlacingItems::sizableBlock=true;
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
-                setSquareDrawer(); return;
+                setRectDrawer(); return;
             }
 
             LvlPlacingItems::itemW = LvlPlacingItems::blockSet.w;
@@ -164,9 +164,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
             //Square fill mode (uses own cursor item)
             //if(LvlPlacingItems::squareFillingMode)
-            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Square)
+            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Rect)
             {
-                setSquareDrawer(); return;
+                setRectDrawer(); return;
             }
 
             //Offset relative to item center
@@ -261,9 +261,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
 
         //Square fill mode
-        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square)
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Rect)
         {
-            setSquareDrawer(); return;
+            setRectDrawer(); return;
         }
 
         LvlPlacingItems::c_offset_x= qRound(qreal(w) / 2);
@@ -401,7 +401,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= 0;
         LvlPlacingItems::c_offset_y= 0;
         LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer.isEmpty()? "Default" : LvlPlacingItems::layer;
-        setSquareDrawer(); return;
+        setRectDrawer(); return;
         break;
     case 4: //doorPoint
         placingItem=PLC_Door;
@@ -473,7 +473,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
 
 
-void LvlScene::setSquareDrawer()
+void LvlScene::setRectDrawer()
 {
     if(cursor)
         {delete cursor;
@@ -526,7 +526,52 @@ void LvlScene::setSquareDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawSquare);
+    SwitchEditingMode(MODE_DrawRect);
+    DrawMode=true;
+}
+
+void LvlScene::setCircleDrawer()
+{
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
+    QPen pen;
+    QBrush brush;
+
+    switch(placingItem)
+    {
+    case PLC_Block:
+    case PLC_BGO:
+    default:
+        pen = QPen(Qt::gray, 2);
+        brush = QBrush(Qt::darkGray);
+        break;
+    }
+
+    //Align width and height to fit into item aligning
+    long addW=LvlPlacingItems::gridSz-LvlPlacingItems::itemW%LvlPlacingItems::gridSz;
+    long addH=LvlPlacingItems::gridSz-LvlPlacingItems::itemH%LvlPlacingItems::gridSz;
+    if(addW==LvlPlacingItems::gridSz) addW=0;
+    if(addH==LvlPlacingItems::gridSz) addH=0;
+    LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
+    LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
+
+    cursor = addEllipse(0,0,1,1, pen, brush);
+
+    //set data flags
+    foreach(dataFlag flag, LvlPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
+
+    cursor->setData(ITEM_TYPE, "Circle");
+
+    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
+    cursor->setZValue(7000);
+    cursor->setOpacity( 0.5 );
+    cursor->setVisible(false);
+    cursor->setEnabled(true);
+
+    SwitchEditingMode(MODE_DrawCircle);
     DrawMode=true;
 }
 

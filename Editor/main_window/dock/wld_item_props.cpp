@@ -697,8 +697,8 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
                 WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 
                 //WldPlacingItems::squarefillingMode = false;
-                mw()->ui->actionSquareFill->setChecked(false);
-                mw()->ui->actionSquareFill->setEnabled(false);
+                mw()->ui->actionRectFill->setChecked(false);
+                mw()->ui->actionRectFill->setEnabled(false);
 
                 //WldPlacingItems::lineMode = false;
                 mw()->ui->actionLine->setChecked(false);

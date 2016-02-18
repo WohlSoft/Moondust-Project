@@ -270,7 +270,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawSquare);
+        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawRect);
         break;
     case MODE_Pasting:    // paste from Buffer
         scene->clearSelection();

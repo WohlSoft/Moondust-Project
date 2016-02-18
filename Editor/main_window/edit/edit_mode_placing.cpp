@@ -22,12 +22,13 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-void MainWindow::on_actionSquareFill_triggered(bool checked)
+void MainWindow::on_actionRectFill_triggered(bool checked)
 {
         resetEditmodeButtons();
         ui->PlacingToolbar->setVisible(true);
             ui->actionOverwriteMode->setVisible(true);
-            ui->actionSquareFill->setVisible(true);
+            ui->actionRectFill->setVisible(true);
+            ui->actionCircleFill->setVisible(true);
             ui->actionLine->setVisible(true);
             ui->actionFill->setVisible(true);
             ui->actionFloodSectionOnly->setVisible(true);
@@ -37,11 +38,12 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             LevelEdit * edit = activeLvlEditWin();
 
-            LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Square
+            LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Rect
                                                     : LvlPlacingItems::PMODE_Brush );
 
             ui->actionLine->setChecked(false);
             ui->actionFill->setChecked(false);
+            ui->actionCircleFill->setChecked(false);
 
             switch(edit->scene->placingItem)
             {
@@ -66,7 +68,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             WorldEdit * edit = activeWldEditWin();
 
-            WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Square
+            WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Rect
                                                     : WldPlacingItems::PMODE_Brush );
 
             ui->actionLine->setChecked(false);
@@ -102,13 +104,96 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 }
 
 
+void MainWindow::on_actionCircleFill_triggered(bool checked)
+{
+    resetEditmodeButtons();
+    ui->PlacingToolbar->setVisible(true);
+        ui->actionOverwriteMode->setVisible(true);
+        ui->actionRectFill->setVisible(true);
+        ui->actionCircleFill->setVisible(true);
+        ui->actionLine->setVisible(true);
+        ui->actionFill->setVisible(true);
+        ui->actionFloodSectionOnly->setVisible(true);
+        ui->actionFloodSectionOnly->setEnabled(false);
+
+    if (activeChildWindow()==1)
+    {
+        LevelEdit * edit = activeLvlEditWin();
+
+        LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Circle
+                                                : LvlPlacingItems::PMODE_Brush );
+
+        ui->actionRectFill->setChecked(false);
+        ui->actionLine->setChecked(false);
+        ui->actionFill->setChecked(false);
+
+        switch(edit->scene->placingItem)
+        {
+            case LvlScene::PLC_Block:
+               edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
+               WriteToLog(QtDebugMsg, QString("Block Circle draw -> %1").arg(checked));
+
+            break;
+            case LvlScene::PLC_BGO:
+               edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
+               WriteToLog(QtDebugMsg, QString("BGO Circle draw -> %1").arg(checked));
+
+            break;
+
+            default:
+            break;
+        }
+        edit->setFocus();
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+        WorldEdit * edit = activeWldEditWin();
+
+        WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Circle
+                                                : WldPlacingItems::PMODE_Brush );
+
+        ui->actionRectFill->setChecked(false);
+        ui->actionLine->setChecked(false);
+        ui->actionFill->setChecked(false);
+
+        switch(edit->scene->placingItem)
+        {
+            case WldScene::PLC_Tile:
+               edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
+               WriteToLog(QtDebugMsg, QString("Tile Circle draw -> %1").arg(checked));
+
+            break;
+            case WldScene::PLC_Scene:
+               edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
+               WriteToLog(QtDebugMsg, QString("Scenery Circle draw -> %1").arg(checked));
+
+            break;
+            case WldScene::PLC_Path:
+               edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
+               WriteToLog(QtDebugMsg, QString("Path Circle draw -> %1").arg(checked));
+
+            break;
+            case WldScene::PLC_Level:
+               edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
+               WriteToLog(QtDebugMsg, QString("Path Circle draw -> %1").arg(checked));
+
+            break;
+
+            default: break;
+        }
+        edit->setFocus();
+    }
+}
+
 
 void MainWindow::on_actionLine_triggered(bool checked)
 {
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
         ui->actionOverwriteMode->setVisible(true);
-        ui->actionSquareFill->setVisible(true);
+        ui->actionRectFill->setVisible(true);
+        ui->actionCircleFill->setVisible(true);
         ui->actionLine->setVisible(true);
         ui->actionFill->setVisible(true);
         ui->actionFloodSectionOnly->setVisible(true);
@@ -121,7 +206,8 @@ void MainWindow::on_actionLine_triggered(bool checked)
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Line
                                                 : LvlPlacingItems::PMODE_Brush );
 
-        ui->actionSquareFill->setChecked(false);
+        ui->actionRectFill->setChecked(false);
+        ui->actionCircleFill->setChecked(false);
         ui->actionFill->setChecked(false);
 
 
@@ -156,7 +242,8 @@ void MainWindow::on_actionLine_triggered(bool checked)
         WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Line
                                                 : WldPlacingItems::PMODE_Brush );
 
-        ui->actionSquareFill->setChecked(false);
+        ui->actionRectFill->setChecked(false);
+        ui->actionCircleFill->setChecked(false);
         ui->actionFill->setChecked(false);
 
         switch(edit->scene->placingItem)
@@ -195,7 +282,8 @@ void MainWindow::on_actionFill_triggered(bool checked)
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
         ui->actionOverwriteMode->setVisible(true);
-        ui->actionSquareFill->setVisible(true);
+        ui->actionRectFill->setVisible(true);
+        ui->actionCircleFill->setVisible(true);
         ui->actionLine->setVisible(true);
         ui->actionFill->setVisible(true);
         ui->actionFloodSectionOnly->setVisible(true);
@@ -208,7 +296,8 @@ void MainWindow::on_actionFill_triggered(bool checked)
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_FloodFill
                                                 : LvlPlacingItems::PMODE_Brush );
 
-        ui->actionSquareFill->setChecked(false);
+        ui->actionRectFill->setChecked(false);
+        ui->actionCircleFill->setChecked(false);
         ui->actionLine->setChecked(false);
 
         switch(edit->scene->placingItem)
@@ -231,7 +320,8 @@ void MainWindow::on_actionFill_triggered(bool checked)
         WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_FloodFill
                                                 : WldPlacingItems::PMODE_Brush );
 
-        ui->actionSquareFill->setChecked(false);
+        ui->actionRectFill->setChecked(false);
+        ui->actionCircleFill->setChecked(false);
         ui->actionLine->setChecked(false);
 
         switch(edit->scene->placingItem)

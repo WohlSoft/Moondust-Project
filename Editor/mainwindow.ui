@@ -350,7 +350,8 @@
     <addaction name="actionEriser"/>
     <addaction name="separator"/>
     <addaction name="actionOverwriteMode"/>
-    <addaction name="actionSquareFill"/>
+    <addaction name="actionRectFill"/>
+    <addaction name="actionCircleFill"/>
     <addaction name="actionLine"/>
     <addaction name="actionFill"/>
     <addaction name="actionFloodSectionOnly"/>
@@ -620,7 +621,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSquareFill"/>
+   <addaction name="actionRectFill"/>
+   <addaction name="actionCircleFill"/>
    <addaction name="actionLine"/>
    <addaction name="actionFill"/>
    <addaction name="actionOverwriteMode"/>
@@ -645,7 +647,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -692,7 +694,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -704,7 +706,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2201,7 +2203,7 @@
     <string>Lock Music Boxes</string>
    </property>
   </action>
-  <action name="actionSquareFill">
+  <action name="actionRectFill">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -2210,13 +2212,13 @@
      <normaloff>:/images/square_fill.png</normaloff>:/images/square_fill.png</iconset>
    </property>
    <property name="text">
-    <string>Square Fill</string>
+    <string>Rectangular fill</string>
    </property>
    <property name="toolTip">
-    <string>Square Fill (Shift+S)</string>
+    <string>Rectangular Fill (Shift+S)</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Shift+S</string>
+    <string>Shift+S</string>
    </property>
   </action>
   <action name="actionOverwriteMode">
@@ -2709,12 +2711,29 @@
     <string>Wrap Vertically</string>
    </property>
   </action>
+  <action name="actionCircleFill">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/circle_fill.png</normaloff>:/images/circle_fill.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circular fill</string>
+   </property>
+   <property name="toolTip">
+    <string>Circular fill (Shift+C)</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+C</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Engine/_resources/engine.qrc"/>
-  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
+  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

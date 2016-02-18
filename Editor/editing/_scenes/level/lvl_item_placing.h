@@ -40,7 +40,8 @@ public:
     enum PlaceMode
     {
         PMODE_Brush=0,
-        PMODE_Square,
+        PMODE_Rect,
+        PMODE_Circle,
         PMODE_Line,
         PMODE_FloodFill
     };
