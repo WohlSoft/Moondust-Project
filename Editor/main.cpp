@@ -141,7 +141,6 @@ int main(int argc, char *argv[])
     MainWindow *w = new MainWindow;
     if(!w->continueLoad)
     {
-
         delete w;
         goto QuitFromEditor;
     }

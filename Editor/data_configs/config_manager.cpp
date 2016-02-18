@@ -330,8 +330,19 @@ QString ConfigManager::isPreLoaded()
 
     if(!saved_theme.isEmpty())
         themePack = saved_theme;
+
+    QList<QListWidgetItem*> AvailableConfigs=ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    //Automatically choice config pack if alone detected
+    if(AvailableConfigs.size()==1)
+    {
+        currentConfig = AvailableConfigs[0]->data(3).toString();
+        currentConfigPath = AvailableConfigs[0]->data(Qt::UserRole+4).toString();
+        AvailableConfigs[0]->setSelected(true);
+        ui->configList->scrollToItem(AvailableConfigs[0]);
+    }
+    else
     //check exists of config in list
-    foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+    foreach(QListWidgetItem * it, AvailableConfigs)
     {
         if(configPath.isEmpty())
         {
@@ -348,8 +359,11 @@ QString ConfigManager::isPreLoaded()
             break;
         }
     }
-
     ui->AskAgain->setChecked(askAgain);
+
+    //Don't spawn dialog on load if alone config pack detected
+    if(AvailableConfigs.size()==1)
+        askAgain=false;
 
     return currentConfigPath;
 }
