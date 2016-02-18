@@ -24,11 +24,18 @@ void WldBaseItem::construct()
     m_gridSize=32;
     m_gridOffsetX=0;
     m_gridOffsetY=0;
+
     m_locked=false;
+
     m_imgOffsetX=0;
     m_imgOffsetY=0;
     m_animatorID = -1;
     m_imageSize = QRectF(0,0,10,10);
+
+    m_mouseLeftPressed=false;
+    m_mouseMidPressed=false;
+    m_mouseRightPressed=false;
+
     setData(ITEM_IS_ITEM, 1);
 }
 
