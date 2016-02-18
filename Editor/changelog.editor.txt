@@ -3,6 +3,7 @@ Editor 0.3.1.10
 - Level list dialog now looks for level files in sub directories (is possible to collect levels into sub-directories to don't flood episode root folder)
 - Better testing through SMBX on Windows version
 - Added support of SMBX65-38A file formats
+- Fixed miss up of order priority applying for BGO-190
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

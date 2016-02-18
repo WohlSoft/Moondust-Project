@@ -43,7 +43,7 @@ void FileFormats::smbx64LevelPrepare(LevelData &lvl)
     {
         if(lvl.bgo[q].smbx64_sp < 0)
         {
-            if( (lvl.bgo[q].id>0) && (lvl.bgo[q].id < (unsigned)190) )
+            if( (lvl.bgo[q].id>0) && (lvl.bgo[q].id <= (unsigned)190) )
             {
                 lvl.bgo[q].smbx64_sp_apply = _smbx64_bgo_sort_priorities[lvl.bgo[q].id-1];
             }
