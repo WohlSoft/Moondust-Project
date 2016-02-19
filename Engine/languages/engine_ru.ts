@@ -241,130 +241,130 @@ Enter to: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="528"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="529"/>
         <location filename="../gui/pge_msgbox.cpp" line="362"/>
         <location filename="../gui/pge_textinputbox.cpp" line="413"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="546"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="547"/>
         <location filename="../gui/pge_msgbox.cpp" line="380"/>
         <location filename="../gui/pge_textinputbox.cpp" line="431"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="565"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="566"/>
         <location filename="../gui/pge_msgbox.cpp" line="399"/>
         <location filename="../gui/pge_textinputbox.cpp" line="450"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../gui/pge_menuboxbase.cpp" line="584"/>
+        <location filename="../gui/pge_menuboxbase.cpp" line="585"/>
         <location filename="../gui/pge_msgbox.cpp" line="418"/>
         <location filename="../gui/pge_textinputbox.cpp" line="469"/>
         <source>Fatal</source>
         <translation>Авария</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../common_features/crash_handler.cpp" line="34"/>
         <source>Unhandled exception!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="75"/>
+        <location filename="../common_features/crash_handler.cpp" line="35"/>
         <source>Engine was crashed because accepted unhandled exception!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="82"/>
+        <location filename="../common_features/crash_handler.cpp" line="42"/>
         <source>Out of memory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="83"/>
+        <location filename="../common_features/crash_handler.cpp" line="43"/>
         <source>Engine was crashed because out of memory! Try to close other applications and restart game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="102"/>
+        <location filename="../common_features/crash_handler.cpp" line="62"/>
         <source>Killed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="103"/>
+        <location filename="../common_features/crash_handler.cpp" line="63"/>
         <source>Engine was killed by mad maniac :-P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="108"/>
+        <location filename="../common_features/crash_handler.cpp" line="68"/>
         <source>Time out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="109"/>
+        <location filename="../common_features/crash_handler.cpp" line="69"/>
         <source>Engine was abourted because alarm() time out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="118"/>
+        <location filename="../common_features/crash_handler.cpp" line="78"/>
         <source>Wrong CPU Instruction!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="119"/>
+        <location filename="../common_features/crash_handler.cpp" line="79"/>
         <source>Engine was crashed because a wrong CPU instruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="124"/>
+        <location filename="../common_features/crash_handler.cpp" line="84"/>
         <source>Wrong arithmetical operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="125"/>
+        <location filename="../common_features/crash_handler.cpp" line="85"/>
         <source>Engine was crashed because wrong arithmetical opreation!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="130"/>
+        <location filename="../common_features/crash_handler.cpp" line="90"/>
         <source>Aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="131"/>
+        <location filename="../common_features/crash_handler.cpp" line="91"/>
         <source>Engine was been aborted because critical error was occouped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="135"/>
+        <location filename="../common_features/crash_handler.cpp" line="95"/>
         <source>Segmentation fault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="136"/>
+        <location filename="../common_features/crash_handler.cpp" line="96"/>
         <source>Engine was crashed because Segmentation fault. Run debug with built in debug mode and retry your recent action to take more detail info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="142"/>
+        <location filename="../common_features/crash_handler.cpp" line="102"/>
         <source>Interrupt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="143"/>
+        <location filename="../common_features/crash_handler.cpp" line="103"/>
         <source>Engine was interrupted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="547"/>
+        <location filename="../main.cpp" line="439"/>
         <source>No opened files</source>
         <translation>Нет открытых файлов</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="556"/>
+        <location filename="../main.cpp" line="448"/>
         <source>ERROR:
 Fail to start world map
 
@@ -375,14 +375,14 @@ Fail to start world map
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="583"/>
+        <location filename="../main.cpp" line="475"/>
         <source>Start level
 %1</source>
         <translation>Запуск уровняl
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="726"/>
+        <location filename="../main.cpp" line="618"/>
         <source>Warp exit
 
 Exit to:
@@ -397,7 +397,7 @@ Enter to: %2</source>
 Вход в: %2</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="771"/>
+        <location filename="../main.cpp" line="663"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Уровень быз завершён с ошибкой.
@@ -627,16 +627,22 @@ Enter to: %2</source>
         <translation>Невозможно прочитать файл</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="632"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="653"/>
         <source>Unknown values are presented</source>
         <translation>Представлены неизвестные значения</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="633"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="654"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Ваш файл имеет неизвестные значения,
 которые будут удалены когда вы сохраните файл</translation>
+    </message>
+    <message>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="319"/>
+        <source>Fatal error: Impossible to find start section.
+Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

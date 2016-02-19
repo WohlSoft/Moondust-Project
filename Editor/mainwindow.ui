@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -648,7 +648,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -707,7 +707,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2219,7 +2219,7 @@
     <string>Rectangular Fill (Shift+S)</string>
    </property>
    <property name="shortcut">
-    <string>Shift+S</string>
+    <string notr="true">Shift+S</string>
    </property>
   </action>
   <action name="actionOverwriteMode">
@@ -2727,7 +2727,7 @@
     <string>Circular fill (Shift+C)</string>
    </property>
    <property name="shortcut">
-    <string>Shift+C</string>
+    <string notr="true">Shift+C</string>
    </property>
   </action>
   <action name="actionShowGrid">
@@ -2744,11 +2744,13 @@
    <property name="text">
     <string>Show grid</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
   <include location="_resources/editor.qrc"/>
  </resources>
