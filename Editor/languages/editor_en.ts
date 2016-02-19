@@ -8172,27 +8172,30 @@ Do you want to abort current testing process?</translation>
 You have a Vanilia SMBX!
 That means, impossible to launch level testing automatically.
 To launch a level testing, start a game and select playing of the %1 episode.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 not found!
+You have a Vanilia SMBX!
+That means, impossible to launch level testing automatically.
+To launch a level testing, start a game and select playing of the %1 episode.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="660"/>
         <source>process execution is failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>process execution is failed.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="662"/>
         <source>patching is failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>patching is failed.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="667"/>
         <source>Failed to launch LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to launch LunaLUA-SMBX!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="668"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible to launch SMBX Engine, because %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="679"/>
@@ -8724,12 +8727,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="385"/>
         <source>Alignment in the editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alignment in the editor:</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="392"/>
         <source>Grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid size</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="576"/>
@@ -8834,27 +8837,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="682"/>
         <source>Grid offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid offset X</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="706"/>
         <source>Grid offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid offset Y</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="721"/>
         <source>Middle of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation>Middle of cell by center</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="726"/>
         <source>Edge of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation>Edge of cell by center</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="734"/>
         <source>Align at</source>
-        <translation type="unfinished"></translation>
+        <translation>Align at</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="943"/>

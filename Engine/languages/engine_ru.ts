@@ -2,243 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
-    <name>QApplication</name>
-    <message>
-        <source>No opened files</source>
-        <translation type="vanished">Нет открытых файлов</translation>
-    </message>
-    <message>
-        <source>ERROR:
-Fail to start world map
-
-%1</source>
-        <translation type="vanished">ОШИБКА:
-Невозможно запустить карту мира
-
-%1</translation>
-    </message>
-    <message>
-        <source>Start level
-%1</source>
-        <translation type="vanished">Запуск уровняl
-%1</translation>
-    </message>
-    <message>
-        <source>Warp exit
-
-Exit to:
-%1
-
-Enter to: %2</source>
-        <translation type="vanished">Выходной проход
-
-Выход через:
-%1
-
-Вход в: %2</translation>
-    </message>
-    <message>
-        <source>Level was closed with error.
-%1</source>
-        <translation type="vanished">Уровень быз завершён с ошибкой.
-%1</translation>
-    </message>
-    <message>
-        <source>Game Over!</source>
-        <translation type="vanished">Игра окончена!</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">Продолжить</translation>
-    </message>
-    <message>
-        <source>Exit without saving</source>
-        <translation type="vanished">Выйти без сохранения</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="vanished">Выйти</translation>
-    </message>
-    <message>
-        <source>1 Player Game</source>
-        <translation type="vanished">Одиночная игра</translation>
-    </message>
-    <message>
-        <source>2 Player Game</source>
-        <translation type="vanished">Игра вдвоём</translation>
-    </message>
-    <message>
-        <source>Play level</source>
-        <translation type="vanished">Сыграть уровень</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Настройки</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Выход</translation>
-    </message>
-    <message>
-        <source>Test of screens</source>
-        <translation type="vanished">Тест экранов</translation>
-    </message>
-    <message>
-        <source>Test of message boxes</source>
-        <translation type="vanished">Тест окон сообщений</translation>
-    </message>
-    <message>
-        <source>Player controlling</source>
-        <translation type="vanished">Управление</translation>
-    </message>
-    <message>
-        <source>Video settings</source>
-        <translation type="vanished">Настройки видео</translation>
-    </message>
-    <message>
-        <source>Music volume</source>
-        <translation type="vanished">Громк. музыки</translation>
-    </message>
-    <message>
-        <source>Sound volume</source>
-        <translation type="vanished">Громк. звука</translation>
-    </message>
-    <message>
-        <source>Full Screen mode</source>
-        <translation type="vanished">Полный экран</translation>
-    </message>
-    <message>
-        <source>Credits</source>
-        <translation type="vanished">Об авторах</translation>
-    </message>
-    <message>
-        <source>Loading screen</source>
-        <translation type="vanished">Загрузочный экран</translation>
-    </message>
-    <message>
-        <source>Game over screen</source>
-        <translation type="vanished">Игра окончена</translation>
-    </message>
-    <message>
-        <source>Message box</source>
-        <translation type="vanished">Окно сообщения</translation>
-    </message>
-    <message>
-        <source>Menu box</source>
-        <translation type="vanished">Окно меню</translation>
-    </message>
-    <message>
-        <source>Text Input box</source>
-        <translation type="vanished">Окно ввода текста</translation>
-    </message>
-    <message>
-        <source>Question box</source>
-        <translation type="vanished">Окно вопроса</translation>
-    </message>
-    <message>
-        <source>Show debug info</source>
-        <translation type="vanished">Показ. отдад. инфо</translation>
-    </message>
-    <message>
-        <source>Enable frame-skip</source>
-        <translation type="vanished">Вкл. пропуск кадров</translation>
-    </message>
-    <message>
-        <source>Enable V-Sync</source>
-        <translation type="vanished">Вкл. вертик. синхр</translation>
-    </message>
-    <message>
-        <source>Frame time (ms.)</source>
-        <translation type="vanished">Время кадра (мс)</translation>
-    </message>
-    <message>
-        <source>Player 1 controls</source>
-        <translation type="vanished">Первый игрок</translation>
-    </message>
-    <message>
-        <source>Player 2 controls</source>
-        <translation type="vanished">Второй игрок</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation type="vanished">Клавиатура</translation>
-    </message>
-    <message>
-        <source>Joystick: %1</source>
-        <translation type="vanished">Джойстик: %1</translation>
-    </message>
-    <message>
-        <source>Input:</source>
-        <translation type="vanished">Ввод:</translation>
-    </message>
-    <message>
-        <source>Please wait...</source>
-        <translation type="vanished">Пожалуйста, подождите...</translation>
-    </message>
-    <message>
-        <source>&lt;episodes not found&gt;</source>
-        <translation type="vanished">&lt;эпизоды не найдены&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;levels not found&gt;</source>
-        <translation type="vanished">&lt;уровни не найдены&gt;</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation type="vanished">Пауза</translation>
-    </message>
-    <message>
-        <source>Save and continue</source>
-        <translation type="vanished">Сохр. и продолжить</translation>
-    </message>
-    <message>
-        <source>Save and quit</source>
-        <translation type="vanished">Сохр. и выйти</translation>
-    </message>
-    <message>
-        <source>Quit without saving</source>
-        <translation type="vanished">Выйти без сохранения</translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation type="vanished">Информация</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">Предупреждение</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <source>Fatal</source>
-        <translation type="vanished">Авария</translation>
-    </message>
-    <message>
-        <source>File open error</source>
-        <translation type="vanished">Ошибка открытия файла</translation>
-    </message>
-    <message>
-        <source>File is not exist</source>
-        <translation type="vanished">Файл не существует</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read the file</source>
-        <translation type="vanished">Невозможно прочитать файл</translation>
-    </message>
-    <message>
-        <source>Unknown values are presented</source>
-        <translation type="vanished">Представлены неизвестные значения</translation>
-    </message>
-    <message>
-        <source>Your file have an unknown values which will be removed
- when you will save file</source>
-        <translation type="vanished">Ваш файл имеет неизвестные значения,
-которые будут удалены когда вы сохраните файл</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../gui/pge_menuboxbase.cpp" line="529"/>
@@ -271,92 +34,96 @@ Enter to: %2</source>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="34"/>
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Необработанное исключение!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="35"/>
         <source>Engine was crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок аварийно завершился в связи с получением необработанного исключения!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="42"/>
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно памяти!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="43"/>
         <source>Engine was crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок аварийно завершился в связи с переполнением памяти!
+Попробуйте закрыть другие приложения и перезапустить игру.</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="62"/>
         <source>Killed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Убит!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="63"/>
         <source>Engine was killed by mad maniac :-P</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок был убит сумасшедшим маньяком :-P</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="68"/>
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Время вышло!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="69"/>
         <source>Engine was abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="78"/>
         <source>Wrong CPU Instruction!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверная инструкция процессора!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="79"/>
         <source>Engine was crashed because a wrong CPU instruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессра</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="84"/>
         <source>Wrong arithmetical operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверная арифметическая операция</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="85"/>
         <source>Engine was crashed because wrong arithmetical opreation!</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="90"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервано</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="91"/>
         <source>Engine was been aborted because critical error was occouped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Работа движка была прервана в связи с критической ошибкой.</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="95"/>
         <source>Segmentation fault</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка сегментирования</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="96"/>
         <source>Engine was crashed because Segmentation fault. Run debug with built in debug mode and retry your recent action to take more detail info.</source>
-        <translation type="unfinished"></translation>
+        <translation>Движок аварийно завершился в связи с ошибкой сегментирования.
+Для получения более подробной информации, перекомпилируйте движок
+в режиме отладки и запустите отладчик, затем повторите ваши недавние действия,
+спровоцировавшие эту ошибку.</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="102"/>
         <source>Interrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Прерывание</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="103"/>
         <source>Engine was interrupted</source>
-        <translation type="unfinished"></translation>
+        <translation>Работа движка была прервана</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="439"/>
@@ -642,72 +409,8 @@ Enter to: %2</source>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="319"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QTranslator</name>
-    <message>
-        <source>Information</source>
-        <translation type="vanished">Информация</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">Предупреждение</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <source>Fatal</source>
-        <translation type="vanished">Авария</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation type="vanished">Пауза</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">Продолжить</translation>
-    </message>
-    <message>
-        <source>Save and continue</source>
-        <translation type="vanished">Сохр. и продолжить</translation>
-    </message>
-    <message>
-        <source>Save and quit</source>
-        <translation type="vanished">Сохр. и выйти</translation>
-    </message>
-    <message>
-        <source>Exit without saving</source>
-        <translation type="vanished">Выйти без сохранения</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="vanished">Выйти</translation>
-    </message>
-    <message>
-        <source>File open error</source>
-        <translation type="vanished">Ошибка открытия файла</translation>
-    </message>
-    <message>
-        <source>File is not exist</source>
-        <translation type="vanished">Файл не существует</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read the file</source>
-        <translation type="vanished">Невозможно прочитать файл</translation>
-    </message>
-    <message>
-        <source>Unknown values are presented</source>
-        <translation type="vanished">Представлены неизвестные значения</translation>
-    </message>
-    <message>
-        <source>Your file have an unknown values which will be removed
- when you will save file</source>
-        <translation type="vanished">Ваш файл имеет неизвестные значения,
-которые будут удалены когда вы сохраните файл</translation>
+        <translation>Фатальная ошибка: Невозможно найти начальную секцию.
+Не поместили ли вы начальную точку игрока (или точку входного прохода) слишком далеко от секции(й)?</translation>
     </message>
 </context>
 <context>

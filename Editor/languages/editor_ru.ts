@@ -8150,27 +8150,30 @@ Do you want to abort current testing process?</source>
 You have a Vanilia SMBX!
 That means, impossible to launch level testing automatically.
 To launch a level testing, start a game and select playing of the %1 episode.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 не найден!
+Вы имеете устаревшую сборку SMBX (Vanilia)!
+Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень. 
+Чтобы запустить тест урвоня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="660"/>
         <source>process execution is failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>не удалось запустить процесс.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="662"/>
         <source>patching is failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>не удалось применить патч.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="667"/>
         <source>Failed to launch LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неудачная попытка запустить LunaLUA-SMBX!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="668"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить SMBX-Движок, потому что %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="679"/>
@@ -8703,12 +8706,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="385"/>
         <source>Alignment in the editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравнивание в редакторе:</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="392"/>
         <source>Grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер сетки</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="576"/>
@@ -8813,27 +8816,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="682"/>
         <source>Grid offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение сетки X</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="706"/>
         <source>Grid offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение сетки Y</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="721"/>
         <source>Middle of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation>Центр по середине ячейки</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="726"/>
         <source>Edge of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation>Центр по краю ячейки</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="734"/>
         <source>Align at</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="943"/>
