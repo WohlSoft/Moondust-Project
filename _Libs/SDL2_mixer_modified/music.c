@@ -747,6 +747,12 @@ Mix_Music * SDLCALLCC Mix_LoadMUS_RW(SDL_RWops *src, int freesrc)
     return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
 }
 
+Mix_Music * SDLCALLCC Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID)
+{
+    gme_track_number=trackID;
+    return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
+}
+
 Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 {
     Mix_Music *music;

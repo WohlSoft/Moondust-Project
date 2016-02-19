@@ -16,7 +16,7 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 include ($$PWD/../../_common/lib_destdir.pri)
 TARGET = SDL2_mixer_ext
 win32:enable-stdcalls:{ #Useful for VB6 usage
-    TARGET = SDL2_mixer_ext_vb6
+    TARGET = SDL2MixerVB
 }
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib

@@ -138,6 +138,12 @@ Public Declare Function Mix_LoadWAV_RW Lib "SDL2_mixer_ext_vb6.dll" (ByVal rwops
 '       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
 Public Declare Function Mix_LoadMUS_RW Lib "SDL2_mixer_ext_vb6.dll" _
                         (ByVal rwops As Long, ByVal freesrc As Long) As Long
+'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID=0);
+'       rwops - an SDL_rwops structure pointer (in VB is a Long value!)
+'       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
+'       trackID - ID of a track inside NES,HES,GBM,etc. file. Doesn't takes effect on any other regular formats.
+Public Declare Function Mix_LoadMUS_RW_GME Lib "SDL2_mixer_ext_vb6.dll" _
+                        (ByVal rwops As Long, ByVal freesrc As Long, Optional ByVal trackID As Long = 0) As Long
 
 '/* Load a music file from an SDL_RWop object assuming a specific format */
 'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc);
