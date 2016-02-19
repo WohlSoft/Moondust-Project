@@ -32,6 +32,7 @@
 #include "edit_modes/wld_mode_erase.h"
 #include "edit_modes/wld_mode_place.h"
 #include "edit_modes/wld_mode_square.h"
+#include "edit_modes/wld_mode_circle.h"
 #include "edit_modes/wld_mode_line.h"
 #include "edit_modes/wld_mode_fill.h"
 #include "edit_modes/wld_mode_resize.h"
@@ -190,6 +191,9 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
 
     WLD_ModeRect * modeSquare = new WLD_ModeRect(this);
     EditModes.push_back(modeSquare);
+
+    WLD_ModeCircle * modeCircle = new WLD_ModeCircle(this);
+    EditModes.push_back(modeCircle);
 
     WLD_ModeLine * modeLine = new WLD_ModeLine(this);
     EditModes.push_back(modeLine);

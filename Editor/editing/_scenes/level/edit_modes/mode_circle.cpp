@@ -78,7 +78,8 @@ void LVL_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->last_npc_arrayID=s->LvlData->npc_array_id;
 
     WriteToLog(QtDebugMsg, QString("Circle mode %1").arg(s->EditingMode));
-    if(s->cursor){
+    if(s->cursor)
+    {
         drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint(),
                                           LvlPlacingItems::gridSz,
                                           LvlPlacingItems::gridOffset));
@@ -90,7 +91,7 @@ void LVL_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                LvlPlacingItems::gridOffset);
 
         QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-        dynamic_cast<QGraphicsRectItem *>(s->cursor)->setRect(0,0, hs.width(), hs.height());
+        dynamic_cast<QGraphicsEllipseItem *>(s->cursor)->setRect(0,0, hs.width(), hs.height());
     }
 }
 
@@ -107,34 +108,27 @@ void LVL_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     else
         s->setMessageBoxItem(false);
 
-        if(s->cursor)
+    if(s->cursor && s->cursor->isVisible())
+    {
+        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->cursor);
+        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
+                               LvlPlacingItems::gridSz,
+                               LvlPlacingItems::gridOffset);
+
+        QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+
+
+        cur->setRect(0,0, hs.width(), hs.height());
+        cur->setPos(((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
+                    ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y()));
+
+        if( ((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
+                (s->placingItem==LvlScene::PLC_BGO))
         {
-            if(s->cursor->isVisible())
-            {
-                QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
-                                       LvlPlacingItems::gridSz,
-                                       LvlPlacingItems::gridOffset);
-
-                QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-
-
-                dynamic_cast<QGraphicsRectItem *>(s->cursor)->setRect(0,0, hs.width(), hs.height());
-                dynamic_cast<QGraphicsRectItem *>(s->cursor)->setPos(
-                            ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
-                            ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
-                            );
-
-                if(((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
-                        (s->placingItem==LvlScene::PLC_BGO))
-                {
-                item_rectangles::drawRound(s, QRect(dynamic_cast<QGraphicsRectItem *>(s->cursor)->x(),
-                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->y(),
-                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().width(),
-                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().height()),
-                                                    QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
-                }
-            }
+            item_rectangles::drawRound(s, QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+                                                QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
         }
+    }
 
 }
 
@@ -147,10 +141,10 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->cursor)
     {
+        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->cursor);
 
         // /////////// Don't draw with zero width or height //////////////
-        if( (dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().width()==0) ||
-          (dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().height()==0))
+        if( (cur->rect().width()==0) || (cur->rect().height()==0))
         {
             s->cursor->hide();
             dontCallEvent = true;
@@ -167,8 +161,8 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     LvlPlacingItems::blockSet.x = s->cursor->scenePos().x();
                     LvlPlacingItems::blockSet.y = s->cursor->scenePos().y();
-                    LvlPlacingItems::blockSet.w = dynamic_cast<QGraphicsEllipseItem *>(s->cursor)->rect().width();
-                    LvlPlacingItems::blockSet.h = dynamic_cast<QGraphicsEllipseItem *>(s->cursor)->rect().height();
+                    LvlPlacingItems::blockSet.w = cur->rect().width();
+                    LvlPlacingItems::blockSet.h = cur->rect().height();
                     //here define placing water item.
                     s->LvlData->blocks_array_id++;
 
@@ -185,7 +179,6 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 else
                 {
                     s->placeItemsByRectArray();
-
                     //WriteToLog(QtDebugMsg, "clear collision buffer");
                     s->emptyCollisionCheck = false;
                     s->collisionCheckBuffer.clear();

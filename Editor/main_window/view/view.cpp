@@ -49,7 +49,7 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
     if (activeChildWindow()==3)
     {
        activeWldEditWin()->scene->opts.grid_show = checked;
-       activeLvlEditWin()->scene->update();
+       activeWldEditWin()->scene->update();
     }
 }
 

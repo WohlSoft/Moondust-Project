@@ -48,13 +48,15 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
         for(int j = 0; j < repHeight; j++){
             long x1 = x + i * smallRect.width();
             long y1 = y + j * smallRect.height();
-            rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
-                                               QPen(Qt::yellow, 1),
-                                               brush));
-            rectArray.last()->setPos(x1, y1);
-            rectArray.last()->setData(0, "YellowRectangle");
-            rectArray.last()->setOpacity(0.7);
-            rectArray.last()->setZValue(10000);
+
+            QGraphicsRectItem* r=scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
+                                            QPen(Qt::yellow, 1),
+                                            brush);
+            r->setPos(x1, y1);
+            r->setData(0, "YellowRectangle");
+            r->setOpacity(0.7);
+            r->setZValue(10000);
+            rectArray.push_back(r);
         }
     }
 }
@@ -75,26 +77,28 @@ void item_rectangles::drawRound(QGraphicsScene *scene, QRect bigRect, QSize smal
     int Cy = y+(height/2);
     int hRadius = width/2;
     int vRadius = height/2;
-    //(Px - Cx)^2 + (Py - Cy)^2 <= R^2
+
     for(int i = 0; i < repWidth; i++)
     {
         for(int j = 0; j < repHeight; j++)
         {
-            long x1 = x + i * smallRect.width();
-            long y1 = y + j * smallRect.height();
-            long Px = x1+smallRect.width()/2;
-            long Py = y1+smallRect.height()/2;
+            int x1 = x + i * smallRect.width();
+            int y1 = y + j * smallRect.height();
+            int Px = x1+smallRect.width()/2;
+            int Py = y1+smallRect.height()/2;
 
-            if( abs(Cx-Px) > hRadius ) continue;
-            if( abs(Cy-Py) > vRadius ) continue;
+            if((hRadius <= 0.0) || (vRadius <= 0.0)) continue;
 
-            rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
-                                               QPen(Qt::yellow, 1),
-                                               brush));
-            rectArray.last()->setPos(x1, y1);
-            rectArray.last()->setData(0, "YellowRectangle");
-            rectArray.last()->setOpacity(0.7);
-            rectArray.last()->setZValue(10000);
+            if( ((pow(Px-Cx,2)/pow(hRadius, 2))+(pow(Py-Cy, 2)/pow(vRadius, 2))) > 1.0 ) continue;
+
+            QGraphicsRectItem* r=scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
+                                            QPen(Qt::yellow, 1),
+                                            brush);
+            r->setPos(x1, y1);
+            r->setData(0, "YellowRectangle");
+            r->setOpacity(0.7);
+            r->setZValue(10000);
+            rectArray.push_back(r);
         }
     }
 }

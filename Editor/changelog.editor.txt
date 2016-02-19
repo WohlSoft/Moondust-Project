@@ -4,6 +4,8 @@ Editor 0.3.1.10
 - Better testing through SMBX on Windows version
 - Added support of SMBX65-38A file formats
 - Fixed miss up of order priority applying for BGO-190
+- Added circle fill
+- Added grid showing
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

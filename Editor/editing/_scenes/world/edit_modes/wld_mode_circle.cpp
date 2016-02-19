@@ -79,7 +79,9 @@ void WLD_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->last_level_arrayID=s->WldData->level_array_id;
     s->last_musicbox_arrayID=s->WldData->musicbox_array_id;
 
-    if(s->cursor){
+    if(s->cursor)
+    {
+        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->cursor);
         drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint(),
                                           WldPlacingItems::gridSz,
                                           WldPlacingItems::gridOffset));
@@ -91,7 +93,7 @@ void WLD_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                WldPlacingItems::gridOffset);
 
         QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-        ((QGraphicsRectItem *)(s->cursor))->setRect(0,0, hs.width(), hs.height());
+        cur->setRect(0,0, hs.width(), hs.height());
     }
 }
 
@@ -100,10 +102,9 @@ void WLD_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor)
+    if(s->cursor && s->cursor->isVisible())
     {
-        if(s->cursor->isVisible())
-        {
+        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->cursor);
         QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
                                WldPlacingItems::gridSz,
                                WldPlacingItems::gridOffset);
@@ -111,20 +112,14 @@ void WLD_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
         QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
 
 
-        ((QGraphicsRectItem *)s->cursor)->setRect(0,0, hs.width(), hs.height());
-        ((QGraphicsRectItem *)s->cursor)->setPos(
+        cur->setRect(0,0, hs.width(), hs.height());
+        cur->setPos(
                     ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                     ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                     );
 
-        item_rectangles::drawRound(s, QRect (((QGraphicsRectItem *)s->cursor)->x(),
-                                                ((QGraphicsRectItem *)s->cursor)->y(),
-                                                ((QGraphicsRectItem *)s->cursor)->rect().width(),
-                                                ((QGraphicsRectItem *)s->cursor)->rect().height()),
-                                    QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
-                                    );
-
-        }
+        item_rectangles::drawRound(s, QRect (cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+                                    QSize(WldPlacingItems::itemW, WldPlacingItems::itemH) );
     }
 }
 
@@ -137,26 +132,14 @@ void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->cursor)
     {
-
+        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->cursor);
         // /////////// Don't draw with zero width or height //////////////
-        if( (((QGraphicsRectItem *)s->cursor)->rect().width()==0) ||
-          (((QGraphicsRectItem *)s->cursor)->rect().height()==0))
+        if( (cur->rect().width()==0) || (cur->rect().height()==0) )
         {
             s->cursor->hide();
             return;
         }
-        //QPointF p = ((QGraphicsRectItem *)s->cursor)->scenePos();
-        //QSizeF sz = ((QGraphicsRectItem *)s->cursor)->rect().size();
 
-//        s->collisionCheckBuffer = s->items(QRectF(
-//                    p.x()-10, p.y()-10,
-//                    sz.width()+20, sz.height()+20),
-//                    Qt::IntersectsItemBoundingRect);
-
-//        if(s->collisionCheckBuffer.isEmpty())
-//            s->emptyCollisionCheck = true;
-//        else
-//            s->prepareCollisionBuffer();
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();
 

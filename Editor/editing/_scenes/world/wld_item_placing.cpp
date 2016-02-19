@@ -125,6 +125,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {
             setRectDrawer(); return;
         }
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        {
+            setCircleDrawer(); return;
+        }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
@@ -226,6 +230,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {
             setLineDrawer(); return;
         }
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        {
+            setCircleDrawer(); return;
+        }
 
         cursor = addPixmap(tImg.copy(0,ih * sceneConf.display_frame ,iw,ih));
 
@@ -307,6 +315,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
             setRectDrawer(); return;
+        }
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        {
+            setCircleDrawer(); return;
         }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
