@@ -37,8 +37,8 @@ _Libs/_builds/win32/lib/libSDL2_mixer_ext.a
 _Libs/_builds/win32/lib/libSDL2_mixer_ext.la
 _Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.la
 _Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.a
-_Libs/_builds/win32/lib/SDL2MixerVB.la
-_Libs/_builds/win32/lib/SDL2MixerVB.a
+_Libs/_builds/win32/lib/libSDL2MixerVB.la
+_Libs/_builds/win32/lib/libSDL2MixerVB.a
 #Mac OS's junk
 .DS_Store
 

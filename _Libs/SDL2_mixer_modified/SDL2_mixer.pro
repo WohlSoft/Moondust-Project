@@ -27,7 +27,7 @@ win32:{
     INCLUDEPATH += $$PWD/../_builds/win32/include
     DEFINES += USE_NATIVE_MIDI
     enable-stdcalls:{ #Useful for VB6 usage
-        TARGET = SDL2_mixer_ext_vb6
+        TARGET = SDL2MixerVB
         QMAKE_LFLAGS += -Wl,--add-stdcall-alias
         DEFINES +=FORCE_STDCALLS
     }
