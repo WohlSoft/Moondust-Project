@@ -32,7 +32,7 @@ void CrashHandler::crashByUnhandledException()
 {
     WriteToLog(QtWarningMsg, "<Unhandled exception!>");
     QMessageBox::critical(NULL, QObject::tr("Unhandled exception!"),
-                 QObject::tr("Engine was crashed because accepted unhandled exception!"));
+                 QObject::tr("Engine has crashed because accepted unhandled exception!"));
     exit(-1);
 }
 
@@ -40,7 +40,7 @@ void CrashHandler::crashByFlood()
 {
     WriteToLog(QtWarningMsg, "<Out of memory!>");
     QMessageBox::critical(NULL, QObject::tr("Out of memory!"),
-                 QObject::tr("Engine was crashed because out of memory! Try to close other applications and restart game."));
+                 QObject::tr("Engine has crashed because out of memory! Try to close other applications and restart game."));
     exit(-1);
 }
 
@@ -60,13 +60,13 @@ void CrashHandler::handle_signal(int signal)
         case SIGKILL:
             WriteToLog(QtWarningMsg, "<killed>");
             QMessageBox::critical(NULL, QObject::tr("Killed!"),
-                         QObject::tr("Engine was killed by mad maniac :-P"));
+                         QObject::tr("Engine has killed by mad maniac :-P"));
             exit(signal);
             break;
         case SIGALRM:
             WriteToLog(QtWarningMsg, "<alarm() time out!>");
             QMessageBox::critical(NULL, QObject::tr("Time out!"),
-                          QObject::tr("Engine was abourted because alarm() time out!"));
+                          QObject::tr("Engine has abourted because alarm() time out!"));
             exit(signal);
             break;
         case SIGURG:
@@ -76,31 +76,32 @@ void CrashHandler::handle_signal(int signal)
         case SIGILL:
             WriteToLog(QtWarningMsg, "<Wrong CPU Instruction>");
             QMessageBox::critical(NULL, QObject::tr("Wrong CPU Instruction!"),
-                         QObject::tr("Engine was crashed because a wrong CPU instruction"));
+                         QObject::tr("Engine has crashed because a wrong CPU instruction"));
             exit(signal);
         #endif
         case SIGFPE:
             WriteToLog(QtWarningMsg, "<wrong arithmetical operation>");
             QMessageBox::critical(NULL, QObject::tr("Wrong arithmetical operation"),
-                          QObject::tr("Engine was crashed because wrong arithmetical opreation!"));
+                          QObject::tr("Engine has crashed because wrong arithmetical opreation!"));
             exit(signal);
             break;
         case SIGABRT:
             WriteToLog(QtWarningMsg, "<Aborted!>");
             QMessageBox::critical(NULL, QObject::tr("Aborted"),
-                          QObject::tr("Engine was been aborted because critical error was occouped."));
+                          QObject::tr("Engine has been aborted because critical error was occouped."));
             exit(signal);
         case SIGSEGV:
             WriteToLog(QtWarningMsg, "<Segmentation fault crash!>");
             QMessageBox::critical(NULL, QObject::tr("Segmentation fault"),
-                          QObject::tr("Engine was crashed because Segmentation fault. Run debug with built in debug mode "
+                          QObject::tr("Engine has crashed because Segmentation fault.\n"
+                                      "Run debugging with a built in debug mode application\n"
                                       "and retry your recent action to take more detail info."));
             exit(signal);
             break;
         case SIGINT:
             WriteToLog(QtWarningMsg, "<Interrupted!>");
             QMessageBox::critical(NULL, QObject::tr("Interrupt"),
-                          QObject::tr("Engine was interrupted"));
+                          QObject::tr("Engine has interrupted"));
             exit(0);
             break;
         default:

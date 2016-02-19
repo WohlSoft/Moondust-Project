@@ -38,7 +38,49 @@
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="35"/>
-        <source>Engine was crashed because accepted unhandled exception!</source>
+        <source>Engine has crashed because accepted unhandled exception!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="43"/>
+        <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="63"/>
+        <source>Engine has killed by mad maniac :-P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="69"/>
+        <source>Engine has abourted because alarm() time out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="79"/>
+        <source>Engine has crashed because a wrong CPU instruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="85"/>
+        <source>Engine has crashed because wrong arithmetical opreation!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="91"/>
+        <source>Engine has been aborted because critical error was occouped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="96"/>
+        <source>Engine has crashed because Segmentation fault.
+Run debugging with a built in debug mode application
+and retry your recent action to take more detail info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="104"/>
+        <source>Engine has interrupted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -47,18 +89,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="43"/>
-        <source>Engine was crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crash_handler.cpp" line="62"/>
         <source>Killed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crash_handler.cpp" line="63"/>
-        <source>Engine was killed by mad maniac :-P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -67,18 +99,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="69"/>
-        <source>Engine was abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crash_handler.cpp" line="78"/>
         <source>Wrong CPU Instruction!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crash_handler.cpp" line="79"/>
-        <source>Engine was crashed because a wrong CPU instruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -87,18 +109,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="85"/>
-        <source>Engine was crashed because wrong arithmetical opreation!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crash_handler.cpp" line="90"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crash_handler.cpp" line="91"/>
-        <source>Engine was been aborted because critical error was occouped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -107,18 +119,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="96"/>
-        <source>Engine was crashed because Segmentation fault. Run debug with built in debug mode and retry your recent action to take more detail info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crash_handler.cpp" line="102"/>
-        <source>Interrupt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crash_handler.cpp" line="103"/>
-        <source>Engine was interrupted</source>
+        <source>Interrupt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

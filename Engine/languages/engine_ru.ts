@@ -38,8 +38,58 @@
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="35"/>
-        <source>Engine was crashed because accepted unhandled exception!</source>
+        <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>Движок аварийно завершился в связи с получением необработанного исключения!</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="43"/>
+        <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
+        <translation>Движок аварийно завершился в связи с переполнением памяти!
+Попробуйте закрыть другие приложения и перезапустить игру.</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="63"/>
+        <source>Engine has killed by mad maniac :-P</source>
+        <translation>Движок был убит сумасшедшим маньяком :-P</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="69"/>
+        <source>Engine has abourted because alarm() time out!</source>
+        <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="79"/>
+        <source>Engine has crashed because a wrong CPU instruction</source>
+        <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессра</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="85"/>
+        <source>Engine has crashed because wrong arithmetical opreation!</source>
+        <translation>Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="91"/>
+        <source>Engine has been aborted because critical error was occouped.</source>
+        <translation>Работа движка была прервана в связи с критической ошибкой.</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="96"/>
+        <source>Engine has crashed because Segmentation fault.
+Run debugging with a built in debug mode application
+and retry your recent action to take more detail info.</source>
+        <translation>Движок аварийно завершился в связи с ошибкой сегментирования.
+Для получения более подробной информации, перекомпилируйте движок
+в режиме отладки и запустите отладчик, затем повторите ваши недавние действия,
+спровоцировавшие эту ошибку.</translation>
+    </message>
+    <message>
+        <location filename="../common_features/crash_handler.cpp" line="104"/>
+        <source>Engine has interrupted</source>
+        <translation>Работа движка была прервана</translation>
+    </message>
+    <message>
+        <source>Engine was crashed because accepted unhandled exception!</source>
+        <translation type="vanished">Движок аварийно завершился в связи с получением необработанного исключения!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="42"/>
@@ -47,9 +97,8 @@
         <translation>Недостаточно памяти!</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="43"/>
         <source>Engine was crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Движок аварийно завершился в связи с переполнением памяти!
+        <translation type="vanished">Движок аварийно завершился в связи с переполнением памяти!
 Попробуйте закрыть другие приложения и перезапустить игру.</translation>
     </message>
     <message>
@@ -58,9 +107,8 @@
         <translation>Убит!</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="63"/>
         <source>Engine was killed by mad maniac :-P</source>
-        <translation>Движок был убит сумасшедшим маньяком :-P</translation>
+        <translation type="vanished">Движок был убит сумасшедшим маньяком :-P</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="68"/>
@@ -68,9 +116,8 @@
         <translation>Время вышло!</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="69"/>
         <source>Engine was abourted because alarm() time out!</source>
-        <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
+        <translation type="vanished">Работа движок была прервана в связи с истечением времени alarm()!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="78"/>
@@ -78,9 +125,8 @@
         <translation>Неверная инструкция процессора!</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="79"/>
         <source>Engine was crashed because a wrong CPU instruction</source>
-        <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессра</translation>
+        <translation type="vanished">Движок аварийно завершился в связи с ошибочной инструкцией процессра</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="84"/>
@@ -88,9 +134,8 @@
         <translation>Неверная арифметическая операция</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="85"/>
         <source>Engine was crashed because wrong arithmetical opreation!</source>
-        <translation>Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
+        <translation type="vanished">Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="90"/>
@@ -98,9 +143,8 @@
         <translation>Прервано</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="91"/>
         <source>Engine was been aborted because critical error was occouped.</source>
-        <translation>Работа движка была прервана в связи с критической ошибкой.</translation>
+        <translation type="vanished">Работа движка была прервана в связи с критической ошибкой.</translation>
     </message>
     <message>
         <location filename="../common_features/crash_handler.cpp" line="95"/>
@@ -108,22 +152,20 @@
         <translation>Ошибка сегментирования</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="96"/>
         <source>Engine was crashed because Segmentation fault. Run debug with built in debug mode and retry your recent action to take more detail info.</source>
-        <translation>Движок аварийно завершился в связи с ошибкой сегментирования.
+        <translation type="vanished">Движок аварийно завершился в связи с ошибкой сегментирования.
 Для получения более подробной информации, перекомпилируйте движок
 в режиме отладки и запустите отладчик, затем повторите ваши недавние действия,
 спровоцировавшие эту ошибку.</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="102"/>
+        <location filename="../common_features/crash_handler.cpp" line="103"/>
         <source>Interrupt</source>
         <translation>Прерывание</translation>
     </message>
     <message>
-        <location filename="../common_features/crash_handler.cpp" line="103"/>
         <source>Engine was interrupted</source>
-        <translation>Работа движка была прервана</translation>
+        <translation type="vanished">Работа движка была прервана</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="439"/>

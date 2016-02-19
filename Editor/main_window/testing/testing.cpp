@@ -581,8 +581,9 @@ void MainWindow::on_actionRunTestSMBX_triggered()
 
         if(!QFile(smbxPath+"LunaDll.dll").exists())
         {
-            QMessageBox::warning(this, tr("Vanilia SMBX detected!"),
-            tr("%2 not found!\nYou have a Vanilia SMBX!\nThat means, impossible to launch level testing automatically.\n"
+            QMessageBox::warning(this, tr("Vanilla SMBX detected!"),
+            tr("%2 not found!\nYou have a Vanilla SMBX!\n"
+               "That means, impossible to launch level testing automatically.\n"
                "To launch a level testing, start a game and select playing of the %1 episode.")
                                  .arg("\"_temp_episode_pge\"")
                                  .arg(smbxPath+"LunaDll.dll"),
@@ -659,7 +660,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             case LUNALOADER_CREATEPROCESS_FAIL:
                 luna_error=tr("process execution is failed.");
             case LUNALOADER_PATCH_FAIL:
-                luna_error=tr("patching is failed.");
+                luna_error=tr("patching has failed.");
             default:
                 break;
             }

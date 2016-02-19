@@ -8090,7 +8090,7 @@ Do you want to abort current testing process?</source>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="157"/>
         <location filename="../main_window/testing/testing.cpp" line="170"/>
-        <location filename="../main_window/testing/testing.cpp" line="678"/>
+        <location filename="../main_window/testing/testing.cpp" line="679"/>
         <source>Save file first</source>
         <translation>Сначала сохраните файл</translation>
     </message>
@@ -8140,107 +8140,125 @@ Do you want to abort current testing process?</source>
 Хотите ли вы прервать процесс тестирования?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="584"/>
         <source>Vanilia SMBX detected!</source>
-        <translation>Обнаружен старый SMBX (Vabilia SMBX)!</translation>
+        <translation type="vanished">Обнаружен старый SMBX (Vabilia SMBX)!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="585"/>
         <source>%2 not found!
 You have a Vanilia SMBX!
 That means, impossible to launch level testing automatically.
 To launch a level testing, start a game and select playing of the %1 episode.</source>
-        <translation>%2 не найден!
+        <translation type="vanished">%2 не найден!
 Вы имеете устаревшую сборку SMBX (Vanilia)!
 Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень. 
 Чтобы запустить тест урвоня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="660"/>
+        <location filename="../main_window/testing/testing.cpp" line="661"/>
         <source>process execution is failed.</source>
         <translation>не удалось запустить процесс.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="662"/>
         <source>patching is failed.</source>
+        <translation type="vanished">не удалось применить патч.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="584"/>
+        <source>Vanilla SMBX detected!</source>
+        <translation>Обнаружен старый SMBX (Vanilla SMBX)!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="585"/>
+        <source>%2 not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing automatically.
+To launch a level testing, start a game and select playing of the %1 episode.</source>
+        <translation>%2 не найден!
+Вы имеете устаревшую сборку SMBX (Vanilla)!
+Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень. 
+Чтобы запустить тест урвоня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="663"/>
+        <source>patching has failed.</source>
         <translation>не удалось применить патч.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="667"/>
+        <location filename="../main_window/testing/testing.cpp" line="668"/>
         <source>Failed to launch LunaLUA-SMBX!</source>
         <translation>Неудачная попытка запустить LunaLUA-SMBX!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="668"/>
+        <location filename="../main_window/testing/testing.cpp" line="669"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation>Невозможно запустить SMBX-Движок, потому что %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="679"/>
+        <location filename="../main_window/testing/testing.cpp" line="680"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>Сперва сохраните файл, чтобы запустить тест через SMBX!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="688"/>
+        <location filename="../main_window/testing/testing.cpp" line="689"/>
         <source>Incompatible file format</source>
         <translation>Несовместимый формат файла</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="689"/>
+        <location filename="../main_window/testing/testing.cpp" line="690"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation>Чтобы иметь возможность протестировать уровень в SMBX, файл должен быть сохранён в формат SMBX64!
 Иначе будет создан временный файл. Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="700"/>
-        <location filename="../main_window/testing/testing.cpp" line="772"/>
-        <location filename="../main_window/testing/testing.cpp" line="787"/>
-        <location filename="../main_window/testing/testing.cpp" line="802"/>
-        <location filename="../main_window/testing/testing.cpp" line="811"/>
-        <location filename="../main_window/testing/testing.cpp" line="853"/>
+        <location filename="../main_window/testing/testing.cpp" line="701"/>
+        <location filename="../main_window/testing/testing.cpp" line="773"/>
+        <location filename="../main_window/testing/testing.cpp" line="788"/>
+        <location filename="../main_window/testing/testing.cpp" line="803"/>
+        <location filename="../main_window/testing/testing.cpp" line="812"/>
+        <location filename="../main_window/testing/testing.cpp" line="854"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="701"/>
+        <location filename="../main_window/testing/testing.cpp" line="702"/>
         <source>Fail to create temp file %1</source>
         <translation>Ошибка создания временного файла %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="746"/>
+        <location filename="../main_window/testing/testing.cpp" line="747"/>
         <source>SMBX Level test</source>
         <translation>Тест уровня SMBX</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="747"/>
+        <location filename="../main_window/testing/testing.cpp" line="748"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation>Хотите ли Вы сохранить файл перед началом тестирования?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="773"/>
+        <location filename="../main_window/testing/testing.cpp" line="774"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation>SMBX с LunaDLL не запущен!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="788"/>
+        <location filename="../main_window/testing/testing.cpp" line="789"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation>Невозможно передать путь к файлу в LunaDLL: (%1)</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="803"/>
+        <location filename="../main_window/testing/testing.cpp" line="804"/>
         <source>Could not map view of file (%1).</source>
         <translation>Невозможно сопоставить просмотр файла (%1).</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="812"/>
+        <location filename="../main_window/testing/testing.cpp" line="813"/>
         <source>Too long path: </source>
         <translation>Слишком длинный путь: </translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="851"/>
-        <location filename="../main_window/testing/testing.cpp" line="854"/>
+        <location filename="../main_window/testing/testing.cpp" line="852"/>
+        <location filename="../main_window/testing/testing.cpp" line="855"/>
         <source>Failed to find SMBX Window</source>
         <translation>Окно SMBX не найдено</translation>
     </message>
