@@ -162,11 +162,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::flags.push_back(flag);
 
 
-            //Square fill mode (uses own cursor item)
-            //if(LvlPlacingItems::squareFillingMode)
+            //Rectangular fill mode (uses own cursor item)
             if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Rect)
             {
                 setRectDrawer(); return;
+            }
+
+            //Rectangular fill mode (uses own cursor item)
+            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Circle)
+            {
+                setCircleDrawer(); return;
             }
 
             //Offset relative to item center
@@ -174,7 +179,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
 
             //Line mode (uses own cursor item)
-            //if(LvlPlacingItems::lineMode)
             if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Line)
             {
                 setLineDrawer(); return;

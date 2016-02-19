@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -269,6 +269,7 @@
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
     <addaction name="actionGridEn"/>
+    <addaction name="actionShowGrid"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
@@ -647,7 +648,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -694,7 +695,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../Engine/_resources/engine.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -706,7 +707,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2729,11 +2730,27 @@
     <string>Shift+C</string>
    </property>
   </action>
+  <action name="actionShowGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show grid</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="_resources/editor.qrc"/>
+  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
+  <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

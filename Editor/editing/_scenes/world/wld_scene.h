@@ -118,6 +118,8 @@ public:
 
         void openProps();                //!< Open properties box of selected items
         void Debugger_updateItemList();  //!< Refresh debugger box
+    protected:
+        void drawForeground(QPainter *painter, const QRectF &rect);
 
     // ///////////////////GFX Manager////////////////////////
     public:
@@ -258,8 +260,6 @@ public:
 
     // ///////////////////Aligning///////////////////////////
     public:
-        bool grid;
-
         QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
         void applyGridToEach(QList<QGraphicsItem *> items);
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
@@ -319,7 +319,8 @@ public:
             MODE_HandScroll,
             MODE_Erasing,
             MODE_PlacingNew,
-            MODE_DrawSquare,
+            MODE_DrawRect,
+            MODE_DrawCircle,
             MODE_PasteFromClip,
             MODE_Resizing,
             MODE_SelectingOnly,
@@ -355,7 +356,8 @@ public:
         void setItemPlacer(int itemType, unsigned long itemID=1);
         void updateCursoredNpcDirection();
 
-        void setSquareDrawer();
+        void setRectDrawer();
+        void setCircleDrawer();
         void setLineDrawer();
         void setFloodFiller();
 

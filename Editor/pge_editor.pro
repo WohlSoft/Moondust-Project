@@ -418,7 +418,8 @@ SOURCES += main.cpp\
     ../_common/data_functions/smbx64_validation_messages.cpp \
     main_window/testing/testing_settings.cpp \
     common_features/file_mapper.cpp \
-    editing/_scenes/level/edit_modes/mode_circle.cpp
+    editing/_scenes/level/edit_modes/mode_circle.cpp \
+    editing/_scenes/world/edit_modes/wld_mode_circle.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -615,7 +616,8 @@ HEADERS  += defines.h \
     main_window/testing/testing_settings.h \
     common_features/data_array.h \
     common_features/file_mapper.h \
-    editing/_scenes/level/edit_modes/mode_circle.h
+    editing/_scenes/level/edit_modes/mode_circle.h \
+    editing/_scenes/world/edit_modes/wld_mode_circle.h
 
 
 FORMS    += \

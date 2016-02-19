@@ -53,23 +53,24 @@ void MainWindow::loadSettings()
         GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
         GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
-        GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", "true").toBool();
-        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", "true").toBool();
-        GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
-        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "true").toBool();
-        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "true").toBool();
-        GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
+        GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", true).toBool();
+        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", true).toBool();
+        GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", false).toBool();
+        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", true).toBool();
+        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", true).toBool();
+        GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", false).toBool();
 
-        GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", "true").toBool();
-        GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
-        GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
+        GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", true).toBool();
+        GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", false).toBool();
+        GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", false).toBool();
 
-        GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", "false").toBool();
-        GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", "false").toBool();
-        GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", "false").toBool();
+        GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", false).toBool();
+        GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", false).toBool();
+        GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", false).toBool();
 
-        GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
-        GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+        GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
+        GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
+        GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
 
         GlobalSettings::LvlItemDefaults.npc_direction=settings.value("defaults-npc-directuin", -1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_type=settings.value("defaults-npc-gen-type", 1).toInt();
@@ -272,6 +273,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
+    settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);

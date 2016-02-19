@@ -30,6 +30,7 @@
 #include "edit_modes/mode_erase.h"
 #include "edit_modes/mode_place.h"
 #include "edit_modes/mode_square.h"
+#include "edit_modes/mode_circle.h"
 #include "edit_modes/mode_line.h"
 #include "edit_modes/mode_resize.h"
 #include "edit_modes/mode_fill.h"
@@ -74,10 +75,6 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
 
-
-    //Options
-    opts.animationEnabled = true;
-    opts.collisionsEnabled = true;
 
 
     //Indexes
@@ -131,9 +128,6 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
             local_rotation_table_npc[x.id]=x;
     }
 
-
-
-    grid = true;
     IncrementingNpcSpecialSpin = 0;
 
     last_block_arrayID = 0;
@@ -203,6 +197,9 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     LVL_ModeSquare * modeSquare = new LVL_ModeSquare(this);
     EditModes.push_back(modeSquare);
+
+    LVL_ModeCircle * modeCircle = new LVL_ModeCircle(this);
+    EditModes.push_back(modeCircle);
 
     LVL_ModeLine * modeLine = new LVL_ModeLine(this);
     EditModes.push_back(modeLine);
@@ -329,7 +326,8 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
     //Experimental stuff (grid dawing)
-    #ifdef DEBUG_BUILD
+    if(!opts.grid_show) return;
+
     int gridSize=pConfigs->default_grid;
     qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
     qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
@@ -343,5 +341,4 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
     painter->setOpacity(0.2);
     painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
     painter->drawLines(lines.data(), lines.size());
-    #endif
 }

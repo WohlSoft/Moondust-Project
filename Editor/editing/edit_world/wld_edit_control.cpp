@@ -268,7 +268,7 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_DrawSquare);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_DrawRect);
         break;
     case MODE_Pasting://4    // paste from Buffer
         scene->clearSelection();

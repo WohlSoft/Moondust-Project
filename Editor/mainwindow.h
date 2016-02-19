@@ -606,6 +606,7 @@ public:
         LvlSectionProps *dock_LvlSectionProps;
     public slots:
         void on_actionGridEn_triggered(bool checked);
+        void on_actionShowGrid_triggered(bool checked);
 
     private slots:
         void on_actionSection_Settings_triggered(bool checked);
@@ -759,7 +760,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

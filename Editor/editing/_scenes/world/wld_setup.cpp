@@ -37,45 +37,30 @@ void WldScene::SwitchEditingMode(int EdtMode)
     switch(EdtMode)
     {
     case MODE_PlacingNew:
-//        resetResizers();
-//        unserPointSelector();
-//        DrawMode=true;
         switchMode("Placing");
         break;
 
-    case MODE_DrawSquare:
-//        resetResizers();
-//        unserPointSelector();
-//        DrawMode=true;
+    case MODE_DrawRect:
         switchMode("Square");
         break;
 
+    case MODE_DrawCircle:
+        switchMode("Circle");
+        break;
+
     case MODE_Line:
-//        resetResizers();
-//        unserPointSelector();
-//        DrawMode=true;
         switchMode("Line");
         break;
 
     case MODE_SetPoint:
-//        resetResizers();
-//        DrawMode=true;
         switchMode("SetPoint");
         break;
 
     case MODE_Resizing:
-//        resetCursor();
-//        unserPointSelector();
-//        DrawMode=true;
-//        disableMoveItems=true;
         switchMode("Resize");
         break;
 
     case MODE_PasteFromClip:
-//        resetCursor();
-//        resetResizers();
-//        unserPointSelector();
-//        disableMoveItems=true;
         switchMode("Select");
         clearSelection();
         disableMoveItems=true;
@@ -85,16 +70,10 @@ void WldScene::SwitchEditingMode(int EdtMode)
         break;
 
     case MODE_Erasing:
-//        resetCursor();
-//        resetResizers();
-//        unserPointSelector();
         switchMode("Erase");
         break;
 
     case MODE_SelectingOnly:
-//        resetCursor();
-//        resetResizers();
-//        unserPointSelector();
         switchMode("Select");
         disableMoveItems=true;
         break;
@@ -109,9 +88,6 @@ void WldScene::SwitchEditingMode(int EdtMode)
 
     case MODE_Selecting:
     default:
-//        resetCursor();
-//        resetResizers();
-//        unserPointSelector();
         switchMode("Select");
         break;
 

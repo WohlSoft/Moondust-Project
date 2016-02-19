@@ -254,7 +254,6 @@ void WldScene::Debugger_updateItemList()
     MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
 }
 
-
 // /////////////////////////////Open properties window of selected item////////////////////////////////
 void WldScene::openProps()
 {

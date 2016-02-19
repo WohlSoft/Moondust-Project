@@ -279,8 +279,6 @@ public:
 
     // ///////////////////Aligning///////////////////////////
     public:
-        bool grid; //!< Is grid aligning enabled or disabled by menubar button
-
         QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
         void applyGridToEach(QList<QGraphicsItem *> items);

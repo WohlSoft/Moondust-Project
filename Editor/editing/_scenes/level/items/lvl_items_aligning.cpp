@@ -32,7 +32,7 @@
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
-    if((grid)&&(gridSize>0))
+    if((opts.grid_snap)&&(gridSize>0))
         return Grid::applyGrid(source, gridSize, gridOffset);
     else
         return source;

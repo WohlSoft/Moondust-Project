@@ -59,6 +59,46 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
     }
 }
 
+void item_rectangles::drawRound(QGraphicsScene *scene, QRect bigRect, QSize smallRect)
+{
+    clearArray();
+
+    long x = bigRect.x();
+    long y = bigRect.y();
+    long width = bigRect.width();
+    long height = bigRect.height();
+    int repWidth = width/smallRect.width();
+    int repHeight = height/smallRect.height();
+    QBrush brush = QBrush(Qt::darkYellow);
+
+    int Cx = x+(width/2);
+    int Cy = y+(height/2);
+    int hRadius = width/2;
+    int vRadius = height/2;
+    //(Px - Cx)^2 + (Py - Cy)^2 <= R^2
+    for(int i = 0; i < repWidth; i++)
+    {
+        for(int j = 0; j < repHeight; j++)
+        {
+            long x1 = x + i * smallRect.width();
+            long y1 = y + j * smallRect.height();
+            long Px = x1+smallRect.width()/2;
+            long Py = y1+smallRect.height()/2;
+
+            if( abs(Cx-Px) > hRadius ) continue;
+            if( abs(Cy-Py) > vRadius ) continue;
+
+            rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
+                                               QPen(Qt::yellow, 1),
+                                               brush));
+            rectArray.last()->setPos(x1, y1);
+            rectArray.last()->setData(0, "YellowRectangle");
+            rectArray.last()->setOpacity(0.7);
+            rectArray.last()->setZValue(10000);
+        }
+    }
+}
+
 void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize smallRect)
 {
     clearArray();

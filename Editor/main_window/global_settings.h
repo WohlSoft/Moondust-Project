@@ -24,9 +24,12 @@
 
 struct LevelEditingSettings
 {
+    LevelEditingSettings();
     //Common
     bool animationEnabled;
     bool collisionsEnabled;
+    bool grid_snap;
+    bool grid_show;
     //World map only
     bool semiTransparentPaths;
 };

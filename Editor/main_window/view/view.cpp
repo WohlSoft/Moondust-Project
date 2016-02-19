@@ -27,15 +27,31 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->grid = checked;
+       activeLvlEditWin()->scene->opts.grid_snap = checked;
     }
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->scene->grid = checked;
+       activeWldEditWin()->scene->opts.grid_snap = checked;
     }
 }
 
+
+void MainWindow::on_actionShowGrid_triggered(bool checked)
+{
+    GlobalSettings::LvlOpts.grid_show = checked;
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->opts.grid_show = checked;
+       activeLvlEditWin()->scene->update();
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+       activeWldEditWin()->scene->opts.grid_show = checked;
+       activeLvlEditWin()->scene->update();
+    }
+}
 
 // //////////////////////////////////////////////////////////////
 void MainWindow::on_actionAnimation_triggered(bool checked)

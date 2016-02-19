@@ -20,7 +20,7 @@
 #include <common_features/item_rectangles.h>
 #include <common_features/themes.h>
 
-#include "wld_mode_square.h"
+#include "wld_mode_circle.h"
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
 #include "../items/item_tile.h"
@@ -29,16 +29,16 @@
 #include "../items/item_level.h"
 #include "../items/item_music.h"
 
-WLD_ModeRect::WLD_ModeRect(QGraphicsScene *parentScene, QObject *parent)
-    : EditMode("Square", parentScene, parent)
+WLD_ModeCircle::WLD_ModeCircle(QGraphicsScene *parentScene, QObject *parent)
+    : EditMode("Circle", parentScene, parent)
 {
     drawStartPos = QPointF(0,0);
 }
 
-WLD_ModeRect::~WLD_ModeRect()
+WLD_ModeCircle::~WLD_ModeCircle()
 {}
 
-void WLD_ModeRect::set()
+void WLD_ModeCircle::set()
 {
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
@@ -59,7 +59,7 @@ void WLD_ModeRect::set()
     s->_viewPort->viewport()->setMouseTracking(true);
 }
 
-void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void WLD_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
@@ -95,7 +95,7 @@ void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void WLD_ModeRect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void WLD_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
@@ -117,7 +117,7 @@ void WLD_ModeRect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                     ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                     );
 
-        item_rectangles::drawMatrix(s, QRect (((QGraphicsRectItem *)s->cursor)->x(),
+        item_rectangles::drawRound(s, QRect (((QGraphicsRectItem *)s->cursor)->x(),
                                                 ((QGraphicsRectItem *)s->cursor)->y(),
                                                 ((QGraphicsRectItem *)s->cursor)->rect().width(),
                                                 ((QGraphicsRectItem *)s->cursor)->rect().height()),
@@ -128,7 +128,7 @@ void WLD_ModeRect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void WLD_ModeRect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 
@@ -168,12 +168,12 @@ void WLD_ModeRect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void WLD_ModeRect::keyPress(QKeyEvent *keyEvent)
+void WLD_ModeCircle::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void WLD_ModeRect::keyRelease(QKeyEvent *keyEvent)
+void WLD_ModeCircle::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())

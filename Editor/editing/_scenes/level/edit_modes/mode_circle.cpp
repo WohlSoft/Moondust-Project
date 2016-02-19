@@ -127,12 +127,11 @@ void LVL_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                 if(((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
                         (s->placingItem==LvlScene::PLC_BGO))
                 {
-                item_rectangles::drawMatrix(s, QRect (dynamic_cast<QGraphicsRectItem *>(s->cursor)->x(),
-                                                         dynamic_cast<QGraphicsRectItem *>(s->cursor)->y(),
-                                                         dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().width(),
-                                                         dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().height()),
-                                            QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
-                                            );
+                item_rectangles::drawRound(s, QRect(dynamic_cast<QGraphicsRectItem *>(s->cursor)->x(),
+                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->y(),
+                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().width(),
+                                                    dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().height()),
+                                                    QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
                 }
             }
         }

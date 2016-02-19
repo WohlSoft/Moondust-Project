@@ -54,11 +54,6 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
         }
     }
 
-    //Options
-    opts.animationEnabled = true;
-    opts.collisionsEnabled = true;
-    grid = true;
-
     //Indexes
     index_tiles = pConfigs->index_wtiles; //Applaying blocks indexes
     index_scenes = pConfigs->index_wscene;
@@ -193,7 +188,7 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     WLD_ModePlace * modePlace = new WLD_ModePlace(this);
     EditModes.push_back(modePlace);
 
-    WLD_ModeSquare * modeSquare = new WLD_ModeSquare(this);
+    WLD_ModeRect * modeSquare = new WLD_ModeRect(this);
     EditModes.push_back(modeSquare);
 
     WLD_ModeLine * modeLine = new WLD_ModeLine(this);
@@ -224,3 +219,25 @@ WldScene::~WldScene()
         delete tmp;
     }
 }
+
+void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
+{
+    QGraphicsScene::drawForeground(painter, rect);
+    //Experimental stuff (grid dawing)
+    if(!opts.grid_show) return;
+
+    int gridSize=pConfigs->default_grid;
+    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+
+    QVarLengthArray<QLineF, 100> lines;
+    for (qreal x = left; x < rect.right(); x += gridSize)
+        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+    for (qreal y = top; y < rect.bottom(); y += gridSize)
+        lines.append(QLineF(rect.left(), y, rect.right(), y));
+
+    painter->setOpacity(0.2);
+    painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
+    painter->drawLines(lines.data(), lines.size());
+}
+

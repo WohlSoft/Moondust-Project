@@ -123,7 +123,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
-            setSquareDrawer(); return;
+            setRectDrawer(); return;
         }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
@@ -216,7 +216,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
-            setSquareDrawer(); return;
+            setRectDrawer(); return;
         }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
@@ -306,7 +306,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
-            setSquareDrawer(); return;
+            setRectDrawer(); return;
         }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
@@ -402,7 +402,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
         {
-            setSquareDrawer(); return;
+            setRectDrawer(); return;
+        }
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        {
+            setCircleDrawer(); return;
         }
 
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
@@ -509,7 +513,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
 
 
-void WldScene::setSquareDrawer()
+void WldScene::setRectDrawer()
 {
     if(cursor)
         {delete cursor;
@@ -543,7 +547,44 @@ void WldScene::setSquareDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawSquare);
+    SwitchEditingMode(MODE_DrawRect);
+}
+
+void WldScene::setCircleDrawer()
+{
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
+    QPen pen;
+    QBrush brush;
+
+
+    pen = QPen(Qt::gray, 2);
+    brush = QBrush(Qt::darkGray);
+
+    //Align width and height to fit into item aligning
+    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
+    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
+    if(addW==WldPlacingItems::gridSz) addW=0;
+    if(addH==WldPlacingItems::gridSz) addH=0;
+    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
+    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+
+    cursor = addEllipse(0,0,1,1, pen, brush);
+
+    //set data flags
+    foreach(dataFlag_w flag, WldPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
+
+    cursor->setData(0, "Circle");
+    cursor->setData(25, "CURSOR");
+    cursor->setZValue(7000);
+    cursor->setOpacity( 0.5 );
+    cursor->setVisible(false);
+    cursor->setEnabled(true);
+
+    SwitchEditingMode(MODE_DrawCircle);
 }
 
 void WldScene::setLineDrawer()

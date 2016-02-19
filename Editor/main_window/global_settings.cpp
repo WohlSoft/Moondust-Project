@@ -18,6 +18,15 @@
 
 #include "global_settings.h"
 
+LevelEditingSettings::LevelEditingSettings()
+{
+    animationEnabled=true;
+    collisionsEnabled=true;
+    grid_snap=true;
+    grid_show=false;
+    semiTransparentPaths=false;
+}
+
 QString GlobalSettings::locale="";
 long GlobalSettings::animatorItemsLimit=25000;
 QString GlobalSettings::openPath=".";
@@ -66,3 +75,4 @@ QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
 QTabWidget::TabPosition GlobalSettings::TSTToolboxPos = QTabWidget::North;
 
 int GlobalSettings::lastWinType=0;
+

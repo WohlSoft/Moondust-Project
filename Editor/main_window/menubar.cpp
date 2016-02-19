@@ -179,6 +179,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionSectionMore->setEnabled( (WinType==1) );
 
     ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionShowGrid->setEnabled( (WinType==1)|| (WinType==3) );
 
     ui->actionFixWrongMasks->setEnabled( (WinType==1)|| (WinType==3) );
     ui->actionCDATA_clear_unused->setEnabled( (WinType==1)|| (WinType==3) );
@@ -270,7 +271,9 @@ void MainWindow::updateMenus(bool force)
             ui->actionLockWaters->setChecked(scn->lock_water);
             ui->actionLockDoors->setChecked(scn->lock_door);
 
-            ui->actionGridEn->setChecked(scn->grid);
+            WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
+            ui->actionGridEn->setChecked(scn->opts.grid_snap);
+            ui->actionShowGrid->setChecked(scn->opts.grid_show);
 
             GlobalSettings::LvlOpts = scn->opts;
 
@@ -303,7 +306,8 @@ void MainWindow::updateMenus(bool force)
             ui->actionLockMusicBoxes->setChecked(scn->lock_musbox);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
-            ui->actionGridEn->setChecked(scn->grid);
+            ui->actionGridEn->setChecked(scn->opts.grid_snap);
+            ui->actionShowGrid->setChecked(scn->opts.grid_show);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts = scn->opts;

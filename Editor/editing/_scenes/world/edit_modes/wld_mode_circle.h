@@ -16,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WLD_MODE_SQUARE_H
-#define WLD_MODE_SQUARE_H
+#ifndef WLD_MODE_CIRCLE_H
+#define WLD_MODE_CIRCLE_H
 
 #include <common_features/edit_mode_base.h>
 
-class WLD_ModeRect : public EditMode
+class WLD_ModeCircle : public EditMode
 {
 public:
-    WLD_ModeRect(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~WLD_ModeRect();
+    WLD_ModeCircle(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~WLD_ModeCircle();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -39,4 +39,4 @@ private:
 
 };
 
-#endif // WLD_MODE_SQUARE_H
+#endif // WLD_MODE_CIRCLE_H
