@@ -445,17 +445,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  }
              }
 
-             //Apply only if custom config or image was found
-             if(custom)
-             {
-                 //Apply index;
-                 if(uNPC.id < (unsigned int)index_npc.size())
-                 {
-                     index_npc[uNPC.id].type = 1;
-                     index_npc[uNPC.id].i = (uNPCs.size()-1);
-                 }
-             }
-
+//             //Apply only if custom config or image was found
+//             if(custom)
+//             {
+//                 //Apply index;
+//                 if(uNPC.id < (unsigned int)index_npc.size())
+//                 {
+//                     index_npc[uNPC.id].type = 1;
+//                     index_npc[uNPC.id].i = (uNPCs.size()-1);
+//                 }
+//             }
              AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
                          ((t_npc.cur_image->isNull())?
                               uNpcImg:

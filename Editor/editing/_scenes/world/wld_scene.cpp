@@ -227,7 +227,6 @@ WldScene::~WldScene()
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    //Experimental stuff (grid dawing)
     if(!opts.grid_show) return;
 
     int gridSize=pConfigs->default_grid;
@@ -240,8 +239,10 @@ void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
     for (qreal y = top; y < rect.bottom(); y += gridSize)
         lines.append(QLineF(rect.left(), y, rect.right(), y));
 
-    painter->setOpacity(0.2);
+    painter->setRenderHint(QPainter::Antialiasing, false);
+    painter->setOpacity(0.5);
+    painter->setPen(QPen(QBrush(Qt::black), 1, Qt::SolidLine));
+    painter->drawLines(lines.data(), lines.size());
     painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
     painter->drawLines(lines.data(), lines.size());
 }
-

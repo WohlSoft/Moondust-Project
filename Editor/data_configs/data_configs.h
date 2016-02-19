@@ -124,11 +124,6 @@ public:
     PGE_DataArray<obj_npc > main_npc;
     npc_Markers marker_npc;
 
-    //Indexes
-    //QList<blocksIndexes > index_blocks;
-    //QList<bgoIndexes > index_bgo;
-    QList<npcIndexes > index_npc;
-
     //World map items
     QList<obj_w_tile > main_wtiles;
     QList<obj_w_path > main_wpaths;

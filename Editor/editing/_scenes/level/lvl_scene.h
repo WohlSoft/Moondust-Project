@@ -103,11 +103,6 @@ public:
 
         LevelData LvlBuffer;    //!< Data buffer
 
-        //Array Sort functions
-        void sortBlockArray(QVector<LevelBlock > &blocks);
-        void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
-        void sortBGOArray(QVector<LevelBGO > &bgos);
-
     public:
         //default objects Z value
         int Z_backImage;
@@ -130,13 +125,12 @@ public:
         int Z_sys_interspace1; // interSection space layer
         int Z_sys_sctBorder;
 
-
     // ///////////////////Miscellaneous////////////////////////
     public:
         LevelEditingSettings opts;
 
         QPoint getViewportPos(); //!< Returns current position of viewport
-        QRect getViewportRect(); //!< Returns current rectangle of viewport
+        QRect  getViewportRect(); //!< Returns current rectangle of viewport
 
         //Clipboard
         LevelData copy(bool cut = false);
@@ -150,11 +144,6 @@ public:
 
     // ///////////////////GFX Manager////////////////////////
     public:
-        //Object Indexing:
-        //QList<blocksIndexes > index_blocks;
-        //QList<bgoIndexes > index_bgo;
-        QList<npcIndexes > index_npc;
-
         //! Common container of pre-loaded images
         QList<QPixmap> custom_images;
 
@@ -167,8 +156,6 @@ public:
         PGE_DataArray<obj_block > uBlocks;
         QList<obj_block* > custom_Blocks;
 
-        //QList<UserBlocks > uBlocks;
-        //QList<UserNPCs > uNPCs;
         PGE_DataArray<obj_npc > uNPCs;
         QList<obj_npc* > custom_NPCs;
 

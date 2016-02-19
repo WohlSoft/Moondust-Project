@@ -75,14 +75,6 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
 
-
-
-    //Indexes
-    //index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
-    //index_bgo = pConfigs->index_bgo;
-    index_npc = pConfigs->index_npc;
-
-
     //set dummy images if target not exist or wrong
     uBlockImg = Themes::Image(Themes::dummy_block);
     uNpcImg =   Themes::Image(Themes::dummy_npc);
@@ -232,100 +224,9 @@ LvlScene::~LvlScene()
     }
 }
 
-
-
-// ////////////////////Sort///////////////////////////
-
-void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
-{
-    LevelBlock tmp1;
-    int total = blocks.size();
-    long i;
-    unsigned long ymin;
-    long ymini;
-    long sorted = 0;
-
-
-        while(sorted < blocks.size())
-        {
-            ymin = blocks[sorted].array_id;
-            ymini = sorted;
-
-            for(i = sorted; i < total; i++)
-            {
-                if( blocks[i].array_id < ymin )
-                {
-                    ymin = blocks[i].array_id; ymini = i;
-                }
-            }
-            tmp1 = blocks[ymini];
-            blocks[ymini] = blocks[sorted];
-            blocks[sorted] = tmp1;
-            sorted++;
-        }
-}
-
-void LvlScene::sortBlockArrayByPos(QVector<LevelBlock > &blocks)
-{
-    LevelBlock tmp1;
-    int total = blocks.size();
-    long i;
-    long xmin;
-    long xmini;
-    long sorted = 0;
-
-
-        while(sorted < blocks.size())
-        {
-            xmin = blocks[sorted].x;
-            xmini = sorted;
-
-            for(i = sorted; i < total; i++)
-            {
-                if( blocks[i].x < xmin )
-                {
-                    xmin = blocks[i].x; xmini = i;
-                }
-            }
-            tmp1 = blocks[xmini];
-            blocks[xmini] = blocks[sorted];
-            blocks[sorted] = tmp1;
-            sorted++;
-        }
-}
-
-void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
-{
-    LevelBGO tmp1;
-    int total = bgos.size();
-    long i;
-    unsigned long ymin;
-    unsigned long ymini;
-    long sorted = 0;
-
-        while(sorted < bgos.size())
-        {
-            ymin = bgos[sorted].array_id;
-            ymini = sorted;
-
-            for(i = sorted; i < total; i++)
-            {
-                if( bgos[i].array_id < ymin )
-                {
-                    ymin = bgos[i].array_id; ymini = i;
-                }
-            }
-            tmp1 = bgos[ymini];
-            bgos[ymini] = bgos[sorted];
-            bgos[sorted] = tmp1;
-            sorted++;
-        }
-}
-
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    //Experimental stuff (grid dawing)
     if(!opts.grid_show) return;
 
     int gridSize=pConfigs->default_grid;
@@ -338,7 +239,10 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
     for (qreal y = top; y < rect.bottom(); y += gridSize)
         lines.append(QLineF(rect.left(), y, rect.right(), y));
 
-    painter->setOpacity(0.2);
+    painter->setRenderHint(QPainter::Antialiasing, false);
+    painter->setOpacity(0.5);
+    painter->setPen(QPen(QBrush(Qt::black), 1, Qt::SolidLine));
+    painter->drawLines(lines.data(), lines.size());
     painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
     painter->drawLines(lines.data(), lines.size());
 }

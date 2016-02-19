@@ -173,7 +173,6 @@ void dataconfigs::loadLevelNPC()
     npcset.setIniCodec("UTF-8");
 
     main_npc.clear();   //Clear old
-    index_npc.clear();
 
     npcset.beginGroup("npc-main");
         npc_total =                 npcset.value("total", "0").toInt();
@@ -200,17 +199,6 @@ void dataconfigs::loadLevelNPC()
     ConfStatus::total_npc = npc_total;
 
     main_npc.allocateSlots(npc_total);
-
-    /************Allocation of empty indexes of arrayElements*************/
-    npcIndexes npcIndex;
-    for(i=0;i<=npc_total; i++)
-    {
-        npcIndex.i=i;
-        npcIndex.gi=i;
-        npcIndex.type=0;
-        index_npc.push_back(npcIndex);
-    }
-    /************Allocation of empty indexes of arrayElements*************/
 
     /*************Buffers*********************/
     int defGFX_h = 0;
@@ -485,13 +473,6 @@ void dataconfigs::loadLevelNPC()
 
         snpc.id = i;
         main_npc.storeElement(i, snpc);
-        /************Add to Index**************/
-        if(i < (unsigned int)index_npc.size())
-        {
-            index_npc[i].i = i;
-            index_npc[i].gi = i;
-        }
-        /************Add to Index**************/
 
     skipNPC:
     npcset.endGroup();
