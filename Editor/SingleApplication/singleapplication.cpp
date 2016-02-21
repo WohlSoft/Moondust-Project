@@ -20,33 +20,59 @@
 
 #include "singleapplication.h"
 
-SingleApplication::SingleApplication(QStringList &args)
+SingleApplication::SingleApplication(QStringList &args) :
+    m_sema("PGE_EditorSemaphore_35y321c9m853n5y9312mc5ly891235y", 1),
+    m_shmem("PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y")
 {
     _shouldContinue = false; // By default this is not the main process
 
     socket = new QUdpSocket();
     server = NULL;
-    QUdpSocket acceptor;
-    acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
-
-    // Attempt to connect to the LocalServer
-    socket->connectToHost(QHostAddress::LocalHost, 58487);
     QString isServerRuns;
-    if(socket->waitForConnected(100))
+
+    bool isRunning=false;
+    m_sema.acquire();//Avoid races
+    if(m_shmem.attach()) //Detect shared memory copy
     {
-        socket->write(QString("CMD:Is editor running?").toUtf8());
-        socket->flush();
-        if(acceptor.waitForReadyRead(100))
+        isRunning = true;
+    }
+    else
+    {
+        m_shmem.create(1);
+        isRunning = false;
+    }
+
+    //Force run second copy of application
+    if(args.contains("--force-run", Qt::CaseInsensitive))
+    {
+        isServerRuns.clear();
+        isRunning=false;
+        args.removeAll("--force-run");
+    }
+
+    if(isRunning)
+    {
+        QUdpSocket acceptor;
+        acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
+
+        // Attempt to connect to the LocalServer
+        socket->connectToHost(QHostAddress::LocalHost, 58487);
+        if(socket->waitForConnected(100))
         {
-            //QByteArray dataGram;//Yes, I'm runs!
-            QByteArray datagram;
-            datagram.resize(acceptor.pendingDatagramSize());
-            QHostAddress sender;
-            quint16 senderPort;
-            acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-            if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
+            socket->write(QString("CMD:Is editor running?").toUtf8());
+            socket->flush();
+            if(acceptor.waitForReadyRead(100))
             {
-                isServerRuns="Yes!";
+                //QByteArray dataGram;//Yes, I'm runs!
+                QByteArray datagram;
+                datagram.resize(acceptor.pendingDatagramSize());
+                QHostAddress sender;
+                quint16 senderPort;
+                acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+                if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
+                {
+                    isServerRuns="Yes!";
+                }
             }
         }
     }
@@ -58,7 +84,7 @@ SingleApplication::SingleApplication(QStringList &args)
     }
     _arguments = args;
 
-    if(!isServerRuns.isEmpty())
+    if(isRunning)
     {
         QString str = QString("CMD:showUp");
         QByteArray bytes;
@@ -83,6 +109,7 @@ SingleApplication::SingleApplication(QStringList &args)
         QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
         QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
     }
+    m_sema.release();//Free semaphore
 }
 
 /**
