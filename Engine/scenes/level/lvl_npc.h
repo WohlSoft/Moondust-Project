@@ -256,6 +256,8 @@ public:
 
     inline bool not_movable() { return data.nomove; }
     inline void setNot_movable(bool n) { data.nomove=n; }
+    inline long contents() { return data.contents; }
+    inline void setContents(long c) { data.contents=c; }
     inline long special1() { return data.special_data; }
     inline void setSpecial1(long s) { data.special_data=s; }
     inline long special2() { return data.special_data2; }

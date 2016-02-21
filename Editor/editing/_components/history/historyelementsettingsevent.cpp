@@ -46,7 +46,7 @@ void HistoryElementSettingsEvent::undo()
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
-        eventp->autostart = !extraData.toBool();
+        eventp->autostart = (int)(extraData.toInt() != 1);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SMOKE){
@@ -234,7 +234,7 @@ void HistoryElementSettingsEvent::redo()
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
-        eventp->autostart = extraData.toBool();
+        eventp->autostart = extraData.toInt();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SMOKE){

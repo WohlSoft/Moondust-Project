@@ -726,7 +726,7 @@ void HistoryElementItemSetting::historyRedoSettingsChangeNPCBlocks(const LevelBl
 
 void HistoryElementItemSetting::historyUndoSettingsChangeNPCNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->setIncludedNPC(sourceNPC.special_data);
+    ((ItemNPC*)item)->setIncludedNPC(sourceNPC.contents);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsChangeNPCNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)

@@ -350,7 +350,7 @@ void LvlEventsBox::setEventData(long index)
                     ui->LVLEvent_AutoStart->setEnabled(true);
 
                     //Set controls data
-                    ui->LVLEvent_AutoStart->setChecked( event.autostart );
+                    ui->LVLEvent_AutoStart->setChecked( event.autostart==LevelSMBX64Event::AUTO_LevelStart );
 
                     //Layers visibly - layerList
                     ui->LVLEvent_disableSmokeEffect->setChecked( event.nosmoke );
@@ -1094,7 +1094,7 @@ void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSTART, QVariant(checked));
-        edit->LvlData.events[i].autostart = checked;
+        edit->LvlData.events[i].autostart = (int)checked;
         edit->LvlData.modified=true;
     }
 }

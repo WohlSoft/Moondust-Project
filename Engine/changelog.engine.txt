@@ -1,6 +1,7 @@
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
 - Added more physical environment zones types, include air chambers for underwater sections
+- Added separated support of portal and instant warps: instant warp will do same as in SMBX, portal warp will teleport character with keeping of keenetic energy
 
 0.2.5
 - Fixed crash on NPC placement with interprocessing

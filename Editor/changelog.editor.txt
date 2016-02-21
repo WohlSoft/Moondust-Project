@@ -6,6 +6,8 @@ Editor 0.3.1.10
 - Fixed miss up of order priority applying for BGO-190
 - Added circle fill
 - Added grid showing
+- Added separated support of portal and instant warps: instant warp will do same as in SMBX, portal warp will teleport character with keeping of keenetic energy
+- NPC-Containers now supports saving of extra special properties for contents: LVLX and SMBX65-38A only, SMBX64 LVL supports extra special for one NPC container only
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

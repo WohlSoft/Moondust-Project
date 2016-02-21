@@ -320,18 +320,14 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
          nextLine(); UIntVar(npcdata.id, line); //NPC id
 
          npcdata.special_data = 0;
+         npcdata.contents     = 0;
          switch(npcdata.id)
          {
          //SMBX64 Fixed special options for NPC
-         /*Containers*/
-         case 283:/*Bubble*/ case 91: /*buried*/ case 284: /*SMW Lakitu*/
-         case 96: /*egg*/
-         /*parakoopas*/
-         case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
+         /*parakoopas*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
          /*Paragoomba*/ case 243: case 244:
          /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
          /*WarpSelection*/ case 288: case 289: /*firebar*/ case 260:
-
              if(
                      ((npcdata.id!=76)&&(npcdata.id!=28))
                      ||
@@ -340,20 +336,25 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                          ||((ge(31))&&(npcdata.id==28))
                      )
                )
-             {
-                 nextLine(); SIntVar(npcdata.special_data, line); //NPC special option
-             }
+            {
+                nextLine(); SIntVar(npcdata.special_data, line); //NPC special option
+            } break;
+
+         /*Containers*/
+         case 91: /*buried*/
+         case 96: /*egg*/
+         case 283:/*Bubble*/
+         case 284:/*SMW Lakitu*/
+            nextLine(); SIntVar(npcdata.contents, line);
 
             if(npcdata.id==91)
-            switch(npcdata.special_data)
+            switch(npcdata.contents)
             {
-            /*WarpSelection*/ case 288: /* case 289:*/ /*firebar*/ /*case 260:*/
-             nextLine(); SIntVar(npcdata.special_data2, line);
-             break;
-            default: break;
+                /*WarpSelection*/ case 288: /*case 289:*/ /*firebar*/ /*case 260:*/
+                nextLine(); SIntVar(npcdata.special_data, line); break;
+                default: break;
             }
 
-             break;
          default: break;
          }
 
@@ -573,6 +574,8 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); wBoolVar(events.ctrl_run, line);    //RUN
                 nextLine(); wBoolVar(events.ctrl_start, line);  //START
                 nextLine(); wBoolVar(events.ctrl_up, line);  //UP
+                events.ctrls_enable = events.ctrlKeyPressed();
+                events.ctrl_lock_keyboard=events.ctrls_enable;
             }
 
             if(ge(32))
@@ -805,12 +808,6 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             switch(FileData.npc[i].id)
             {
                 //SMBX64 Fixed special options for NPC
-                /*Containers*/
-                case 283:/*Bubble*/
-                case 91: /*buried*/
-                case 284: /*SMW Lakitu*/
-                case 96: /*egg*/
-
                 /*Items*/
                 /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
                 /*paragoomba*/ case 243: case 244:
@@ -826,10 +823,17 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
                             ||((file_format >= 31)&&(FileData.npc[i].id==28))
                         )
                   )
-            TextData += SMBX64::IntS(FileData.npc[i].special_data);
+                TextData += SMBX64::IntS(FileData.npc[i].special_data);
+                break;
+                /*Containers*/
+                case 283:/*Bubble*/
+                case 91: /*buried*/
+                case 284: /*SMW Lakitu*/
+                case 96: /*egg*/
 
-                if((FileData.npc[i].id==91)&&(FileData.npc[i].special_data==288)) // Warp Section value for included into herb magic potion
-                    TextData += SMBX64::IntS(FileData.npc[i].special_data2);
+                TextData += SMBX64::IntS(FileData.npc[i].contents);
+                if( (FileData.npc[i].id==91)&&(FileData.npc[i].contents==288) ) // Warp Section value for included into herb magic potion
+                    TextData += SMBX64::IntS(FileData.npc[i].special_data);
 
                 break;
                 default:
@@ -1027,7 +1031,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
             if(file_format>=32)
             {
-            TextData += SMBX64::BoolS(FileData.events[i].autostart);
+            TextData += SMBX64::BoolS( FileData.events[i].autostart>0 );
 
             TextData += SMBX64::qStrS(FileData.events[i].movelayer);
             TextData += SMBX64::FloatS(FileData.events[i].layer_speed_x);

@@ -29,33 +29,32 @@ void LVL_Player::processWarpChecking()
 
     switch( contactedWarp->data.type )
     {
-    case 1://pipe
+    case LevelDoor::WARP_PIPE:
         {
             bool isContacted=false;
-       // Entrance direction: [3] down, [1] up, [2] left, [4] right
 
             switch(contactedWarp->data.idirect)
             {
-                case 4://right
+                case LevelDoor::ENTRANCE_RIGHT:
                     if(posRect.right() >= contactedWarp->right()-1.0 &&
                        posRect.right() <= contactedWarp->right()+speedX() &&
                        posRect.bottom() >= contactedWarp->bottom()-1.0 &&
                        posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
-                case 3://down
+                case LevelDoor::ENTRANCE_DOWN:
                     if(posRect.bottom() >= contactedWarp->bottom()-1.0 &&
                        posRect.bottom() <= contactedWarp->bottom()+speedY() &&
                        posRect.center().x() >= contactedWarp->left() &&
                        posRect.center().x() <= contactedWarp->right()
                             ) isContacted = true;
                     break;
-                case 2://left
+                case LevelDoor::ENTRANCE_LEFT:
                     if(posRect.left() <= contactedWarp->left()+1.0 &&
                        posRect.left() >= contactedWarp->left()+speedX() &&
                        posRect.bottom() >= contactedWarp->bottom()-1.0 &&
                        posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
-                case 1://up
+                case LevelDoor::ENTRANCE_UP:
                     if(posRect.top() <= contactedWarp->top()+1.0 &&
                        posRect.top() >= contactedWarp->top()+speedY() &&
                        posRect.center().x() >= contactedWarp->left() &&
@@ -70,18 +69,18 @@ void LVL_Player::processWarpChecking()
                 bool doTeleport=false;
                 switch(contactedWarp->data.idirect)
                 {
-                    case 4://right
+                    case LevelDoor::ENTRANCE_RIGHT:
                         if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
                         break;
-                    case 3://down
+                    case LevelDoor::ENTRANCE_DOWN:
                         if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height);
                             animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                             doTeleport=true;}
                         break;
-                    case 2://left
+                    case LevelDoor::ENTRANCE_LEFT:
                         if(keys.left && !wasEntered) { setPosX(contactedWarp->left()); doTeleport=true; }
                         break;
-                    case 1://up
+                    case LevelDoor::ENTRANCE_UP:
                         if(keys.up && !wasEntered) {  setPosY(contactedWarp->top());
                             animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                             doTeleport=true;}
@@ -101,7 +100,7 @@ void LVL_Player::processWarpChecking()
         }
 
         break;
-    case 2://door
+    case LevelDoor::WARP_DOOR:
         if(keys.up && !wasEntered)
         {
             bool isContacted=false;
@@ -121,7 +120,8 @@ void LVL_Player::processWarpChecking()
             }
         }
         break;
-    case 0://Instant
+    case LevelDoor::WARP_INSTANT:
+    case LevelDoor::WARP_PORTAL:
     default:
         if(!wasEntered)
         {
@@ -143,7 +143,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
     switch(warpType)
     {
-        case 2://door
+        case LevelDoor::WARP_DOOR:
         {
                 setGravityScale(0);
                 setSpeed(0, 0);
@@ -174,7 +174,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                 event_queue.events.push_back(event3);
         }
         break;
-    case 1://Pipe
+    case LevelDoor::WARP_PIPE:
         {
             // Exit direction: [1] down [3] up [4] left [2] right
             setGravityScale(0);
@@ -191,7 +191,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
             // Exit direction: [1] down [3] up [4] left [2] right
             switch(warpDirection)
             {
-                case 2://right
+                case LevelDoor::EXIT_RIGHT:
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
@@ -203,7 +203,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         event_queue.events.push_back(eventX);
                     }
                     break;
-                case 1://down
+                case LevelDoor::EXIT_DOWN:
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
@@ -214,7 +214,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         event_queue.events.push_back(eventX);
                     }
                     break;
-                case 4://left
+                case LevelDoor::EXIT_LEFT:
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x, y]()->void{
@@ -226,7 +226,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         event_queue.events.push_back(eventX);
                     }
                     break;
-                case 3://up
+                case LevelDoor::EXIT_UP:
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
@@ -275,7 +275,9 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
             event_queue.events.push_back(endWarping);
         }
         break;
-    case 0://Instant
+    case LevelDoor::WARP_INSTANT:
+        setSpeed(0, (speedY()<0?speedY():0) );//zero X speed!
+    case LevelDoor::WARP_PORTAL:
         teleport(x+16-_width_half,
                      y+32-_height);
         break;
@@ -292,7 +294,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
 
     switch(warp.type)
     {
-        case 1:/*******Pipe!*******/
+        case LevelDoor::WARP_PIPE:/*******Pipe!*******/
         {
             setSpeed(0, 0);
             setPaused(true);
@@ -311,7 +313,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             // Entrance direction: [3] down, [1] up, [2] left, [4] right
             switch(contactedWarp->data.idirect)
             {
-                case 4://Right
+                case LevelDoor::ENTRANCE_RIGHT://Right
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -324,7 +326,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         event_queue.events.push_back(eventX);
                     }
                 break;
-                case 3: //Down
+                case LevelDoor::ENTRANCE_DOWN: //Down
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -336,7 +338,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         event_queue.events.push_back(eventX);
                     }
                 break;
-                case 2://Left
+                case LevelDoor::ENTRANCE_LEFT://Left
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -349,7 +351,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         event_queue.events.push_back(eventX);
                     }
                 break;
-                case 1: //Up
+                case LevelDoor::ENTRANCE_UP: //Up
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -407,7 +409,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             }
         }
         break;
-        case 2:/*******Door!*******/
+        case LevelDoor::WARP_DOOR:/*******Door!*******/
         {
             setSpeed(0, 0);
             setPaused(true);

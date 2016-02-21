@@ -6,7 +6,7 @@ function bubble:__init(npc_obj)
 end
 
 function bubble:dropContents()
-    local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.special1, GENERATOR_APPEAR, SPAWN_UP, false)
+    local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.contents, GENERATOR_APPEAR, SPAWN_UP, false)
     thrownNPC.speedX = 0
     thrownNPC.speedY = 0
     thrownNPC.center_x = self.npc_obj.center_x

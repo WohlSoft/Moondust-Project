@@ -214,12 +214,12 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             {
                 if(box->LvlData.npc[q].id == x)
                 {
-                    qDebug() << "container!" <<  box->LvlData.npc[q].special_data;
+                    qDebug() << "container! " <<  box->LvlData.npc[q].contents;
                     isConainer=true; break;
                 }
             }
 
-            unsigned long npcID = (isConainer ? box->LvlData.npc[q].special_data : box->LvlData.npc[q].id);
+            unsigned long npcID = (isConainer ? box->LvlData.npc[q].contents : box->LvlData.npc[q].id);
             for(int r=0;r<bossNPCs.size();r++)
             {
                 if( npcID == bossNPCs[r].first)

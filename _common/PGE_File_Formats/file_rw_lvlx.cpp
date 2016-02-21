@@ -584,6 +584,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_SIntVal("X", npcdata.x) //X position
                     PGEX_SIntVal("Y", npcdata.y) //Y position
                     PGEX_SIntVal("D", npcdata.direct) //Direction
+                    PGEX_SIntVal("CN", npcdata.contents) //Contents of container-NPC
                     PGEX_SIntVal("S1", npcdata.special_data) //Special value 1
                     PGEX_SIntVal("S2", npcdata.special_data2) //Special value 2
                     PGEX_BoolVal("GE", npcdata.generator) //Generator
@@ -600,7 +601,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_BoolVal("BS", npcdata.is_boss) //Enable boss mode!
                     PGEX_StrVal("LR", npcdata.layer) //Layer
                     PGEX_StrVal("LA", npcdata.attach_layer) //Attach Layer
-                    PGEX_StrVal("SV", npcdata.send_it_to_variable) //Send ID to variable
+                    PGEX_StrVal("SV", npcdata.send_id_to_variable) //Send ID to variable
                     PGEX_StrVal("EA", npcdata.event_activate) //Event slot "Activated"
                     PGEX_StrVal("ED", npcdata.event_die) //Event slot "Death/Take/Destroy"
                     PGEX_StrVal("ET", npcdata.event_talk) //Event slot "Talk"
@@ -787,7 +788,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_StrVal("TE", event.trigger) //Trigger event
                     PGEX_UIntVal("TD", event.trigger_timer) //Trigger delay
                     PGEX_BoolVal("DS", event.nosmoke) //Disable smoke
-                    PGEX_BoolVal("AU", event.autostart) //Auto start
+                    PGEX_UIntVal("AU", event.autostart) //Auto start
+                    PGEX_StrVal("AUC", event.autostart_condition) //Auto start condition
                     PGEX_BoolArrVal("PC", controls) //Player controls
                     PGEX_StrVal  ("ML", event.movelayer) //Move layer
                     PGEX_FloatVal("MX", event.layer_speed_x) //Layer motion speed X
@@ -839,6 +841,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                 if(controls.size()>=8)  event.ctrl_start = controls[7];
                 if(controls.size()>=9)  event.ctrl_altrun = controls[8];
                 if(controls.size()>=10) event.ctrl_altjump = controls[9];
+                if(controls.size()>=11) event.ctrls_enable = controls[10];
+                if(controls.size()>=12) event.ctrl_lock_keyboard = controls[11];
 
                 //add captured value into array
                 bool found=false;
@@ -1219,6 +1223,8 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             TextData += PGEFile::value("D", PGEFile::IntS(FileData.npc[i].direct));  // NPC Direction
 
+            if(FileData.npc[i].contents != 0)
+                TextData += PGEFile::value("CN", PGEFile::IntS(FileData.npc[i].contents));  // Contents of container
             if(FileData.npc[i].special_data!=defNPC.special_data)
                 TextData += PGEFile::value("S1", PGEFile::IntS(FileData.npc[i].special_data));  // Special value 1
             if(FileData.npc[i].special_data2!=defNPC.special_data2)
@@ -1254,8 +1260,8 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             if(!FileData.npc[i].attach_layer.PGESTRINGisEmpty())
                 TextData += PGEFile::value("LA", PGEFile::qStrS(FileData.npc[i].attach_layer));  // Attach layer
-            if(!FileData.npc[i].send_it_to_variable.PGESTRINGisEmpty())
-                TextData += PGEFile::value("SV", PGEFile::qStrS(FileData.npc[i].send_it_to_variable)); //Send ID to variable
+            if(!FileData.npc[i].send_id_to_variable.PGESTRINGisEmpty())
+                TextData += PGEFile::value("SV", PGEFile::qStrS(FileData.npc[i].send_id_to_variable)); //Send ID to variable
 
             //Event slots
             if(!FileData.npc[i].event_activate.PGESTRINGisEmpty())
@@ -1498,8 +1504,10 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             if(FileData.events[i].nosmoke)
                 TextData += PGEFile::value("DS", PGEFile::BoolS(FileData.events[i].nosmoke)); // Disable Smoke
-            if(FileData.events[i].autostart)
-                TextData += PGEFile::value("AU", PGEFile::BoolS(FileData.events[i].autostart)); // Autostart event
+            if(FileData.events[i].autostart>0)
+                TextData += PGEFile::value("AU", PGEFile::IntS(FileData.events[i].autostart)); // Autostart event
+            if(!FileData.events[i].autostart_condition.PGESTRINGisEmpty())
+                TextData += PGEFile::value("AUC", PGEFile::qStrS(FileData.events[i].autostart_condition)); // Autostart condition event
 
             PGELIST<bool > controls;
             controls.push_back(FileData.events[i].ctrl_up);
@@ -1512,6 +1520,8 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             controls.push_back(FileData.events[i].ctrl_start);
             controls.push_back(FileData.events[i].ctrl_altrun);
             controls.push_back(FileData.events[i].ctrl_altjump);
+            controls.push_back(FileData.events[i].ctrls_enable);
+            controls.push_back(FileData.events[i].ctrl_lock_keyboard);
 
             addArray=false;
             for(int tt=0; tt<(signed)controls.size(); tt++)

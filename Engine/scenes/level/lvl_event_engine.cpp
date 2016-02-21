@@ -237,7 +237,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     }
 
     //Automatically trigger events
-    if((evt.name=="Level - Start")||evt.autostart)
+    if( (evt.name=="Level - Start") || evt.autostart==LevelSMBX64Event::AUTO_LevelStart )
         workingEvents.push_back(events[evt.name]);
 }
 

@@ -209,6 +209,8 @@ struct LevelNPC
     int direct;
     //! ID of NPC type defined in the lvl_npc.ini
     unsigned long id;
+    //! <Container-NPC specific!> Contained NPC in this container.
+    long contents;
     //! User-data integer #1 used for configuring some NPC-AI's (kept for SMBX64)
     long special_data;
     //! User-data integer #2 used for configuring some NPC-AI's (kept for SMBX64)
@@ -289,7 +291,7 @@ struct LevelNPC
     //! Attach layer to this NPC. All memberes of this layer are will follow to motion of this NPC.
     PGESTRING attach_layer;
     //! Variable name where NPC-ID will be written
-    PGESTRING send_it_to_variable;
+    PGESTRING send_id_to_variable;
 
 /*
  * Editor-only parameters which are not saving into file
@@ -351,9 +353,10 @@ struct LevelDoor
     {
         WARP_INSTANT=0,
         WARP_PIPE=1,
-        WARP_DOOR=2
+        WARP_DOOR=2,
+        WARP_PORTAL=3
     };
-    //! Warp type: [1] pipe, [2] door, [0] instant
+    //! Warp type: [1] pipe, [2] door, [0] instant (zero velocity-X after exit), [3] portal (instant with Keeping of velocities)
     int type;
     //! Target level filename (Exit from this leven and enter to target level)
     PGESTRING lname;
@@ -523,6 +526,13 @@ struct LevelSMBX64Event
     //! Trigger another event after time in deci-seconds
     long trigger_timer;
 
+    //! Hold key controllers holding
+    bool ctrls_enable;
+    /*!
+     * \brief Check is one of control keys pressed
+     * \return true if one of keys is pressed
+     */
+    bool ctrlKeyPressed();
     //! Hold "Up" key controllers
     bool ctrl_up;
     //! Hold "Down" key controllers
@@ -545,8 +555,19 @@ struct LevelSMBX64Event
     //! Hold "Drop" key controllers
     bool ctrl_drop;
 
+    //! Temporary lock player controllers input
+    bool ctrl_lock_keyboard;
+
+    enum AutoStartCond{
+        AUTO_None           = 0,
+        AUTO_LevelStart     = 1,
+        AUTO_MatchAll       = 3,
+        AUTO_CallAndMatch   = 4
+    };
     //! Trigger event automatically on level startup
-    bool autostart;
+    int autostart;
+    //! Conditional expression for event autostart
+    PGESTRING autostart_condition;
 
     //! Install layer motion settings for layer if is not empt
     PGESTRING movelayer;

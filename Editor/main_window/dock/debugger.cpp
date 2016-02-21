@@ -275,7 +275,7 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
                                 {
                                     obj_npc &t_npc = e->scene->uNPCs[ e->LvlData.npc[j].id ];
                                     if(t_npc.container) {
-                                        if(e->LvlData.npc[j].special_data==q) {countItems++; break;}
+                                        if(e->LvlData.npc[j].contents==q) {countItems++; break;}
                                     }
                                 }
                             }

@@ -25,6 +25,7 @@
 
 class MainWindow;
 class QComboBox;
+class QPushButton;
 
 namespace Ui {
 class LvlItemProperties;
@@ -69,7 +70,8 @@ public slots:
     void CloseBox();
 
     void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false, bool dont_reset_props=false);
-    void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
+    void refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem=false, bool dont_reset_props=false);
+    void refreshSecondNpcSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
 
 
 private slots:
@@ -99,10 +101,11 @@ private slots:
     void on_PROPS_NPCNoMove_clicked(bool checked);
     void on_PROPS_NpcBoss_clicked(bool checked);
     void on_PROPS_NpcTMsg_clicked();
+    void on_PROPS_NPCContaiter_clicked();
     void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
     void on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked);
     void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
-    void on_PROPS_NPCContaiter_clicked();
+    void on_PROPS_NPCSpecialNPC_clicked();
     void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
     void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
     void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
@@ -127,6 +130,7 @@ protected:
 
 private:
     void npc_refreshMinHeight();
+    void processNpcContainerButton(QPushButton *btn);
 
     int npcSpecSpinOffset;
     int npcSpecSpinOffset_2;

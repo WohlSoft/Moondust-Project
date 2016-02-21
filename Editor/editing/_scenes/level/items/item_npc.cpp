@@ -532,7 +532,7 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
     }
     if(npcID==0)
     {
-        if(!init) m_data.special_data = 0;
+        if(!init) m_data.contents = 0;
         if(!init) arrayApply();
         return;
     }
@@ -560,7 +560,7 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
         m_includedNPC->setZValue(this->zValue() - 0.0000010);
     m_grp->addToGroup(m_includedNPC);
 
-    if(!init) m_data.special_data = npcID;
+    if(!init) m_data.contents = npcID;
     if(!init) arrayApply();
 }
 
@@ -792,8 +792,8 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
         else
             setZValue(m_scene->Z_npcStd);
 
-        if((m_localProps.container)&&(m_data.special_data>0))
-            setIncludedNPC(m_data.special_data, true);
+        if((m_localProps.container)&&(m_data.contents>0))
+            setIncludedNPC(m_data.contents, true);
 
         m_data.is_star = m_localProps.is_star;
 

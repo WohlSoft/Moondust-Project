@@ -312,6 +312,11 @@
               <string>2 - Door</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>3 - Portal</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="1">

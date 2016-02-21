@@ -4,19 +4,19 @@ function yoshi_egg:initProps()
 
     self.recent_speedY = 0
 
-    if(self.npc_obj.special1==98)then -- Blue Yoshi
+    if(self.npc_obj.contents==98)then -- Blue Yoshi
         self.egg_color={1}
-    elseif(self.npc_obj.special1==99)then -- Yellow Yoshi
+    elseif(self.npc_obj.contents==99)then -- Yellow Yoshi
         self.egg_color={2}
-    elseif(self.npc_obj.special1==100)then -- Red Yoshi
+    elseif(self.npc_obj.contents==100)then -- Red Yoshi
         self.egg_color={3}
-    elseif(self.npc_obj.special1==148)then -- Black Yoshi
+    elseif(self.npc_obj.contents==148)then -- Black Yoshi
         self.egg_color={4}
-    elseif(self.npc_obj.special1==149)then -- Purpure Yoshi
+    elseif(self.npc_obj.contents==149)then -- Purpure Yoshi
         self.egg_color={5}
-    elseif(self.npc_obj.special1==150)then -- Magenta Yoshi
+    elseif(self.npc_obj.contents==150)then -- Magenta Yoshi
         self.egg_color={6}
-    elseif(self.npc_obj.special1==228)then -- Cyan Yoshi
+    elseif(self.npc_obj.contents==228)then -- Cyan Yoshi
         self.egg_color={7}
     else
         self.egg_color={0}     -- Default green
@@ -26,12 +26,12 @@ function yoshi_egg:initProps()
 end
 
 function yoshi_egg:dropContents()
-    local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.special1, GENERATOR_APPEAR, SPAWN_UP, false)
+    local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.contents, GENERATOR_APPEAR, SPAWN_UP, false)
     thrownNPC.speedX = 0
     thrownNPC.speedY = 0
     thrownNPC.center_x = self.npc_obj.center_x
     thrownNPC.y = self.npc_obj.bottom - thrownNPC.height
-    thrownNPC.special1 = 0
+    thrownNPC.contents = 0
 end
 
 function yoshi_egg:__init(npc_obj)
@@ -57,7 +57,7 @@ function yoshi_egg:onLoop(TickTime)
 end
 
 function yoshi_egg:onKill(reason)
-    if(self.npc_obj.special1==0)then
+    if(self.npc_obj.contents==0)then
         Audio.playSound(self.def_eggSmashSoundID)        
     else
         Audio.playSound(self.def_eggHatchSoundID)

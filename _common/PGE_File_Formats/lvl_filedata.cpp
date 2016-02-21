@@ -216,6 +216,7 @@ LevelNPC    FileFormats::CreateLvlNpc()
     dummyNPC.y = 0 ;
     dummyNPC.direct = -1;
     dummyNPC.id=0;
+    dummyNPC.contents=0;
     dummyNPC.special_data=0;
     dummyNPC.special_data2=0;
     dummyNPC.generator=false;
@@ -357,6 +358,7 @@ LevelSMBX64Event FileFormats::CreateLvlEvent()
     dummyEvent.trigger="";
     dummyEvent.trigger_timer=0;
     dummyEvent.nosmoke=false;
+    dummyEvent.ctrls_enable=false;
     dummyEvent.ctrl_altjump=false;
     dummyEvent.ctrl_altrun=false;
     dummyEvent.ctrl_down=false;
@@ -367,8 +369,10 @@ LevelSMBX64Event FileFormats::CreateLvlEvent()
     dummyEvent.ctrl_run=false;
     dummyEvent.ctrl_start=false;
     dummyEvent.ctrl_up=false;
-    dummyEvent.autostart=false;
-    dummyEvent.movelayer="";
+    dummyEvent.ctrl_lock_keyboard=false;
+    dummyEvent.autostart = LevelSMBX64Event::AUTO_None;
+    dummyEvent.autostart_condition="";
+    dummyEvent.movelayer = "";
     dummyEvent.layer_speed_x=0.0;
     dummyEvent.layer_speed_y=0.0;
     dummyEvent.move_camera_x=0.0;
@@ -721,4 +725,18 @@ bool LevelData::layerIsExist(PGESTRING title)
             return true;
     }
     return false;
+}
+
+bool LevelSMBX64Event::ctrlKeyPressed()
+{
+    return ctrl_up||
+           ctrl_down||
+           ctrl_left||
+           ctrl_right||
+           ctrl_jump||
+           ctrl_altjump||
+           ctrl_run||
+           ctrl_altrun||
+           ctrl_drop||
+           ctrl_start;
 }

@@ -167,7 +167,7 @@ void SplitCSVStr(PGESTRINGList &dst, PGESTRING &Src)
     }
 }
 
-#define SMBX65_SplitSubLine(dst, src) SMBX65_SplitLine(dst, Src, '/')
+#define SMBX65_SplitSubLine(dst, src) SMBX65_SplitLine(dst, src, '/')
 void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src, char sep='|')
 {
     dst.clear();
@@ -178,7 +178,7 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src, char sep='|')
         do
         {
             cur=Src[i++];
-            if(cur!='|') Buffer.push_back(cur);
+            if(cur!=sep) Buffer.push_back(cur);
         } while( (i<(signed)Src.size()) && (cur!=sep) );
         dst.push_back(Buffer);
     }
@@ -248,7 +248,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
     LevelPhysEnv waters;
     LevelLayer layerdata;
     LevelSMBX64Event eventdata;
-    LevelEvent_layers event_layers;
     LevelEvent_Sets event_sets;
     LevelVariable vardata;
     LevelScript scriptdata;
@@ -627,7 +626,6 @@ readLineAgain:
         else
         if(currentLine[0]=="N")//NPC
         {
-            //T|layer|id|x|y
             npcdata = CreateLvlNpc();
             for(int i=1;i<(signed)currentLine.size();i++)
             {
@@ -692,8 +690,21 @@ readLineAgain:
                                         break;
                                 //b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
                                     case 3:
-                                        //this field is useless here, ignore it
-                                        //on file save it can be quickly re-calculated
+                                        //CONTAINER with packed NPC
+                                        if( SMBX64::sInt(dLine) )
+                                            goto badfile;
+                                        int contID=toInt(dLine);
+                                        if(contID==0)
+                                            break;
+                                        npcdata.contents = npcdata.id;
+                                        switch(contID)
+                                        {
+                                            case 1: npcdata.id=91;break;
+                                            case 2: npcdata.id=96;break;
+                                            case 3: npcdata.id=283;break;
+                                            case 4: npcdata.id=284;break;
+                                            case 5: npcdata.id=300;break;
+                                        }
                                         break;
                                 }
                             }
@@ -741,15 +752,28 @@ readLineAgain:
                                 case 5: npcdata.event_nextframe=PGE_URLDEC(dLine); break;
                             //    e7=touch event
                                 case 6: npcdata.event_touch=PGE_URLDEC(dLine); break;
-                            //    a1=layer name to attach
-                                case 7: npcdata.attach_layer=PGE_URLDEC(dLine); break;
-                            //    a2=variable name to send
-                                case 8: npcdata.send_it_to_variable=PGE_URLDEC(dLine); break;
                             }
                         }
                     } break;
-
+                //Attach layer / Updated variable with
                 case 8:
+                    {
+                    PGESTRINGList nelayers;
+                    SplitCSVStr(nelayers, cLine);
+                    for(int j=0; j<(signed)nelayers.size(); j++)
+                        {
+                            PGESTRING &dLine=nelayers[j];
+                            switch(j) //    [***urlencode!***]
+                            {
+                            //    a1=layer name to attach
+                                case 0: npcdata.attach_layer=PGE_URLDEC(dLine); break;
+                            //    a2=variable name to send
+                                case 1: npcdata.send_id_to_variable=PGE_URLDEC(dLine); break;
+                            }
+                        }
+                    } break;
+                //Generators
+                case 9:
                     {
                         PGESTRINGList nevents;
                         SplitCSVStr(nevents, cLine);
@@ -839,7 +863,7 @@ readLineAgain:
                             }
                     } break;
                 //msg=message by this npc talkative[***urlencode!***]
-                case 9:
+                case 10:
                     {
                         npcdata.msg=PGE_URLDEC(cLine);
                     } break;
@@ -1221,17 +1245,67 @@ readLineAgain:
                 //ea=val,syntax
                 case 3:
                     {
-                    //    val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
-                    //    syntax=condidtion expression[***urlencode!***]
+                        PGESTRINGList autorun;
+                        SplitCSVStr(autorun, cLine);
+                        for(int j=0; j<(signed)autorun.size(); j++)
+                            {
+                                PGESTRING &dLine=autorun[j];
+                                switch(j)
+                                {
+                                //    val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
+                                    case 0:
+                                        if( SMBX64::sFloat(dLine) )
+                                            goto badfile;
+                                        eventdata.autostart=(int)round(toFloat(dLine));
+                                    break;
+                                //    syntax=condidtion expression[***urlencode!***]
+                                    case 1: eventdata.autostart_condition=PGE_URLDEC(dLine); break;
+                                }
+                            }
                     } break;
                 //el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn
                 case 4:
                     {
-                    //    b=no smoke[0=false !0=true]
-                    //    [***urlencode!***]
-                    //    s(n)=show layer
-                    //    l(n)=hide layer
-                    //    t(n)=toggle layer
+                        PGESTRINGList EvPref;
+                        SMBX65_SplitSubLine(EvPref, cLine);
+                        for(int j=0; j<(signed)EvPref.size(); j++)
+                            {
+                                PGESTRING &dLine=EvPref[j];
+                                switch(j)
+                                {
+                                //    b=no smoke[0=false !0=true]
+                                    case 0: eventdata.nosmoke = (dLine!="0");
+                                    break;
+                                    //    [***urlencode!***]
+                                    //    s(n)=show layer
+                                    case 1:
+                                        {
+                                            PGESTRINGList showlayers;
+                                            SplitCSVStr(showlayers, dLine);
+                                            for(int k=0; k<(signed)showlayers.size(); k++)
+                                                eventdata.layers_show.push_back(PGE_URLDEC(showlayers[k]));
+                                        }
+                                    break;
+                                    //    l(n)=hide layer
+                                    case 2:
+                                        {
+                                            PGESTRINGList hidelayers;
+                                            SplitCSVStr(hidelayers, dLine);
+                                            for(int k=0; k<(signed)hidelayers.size(); k++)
+                                                eventdata.layers_hide.push_back(PGE_URLDEC(hidelayers[k]));
+                                        }
+                                    break;
+                                    //    t(n)=toggle layer
+                                    case 3:
+                                        {
+                                            PGESTRINGList togglelayers;
+                                            SplitCSVStr(togglelayers, dLine);
+                                            for(int k=0; k<(signed)togglelayers.size(); k++)
+                                                eventdata.layers_toggle.push_back(PGE_URLDEC(togglelayers[k]));
+                                        }
+                                    break;
+                                }
+                            }
                     } break;
                 //elm=elm1/elm2...elmn
                 case 5:
@@ -1241,21 +1315,43 @@ readLineAgain:
                     //    horizontal syntax,vertical syntax[***urlencode!***][syntax]
                     //    way=[0=by speed][1=by Coordinate]
                     } break;
+                    //1,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0, 1
                 //epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
                 case 6:
                     {
-                    //    b1=enable player controls
-                    //    b2=drop
-                    //    b3=alt run
-                    //    b4=run
-                    //    b5=jump
-                    //    b6=alt jump
-                    //    b7=up
-                    //    b8=down
-                    //    b9=left
-                    //    b10=right
-                    //    b11=start
-                    //    b12=lock keyboard
+                        PGESTRINGList PlrCtrls;
+                        SplitCSVStr(PlrCtrls, cLine);
+                        for(int j=0; j<(signed)PlrCtrls.size(); j++)
+                        {
+                            PGESTRING &dLine=PlrCtrls[j];
+                            switch(j)
+                            {
+                                //    b1=enable player controls
+                                case 0: eventdata.ctrls_enable=(dLine!="0");break;
+                                //    b2=drop
+                                case 1: eventdata.ctrl_drop=(dLine!="0");break;
+                                //    b3=alt run
+                                case 2: eventdata.ctrl_altrun=(dLine!="0");break;
+                                //    b4=run
+                                case 3: eventdata.ctrl_run=(dLine!="0");break;
+                                //    b5=jump
+                                case 4: eventdata.ctrl_jump=(dLine!="0");break;
+                                //    b6=alt jump
+                                case 5: eventdata.ctrl_altjump=(dLine!="0");break;
+                                //    b7=up
+                                case 6: eventdata.ctrl_up=(dLine!="0");break;
+                                //    b8=down
+                                case 7: eventdata.ctrl_down=(dLine!="0");break;
+                                //    b9=left
+                                case 8: eventdata.ctrl_left=(dLine!="0");break;
+                                //    b10=right
+                                case 9: eventdata.ctrl_right=(dLine!="0");break;
+                                //    b11=start
+                                case 10: eventdata.ctrl_start=(dLine!="0");break;
+                                //    b12=lock keyboard
+                                case 11: eventdata.ctrl_lock_keyboard=(dLine!="0");break;
+                            }
+                        }
                     } break;
                 //eps=esection/ebackground/emusic
                 case 7:
