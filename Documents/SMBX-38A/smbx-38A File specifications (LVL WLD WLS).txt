@@ -1,15 +1,37 @@
+========================================================
+SMBX-38A file formats
+========================================================
+Developed by Chinese developer named as 5438A38A for usage in re-developed SMBX 1.4.x
+(Unofficial implementation of SMBX Engine)
+========================================================
+	All files are written as ASCII-text. Every header contains line "SMBXFile??",
+where ?? is a version number of file generator standard (first version is 65, latest 66).
+Non-ASCII data is encoding into URI and BASE64 formats. Every line begins from a marker
+of element type, and parameters are going in strict order. Parameters are separating
+with "|" character, sub-parameters (extra parameters or array elements between one
+parent parameter cell) are spliting with "/" or "," characters. Extra parameters are
+allowed on end of every line (extra parameters are can be added to end of every
+parameter chain, but replacing or appending into middle of this chain is not allowed).
+Entries of extra types are allowed too, but there are must not use busy markers!
 
-             File specifications for SMBX65-38A file formats
- which are using in the SMBX 1.4.1 made by 5438A38A Chinese programmer.
-
-Contents:
-- LVL File
-- WLD File
-- WLS File
-
-========================================================================
-                     SMBX65-38A LVL file description
-========================================================================
+========================================================
+LVL file specification
+========================================================
+Data type markers:
+A 	    – Level header settings
+P1, P2 	– Player spawn points
+M       – Section settings
+B       – blocks
+T       – Background objects
+N       – Non-playable characters
+Q       – Liquid/Environment boxes
+W       – Warp entries
+L       – Layers
+E       – Events
+V       – Local level variables
+S       – UTF-8 encoded local level scripts
+Su      – ASCII-encoded local level scripts
+--------------------------------------------------------
 line 1:
 	SMBXFile??
 	??=Version number
@@ -122,13 +144,14 @@ next line: waters
 		10-Collision Script
 		11-Click Script
 		12-Collision Event
+		13-Air
 	b2=friction
 	b3=Acceleration Direction
 	b4=Acceleration
 	b5=Maximum Velocity
 	event=touch event
 next line: warps
-	W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc|lik|liid|noexit|wx|wy|le|we
+	W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
 	layer=layer name["" == "Default"][***urlencode!***]	
 	x=entrance position x
 	y=entrance postion y
@@ -146,6 +169,8 @@ next line: warps
 	bomb=need a bomb
 	hide=hide the entry scene
 	anpc=allow npc interlevel
+	mini=Mini-Only
+	size=Warp Size(pixel)
 	lik=warp to level[***urlencode!***]	
 	liid=normal enterance / to warp[0-WARPMAX]
 	noexit=level entrance
@@ -160,7 +185,7 @@ next line: layers
 next line: events
 	E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
 	name=event name[***urlencode!***]
-	msg=show message after start event
+	msg=show message after start event[***urlencode!***]
 	ea=val,syntax
 		val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
 		syntax=condidtion expression[***urlencode!***]
@@ -255,16 +280,30 @@ next line: scripts
 	Su|name|scriptu
 	name=name of script[***urlencode!***]
 	script=script[***base64encode!***][utf-8]
-	scriptu=script[***base64encode!***][unicode]
+	scriptu=script[***base64encode!***][ASCII]
 
-========================================================================
-                     SMBX65-38A WLD file description
-========================================================================
+
+========================================================
+WLD file description
+========================================================
+Data type markers:
+ws1 	– World settings header
+ws2 	– Credits
+ws3 	– List of additional strings
+ws4 	– Saving locker setup
+T	    – Terrain tiles
+S	    – Sceneries
+P	    – Paths
+M	    – Areas – Music boxes, viewports, etc.
+L	    – Level entrances
+WL	    – Layers
+WE	    – Events
+--------------------------------------------------------
 line 1:
 	SMBXFile??
 	??=Version number
 next line: world settings
-	ws1|wn|bp1,bp2,bp3,bp4,bp5|asn|dtp,nwm,rsd,dcp,sc,sm,asg|sn,mis|acm|sc
+	ws1|wn|bp1,bp2,bp3,bp4,bp5|asn|dtp,nwm,rsd,dcp,sc,sm,asg,smb3|sn,mis|acm|sc
 	ws2|credits
 	ws3|list
 	ws4|se|msg
@@ -281,6 +320,7 @@ next line: world settings
 		0=Restart at the world map where we saved last time
 		1=Restart at the level where we saved last time
 	asg=auto save game[0=false !0=true]
+	smb3=smb3 style world map[0=false !0=true]
 	sn=star number
 	mis=max item number in world inventory
 	acm=anti cheat mode[0=don't allow in list !0=allow in list]
@@ -296,28 +336,48 @@ next line: world settings
 	se=save locker syntax[***urlencode!***][syntax]
 	msg=message when save was locked[***urlencode!***]
 next line: tiles
-	T|id|x|y
+	T|id|x|y|layer
 	id=tile id
 	x=tile position x
 	y=tile position y
+	layer=layer name["" == "Default"][***urlencode!***]	
 next line: scenerys
-	S|id|x|y
+	S|id|x|y|layer
 	id=scenery id
 	x=scenery position x
 	y=scenery position y
+	layer=layer name["" == "Default"][***urlencode!***]	
 next line: paths
-	P|id|x|y
+	P|id|x|y|layer
 	id=path id
 	x=path position x
 	y=path position y
-next line: musics
-	M|id|x|y|name
+	layer=layer name["" == "Default"][***urlencode!***]	
+next line: Areas
+	M|id|x|y|name|layer|w|h|flag|te,eflag|ie1,ie2,ie3
 	id=music id
-	x=music position x
-	y=music position y
+	x=Area position x
+	y=Area position y
 	name=custom music name[***urlencode!***]
+	layer=layer name["" == "Default"][***urlencode!***]
+	w=width
+	h=height
+	flag=area settings[***Bitwise operation***]
+		0=False !0=True
+		b1=(flag & 1) World Music
+		b2=(flag & 2) Set Viewport
+		b3=(flag & 4) Ship Route
+		b4=(flag & 8) Forced Walking
+		b5=(flag & 16) Item-triggered events
+	te:Touch Event[***urlencode!***]
+		eflag:0=Triggered every time entering
+		      1=Triggered on entrance and level completion
+                   2=Triggered only once
+	ie1=Hammer Event[***urlencode!***]
+	ie2=Warp Whistle Event[***urlencode!***]
+	ie3=Anchor Event[***urlencode!***]
 next line: levels
-	L|id|x|y|fn|n|eu\el\ed\er|wx|wy|wlz|bg,pb,av,ls,f|s
+	L|id|x|y|fn|n|eu\el\ed\er|wx|wy|wlz|bg,pb,av,ls,f,nsc,otl,li,lcm|s|Layer|Lmt
 	id=level id
 	x=level position x
 	y=level position y
@@ -336,16 +396,76 @@ next line: levels
 	av=always visible
 	ls=is game start point
 	f=forced
+	nsc=no star coin count
+	otl=destory after clear
+	li=level ID
+	lcm=Affected by Music Box
 	s=entrance syntax
 		s=ds1/ds2...dsn
 		ds=ds1,ds2[***urlencode!***][syntax]
 		ds1=condidtion expression
 		ds2=index
+	layer=layer name["" == "Default"][***urlencode!***]
+	Lmt=Level Movement Command
+		lmt=NodeInfo\PathInfo
+			NodeInfo=Node1:Node2:...:NodeN
+				Node=x,y,chance
+			PathInfo=Path1:Path2:...:PathN
+				Path=NodeID1,NodeID2
+next line: layers
+	WL|name|status
+	name=layer name[***urlencode!***]
+	status=is hidden layer
+next line: events
+	WE|name|layer|layerm|world|other
+	name=event name[***urlencode!***]
+	layer=way/hidelist/showlist/togglelist
+		list=name1,name2,name3...namen
+			name[***urlencode!***]
+		if (way % 10 == 1) nosmoke = true;
+		if (way > 10) object_state = true; else layer_state = true;
+	layerm=movementcommand1\movementcommand2\...\movementcommandn
+		movementcommand=way,layer,hp,vp,ap
+			way:0=speed,1=coordinate,2=moveto,4=spin
+			layer=layer name[***urlencode!***]
+			hp=Horizontal Parameter[***urlencode!***]
+			vp=Vertical Parameter[***urlencode!***]
+			ap=Additional Parameter[***urlencode!***]
+	world=aw/cs,le,inpc,msgc,syntax,msg
+		aw=AutoStart Settings
+			0=Not Auto Start
+			1=Triggered on loading the world the first time.
+			2=Triggered every time loading the world.
+			3=Triggered on level exit.
+		cs=Start when match all condition[0=false !0=true]
+		le:0=This is a Normal Event.
+		   1=This is a Level Enter/Exit Event.
+		inpc=Interrupt the process if 'false' returned
+		msgc=Show a message if 'false' returned
+		syntax=Condition expression[***urlencode!***]
+		msg=message[***urlencode!***]
+	other=sd/ld/event,delay/script/msg/wwx,wwy,lockl
+		sd=play sound number
+		ld=lock keyboard (frames)
+		event=trigger event name[***urlencode!***]
+		delay=trigger delay[1 frame]
+		script=script name[***urlencode!***]
+		msg=show message after start event[***urlencode!***]
+		wwx=Warp Whistle: Map Warp Location x
+		wwy=Warp Whistle: Map Warp Location y
+			if (wwx == -1 && wwy == -1) [means not moving]
+		lockl=[Level ID]Affected by Anchor 
 
 
-========================================================================
-                SMBX65-38A WLS file description(world settings)
-========================================================================
+========================================================
+WLS file description(world settings)
+========================================================
+Data type markers:
+G   – Global variables
+GS  – Global script UTF-8 Encoded
+GSu – Global script ASCII-encoded
+CW  – Custom sounds entires (alternate implementation of sounds.ini from PGE and LunaLUA)
+--------------------------------------------------------
 line 1:
 	SMBXFile??
 	??=Version number
@@ -358,6 +478,20 @@ next line: global scripts
 	GSu|name|scriptu
 	name=name of script[***urlencode!***]
 	script=script[***base64encode!***][utf-8]
-	scriptu=script[***base64encode!***][unicode]
+	scriptu=script[***base64encode!***][ASCII]
+next line: custom sounds
+	CW|cdata1|cdata2|...|cdatan
+		cdata=sound-id,sound-filename
+			sound-filename:[***urlencode!***]
+
+
+
+
+
+
+
+
+
+
 
 
