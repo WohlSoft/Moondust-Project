@@ -765,4 +765,14 @@ LevelEvent_MoveLayer::LevelEvent_MoveLayer()
     way=LM_Speed;
 }
 
-
+LevelEvent_SpawnEffect::LevelEvent_SpawnEffect()
+{
+    id=0;
+    x=0;
+    y=0;
+    speed_x=0.0f;
+    speed_y=0.0f;
+    gravity=false;
+    fps=-1;//Default FPS
+    max_life_time=-1;//Default life time
+}

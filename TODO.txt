@@ -17,7 +17,16 @@ Engine: Lua
 - setFramePos() NPC Animator function to provide ability jump to any frame position in sequence
 - effect-def based effect spawn function to allow easier and flexible way of effect spawning
 + Detectors API for NPCs
-- Player-LUA events and allow external lua files like npc's are has
+- Player-LUA events and allow external lua files like npc's are has.
+
+  Player's events function:
+   onInit(...)
+   onLoop(timeOfTick)
+   onContact(physObject)
+   onTake(physObject)
+   onHarm(harmEvent)
+   onKill(killEvent)
+   onControl(key)
 
 Engine: New level physics
 - Wall adheasing NPCs support 

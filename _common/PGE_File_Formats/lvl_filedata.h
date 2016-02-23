@@ -564,6 +564,47 @@ struct LevelEvent_MoveLayer
     int way;
 };
 
+//    ce(n)=id,x,y,sx,sy,grv,fsp,life
+//        id=effect id
+//        x=effect position x[***urlencode!***][syntax]
+//        y=effect position y[***urlencode!***][syntax]
+//        sx=effect horizontal speed[***urlencode!***][syntax]
+//        sy=effect vertical speed[***urlencode!***][syntax]
+//        grv=to decide whether the effects are affected by gravity[0=false !0=true]
+//        fsp=frame speed of effect generated
+//        life=effect existed over this time will be destroyed.
+/*!
+ * \brief Spawn effect task declaration
+ */
+struct LevelEvent_SpawnEffect
+{
+    LevelEvent_SpawnEffect();
+    //! Effect ID to spawn
+    long id;
+    //! Spawn effect at X
+    long x;
+    //! Spawn effect at Y
+    long y;
+    //! Expression for X position
+    PGESTRING expression_x;
+    //! Expression for Y position
+    PGESTRING expression_y;
+    //! Initial speed X (pixels per 1/65 second)
+    float speed_x;
+    //! Initial speed Y (pixels per 1/65 second)
+    float speed_y;
+    //! Expression for X speed
+    PGESTRING expression_sx;
+    //! Expression for Y speed
+    PGESTRING expression_sy;
+    //! Spawn effect with gravity
+    bool gravity;
+    //! Frame speed of spawned effect
+    int fps;
+    //! Life time of effect (1/65 seconds)
+    int max_life_time;
+};
+
 /*!
  * \brief Level specific Classic Event Entry structure
  */
@@ -638,6 +679,8 @@ struct LevelSMBX64Event
     PGESTRING autostart_condition;
     //! Array of extra moving layers
     PGELIST<LevelEvent_MoveLayer > moving_layers;
+    //! Effects to spawn;
+    PGELIST<LevelEvent_SpawnEffect> spawn_effects;
     //! Install layer motion settings for layer if is not empt
     PGESTRING movelayer;
     //! Set layer X motion in pixels per 1/65

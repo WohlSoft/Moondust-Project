@@ -1437,7 +1437,7 @@ readLineAgain:
                         }
                         //fill entries
                         eventdata.sets.clear();
-                        for(int q=0;q<FileData.sections.size(); q++)
+                        for(int q=0;q<(signed)FileData.sections.size(); q++)
                         {
                             LevelEvent_Sets set;
                             set.id=q;
@@ -1452,7 +1452,8 @@ readLineAgain:
 
                         for(int j=0; j<evSetsSize; j++)
                         {
-                            if(j<ev_sections.size())
+                            //SECTIONS
+                            if(j<(signed)ev_sections.size())
                             {
                                 PGESTRINGList params;
                                 SplitCSVStr(params, ev_sections[j]);
@@ -1460,15 +1461,15 @@ readLineAgain:
                                 int id = -1;
                                 bool customSizes=false;
                                 bool autoscroll=false;
-                                for(int k=0; k<params.size();k++)
+                                for(int k=0; k<(signed)params.size();k++)
                                 {
                                     if(     (k>0)&&
-                                            ( (id<0) || (id>=eventdata.sets.size()) )
+                                            ( (id<0) || (id>=(signed)eventdata.sets.size()) )
                                        )//Append sections
                                     {
                                         if(id<0) goto badfile;//Missmatched section ID!
                                         int last=eventdata.sets.size()-1;
-                                        while(id>=eventdata.sets.size())
+                                        while(id>=(signed)eventdata.sets.size())
                                         {
                                             LevelEvent_Sets set;
                                             set.id=last;
@@ -1476,14 +1477,14 @@ readLineAgain:
                                             last++;
                                         }
                                     }
-                                    PGESTRING &eLine=params[j];
+                                    PGESTRING &eLine=params[k];
                                     switch(k)
                                     {
                                     //id=section id
                                     case 0:
                                         if(SMBX64::uInt(eLine))
                                             goto badfile;
-                                        id=toInt(eLine);
+                                        id=toInt(eLine)-1;
                                         break;
                                     //stype=[0=don't change][1=default][2=custom]
                                     case 1:
@@ -1543,7 +1544,7 @@ readLineAgain:
                                                 eventdata.sets[id].position_bottom=0;
                                             else
                                                 eventdata.sets[id].position_bottom=(long)round(toFloat(eventdata.sets[id].expression_pos_h))+
-                                                                                    eventdata.sets[id].position_bottom;
+                                                                                    eventdata.sets[id].position_top;
                                         } else {
                                             eventdata.sets[id].position_bottom = 0;
                                         }
@@ -1590,33 +1591,176 @@ readLineAgain:
                                     }
                                 }
                             }
+                            //BACKGROUNDS
+                            if(j<(signed)ev_bgs.size())
+                            {
+                                PGESTRINGList params;
+                                SplitCSVStr(params, ev_bgs[j]);
+                                //eb=id,btype,backgroundid
+                                int id = -1;
+                                bool customBg=false;
+                                for(int k=0; k<(signed)params.size();k++)
+                                {
+                                    if(     (k>0)&&
+                                            ( (id<0) || (id>=(signed)eventdata.sets.size()) )
+                                       )//Append sections
+                                    {
+                                        if(id<0) goto badfile;//Missmatched section ID!
+                                        int last=eventdata.sets.size()-1;
+                                        while(id>=(signed)eventdata.sets.size())
+                                        {
+                                            LevelEvent_Sets set;
+                                            set.id=last;
+                                            eventdata.sets.push_back(set);
+                                            last++;
+                                        }
+                                    }
+
+                                    PGESTRING &eLine=params[k];
+                                    switch(k)
+                                    {
+                                    //id=section id
+                                    case 0:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                        id=toInt(eLine)-1;
+                                        break;
+                                    //btype=[0=don't change][1=default][2=custom]
+                                    case 1:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                            switch(toInt(eLine))
+                                            {
+                                                case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing;
+                                                case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 2: customBg=true;
+                                            }
+                                        break;
+                                    //backgroundid=[when btype=2]custom background id
+                                    case 2:
+                                        if(customBg)
+                                        {
+                                            if(SMBX64::sFloat(eLine))
+                                                goto badfile;
+                                            eventdata.sets[id].background_id=(long)round(toFloat(eLine));
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+
+                            //em=id,mtype,musicid,customfile
+                            //            id=section id
+                            //mtype=[0=don't change][1=default][2=custom]
+                            //musicid=[when mtype=2]custom music id
+                            //customfile=[when mtype=3]custom music file name[***urlencode!***]
+                            //MUSICS
+                            if(j<(signed)ev_musics.size())
+                            {
+                                PGESTRINGList params;
+                                SplitCSVStr(params, ev_musics[j]);
+                                //em=id,mtype,musicid,customfile
+                                int id = -1;
+                                bool customMusics=false;
+                                for(int k=0; k<(signed)params.size();k++)
+                                {
+                                    if(     (k>0)&&
+                                            ( (id<0) || (id>=(signed)eventdata.sets.size()) )
+                                       )//Append sections
+                                    {
+                                        if(id<0) goto badfile;//Missmatched section ID!
+                                        int last=eventdata.sets.size()-1;
+                                        while(id>=(signed)eventdata.sets.size())
+                                        {
+                                            LevelEvent_Sets set;
+                                            set.id=last;
+                                            eventdata.sets.push_back(set);
+                                            last++;
+                                        }
+                                    }
+
+                                    PGESTRING &eLine=params[k];
+                                    switch(k)
+                                    {
+                                    //id=section id
+                                    case 0:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                        id=toInt(eLine)-1;
+                                        break;
+                                    //mtype=[0=don't change][1=default][2=custom]
+                                    case 1:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                            switch(toInt(eLine))
+                                            {
+                                                case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing;
+                                                case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 2:
+                                                default: customMusics=true;
+                                            }
+                                        break;
+                                    //musicid=[when mtype=2]custom music id
+                                    case 2:
+                                        if(customMusics)
+                                        {
+                                            if(SMBX64::sFloat(eLine))
+                                                goto badfile;
+                                            eventdata.sets[id].music_id=(long)round(toFloat(eLine));
+                                        }
+                                        break;
+                                    case 3:
+                                        if(customMusics)
+                                        {
+                                            eventdata.sets[id].music_file = PGE_URLDEC(eLine);
+                                            if(eventdata.sets[id].music_file=="0")
+                                                eventdata.sets[id].music_file.clear();
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
                         }
-                            //        eb=id,btype,backgroundid
-                            //            id=section id
-                            //            btype=[0=don't change][1=default][2=custom]
-                            //            backgroundid=[when btype=2]custom background id
-
-
-                            //        em=id,mtype,musicid,customfile
-                            //            id=section id
-                            //            mtype=[0=don't change][1=default][2=custom]
-                            //            musicid=[when mtype=2]custom music id
-                            //            customfile=[when mtype=3]custom music file name[***urlencode!***]
                     } break;
                 //eef=sound/endgame/ce1/ce2...cen
                 case 8:
                     {
-                    //    sound=play sound number
+
                     //    endgame=[0=none][1=bowser defeat]
                     //    ce(n)=id,x,y,sx,sy,grv,fsp,life
-                    //        id=effect id
-                    //        x=effect position x[***urlencode!***][syntax]
-                    //        y=effect position y[***urlencode!***][syntax]
-                    //        sx=effect horizontal speed[***urlencode!***][syntax]
-                    //        sy=effect vertical speed[***urlencode!***][syntax]
-                    //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
-                    //        fsp=frame speed of effect generated
-                    //        life=effect existed over this time will be destroyed.
+
+                    PGESTRINGList Effects;
+                    SMBX65_SplitSubLine(Effects, cLine);
+                    for(int j=0; j<(signed)Effects.size(); j++)
+                        {
+                            PGESTRING &dLine=Effects[j];
+                            switch(j)
+                            {
+                                //sound=play sound number
+                                case 0:
+                                    if(SMBX64::uInt(dLine))
+                                        goto badfile;
+                                    eventdata.sound_id = toInt(dLine);
+                                break;
+                                //    endgame=[0=none][1=bowser defeat]
+                                case 1:
+                                    if(SMBX64::uInt(dLine))
+                                        goto badfile;
+                                    eventdata.end_game = toInt(dLine);
+                                break;
+                                default:
+                                //ce(n)=id,x,y,sx,sy,grv,fsp,life
+                                //        id=effect id
+                                //        x=effect position x[***urlencode!***][syntax]
+                                //        y=effect position y[***urlencode!***][syntax]
+                                //        sx=effect horizontal speed[***urlencode!***][syntax]
+                                //        sy=effect vertical speed[***urlencode!***][syntax]
+                                //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
+                                //        fsp=frame speed of effect generated
+                                //        life=effect existed over this time will be destroyed.
+                                break;
+                            }
+                        }
                     } break;
                 //ecn=cn1/cn2...cnn
                 case 9:
@@ -1712,7 +1856,7 @@ readLineAgain:
         }
 
         else
-        if(currentLine[0]=="Su") //next line: scripts (saved as unicode)
+        if(currentLine[0]=="Su") //next line: scripts (saved as ASCII)
         {
             //Su|name|scriptu
             scriptdata = CreateLvlScript("doScript", LevelScript::LANG_TEASCRIPT);
@@ -1726,10 +1870,9 @@ readLineAgain:
                     {
                         scriptdata.name=PGE_URLDEC(cLine);
                     } break;
-                //scriptu=script[***base64encode!***][unicode]
+                //scriptu=script[***base64encode!***][ASCII]
                 case 2:
                     {
-                        //scriptdata.scrupt=PGE_BASE64DEC_W(cLine);//for STD-based version need to convert string into UTF8!
                         scriptdata.script=PGE_BASE64DEC_A(cLine);
                     } break;
                 }
