@@ -219,6 +219,7 @@ next line: events
 		emusic=em1:em2...emn
 			es=id,x,y,w,h,auto,sx,sy
 				id=section id
+				stype=[0=don't change][1=default][2=custom]
 				x=left x coordinates for section [id][***urlencode!***][syntax]
 				y=top y coordinates for section [id][***urlencode!***][syntax]
 				w=width for section [id][***urlencode!***][syntax]
