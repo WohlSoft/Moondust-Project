@@ -3,15 +3,13 @@ Editor
 * New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 - Add re-configurable hot-keys
+- Speed-up render of editing scene with forcing of RTree usage with escaping usage of QGraphicsScene's update() function!
 
 Engine
 - Replace QDialog-based config pack selection box with the own-drawn scene in the SDL Window
 - Make global "loaderCallback" function pointer to allow processing of level/world loader screen from side
   without making of separated threads (which is not supported with single OpenGL context while texture loadings are in process)
 - Exclamation sign sprite over talkable NPC's
-+ Split sense of "scenery" argument to "scenery" and "shared-animation"
-+ Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
-+ Question box
 - Fix a bug causes missing of custom lua-scripts declared in the custom npc.txt file
 
 Engine: Lua
@@ -37,10 +35,12 @@ PGE Manager
 
 Common
 - Reorganize PGE File Library to use classes with inhereting and polymorphism
+- World map layers and events system. Make Action-styled events system NOW!
+- Action-styled events for level subsystem
+- Completed Read/Write implementation of SMBX-38A file formats support
 
 SDL Mixer X
 - Reorganize SDL2_Mixer_ext into C++, build classes to reduce code size
-+ Resolve 44100 hz shit with adding separated resampling code
 
 Completed works
 ============================================================
@@ -63,6 +63,9 @@ Engine
 
 Engine: New level physics
 + R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
++ Split sense of "scenery" argument to "scenery" and "shared-animation"
++ Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
++ Question box
 
 GIFs2PNG
 + Use editor's unmasking code insead of alphachannel
@@ -72,3 +75,7 @@ GIFs2PNG
 
 Common
 + Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)
+
+SDL Mixer X
++ Resolve 44100 hz shit with adding separated resampling code
+
