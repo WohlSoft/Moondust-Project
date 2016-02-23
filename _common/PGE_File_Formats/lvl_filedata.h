@@ -392,6 +392,10 @@ struct LevelDoor
     bool hide_entering_scene;
     //! Allows player to move through this warp carried NPC's to another level
     bool allownpc_interlevel;
+    //! Required special state of playable character allowed to enter this warp
+    bool special_state_required;
+    //! Length of entrance/exit zone: How wide will be entrance/exit point
+    unsigned int length;
     //! Trigger event on enter
     PGESTRING event_enter;
 
@@ -482,10 +486,23 @@ struct LevelLayer
  */
 struct LevelEvent_Sets
 {
+
+    LevelEvent_Sets();
+    enum SetActions{
+        LESet_Nothing=-1,
+        LESet_ResetDefault=-2,
+    };
+
+    //!ID of section
+    long id;
+
     //! Set new Music ID in this section (-1 - do nothing, -2 - reset to defaint, >=0 - set music ID)
     long music_id;
+    //! Set new Custom Music File path
+    PGESTRING music_file;
     //! Set new Background ID in this section (-1 - do nothing, -2 - reset to defaint, >=0 - set background ID)
     long background_id;
+
     //! Change section borders if not (-1 - do nothing, -2 set default, any other values - set X position of left section boundary)
     long position_left;
     //! Change Y position of top section boundary
@@ -494,6 +511,57 @@ struct LevelEvent_Sets
     long position_bottom;
     //! Change X position of right section boundary
     long position_right;
+
+    //! Ariphmetical expression calculates position X
+    PGESTRING expression_pos_x;
+    //! Ariphmetical expression calculates position Y
+    PGESTRING expression_pos_y;
+    //! Ariphmetical expression calculates width of section
+    PGESTRING expression_pos_w;
+    //! Ariphmetical expression calculates height of section
+    PGESTRING expression_pos_h;
+
+    //! Enable autoscroll for this section
+    bool  autoscrol;
+    //! X speed of autoscrool
+    float autoscrol_x;
+    //! Y speed of autoscrool
+    float autoscrol_y;
+
+    //! Ariphmetical expression calculates autoscrool X
+    PGESTRING expression_autoscrool_x;
+    //! Ariphmetical expression calculates autoscrool y
+    PGESTRING expression_autoscrool_y;
+};
+
+/*!
+ * \brief Movable layer configuration
+ */
+struct LevelEvent_MoveLayer
+{
+    LevelEvent_MoveLayer();
+    //! Name of moving layer
+    PGESTRING name;
+    //! Speed X of layer
+    float speed_x;
+    //! Speed Y of layer
+    float speed_y;
+
+    //! Expression for X speed/coordinate
+    PGESTRING expression_x;
+
+    //! Expression for Y speed/coordinate
+    PGESTRING expression_y;
+
+    //! List of available layer motion ways
+    enum LayerMotionWay{
+        //! Set moving speed
+        LM_Speed=0,
+        //! Move to coordinate offset relative to initial position
+        LM_Coordinate=1
+    };
+    //! Way to do layer motion
+    int way;
 };
 
 /*!
@@ -568,7 +636,8 @@ struct LevelSMBX64Event
     int autostart;
     //! Conditional expression for event autostart
     PGESTRING autostart_condition;
-
+    //! Array of extra moving layers
+    PGELIST<LevelEvent_MoveLayer > moving_layers;
     //! Install layer motion settings for layer if is not empt
     PGESTRING movelayer;
     //! Set layer X motion in pixels per 1/65

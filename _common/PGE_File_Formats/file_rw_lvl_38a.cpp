@@ -1140,7 +1140,23 @@ readLineAgain:
                                         goto badfile;
                                     else doordata.allownpc_interlevel = (bool)toInt(dLine);
                                 } break;
+                         //Since SMBX-66-38A: {
+                            //mini=Mini-Only
+                            case 6:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.special_state_required = (bool)toInt(dLine);
+                                } break;
+                            //size=Warp Size(pixel)
+                            case 7:
+                                {
+                                    if( SMBX64::uInt(dLine) )
+                                        goto badfile;
+                                    else doordata.length = toInt(dLine);
+                                } break;
                             }
+                         // }//Since SMBX-66-38A
                         }
                     } break;
                 //lik=warp to level[***urlencode!***]
@@ -1312,8 +1328,51 @@ readLineAgain:
                     {
                     //    elm(n)=layername,horizontal syntax,vertical syntax,way
                     //    layername=layer name for movement[***urlencode!***]
-                    //    horizontal syntax,vertical syntax[***urlencode!***][syntax]
+                    //    horizontal syntax, vertical syntax[***urlencode!***][syntax]
                     //    way=[0=by speed][1=by Coordinate]
+                        PGESTRINGList EvMvLayers;
+                        SMBX65_SplitSubLine(EvMvLayers, cLine);
+                        for(int j=0; j<(signed)EvMvLayers.size(); j++)
+                            {
+                                LevelEvent_MoveLayer ml;
+                                PGESTRING &dLine=EvMvLayers[j];
+
+                                PGESTRINGList movelayers;
+                                SplitCSVStr(movelayers, dLine);
+                                for(int k=0; k<(signed)movelayers.size(); k++)
+                                {
+                                    PGESTRING &eLine=movelayers[k];
+                                    switch(k)
+                                    {
+                                        case 0:
+                                            ml.name=PGE_URLDEC(eLine);
+                                            eventdata.movelayer=ml.name;
+                                        break;
+                                        case 1:
+                                            ml.expression_x=PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(ml.expression_x))
+                                                ml.speed_x=0.0f;
+                                            else
+                                                ml.speed_x=toFloat(ml.expression_x);
+                                            eventdata.layer_speed_x=ml.speed_x;
+                                        break;
+                                        case 2:
+                                            ml.expression_y=PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(ml.expression_y))
+                                                ml.speed_y=0.0f;
+                                            else
+                                                ml.speed_y=toFloat(ml.expression_y);
+                                            eventdata.layer_speed_y=ml.speed_y;
+                                        break;
+                                        case 3:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            ml.way=toInt(eLine);
+                                        break;
+                                    }
+                                    eventdata.moving_layers.push_back(ml);
+                                }
+                            }
                     } break;
                     //1,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0, 1
                 //epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
@@ -1359,24 +1418,190 @@ readLineAgain:
                     //    esection=es1:es2...esn
                     //    ebackground=eb1:eb2...ebn
                     //    emusic=em1:em2...emn
-                    //        es=id,x,y,w,h,auto,sx,sy
-                    //            id=section id
-                    //            x=left x coordinates for section [id][***urlencode!***][syntax]
-                    //            y=top y coordinates for section [id][***urlencode!***][syntax]
-                    //            w=width for section [id][***urlencode!***][syntax]
-                    //            h=height for section [id][***urlencode!***][syntax]
-                    //            auto=enable autoscroll controls[0=false !0=true]
-                    //            sx=move screen horizontal syntax[***urlencode!***][syntax]
-                    //            sy=move screen vertical syntax[***urlencode!***][syntax]
-                    //        eb=id,btype,backgroundid
-                    //            id=section id
-                    //            btype=[0=don't change][1=default][2=custom]
-                    //            backgroundid=[when btype=2]custom background id
-                    //        em=id,mtype,musicid,customfile
-                    //            id=section id
-                    //            mtype=[0=don't change][1=default][2=custom]
-                    //            musicid=[when mtype=2]custom music id
-                    //            customfile=[when mtype=3]custom music file name[***urlencode!***]
+                        PGESTRINGList EvSets;
+                        SMBX65_SplitSubLine(EvSets, cLine);
+
+                        PGESTRINGList ev_sections;
+                        PGESTRINGList ev_bgs;
+                        PGESTRINGList ev_musics;
+                        //Collect entries
+                        for(int j=0; j<(signed)EvSets.size(); j++)
+                        {
+                            PGESTRING &dLine=EvSets[j];
+                            switch(j)
+                            {
+                            case 0: SMBX65_SplitLine(ev_sections, dLine, ':'); break;
+                            case 1: SMBX65_SplitLine(ev_bgs, dLine, ':'); break;
+                            case 2: SMBX65_SplitLine(ev_musics, dLine, ':'); break;
+                            }
+                        }
+                        //fill entries
+                        eventdata.sets.clear();
+                        for(int q=0;q<FileData.sections.size(); q++)
+                        {
+                            LevelEvent_Sets set;
+                            set.id=q;
+                            eventdata.sets.push_back(set);
+                        }
+
+                        int evSetsSize = ev_sections.size();
+                        if(evSetsSize<(signed)ev_bgs.size())
+                            evSetsSize=ev_bgs.size();
+                        if(evSetsSize<(signed)ev_musics.size())
+                            evSetsSize=ev_musics.size();
+
+                        for(int j=0; j<evSetsSize; j++)
+                        {
+                            if(j<ev_sections.size())
+                            {
+                                PGESTRINGList params;
+                                SplitCSVStr(params, ev_sections[j]);
+                                //        es=id,stype,x,y,w,h,auto,sx,sy
+                                int id = -1;
+                                bool customSizes=false;
+                                bool autoscroll=false;
+                                for(int k=0; k<params.size();k++)
+                                {
+                                    if(     (k>0)&&
+                                            ( (id<0) || (id>=eventdata.sets.size()) )
+                                       )//Append sections
+                                    {
+                                        if(id<0) goto badfile;//Missmatched section ID!
+                                        int last=eventdata.sets.size()-1;
+                                        while(id>=eventdata.sets.size())
+                                        {
+                                            LevelEvent_Sets set;
+                                            set.id=last;
+                                            eventdata.sets.push_back(set);
+                                            last++;
+                                        }
+                                    }
+                                    PGESTRING &eLine=params[j];
+                                    switch(k)
+                                    {
+                                    //id=section id
+                                    case 0:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                        id=toInt(eLine);
+                                        break;
+                                    //stype=[0=don't change][1=default][2=custom]
+                                    case 1:
+                                        if(SMBX64::uInt(eLine))
+                                            goto badfile;
+                                            switch(toInt(eLine))
+                                            {
+                                                case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing;
+                                                case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 2: customSizes=true;
+                                            }
+                                        break;
+                                    //x=left x coordinates for section [id][***urlencode!***][syntax]
+                                    case 2:
+                                        if(customSizes)
+                                        {
+                                            eventdata.sets[id].expression_pos_x = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_pos_x))
+                                                eventdata.sets[id].position_left=0;
+                                            else
+                                                eventdata.sets[id].position_left=(long)round(toFloat(eventdata.sets[id].expression_pos_x));
+                                        }
+                                        break;
+                                    //y=top y coordinates for section [id][***urlencode!***][syntax]
+                                    case 3:
+                                        if(customSizes)
+                                        {
+                                            eventdata.sets[id].expression_pos_y = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_pos_y))
+                                                eventdata.sets[id].position_top=0;
+                                            else
+                                                eventdata.sets[id].position_top=(long)round(toFloat(eventdata.sets[id].expression_pos_y));
+                                        } else {
+                                            eventdata.sets[id].position_top = 0;
+                                        }
+                                        break;
+                                    //w=width for section [id][***urlencode!***][syntax]
+                                    case 4:
+                                        if(customSizes)
+                                        {
+                                            eventdata.sets[id].expression_pos_w = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_pos_w))
+                                                eventdata.sets[id].position_right=0;
+                                            else
+                                                eventdata.sets[id].position_right=(long)round(toFloat(eventdata.sets[id].expression_pos_w))+
+                                                                                   eventdata.sets[id].position_left;
+                                        } else {
+                                            eventdata.sets[id].position_right = 0;
+                                        }
+                                        break;
+                                    //h=height for section [id][***urlencode!***][syntax]
+                                    case 5:
+                                        if(customSizes)
+                                        {
+                                            eventdata.sets[id].expression_pos_h = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_pos_h))
+                                                eventdata.sets[id].position_bottom=0;
+                                            else
+                                                eventdata.sets[id].position_bottom=(long)round(toFloat(eventdata.sets[id].expression_pos_h))+
+                                                                                    eventdata.sets[id].position_bottom;
+                                        } else {
+                                            eventdata.sets[id].position_bottom = 0;
+                                        }
+                                        break;
+                                    //auto=enable autoscroll controls[0=false !0=true]
+                                    case 6:
+                                        autoscroll = (eLine!="0");
+                                        eventdata.sets[id].autoscrol = autoscroll;
+                                        break;
+                                    //sx=move screen horizontal syntax[***urlencode!***][syntax]
+                                    case 7:
+                                        if(autoscroll)
+                                        {
+                                            eventdata.sets[id].expression_autoscrool_x = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_autoscrool_x))
+                                                eventdata.sets[id].autoscrol_x=0.f;
+                                            else
+                                                eventdata.sets[id].autoscrol_x=toFloat(eventdata.sets[id].expression_autoscrool_x);
+                                            eventdata.scroll_section=id;
+                                            eventdata.move_camera_x = eventdata.sets[id].autoscrol_x;
+                                        } else {
+                                            eventdata.sets[id].autoscrol_x = 0.f;
+                                            eventdata.scroll_section = id;
+                                            eventdata.move_camera_x = 0.f;
+                                        }
+                                        break;
+                                    //sy=move screen vertical syntax[***urlencode!***][syntax]
+                                    case 8:
+                                        if(autoscroll)
+                                        {
+                                            eventdata.sets[id].expression_autoscrool_y = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(eventdata.sets[id].expression_autoscrool_y))
+                                                eventdata.sets[id].autoscrol_y=0.f;
+                                            else
+                                                eventdata.sets[id].autoscrol_y=toFloat(eventdata.sets[id].expression_autoscrool_y);
+                                            eventdata.scroll_section=id;
+                                            eventdata.move_camera_y = eventdata.sets[id].autoscrol_y;
+                                        } else {
+                                            eventdata.sets[id].autoscrol_y = 0.f;
+                                            eventdata.scroll_section = id;
+                                            eventdata.move_camera_y = 0.f;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                            //        eb=id,btype,backgroundid
+                            //            id=section id
+                            //            btype=[0=don't change][1=default][2=custom]
+                            //            backgroundid=[when btype=2]custom background id
+
+
+                            //        em=id,mtype,musicid,customfile
+                            //            id=section id
+                            //            mtype=[0=don't change][1=default][2=custom]
+                            //            musicid=[when mtype=2]custom music id
+                            //            customfile=[when mtype=3]custom music file name[***urlencode!***]
                     } break;
                 //eef=sound/endgame/ce1/ce2...cen
                 case 8:

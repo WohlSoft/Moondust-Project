@@ -274,6 +274,8 @@ LevelDoor  FileFormats::CreateLvlWarp()
     dummyDoor.need_a_bomb = false;
     dummyDoor.hide_entering_scene = false;
     dummyDoor.allownpc_interlevel = false;
+    dummyDoor.special_state_required = false;
+    dummyDoor.length = 32;
     dummyDoor.event_enter = "";
 
     dummyDoor.array_id = 0;
@@ -740,3 +742,27 @@ bool LevelSMBX64Event::ctrlKeyPressed()
            ctrl_drop||
            ctrl_start;
 }
+
+LevelEvent_Sets::LevelEvent_Sets()
+{
+    id            = 0;
+    music_id=       LESet_Nothing;
+    background_id=  LESet_Nothing;
+    position_left=  LESet_Nothing;
+    position_top=   LESet_Nothing;
+    position_bottom=LESet_Nothing;
+    position_right= LESet_Nothing;
+    autoscrol     = false;
+    autoscrol_x   = 0.f;
+    autoscrol_y   = 0.f;
+}
+
+LevelEvent_MoveLayer::LevelEvent_MoveLayer()
+{
+    name="";
+    speed_x=0.0f;
+    speed_y=0.0f;
+    way=LM_Speed;
+}
+
+
