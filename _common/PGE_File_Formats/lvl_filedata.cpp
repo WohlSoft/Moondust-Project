@@ -380,7 +380,7 @@ LevelSMBX64Event FileFormats::CreateLvlEvent()
     dummyEvent.move_camera_x=0.0;
     dummyEvent.move_camera_y=0.0;
     dummyEvent.scroll_section=0;
-
+    dummyEvent.trigger_api_id=0;
     dummyEvent.layers_hide.clear();
     dummyEvent.layers_show.clear();
     dummyEvent.layers_toggle.clear();
@@ -775,4 +775,23 @@ LevelEvent_SpawnEffect::LevelEvent_SpawnEffect()
     gravity=false;
     fps=-1;//Default FPS
     max_life_time=-1;//Default life time
+}
+
+LevelEvent_SpawnNPC::LevelEvent_SpawnNPC()
+{
+    id=0;
+    x=0;
+    y=0;
+    speed_x=0.0;
+    speed_y=0.0;
+    special=0;
+}
+
+LevelEvent_SetTimer::LevelEvent_SetTimer()
+{
+    enable=false;
+    count=0;
+    interval=1000.0f;
+    count_dir=DIR_REVERSE;
+    show=false;
 }

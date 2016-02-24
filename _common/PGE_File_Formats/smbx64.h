@@ -25,7 +25,9 @@
 
 #include "pge_file_lib_globs.h"
 
-//SMBX64 standard data
+/*!
+ * \brief SMBX64 Standard validation and raw data conversion functions
+ */
 #ifdef PGE_FILES_QT
 class SMBX64 : public QObject
 {
@@ -38,26 +40,110 @@ class SMBX64
 public:
     inline SMBX64() {}
 
-    // /////////////Validators///////////////
-    //returns TRUE on wrong data
-    static bool uInt(PGESTRING in); // UNSIGNED INT
-    static bool sInt(PGESTRING in); // SIGNED INT
-    static bool sFloat(PGESTRING &in); // SIGNED FLOAT
-    static bool qStr(PGESTRING in); // QUOTED STRING
-    static bool wBool(PGESTRING in); //Worded BOOL
-    static bool dBool(PGESTRING in); //Worded BOOL
+    /*********************Validations**********************/
+    /*!
+     * \brief Validate Unsigned Integer value
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool uInt(PGESTRING in);
+    /*!
+     * \brief Validate Signed Integer value
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool sInt(PGESTRING in);
+    /*!
+     * \brief Validate Floating Point value
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool sFloat(PGESTRING &in);
+    /*!
+     * \brief Validate quoted string value
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool qStr(PGESTRING in);
+    /*!
+     * \brief Validate CSV-boolean value (#TRUE# or #FALSE#)
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool wBool(PGESTRING in);
+    /*!
+     * \brief Validate digital boolean value (0 or 1)
+     * \param in raw value
+     * \return true if value is INVALID
+     */
+    static bool dBool(PGESTRING in);
 
-    //Convert from string to internal data
+    /*!
+     * \brief Converts CVS-bool raw string into boolean value
+     * \param in raw value
+     * \return boolean equivalent
+     */
     static bool wBoolR(PGESTRING in);
-    //Convert from SMBX64 string to internal
+
+    /******************RAW to Internal**********************/
+    /*!
+     * \brief Convert from SMBX64 string to internal with damage correction
+     * \param in raw value
+     * \return fixed string vale
+     */
     static PGESTRING StrToStr(PGESTRING in);
 
-    //SMBX64 parameter string generators
+    /******************Internal to RAW**********************/
+    /*!
+     * \brief Generate raw string from integer value
+     * \param input Source integer value
+     * \return ASCII encoded integer value
+     */
     static PGESTRING IntS(long input);
+
+    /*!
+     * \brief Generate raw CVS-bool string from boolean value
+     * \param input Source boolean value
+     * \return ASCII encoded CVS-bool value
+     */
     static PGESTRING BoolS(bool input);
+
+    /*!
+     * \brief Convert string into valid CVS string line
+     * \param input Source string
+     * \return Valid CVS string
+     */
     static PGESTRING qStrS(PGESTRING input);
-    static PGESTRING FloatS(float input);
+
+    /*!
+     * \brief Convert string into valid CVS string line (with line feeds keeping)
+     * \param input Source string
+     * \return Valid CVS string
+     */
     static PGESTRING qStrS_multiline(PGESTRING input);
+
+    /*!
+     * \brief Generate raw string from floating point value
+     * \param input Source floating point vale
+     * \return ASCII encoded floating point value
+     */
+    static PGESTRING FloatS(float input);
+
+
+    /******************Units converters**********************/
+    /*!
+     * \brief Convert 1/65 seconds into milliseconds
+     * \param t65 1/65 time value
+     * \return millisecond time equivalent
+     */
+    static double t65_to_ms(double t65);
+
+    /*!
+     * \brief Convert milliseconds into 1/65 seconds
+     * \param ms time in milliseconds
+     * \return 1/65 second time equivalent
+     */
+    static double ms_to_65(double ms);
 };
 
 

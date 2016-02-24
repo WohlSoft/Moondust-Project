@@ -1650,10 +1650,10 @@ readLineAgain:
                             }
 
                             //em=id,mtype,musicid,customfile
-                            //            id=section id
-                            //mtype=[0=don't change][1=default][2=custom]
-                            //musicid=[when mtype=2]custom music id
-                            //customfile=[when mtype=3]custom music file name[***urlencode!***]
+                            //  id=section id
+                            //  mtype=[0=don't change][1=default][2=custom]
+                            //  musicid=[when mtype=2]custom music id
+                            //  customfile=[when mtype=3]custom music file name[***urlencode!***]
                             //MUSICS
                             if(j<(signed)ev_musics.size())
                             {
@@ -1725,10 +1725,6 @@ readLineAgain:
                 //eef=sound/endgame/ce1/ce2...cen
                 case 8:
                     {
-
-                    //    endgame=[0=none][1=bowser defeat]
-                    //    ce(n)=id,x,y,sx,sy,grv,fsp,life
-
                     PGESTRINGList Effects;
                     SMBX65_SplitSubLine(Effects, cLine);
                     for(int j=0; j<(signed)Effects.size(); j++)
@@ -1749,15 +1745,72 @@ readLineAgain:
                                     eventdata.end_game = toInt(dLine);
                                 break;
                                 default:
-                                //ce(n)=id,x,y,sx,sy,grv,fsp,life
-                                //        id=effect id
-                                //        x=effect position x[***urlencode!***][syntax]
-                                //        y=effect position y[***urlencode!***][syntax]
-                                //        sx=effect horizontal speed[***urlencode!***][syntax]
-                                //        sy=effect vertical speed[***urlencode!***][syntax]
-                                //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
-                                //        fsp=frame speed of effect generated
-                                //        life=effect existed over this time will be destroyed.
+                                {
+                                    LevelEvent_SpawnEffect effect;
+                                    PGESTRINGList EffectsToSpawn;
+                                    SplitCSVStr(EffectsToSpawn, dLine);
+                                    for(int k=0; k<(signed)EffectsToSpawn.size();k++)
+                                    {
+                                        //ce(n)=id,x,y,sx,sy,grv,fsp,life
+                                        PGESTRING &eLine=EffectsToSpawn[k];
+                                        switch(k)
+                                        {
+                                        //        id=effect id
+                                        case 0:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            effect.id = toInt(eLine);
+                                            break;
+                                        //        x=effect position x[***urlencode!***][syntax]
+                                        case 1:
+                                            effect.expression_x = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(effect.expression_x))
+                                                effect.x=0;
+                                            else
+                                                effect.x=(long)toFloat(effect.expression_x);
+                                            break;
+                                        //        y=effect position y[***urlencode!***][syntax]
+                                        case 2:
+                                            effect.expression_y = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(effect.expression_y))
+                                                effect.y=0;
+                                            else
+                                                effect.y=(long)toFloat(effect.expression_y);
+                                            break;
+                                        //        sx=effect horizontal speed[***urlencode!***][syntax]
+                                        case 3:
+                                            effect.expression_sx = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(effect.expression_sx))
+                                                effect.speed_x=0.f;
+                                            else
+                                                effect.speed_x=toFloat(effect.expression_sx);
+                                            break;
+                                        //        sy=effect vertical speed[***urlencode!***][syntax]
+                                        case 4:
+                                            effect.expression_sy = PGE_URLDEC(eLine);
+                                            if(SMBX64::sFloat(effect.expression_sy))
+                                                effect.speed_y=0.f;
+                                            else
+                                                effect.speed_y=toFloat(effect.expression_sy);
+                                            break;
+                                        //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
+                                        case 5: effect.gravity = (eLine!="0"); break;
+                                        //        fsp=frame speed of effect generated
+                                        case 6:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            effect.fps = toInt(eLine);
+                                            break;
+                                        //        life=effect existed over this time will be destroyed.
+                                        case 7:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            effect.max_life_time = toInt(eLine);
+                                            break;
+                                        }
+                                    }
+                                    eventdata.spawn_effects.push_back(effect);
+                                }
                                 break;
                             }
                         }
@@ -1765,35 +1818,170 @@ readLineAgain:
                 //ecn=cn1/cn2...cnn
                 case 9:
                     {
-                    //    cn(n)=id,x,y,sx,sy,sp
-                    //        id=npc id
-                    //        x=npc position x[***urlencode!***][syntax]
-                    //        y=npc position y[***urlencode!***][syntax]
-                    //        sx=npc horizontal speed[***urlencode!***][syntax]
-                    //        sy=npc vertical speed[***urlencode!***][syntax]
-                    //        sp=advanced settings of generated npc
+                        PGESTRINGList SpawnNPCs;
+                        SMBX65_SplitSubLine(SpawnNPCs, cLine);
+                        //cn(n)=id,x,y,sx,sy,sp
+                        for(int j=0;j<(signed)SpawnNPCs.size(); j++)
+                        {
+                            LevelEvent_SpawnNPC spawnnpc;
+                            PGESTRING &dLine=SpawnNPCs[j];
+                            PGESTRINGList SpawnNPC;
+                            SplitCSVStr(SpawnNPC, dLine);
+                            for(int k=0;k<(signed)SpawnNPC.size(); k++)
+                            {
+                                PGESTRING &eLine=SpawnNPC[k];
+                                switch(k)
+                                {
+                                //id=npc id
+                                case 0:
+                                    if(SMBX64::uInt(eLine))
+                                        goto badfile;
+                                    spawnnpc.id=toInt(eLine);
+                                    break;
+                                //x=npc position x[***urlencode!***][syntax]
+                                case 1:
+                                    spawnnpc.expression_x = PGE_URLDEC(eLine);
+                                    if(SMBX64::sFloat(spawnnpc.expression_x))
+                                        spawnnpc.speed_x=0.f;
+                                    else
+                                        spawnnpc.speed_x=toFloat(spawnnpc.expression_x);
+                                    break;
+                                //y=npc position y[***urlencode!***][syntax]
+                                case 2:
+                                    spawnnpc.expression_y = PGE_URLDEC(eLine);
+                                    if(SMBX64::sFloat(spawnnpc.expression_y))
+                                        spawnnpc.speed_y=0.f;
+                                    else
+                                        spawnnpc.speed_y=toFloat(spawnnpc.expression_y);
+                                    break;
+                                //sx=npc horizontal speed[***urlencode!***][syntax]
+                                case 3:
+                                    spawnnpc.expression_sx = PGE_URLDEC(eLine);
+                                    if(SMBX64::sFloat(spawnnpc.expression_sx))
+                                        spawnnpc.speed_x=0.f;
+                                    else
+                                        spawnnpc.speed_x=toFloat(spawnnpc.expression_sx);
+                                    break;
+                                //sy=npc vertical speed[***urlencode!***][syntax]
+                                case 4:
+                                    spawnnpc.expression_sy = PGE_URLDEC(eLine);
+                                    if(SMBX64::sFloat(spawnnpc.expression_sy))
+                                        spawnnpc.speed_y=0.f;
+                                    else
+                                        spawnnpc.speed_y=toFloat(spawnnpc.expression_sy);
+                                    break;
+                                //sp=advanced settings of generated npc
+                                case 5:
+                                    if(SMBX64::sInt(eLine))
+                                        goto badfile;
+                                    spawnnpc.special=toInt(eLine);
+                                    break;
+                                }
+                            }
+                            eventdata.spawn_npc.push_back(spawnnpc);
+                        }
                     } break;
                 //evc=vc1/vc2...vcn
                 case 10:
                     {
-                    //    vc(n)=name,newvalue
-                    //        name=variable name[***urlencode!***]
-                    //        newvalue=new value[***urlencode!***][syntax]
+                        LevelEvent_UpdateVariable updVar;
+                        PGESTRINGList updVars;
+                        SMBX65_SplitSubLine(updVars, cLine);
+                        //    vc(n)=name,newvalue
+                        for(int j=0; j<(signed)updVars.size(); j++)
+                        {
+                            PGESTRING &dLine=updVars[j];
+                            switch(j)
+                            {
+                            //name=variable name[***urlencode!***]
+                            case 0:updVar.name=PGE_URLDEC(dLine); break;
+                            //newvalue=new value[***urlencode!***][syntax]
+                            case 1:updVar.newval=PGE_URLDEC(dLine); break;
+                            }
+                        }
+                        eventdata.update_variable.push_back(updVar);
                     } break;
                 //ene=nextevent/timer/apievent/scriptname
                 case 11:
                     {
-                    //    nextevent=name,delay
-                    //        name=trigger event name[***urlencode!***]
-                    //        delay=trigger delay[1 frame]
-                    //    timer=enable,count,interval,type,show
-                    //        enable=enable the game timer controlling[0=false !0=true]
-                    //        count=set the time left of the game timer
-                    //        interval=set the time count interval of the game timer
-                    //        type=to choose the way timer counts[0=counting down][1=counting up]
-                    //        show=to choose whether the game timer is showed in hud[0=false !0=true]
-                    //    apievent=the id of apievent
-                    //    scriptname=script name[***urlencode!***]
+                        PGESTRINGList extraProps;
+                        SMBX65_SplitSubLine(extraProps, cLine);
+                        for(int j=0; j<(signed)extraProps.size(); j++)
+                        {
+                            PGESTRING &dLine=extraProps[j];
+                            switch(j)
+                            {
+                            //nextevent=name,delay
+                            case 0:
+                                {
+                                    PGESTRINGList TriggerEvent;
+                                    SplitCSVStr(TriggerEvent, dLine);
+                                    for(int k=0; k<(signed)TriggerEvent.size(); k++)
+                                    {
+                                        PGESTRING &eLine=TriggerEvent[k];
+                                        switch(k)
+                                        {
+                                        //name=trigger event name[***urlencode!***]
+                                        case 0: eventdata.trigger=PGE_URLDEC(eLine); break;
+                                        //delay=trigger delay[1 frame]
+                                        case 1:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            //Convert 1/65 seconds into 1/10 seconds for SMBX-64 Standard
+                                            eventdata.trigger_timer = (long)round(SMBX64::t65_to_ms(toFloat(eLine))/100.0);
+                                            break;
+                                        }
+                                    }
+                                } break;
+                            //timer=enable,count,interval,type,show
+                            case 1:
+                                {
+                                    PGESTRINGList Timer;
+                                    SplitCSVStr(Timer, dLine);
+                                    for(int k=0; k<(signed)Timer.size(); k++)
+                                    {
+                                        PGESTRING &eLine=Timer[k];
+                                        switch(k)
+                                        {
+                                        //enable=enable the game timer controlling[0=false !0=true]
+                                        case 0: eventdata.timer_def.enable=(eLine!="0"); break;
+                                        //count=set the time left of the game timer
+                                        case 1:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            //Convert 1/65 seconds into milliseconds units
+                                            eventdata.timer_def.count = toInt(eLine);
+                                            break;
+                                        //interval=set the time count interval of the game timer
+                                        case 2:
+                                            if(SMBX64::sFloat(eLine))
+                                                goto badfile;
+                                            //Convert 1/65 seconds into milliseconds units
+                                            eventdata.timer_def.interval = SMBX64::t65_to_ms(toFloat(eLine));
+                                            break;
+                                        //type=to choose the way timer counts[0=counting down][1=counting up]
+                                        case 3:
+                                            if(SMBX64::uInt(eLine))
+                                                goto badfile;
+                                            eventdata.timer_def.count_dir = toInt(eLine);
+                                            break;
+                                        //show=to choose whether the game timer is showed in hud[0=false !0=true]
+                                        case 4:
+                                            eventdata.timer_def.show = (eLine!="0");
+                                            break;
+                                        }
+                                    }
+                                } break;
+                            //    apievent=the id of apievent
+                            case 2:
+                                if(SMBX64::uInt(dLine))
+                                    goto badfile;
+                                eventdata.trigger_api_id = toInt(dLine);
+                                break;
+                            //    scriptname=script name[***urlencode!***]
+                            case 3: eventdata.trigger_script = PGE_URLDEC(dLine); break;
+                            }
+                        }
                     } break;
                 }
             }

@@ -558,7 +558,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
             }
 
             if(ge(26)) { nextLine(); strVar(events.trigger, line); //Trigger
-                         nextLine(); UIntVar(events.trigger_timer, line);} //Start trigger event after x [sec*10]. Etc. 153,2 sec
+                         nextLine(); UIntVar(events.trigger_timer, line);} //Start trigger event after x [1/10 sec]. Etc. 153,2 sec
 
             if(ge(27)) { nextLine(); wBoolVar(events.nosmoke, line); }//Don't smoke tobacco, let's healthy! :D
 

@@ -564,15 +564,6 @@ struct LevelEvent_MoveLayer
     int way;
 };
 
-//    ce(n)=id,x,y,sx,sy,grv,fsp,life
-//        id=effect id
-//        x=effect position x[***urlencode!***][syntax]
-//        y=effect position y[***urlencode!***][syntax]
-//        sx=effect horizontal speed[***urlencode!***][syntax]
-//        sy=effect vertical speed[***urlencode!***][syntax]
-//        grv=to decide whether the effects are affected by gravity[0=false !0=true]
-//        fsp=frame speed of effect generated
-//        life=effect existed over this time will be destroyed.
 /*!
  * \brief Spawn effect task declaration
  */
@@ -597,12 +588,70 @@ struct LevelEvent_SpawnEffect
     PGESTRING expression_sx;
     //! Expression for Y speed
     PGESTRING expression_sy;
-    //! Spawn effect with gravity
+    //! Spawn effect with gravity (to decide whether the effects are affected by gravity)
     bool gravity;
     //! Frame speed of spawned effect
     int fps;
-    //! Life time of effect (1/65 seconds)
+    //! Life time of effect (1/65 seconds) (effect existed over this time will be destroyed.)
     int max_life_time;
+};
+
+/*!
+ * \brief Declaration of spawn NPC command
+ */
+struct LevelEvent_SpawnNPC
+{
+    LevelEvent_SpawnNPC();
+    //! Spawn NPC-ID
+    long id;
+    //! Spawn NPC at X position
+    long x;
+    //! Spawn NPC at Y position
+    long y;
+    //! Spawn NPC with initial keenetic speed X
+    float speed_x;
+    //! Spawn NPC with initial keenetic speed Y
+    float speed_y;
+    //! Expression for X position
+    PGESTRING expression_x;
+    //! Expression for Y position
+    PGESTRING expression_y;
+    //! Expression for X speed
+    PGESTRING expression_sx;
+    //! Expression for Y speed
+    PGESTRING expression_sy;
+    //! Additional special parameter: advanced settings of generated npc
+    long special;
+};
+
+/*!
+ * \brief Declaration of variable update command
+ */
+struct LevelEvent_UpdateVariable
+{
+    //! Variable name to update
+    PGESTRING name;
+    //! Variable value to update
+    PGESTRING newval;
+};
+
+struct LevelEvent_SetTimer
+{
+    LevelEvent_SetTimer();
+    //! Enable timer
+    bool  enable;
+    //! Time left (ticks)
+    long  count;
+    //! Lenght of every tick (miliseconds per every tick)
+    float interval;
+    enum CountDirection{
+        DIR_REVERSE=0,
+        DIR_FORWARD=1
+    };
+    //! Count direction
+    int count_dir;
+    //! Show timer
+    bool show;
 };
 
 /*!
@@ -678,9 +727,20 @@ struct LevelSMBX64Event
     //! Conditional expression for event autostart
     PGESTRING autostart_condition;
     //! Array of extra moving layers
-    PGELIST<LevelEvent_MoveLayer > moving_layers;
+    PGELIST<LevelEvent_MoveLayer >  moving_layers;
     //! Effects to spawn;
     PGELIST<LevelEvent_SpawnEffect> spawn_effects;
+    //! NPC's to spawn;
+    PGELIST<LevelEvent_SpawnNPC>    spawn_npc;
+    //! Variables to update;
+    PGELIST<LevelEvent_UpdateVariable> update_variable;
+    //! Timer definition
+    LevelEvent_SetTimer timer_def;
+    //! Trigger script by name
+    PGESTRING   trigger_script;
+    //! Trigger API function by ID (SMBX65-38A)
+    int         trigger_api_id;
+
     //! Install layer motion settings for layer if is not empt
     PGESTRING movelayer;
     //! Set layer X motion in pixels per 1/65

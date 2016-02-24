@@ -199,3 +199,16 @@ PGESTRING SMBX64::qStrS_multiline(PGESTRING input)
     input = PGE_RemSSTR(input, "\"");
     return PGESTRING("\"")+input+PGESTRING("\"\n");
 }
+
+
+
+
+double SMBX64::t65_to_ms(double t65)
+{
+    return t65 * (1000.0/65.0);
+}
+
+double SMBX64::ms_to_65(double ms)
+{
+    return ms * (65.0/1000.0);
+}
