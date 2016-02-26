@@ -58,7 +58,7 @@ android || macx: {
 }
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
-contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/liajit-2.0
+contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/luajit-2.0
 
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
@@ -94,7 +94,7 @@ contains(DEFINES, USE_LUA_JIT): {
     macx: {
         LIBS += -lluajit
     } else {
-        LIBS += -lluajit-5.1
+        LIBS += -lluajit-5.1 -ldl
     }
 }
 unix:{
