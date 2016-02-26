@@ -94,7 +94,8 @@ contains(DEFINES, USE_LUA_JIT): {
     macx: {
         LIBS += -lluajit
     } else {
-        LIBS += -lluajit-5.1 -ldl
+        LIBS += -lluajit-5.1
+        linux-g++: LIBS += -ldl
     }
 }
 unix:{
