@@ -1890,34 +1890,44 @@ Message limits: max line lenth is 27 characters</source>
         <translation>Закрыть на замок</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="131"/>
+        <source>Need a bomb</source>
+        <translation>Нужна бомба</translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="134"/>
+        <source>Required special state</source>
+        <translation>Требуется спец-состояние</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="140"/>
         <source>Copy preferences</source>
         <translation>Копировать свойства</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
         <source>Position: X, Y</source>
         <translation>Положение: X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Положение: X, Y, Ширина, Высота</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Положение: Лево, Верх, Право, Низ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="150"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="259"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="271"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="283"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="317"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="329"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="341"/>
         <source>Preferences has been copied: %1</source>
         <translation>Свойства скопированы: %1</translation>
     </message>
@@ -1930,7 +1940,7 @@ Message limits: max line lenth is 27 characters</source>
         <translation type="vanished">Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="147"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -2184,46 +2194,51 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
+        <source>Change included NPC...</source>
+        <translation>Изменить содержимое блока...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
         <source>Copy preferences</source>
         <translation>Копировать свойства</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="172"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
         <source>NPC-ID: %1</source>
         <translation>ID нИП: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
         <source>Position: X, Y</source>
         <translation>Положение: X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Положение: X, Y, Ширина, Высота</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="175"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Положение: Лево, Верх, Право, Низ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="238"/>
         <source>Margin of section</source>
         <translation>Поля секции</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="232"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="239"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation>Укажите величину поля вокруг секции,
 объекты которого также будут удалены (в пикселях)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="267"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="277"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="289"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="301"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="313"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="325"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="337"/>
         <source>Preferences has been copied: %1</source>
         <translation>Свойства скопированы: %1</translation>
     </message>
@@ -2257,7 +2272,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Превратить все %1 в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
@@ -2266,17 +2281,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="obsolete">Главный босс</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="188"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -3565,7 +3580,7 @@ or delete them first with &apos;Delete Section&apos; option.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="618"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="381"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="396"/>
         <source>Section</source>
         <translation>Секция</translation>
     </message>
@@ -3751,38 +3766,38 @@ or delete them first with &apos;Delete Section&apos; option.</source>
         <translation>Создать копию события</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="290"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="305"/>
         <source>[Silence]</source>
         <translation>[Тишина]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="397"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2017"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="412"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2046"/>
         <source>[none]</source>
         <translation>[нет]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1028"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1057"/>
         <source>New Event %1</source>
         <translation>Новое Событие %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1073"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1102"/>
         <source>Copyed Event %1</source>
         <translation>Копировано Событие %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1747"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1776"/>
         <source>Get section size</source>
         <translation>Получение размера секции</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1748"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1777"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>Пожалуйста, переключите текущую секцию на %1 для захвата данных для этого события</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2007"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2036"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Пожалуйста, введите сообщение
@@ -3825,10 +3840,10 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="210"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="234"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="258"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1149"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1214"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1345"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1376"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="716"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="740"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="961"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="992"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
         <translation>Не сбрасывать событие на &quot;нет&quot;</translation>
     </message>
@@ -3844,14 +3859,14 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="299"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1092"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="674"/>
         <source>Layer empty:</source>
         <translation>Слой пуст:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="346"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="597"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1401"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="866"/>
         <source>Layer:</source>
         <translation>Слой:</translation>
     </message>
@@ -3928,156 +3943,157 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>НИП</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="908"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1218"/>
         <source>Up</source>
         <translation>Вверх</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="968"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1278"/>
         <source>Down</source>
         <translation>Вниз</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1070"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="928"/>
         <source>Death:</source>
         <translation>Умер:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1048"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="780"/>
         <source>Talk:</source>
         <translation>Поговорить:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1011"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1328"/>
         <source>Activate:</source>
         <translation>Активирован:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1194"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="979"/>
         <source>Attach to:</source>
         <translation>Присоединить слой:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="659"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="790"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="504"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1100"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1345"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="515"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="683"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="878"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="509"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1188"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1369"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="520"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="690"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1376"/>
         <source>Random</source>
         <translation>Случайно</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="697"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="938"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="516"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1248"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1383"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="527"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="713"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1180"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="879"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1023"/>
         <source>Generator</source>
         <translation>Генератор</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="740"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1050"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="758"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1068"/>
         <source>Warp</source>
         <translation>Выползание</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="763"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1073"/>
         <source>Projectile</source>
         <translation>Снаряд</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="747"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1057"/>
         <source>Delay:</source>
         <translation>Задержка:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1099"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1430"/>
         <source>Contains of current NPC-Container</source>
         <translation>Содержимое конейнера НИП</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1318"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="703"/>
         <source>Auto-increment</source>
         <translation>Авто-инкремент</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1255"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="941"/>
         <source>Talk message:</source>
         <translation>Сообщение разговора:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1133"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="696"/>
         <source>Friendly</source>
         <translation>Дружественный</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1262"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="948"/>
         <source>Doesn&apos;t move</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1113"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="773"/>
         <source>Set as Boss</source>
         <translation>Сделать Боссом</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="253"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="261"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation>ID блока: %1, ID массива: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="299"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="371"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="499"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="307"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="379"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="510"/>
         <source>Position: [%1, %2]</source>
         <translation>Положение: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="309"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1058"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="317"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="840"/>
         <source>%1 coins</source>
         <translation>%1 монеток</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="310"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="598"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1059"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1778"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="318"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="548"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="841"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1304"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1744"/>
         <source>[empty]</source>
         <translation>[пусто]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="366"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="374"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation>ID Ф.Об.: %1, ID массива: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="421"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="429"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation>ID НИП: %1, ID массива: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="611"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1638"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="557"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1631"/>
         <source>[none]</source>
         <translation>[нет]</translation>
     </message>
@@ -5054,161 +5070,413 @@ Physical env. zones:	%6
 <context>
     <name>LvlWarpBox</name>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="35"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="39"/>
         <source>Warps and Doors</source>
         <translation>Проходы и Двери</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="60"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="782"/>
         <source>Main</source>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="115"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="883"/>
         <source>Layer:</source>
         <translation>Слой:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="174"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1174"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
         <translation>Без тр. средств</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="181"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1184"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
         <translation>Рраз. НИП</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="188"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1194"/>
         <source>Locked</source>
         <translation>Заперто</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="214"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="836"/>
         <source>Set Exit</source>
         <translation>Уст. Выход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="302"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="833"/>
+        <source>Place exit point or quickly jump to already placed</source>
+        <translation>Разместить выходную точку или быстро
+переместиться к уже размещённой</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="846"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1090"/>
+        <source>Point already placed</source>
+        <translation>Точка уже размещена</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="960"/>
+        <source>Defines a type of warp:
+0 - Instant, player will be teleported with zero of movement speed.
+1 - Pipe, directional warp entrance and exit.
+2 - Door, player can enter with up key.
+3 - Portal, player will be teleported with keeping movelent speed as-is.</source>
+        <translation>Определения типов прохода:
+0 - Мгновенный, игрок будет телепортирован с занулением скорости движения.
+1 - Труба, направленный вход и выход.
+2 - Дверь, игрок может войти с клавишей &apos;&apos;Вверх&quot;.
+3 - Портал, игрок будет телепортирован с сохранением скорости движения как есть.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="980"/>
         <source>0 - Instant</source>
         <translation>0 - Мгновенный</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="307"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="985"/>
         <source>1 - Pipe</source>
         <translation>1 - Труба</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="312"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="990"/>
         <source>2 - Door</source>
         <translation>2 - Дверь</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="320"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="995"/>
+        <source>3 - Portal</source>
+        <translation>3 - Портал</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1003"/>
+        <source>Message which will be shown
+if required number of stars is not collected</source>
+        <translation>Сообщение, которое будет показано
+если необходимое количество звёзд
+ещё не собрано</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1011"/>
+        <source>Need stars message</source>
+        <translation>Сообщ. о необх. звёздах</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1018"/>
         <source>Need stars</source>
         <translation>Нужно звёзд</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="327"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1031"/>
+        <source>Required number of a stars
+to enter this warp</source>
+        <translation>Необходимое число звёзд,
+чтобы войти в этот проход</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1042"/>
         <source>Warp type</source>
         <translation>Тип прохода</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="353"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1049"/>
+        <source>If this warp following to a level, number of existing
+and collected stars will not be shown.</source>
+        <translation>Если этот проход следует на другой уровень,
+количество присутствующих и уже собранных звёзд
+на целевом уровне показано не будет.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1053"/>
+        <source>Don&apos;t show stars number</source>
+        <translation>Не показывать кол-во звёзд</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1070"/>
+        <source>Place entrance point or quickly jump to already placed</source>
+        <translation>Разместить входную точку или быстро
+переместиться к уже размещённой</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1073"/>
         <source>Set Entrance</source>
         <translation>Уст. Вход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="387"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1124"/>
+        <source>On-Enter event:</source>
+        <translation>Событие на вход:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1131"/>
+        <source>Trigger event when player will enter into this warp</source>
+        <translation>Запустить событие, когда игрок войдёт в этот проход</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1168"/>
+        <source>Any mounted vehicles are will be removed
+when player will pass this warp.
+There are will be restored back when player
+finish level or lose it.</source>
+        <translation>Любые примонтированные транспортные
+средства будут удалены с игрока когда тот
+войдёт в этот проход.
+Они будут восстановлены обратно, когда игрок
+окончит уровень или проиграет.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1181"/>
+        <source>Player can pass warp together with carried NPC.</source>
+        <translation>Игрок сможет пройти через проход вместе с носимым нИП.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1191"/>
+        <source>Entrance closed with a lock. Need a key to open it.</source>
+        <translation>Вход закрыт на замок. Нужен ключ, чтобы открыть его.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1201"/>
+        <source>To be able enter into this warp, lock exlosion is needed.</source>
+        <translation>Чтобы войти в этот проход, нужно взорвать замок бомбой.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1204"/>
+        <source>Bomb needed</source>
+        <translation>Нужна бомба</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1211"/>
+        <source>Player with special state only can enter into this warp.
+Special state of playable character is defining by current configuration package settings.</source>
+        <translation>Вход разрешён игроку, который имеет специальное состояние.
+Специальное состояние определяется текущими настройками конфигурационного пакета.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1215"/>
+        <source>Sp. State only</source>
+        <translation>Только Спц-Сост</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1241"/>
+        <source>Allow entering from both sides of this warp.</source>
+        <translation>Разрешить проходитть через этот проход с обеих сторон.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1244"/>
+        <source>Two-way warp</source>
+        <translation>Двунаправл. проход</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1375"/>
+        <source>Cannon shoot exit</source>
+        <translation>Выход-пушка</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1381"/>
+        <source>Projectile speed:</source>
+        <translation>Скорость снаряда:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1388"/>
+        <source>How fast will fly player when it will be shooted.
+Unit is a pixels per 1/65 seconds.</source>
+        <translation>Как быстро будет лететь игрок в момент вылетета.
+Единица измерения - пиксели в 1/65 секунды.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1405"/>
+        <source>When player will exit from this warp, it will be shooted by defined direction</source>
+        <translation>Когда игрок выйдет из прохода, тот будет выброшен по определённому направлению</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1408"/>
+        <source>Cannon exit</source>
+        <translation>Выход-пушка</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="164"/>
         <source>Pipe direction</source>
         <translation>Направление трубы</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="414"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="191"/>
         <source>Entrance</source>
         <translation>Вход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="460"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="237"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="598"/>
         <source>Down</source>
         <translation>Вниз</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="490"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="710"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="267"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="487"/>
         <source>Left</source>
         <translation>Налево</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="520"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="762"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="297"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="539"/>
         <source>Right</source>
         <translation>Направо</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="569"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="680"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="346"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="457"/>
         <source>Up</source>
         <translation>Вверх</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="650"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="427"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="874"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="730"/>
         <source>Warp to World map</source>
         <translation>Перейти на карту мира в</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="883"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="739"/>
         <source>X:</source>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="893"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="746"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="761"/>
+        <source>Target coordinates of player on the world map
+when you exited from a level through this warp</source>
+        <translation>Целевые координаты игрока на карте мира
+когда вы выйдите из уровня через этот проход</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="754"/>
         <source>Y:</source>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="903"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="769"/>
+        <source>Browse world map for setting a target exit point</source>
+        <translation>Обзор карты мира для указания целевой выходной точки</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="772"/>
         <source>Set</source>
         <translation>Выбр</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="913"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="667"/>
         <source>Level door</source>
         <translation>Дверь уровня</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="934"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="688"/>
+        <source>Entering into this warp causes exiting of the level.
+If this flag enabled, possible to place entrance point only.</source>
+        <translation>Вход в этот проход завершает уровень.
+Если этот флаг включён, возможно разместить только одну входную точку.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="692"/>
         <source>Exit only</source>
         <translation>Только выход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="941"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="699"/>
+        <source>Disables any possibility to enter into this warp.
+Use this flag if you plan use it for level entrances only.
+If this flag is enabled, possible to place exit point only.</source>
+        <translation>Отключает все возможности войти через этот проход.
+Используйте этот флаг, если хотите использовать этот проход
+только в качестве входной точки в уровень.
+Если этот флаг включён, возможно размещение только одной выходной точки.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="704"/>
         <source>Enter only</source>
         <translation>Только вход</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="967"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1254"/>
         <source>Warp to other level</source>
         <translation>Пер. на уровень</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1005"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1275"/>
+        <source>If this field is not empty, player will exit this level and will start this level.</source>
+        <translation>Если это поле не пустое, игрок выйдет из уровня и начнёт указанный в этом поле уровень.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1282"/>
         <source>Level file:</source>
         <translation>Файл уровня:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="995"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1289"/>
+        <source>Declares Warp-ID of target level if value is not zero.
+Player will enter into target level through specific warp point.
+If value is zero, start level at pre-declared player start points.</source>
+        <translation>Определяет ID прохода на целевом уровне, если значение не равно нулю.
+Игрок войдёт на целевой уровень через указанную выходную точку.
+Если значение равно нулю, игрок начнёт с заранее предопредённой начальной точки.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1326"/>
+        <source>Browse for another level file</source>
+        <translation>Обзор других файлов уровней</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1339"/>
+        <source>Show blank screen instead of loading screen.
+In the SMBX Engine level loading screen showing
+a current playable character(s) and number of lives.</source>
+        <translation>Показать пустой экран вместо загрузочного экрана.
+В старом SMBX-движке загрузочный экран уровня показывает
+текущего игрового персонажа(ей) и остаток жизней.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1344"/>
+        <source>Hide level enter screen</source>
+        <translation>Скрыть экран входа</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1351"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
         <translation>Войти в Дв. №</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1361"/>
+        <source>Keep carried NPC when player entering
+to another level through this warp.</source>
+        <translation>Сохранить переносимого нИП, когда игрок входит
+на другой уровень через этот проход.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1365"/>
+        <source>Allow inter-level NPC</source>
+        <translation>Разрешить меж-уровн. нИП</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="103"/>
+        <source>Choise a warp entry to edit</source>
+        <translation>Выбрать запись прохода для редактирования</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="128"/>
+        <source>Create new warp entry.
+Every warp points pair requires a warp entry</source>
+        <translation>Создать новую запись прохода.
+Каждая пара точек прохода нуждается в наличии записи прохода</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="151"/>
+        <source>Remove current warp entry with all placed points.</source>
+        <translation>Удалить текущую запись прохда вместе со всеми размещёнными точками.</translation>
     </message>
     <message>
         <source>Level file</source>
@@ -5220,12 +5488,12 @@ Physical env. zones:	%6
         <translation type="vanished">Дверь №</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="893"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
         <source>World map files not found</source>
         <translation>Файлы карт мира не найдены</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="894"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5234,24 +5502,24 @@ File path: %1</source>
 Путь к файлу: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
         <source>Select world map file</source>
         <translation>Выбор файла карты мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Обнаружено больше чем одна карта мира.
 Пожалуйста, выберите нужную карту мира в списке:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="917"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="918"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
@@ -7889,7 +8157,7 @@ Configuration package loaded with errors.</source>
         <translation type="vanished">ID нИП: %1, ID массива: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="230"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="239"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="174"/>
@@ -9066,469 +9334,523 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../defines.h" line="159"/>
+        <location filename="../defines.h" line="169"/>
         <source>Invizible</source>
         <translation>Невидимый</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="160"/>
+        <location filename="../defines.h" line="170"/>
         <source>Slippery</source>
         <translation>Скользкий</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="161"/>
+        <location filename="../defines.h" line="171"/>
         <source>Z-Layer</source>
         <translation>Z-Cлой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="162"/>
+        <location filename="../defines.h" line="172"/>
         <source>Z-Offset</source>
         <translation>Смещение Z</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="163"/>
+        <location filename="../defines.h" line="173"/>
         <source>Friendly</source>
         <translation>Дружественный</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="164"/>
+        <location filename="../defines.h" line="174"/>
         <source>Boss</source>
         <translation>Босс</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="165"/>
+        <location filename="../defines.h" line="175"/>
         <source>Not Moveable</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="166"/>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="176"/>
+        <location filename="../defines.h" line="230"/>
         <source>Message</source>
         <translation>Сообщение</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="167"/>
+        <location filename="../defines.h" line="177"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="168"/>
+        <location filename="../defines.h" line="178"/>
         <source>Included NPC</source>
         <translation>Изменить содержимое блока</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="169"/>
+        <location filename="../defines.h" line="179"/>
         <source>Water Type</source>
         <translation>Тип среды</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="170"/>
+        <location filename="../defines.h" line="180"/>
         <source>Layer</source>
         <translation>Слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="171"/>
         <source>No Yoshi</source>
+        <translation type="vanished">Без транспортных средств</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="181"/>
+        <source>No Vehicles</source>
         <translation>Без транспортных средств</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="172"/>
+        <location filename="../defines.h" line="182"/>
+        <source>Two-way warp</source>
+        <translation>Двунаправленный проход</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="183"/>
         <source>Allow NPC</source>
         <translation>Рразрешить предметы</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="173"/>
+        <location filename="../defines.h" line="184"/>
+        <source>Allow NPC inter level</source>
+        <translation>Разрешить проносить нИП между уровней</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="185"/>
         <source>Locked</source>
         <translation>Заперто</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="174"/>
+        <location filename="../defines.h" line="186"/>
+        <source>Need a bomb</source>
+        <translation>Нужна бомба</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="187"/>
+        <source>Hide number of stars</source>
+        <translation>Скрыть количество звёзд</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="188"/>
+        <source>Enable cannon exit</source>
+        <translation>Включить выход-пушку</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="189"/>
+        <source>Special state required</source>
+        <translation>Необходимо специальное состояние</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="190"/>
+        <source>Hide level entering scene</source>
+        <translation>Скрыть экран входа на уровень</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="191"/>
         <source>Warp Type</source>
         <translation>Тип прохода</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="175"/>
+        <location filename="../defines.h" line="192"/>
         <source>Need Stars</source>
         <translation>Нужно звёзд</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="176"/>
+        <location filename="../defines.h" line="193"/>
+        <source>Need Stars message</source>
+        <translation>Сообщение о необходимых звёздах</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="194"/>
+        <source>Cannon exit projectile speed</source>
+        <translation>Скорость снаряда выхода-пушки</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="195"/>
         <source>Entrance Direction</source>
         <translation>Направление входа</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="177"/>
+        <location filename="../defines.h" line="196"/>
         <source>Exit Direction</source>
         <translation>Направление выхода</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="178"/>
+        <location filename="../defines.h" line="197"/>
         <source>Set Level Exit</source>
         <translation>Установить выход уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="179"/>
+        <location filename="../defines.h" line="198"/>
         <source>Set Level Entrance</source>
         <translation>Установить вход уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="199"/>
         <source>Level Warp To</source>
         <translation>Проход на другой уровень</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="200"/>
         <source>Activate Generator</source>
         <translation>Активация Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="201"/>
         <source>Generator Type</source>
         <translation>Тип Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="202"/>
         <source>Generator Direction</source>
         <translation>Направление Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="203"/>
         <source>Generator Time</source>
         <translation>Время Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="204"/>
         <source>Attach Layer</source>
         <translation>Присоединить слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="205"/>
         <source>Event Block Destroyed</source>
         <translation>Событие: Блок сломан</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="206"/>
         <source>Event Block Hited</source>
         <translation>Событие: Блок стукнут</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="207"/>
         <source>Event Layer Empty</source>
         <translation>Событие: Слой пуст</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="208"/>
         <source>Event NPC Activate</source>
         <translation>Событие: НИП Активизировался</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="209"/>
         <source>Event NPC Die</source>
         <translation>Событие: НИП Умер</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="210"/>
         <source>Event NPC Talk</source>
         <translation>Событие: Разговор с НИП</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="211"/>
+        <source>Event Warp Enter</source>
+        <translation>Событие на вход через проход</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="212"/>
         <source>NPC Special Data</source>
         <translation>Экстра-данные НИП</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="213"/>
         <source>Autostart</source>
         <translation>Автозапуск</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="214"/>
         <source>Layer Smoke Effect</source>
         <translation>Эффект дыма для слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="215"/>
         <source>Add Hide Layer</source>
         <translation>Добавить слой в список скрытия</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="216"/>
         <source>Remove Hide Layer</source>
         <translation>Удалить слой из списка скрытия</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="217"/>
         <source>Add Show Layer</source>
         <translation>Добавить слой в список проявление</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="218"/>
         <source>Remove Show Layer</source>
         <translation>Удалить слой из списка проявления</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="219"/>
         <source>Add Toggle Layer</source>
         <translation>Добавить слой в список переключения</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="220"/>
         <source>Remove Toggle Layer</source>
         <translation>Удалить слой из списка переключения</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="221"/>
         <source>Moving Layer</source>
         <translation>Движущийся слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="222"/>
         <source>Layer Speed Horizontal</source>
         <translation>Горизонтальная скорость слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="223"/>
         <source>Layer Speed Vertical</source>
         <translation>Вертикальная скорость слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="224"/>
         <source>Autoscroll Layer</source>
         <translation>Автопрокрутка секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="225"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Горизонтальная скорость автопрокрутки секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="226"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Вертикальная скорость автопрокрутки секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="227"/>
         <source>Section Size</source>
         <translation>Размер секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="228"/>
         <source>Section Music</source>
         <translation>Музыка секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="229"/>
         <source>Section Background</source>
         <translation>Фон секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="231"/>
         <source>Sound</source>
         <translation>Звук</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="232"/>
         <source>End Game</source>
         <translation>Завершение игры</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="233"/>
         <source>Up Key Activate</source>
         <translation>Клавиша &quot;Вверх&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="234"/>
         <source>Down Key Activate</source>
         <translation>Клавиша &quot;Вниз&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="235"/>
         <source>Left Key Activate</source>
         <translation>Клавиша &quot;Влево&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="236"/>
         <source>Right Key Activate</source>
         <translation>Клавиша &quot;Вправо&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="237"/>
         <source>Run Key Activate</source>
         <translation>Клавиша &quot;Бег&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="238"/>
         <source>Alt Run Key Activate</source>
         <translation>Клавиша &quot;Альт. Бег&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="239"/>
         <source>Jump Key Activate</source>
         <translation>Клавиша &quot;Прыжок&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="240"/>
         <source>Alt Jump Key Activate</source>
         <translation>Клавиша &quot;Альт.Прыжок&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="241"/>
         <source>Drop Key Activate</source>
         <translation>Клавиша &quot;Сбросить&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="242"/>
         <source>Start Key Activate</source>
         <translation>Клавиша &quot;Старт&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="243"/>
         <source>Trigger Activate</source>
         <translation>Триггер события</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="244"/>
         <source>Trigger Delay</source>
         <translation>Задержка триггера</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="245"/>
         <source>Is Warp</source>
         <translation>Соедининение левого-правого крёв</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="246"/>
         <source>No Back</source>
         <translation>Отключить возвращение на лево</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="247"/>
         <source>Off Screen Exit</source>
         <translation>Выход из уровня за кадр</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="228"/>
+        <location filename="../defines.h" line="248"/>
         <source>Underwater</source>
         <translation>Под водой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
+        <location filename="../defines.h" line="249"/>
         <source>Background Image</source>
         <translation>Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="230"/>
+        <location filename="../defines.h" line="250"/>
         <source>Music</source>
         <translation>Музыка</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="231"/>
+        <location filename="../defines.h" line="251"/>
         <source>Custom Music</source>
         <translation>Пользовательская музыка</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="232"/>
+        <location filename="../defines.h" line="252"/>
         <source>Level Name</source>
         <translation>Имя уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="233"/>
+        <location filename="../defines.h" line="253"/>
         <source>BGO Sorting Priority</source>
         <translation>Приоритет сортировки Фоновых Объектов</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="235"/>
-        <location filename="../defines.h" line="261"/>
+        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="281"/>
         <source>Unknown</source>
         <translation>Неизвестное</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="262"/>
         <source>Always Visible</source>
         <translation>Всегда Видим</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="263"/>
         <source>Big Path Background</source>
         <translation>Большой фоновый путь</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="264"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="265"/>
         <source>Door ID</source>
         <translation>ID Двери</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="266"/>
         <source>Game start point</source>
         <translation>Точка начала игры</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="267"/>
         <source>Goto X</source>
         <translation>Перейти к X</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="268"/>
         <source>Goto Y</source>
         <translation>Перейти к Y</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="269"/>
         <source>Hub styled world</source>
         <translation>Корридорный мир</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="270"/>
         <source>Intro Level</source>
         <translation>Входной уровень</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="271"/>
         <source>Level file</source>
         <translation>Файл уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="272"/>
         <source>Level title</source>
         <translation>Заголовок уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="273"/>
         <source>Path Background</source>
         <translation>Фоновый путь</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="254"/>
+        <location filename="../defines.h" line="274"/>
         <source>Exit at bottom</source>
         <translation>Выход снизу</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="275"/>
         <source>Exit at left</source>
         <translation>Выход слева</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="256"/>
+        <location filename="../defines.h" line="276"/>
         <source>Exit at right</source>
         <translation>Выход справа</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="257"/>
+        <location filename="../defines.h" line="277"/>
         <source>Exit at top</source>
         <translation>Выход сверху</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="258"/>
+        <location filename="../defines.h" line="278"/>
         <source>Restart after fail</source>
         <translation>Переиграть после провала</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="259"/>
+        <location filename="../defines.h" line="279"/>
         <source>Total stars</source>
         <translation>Всего звёзд</translation>
     </message>

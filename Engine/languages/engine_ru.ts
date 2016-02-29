@@ -448,7 +448,7 @@ Enter to: %2</source>
 которые будут удалены когда вы сохраните файл</translation>
     </message>
     <message>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="319"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="320"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Фатальная ошибка: Невозможно найти начальную секцию.

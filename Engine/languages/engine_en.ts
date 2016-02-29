@@ -444,7 +444,7 @@ Enter to: %2</translation>
  when you will save file</translation>
     </message>
     <message>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="319"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="320"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Fatal error: Impossible to find start section.
