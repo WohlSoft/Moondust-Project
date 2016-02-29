@@ -167,6 +167,13 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("NPC-%1").arg(m_data.id));
                                 ItemMenu.addSeparator();
 
+    QAction *chNPC = NULL;
+    if(m_localProps.container)
+    {
+        chNPC =                 ItemMenu.addAction(tr("Change included NPC..."));
+                                ItemMenu.addSeparator();
+    }
+
     /*************Copy Preferences*******************/
     QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
     QAction *copyItemID =       copyPreferences->addAction(tr("NPC-ID: %1").arg(m_data.id));
@@ -259,6 +266,35 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         delete npcList;
         if(!newData.npc.isEmpty())
             m_scene->addTransformHistory(newData, oldData);
+    }
+    else
+    if(selected==chNPC)
+    {
+        LevelData selData;
+        ItemSelectDialog * npcList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_NPC, 0,0,0,
+                                                          m_data.contents,
+                                                          0,0,0,0,0,MainWinConnect::pMainWin);
+        npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+        if(npcList->exec()==QDialog::Accepted)
+        {
+            //apply to all selected items.
+            int selected_npc=0;
+            if(npcList->npcID!=0){
+                selected_npc = npcList->npcID;
+            }
+
+            foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="NPC")
+                {
+                    selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
+                    ((ItemNPC *) SelItem)->setIncludedNPC(selected_npc);
+                }
+            }
+            m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
+        }
+        delete npcList;
     }
     else
     if(selected==copyItemID)
@@ -530,10 +566,13 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
         delete m_includedNPC;
         m_includedNPC = NULL;
     }
-    if(npcID==0)
+    if(npcID==0 || !m_localProps.container)
     {
-        if(!init) m_data.contents = 0;
-        if(!init) arrayApply();
+        if( !init && (m_data.contents != 0) )
+        {
+            m_data.contents = 0;
+            arrayApply();
+        }
         return;
     }
 
