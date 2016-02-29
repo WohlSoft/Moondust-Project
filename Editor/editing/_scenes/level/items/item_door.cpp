@@ -128,6 +128,12 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction * Locked =          ItemMenu.addAction(tr("Locked"));
         Locked->setCheckable(true);
         Locked->setChecked( m_data.locked );
+    QAction * BombNeed =        ItemMenu.addAction(tr("Need a bomb"));
+        BombNeed->setCheckable(true);
+        BombNeed->setChecked( m_data.need_a_bomb );
+    QAction * SpecialStReq =    ItemMenu.addAction(tr("Required special state"));
+        SpecialStReq->setCheckable(true);
+        SpecialStReq->setChecked( m_data.special_state_required );
 
     /*************Copy Preferences*******************/
     ItemMenu.addSeparator();
@@ -193,7 +199,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
+        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NOVEHICLE, QVariant(NoTransport->isChecked()));
         MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
     }
     else
@@ -246,6 +252,58 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             }
         }
         m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else
+    if(selected==BombNeed)
+    {
+        LevelData modDoors;
+        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        {
+            if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+                ((ItemDoor *) SelItem)->m_data.need_a_bomb=BombNeed->isChecked();
+                ((ItemDoor *) SelItem)->arrayApply();
+            }
+        }
+        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(BombNeed->isChecked()));
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else
+    if(selected==SpecialStReq)
+    {
+        LevelData modDoors;
+        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        {
+            if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+                ((ItemDoor *) SelItem)->m_data.special_state_required=SpecialStReq->isChecked();
+                ((ItemDoor *) SelItem)->arrayApply();
+            }
+        }
+        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(SpecialStReq->isChecked()));
         MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
     }
     else

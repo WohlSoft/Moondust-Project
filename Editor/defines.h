@@ -86,12 +86,21 @@ public:
         SETTING_DIRECTION,          //extraData: int [New Dir]
         SETTING_CHANGENPC,          //extraData: int [New NPC ID]
         SETTING_WATERTYPE,          //extraData: bool [IsWater = true, IsQuicksand = false]
-        SETTING_LAYER,            //extraData: String [Layer name]
-        SETTING_NOYOSHI,            //extraData: bool [Activated?]
+        SETTING_LAYER,              //extraData: String [Layer name]
+        SETTING_NOVEHICLE,          //extraData: bool [Activated?]
+        SETTING_TWOWAY,             //extraData: bool [Activated?]
         SETTING_ALLOWNPC,           //extraData: bool [Activated?]
+        SETTING_ALLOWNPC_IL,        //extraData: bool [Activated?]
         SETTING_LOCKED,             //extraData: bool [Activated?]
+        SETTING_NEED_A_BOMB,        //extraData: bool [Activated?]
+        SETTING_HIDE_STAR_NUMBER,   //extraData: bool [Activated?]
+        SETTING_ENABLE_CANNON,      //extraData: bool [Activated?]
+        SETTING_W_SPECIAL_STATE_REQUIRED,//extraData: bool [Activated?]
+        SETTING_HIDE_LEVEL_ENTER_SCENE,  //extraData: bool [Activated?]
         SETTING_WARPTYPE,           //extraData: QList<QVariant[int]> [Old warptype, New warptype]
         SETTING_NEEDASTAR,          //extraData: QList<QVariant[int]> [Old stars, New stars]
+        SETTING_NEEDASTAR_MSG,      //extraData: QList<QVariant[int]> [Old stars, New stars]
+        SETTING_CANNON_SPEED,       //extraData: QList<QVariant[double]> [Old stars, New stars]
         SETTING_ENTRDIR,            //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
         SETTING_EXITDIR,            //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
         SETTING_LEVELEXIT,          //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
@@ -108,6 +117,7 @@ public:
         SETTING_EV_ACTIVATE,        //extraData: String [new event]
         SETTING_EV_DEATH,           //extraData: String [new event]
         SETTING_EV_TALK,            //extraData: String [new event]
+        SETTING_EV_WARP_ENTER,      //extraData: String [new event]
         SETTING_SPECIAL_DATA,       //extraData: int [new type]
         SETTING_EV_AUTOSTART,       //extraData: bool [Activated?]
         SETTING_EV_SMOKE,           //extraData: bool [Activated?]
@@ -168,11 +178,20 @@ public:
         case SETTING_CHANGENPC: return QObject::tr("Included NPC");
         case SETTING_WATERTYPE: return QObject::tr("Water Type");
         case SETTING_LAYER: return QObject::tr("Layer");
-        case SETTING_NOYOSHI: return QObject::tr("No Yoshi");
+        case SETTING_NOVEHICLE: return QObject::tr("No Vehicles");
+        case SETTING_TWOWAY: return QObject::tr("Two-way warp");
         case SETTING_ALLOWNPC: return QObject::tr("Allow NPC");
+        case SETTING_ALLOWNPC_IL: return QObject::tr("Allow NPC inter level");
         case SETTING_LOCKED: return QObject::tr("Locked");
+        case SETTING_NEED_A_BOMB: return QObject::tr("Need a bomb");
+        case SETTING_HIDE_STAR_NUMBER: return QObject::tr("Hide number of stars");
+        case SETTING_ENABLE_CANNON: return QObject::tr("Enable cannon exit");
+        case SETTING_W_SPECIAL_STATE_REQUIRED: return QObject::tr("Special state required");
+        case SETTING_HIDE_LEVEL_ENTER_SCENE: return QObject::tr("Hide level entering scene");
         case SETTING_WARPTYPE: return QObject::tr("Warp Type");
         case SETTING_NEEDASTAR: return QObject::tr("Need Stars");
+        case SETTING_NEEDASTAR_MSG: return QObject::tr("Need Stars message");
+        case SETTING_CANNON_SPEED: return QObject::tr("Cannon exit projectile speed");
         case SETTING_ENTRDIR: return QObject::tr("Entrance Direction");
         case SETTING_EXITDIR: return QObject::tr("Exit Direction");
         case SETTING_LEVELEXIT: return QObject::tr("Set Level Exit");
@@ -189,6 +208,7 @@ public:
         case SETTING_EV_ACTIVATE: return QObject::tr("Event NPC Activate");
         case SETTING_EV_DEATH: return QObject::tr("Event NPC Die");
         case SETTING_EV_TALK: return QObject::tr("Event NPC Talk");
+        case SETTING_EV_WARP_ENTER: return QObject::tr("Event Warp Enter");
         case SETTING_SPECIAL_DATA: return QObject::tr("NPC Special Data");
         case SETTING_EV_AUTOSTART: return QObject::tr("Autostart");
         case SETTING_EV_SMOKE: return QObject::tr("Layer Smoke Effect");

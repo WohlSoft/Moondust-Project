@@ -279,6 +279,8 @@ void LVL_EventEngine::processTimers(float tickTime)
 
 void LVL_EventEngine::triggerEvent(QString event)
 {
+    if(event.isEmpty())
+        return;
     if(events.contains(event))
         workingEvents.push_back(events[event]);
 }

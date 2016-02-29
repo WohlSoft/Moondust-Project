@@ -20,6 +20,7 @@
 #include <editing/_scenes/level/items/item_bgo.h>
 #include <editing/_scenes/level/items/item_block.h>
 #include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/items/item_door.h>
 #include <editing/_scenes/level/items/item_water.h>
 #include <editing/_scenes/level/itemmsgbox.h>
 #include <audio/sdl_music_player.h>
@@ -27,6 +28,7 @@
 #include <tools/math/blocksperseconddialog.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_search_box.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -176,6 +178,7 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->hide();
     dock_LvlItemProps->LvlItemPropsLock=true;
     dock_LvlEvents->lockSetEventSettings=true;
+    dock_LvlWarpProps->lockWarpSetSettings=true;
 
     QComboBox * _ip_block_d = dock_LvlItemProps->cbox_event_block_dest();
     QComboBox * _ip_block_h = dock_LvlItemProps->cbox_event_block_hit();
@@ -197,6 +200,8 @@ void MainWindow::EventListsSync()
 
     QComboBox * _eb_trigger = dock_LvlEvents->cbox_event_trigger();
 
+    QComboBox * _w_ent = dock_LvlWarpProps->cbox_event_enter();
+
     QString curDestroyedBlock  = _sb_block_d->currentText();
     QString curHitedBlock      = _sb_block_h->currentText();
     QString curLayerEmptyBlock = _sb_block_l->currentText();
@@ -205,6 +210,8 @@ void MainWindow::EventListsSync()
     QString curDeathNpc = _sb_npc_d->currentText();
     QString curTalkNpc = _sb_npc_t->currentText();
     QString curEmptyLayerNpc = _sb_npc_el->currentText();
+
+    QString curEnterEventWarp = _w_ent->currentText();
 
     int WinType = activeChildWindow();
 
@@ -227,6 +234,8 @@ void MainWindow::EventListsSync()
     _sb_npc_t->clear();
     _sb_npc_el->clear();
 
+    _w_ent->clear();
+
     QString noEvent = tr("[None]");
     _ip_block_d->addItem(noEvent);
     _ip_block_h->addItem(noEvent);
@@ -242,6 +251,8 @@ void MainWindow::EventListsSync()
     _sb_npc_d->addItem(noEvent);
     _sb_npc_t->addItem(noEvent);
     _sb_npc_el->addItem(noEvent);
+
+    _w_ent->addItem(noEvent);
 
     if (WinType==1)
     {
@@ -265,6 +276,7 @@ void MainWindow::EventListsSync()
             _sb_npc_d->addItem(event.name);
             _sb_npc_t->addItem(event.name);
             _sb_npc_el->addItem(event.name);
+            _w_ent->addItem(event.name);
         }
     }
 
@@ -277,7 +289,10 @@ void MainWindow::EventListsSync()
     _sb_npc_t->setCurrentText(curTalkNpc);
     _sb_npc_el->setCurrentText(curEmptyLayerNpc);
 
+    _w_ent->setCurrentText(curEnterEventWarp);
+
     dock_LvlEvents->lockSetEventSettings=false;
+    dock_LvlWarpProps->lockWarpSetSettings=false;
 
     if(dock_LvlEvents->currentEventArrayID>0)
         dock_LvlEvents->setEventData(dock_LvlEvents->currentEventArrayID);
@@ -970,33 +985,47 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
-
-        if((*it)->data(0).toString()=="Block")
+        if((*it)->data(ITEM_IS_CURSOR).toString()=="CURSOR") continue; //skip cursor item
+        QString iType=(*it)->data(ITEM_TYPE).toString();
+        if(iType=="Block")
         {
             bool isMod=false;
-            if( ((ItemBlock *)(*it))->m_data.event_destroy ==  eventName)
-                {((ItemBlock *)(*it))->m_data.event_destroy = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->m_data.event_hit ==  eventName)
-                {((ItemBlock *)(*it))->m_data.event_hit = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->m_data.event_emptylayer ==  eventName)
-                {((ItemBlock *)(*it))->m_data.event_emptylayer = newEventName; isMod=true;}
-            if(isMod){ ((ItemBlock *)(*it))->arrayApply(); }
+            ItemBlock  *block=(ItemBlock  *)(*it);
+            if( block->m_data.event_destroy ==  eventName)
+                {block->m_data.event_destroy = newEventName; isMod=true;}
+            if( block->m_data.event_hit ==  eventName)
+                {block->m_data.event_hit = newEventName; isMod=true;}
+            if( block->m_data.event_emptylayer ==  eventName)
+                {block->m_data.event_emptylayer = newEventName; isMod=true;}
+            if(isMod){ block->arrayApply(); }
         }
         else
-        if((*it)->data(0).toString()=="NPC")
+        if(iType=="NPC")
         {
             bool isMod=false;
-            if( ((ItemNPC *)(*it))->m_data.event_activate ==  eventName)
-                {((ItemNPC *)(*it))->m_data.event_activate = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->m_data.event_die ==  eventName)
-                {((ItemNPC *)(*it))->m_data.event_die = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->m_data.event_talk ==  eventName)
-                {((ItemNPC *)(*it))->m_data.event_talk = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->m_data.event_emptylayer ==  eventName)
-                {((ItemNPC *)(*it))->m_data.event_emptylayer = newEventName; isMod=true;}
-            if(isMod) {((ItemNPC *)(*it))->arrayApply();}
+            ItemNPC *npc=(ItemNPC *)(*it);
+            if( npc->m_data.event_activate ==  eventName)
+                {npc->m_data.event_activate = newEventName; isMod=true;}
+            if( npc->m_data.event_die ==  eventName)
+                {npc->m_data.event_die = newEventName; isMod=true;}
+            if( npc->m_data.event_talk ==  eventName)
+                {npc->m_data.event_talk = newEventName; isMod=true;}
+            if( npc->m_data.event_emptylayer ==  eventName)
+                {npc->m_data.event_emptylayer = newEventName; isMod=true;}
+            if(isMod) { npc->arrayApply(); }
         }
+        else
+        if( iType=="Door_enter" || iType=="Door_exit" )
+        {
+            ItemDoor *door=(ItemDoor*)(*it);
+            if( door->m_data.event_enter ==  eventName )
+                {door->m_data.event_enter = newEventName;}
+        }
+    }
+    for(int i=0; i < edit->LvlData.doors.size(); i++)
+    {
+        if( edit->LvlData.doors[i].event_enter == eventName)
+            edit->LvlData.doors[i].event_enter = newEventName;
     }
     for(int i=0; i < edit->LvlData.events.size(); i++)
     {

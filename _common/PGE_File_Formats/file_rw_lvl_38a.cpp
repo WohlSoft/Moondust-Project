@@ -1153,7 +1153,8 @@ readLineAgain:
                                 {
                                     if( SMBX64::uInt(dLine) )
                                         goto badfile;
-                                    else doordata.length = toInt(dLine);
+                                    else doordata.length_i = toInt(dLine);
+                                    doordata.length_o = doordata.length_i;
                                 } break;
                             }
                          // }//Since SMBX-66-38A

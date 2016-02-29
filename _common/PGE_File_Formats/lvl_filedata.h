@@ -394,10 +394,18 @@ struct LevelDoor
     bool allownpc_interlevel;
     //! Required special state of playable character allowed to enter this warp
     bool special_state_required;
-    //! Length of entrance/exit zone: How wide will be entrance/exit point
-    unsigned int length;
+    //! Length of entrance zone: How wide will be entrance point
+    unsigned int length_i;
+    //! Length of exit zone: How wide will be exit point
+    unsigned int length_o;
     //! Trigger event on enter
     PGESTRING event_enter;
+    //! Is this warp a two-way (possible to enter from both sides)
+    bool two_way;
+    //! Cannon shoot warp exit
+    bool  cannon_exit;
+    //! Cannon shoot projectile speed (pixels per 1/65 seconds)
+    float cannon_exit_speed;
 
 /*
  * Editor-only parameters which are not saving into file

@@ -275,8 +275,12 @@ LevelDoor  FileFormats::CreateLvlWarp()
     dummyDoor.hide_entering_scene = false;
     dummyDoor.allownpc_interlevel = false;
     dummyDoor.special_state_required = false;
-    dummyDoor.length = 32;
+    dummyDoor.length_i = 32;
+    dummyDoor.length_o = 32;
     dummyDoor.event_enter = "";
+    dummyDoor.two_way=false;
+    dummyDoor.cannon_exit=false;
+    dummyDoor.cannon_exit_speed=10.0f;
 
     dummyDoor.array_id = 0;
     dummyDoor.index = 0;

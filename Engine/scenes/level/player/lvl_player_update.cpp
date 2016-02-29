@@ -198,17 +198,14 @@ void LVL_Player::update(float ticks)
         if(attack_pressed) attack_pressed=false;
     }
 
-
-
-    //if
-    if(!keys.up && !keys.down && !keys.left && !keys.right)
-    {
-        if(wasEntered)
-        {
-            wasEntered = false;
-            wasEnteredTimeout=0;
-        }
-    }
+//  if(!keys.up && !keys.down && !keys.left && !keys.right)
+//  {
+//      if(wasEntered)
+//      {
+//          wasEntered = false;
+//          wasEnteredTimeout=0;
+//      }
+//  }
 
     //Reset state
     if(wasEntered)

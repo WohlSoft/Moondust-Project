@@ -23,8 +23,10 @@ private:
 
 public:
     QComboBox *cbox_layer();
+    QComboBox *cbox_event_enter();
 
 public slots:
+    void setSMBX64Strict(bool en);
     void re_translate();
     void init();//void setDoorsToolbox();
 
@@ -41,18 +43,25 @@ private slots:
 
     void on_WarpList_currentIndexChanged(int index); //Door list
     void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
+    void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
     void on_WarpAdd_clicked();
     void on_WarpRemove_clicked();
 
     void on_WarpSetEntrance_clicked();
     void on_WarpSetExit_clicked();
 
-    void on_WarpNoYoshi_clicked(bool checked);
+    void on_WarpTwoWay_clicked(bool checked);
+
+    void on_WarpNoVehicles_clicked(bool checked);
     void on_WarpAllowNPC_clicked(bool checked);
     void on_WarpLock_clicked(bool checked);
+    void on_WarpBombNeed_clicked(bool checked);
+    void on_WarpSpecialStateOnly_clicked(bool checked);
 
     void on_WarpType_currentIndexChanged(int index);
     void on_WarpNeedAStars_valueChanged(int arg1);
+    void on_WarpNeedAStarsMsg_editingFinished();
+    void on_WarpHideStars_clicked(bool checked);
 
     void on_Entr_Down_clicked();
     void on_Entr_Right_clicked();
@@ -62,6 +71,9 @@ private slots:
     void on_Exit_Left_clicked();
     void on_Exit_Right_clicked();
     void on_Exit_Down_clicked();
+
+    void on_WarpEnableCannon_clicked(bool checked);
+    void on_WarpCannonSpeed_valueChanged(double arg1);
 
     void on_WarpToMapX_editingFinished();
     void on_WarpToMapY_editingFinished();
@@ -73,6 +85,9 @@ private slots:
     void on_WarpLevelFile_editingFinished();
     void on_WarpToExitNu_valueChanged(int arg1);
     void on_WarpBrowseLevels_clicked();
+
+    void on_WarpHideLevelEnterScreen_clicked(bool checked);
+    void on_WarpAllowNPC_IL_clicked(bool checked);
 
 private:
     QString doorTitle(LevelDoor &door);

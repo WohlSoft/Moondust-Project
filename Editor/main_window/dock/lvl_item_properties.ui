@@ -60,7 +60,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-751</y>
+         <y>-817</y>
          <width>279</width>
          <height>1558</height>
         </rect>
@@ -784,7 +784,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <item row="18" column="0" colspan="3">
             <widget class="QLabel" name="PROPS_NPCNpcLabel">
              <property name="text">
-              <string>SpecialNpc</string>
+              <string notr="true">SpecialNpc</string>
              </property>
             </widget>
            </item>
@@ -1410,7 +1410,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <item row="19" column="0" colspan="3">
             <widget class="QPushButton" name="PROPS_NPCSpecialNPC">
              <property name="text">
-              <string>Container</string>
+              <string notr="true">Container</string>
              </property>
             </widget>
            </item>

@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <functional>
+#include <algorithm>
 
 bool LevelScene::setEntrance(int entr)
 {
@@ -366,9 +367,11 @@ bool LevelScene::init_items()
         if(data.doors[i].lvl_i) continue;
 
         LVL_Warp * warpP;
+        LevelDoor door = data.doors[i];
+        bool two_way_opposite=false;
+        place_door_again:
         warpP = new LVL_Warp(this);
-        //warpP->worldPtr = world;
-        warpP->data = data.doors[i];
+        warpP->data = door;
         warpP->init();
 
         int sID = findNearestSection(warpP->posX(), warpP->posY());
@@ -378,8 +381,16 @@ bool LevelScene::init_items()
             warpP->setParentSection(sct);
         }
         warpP->_syncPosition();
-
         warps.push_back(warpP);
+        if(!two_way_opposite && door.two_way)//Place opposite entrance point
+        {
+            two_way_opposite=true;
+            std::swap(door.idirect,  door.odirect);
+            std::swap(door.ix,       door.ox);
+            std::swap(door.iy,       door.oy);
+            std::swap(door.length_i, door.length_o);
+            goto place_door_again;
+        }
     }
 
     //BGO
@@ -389,7 +400,6 @@ bool LevelScene::init_items()
 
         LVL_PhysEnv * physesP;
         physesP = new LVL_PhysEnv(this);
-        //physesP->worldPtr = world;
         physesP->data = data.physez[i];
         physesP->init();
         physesP->_syncPosition();
@@ -415,7 +425,6 @@ bool LevelScene::init_items()
 
     if(added_players<=0 && !isWarpEntrance)
     {
-        //qDebug()<<"No defined players!";
         _errorString="No defined players!";
         return false;
     }

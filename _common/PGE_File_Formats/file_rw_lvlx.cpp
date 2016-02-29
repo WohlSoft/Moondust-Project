@@ -665,6 +665,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_SIntVal("IY", door.iy) //Input point
                     PGEX_SIntVal("OX", door.ox) //Output point
                     PGEX_SIntVal("OY", door.oy) //Output point
+                    PGEX_UIntVal("IL", door.length_i) //Length of entrance (input) point
+                    PGEX_UIntVal("OL", door.length_o) //Length of exit (output) point
                     PGEX_UIntVal("DT", door.type) //Input point
                     PGEX_UIntVal("ID", door.idirect) //Input direction
                     PGEX_UIntVal("OD", door.odirect) //Output direction
@@ -683,8 +685,12 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                     PGEX_BoolVal("LB", door.need_a_bomb) //Door is blocked, need bomb to unlock
                     PGEX_BoolVal("HS", door.hide_entering_scene) //Don't show entering scene
                     PGEX_BoolVal("AL", door.allownpc_interlevel) //Allow NPC's inter-level
+                    PGEX_BoolVal("SR", door.special_state_required) //Required a special state to enter
+                    PGEX_BoolVal("PT", door.cannon_exit) //Cannon exit
+                    PGEX_FloatVal("PS", door.cannon_exit_speed) //Cannon exit speed
                     PGEX_StrVal ("LR", door.layer) //Layer
                     PGEX_StrVal ("EE", door.event_enter) //On-Enter event slot
+                    PGEX_BoolVal("TW", door.two_way) //Two-way warp
                 }
 
                 door.isSetIn = ( !door.lvl_i );
@@ -1347,6 +1353,11 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("OY", PGEFile::IntS(FileData.doors[i].oy));  // Warp Output Y
             }
 
+            if(FileData.doors[i].length_i != 32)
+                TextData += PGEFile::value("IL", PGEFile::IntS(FileData.doors[i].length_i));  //Length of entrance
+            if(FileData.doors[i].length_o != 32)
+                TextData += PGEFile::value("OL", PGEFile::IntS(FileData.doors[i].length_o));  //Length of exit
+
             TextData += PGEFile::value("DT", PGEFile::IntS(FileData.doors[i].type));  // Warp type
 
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.doors[i].idirect));  // Warp Input direction
@@ -1393,16 +1404,28 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("LB", PGEFile::BoolS(FileData.doors[i].need_a_bomb));  //Need a bomb to open door
 
             if(FileData.doors[i].hide_entering_scene)
-                TextData += PGEFile::value("HS", PGEFile::BoolS(FileData.doors[i].hide_entering_scene));  //Hide entrance scene
+                TextData += PGEFile::value("HS", PGEFile::BoolS(FileData.doors[i].hide_entering_scene));   //Hide entrance scene
 
             if(FileData.doors[i].allownpc_interlevel)
-                TextData += PGEFile::value("AL", PGEFile::BoolS(FileData.doors[i].allownpc_interlevel));  //Allow Items inter-level
+                TextData += PGEFile::value("AL", PGEFile::BoolS(FileData.doors[i].allownpc_interlevel));   //Allow Items inter-level
+
+            if(FileData.doors[i].special_state_required)
+                TextData += PGEFile::value("SR", PGEFile::BoolS(FileData.doors[i].special_state_required));//Special state required
+
+            if(FileData.doors[i].cannon_exit)
+            {
+                TextData += PGEFile::value("PT", PGEFile::BoolS(FileData.doors[i].cannon_exit));//cannon exit
+                TextData += PGEFile::value("PS", PGEFile::FloatS(FileData.doors[i].cannon_exit_speed));//cannon exit projectile speed
+            }
 
             if(FileData.doors[i].layer!=defDoor.layer) //Write only if not default
                 TextData += PGEFile::value("LR", PGEFile::qStrS(FileData.doors[i].layer));  // Layer
 
             if(!FileData.doors[i].event_enter.PGESTRINGisEmpty()) //Write only if not default
                 TextData += PGEFile::value("EE", PGEFile::qStrS(FileData.doors[i].event_enter));  // On-Enter event
+
+            if(FileData.doors[i].two_way)
+                TextData += PGEFile::value("TW", PGEFile::BoolS(FileData.doors[i].two_way)); //Two-way warp
 
             TextData += "\n";
         }

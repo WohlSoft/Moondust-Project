@@ -29,7 +29,11 @@ LVL_Warp::~LVL_Warp()
 
 void LVL_Warp::init()
 {
-    setSize(32, 32);
+    if(data.idirect==LevelDoor::ENTRANCE_LEFT||data.idirect==LevelDoor::ENTRANCE_RIGHT)
+        setSize(data.length_i, 32);
+    else
+        setSize(32, data.length_i);
+
     setPos(data.ix, data.iy);
     collide_player = COLLISION_NONE;
     collide_npc = COLLISION_NONE;

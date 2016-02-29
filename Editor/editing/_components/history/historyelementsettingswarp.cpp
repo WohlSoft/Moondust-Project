@@ -48,7 +48,11 @@ void HistoryElementSettingsWarp::undo()
         return;
 
 
-    if(subtype == HistorySettings::SETTING_NOYOSHI){
+    if(subtype == HistorySettings::SETTING_TWOWAY){
+        doorp->two_way = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NOVEHICLE){
         doorp->novehicles = !extraData.toBool();
     }
     else
@@ -56,8 +60,32 @@ void HistoryElementSettingsWarp::undo()
         doorp->allownpc = !extraData.toBool();
     }
     else
+    if(subtype == HistorySettings::SETTING_ALLOWNPC_IL){
+        doorp->allownpc_interlevel = !extraData.toBool();
+    }
+    else
     if(subtype == HistorySettings::SETTING_LOCKED){
         doorp->locked = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NEED_A_BOMB){
+        doorp->need_a_bomb = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_HIDE_STAR_NUMBER){
+        doorp->star_num_hide = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_ENABLE_CANNON){
+        doorp->cannon_exit = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED){
+        doorp->special_state_required = !extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
+        doorp->hide_entering_scene = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_WARPTYPE){
@@ -66,6 +94,14 @@ void HistoryElementSettingsWarp::undo()
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR){
         doorp->stars = extraData.toList()[0].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NEEDASTAR_MSG){
+        doorp->stars_msg = extraData.toList()[0].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_CANNON_SPEED){
+        doorp->cannon_exit_speed = extraData.toList()[0].toFloat();
     }
     else
     if(subtype == HistorySettings::SETTING_ENTRDIR){
@@ -78,6 +114,10 @@ void HistoryElementSettingsWarp::undo()
     else
     if(subtype == HistorySettings::SETTING_LAYER){
         doorp->layer = extraData.toList()[0].toString();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_WARP_ENTER){
+        doorp->event_enter = extraData.toList()[0].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){
@@ -136,7 +176,11 @@ void HistoryElementSettingsWarp::redo()
         return;
 
 
-    if(subtype == HistorySettings::SETTING_NOYOSHI){
+    if(subtype == HistorySettings::SETTING_TWOWAY){
+        doorp->two_way = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NOVEHICLE){
         doorp->novehicles = extraData.toBool();
     }
     else
@@ -144,8 +188,32 @@ void HistoryElementSettingsWarp::redo()
         doorp->allownpc = extraData.toBool();
     }
     else
+    if(subtype == HistorySettings::SETTING_ALLOWNPC_IL){
+        doorp->allownpc_interlevel = extraData.toBool();
+    }
+    else
     if(subtype == HistorySettings::SETTING_LOCKED){
         doorp->locked = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NEED_A_BOMB){
+        doorp->need_a_bomb = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_HIDE_STAR_NUMBER){
+        doorp->star_num_hide = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_ENABLE_CANNON){
+        doorp->cannon_exit = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED){
+        doorp->special_state_required = extraData.toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
+        doorp->hide_entering_scene = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_WARPTYPE){
@@ -154,6 +222,14 @@ void HistoryElementSettingsWarp::redo()
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR){
         doorp->stars = extraData.toList()[1].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_NEEDASTAR_MSG){
+        doorp->stars_msg = extraData.toList()[1].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_CANNON_SPEED){
+        doorp->cannon_exit_speed = extraData.toList()[1].toFloat();
     }
     else
     if(subtype == HistorySettings::SETTING_ENTRDIR){
@@ -166,6 +242,10 @@ void HistoryElementSettingsWarp::redo()
     else
     if(subtype == HistorySettings::SETTING_LAYER){
         doorp->layer = extraData.toList()[1].toString();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_WARP_ENTER){
+        doorp->event_enter = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){

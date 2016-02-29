@@ -93,7 +93,8 @@ void LVL_Player::processWarpChecking()
                 {
                     WarpTo(contactedWarp->data);
                     wasEntered = true;
-                    wasEnteredTimeout=800;
+                    wasEnteredTimeout=100;
+                    _scene->events.triggerEvent(contactedWarp->data.event_enter);
                 }
             }
 
@@ -116,7 +117,8 @@ void LVL_Player::processWarpChecking()
                 setPosY(contactedWarp->bottom()-posRect.height());
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
-                wasEnteredTimeout=800;
+                wasEnteredTimeout=100;
+                _scene->events.triggerEvent(contactedWarp->data.event_enter);
             }
         }
         break;
@@ -126,8 +128,9 @@ void LVL_Player::processWarpChecking()
         if(!wasEntered)
         {
             WarpTo(contactedWarp->data.ox, contactedWarp->data.oy, contactedWarp->data.type);
-            wasEnteredTimeout=800;
+            wasEnteredTimeout= ((contactedWarp->data.type==LevelDoor::WARP_INSTANT) ? 400 : 0);
             wasEntered = true;
+            _scene->events.triggerEvent(contactedWarp->data.event_enter);
         }
         break;
     }
