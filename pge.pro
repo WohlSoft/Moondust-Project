@@ -1,6 +1,25 @@
 include(_common/dest_dir.pri)
 
 TEMPLATE = subdirs
+
+DEFINES += USE_LUA_JIT
+
+android: {
+DEFINES -= USE_LUA_JIT
+}
+
+macx:{
+DEFINES -= USE_LUA_JIT
+}
+
+useccache: {
+#To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
+QMAKE_CC = ccache gcc
+QMAKE_CXX = ccache g++
+message("CHACHE with GCC will be used")
+}
+#CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb
+
 SUBDIRS = DependentLibs \
     Editor \
     Engine \
@@ -11,8 +30,6 @@ SUBDIRS = DependentLibs \
     MusicPlayer \
     Manager \
     Maintainer
-
-DEFINES += USE_LUA_JIT
 
 DependentLibs.file = _Libs/pge_deps.pro
 
@@ -69,16 +86,9 @@ nomaintainer: {
 }
 
 android:{
-DEFINES -= USE_LUA_JIT
 SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer MusicPlayer
 INSTALLS -= configs helps themes calibrator_cnfs
 }
-
-macx:{
-DEFINES -= USE_LUA_JIT
-}
-
-#CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb
 
 DISTFILES += \
     pge_engine.supp

@@ -44,3 +44,9 @@ RCC_DIR     = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
 UI_DIR      = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
 message("$$TARGET will be built as $$BUILDTP $$ARCH $$TARGETOS ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR, GIT version $$GIT_VERSION")
 
+useccache: {
+#To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
+QMAKE_CC = ccache gcc
+QMAKE_CXX = ccache g++
+message("CHACHE with GCC will be used")
+}

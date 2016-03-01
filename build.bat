@@ -2,6 +2,7 @@
 
 SET NoPause=0
 SET BuildArgs=
+SET MAKE_EXTRA_ARGS=-r -j 4
 
 :argsloop
 if "%1"=="nopause"  SET NoPause=1
@@ -34,7 +35,7 @@ rem build all components
 %QtDir%\qmake.exe CONFIG+=release CONFIG-=debug %BuildArgs%
 if ERRORLEVEL 1 goto error
 
-%MinGW%\mingw32-make
+%MinGW%\mingw32-make %MAKE_EXTRA_ARGS%
 if ERRORLEVEL 1 goto error
 
 rem copy data and configs into the build directory

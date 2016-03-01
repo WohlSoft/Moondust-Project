@@ -47,6 +47,34 @@ if [[ "$OurOS" == "win32" ]]; then
 fi
 
 echo $OurOS
+
+#flags
+flag_pause_on_end=true
+flag_nolibs=false
+flag_libsonly=false
+QMAKE_EXTRA_ARGS=""
+MAKE_EXTRA_ARGS="-r -j 4"
+
+for var in "$@"
+do
+    case "$var" in
+        no-pause)
+                flag_pause_on_end=false
+            ;;
+        use-ccache)
+                QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
+            ;;
+        no-libs)
+                flag_nolibs=true
+                flag_libsonly=false
+            ;;
+        libs-only)
+                flag_nolibs=false
+                flag_libsonly=true
+            ;;
+    esac
+done
+
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
@@ -61,11 +89,14 @@ done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
 cd $SCRDIR
-
+source ./_common/functions.sh
 #=======================================================================
-
+TIME_STARTED_LIBS=0
+TIME_ENDED_LIBS=0
+TIME_PASSED_LIBS=0
 buildLibs()
 {
+    TIME_STARTED_LIBS=$(date +%s)
     # build libraries
     cd "$PrjPath/_Libs/_sources"
     InstallTo=$(echo ~+/../_builds/$OurOS)
@@ -78,6 +109,8 @@ buildLibs()
 
     echo "Library install path: $InstallTo"
     source ./___build_script.sh
+    TIME_ENDED_LIBS=$(date +%s)
+    TIME_PASSED_LIBS=$(($TIME_ENDED_LIBS-$TIME_STARTED_LIBS))
 }
 
 PrjPath=$SCRDIR
@@ -92,25 +125,27 @@ fi
 	
 #=======================================================================
 
-if [[ "$1" == "no-libs" ]]; then
+if $flag_nolibs ; then
 	echo "Building of tag.gz libraries skiped"
 	echo "Building SDL2_mixer_ext, LuaBIND and FreeImage..."
 else
 	buildLibs
-    if [[ "$1" == "libs-only" ]]; then
+    if $flag_libsonly ; then
         exit 0
     fi
 fi
 
 cd "$PrjPath/_Libs"
 
-$QMake CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
+$QMake CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT $QMAKE_EXTRA_ARGS
 checkState
 
 #=======================================================================
-make
+TIME_STARTED=$(date +%s)
+make $MAKE_EXTRA_ARGS
 checkState
-
+TIME_ENDED=$(date +%s)
+TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
 #=======================================================================
 # copy data and configs into the build directory
 make install
@@ -118,8 +153,17 @@ checkState
 
 cd ..
 #=======================================================================
-printf "\n\n=========BUILT!!===========\n\n"
+echo ""
+echo "Autotools-based built libraries"
+show_time $TIME_PASSED_LIBS
+echo "QMake-based built libraries"
+show_time $TIME_PASSED
+echo "Total time of build"
+show_time $(($TIME_PASSED+$TIME_PASSED_LIBS))
+printf "\n\n=========DEPENDENCIES HAS BEEN BUILT!!===========\n\n"
 cd $bak
-# if [[ $1 != "no-pause" ]]; then read -n 1; fi
+if $flag_pause_on_end ; then 
+    read -n 1;
+fi
 exit 0
 
