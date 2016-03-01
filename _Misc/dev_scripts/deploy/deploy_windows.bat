@@ -8,6 +8,8 @@ IF NOT EXIST "%SEVENZIP%\7z.exe" GOTO ErrorNo7z
 
 cd "%SOURCEDIR%\Editor"
 call "%SOURCEDIR%\_paths.bat"
+set OldPATH=%PATH%
+PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;%PATH%
 
 "%QtDir%\lrelease" pge_editor.pro
 copy languages\*.qm %SOURCEDIR%\bin-w32\languages
@@ -155,6 +157,8 @@ echo Packing of editor data
 "%SEVENZIP%\7z" a -tzip "install-pge-engine-dev-win32.zip" %PGEEngine%
 "%SEVENZIP%\7z" a -tzip "install-pge-tools-dev-win32.zip" %PGETools%
 move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
+
+PATH=%OldPATH%
 
 echo.
 echo "All done!"
