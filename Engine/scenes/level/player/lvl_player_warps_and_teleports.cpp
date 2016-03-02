@@ -139,7 +139,7 @@ void LVL_Player::processWarpChecking()
 
 
 //Enter player to level
-void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
+void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool cannon, float cannon_speed)
 {
     warpFrameW = texture.w;
     warpFrameH = texture.h;
@@ -256,26 +256,49 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
             wait200ms.makeTimer(250);
             event_queue.events.push_back(wait200ms);
 
-            EventQueueEntry<LVL_Player >playSnd;
-            playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                        },0);
-            event_queue.events.push_back(playSnd);
+            if(cannon)
+            {
+                EventQueueEntry<LVL_Player >playSnd;
+                playSnd.makeCaller([this, warpDirection, cannon_speed]()->void
+                           {
+                               PGE_Audio::playSoundByRole(obj_sound_role::WeaponCannon);
+                               warpPipeOffset=0.0f;
+                               isWarping=false;
+                                       switch(warpDirection)
+                                       {
+                                        case LevelDoor::EXIT_RIGHT: setSpeed(cannon_speed, 0);break;
+                                        case LevelDoor::EXIT_LEFT: setSpeed(-cannon_speed, 0);break;
+                                        case LevelDoor::EXIT_UP: setSpeed(0, -cannon_speed);break;
+                                        case LevelDoor::EXIT_DOWN: setSpeed(0, cannon_speed);break;
+                                       }
+                               setPaused(false);
+                               last_environment=-1;//!< Forcing to refresh physical environment
+                           },0);
+                event_queue.events.push_back(playSnd);
+            }
+            else
+            {
+                EventQueueEntry<LVL_Player >playSnd;
+                playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                                            },0);
+                event_queue.events.push_back(playSnd);
 
-            float pStep = 1.5f/PGE_Window::TicksPerSecond;
+                float pStep = 1.5f/PGE_Window::TicksPerSecond;
 
-            EventQueueEntry<LVL_Player >warpOut;
-            warpOut.makeWaiterCond([this, pStep]()->bool{
-                                      warpPipeOffset -= pStep;
-                                      return warpPipeOffset<=0.0f;
-                                  }, false, 0);
-            event_queue.events.push_back(warpOut);
+                EventQueueEntry<LVL_Player >warpOut;
+                warpOut.makeWaiterCond([this, pStep]()->bool{
+                                          warpPipeOffset -= pStep;
+                                          return warpPipeOffset<=0.0f;
+                                      }, false, 0);
+                event_queue.events.push_back(warpOut);
 
-            EventQueueEntry<LVL_Player >endWarping;
-            endWarping.makeCaller([this]()->void{
-                                  isWarping=false; setSpeed(0, 0); setPaused(false);
-                                  last_environment=-1;//!< Forcing to refresh physical environment
-                              }, 0);
-            event_queue.events.push_back(endWarping);
+                EventQueueEntry<LVL_Player >endWarping;
+                endWarping.makeCaller([this]()->void{
+                                      isWarping=false; setSpeed(0, 0); setPaused(false);
+                                      last_environment=-1;//!< Forcing to refresh physical environment
+                                  }, 0);
+                event_queue.events.push_back(endWarping);
+            }
         }
         break;
     case LevelDoor::WARP_INSTANT:
@@ -408,7 +431,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                       }, true, 100);
                 event_queue.events.push_back(whileOpacityFade);
 
-                WarpTo(warp.ox, warp.oy, warp.type, warp.odirect);
+                WarpTo(warp.ox, warp.oy, warp.type, warp.odirect, warp.cannon_exit, warp.cannon_exit_speed);
             }
         }
         break;

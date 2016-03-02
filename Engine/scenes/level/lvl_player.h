@@ -185,7 +185,7 @@ class LVL_Player :
 
         EventQueue<LVL_Player > event_queue;
         void    processWarpChecking();
-        void    WarpTo(float x, float y, int warpType, int warpDirection=1);
+        void    WarpTo(float x, float y, int warpType, int warpDirection=1, bool cannon=false, float cannon_speed=10.0f);
         void    WarpTo(LevelDoor warp);
         /*******************Warps*********************/\
 

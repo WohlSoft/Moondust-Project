@@ -197,7 +197,7 @@ void LevelScene::toggleSwitch(int switch_id)
 
 
 
-void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect)
+void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect, bool cannon, float cannon_speed)
 {
     LVL_Player * player;
     if(luaEngine.isValid()){
@@ -237,7 +237,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     if(byWarp)
     {
         player->setPaused(true);
-        player->WarpTo(playerData.x, playerData.y, warpType, warpDirect);
+        player->WarpTo(playerData.x, playerData.y, warpType, warpDirect, cannon, cannon_speed);
         if(warpType==2)
             PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
         else if(warpType==0)

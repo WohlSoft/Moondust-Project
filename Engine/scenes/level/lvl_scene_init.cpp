@@ -100,7 +100,9 @@ bool LevelScene::setEntrance(int entr)
                                           newPoint.w = w;
                                           newPoint.h = h;
                                           newPoint.direction=1;
-                                          this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
+                                          this->addPlayer(newPoint, true,
+                                                          startWarp.type, startWarp.odirect,
+                                                          startWarp.cannon_exit, startWarp.cannon_exit_speed);
                                           isWarpEntrance=false;
                                       }, 1000);
                     system_events.events.push_back(event3);
