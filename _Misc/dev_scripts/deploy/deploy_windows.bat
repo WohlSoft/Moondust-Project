@@ -46,7 +46,7 @@ if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\langu
 if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
 %CurDir%\upx.exe -9 Qt5Core.dll
 %CurDir%\upx.exe -9 Qt5Gui.dll
-%CurDir%\upx.exe -9 D3Dcompiler_43.dll
+%CurDir%\upx.exe -9 D3Dcompiler_*.dll
 %CurDir%\upx.exe -9 libGLESV2.dll
 %CurDir%\upx.exe -9 Qt5Network.dll
 %CurDir%\upx.exe -9 Qt5Widgets.dll

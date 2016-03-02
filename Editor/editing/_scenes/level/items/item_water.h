@@ -26,6 +26,7 @@
 
 class ItemWater : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemWater(QGraphicsItem *parent=0);

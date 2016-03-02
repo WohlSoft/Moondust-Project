@@ -404,7 +404,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
         TextData += SMBX64::IntS(FileData.stars);
 
     PGESTRINGList credits;
-    PGE_SPLITSTR(credits, FileData.authors, "\n");
+    PGE_SPLITSTRING(credits, FileData.authors, "\n");
     FileData.author1 = (credits.size()>0) ? credits[0] : "";
     FileData.author2 = (credits.size()>1) ? credits[1] : "";
     FileData.author3 = (credits.size()>2) ? credits[2] : "";

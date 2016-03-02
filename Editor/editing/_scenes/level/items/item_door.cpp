@@ -94,7 +94,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?""+tr("[hidden]"):"") );
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);

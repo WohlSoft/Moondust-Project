@@ -87,7 +87,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?tr(" [hidden]"):"") );
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" "+tr("[hidden]"):"") );
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
@@ -130,7 +130,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                          ItemMenu.addSeparator();
     QAction *remove =    ItemMenu.addAction( tr("Remove") );
                          ItemMenu.addSeparator();
-    QAction *props =     ItemMenu.addAction(tr("Properties..."));
+    QAction *props =     ItemMenu.addAction( tr("Properties...") );
 
     /*****************Waiting for answer************************/
     QAction *selected =  ItemMenu.exec(mouseEvent->screenPos());
@@ -196,7 +196,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_BLOCK, 0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * blockList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_BLOCK, 0,0,0,0,0,0,0,0,0, m_scene->_edit);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
         util::DialogToCenter(blockList, true);
 
@@ -218,7 +218,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
             else if(selected==transform_all_s)
             {
                 bool ok=false;
-                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                long mg = QInputDialog::getInt(m_scene->_edit, tr("Margin of section"),
                                tr("Please select, how far items out of section should be removed too (in pixels)"),
                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
@@ -270,7 +270,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                 goto typeEventAgain;
             if(ok)
             {
-                ItemMsgBox msgBox(Opened_By::BLOCK, "", false, tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"), MainWinConnect::pMainWin);
+                ItemMsgBox msgBox(Opened_By::BLOCK, "", false,
+                                  tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"),
+                                  tr("Hit message text"), m_scene->_edit);
                 util::DialogToCenter(&msgBox, true);
                 if(msgBox.exec()==QDialog::Accepted)
                 {

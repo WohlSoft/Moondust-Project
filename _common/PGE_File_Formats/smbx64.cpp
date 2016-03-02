@@ -169,7 +169,7 @@ PGESTRING SMBX64::StrToStr(PGESTRING in)
     if((!target.PGESTRINGisEmpty()) && (target[target.size()-1]==PGEChar('\"')))
         target.PGE_RemSRng(target.size()-1, 1);
 
-    target=PGE_ReplSTR(target, "\"", "\'");//Correct damaged by SMBX line
+    target=PGE_ReplSTRING(target, "\"", "\'");//Correct damaged by SMBX line
     return target;
 }
 
@@ -186,17 +186,17 @@ PGESTRING SMBX64::BoolS(bool input)
 
 PGESTRING SMBX64::qStrS(PGESTRING input)
 {
-    input = PGE_RemSSTR(input, "\n");
-    input = PGE_RemSSTR(input, "\r");
-    input = PGE_RemSSTR(input, "\t");
-    input = PGE_RemSSTR(input, "\"");
+    input = PGE_RemSubSTRING(input, "\n");
+    input = PGE_RemSubSTRING(input, "\r");
+    input = PGE_RemSubSTRING(input, "\t");
+    input = PGE_RemSubSTRING(input, "\"");
     return PGESTRING("\"")+input+PGESTRING("\"\n");
 }
 
 PGESTRING SMBX64::qStrS_multiline(PGESTRING input)
 {
-    input = PGE_RemSSTR(input, "\t");
-    input = PGE_RemSSTR(input, "\"");
+    input = PGE_RemSubSTRING(input, "\t");
+    input = PGE_RemSubSTRING(input, "\"");
     return PGESTRING("\"")+input+PGESTRING("\"\n");
 }
 

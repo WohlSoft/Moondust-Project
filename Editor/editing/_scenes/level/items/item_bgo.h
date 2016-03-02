@@ -26,6 +26,7 @@
 
 class ItemBGO : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemBGO(QGraphicsItem *parent=0);

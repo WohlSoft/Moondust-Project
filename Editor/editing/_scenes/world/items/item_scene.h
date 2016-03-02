@@ -26,6 +26,7 @@
 
 class ItemScene : public WldBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemScene(QGraphicsItem *parent=0);

@@ -74,8 +74,8 @@ PGEFile::PGEX_Item x = f_section.data[sdata];
 /*! \def PGEX_StrVal(Mark, targetValue)
     \brief Parse Plain text string value by requested Marker and write into target variable
 */
-#define PGEX_StrVal(Mark, targetValue)  else if(v.marker==Mark) { if(PGEFile::IsQStr(v.value)) \
-                                                targetValue = PGEFile::X2STR(v.value); \
+#define PGEX_StrVal(Mark, targetValue)  else if(v.marker==Mark) { if(PGEFile::IsQoutedString(v.value)) \
+                                                targetValue = PGEFile::X2STRING(v.value); \
                                                 else goto badfile; }
 /*! \def PGEX_StrArrVal(Mark, targetValue)
     \brief Parse Plain text string array value by requested Marker and write into target variable

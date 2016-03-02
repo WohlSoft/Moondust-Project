@@ -220,7 +220,7 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
         else
         {
             PGESTRINGList fields;
-            PGE_SPLITSTR(fields, encodeEscape(src_data[q]), ";");
+            PGE_SPLITSTRING(fields, encodeEscape(src_data[q]), ";");
             PGEX_Item dataItem;
             dataItem.type = PGEX_Struct;
             for(int i=0;i<(signed)fields.size();i++)
@@ -230,7 +230,7 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
                 //Store data into list
 
                 PGESTRINGList value; //= fields[i].split(':');
-                PGE_SPLITSTR(value, fields[i], ":");
+                PGE_SPLITSTRING(value, fields[i], ":");
 
                 if(value.size()!=2)
                 {
@@ -268,7 +268,7 @@ bool PGEFile::IsSectionTitle(PGESTRING in)
 
 
 //validatos
-bool PGEFile::IsQStr(PGESTRING in) // QUOTED STRING
+bool PGEFile::IsQoutedString(PGESTRING in) // QUOTED STRING
 {
     //return QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$").exactMatch(in);
     int i=0;
@@ -431,12 +431,12 @@ bool PGEFile::IsStringArray(PGESTRING in) // String array
 PGESTRINGList PGEFile::X2STRArr(PGESTRING src)
 {
     PGESTRINGList strArr;
-    src=PGE_RemSSTR(src, "[");
-    src=PGE_RemSSTR(src, "]");
-    PGE_SPLITSTR(strArr, src, ",");
+    src=PGE_RemSubSTRING(src, "[");
+    src=PGE_RemSubSTRING(src, "]");
+    PGE_SPLITSTRING(strArr, src, ",");
     for(int i=0; i<(signed)strArr.size(); i++)
     {
-        strArr[i] = X2STR(strArr[i]);
+        strArr[i] = X2STRING(strArr[i]);
     }
 
     return strArr;
@@ -460,13 +460,13 @@ PGELIST<PGESTRINGList > PGEFile::splitDataLine(PGESTRING src_data, bool *valid)
 
     PGESTRING encoded=encodeEscape(src_data);
     PGESTRINGList fields;
-    PGE_SPLITSTR(fields, encoded, ";");
+    PGE_SPLITSTRING(fields, encoded, ";");
 
     for(int i=0;i<(signed)fields.size();i++)
     {
         if(removeSpaces(fields[i]).PGESTRINGisEmpty()) continue;
         PGESTRINGList value;
-        PGE_SPLITSTR(value, fields[i], ":");
+        PGE_SPLITSTRING(value, fields[i], ":");
 
         if(value.size()!=2) {wrong=true; break;}
         entryData.push_back(value);
@@ -494,7 +494,7 @@ PGESTRING PGEFile::FloatS(double input)
 
 PGESTRING PGEFile::qStrS(PGESTRING input)
 {
-    return "\""+escapeStr(input)+"\"";
+    return "\""+escapeString(input)+"\"";
 }
 
 PGESTRING PGEFile::hStrS(PGESTRING input)
@@ -545,69 +545,69 @@ PGESTRING PGEFile::BoolArrayS(PGELIST<bool> input)
 PGESTRING PGEFile::encodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
-    output=PGE_ReplSTR(output, "\\n", "==n==");
-    output=PGE_ReplSTR(output, "\\\"", "==q==");
-    output=PGE_ReplSTR(output, "\\\\", "==sl==");
-    output=PGE_ReplSTR(output, "\\;", "==Sc==");
-    output=PGE_ReplSTR(output, "\\:", "==Cl==");
-    output=PGE_ReplSTR(output, "\\[", "==Os==");
-    output=PGE_ReplSTR(output, "\\]", "==Cs==");
-    output=PGE_ReplSTR(output, "\\,", "==Cm==");
-    output=PGE_ReplSTR(output, "\\%", "==Pc==");
+    output=PGE_ReplSTRING(output, "\\n", "==n==");
+    output=PGE_ReplSTRING(output, "\\\"", "==q==");
+    output=PGE_ReplSTRING(output, "\\\\", "==sl==");
+    output=PGE_ReplSTRING(output, "\\;", "==Sc==");
+    output=PGE_ReplSTRING(output, "\\:", "==Cl==");
+    output=PGE_ReplSTRING(output, "\\[", "==Os==");
+    output=PGE_ReplSTRING(output, "\\]", "==Cs==");
+    output=PGE_ReplSTRING(output, "\\,", "==Cm==");
+    output=PGE_ReplSTRING(output, "\\%", "==Pc==");
     return output;
 }
 
 PGESTRING PGEFile::decodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
-    output=PGE_ReplSTR(output, "==n==", "\\n");
-    output=PGE_ReplSTR(output, "==q==", "\\\"");
-    output=PGE_ReplSTR(output, "==sl==","\\\\");
-    output=PGE_ReplSTR(output, "==Sc==", "\\;");
-    output=PGE_ReplSTR(output, "==Cl==", "\\:");
-    output=PGE_ReplSTR(output, "==Os==", "\\[");
-    output=PGE_ReplSTR(output, "==Cs==", "\\]");
-    output=PGE_ReplSTR(output, "==Cm==", "\\,");
-    output=PGE_ReplSTR(output, "==Pc==", "\\%");
+    output=PGE_ReplSTRING(output, "==n==", "\\n");
+    output=PGE_ReplSTRING(output, "==q==", "\\\"");
+    output=PGE_ReplSTRING(output, "==sl==","\\\\");
+    output=PGE_ReplSTRING(output, "==Sc==", "\\;");
+    output=PGE_ReplSTRING(output, "==Cl==", "\\:");
+    output=PGE_ReplSTRING(output, "==Os==", "\\[");
+    output=PGE_ReplSTRING(output, "==Cs==", "\\]");
+    output=PGE_ReplSTRING(output, "==Cm==", "\\,");
+    output=PGE_ReplSTRING(output, "==Pc==", "\\%");
     return output;
 }
 
-PGESTRING PGEFile::X2STR(PGESTRING input)
+PGESTRING PGEFile::X2STRING(PGESTRING input)
 {
-    return restoreStr(
+    return restoreString(
                 decodeEscape(
                     removeQuotes(input)
                 )
             );
 }
 
-PGESTRING PGEFile::restoreStr(PGESTRING input)
+PGESTRING PGEFile::restoreString(PGESTRING input)
 {
     PGESTRING output = input;
-    output=PGE_ReplSTR(output, "\\n", "\n");
-    output=PGE_ReplSTR(output, "\\\"", "\"");
-    output=PGE_ReplSTR(output, "\\;", ";");
-    output=PGE_ReplSTR(output, "\\:", ":");
-    output=PGE_ReplSTR(output, "\\[", "[");
-    output=PGE_ReplSTR(output, "\\]", "]");
-    output=PGE_ReplSTR(output, "\\,", ",");
-    output=PGE_ReplSTR(output, "\\%", "%");
-    output=PGE_ReplSTR(output, "\\\\", "\\");
+    output=PGE_ReplSTRING(output, "\\n", "\n");
+    output=PGE_ReplSTRING(output, "\\\"", "\"");
+    output=PGE_ReplSTRING(output, "\\;", ";");
+    output=PGE_ReplSTRING(output, "\\:", ":");
+    output=PGE_ReplSTRING(output, "\\[", "[");
+    output=PGE_ReplSTRING(output, "\\]", "]");
+    output=PGE_ReplSTRING(output, "\\,", ",");
+    output=PGE_ReplSTRING(output, "\\%", "%");
+    output=PGE_ReplSTRING(output, "\\\\", "\\");
     return output;
 }
 
-PGESTRING PGEFile::escapeStr(PGESTRING input)
+PGESTRING PGEFile::escapeString(PGESTRING input)
 {
     PGESTRING output = input;
-    output=PGE_ReplSTR(output, "\\", "\\\\");
-    output=PGE_ReplSTR(output, "\n", "\\n");
-    output=PGE_ReplSTR(output, "\"", "\\\"");
-    output=PGE_ReplSTR(output, ";", "\\;");
-    output=PGE_ReplSTR(output, ":", "\\:");
-    output=PGE_ReplSTR(output, "[", "\\[");
-    output=PGE_ReplSTR(output, "]", "\\]");
-    output=PGE_ReplSTR(output, ",", "\\,");
-    output=PGE_ReplSTR(output, "%", "\\%");
+    output=PGE_ReplSTRING(output, "\\", "\\\\");
+    output=PGE_ReplSTRING(output, "\n", "\\n");
+    output=PGE_ReplSTRING(output, "\"", "\\\"");
+    output=PGE_ReplSTRING(output, ";", "\\;");
+    output=PGE_ReplSTRING(output, ":", "\\:");
+    output=PGE_ReplSTRING(output, "[", "\\[");
+    output=PGE_ReplSTRING(output, "]", "\\]");
+    output=PGE_ReplSTRING(output, ",", "\\,");
+    output=PGE_ReplSTRING(output, "%", "\\%");
     return output;
 }
 

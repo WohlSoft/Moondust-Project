@@ -26,6 +26,7 @@
 
 class ItemBlock : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemBlock(LvlScene *parentScene, QGraphicsItem *parent=0);

@@ -26,6 +26,7 @@
 
 class ItemPath : public WldBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemPath(QGraphicsItem *parent=0);

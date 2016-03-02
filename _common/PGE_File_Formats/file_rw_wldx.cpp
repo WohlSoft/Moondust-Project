@@ -85,8 +85,8 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
             if(data[i].size()!=2) goto badfile;
             if(data[i][0]=="TL") //Episode Title
             {
-             if(PGEFile::IsQStr(data[i][1]))
-                 FileData.EpisodeTitle = PGEFile::X2STR(data[i][1]);
+             if(PGEFile::IsQoutedString(data[i][1]))
+                 FileData.EpisodeTitle = PGEFile::X2STRING(data[i][1]);
              else
                  goto badfile;
             }
@@ -101,8 +101,8 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
             else
             if(data[i][0]=="IT") //Intro level
             {
-             if(PGEFile::IsQStr(data[i][1]))
-                 FileData.IntroLevel_file = PGEFile::X2STR(data[i][1]);
+             if(PGEFile::IsQoutedString(data[i][1]))
+                 FileData.IntroLevel_file = PGEFile::X2STRING(data[i][1]);
              else
                  goto badfile;
             }
@@ -133,8 +133,8 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
             else
             if(data[i][0]=="CD") //Credits list
             {
-             if(PGEFile::IsQStr(data[i][1]))
-                 FileData.authors = PGEFile::X2STR(data[i][1]);
+             if(PGEFile::IsQoutedString(data[i][1]))
+                 FileData.authors = PGEFile::X2STRING(data[i][1]);
              else
                  goto badfile;
             }

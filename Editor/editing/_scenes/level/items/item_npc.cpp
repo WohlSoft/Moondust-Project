@@ -108,7 +108,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-        setLayer =              LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
+        setLayer =              LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?""+tr("[hidden]"):"") );
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
@@ -213,7 +213,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * npcList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * npcList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0, m_scene->_edit);
         npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
         util::DialogToCenter(npcList, true);
 
@@ -235,7 +235,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             else if(selected==transform_all_s)
             {
                 bool ok=false;
-                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                long mg = QInputDialog::getInt(m_scene->_edit, tr("Margin of section"),
                                tr("Please select, how far items out of section should be removed too (in pixels)"),
                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
@@ -273,7 +273,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         LevelData selData;
         ItemSelectDialog * npcList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_NPC, 0,0,0,
                                                           m_data.contents,
-                                                          0,0,0,0,0,MainWinConnect::pMainWin);
+                                                          0,0,0,0,0, m_scene->_edit);
         npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
         if(npcList->exec()==QDialog::Accepted)

@@ -26,6 +26,7 @@
 
 class ItemNPC : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsItem *parent=0);

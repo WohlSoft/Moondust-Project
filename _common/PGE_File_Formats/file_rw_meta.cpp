@@ -85,8 +85,8 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
                       if(v.marker=="BM") //Bookmark name
                       {
-                          if(PGEFile::IsQStr(v.value))
-                              meta_bookmark.bookmarkName = PGEFile::X2STR(v.value);
+                          if(PGEFile::IsQoutedString(v.value))
+                              meta_bookmark.bookmarkName = PGEFile::X2STRING(v.value);
                           else
                               goto badfile;
                       }
@@ -166,8 +166,8 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
                             if(v.marker=="TL") //Marker
                             {
-                                if(PGEFile::IsQStr(v.value))
-                                    event->setMarker(PGEFile::X2STR(v.value));
+                                if(PGEFile::IsQoutedString(v.value))
+                                    event->setMarker(PGEFile::X2STRING(v.value));
                                 else
                                     goto badfile;
                             }
@@ -228,16 +228,16 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
                                         if(v.marker=="N") //Command name
                                         {
-                                            if(PGEFile::IsQStr(v.value))
-                                                name = PGEFile::X2STR(v.value);
+                                            if(PGEFile::IsQoutedString(v.value))
+                                                name = PGEFile::X2STRING(v.value);
                                             else
                                                 goto badfile;
                                         }
                                         else
                                         if(v.marker=="CT") //Command type
                                         {
-                                            if(PGEFile::IsQStr(v.value))
-                                                commandType = PGEFile::X2STR(v.value);
+                                            if(PGEFile::IsQoutedString(v.value))
+                                                commandType = PGEFile::X2STRING(v.value);
                                             else
                                                 goto badfile;
                                         }

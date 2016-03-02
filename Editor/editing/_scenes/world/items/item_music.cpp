@@ -180,7 +180,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         int transformTO;
         QString transformTO_file;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0, m_scene->_edit);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
         util::DialogToCenter(itemList, true);
 

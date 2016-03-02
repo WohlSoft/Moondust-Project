@@ -100,8 +100,8 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
             if(data[i].size()!=2) goto badfile;
             if(data[i][0]=="TL") //Level Title
             {
-                if(PGEFile::IsQStr(data[i][1]))
-                    FileData.LevelName = PGEFile::X2STR(data[i][1]);
+                if(PGEFile::IsQoutedString(data[i][1]))
+                    FileData.LevelName = PGEFile::X2STRING(data[i][1]);
                 else
                     goto badfile;
             }
@@ -116,8 +116,8 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
             else
             if(data[i][0]=="DL") //Open Level on player's fail
             {
-                if(PGEFile::IsQStr(data[i][1]))
-                    FileData.open_level_on_fail = PGEFile::X2STR(data[i][1]);
+                if(PGEFile::IsQoutedString(data[i][1]))
+                    FileData.open_level_on_fail = PGEFile::X2STRING(data[i][1]);
                 else
                     goto badfile;
             }
@@ -317,8 +317,8 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                             PGEX_ValueBegin()
                             if(v.marker=="TL") //Marker
                             {
-                                if(PGEFile::IsQStr(v.value))
-                                    event->setMarker(PGEFile::X2STR(v.value));
+                                if(PGEFile::IsQoutedString(v.value))
+                                    event->setMarker(PGEFile::X2STRING(v.value));
                                 else
                                     goto badfile;
                             }
@@ -824,7 +824,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
                 for(q=0;q<(signed)event.sets.size() && q<(signed)ssSets.size(); q++)
                 {
                     PGESTRINGList sizes;
-                    PGE_SPLITSTR(sizes, ssSets[q], ",");
+                    PGE_SPLITSTRING(sizes, ssSets[q], ",");
                     if(sizes.size()!=4) goto badfile;
                     if(!PGEFile::IsIntS(sizes[0])) goto badfile;
                     event.sets[q].position_left = toInt(sizes[0]);

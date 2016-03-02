@@ -26,6 +26,7 @@
 
 class ItemDoor : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemDoor(QGraphicsItem *parent=0);

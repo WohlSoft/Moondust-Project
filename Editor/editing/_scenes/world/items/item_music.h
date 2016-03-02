@@ -25,6 +25,7 @@
 
 class ItemMusic : public WldBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemMusic(QGraphicsItem *parent=0);

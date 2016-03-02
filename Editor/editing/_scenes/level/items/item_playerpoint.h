@@ -26,6 +26,7 @@
 
 class ItemPlayerPoint : public LvlBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = 0);

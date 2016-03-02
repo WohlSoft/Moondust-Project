@@ -73,9 +73,9 @@
 #define PGEPAIR QPair
 #define PGEMAP QMap
 #define PGEFILE QFile
-#define PGE_SPLITSTR(dst, src, sep) dst=src.split(sep);
-#define PGE_ReplSTR(src, from, to) src.replace(from, to)
-#define PGE_RemSSTR(src, substr) src.remove(substr)
+#define PGE_SPLITSTRING(dst, src, sep) dst=src.split(sep);
+#define PGE_ReplSTRING(src, from, to) src.replace(from, to)
+#define PGE_RemSubSTRING(src, substr) src.remove(substr)
 #define PGE_RemSRng(pos, len) remove(pos, len)
 inline bool IsNULL(PGESTRING str) { return str.isNull(); }
 inline int toInt(PGESTRING str){ return str.toInt(); }

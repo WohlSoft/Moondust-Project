@@ -172,7 +172,7 @@ public:
      * \param in Input data string with data required to valitade
      * \return true if given value is passed or false if value is invalid
      */
-    static bool IsQStr(PGESTRING in);// QUOTED STRING
+    static bool IsQoutedString(PGESTRING in);// QUOTED STRING
     /*!
      * \brief Is given value is a heximal number?
      * \param in Input data string with data required to valitade
@@ -280,7 +280,7 @@ public:
      * \param input Encoded PGE-X string value
      * \return Plain text string
      */
-    static PGESTRING X2STR(PGESTRING input);
+    static PGESTRING X2STRING(PGESTRING input);
     /*!
      * \brief Decodes PGE-X String array into array of plain text strings
      * \param src Encoded PGE-X string value
@@ -299,13 +299,13 @@ public:
      * \param input plain text string
      * \return Plain text string with applied escape sequensions
      */
-    static PGESTRING escapeStr(PGESTRING input);
+    static PGESTRING escapeString(PGESTRING input);
     /*!
      * \brief Decodes PGE-X escape-sequensions
      * \param input Plain text string with applied escape sequensions
      * \return Plain text string
      */
-    static PGESTRING restoreStr(PGESTRING input);
+    static PGESTRING restoreString(PGESTRING input);
     /*!
      * \brief Replaced escape-sequensions with special working strings
      * \param input Plain text string with applied escape sequensions

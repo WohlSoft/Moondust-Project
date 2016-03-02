@@ -84,7 +84,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" "+tr("[hidden]"):"") );
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
@@ -236,7 +236,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     if(selected==ZOffset)
     {
         bool ok;
-        qreal newzOffset = QInputDialog::getDouble(nullptr, tr("Z-Offset"),
+        qreal newzOffset = QInputDialog::getDouble(m_scene->_edit, tr("Z-Offset"),
                                                    tr("Please enter the Z-value offset:"),
                                                    m_data.z_offset,
                                                    -500, 500,7, &ok);
@@ -283,7 +283,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             else if(selected==transform_all_s)
             {
                 bool ok=false;
-                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                long mg = QInputDialog::getInt(m_scene->_edit, tr("Margin of section"),
                                tr("Please select, how far items out of section should be removed too (in pixels)"),
                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;

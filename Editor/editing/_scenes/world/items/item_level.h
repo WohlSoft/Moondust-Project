@@ -26,6 +26,7 @@
 
 class ItemLevel : public WldBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemLevel(QGraphicsItem *parent=0);

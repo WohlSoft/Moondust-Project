@@ -290,7 +290,7 @@ void LvlScene::setLocked(int type, bool lock)
 void LvlScene::setLayerToSelected()
 {
     QString lName;
-    ToNewLayerBox * layerBox = new ToNewLayerBox(LvlData);
+    ToNewLayerBox * layerBox = new ToNewLayerBox(LvlData, _viewPort);
     layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
     if(layerBox->exec()==QDialog::Accepted)

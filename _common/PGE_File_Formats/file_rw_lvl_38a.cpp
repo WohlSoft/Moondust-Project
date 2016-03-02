@@ -62,7 +62,7 @@ LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
     else file_format = 65;
 readLineAgain:
     nextLineH();   //Read second Line
-    PGE_SPLITSTR(currentLine, line, "|");
+    PGE_SPLITSTRING(currentLine, line, "|");
 
     if(currentLine.size()==0)
     {

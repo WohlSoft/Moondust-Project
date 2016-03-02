@@ -26,6 +26,7 @@
 
 class ItemTile : public WldBaseItem
 {
+    Q_OBJECT
     void construct();
 public:
     ItemTile(QGraphicsItem *parent=0);
