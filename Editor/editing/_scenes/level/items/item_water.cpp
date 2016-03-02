@@ -115,26 +115,26 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WaterType->deleteLater();
 
     #define CONTEXT_MENU_ITEM_CHK(name, enable, label, checked_condition)\
-        name = WaterType->addAction(tr(label));\
+        name = WaterType->addAction(label);\
         name->setCheckable(true);\
         name->setEnabled(enable);\
         name->setChecked(checked_condition); typeID++;
 
     QAction *envTypes[13]; int typeID=0;
 
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Water",        m_data.env_type==LevelPhysEnv::ENV_WATER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          "Quicksand",    m_data.env_type==LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Custom liquid", m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Gravitational Field", m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Touch Event (Once)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Touch Event (Every frame)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "NPC Touch Event (Once)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "NPC Touch Event (Every frame)", m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Mouse click Event", m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Collision script", m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Mouse click Script", m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Collision Event", m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, "Air chamber", m_data.env_type==LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Water"),        m_data.env_type==LevelPhysEnv::ENV_WATER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Quicksand"),    m_data.env_type==LevelPhysEnv::ENV_QUICKSAND);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Custom liquid"), m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Gravitational Field"), m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Mouse click Event"), m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Collision script"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Mouse click Script"), m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Collision Event"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Air chamber"), m_data.env_type==LevelPhysEnv::ENV_AIR);
 
     ItemMenu.addSeparator();
 
