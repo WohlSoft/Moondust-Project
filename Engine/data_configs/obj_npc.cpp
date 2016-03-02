@@ -22,6 +22,7 @@
 #include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/npctxt_manager.h>
+#include <common_features/util.h>
 
 #include <QFileInfo>
 #include <QDir>
@@ -211,15 +212,12 @@ bool ConfigManager::loadLevelNPC()
         snpc.frames_right.clear();
         if(snpc.custom_ani_alg==2)
         {
-            PGESTRINGList tmp;
             PGESTRING common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
-            tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
-            foreach(PGESTRING x, tmp)
-                snpc.frames_left.push_back(x.toInt());
-            tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
-            foreach(PGESTRING x, tmp)
-                snpc.frames_right.push_back(x.toInt());
-
+            PGESTRING tmp;
+            tmp = npcset.value("ani-frames-left", common).toString().remove(' '); //left direction
+            util::CSV2IntArr(tmp, snpc.frames_left);
+            tmp = npcset.value("ani-frames-right", common).toString().remove(' '); //right direction
+            util::CSV2IntArr(tmp, snpc.frames_right);
         }
         /*************Build custom animation settings**end**********/
 

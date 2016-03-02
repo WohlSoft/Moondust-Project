@@ -20,6 +20,7 @@
 #include <gui/pge_msgbox.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
+#include <common_features/util.h>
 
 /*****Level blocks************/
 PGE_DataArray<obj_block>   ConfigManager::lvl_block_indexes;
@@ -173,24 +174,8 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.plSwitch_frames_false.clear();
                 if(sblock.plSwitch_Button)
                 {
-                    QString tmp = blockset.value("player-switch-frames-true", "").toString();
-                    if(!tmp.isEmpty())
-                    {
-                        QStringList tmlL = tmp.split(',');
-                        foreach(QString fr, tmlL)
-                            sblock.plSwitch_frames_true.push_back(fr.toInt());
-                    }
-                    else
-                        sblock.plSwitch_frames_true.push_back(0);
-                    tmp = blockset.value("player-switch-frames-false", "").toString();
-                    if(!tmp.isEmpty())
-                    {
-                        QStringList tmlL = tmp.split(',');
-                        foreach(QString fr, tmlL)
-                            sblock.plSwitch_frames_false.push_back(fr.toInt());
-                    }
-                    else
-                        sblock.plSwitch_frames_false.push_back(0);
+                    util::CSV2IntArr(blockset.value("player-switch-frames-true", "").toString(), sblock.plSwitch_frames_true);
+                    util::CSV2IntArr(blockset.value("player-switch-frames-false", "").toString(), sblock.plSwitch_frames_false);
                 }
 
                 sblock.plFilter_Block= blockset.value("player-filter-block", false).toBool();
@@ -199,24 +184,8 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.plFilter_frames_false.clear();
                 if(sblock.plFilter_Block)
                 {
-                    QString tmp = blockset.value("player-filter-frames-true", "").toString();
-                    if(!tmp.isEmpty())
-                    {
-                        QStringList tmlL = tmp.split(',');
-                        foreach(QString fr, tmlL)
-                            sblock.plFilter_frames_true.push_back(fr.toInt());
-                    }
-                    else
-                        sblock.plFilter_frames_true.push_back(0);
-                    tmp = blockset.value("player-filter-frames-false", "").toString();
-                    if(!tmp.isEmpty())
-                    {
-                        QStringList tmlL = tmp.split(',');
-                        foreach(QString fr, tmlL)
-                            sblock.plFilter_frames_false.push_back(fr.toInt());
-                    }
-                    else
-                        sblock.plFilter_frames_false.push_back(0);
+                    util::CSV2IntArr(blockset.value("player-filter-frames-true", "").toString(), sblock.plFilter_frames_true);
+                    util::CSV2IntArr(blockset.value("player-filter-frames-false", "").toString(), sblock.plFilter_frames_false);
                 }
 
                 long iTmp;

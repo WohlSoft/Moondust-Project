@@ -18,6 +18,7 @@
 
 #include "config_manager.h"
 #include <common_features/number_limiter.h>
+#include <common_features/util.h>
 
 /*****Level BG************/
 PGE_DataArray<obj_BG>   ConfigManager::lvl_bg_indexes;
@@ -29,7 +30,6 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *me
 {
     bool valid=true;
     bool internal=!setup;
-    QStringList tmp;
     QString tmpstr, imgFile;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
@@ -82,18 +82,10 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *me
         NumberLimiter::applyD(sbg.magic_strips, 1u, 1u);
 
         sbg.magic_splits =      setup->value("magic-splits", (merge_with? merge_with->magic_splits:"0")).toString();
-        tmp.clear();
-        tmp = sbg.magic_splits.split(',');
-        sbg.magic_splits_i.clear();
-        foreach(QString x, tmp)
-            sbg.magic_splits_i.push_back(x.toInt());
+        sbg.magic_splits_i.clear(); util::CSV2IntArr(sbg.magic_splits, sbg.magic_splits_i);
 
         sbg.magic_speeds =      setup->value("magic-speeds", (merge_with? merge_with->magic_speeds:"0")).toString();
-        tmp.clear();
-        tmp = sbg.magic_speeds.split(',');
-        sbg.magic_speeds_i.clear();
-        foreach(QString x, tmp)
-            sbg.magic_speeds_i.push_back(x.toDouble());
+        sbg.magic_speeds_i.clear(); util::CSV2DoubleArr(sbg.magic_speeds, sbg.magic_speeds_i);
 
         sbg.animated =          setup->value("animated", (merge_with?merge_with->animated:false)).toBool();//animated
         sbg.frames =            setup->value("frames", (merge_with?merge_with->frames:1)).toInt();

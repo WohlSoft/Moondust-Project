@@ -48,6 +48,11 @@ public:
     static bool strempty(const char* str);
 
     static QString resolveRelativeOrAbsolute(const QString &path, const QStringList& relativeLookup);
+
+    static void CSV2IntArr(QString source, QList<int> &dest);
+    static void CSV2IntArr(QString source, QVector<int> &dest);
+    static void CSV2DoubleArr(QString source, QList<double> &dest);
+    static void CSV2DoubleArr(QString source, QVector<double> &dest);
 };
 
 namespace varadic_util

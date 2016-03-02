@@ -143,8 +143,43 @@ QString util::resolveRelativeOrAbsolute(const QString& path, const QStringList &
     return "";
 }
 
+#define CSV2IntArr_CODE(source, dest, func, def)\
+    \
+    if(!source.isEmpty())\
+    {\
+        bool ok;\
+        QStringList tmlL = source.split(',', QString::SkipEmptyParts);\
+        foreach(QString fr, tmlL)\
+        {\
+            dest.push_back(fr.func(&ok));\
+            if(!ok) dest.pop_back();\
+        }\
+        if(dest.isEmpty()) dest.push_back(def);\
+    }\
+    else\
+    {\
+        dest.push_back(def);\
+    }
 
+void util::CSV2IntArr(QString source, QList<int> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toInt, 0)
+}
 
+void util::CSV2IntArr(QString source, QVector<int> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toInt, 0)
+}
+
+void util::CSV2DoubleArr(QString source, QList<double> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toDouble, 0.0)
+}
+
+void util::CSV2DoubleArr(QString source, QVector<double> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toDouble, 0.0)
+}
 
 size_t charsets_utils::utf8len(const char *s)
 {
