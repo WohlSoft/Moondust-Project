@@ -2716,12 +2716,69 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Тип среды</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="125"/>
         <source>Water</source>
-        <translation type="vanished">Вода</translation>
+        <translation>Вода</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="126"/>
         <source>Quicksand</source>
-        <translation type="vanished">Зыбучий песок</translation>
+        <translation>Зыбучий песок</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="127"/>
+        <source>Custom liquid</source>
+        <translation>Пользовательская жидкость</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <source>Gravitational Field</source>
+        <translation>Гравитационное поле</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <source>Touch Event (Once)</source>
+        <translation>Событие касания (один раз)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <source>Touch Event (Every frame)</source>
+        <translation>Событие касания (Циклически)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <source>NPC Touch Event (Once)</source>
+        <translation>Событие касания нИП (Один раз)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <source>NPC Touch Event (Every frame)</source>
+        <translation>Событие касания нИП (Циклически)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <source>Mouse click Event</source>
+        <translation>Событие нажатия кнопки мыши</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <source>Collision script</source>
+        <translation>Скрипт коллизии</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <source>Mouse click Script</source>
+        <translation>Скрипт нажатия кнопки мыши</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <source>Collision Event</source>
+        <translation>Событие коллизии</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <source>Air chamber</source>
+        <translation>Воздушная камера</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>

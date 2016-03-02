@@ -2735,12 +2735,69 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Tipo de ambiente</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="125"/>
         <source>Water</source>
-        <translation type="vanished">Agua</translation>
+        <translation>Agua</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="126"/>
         <source>Quicksand</source>
-        <translation type="vanished">Arenas movedizas</translation>
+        <translation>Arenas movedizas</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="127"/>
+        <source>Custom liquid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <source>Gravitational Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <source>Touch Event (Once)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <source>Touch Event (Every frame)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <source>NPC Touch Event (Once)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <source>NPC Touch Event (Every frame)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <source>Mouse click Event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <source>Collision script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <source>Mouse click Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <source>Collision Event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <source>Air chamber</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
