@@ -1546,6 +1546,11 @@ Please save them first before doing anything else.</source>
         <translation>Добавить на новый слой...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="87"/>
+        <source>[hidden]</source>
+        <translation>[скрытый]</translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="99"/>
         <source>Change Z-Offset...</source>
         <translation>Изменить смещение Z...</translation>
@@ -1683,9 +1688,13 @@ Please save them first before doing anything else.</source>
         <translation>Добавить на новый слой...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
         <source> [hidden]</source>
-        <translation> [скрытый]</translation>
+        <translation type="vanished"> [скрытый]</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
+        <source>[hidden]</source>
+        <translation>[скрытый]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="100"/>
@@ -1772,7 +1781,7 @@ Please save them first before doing anything else.</source>
         <translation>Пожалуйста, введите имя события:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Пожалуйста, наберите сообщение для события
@@ -1780,27 +1789,27 @@ Message limits: max line lenth is 27 characters</source>
 максимальная длина строки 27 символов</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Hit message text</source>
         <translation>Текст сообщения стукнутого блока</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event has been created</source>
         <translation>Событие успешно создано</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Message event has been created!</source>
         <translation>Событие с сообщением успешно создано!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>Слот события &apos;Стуктут&apos; уже используется</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Извинте, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
     </message>
@@ -1859,6 +1868,11 @@ Message limits: max line lenth is 27 characters</source>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="90"/>
         <source>Add to new layer...</source>
         <translation>Добавить на новый слой...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="97"/>
+        <source>[hidden]</source>
+        <translation>[скрытый]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
@@ -2147,6 +2161,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="103"/>
         <source>Add to new layer...</source>
         <translation>Добавить на новый слой...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="111"/>
+        <source>[hidden]</source>
+        <translation>[скрытый]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="126"/>
@@ -2685,6 +2704,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="96"/>
         <source>Add to new layer...</source>
         <translation>Добавить на новый слой...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation>[скрытый]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
@@ -3408,6 +3432,229 @@ Do you want to save your changes?</source>
     <message>
         <source>NPC</source>
         <translation type="vanished">иНП</translation>
+    </message>
+</context>
+<context>
+    <name>LvlBaseItem</name>
+    <message>
+        <source>Layer: </source>
+        <translation type="obsolete">Слой: </translation>
+    </message>
+    <message>
+        <source>Add to new layer...</source>
+        <translation type="obsolete">Добавить на новый слой...</translation>
+    </message>
+    <message>
+        <source>Change Z-Offset...</source>
+        <translation type="obsolete">Изменить смещение Z...</translation>
+    </message>
+    <message>
+        <source>Z-Layer</source>
+        <translation type="obsolete">Z-Cлой</translation>
+    </message>
+    <message>
+        <source>Background-2</source>
+        <translation type="obsolete">Фон-2</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="obsolete">Фон</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="obsolete">По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Foreground-2</source>
+        <translation type="obsolete">Передний план-2</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Превратить в</translation>
+    </message>
+    <message>
+        <source>Transform all %1 in this section into</source>
+        <translation type="obsolete">Превратить все %1 из текущей секции в</translation>
+    </message>
+    <message>
+        <source>Transform all %1 into</source>
+        <translation type="obsolete">Превратить все %1 в</translation>
+    </message>
+    <message>
+        <source>Copy preferences</source>
+        <translation type="obsolete">Копировать свойства</translation>
+    </message>
+    <message>
+        <source>BGO-ID: %1</source>
+        <translation type="obsolete">ID Фонового объекта: %1</translation>
+    </message>
+    <message>
+        <source>Position: X, Y</source>
+        <translation type="obsolete">Положение: X, Y</translation>
+    </message>
+    <message>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="obsolete">Положение: X, Y, Ширина, Высота</translation>
+    </message>
+    <message>
+        <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="obsolete">Положение: Лево, Верх, Право, Низ</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Копировать</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вырезать</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Удалить</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Свойства...</translation>
+    </message>
+    <message>
+        <source>Z-Offset</source>
+        <translation type="obsolete">Смещение Z</translation>
+    </message>
+    <message>
+        <source>Please enter the Z-value offset:</source>
+        <translation type="obsolete">Пожалуйста, введите значение смещения Z:</translation>
+    </message>
+    <message>
+        <source>Margin of section</source>
+        <translation type="obsolete">Поля секции</translation>
+    </message>
+    <message>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation type="obsolete">Укажите величину поля вокруг секции,
+объекты которого также будут удалены (в пикселях)</translation>
+    </message>
+    <message>
+        <source>Preferences has been copied: %1</source>
+        <translation type="obsolete">Свойства скопированы: %1</translation>
+    </message>
+    <message>
+        <source>Invisible</source>
+        <translation type="obsolete">Невидимый</translation>
+    </message>
+    <message>
+        <source>Slippery</source>
+        <translation type="obsolete">Скользкий</translation>
+    </message>
+    <message>
+        <source>Resize</source>
+        <translation type="obsolete">Изменить размер</translation>
+    </message>
+    <message>
+        <source>Change included NPC...</source>
+        <translation type="obsolete">Изменить содержимое блока...</translation>
+    </message>
+    <message>
+        <source>Make message box...</source>
+        <translation type="obsolete">Сделать всплыв. сообщение...</translation>
+    </message>
+    <message>
+        <source>Block-ID: %1</source>
+        <translation type="obsolete">ID Блока: %1</translation>
+    </message>
+    <message>
+        <source>Event name</source>
+        <translation type="obsolete">Имя события</translation>
+    </message>
+    <message>
+        <source>Please enter the name of event:</source>
+        <translation type="obsolete">Пожалуйста, введите имя события:</translation>
+    </message>
+    <message>
+        <source>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</source>
+        <translation type="obsolete">Пожалуйста, наберите сообщение для события
+Ограничения сообщения:
+максимальная длина строки 27 символов</translation>
+    </message>
+    <message>
+        <source>Hit message text</source>
+        <translation type="obsolete">Текст сообщения стукнутого блока</translation>
+    </message>
+    <message>
+        <source>Event has been created</source>
+        <translation type="obsolete">Событие успешно создано</translation>
+    </message>
+    <message>
+        <source>Message event has been created!</source>
+        <translation type="obsolete">Событие с сообщением успешно создано!</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is used</source>
+        <translation type="obsolete">Слот события &apos;Стуктут&apos; уже используется</translation>
+    </message>
+    <message>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
+        <translation type="obsolete">Извинте, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Open target level: %1</source>
+        <translation type="obsolete">Открыть целевой уровень: %1</translation>
+    </message>
+    <message>
+        <source>Jump to exit</source>
+        <translation type="obsolete">Перейти к выходу</translation>
+    </message>
+    <message>
+        <source>Jump to entrance</source>
+        <translation type="obsolete">Перейти ко входу</translation>
+    </message>
+    <message>
+        <source>Need a bomb</source>
+        <translation type="obsolete">Нужна бомба</translation>
+    </message>
+    <message>
+        <source>Required special state</source>
+        <translation type="obsolete">Требуется спец-состояние</translation>
+    </message>
+    <message>
+        <source>Edit NPC-Configuration</source>
+        <translation type="obsolete">Править конфигурацию НИП</translation>
+    </message>
+    <message>
+        <source>New NPC-Configuration</source>
+        <translation type="obsolete">Новая конфигурация НИП</translation>
+    </message>
+    <message>
+        <source>Set %1</source>
+        <translation type="obsolete">Установить %1</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="obsolete">Случайно</translation>
+    </message>
+    <message>
+        <source>Friendly</source>
+        <translation type="obsolete">Дружественный</translation>
+    </message>
+    <message>
+        <source>Doesn&apos;t move</source>
+        <translation type="obsolete">Неподвижный</translation>
+    </message>
+    <message>
+        <source>Set message...</source>
+        <translation type="obsolete">Установить сообщение...</translation>
+    </message>
+    <message>
+        <source>Set as Boss</source>
+        <translation type="obsolete">Сделать Боссом</translation>
+    </message>
+    <message>
+        <source>NPC-ID: %1</source>
+        <translation type="obsolete">ID нИП: %1</translation>
+    </message>
+    <message>
+        <source>Environment type</source>
+        <translation type="obsolete">Тип среды</translation>
     </message>
 </context>
 <context>
@@ -5488,12 +5735,12 @@ Every warp points pair requires a warp entry</source>
         <translation type="vanished">Дверь №</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>World map files not found</source>
         <translation>Файлы карт мира не найдены</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1036"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5502,24 +5749,24 @@ File path: %1</source>
 Путь к файлу: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1047"/>
         <source>Select world map file</source>
         <translation>Выбор файла карты мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Обнаружено больше чем одна карта мира.
 Пожалуйста, выберите нужную карту мира в списке:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1059"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1060"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
@@ -11362,6 +11609,97 @@ because object configurations are not loaded
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
         <source>Select the point on the world map first.</source>
         <translation>Сначала укажите точку на карте мира.</translation>
+    </message>
+</context>
+<context>
+    <name>WldBaseItem</name>
+    <message>
+        <source>Open target file: %1</source>
+        <translation type="obsolete">Открыть целевой файл: %1</translation>
+    </message>
+    <message>
+        <source>Path background</source>
+        <translation type="obsolete">Фоновый путь</translation>
+    </message>
+    <message>
+        <source>Big Path background</source>
+        <translation type="obsolete">Большой фоновый путь</translation>
+    </message>
+    <message>
+        <source>Always Visible</source>
+        <translation type="obsolete">Всегда Видим</translation>
+    </message>
+    <message>
+        <source>Copy preferences</source>
+        <translation type="obsolete">Копировать свойства</translation>
+    </message>
+    <message>
+        <source>Level-ID: %1</source>
+        <translation type="obsolete">ID Уровня: %1</translation>
+    </message>
+    <message>
+        <source>Position: X, Y</source>
+        <translation type="obsolete">Положение: X, Y</translation>
+    </message>
+    <message>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="obsolete">Положение: X, Y, Ширина, Высота</translation>
+    </message>
+    <message>
+        <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="obsolete">Положение: Лево, Верх, Право, Низ</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Копировать</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вырезать</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Превратить в</translation>
+    </message>
+    <message>
+        <source>Transform all %1 into</source>
+        <translation type="obsolete">Превратить все %1 в</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Удалить</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Свойства...</translation>
+    </message>
+    <message>
+        <source>Preferences has been copied: %1</source>
+        <translation type="obsolete">Свойства скопированы: %1</translation>
+    </message>
+    <message>
+        <source>&lt;Silence&gt;</source>
+        <translation type="obsolete">&lt;Тишина&gt;</translation>
+    </message>
+    <message>
+        <source>Play this</source>
+        <translation type="obsolete">Воспроизвести</translation>
+    </message>
+    <message>
+        <source>World-Music-ID: %1</source>
+        <translation type="obsolete">ID Музыки карты мира: %1</translation>
+    </message>
+    <message>
+        <source>Path-ID: %1</source>
+        <translation type="obsolete">ID Пути: %1</translation>
+    </message>
+    <message>
+        <source>Scenery-ID: %1</source>
+        <translation type="obsolete">ID Декорации: %1</translation>
+    </message>
+    <message>
+        <source>Tile-ID: %1</source>
+        <translation type="obsolete">ID Плитки: %1</translation>
     </message>
 </context>
 <context>

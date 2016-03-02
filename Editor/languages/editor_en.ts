@@ -1605,6 +1605,11 @@ Please save them before doing anything else.</translation>
         <translation>Add to new layer...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="87"/>
+        <source>[hidden]</source>
+        <translation>[hidden]</translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="99"/>
         <source>Change Z-Offset...</source>
         <translation>Change Z-Offset...</translation>
@@ -1741,9 +1746,13 @@ Please save them before doing anything else.</translation>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
         <source> [hidden]</source>
-        <translation> [hidden]</translation>
+        <translation type="vanished"> [hidden]</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
+        <source>[hidden]</source>
+        <translation>[hidden]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="100"/>
@@ -1829,34 +1838,34 @@ Please save them before doing anything else.</translation>
         <translation>Please enter the name of event:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Hit message text</source>
         <translation>Hit message text</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event has been created</source>
         <translation>Event has been created</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Message event has been created!</source>
         <translation>Message event has been created!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>&apos;Hit&apos; event slot is used</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</translation>
     </message>
@@ -1915,6 +1924,11 @@ Message limits: max line lenth is 27 characters</translation>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="90"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="97"/>
+        <source>[hidden]</source>
+        <translation>[hidden]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
@@ -2201,6 +2215,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="103"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="111"/>
+        <source>[hidden]</source>
+        <translation>[hidden]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="126"/>
@@ -2738,6 +2757,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="96"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation>[hidden]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
@@ -3461,6 +3485,255 @@ Do you want to save your changes?</translation>
     <message>
         <source>NPC</source>
         <translation type="vanished">NPC</translation>
+    </message>
+</context>
+<context>
+    <name>LvlBaseItem</name>
+    <message>
+        <source>Layer: </source>
+        <translation type="obsolete">Layer: </translation>
+    </message>
+    <message>
+        <source>Add to new layer...</source>
+        <translation type="obsolete">Add to new layer...</translation>
+    </message>
+    <message>
+        <source>Change Z-Offset...</source>
+        <translation type="obsolete">Change Z-Offset...</translation>
+    </message>
+    <message>
+        <source>Z-Layer</source>
+        <translation type="obsolete">Z-Layer</translation>
+    </message>
+    <message>
+        <source>Background-2</source>
+        <translation type="obsolete">Background-2</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="obsolete">Background</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="obsolete">Default</translation>
+    </message>
+    <message>
+        <source>Foreground</source>
+        <translation type="obsolete">Foreground</translation>
+    </message>
+    <message>
+        <source>Foreground-2</source>
+        <translation type="obsolete">Foreground-2</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Transform into</translation>
+    </message>
+    <message>
+        <source>Transform all %1 in this section into</source>
+        <translation type="obsolete">Transform all %1 in this section into</translation>
+    </message>
+    <message>
+        <source>Transform all %1 into</source>
+        <translation type="obsolete">Transform all %1 into</translation>
+    </message>
+    <message>
+        <source>Copy preferences</source>
+        <translation type="obsolete">Copy preferences</translation>
+    </message>
+    <message>
+        <source>BGO-ID: %1</source>
+        <translation type="obsolete">BGO-ID: %1</translation>
+    </message>
+    <message>
+        <source>Position: X, Y</source>
+        <translation type="obsolete">Position: X, Y</translation>
+    </message>
+    <message>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="obsolete">Position: X, Y, Width, Height</translation>
+    </message>
+    <message>
+        <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="obsolete">Position: Left, Top, Right, Bottom</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Copy</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Cut</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Remove</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Properties...</translation>
+    </message>
+    <message>
+        <source>Z-Offset</source>
+        <translation type="obsolete">Z-Offset</translation>
+    </message>
+    <message>
+        <source>Please enter the Z-value offset:</source>
+        <translation type="obsolete">Please enter the Z-offset value:</translation>
+    </message>
+    <message>
+        <source>Margin of section</source>
+        <translation type="obsolete">Section margin</translation>
+    </message>
+    <message>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation type="obsolete">Please select how far items can travel beyond the section boundaries (in pixels) before they are removed</translation>
+    </message>
+    <message>
+        <source>Preferences has been copied: %1</source>
+        <translation type="obsolete">Preferences has been copied: %1</translation>
+    </message>
+    <message>
+        <source>Invisible</source>
+        <translation type="obsolete">Invisible</translation>
+    </message>
+    <message>
+        <source>Slippery</source>
+        <translation type="obsolete">Slippery</translation>
+    </message>
+    <message>
+        <source>Resize</source>
+        <translation type="obsolete">Resize</translation>
+    </message>
+    <message>
+        <source>Change included NPC...</source>
+        <translation type="obsolete">Change contained NPC...</translation>
+    </message>
+    <message>
+        <source>Make message box...</source>
+        <translation type="obsolete">Make message box...</translation>
+    </message>
+    <message>
+        <source>Block-ID: %1</source>
+        <translation type="obsolete">Block-ID: %1</translation>
+    </message>
+    <message>
+        <source>Event name</source>
+        <translation type="obsolete">Event name</translation>
+    </message>
+    <message>
+        <source>Please enter the name of event:</source>
+        <translation type="obsolete">Please enter the name of event:</translation>
+    </message>
+    <message>
+        <source>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</source>
+        <translation type="obsolete">Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</translation>
+    </message>
+    <message>
+        <source>Hit message text</source>
+        <translation type="obsolete">Hit message text</translation>
+    </message>
+    <message>
+        <source>Event has been created</source>
+        <translation type="obsolete">Event has been created</translation>
+    </message>
+    <message>
+        <source>Message event has been created!</source>
+        <translation type="obsolete">Message event has been created!</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is used</source>
+        <translation type="obsolete">&apos;Hit&apos; event slot is used</translation>
+    </message>
+    <message>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
+        <translation type="obsolete">Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</translation>
+    </message>
+    <message>
+        <source>Open target level: %1</source>
+        <translation type="obsolete">Open target level: %1</translation>
+    </message>
+    <message>
+        <source>Jump to exit</source>
+        <translation type="obsolete">Jump to exit</translation>
+    </message>
+    <message>
+        <source>Jump to entrance</source>
+        <translation type="obsolete">Jump to entrance</translation>
+    </message>
+    <message>
+        <source>No Vehicles</source>
+        <translation type="obsolete">Deny vehicles</translation>
+    </message>
+    <message>
+        <source>Allow NPC</source>
+        <translation type="obsolete">Allow items</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="obsolete">Locked</translation>
+    </message>
+    <message>
+        <source>Need a bomb</source>
+        <translation type="obsolete">Need a bomb</translation>
+    </message>
+    <message>
+        <source>Required special state</source>
+        <translation type="obsolete">Required special state</translation>
+    </message>
+    <message>
+        <source>Edit NPC-Configuration</source>
+        <translation type="obsolete">Edit NPC-Configuration</translation>
+    </message>
+    <message>
+        <source>New NPC-Configuration</source>
+        <translation type="obsolete">New NPC-Configuration</translation>
+    </message>
+    <message>
+        <source>Set %1</source>
+        <translation type="obsolete">Set %1</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="obsolete">Direction</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="obsolete">Left</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="obsolete">Random</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="obsolete">Right</translation>
+    </message>
+    <message>
+        <source>Friendly</source>
+        <translation type="obsolete">Friendly</translation>
+    </message>
+    <message>
+        <source>Doesn&apos;t move</source>
+        <translation type="obsolete">Doesn&apos;t move</translation>
+    </message>
+    <message>
+        <source>Set message...</source>
+        <translation type="obsolete">Set message...</translation>
+    </message>
+    <message>
+        <source>Set as Boss</source>
+        <translation type="obsolete">Set as Boss</translation>
+    </message>
+    <message>
+        <source>NPC-ID: %1</source>
+        <translation type="obsolete">NPC-ID: %1</translation>
+    </message>
+    <message>
+        <source>Environment type</source>
+        <translation type="obsolete">Environment type</translation>
     </message>
 </context>
 <context>
@@ -5537,12 +5810,12 @@ Every warp points pair requires a warp entry</translation>
         <translation type="vanished">Enter at warp #</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>World map files not found</source>
         <translation>World map files not found</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1036"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5551,24 +5824,24 @@ Please put this level file with a world map, or create a new world map in the sa
 File path: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1047"/>
         <source>Select world map file</source>
         <translation>Select world map file</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Found more than one world map file.
 Please select the map you want to use:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1059"/>
         <source>File open error</source>
         <translation>File open error</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1060"/>
         <source>Can&apos;t open the file.</source>
         <translation>Can&apos;t open the file!.</translation>
     </message>
@@ -11376,6 +11649,97 @@ Please check that the config/SMBX directory exists and contains the *.INI files 
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
         <source>Select the point on the world map first.</source>
         <translation>Select a point on the world map first.</translation>
+    </message>
+</context>
+<context>
+    <name>WldBaseItem</name>
+    <message>
+        <source>Open target file: %1</source>
+        <translation type="obsolete">Open target file: %1</translation>
+    </message>
+    <message>
+        <source>Path background</source>
+        <translation type="obsolete">Background Path</translation>
+    </message>
+    <message>
+        <source>Big Path background</source>
+        <translation type="obsolete">Big Background Path</translation>
+    </message>
+    <message>
+        <source>Always Visible</source>
+        <translation type="obsolete">Always Visible</translation>
+    </message>
+    <message>
+        <source>Copy preferences</source>
+        <translation type="obsolete">Copy preferences</translation>
+    </message>
+    <message>
+        <source>Level-ID: %1</source>
+        <translation type="obsolete">Level-ID: %1</translation>
+    </message>
+    <message>
+        <source>Position: X, Y</source>
+        <translation type="obsolete">Position: X, Y</translation>
+    </message>
+    <message>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="obsolete">Position: X, Y, Width, Height</translation>
+    </message>
+    <message>
+        <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="obsolete">Position: Left, Top, Right, Bottom</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Copy</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Cut</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Transform into</translation>
+    </message>
+    <message>
+        <source>Transform all %1 into</source>
+        <translation type="obsolete">Transform all %1 into</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Remove</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Properties...</translation>
+    </message>
+    <message>
+        <source>Preferences has been copied: %1</source>
+        <translation type="obsolete">Preferences has been copied: %1</translation>
+    </message>
+    <message>
+        <source>&lt;Silence&gt;</source>
+        <translation type="obsolete">&lt;Silence&gt;</translation>
+    </message>
+    <message>
+        <source>Play this</source>
+        <translation type="obsolete">Play this</translation>
+    </message>
+    <message>
+        <source>World-Music-ID: %1</source>
+        <translation type="obsolete">World-Music-ID: %1</translation>
+    </message>
+    <message>
+        <source>Path-ID: %1</source>
+        <translation type="obsolete">Path-ID: %1</translation>
+    </message>
+    <message>
+        <source>Scenery-ID: %1</source>
+        <translation type="obsolete">Scenery-ID: %1</translation>
+    </message>
+    <message>
+        <source>Tile-ID: %1</source>
+        <translation type="obsolete">Tile-ID: %1</translation>
     </message>
 </context>
 <context>

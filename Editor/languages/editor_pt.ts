@@ -1458,6 +1458,11 @@ Please save them first before doing anything else.</source>
         <translation>Adicionar a nova camada...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="87"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="99"/>
         <source>Change Z-Offset...</source>
         <translation>Mudar localização Z...</translation>
@@ -1594,9 +1599,13 @@ Please save them first before doing anything else.</source>
         <translation>Adicionar a nova camada...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
         <source> [hidden]</source>
-        <translation>[oculto]</translation>
+        <translation type="vanished">[oculto]</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="100"/>
@@ -1682,34 +1691,34 @@ Please save them first before doing anything else.</source>
         <translation>Por favor, insira o nome do evento:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Coloque aqui a mensagem que será mostrada.
 Apenas 27 caracteres por linha</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Hit message text</source>
         <translation>Texto da mensagem do evento Bater</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event has been created</source>
         <translation>O evento foi criado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Message event has been created!</source>
         <translation>Evento de mensagem criado!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>O campo de evento &apos;Bater&apos; está ocupado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
     </message>
@@ -1768,6 +1777,11 @@ Apenas 27 caracteres por linha</translation>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="90"/>
         <source>Add to new layer...</source>
         <translation>Adicionar a nova camada...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="97"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
@@ -2036,6 +2050,11 @@ Apenas 27 caracteres por linha</translation>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="103"/>
         <source>Add to new layer...</source>
         <translation>Adicionar a nova camada...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="111"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="126"/>
@@ -2563,17 +2582,14 @@ Apenas 27 caracteres por linha</translation>
         <translation>Adicionar a nova camada...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
         <translation>Tipo de ambiente</translation>
-    </message>
-    <message>
-        <source>Water</source>
-        <translation type="vanished">Água</translation>
-    </message>
-    <message>
-        <source>Quicksand</source>
-        <translation type="vanished">Areia movediça</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
@@ -2595,6 +2611,14 @@ Apenas 27 caracteres por linha</translation>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Water</source>
+        <translation type="vanished">Água</translation>
+    </message>
+    <message>
+        <source>Quicksand</source>
+        <translation type="vanished">Areia movediça</translation>
     </message>
     <message>
         <source>Show zone range data</source>
@@ -3191,6 +3215,183 @@ Deseja salvar sua mudanças?</translation>
         <location filename="../editing/edit_level/levelprops.ui" line="242"/>
         <source>Trigger event</source>
         <translation>Ativar evento</translation>
+    </message>
+</context>
+<context>
+    <name>LvlBaseItem</name>
+    <message>
+        <source>Layer: </source>
+        <translation type="obsolete">Camada:</translation>
+    </message>
+    <message>
+        <source>Add to new layer...</source>
+        <translation type="obsolete">Adicionar a nova camada...</translation>
+    </message>
+    <message>
+        <source>Change Z-Offset...</source>
+        <translation type="obsolete">Mudar localização Z...</translation>
+    </message>
+    <message>
+        <source>Z-Layer</source>
+        <translation type="obsolete">Camada Z</translation>
+    </message>
+    <message>
+        <source>Background-2</source>
+        <translation type="obsolete">Plando de fundo 2</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="obsolete">Plando de fundo</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="obsolete">Padrão</translation>
+    </message>
+    <message>
+        <source>Foreground-2</source>
+        <translation type="obsolete">Parte frontal 2</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Transformar em</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Copiar</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Cortar</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Propiedades...</translation>
+    </message>
+    <message>
+        <source>Z-Offset</source>
+        <translation type="obsolete">Localização Z</translation>
+    </message>
+    <message>
+        <source>Please enter the Z-value offset:</source>
+        <translation type="obsolete">Por favor, insira o valor-Z da localização:</translation>
+    </message>
+    <message>
+        <source>Margin of section</source>
+        <translation type="obsolete">Margem de seção</translation>
+    </message>
+    <message>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation type="obsolete">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+    </message>
+    <message>
+        <source>Invisible</source>
+        <translation type="obsolete">Invisível</translation>
+    </message>
+    <message>
+        <source>Slippery</source>
+        <translation type="obsolete">Escorregadio</translation>
+    </message>
+    <message>
+        <source>Resize</source>
+        <translation type="obsolete">Redimensionar</translation>
+    </message>
+    <message>
+        <source>Change included NPC...</source>
+        <translation type="obsolete">Mudar NPC incluído...</translation>
+    </message>
+    <message>
+        <source>Make message box...</source>
+        <translation type="obsolete">Fazer caixa de mensagem...</translation>
+    </message>
+    <message>
+        <source>Event name</source>
+        <translation type="obsolete">Nome do evento</translation>
+    </message>
+    <message>
+        <source>Please enter the name of event:</source>
+        <translation type="obsolete">Por favor, insira o nome do evento:</translation>
+    </message>
+    <message>
+        <source>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</source>
+        <translation type="obsolete">Coloque aqui a mensagem que será mostrada.
+Apenas 27 caracteres por linha</translation>
+    </message>
+    <message>
+        <source>Hit message text</source>
+        <translation type="obsolete">Texto da mensagem do evento Bater</translation>
+    </message>
+    <message>
+        <source>Event has been created</source>
+        <translation type="obsolete">O evento foi criado</translation>
+    </message>
+    <message>
+        <source>Message event has been created!</source>
+        <translation type="obsolete">Evento de mensagem criado!</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is used</source>
+        <translation type="obsolete">O campo de evento &apos;Bater&apos; está ocupado</translation>
+    </message>
+    <message>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
+        <translation type="obsolete">Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Open target level: %1</source>
+        <translation type="obsolete">Abrir nível desejado: %1</translation>
+    </message>
+    <message>
+        <source>Jump to exit</source>
+        <translation type="obsolete">Pular para saída</translation>
+    </message>
+    <message>
+        <source>Jump to entrance</source>
+        <translation type="obsolete">Pular para a entrada</translation>
+    </message>
+    <message>
+        <source>No Vehicles</source>
+        <translation type="obsolete">Barrar veículos</translation>
+    </message>
+    <message>
+        <source>Allow NPC</source>
+        <translation type="obsolete">Permitir NPCs</translation>
+    </message>
+    <message>
+        <source>Edit NPC-Configuration</source>
+        <translation type="obsolete">Editar configurações do NPC</translation>
+    </message>
+    <message>
+        <source>New NPC-Configuration</source>
+        <translation type="obsolete">Nova configuração de NPC</translation>
+    </message>
+    <message>
+        <source>Set %1</source>
+        <translation type="obsolete">Definir %1</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="obsolete">Direção</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="obsolete">Esquerda</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="obsolete">Aleatório</translation>
+    </message>
+    <message>
+        <source>Friendly</source>
+        <translation type="obsolete">Amigável</translation>
+    </message>
+    <message>
+        <source>Set message...</source>
+        <translation type="obsolete">Definir mensagem...</translation>
+    </message>
+    <message>
+        <source>Environment type</source>
+        <translation type="obsolete">Tipo de ambiente</translation>
     </message>
 </context>
 <context>
@@ -4856,12 +5057,12 @@ no transporte
 número</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>World map files not found</source>
         <translation>Arquivos de mundo não encontrados</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1036"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -4870,24 +5071,24 @@ Por favor, coloque este arquivo de nível atual junto de um mundo, ou crie um no
 Caminho: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1047"/>
         <source>Select world map file</source>
         <translation>Selecionar arquivo de mundo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Foram encontrados mais um arquivo de mundo.
 Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1059"/>
         <source>File open error</source>
         <translation>Erro ao abrir arquivo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1060"/>
         <source>Can&apos;t open the file.</source>
         <translation>Não foi possível abrir o arquivo.</translation>
     </message>
@@ -9196,6 +9397,49 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
         <source>Select the point on the world map first.</source>
         <translation>Selecione um ponto no mapa primeiro.</translation>
+    </message>
+</context>
+<context>
+    <name>WldBaseItem</name>
+    <message>
+        <source>Open target file: %1</source>
+        <translation type="obsolete">Abrir arquivo desejado: %1</translation>
+    </message>
+    <message>
+        <source>Path background</source>
+        <translation type="obsolete">Com Caminho</translation>
+    </message>
+    <message>
+        <source>Big Path background</source>
+        <translation type="obsolete">Com caminho grande</translation>
+    </message>
+    <message>
+        <source>Always Visible</source>
+        <translation type="obsolete">Sempre visível</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Copiar</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Cortar</translation>
+    </message>
+    <message>
+        <source>Transform into</source>
+        <translation type="obsolete">Transformar em</translation>
+    </message>
+    <message>
+        <source>Properties...</source>
+        <translation type="obsolete">Propiedades...</translation>
+    </message>
+    <message>
+        <source>&lt;Silence&gt;</source>
+        <translation type="obsolete">&lt;Silêncio&gt;</translation>
+    </message>
+    <message>
+        <source>Play this</source>
+        <translation type="obsolete">Tocar isso</translation>
     </message>
 </context>
 <context>

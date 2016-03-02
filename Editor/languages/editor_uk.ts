@@ -1371,6 +1371,11 @@ Please save them first before doing anything else.</source>
         <translation>Додати на новий шар...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="87"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="99"/>
         <source>Change Z-Offset...</source>
         <translation type="unfinished"></translation>
@@ -1507,9 +1512,13 @@ Please save them first before doing anything else.</source>
         <translation>Додати на новий шар...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
         <source> [hidden]</source>
-        <translation> [Прихований]</translation>
+        <translation type="vanished"> [Прихований]</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="100"/>
@@ -1527,6 +1536,11 @@ Please save them first before doing anything else.</source>
         <translation>Змінити розмір</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
+        <source>Change included NPC...</source>
+        <translation>Змінити вміст блока...</translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
@@ -1539,6 +1553,11 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
         <source>Transform all %1 into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="117"/>
+        <source>Make message box...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1564,6 +1583,26 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="125"/>
         <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <source>Copy</source>
+        <translation>Копіювати</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
+        <source>Cut</source>
+        <translation>Вирізати</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
+        <source>Remove</source>
+        <translation>Видалити</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
+        <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1595,64 +1634,34 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event has been created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Message event has been created!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
-        <source>Change included NPC...</source>
-        <translation>Змінити вміст блока...</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="117"/>
-        <source>Make message box...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
-        <source>Copy</source>
-        <translation>Копіювати</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
-        <source>Cut</source>
-        <translation>Вирізати</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
-        <source>Remove</source>
-        <translation>Видалити</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
-        <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1672,6 +1681,11 @@ Message limits: max line lenth is 27 characters</source>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="90"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Додати на новий шар...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="97"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
@@ -1947,6 +1961,11 @@ Message limits: max line lenth is 27 characters</source>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="103"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Додати на новий шар...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="111"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="126"/>
@@ -2470,6 +2489,11 @@ Message limits: max line lenth is 27 characters</source>
         <translation type="unfinished">Додати на новий шар...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
         <translation type="unfinished"></translation>
@@ -2487,12 +2511,6 @@ Message limits: max line lenth is 27 characters</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="182"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
-        <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2514,6 +2532,12 @@ Message limits: max line lenth is 27 characters</source>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
         <source>Remove</source>
         <translation type="unfinished">Видалити</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
+        <source>Preferences has been copied: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2993,6 +3017,45 @@ Do you want to save your changes?</source>
         <location filename="../editing/edit_level/levelprops.ui" line="242"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LvlBaseItem</name>
+    <message>
+        <source>Layer: </source>
+        <translation type="obsolete">Шар: </translation>
+    </message>
+    <message>
+        <source>Add to new layer...</source>
+        <translation type="obsolete">Додати на новий шар...</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Копіювати</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вирізати</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Видалити</translation>
+    </message>
+    <message>
+        <source>Invisible</source>
+        <translation type="obsolete">Невидимий</translation>
+    </message>
+    <message>
+        <source>Slippery</source>
+        <translation type="obsolete">Слизький</translation>
+    </message>
+    <message>
+        <source>Resize</source>
+        <translation type="obsolete">Змінити розмір</translation>
+    </message>
+    <message>
+        <source>Change included NPC...</source>
+        <translation type="obsolete">Змінити вміст блока...</translation>
     </message>
 </context>
 <context>
@@ -4615,35 +4678,35 @@ Every warp points pair requires a warp entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1036"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1047"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1059"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1060"/>
         <source>Can&apos;t open the file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8663,6 +8726,21 @@ because object configurations are not loaded
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
         <source>Select the point on the world map first.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WldBaseItem</name>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Копіювати</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вирізати</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="obsolete">Видалити</translation>
     </message>
 </context>
 <context>

@@ -1383,6 +1383,11 @@ Please save them first before doing anything else.</source>
         <translation>aggiungi a nuovo strato...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="87"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="99"/>
         <source>Change Z-Offset...</source>
         <translation type="unfinished"></translation>
@@ -1519,9 +1524,13 @@ Please save them first before doing anything else.</source>
         <translation>aggiungi a nuovo strato...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
         <source> [hidden]</source>
-        <translation>[nascosto]</translation>
+        <translation type="vanished">[nascosto]</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="90"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="100"/>
@@ -1539,6 +1548,11 @@ Please save them first before doing anything else.</source>
         <translation>ridimensiona</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
+        <source>Change included NPC...</source>
+        <translation>cambia NPC incluso...</translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
@@ -1551,6 +1565,11 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
         <source>Transform all %1 into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="117"/>
+        <source>Make message box...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1577,6 +1596,26 @@ Please save them first before doing anything else.</source>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="125"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <source>Copy</source>
+        <translation>copia</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
+        <source>Cut</source>
+        <translation>taglia</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
+        <source>Remove</source>
+        <translation>rimuovi</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
+        <source>Properties...</source>
+        <translation>propietà...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
@@ -1607,65 +1646,35 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="303"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event has been created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Message event has been created!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
-        <source>Change included NPC...</source>
-        <translation>cambia NPC incluso...</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="117"/>
-        <source>Make message box...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
-        <source>Copy</source>
-        <translation>copia</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
-        <source>Cut</source>
-        <translation>taglia</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
-        <source>Remove</source>
-        <translation>rimuovi</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
-        <source>Properties...</source>
-        <translation>propietà...</translation>
     </message>
 </context>
 <context>
@@ -1684,6 +1693,11 @@ Message limits: max line lenth is 27 characters</source>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="90"/>
         <source>Add to new layer...</source>
         <translation>aggiungi uno strato</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="97"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
@@ -1964,6 +1978,11 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <translation>aggiungi a nuovo strato...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="111"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="126"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
@@ -2009,34 +2028,24 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="165"/>
+        <source>Transform into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="166"/>
+        <source>Transform all %1 in this section into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
+        <source>Transform all %1 into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
         <source>Change included NPC...</source>
         <translation type="unfinished">cambia NPC incluso...</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
-        <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
-        <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
-        <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
-        <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
-        <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="238"/>
@@ -2071,18 +2080,28 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <translation>setta come boss</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="165"/>
-        <source>Transform into</source>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
+        <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="166"/>
-        <source>Transform all %1 in this section into</source>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
+        <source>NPC-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
-        <source>Transform all %1 into</source>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
+        <source>Position: X, Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
+        <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2490,17 +2509,14 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <translation>aggiungi a nuovo strato...</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
         <translation>tipo di ambiente</translation>
-    </message>
-    <message>
-        <source>Water</source>
-        <translation type="vanished">acqua</translation>
-    </message>
-    <message>
-        <source>Quicksand</source>
-        <translation type="vanished">sabbie mobili</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
@@ -2522,6 +2538,14 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Water</source>
+        <translation type="vanished">acqua</translation>
+    </message>
+    <message>
+        <source>Quicksand</source>
+        <translation type="vanished">sabbie mobili</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="146"/>
@@ -3061,6 +3085,81 @@ Do you want to save your changes?</source>
     <message>
         <source>NPC</source>
         <translation type="obsolete">NPC</translation>
+    </message>
+</context>
+<context>
+    <name>LvlBaseItem</name>
+    <message>
+        <source>Invisible</source>
+        <translation type="obsolete">invisibile</translation>
+    </message>
+    <message>
+        <source>Slippery</source>
+        <translation type="obsolete">scivoloso</translation>
+    </message>
+    <message>
+        <source>Resize</source>
+        <translation type="obsolete">ridimensiona</translation>
+    </message>
+    <message>
+        <source>Change included NPC...</source>
+        <translation type="obsolete">cambia NPC incluso...</translation>
+    </message>
+    <message>
+        <source>Jump to exit</source>
+        <translation type="obsolete">vai all&apos;uscita</translation>
+    </message>
+    <message>
+        <source>Jump to entrance</source>
+        <translation type="obsolete">vai all&apos;entrata</translation>
+    </message>
+    <message>
+        <source>Allow NPC</source>
+        <translation type="obsolete">permetti npc</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="obsolete">chiuso a chiave</translation>
+    </message>
+    <message>
+        <source>New NPC-Configuration</source>
+        <translation type="obsolete">nuova configurazione di NPC</translation>
+    </message>
+    <message>
+        <source>Set %1</source>
+        <translation type="obsolete">setta %1</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="obsolete">direzione</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="obsolete">sinistra</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="obsolete">casuale</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="obsolete">destra</translation>
+    </message>
+    <message>
+        <source>Friendly</source>
+        <translation type="obsolete">amichevole</translation>
+    </message>
+    <message>
+        <source>Set message...</source>
+        <translation type="obsolete">setta messaggio...</translation>
+    </message>
+    <message>
+        <source>Set as Boss</source>
+        <translation type="obsolete">setta come boss</translation>
+    </message>
+    <message>
+        <source>Environment type</source>
+        <translation type="obsolete">tipo di ambiente</translation>
     </message>
 </context>
 <context>
@@ -4749,35 +4848,35 @@ Every warp points pair requires a warp entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1036"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1047"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1059"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1054"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1060"/>
         <source>Can&apos;t open the file.</source>
         <translation type="unfinished"></translation>
     </message>
