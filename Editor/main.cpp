@@ -178,9 +178,6 @@ int main(int argc, char *argv[])
     ret=a->exec();
 
 QuitFromEditor:
-        WriteToLog(QtDebugMsg, "Closing interprocess communicator...");
-    IntEngine::destroy();
-
     FreeImage_DeInitialise();
 
     #ifdef USE_SDL_MIXER

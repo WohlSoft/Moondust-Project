@@ -211,21 +211,13 @@ void LocalServer::onCMD(QString data)
             }
             case 1:
             {
-                if(!IntEngine::isWorking())
-                {
-                    IntEngine::init();
-                }
                 IntEngine::sendLevelBuffer();
-                //MainWinConnect::pMainWin->showMinimized();
-                //IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
+                MainWinConnect::pMainWin->showMinimized();
                 break;
             }
             case 2:
             {
-                if(IntEngine::isWorking())
-                {
-                    IntEngine::quit();
-                }
+                IntEngine::quit();
                 break;
             }
             case 3:

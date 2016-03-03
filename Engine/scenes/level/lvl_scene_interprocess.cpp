@@ -30,7 +30,7 @@ void LevelScene::process_InterprocessCommands()
     {
         switch(IntProc::commandType())
         {
-            case IntProc::MessageBox:
+            case IntProc::MsgBox:
             {
                 PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
                                   PGE_MsgBox::msg_info, PGE_Point(-1, -1),
@@ -44,7 +44,11 @@ void LevelScene::process_InterprocessCommands()
             {
                 QString raw = IntProc::getCMD();
                 WriteToLog(QtDebugMsg, raw);
-                LevelData got=FileFormats::ReadExtendedLvlFile(raw, ".");
+
+                LevelData got;
+                PGE_FileFormats_misc::RawTextInput raw_file(&raw);
+                FileFormats::ReadExtendedLvlFile(raw_file, got);
+
                 if(!got.ReadFileValid)
                 {
                     WriteToLog(QtDebugMsg, FileFormats::errorString);

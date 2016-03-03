@@ -20,22 +20,21 @@
 #define ENGINE_INTPROCINTPROC_H
 
 #include <QObject>
-#include "engine_client.h"
+#include <QProcess>
+
 struct LevelData;
 
 class IntEngine: public QObject
 {
     Q_OBJECT
-
 public:
     IntEngine();
     ~IntEngine();
-    static void init();
+    static void init(QProcess *engine_proc);
 
     static void quit();
-    static void destroy();
-    static EngineClient * engineSocket;
     static bool isWorking();
+
     static bool sendCheat(QString _args);
     static bool sendMessageBox(QString _args);
     static bool sendItemPlacing(QString _args);
@@ -43,9 +42,17 @@ public:
 
     static void setTestLvlBuffer(LevelData &buffer);
 
+    static bool sendMessage(QString msg);
+
     static LevelData testBuffer;
+signals:
+    void engineInputMsg(QString msg);
+
 private slots:
-    void destroyEngine();
+    void onData();
+
+private:
+    static QProcess *engine;
 };
 
 #endif // ENGINE_INTPROCINTPROC_H

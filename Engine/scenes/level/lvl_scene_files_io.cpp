@@ -46,7 +46,6 @@ bool LevelScene::loadFile(QString filePath)
 bool LevelScene::loadFileIP()
 {
     if(!IntProc::isEnabled()) return false;
-    if(!IntProc::isWorking()) return false;
 
     data.ReadFileValid = false;
 
@@ -75,12 +74,6 @@ bool LevelScene::loadFileIP()
         {
             time.restart();
             attempts+=1;
-            //Send command again
-            if(!IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE"))
-            {
-                errorMsg += "Editor is not started!\n";
-                return false;
-            }
         }
 
         if(attempts>4)

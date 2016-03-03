@@ -1,6 +1,6 @@
 
-if(linux-g++*|win32*): release: static: {
-QMAKE_CFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_CXXFLAGS += -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+if(linux-g++*|win32*): release: {
+QMAKE_CFLAGS += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_CXXFLAGS += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
 QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
 }

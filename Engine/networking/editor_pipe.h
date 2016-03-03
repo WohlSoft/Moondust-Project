@@ -3,42 +3,24 @@
 
 #include <QThread>
 #include <QVector>
-#include <QTcpServer>
-#include <QTcpSocket>
-#include <QLocalSocket>
-
-#include <QAbstractSocket>
 #include <PGE_File_Formats/file_formats.h>
 
-#define LOCAL_SERVER_NAME "PGEEngine42e3j"
-
-//Q_DECLARE_METATYPE(QAbstractSocket::SocketState)
-
-class IntProcServer  : public QTcpServer
+class EditorPipe_std : public QThread
 {
     Q_OBJECT
 public:
-    explicit IntProcServer();
-    ~IntProcServer();
-public slots:
-    void writeMessage(QString msg);
-    void stateChanged(QAbstractSocket::SocketState stat);
+    EditorPipe_std();
+    void run();
 signals:
-    void messageIn(QString msg);
-
-protected slots:
-    void readData();
-    void handleNewConnection();
-    void clientDisconnected();
-    void displayError(QAbstractSocket::SocketError socketError);
-
+    void msg(QString m);
+public slots:
+    void sendMessage(QString msg);
 private:
-    QTcpSocket *clientConnection;
+    QTextStream m_input;
+    QTextStream m_output;
 };
 
-
-
-class EditorPipe : public QThread
+class EditorPipe : public QObject
 {
     Q_OBJECT
 public:
@@ -59,24 +41,15 @@ public:
 private:
     bool levelAccepted;
 
-protected:
-    void run();
-    void exec();
-
 signals:
     void sendMessage(QString msg);
-    //void dataReceived(QString data);
-    //void privateDataReceived(QString data, QTcpSocket *client);
-    //void showUp();
     void openFile(QString path);
 
 private slots:
-    void slotOnData(QString data);
     void icomingData(QString in);
 
 private:
-    bool lastMsgSuccess;
-    QString buffer;
+    EditorPipe_std msgr;
 };
 
 #endif // EDITOR_PIPE_H

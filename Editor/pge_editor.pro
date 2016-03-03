@@ -247,7 +247,6 @@ SOURCES += main.cpp\
     main_window/tools/main_tool_cdata_cleaner.cpp \
     main_window/tools/main_tool_cdata_import.cpp \
     main_window/tools/main_tool_cdata_lazyfix.cpp \
-    networking/engine_client.cpp \
     networking/engine_intproc.cpp \
     script/scriptholder.cpp \
     script/command_compiler/autocodecompiler.cpp \
@@ -498,7 +497,6 @@ HEADERS  += defines.h \
     editing/edit_world/world_edit.h \
     main_window/global_settings.h \
     main_window/about_dialog/aboutdialog.h \
-    networking/engine_client.h \
     networking/engine_intproc.h \
     script/scriptholder.h \
     script/command_compiler/autocodecompiler.h \

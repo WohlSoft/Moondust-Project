@@ -19,106 +19,89 @@
 #include "engine_intproc.h"
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/mainwinconnect.h>
+#include <common_features/app_path.h>
+#include <QSharedPointer>
 
-EngineClient * IntEngine::engineSocket=NULL;
-IntEngine *IntEngine_protector=NULL;
+static QString base64_encode(QString string){
+    QByteArray ba;
+    ba.append(string);
+    return ba.toBase64();
+}
 
 IntEngine::IntEngine()
-{
-    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
-}
+{}
 
 IntEngine::~IntEngine()
 {}
 
-LevelData IntEngine::testBuffer;
-
-void IntEngine::init()
+void IntEngine::onData()
 {
-    //testBuffer = FileFormats::dummyLvlDataArray();
-
-    if(!IntEngine_protector)
+    if(engine)
     {
-        IntEngine_protector = new IntEngine;
-        connect(MainWinConnect::pMainWin, SIGNAL(destroyed()), IntEngine_protector, SLOT(destroyEngine()));
-    }
-
-    //if(lvlData)
-    //    testBuffer = (*lvlData);
-
-    qDebug() << "INIT Interprocessing...";
-    if(!isWorking())
-    {
-        if(!engineSocket)
+        QByteArray strdata = engine->readAllStandardOutput();
+        QString msg=QByteArray::fromBase64(strdata);
+        if(msg.startsWith("CMD:"))
         {
-            qDebug() << "Constructing new engine socket";
-            engineSocket = new EngineClient();
-            engineSocket->setParent(0);
+            msg.remove("CMD:");
+            if("CONNECT_TO_ENGINE"==msg)
+            {
+                sendLevelBuffer();
+            } else if("ENGINE_CLOSED"==msg) {
+                MainWinConnect::pMainWin->show();
+                MainWinConnect::pMainWin->raise();
+            }
+            qDebug() << "ENGINE MESSAGE: >>\n" << msg << "\n<<ENGINE MESSAGE END";
         }
-        qDebug() << "Starting session";
-        engineSocket->start();
-        qDebug() << "done";
+        else
+        {
+            emit engineInputMsg(msg);
+        }
+    }
+}
+
+LevelData IntEngine::testBuffer;
+QProcess *IntEngine::engine=NULL;
+
+QSharedPointer<IntEngine> IntEngine_helper(NULL);
+
+void IntEngine::init(QProcess *engine_proc)
+{
+    if(IntEngine_helper.isNull())
+    {
+        IntEngine_helper = QSharedPointer<IntEngine>(new IntEngine);
+    }
+    if(!engine)
+    {
+        engine = engine_proc;
+        engine->connect(engine, SIGNAL(readyReadStandardOutput()),
+                        &(*IntEngine_helper), SLOT(onData()));
     }
 }
 
 void IntEngine::quit()
 {
     testBuffer = FileFormats::CreateLevelData();
-
-    qDebug() << "isWorking check";
-    if(isWorking())
+    if(engine)
     {
-        if(!engineSocket)
-        {
-            qDebug() << "Already disconnected";
-            return;
-        }
-        qDebug() << "Close connection";
-        engineSocket->closeConnection();
-        qDebug() << "exit";
-//        while(engineSocket->isWorking())
-//            { qApp->processEvents(); }
-        if(!engineSocket->wait(5000))
-        {
-            qDebug() << "TERMINATOR RETURNS BACK! 8-)";
-            engineSocket->terminate();
-            engineSocket->wait();
-            qDebug() << "Terminated!";
-        }
+        engine->close();
     }
-    qDebug() << "Interpricessing disconected";
-}
-
-void IntEngine::destroy()
-{
-    if(engineSocket)
-    {
-        if(isWorking())
-        {
-            quit();
-        }
-        qDebug() << "Destroting of the engine socket...";
-        delete engineSocket;
-        qDebug() << "Destroyed";
-    }
-    engineSocket=NULL;
+    engine=NULL;
 }
 
 bool IntEngine::isWorking()
 {
     bool isRuns=false;
-    isRuns = (engineSocket!=NULL); if(!isRuns) return false;
-    isRuns = (engineSocket->isRunning());
+    isRuns = (engine!=NULL); if(!isRuns) return false;
+    isRuns = (engine->state()==QProcess::Running);
     return isRuns;
 }
 
 bool IntEngine::sendCheat(QString _args)
 {
-    if(isWorking())
-    {
+    if(engine) {
         if(_args.isEmpty()) return false;
         _args=_args.replace('\n', "\\n");
-        return engineSocket->sendCommand(QString("CHEAT: %1\n\n").arg(_args));
+        return sendMessage(QString("CHEAT: %1").arg(_args));
     }
     else
         return false;
@@ -126,11 +109,10 @@ bool IntEngine::sendCheat(QString _args)
 
 bool IntEngine::sendMessageBox(QString _args)
 {
-    if(isWorking())
-    {
+    if(engine) {
         if(_args.isEmpty()) return false;
         _args=_args.replace('\n', "\\n");
-        return engineSocket->sendCommand(QString("MSGBOX: %1\n\n").arg(_args));
+        return sendMessage(QString("MSGBOX: %1").arg(_args));
     }
     else
         return false;
@@ -138,20 +120,40 @@ bool IntEngine::sendMessageBox(QString _args)
 
 bool IntEngine::sendItemPlacing(QString _args)
 {
-    if(isWorking())
-    {
-        return engineSocket->sendCommand(QString("PLACEITEM: %1\n").arg(_args));
+    if(engine) {
+        qDebug() << "ENGINE: Place item command: " << _args;
+        bool answer=sendMessage(QString("PLACEITEM: %1").arg(_args));
+        return answer;
     }
-    else
-        return false;
+    return false;
 }
-
 
 void IntEngine::sendLevelBuffer()
 {
-    if(isWorking())
+    if(engine)
     {
-        engineSocket->doSendData=true;
+        qDebug() << "Attempt to send LVLX buffer";
+        QString output=FileFormats::WriteExtendedLvlFile(testBuffer);
+
+        QString sendLvlx;
+        if(!testBuffer.path.isEmpty())
+            sendLvlx = QString("SEND_LVLX: %1/%2\n")
+                    .arg(testBuffer.path)
+                    .arg(testBuffer.filename+".lvlx");
+        else
+            sendLvlx = QString("SEND_LVLX: %1/%2\n")
+                    .arg(ApplicationPath)
+                    .arg("_untitled.lvlx");
+        if(output.size()<=0)
+        {
+            output="HEAD\nEMPTY:1\nHEAD_END\n";
+        }
+
+        sendMessage(sendLvlx);
+        QString output_e = base64_encode(output)+"\n";
+        engine->write(output_e.toUtf8());
+        sendMessage("PARSE_LVLX");
+        qDebug() << "LVLX buffer sent";
     }
 }
 
@@ -161,11 +163,8 @@ void IntEngine::setTestLvlBuffer(LevelData &buffer)
     testBuffer.metaData.script = NULL;//avoid editor crash after file reloading
 }
 
-void IntEngine::destroyEngine()
+bool IntEngine::sendMessage(QString msg)
 {
-    if(engineSocket)
-    {
-        delete engineSocket;
-        engineSocket = NULL;
-    }
+    QString output_e = base64_encode(msg)+"\n";
+    return (engine->write(output_e.toUtf8())>0);
 }
