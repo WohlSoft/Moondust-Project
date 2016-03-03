@@ -357,7 +357,6 @@ static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
 
     return LUNALOADER_OK;
 }
-#endif
 
 #ifdef SHARED_FILEPATH_SENDING
 static bool SMBXEditorIsStarted()
@@ -365,7 +364,8 @@ static bool SMBXEditorIsStarted()
     HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
     return (smbxWind);
 }
-#endif
+#endif //SHARED_FILEPATH_SENDING
+#endif//Q_OS_WIN
 
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
