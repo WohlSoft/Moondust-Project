@@ -107,7 +107,7 @@ relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the s
 relocateLibraryInCurrentApp "@rpath/" SDL2_image.framework/Versions/A/SDL2_image #note the space
 
 EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.dylib"
-etchPathsForLib #fetch for our dylib
+fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
 #fetchPathsForLib #fetch for our dylib
 #EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
