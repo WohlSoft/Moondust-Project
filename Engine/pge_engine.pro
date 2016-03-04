@@ -303,7 +303,9 @@ SOURCES += \
     common_features/translator.cpp \
     common_features/file_mapper.cpp \
     common_features/md5.cpp \
-    common_features/crash_handler.cpp
+    common_features/crash_handler.cpp \
+    graphics/render/render_base.cpp \
+    graphics/render/render_opengl31.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -457,7 +459,9 @@ HEADERS  += \
     common_features/file_mapper.h \
     graphics/gl_debug.h \
     common_features/md5.h \
-    common_features/crash_handler.h
+    common_features/crash_handler.h \
+    graphics/render/render_base.h \
+    graphics/render/render_opengl31.h
 
 
 FORMS    += \

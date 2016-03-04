@@ -51,6 +51,8 @@
 
 #include <audio/pge_audio.h>
 
+#include "render/render_base.h"
+
 #include <QDir>
 #include <QImage>
 #include <QDateTime>
@@ -59,6 +61,12 @@
 
 #ifdef DEBUG_BUILD
 #include <QElapsedTimer>
+#endif
+
+#if 0 //WIP
+static Render_Base dummy;//Empty renderer
+
+static Render_Base *renderer=&dummy;
 #endif
 
 bool GlRenderer::_isReady=false;
@@ -91,6 +99,33 @@ float GlRenderer::color_binded_texture[16] = { 1.0f, 1.0f, 1.0f, 1.0f,
 
 PGE_Texture GlRenderer::_dummyTexture;
 
+//#define PGE_USE_OpenGL_2_1
+//#define PGE_USE_OpenGL_3_2
+#ifdef PGE_USE_OpenGL_3_2
+void glBindBuffer(GLenum target, GLuint buffer);
+void glGenBuffers(GLsizei n, GLuint* buffers);
+void glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage);
+void glDeleteBuffers(GLsizei n, const GLuint * buffers);
+
+void glGenVertexArrays(GLsizei n, GLuint *arrays);
+void glBindVertexArray(GLuint array);
+GLboolean glIsVertexArray(GLuint array);
+void glDeleteVertexArrays(GLsizei n, const GLuint *arrays);
+void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer);
+void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer);
+#endif
+
+GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineType rtype)
+{
+    if(rtype==RENDER_AUTO)
+    {
+
+    } else {
+
+    }
+    return rtype;
+}
+
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())
@@ -114,7 +149,9 @@ bool GlRenderer::init()
     glDepthFunc(GL_NEVER); GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
 
     glEnable(GL_BLEND); GLERRORCHECK();
-    glEnable(GL_TEXTURE_2D);
+    #ifndef PGE_USE_OpenGL_3_2
+    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+    #endif
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
@@ -149,14 +186,19 @@ void GlRenderer::initDummyTexture()
     _dummyTexture.h = h;
     GLubyte* textura= (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
 
-    //glEnable(GL_TEXTURE_2D); GLERRORCHECK();
-    //glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
+    #ifdef PGE_USE_OpenGL_2_1
+    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+    glActiveTexture( GL_TEXTURE0 ); GLERRORCHECK();
+    #endif
     glGenTextures( 1, &(_dummyTexture.texture) ); GLERRORCHECK();
     glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
     glTexImage2D( GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
     glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     _dummyTexture.inited = true;
     //FreeImage_Unload(sourceImage);
+    #ifdef PGE_USE_OpenGL_2_1
+    glDisable(GL_TEXTURE_2D); GLERRORCHECK();
+    #endif
 }
 
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
@@ -258,7 +300,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     target.nOfColors = GL_RGBA;
     target.format = GL_BGRA;
 
-    //glEnable(GL_TEXTURE_2D);
+    #ifdef PGE_USE_OpenGL_2_1
+    glEnable(GL_TEXTURE_2D);
+    #endif
     // Have OpenGL generate a texture object handle for us
     glGenTextures( 1, &(target.texture) ); GLERRORCHECK();
 
@@ -309,10 +353,16 @@ GLuint GlRenderer::QImage2Texture(QImage *img)
     QImage text_image = GraphicsHelps::convertToGLFormat(*img);//.mirrored(false, true);
 
     GLuint texture=0;
+    #ifdef PGE_USE_OpenGL_2_1
+    glEnable(GL_TEXTURE_2D);
+    #endif
     glGenTextures(1, &texture);  GLERRORCHECK();
     glBindTexture(GL_TEXTURE_2D, texture);  GLERRORCHECK();
     glTexImage2D(GL_TEXTURE_2D, 0,  4, text_image.width(), text_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, text_image.bits() );  GLERRORCHECK();
     glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
+    #ifdef PGE_USE_OpenGL_2_1
+    glDisable(GL_TEXTURE_2D);
+    #endif
     return texture;
 }
 
@@ -320,7 +370,9 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
 {
     if( (tx.inited) && (tx.texture != _dummyTexture.texture))
     {
-        //glDisable(GL_TEXTURE_2D);
+        #ifdef PGE_USE_OpenGL_2_1
+        glDisable(GL_TEXTURE_2D);
+        #endif
         glDeleteTextures( 1, &(tx.texture) );
     }
     tx.inited = false;
@@ -334,6 +386,9 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
 
 void GlRenderer::deleteTexture(GLuint tx)
 {
+    #ifdef PGE_USE_OpenGL_2_1
+    glDisable(GL_TEXTURE_2D);
+    #endif
     glDeleteTextures( 1, &tx );
 }
 
@@ -346,12 +401,12 @@ void GlRenderer::deleteTexture(GLuint tx)
 
 
 
-PGE_PointF GlRenderer::mapToOpengl(PGE_Point s)
-{
-    qreal nx  =  s.x() - qreal(PGE_Window::Width)  /  2;
-    qreal ny  =  s.y() - qreal(PGE_Window::Height)  /  2;
-    return PGE_PointF(nx, ny);
-}
+//PGE_PointF GlRenderer::mapToOpengl(PGE_Point s)
+//{
+//    qreal nx  =  s.x() - qreal(PGE_Window::Width)  /  2;
+//    qreal ny  =  s.y() - qreal(PGE_Window::Height)  /  2;
+//    return PGE_PointF(nx, ny);
+//}
 
 QString GlRenderer::ScreenshotPath = "";
 
@@ -568,18 +623,21 @@ void GlRenderer::setWindowSize(int w, int h)
 static inline void setRenderColors()
 {
     glBindTexture( GL_TEXTURE_2D, 0 );  GLERRORCHECK();
+    #ifndef PGE_USE_OpenGL_3_2
     glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
     glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
     glDisableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
+    #endif
 }
 
 static inline void setRenderTexture(GLuint &tID)
 {
     glBindTexture( GL_TEXTURE_2D, tID ); GLERRORCHECK();
-
+    #ifndef PGE_USE_OpenGL_3_2
     glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
     glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
+    #endif
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  GLERRORCHECK();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);  GLERRORCHECK();
@@ -613,6 +671,9 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     setRenderColors();
     setAlphaBlending();
 
+    #ifdef PGE_USE_OpenGL_2_1
+
+    #else
     GLfloat Vertices[] = {
         left, top, 0,
         right, top, 0,
@@ -624,9 +685,29 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
                          red, green, blue, alpha,
                          red, green, blue, alpha };
 
+    #ifdef PGE_USE_OpenGL_3_2
+    GLuint vbo;
+    glGenBuffers(1, &vbo); GLERRORCHECK();
+    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
+    glBufferData(
+      GL_ARRAY_BUFFER, sizeof(Vertices),
+      Vertices, GL_STATIC_DRAW
+    ); GLERRORCHECK();
+
+    GLuint vao;
+    glGenVertexArrays(1, &vao); GLERRORCHECK();
+    glBindVertexArray(vao); GLERRORCHECK();
+    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr); GLERRORCHECK();
+    glBindBuffer(GL_ARRAY_BUFFER, 0);  GLERRORCHECK();// unbind VBO
+    glBindVertexArray(0);  GLERRORCHECK();// unbind VAO
+
+    glDeleteVertexArrays(1, &vao);  GLERRORCHECK();
+    glDeleteBuffers(1, &vbo);  GLERRORCHECK();
+    #else
     glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
     glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-
+    #endif
     if(filled)
     {
         GLubyte indices[] = {
@@ -637,7 +718,7 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     } else {
         glDrawArrays(GL_LINE_LOOP, 0, 4); GLERRORCHECK();
     }
-
+    #endif
 }
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)

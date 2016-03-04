@@ -31,9 +31,18 @@ class  QImage;
 class GlRenderer
 {
 public:
+    enum RenderEngineType {
+        RENDER_INVALID=-1,
+        RENDER_AUTO=0,
+        RENDER_OPENGL_2_1,
+        RENDER_OPENGL_3_1,
+        RENDER_SDL2
+    };
+    static RenderEngineType setRenderer(RenderEngineType rtype=RENDER_AUTO);
+
     static bool init();
     static bool uninit();
-    static PGE_PointF mapToOpengl(PGE_Point s);
+    //static PGE_PointF mapToOpengl(PGE_Point s);
 
     static QString ScreenshotPath;
     static void makeShot();

@@ -27,7 +27,7 @@
 
 #include "SDL_mixer_ext.h"
 
-#define MyResampler_BUFFER_SIZE 102400
+#define MyResampler_BUFFER_SIZE 204800
 
 struct MyResampler
 {
@@ -35,7 +35,7 @@ struct MyResampler
     double ratio;
     int buf_len;
     int channels;
-    Uint8 buf[MyResampler_BUFFER_SIZE];//100 KB for backup stuff;
+    Uint8 buf[MyResampler_BUFFER_SIZE];//200 KB for backup stuff;
     void (*filter)(struct MyResampler *res);
 };
 
