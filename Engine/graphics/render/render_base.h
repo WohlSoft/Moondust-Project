@@ -12,7 +12,7 @@ class Render_Base
 {
 public:
     Render_Base();
-    Render_Base(QString renderer_name);
+    Render_Base(QString renderer_name="Unknown");
 
     /*!
      * \brief Initializes renderer
