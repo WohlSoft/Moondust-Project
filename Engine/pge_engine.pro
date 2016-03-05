@@ -87,7 +87,7 @@ macx: {
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
-    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
+    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 
 contains(DEFINES, USE_LUA_JIT): {
