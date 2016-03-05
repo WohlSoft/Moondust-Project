@@ -27,11 +27,13 @@ end
 
 function yoshi_egg:dropContents()
     local thrownNPC=self.npc_obj:spawnNPC(self.npc_obj.contents, GENERATOR_APPEAR, SPAWN_UP, false)
-    thrownNPC.speedX = 0
-    thrownNPC.speedY = 0
-    thrownNPC.center_x = self.npc_obj.center_x
-    thrownNPC.y = self.npc_obj.bottom - thrownNPC.height
-    thrownNPC.contents = 0
+    if(thrownNPC~=nil)then
+        thrownNPC.speedX = 0
+        thrownNPC.speedY = 0
+        thrownNPC.center_x = self.npc_obj.center_x
+        thrownNPC.y = self.npc_obj.bottom - thrownNPC.height
+        thrownNPC.contents = 0
+    end
 end
 
 function yoshi_egg:__init(npc_obj)

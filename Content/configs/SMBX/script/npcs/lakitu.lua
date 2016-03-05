@@ -46,11 +46,13 @@ end
 
 function lakitu:throwNPC()
     local thrownNPC=self.npc_obj:spawnNPC(self.throwID, GENERATOR_APPEAR, SPAWN_UP, false)
-    thrownNPC.speedX = self.npc_obj.direction * 3
-    thrownNPC.speedY = -3
-    thrownNPC.center_x = self.npc_obj.center_x + self.npc_obj.direction*(self.npc_obj.width/2)
-    thrownNPC.center_y = self.npc_obj.top-16
-    thrownNPC.special1 = 0
+    if(thrownNPC~=nil)then
+        thrownNPC.speedX = self.npc_obj.direction * 3
+        thrownNPC.speedY = -3
+        thrownNPC.center_x = self.npc_obj.center_x + self.npc_obj.direction*(self.npc_obj.width/2)
+        thrownNPC.center_y = self.npc_obj.top-16
+        thrownNPC.special1 = 0
+    end
 end
 
 function lakitu:onActivated()
