@@ -1,10 +1,14 @@
 #include "render_base.h"
 
-Render_Base::Render_Base()
+Render_Base::Render_Base() :
+    m_renderer_name("Unknown")
 {}
 
 Render_Base::Render_Base(QString renderer_name) :
     m_renderer_name(renderer_name)
+{}
+
+void Render_Base::set_SDL_settings()
 {}
 
 bool Render_Base::init()
@@ -20,13 +24,13 @@ bool Render_Base::uninit()
 void Render_Base::initDummyTexture()
 {}
 
-void Render_Base::loadTextureP(PGE_Texture &/*target*/, QString /*path*/, QString /*maskPath*/)
-{}
-
-GLuint Render_Base::QImage2Texture(QImage */*img*/)
+PGE_Texture Render_Base::getDummyTexture()
 {
-    return 0;
+    return PGE_Texture();
 }
+
+void Render_Base::loadTexture(PGE_Texture &/*target*/, int /*width*/, int /*height*/, unsigned char */*RGBApixels*/)
+{}
 
 void Render_Base::deleteTexture(PGE_Texture &/*tx*/)
 {}
@@ -74,6 +78,15 @@ void Render_Base::BindTexture(PGE_Texture */*texture*/)
 void Render_Base::BindTexture(GLuint &/*texture_id*/)
 {}
 
+void Render_Base::setRGB(float /*Red*/, float /*Green*/, float /*Blue*/, float /*Alpha*/)
+{}
+
+void Render_Base::resetRGB()
+{}
+
+void Render_Base::setTextureColor(float /*Red*/, float /*Green*/, float /*Blue*/, float /*Alpha*/)
+{}
+
 void Render_Base::renderTextureCur(float /*x*/, float /*y*/, float /*w*/, float /*h*/, float /*ani_top*/, float /*ani_bottom*/, float /*ani_left*/, float /*ani_right*/)
 {}
 
@@ -88,6 +101,31 @@ void Render_Base::getCurHeight(GLint &/*h*/)
 
 void Render_Base::UnBindTexture()
 {}
+
+PGE_PointF Render_Base::MapToGl(PGE_Point point)
+{
+    return PGE_PointF(point);
+}
+
+PGE_PointF Render_Base::MapToGl(float x, float y)
+{
+    return PGE_PointF(x, y);
+}
+
+PGE_Point Render_Base::MapToScr(PGE_Point point)
+{
+    return point;
+}
+
+PGE_Point Render_Base::MapToScr(int x, int y)
+{
+    return PGE_Point(x, y);
+}
+
+int Render_Base::alignToCenter(int x, int /*w*/)
+{
+    return x;
+}
 
 const QString &Render_Base::name()
 {

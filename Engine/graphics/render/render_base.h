@@ -3,6 +3,8 @@
 
 #include <QString>
 #include <common_features/pge_texture.h>
+#include <common_features/point.h>
+#include <common_features/pointf.h>
 
 class QImage;
 /*!
@@ -12,7 +14,12 @@ class Render_Base
 {
 public:
     Render_Base();
-    Render_Base(QString renderer_name="Unknown");
+    Render_Base(QString renderer_name);
+
+    /*!
+     * \brief Sets default properties for SDL Window before window creation that required for needed renderer type
+     */
+    virtual void set_SDL_settings();
 
     /*!
      * \brief Initializes renderer
@@ -28,19 +35,15 @@ public:
      * \brief Initializes a "dummy" texture which will be used as replacement for broken textures
      */
     virtual void initDummyTexture();
+
+    virtual PGE_Texture getDummyTexture();
     /*!
      * \brief Loades a texture and merges with a bit mask image if needed
      * \param target reference to resulted texture
      * \param path source image file path
      * \param maskPath mask image file path
      */
-    virtual void loadTextureP(PGE_Texture &target, QString path, QString maskPath);
-    /*!
-     * \brief Convert QImage object into OpenGL texture index
-     * \param img Pointer to source image
-     * \return Texture ID
-     */
-    virtual GLuint QImage2Texture(QImage *img);
+    virtual void loadTexture(PGE_Texture &target, int width, int height, unsigned char* RGBApixels);
     /*!
      * \brief Deletes target texture
      * \param tx texture to delete
@@ -83,11 +86,21 @@ public:
     virtual void BindTexture(PGE_Texture *texture);
     virtual void BindTexture(GLuint &texture_id);
 
+    virtual void setRGB(float Red, float Green, float Blue, float Alpha=1.0);
+    virtual void resetRGB();
+
+    virtual void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
     virtual void renderTextureCur(float x, float y);
     virtual void getCurWidth(GLint &w);
     virtual void getCurHeight(GLint &h);
     virtual void UnBindTexture();
+
+    virtual PGE_PointF MapToGl(PGE_Point point);
+    virtual PGE_PointF MapToGl(float x, float y);
+    virtual PGE_Point  MapToScr(PGE_Point point);
+    virtual PGE_Point  MapToScr(int x, int y);
+    virtual int  alignToCenter(int x, int w);
     /*!
      * \brief Get name of renrering device
      * \return name of rendering device

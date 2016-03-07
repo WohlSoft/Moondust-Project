@@ -40,6 +40,8 @@ public:
     };
     static RenderEngineType setRenderer(RenderEngineType rtype=RENDER_AUTO);
 
+    static void setup_OpenGL31();
+
     static bool init();
     static bool uninit();
     //static PGE_PointF mapToOpengl(PGE_Point s);
@@ -81,8 +83,8 @@ public:
     static void deleteTexture(PGE_Texture &tx);
     static void deleteTexture(GLuint tx);
 private:
-    static void initDummyTexture();
-    static PGE_Texture _dummyTexture;
+    //static void initDummyTexture();
+    //static PGE_Texture _dummyTexture;
 
     //Virtual resolution of renderable zone
     static int window_w;

@@ -52,6 +52,7 @@
 #include <audio/pge_audio.h>
 
 #include "render/render_base.h"
+#include "render/render_opengl31.h"
 
 #include <QDir>
 #include <QImage>
@@ -63,8 +64,9 @@
 #include <QElapsedTimer>
 #endif
 
-#if 0 //WIP
+#if 1 //WIP
 static Render_Base dummy;//Empty renderer
+static Render_OpenGL31 opengl31;
 
 static Render_Base *renderer=&dummy;
 #endif
@@ -97,7 +99,7 @@ float GlRenderer::color_binded_texture[16] = { 1.0f, 1.0f, 1.0f, 1.0f,
                                                1.0f, 1.0f, 1.0f, 1.0f,
                                                1.0f, 1.0f, 1.0f, 1.0f };
 
-PGE_Texture GlRenderer::_dummyTexture;
+//PGE_Texture GlRenderer::_dummyTexture;
 
 //#define PGE_USE_OpenGL_2_1
 //#define PGE_USE_OpenGL_3_2
@@ -126,6 +128,12 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
     return rtype;
 }
 
+void GlRenderer::setup_OpenGL31()
+{
+    renderer=&opengl31;
+    renderer->set_SDL_settings();
+}
+
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())
@@ -140,26 +148,28 @@ bool GlRenderer::init()
     }
     GLERRORCHECK();*/
 
-    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
+    renderer->init();
 
-    //Initialize clear color
-    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
+//    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
-    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
-    glDepthFunc(GL_NEVER); GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
+//    //Initialize clear color
+//    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
 
-    glEnable(GL_BLEND); GLERRORCHECK();
-    #ifndef PGE_USE_OpenGL_3_2
-    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
-    #endif
+//    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
+//    glDepthFunc(GL_NEVER); GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
+
+//    glEnable(GL_BLEND); GLERRORCHECK();
+//    #ifndef PGE_USE_OpenGL_3_2
+//    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+//    #endif
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
 
-    resetViewport();
+    renderer->resetViewport();
 
     //Init dummy texture;
-    initDummyTexture();
+    renderer->initDummyTexture();
 
     return true;
 }
@@ -167,10 +177,12 @@ bool GlRenderer::init()
 bool GlRenderer::uninit()
 {
     //glDisable(GL_TEXTURE_2D);
-    glDeleteTextures( 1, &(_dummyTexture.texture) );
+    //glDeleteTextures( 1, &(_dummyTexture.texture) );
+    renderer->uninit();
     return false;
 }
 
+/*
 void GlRenderer::initDummyTexture()
 {
     //loadTextureP(_dummyTexture, "://images/_broken.png");
@@ -200,6 +212,7 @@ void GlRenderer::initDummyTexture()
     glDisable(GL_TEXTURE_2D); GLERRORCHECK();
     #endif
 }
+*/
 
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 {
@@ -225,7 +238,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     {
         WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
-        target = _dummyTexture;
+        target = renderer->getDummyTexture();
         return;
     }
 
@@ -262,14 +275,13 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         FreeImage_Unload(sourceImage);
         WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg("Zero image size!"));
-        target = _dummyTexture;
+        target = renderer->getDummyTexture();
         return;
     }
 
     #ifdef DEBUG_BUILD
     bindingTime.start();
     #endif
-
     //sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
     //Uint8 upperColor = GraphicsHelps::getPixel(sourceImage, 0, 0); //sourceImage.pixel(0,0);
     //target.ColorUpper.r = float((upperColor>>24)&0xFF)/255.0f;
@@ -299,29 +311,26 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     target.nOfColors = GL_RGBA;
     target.format = GL_BGRA;
-
-    #ifdef PGE_USE_OpenGL_2_1
-    glEnable(GL_TEXTURE_2D);
-    #endif
-    // Have OpenGL generate a texture object handle for us
-    glGenTextures( 1, &(target.texture) ); GLERRORCHECK();
-
-    // Bind the texture object
-    glBindTexture( GL_TEXTURE_2D, target.texture ); GLERRORCHECK();
-
-    // Edit the texture object's image data using the information SDL_Surface gives us
     target.w = w;
     target.h = h;
-    // Set the texture's stretching properties
+//    #ifdef PGE_USE_OpenGL_2_1
+//    glEnable(GL_TEXTURE_2D);
+//    #endif
+//    // Have OpenGL generate a texture object handle for us
+//    glGenTextures( 1, &(target.texture) ); GLERRORCHECK();
+//    // Bind the texture object
+//    glBindTexture( GL_TEXTURE_2D, target.texture ); GLERRORCHECK();
 
     GLubyte* textura= (GLubyte*)FreeImage_GetBits(sourceImage);
 
-//    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
-//         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, w, h,
-           0, target.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
-    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
-    target.inited = true;
+    renderer->loadTexture(target, w, h, textura);
+
+// //    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
+// //         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+//    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, w, h,
+//           0, target.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
+//    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
+//    target.inited = true;
 
     #ifdef DEBUG_BUILD
     bindElapsed=bindingTime.elapsed();
@@ -358,7 +367,11 @@ GLuint GlRenderer::QImage2Texture(QImage *img)
     #endif
     glGenTextures(1, &texture);  GLERRORCHECK();
     glBindTexture(GL_TEXTURE_2D, texture);  GLERRORCHECK();
-    glTexImage2D(GL_TEXTURE_2D, 0,  4, text_image.width(), text_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, text_image.bits() );  GLERRORCHECK();
+    glTexImage2D(GL_TEXTURE_2D, 0,  4,
+                 text_image.width(),
+                 text_image.height(),
+                 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 text_image.bits() );  GLERRORCHECK();
     glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     #ifdef PGE_USE_OpenGL_2_1
     glDisable(GL_TEXTURE_2D);
@@ -368,12 +381,13 @@ GLuint GlRenderer::QImage2Texture(QImage *img)
 
 void GlRenderer::deleteTexture(PGE_Texture &tx)
 {
-    if( (tx.inited) && (tx.texture != _dummyTexture.texture))
+    if( (tx.inited) && (tx.texture != renderer->getDummyTexture().texture))
     {
-        #ifdef PGE_USE_OpenGL_2_1
-        glDisable(GL_TEXTURE_2D);
-        #endif
-        glDeleteTextures( 1, &(tx.texture) );
+        renderer->deleteTexture(tx);
+//        #ifdef PGE_USE_OpenGL_2_1
+//        glDisable(GL_TEXTURE_2D);
+//        #endif
+//        glDeleteTextures( 1, &(tx.texture) );
     }
     tx.inited = false;
     tx.inited=false;
@@ -386,12 +400,12 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
 
 void GlRenderer::deleteTexture(GLuint tx)
 {
-    #ifdef PGE_USE_OpenGL_2_1
-    glDisable(GL_TEXTURE_2D);
-    #endif
-    glDeleteTextures( 1, &tx );
+    renderer->deleteTexture(tx);
+//    #ifdef PGE_USE_OpenGL_2_1
+//    glDisable(GL_TEXTURE_2D);
+//    #endif
+//    glDeleteTextures( 1, &tx );
 }
-
 
 
 
@@ -432,8 +446,8 @@ void GlRenderer::makeShot()
     h=h-offset_y*2;
 
     uchar* pixels = new uchar[4*w*h];
-    //glLoadIdentity();
-    glReadPixels(offset_x, offset_y, w, h, GL_BGR, GL_UNSIGNED_BYTE, pixels);
+    renderer->getScreenPixels(offset_x, offset_y, w, h, pixels);
+    //glReadPixels(offset_x, offset_y, w, h, GL_BGR, GL_UNSIGNED_BYTE, pixels);
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
@@ -521,102 +535,105 @@ bool GlRenderer::ready()
 
 void GlRenderer::setRGB(float Red, float Green, float Blue, float Alpha)
 {
-    color_level_red=Red;
-    color_level_green=Green;
-    color_level_blue=Blue;
-    color_level_alpha=Alpha;
+    renderer->setRGB(Red, Green, Blue, Alpha);
 }
 
 void GlRenderer::resetRGB()
 {
-    color_level_red=1.f;
-    color_level_green=1.f;
-    color_level_blue=1.f;
-    color_level_alpha=1.f;
+    renderer->resetRGB();
 }
 
 
 PGE_PointF GlRenderer::MapToGl(PGE_Point point)
 {
-    return MapToGl(point.x(), point.y());
+    return renderer->MapToGl(point.x(), point.y());
+    //return MapToGl(point.x(), point.y());
 }
 
 PGE_PointF GlRenderer::MapToGl(float x, float y)
 {
-    double nx1 = roundf(x)/(viewport_w_half)-1.0;
-    double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
-    return PGE_PointF(nx1, ny1);
+    return renderer->MapToGl(x, y);
+//    double nx1 = roundf(x)/(viewport_w_half)-1.0;
+//    double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
+//    return PGE_PointF(nx1, ny1);
 }
 
 PGE_Point GlRenderer::MapToScr(PGE_Point point)
 {
-    return MapToScr(point.x(), point.y());
+    return renderer->MapToScr(point.x(), point.y());
+    //return MapToScr(point.x(), point.y());
 }
 
 PGE_Point GlRenderer::MapToScr(int x, int y)
 {
-    return PGE_Point(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
+    return renderer->MapToScr(x, y);
+    //return PGE_Point(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
 }
 
 int GlRenderer::alignToCenter(int x, int w)
 {
-    return x+(viewport_w_half-(w/2));
+    return renderer->alignToCenter(x, w);
+    //return x+(viewport_w_half-(w/2));
 }
 
 void GlRenderer::setViewport(int x, int y, int w, int h)
 {
-    glViewport(offset_x+x*viewport_scale_x,
-               offset_y+(window_h-(y+h))*viewport_scale_y,
-               w*viewport_scale_x, h*viewport_scale_y);  GLERRORCHECK();
-    viewport_x=x;
-    viewport_y=y;
-    setViewportSize(w, h);
+    renderer->setViewport(x, y, w, h);
+//    glViewport(offset_x+x*viewport_scale_x,
+//               offset_y+(window_h-(y+h))*viewport_scale_y,
+//               w*viewport_scale_x, h*viewport_scale_y);  GLERRORCHECK();
+//    viewport_x=x;
+//    viewport_y=y;
+//    setViewportSize(w, h);
 }
 
 void GlRenderer::resetViewport()
 {
-    float w, w1, h, h1;
-    int   wi, hi;
-    SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
-    w=wi;h=hi; w1=w;h1=h;
-    scale_x=(float)((float)(w)/(float)window_w);
-    scale_y=(float)((float)(h)/(float)window_h);
-    viewport_scale_x = scale_x;
-    viewport_scale_y = scale_y;
-    if(scale_x>scale_y)
-    {
-        w1=scale_y*window_w;
-        viewport_scale_x=w1/window_w;
-    }
-    else if(scale_x<scale_y)
-    {
-        h1=scale_x*window_h;
-        viewport_scale_y=h1/window_h;
-    }
+    renderer->resetViewport();
+//    float w, w1, h, h1;
+//    int   wi, hi;
+//    SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
+//    w=wi;h=hi; w1=w;h1=h;
+//    scale_x=(float)((float)(w)/(float)window_w);
+//    scale_y=(float)((float)(h)/(float)window_h);
+//    viewport_scale_x = scale_x;
+//    viewport_scale_y = scale_y;
+//    if(scale_x>scale_y)
+//    {
+//        w1=scale_y*window_w;
+//        viewport_scale_x=w1/window_w;
+//    }
+//    else if(scale_x<scale_y)
+//    {
+//        h1=scale_x*window_h;
+//        viewport_scale_y=h1/window_h;
+//    }
 
-    offset_x=(w-w1)/2;
-    offset_y=(h-h1)/2;
+//    offset_x=(w-w1)/2;
+//    offset_y=(h-h1)/2;
 
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity(); GLERRORCHECK();
-    glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1); GLERRORCHECK();
-    //gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
-    setViewportSize(window_w, window_h);
+//    //glMatrixMode(GL_PROJECTION);
+//    //glLoadIdentity(); GLERRORCHECK();
+//    glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1); GLERRORCHECK();
+//    //gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+//    setViewportSize(window_w, window_h);
 }
 
 void GlRenderer::setViewportSize(int w, int h)
 {
-    viewport_w=w;
-    viewport_h=h;
-    viewport_w_half=w/2;
-    viewport_h_half=h/2;
+    renderer->setViewportSize(w, h);
+//    viewport_w=w;
+//    viewport_h=h;
+//    viewport_w_half=w/2;
+//    viewport_h_half=h/2;
 }
 
 void GlRenderer::setWindowSize(int w, int h)
 {
-    window_w=w;
-    window_h=h;
-    resetViewport();
+    renderer->setWindowSize(w, h);
+//    window_w=w;
+//    window_h=h;
+//    resetViewport();
 }
 
 
@@ -660,314 +677,326 @@ static inline void setAlphaBlending()
 
 void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+    renderer->renderRect(x, y, w, h, red, green, blue, alpha, filled);
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+w, y+h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    setRenderColors();
-    setAlphaBlending();
+//    setRenderColors();
+//    setAlphaBlending();
 
-    #ifdef PGE_USE_OpenGL_2_1
+//    #ifdef PGE_USE_OpenGL_2_1
 
-    #else
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
-    GLfloat Colors[] = { red, green, blue, alpha,
-                         red, green, blue, alpha,
-                         red, green, blue, alpha,
-                         red, green, blue, alpha };
+//    #else
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
+//    GLfloat Colors[] = { red, green, blue, alpha,
+//                         red, green, blue, alpha,
+//                         red, green, blue, alpha,
+//                         red, green, blue, alpha };
 
-    #ifdef PGE_USE_OpenGL_3_2
-    GLuint vbo;
-    glGenBuffers(1, &vbo); GLERRORCHECK();
-    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
-    glBufferData(
-      GL_ARRAY_BUFFER, sizeof(Vertices),
-      Vertices, GL_STATIC_DRAW
-    ); GLERRORCHECK();
+//    #ifdef PGE_USE_OpenGL_3_2
+//    GLuint vbo;
+//    glGenBuffers(1, &vbo); GLERRORCHECK();
+//    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
+//    glBufferData(
+//      GL_ARRAY_BUFFER, sizeof(Vertices),
+//      Vertices, GL_STATIC_DRAW
+//    ); GLERRORCHECK();
 
-    GLuint vao;
-    glGenVertexArrays(1, &vao); GLERRORCHECK();
-    glBindVertexArray(vao); GLERRORCHECK();
-    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr); GLERRORCHECK();
-    glBindBuffer(GL_ARRAY_BUFFER, 0);  GLERRORCHECK();// unbind VBO
-    glBindVertexArray(0);  GLERRORCHECK();// unbind VAO
+//    GLuint vao;
+//    glGenVertexArrays(1, &vao); GLERRORCHECK();
+//    glBindVertexArray(vao); GLERRORCHECK();
+//    glBindBuffer(GL_ARRAY_BUFFER, vbo); GLERRORCHECK();
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr); GLERRORCHECK();
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);  GLERRORCHECK();// unbind VBO
+//    glBindVertexArray(0);  GLERRORCHECK();// unbind VAO
 
-    glDeleteVertexArrays(1, &vao);  GLERRORCHECK();
-    glDeleteBuffers(1, &vbo);  GLERRORCHECK();
-    #else
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-    #endif
-    if(filled)
-    {
-        GLubyte indices[] = {
-            0, 1, 2, // (bottom left - top left - top right)
-            0, 2, 3  // (bottom left - top right - bottom right)
-        };
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-    } else {
-        glDrawArrays(GL_LINE_LOOP, 0, 4); GLERRORCHECK();
-    }
-    #endif
+//    glDeleteVertexArrays(1, &vao);  GLERRORCHECK();
+//    glDeleteBuffers(1, &vbo);  GLERRORCHECK();
+//    #else
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    #endif
+//    if(filled)
+//    {
+//        GLubyte indices[] = {
+//            0, 1, 2, // (bottom left - top left - top right)
+//            0, 2, 3  // (bottom left - top right - bottom right)
+//        };
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//    } else {
+//        glDrawArrays(GL_LINE_LOOP, 0, 4); GLERRORCHECK();
+//    }
+//    #endif
 }
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    PGE_PointF point;
-        point = MapToGl(_left, _top);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(_right, _bottom);
-    float right = point.x();
-    float bottom = point.y();
+    renderer->renderRectBR(_left, _top, _right, _bottom,
+                            red,  green, blue,  alpha);
+//    PGE_PointF point;
+//        point = MapToGl(_left, _top);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(_right, _bottom);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    setRenderColors();
-    setAlphaBlending();
+//    setRenderColors();
+//    setAlphaBlending();
 
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
 
-    GLfloat Colors[] = { red, green, blue, alpha,
-                         red, green, blue, alpha,
-                         red, green, blue, alpha,
-                         red, green, blue, alpha };
+//    GLfloat Colors[] = { red, green, blue, alpha,
+//                         red, green, blue, alpha,
+//                         red, green, blue, alpha,
+//                         red, green, blue, alpha };
 
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 {
     if(!texture) return;
+    renderer->renderTexture(texture, x, y);
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+texture->w, y+texture->h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+texture->w, y+texture->h);
-    float right = point.x();
-    float bottom = point.y();
+//    setRenderTexture( texture->texture );
+//    setAlphaBlending();
 
-    setRenderTexture( texture->texture );
-    setAlphaBlending();
+//    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
+//    GLfloat TexCoord[] = {
+//        0.0f, 0.0f,
+//        1.0f, 0.0f,
+//        1.0f, 1.0f,
+//        0.0f, 1.0f
+//    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
 
-    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
-    GLfloat TexCoord[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f
-    };
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
+//    GLfloat Colors[] = { 1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f,
+//                         1.0f, 1.0f, 1.0f, 1.0f };
+//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 
-    GLfloat Colors[] = { 1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f };
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-
-    setUnbindTexture();
+//    setUnbindTexture();
 }
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     if(!texture) return;
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+    renderer->renderTexture(texture, x, y, w, h, ani_top, ani_bottom, ani_left, ani_right );
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+w, y+h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    setRenderTexture( texture->texture );
-    setAlphaBlending();
+//    setRenderTexture( texture->texture );
+//    setAlphaBlending();
 
-    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
-    GLfloat TexCoord[] = {
-        ani_left, ani_top,
-        ani_right, ani_top,
-        ani_right, ani_bottom,
-        ani_left, ani_bottom
-    };
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
+//    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
+//    GLfloat TexCoord[] = {
+//        ani_left, ani_top,
+//        ani_right, ani_top,
+//        ani_right, ani_bottom,
+//        ani_left, ani_bottom
+//    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
 
-    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
+//    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
 
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 
-    setUnbindTexture();
+//    setUnbindTexture();
 }
 
 
 void GlRenderer::BindTexture(PGE_Texture *texture)
 {
-    setRenderTexture( texture->texture );
-    setAlphaBlending();
+    renderer->BindTexture(texture);
+//    setRenderTexture( texture->texture );
+//    setAlphaBlending();
 }
 
 void GlRenderer::BindTexture(GLuint &texture_id)
 {
-    setRenderTexture( texture_id );
-    setAlphaBlending();
+    renderer->BindTexture(texture_id);
+//    setRenderTexture( texture_id );
+//    setAlphaBlending();
 }
 
 void GlRenderer::setTextureColor(float Red, float Green, float Blue, float Alpha)
 {
-    color_binded_texture[0]=Red;
-    color_binded_texture[1]=Green;
-    color_binded_texture[2]=Blue;
-    color_binded_texture[3]=Alpha;
+    renderer->setTextureColor(Red, Green, Blue, Alpha);
+//    color_binded_texture[0]=Red;
+//    color_binded_texture[1]=Green;
+//    color_binded_texture[2]=Blue;
+//    color_binded_texture[3]=Alpha;
 
-    color_binded_texture[4]=Red;
-    color_binded_texture[5]=Green;
-    color_binded_texture[6]=Blue;
-    color_binded_texture[7]=Alpha;
+//    color_binded_texture[4]=Red;
+//    color_binded_texture[5]=Green;
+//    color_binded_texture[6]=Blue;
+//    color_binded_texture[7]=Alpha;
 
-    color_binded_texture[8]=Red;
-    color_binded_texture[9]=Green;
-    color_binded_texture[10]=Blue;
-    color_binded_texture[11]=Alpha;
+//    color_binded_texture[8]=Red;
+//    color_binded_texture[9]=Green;
+//    color_binded_texture[10]=Blue;
+//    color_binded_texture[11]=Alpha;
 
-    color_binded_texture[12]=Red;
-    color_binded_texture[13]=Green;
-    color_binded_texture[14]=Blue;
-    color_binded_texture[15]=Alpha;
+//    color_binded_texture[12]=Red;
+//    color_binded_texture[13]=Green;
+//    color_binded_texture[14]=Blue;
+//    color_binded_texture[15]=Alpha;
 }
 
 void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+    renderer->renderTextureCur(x, y, w, h, ani_top, ani_bottom, ani_left, ani_right);
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+w, y+h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
 
-    GLfloat TexCoord[] = {
-        ani_left, ani_top,
-        ani_right, ani_top,
-        ani_right, ani_bottom,
-        ani_left, ani_bottom
-    };
+//    GLfloat TexCoord[] = {
+//        ani_left, ani_top,
+//        ani_right, ani_top,
+//        ani_right, ani_bottom,
+//        ani_left, ani_bottom
+//    };
 
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
 
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }
 
 void GlRenderer::renderTextureCur(float x, float y)
 {
-    GLint w;
-    GLint h;
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
-    if(w<0) return;
-    if(h<0) return;
+    renderer->renderTextureCur(x, y);
+//    GLint w;
+//    GLint h;
+//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
+//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
+//    if(w<0) return;
+//    if(h<0) return;
 
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+w, y+h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
-    GLfloat TexCoord[] = {
-        0.f, 0.f,
-        1.f, 0.f,
-        1.f, 1.f,
-        0.f, 1.f
-    };
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
+//    GLfloat TexCoord[] = {
+//        0.f, 0.f,
+//        1.f, 0.f,
+//        1.f, 1.f,
+//        0.f, 1.f
+//    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
 
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }
 
 void GlRenderer::getCurWidth(GLint &w)
 {
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
+    renderer->getCurWidth(w);
+    //glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
 }
 
 void GlRenderer::getCurHeight(GLint &h)
 {
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT, &h); GLERRORCHECK();
+    renderer->getCurHeight(h);
+    //glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT, &h); GLERRORCHECK();
 }
 
 void GlRenderer::UnBindTexture()
 {
-    setUnbindTexture();
+    renderer->UnBindTexture();
+    //setUnbindTexture();
 }
 
