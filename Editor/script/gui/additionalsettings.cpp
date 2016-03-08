@@ -174,7 +174,7 @@ void AdditionalSettings::configGUI(QList<AdditionalSettings::SimpleAdditionalSet
         int selNextRow = selLayout->count();
 
 
-        QWidget *targetWidget;
+        QWidget *targetWidget=NULL;
         QLabel *targetLabel = new QLabel(selData.labelTxt, selWidget);
         if(selData.controlType == 0){
             QSpinBox *spinBox = new QSpinBox(selWidget);
@@ -357,6 +357,5 @@ void AdditionalSettings::loadValuesByScriptHolder(QList<SimpleAdditionalSetting>
 
 
 AdditionalSettings::SimpleAdditionalSetting::SimpleAdditionalSetting()
-{
-    controlType=-1;
-}
+    : controlType(-1)
+{}

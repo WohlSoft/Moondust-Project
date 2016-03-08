@@ -110,7 +110,7 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
-    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
+    release: QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 
 LIBS += -lfreeimagelite
