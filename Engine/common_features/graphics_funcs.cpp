@@ -70,7 +70,7 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     loadingTime.start();
     fReadTime.start();
     #endif
-    #if  defined(__unix__) || defined(_WIN32)
+    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     PGE_FileMapper fileMap;
     if( !fileMap.open_file(file.toUtf8().data()) )
     {

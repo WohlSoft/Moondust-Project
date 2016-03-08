@@ -18,6 +18,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
+#include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>
 
 #include "data_configs.h"
@@ -48,7 +49,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 {
     bool valid=true;
     bool internal=!setup;
-    QString tmpstr, imgFile;
+    QString errStr, tmpstr, imgFile;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
     setup->beginGroup( section );
@@ -86,22 +87,22 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 sbg.repead_v = (merge_with ? merge_with->repead_v : 0);
             else sbg.repead_v = 0;
 
-        imgFile = setup->value("image", (merge_with ? merge_with->image_n : "") ).toString();
-        sbg.image_n = imgFile;
+        sbg.image_n = setup->value("image", (merge_with ? merge_with->image_n : "") ).toString();
         if(!merge_with)
         {
-            if( (imgFile!="") )
+            if( (sbg.image_n !="") )
             {
-                sbg.image = QPixmap(BGPath + imgFile);
-                if(sbg.image.isNull())
+                GraphicsHelps::loadMaskedImage(BGPath,
+                    sbg.image_n, imgFile,
+                    sbg.image,
+                    errStr);
+                if(!errStr.isEmpty())
                 {
-                    addError(QString("%1 Broken image file").arg(section));
+                    addError(QString("%1 %2").arg(section).arg(errStr));
                     valid=false;
                     goto abort;
                 }
-            }
-            else
-            {
+            } else {
                 addError(QString("%1 Image filename isn't defined").arg(section));
                 valid=false;
                 goto abort;
@@ -125,16 +126,16 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 
         if(sbg.type==1)
         {
-            imgFile = setup->value("second-image", (merge_with ? merge_with->second_image_n : "")).toString();
-            sbg.second_image_n = imgFile;
+            sbg.second_image_n = setup->value("second-image", (merge_with ? merge_with->second_image_n : "")).toString();
             if(!merge_with)
             {
-                if( (imgFile!="") )
+                if( (sbg.second_image_n !="") )
                 {
-                    sbg.second_image = QPixmap(BGPath  + imgFile);
-                }
-                else
-                {
+                    GraphicsHelps::loadMaskedImage(BGPath,
+                       sbg.image_n, imgFile,
+                       sbg.second_image,
+                       errStr);
+                } else {
                     sbg.second_image = Themes::Image(Themes::dummy_bg);
                 }
             }

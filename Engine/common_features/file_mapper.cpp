@@ -20,7 +20,7 @@
 
 #include "util.h"
 
-#ifdef __unix__
+#if defined(__unix__) || defined(__APPLE__)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -57,7 +57,7 @@ PGE_FileMapper::PGE_FileMapper(const PGE_FileMapper &fm) :
 
 bool PGE_FileMapper::open_file(std::string path)
 {
-#ifdef __unix__
+#if defined(__unix__) || defined(__APPLE__)
     struct  stat sb;
     int     m_fd;
     m_fd = open(path.c_str(), O_RDONLY);
@@ -133,7 +133,7 @@ bool PGE_FileMapper::close_file()
 {
     if(data)
     {
-        #ifdef __unix__
+        #if defined(__unix__) || defined(__APPLE__)
         if(munmap(data, size)==-1)
         {
             m_error="Fail to unmap";

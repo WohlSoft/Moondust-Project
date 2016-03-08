@@ -88,7 +88,7 @@ void ConfigManager::buildSoundIndex()
             if(main_sound.contains(i))
             {
                 obj_sound &snd = main_sound[i];
-                #if  defined(__unix__) || defined(_WIN32)
+                #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
                 PGE_FileMapper fileMap;
                 if( fileMap.open_file(snd.absPath.toUtf8().data()) )
                 {
@@ -117,7 +117,7 @@ void ConfigManager::buildSoundIndex()
                 sound.setPath(snd.absPath);
                 if(sound.need_reload)
                 {
-                    #if  defined(__unix__) || defined(_WIN32)
+                    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
                     PGE_FileMapper fileMap;
                     if( fileMap.open_file(snd.absPath.toUtf8().data()) )
                     {
