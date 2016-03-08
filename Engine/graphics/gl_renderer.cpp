@@ -637,43 +637,43 @@ void GlRenderer::setWindowSize(int w, int h)
 }
 
 
-static inline void setRenderColors()
-{
-    glBindTexture( GL_TEXTURE_2D, 0 );  GLERRORCHECK();
-    #ifndef PGE_USE_OpenGL_3_2
-    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
-    #endif
-}
+//static inline void setRenderColors()
+//{
+//    glBindTexture( GL_TEXTURE_2D, 0 );  GLERRORCHECK();
+//    #ifndef PGE_USE_OpenGL_3_2
+//    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
+//    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
+//    glDisableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
+//    #endif
+//}
 
-static inline void setRenderTexture(GLuint &tID)
-{
-    glBindTexture( GL_TEXTURE_2D, tID ); GLERRORCHECK();
-    #ifndef PGE_USE_OpenGL_3_2
-    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
-    #endif
+//static inline void setRenderTexture(GLuint &tID)
+//{
+//    glBindTexture( GL_TEXTURE_2D, tID ); GLERRORCHECK();
+//    #ifndef PGE_USE_OpenGL_3_2
+//    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
+//    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
+//    glEnableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
+//    #endif
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);  GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); GLERRORCHECK();
-}
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  GLERRORCHECK();
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);  GLERRORCHECK();
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); GLERRORCHECK();
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); GLERRORCHECK();
+//}
 
-static inline void setUnbindTexture()
-{
-    glBindTexture( GL_TEXTURE_2D, 0 ); GLERRORCHECK();
-}
+//static inline void setUnbindTexture()
+//{
+//    glBindTexture( GL_TEXTURE_2D, 0 ); GLERRORCHECK();
+//}
 
-static inline void setAlphaBlending()
-{
-    #ifdef GL_GLEXT_PROTOTYPES
-    glBlendEquation(GL_FUNC_ADD); GLERRORCHECK();
-    #endif
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
-}
+//static inline void setAlphaBlending()
+//{
+//    #ifdef GL_GLEXT_PROTOTYPES
+//    glBlendEquation(GL_FUNC_ADD); GLERRORCHECK();
+//    #endif
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
+//}
 
 void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
