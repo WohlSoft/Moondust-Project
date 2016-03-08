@@ -54,7 +54,9 @@ s_search_list[] = {
 	"plugins\\",
 };
 
+#if defined(_WIN32) && !defined(__MINGW32__)
 static int s_search_list_size = sizeof(s_search_list) / sizeof(char *);
+#endif
 static PluginList *s_plugins = NULL;
 static int s_plugin_reference_count = 0;
 
@@ -82,6 +84,7 @@ FreeImage_stricmp(const char *s1, const char *s2) {
 PluginList::PluginList() :
 m_plugin_map(),
 m_node_count(0) {
+(void)m_node_count;
 }
 
 FREE_IMAGE_FORMAT
@@ -226,6 +229,7 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 
 		// initialise the TagLib singleton
 		TagLib& s = TagLib::instance();
+        (void)s;
 
 		// internal plugin initialization
 
@@ -343,6 +347,8 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 					SetCurrentDirectoryW(current_dir);
 				}
 			}
+#else
+(void)load_local_plugins_only;
 #endif // _WIN32
 		}
 	}
@@ -438,6 +444,8 @@ FreeImage_LoadU(FREE_IMAGE_FORMAT fif, const wchar_t *filename, int flags) {
 	} else {
 		FreeImage_OutputMessageProc((int)fif, "FreeImage_LoadU: failed to open input file");
 	}
+#else
+    (void)fif;(void)filename;(void)flags;
 #endif
 	return NULL;
 }
@@ -506,6 +514,8 @@ FreeImage_SaveU(FREE_IMAGE_FORMAT fif, FIBITMAP *dib, const wchar_t *filename, i
 	} else {
 		FreeImage_OutputMessageProc((int)fif, "FreeImage_SaveU: failed to open output file");
 	}
+#else
+    (void)fif;(void)dib;(void)filename;(void)flags;
 #endif
 	return FALSE;
 }
@@ -801,6 +811,7 @@ FreeImage_GetFIFFromFilenameU(const wchar_t *filename) {
 
 	return fRet;
 #else
+    (void)filename;
 	return FIF_UNKNOWN;
 #endif // _WIN32
 }

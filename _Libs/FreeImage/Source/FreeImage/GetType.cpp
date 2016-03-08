@@ -33,7 +33,8 @@
 
 FREE_IMAGE_FORMAT DLL_CALLCONV
 FreeImage_GetFileTypeFromHandle(FreeImageIO *io, fi_handle handle, int size) {
-	if (handle != NULL) {
+    (void)size;
+    if (handle != NULL) {
 		int fif_count = FreeImage_GetFIFCount();
 
 		for (int i = 0; i < fif_count; ++i) {
@@ -76,6 +77,7 @@ FreeImage_GetFileType(const char *filename, int size) {
 
 FREE_IMAGE_FORMAT DLL_CALLCONV 
 FreeImage_GetFileTypeU(const wchar_t *filename, int size) {
+    (void)filename;(void)size;
 #ifdef _WIN32	
 	FreeImageIO io;
 	SetDefaultIO(&io);

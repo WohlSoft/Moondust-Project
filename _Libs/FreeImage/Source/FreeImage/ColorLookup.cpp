@@ -74,7 +74,7 @@ FreeImage_LookupNamedColor(const char *szColor, const NamedColor *color_array, i
 
     // make lower case name, squezze white space
 
-    for (i = 0; szColor[i] && i < sizeof(color) - 1; i++) {
+    for (i = 0; (signed)(szColor[i] && i) < (signed)sizeof(color) - 1; i++) {
 		if (isspace(szColor[i])) {
             continue;
 		}

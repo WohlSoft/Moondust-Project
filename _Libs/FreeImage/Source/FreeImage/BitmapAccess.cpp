@@ -3,7 +3,7 @@
 //
 // Design and implementation by
 // - Floris van den Berg (flvdberg@wxs.nl)
-// - Hervé Drolon (drolon@infonie.fr)
+// - Herve Drolon (drolon@infonie.fr)
 // - Detlev Vendt (detlev.vendt@brillit.de)
 // - Petr Supina (psup@centrum.cz)
 // - Carsten Klein (c.klein@datagis.com)
@@ -709,6 +709,8 @@ FreeImage_GetColorType(FIBITMAP *dib) {
 			case FIT_RGBA16:
 			case FIT_RGBAF:
 				return FIC_RGBALPHA;
+            default:
+                break;
 		}
 
 		return FIC_MINISBLACK;
