@@ -1772,7 +1772,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton* btn)
                 {
                     ItemNPC* npcI = ((ItemNPC*)item);
                     selData.npc.push_back(npcI->m_data);
-                    if((ui->PROPS_NPCContaiter==btn))
+                    if(ui->PROPS_NPCContaiter==btn)
                         npcI->setIncludedNPC(selected_npc);
                     else if(ui->PROPS_NPCSpecialNPC==btn)
                         npcI->m_data.special_data = selected_npc;

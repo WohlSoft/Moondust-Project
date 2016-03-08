@@ -4,7 +4,9 @@
 
 #include <scenes/scene_title.h>
 
-LuaTitleScreenEngine::LuaTitleScreenEngine(TitleScene *scene) : LuaEngine(scene)
+LuaTitleScreenEngine::LuaTitleScreenEngine(TitleScene *scene)
+    : LuaEngine(scene),
+      m_scene(scene)
 {}
 
 LuaTitleScreenEngine::~LuaTitleScreenEngine()
@@ -12,7 +14,7 @@ LuaTitleScreenEngine::~LuaTitleScreenEngine()
 
 TitleScene *LuaTitleScreenEngine::getScene()
 {
-    return dynamic_cast<TitleScene*>(getBaseScene());
+    return m_scene;
 }
 
 void LuaTitleScreenEngine::onBindAll()

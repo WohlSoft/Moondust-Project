@@ -82,7 +82,6 @@ private:
     bool _animationFinished;
 
     bool isEnabled;
-    SDL_TimerID timer_id;
 
     void createAnimationFrames();
 
