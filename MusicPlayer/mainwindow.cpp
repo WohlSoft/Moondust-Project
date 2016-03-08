@@ -185,6 +185,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_musplay.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_musplay.ico"));
+    #endif
     ui->adlmidi_xtra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);

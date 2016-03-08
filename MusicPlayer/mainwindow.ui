@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
-    <height>452</height>
+    <width>645</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -17,8 +17,8 @@
    <string>Simple SDL2 Mixer X Music player</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>_resources/cat_musplay.ico</normaloff>_resources/cat_musplay.ico</iconset>
+   <iconset resource="_resources/musicplayer.qrc">
+    <normaloff>:/cat_musplay/cat_musplay_48x48.png</normaloff>:/cat_musplay/cat_musplay_48x48.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -477,37 +477,30 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0" colspan="3">
-     <widget class="QLabel" name="musTitle">
-      <property name="styleSheet">
-       <string notr="true">border-color: rgb(0, 0, 0); border-width: 1px</string>
-      </property>
+    <item row="8" column="0" colspan="3">
+     <widget class="QCheckBox" name="recordWav">
       <property name="text">
-       <string/>
+       <string>Record WAV</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="3">
-     <widget class="QLabel" name="musArtist">
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string/>
+       <string>Press &quot;Open&quot; or drag&amp;drop music file into this window</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="3">
-     <widget class="QLabel" name="musCopyright">
+    <item row="3" column="0" colspan="3">
+     <widget class="QLabel" name="musAlbum">
       <property name="text">
        <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QPushButton" name="open">
-      <property name="text">
-       <string>Open</string>
-      </property>
-      <property name="shortcut">
-       <string>Ctrl+O</string>
       </property>
      </widget>
     </item>
@@ -531,30 +524,37 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QLabel" name="musAlbum">
+    <item row="7" column="0">
+     <widget class="QPushButton" name="open">
+      <property name="text">
+       <string>Open</string>
+      </property>
+      <property name="shortcut">
+       <string>Ctrl+O</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QLabel" name="musArtist">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="3">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+    <item row="1" column="0" colspan="3">
+     <widget class="QLabel" name="musTitle">
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(0, 0, 0); border-width: 1px</string>
       </property>
       <property name="text">
-       <string>Press &quot;Open&quot; or drag&amp;drop music file into this window</string>
+       <string/>
       </property>
      </widget>
     </item>
-    <item row="8" column="0" colspan="3">
-     <widget class="QCheckBox" name="recordWav">
+    <item row="4" column="0" colspan="3">
+     <widget class="QLabel" name="musCopyright">
       <property name="text">
-       <string>Record WAV</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -573,6 +573,8 @@
   <tabstop>vibrato</tabstop>
   <tabstop>modulation</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="_resources/musicplayer.qrc"/>
+ </resources>
  <connections/>
 </ui>

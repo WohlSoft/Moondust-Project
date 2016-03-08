@@ -71,6 +71,11 @@ macx:{
 
 RC_FILE = _resources/musicplayer.rc
 
+macx {
+    ICON = _resources/cat_musplay.icns
+}
+
+
 SOURCES += main.cpp\
     mainwindow.cpp \
     SingleApplication/localserver.cpp \
