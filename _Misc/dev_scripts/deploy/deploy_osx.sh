@@ -56,13 +56,16 @@ if [ ! -d "$DeployDir/$PgePrjSD" ]; then
         mkdir -p "$DeployDir/$PgePrjSD"
 fi
 
-#$CurDir/upx-linux-x64 pge_editor
-#$CurDir/upx-linux-x64 PNG2GIFs
-#$CurDir/upx-linux-x64 GIFs2PNG
-#$CurDir/upx-linux-x64 LazyFixTool
-#$CurDir/upx-linux-x64 pge_calibrator
-#$CurDir/upx-linux-x64 pge_engine
-#$CurDir/upx-linux-x64 pge_musplay
+$CurDir/upx-osx-intel64 -9 pge_editor.app/Contents/MacOS/pge_editor
+$CurDir/upx-osx-intel64 -9 PNG2GIFs
+$CurDir/upx-osx-intel64 -9 GIFs2PNG
+$CurDir/upx-osx-intel64 -9 LazyFixTool
+$CurDir/upx-osx-intel64 -9 pge_calibrator.app/Contents/MacOS/pge_calibrator
+$CurDir/upx-osx-intel64 -9 pge_engine.app/Contents/MacOS/pge_engine
+$CurDir/upx-osx-intel64 -9 pge_manager.app/Contents/MacOS/pge_manager
+$CurDir/upx-osx-intel64 -9 pge_maintainer.app/Contents/MacOS/pge_maintainer
+$CurDir/upx-osx-intel64 -9 pge_musplay.app/Contents/MacOS/pge_musplay
+
 cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"

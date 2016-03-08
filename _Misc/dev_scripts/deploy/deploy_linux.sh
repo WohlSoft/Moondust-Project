@@ -42,15 +42,15 @@ if [ ! -d "$DeployDir" ]; then
 	mkdir "$DeployDir/$PgePrjSD"
 fi
 
-$CurDir/upx-linux-x64 pge_editor
-$CurDir/upx-linux-x64 PNG2GIFs
-$CurDir/upx-linux-x64 GIFs2PNG
-$CurDir/upx-linux-x64 LazyFixTool
-$CurDir/upx-linux-x64 pge_calibrator
-$CurDir/upx-linux-x64 pge_engine
-$CurDir/upx-linux-x64 pge_manager
-$CurDir/upx-linux-x64 pge_maintainer
-$CurDir/upx-linux-x64 pge_musplay
+$CurDir/upx-linux-x64 -9 pge_editor
+$CurDir/upx-linux-x64 -9 PNG2GIFs
+$CurDir/upx-linux-x64 -9 GIFs2PNG
+$CurDir/upx-linux-x64 -9 LazyFixTool
+$CurDir/upx-linux-x64 -9 pge_calibrator
+$CurDir/upx-linux-x64 -9 pge_engine
+$CurDir/upx-linux-x64 -9 pge_manager
+$CurDir/upx-linux-x64 -9 pge_maintainer
+$CurDir/upx-linux-x64 -9 pge_musplay
 cp pge_editor "$DeployDir/$PgePrjSD"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"
