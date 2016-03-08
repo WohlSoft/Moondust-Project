@@ -29,7 +29,7 @@
 #include "dynamic_flac.h"
 
 flac_loader flac = {
-    0, NULL
+    0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 };
 
 #ifdef FLAC_DYNAMIC

@@ -2073,7 +2073,7 @@ interleaveloop:
 #else
 //---GCCFIX: Asm replaced with C function
 // Multichannel not supported.
-void MPPASMCALL X86_InterleaveFrontRear(int *pFrontBuf, int *pRearBuf, DWORD nSamples)
+void MPPASMCALL X86_InterleaveFrontRear(int */*pFrontBuf*/, int */*pRearBuf*/, DWORD /*nSamples*/)
 {
 }
 #endif

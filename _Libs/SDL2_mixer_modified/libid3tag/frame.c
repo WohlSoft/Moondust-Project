@@ -285,7 +285,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
       *ptr += 3;
       size  = id3_parse_uint(ptr, 3);
 
-      if (size > end - *ptr)
+      if (size > (unsigned)(end - *ptr))
 	goto fail;
 
       end = *ptr + size;
@@ -302,7 +302,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
       size  = id3_parse_uint(ptr, 4);
       flags = id3_parse_uint(ptr, 2);
 
-      if (size > end - *ptr)
+      if (size > (unsigned)(end - *ptr))
 	goto fail;
 
       end = *ptr + size;
@@ -370,7 +370,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
     size  = id3_parse_syncsafe(ptr, 4);
     flags = id3_parse_uint(ptr, 2);
 
-    if (size > end - *ptr)
+    if (size > (unsigned)(end - *ptr))
       goto fail;
 
     end = *ptr + size;

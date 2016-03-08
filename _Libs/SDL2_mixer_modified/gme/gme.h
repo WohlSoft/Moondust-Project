@@ -14,7 +14,8 @@
 typedef const char* gme_err_t;
 
 /* First parameter of most gme_ functions is a pointer to the Music_Emu */
-typedef struct Music_Emu Music_Emu;
+//typedef struct Music_Emu Music_Emu;
+struct Music_Emu;
 
 
 /******** Basic operations ********/

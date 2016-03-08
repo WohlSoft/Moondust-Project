@@ -319,6 +319,7 @@ hash (str, len)
      register const char *str;
      register unsigned int len;
 {
+    (void)len;
   static const unsigned char asso_values[] =
     {
       156, 156, 156, 156, 156, 156, 156, 156, 156, 156,

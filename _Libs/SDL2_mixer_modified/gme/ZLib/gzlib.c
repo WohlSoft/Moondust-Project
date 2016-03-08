@@ -12,6 +12,12 @@
 #  define LSEEK lseek64
 #else
 #  define LSEEK lseek
+#ifdef __APPLE__
+off_t       lseek(int, off_t, int);
+ssize_t     read(int, void *, size_t);
+int         close(int);
+ssize_t     write(int, const void *, size_t);
+#endif
 #endif
 #endif
 

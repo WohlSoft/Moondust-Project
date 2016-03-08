@@ -505,6 +505,7 @@ static MIDTRACK *mid_locate_track(MIDHANDLE *h, int mch, int pos)
 
 static void	mid_add_event(MIDHANDLE *h, MIDTRACK *tp, MIDEVENT *e)
 {
+    (void)h;
 	MIDEVENT *ew, *ep;
 	ep = NULL;
 	ew = tp->workevent;

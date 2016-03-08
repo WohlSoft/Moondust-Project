@@ -258,6 +258,7 @@ void ADLMIDI_delete(struct MUSIC_MIDIADL *music)
 /* Jump (seek) to a given position (time is in seconds) */
 void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
 {
+    (void)time;
     if(music)
     {
         //gme_seek(adl_midiplayer, (int)round(time*1000));

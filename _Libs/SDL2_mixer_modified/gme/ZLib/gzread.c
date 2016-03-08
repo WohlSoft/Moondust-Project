@@ -5,6 +5,12 @@
 
 #include "gzguts.h"
 
+#ifdef __APPLE__
+ssize_t     write(int, const void *, size_t);
+int         close(int);
+ssize_t     read(int, void *, size_t);
+#endif
+
 /* Local functions */
 local int gz_load OF((gz_statep, unsigned char *, unsigned, unsigned *));
 local int gz_avail OF((gz_statep));

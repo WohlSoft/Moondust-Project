@@ -26,7 +26,7 @@
 #include "dynamic_ogg.h"
 
 vorbis_loader vorbis = {
-    0, NULL
+    0, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 };
 
 #ifdef OGG_DYNAMIC

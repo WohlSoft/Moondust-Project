@@ -541,6 +541,7 @@ static void mmfseek(MMFILE *mmfile, long p, int whence)
 static ABCEVENT *abc_new_event(ABCHANDLE *h, uint32_t abctick, const char data[])
 // =====================================================================================
 {
+    (void)h;
     ABCEVENT   *retval;
 		int i;
 
@@ -558,6 +559,7 @@ static ABCEVENT *abc_new_event(ABCHANDLE *h, uint32_t abctick, const char data[]
 static ABCEVENT *abc_copy_event(ABCHANDLE *h, ABCEVENT *se)
 // =============================================================================
 {
+    (void)h;
 	ABCEVENT *e;
 	e = (ABCEVENT *)_mm_calloc(h->trackhandle, 1,sizeof(ABCEVENT));
 	e->next        = NULL;
@@ -853,7 +855,7 @@ static ABCTRACK *abc_locate_track(ABCHANDLE *h, const char *voice, int pos)
 	ABCTRACK *tr, *prev, *trunused;
 	char vc[21];
 	int i, trans=0, voiceno=0, instrno = 1, channo = 0;
-	for( ; *voice == ' '; voice++ ) ;	// skip leading spaces
+    for( ; *voice == ' '; voice++ ) {};	// skip leading spaces
     for( i=0; (unsigned)i+1 < (unsigned)sizeof(vc) && *voice && *voice != ']' && *voice != '%' && !isspace(*voice); voice++ )	// can work with inline voice instructions
 		vc[i++] = *voice;
 	vc[i] = '\0';
@@ -1959,6 +1961,7 @@ static int abc_patno(ABCHANDLE *h, uint32_t tracktime)
 
 static void abc_stripoff(ABCHANDLE *h, ABCTRACK *tp, uint32_t tt)
 {
+    (void)h;
 	ABCEVENT *e1, *e2;
 	e2 = NULL;
 	for( e1 = tp->head; e1 && e1->tracktick <= tt; e1=e1->next )
@@ -3616,6 +3619,7 @@ static void abc_init_partpat(BYTE partp[27][2])
 
 static int abc_partpat_to_orderlist(BYTE partp[27][2], const char *abcparts, ABCHANDLE *h, BYTE **list, int orderlen)
 {
+    (void)h;
 	int t, partsused;
 	const char *p;
 	BYTE *orderlist = *list;

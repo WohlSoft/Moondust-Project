@@ -49,7 +49,7 @@ typedef struct {
 } FLAC_SDL_Data;
 
 static FLAC__StreamDecoderReadStatus flac_read_load_cb(
-                                    const FLAC__StreamDecoder decoder,
+                                    const FLAC__StreamDecoder *decoder,
                                     FLAC__byte buffer[],
                                     size_t *bytes,
                                     void *client_data)
@@ -73,7 +73,7 @@ static FLAC__StreamDecoderReadStatus flac_read_load_cb(
 }
 
 static FLAC__StreamDecoderSeekStatus flac_seek_load_cb(
-                                    const FLAC__StreamDecoder decoder,
+                                    const FLAC__StreamDecoder *decoder,
                                     FLAC__uint64 absolute_byte_offset,
                                     void *client_data)
 {
@@ -88,7 +88,7 @@ static FLAC__StreamDecoderSeekStatus flac_seek_load_cb(
 }
 
 static FLAC__StreamDecoderTellStatus flac_tell_load_cb(
-                                    const FLAC__StreamDecoder decoder,
+                                    const FLAC__StreamDecoder *decoder,
                                     FLAC__uint64 *absolute_byte_offset,
                                     void *client_data)
 {
@@ -106,7 +106,7 @@ static FLAC__StreamDecoderTellStatus flac_tell_load_cb(
 }
 
 static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
-                                    const FLAC__StreamDecoder decoder,
+                                    const FLAC__StreamDecoder *decoder,
                                     FLAC__uint64 *stream_length,
                                     void *client_data)
 {
@@ -126,7 +126,7 @@ static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
     }
 }
 
-static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder decoder,
+static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder *decoder,
                                     void *client_data)
 {
     (void)decoder;
@@ -147,7 +147,7 @@ static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder decoder,
 }
 
 static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
-                                    const FLAC__StreamDecoder decoder,
+                                    const FLAC__StreamDecoder *decoder,
                                     const FLAC__Frame *frame,
                                     const FLAC__int32 *const buffer[],
                                     void *client_data)
@@ -204,7 +204,7 @@ static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
 }
 
 static void flac_metadata_load_cb(
-                    const FLAC__StreamDecoder decoder,
+                    const FLAC__StreamDecoder *decoder,
                     const FLAC__StreamMetadata *metadata,
                     void *client_data)
 {
@@ -234,7 +234,7 @@ static void flac_metadata_load_cb(
 }
 
 static void flac_error_load_cb(
-                const FLAC__StreamDecoder decoder,
+                const FLAC__StreamDecoder *decoder,
                 FLAC__StreamDecoderErrorStatus status,
                 void *client_data)
 {
@@ -285,10 +285,10 @@ SDL_AudioSpec *Mix_LoadFLAC_RW (SDL_RWops *src, int freesrc,
     }
 
     init_status = flac.FLAC__stream_decoder_init_stream(decoder,
-                                flac_read_load_cb, flac_seek_load_cb,
-                                flac_tell_load_cb, flac_length_load_cb,
-                                flac_eof_load_cb, flac_write_load_cb,
-                                flac_metadata_load_cb, flac_error_load_cb,
+                                &flac_read_load_cb, &flac_seek_load_cb,
+                                &flac_tell_load_cb, &flac_length_load_cb,
+                                &flac_eof_load_cb, &flac_write_load_cb,
+                                &flac_metadata_load_cb, &flac_error_load_cb,
                                 client_data);
 
     if (init_status != FLAC__STREAM_DECODER_INIT_STATUS_OK) {

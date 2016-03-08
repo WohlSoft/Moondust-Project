@@ -31,6 +31,10 @@
 
 # ifdef HAVE_UNISTD_H
 #  include <unistd.h>
+#else
+int dup(int oldfd);
+int dup2(int oldfd, int newfd);
+int close(int);
 # endif
 
 # ifdef HAVE_ASSERT_H
@@ -182,6 +186,7 @@ int add_filetag(struct id3_file *file, struct filetag const *filetag)
  * NAME:	del_filetag()
  * DESCRIPTION:	delete a file tag entry
  */
+#if defined(HAVE_FTRUNCATE)
 static
 void del_filetag(struct id3_file *file, unsigned int index)
 {
@@ -194,7 +199,7 @@ void del_filetag(struct id3_file *file, unsigned int index)
 
   --file->ntags;
 }
-
+#endif
 /*
  * NAME:	add_tag()
  * DESCRIPTION:	read, parse, and add a tag to a file structure

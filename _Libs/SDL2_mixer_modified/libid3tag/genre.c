@@ -140,7 +140,7 @@ int id3_genre_number(id3_ucs4_t const *string)
     return (number <= 0xff) ? number : -1;
   }
 
-  for (i = 0; i < NGENRES; ++i) {
+  for (i = 0; (unsigned)i < (unsigned)NGENRES; ++i) {
     if (compare(string, genre_table[i]))
       return i;
   }

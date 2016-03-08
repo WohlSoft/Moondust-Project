@@ -400,7 +400,7 @@ int WAVStream_Active(void)
 
 static SDL_bool ParseFMT(WAVStream *wave, Uint32 chunk_length)
 {
-    SDL_RWops *src = wave->src;
+    //SDL_RWops *src = wave->src;
     SDL_AudioSpec *spec = &wave->spec;
     WaveFMT *format;
     Uint8 *data;
@@ -499,7 +499,7 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
     }
     chunk = (SamplerChunk *)data;
 
-    for (i = 0; i < SDL_SwapLE32(chunk->sample_loops); ++i) {
+    for (i = 0; (unsigned)i < (unsigned)SDL_SwapLE32(chunk->sample_loops); ++i) {
         const Uint32 LOOP_TYPE_FORWARD = 0;
         Uint32 loop_type = SDL_SwapLE32(chunk->loops[i].type);
         if (loop_type == LOOP_TYPE_FORWARD) {

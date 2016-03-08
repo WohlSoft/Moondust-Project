@@ -46,7 +46,7 @@ SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, 
     mad_data *mp3_mad = NULL;//Sam, you forgot to initialize this :P
 #endif
 	long samplesize;
-	int read_len;
+    int read_len=0;
 	const Uint32 chunk_len = 4096;
 	int err = 0;
     int errisset = 0;

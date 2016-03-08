@@ -5,6 +5,11 @@
 
 #include "gzguts.h"
 
+#ifdef __APPLE__
+ssize_t      write(int, const void *, size_t);
+int          close(int);
+#endif
+
 /* Local functions */
 local int gz_init OF((gz_statep));
 local int gz_comp OF((gz_statep, int));

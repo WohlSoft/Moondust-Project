@@ -25,7 +25,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
+#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
 #endif
 
 #line 1 "compat.gperf"
@@ -343,6 +343,7 @@ static
 int translate_TCON(struct id3_frame *frame, char const *oldid,
 		   id3_byte_t const *data, id3_length_t length)
 {
+    (void)oldid;
   id3_byte_t const *end;
   enum id3_field_textencoding encoding;
   id3_ucs4_t *string = 0, *ptr, *endptr;

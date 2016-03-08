@@ -478,7 +478,7 @@ struct id3_tag *v2_parse(id3_byte_t const *ptr)
 
 	  ehsize = id3_parse_uint(&ptr, 4);
 
-	  if (ehsize > end - ptr)
+      if (ehsize > (unsigned)(end - ptr))
 	    goto fail;
 
 	  ehptr = ptr;
@@ -493,7 +493,7 @@ struct id3_tag *v2_parse(id3_byte_t const *ptr)
 	    ehflags = id3_parse_uint(&ehptr, 2);
 	    padsize = id3_parse_uint(&ehptr, 4);
 
-	    if (padsize > end - ptr)
+        if (padsize > (unsigned)(end - ptr))
 	      goto fail;
 
 	    end -= padsize;
@@ -527,7 +527,7 @@ struct id3_tag *v2_parse(id3_byte_t const *ptr)
 	  ehptr  = ptr;
 	  ehsize = id3_parse_syncsafe(&ptr, 4);
 
-	  if (ehsize < 6 || ehsize > end - ehptr)
+      if (ehsize < 6 || ehsize > (unsigned)(end - ehptr))
 	    goto fail;
 
 	  ehend = ehptr + ehsize;
