@@ -25,7 +25,9 @@
 #include <QFileInfo>
 #include "version.h"
 
-#define FREEIMAGE_LIB
+#ifdef _WIN32
+#define FREEIMAGE_LIB 1
+#endif
 #include <FreeImageLite.h>
 
 #include "common_features/config_manager.h"

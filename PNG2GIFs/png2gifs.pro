@@ -32,6 +32,7 @@ CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
 CONFIG   += thread
+CONFIG   += c++11
 
 TEMPLATE = app
 

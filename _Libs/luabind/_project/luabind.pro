@@ -37,7 +37,6 @@ SOURCES += ../src/class.cpp \
     ../src/exception_handler.cpp \
     ../src/function.cpp \
     ../src/function_introspection.cpp \
-    ../src/headertest.cpp \
     ../src/inheritance.cpp \
     ../src/link_compatibility.cpp \
     ../src/object_rep.cpp \

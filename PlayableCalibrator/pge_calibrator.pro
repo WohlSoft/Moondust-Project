@@ -34,7 +34,8 @@ include($$PWD/../_common/build_props.pri)
 
 TARGET = pge_calibrator
 TEMPLATE = app
-CONFIG += static
+CONFIG   += static
+CONFIG   += c++11
 
 macx {
     ICON = _resourses/calibrator.icns
