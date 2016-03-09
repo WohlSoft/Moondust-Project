@@ -60,15 +60,15 @@ LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
     if( !PGE_StartsWith(line, "SMBXFile") ) //File format number
         goto badfile;
     else file_format = 65;
-readLineAgain:
-    nextLineH();   //Read second Line
-    PGE_SPLITSTRING(currentLine, line, "|");
 
-    if(currentLine.size()==0)
+    while(!inf.eof())
     {
-        if(!inf.eof())
-            goto readLineAgain;
-    } else {
+        nextLineH();   //Read second Line
+        PGE_SPLITSTRING(currentLine, line, "|");
+
+        if(currentLine.size()==0)
+            continue;
+
         if(currentLine[0]=="A")
         {
             for(int i=1;i<(signed)currentLine.size();i++)
@@ -81,27 +81,28 @@ readLineAgain:
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
                         else FileData.stars=toInt(cLine);   //Number of stars
-                    } break;
+                    } break;//switch
                 case 2://Level title (URL Encoded!)
                     {
                         FileData.LevelName = PGE_URLDEC(cLine);
-                    } break;
+                    } break;//switch
                 //param3=a filename, when player died, the player will be sent to this level.
                 case 3:
                     {
                         FileData.open_level_on_fail = PGE_URLDEC(cLine);
-                    } break;
+                    } break;//switch
                 //param4=normal entrance / to warp [0-WARPMAX]
                 case 4:
                     {
                         if( SMBX64::uInt(cLine) )
                             goto badfile;
                         else FileData.open_level_on_fail_warpID = toInt(cLine);
-                    } break;
+                    } break;//switch
                 }
 
             }
-        } else goto readLineAgain;
+            break;//while(!inf.eof())
+        }
     }
 
     FileData.CurSection=0;
@@ -267,15 +268,14 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
     if( !PGE_StartsWith(line, "SMBXFile") ) //File format number
         goto badfile;
     else file_format = 65;
-readLineAgain:
-    nextLine();   //Read second Line
-    SMBX65_SplitLine(currentLine, line);
 
-    if(currentLine.size()==0)
+    while(!in.eof())
     {
-        if(!in.eof())
-            goto readLineAgain;
-    } else {
+        nextLine();   //Read second Line
+        SMBX65_SplitLine(currentLine, line);
+
+        if(currentLine.size()==0)
+            continue;
 
         if(currentLine[0]=="A")//Level settings
         {
@@ -2069,8 +2069,7 @@ readLineAgain:
             FileData.scripts.push_back(scriptdata);
         }
 
-        goto readLineAgain;
-    }
+    }//while is not EOF
 
     LevelAddInternalEvents(FileData);
 
