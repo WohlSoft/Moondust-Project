@@ -6,6 +6,9 @@ set CurDir=%CD%
 
 IF NOT EXIST "%SEVENZIP%\7z.exe" GOTO ErrorNo7z
 
+set COMPRESS_DLL=%CurDir%\upx.exe -9
+set COMPRESS_EXE=%CurDir%\upx.exe -9 --compress-icons=0
+
 cd "%SOURCEDIR%\Editor"
 call "%SOURCEDIR%\_paths.bat"
 set OldPATH=%PATH%
@@ -41,27 +44,44 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
 %QtDir%\windeployqt pge_maintainer.exe
+
 rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
 if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
 if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
-%CurDir%\upx.exe -9 Qt5Core.dll
-%CurDir%\upx.exe -9 Qt5Gui.dll
-%CurDir%\upx.exe -9 D3Dcompiler_*.dll
-%CurDir%\upx.exe -9 libGLESV2.dll
-%CurDir%\upx.exe -9 Qt5Network.dll
-%CurDir%\upx.exe -9 Qt5Widgets.dll
-%CurDir%\upx.exe -9 libstdc++-6.dll
+
+rem Remove possible temporary files of UPX
+if exist %SOURCEDIR%\bin-w32\*.upx del /Q "%SOURCEDIR%\bin-w32\*.upx"
+
+%COMPRESS_DLL% D3Dcompiler_*.dll
+%COMPRESS_DLL% libEGL.dll
+%COMPRESS_DLL% libGLESV2.dll
+%COMPRESS_DLL% opengl32sw.dll
+%COMPRESS_DLL% Qt5Concurrent.dll
+%COMPRESS_DLL% Qt5Core.dll
+%COMPRESS_DLL% Qt5Gui.dll
+%COMPRESS_DLL% Qt5Network.dll
+%COMPRESS_DLL% Qt5Svg.dll
+%COMPRESS_DLL% Qt5Widgets.dll
+%COMPRESS_DLL% Qt5WinExtras.dll
+%COMPRESS_DLL% Qt5Xml.dll
 :noDynamicQt1
 
-%CurDir%\upx.exe -9 --compress-icons=0 pge_editor.exe
-%CurDir%\upx.exe -9 --compress-icons=0 PNG2GIFs.exe
-%CurDir%\upx.exe -9 --compress-icons=0 GIFs2PNG.exe
-%CurDir%\upx.exe -9 --compress-icons=0 LazyFixTool.exe
-%CurDir%\upx.exe -9 --compress-icons=0 pge_calibrator.exe
-%CurDir%\upx.exe -9 --compress-icons=0 pge_engine.exe
-%CurDir%\upx.exe -9 --compress-icons=0 pge_manager.exe
-%CurDir%\upx.exe -9 --compress-icons=0 pge_maintainer.exe
-%CurDir%\upx.exe -9 --compress-icons=0 pge_musplay.exe
+%COMPRESS_DLL% SDL2.dll
+%COMPRESS_DLL% SDL2_mixer_ext.dll
+
+%COMPRESS_DLL% libgcc_s_dw2-1.dll
+%COMPRESS_DLL% libstdc++-6.dll
+%COMPRESS_DLL% libwinpthread-1.dll
+
+%COMPRESS_EXE% pge_editor.exe
+%COMPRESS_EXE% PNG2GIFs.exe
+%COMPRESS_EXE% GIFs2PNG.exe
+%COMPRESS_EXE% LazyFixTool.exe
+%COMPRESS_EXE% pge_calibrator.exe
+%COMPRESS_EXE% pge_engine.exe
+%COMPRESS_EXE% pge_manager.exe
+%COMPRESS_EXE% pge_maintainer.exe
+%COMPRESS_EXE% pge_musplay.exe
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
@@ -73,16 +93,18 @@ copy pge_musplay.exe "%DeployDir%\%PgePrjSD%"
 
 copy *.dll "%DeployDir%\%PgePrjSD%"
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt2
-xcopy /Y /E /I .\bearer\*.* "%DeployDir%\%PgePrjSD%\bearer"
-xcopy /Y /E /I .\iconengines\*.* "%DeployDir%\%PgePrjSD%\iconengines"
-xcopy /Y /E /I .\imageformats\*.* "%DeployDir%\%PgePrjSD%\imageformats"
+rem xcopy /Y /E /I .\bearer\*.* "%DeployDir%\%PgePrjSD%\bearer"
+rem xcopy /Y /E /I .\iconengines\*.* "%DeployDir%\%PgePrjSD%\iconengines"
+md "%DeployDir%\%PgePrjSD%\imageformats"
+xcopy /Y /E /I .\imageformats\qgif.dll "%DeployDir%\%PgePrjSD%\imageformats"
+xcopy /Y /E /I .\imageformats\qico.dll "%DeployDir%\%PgePrjSD%\imageformats"
 xcopy /Y /E /I .\platforms\*.* "%DeployDir%\%PgePrjSD%\platforms"
 xcopy /Y /E /I .\translations\*.* ".\languages"
 :noDynamicQt2
 xcopy /Y /E /I .\languages\*.* "%DeployDir%\%PgePrjSD%\languages"
 xcopy /Y /E /I .\themes\*.* "%DeployDir%\%PgePrjSD%\themes"
 if not exist "%DeployDir%\%PgePrjSD%\help\*.*" md "%DeployDir%\%PgePrjSD%\help"
-echo ^<html^>^<head^>^<meta http-equiv="refresh" content="0; url=http://help.engine.wohlnet.ru/manual_editor.html"/^>^</head^>^<body^>^</body^>^</html^> > "%DeployDir%\%PgePrjSD%\help\manual_editor.htm"
+echo ^<html^>^<head^>^<meta http-equiv="refresh" content="0; url=http://pgehelp.wohlsoft.ru/manual_editor.html"/^>^</head^>^<body^>^</body^>^</html^> > "%DeployDir%\%PgePrjSD%\help\manual_editor.htm"
 
 xcopy /Y /E /I .\calibrator "%DeployDir%\%PgePrjSD%\calibrator"
 del /Q "%DeployDir%\%PgePrjSD%\calibrator\templates\*.*"

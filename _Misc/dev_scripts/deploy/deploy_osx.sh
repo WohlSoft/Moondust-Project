@@ -83,7 +83,7 @@ cp -r ./languages "$DeployDir/$PgePrjSD"
 cp -r ./themes "$DeployDir/$PgePrjSD"
 if [ ! -d "$DeployDir/$PgePrjSD/help" ]; then
         mkdir "$DeployDir/$PgePrjSD/help"
-        echo "<html><head><meta http-equiv=\"refresh\" content=\"0; url=http://help.engine.wohlnet.ru/manual_editor.html\"/></head><body></body></html>" > "$DeployDir/$PgePrjSD/help/manual_editor.htm"
+        echo "<html><head><meta http-equiv=\"refresh\" content=\"0; url=http://pgehelp.wohlsoft.ru/manual_editor.html\"/></head><body></body></html>" > "$DeployDir/$PgePrjSD/help/manual_editor.htm"
 fi
 cp -r ./calibrator "$DeployDir/$PgePrjSD"
 cp $SOURCEDIR/Content/readmes/*.txt "$DeployDir/$PgePrjSD"
