@@ -132,7 +132,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 if( (sbg.second_image_n !="") )
                 {
                     GraphicsHelps::loadMaskedImage(BGPath,
-                       sbg.image_n, imgFile,
+                       sbg.second_image_n, imgFile,
                        sbg.second_image,
                        errStr);
                 } else {
