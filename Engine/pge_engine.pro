@@ -305,7 +305,8 @@ SOURCES += \
     common_features/md5.cpp \
     common_features/crash_handler.cpp \
     graphics/render/render_base.cpp \
-    graphics/render/render_opengl31.cpp
+    graphics/render/render_opengl31.cpp \
+    scenes/level/lvl_player_switch.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -461,7 +462,8 @@ HEADERS  += \
     common_features/md5.h \
     common_features/crash_handler.h \
     graphics/render/render_base.h \
-    graphics/render/render_opengl31.h
+    graphics/render/render_opengl31.h \
+    scenes/level/lvl_player_switch.h
 
 
 FORMS    += \

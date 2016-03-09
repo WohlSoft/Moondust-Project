@@ -47,6 +47,7 @@
 
 #include "level/lvl_layer_engine.h"
 #include "level/lvl_event_engine.h"
+#include "level/lvl_player_switch.h"
 
 #include <controls/controller.h>
 
@@ -74,6 +75,7 @@ class LevelScene : public Scene
 {
     friend class LVL_EventEngine;
     friend class PGE_LevelCamera;
+    friend class CharacterSwitcherEngine;
 public:
     LevelScene();
     ~LevelScene();
@@ -218,11 +220,19 @@ public:
 
     QQueue<transformTask_block > block_transforms;
 
+    /**********************Switch blocks*************************/
     QHash<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
+    /**********************Switch blocks*************************/
+    /*************************Character switchers*************************/
+    CharacterSwitcherEngine character_switchers;
+    /*************************Character switchers*************************/
 
+    /**********************NPC Management*********************/
     QVector<LVL_Npc* > active_npcs;
     QVector<LVL_Npc* > dead_npcs;
+    /**********************NPC Management*********************/
+
     QVector<LVL_Player* > dead_players;
 
     QVector<LVL_Block* > fading_blocks;

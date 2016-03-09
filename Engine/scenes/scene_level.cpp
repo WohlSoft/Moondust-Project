@@ -47,37 +47,34 @@ QElapsedTimer debug_TimeReal;
 int           debug_TimeCounted=0;
 
 LevelScene::LevelScene()
-    : Scene(Level), luaEngine(this)
+    : Scene(Level),
+      isInit(false),
+      isInitFailed(false),
+      isWarpEntrance(false),
+      cameraStartDirected(false),
+      cameraStartDirection(0),
+      NewPlayerID(1),
+      /*********Exit*************/
+      isLevelContinues(true),
+      warpToLevelFile(""),
+      lastWarpID(0),
+      warpToArrayID(0),
+      warpToWorld(false),
+      exitLevelDelay(3000),
+      exitLevelCode(LvlExit::EXIT_Closed),
+      /**************************/
+      character_switchers(this),
+      data(FileFormats::CreateLevelData()),
+      /*********Physics**********/
+      globalGravity(1.0),
+      /**************************/
+      luaEngine(this)
 {
     tree.RemoveAll();
     layers._scene=this;
     events._scene=this;
 
-    data = FileFormats::CreateLevelData();
     data.ReadFileValid = false;
-
-    isInit=false;
-    isInitFailed=false;
-    isWarpEntrance=false;
-    cameraStartDirected=false;
-    cameraStartDirection=0;
-
-    /*********Physics**********/
-    globalGravity=1.0;
-    /**************************/
-
-    /*********Exit*************/
-    isLevelContinues=true;
-
-    doExit = false;
-    exitLevelDelay=3000;
-    exitLevelCode = LvlExit::EXIT_Closed;
-    lastWarpID=0;
-    warpToLevelFile = "";
-    warpToArrayID = 0;
-    warpToWorld=false;
-    NewPlayerID = 1;
-    /**************************/
 
     /**************************/
     placingMode=false;
