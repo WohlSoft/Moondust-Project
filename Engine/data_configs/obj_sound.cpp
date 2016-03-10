@@ -70,7 +70,9 @@ void obj_sound_index::play()
 
 void ConfigManager::buildSoundIndex()
 {
-    int reserve_chans=0;
+    int need_to_reserve=0;
+    int total_channels=32;
+
     bool newBuild=main_sfx_index.isEmpty();
 
     #ifdef DEBUG_BUILD
@@ -102,7 +104,7 @@ void ConfigManager::buildSoundIndex()
                 if(!sound.chunk)
                     qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
                 else
-                    reserve_chans += (snd.channel>=0?1:0);
+                    need_to_reserve += (snd.channel>=0?1:0);
                 sound.channel = snd.channel;
             }
             main_sfx_index[i-1]=sound;
@@ -131,21 +133,43 @@ void ConfigManager::buildSoundIndex()
                 if(!sound.chunk)
                     qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
                 else
-                    reserve_chans += (snd.channel>=0?1:0);
+                    need_to_reserve += (snd.channel>=0?1:0);
                 sound.channel = snd.channel;
             }
         }
     }
 
+    if(need_to_reserve>32)
+    {
+        total_channels=(need_to_reserve+32);
+        Mix_AllocateChannels(need_to_reserve+32);
+    }
+
+    //Final channel definition (use reserved channels at end of channels set)
+    int set_channel = (total_channels-1);
+    for(int i=0; i<main_sfx_index.size();i++)
+    {
+        obj_sound_index &sound = main_sfx_index[i];
+        if(sound.channel>=0)
+        {
+            sound.channel = set_channel--;
+        }
+    }
+
+    if(need_to_reserve==total_channels)
+        need_to_reserve=0;
+    else
+        need_to_reserve=(total_channels-need_to_reserve);
+
+    #define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
+
     #ifdef DEBUG_BUILD
     WriteToLog(QtDebugMsg, QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
-    qDebug() << "Reserved audio channels: "<< Mix_ReserveChannels(reserve_chans);
+    qDebug() << "Reserved audio channels: "<< RESERVE_CHANS_COMMAND;
     qDebug() << "SFX Index entries: " << main_sfx_index.size();
+    #else
+    RESERVE_CHANS_COMMAND;
     #endif
-    if(reserve_chans>32)
-    {
-        Mix_AllocateChannels(reserve_chans+32);
-    }
     SDL_ClearError();
 }
 
@@ -259,7 +283,7 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipSoundFile;
             }
-            reserveChannel = soundset.value("single-channel", "0").toBool();
+            reserveChannel = soundset.value("single-channel", false).toBool();
             if(reserveChannel)
                 sound.channel = cur_channel++;
             else
