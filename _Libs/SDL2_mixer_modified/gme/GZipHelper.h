@@ -53,6 +53,7 @@
 #include "ZLib/zlib.h"
 #include "ZLib/zutil.h"
 #include <stdlib.h>
+#include <errno.h>
 
 #define ALLOC(size) malloc(size)
 #define TRYFREE(p) {if (p) free(p);}
