@@ -139,10 +139,10 @@ void ConfigManager::buildSoundIndex()
         }
     }
 
-    if(need_to_reserve>32)
+    if(need_to_reserve>0)
     {
-        total_channels=(need_to_reserve+32);
-        Mix_AllocateChannels(need_to_reserve+32);
+        total_channels=(total_channels+need_to_reserve+32);
+        Mix_AllocateChannels(total_channels);
     }
 
     //Final channel definition (use reserved channels at end of channels set)
