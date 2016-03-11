@@ -225,7 +225,7 @@ BLARGG_EXPORT gme_err_t gme_load_file( Music_Emu* me, const char* path ) { retur
 
 BLARGG_EXPORT gme_err_t gme_load_data( Music_Emu* me, void const* data, long size )
 {
-	Mem_File_Reader in( data, size );
+    GME_MEM_READER in( data, size );
 	return me->load( in );
 }
 

@@ -270,7 +270,8 @@ HEADERS += \
     modplug/sndfile.h \
     modplug/stdafx.h \
     modplug/tables.h \
-    resample/my_resample.h
+    resample/my_resample.h \
+    gme/GZipHelper.h
 
 SOURCES += \
     dynamic_flac.c \

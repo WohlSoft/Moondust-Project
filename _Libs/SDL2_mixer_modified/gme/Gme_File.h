@@ -156,8 +156,10 @@ Music_Emu* gme_new_( Music_Emu*, long sample_rate );
 #ifndef GME_FILE_READER
 	#ifdef HAVE_ZLIB_H
 		#define GME_FILE_READER Gzip_File_Reader
+        #define GME_MEM_READER GZipMem_File_Reader
 	#else
 		#define GME_FILE_READER Std_File_Reader
+        #define GME_MEM_READER Mem_File_Reader
 	#endif
 #elif defined (GME_FILE_READER_INCLUDE)
 	#include GME_FILE_READER_INCLUDE

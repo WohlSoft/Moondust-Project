@@ -90,7 +90,7 @@ private:
 
 
 //TODO: Implement a support of GZIP-compressed range of memory
-#if 0 //HAVE_ZLIB_H
+#ifdef HAVE_ZLIB_H
 // Treats range of memory as a compressed file
 class GZipMem_File_Reader : public File_Reader {
 public:
@@ -107,7 +107,6 @@ private:
     const long size_compressed_;
     char* begin;
     long size_;
-    bool isGZIP;
     long pos;
 };
 #endif
