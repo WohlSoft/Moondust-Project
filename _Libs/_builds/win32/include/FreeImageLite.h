@@ -124,6 +124,14 @@ FI_STRUCT (FIMULTIBITMAP) { void *data; };
 
 // Types used in the library (directly copied from Windows) -----------------
 
+//FI_DWORD avoids collision with already defined MS's DWORD
+#ifndef _MSC_VER
+#include <inttypes.h>
+typedef uint32_t FI_DWORD;
+#else
+typedef unsigned long FI_DWORD;
+#endif
+
 #if defined(__MINGW32__) && defined(_WINDOWS_H)
 #define _WINDOWS_	// prevent a bug in MinGW32
 #endif // __MINGW32__
@@ -826,13 +834,13 @@ DLL_API BOOL DLL_CALLCONV FreeImage_SaveToHandle(FREE_IMAGE_FORMAT fif, FIBITMAP
 
 // Memory I/O stream routines -----------------------------------------------
 
-DLL_API FIMEMORY *DLL_CALLCONV FreeImage_OpenMemory(BYTE *data FI_DEFAULT(0), DWORD size_in_bytes FI_DEFAULT(0));
+DLL_API FIMEMORY *DLL_CALLCONV FreeImage_OpenMemory(BYTE *data FI_DEFAULT(0), FI_DWORD size_in_bytes FI_DEFAULT(0));
 DLL_API void DLL_CALLCONV FreeImage_CloseMemory(FIMEMORY *stream);
 DLL_API FIBITMAP *DLL_CALLCONV FreeImage_LoadFromMemory(FREE_IMAGE_FORMAT fif, FIMEMORY *stream, int flags FI_DEFAULT(0));
 DLL_API BOOL DLL_CALLCONV FreeImage_SaveToMemory(FREE_IMAGE_FORMAT fif, FIBITMAP *dib, FIMEMORY *stream, int flags FI_DEFAULT(0));
 DLL_API long DLL_CALLCONV FreeImage_TellMemory(FIMEMORY *stream);
 DLL_API BOOL DLL_CALLCONV FreeImage_SeekMemory(FIMEMORY *stream, long offset, int origin);
-DLL_API BOOL DLL_CALLCONV FreeImage_AcquireMemory(FIMEMORY *stream, BYTE **data, DWORD *size_in_bytes);
+DLL_API BOOL DLL_CALLCONV FreeImage_AcquireMemory(FIMEMORY *stream, BYTE **data, FI_DWORD *size_in_bytes);
 DLL_API unsigned DLL_CALLCONV FreeImage_ReadMemory(void *buffer, unsigned size, unsigned count, FIMEMORY *stream);
 DLL_API unsigned DLL_CALLCONV FreeImage_WriteMemory(const void *buffer, unsigned size, unsigned count, FIMEMORY *stream);
 
@@ -1028,11 +1036,11 @@ DLL_API FIBITMAP *DLL_CALLCONV FreeImage_TmoFattal02(FIBITMAP *src, double color
 
 // ZLib interface -----------------------------------------------------------
 
-DLL_API DWORD DLL_CALLCONV FreeImage_ZLibCompress(BYTE *target, DWORD target_size, BYTE *source, DWORD source_size);
-DLL_API DWORD DLL_CALLCONV FreeImage_ZLibUncompress(BYTE *target, DWORD target_size, BYTE *source, DWORD source_size);
-DLL_API DWORD DLL_CALLCONV FreeImage_ZLibGZip(BYTE *target, DWORD target_size, BYTE *source, DWORD source_size);
-DLL_API DWORD DLL_CALLCONV FreeImage_ZLibGUnzip(BYTE *target, DWORD target_size, BYTE *source, DWORD source_size);
-DLL_API DWORD DLL_CALLCONV FreeImage_ZLibCRC32(DWORD crc, BYTE *source, DWORD source_size);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_ZLibCompress(BYTE *target, FI_DWORD target_size, BYTE *source, FI_DWORD source_size);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_ZLibUncompress(BYTE *target, FI_DWORD target_size, BYTE *source, FI_DWORD source_size);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_ZLibGZip(BYTE *target, FI_DWORD target_size, BYTE *source, FI_DWORD source_size);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_ZLibGUnzip(BYTE *target, FI_DWORD target_size, BYTE *source, FI_DWORD source_size);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_ZLibCRC32(FI_DWORD crc, BYTE *source, FI_DWORD source_size);
 
 // --------------------------------------------------------------------------
 // Metadata routines
@@ -1048,16 +1056,16 @@ DLL_API const char *DLL_CALLCONV FreeImage_GetTagKey(FITAG *tag);
 DLL_API const char *DLL_CALLCONV FreeImage_GetTagDescription(FITAG *tag);
 DLL_API WORD DLL_CALLCONV FreeImage_GetTagID(FITAG *tag);
 DLL_API FREE_IMAGE_MDTYPE DLL_CALLCONV FreeImage_GetTagType(FITAG *tag);
-DLL_API DWORD DLL_CALLCONV FreeImage_GetTagCount(FITAG *tag);
-DLL_API DWORD DLL_CALLCONV FreeImage_GetTagLength(FITAG *tag);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_GetTagCount(FITAG *tag);
+DLL_API FI_DWORD DLL_CALLCONV FreeImage_GetTagLength(FITAG *tag);
 DLL_API const void *DLL_CALLCONV FreeImage_GetTagValue(FITAG *tag);
 
 DLL_API BOOL DLL_CALLCONV FreeImage_SetTagKey(FITAG *tag, const char *key);
 DLL_API BOOL DLL_CALLCONV FreeImage_SetTagDescription(FITAG *tag, const char *description);
 DLL_API BOOL DLL_CALLCONV FreeImage_SetTagID(FITAG *tag, WORD id);
 DLL_API BOOL DLL_CALLCONV FreeImage_SetTagType(FITAG *tag, FREE_IMAGE_MDTYPE type);
-DLL_API BOOL DLL_CALLCONV FreeImage_SetTagCount(FITAG *tag, DWORD count);
-DLL_API BOOL DLL_CALLCONV FreeImage_SetTagLength(FITAG *tag, DWORD length);
+DLL_API BOOL DLL_CALLCONV FreeImage_SetTagCount(FITAG *tag, FI_DWORD count);
+DLL_API BOOL DLL_CALLCONV FreeImage_SetTagLength(FITAG *tag, FI_DWORD length);
 DLL_API BOOL DLL_CALLCONV FreeImage_SetTagValue(FITAG *tag, const void *value);
 
 // iterator
@@ -1114,7 +1122,7 @@ DLL_API BOOL DLL_CALLCONV FreeImage_AdjustGamma(FIBITMAP *dib, double gamma);
 DLL_API BOOL DLL_CALLCONV FreeImage_AdjustBrightness(FIBITMAP *dib, double percentage);
 DLL_API BOOL DLL_CALLCONV FreeImage_AdjustContrast(FIBITMAP *dib, double percentage);
 DLL_API BOOL DLL_CALLCONV FreeImage_Invert(FIBITMAP *dib);
-DLL_API BOOL DLL_CALLCONV FreeImage_GetHistogram(FIBITMAP *dib, DWORD *histo, FREE_IMAGE_COLOR_CHANNEL channel FI_DEFAULT(FICC_BLACK));
+DLL_API BOOL DLL_CALLCONV FreeImage_GetHistogram(FIBITMAP *dib, FI_DWORD *histo, FREE_IMAGE_COLOR_CHANNEL channel FI_DEFAULT(FICC_BLACK));
 DLL_API int DLL_CALLCONV FreeImage_GetAdjustColorsLookupTable(BYTE *LUT, double brightness, double contrast, double gamma, BOOL invert);
 DLL_API BOOL DLL_CALLCONV FreeImage_AdjustColors(FIBITMAP *dib, double brightness, double contrast, double gamma, BOOL invert FI_DEFAULT(FALSE));
 DLL_API unsigned DLL_CALLCONV FreeImage_ApplyColorMapping(FIBITMAP *dib, RGBQUAD *srccolors, RGBQUAD *dstcolors, unsigned count, BOOL ignore_alpha, BOOL swap);

@@ -124,6 +124,14 @@ FI_STRUCT (FIMULTIBITMAP) { void *data; };
 
 // Types used in the library (directly copied from Windows) -----------------
 
+//FI_DWORD avoids collision with already defined MS's DWORD
+#ifndef _MSC_VER
+#include <inttypes.h>
+typedef uint32_t FI_DWORD;
+#else
+typedef unsigned long FI_DWORD;
+#endif
+
 #if defined(__MINGW32__) && defined(_WINDOWS_H)
 #define _WINDOWS_	// prevent a bug in MinGW32
 #endif // __MINGW32__
@@ -149,7 +157,6 @@ FI_STRUCT (FIMULTIBITMAP) { void *data; };
 
 #ifndef _MSC_VER
 // define portable types for 32-bit / 64-bit OS
-#include <inttypes.h>
 typedef int32_t BOOL;
 typedef uint8_t BYTE;
 typedef uint16_t WORD;
