@@ -199,8 +199,8 @@ static int PlaySome(Uint8 *stream, int len)
 {
     Sint64 pos, stop;
     WAVLoopPoint *loop;
-    Sint64 loop_start;
-    Sint64 loop_stop;
+    Sint64 loop_start=0;
+    Sint64 loop_stop=0;
     int i;
     int consumed=0;
 

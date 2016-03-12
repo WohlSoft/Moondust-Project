@@ -309,6 +309,7 @@ void Std_File_Reader::close()
 
 static const char* get_gzip_eof( const char* path, long* eof )
 {
+    int ret;(void)ret;//Dummy to fix warning
 	FILE* file = fopen( path, "rb" );
 	if ( !file )
 		return "Couldn't open file";
@@ -317,7 +318,7 @@ static const char* get_gzip_eof( const char* path, long* eof )
     if ( fread( buf, 2, 1, file ) > 0 && buf [0] == 0x1F && buf [1] == 0x8B )
 	{
 		fseek( file, -4, SEEK_END );
-		fread( buf, 4, 1, file );
+        ret=fread( buf, 4, 1, file );
 		*eof = get_le32( buf );
 	}
 	else
