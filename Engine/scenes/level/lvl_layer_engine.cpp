@@ -91,6 +91,47 @@ void LVL_LayerEngine::removeRegItem(QString layer, PGE_Phys_Object *item)
     lyr.removeAll(item);
 }
 
+void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double speedY)
+{
+    if(moving_layers.contains(layer))
+    {
+        MovingLayer &l = moving_layers[layer];
+        l.m_speedX=speedX;
+        l.m_speedY=speedY;
+    } else {
+        MovingLayer l;
+        l.m_speedX=speedX;
+        l.m_speedY=speedY;
+        l.m_members = &members[layer];
+        moving_layers[layer]=l;
+    }
+}
+
+void LVL_LayerEngine::processMoving(float tickTime)
+{
+    if(moving_layers.isEmpty()) return;
+    for(QHash<QString, MovingLayer>::iterator it = moving_layers.begin(); it != moving_layers.end(); it++)
+    {
+        MovingLayer &l = (*it);
+        for(int i=0; i<l.m_members->size(); i++)
+        {
+            PGE_Phys_Object*obj = (*l.m_members)[i];
+            //Don't iterate playable characters
+            if(obj->type==PGE_Phys_Object::LVLPlayer) continue;
+
+            obj->setSpeed(l.m_speedX, l.m_speedY);
+            //Don't iterate activated NPC's!
+            if(obj->type==PGE_Phys_Object::LVLNPC)
+            {
+                LVL_Npc*npc=(LVL_Npc*)obj;
+                if(npc->isActivated) continue;
+            }
+            obj->iterateStep(tickTime);
+            obj->update(tickTime);
+        }
+    }
+}
+
 bool LVL_LayerEngine::isEmpty(QString layer)
 {
     return members[layer].isEmpty();

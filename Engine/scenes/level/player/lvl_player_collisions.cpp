@@ -54,6 +54,11 @@ static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*near
 
 void LVL_Player::updateCollisions()
 {
+    if(foot_contacts_map.isEmpty())
+    {
+        _velocityX_add=0.0;
+        _velocityY_add=0.0;
+    }
     foot_contacts_map.clear();
     _onGround=false;
     foot_sl_contacts_map.clear();
@@ -74,9 +79,6 @@ void LVL_Player::updateCollisions()
     collided_slope_angle_ratio=0.0f;
     collided_slope_celling=false;
     collided_slope_angle_ratio_celling=0.0f;
-
-    _velocityX_add=0;
-    _velocityY_add=0;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -299,14 +301,14 @@ void LVL_Player::updateCollisions()
     {
         posRect.setX(_wallX);
         setSpeedX(0);
-        _velocityX_add=0;
+        //_velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         posRect.setY(_floorY);
         float bumpSpeed=speedY();
         setSpeedY(_floorY_vel);
-        _velocityY_add=0;
+        //_velocityY_add=0;
         if(!blocks_to_hit.isEmpty())
         {
             PGE_Phys_Object* nearestObj=nearestBlock(blocks_to_hit);
@@ -856,5 +858,48 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
         }
     default: break;
     }
+}
+
+void LVL_Player::updateSpeedAddingStack()
+{
+    if(!collided_bottom.isEmpty())
+    {
+        double _floorX_vel=0.0;//velocities sum
+        double _floorX_num=0.0;//num of velocities
+        double _floorY_vel=0.0;//velocities sum
+        double _floorY_num=0.0;//num of velocities
+        for(PlayerColliders::iterator it=collided_bottom.begin(); it!=collided_bottom.end() ; it++)
+        {
+            PGE_Phys_Object *collided= *it;
+            switch(collided->type)
+            {
+                case PGE_Phys_Object::LVLBlock:
+                {
+                    LVL_Block *blk= static_cast<LVL_Block*>(collided);
+                    if(!blk) continue;
+                    _floorY_vel+=blk->speedYsum();
+                    _floorY_num+=1.0;
+                    _floorX_vel+=blk->speedXsum();
+                    _floorX_num+=1.0;
+                } break;
+                case PGE_Phys_Object::LVLNPC:
+                {
+                    LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
+                    if(!npc) continue;
+                    _floorY_vel+=npc->speedYsum();
+                    _floorY_num+=1.0;
+                    _floorX_vel+=npc->speedXsum();
+                    _floorX_num+=1.0;
+                }
+                break;
+                default:break;
+            }
+        }
+        if(_floorX_num!=0.0) _floorX_vel=_floorX_vel/_floorX_num;
+        if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
+        _velocityX_add=_floorX_vel;
+        _velocityY_add=_floorY_vel;
+    }
+
 }
 

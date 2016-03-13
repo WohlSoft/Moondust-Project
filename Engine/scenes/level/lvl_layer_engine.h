@@ -35,7 +35,17 @@ public:
     void registerItem(QString layer, PGE_Phys_Object* item);
     void removeRegItem(QString layer, PGE_Phys_Object* item);
     bool isEmpty(QString layer);
+
+    struct MovingLayer
+    {
+        double m_speedX;
+        double m_speedY;
+        QList<PGE_Phys_Object* >*m_members;
+    };
+    void installLayerMotion(QString layer, double speedX, double speedY);
     QHash<QString, QList<PGE_Phys_Object* > > members;
+    QHash<QString, MovingLayer> moving_layers;
+    void processMoving(float tickTime);
 };
 
 #endif // LVL_LAYER_H

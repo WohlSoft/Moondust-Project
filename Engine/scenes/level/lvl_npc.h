@@ -108,6 +108,9 @@ public:
     bool  disableNpcCollision;
     bool _stucked;
 
+    QVector<PGE_Phys_Object*>   collision_speed_add;
+    void updateSpeedAddingStack();
+
     bool    bumpDown;
     bool    bumpUp;
     /***************************************************/

@@ -221,6 +221,15 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             evntAct.action.events.push_back(message);
         }
 
+        if(!evt.movelayer.isEmpty())
+        {
+            EventQueueEntry<LVL_EventAction> movelayer;
+            movelayer.makeCaller([this,evt]()->void{
+                                       _scene->layers.installLayerMotion(evt.movelayer, evt.layer_speed_x, evt.layer_speed_y);
+                               }, 0);
+            evntAct.action.events.push_back(movelayer);
+        }
+
     events[evt.name].push_back(evntAct);
 
     if(!evt.trigger.isEmpty())

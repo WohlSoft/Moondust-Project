@@ -269,6 +269,7 @@ void PGE_Phys_Object::setSpeed(double x, double y)
 {
     _velocityX=x;
     _velocityY=y;
+    updateSpeedAddingStack();
     _velocityX_prev=_velocityX;
     _velocityY_prev=_velocityY;
 }
@@ -276,12 +277,14 @@ void PGE_Phys_Object::setSpeed(double x, double y)
 void PGE_Phys_Object::setSpeedX(double x)
 {
     _velocityX=x;
+    updateSpeedAddingStack();
     _velocityX_prev=_velocityX;
 }
 
 void PGE_Phys_Object::setSpeedY(double y)
 {
     _velocityY=y;
+    updateSpeedAddingStack();
     _velocityY_prev=_velocityY;
 }
 
@@ -369,6 +372,8 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
+    bool updateSpeedAdding=false;
+
     posRect.setX(posRect.x()+(_velocityX+_velocityX_add) * (ticks/_smbxTickTime));
     _velocityX_prev=_velocityX;
 
@@ -394,6 +399,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
     if(_accelX!=0)
     {
         _velocityX+= _accelX*accelCof;
+        updateSpeedAdding=true;
         _accelX=0;
     }
     else
@@ -412,11 +418,13 @@ void PGE_Phys_Object::iterateStep(float ticks)
             else
                 _velocityX=0;
         }
+        updateSpeedAdding=true;
     }
 
     if(_accelY!=0)
     {
         _velocityY+= _accelY*accelCof*G;
+        updateSpeedAdding=true;
         _accelY=0;
     }
 
@@ -435,18 +443,22 @@ void PGE_Phys_Object::iterateStep(float ticks)
             else
                 _velocityY=0;
         }
+        updateSpeedAdding=true;
     }
 
     if(phys_setup.gravityAccel != 0.0f)
     {
         _velocityY+= (G*phys_setup.gravityAccel)*accelCof;
+        updateSpeedAdding=true;
     }
 
-    if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) _velocityX-=phys_setup.grd_dec_x*accelCof;
-    if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) _velocityX+=phys_setup.grd_dec_x*accelCof;
-    if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) _velocityY=phys_setup.max_vel_y;
-    if((phys_setup.min_vel_y!=0)&&(_velocityY<phys_setup.min_vel_y)) _velocityY=phys_setup.min_vel_y;
+    if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) { _velocityX-=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
+    if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) { _velocityX+=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
+    if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) {_velocityY=phys_setup.max_vel_y;updateSpeedAdding=true;}
+    if((phys_setup.min_vel_y!=0)&&(_velocityY<phys_setup.min_vel_y)) {_velocityY=phys_setup.min_vel_y;updateSpeedAdding=true;}
 
+    if(updateSpeedAdding)
+        updateSpeedAddingStack();
 }
 
 void PGE_Phys_Object::updateCollisions()

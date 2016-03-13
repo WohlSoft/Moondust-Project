@@ -125,26 +125,30 @@ LevelScene::LevelScene()
 
 void LevelScene::processPhysics(float ticks)
 {
-    //Iterate
+    //Iterate layer movement
+    layers.processMoving(uTickf);
+
+    //Iterate playable characters
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
         LVL_Player*plr=(*it);
         plr->iterateStep(ticks);
         plr->_syncPosition();
     }
+    //Iterate activated NPCs
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->iterateStep(ticks);
         active_npcs[i]->_syncPosition();
     }
 
-    //Collide!
+    //Process collision check and resolving for playable characters
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
         LVL_Player*plr=(*it);
         plr->updateCollisions();
     }
-
+    //Process collision check and resolving for activated NPC's
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->updateCollisions();

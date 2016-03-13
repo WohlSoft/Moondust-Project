@@ -105,6 +105,10 @@ public:
     void setSpeedY(double y);
     void setDecelX(double x);
     void applyAccel(double x, double y);
+    /*!
+     * \brief Update Speed-adding stack if needed
+     */
+    virtual void updateSpeedAddingStack() {}
 
     double gravityScale();
     void setGravityScale(double scl);
