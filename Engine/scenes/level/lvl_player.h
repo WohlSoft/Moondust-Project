@@ -33,6 +33,14 @@
 #include <QHash>
 #include <QVector>
 
+class LVL_Player_harm_event
+{
+public:
+    LVL_Player_harm_event();
+    bool    doHarm;
+    int     doHarm_damage;
+};
+
 class LVL_Section;
 class LVL_Block;
 
@@ -133,8 +141,6 @@ class LVL_Player :
         float   invincible_delay;
         bool    blink_screen;
         bool    blink_screen_state;
-        bool    doHarm;
-        int     doHarm_damage;
         void    harm(int _damage=1);
         void    setInvincible(bool state, float delay, bool enableScreenBlink=false);
         /*******************Life and Death*****************/
@@ -251,7 +257,12 @@ public:
                            L    `-._,
                             `-.__.-'
          ***********************************************/
-        virtual void lua_onLoop(){}
+        virtual void lua_onLoop() {}
+        virtual void lua_onHarm(LVL_Player_harm_event*) {}
+        inline long getHealth() { return health; }
+        inline void setHealth(int _health) { health=_health; }
+        inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}
+        inline void setState(int _state) { setCharacterSafe(characterID, _state);}
         bool isLuaPlayer;
         /********************Lua Stuff******************/
 

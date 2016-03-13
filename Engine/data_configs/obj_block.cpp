@@ -170,6 +170,7 @@ bool ConfigManager::loadLevelBlocks()
 
                 sblock.plSwitch_Button = blockset.value("player-switch-button", false).toBool();
                 sblock.plSwitch_Button_id = blockset.value("player-switch-button-id", 0).toInt();
+                    NumberLimiter::apply(sblock.plSwitch_Button_id, 0);
                 sblock.plSwitch_frames_true.clear();
                 sblock.plSwitch_frames_false.clear();
                 if(sblock.plSwitch_Button)
@@ -180,6 +181,7 @@ bool ConfigManager::loadLevelBlocks()
 
                 sblock.plFilter_Block= blockset.value("player-filter-block", false).toBool();
                 sblock.plFilter_Block_id= blockset.value("player-filter-block-id", 0).toInt();
+                    NumberLimiter::apply(sblock.plFilter_Block_id, 0);
                 sblock.plFilter_frames_true.clear();
                 sblock.plFilter_frames_false.clear();
                 if(sblock.plFilter_Block)

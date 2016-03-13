@@ -24,6 +24,14 @@
 
 #include <settings/debugger.h>
 
+
+
+LVL_Player_harm_event::LVL_Player_harm_event() :
+    doHarm(false),
+    doHarm_damage(0)
+{}
+
+
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 {
     PGE_RectF attackZone;
@@ -166,17 +174,26 @@ void LVL_Player::harm(int _damage)
 {
     if(invincible||PGE_Debugger::cheat_pagangod) return;
 
+    LVL_Player_harm_event dmg;
+    dmg.doHarm=true;
+    dmg.doHarm_damage=_damage;
+
+    try{
+        lua_onHarm(&dmg);
+    } catch (luabind::error& e) {
+        _scene->getLuaEngine()->postLateShutdownError(e);
+    }
+
+    if(!dmg.doHarm) return;
+    _damage = dmg.doHarm_damage;
+
     //doHarm=true;
     health-=_damage;
     if(health<=0)
     {
         kill(DEAD_killed);
     } else {
-        PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
-        if(health==2)
-            setCharacterSafe(characterID, 2);
-        if(health==1)
-            setCharacterSafe(characterID, 1);
+        //PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
         setInvincible(true, 3000, true);
     }
 }

@@ -125,6 +125,8 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         x._chsetup.state = stateID;
         _scene->getGameState()->setPlayerState(playerID, x);
         _collideUnduck();
+        //Apply changed animation on character switchers and configure switches and filters
+        _scene->character_switchers.refreshState();
 
         #ifdef COLLIDE_DEBUG
         //Freeze time to check out what happening at moment
@@ -136,7 +138,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
 
 void LVL_Player::setCharacterSafe(int CharacterID, int _stateID)
 {
-    if(!ConfigManager::playable_characters.contains(CharacterID))
+    if( (CharacterID<1) || !ConfigManager::playable_characters.contains(CharacterID) )
     {
         PGE_Audio::playSoundByRole(obj_sound_role::PlayerSpring);
         return;
@@ -147,7 +149,7 @@ void LVL_Player::setCharacterSafe(int CharacterID, int _stateID)
 
     float oldHeight = posRect.height();
 
-    if(!states.contains(_stateID))
+    if((_stateID<1) || !states.contains(_stateID))
     {
         PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
         return;

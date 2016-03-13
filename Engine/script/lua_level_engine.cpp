@@ -118,6 +118,7 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_Class_InAreaDetector::bindToLua(),
         Binding_Level_Class_PlayerPosDetector::bindToLua(),
         Binding_Level_Class_ContactDetector::bindToLua(),
+        Binding_Level_ClassWrapper_LVL_Player::HarmEvent_bindToLua(),
         Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
         Binding_Level_ClassWrapper_LVL_NPC::bindToLua(),
         Binding_Level_GlobalFuncs_Player::bindToLua(),

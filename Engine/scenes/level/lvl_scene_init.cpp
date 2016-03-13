@@ -347,6 +347,10 @@ bool LevelScene::init_items()
         if(!isLevelContinues) return false;//!< quit from game if window was closed
         placeBlock(data.blocks[i]);
     }
+
+    //Build character switchers and configure switches and filters
+    character_switchers.refreshState();
+
     //BGO
     for(int i=0; i<data.bgo.size(); i++)
     {

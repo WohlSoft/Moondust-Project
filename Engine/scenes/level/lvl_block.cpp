@@ -121,6 +121,10 @@ void LVL_Block::transformTo_x(long id)
         LevelScene::zCounter += 0.0000000001;
         z_index += LevelScene::zCounter;
     }
+
+    bool do_init_player_switch=((setup->animator_ID==0)&&(setup->plSwitch_Button));
+    bool do_init_player_filter=((setup->animator_ID==0)&&(setup->plFilter_Block));
+
     long tID = ConfigManager::getBlockTexture(data.id);
     if( tID >= 0 )
     {
@@ -178,7 +182,20 @@ void LVL_Block::transformTo_x(long id)
         _scene->switch_blocks[setup->switch_ID].push_back(this);
     }
 
+    //Register player switch block if needed
+    if(do_init_player_switch)
+    {
+        _scene->character_switchers.buildSwitch(*setup);
+    }
+
+    //Register player filter block if needed
+    if(do_init_player_filter)
+    {
+        _scene->character_switchers.buildBrick(*setup);
+    }
+
     collide_npc=collide_player;
+
 }
 
 

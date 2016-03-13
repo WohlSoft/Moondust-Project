@@ -74,8 +74,6 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     invincible_delay=0.0f;
     blink_screen=false;
     blink_screen_state=true;
-    doHarm=false;
-    doHarm_damage=0;
 
     jumpTime=0;
     jumpVelocity=5.3f;

@@ -16,8 +16,21 @@ function peachPlayer:onLoop()
         --     self.speedY = -15
         -- end
         BasePlayer.onLoop(self)
+    end    
+end
+
+function peachPlayer:onHarm(harmevent)
+    local newHealth = self.health-harmevent.damage
+    if(newHealth==2)then
+        self:setState(2)
+        Audio.playSoundByRole(SoundRoles.PlayerHarm)
+    elseif(newHealth==1)then
+        self:setState(1)
+        Audio.playSoundByRole(SoundRoles.PlayerShrink)
+    elseif(newHealth~=0)then
+        Audio.playSoundByRole(SoundRoles.PlayerHarm)
     end
-    
+    BasePlayer.onHarm(self, harmevent)
 end
 
 return peachPlayer

@@ -602,21 +602,21 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         case SDLK_7:
         {
             if(players.size()>=1)
-                players[0]->setCharacterSafe(1, 1);
+                players[0]->setCharacterSafe(players[0]->characterID-1, players[0]->stateID);
         }
         break;
         case SDLK_8:
         {
             if(players.size()>=1)
-              players[0]->setCharacterSafe(1, 2);
+                players[0]->setCharacterSafe(players[0]->characterID+1, players[0]->stateID);
         }
         break;
         case SDLK_9:
         {
            if(players.size()>=2)
             players[1]->setCharacterSafe(2, 1);
-           else if(players.size()>=1)
-            players[0]->setCharacterSafe(2, 1);
+           if(players.size()>=1)
+               players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID-1);
         }
         break;
         case SDLK_0:
@@ -624,7 +624,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
            if(players.size()>=2)
             players[1]->setCharacterSafe(2, 2);
            else if(players.size()>=1)
-            players[0]->setCharacterSafe(2, 2);
+            players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID+1);
         }
         break;
 

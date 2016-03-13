@@ -108,7 +108,11 @@ F12 - take screenshot (will be saved in the 'screenshots' folder which will be i
 Screenshots will be written into PNG format and will have timedate based filename.
 
 1, 2, 3, 4, 5 degits keys - spawn something effect (made temporary while effects system are debugged)
-7, 8, 9, 0 - toggle character and it's state: 7 - Small Peach, 8 - Raccoon Peach, 9 - Small Mario, 0 - Raccoon Mario
+7, 8, 9, 0 - Toggle playable character and it's state: 
+ - 7 decrease character ID
+ - 8 increase character ID
+ - 9 decrease character state ID
+ - 0 increase character state ID
 
 Enter, Esc - pause/resume game, show pause menu
 

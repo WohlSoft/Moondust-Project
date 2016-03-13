@@ -61,15 +61,15 @@ void CharacterSwitcherEngine::buildBrick(obj_block &blk)
 {
     if(blk.plFilter_Block)
     {
-        CharacterSwitchState swst;
+        CharacterBlockState swst;
         swst.CharacterID=blk.plFilter_Block_id;
         swst.sequence_on=blk.plFilter_frames_true;
-        swst.sequence_off=blk.plFilter_frames_true;
+        swst.sequence_off=blk.plFilter_frames_false;
         if(blk.animator_ID<ConfigManager::Animator_Blocks.size())
         {
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
         }
-        m_switches.push_back(swst);
+        m_blocks.push_back(swst);
     }
 }
 
@@ -82,9 +82,9 @@ void CharacterSwitcherEngine::refreshState()
             CharacterSwitchState &sw=m_switches[i];
             int needed=sw.CharacterID;
             bool found=false;
-            for(int j=0; j<m_scene->players.size(); j++)
+            for(int j=1; j<=m_scene->numberOfPlayers; j++)
             {
-                if(needed==m_scene->players[i]->characterID) { found=true; break; }
+                if(needed==m_scene->gameState->getPlayerState(j).characterID) { found=true; break; }
             }
             if(found)
             {
@@ -105,9 +105,9 @@ void CharacterSwitcherEngine::refreshState()
             CharacterBlockState &blk=m_blocks[i];
             int needed=blk.CharacterID;
             bool found=false;
-            for(int j=0; j<m_scene->players.size(); j++)
+            for(int j=1; j<=m_scene->numberOfPlayers; j++)
             {
-                if(needed==m_scene->players[i]->characterID) { found=true; break; }
+                if(needed==m_scene->gameState->getPlayerState(j).characterID) { found=true; break; }
             }
             if(found)
             {

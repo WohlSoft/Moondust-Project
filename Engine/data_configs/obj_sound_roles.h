@@ -26,6 +26,7 @@ struct obj_sound_role
         PlayerStomp, //Pha!
         PlayerKick,
         PlayerShrink,//Ouch!
+        PlayerHarm, //Ouch!
         PlayerGrow,  //from small to big
         PlayerDied,  //player died 2
         PlayerDropItem, //Drop reserve item

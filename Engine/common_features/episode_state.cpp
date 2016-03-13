@@ -110,6 +110,7 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
     state._chsetup.id=state.characterID;
     state._chsetup.state=state.stateID;
 
+    //If playerID bigger than stored states - append, or replace exists
     if(playerID>game_state.currentCharacter.size())
     {
         while(playerID>game_state.currentCharacter.size())
@@ -118,15 +119,19 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
     else
         game_state.currentCharacter[playerID-1]=state.characterID;
 
-    bool found=false;
-    for(int i=0;i<game_state.characterStates.size(); i++)
+    //If characterID bigger than stored entries - append, or replace exists
+    if( state.characterID > game_state.characterStates.size() )
     {
-        if(game_state.characterStates[i].id==state.characterID)
+        while( state.characterID > game_state.characterStates.size() )
         {
-            game_state.characterStates[i]=state._chsetup;
-            found=true;
-            break;
+            saveCharState st;
+            st = FileFormats::CreateSavCharacterState();
+            st.id=(game_state.characterStates.size()+1);
+            st.state=1;
+            game_state.characterStates.push_back(st);
         }
-    } if(!found) game_state.characterStates.push_back(state._chsetup);
+    } else {
+        game_state.characterStates[state.characterID-1]=state._chsetup;
+    }
 }
 

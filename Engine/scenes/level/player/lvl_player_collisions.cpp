@@ -32,6 +32,26 @@
 
 //#define COLLIDE_DEBUG
 
+static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*nearest)
+{
+    //Do transformation if needed
+    if( nearest->setup->plSwitch_Button && (player->characterID!=nearest->setup->plSwitch_Button_id) )
+    {
+        int target_id = (nearest->setup->plSwitch_Button_id-1);
+        QVector<saveCharState>&states=player->_scene->getGameState()->game_state.characterStates;
+        if(target_id >= states.size())
+        {
+            PlayerState x = player->_scene->getGameState()->getPlayerState(player->playerID);
+            x.characterID    = target_id+1;
+            x.stateID        = 1;
+            x._chsetup.state = 1;
+            player->_scene->getGameState()->setPlayerState(player->playerID, x);
+        }
+        saveCharState&st = states[target_id];
+        player->setCharacterSafe(nearest->setup->plSwitch_Button_id, st.state);
+    }
+}
+
 void LVL_Player::updateCollisions()
 {
     foot_contacts_map.clear();
@@ -293,6 +313,7 @@ void LVL_Player::updateCollisions()
             if(nearestObj && (nearestObj->type==PGE_Phys_Object::LVLBlock))
             {
                 LVL_Block*nearest = static_cast<LVL_Block*>(nearestObj);
+                processCharacterSwitchBlock(this, nearest);//Do transformation if needed
                 long npcid=nearest->data.npc_id;
                 if(resolveBottom) nearest->hit(LVL_Block::down); else nearest->hit();
                 if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || nearest->setup->bounce )
@@ -450,6 +471,7 @@ void LVL_Player::_collideUnduck()
             {
                 LVL_Block*nearest = static_cast<LVL_Block*>(nearest_obj);
                 resolveTop=true;
+                processCharacterSwitchBlock(this, nearest);//Do transformation if needed
                 long npcid=nearest->data.npc_id;
                 nearest->hit();
                 if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || (nearest->setup->bounce) )
@@ -500,6 +522,10 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                 #endif
                 break;
             }
+
+            //Don't collide with own filter blocks
+            if(blk->setup->plFilter_Block && characterID==blk->setup->plFilter_Block_id)
+                break;
 
             if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
                 ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )
