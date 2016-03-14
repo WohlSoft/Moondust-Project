@@ -119,7 +119,7 @@ bool ConfigManager::loadLevelNPC()
         imgFile = npcset.value("image", "").toString();
         {
             PGESTRING err;
-            GraphicsHelps::loadMaskedImage(npcPath, imgFile, snpc.mask_n, err, &snpc.image_size);
+            GraphicsHelps::getMakedImageInfo(npcPath, imgFile, snpc.mask_n, err, &snpc.image_size);
             snpc.image_n = imgFile;
             if( imgFile=="" )
             {

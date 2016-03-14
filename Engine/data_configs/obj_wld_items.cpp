@@ -103,7 +103,7 @@ bool ConfigManager::loadWorldTiles()
         imgFile = tileset.value("image", "").toString();
         {
             QString err;
-            GraphicsHelps::loadMaskedImage(tilePath, imgFile, stile.mask_n, err);
+            GraphicsHelps::getMakedImageInfo(tilePath, imgFile, stile.mask_n, err);
             stile.image_n = imgFile;
             if( imgFile=="" )
             {
@@ -202,7 +202,7 @@ bool ConfigManager::loadWorldScenery()
             imgFile = sceneset.value("image", "").toString();
             {
                 QString err;
-                GraphicsHelps::loadMaskedImage(scenePath, imgFile, sScene.mask_n, err);
+                GraphicsHelps::getMakedImageInfo(scenePath, imgFile, sScene.mask_n, err);
                 sScene.image_n = imgFile;
                 if( imgFile=="" )
                 {
@@ -299,7 +299,7 @@ bool ConfigManager::loadWorldPaths()
             imgFile = pathset.value("image", "").toString();
             {
                 QString err;
-                GraphicsHelps::loadMaskedImage(pathPath, imgFile, sPath.mask_n, err);
+                GraphicsHelps::getMakedImageInfo(pathPath, imgFile, sPath.mask_n, err);
                 sPath.image_n = imgFile;
                 if( imgFile=="" )
                 {
@@ -398,7 +398,7 @@ bool ConfigManager::loadWorldLevels()
         imgFile = levelset.value("image", "").toString();
         {
             QString err;
-            GraphicsHelps::loadMaskedImage(wlvlPath, imgFile, slevel.mask_n, err);
+            GraphicsHelps::getMakedImageInfo(wlvlPath, imgFile, slevel.mask_n, err);
             slevel.image_n = imgFile;
             if( imgFile=="" )
             {

@@ -297,7 +297,7 @@ void ConfigManager::checkForImage(QString &imgPath, QString root)
 {
     if(!imgPath.isEmpty())
     {
-        if(!QImage(root+imgPath).isNull())
+        if(QFile(root+imgPath).exists())
             imgPath = root+imgPath;
         else
             imgPath = "";

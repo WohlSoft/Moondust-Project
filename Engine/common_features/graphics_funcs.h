@@ -66,6 +66,21 @@ public:
      */
     static FIBITMAP *loadImageRC(QString file);
 
+    /*!
+     * \brief Converts FreeImage into SDL_Surface
+     * \param img Source FreeImage descriptor to loaded image
+     * \return SDL_Surface pointer
+     */
+    static SDL_Surface *fi2sdl(FIBITMAP *img);
+
+    /*!
+     * \brief Closes image and frees memory
+     * \param FreeImage descriptor to loaded image
+     */
+    static void closeImage(FIBITMAP *img);
+
+
+
     /*
     static void   putPixel(SDL_Surface *surface, int x, int y, Uint32 color);
     static Uint32 getPixel(SDL_Surface *surface, int x, int y);
@@ -81,13 +96,7 @@ public:
      * \param pathToMask
      */
     static void mergeWithMask(FIBITMAP *image, QString pathToMask);
-
-    static QImage setAlphaMask(QImage image, QImage mask);
-    static QImage fromBMP(QString& file);
-    static QImage loadQImage(QString file);
-    static QPixmap squareImage(QPixmap image, QSize targetSize);
-    static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
-    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize=0);
+    static void getMakedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize=0);
     static QImage convertToGLFormat(const QImage &img);//Taken from QGLWidget
 };
 

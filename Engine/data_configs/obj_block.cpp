@@ -91,7 +91,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.category = blockset.value("category", "_Other").toString();
                 //sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
-                GraphicsHelps::loadMaskedImage(blockPath, imgFile, sblock.mask_n, Temp01);
+                GraphicsHelps::getMakedImageInfo(blockPath, imgFile, sblock.mask_n, Temp01);
                 sblock.image_n = imgFile;
                 if( imgFile=="" )
                 {

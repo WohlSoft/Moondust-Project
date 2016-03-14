@@ -25,13 +25,13 @@
 
 #include <QtDebug>
 #include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 #include <QImage>
 #include <QPainter>
 #include <QFontMetrics>
 #include <QFontDatabase>
-#include <QFileInfo>
-#include <QDir>
 
 #include <common_features/graphics_funcs.h>
 

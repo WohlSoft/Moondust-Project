@@ -19,15 +19,12 @@
 #include <QPixmap>
 #include <QImage>
 #include <QRgb>
+
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSysInfo>
 
 #include "graphics_funcs.h"
-#include <EasyBMP/EasyBMP.h>
-extern "C"{
-#include <giflib/gif_lib.h>
-}
 
 #ifdef DEBUG_BUILD
 #include <common_features/logger.h>
@@ -135,12 +132,16 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 FIBITMAP* GraphicsHelps::loadImageRC(QString file)
 {
     QFile _file(file);
-    _file.open(QIODevice::ReadOnly);
+    if(!_file.open(QIODevice::ReadOnly))
+    {
+        return NULL;
+    }
     QByteArray data=_file.readAll();
-    FIMEMORY x; x.data=data.data();
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory( &x, data.size() );
+    FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)data.data(), (unsigned int)data.size());
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory( imgMEM );
     if(formato  == FIF_UNKNOWN) { return NULL; }
-    FIBITMAP* img = FreeImage_LoadFromMemory(formato, &x, 0);
+    FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
     if(!img) { return NULL; }
 
     FIBITMAP* temp;
@@ -151,6 +152,22 @@ FIBITMAP* GraphicsHelps::loadImageRC(QString file)
 
     return img;
 }
+
+void GraphicsHelps::closeImage(FIBITMAP *img)
+{
+    FreeImage_Unload(img);
+}
+
+SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
+{
+    int h = FreeImage_GetHeight(img);
+    int w = FreeImage_GetWidth(img);
+    FreeImage_FlipVertical(img);
+    SDL_Surface* surf = SDL_CreateRGBSurfaceFrom(FreeImage_GetBits(img),
+        w, h, 32, w*4, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, FI_RGBA_ALPHA_MASK);
+    return surf;
+}
+
 
 /*
 void GraphicsHelps::putPixel(SDL_Surface * surface, int x, int y, Uint32 color)
@@ -165,7 +182,6 @@ void GraphicsHelps::putPixel(SDL_Surface * surface, int x, int y, Uint32 color)
     if( SDL_MUSTLOCK(surface) )
         SDL_UnlockSurface(surface);
 }
-
 
 Uint32 GraphicsHelps::getPixel(SDL_Surface *surface, int x, int y)
 {
@@ -231,147 +247,33 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
     FreeImage_Unload(mask);
 }
 
-
-
-QImage GraphicsHelps::setAlphaMask(QImage image, QImage mask)
-{
-    if(mask.isNull())
-        return image;
-
-    if(image.isNull())
-        return image;
-
-    QImage target = image;
-    QImage newmask = mask;
-
-    if(target.size()!= newmask.size())
-    {
-        newmask = newmask.copy(0,0, target.width(), target.height());
-    }
-
-    newmask.invertPixels();
-
-    target.setAlphaChannel(newmask);
-
-    return target;
-}
-
-QImage GraphicsHelps::fromBMP(QString &file)
-{
-    QImage errImg;
-
-    BMP tarBMP;
-    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
-        return errImg; //Check if empty with errImg.isNull();
-    }
-
-    QImage bmpImg(tarBMP.TellWidth(),tarBMP.TellHeight(),QImage::Format_RGB666);
-
-    for(int x = 0; x < tarBMP.TellWidth(); x++){
-        for(int y = 0; y < tarBMP.TellHeight(); y++){
-            RGBApixel pixAt = tarBMP.GetPixel(x,y);
-            bmpImg.setPixel(x,y,qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
-        }
-    }
-
-    return bmpImg;
-}
-
-//QPixmap GraphicsHelps::loadPixmap(QString file)
+//SDL_Surface* GraphicsHelps::QImage_toSDLSurface(const QImage &sourceImage)
 //{
-//    return QPixmap::fromImage(loadQImage(file));
+//    // Ensure that the source image is in the correct pixel format
+//    QImage image = sourceImage;
+//    if (image.format() != QImage::Format_ARGB32)
+//        image = image.convertToFormat(QImage::Format_ARGB32);
+
+//    // QImage stores each pixel in ARGB format
+//    // Mask appropriately for the endianness
+//#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+//    Uint32 amask = 0x000000ff;
+//    Uint32 rmask = 0x0000ff00;
+//    Uint32 gmask = 0x00ff0000;
+//    Uint32 bmask = 0xff000000;
+//#else
+//    Uint32 amask = 0xff000000;
+//    Uint32 rmask = 0x00ff0000;
+//    Uint32 gmask = 0x0000ff00;
+//    Uint32 bmask = 0x000000ff;
+//#endif
+
+//    return SDL_CreateRGBSurfaceFrom((void*)image.constBits(),
+//        image.width(), image.height(), image.depth(), image.bytesPerLine(),
+//        rmask, gmask, bmask, amask);
 //}
 
-
-QImage GraphicsHelps::loadQImage(QString file)
-{
-    QFile img(file);
-    if(!img.exists())
-        return QImage();
-    if(!img.open(QIODevice::ReadOnly))
-        return QImage();
-
-    QByteArray mg=img.read(5); //Get magic number!
-    if(mg.size()<2) // too short!
-        return QImage();
-    char *magic = mg.data();
-    img.close();
-
-    //Detect PNG 89 50 4e 47
-    if( (magic[0]=='\x89')&&(magic[1]=='\x50')&&(magic[2]=='\x4e')&&(magic[3]=='\x47') )
-    {
-        QImage image = QImage( file );
-        return image;
-    } else
-    //Detect GIF 47 49 46 38
-    if( (magic[0]=='\x47')&&(magic[1]=='\x49')&&(magic[2]=='\x46')&&(magic[3]=='\x38') )
-    {
-        QImage image = QImage( file );
-        //QImage image = fromGIF( file );
-        return image;
-    }
-    else
-    //Detect BMP 42 4d
-    if( (magic[0]=='\x42')&&(magic[1]=='\x4d') )
-    {
-        QImage image = fromBMP( file );
-        return image;
-    }
-
-    //Another formats, supported by Qt :P
-    QImage image = QImage( file );
-    return image;
-}
-
-QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
-{
-    QPixmap target = QPixmap(targetSize);
-    target.fill(Qt::transparent);
-    QPixmap source;
-
-    if( ( targetSize.width() < image.width() ) || ( targetSize.height() < image.height() ))
-        source = image.scaled(targetSize, Qt::KeepAspectRatio);
-    else
-        source = image;
-
-    QPainter p(&target);
-
-    int targetX = qRound( ( ( qreal(target.width()) - qreal(source.width()) ) / 2 ) );
-    int targetY = qRound( ( ( qreal(target.height()) - qreal(source.height()) ) / 2 ) );
-
-    p.drawPixmap( targetX, targetY,source.width(),source.height(), source );
-
-    p.end();
-    return target;
-}
-
-SDL_Surface* GraphicsHelps::QImage_toSDLSurface(const QImage &sourceImage)
-{
-    // Ensure that the source image is in the correct pixel format
-    QImage image = sourceImage;
-    if (image.format() != QImage::Format_ARGB32)
-        image = image.convertToFormat(QImage::Format_ARGB32);
-
-    // QImage stores each pixel in ARGB format
-    // Mask appropriately for the endianness
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Uint32 amask = 0x000000ff;
-    Uint32 rmask = 0x0000ff00;
-    Uint32 gmask = 0x00ff0000;
-    Uint32 bmask = 0xff000000;
-#else
-    Uint32 amask = 0xff000000;
-    Uint32 rmask = 0x00ff0000;
-    Uint32 gmask = 0x0000ff00;
-    Uint32 bmask = 0x000000ff;
-#endif
-
-    return SDL_CreateRGBSurfaceFrom((void*)image.constBits(),
-        image.width(), image.height(), image.depth(), image.bytesPerLine(),
-        rmask, gmask, bmask, amask);
-}
-
-void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
+void GraphicsHelps::getMakedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
 {
     if( in_imgName.isEmpty() )
     {
@@ -404,11 +306,18 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
 
     if(imgSize)
     {
-        QImage img = loadQImage(rootDir+in_imgName);
-        if(img.isNull())
+        FIBITMAP* img = loadImage(rootDir+in_imgName);
+        if(!img)
+        {
             out_errStr="Invalid image file!";
+        }
         else
-            imgSize->setSize(img.width(), img.height());
+        {
+            int w = FreeImage_GetWidth(img);
+            int h = FreeImage_GetHeight(img);
+            imgSize->setSize(w, h);
+            GraphicsHelps::closeImage(img);
+        }
     }
 }
 

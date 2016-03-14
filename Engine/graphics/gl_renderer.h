@@ -20,10 +20,10 @@
 #define GL_RENDERER_H
 
 #include <QString>
-#include <common_features/pge_texture.h>
+#include "render/render_base.h"
 #include <common_features/rectf.h>
-#include <common_features/point.h>
-#include <common_features/pointf.h>
+
+extern Render_Base* g_renderer;
 
 struct SDL_Thread;
 class  QImage;

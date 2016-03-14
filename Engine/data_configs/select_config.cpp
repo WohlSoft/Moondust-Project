@@ -27,6 +27,28 @@
 #include "../common_features/util.h"
 #include "../common_features/graphics_funcs.h"
 
+static QPixmap squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
+{
+    QPixmap target = QPixmap(targetSize);
+    target.fill(Qt::transparent);
+    QPixmap source;
+
+    if( ( targetSize.width() < image.width() ) || ( targetSize.height() < image.height() ))
+        source = image.scaled(targetSize, Qt::KeepAspectRatio);
+    else
+        source = image;
+
+    QPainter p(&target);
+
+    int targetX = qRound( ( ( qreal(target.width()) - qreal(source.width()) ) / 2 ) );
+    int targetY = qRound( ( ( qreal(target.height()) - qreal(source.height()) ) / 2 ) );
+
+    p.drawPixmap( targetX, targetY,source.width(),source.height(), source );
+
+    p.end();
+    return target;
+}
+
 SelectConfig::SelectConfig(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SelectConfig)
@@ -114,7 +136,7 @@ SelectConfig::SelectConfig(QWidget *parent) :
         item = new QListWidgetItem( configName );
         QPixmap iconImg(200,114);
         iconImg.fill(QColor(Qt::white));
-        iconImg = GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(200,114));
+        iconImg = squareImage(QPixmap(splash_logo), QSize(200,114));
         item->setIcon( QIcon( iconImg ) );
         item->setData(Qt::ToolTipRole, description);
         item->setData(Qt::UserRole, c);

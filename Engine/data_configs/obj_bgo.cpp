@@ -100,7 +100,7 @@ bool ConfigManager::loadLevelBGO()
             imgFile = bgoset.value("image", "").toString();
             {
                 QString err;
-                GraphicsHelps::loadMaskedImage(bgoPath, imgFile, sbgo.mask_n, err);
+                GraphicsHelps::getMakedImageInfo(bgoPath, imgFile, sbgo.mask_n, err);
                 sbgo.image_n = imgFile;
                 if( imgFile=="" )
                 {

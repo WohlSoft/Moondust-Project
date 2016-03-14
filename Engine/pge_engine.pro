@@ -139,7 +139,6 @@ SOURCES += \
     data_configs/config_manager.cpp \
     common_features/app_path.cpp \
     common_features/graphics_funcs.cpp \
-    ../_Libs/EasyBMP/EasyBMP.cpp \
     data_configs/obj_block.cpp \
     controls/controller_keyboard.cpp \
     data_configs/select_config.cpp \
@@ -326,10 +325,6 @@ HEADERS  += \
     common_features/app_path.h \
     common_features/graphics_funcs.h \
     common_features/pge_texture.h \
-    ../_Libs/EasyBMP/EasyBMP.h \
-    ../_Libs/EasyBMP/EasyBMP_BMP.h \
-    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
-    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
     controls/controller_keyboard.h \
     data_configs/select_config.h \
     common_features/util.h \

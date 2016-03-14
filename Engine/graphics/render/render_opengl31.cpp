@@ -10,6 +10,11 @@
 
 #include "../gl_debug.h"
 
+#ifdef _WIN32
+#define FREEIMAGE_LIB
+#endif
+#include <FreeImageLite.h>
+
 Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
     //Virtual resolution of renderable zone
     window_w(800),
@@ -92,22 +97,24 @@ bool Render_OpenGL31::uninit()
 
 void Render_OpenGL31::initDummyTexture()
 {
-    QImage image = GraphicsHelps::convertToGLFormat(QImage("://images/_broken.png")).mirrored(false, true);
-
-    int w = image.width();//FreeImage_GetWidth(sourceImage);
-    int h = image.height();//FreeImage_GetHeight(sourceImage);
+    FIBITMAP* image = GraphicsHelps::loadImageRC("://images/_broken.png");
+    if(!image)
+    {
+        QMessageBox::warning(nullptr, "OpenGL Error",
+                             QString("Can't initialize dummy texture!\n"
+                                     "In file: %1:%2").arg(__FILE__).arg(__LINE__));
+        abort();
+    }
+    int w = FreeImage_GetWidth(image);
+    int h = FreeImage_GetHeight(image);
 
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
     _dummyTexture.w = w;
     _dummyTexture.h = h;
-    GLubyte* textura = (GLubyte*)image.bits();//FreeImage_GetBits(sourceImage);
-
-    glGenTextures( 1, &(_dummyTexture.texture) ); GLERRORCHECK();
-    glBindTexture( GL_TEXTURE_2D, _dummyTexture.texture ); GLERRORCHECK();
-    glTexImage2D( GL_TEXTURE_2D, 0, _dummyTexture.nOfColors, w, h, 0, _dummyTexture.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
-    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
-    _dummyTexture.inited = true;
+    GLubyte* textura = (GLubyte*)FreeImage_GetBits(image);
+    loadTexture(_dummyTexture, w, h, textura);
+    GraphicsHelps::closeImage(image);
 }
 
 PGE_Texture Render_OpenGL31::getDummyTexture()
@@ -340,6 +347,7 @@ void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y)
                          1.0f, 1.0f, 1.0f, 1.0f,
                          1.0f, 1.0f, 1.0f, 1.0f,
                          1.0f, 1.0f, 1.0f, 1.0f };
+
     glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
     glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();

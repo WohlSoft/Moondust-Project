@@ -85,13 +85,19 @@ bool PGE_Window::init(QString WindowTitle)
     GraphicsHelps::initSDLImage();
     if(!checkSDLError()) return false;
 
+    FIBITMAP*img;
 #ifdef Q_OS_MACX
-    QImage icon(":/icon/cat_256.png");
+    img = GraphicsHelps::loadImageRC(":/icon/cat_256.png");
 #else
-    QImage icon(":/icon/cat_16.png");
+    img = GraphicsHelps::loadImageRC(":/icon/cat_16.png");
 #endif
-
-    SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
+    if(img)
+    {
+        SDL_Surface *sicon=GraphicsHelps::fi2sdl(img);
+        SDL_SetWindowIcon(window, sicon);
+        GraphicsHelps::closeImage(img);
+        SDL_FreeSurface(sicon);
+    }
 
     WriteToLog(QtDebugMsg, "Create OpenGL context...");
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
