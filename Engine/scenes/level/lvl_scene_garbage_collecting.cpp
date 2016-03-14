@@ -23,10 +23,16 @@
 
 void LevelScene::collectGarbageNPCs()
 {
+    QVector<LVL_Npc *> stillVizible;//Avoid camera crash (which uses a cached render list)
     while(!dead_npcs.isEmpty())
     {
         LVL_Npc *corpse = dead_npcs.last();
         dead_npcs.pop_back();
+        if(corpse->isInRenderList())
+        {
+            stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
+            continue;
+        }
         #if (QT_VERSION >= 0x050400)
         active_npcs.removeAll(corpse);
         npcs.removeAll(corpse);
@@ -55,14 +61,21 @@ void LevelScene::collectGarbageNPCs()
         #endif
         luaEngine.destoryLuaNpc(corpse);
     }
+    dead_npcs.append(stillVizible);
 }
 
 void LevelScene::collectGarbagePlayers()
 {
+    QVector<LVL_Player *> stillVizible;//Avoid camera crash (which uses a cached render list)
     while(!dead_players.isEmpty())
     {
         LVL_Player *corpse = dead_players.last();
         dead_players.pop_back();
+        if(corpse->isInRenderList())
+        {
+            stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
+            continue;
+        }
         LVL_Player::deathReason reason = corpse->kill_reason;
 
         #if (QT_VERSION >= 0x050400)
@@ -98,6 +111,7 @@ void LevelScene::collectGarbagePlayers()
         if(reason==LVL_Player::deathReason::DEAD_burn)
             PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
+    dead_players.append(stillVizible);
 
     if(players.isEmpty())
     {

@@ -379,12 +379,12 @@ void PGE_Phys_Object::iterateStep(float ticks)
 
     if(collided_slope)
     {
-        _velocityY_prev = (_velocityY+(_velocityX*collided_slope_angle_ratio));
+        _velocityY_prev = (_velocityY+_velocityY_add+(_velocityX*collided_slope_angle_ratio));
         posRect.setY(posRect.y()+ _velocityY_prev * (ticks/_smbxTickTime));
     }
     else
     {
-        posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
+        posRect.setY(posRect.y()+(_velocityY+_velocityY_add) * (ticks/_smbxTickTime));
         _velocityY_prev=_velocityY;
     }
 

@@ -22,6 +22,7 @@ local RAIL_HORIZONTAL = 71
 local RAIL_VERTICAL = 72
 local REVERSER_1 = 70
 local REVERSER_2 = 100
+local CHECK_DELAY = 32
 
 function platform:initProps()
     self.direction = DIR_AUTO
@@ -29,6 +30,7 @@ function platform:initProps()
     self.state = self.npc_obj.direction
     self.npc_obj.gravity = 1
     self.found = false
+    self.check_time_left = CHECK_DELAY
 end
 
 function platform:__init(npc_obj)
@@ -39,6 +41,22 @@ end
 
 function platform:onActivated()
     self:initProps()
+end
+
+function platform:isCollidesCenter(blk)
+    if(blk==nil)then
+        return false;
+    elseif(self.npc_obj.center_x > blk.right)then
+        return false;
+    elseif(self.npc_obj.center_x < blk.left)then
+        return false;
+    elseif(self.npc_obj.center_y > blk.bottom)then
+        return false;
+    elseif(self.npc_obj.center_y < blk.top)then
+        return false;
+    else
+        return true;
+    end
 end
 
 function platform:onLoop(tickTime)
@@ -73,70 +91,88 @@ function platform:onLoop(tickTime)
             end
         end
 
-        if(self.contacts:detected())then
-            local bgos= self.contacts:getBGOs()
-            self.found=false
-            for K,Blk in pairs(bgos) do
-                if(Blk.id==RAIL_DIAGONAL_1)then
-                    self.found=true
-                    if(self.npc_obj.speedX>0)then
-                        self.direction=DIR_RIGHT_DOWN
-                    else
-                        self.direction=DIR_LEFT_UP
+        if(self.check_time_left>=0)then
+            self.check_time_left=self.check_time_left-tickTime
+        else
+            self.check_time_left=CHECK_DELAY
+            if(self.contacts:detected())then
+                local bgos= self.contacts:getBGOs()
+                self.found=false
+                for K,Blk in pairs(bgos) do
+                    if(Blk.right==1)then
+                        Renderer.printText("meow", 10, 10)
                     end
-                elseif(Blk.id==RAIL_DIAGONAL_2)then
-                    self.found=true
-                    if(self.npc_obj.speedX>0)then
-                        self.direction=DIR_UP_RIGHT
-                    else
-                        self.direction=DIR_DOWN_LEFT
+                    if(self:isCollidesCenter(Blk)) then
+                        if(Blk.id==RAIL_DIAGONAL_1)then
+                            self.found=true
+                            if(self.npc_obj.speedX>0)then
+                                self.direction=DIR_RIGHT_DOWN
+                            else
+                                self.direction=DIR_LEFT_UP
+                            end
+                        elseif(Blk.id==RAIL_DIAGONAL_2)then
+                            self.found=true
+                            if(self.npc_obj.speedX>0)then
+                                self.direction=DIR_UP_RIGHT
+                            else
+                                self.direction=DIR_DOWN_LEFT
+                            end
+                        elseif(Blk.id==RAIL_HORIZONTAL)then
+                            self.found=true
+                            if(self.npc_obj.speedX>0)then
+                                self.direction=DIR_RIGHT
+                            else
+                                self.direction=DIR_LEFT
+                            end
+                        elseif(Blk.id==RAIL_VERTICAL)then
+                            self.found=true
+                            if(self.npc_obj.speedY>0)then
+                                self.direction=DIR_DOWN
+                            else
+                                self.direction=DIR_UP
+                            end
+                        elseif(Blk.id==REVERSER_1 or Blk.id==REVERSER_2)then
+                            self.found=true
+                            if(self.direction==DIR_LEFT) then
+                                self.direction=DIR_RIGHT
+                            elseif(self.direction==DIR_LEFT_UP) then
+                                self.direction=DIR_RIGHT_DOWN
+                            elseif(self.direction==DIR_UP) then
+                                self.direction=DIR_DOWN
+                            elseif(self.direction==DIR_UP_RIGHT) then
+                                self.direction=DIR_DOWN_LEFT
+                            elseif(self.direction==DIR_RIGHT) then
+                                self.direction=DIR_LEFT
+                            elseif(self.direction==DIR_RIGHT_DOWN) then
+                                self.direction=DIR_LEFT_UP
+                            elseif(self.direction==DIR_DOWN) then
+                                self.direction=DIR_UP
+                            elseif(self.direction==DIR_DOWN_LEFT) then
+                                self.direction=DIR_UP_RIGHT
+                            end
+                            self.npc_obj.speedX=-self.npc_obj.speedX
+                            self.npc_obj.speedY=-self.npc_obj.speedY
+                        end
                     end
-                elseif(Blk.id==RAIL_HORIZONTAL)then
-                    self.found=true
-                    if(self.npc_obj.speedX>0)then
-                        self.direction=DIR_RIGHT
-                    else
-                        self.direction=DIR_LEFT
-                    end
-                elseif(Blk.id==RAIL_VERTICAL)then
-                    self.found=true
-                    if(self.npc_obj.speedY>0)then
-                        self.direction=DIR_DOWN
-                    else
-                        self.direction=DIR_UP
-                    end
-                elseif(Blk.id==REVERSER_1 or Blk.id==REVERSER_2)then
-                    self.found=true
-                    if(self.direction==DIR_LEFT) then
-                        self.direction=DIR_RIGHT
-                    elseif(self.direction==DIR_LEFT_UP) then
-                        self.direction=DIR_RIGHT_DOWN
-                    elseif(self.direction==DIR_UP) then
-                        self.direction=DIR_DOWN
-                    elseif(self.direction==DIR_UP_RIGHT) then
-                        self.direction=DIR_DOWN_LEFT
-                    elseif(self.direction==DIR_RIGHT) then
-                        self.direction=DIR_LEFT
-                    elseif(self.direction==DIR_RIGHT_DOWN) then
-                        self.direction=DIR_LEFT_UP
-                    elseif(self.direction==DIR_DOWN) then
-                        self.direction=DIR_UP
-                    elseif(self.direction==DIR_DOWN_LEFT) then
-                        self.direction=DIR_UP_RIGHT
-                    end
-                    self.npc_obj.speedX=-self.npc_obj.speedX
-                    self.npc_obj.speedY=-self.npc_obj.speedY
                 end
-            end
-            if(self.found)then
-                self.npc_obj.gravity=0
-            else
-                self.npc_obj.gravity=1
+                if(self.found)then
+                    self.npc_obj.gravity=0
+                else
+                    self.npc_obj.gravity=1
+                end
             end
         end
     else
         self.npc_obj.speedX=0
         self.npc_obj.speedY=0
+        if(self.contacts:detected())then
+            local plrs= self.contacts:getPlayers()
+            for K,Plr in pairs(plrs) do
+                if(Plr.bottom==self.npc_obj.top)then
+                    self.state=ST_ON
+                end                    
+            end
+        end
     end
 end
 

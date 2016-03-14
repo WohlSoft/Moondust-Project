@@ -59,6 +59,8 @@ class PGE_Phys_Object
     //! Tells, does this object stored into the render list
     bool         _render_list;
 public:
+    inline bool isInRenderList() {return _render_list;}
+public:
     //! Pointer of the parent scene
     LevelScene*  _scene;
 protected:
@@ -109,6 +111,12 @@ public:
      * \brief Update Speed-adding stack if needed
      */
     virtual void updateSpeedAddingStack() {}
+    /*!
+     * \brief Apply position correction to members of speed-adding stack (to don't cause through-fall when rider will touch floor)
+     * param offsetX Apply offset on X
+     * param offsetY Apply offset on Y
+     */
+    virtual void applyCorrectionToSA_stack(double, double) {}
 
     double gravityScale();
     void setGravityScale(double scl);

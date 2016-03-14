@@ -227,6 +227,7 @@ void LVL_Player::kill(deathReason reason)
 void LVL_Player::unregister()
 {
     isAlive = false;
+    _is_visible=false;
     //Unregister controllers
     if(_scene->player1Controller) _scene->player1Controller->removeFromControl(this);
     if(_scene->player2Controller) _scene->player2Controller->removeFromControl(this);

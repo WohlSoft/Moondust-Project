@@ -127,7 +127,7 @@ void LVL_LayerEngine::processMoving(float tickTime)
                 if(npc->isActivated) continue;
             }
             obj->iterateStep(tickTime);
-            obj->update(tickTime);
+            obj->_syncPosition();
         }
     }
 }

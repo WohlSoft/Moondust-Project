@@ -110,6 +110,7 @@ public:
 
     QVector<PGE_Phys_Object*>   collision_speed_add;
     void updateSpeedAddingStack();
+    void applyCorrectionToSA_stack(double offsetX, double offsetY);
 
     bool    bumpDown;
     bool    bumpUp;

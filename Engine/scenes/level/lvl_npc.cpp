@@ -76,6 +76,8 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     buddies_list=NULL;
     buddies_updated=false;
     buddies_leader=NULL;
+
+    collision_speed_add.clear();
 }
 
 LVL_Npc::~LVL_Npc()

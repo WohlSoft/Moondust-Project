@@ -79,6 +79,7 @@ class LVL_Player :
         bool _stucked;
 
         void updateSpeedAddingStack();
+        void applyCorrectionToSA_stack(double offsetX, double offsetY);
         /***************************************************/
 
         int playerID;

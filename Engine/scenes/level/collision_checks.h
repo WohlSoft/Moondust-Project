@@ -51,7 +51,7 @@ inline bool isCollideFloor(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 {
     return (
      (
-        (body._velocityY+body._velocityY_add >= 0.0)
+        ((body._velocityY+body._velocityY_add >= 0.0)||(collided->_velocityY+collided->_velocityY_add <= 0.0))
         &&
         (floor(body.posRect.bottom())+collided->colliding_ySpeed < collided->posRect.top()+
                                    fabs(body._velocityY+body._velocityX_add)

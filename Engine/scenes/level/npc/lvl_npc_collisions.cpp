@@ -48,8 +48,6 @@ void LVL_Npc::updateCollisions()
     collided_center.clear();
     cliffDetected=false;
 
-    collision_speed_add.clear();
-
     collided_slope=false;
     collided_slope_angle_ratio=0.0f;
     collided_slope_celling=false;
@@ -99,15 +97,17 @@ void LVL_Npc::updateCollisions()
                     _floorY_num+=1.0;
                     _floorX_vel+=blk->speedXsum();
                     _floorX_num+=1.0;
-                }
+                } break;
                 case PGE_Phys_Object::LVLNPC:
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
-                    if(!npc) continue;
+                    if(!npc) break;
                     foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(npc);
+//                    if((npc->collide_npc==COLLISION_TOP)||(npc->collide_npc==COLLISION_ANY))
+//                        npc->collision_speed_add.push_back(this);
                     _floorY_vel+=npc->speedYsum();
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
@@ -179,7 +179,10 @@ void LVL_Npc::updateCollisions()
             case PGE_Phys_Object::LVLPlayer:
                 {
                     if((collide_player==COLLISION_ANY)||(collide_player==COLLISION_TOP))
-                        collision_speed_add.push_back(collided);
+                    {
+                        if(!collision_speed_add.contains(collided))
+                            collision_speed_add.push_back(collided);
+                    }
                     continue;
                 }
             break;
@@ -191,7 +194,8 @@ void LVL_Npc::updateCollisions()
                             ((collide_npc==COLLISION_ANY)||(collide_npc==COLLISION_TOP))
                             )
                     {
-                        collision_speed_add.push_back(collided);
+                        if(!collision_speed_add.contains(collided))
+                            collision_speed_add.push_back(collided);
                         continue;
                     }
                 }
@@ -276,20 +280,27 @@ void LVL_Npc::updateCollisions()
         }
     }
 
+    bool needCorrect=false;
+    double correctX=0.0;
+    double correctY=0.0;
     if(resolveLeft || resolveRight)
     {
-        posRect.setX(_wallX);
+        //posRect.setX(_wallX);
+        correctX=_wallX-posRect.x();
+        needCorrect=true;
         setSpeedX(0);
         _velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
-        posRect.setY(_floorY);
+        //posRect.setY(_floorY);
+        correctY=_floorY-posRect.y();
+        needCorrect=true;
         //float bumpSpeed=speedY();
-        if(resolveTop)
+        //if(resolveTop)
             setSpeedY(0.0);
-        else
-            setSpeedY(_floorY_vel);
+        //else
+        //  setSpeedY(_floorY_vel);
         _velocityY_add=0;
         //if(!blocks_to_hit.isEmpty())
         //{
@@ -313,6 +324,12 @@ void LVL_Npc::updateCollisions()
     }
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
+    if(needCorrect)
+    {
+        applyCorrectionToSA_stack(correctX, correctY);
+    }
+
+    collision_speed_add.clear();
 //    for(int i=0;i<add_speed_to.size();i++)
 //    {
 //        if(add_speed_to[i]->_velocityX_add!=0.0f)
@@ -743,4 +760,12 @@ void LVL_Npc::updateSpeedAddingStack()
     }
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->updateSpeedAddingStack();
+}
+
+void LVL_Npc::applyCorrectionToSA_stack(double offsetX, double offsetY)
+{
+    posRect.setPos(posRect.x()+offsetX, posRect.y()+offsetY);
+    _syncPosition();
+    for(int i=0; i<collision_speed_add.size(); i++)
+        collision_speed_add[i]->applyCorrectionToSA_stack(offsetX, offsetY);
 }

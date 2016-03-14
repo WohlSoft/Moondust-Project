@@ -9,6 +9,17 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
     using namespace luabind;
     return
         class_<PGE_Phys_Object>("PhysBase")
+            .enum_("ObjTypes")
+            [
+                value("Unknown", PGE_Phys_Object::LVLUnknown),
+                value("Block", PGE_Phys_Object::LVLBlock),
+                value("BGO", PGE_Phys_Object::LVLBGO),
+                value("NPC", PGE_Phys_Object::LVLNPC),
+                value("Player", PGE_Phys_Object::LVLPlayer),
+                value("Warp", PGE_Phys_Object::LVLWarp),
+                value("Special", PGE_Phys_Object::LVLSpecial),
+                value("PhysEnv", PGE_Phys_Object::LVLPhysEnv)
+            ]
             //Size and position
             .property("x", &PGE_Phys_Object::posX, &PGE_Phys_Object::setPosX)
             .property("y", &PGE_Phys_Object::posY, &PGE_Phys_Object::setPosY)
@@ -20,6 +31,7 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             .property("left", &PGE_Phys_Object::left, &PGE_Phys_Object::setLeft)
             .property("right", &PGE_Phys_Object::right, &PGE_Phys_Object::setRight)
             .property("bottom", &PGE_Phys_Object::bottom, &PGE_Phys_Object::setBottom)
+            .def_readonly("type", &PGE_Phys_Object::type)
 
             //Physics
             .property("paused_physics", &PGE_Phys_Object::isPaused, &PGE_Phys_Object::setPaused)

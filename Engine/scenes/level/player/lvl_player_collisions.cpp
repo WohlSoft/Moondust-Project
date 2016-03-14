@@ -136,6 +136,8 @@ void LVL_Player::updateCollisions()
                     floor_blocks.push_back(npc);
                     if((npc->collide_player!=COLLISION_TOP) && (npc->setup->kill_on_jump))
                         npcs_to_stomp.push_back(npc);
+                    else
+                        npc->collision_speed_add.push_back(this);
                     _floorY_vel+=npc->speedYsum();
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
@@ -297,17 +299,25 @@ void LVL_Player::updateCollisions()
         }
     }
 
+    bool needCorrect=false;
+    double correctX=0.0;
+    double correctY=0.0;
     if(resolveLeft || resolveRight)
     {
-        posRect.setX(_wallX);
+        //posRect.setX(_wallX);
+        correctX=_wallX-posRect.x();
+        needCorrect=true;
         setSpeedX(0);
         //_velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
-        posRect.setY(_floorY);
+        //posRect.setY(_floorY);
+        correctY=_floorY-posRect.y();
+        needCorrect=true;
         float bumpSpeed=speedY();
-        setSpeedY(_floorY_vel);
+        //setSpeedY(_floorY_vel);
+        setSpeedY(0);
         //_velocityY_add=0;
         if(!blocks_to_hit.isEmpty())
         {
@@ -334,6 +344,11 @@ void LVL_Player::updateCollisions()
     else
     {
         posRect.setY(backupY);
+    }
+
+    if(needCorrect)
+    {
+        applyCorrectionToSA_stack(correctX, correctY);
     }
 
     //Stomp all detected NPC's
@@ -901,5 +916,11 @@ void LVL_Player::updateSpeedAddingStack()
         _velocityY_add=_floorY_vel;
     }
 
+}
+
+void LVL_Player::applyCorrectionToSA_stack(double offsetX, double offsetY)
+{
+    posRect.setPos(posRect.x()+offsetX, posRect.y()+offsetY);
+    _syncPosition();
 }
 
