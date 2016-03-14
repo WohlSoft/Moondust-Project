@@ -113,7 +113,7 @@ inline bool isCollideSlopeFloor(PGE_Phys_Object &body, PGE_Phys_Object *collided
     double slopeTop = collided->posRect.bottom()-floorH;
     if(slopeTop<collided->top()) slopeTop=collided->posRect.top();
     else if(slopeTop>collided->bottom()) slopeTop=collided->posRect.bottom();
-    return (body.posRect.bottom()>=slopeTop)&&
+    return (body.posRect.bottom()>=(slopeTop-1.0))&&
            (body.posRect.bottom()<=collided->posRect.bottom())&&
    (!( (body.posRect.left()+collided->colliding_xSpeed>=collided->posRect.right()+body.colliding_xSpeed) ||
        (body.posRect.right()+collided->colliding_xSpeed<=collided->posRect.left()+body.colliding_xSpeed) ) )

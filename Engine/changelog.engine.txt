@@ -5,8 +5,11 @@
 - Added support of enter event for warps
 - Added support of two-way directed warps
 - Added support of cannon exit warps
-- Better and stable interprocessing with editor based on stdin/stdout!
+- Better and stable interprocessing with editor based on stdin/stdout!1
 - Added a support of character filter blocks and character switch blocks!
+- Better speed-adding physics
+- Layer motion engine has been implemented!
+- Bit better slopes support
 
 0.2.5
 - Fixed crash on NPC placement with inter-processing
