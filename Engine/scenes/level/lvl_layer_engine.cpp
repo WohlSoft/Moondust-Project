@@ -99,6 +99,8 @@ void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double sp
         l.m_speedX=speedX;
         l.m_speedY=speedY;
     } else {
+        if((speedX==0.0)&&(speedY==0.0))
+            return;//Don't store zero-speed layers!
         MovingLayer l;
         l.m_speedX=speedX;
         l.m_speedY=speedY;
@@ -110,6 +112,7 @@ void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double sp
 void LVL_LayerEngine::processMoving(float tickTime)
 {
     if(moving_layers.isEmpty()) return;
+    QVector<QString> remove_list;
     for(QHash<QString, MovingLayer>::iterator it = moving_layers.begin(); it != moving_layers.end(); it++)
     {
         MovingLayer &l = (*it);
@@ -128,8 +131,13 @@ void LVL_LayerEngine::processMoving(float tickTime)
             }
             obj->iterateStep(tickTime);
             obj->_syncPosition();
+            if((l.m_speedX==0.0)&&(l.m_speedY==0.0))
+                remove_list.push_back(it.key());
         }
     }
+    //Remove zero-speed layers
+    for(int i=0;i<remove_list.size(); i++)
+        moving_layers.remove(remove_list[i]);
 }
 
 bool LVL_LayerEngine::isEmpty(QString layer)
