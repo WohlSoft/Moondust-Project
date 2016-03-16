@@ -41,6 +41,8 @@ extern const struct adldata
     unsigned char feedconn; // Feedback/connection bits for the channel
 
     signed char finetune;
+
+    bool diff;
 } adl[];
 
 extern const struct adlinsdata
@@ -52,6 +54,7 @@ extern const struct adlinsdata
     unsigned char flags;
     unsigned short ms_sound_kon;  // Number of milliseconds it produces sound;
     unsigned short ms_sound_koff;
+    double fine_tune;
 } adlins[];
 extern const unsigned short banks[][256];
 extern const char* const banknames[67];

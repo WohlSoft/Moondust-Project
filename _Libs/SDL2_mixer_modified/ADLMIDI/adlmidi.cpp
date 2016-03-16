@@ -980,7 +980,7 @@ private:
 
                     if((adlins[insmeta].flags & adlinsdata::Flag_Pseudo4op) && ins == adlins[insmeta].adlno2)
                     {
-                        phase = 0.125; // Detune the note slightly (this is what Doom does)
+                        phase = adlins[insmeta].fine_tune;//0.125; // Detune the note slightly (this is what Doom does)
                     }
 
                     if(Ch[MidCh].vibrato && d.vibdelay >= Ch[MidCh].vibdelay)
