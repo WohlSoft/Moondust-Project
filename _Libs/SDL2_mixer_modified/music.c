@@ -530,6 +530,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 {
     Uint8 magic[5];
     Uint8 moremagic[9];
+    Uint8 lessmagic[3];
 
     Sint64 start = SDL_RWtell(src);
     if (SDL_RWread(src, magic, 1, 4) != 4 || SDL_RWread(src, moremagic, 1, 8) != 8 ) {
@@ -537,6 +538,8 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_NONE;
     }
     SDL_RWseek(src, start, RW_SEEK_SET);
+    memcpy(lessmagic, magic, 2);
+    lessmagic[2]='\0';
     magic[4]='\0';
     moremagic[8] = '\0';
 
@@ -562,17 +565,50 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MID;
     }
 
-    /* WAVE files have the magic four bytes "RIFF" */
-    if ((strcmp((char *)magic, "RIFF") == 0) && (strcmp((char *)(moremagic+4), "RMID") == 0)) {
+    if (strcmp((char *)magic, "MUS\x1A") == 0) {
         return MUS_MID;
     }
 
-    /* SPC files have the magic four bytes "SNES" */
+    /* WAVE files have the magic four bytes "RIFF" */
+    if (    (strcmp((char *)magic, "RIFF") == 0)&&(strcmp((char *)(moremagic+4), "RMID") == 0)) {
+        return MUS_MID;
+    }
+
+    /* GME Specific files */
+    if (strcmp((char *)magic, "ZXAY") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "GBS\x01") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "GYMX") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "HESM") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "KSCC") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "KSSX") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "NESM") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "NSFE") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "SAP\x0D") == 0) {
+        return MUS_SPC;
+    }
     if (strcmp((char *)magic, "SNES") == 0) {
         return MUS_SPC;
     }
-
-    if (strcmp((char *)magic, "NESM") == 0) {
+    if (strcmp((char *)magic, "Vgm ") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp(lessmagic, "\x1f\x8b") == 0) {
         return MUS_SPC;
     }
 
@@ -699,6 +735,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
                     #ifdef USE_ADL_MIDI
                     MIX_string_equals(ext, "RMI") ||
                     MIX_string_equals(ext, "MUS") ||
+                    MIX_string_equals(ext, "IMF") ||
                     #endif
                     MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
