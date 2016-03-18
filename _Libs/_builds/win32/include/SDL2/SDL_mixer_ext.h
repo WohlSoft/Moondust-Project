@@ -184,6 +184,11 @@ extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS(const char *file);
    Matt Campbell (matt@campbellhome.dhs.org) April 2000 */
 extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW(SDL_RWops *src, int freesrc);
 
+/* Load a music file from an SDL_RWop object with custom arguments (trackID for GME or settings for a MIDI playing)
+ * Arguments are taking no effect for file formats which are not supports extra arguments.
+  */
+extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW_ARG(SDL_RWops *src, int freesrc, char *args);
+
 /* Load a music file from an SDL_RWop object with custom trackID for GME.
  * trackID argument takes no effect for non-NSF,HES,GBM,etc. file formats.
  * Default value should be 0
@@ -677,6 +682,7 @@ extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getVibrato();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setVibrato(int vib);
 extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getScaleMod();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setScaleMod(int sc);
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
 
 extern DECLSPEC int SDLCALL MIX_SetMidiDevice(int device);
 
