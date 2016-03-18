@@ -191,9 +191,6 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 		play_mus=NULL;
     }
 
-    MIX_SetMidiDevice(MIDI_ADLMIDI);
-    MIX_ADLMIDI_setSetDefaults();
-
     play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
 
     if(!play_mus)

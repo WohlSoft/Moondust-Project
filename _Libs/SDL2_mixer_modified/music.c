@@ -74,7 +74,6 @@ typedef _off_t off_t;
 #endif
 #ifdef GME_MUSIC
 #include "music_gme.h"
-static int gme_track_number = 0;
 #endif
 
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
@@ -94,6 +93,8 @@ static int music_volume = MIX_MAX_VOLUME;
 
 static int mididevice_next    = MIDI_ADLMIDI;
 static int mididevice_current = MIDI_ADLMIDI;
+
+static int need_reset_midi = 1;//Reset MIDI settings every file reopening (to allow right argument passing)
 
 struct _Mix_Music {
     Mix_MusicType type;
@@ -962,6 +963,13 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #ifdef MID_MUSIC
     case MUS_MID:
         music->type = MUS_MID;
+        if(need_reset_midi == 1)
+        {
+            MIX_SetMidiDevice(0);
+            #ifdef USE_ADL_MIDI
+            ADLMIDI_setDefaults();
+            #endif
+        }
         parse_adlmidi_args(music_args);
         //Install next MIDI device
         mididevice_current = mididevice_next;
@@ -2243,6 +2251,7 @@ int  MIX_ADLMIDI_getBankID()
 
 void SDLCALLCC MIX_ADLMIDI_setBankID(int bnk)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setBankID(bnk);
     #endif
@@ -2260,6 +2269,7 @@ int SDLCALLCC MIX_ADLMIDI_getTremolo()
 
 void SDLCALLCC MIX_ADLMIDI_setTremolo(int tr)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setTremolo(tr);
     #endif
@@ -2277,6 +2287,7 @@ int  MIX_ADLMIDI_getVibrato()
 
 void SDLCALLCC MIX_ADLMIDI_setVibrato(int vib)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setVibrato(vib);
     #endif
@@ -2294,6 +2305,7 @@ int  MIX_ADLMIDI_getScaleMod()
 
 void SDLCALLCC MIX_ADLMIDI_setScaleMod(int sc)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setScaleMod(sc);
     #endif
@@ -2301,6 +2313,7 @@ void SDLCALLCC MIX_ADLMIDI_setScaleMod(int sc)
 
 void SDLCALLCC MIX_ADLMIDI_setSetDefaults()
 {
+    need_reset_midi=1;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setDefaults();
     #endif

@@ -441,6 +441,10 @@ Public Declare Function MIX_ADLMIDI_getScaleMod Lib "SDL2MixerVB.dll" () As Long
 'void MIX_ADLMIDI_setScaleMod(int sc);
 Public Declare Function MIX_ADLMIDI_setScaleMod Lib "SDL2MixerVB.dll" (ByVal sc As Long) As Long
 
+'extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
+'Sets all ADLMIDI preferences to default state
+Public Declare Sub MIX_ADLMIDI_setSetDefaults Lib "SDL2MixerVB.dll" ()
+
 'int MIX_SetMidiDevice(int device);
 ' Allows you to toggle MIDI Device (change applying only on reopening of MIDI file)
 Public Declare Function MIX_SetMidiDevice Lib "SDL2MixerVB.dll" (ByVal MIDIDevice As Mix_MIDI_Device) As Long
