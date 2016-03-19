@@ -38,6 +38,25 @@ IMPORTANT: To choice a track number of NSF, GBM, HES, etc file,
            Where xxx - actual number of chip track, (from 0 to N-1)
            Examples: "file.nsf|12", "file.hes|2"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+Arguments are passing like argument for a GME-based files (NSF, HES, etc.):
+Syntax for MIDI is:
+        myfile.mid|xyy;xyy;xyy;...;
+    where x - parameter type
+    where y - value (every value must be ended with semicolon!)
+
+available parameters:
+        s - use a specific synthesiser
+            0 - ADLMIDI
+            1 - Native MIDI [Win32/OSX/Haiku only]
+            2 - Timidity
+            3 - Fluidsynth
+        b - value from 0 to 66 - number of ADLMIDI bank
+        t - (0 or 1) enable deep tremolo on ADLMIDI
+        v - (0 or 1) enable deep vibrato on ADLMIDI
+        m - (0 or 1) enable scalable modulation on ADLMIDI
+        a - (0 or 1) enable AdLib mode of percussion on ADLMIDI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 =============================================================================
 Added functions:
@@ -69,6 +88,16 @@ const char* Mix_GetMusicAlbumTag(const Mix_Music *music);
 const char* Mix_GetMusicCopyrightTag(const Mix_Music *music);
 
   //Get music copyright from meta-tag if possible
+
+
+Mix_Music * SDLCALLCC Mix_LoadMUS_RW_ARG(SDL_RWops *src, int freesrc, char *args)
+
+    //Load music from memory with passing arguments
+
+
+Mix_Music * SDLCALLCC Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID)
+
+    //Load music from memory with passing NSF/HES/etc. track number (accepts integer unlike SDLCALLCC Mix_LoadMUS_RW_ARG)
 
 
 typedef enum {
@@ -122,6 +151,11 @@ int  MIX_ADLMIDI_getScaleMod();
 void MIX_ADLMIDI_setScaleMod(int sc);
 
   //Changes ADLMIDI scaling modulation flag (changes applying on MIDI file reopen)
+
+
+void MIX_ADLMIDI_setSetDefaults();
+
+  //Resets ADLMIDI flags and settings to default state
 
 
 =============================================================================

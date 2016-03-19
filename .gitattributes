@@ -1,0 +1,6 @@
+_Libs/* linguist-vendored
+_Misc/* linguist-vendored
+Content/* linguist-vendored
+Documents/* linguist-vendored
+Engine/languages/* linguist-vendored
+Editor/languages/* linguist-vendored

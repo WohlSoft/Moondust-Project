@@ -74,7 +74,6 @@ typedef _off_t off_t;
 #endif
 #ifdef GME_MUSIC
 #include "music_gme.h"
-static int gme_track_number = 0;
 #endif
 
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
@@ -87,12 +86,15 @@ static int volatile music_stopped = 0;
 static int music_loops = 0;
 static char *music_cmd = NULL;
 static char *music_file = NULL;
+static char *music_args = NULL;
 static char *music_filename = NULL;
 static Mix_Music * volatile music_playing = NULL;
 static int music_volume = MIX_MAX_VOLUME;
 
 static int mididevice_next    = MIDI_ADLMIDI;
 static int mididevice_current = MIDI_ADLMIDI;
+
+static int need_reset_midi = 1;//Reset MIDI settings every file reopening (to allow right argument passing)
 
 struct _Mix_Music {
     Mix_MusicType type;
@@ -530,6 +532,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 {
     Uint8 magic[5];
     Uint8 moremagic[9];
+    Uint8 lessmagic[3];
 
     Sint64 start = SDL_RWtell(src);
     if (SDL_RWread(src, magic, 1, 4) != 4 || SDL_RWread(src, moremagic, 1, 8) != 8 ) {
@@ -537,6 +540,8 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_NONE;
     }
     SDL_RWseek(src, start, RW_SEEK_SET);
+    memcpy(lessmagic, magic, 2);
+    lessmagic[2]='\0';
     magic[4]='\0';
     moremagic[8] = '\0';
 
@@ -562,17 +567,50 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MID;
     }
 
-    /* WAVE files have the magic four bytes "RIFF" */
-    if ((strcmp((char *)magic, "RIFF") == 0) && (strcmp((char *)(moremagic+4), "RMID") == 0)) {
+    if (strcmp((char *)magic, "MUS\x1A") == 0) {
         return MUS_MID;
     }
 
-    /* SPC files have the magic four bytes "SNES" */
+    /* WAVE files have the magic four bytes "RIFF" */
+    if (    (strcmp((char *)magic, "RIFF") == 0)&&(strcmp((char *)(moremagic+4), "RMID") == 0)) {
+        return MUS_MID;
+    }
+
+    /* GME Specific files */
+    if (strcmp((char *)magic, "ZXAY") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "GBS\x01") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "GYMX") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "HESM") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "KSCC") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "KSSX") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "NESM") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "NSFE") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp((char *)magic, "SAP\x0D") == 0) {
+        return MUS_SPC;
+    }
     if (strcmp((char *)magic, "SNES") == 0) {
         return MUS_SPC;
     }
-
-    if (strcmp((char *)magic, "NESM") == 0) {
+    if (strcmp((char *)magic, "Vgm ") == 0) {
+        return MUS_SPC;
+    }
+    if (strcmp(lessmagic, "\x1f\x8b") == 0) {
         return MUS_SPC;
     }
 
@@ -588,6 +626,89 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     return MUS_MOD;
 }
 
+/*
+ * Split path and arguments after "|" character.
+ */
+int split_path_and_params(const char *path, char*args)
+{
+    int hasArgs=0;
+    int srclen=strlen(path);
+    int i, j;
+    for(i=0; i<srclen; i++)
+        if(music_file[i]=='|') hasArgs=1;
+    if(hasArgs==1)
+    {
+        //char trackNum[strlen(path)];
+        for(i=(signed)strlen(path)-1;i>=0;i-- )
+        {
+            args[i]=music_file[i];
+            if(music_file[i]=='|')
+            {
+                if(i==0)
+                {
+                    Mix_SetError("Empty filename!");
+                    return 0;
+                }
+                music_file[i]='\0';
+                i++;
+                break;
+            }
+        }
+        for(j=0;i<srclen;i++,j++)
+            args[j]=args[i];
+        if(j<srclen) args[j]='\0';
+    }
+    return 1;
+}
+
+void parse_adlmidi_args(char *args)
+{
+    char arg[100];
+    char type='x';
+    int maxlen = strlen(args);
+    int i, j=0;
+    int value_opened=0;
+    for(i=0; i<maxlen; i++)
+    {
+        char c=args[i];
+        if(value_opened==1)
+        {
+            if( (c==';') || ( i == (maxlen-1) ))
+            {
+                arg[j]='\0';
+                int value=atoi(arg);
+                switch(type)
+                {
+                    #ifdef USE_ADL_MIDI
+                    case 'b': ADLMIDI_setBankID(value); break;
+                    case 't': ADLMIDI_setTremolo(value); break;
+                    case 'v': ADLMIDI_setVibrato(value); break;
+                    case 'a': ADLMIDI_setAdLibDrumsMode(value); break;
+                    case 'm': ADLMIDI_setScaleMod(value); break;
+                    #endif
+                    case 's': MIX_SetMidiDevice(value); break;
+                    case '\0': break;
+                    default:
+                        break;
+                }
+                value_opened=0;
+            }
+            arg[j++]=c;
+        }
+        else
+        {
+            if(c=='\0') return;
+            type=c;
+            switch(c)
+            {
+                case 'b': case 't': case 'v': case 'a': case 'm': case 's':
+                value_opened=1; j=0;
+            }
+        }
+    }
+}
+
+
 /* Load a music file */
 Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
 {
@@ -597,7 +718,10 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
 
     if( music_file )
         SDL_free(music_file);
+    if( music_args )
+        SDL_free(music_args);
     music_file = NULL;
+    music_args = NULL;
         if(!file)
         {
             music_file = NULL;
@@ -605,7 +729,9 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             return NULL;
         }
         music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
+        music_args = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
         strcpy(music_file, (char*)file);
+        music_args[0]='\0';
         #ifdef _WIN32
         if(music_file)
         {
@@ -617,34 +743,8 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             }
         }
         #endif
-        gme_track_number=0;
-        int hasTrackNum=0;
-        int i, j;
-        for(i=0; i<(signed)strlen(music_file); i++)
-            if(music_file[i]=='|') hasTrackNum=1;
-        if(hasTrackNum==1)
-        {
-            char trackNum[strlen(music_file)];
-            for(i=(signed)strlen(music_file)-1;i>=0;i-- )
-            {
-                trackNum[i]=music_file[i];
-                if(music_file[i]=='|')
-                {
-                    if(i==0)
-                    {
-                        Mix_SetError("Empty filename!");
-                        return NULL;//Avoid empty file paths!
-                    }
-                    music_file[i]='\0';
-                    i++;
-                    break;
-                }
-            }
-            for(j=0;i<(signed)strlen(file);i++,j++)
-                trackNum[j]=trackNum[i];
-            if(j<(signed)strlen(file)) trackNum[j]='\0';
-            gme_track_number=atoi(trackNum);
-        }
+        if(split_path_and_params(music_file, music_args)==0)
+            return NULL;
 
         if(strstr(music_file, "/"))
         {
@@ -656,9 +756,6 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
         {
             ext = strrchr(music_filename, '.');
         }
-
-    //Install next MIDI device
-    mididevice_current = mididevice_next;
 
 #ifdef CMD_MUSIC
     if ( music_cmd ) {
@@ -699,6 +796,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
                     #ifdef USE_ADL_MIDI
                     MIX_string_equals(ext, "RMI") ||
                     MIX_string_equals(ext, "MUS") ||
+                    MIX_string_equals(ext, "IMF") ||
                     #endif
                     MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
@@ -747,9 +845,23 @@ Mix_Music * SDLCALLCC Mix_LoadMUS_RW(SDL_RWops *src, int freesrc)
     return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
 }
 
+Mix_Music * SDLCALLCC Mix_LoadMUS_RW_ARG(SDL_RWops *src, int freesrc, char *args)
+{
+    if( music_args )
+        SDL_free(music_args);
+    music_args=(char*)SDL_malloc(sizeof(char)*strlen(args)+1);
+    music_args[0]='\0';
+    strcpy(music_args, args);
+    return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
+}
+
 Mix_Music * SDLCALLCC Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID)
 {
-    gme_track_number=trackID;
+    if( music_args )
+        SDL_free(music_args);
+    music_args=(char*)SDL_malloc(sizeof(char)*25);
+    music_args[0]='\0';
+    snprintf(music_args, 25, "%i", trackID);
     return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
 }
 
@@ -851,6 +963,16 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #ifdef MID_MUSIC
     case MUS_MID:
         music->type = MUS_MID;
+        if(need_reset_midi == 1)
+        {
+            MIX_SetMidiDevice(0);
+            #ifdef USE_ADL_MIDI
+            ADLMIDI_setDefaults();
+            #endif
+        }
+        parse_adlmidi_args(music_args);
+        //Install next MIDI device
+        mididevice_current = mididevice_next;
         switch(mididevice_current)
         {
 #ifdef USE_NATIVE_MIDI
@@ -914,7 +1036,10 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #ifdef GME_MUSIC
     case MUS_SPC:
         if (music->error) {
-            music->data.gameemu_track = gme_track_number;
+            if(music_args)
+                music->data.gameemu_track = atoi(music_args);
+            else
+                music->data.gameemu_track = 0;
             SDL_RWseek(src, start, RW_SEEK_SET);
             music->type = MUS_SPC;
             music->data.gameemu = GME_new_RW(src, freesrc, music->data.gameemu_track);
@@ -2126,6 +2251,7 @@ int  MIX_ADLMIDI_getBankID()
 
 void SDLCALLCC MIX_ADLMIDI_setBankID(int bnk)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setBankID(bnk);
     #endif
@@ -2143,6 +2269,7 @@ int SDLCALLCC MIX_ADLMIDI_getTremolo()
 
 void SDLCALLCC MIX_ADLMIDI_setTremolo(int tr)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setTremolo(tr);
     #endif
@@ -2160,6 +2287,7 @@ int  MIX_ADLMIDI_getVibrato()
 
 void SDLCALLCC MIX_ADLMIDI_setVibrato(int vib)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setVibrato(vib);
     #endif
@@ -2177,8 +2305,17 @@ int  MIX_ADLMIDI_getScaleMod()
 
 void SDLCALLCC MIX_ADLMIDI_setScaleMod(int sc)
 {
+    need_reset_midi=0;
     #ifdef USE_ADL_MIDI
     ADLMIDI_setScaleMod(sc);
+    #endif
+}
+
+void SDLCALLCC MIX_ADLMIDI_setSetDefaults()
+{
+    need_reset_midi=1;
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setDefaults();
     #endif
 }
 

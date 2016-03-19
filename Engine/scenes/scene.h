@@ -27,6 +27,7 @@
 #include <common_features/rectf.h>
 #include <script/lua_engine.h>
 #include <scenes/_base/gfx_effect.h>
+#include <data_configs/spawn_effect_def.h>
 
 #include <functional>
 #include <QList>
@@ -118,6 +119,9 @@ public:
     /// \param phys Additional physical settings
     ///
     void launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+
+    void launchStaticEffect(SpawnEffectDef effect_def, bool centered=false);
+
     void processEffects(float ticks);
     /*  Effects engine   */
 

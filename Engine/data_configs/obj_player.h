@@ -22,6 +22,7 @@
 #include <graphics/graphics.h>
 #include <common_features/player_calibration.h>
 #include <common_features/data_array.h>
+#include "spawn_effect_def.h"
 
 #include <QString>
 #include <QPixmap>
@@ -112,6 +113,8 @@ struct obj_player
     //Size of one frame (will be calculated automatically!)
     int frame_width;
     int frame_height;
+
+    SpawnEffectDef fail_effect;
 
     /*   OpenGL    */
         //for world map

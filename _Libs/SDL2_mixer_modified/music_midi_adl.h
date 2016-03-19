@@ -46,8 +46,12 @@ extern int  ADLMIDI_getTremolo();
 extern void ADLMIDI_setTremolo(int tr);
 extern int  ADLMIDI_getVibrato();
 extern void ADLMIDI_setVibrato(int vib);
+extern int  ADLMIDI_getAdLibDrumsMode();
+extern void ADLMIDI_setAdLibDrumsMode(int ald);
 extern int  ADLMIDI_getScaleMod();
 extern void ADLMIDI_setScaleMod(int sc);
+/* Reset all properties to default values */
+extern void ADLMIDI_setDefaults();
 
 extern int ADLMIDI_init(SDL_AudioSpec *mixer);
 

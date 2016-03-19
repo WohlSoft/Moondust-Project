@@ -69,7 +69,8 @@ BLARGG_EXPORT gme_type_t const* gme_type_list()
 
 BLARGG_EXPORT const char* gme_identify_header( void const* header )
 {
-	switch ( get_be32( header ) )
+    blargg_ulong magic=get_be32( header );
+    switch ( magic )
 	{
 		case BLARGG_4CHAR('Z','X','A','Y'):  return "AY";
 		case BLARGG_4CHAR('G','B','S',0x01): return "GBS";
@@ -82,8 +83,10 @@ BLARGG_EXPORT const char* gme_identify_header( void const* header )
 		case BLARGG_4CHAR('S','A','P',0x0D): return "SAP";
 		case BLARGG_4CHAR('S','N','E','S'):  return "SPC";
 		case BLARGG_4CHAR('V','g','m',' '):  return "VGM";
-        case BLARGG_4CHAR(0x1f,0x8b,0x08, 0): return "VGZ";
-	}
+    }
+    if( (magic&0xFFFF0000L) == 0x1f8b0000L)//Only first two bytes
+        return "VGZ";
+
 	return "";
 }
 

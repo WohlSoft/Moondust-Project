@@ -138,6 +138,13 @@ Public Declare Function Mix_LoadWAV_RW Lib "SDL2MixerVB.dll" (ByVal rwops As Lon
 '       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
 Public Declare Function Mix_LoadMUS_RW Lib "SDL2MixerVB.dll" _
                         (ByVal rwops As Long, ByVal freesrc As Long) As Long
+
+'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW_ARG(SDL_RWops *src, int freesrc, char *args);
+'Load a music file from an SDL_RWop object with custom arguments (trackID for GME or settings for a MIDI playing)
+'Arguments are taking no effect for file formats which are not supports extra arguments.
+Public Declare Function Mix_LoadMUS_RW_ARG Lib "SDL2MixerVB.dll" _
+                        (ByVal rwops As Long, ByVal freesrc As Long, Optional ByVal args As String = "") As Long
+
 'extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID=0);
 '       rwops - an SDL_rwops structure pointer (in VB is a Long value!)
 '       freesrc - close and destroy SDL_rwpos structure (you no need free it after!)
@@ -433,6 +440,10 @@ Public Declare Function MIX_ADLMIDI_setVibrato Lib "SDL2MixerVB.dll" (ByVal vib 
 Public Declare Function MIX_ADLMIDI_getScaleMod Lib "SDL2MixerVB.dll" () As Long
 'void MIX_ADLMIDI_setScaleMod(int sc);
 Public Declare Function MIX_ADLMIDI_setScaleMod Lib "SDL2MixerVB.dll" (ByVal sc As Long) As Long
+
+'extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
+'Sets all ADLMIDI preferences to default state
+Public Declare Sub MIX_ADLMIDI_setSetDefaults Lib "SDL2MixerVB.dll" ()
 
 'int MIX_SetMidiDevice(int device);
 ' Allows you to toggle MIDI Device (change applying only on reopening of MIDI file)
