@@ -406,7 +406,7 @@ void LVL_Player::_collideUnduck()
         if(body==this) continue;
         if(body->isPaused()) continue;
         if(!body->isVisible()) continue;
-        solveCollision(body);
+        detectCollisions(body);
     }
     forceCollideCenter=false;
 
@@ -439,7 +439,7 @@ void LVL_Player::_collideUnduck()
             if(nearest)
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(nearest);
-                if(blk && (blk->shape!=LVL_Block::shape_rect))
+                if((nearest->type==LVLBlock) && (blk) && (blk->shape!=LVL_Block::shape_rect))
                 {
                     if(blk->shape==LVL_Block::shape_tr_bottom_right)
                     {
@@ -513,7 +513,7 @@ void LVL_Player::_collideUnduck()
 
 
 
-void LVL_Player::solveCollision(PGE_Phys_Object *collided)
+void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
 {
     if(!collided) return;
 

@@ -305,7 +305,8 @@ SOURCES += \
     common_features/crash_handler.cpp \
     graphics/render/render_base.cpp \
     graphics/render/render_opengl31.cpp \
-    scenes/level/lvl_player_switch.cpp
+    scenes/level/lvl_player_switch.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -458,7 +459,8 @@ HEADERS  += \
     common_features/crash_handler.h \
     graphics/render/render_base.h \
     graphics/render/render_opengl31.h \
-    scenes/level/lvl_player_switch.h
+    scenes/level/lvl_player_switch.h \
+    script/bindings/level/globalfuncs/luafuncs_level.h
 
 
 FORMS    += \

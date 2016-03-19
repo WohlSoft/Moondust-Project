@@ -58,7 +58,7 @@ function yoshi_egg:onLoop(TickTime)
     self.recent_speedY=self.npc_obj.speedY
 end
 
-function yoshi_egg:onKill(reason)
+function yoshi_egg:onKill(killEvent)
     if(self.npc_obj.contents==0)then
         Audio.playSound(self.def_eggSmashSoundID)        
     else

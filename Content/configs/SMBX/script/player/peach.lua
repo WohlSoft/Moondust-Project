@@ -8,7 +8,7 @@ end
 
 function peachPlayer:onLoop()
     if(Settings.isDebugInfoShown())then
-        Renderer.printText("Player runs :O", 100, 230, 0, 15, 0xFFFF0055)
+        Renderer.printText("meow :3", 100, 230, 0, 15, 0xFFFF0055)
         Renderer.printText("Player x: "..tostring(self.x), 100, 260, 0, 15, 0xFFFF0055)
         Renderer.printText("Player y: "..tostring(self.y), 100, 300, 0, 15, 0xFFFF0055)
         -- i = i + 1

@@ -38,9 +38,15 @@ void LVL_Npc::doHarm(int damageReason)
 void LVL_Npc::harm(int damage, int damageReason)
 {
     try {
-        lua_onHarm(damage, damageReason);
+        HarmEvent event;
+        event.damage=damage;
+        event.reason_code=damageReason;
+        lua_onHarm(&event);
+        if(event.cancel) return;
+        damage = event.damage;
     } catch (luabind::error& e) {
         _scene->getLuaEngine()->postLateShutdownError(e);
+        return;
     }
 
     health -= damage;
@@ -87,11 +93,14 @@ void LVL_Npc::kill(int damageReason)
     if((damageReason==DAMAGE_LAVABURN) && (setup->lava_protect)) return;
 
     try{
-        lua_onKill(damageReason);
+        KillEvent event;
+        event.reason_code=damageReason;
+        lua_onKill(&event);
+        if(event.cancel) return;
     } catch (luabind::error& e) {
         _scene->getLuaEngine()->postLateShutdownError(e);
+        return;
     }
-
 
     //Pre-unregistring event
     if(!data.event_die.isEmpty())

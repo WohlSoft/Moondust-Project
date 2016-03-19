@@ -1,4 +1,5 @@
 #include "luaclass_level_lvl_npc.h"
+#include "luaclass_level_lvl_player.h"
 
 #include <script/lua_global.h>
 
@@ -28,16 +29,16 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onInit()
         call<void>("onInit");
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill(int damageReason)
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill(KillEvent *killEvent)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
-        call<void>("onKill", damageReason);
+        call<void>("onKill", killEvent);
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage, int damageReason)
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(HarmEvent *harmEvent)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
-        call<void>("onHarm", damage, damageReason);
+        call<void>("onHarm", harmEvent);
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onTransform(long id)
@@ -118,5 +119,44 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def_readonly("animationIsFinished", &LVL_Npc::lua_animationIsFinished)
             .def_readonly("onCliff", &LVL_Npc::onCliff);
 
+}
+
+luabind::scope Binding_Level_ClassWrapper_LVL_NPC::HarmEvent_bindToLua()
+{
+    using namespace luabind;
+    return
+        class_<LVL_Npc::HarmEvent>("NpcHarmEvent")
+            .enum_("killedBy")
+            [
+                value("self", LVL_Npc::HarmEvent::killedBy::self),
+                value("player", LVL_Npc::HarmEvent::killedBy::player),
+                value("otherNPC", LVL_Npc::HarmEvent::killedBy::otherNPC)
+            ]
+            .def(constructor<>())
+            .def_readwrite("cancel", &LVL_Npc::HarmEvent::cancel)
+            .def_readwrite("damage", &LVL_Npc::HarmEvent::damage)
+            .def_readwrite("reason_code", &LVL_Npc::HarmEvent::reason_code)
+            .def_readwrite("killed_by", &LVL_Npc::HarmEvent::killed_by)
+            .def_readwrite("killer_p", &LVL_Npc::HarmEvent::killer_p)
+            .def_readwrite("killer_n", &LVL_Npc::HarmEvent::killer_n);
+}
+
+luabind::scope Binding_Level_ClassWrapper_LVL_NPC::KillEvent_bindToLua()
+{
+    using namespace luabind;
+    return
+        class_<LVL_Npc::KillEvent>("NpcKillEvent")
+            .enum_("killedBy")
+            [
+                value("self", LVL_Npc::KillEvent::killedBy::self),
+                value("player", LVL_Npc::KillEvent::killedBy::player),
+                value("otherNPC", LVL_Npc::KillEvent::killedBy::otherNPC)
+            ]
+            .def(constructor<>())
+            .def_readwrite("cancel", &LVL_Npc::KillEvent::cancel)
+            .def_readwrite("reason_code", &LVL_Npc::KillEvent::reason_code)
+            .def_readwrite("killed_by", &LVL_Npc::KillEvent::killed_by)
+            .def_readwrite("killer_p", &LVL_Npc::KillEvent::killer_p)
+            .def_readwrite("killer_n", &LVL_Npc::KillEvent::killer_n);
 }
 
