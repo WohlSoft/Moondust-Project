@@ -64,7 +64,7 @@ class LVL_Player :
         void refreshEnvironmentState();
 
         void updateCollisions();
-        void solveCollision(PGE_Phys_Object *collided);
+        void detectCollisions(PGE_Phys_Object *collided);
         bool forceCollideCenter;//!< collide with invizible blocks at center
         float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 

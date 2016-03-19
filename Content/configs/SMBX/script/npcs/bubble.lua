@@ -39,7 +39,7 @@ function bubble:onLoop(tickTime)
     end
 end
 
-function bubble:onKill(reason)
+function bubble:onKill(killEvent)
     self:dropContents()
 end
 
