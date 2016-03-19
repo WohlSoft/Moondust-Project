@@ -17,6 +17,7 @@ static Uint16 current_output_format;
 static int adlmidi_tremolo = 1;
 static int adlmidi_vibrato = 1;
 static int adlmidi_scalemod = 0;
+static int adlmidi_adlibdrums = 0;
 
 static int adlmidi_bank = 58;
 
@@ -52,6 +53,17 @@ void ADLMIDI_setVibrato(int vib)
     adlmidi_vibrato = vib;
 }
 
+
+int ADLMIDI_getAdLibDrumsMode()
+{
+    return adlmidi_adlibdrums;
+}
+
+void ADLMIDI_setAdLibDrumsMode(int ald)
+{
+    adlmidi_adlibdrums = ald;
+}
+
 int ADLMIDI_getScaleMod()
 {
     return adlmidi_scalemod;
@@ -60,6 +72,16 @@ void ADLMIDI_setScaleMod(int sc)
 {
     adlmidi_scalemod = sc;
 }
+
+void ADLMIDI_setDefaults()
+{
+    adlmidi_tremolo = 1;
+    adlmidi_vibrato = 1;
+    adlmidi_scalemod = 0;
+    adlmidi_adlibdrums = 0;
+    adlmidi_bank = 58;
+}
+
 
 /* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
@@ -128,13 +150,19 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         struct ADL_MIDIPlayer* adl_midiplayer=NULL;
         adl_midiplayer= adl_init(adlmidi_t_sample_rate);
 
-        adl_setHVibrato(adl_midiplayer, adlmidi_vibrato);
-        adl_setHTremolo(adl_midiplayer, adlmidi_tremolo);
-        adl_setBank(adl_midiplayer, adlmidi_bank);
-        adl_setNumCards(adl_midiplayer, 4);
-        adl_setScaleModulators(adl_midiplayer, adlmidi_scalemod);
+        adl_setHVibrato( adl_midiplayer, adlmidi_vibrato );
+        adl_setHTremolo( adl_midiplayer, adlmidi_tremolo );
+        if(adl_setBank( adl_midiplayer, adlmidi_bank ) < 0)
+        {
+            Mix_SetError("ADL-MIDI: %s", adl_errorString());
+            adl_close( adl_midiplayer );
+            return NULL;
+        }
+        adl_setNumCards( adl_midiplayer, 4 );
+        adl_setScaleModulators( adl_midiplayer, adlmidi_scalemod );
+        adl_setPercMode( adl_midiplayer, adlmidi_adlibdrums );
 
-        int err = adl_openData( adl_midiplayer, bytes, spcsize);
+        int err = adl_openData( adl_midiplayer, bytes, spcsize );
         free(bytes);
         if(err!=0)
         {
@@ -266,3 +294,4 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
 }
 
 #endif
+

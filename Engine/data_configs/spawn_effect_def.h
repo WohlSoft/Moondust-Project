@@ -11,6 +11,7 @@ public:
     SpawnEffectDef();
     SpawnEffectDef(const SpawnEffectDef &c);
     void fill(QString prefix, QSettings *setup);
+    unsigned int start_delay;
 
     long id;
     float startX;

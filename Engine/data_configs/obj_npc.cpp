@@ -133,6 +133,9 @@ bool ConfigManager::loadLevelNPC()
         snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
         snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
 
+        snpc.effect_1_def.fill("stomp", &npcset);
+        snpc.effect_2_def.fill("kick", &npcset);
+
         snpc.block_spawn_type=npcset.value("block-spawn-type", 0).toInt();
         snpc.block_spawn_speed=npcset.value("block-spawn-speed", 3.0f).toFloat();
         snpc.block_spawn_sound=npcset.value("block-spawn-sound", true).toBool();
@@ -424,5 +427,5 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
     if(npcSetup->isInit)
         *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
     else
-        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(0, 0));
+        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image_size.w(), npcSetup->image_size.h()));
 }

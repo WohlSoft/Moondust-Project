@@ -213,6 +213,7 @@ bool ConfigManager::loadPlayableCharacters()
                     addError(QString("player-%1 has no states!").arg(i));
                     goto skipPLAYER;
                 }
+                splayer.fail_effect.fill("fail", &playerset);
             playerset.endGroup();
 
             {//States
