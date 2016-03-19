@@ -27,8 +27,8 @@
 struct Scene_Effect_Phys
 {
     Scene_Effect_Phys();
-    float mix_vel_x;
-    float mix_vel_y;
+    float min_vel_x;
+    float min_vel_y;
     float max_vel_x;
     float max_vel_y;
     float decelerate_x;
@@ -47,6 +47,7 @@ public:
     float posX();
     float posY();
     bool finished();
+    float startup_delay;
 
     int direction;
     int frameStyle;

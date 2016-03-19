@@ -221,6 +221,18 @@ void LVL_Player::kill(deathReason reason)
                                           posCenterX(),
                                           posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
+    else if(kill_reason==DEAD_killed)
+    {
+        SpawnEffectDef effect = setup.fail_effect;
+        if(effect.id>0)
+        {
+            effect.startX = posRect.center().x();
+            effect.startY = posRect.center().y();
+            effect.velocityX *= _direction;
+            effect.direction *= _direction;
+            _scene->launchStaticEffect(effect, true);
+        }
+    }
     unregister();
 }
 

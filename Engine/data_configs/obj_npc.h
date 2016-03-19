@@ -53,6 +53,9 @@ struct obj_npc
     unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC
 
+    SpawnEffectDef effect_1_def;
+    SpawnEffectDef effect_2_def;
+
     enum blockSpawn {
         spawn_warp=0,
         spawn_bump

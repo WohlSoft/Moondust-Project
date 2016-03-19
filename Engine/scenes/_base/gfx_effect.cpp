@@ -22,41 +22,107 @@
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
 
-void Scene::launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction, Scene_Effect_Phys phys)
+void Scene::launchStaticEffect(long     effectID,
+                               float    startX,
+                               float    startY,
+                               int      animationLoops,
+                               int      delay,
+                               float    velocityX,
+                               float    velocityY,
+                               float    gravity,
+                               int      direction,
+                               Scene_Effect_Phys phys)
+{
+    SpawnEffectDef effectDef;
+    effectDef.id = effectID;
+    effectDef.startX = startX;
+    effectDef.startY = startY;
+    effectDef.animationLoops = animationLoops;
+    effectDef.delay = delay;
+    effectDef.velocityX = velocityX;
+    effectDef.velocityY = velocityY;
+    effectDef.gravity = gravity;
+    effectDef.direction = direction;
+    effectDef.decelerate_x = phys.decelerate_x;
+    effectDef.decelerate_y = phys.decelerate_y;
+    effectDef.max_vel_x = phys.max_vel_x;
+    effectDef.max_vel_y = phys.max_vel_y;
+    effectDef.min_vel_x = phys.min_vel_x;
+    effectDef.min_vel_y = phys.min_vel_y;
+    launchStaticEffect(effectDef, false);
+}
+
+void Scene::launchStaticEffectC(long    effectID,
+                                float   startX,
+                                float   startY,
+                                int     animationLoops,
+                                int     delay,
+                                float   velocityX,
+                                float   velocityY,
+                                float   gravity,
+                                int     direction,
+                                Scene_Effect_Phys phys)
+{
+    SpawnEffectDef effectDef;
+    effectDef.id = effectID;
+    effectDef.startX = startX;
+    effectDef.startY = startY;
+    effectDef.animationLoops = animationLoops;
+    effectDef.delay = delay;
+    effectDef.velocityX = velocityX;
+    effectDef.velocityY = velocityY;
+    effectDef.gravity = gravity;
+    effectDef.direction = direction;
+    effectDef.decelerate_x = phys.decelerate_x;
+    effectDef.decelerate_y = phys.decelerate_y;
+    effectDef.max_vel_x = phys.max_vel_x;
+    effectDef.max_vel_y = phys.max_vel_y;
+    effectDef.min_vel_x = phys.min_vel_x;
+    effectDef.min_vel_y = phys.min_vel_y;
+    launchStaticEffect(effectDef, true);
+}
+
+void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
 {
     Scene_Effect _effect;
-    if(ConfigManager::lvl_effects_indexes.contains(effectID))
-        _effect.setup = &ConfigManager::lvl_effects_indexes[effectID];
+    if(ConfigManager::lvl_effects_indexes.contains(effect_def.id))
+        _effect.setup = &ConfigManager::lvl_effects_indexes[effect_def.id];
     else
     {
-        PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effectID), PGE_MsgBox::msg_error);
+        PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effect_def.id), PGE_MsgBox::msg_error);
         oops.exec();
         return;
     }
 
-    long tID = ConfigManager::getEffectTexture(effectID);
+    long tID = ConfigManager::getEffectTexture(effect_def.id);
     if( tID >= 0 )
     {
         _effect.texture = ConfigManager::level_textures[tID];
     }
     else
     {
-        PGE_MsgBox oops(this, QString("Can't load texture for effect-%1").arg(effectID), PGE_MsgBox::msg_error);
+        PGE_MsgBox oops(this, QString("Can't load texture for effect-%1").arg(effect_def.id), PGE_MsgBox::msg_error);
         oops.exec();
         return;
     }
 
-    _effect.m_velocityX = velocityX;
-    _effect.m_velocityY = velocityY;
-    _effect.phys_setup=phys;
-    _effect.gravity = gravity;
-    if(direction==0) direction = (rand()%2) ? -1 : 1;
-    _effect.direction=direction;
+    _effect.m_velocityX = effect_def.velocityX;
+    _effect.m_velocityY = effect_def.velocityY;
+    _effect.phys_setup.decelerate_x=effect_def.decelerate_x;
+    _effect.phys_setup.decelerate_y=effect_def.decelerate_y;
+    _effect.phys_setup.max_vel_x=effect_def.max_vel_x;
+    _effect.phys_setup.max_vel_y=effect_def.max_vel_y;
+    _effect.phys_setup.min_vel_x=effect_def.min_vel_x;
+    _effect.phys_setup.min_vel_y=effect_def.min_vel_y;
+    _effect.gravity = effect_def.gravity;
+    if(effect_def.direction==0)
+        effect_def.direction = (rand()%2) ? -1 : 1;
+    _effect.direction = effect_def.direction;
     _effect.frameStyle = _effect.setup->framestyle;
     int frame1=0;
     int frameE=-1;
     int frms=0;
-    frms=_effect.setup->frames;
+    frms = _effect.setup->frames;
 
     switch(_effect.frameStyle)
     {
@@ -80,103 +146,34 @@ void Scene::launchStaticEffectC(long effectID, float startX, float startY, int a
         break;
     }
 
-    WriteToLog(QtDebugMsg, QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effectID).arg(_effect.frameStyle).arg(frms)
+    WriteToLog(QtDebugMsg, QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.frameStyle).arg(frms)
                .arg(frame1).arg(frameE));
 
     _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);
     _effect.posRect.setSize(_effect.texture.w, _effect.texture.h/frms);
-    _effect.posRect.setPos(startX-_effect.posRect.width()/2, startY-_effect.posRect.height()/2);
 
-    if(delay>0)
+    if(centered)
+        _effect.posRect.setPos(effect_def.startX-_effect.posRect.width()/2,
+                               effect_def.startY-_effect.posRect.height()/2);
+    else
+        _effect.posRect.setPos(effect_def.startX, effect_def.startY);
+
+    if( effect_def.delay > 0 )
     {
         _effect._limit_delay=true;
-        _effect._delay=delay;
+        _effect._delay = effect_def.delay;
     }
 
-    if(animationLoops>0)
+    _effect.startup_delay = effect_def.start_delay;
+
+    if( effect_def.animationLoops > 0 )
     {
-        _effect.animator.setOnceMode(true, animationLoops);
+        _effect.animator.setOnceMode(true, effect_def.animationLoops);
     }
-
     _effect.init();
     WorkingEffects.push_back(_effect);
 }
 
-
-
-void Scene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction, Scene_Effect_Phys phys)
-{
-    Scene_Effect _effect;
-    if(ConfigManager::lvl_effects_indexes.contains(effectID))
-        _effect.setup = &ConfigManager::lvl_effects_indexes[effectID];
-    else
-    {
-        PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effectID), PGE_MsgBox::msg_error);
-        oops.exec();
-        return;
-    }
-
-    long tID = ConfigManager::getEffectTexture(effectID);
-    if( tID >= 0 )
-    {
-        _effect.texture = ConfigManager::level_textures[tID];
-    }
-    else
-    {
-        PGE_MsgBox oops(this, QString("Can't load texture for effect-%1").arg(effectID), PGE_MsgBox::msg_error);
-        oops.exec();
-        return;
-    }
-    _effect.m_velocityX = velocityX;
-    _effect.m_velocityY = velocityY;
-    _effect.phys_setup=phys;
-    _effect.gravity = gravity;
-    if(direction==0) direction = (rand()%2) ? -1 : 1;
-    _effect.direction=direction;
-    _effect.frameStyle = _effect.setup->framestyle;
-    int frame1=0;
-    int frameE=-1;
-    int frms=0;
-    frms=_effect.setup->frames;
-    switch(_effect.frameStyle)
-    {
-    case 0:
-        frms=_effect.setup->frames;
-        frame1=0;
-        frameE=-1;
-        break;
-    case 1:
-        frms=_effect.setup->frames*2;
-        frame1= _effect.direction<0? 0 : _effect.setup->frames  -1;
-        frameE= _effect.direction<0 ?    _effect.setup->frames: -1;
-        break;
-    case 2:
-        frms=_effect.setup->frames*4;
-        frame1= _effect.direction<0 ? 0 : (int)(frms-(_effect.setup->frames)*3)-1;
-        frameE= _effect.direction<0 ?     (int)(frms-(_effect.setup->frames)*3) : (frms/2)-1;
-        break;
-    case 3:
-        break;
-    default: break;
-    }
-    _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);
-    _effect.posRect.setSize(_effect.texture.w, _effect.texture.h/frms);
-    _effect.posRect.setPos(startX, startY);
-
-    if(delay>0)
-    {
-        _effect._limit_delay=true;
-        _effect._delay=delay;
-    }
-
-    if(animationLoops>0)
-    {
-        _effect.animator.setOnceMode(true, animationLoops);
-    }
-
-    _effect.init();
-    WorkingEffects.push_back(_effect);
-}
 
 void Scene::processEffects(float ticks)
 {
@@ -199,8 +196,10 @@ Scene_Effect::Scene_Effect()
      direction=0;
      frameStyle=0;
 
+     startup_delay = 0.0f;
+
      _limit_delay=false;
-     _delay=0;
+     _delay = 0.0f;
 
      m_velocityX=0;
      m_velocityY=0;
@@ -215,6 +214,8 @@ Scene_Effect::Scene_Effect(const Scene_Effect &e)
 {
     setup       = e.setup;
     direction   = e.direction;
+
+    startup_delay = e.startup_delay;
 
     animator    = e.animator;
     texture     = e.texture;
@@ -256,6 +257,17 @@ bool Scene_Effect::finished()
 
 void Scene_Effect::update(float ticks)
 {
+    if(startup_delay > 0)
+    {
+        startup_delay -= ticks;
+        if(startup_delay <= 0)
+            ticks = (-startup_delay);
+        else
+            return;
+        if(ticks==0)
+            return;
+    }
+
     animator.manualTick(ticks);
     if(_limit_delay)
     {
@@ -314,13 +326,16 @@ void Scene_Effect::iterateStep(float ticks)
     }
 
     if((phys_setup.max_vel_x!=0)&&(m_velocityX>phys_setup.max_vel_x)) m_velocityX=phys_setup.max_vel_x;
-    if((phys_setup.mix_vel_x!=0)&&(m_velocityX<phys_setup.mix_vel_x)) m_velocityX=phys_setup.mix_vel_x;
+    if((phys_setup.min_vel_x!=0)&&(m_velocityX<phys_setup.min_vel_x)) m_velocityX=phys_setup.min_vel_x;
     if((phys_setup.max_vel_y!=0)&&(m_velocityY>phys_setup.max_vel_y)) m_velocityY=phys_setup.max_vel_y;
-    if((phys_setup.mix_vel_y!=0)&&(m_velocityY<phys_setup.mix_vel_y)) m_velocityY=phys_setup.mix_vel_y;
+    if((phys_setup.min_vel_y!=0)&&(m_velocityY<phys_setup.min_vel_y)) m_velocityY=phys_setup.min_vel_y;
 }
 
 void Scene_Effect::render(double camX, double camY)
 {
+    if(startup_delay>0)
+        return;
+
     AniPos x(0,1);
     x = animator.image();
     GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, posRect.width(), posRect.height(), x.first, x.second);
@@ -330,8 +345,8 @@ void Scene_Effect::render(double camX, double camY)
 
 Scene_Effect_Phys::Scene_Effect_Phys()
 {
-    mix_vel_x=0;
-    mix_vel_y=0;
+    min_vel_x=0;
+    min_vel_y=0;
     max_vel_x=0;
     max_vel_y=0;
     decelerate_x=0;
