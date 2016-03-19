@@ -141,25 +141,25 @@ void ConfigManager::buildSoundIndex()
 
     if(need_to_reserve>0)
     {
-        total_channels=(total_channels+need_to_reserve+32);
-        Mix_AllocateChannels(total_channels);
+        total_channels = (total_channels + need_to_reserve + 32);
+        total_channels = Mix_AllocateChannels(total_channels);
     }
 
     //Final channel definition (use reserved channels at end of channels set)
-    int set_channel = (total_channels-1);
-    for(int i=0; i<main_sfx_index.size();i++)
-    {
-        obj_sound_index &sound = main_sfx_index[i];
-        if(sound.channel>=0)
-        {
-            sound.channel = set_channel--;
-        }
-    }
+    //int set_channel = (total_channels-1);
+    //for(int i=0; i < main_sfx_index.size(); i++)
+    //{
+    //    obj_sound_index &sound = main_sfx_index[i];
+    //    if(sound.channel>=0)
+    //    {
+    //        sound.channel = set_channel--;
+    //    }
+    //}
 
     if(need_to_reserve==total_channels)
         need_to_reserve=0;
-    else
-        need_to_reserve=(total_channels-need_to_reserve);
+    //else
+    //    need_to_reserve=set_channel;
 
     #define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
 
@@ -284,12 +284,13 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 goto skipSoundFile;
             }
             reserveChannel = soundset.value("single-channel", false).toBool();
-            if(reserveChannel)
+            if( reserveChannel )
                 sound.channel = cur_channel++;
             else
                 if(isCustom && main_sound.contains(i))
                     sound.channel = main_sound[i].channel;
-                else sound.channel=-1;
+                else
+                    sound.channel = -1;
 
             sound.id = i;
             main_sound.storeElement(i, sound);
