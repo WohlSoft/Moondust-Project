@@ -15,9 +15,31 @@
 
 TODO:
 * TO-DO better base-classing
-* CSVSubReader
+* --> Remove Copy & Pasta
+*   --> Use base class for parser (HasNext, NextLine)?
 /
 */
+
+
+class parse_error : public std::logic_error
+{
+private:
+    int _line;
+    int _field;
+public:
+    explicit parse_error(const char* msg, int line, int field) : std::logic_error(msg), _line(line), _field(field) {}
+    explicit parse_error(std::string msg, int line, int field) : parse_error(msg.c_str(), line, field) {}
+
+    inline int get_line_number()
+    {
+        return _line;
+    }
+    inline int get_field_number()
+    {
+        return _field;
+    }
+};
+
 
 template<class StrElementType, class StrElementTraits, class StrElementAlloc = std::allocator<StrElementType> >
 struct IfStreamReader
@@ -65,6 +87,16 @@ constexpr auto MakeStringReader(const std::basic_string<StrElementType, StrEleme
     return StringReader<StrElementType, StrElementTraits, StrElementAlloc>(str);
 }
 
+
+// This is for the CSVBatchReader
+// This template class depends on .push_back()
+template<class ContainerValueT, class ContainerT>
+struct CommonContainerUtils
+{
+    static void Add(ContainerT* container, const ContainerValueT& value){
+        container->push_back(value);
+    }
+};
 
 
 
@@ -182,8 +214,77 @@ constexpr auto MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFuncti
     return CSVOptional<T>(value, defVal, validatorFunction, postProcessorFunction);
 }
 
+// 5. Reader in Reader - CSVOptional
 template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class... RestValues>
 struct CSVSubReader;
+
+// 6. Reading in container
+template<class ContainerValueT,
+         class Container,
+         class ContainerUtils,
+         class StrT,
+         class CharT,
+         class StrTUtils,
+         class Converter>
+struct CSVBatchReader {
+private:
+    CharT _sep;
+    Container* _container;
+    StrT _line;
+    size_t _currentCharIndex;
+    int _fieldTracker;
+    std::function<void(ContainerValueT&)> _postProcessorFunction;
+public:
+
+    CSVBatchReader(CharT sep, Container* container, const std::function<void(ContainerValueT&)>& postProcessorFunction) : _sep(sep), _container(container), _currentCharIndex(0U),
+        _fieldTracker(0), _postProcessorFunction(postProcessorFunction) {}
+
+
+    // FIXME: Copy & Pasta
+    inline StrT NextField()
+    {
+        size_t newCharIndex = _currentCharIndex;
+        if (!StrTUtils::find(_line, _sep, newCharIndex))
+            newCharIndex = StrTUtils::length(_line);
+
+        StrT next = StrTUtils::substring(_line, _currentCharIndex, newCharIndex - _currentCharIndex);
+        _currentCharIndex = newCharIndex + 1;
+        return next;
+    }
+
+    // FIXME: Copy & Pasta
+    template<typename ToType>
+    inline void SafeConvert(ToType* to, const StrT& from)
+    {
+        try
+        {
+            Converter::Convert(to, from);
+        }
+        catch (...)
+        {
+            std::throw_with_nested(parse_error(std::string("Failed to parse field ") + std::to_string(_fieldTracker), 1, _fieldTracker));
+        }
+    }
+
+    inline bool HasNext()
+    {
+        return _currentCharIndex <= StrTUtils::length(_line);
+    }
+
+    inline void ReadDataLine(const StrT& val)
+    {
+        _line = val;
+        while(HasNext()){
+            StrT from = NextField();
+            ContainerValueT to;
+            SafeConvert(&to, from);
+            if(_postProcessorFunction)
+                _postProcessorFunction(to);
+            ContainerUtils::Add(_container, to);
+        }
+    }
+};
+
 
 
 
@@ -274,24 +375,6 @@ struct DefaultStringWrapper
 };
 
 
-class parse_error : public std::logic_error
-{
-private:
-    int _line;
-    int _field;
-public:
-    explicit parse_error(const char* msg, int line, int field) : std::logic_error(msg), _line(line), _field(field) {}
-    explicit parse_error(std::string msg, int line, int field) : parse_error(msg.c_str(), line, field) {}
-    
-    inline int get_line_number()
-    {
-        return _line;
-    }
-    inline int get_field_number()
-    {
-        return _field;
-    }
-};
 
 /*
 * This class reads CSV-Files very efficient.
@@ -379,7 +462,7 @@ public:
     template<class T, class... RestValues>
     void ReadNext(T nextVal, RestValues... restVals)
     {
-        static_assert(std::is_pointer<T>::value, "All values which are unpacked must be pointers (except CSVDiscard, CSVVaildate, CSVDiscard, CSVOptional)!");
+        static_assert(std::is_pointer<T>::value, "All values which are unpacked must be pointers (except CSVDiscard, CSVVaildate, CSVDiscard, CSVOptional, CSVSubReader)!");
         ThrowIfOutOfBounds();
 
         //Here do conversion code
@@ -444,14 +527,32 @@ public:
         ReadNext(restVals...);
     }
 
-    template<class SubReader, class SubStrT, class SubCharT, class SubStrTUtils, class SubConverter, class... ValuesSubReader, class... RestValues>
-    void ReadNext(CSVSubReader<SubReader, SubStrT, SubCharT, SubStrTUtils, SubConverter, ValuesSubReader...> subReaderObj, RestValues... restVals)
+    template<class... Args, class... RestValues>
+    void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues... restVals)
     {
         ThrowIfOutOfBounds();
 
         try
         {
             subReaderObj.ReadDataLine(NextField());
+        }
+        catch(...)
+        {
+            ThrowParseErrorInCatchContext();
+        }
+
+        _fieldTracker++;
+        ReadNext(restVals...);
+    }
+
+    template<class... Args, class... RestValues>
+    void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues... restVals)
+    {
+        ThrowIfOutOfBounds();
+
+        try
+        {
+            subBatchReaderObj.ReadDataLine(NextField());
         }
         catch(...)
         {
@@ -475,6 +576,8 @@ public:
             _currentLine = _reader->read_line();
         ReadNext(allValues...);
         _requireReadLine = true;
+
+
         return *this;
     }
 
@@ -564,6 +667,34 @@ constexpr auto MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, 
 {
     return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, values...);
 }
+
+template<class ContainerT,                                                          // The container type
+         class Reader,                                                              // The reader (not used)
+         class StrT,                                                                // The string class
+         class CharT,                                                               // The char type
+         class StrTUtils,                                                           // The string util class
+         class Converter>                                                           // The value converter
+constexpr auto MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container){
+    typedef typename ContainerT::value_type ContainerValueT;                        // The container value type
+    typedef CommonContainerUtils<ContainerValueT, ContainerT> ContainerUtils;       // The container utils wrapper (inserting elements)
+
+    return CSVBatchReader<ContainerValueT, ContainerT, ContainerUtils, StrT, CharT, StrTUtils, Converter>(sep, container, nullptr);
+}
+
+template<class ContainerT,                                                          // The container type
+         class Reader,                                                              // The reader (not used)
+         class StrT,                                                                // The string class
+         class CharT,                                                               // The char type
+         class StrTUtils,                                                           // The string util class
+         class Converter,                                                           // The value converter
+         class PostProcessorFunc>
+constexpr auto MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container, const PostProcessorFunc& postProcessorFunc){
+    typedef typename ContainerT::value_type ContainerValueT;                        // The container value type
+    typedef CommonContainerUtils<ContainerValueT, ContainerT> ContainerUtils;       // The container utils wrapper (inserting elements)
+
+    return CSVBatchReader<ContainerValueT, ContainerT, ContainerUtils, StrT, CharT, StrTUtils, Converter>(sep, container, postProcessorFunc);
+}
+
 
 
 #endif
