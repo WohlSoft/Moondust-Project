@@ -965,12 +965,12 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
         music->type = MUS_MID;
         if(need_reset_midi == 1)
         {
-            MIX_SetMidiDevice(0);
+            mididevice_next = 0;
             #ifdef USE_ADL_MIDI
             ADLMIDI_setDefaults();
             #endif
+            parse_adlmidi_args(music_args);
         }
-        parse_adlmidi_args(music_args);
         //Install next MIDI device
         mididevice_current = mididevice_next;
         switch(mididevice_current)
@@ -2338,6 +2338,7 @@ int SDLCALLCC MIX_SetMidiDevice(int device)
         case MIDI_Fluidsynth:
         #endif
             mididevice_next=device;
+            need_reset_midi = 0;
             return 0;
             break;
         #endif
