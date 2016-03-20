@@ -81,7 +81,7 @@ public:
     void deActivate();
 
     void updateCollisions();
-    void solveCollision(PGE_Phys_Object *collided);
+    void detectCollisions(PGE_Phys_Object *collided);
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
@@ -243,8 +243,8 @@ public:
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
-    virtual void lua_onKill(int) {}
-    virtual void lua_onHarm(int, int) {}
+    virtual void lua_onKill(KillEvent*) {}
+    virtual void lua_onHarm(HarmEvent*) {}
     virtual void lua_onTransform(long) {}
 
     //Additional lua functions
