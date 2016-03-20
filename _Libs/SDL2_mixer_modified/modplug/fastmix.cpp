@@ -287,6 +287,10 @@ CzWINDOWEDFIR sfir;
 // ----------------------------------------------------------------------------
 // MIXING MACROS
 // ----------------------------------------------------------------------------
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
 #define SNDMIX_BEGINSAMPLELOOP8\
 	register MODCHANNEL * const pChn = pChannel;\
 	nPos = pChn->nPosLo;\
@@ -1212,6 +1216,9 @@ BEGIN_RAMPMIX_STFLT_INTERFACE(FilterStereo16BitFirFilterRampMix)
 	SNDMIX_RAMPSTEREOVOL
 END_RAMPMIX_STFLT_INTERFACE()
 
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
 #else
 // Mono
