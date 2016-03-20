@@ -120,7 +120,7 @@ static bool detectOpenGL2()
     return true;
 }
 
-
+#ifndef __APPLE__
 static bool detectOpenGL3()
 {
     SDL_GL_ResetAttributes();
@@ -164,12 +164,12 @@ static bool detectOpenGL3()
     SDL_ClearError();
     return true;
 }
-
+#endif
 
 
 GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineType rtype)
 {
-    if(rtype==RENDER_AUTO)
+    if( rtype == RENDER_AUTO )
     {
         #ifndef __APPLE__
         if(detectOpenGL3())
