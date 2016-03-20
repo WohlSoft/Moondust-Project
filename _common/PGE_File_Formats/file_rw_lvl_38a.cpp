@@ -25,6 +25,8 @@
 #include "CSVReaderPGE.h"
 #include "CSVUtils.h"
 
+using namespace CSVReader;
+
 //for Header readers.
 //Use it if you want read file partially
 //(you must create QTextStream in(&fstream); !!!)
@@ -387,7 +389,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVPostProcessor(&npcdata.event_emptylayer, PGEUrlDecodeFunc),
                                                          MakeCSVPostProcessor(&npcdata.event_grab, PGEUrlDecodeFunc),
                                                          MakeCSVPostProcessor(&npcdata.event_nextframe, PGEUrlDecodeFunc),
-                                                         MakeCSVPostProcessor(&npcdata.event_touch, PGEUrlDecodeFunc)
+                                                         MakeCSVOptional(&npcdata.event_touch, QString(""), nullptr, PGEUrlDecodeFunc)
                                                          ),
                                         MakeCSVSubReader(dataReader, ',',
                                                          MakeCSVPostProcessor(&npcdata.attach_layer, PGEUrlDecodeFunc),
@@ -489,8 +491,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          &doordata.need_a_bomb,
                                                          &doordata.hide_entering_scene,
                                                          &doordata.allownpc_interlevel,
-                                                         &doordata.special_state_required,
-                                                         &doordata.length_i),
+                                                         MakeCSVOptional(&doordata.special_state_required, false),
+                                                         MakeCSVOptional(&doordata.length_i, 32u)),
                                         MakeCSVPostProcessor(&doordata.lname, PGEUrlDecodeFunc),
                                         &doordata.warpto,
                                         &doordata.lvl_i,
@@ -1165,3 +1167,8 @@ PGESTRING WriteSMBX65by38ALvlFile(LevelData FileData, int file_format)
     (void)file_format;//reserved!
     return "";
 }
+
+
+
+
+
