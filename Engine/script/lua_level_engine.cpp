@@ -83,6 +83,22 @@ void LuaLevelEngine::loadNPCClass(int id, const QString &path)
     _G["npc_class_table"][id] = loadClassAPI(path);
 }
 
+void LuaLevelEngine::loadPlayerClass(int id, const QString &path)
+{
+    if(shouldShutdown())
+        return;
+
+    luabind::object _G = luabind::globals(getNativeState());
+    if(luabind::type(_G["player_class_table"]) != LUA_TTABLE){
+        _G["player_class_table"] = luabind::newtable(getNativeState());
+    }
+
+    if(luabind::type(_G["player_class_table"][id]) != LUA_TNIL)
+        return;
+
+    _G["player_class_table"][id] = loadClassAPI(path);
+}
+
 LevelScene *LuaLevelEngine::getScene()
 {
     return dynamic_cast<LevelScene*>(getBaseScene());

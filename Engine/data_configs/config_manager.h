@@ -323,6 +323,7 @@ public:
     static PGE_DataArray<obj_player > playable_characters;
     static CustomDirManager Dir_PlayerWld;
     static CustomDirManager Dir_PlayerLvl;
+    static CustomDirManager Dir_PlayerScript;
     /********Playable characters*******/
 
     /***********Texture banks*************/
@@ -341,6 +342,7 @@ public:
     static QString PathLevelNPCScript();
     static QString PathLevelEffect();
     static QString PathLevelPlayable();
+    static QString PathLevelPlayerScript();
 
     static QString PathCommonGFX();
 
@@ -373,6 +375,7 @@ private:
     static QString effectPath;
     static QString playerLvlPath;
     static QString playerWldPath;
+    static QString playerScriptPath;
 
     static QString tilePath;
     static QString scenePath;

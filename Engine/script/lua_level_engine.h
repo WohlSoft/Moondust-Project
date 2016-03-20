@@ -21,6 +21,7 @@ public:
     void destoryLuaPlayer(LVL_Player *plr);
 
     void loadNPCClass(int id, const QString& path);
+    void loadPlayerClass(int id, const QString& path);
 
     LevelScene* getScene();
 

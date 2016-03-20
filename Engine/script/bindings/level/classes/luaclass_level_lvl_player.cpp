@@ -10,16 +10,28 @@ Binding_Level_ClassWrapper_LVL_Player::Binding_Level_ClassWrapper_LVL_Player() :
 Binding_Level_ClassWrapper_LVL_Player::~Binding_Level_ClassWrapper_LVL_Player()
 {}
 
-void Binding_Level_ClassWrapper_LVL_Player::lua_onLoop()
+void Binding_Level_ClassWrapper_LVL_Player::lua_onInit()
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
-        call<void>("onLoop");
+        call<void>("onInit");
+}
+
+void Binding_Level_ClassWrapper_LVL_Player::lua_onLoop(float tickTime)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onLoop", tickTime);
 }
 
 void Binding_Level_ClassWrapper_LVL_Player::lua_onHarm(LVL_Player_harm_event *harmevent)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onHarm", harmevent);
+}
+
+void Binding_Level_ClassWrapper_LVL_Player::lua_onTransform(long character, long state)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onTransform", character, state);
 }
 
 
@@ -30,8 +42,10 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
     return
         class_<LVL_Player, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_Player>("BasePlayer")
             .def(constructor<>())
+            .def("onInit", &LVL_Player::lua_onInit, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onInit)
             .def("onLoop", &LVL_Player::lua_onLoop, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onLoop)
             .def("onHarm", &LVL_Player::lua_onHarm, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onHarm)
+            .def("onTransform", &LVL_Player::lua_onTransform, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTransform)
 
             .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
 
@@ -39,6 +53,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
 
             .def("setState", &LVL_Player::setState)
             .def("setCharacter", &LVL_Player::setCharacterID)
+            .def_readonly("characterID", &LVL_Player::characterID)
+            .def_readonly("stateID", &LVL_Player::stateID)
 
             .def_readonly("onGround", &LVL_Player::onGround);
 }
