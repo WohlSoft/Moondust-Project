@@ -127,6 +127,23 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
             break;
     }
 
+    if(reason==NPC_Taked_Coin)
+    {
+        try{
+            lua_onTakeNpc(target);
+        } catch (luabind::error& e) {
+            _scene->getLuaEngine()->postLateShutdownError(e);
+            return;
+        }
+    } else {
+        try{
+            lua_onKillNpc(target);
+        } catch (luabind::error& e) {
+            _scene->getLuaEngine()->postLateShutdownError(e);
+            return;
+        }
+    }
+
     if(target->setup->exit_is)
     {
         long snd=target->setup->exit_snd;

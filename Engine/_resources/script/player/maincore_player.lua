@@ -12,9 +12,24 @@ function luaPlayer:__setupEvents()
             self.Has_onKill = true
         end
 
+        self.Has_onHarm = false
+        if(type(self.controller.onHarm) == "function")then
+            self.Has_onHarm = true
+        end
+
         self.Has_onTransform = false
         if(type(self.controller.onTransform) == "function")then
             self.Has_onTransform = true
+        end
+
+        self.Has_onTakeNpc = false
+        if(type(self.controller.onTakeNpc) == "function")then
+            self.Has_onTakeNpc = true
+        end
+
+        self.Has_onKillNpc = false
+        if(type(self.controller.onKillNpc) == "function")then
+            self.Has_onKillNpc = true
         end
     end
 end
@@ -55,23 +70,13 @@ function luaPlayer:onLoop(tickTime)
     BasePlayer.onLoop(self, tickTime)
 end
 
-function luaPlayer:onHarm(harmevent)
+function luaPlayer:onHarm(harmEvent)
     if(not self.isInvalid and self.controller)then
         if(self.Has_onHarm)then
             self.controller:onHarm(harmEvent)
         end
     end
-    BasePlayer.onHarm(self, harmevent)
---    local newHealth = self.health-harmevent.damage
---    if(newHealth==2)then
---        self:setState(2)
---        Audio.playSoundByRole(SoundRoles.PlayerHarm)
---    elseif(newHealth==1)then
---        self:setState(1)
---        Audio.playSoundByRole(SoundRoles.PlayerShrink)
---    elseif(newHealth~=0)then
---        Audio.playSoundByRole(SoundRoles.PlayerHarm)
---    end
+    BasePlayer.onHarm(self, harmEvent)
 end
 
 function luaPlayer:onTransform(charID, state)
@@ -83,6 +88,24 @@ function luaPlayer:onTransform(charID, state)
 
     self:baseReInit(charID)
     BasePlayer.onTransform(self, charID, state)
+end
+
+function luaPlayer:onTakeNpc(npcObj)
+    if(not self.isInvalid and self.controller)then
+        if(self.Has_onTakeNpc)then
+            self.controller:onTakeNpc(npcObj)
+        end
+    end
+    BasePlayer.onTakeNpc(self, onTakeNpc)
+end
+
+function luaPlayer:onKillNpc(npcObj)
+    if(not self.isInvalid and self.controller)then
+        if(self.Has_onKillNpc)then
+            self.controller:onKillNpc(npcObj)
+        end
+    end
+    BasePlayer.onKillNpc(self, onTakeNpc)
 end
 
 return luaPlayer

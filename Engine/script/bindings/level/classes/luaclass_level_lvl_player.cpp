@@ -34,6 +34,17 @@ void Binding_Level_ClassWrapper_LVL_Player::lua_onTransform(long character, long
         call<void>("onTransform", character, state);
 }
 
+void Binding_Level_ClassWrapper_LVL_Player::lua_onTakeNpc(LVL_Npc *npc)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onTakeNpc", npc);
+}
+
+void Binding_Level_ClassWrapper_LVL_Player::lua_onKillNpc(LVL_Npc *npc)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onKillNpc", npc);
+}
 
 
 luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
@@ -46,6 +57,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .def("onLoop", &LVL_Player::lua_onLoop, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onLoop)
             .def("onHarm", &LVL_Player::lua_onHarm, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onHarm)
             .def("onTransform", &LVL_Player::lua_onTransform, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTransform)
+            .def("onTakeNpc", &LVL_Player::lua_onTakeNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTakeNpc)
+            .def("onKillNpc", &LVL_Player::lua_onKillNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKillNpc)
 
             .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
 
