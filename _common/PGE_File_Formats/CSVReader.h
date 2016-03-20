@@ -469,7 +469,7 @@ namespace CSVReader {
 
     private:
         template<typename T>
-        static void ConvertInternal(T* out, const StrType& field, identity<T>)
+        static void ConvertInternal(T* /*out*/, const StrType& /*field*/, identity<T>)
         {
             // This is a hackishy solution, but gcc checks static_assert, even if the template function is not actually used
             static_assert(std::is_same<T, double>::value, "No default converter for this type");
@@ -789,7 +789,7 @@ namespace CSVReader {
      *      static void Convert(T* out, const StrType& field)
      */
     template<class StrT, class StrTUtils, class Converter, class Reader, class CharT>
-    constexpr CSVReader<Reader, StrT, CharT, StrTUtils, Converter> MakeCSVReader(Reader* reader, CharT sep)
+    constexpr CSVReader<Reader, StrT, CharT, StrTUtils, Converter> MakeCSVReader(Reader* reader, CharT /*sep*/)
     {
         return CSVReader<Reader, StrT, CharT, StrTUtils, Converter>(reader);
     }
