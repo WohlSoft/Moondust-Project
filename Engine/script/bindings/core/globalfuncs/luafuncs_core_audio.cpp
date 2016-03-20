@@ -41,6 +41,7 @@ void Binding_Core_GlobalFuncs_Audio::bindConstants(lua_State *L)
 
     SoundRoles["PlayerJump"] = obj_sound_role::PlayerJump;
     SoundRoles["PlayerStomp"] = obj_sound_role::PlayerStomp;
+    SoundRoles["PlayerKick"] = obj_sound_role::PlayerKick;
     SoundRoles["PlayerShrink"] = obj_sound_role::PlayerShrink;
     SoundRoles["PlayerHarm"] = obj_sound_role::PlayerHarm;
     SoundRoles["PlayerGrow"] = obj_sound_role::PlayerGrow;

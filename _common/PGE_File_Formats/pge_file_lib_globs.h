@@ -62,17 +62,17 @@
 #include <QSize>
 #endif
 #define PGE_FILES_INHERED public QObject
-#define PGESTRING QString
+typedef QString PGESTRING;
 #define PGESTRINGisEmpty() isEmpty()
-#define PGESTR_Simpl(str) str.simplified()
+inline PGESTRING PGESTR_Simpl(PGESTRING &str) {return str.simplified();}
 #define PGEGetChar(chr) chr.toLatin1()
-#define PGEChar QChar
-#define PGESTRINGList QStringList
+typedef QChar PGEChar;
+typedef QStringList PGESTRINGList;
 #define PGEVECTOR QVector
 #define PGELIST QList
 #define PGEPAIR QPair
 #define PGEMAP QMap
-#define PGEFILE QFile
+typedef QFile PGEFILE;
 #define PGE_SPLITSTRING(dst, src, sep) dst=src.split(sep);
 #define PGE_ReplSTRING(src, from, to) src.replace(from, to)
 #define PGE_RemSubSTRING(src, substr) src.remove(substr)
@@ -99,7 +99,7 @@ namespace PGE_FileFormats_misc
     QString      base64_decodeA(QString &source);
 }
 #define PGE_BASE64ENC(src)   PGE_FileFormats_misc::base64_encode(src)
-#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_encode(src)
+#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_decode(src)
 #define PGE_BASE64ENC_W(src) PGE_FileFormats_misc::base64_encodeW(src)
 #define PGE_BASE64DEC_W(src) PGE_FileFormats_misc::base64_decodeW(src)
 #define PGE_BASE64ENC_A(src) PGE_FileFormats_misc::base64_encodeA(src)
@@ -115,19 +115,19 @@ namespace PGE_FileFormats_misc
 #include <algorithm>
 #include <map>
 #define PGE_FILES_INGERED
-#define PGESTRING std::string
+typedef std::string PGESTRING;
 #define PGESTRINGisEmpty() empty()
 inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );
         return str;}
 #define PGEGetChar(chr) chr
-#define PGEChar char
-#define PGESTRINGList std::vector<std::string >
+typedef char PGEChar;
+typedef std::vector<std::string> PGESTRINGList;
 #define PGEVECTOR std::vector
 #define PGELIST std::vector
 #define PGEPAIR std::pair
 #define PGEMAP std::map
-#define PGEFILE std::fstream
+typedef std::fstream PGEFILE;
 namespace PGE_FileFormats_misc
 {
     void split(std::vector<std::string>& dest, const std::string& str, std::string separator);
@@ -144,19 +144,19 @@ namespace PGE_FileFormats_misc
     std::string base64_encodeA(std::string &source);
     std::string base64_decodeA(std::string &source);
 }
-#define PGE_SPLITSTR(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
-inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
+#define PGE_SPLITSTRING(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
+inline PGESTRING PGE_ReplSTRING(PGESTRING src, PGESTRING from, PGESTRING to) {
     PGE_FileFormats_misc::replaceAll(src, from, to);
     return src;
 }
 
-inline PGESTRING PGE_RemSSTR(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
+inline PGESTRING PGE_RemSubSTRING(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
 #define PGE_RemSRng(pos, len) erase(pos, len)
 inline bool IsNULL(PGESTRING str) { return (str.empty()!=0); }
 inline int toInt(PGESTRING str){ return std::atoi(str.c_str()); }
 inline float toFloat(PGESTRING str){ return std::atof(str.c_str()); }
 inline double toDouble(PGESTRING str){ return std::atof(str.c_str()); }
-inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSSTR(src, " "); }
+inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSubSTRING(src, " "); }
 template<typename T>
 PGESTRING fromNum(T num) { std::ostringstream n; n<<num; return n.str(); }
 #define PGE_URLENC(src) PGE_FileFormats_misc::url_encode(src)

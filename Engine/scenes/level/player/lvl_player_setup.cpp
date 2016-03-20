@@ -40,8 +40,18 @@ void LVL_Player::init()
     phys_setup.max_vel_y=12;
     animator.tickAnimation(0.f);
     isLocked=false;
-    _isInited=true;
 
+    if(isLuaPlayer)
+    {
+        try{
+            lua_onInit();
+        } catch (luabind::error& e) {
+            _scene->getLuaEngine()->postLateShutdownError(e);
+            return;
+        }
+    }
+
+    _isInited=true;
     _syncSection();
 }
 
@@ -133,6 +143,11 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         //GlRenderer::makeShot();
         //_scene->isTimeStopped=true;
         #endif
+        try{
+            lua_onTransform(characterID, stateID);
+        } catch (luabind::error& e) {
+            _scene->getLuaEngine()->postLateShutdownError(e);
+        }
     }
 }
 

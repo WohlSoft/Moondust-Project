@@ -99,7 +99,7 @@ traceerr = {
 "JIT compilation disabled for function",
 "call unroll limit reached",
 "down-recursion, restarting",
-"NYI: C function %p",
+"NYI: C function %s",
 "NYI: FastFunc %s",
 "NYI: unsupported variant of FastFunc %s",
 "NYI: return to lower frame",

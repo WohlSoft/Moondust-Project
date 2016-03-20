@@ -71,7 +71,8 @@ SOURCES +=  ../lua/lapi.c \
     ../src/set_package_preload.cpp \
     ../src/stack_content_by_name.cpp \
     ../src/weak_ref.cpp \
-    ../src/wrapper_base.cpp
+    ../src/wrapper_base.cpp \
+    ../lua/file_open.c
 
 HEADERS += ../lua/lapi.h \
     ../lua/lauxlib.h \
@@ -193,5 +194,6 @@ HEADERS += ../lua/lapi.h \
     ../luabind/weak_ref.hpp \
     ../luabind/wrapper_base.hpp \
     ../luabind/yield_policy.hpp \
-    ../lua_inclues/lua.hpp
+    ../lua_inclues/lua.hpp \
+    ../lua/file_open.h
 

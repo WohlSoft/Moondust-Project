@@ -49,5 +49,8 @@ HEADERS += \
     ../../_common/PGE_File_Formats/smbx64_macro.h \
     ../../_common/PGE_File_Formats/wld_filedata.h \
     ../../_common/PGE_File_Formats/ConvertUTF.h \
-    ../../_common/PGE_File_Formats/charsetconvert.h
+    ../../_common/PGE_File_Formats/charsetconvert.h \
+    ../../_common/PGE_File_Formats/CSVReader.h \
+    ../../_common/PGE_File_Formats/CSVReaderPGE.h \
+    ../../_common/PGE_File_Formats/CSVUtils.h
 

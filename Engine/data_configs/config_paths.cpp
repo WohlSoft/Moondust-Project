@@ -27,6 +27,7 @@ QString ConfigManager::npcScriptPath;
 QString ConfigManager::effectPath;
 QString ConfigManager::playerLvlPath;
 QString ConfigManager::playerWldPath;
+QString ConfigManager::playerScriptPath;
 
 QString ConfigManager::tilePath;
 QString ConfigManager::scenePath;
@@ -108,6 +109,11 @@ QString ConfigManager::PathWorldPlayable()
     return playerWldPath;
 }
 
+QString ConfigManager::PathLevelPlayerScript()
+{
+    return playerScriptPath;
+}
+
 QString ConfigManager::PathWorldMusic()
 {
     return dirs.music;
@@ -126,6 +132,7 @@ void ConfigManager::refreshPaths()
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
     npcScriptPath = config_dir +  "script/npcs/";
+    playerScriptPath = config_dir +  "script/player/";
     effectPath= dirs.glevel +  "effect/";
     playerLvlPath = dirs.gplayble;
     playerWldPath = dirs.gworld + "player/";

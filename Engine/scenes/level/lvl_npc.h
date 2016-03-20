@@ -106,6 +106,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_center;
     bool  disableBlockCollision;
     bool  disableNpcCollision;
+    bool  enablePlayerCollision;
     bool _stucked;
 
     QVector<PGE_Phys_Object*>   collision_speed_add;
@@ -239,6 +240,15 @@ public:
     };
     //Additional lua enums
 
+    /********************Lua Stuff*******************
+                        .-""""-
+                       F   .-'
+                      F   J
+                     I    I
+                      L   `.
+                       L    `-._,
+                        `-.__.-'
+     ***********************************************/
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
@@ -267,15 +277,13 @@ public:
     inline long special2() { return data.special_data2; }
     inline void setSpecial2(long s) { data.special_data2=s; }
     inline bool isBoss() { return data.is_boss; }
-    inline int getID() { return _npc_id; }
+    inline int  getID() { return _npc_id; }
     inline long getHealth() { return health; }
     inline void setHealth(int _health) { health=_health; }
     inline bool getCollideWithBlocks() { return !disableBlockCollision; }
     inline void setCollideWithBlocks(bool blkcol) { disableBlockCollision=!blkcol; }
-
     bool isLuaNPC;
-
-
+    /********************Lua Stuff******************/
 
     int health;
 

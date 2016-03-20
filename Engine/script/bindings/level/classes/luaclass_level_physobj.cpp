@@ -20,6 +20,13 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
                 value("Special", PGE_Phys_Object::LVLSpecial),
                 value("PhysEnv", PGE_Phys_Object::LVLPhysEnv)
             ]
+            .enum_("CollisionType")
+            [
+                value("COLLISION_NONE",   PGE_Phys_Object::COLLISION_NONE),
+                value("COLLISION_ANY",    PGE_Phys_Object::COLLISION_ANY),
+                value("COLLISION_TOP",    PGE_Phys_Object::COLLISION_TOP),
+                value("COLLISION_BOTTOM", PGE_Phys_Object::COLLISION_BOTTOM)
+            ]
             //Size and position
             .property("x", &PGE_Phys_Object::posX, &PGE_Phys_Object::setPosX)
             .property("y", &PGE_Phys_Object::posY, &PGE_Phys_Object::setPosY)
@@ -38,5 +45,8 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             .property("speedX", &PGE_Phys_Object::speedX, &PGE_Phys_Object::setSpeedX)
             .property("speedY", &PGE_Phys_Object::speedY, &PGE_Phys_Object::setSpeedY)
             .property("gravity", &PGE_Phys_Object::gravityScale, &PGE_Phys_Object::setGravityScale)
-            .property("gravity_accel", &PGE_Phys_Object::gravityAccel, &PGE_Phys_Object::setGravityAccel);
+            .property("gravity_accel", &PGE_Phys_Object::gravityAccel, &PGE_Phys_Object::setGravityAccel)
+            .def_readwrite("collide_player", &PGE_Phys_Object::collide_player)
+            .def_readwrite("collide_npc", &PGE_Phys_Object::collide_npc)
+            ;
 }

@@ -72,7 +72,7 @@ android:{
 TARGET = pge_editor
 TEMPLATE = app
 
-CONFIG += c++14
+CONFIG += c++11
 
 CONFIG += static
 CONFIG += thread
@@ -603,6 +603,9 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/pge_file_lib_globs.h \
     ../_common/PGE_File_Formats/pge_file_lib_sys.h \
     ../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
+    ../_common/PGE_File_Formats/CSVReader.h \
+    ../_common/PGE_File_Formats/CSVReaderPGE.h \
+    ../_common/PGE_File_Formats/CSVUtils.h \
     common_features/dir_copy.h \
     tools/async/asyncstarcounter.h \
     common_features/bool_reseter.h \
@@ -615,10 +618,7 @@ HEADERS  += defines.h \
     common_features/data_array.h \
     common_features/file_mapper.h \
     editing/_scenes/level/edit_modes/mode_circle.h \
-    editing/_scenes/world/edit_modes/wld_mode_circle.h \
-    ../_common/PGE_File_Formats/CSVReader.h \
-    ../_common/PGE_File_Formats/CSVReaderPGE.h
-
+    editing/_scenes/world/edit_modes/wld_mode_circle.h
 
 FORMS    += \
     common_features/crashhandler.ui \
