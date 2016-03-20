@@ -60,7 +60,7 @@ struct IfStreamReader
     }
 };
 template<class StrElementType, class StrElementTraits>
-constexpr auto MakeIfStreamReader(std::basic_ifstream<StrElementType, StrElementTraits>* reader)
+constexpr IfStreamReader<StrElementType, StrElementTraits> MakeIfStreamReader(std::basic_ifstream<StrElementType, StrElementTraits>* reader)
 {
     return IfStreamReader<StrElementType, StrElementTraits>(reader);
 }
@@ -83,7 +83,7 @@ struct StringReader
     }
 };
 template<class StrElementType, class StrElementTraits, class StrElementAlloc>
-constexpr auto MakeStringReader(const std::basic_string<StrElementType, StrElementTraits, StrElementAlloc>& str)
+constexpr StringReader<StrElementType, StrElementTraits, StrElementAlloc> MakeStringReader(const std::basic_string<StrElementType, StrElementTraits, StrElementAlloc>& str)
 {
     return StringReader<StrElementType, StrElementTraits, StrElementAlloc>(str);
 }
@@ -121,7 +121,7 @@ private:
     std::function<bool(const T&)> _validatorFunction;
 };
 template<typename T, typename ValidatorFunc>
-constexpr auto MakeCSVValidator(T* value, ValidatorFunc validatorFunction) {
+constexpr CSVValidator<T> MakeCSVValidator(T* value, ValidatorFunc validatorFunction) {
     return CSVValidator<T>(value, validatorFunction);
 }
 
@@ -153,12 +153,12 @@ private:
     std::function<void(T&)> _postProcessorFunction;
 };
 template<typename T, typename PostProcessorFunc>
-constexpr auto MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction)
+constexpr CSVPostProcessor<T> MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction)
 {
     return CSVPostProcessor<T>(value, postProcessorFunction);
 }
 template<typename T, typename PostProcessorFunc, typename ValidatorFunc>
-constexpr auto MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction, ValidatorFunc validatorFunction)
+constexpr CSVPostProcessor<T> MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction, ValidatorFunc validatorFunction)
 {
     return CSVPostProcessor<T>(value, postProcessorFunction, validatorFunction);
 }
@@ -203,15 +203,15 @@ private:
     std::function<void(T&)> _postProcessorFunction;
 };
 template<typename T>
-constexpr auto MakeCSVOptional(T* value, T defVal) {
+constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal) {
     return CSVOptional<T>(value, defVal);
 }
 template<typename T, typename ValidatorFunc>
-constexpr auto MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction) {
+constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction) {
     return CSVOptional<T>(value, defVal, validatorFunction);
 }
 template<typename T, typename ValidatorFunc, typename PostProcessorFunc>
-constexpr auto MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction, PostProcessorFunc postProcessorFunction) {
+constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction, PostProcessorFunc postProcessorFunction) {
     return CSVOptional<T>(value, defVal, validatorFunction, postProcessorFunction);
 }
 
@@ -608,21 +608,34 @@ public:
 };
 
 template<class StrT, class StrTUtils, class Converter, class Reader, class CharT>
-constexpr auto MakeCSVReader(Reader* reader, CharT sep)
+constexpr CSVReader<Reader, StrT, CharT, StrTUtils, Converter> MakeCSVReader(Reader* reader, CharT sep)
 {
     return CSVReader<Reader, StrT, CharT, StrTUtils, Converter>(reader);
 }
+
+
+namespace detail {
+    template<class Reader>
+    struct CSVReaderFromReaderType
+    {
+        typedef typename Reader::string_type string_type;
+        typedef typename string_type::value_type value_type;
+        typedef typename string_type::traits_type traits_type;
+        typedef typename string_type::allocator_type allocator_type;
+
+        typedef CSVReader<Reader, string_type, value_type,
+            DefaultStringWrapper<value_type, traits_type, allocator_type>, DefaultCSVConverter<string_type>> full_type;
+    };
+}
+
 template<class Reader, class CharT>
-constexpr auto MakeCSVReaderFromBasicString(Reader* reader, CharT sep)
+constexpr typename detail::CSVReaderFromReaderType<Reader>::full_type MakeCSVReaderFromBasicString(Reader* reader, CharT sep)
 {
-    typedef typename Reader::string_type string_type;
-    typedef typename string_type::value_type value_type;
-    typedef typename string_type::traits_type traits_type;
-    typedef typename string_type::allocator_type allocator_type;
+    typedef detail::CSVReaderFromReaderType<Reader> csv_reader_type;
+    typedef typename csv_reader_type::value_type value_type;
 
     static_assert(std::is_same<CharT, value_type>::value, "Value type of basic_string must be the same as the type of the seperator!");
-    return CSVReader<Reader, string_type, value_type,
-        DefaultStringWrapper<value_type, traits_type, allocator_type>, DefaultCSVConverter<string_type>>(reader, sep);
+    return csv_reader_type::full_type(reader, sep);
 }
 
 
@@ -638,6 +651,15 @@ private:
     StrT _data;
 };
 
+template <std::size_t... I>
+class index_sequence {};
+
+template <std::size_t N, std::size_t ...I>
+struct make_index_sequence : make_index_sequence<N-1, N-1,I...> {};
+
+template <std::size_t ...I>
+struct make_index_sequence<0,I...> : index_sequence<I...> {};
+
 template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class... Values>
 struct CSVSubReader
 {
@@ -647,12 +669,12 @@ public:
 
     void ReadDataLine(const StrT& val)
     {
-        ReadDataLineImpl(val, std::index_sequence_for<Values...>{});
+        ReadDataLineImpl(val, make_index_sequence<sizeof...(Values)>{});
     }
 
 private:
     template<std::size_t ...I>
-    void ReadDataLineImpl(const StrT& val, std::index_sequence<I...>)
+    void ReadDataLineImpl(const StrT& val, index_sequence<I...>)
     {
         DirectReader<StrT> subReader(val);
         CSVReader<decltype(subReader), StrT, CharT, StrTUtils, Converter> subCSVReader(&subReader, _sep);
@@ -664,9 +686,26 @@ private:
 };
 
 template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class SubChar, class... RestValues>
-constexpr auto MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues... values)
+constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues... values)
 {
     return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, values...);
+}
+
+
+namespace detail
+{
+    template<class ContainerT,                                                          // The container type
+             class StrT,                                                                // The string class
+             class CharT,                                                               // The char type
+             class StrTUtils,                                                           // The string util class
+             class Converter>
+    struct CSVBatchReaderFromContainer
+    {
+        typedef typename ContainerT::value_type ContainerValueT;
+        typedef CommonContainerUtils<ContainerValueT, ContainerT> ContainerUtils;
+
+        typedef CSVBatchReader<ContainerValueT, ContainerT, ContainerUtils, StrT, CharT, StrTUtils, Converter> full_type;
+    };
 }
 
 template<class ContainerT,                                                          // The container type
@@ -675,11 +714,12 @@ template<class ContainerT,                                                      
          class CharT,                                                               // The char type
          class StrTUtils,                                                           // The string util class
          class Converter>                                                           // The value converter
-constexpr auto MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container){
-    typedef typename ContainerT::value_type ContainerValueT;                        // The container value type
-    typedef CommonContainerUtils<ContainerValueT, ContainerT> ContainerUtils;       // The container utils wrapper (inserting elements)
+constexpr typename detail::CSVBatchReaderFromContainer<ContainerT, StrT, CharT, StrTUtils, Converter>::full_type
+    MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container)
+{
+    typedef detail::CSVBatchReaderFromContainer<ContainerT, StrT, CharT, StrTUtils, Converter> csv_batch_reader_type;
 
-    return CSVBatchReader<ContainerValueT, ContainerT, ContainerUtils, StrT, CharT, StrTUtils, Converter>(sep, container, nullptr);
+    return typename csv_batch_reader_type::full_type(sep, container, nullptr);
 }
 
 template<class ContainerT,                                                          // The container type
@@ -689,7 +729,9 @@ template<class ContainerT,                                                      
          class StrTUtils,                                                           // The string util class
          class Converter,                                                           // The value converter
          class PostProcessorFunc>
-constexpr auto MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container, const PostProcessorFunc& postProcessorFunc){
+constexpr typename detail::CSVBatchReaderFromContainer<ContainerT, StrT, CharT, StrTUtils, Converter>::full_type
+    MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container, const PostProcessorFunc& postProcessorFunc)
+{
     typedef typename ContainerT::value_type ContainerValueT;                        // The container value type
     typedef CommonContainerUtils<ContainerValueT, ContainerT> ContainerUtils;       // The container utils wrapper (inserting elements)
 

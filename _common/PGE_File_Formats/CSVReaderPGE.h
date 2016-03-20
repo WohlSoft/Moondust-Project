@@ -132,13 +132,13 @@ private:
 
 #ifdef PGE_FILES_QT
 template<class Reader>
-constexpr auto MakeCSVReaderForPGESTRING(Reader* reader, QChar sep)
+constexpr CSVReader<Reader, QString, QChar, CSVQStringUtils, CSVQStringConverter> MakeCSVReaderForPGESTRING(Reader* reader, QChar sep)
 {
     return CSVReader<Reader, QString, QChar, CSVQStringUtils, CSVQStringConverter>(reader, sep);
 }
 #else
 template<class Reader>
-constexpr auto MakeCSVReaderForPGESTRING(Reader* reader, char sep)
+constexpr CSVReader<Reader, QString, QChar, CSVQStringUtils, CSVQStringConverter> MakeCSVReaderForPGESTRING(Reader* reader, char sep)
 {
     return MakeCSVReaderFromBasicString(reader, sep);
 }

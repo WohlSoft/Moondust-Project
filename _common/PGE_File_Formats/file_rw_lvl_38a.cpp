@@ -48,32 +48,13 @@ static auto PGELayerOrDefault = [](PGESTRING& data){data = (data == "" ? "Defaul
 static auto PGEFilpBool = [](bool& value){value = !value;};
 
 template<class T>
-constexpr auto MakeClampFunc(T min, T max){
-    return [=](auto& value)
-    {
-        if(value < min)
-            value = min;
-        if(value > max)
-            value = max;
-    };
-}
-template<class T>
-constexpr auto MakeMinFunc(T min){
-    return [=](auto& value)
+constexpr std::function<void(T&)> MakeMinFunc(T min){
+    return [=](T& value)
     {
         if(value < min)
             value = min;
     };
 }
-template<class T>
-constexpr auto MakeMaxFunc(T max){
-    return [=](auto& value)
-    {
-        if(value > max)
-            value = max;
-    };
-}
-
 
 
 LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)

@@ -72,7 +72,7 @@ android:{
 TARGET = pge_editor
 TEMPLATE = app
 
-CONFIG += c++14
+CONFIG += c++11
 
 CONFIG += static
 CONFIG += thread
