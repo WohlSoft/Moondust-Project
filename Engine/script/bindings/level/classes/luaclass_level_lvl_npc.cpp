@@ -109,6 +109,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .property("isBoss", &LVL_Npc::isBoss)
 
             .property("collideWithBlocks", &LVL_Npc::getCollideWithBlocks, &LVL_Npc::setCollideWithBlocks)
+            .def_readwrite("collideWithPlayers", &LVL_Npc::enablePlayerCollision)
 
             .property("health", &LVL_Npc::getHealth, &LVL_Npc::setHealth)
 

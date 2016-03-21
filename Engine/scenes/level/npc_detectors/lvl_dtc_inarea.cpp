@@ -31,17 +31,16 @@ void InAreaDetector::processDetector()
     _contacts = 0;
     _detected=false;
     _trapZone=_srcTrapZone;
-    if(_parentNPC->direction()>0)
+
+    _trapZone.setPos(
+                _parentNPC->posCenterX()+_srcTrapZone.left(),
+                _parentNPC->posCenterY()+_srcTrapZone.top()
+                );
+
+    if( _parentNPC->direction() < 0 )
     {
-        _trapZone.setPos(
-                    _parentNPC->posCenterX()+_srcTrapZone.left(),
-                    _parentNPC->posCenterY()+_srcTrapZone.top()
-                    );
-    } else {
-        _trapZone.setPos(
-                    _parentNPC->posCenterX()+_srcTrapZone.left()-_srcTrapZone.width(),
-                    _parentNPC->posCenterY()+_srcTrapZone.top()
-                    );
+        double x_pos = _trapZone.left() + (_parentNPC->posCenterX() - _trapZone.center().x())*2.0;
+        _trapZone.setPos( x_pos, _trapZone.y() );
     }
 
     detectedPLR.clear();

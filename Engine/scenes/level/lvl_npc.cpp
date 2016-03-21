@@ -55,6 +55,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
 
     disableBlockCollision=false;
     disableNpcCollision=false;
+    enablePlayerCollision=true;
     _stucked=false;
 
     bumpDown=false;

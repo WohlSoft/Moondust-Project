@@ -703,6 +703,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                 {
                     collided_talkable_npc=npc;
                 }
+                if(!npc->enablePlayerCollision) break;
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
                 if(npc->setup->climbable)

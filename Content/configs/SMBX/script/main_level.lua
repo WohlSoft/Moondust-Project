@@ -26,6 +26,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID == 1 )then
             plr:setState(2)
             Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end
@@ -34,6 +35,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID ~= 3 )then
             plr:setState(3)
             Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end
@@ -42,6 +44,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID ~= 7 )then
             plr:setState(7)
             Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end
@@ -50,6 +53,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID ~= 4 )then
             plr:setState(4)
             Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end
@@ -58,6 +62,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID ~= 5)then
             plr:setState(5)
             Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end
@@ -66,6 +71,7 @@ function ProcessPlayerPowerUP(plr, npc)
         if(plr.stateID ~= 6)then
             plr:setState(6)
             Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincable(true, 1500, true)
         else
             Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
         end

@@ -27,7 +27,7 @@ end
 
 function fire_bar:onActivated()
     self:initProps()
-    self.npc_obj:activateNeighbours()
+    --self.npc_obj:activateNeighbours()
 end
 
 function fire_bar:onLoop(tickTime)
