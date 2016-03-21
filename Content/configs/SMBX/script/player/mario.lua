@@ -18,22 +18,11 @@ function marioPlayer:onLoop(tickTime)
 end
 
 function marioPlayer:onHarm(harmEvent)
-    local newHealth = self.plr_obj.health-harmEvent.damage
-    if(newHealth==1)then
-        self.plr_obj:setState(1)
-        Audio.playSoundByRole(SoundRoles.PlayerShrink)
-    else
-        self.plr_obj:setState(2)
-        Audio.playSoundByRole(SoundRoles.PlayerHarm)
-    end
+	processPlayerHarm(self.plr_obj, harmEvent)
 end
 
 function marioPlayer:onTakeNpc(npcObj)
-    if( (npcObj.id==9) and (self.plr_obj.stateID == 1 ) )then
-        self.plr_obj.health = 2
-        self.plr_obj:setState(2)
-        Audio.playSoundByRole(SoundRoles.PlayerGrow)
-    end
+    ProcessPlayerPowerUP(self.plr_obj, npcObj)
 end
 
 return marioPlayer
