@@ -162,7 +162,7 @@ function npc_isShell(npcID)
         return true
     --elseif(npcID==195)then
     --    return true
-    --end
+    end
     return false
 end
 
