@@ -32,3 +32,21 @@ void ControllableObject::resetControls()
 {
     keys = ResetControlKeys();
 }
+
+bool ControllableObject::getKeyState(int keyType)
+{
+    switch(keyType)
+    {
+        case KEY_LEFT:      return keys.left;
+        case KEY_RIGHT:     return keys.right;
+        case KEY_UP:        return keys.up;
+        case KEY_DOWN:      return keys.down;
+        case KEY_RUN:       return keys.run;
+        case KEY_JUMP:      return keys.jump;
+        case KEY_ALT_RUN:   return keys.alt_run;
+        case KEY_ALT_JUMP:  return keys.alt_jump;
+        case KEY_DROP:      return keys.drop;
+        case KEY_START:     return keys.start;
+        default: return false;
+    }
+}

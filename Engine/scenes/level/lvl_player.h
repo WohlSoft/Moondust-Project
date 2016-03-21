@@ -266,6 +266,8 @@ public:
         virtual void lua_onTransform(long, long) {}
         virtual void lua_onTakeNpc(LVL_Npc*) {}
         virtual void lua_onKillNpc(LVL_Npc*) {}
+        inline void lua_setAnimation(int animationID, int framespeed) { animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed); }
+        inline bool lua_getKeyState(int keyType) { return getKeyState(keyType); }
         inline long getHealth() { return health; }
         inline void setHealth(int _health) { health=_health; }
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}

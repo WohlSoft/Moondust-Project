@@ -33,5 +33,23 @@ void Binding_Global_Constants::bindToLua(lua_State *L)
     _G["NPC_WARP_BOTTOM"] = LVL_Npc::WARP_BOTTOM;
     _G["NPC_WARP_RIGHT"] =  LVL_Npc::WARP_RIGHT;
 
+    //Key codes
+    _G["KEY_START"] =  ControllableObject::KEY_START;
+    _G["KEY_DROP"] =  ControllableObject::KEY_DROP;
+    _G["KEY_JUMP"] =  ControllableObject::KEY_JUMP;
+    _G["KEY_RUN"] =  ControllableObject::KEY_RUN;
+    _G["KEY_ALT_RUN"] =  ControllableObject::KEY_ALT_RUN;
+    _G["KEY_ALT_JUMP"] =  ControllableObject::KEY_ALT_JUMP;
+    _G["KEY_LEFT"] =  ControllableObject::KEY_LEFT;
+    _G["KEY_RIGHT"] =  ControllableObject::KEY_RIGHT;
+    _G["KEY_UP"] =  ControllableObject::KEY_UP;
+    _G["KEY_DOWN"] =  ControllableObject::KEY_DOWN;
+    _G["KEY_LEFT"] =  ControllableObject::KEY_LEFT;
+    _G["KEY_RIGHT"] =  ControllableObject::KEY_RIGHT;
+    //kept for LunaLUA compatibility
+    _G["KEY_STR"] =  ControllableObject::KEY_START;
+    _G["KEY_SEL"] =  ControllableObject::KEY_DROP;
+    _G["KEY_SPINJUMP"] =  ControllableObject::KEY_ALT_JUMP;
+    _G["KEY_X"] =  ControllableObject::KEY_ALT_RUN;
 }
 
