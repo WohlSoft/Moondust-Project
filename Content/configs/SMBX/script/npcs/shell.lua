@@ -8,7 +8,10 @@ local AI_RUNNING = 1
 
 function shell:initProps()
     -- Currents
-    self.cur_mode = AI_IDLING
+    self.cur_mode=AI_IDLING
+    self.npc_obj.motionSpeed = 0
+    self.npc_obj.speedX = 0
+    self.npc_obj:setSequence({0})
 end
 
 function shell:__init(npc_obj)
