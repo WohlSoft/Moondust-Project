@@ -144,3 +144,25 @@ function npc_isIcePlant(npcID)
     return false
 end
 
+-- Is NPC a Fire Plant?
+function npc_isShell(npcID)
+    if(npcID==5)then
+        return true
+    elseif(npcID==7)then
+        return true
+    elseif(npcID==24)then
+        return true
+    elseif(npcID==73)then
+        return true
+    elseif((npcID>=113)and(npcID<=116))then
+        return true
+    elseif(npcID==172)then
+        return true
+    elseif(npcID==174)then
+        return true
+    --elseif(npcID==195)then
+    --    return true
+    --end
+    return false
+end
+
