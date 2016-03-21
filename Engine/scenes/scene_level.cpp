@@ -468,6 +468,17 @@ void LevelScene::render()
             for(int i=0; i<render_sz; i++)
             {
                 render_obj[i]->renderDebug(cam->posX(), cam->posY());
+                if(render_obj[i]->type==PGE_Phys_Object::LVLNPC)
+                {
+                    LVL_Npc *npc=static_cast<LVL_Npc*>(render_obj[i]);
+                    for(int i=0; i<npc->detectors_inarea.size(); i++)
+                    {
+                        PGE_RectF trapZone = npc->detectors_inarea[i].trapZone();
+                        GlRenderer::renderRect(trapZone.x()-cam->posX(), trapZone.y()-cam->posY(),
+                                                 trapZone.width(), trapZone.height(),
+                                                 1.0f, 0.0, 0.0f, 1.0f, false);
+                    }
+                }
             }
         }
 
