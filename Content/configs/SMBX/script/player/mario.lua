@@ -18,7 +18,7 @@ function marioPlayer:onLoop(tickTime)
 end
 
 function marioPlayer:onHarm(harmEvent)
-	processPlayerHarm(self.plr_obj, harmEvent)
+    processPlayerHarm(self.plr_obj, harmEvent)
 end
 
 function marioPlayer:onTakeNpc(npcObj)

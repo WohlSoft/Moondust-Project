@@ -2,7 +2,7 @@ class 'toadPlayer'
 
 function toadPlayer:__init(plr_obj)
     self.plr_obj = plr_obj
-	if(self.plr_obj.stateID==1)then
+    if(self.plr_obj.stateID==1)then
         self.plr_obj.health = 1
     --elseif(self.plr_obj.stateID>=2)then
     --    self.plr_obj.health = 2
@@ -18,7 +18,7 @@ function toadPlayer:onLoop(tickTime)
 end
 
 function toadPlayer:onHarm(harmEvent)
-	processPlayerHarm(self.plr_obj, harmEvent)
+    processPlayerHarm(self.plr_obj, harmEvent)
 end
 
 function toadPlayer:onTakeNpc(npcObj)
