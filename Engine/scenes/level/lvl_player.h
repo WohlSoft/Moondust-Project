@@ -58,7 +58,7 @@ class LVL_Player :
     public:
         void setPlayerPointInfo(PlayerPoint pt);
         void init();
-        void update(float ticks);
+        void update(float tickTime);
         void updateCamera();
 
         void refreshEnvironmentState();
@@ -260,8 +260,12 @@ public:
                            L    `-._,
                             `-.__.-'
          ***********************************************/
-        virtual void lua_onLoop() {}
+        virtual void lua_onInit() {}
+        virtual void lua_onLoop(float) {}
         virtual void lua_onHarm(LVL_Player_harm_event*) {}
+        virtual void lua_onTransform(long, long) {}
+        virtual void lua_onTakeNpc(LVL_Npc*) {}
+        virtual void lua_onKillNpc(LVL_Npc*) {}
         inline long getHealth() { return health; }
         inline void setHealth(int _health) { health=_health; }
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}

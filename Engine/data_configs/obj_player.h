@@ -125,6 +125,9 @@ struct obj_player
     long animator_ID_wld;
     /*   OpenGL    */
 
+    //! LUA-Script of playable character
+    QString script;
+
     QString name;
     QString sprite_folder;
     enum StateTypes
@@ -146,8 +149,6 @@ struct obj_player
 
     PGE_DataArray<obj_player_state > states;
     PGE_DataArray<obj_player_physics > phys_default;
-
-    QString event_script;//!< Global player's LUA-Script with events
 
     bool allowFloating;
 };

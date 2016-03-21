@@ -24,7 +24,7 @@
 #include <settings/debugger.h>
 
 
-void LVL_Player::update(float ticks)
+void LVL_Player::update(float tickTime)
 {
     if(isLocked) return;
     if(!_isInited) return;
@@ -32,18 +32,18 @@ void LVL_Player::update(float ticks)
     LVL_Section* section = sct();
     if(!section) return;
 
-    event_queue.processEvents(ticks);
+    event_queue.processEvents(tickTime);
 
     if((isWarping) || (!isAlive))
     {
-        animator.tickAnimation(ticks);
+        animator.tickAnimation(tickTime);
         updateCamera();
         return;
     }
 
     if(invincible)
     {
-        invincible_delay-=ticks;
+        invincible_delay-=tickTime;
         if(invincible_delay<0.0f)
         {
             invincible=false;
@@ -210,7 +210,7 @@ void LVL_Player::update(float ticks)
     //Reset state
     if(wasEntered)
     {
-        wasEnteredTimeout-=ticks;
+        wasEnteredTimeout-=tickTime;
         if(wasEnteredTimeout<0)
         {
             wasEnteredTimeout=0;
@@ -367,13 +367,13 @@ void LVL_Player::update(float ticks)
         {
             if(jumpTime>0)
             {
-                jumpTime -= ticks;
+                jumpTime -= tickTime;
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
 
             if(floating_isworks)
             {
-                floating_timer -= ticks;
+                floating_timer -= tickTime;
                 if(floating_start_type)
                     setSpeedY( state_cur.floating_amplitude*(-cos(floating_timer/80.0)) );
                 else
@@ -406,7 +406,7 @@ void LVL_Player::update(float ticks)
     }
 
     refreshAnimation();
-    animator.tickAnimation(ticks);
+    animator.tickAnimation(tickTime);
 
     PGE_RectF sBox = section->sectionLimitBox();
     float asVelX=0.0f;
@@ -470,7 +470,7 @@ void LVL_Player::update(float ticks)
                 {
                     keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1 : 500;
                 }
-                _exiting_swimTimer-= ticks;
+                _exiting_swimTimer-= tickTime;
             } else keys.run=false;
         }
     }
@@ -539,7 +539,7 @@ void LVL_Player::update(float ticks)
     if(_doSafeSwitchCharacter) setCharacter(characterID, stateID);
 
     try {
-        lua_onLoop();
+        lua_onLoop(tickTime);
     } catch (luabind::error& e) {
         _scene->getLuaEngine()->postLateShutdownError(e);
     }

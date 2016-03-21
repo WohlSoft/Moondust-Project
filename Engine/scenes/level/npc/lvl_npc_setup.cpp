@@ -222,6 +222,10 @@ void LVL_Npc::transformTo_x(long id)
 
     if(_isInited)
     {
-        lua_onTransform(_npc_id);
+        try{
+            lua_onTransform(_npc_id);
+        } catch (luabind::error& e) {
+            _scene->getLuaEngine()->postLateShutdownError(e);
+        }
     }
 }

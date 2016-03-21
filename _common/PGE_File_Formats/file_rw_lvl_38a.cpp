@@ -243,7 +243,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
     LevelPhysEnv phyEnv;
     LevelLayer layerdata;
     LevelSMBX64Event eventdata;
-    LevelEvent_Sets event_sets;
+    //LevelEvent_Sets event_sets;
     LevelVariable vardata;
     LevelScript scriptdata;
 
