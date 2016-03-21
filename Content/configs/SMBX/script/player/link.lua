@@ -4,8 +4,10 @@ function linkPlayer:__init(plr_obj)
     self.plr_obj = plr_obj
     if(self.plr_obj.stateID==1)then
         self.plr_obj.health = 1
-    --elseif(self.plr_obj.stateID>=2)then
-    --    self.plr_obj.health = 2
+    elseif(self.plr_obj.stateID==2)then
+        self.plr_obj.health = 2
+    elseif(self.plr_obj.stateID>=3)then
+        self.plr_obj.health = 3
     end
 end
 
