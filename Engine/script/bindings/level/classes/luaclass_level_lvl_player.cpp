@@ -66,7 +66,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
 
             .def("setState", &LVL_Player::setState)
             .def("setCharacter", &LVL_Player::setCharacterID)
-            .def("setInvincable", &LVL_Player::setInvincible)
+            .def("setInvincible", &LVL_Player::setInvincible)
             .def_readonly("characterID", &LVL_Player::characterID)
             .def_readonly("stateID", &LVL_Player::stateID)
 
