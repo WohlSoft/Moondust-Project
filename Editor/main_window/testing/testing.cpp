@@ -58,7 +58,7 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
         box.setText(parent->tr("Don't show this message again."));
         msg.setCheckBox(&box);
         msg.setText(parent->tr("Hello! This is a test in PGE Engine.\n"
-                       "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature."
+                       "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. "
                        "Currently, it's experimental and has not implemented many features yet. "
                        "Some features may not be implemented or may work incorrectly. "
                        "If you are making levels or episodes for the old SMBX Engine and you want to run "
