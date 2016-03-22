@@ -35,7 +35,7 @@ typedef QStringList PGESTRINGList;
 #include <vector>
 #include <string>
 typedef std::string PGESTRING;
-typedef std::vector<std::string > PGESTRINGList;
+typedef std::vector<std::string> PGESTRINGList;
 #endif
 
 /*!
