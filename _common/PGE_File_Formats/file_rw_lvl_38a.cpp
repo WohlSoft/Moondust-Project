@@ -1026,7 +1026,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
                         else w = toFloat(cLine);
-                        if(w<800.0) w=800.0;
+                        if((w<800.0)&&(w!=0)) w=800.0;
                     } break;
                 //"h=height of the section[if (h < 600) h = 600]
                 case 5:
@@ -1034,7 +1034,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                         if( SMBX64::sFloat(cLine) )
                             goto badfile;
                         else h = toFloat(cLine);
-                        if(h<600.0) h=600.0;
+                        if((h<600.0)&&(h!=0)) h=600.0;
                     } break;
                 //"b1=under water?[0=false !0=true]
                 case 6:

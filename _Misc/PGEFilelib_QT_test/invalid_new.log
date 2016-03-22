@@ -1,5 +1,42 @@
 38a_deep_test/level35.lvl
+Info: Invalid file format, detected file SMBX-65format
+Caused by: 
+exception: Expected 18 CSV-Fields, got 17 at line 6361!
+
+linedata
+line:0
+
 38a_deep_test/level38.lvl
+Info: Invalid file format, detected file SMBX-65format
+Caused by: 
+exception: Failed to parse field 7 at line 2083
+ exception: Failed to parse field 2 at line 1
+  exception: Expected 4 CSV-Fields, got 3 at line 1!
+
+linedata
+line:0
+
 38a_deep_test/level39.lvl
+Info: Invalid file format, detected file SMBX-65format
+Caused by: 
+exception: Expected 18 CSV-Fields, got 17 at line 6930!
+
+linedata
+line:0
+
 38a_deep_test/warp13.lvl
+Info: Invalid file format, detected file SMBX-65format
+Caused by: 
+exception: Expected 18 CSV-Fields, got 17 at line 222!
+
+linedata
+line:0
+
 38a_deep_test/warp5.lvl
+Info: Invalid file format, detected file SMBX-65format
+Caused by: 
+exception: Expected 18 CSV-Fields, got 17 at line 446!
+
+linedata
+line:0
+

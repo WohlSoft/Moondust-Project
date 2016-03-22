@@ -153,7 +153,9 @@ int main(int argc, char *argv[])
                 testOutput.close();
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
-                niout << path+file << "\r\n";
+                niout << path+file << "\r\nInfo: "
+                      << FileData.ERROR_info << "\r\nlinedata" << FileData.ERROR_linedata
+                      << "\r\nline:" << FileData.ERROR_linenum << "\r\n\r\n";
                 newInvalid.flush();
             }
 
@@ -170,7 +172,9 @@ int main(int argc, char *argv[])
                 testOutput.close();
             } else {
                 cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
-                oiout << path+file << "\r\n";
+                oiout << path+file << "\r\nInfo: "
+                      << FileData.ERROR_info << "\r\nlinedata" << FileData.ERROR_linedata
+                      << "\r\nline:" << FileData.ERROR_linenum << "\r\n\r\n";
                 oldInvalid.flush();
             }
 
@@ -183,6 +187,10 @@ int main(int argc, char *argv[])
                 cout << "FILES ARE DIFFERENT\n";
                 diout << path+file << "\r\n";
                 diffs.flush();
+            } else {
+                //Remove similar files!
+                QFile(opath+file+".old.lvlx").remove();
+                QFile(opath+file+".old.lvlx").remove();
             }
             cout.flush();
         }
