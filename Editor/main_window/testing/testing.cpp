@@ -67,6 +67,7 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
                        "or episodes.")
                       );
         msg.setStandardButtons(QMessageBox::Ok);
+        msg.setWindowModality(Qt::WindowModal);
         msg.exec();
         showNotice = !box.isChecked();
     }
