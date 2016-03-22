@@ -56,7 +56,7 @@ end
 function dummy_boss:onLoop(TickTime)
 end
 
-function dummy_boss:onKill(reason)
+function dummy_boss:onKill(killEvent)
     if(self.npc_obj.isBoss) then
         self:substr()
         if(self:allKilled()) then

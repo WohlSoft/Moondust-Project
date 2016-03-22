@@ -344,7 +344,7 @@ void LVL_Npc::updateCollisions()
 }
 
 
-void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
+void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
 {
     if(!collided) return;
 

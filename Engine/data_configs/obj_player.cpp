@@ -26,6 +26,7 @@
 PGE_DataArray<obj_player > ConfigManager::playable_characters;
 CustomDirManager ConfigManager::Dir_PlayerWld;
 CustomDirManager ConfigManager::Dir_PlayerLvl;
+CustomDirManager ConfigManager::Dir_PlayerScript;
 /*****Playable Characters************/
 
 void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString grp)
@@ -206,13 +207,14 @@ bool ConfigManager::loadPlayableCharacters()
                 splayer.state_type =  playerset.value("sprite-folder", 0 ).toInt();
                 splayer.matrix_width = playerset.value("matrix-width", 10 ).toInt();
                 splayer.matrix_height = playerset.value("matrix-height", 10 ).toInt();
-                splayer.event_script = playerset.value("script-file", QString("script/player/%1.lua").arg(splayer.sprite_folder)).toString();
+                splayer.script =  playerset.value("script-file", "" ).toString();
                 total_states = playerset.value("states-number", 0 ).toInt();
                 if(total_states==0)
                 {
                     addError(QString("player-%1 has no states!").arg(i));
                     goto skipPLAYER;
                 }
+                splayer.fail_effect.fill("fail", &playerset);
             playerset.endGroup();
 
             {//States

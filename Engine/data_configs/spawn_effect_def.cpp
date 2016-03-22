@@ -4,10 +4,11 @@
 SpawnEffectDef::SpawnEffectDef()
 {
     id=0;
+    start_delay=0;
     startX=0.0f;
     startY=0.0f;
     animationLoops=1;
-    delay=0;
+    delay = 0;
     framespeed=64;
     velocityX=0.0f;
     velocityY=0.0f;
@@ -24,16 +25,20 @@ SpawnEffectDef::SpawnEffectDef()
 
 SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
 {
-    id=c.id;
-    startX=c.startX;
-    startY=c.startY;
-    animationLoops=c.animationLoops;
-    delay=c.delay;
-    framespeed=c.framespeed;
-    velocityX=c.velocityX;
-    velocityY=c.velocityY;
-    gravity=c.gravity;
-    direction=c.direction;
+    id = c.id;
+    start_delay = c.start_delay;
+    startX = c.startX;
+    startY = c.startY;
+    animationLoops = c.animationLoops;
+
+    delay = c.delay;
+
+    framespeed = c.framespeed;
+    velocityX = c.velocityX;
+    velocityY = c.velocityY;
+    gravity = c.gravity;
+
+    direction = c.direction;
 
     min_vel_x=c.min_vel_x;
     min_vel_y=c.min_vel_y;
@@ -48,6 +53,7 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
     if(!setup) return;
 
     id = setup->value(prefix+"-effect-id", 0).toInt();
+    start_delay = setup->value(prefix+"-effect-start-delay", 0).toInt();
     startX = setup->value(prefix+"-effect-start-x", 0.0f).toFloat();
     startY = setup->value(prefix+"-effect-start-y", 0.0f).toFloat();
     animationLoops = setup->value(prefix+"-effect-animation-loops", 1).toInt();
@@ -61,7 +67,6 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
     min_vel_y = setup->value(prefix+"-effect-min-vel-y", 0.0f).toFloat();
     max_vel_x = setup->value(prefix+"-effect-max-vel-x", 0.0f).toFloat();
     max_vel_y = setup->value(prefix+"-effect-max-vel-y", 0.0f).toFloat();
-    max_vel_x = setup->value(prefix+"-effect-max-vel-x", 0.0f).toFloat();
     decelerate_x = setup->value(prefix+"-effect-decelerate-x", 0.0f).toFloat();
     decelerate_y = setup->value(prefix+"-effect-decelerate-y", 0.0f).toFloat();
 

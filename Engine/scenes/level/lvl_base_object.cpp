@@ -476,11 +476,11 @@ void PGE_Phys_Object::updateCollisions()
         if(body->_paused) continue;
         if(!body->_is_visible) continue;
 
-        solveCollision(body);
+        detectCollisions(body);
     }
 }
 
-void PGE_Phys_Object::solveCollision(PGE_Phys_Object *)
+void PGE_Phys_Object::detectCollisions(PGE_Phys_Object *)
 {}
 
 

@@ -22,6 +22,7 @@
 #include <graphics/graphics.h>
 #include <common_features/player_calibration.h>
 #include <common_features/data_array.h>
+#include "spawn_effect_def.h"
 
 #include <QString>
 #include <QPixmap>
@@ -113,6 +114,8 @@ struct obj_player
     int frame_width;
     int frame_height;
 
+    SpawnEffectDef fail_effect;
+
     /*   OpenGL    */
         //for world map
     bool isInit_wld;
@@ -121,6 +124,9 @@ struct obj_player
     long textureArrayId_wld;
     long animator_ID_wld;
     /*   OpenGL    */
+
+    //! LUA-Script of playable character
+    QString script;
 
     QString name;
     QString sprite_folder;
@@ -143,8 +149,6 @@ struct obj_player
 
     PGE_DataArray<obj_player_state > states;
     PGE_DataArray<obj_player_physics > phys_default;
-
-    QString event_script;//!< Global player's LUA-Script with events
 
     bool allowFloating;
 };

@@ -45,6 +45,7 @@ void LVL_Npc::Activate()
             _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
+    lua_activate_neighbours();//Also activate neighours
 }
 
 void LVL_Npc::deActivate()

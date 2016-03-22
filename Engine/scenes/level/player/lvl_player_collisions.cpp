@@ -307,7 +307,7 @@ void LVL_Player::updateCollisions()
         //posRect.setX(_wallX);
         correctX=_wallX-posRect.x();
         needCorrect=true;
-        setSpeedX(0);
+        setSpeedX(0.0);
         //_velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
@@ -348,6 +348,12 @@ void LVL_Player::updateCollisions()
 
     if(needCorrect)
     {
+        if(!npcs_to_stomp.isEmpty())
+        {   //Don't apply speed-adding from stomped NPCs
+            foot_contacts_map.clear();
+            _velocityX_add=0.0f;
+            correctX = 0.0f;
+        }
         applyCorrectionToSA_stack(correctX, correctY);
     }
 
@@ -358,7 +364,7 @@ void LVL_Player::updateCollisions()
         npcs_to_stomp.pop_back();
 
         //Avoid workarround "don't hurt while flying up"
-        if(bottom() > npc->top()) setPosY( npc->top() - height()-1 );
+        if(bottom() >= npc->top()) setPosY( npc->top() - height()-1 );
 
         npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
         this->bump(true);
@@ -406,7 +412,7 @@ void LVL_Player::_collideUnduck()
         if(body==this) continue;
         if(body->isPaused()) continue;
         if(!body->isVisible()) continue;
-        solveCollision(body);
+        detectCollisions(body);
     }
     forceCollideCenter=false;
 
@@ -439,7 +445,7 @@ void LVL_Player::_collideUnduck()
             if(nearest)
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(nearest);
-                if(blk && (blk->shape!=LVL_Block::shape_rect))
+                if((nearest->type==LVLBlock) && (blk) && (blk->shape!=LVL_Block::shape_rect))
                 {
                     if(blk->shape==LVL_Block::shape_tr_bottom_right)
                     {
@@ -513,7 +519,7 @@ void LVL_Player::_collideUnduck()
 
 
 
-void LVL_Player::solveCollision(PGE_Phys_Object *collided)
+void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
 {
     if(!collided) return;
 
@@ -697,6 +703,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                 {
                     collided_talkable_npc=npc;
                 }
+                if(!npc->enablePlayerCollision) break;
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
                 if(npc->setup->climbable)

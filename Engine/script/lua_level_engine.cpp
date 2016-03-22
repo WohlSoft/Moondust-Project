@@ -15,20 +15,17 @@
 
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_npc.h"
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_player.h"
+#include "bindings/level/globalfuncs/luafuncs_level.h"
 
 #include "bindings/core/lua_global_constants.h"
 
 #include <luabind/adopt_policy.hpp>
 
 LuaLevelEngine::LuaLevelEngine(LevelScene *scene) : LuaEngine(scene)
-{
-
-}
+{}
 
 LuaLevelEngine::~LuaLevelEngine()
-{
-
-}
+{}
 
 LVL_Player *LuaLevelEngine::createLuaPlayer()
 {
@@ -86,6 +83,22 @@ void LuaLevelEngine::loadNPCClass(int id, const QString &path)
     _G["npc_class_table"][id] = loadClassAPI(path);
 }
 
+void LuaLevelEngine::loadPlayerClass(int id, const QString &path)
+{
+    if(shouldShutdown())
+        return;
+
+    luabind::object _G = luabind::globals(getNativeState());
+    if(luabind::type(_G["player_class_table"]) != LUA_TTABLE){
+        _G["player_class_table"] = luabind::newtable(getNativeState());
+    }
+
+    if(luabind::type(_G["player_class_table"][id]) != LUA_TNIL)
+        return;
+
+    _G["player_class_table"][id] = loadClassAPI(path);
+}
+
 LevelScene *LuaLevelEngine::getScene()
 {
     return dynamic_cast<LevelScene*>(getBaseScene());
@@ -99,6 +112,7 @@ void LuaLevelEngine::setNpcBaseClassPath(const QString &npcBaseClassPath)
 {
     m_npcBaseClassPath = npcBaseClassPath;
 }
+
 QString LuaLevelEngine::getPlayerBaseClassPath() const
 {
     return m_playerBaseClassPath;
@@ -108,8 +122,6 @@ void LuaLevelEngine::setPlayerBaseClassPath(const QString &playerBaseClassPath)
 {
     m_playerBaseClassPath = playerBaseClassPath;
 }
-
-
 
 void LuaLevelEngine::onBindAll()
 {
@@ -121,8 +133,11 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_ClassWrapper_LVL_Player::HarmEvent_bindToLua(),
         Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
         Binding_Level_ClassWrapper_LVL_NPC::bindToLua(),
+        Binding_Level_ClassWrapper_LVL_NPC::HarmEvent_bindToLua(),
+        Binding_Level_ClassWrapper_LVL_NPC::KillEvent_bindToLua(),
         Binding_Level_GlobalFuncs_Player::bindToLua(),
         Binding_Level_GlobalFuncs_NPC::bindToLua(),
+        Binding_Level_CommonFuncs::bindToLua(),
         LVL_Block::bindToLua(),
         LVL_Bgo::bindToLua()
     ];

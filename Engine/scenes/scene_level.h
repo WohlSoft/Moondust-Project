@@ -279,6 +279,7 @@ public:
     PGE_PointF placingMode_drawBegin;
     PGE_PointF placingMode_drawEnd;
     /********************Rect***********************/
+
     /********************Placing element's texture***********************/
     bool        placingMode_animated;
     int         placingMode_animatorID;

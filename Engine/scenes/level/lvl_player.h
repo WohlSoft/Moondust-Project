@@ -58,13 +58,13 @@ class LVL_Player :
     public:
         void setPlayerPointInfo(PlayerPoint pt);
         void init();
-        void update(float ticks);
+        void update(float tickTime);
         void updateCamera();
 
         void refreshEnvironmentState();
 
         void updateCollisions();
-        void solveCollision(PGE_Phys_Object *collided);
+        void detectCollisions(PGE_Phys_Object *collided);
         bool forceCollideCenter;//!< collide with invizible blocks at center
         float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
@@ -260,8 +260,14 @@ public:
                            L    `-._,
                             `-.__.-'
          ***********************************************/
-        virtual void lua_onLoop() {}
+        virtual void lua_onInit() {}
+        virtual void lua_onLoop(float) {}
         virtual void lua_onHarm(LVL_Player_harm_event*) {}
+        virtual void lua_onTransform(long, long) {}
+        virtual void lua_onTakeNpc(LVL_Npc*) {}
+        virtual void lua_onKillNpc(LVL_Npc*) {}
+        inline void lua_setAnimation(int animationID, int framespeed) { animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed); }
+        inline bool lua_getKeyState(int keyType) { return getKeyState(keyType); }
         inline long getHealth() { return health; }
         inline void setHealth(int _health) { health=_health; }
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}

@@ -130,7 +130,7 @@ public:
 
     void iterateStep(float ticks);
     virtual void updateCollisions();
-    virtual void solveCollision(PGE_Phys_Object *collided);
+    virtual void detectCollisions(PGE_Phys_Object *collided);
     double colliding_xSpeed;
     double colliding_ySpeed;
 

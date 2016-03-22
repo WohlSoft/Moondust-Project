@@ -227,6 +227,7 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
     ConfigManager::Dir_NPC.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPC() );
     ConfigManager::Dir_NPCScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPCScript() );
+    ConfigManager::Dir_PlayerScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayerScript() );
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
     ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
@@ -262,6 +263,16 @@ bool LevelScene::init_items()
         if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
         {
             luaEngine.loadNPCClass(npc.id, scriptPath);
+        }
+    }
+
+    for(int i=1; i<ConfigManager::playable_characters.size(); i++)
+    {
+        obj_player&player=ConfigManager::playable_characters[i];
+        QString scriptPath = ConfigManager::Dir_PlayerScript.getCustomFile(player.script);
+        if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
+        {
+            luaEngine.loadPlayerClass(player.id, scriptPath);
         }
     }
 
