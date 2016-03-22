@@ -24,8 +24,10 @@ TODO:
 namespace CSVReader {
 
 
-
     // ========= Exceptions START ===========
+    /*!
+     * \brief Exception for parsing errors.
+     */
     class parse_error : public std::logic_error
     {
     private:
@@ -210,9 +212,16 @@ namespace CSVReader {
 
     // ========= Special Attributes START ===========
     // 1. Alternative Parameter - CSVDiscard
+    /*!
+     * \brief Special CSVReader parameter value for ignoring a field.
+     */
     struct CSVDiscard {};
 
     // 2. Alternative Parameter - CSVValidator
+    /*!
+     * \brief Special CSVReader parameter value for validating a field.
+     * \see MakeCSVValidator()
+     */
     template<typename T>
     struct CSVValidator {
         typedef T value_type;
@@ -228,12 +237,22 @@ namespace CSVReader {
         T* _value;
         std::function<bool(const T&)> _validatorFunction;
     };
+    /*!
+     * \brief Creates a new CSVValidator.
+     * \see CSVValidator
+     */
     template<typename T, typename ValidatorFunc>
     constexpr CSVValidator<T> MakeCSVValidator(T* value, ValidatorFunc validatorFunction) {
         return CSVValidator<T>(value, validatorFunction);
     }
 
     // 3. Alternative Parameter - CSVPostProcessor
+    /*!
+     * \brief Special CSVReader parameter value for post processing a field.
+     * \see MakeCSVPostProcessor()
+     *
+     * The post processor will be called before the value will be writting into the pointer.
+     */
     template<typename T>
     struct CSVPostProcessor
     {
@@ -260,11 +279,19 @@ namespace CSVReader {
         std::function<bool(const T&)> _validatorFunction;
         std::function<void(T&)> _postProcessorFunction;
     };
+    /*!
+     * \brief Creates a new CSVPostProcessor.
+     * \see CSVPostProcessor
+     */
     template<typename T, typename PostProcessorFunc>
     constexpr CSVPostProcessor<T> MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction)
     {
         return CSVPostProcessor<T>(value, postProcessorFunction);
     }
+    /*!
+     * \brief Creates a new CSVPostProcessor.
+     * \see CSVPostProcessor
+     */
     template<typename T, typename PostProcessorFunc, typename ValidatorFunc>
     constexpr CSVPostProcessor<T> MakeCSVPostProcessor(T* value, PostProcessorFunc postProcessorFunction, ValidatorFunc validatorFunction)
     {
@@ -274,6 +301,13 @@ namespace CSVReader {
 
 
     // 4. Alternative parameter - CSVOptional
+    /*!
+     * \brief Special CSVReader parameter value for marking a field as optional.
+     * \see MakeCSVOptional()
+     *
+     * If the reader cannot read further, then the default value is used
+     * instead of throwing an exception.
+     */
     template<typename T>
     struct CSVOptional
     {
@@ -310,24 +344,45 @@ namespace CSVReader {
         std::function<bool(const T&)> _validatorFunction;
         std::function<void(T&)> _postProcessorFunction;
     };
+    /*!
+     * \brief Creates a new CSVOptional.
+     * \see CSVOptional
+     */
     template<typename T, typename OT>
     constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal) {
         return CSVOptional<T>(value, defVal);
     }
+    /*!
+     * \brief Creates a new CSVOptional.
+     * \see CSVOptional
+     */
     template<typename T, typename OT, typename ValidatorFunc>
     constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal, ValidatorFunc validatorFunction) {
         return CSVOptional<T>(value, defVal, validatorFunction);
     }
+    /*!
+     * \brief Creates a new CSVOptional.
+     * \see CSVOptional
+     */
     template<typename T, typename OT, typename ValidatorFunc, typename PostProcessorFunc>
     constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal, ValidatorFunc validatorFunction, PostProcessorFunc postProcessorFunction) {
         return CSVOptional<T>(value, defVal, validatorFunction, postProcessorFunction);
     }
 
     // 5. Reader in Reader - CSVOptional
+    /*!
+     * \brief Special CSVReader parameter value for creating a sub-reader.
+     * \see MakeCSVSubReader()
+     * This class can read fields, which are seperated again with another token.
+     */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class... RestValues>
     struct CSVSubReader;
 
     // 6. Reading in container
+    /*!
+     * \brief Special CSVReader parameter value for reading a collection of literal types.
+     * \see MakeCSVBatchReader
+     */
     template<class ContainerValueT,
              class Container,
              class ContainerUtils,
@@ -361,6 +416,10 @@ namespace CSVReader {
     };
 
     // 7. Reading with iteration
+    /*!
+     * \brief Special CSVReader parameter value for iterating through an unknown number of types.
+     * \see MakeCSVIterator()
+     */
     template<class StrT,
              class CharT,
              class StrTUtils,
@@ -396,6 +455,9 @@ namespace CSVReader {
     /*
     * The Default CSV Converter uses the STL library to do the most of the conversion.
     */
+    /*!
+     * \brief The default converter to convert strings to literal types.
+     */
     template<class StrType>
     struct DefaultCSVConverter
     {
@@ -463,7 +525,10 @@ namespace CSVReader {
     };
 
 
-
+    /*!
+     * \brief The default wrapper for strings (Works for STL strings)
+     * \see MakeCSVReaderFromBasicString()
+     */
     template<class StrElementType, class StrElementTraits, class StrElementAlloc>
     struct DefaultStringWrapper
     {
@@ -491,23 +556,17 @@ namespace CSVReader {
 
 
 
-    /*
-    * This class reads CSV-Files very efficient.
-    *
-    * Reader is a class, which has one function member called:
-    *
-    *      std::string read_line();
-    *
-    *
-    * Converter is a class, which has one static template member function called:
-    *
-    *      template<typename T>
-    *      static void Convert(T* out, const std::string& field);
-    *
-    * Converter is allowed to throw std::invalid_argument error, if a conversion fails.
-    *
-    *
-    */
+
+
+    /*!
+     * \brief Provides features to read out CSV data.
+     * \see MakeCSVReader()
+     *
+     * This class provides features to read out CSV data and converting them directly to literal types.
+     *
+     * Use MakeCSVReader or MakeCSVReaderFromBasicString for easy construction of this class.
+     *
+     */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter>
     class CSVReader : detail::CSVReaderBase<StrT, CharT, StrTUtils, Converter>
     {
@@ -530,7 +589,6 @@ namespace CSVReader {
                                   + std::to_string(this->_fieldTracker) + " at line "
                                   + std::to_string(this->_lineTracker) + "!", this->_fieldTracker, this->_lineTracker);
         }
-    public:
         template<class T, class... RestValues>
         void ReadNext(T nextVal, RestValues... restVals)
         {
@@ -654,7 +712,22 @@ namespace CSVReader {
         }
 
         void ReadNext() {}
-
+    public:
+        /*!
+         * \brief Read the next data line and pushes the result directly to the parameter.
+         *
+         * allValues must be pointer with the exception of:
+         *      * CSVDiscard
+         *      * CSVValidator
+         *      * CSVPostProcessor
+         *      * CSVOptional
+         *      * CSVSubReader
+         *      * CSVBatchReader
+         *      * CSVIterator
+         *
+         * \throws std::nested_exception When a parsing or conversion error happens.
+         *
+         */
         template<typename... Values>
         CSVReader& ReadDataLine(Values... allValues)
         {
@@ -671,7 +744,11 @@ namespace CSVReader {
             return *this;
         }
 
+
         // Begins with 1
+        /*!
+         * \brief Read out (peeking) a field without going to the next line.
+         */
         template<typename T>
         T ReadField(int fieldNum)
         {
@@ -696,6 +773,20 @@ namespace CSVReader {
 
     };
 
+    /*!
+     * \brief Creates a new CSVReader.
+     * \see CSVReader
+     *
+     * StrT template argument is the string class type.
+     * StrTUtils is a wrapper for the StrT class providing following static functions:
+     *      static bool find(const StrT& str, CharT sep, size_t& findIndex)
+     *      static size_t length(const target_string& str)
+     *      static target_string substring(const target_string& str, size_t pos, size_t count)
+     *
+     * Converter is a wrapper for converting StrT fields to literal types:
+     *      template<typename T>
+     *      static void Convert(T* out, const StrType& field)
+     */
     template<class StrT, class StrTUtils, class Converter, class Reader, class CharT>
     constexpr CSVReader<Reader, StrT, CharT, StrTUtils, Converter> MakeCSVReader(Reader* reader, CharT sep)
     {
@@ -717,6 +808,10 @@ namespace CSVReader {
         };
     }
 
+    /*!
+     * \brief Creates a new CSVReader for STL strings. (std::string, std::wstring, ...)
+     * \see CSVReader
+     */
     template<class Reader, class CharT>
     constexpr typename detail::CSVReaderFromReaderType<Reader>::full_type MakeCSVReaderFromBasicString(Reader* reader, CharT sep)
     {
@@ -753,7 +848,10 @@ namespace CSVReader {
         std::tuple<Values...> _val;
     };
 
-
+    /*!
+     * \brief Creates a new CSVSubReader.
+     * \see CSVSubReader
+     */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class SubChar, class... RestValues>
     constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues... values)
     {
@@ -777,6 +875,12 @@ namespace CSVReader {
         };
     }
 
+    /*!
+     * \brief Creates a new CSVBatchReader
+     * \see CSVBatchReader
+     *
+     * An overload without PostProcessor
+     */
     template<class ContainerT,                                                          // The container type
              class Reader,                                                              // The reader (not used)
              class StrT,                                                                // The string class
@@ -791,6 +895,15 @@ namespace CSVReader {
         return typename csv_batch_reader_type::full_type(sep, container, nullptr);
     }
 
+    /*!
+     * \brief Creates a new CSVBatchReader
+     * \see CSVBatchReader
+     *
+     * This will create a new CSVBatchReader. The ContainerT type is required to
+     * expose the value type with ContainerT::value_type (STL compatible).
+     *
+     * In addition you can pass an optional PostProcessor function.
+     */
     template<class ContainerT,                                                          // The container type
              class Reader,                                                              // The reader (not used)
              class StrT,                                                                // The string class
@@ -808,7 +921,10 @@ namespace CSVReader {
     }
 
 
-
+    /*!
+     * \brief Creates a new CSVIterator
+     * \see CSVIterator
+     */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class SubChar, class IteratorFunc>
     constexpr CSVIterator<StrT, CharT, StrTUtils, Converter>
         MakeCSVIterator(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, const IteratorFunc& iteratorFunc)
