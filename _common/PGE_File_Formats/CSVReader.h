@@ -185,6 +185,8 @@ namespace CSVReader {
     template<class StrT>
     struct DirectReader
     {
+        typedef StrT string_type;
+
         DirectReader(const StrT& data) : _data(data) {}
         StrT read_line()
         {
@@ -308,16 +310,16 @@ namespace CSVReader {
         std::function<bool(const T&)> _validatorFunction;
         std::function<void(T&)> _postProcessorFunction;
     };
-    template<typename T>
-    constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal) {
+    template<typename T, typename OT>
+    constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal) {
         return CSVOptional<T>(value, defVal);
     }
-    template<typename T, typename ValidatorFunc>
-    constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction) {
+    template<typename T, typename OT, typename ValidatorFunc>
+    constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal, ValidatorFunc validatorFunction) {
         return CSVOptional<T>(value, defVal, validatorFunction);
     }
-    template<typename T, typename ValidatorFunc, typename PostProcessorFunc>
-    constexpr CSVOptional<T> MakeCSVOptional(T* value, T defVal, ValidatorFunc validatorFunction, PostProcessorFunc postProcessorFunction) {
+    template<typename T, typename OT, typename ValidatorFunc, typename PostProcessorFunc>
+    constexpr CSVOptional<T> MakeCSVOptional(T* value, OT defVal, ValidatorFunc validatorFunction, PostProcessorFunc postProcessorFunction) {
         return CSVOptional<T>(value, defVal, validatorFunction, postProcessorFunction);
     }
 
@@ -433,6 +435,10 @@ namespace CSVReader {
         {
             *out = std::stold(field);
         }
+        static void ConvertInternal(unsigned int* out, const StrType& field, identity<unsigned int>)
+        {
+            *out = static_cast<unsigned int>(std::stoul(field));
+        }
         static void ConvertInternal(unsigned long* out, const StrType& field, identity<unsigned long>)
         {
             *out = std::stoul(field);
@@ -440,6 +446,15 @@ namespace CSVReader {
         static void ConvertInternal(unsigned long long* out, const StrType& field, identity<unsigned long long>)
         {
             *out = std::stoull(field);
+        }
+        static void ConvertInternal(bool* out, const StrType& field, identity<bool>)
+        {
+            if(field == "0" || field == "") // FIXME: Is it correct? Or too hackish?
+                *out = false;
+            else if(field == "!0" || field == "1") // FIXME: Is it correct? Or too hackish?
+                *out = true;
+            else
+                throw std::invalid_argument(std::string("Could not convert to bool (must be empty, \"0\", \"!0\" or \"1\"), got \"") + field + std::string("\""));
         }
         static void ConvertInternal(StrType* out, const StrType& field, identity<StrType>)
         {
@@ -780,11 +795,12 @@ namespace CSVReader {
              class Reader,                                                              // The reader (not used)
              class StrT,                                                                // The string class
              class CharT,                                                               // The char type
+             class SubCharT,
              class StrTUtils,                                                           // The string util class
              class Converter,                                                           // The value converter
              class PostProcessorFunc>
     constexpr typename detail::CSVBatchReaderFromContainer<ContainerT, StrT, CharT, StrTUtils, Converter>::full_type
-        MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, CharT sep, ContainerT* container, const PostProcessorFunc& postProcessorFunc)
+        MakeCSVBatchReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubCharT sep, ContainerT* container, const PostProcessorFunc& postProcessorFunc)
     {
         typedef detail::CSVBatchReaderFromContainer<ContainerT, StrT, CharT, StrTUtils, Converter> csv_batch_reader_type;
 

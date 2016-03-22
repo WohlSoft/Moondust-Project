@@ -5,16 +5,15 @@
 
 #include "CSVReader.h"
 
-#ifdef PGE_FILES_QT
 #include "pge_file_lib_globs.h"
-#include <QString>
 
 namespace CSVReader {
     struct CSVPGEReader
     {
+        typedef PGESTRING string_type;
         CSVPGEReader(PGE_FileFormats_misc::TextInput* reader) : _reader(reader) {}
 
-        QString read_line()
+        PGESTRING read_line()
         {
             return _reader->readLine();
         }
@@ -22,7 +21,8 @@ namespace CSVReader {
         PGE_FileFormats_misc::TextInput* _reader;
     };
 
-    struct CSVQStringUtils
+#ifdef PGE_FILES_QT
+    struct CSVPGESTRINGUtils
     {
         static bool find(const QString& str, QChar sep, size_t& findIndex)
         {
@@ -43,8 +43,12 @@ namespace CSVReader {
             return str.mid(pos, count);
         }
     };
+#else
+    struct CSVPGESTRINGUtils : DefaultStringWrapper<char, std::char_traits<char>, std::allocator<char>> {};
+#endif
 
-    struct CSVQStringConverter
+    #ifdef PGE_FILES_QT
+    struct CSVPGESTRINGConverter
     {
         template<typename T>
         static void Convert(T* out, const QString& field)
@@ -130,18 +134,27 @@ namespace CSVReader {
             *out = field;
         }
     };
+#else
+    struct CSVPGESTRINGConverter : DefaultCSVConverter<std::string> {};
+#endif
 
-    template<class Reader>
-    constexpr CSVReader<Reader, QString, QChar, CSVQStringUtils, CSVQStringConverter> MakeCSVReaderForPGESTRING(Reader* reader, QChar sep)
-    {
-        return CSVReader<Reader, QString, QChar, CSVQStringUtils, CSVQStringConverter>(reader, sep);
+    namespace detail {
+        template<class Reader>
+        struct CSVReaderFromPGESTRING {
+            typedef typename Reader::string_type string_type;
+            typedef typename string_type::value_type value_type;
+
+            typedef CSVReader<Reader, string_type, value_type, CSVPGESTRINGUtils, CSVPGESTRINGConverter> full_type;
+        };
     }
 
-
-
+    template<class Reader, class CharT>
+    constexpr typename detail::CSVReaderFromPGESTRING<Reader>::full_type MakeCSVReaderForPGESTRING(Reader* reader, CharT sep)
+    {
+        return typename detail::CSVReaderFromPGESTRING<Reader>::full_type(reader, sep);
+    }
 
 }
-#endif
 
 
 

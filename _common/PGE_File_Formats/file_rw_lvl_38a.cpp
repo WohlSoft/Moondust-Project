@@ -95,6 +95,8 @@ LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
                                         MakeCSVPostProcessor(&FileData.LevelName, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.LevelName, PGESTRING(""), nullptr, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.open_level_on_fail_warpID, 0u));
+            } else {
+                dataReader.ReadDataLine();
             }
         }
     }
@@ -263,7 +265,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
         PGESTRING fileIndentifier = dataReader.ReadField<PGESTRING>(1);
         dataReader.ReadDataLine();
 
-        qWarning() << "File format: " << fileIndentifier;
         if(!PGE_StartsWith(fileIndentifier, "SMBXFile"))
             throw std::logic_error("Invalid file format");
 
@@ -388,7 +389,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVPostProcessor(&npcdata.event_emptylayer, PGEUrlDecodeFunc),
                                                          MakeCSVPostProcessor(&npcdata.event_grab, PGEUrlDecodeFunc),
                                                          MakeCSVPostProcessor(&npcdata.event_nextframe, PGEUrlDecodeFunc),
-                                                         MakeCSVOptional(&npcdata.event_touch, QString(""), nullptr, PGEUrlDecodeFunc)
+                                                         MakeCSVOptional(&npcdata.event_touch, "", nullptr, PGEUrlDecodeFunc)
                                                          ),
                                         MakeCSVSubReader(dataReader, ',',
                                                          MakeCSVPostProcessor(&npcdata.attach_layer, PGEUrlDecodeFunc),
@@ -559,9 +560,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          ),
                                         MakeCSVSubReader(dataReader, '/',
                                                          &eventdata.nosmoke,
-                                                         MakeCSVBatchReader(dataReader, QChar(','), &eventdata.layers_show, PGEUrlDecodeFunc),
-                                                         MakeCSVBatchReader(dataReader, QChar(','), &eventdata.layers_hide, PGEUrlDecodeFunc),
-                                                         MakeCSVBatchReader(dataReader, QChar(','), &eventdata.layers_toggle, PGEUrlDecodeFunc)
+                                                         MakeCSVBatchReader(dataReader, ',', &eventdata.layers_show, PGEUrlDecodeFunc),
+                                                         MakeCSVBatchReader(dataReader, ',', &eventdata.layers_hide, PGEUrlDecodeFunc),
+                                                         MakeCSVBatchReader(dataReader, ',', &eventdata.layers_toggle, PGEUrlDecodeFunc)
                                                          ),
                                         MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
                                             auto fieldReader = MakeDirectReader(nextFieldStr);
@@ -796,7 +797,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
         }//while is not EOF
     } catch(const std::exception& err)
     {
-        qWarning() << "Except: " << exception_to_pretty_string(err).c_str();
         FileData.ReadFileValid=false;
         FileData.ERROR_info = "Invalid file format, detected file SMBX-" + fromNum(newest_file_format) + "format\n"
                 "Caused by: \n" + PGESTRING(exception_to_pretty_string(err).c_str());
