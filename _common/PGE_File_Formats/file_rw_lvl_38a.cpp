@@ -273,25 +273,25 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
             PGESTRING identifier = dataReader.ReadField<PGESTRING>(1);
             if(identifier == "A") {
                 // FIXME: Remove copy from line 77
-                //A|param1|param2[|param3|param4]
+                // A|param1|param2[|param3|param4]
                 dataReader.ReadDataLine(CSVDiscard(), // Skip the first field (this is already "identifier")
                                         &FileData.stars,
                                         MakeCSVPostProcessor(&FileData.LevelName, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.open_level_on_fail, PGESTRING(""), nullptr, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.open_level_on_fail_warpID, 0u));
             } else if(identifier == "P1") {
-                //P1|x1|y1
+                // P1|x1|y1
                 playerdata = CreateLvlPlayerPoint(1);
                 dataReader.ReadDataLine(CSVDiscard(), &playerdata.x, &playerdata.y);
                 FileData.players.push_back(playerdata);
             } else if(identifier == "P2") {
-                //P2|x2|y2
+                // P2|x2|y2
                 // FIXME: Copy from above (can be solved with switch?)
                 playerdata = CreateLvlPlayerPoint(2);
                 dataReader.ReadDataLine(CSVDiscard(), &playerdata.x, &playerdata.y);
                 FileData.players.push_back(playerdata);
             } else if(identifier == "M") {
-                //M|id|x|y|w|h|b1|b2|b3|b4|b5|b6|music|background|musicfile
+                // M|id|x|y|w|h|b1|b2|b3|b4|b5|b6|music|background|musicfile
                 section = CreateLvlSection();
                 double x = 0.0, y = 0.0, w = 0.0, h = 0.0;
                 PGESTRING scroll_lock_x;
@@ -350,6 +350,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 else
                     FileData.sections.push_back(section); //Add Section in main array
             } else if(identifier == "B") {
+                // B|layer|id|x|y|contain|b1|b2|e1,e2,e3|w|h
                 blockdata = CreateLvlBlock();
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&blockdata.layer, PGELayerOrDefault),
@@ -370,6 +371,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 blockdata.array_id = FileData.blocks_array_id++;
                 FileData.blocks.push_back(blockdata);
             } else if(identifier == "T") {
+                // T|layer|id|x|y
                 bgodata = CreateLvlBgo();
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&blockdata.layer, PGELayerOrDefault),
@@ -380,6 +382,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 bgodata.array_id = FileData.bgo_array_id++;
                 FileData.bgo.push_back(bgodata);
             } else if(identifier == "N") {
+                // N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
                 npcdata = CreateLvlNpc();
                 long specialData; // We have to handle that later :(
                 int genType; // We have to handle that later :(
@@ -464,6 +467,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 npcdata.array_id = FileData.npc_array_id++;
                 FileData.npc.push_back(npcdata);
             } else if(identifier == "Q") {
+                // Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
                 phyEnv = CreateLvlPhysEnv();
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&phyEnv.layer, PGELayerOrDefault),
@@ -483,6 +487,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 phyEnv.array_id = FileData.physenv_array_id++;
                 FileData.physez.push_back(phyEnv);
             } else if(identifier == "W") {
+                // W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
                 doordata = CreateLvlWarp();
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&doordata.layer, PGELayerOrDefault),
@@ -529,6 +534,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 doordata.array_id = FileData.doors_array_id++;
                 FileData.doors.push_back(doordata);
             } else if(identifier == "L") {
+                // L|name|status
                 layerdata = CreateLvlLayer();
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&layerdata.name, PGELayerOrDefault),
@@ -538,6 +544,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 layerdata.array_id = FileData.layers_array_id++;
                 FileData.layers.push_back(layerdata);
             } else if(identifier == "E") {
+                // E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
                 eventdata = CreateLvlEvent();
 
                 // Here we can just align the section id with the index of the set
@@ -549,21 +556,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                     set.id=q;
                     eventdata.sets.push_back(set);
                 }
-
-                // Temp Field 7
-/*
-                PGESTRINGList ev_sections;
-                PGESTRINGList ev_bgs;
-                PGESTRINGList ev_musics;
-*/
-                // Temp Field 8
-                PGESTRING effects;
-
-                // Temp Field 9
-                PGESTRING spawn_npcs;
-
-                // Temp Field 10
-                PGESTRING update_var;
 
                 // Temp Field 11
                 float trigger_time_raw;
@@ -790,6 +782,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 FileData.events.push_back(eventdata);
 
             } else if(identifier == "V") {
+                // V|name|value
                 vardata = CreateLvlVariable("var");
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&vardata.name, PGEUrlDecodeFunc),
@@ -799,6 +792,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                         );
                 FileData.variables.push_back(vardata);
             } else if(identifier == "S") {
+                // S|name|script
                 scriptdata = CreateLvlScript("doScript", LevelScript::LANG_TEASCRIPT);
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&scriptdata.name, PGEUrlDecodeFunc),
@@ -806,6 +800,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                         );
                 FileData.scripts.push_back(scriptdata);
             } else if(identifier == "Su") {
+                // Su|name|scriptu
                 scriptdata = CreateLvlScript("doScript", LevelScript::LANG_TEASCRIPT);
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&scriptdata.name, PGEUrlDecodeFunc),
