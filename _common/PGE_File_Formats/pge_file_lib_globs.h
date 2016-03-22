@@ -62,7 +62,7 @@
 #include <QSize>
 #endif
 #define PGE_FILES_INHERED public QObject
-#define PGESTRING QString
+typedef QString PGESTRING;
 #define PGESTRINGisEmpty() isEmpty()
 #define PGESTR_Simpl(str) str.simplified()
 #define PGEGetChar(chr) chr.toLatin1()
@@ -115,7 +115,7 @@ namespace PGE_FileFormats_misc
 #include <algorithm>
 #include <map>
 #define PGE_FILES_INGERED
-#define PGESTRING std::string
+typedef std::string PGESTRING;
 #define PGESTRINGisEmpty() empty()
 inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );

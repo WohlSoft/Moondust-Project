@@ -10,6 +10,10 @@
 - Better speed-adding physics
 - Layer motion engine has been implemented!
 - Bit better slopes support
+- Player Lua API has been implemented! It provides a programmign of playable character events
+- Improved onHarm/onKill events on NPC-AI
+- Added new NPC-AI events, functions and variables
+- Added a support of collision toggling from lua
 
 0.2.5
 - Fixed crash on NPC placement with inter-processing
