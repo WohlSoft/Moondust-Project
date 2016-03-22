@@ -813,12 +813,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
 
     FileData.ReadFileValid=true;
     return true;
-badfile:
-    FileData.ReadFileValid=false;
-    FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
-    FileData.ERROR_linenum = in.getCurrentLineNumber();
-    FileData.ERROR_linedata=line;
-    return false;
 }
 
 
