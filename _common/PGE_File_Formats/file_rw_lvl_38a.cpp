@@ -499,13 +499,21 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 // W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
                 doordata = CreateLvlWarp();
                 dataReader.ReadDataLine(CSVDiscard(),
+                                        //layer=layer name["" == "Default"][***urlencode!***]
                                         MakeCSVPostProcessor(&doordata.layer, PGELayerOrDefault),
+                                        //x=entrance position x
                                         &doordata.ix,
+                                        //y=entrance postion y
                                         &doordata.iy,
+                                        //ex=exit position x
                                         &doordata.ox,
+                                        //ey=exit position y
                                         &doordata.oy,
+                                        //type=[1=pipe][2=door][0=instant][3=portal/loop]
                                         &doordata.type,
+                                        //enterd=entrance direction[1=up 2=left 3=down 4=right]
                                         &doordata.idirect,
+                                        //exitd=exit direction[1=up 2=left 3=down 4=right]
                                         MakeCSVPostProcessor(&doordata.odirect, [](int& value){
                                             switch(value)//Convert into SMBX64/PGE-X Compatible form
                                             {
@@ -516,24 +524,42 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                             }
                                         }),
                                         MakeCSVSubReader(dataReader, ',',
+                                                         //sn=need stars for enter
                                                          &doordata.stars,
+                                                         //msg=a message when you have not enough stars
                                                          MakeCSVPostProcessor(&doordata.stars_msg, PGEUrlDecodeFunc),
+                                                         //hide=hide the star number in this warp
                                                          &doordata.star_num_hide),
                                         MakeCSVSubReader(dataReader, ',',
+                                                         //locked=locked
                                                          &doordata.locked,
+                                                         //noyoshi=no yoshi
                                                          &doordata.novehicles,
+                                                         //canpick=allow npc
                                                          &doordata.allownpc,
+                                                         //bomb=need a bomb
                                                          &doordata.need_a_bomb,
+                                                         //hide=hide the entry scene
                                                          &doordata.hide_entering_scene,
+                                                         //anpc=allow npc interlevel
                                                          &doordata.allownpc_interlevel,
+                                                         //mini=Mini-Only
                                                          MakeCSVOptional(&doordata.special_state_required, false),
+                                                         //size=Warp Size(pixel)
                                                          MakeCSVOptional(&doordata.length_i, 32u)),
+                                        //lik=warp to level[***urlencode!***]
                                         MakeCSVPostProcessor(&doordata.lname, PGEUrlDecodeFunc),
+                                        //liid=normal enterance / to warp[0-WARPMAX]
                                         &doordata.warpto,
+                                        //noexit=level entrance
                                         &doordata.lvl_i,
+                                        //wx=warp to x on world map
                                         &doordata.world_x,
+                                        //wy=warp to y on world map
                                         &doordata.world_y,
+                                        //le=level exit
                                         &doordata.lvl_o,
+                                        //we=warp event[***urlencode!***]
                                         MakeCSVPostProcessor(&doordata.event_enter, PGEUrlDecodeFunc)
                                         );
                 doordata.length_o = doordata.length_i;
@@ -1346,7 +1372,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                             goto badfile;
                         else
                         {
-                            npcdata.special_data = (int)round(toFloat(cLine));
+                            npcdata.special_data = (long)round(toDouble(cLine));
                             switch(npcdata.id)
                             {
                             case 15: case 39: case 86: //Bind "Is Boss" flag for supported NPC's

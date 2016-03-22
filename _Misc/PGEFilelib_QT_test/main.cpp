@@ -140,8 +140,9 @@ int main(int argc, char *argv[])
             PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
             QString raw_old;
             QString raw_new;
+            LevelData FileData;
 
-            LevelData FileData = FileFormats::CreateLevelData();
+            FileData = FileFormats::CreateLevelData();
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
             if(FileFormats::ReadSMBX65by38ALvlFile(fileI, FileData))
             {
