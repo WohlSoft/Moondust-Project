@@ -428,7 +428,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVOptional(&npcdata.generator_angle_range, 360.0),
                                                          MakeCSVOptional(&npcdata.generator_initial_speed, 10.0)
                                                          ),
-                                        MakeCSVPostProcessor(&FileData.LevelName, PGEUrlDecodeFunc)
+                                        MakeCSVPostProcessor(&npcdata.msg, PGEUrlDecodeFunc)
                                         );
 
                 switch(specialData)
