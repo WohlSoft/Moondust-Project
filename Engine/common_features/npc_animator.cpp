@@ -335,13 +335,15 @@ void AdvNpcAnimator::setDirectedSequence(bool dd)
 void AdvNpcAnimator::setOnceMode(bool en)
 {
     onceMode=en;
-    if(en&&_animationFinished)
+    if(en/*&&_animationFinished*/)
     {
         _animationFinished=false;
         frameCurrentL = frameFirstL;
         frameCurrentR = frameFirstR;
         setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
         setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+    } else {
+        _animationFinished=false;
     }
 }
 
@@ -393,7 +395,7 @@ void AdvNpcAnimator::nextFrame()
 {
     if(!isEnabled) return;
 
-    if(onceMode&&_animationFinished) return;
+    if(onceMode && _animationFinished) return;
 
     //Left
     if(!aniDirectL)

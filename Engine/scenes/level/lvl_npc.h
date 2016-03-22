@@ -106,6 +106,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_center;
     bool  disableBlockCollision;
     bool  disableNpcCollision;
+    bool  enablePlayerCollision;
     bool _stucked;
 
     QVector<PGE_Phys_Object*>   collision_speed_add;

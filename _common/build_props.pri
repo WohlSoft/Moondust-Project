@@ -48,5 +48,9 @@ useccache: {
 #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
 QMAKE_CC = ccache gcc
 QMAKE_CXX = ccache g++
+QMAKE_LINK = g++
+QMAKE_LINK_SHLIB = g++
+QMAKE_LINK_C = gcc
+QMAKE_LINK_C_SHLIB = gcc
 message("CHACHE with GCC will be used")
 }

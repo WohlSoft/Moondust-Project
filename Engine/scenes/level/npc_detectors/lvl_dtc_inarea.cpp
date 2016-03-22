@@ -31,10 +31,17 @@ void InAreaDetector::processDetector()
     _contacts = 0;
     _detected=false;
     _trapZone=_srcTrapZone;
+
     _trapZone.setPos(
                 _parentNPC->posCenterX()+_srcTrapZone.left(),
                 _parentNPC->posCenterY()+_srcTrapZone.top()
                 );
+
+    if( _parentNPC->direction() < 0 )
+    {
+        double x_pos = _trapZone.left() + (_parentNPC->posCenterX() - _trapZone.center().x())*2.0;
+        _trapZone.setPos( x_pos, _trapZone.y() );
+    }
 
     detectedPLR.clear();
     detectedBLK.clear();
@@ -125,6 +132,11 @@ bool InAreaDetector::detected(long type, long ID)
 int InAreaDetector::contacts()
 {
     return _contacts;
+}
+
+PGE_RectF InAreaDetector::trapZone()
+{
+    return _trapZone;
 }
 
 

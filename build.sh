@@ -18,7 +18,11 @@ do
                 flag_pause_on_end=false
             ;;
         use-ccache)
-                QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
+                if [[ "$OSTYPE" == "linux-gnu" ]]; then
+                    QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS -spec linux-g++ CONFIG+=useccache"
+                else
+                    QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
+                fi
             ;;
     esac
 done

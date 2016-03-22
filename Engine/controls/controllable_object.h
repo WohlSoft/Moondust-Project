@@ -30,6 +30,19 @@
 class ControllableObject
 {
 public:
+    enum KeyType
+    {
+        KEY_START=0,
+        KEY_DROP,
+        KEY_LEFT,
+        KEY_RIGHT,
+        KEY_UP,
+        KEY_DOWN,
+        KEY_RUN,
+        KEY_JUMP,
+        KEY_ALT_RUN,
+        KEY_ALT_JUMP
+    };
     /*!
      * \brief Constructor
      */
@@ -45,6 +58,13 @@ public:
      * \brief Sets all key states into "unpressed" state
      */
     void resetControls();
+
+    /*!
+     * \brief Returns a state of key type
+     * \param keyType Type of key
+     * \return true if key pressed, false if released
+     */
+    bool getKeyState(int keyType);
 
 protected:
     //! Recently accepted control key states

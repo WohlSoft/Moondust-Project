@@ -307,7 +307,7 @@ void LVL_Player::updateCollisions()
         //posRect.setX(_wallX);
         correctX=_wallX-posRect.x();
         needCorrect=true;
-        setSpeedX(0);
+        setSpeedX(0.0);
         //_velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
@@ -348,6 +348,12 @@ void LVL_Player::updateCollisions()
 
     if(needCorrect)
     {
+        if(!npcs_to_stomp.isEmpty())
+        {   //Don't apply speed-adding from stomped NPCs
+            foot_contacts_map.clear();
+            _velocityX_add=0.0f;
+            correctX = 0.0f;
+        }
         applyCorrectionToSA_stack(correctX, correctY);
     }
 
@@ -358,7 +364,7 @@ void LVL_Player::updateCollisions()
         npcs_to_stomp.pop_back();
 
         //Avoid workarround "don't hurt while flying up"
-        if(bottom() > npc->top()) setPosY( npc->top() - height()-1 );
+        if(bottom() >= npc->top()) setPosY( npc->top() - height()-1 );
 
         npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
         this->bump(true);
@@ -697,6 +703,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                 {
                     collided_talkable_npc=npc;
                 }
+                if(!npc->enablePlayerCollision) break;
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
                 if(npc->setup->climbable)

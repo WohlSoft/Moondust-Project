@@ -42,10 +42,46 @@
 #include <QDirIterator>
 #endif
 
+static void pge_engine_alphatestingNotify(MainWindow*parent)
+{
+    /************************Alpha-testing notify*****************************/
+    QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
+    cCounters.setIniCodec("UTF-8");
+    cCounters.beginGroup("message-boxes");
+    bool showNotice=cCounters.value("pge-engine-test-launch",true).toBool();
+    if(showNotice)
+    {
+        QMessageBox msg(parent);
+        msg.setWindowTitle(parent->tr("PGE Engine testing"));
+        msg.setWindowIcon(parent->windowIcon());
+        QCheckBox box;
+        box.setText(parent->tr("Don't show this message again."));
+        msg.setCheckBox(&box);
+        msg.setText(parent->tr("Hello! This is a test in PGE Engine.\n"
+                       "PGE Engine - is a develiping part of PGE Project which implements a gameplay and testing ability. "
+                       "Currently it's experimental and it has no implemented many features yet. "
+                       "Some features are may not be implemented or may work incorrectly. "
+                       "If you are making a levels or episodes for old SMBX Engine and you want to run "
+                       "test with completed support of necessary gameplay, please run level tests in the SMBX Engine. "
+                       "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE Specific levels "
+                       "or episodes.")
+                      );
+        msg.setStandardButtons(QMessageBox::Ok);
+        msg.exec();
+        showNotice = !box.isChecked();
+    }
+    cCounters.setValue("pge-engine-test-launch",showNotice);
+    cCounters.endGroup();
+    /************************Alpha-testing notify*****************************/
+}
+
+
 void MainWindow::on_action_doTest_triggered()
 {
-    QString command;
 
+    pge_engine_alphatestingNotify(this);
+
+    QString command;
     #ifdef _WIN32
     command = ApplicationPath+"/pge_engine.exe";
     #elif __APPLE__
@@ -110,6 +146,8 @@ void MainWindow::on_action_doTest_triggered()
 
 void MainWindow::on_action_doSafeTest_triggered()
 {
+    pge_engine_alphatestingNotify(this);
+
     QString command;
 
     #ifdef _WIN32

@@ -60,16 +60,22 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .def("onTakeNpc", &LVL_Player::lua_onTakeNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTakeNpc)
             .def("onKillNpc", &LVL_Player::lua_onKillNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKillNpc)
 
+            .def("getKeyState", &LVL_Player::lua_getKeyState)
+            .def("setAnimation", &LVL_Player::lua_setAnimation)
+
             .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
 
             .def("bump", &LVL_Player::bump)
 
             .def("setState", &LVL_Player::setState)
             .def("setCharacter", &LVL_Player::setCharacterID)
+            .def("setInvincible", &LVL_Player::setInvincible)
             .def_readonly("characterID", &LVL_Player::characterID)
             .def_readonly("stateID", &LVL_Player::stateID)
 
-            .def_readonly("onGround", &LVL_Player::onGround);
+            .def_readonly("onGround", &LVL_Player::onGround)
+            ;
+
 }
 
 luabind::scope Binding_Level_ClassWrapper_LVL_Player::HarmEvent_bindToLua()

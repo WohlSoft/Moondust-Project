@@ -10,65 +10,71 @@ YELLOW_SW = 4
 
 -- Increase player health
 function plr_healthUp(plr)
-	if( plr.health < 3 )then
-		if( (plr.characterID > 2) and (plr.health == 2) )then
-				plr.health = 3
-		else
-				plr.health = 2
-		end
-	end
+    if( plr.health < 3 )then
+        if( (plr.characterID > 2) and (plr.health == 2) )then
+                plr.health = 3
+        else
+                plr.health = 2
+        end
+    end
 end
 
 -- Processes player powerup system
 function ProcessPlayerPowerUP(plr, npc)
-	if( npc_isRadish(npc.id) )then
-		plr_healthUp(plr)
-		if(plr.stateID == 1 )then
-			plr:setState(2)
-			Audio.playSoundByRole(SoundRoles.PlayerGrow)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
+    if( npc_isRadish(npc.id) )then
+        plr_healthUp(plr)
+        if(plr.stateID == 1 )then
+            plr:setState(2)
+            Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
     elseif( npc_isFirePlant(npc.id))then
-		plr_healthUp(plr)
-		if(plr.stateID ~= 3 )then
-			plr:setState(3)
-			Audio.playSoundByRole(SoundRoles.PlayerGrow)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
-	elseif( npc_isIcePlant(npc.id))then
-		plr_healthUp(plr)
-		if(plr.stateID ~= 7 )then
-			plr:setState(7)
-			Audio.playSoundByRole(SoundRoles.PlayerGrow)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
-	elseif( npc.id == 34 )then -- Leaf
-		plr_healthUp(plr)
-		if(plr.stateID ~= 4 )then
-			plr:setState(4)
-			Audio.playSoundByRole(SoundRoles.PlayerMagic)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
+        plr_healthUp(plr)
+        if(plr.stateID ~= 3 )then
+            plr:setState(3)
+            Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
+    elseif( npc_isIcePlant(npc.id))then
+        plr_healthUp(plr)
+        if(plr.stateID ~= 7 )then
+            plr:setState(7)
+            Audio.playSoundByRole(SoundRoles.PlayerGrow)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
+    elseif( npc.id == 34 )then -- Leaf
+        plr_healthUp(plr)
+        if(plr.stateID ~= 4 )then
+            plr:setState(4)
+            Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
     elseif( npc.id == 169 )then -- Tanooki
-		plr_healthUp(plr)
-		if(plr.stateID ~= 5)then
-			plr:setState(5)
-			Audio.playSoundByRole(SoundRoles.PlayerMagic)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
+        plr_healthUp(plr)
+        if(plr.stateID ~= 5)then
+            plr:setState(5)
+            Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
     elseif( npc.id == 170 )then -- Hammer
-		plr_healthUp(plr)
-		if(plr.stateID ~= 6)then
-			plr:setState(6)
-			Audio.playSoundByRole(SoundRoles.PlayerMagic)
-		else
-			Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
-		end
+        plr_healthUp(plr)
+        if(plr.stateID ~= 6)then
+            plr:setState(6)
+            Audio.playSoundByRole(SoundRoles.PlayerMagic)
+            plr:setInvincible(true, 1500, true)
+        else
+            Audio.playSoundByRole(SoundRoles.PlayerTakeItem)
+        end
     end
 end
 
@@ -110,37 +116,59 @@ end
 
 -- Is NPC a Radish?
 function npc_isRadish(npcID)
-	if(npcID==9)then
+    if(npcID==9)then
         return true
     elseif(npcID==184)then
         return true
     elseif(npcID==185)then
         return true
-	elseif(npcID==249)then
+    elseif(npcID==249)then
         return true
-	end
-	return false
+    end
+    return false
 end
 
 -- Is NPC a Fire Plant?
 function npc_isFirePlant(npcID)
-	if(npcID==14)then
+    if(npcID==14)then
         return true
     elseif(npcID==182)then
         return true
     elseif(npcID==183)then
         return true
-	end
-	return false
+    end
+    return false
 end
 
 -- Is NPC an Ice Plant?
 function npc_isIcePlant(npcID)
-	if(npcID==264)then
+    if(npcID==264)then
         return true
     elseif(npcID==277)then
         return true
-	end
-	return false
+    end
+    return false
+end
+
+-- Is NPC a Fire Plant?
+function npc_isShell(npcID)
+    if(npcID==5)then
+        return true
+    elseif(npcID==7)then
+        return true
+    elseif(npcID==24)then
+        return true
+    elseif(npcID==73)then
+        return true
+    elseif((npcID>=113)and(npcID<=116))then
+        return true
+    elseif(npcID==172)then
+        return true
+    elseif(npcID==174)then
+        return true
+    --elseif(npcID==195)then
+    --    return true
+    end
+    return false
 end
 

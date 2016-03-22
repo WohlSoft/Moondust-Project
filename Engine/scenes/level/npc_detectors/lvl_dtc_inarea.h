@@ -23,7 +23,7 @@ public:
     bool detected();
     bool detected(long type, long ID);
     int contacts();   //! number of detected items
-
+    PGE_RectF trapZone();
 private:
     QHash<int, int > detectedPLR;
     QHash<int, int > detectedBLK;
