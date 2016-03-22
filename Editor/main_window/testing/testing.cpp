@@ -58,12 +58,12 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
         box.setText(parent->tr("Don't show this message again."));
         msg.setCheckBox(&box);
         msg.setText(parent->tr("Hello! This is a test in PGE Engine.\n"
-                       "PGE Engine - is a develiping part of PGE Project which implements a gameplay and testing ability. "
-                       "Currently it's experimental and it has no implemented many features yet. "
-                       "Some features are may not be implemented or may work incorrectly. "
-                       "If you are making a levels or episodes for old SMBX Engine and you want to run "
-                       "test with completed support of necessary gameplay, please run level tests in the SMBX Engine. "
-                       "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE Specific levels "
+                       "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. "
+                       "Currently, it's experimental and has not implemented many features yet. "
+                       "Some features may not be implemented or may work incorrectly. "
+                       "If you are making levels or episodes for the old SMBX Engine and you want to run "
+                       "a test with a complete feature-set, please run level tests in the SMBX Engine. "
+                       "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE specific levels "
                        "or episodes.")
                       );
         msg.setStandardButtons(QMessageBox::Ok);

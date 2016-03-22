@@ -40,7 +40,7 @@ void FileStringList::addData(PGESTRING fileData)
     #ifdef PGE_FILES_QT
     buffer = fileData.split(QRegExp("[\r\n]"), QString::SkipEmptyParts);
     #else
-    PGE_SPLITSTR(buffer, fileData, "\n");
+    PGE_SPLITSTRING(buffer, fileData, "\n");
     #endif
     lineID=0;
 }

@@ -144,19 +144,19 @@ namespace PGE_FileFormats_misc
     std::string base64_encodeA(std::string &source);
     std::string base64_decodeA(std::string &source);
 }
-#define PGE_SPLITSTR(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
-inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
+#define PGE_SPLITSTRING(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
+inline PGESTRING PGE_ReplSTRING(PGESTRING src, PGESTRING from, PGESTRING to) {
     PGE_FileFormats_misc::replaceAll(src, from, to);
     return src;
 }
 
-inline PGESTRING PGE_RemSSTR(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
+inline PGESTRING PGE_RemSubSTRING(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
 #define PGE_RemSRng(pos, len) erase(pos, len)
 inline bool IsNULL(PGESTRING str) { return (str.empty()!=0); }
 inline int toInt(PGESTRING str){ return std::atoi(str.c_str()); }
 inline float toFloat(PGESTRING str){ return std::atof(str.c_str()); }
 inline double toDouble(PGESTRING str){ return std::atof(str.c_str()); }
-inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSSTR(src, " "); }
+inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSubSTRING(src, " "); }
 template<typename T>
 PGESTRING fromNum(T num) { std::ostringstream n; n<<num; return n.str(); }
 #define PGE_URLENC(src) PGE_FileFormats_misc::url_encode(src)

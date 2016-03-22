@@ -86,7 +86,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
        #ifdef PGE_FILES_QT
        Params=line.split("=", QString::SkipEmptyParts); // split the Parameter and value (example: chicken=2)
        #else
-       PGE_SPLITSTR(Params, line, "=");
+       PGE_SPLITSTRING(Params, line, "=");
        #endif
 
        if(Params.size() != 2) // If string does not contain strings with "=" as separator
