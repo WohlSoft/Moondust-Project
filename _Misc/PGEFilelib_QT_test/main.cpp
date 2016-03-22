@@ -3,6 +3,9 @@
 #include <QTextStream>
 #include <PGE_File_Formats/file_formats.h>
 
+//for DEEP test of SMBX38A
+#include <QDir>
+
 void printLevelInfo(LevelData &lvl, QTextStream &cout)
 {
     cout<<"Level title: "<< lvl.LevelName << "\n";
@@ -26,6 +29,7 @@ void printLevelInfo(LevelData &lvl, QTextStream &cout)
         }
         cout<< "==================================" << "\n";
     }
+    cout.flush();
 }
 
 void printWorldInfo(WorldData &lvl, QTextStream &cout)
@@ -38,11 +42,13 @@ void printWorldInfo(WorldData &lvl, QTextStream &cout)
     cout<<"Paths: "<< lvl.paths.size() << "\n";
     cout<<"Levels: "<< lvl.levels.size() << "\n";
     cout<<"Musicboxes: "<< lvl.music.size() << "\n\n";
+    cout.flush();
 }
 
 void printLine(QTextStream &cout)
 {
     cout <<"\n\n=============================\n";
+    cout.flush();
 }
 
 int main(int argc, char *argv[])
@@ -99,7 +105,93 @@ int main(int argc, char *argv[])
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
         printLevelInfo(level,cout);
+        QFile testOutput("test_65-38a-out.lvlx");
+        testOutput.open(QIODevice::WriteOnly);
+        QTextStream(&testOutput) << FileFormats::WriteExtendedLvlFile(level);
+        testOutput.close();
     }
+
+    /**********************DEEP TEST OF SMBX38A files*********************/
+    {
+        cout << "==================DEEP TEST OF SMBX38A==================\n";
+        QString path = "38a_deep_test/";
+        QDir testDir(path);
+        QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
+
+        QFile("invalid_new.log").remove();
+        QFile("invalid_old.log").remove();
+        QFile("differents.log").remove();
+
+        QFile newInvalid("invalid_new.log");
+        newInvalid.open(QIODevice::Append);
+        QTextStream niout(&newInvalid);
+
+        QFile oldInvalid("invalid_old.log");
+        oldInvalid.open(QIODevice::Append);
+        QTextStream oiout(&oldInvalid);
+
+        QFile diffs("differents.log");
+        diffs.open(QIODevice::Append);
+        QTextStream diout(&diffs);
+
+        foreach(QString file, files)
+        {
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            QString raw_old;
+            QString raw_new;
+
+            LevelData FileData = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+            if(FileFormats::ReadSMBX65by38ALvlFile(fileI, FileData))
+            {
+                QFile testOutput(path+file+".new.lvlx");
+                testOutput.open(QIODevice::WriteOnly);
+                raw_new=FileFormats::WriteExtendedLvlFile(FileData);
+                QTextStream(&testOutput) << raw_new;
+                testOutput.flush();
+                testOutput.close();
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\n";
+                newInvalid.flush();
+            }
+
+
+            FileData = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+            if(FileFormats::ReadSMBX65by38ALvlFile_OLD(fileI, FileData))
+            {
+                QFile testOutput(path+file+".old.lvlx");
+                testOutput.open(QIODevice::WriteOnly);
+                raw_old=FileFormats::WriteExtendedLvlFile(FileData);
+                QTextStream(&testOutput) << raw_old;
+                testOutput.flush();
+                testOutput.close();
+            } else {
+                cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                oiout << path+file << "\r\n";
+                oldInvalid.flush();
+            }
+
+            if(raw_old.isEmpty())
+                continue;
+            if(raw_new.isEmpty())
+                continue;
+            if(raw_old!=raw_new)
+            {
+                cout << "FILES ARE DIFFERENT\n";
+                diout << path+file << "\r\n";
+                diffs.flush();
+            }
+            cout.flush();
+        }
+        oldInvalid.close();
+        newInvalid.close();
+        diffs.close();
+        cout << "==================DEEP TEST OF SMBX38A=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
 
 
     printLine(cout);

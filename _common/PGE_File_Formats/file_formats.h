@@ -125,7 +125,7 @@ public:
     static bool ReadSMBX65by38ALvlFileF(PGESTRING  filePath, LevelData &FileData);
     static bool ReadSMBX65by38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
     static bool ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
-
+    static bool ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, LevelData &FileData);
 
     /*!
      * \brief Generates SMBX65-38A Level file data
@@ -534,7 +534,6 @@ public:
     static PGESTRING        removeQuotes(PGESTRING str);
     //! String which contains info about last happened error
     static PGESTRING        errorString;
-
 };
 
 #endif // FILE_FORMATS_H
