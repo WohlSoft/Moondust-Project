@@ -29,13 +29,13 @@
 #include <QString>
 #include <QStringList>
 #include <QObject>
-#define PGESTRING QString
-#define PGESTRINGList QStringList
+typedef QString PGESTRING;
+typedef QStringList PGESTRINGList;
 #else
 #include <vector>
 #include <string>
-#define PGESTRING std::string
-#define PGESTRINGList std::vector<std::string >
+typedef std::string PGESTRING;
+typedef std::vector<std::string > PGESTRINGList;
 #endif
 
 /*!

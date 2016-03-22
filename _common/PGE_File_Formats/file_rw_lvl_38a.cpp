@@ -30,7 +30,7 @@ using namespace CSVReader;
 //for Header readers.
 //Use it if you want read file partially
 //(you must create QTextStream in(&fstream); !!!)
-#define SMBX65_FileBegin() int file_format=0;   /*File format number*/\
+#define SMBX65_FileBegin() /*int file_format=0;*/  /*File format number*/\
                            PGESTRING line;      /*Current Line data*/
 
 //Jump to next line
@@ -273,53 +273,74 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
             PGESTRING identifier = dataReader.ReadField<PGESTRING>(1);
             if(identifier == "A") {
                 // FIXME: Remove copy from line 77
+                //A|param1|param2[|param3|param4]
                 dataReader.ReadDataLine(CSVDiscard(), // Skip the first field (this is already "identifier")
                                         &FileData.stars,
                                         MakeCSVPostProcessor(&FileData.LevelName, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.open_level_on_fail, PGESTRING(""), nullptr, PGEUrlDecodeFunc),
                                         MakeCSVOptional(&FileData.open_level_on_fail_warpID, 0u));
             } else if(identifier == "P1") {
+                //P1|x1|y1
                 playerdata = CreateLvlPlayerPoint(1);
                 dataReader.ReadDataLine(CSVDiscard(), &playerdata.x, &playerdata.y);
                 FileData.players.push_back(playerdata);
             } else if(identifier == "P2") {
+                //P2|x2|y2
                 // FIXME: Copy from above (can be solved with switch?)
                 playerdata = CreateLvlPlayerPoint(2);
                 dataReader.ReadDataLine(CSVDiscard(), &playerdata.x, &playerdata.y);
                 FileData.players.push_back(playerdata);
             } else if(identifier == "M") {
+                //M|id|x|y|w|h|b1|b2|b3|b4|b5|b6|music|background|musicfile
                 section = CreateLvlSection();
                 double x = 0.0, y = 0.0, w = 0.0, h = 0.0;
                 PGESTRING scroll_lock_x;
                 PGESTRING scroll_lock_y;
                 dataReader.ReadDataLine(CSVDiscard(),
-                                        MakeCSVPostProcessor(&section.id, [](int& sectionID){
+                                        //id=[1-SectionMAX]
+                                        MakeCSVPostProcessor(&section.id, [](int& sectionID) {
                                             sectionID--;
                                             if(sectionID < 0) sectionID = 0;
                                         }),
+                                        //x=Left size[-left/+right]
                                         &x,
+                                        //y=Top size[-down/+up]
                                         &y,
-                                        MakeCSVPostProcessor(&w, MakeMinFunc(800.0)),
-                                        MakeCSVPostProcessor(&h, MakeMinFunc(600.0)),
+                                        //w=width of the section[if (w < 800) w = 800]
+                                        &w,//MakeCSVPostProcessor(&w, MakeMinFunc(800.0)),
+                                        //h=height of the section[if (h < 600) h = 600]
+                                        &h,//MakeCSVPostProcessor(&h, MakeMinFunc(600.0)),
+                                        //b1=under water?[0=false !0=true]
                                         &section.underwater,
+                                        //b2=is x-level wrap[0=false !0=true]
                                         &section.wrap_h,
+                                        //b3=enable off screen exit[0=false !0=true]
                                         &section.OffScreenEn,
+                                        //b4=no turn back(x)[0=no x-scrolllock 1=scrolllock left 2=scrolllock right]
                                         &scroll_lock_x,
+                                        //b5=no turn back(y)[0=no y-scrolllock 1=scrolllock up 2=scrolllock down]
                                         &scroll_lock_y,
+                                        //b6=is y-level wrap[0=false !0=true]
                                         &section.wrap_v,
+                                        //music=music number[same as smbx1.3]
                                         &section.music_id,
+                                        //background=background number[same as the filename in 'background2' folder]
                                         &section.background,
+                                        //musicfile=custom music file[***urlencode!***]
                                         MakeCSVPostProcessor(&section.music_file, PGEUrlDecodeFunc));
+
                 section.lock_left_scroll = (scroll_lock_x == "1");
                 section.lock_right_scroll = (scroll_lock_x == "2");
                 section.lock_up_scroll = (scroll_lock_y == "1");
                 section.lock_down_scroll = (scroll_lock_y == "2");
 
-                section.size_left = (long)round(x);
-                section.size_top = (long)round(y);
-                section.size_right = (long)round(x+w);
-                section.size_bottom = (long)round(y+h);
-
+                if((x!=0.0)||(y!=0.0)||(w!=0.0)||(h!=0.0))
+                {
+                    section.size_left = (long)round(x);
+                    section.size_top = (long)round(y);
+                    section.size_right = (long)round(x+w);
+                    section.size_bottom = (long)round(y+h);
+                }
                 //Very important data! I'ts a camera position in the editor!
                 section.PositionX = section.size_left-10;
                 section.PositionY = section.size_top-10;
