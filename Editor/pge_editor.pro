@@ -615,7 +615,9 @@ HEADERS  += defines.h \
     common_features/data_array.h \
     common_features/file_mapper.h \
     editing/_scenes/level/edit_modes/mode_circle.h \
-    editing/_scenes/world/edit_modes/wld_mode_circle.h
+    editing/_scenes/world/edit_modes/wld_mode_circle.h \
+    ../_common/PGE_File_Formats/CSVReader.h \
+    ../_common/PGE_File_Formats/CSVReaderPGE.h
 
 
 FORMS    += \

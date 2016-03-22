@@ -99,7 +99,7 @@ namespace PGE_FileFormats_misc
     QString      base64_decodeA(QString &source);
 }
 #define PGE_BASE64ENC(src)   PGE_FileFormats_misc::base64_encode(src)
-#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_encode(src)
+#define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_decode(src)
 #define PGE_BASE64ENC_W(src) PGE_FileFormats_misc::base64_encodeW(src)
 #define PGE_BASE64DEC_W(src) PGE_FileFormats_misc::base64_decodeW(src)
 #define PGE_BASE64ENC_A(src) PGE_FileFormats_misc::base64_encodeA(src)
