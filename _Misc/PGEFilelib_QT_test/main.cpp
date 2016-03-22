@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
             } else {
                 //Remove similar files!
                 QFile(opath+file+".old.lvlx").remove();
-                QFile(opath+file+".old.lvlx").remove();
+                QFile(opath+file+".new.lvlx").remove();
             }
             cout.flush();
         }

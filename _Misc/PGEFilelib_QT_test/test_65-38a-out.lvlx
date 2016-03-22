@@ -1,3 +1,6 @@
+HEAD
+TL:"My funny level! \:D";SZ:0;
+HEAD_END
 SECTION
 SC:0;L:-200000;R:-184224;T:-201216;B:-200000;MZ:24;MF:"hills.mp3";BG:49;
 SC:1;L:-180000;R:-179200;T:-180600;B:-179872;MZ:24;MF:"bonus area.mp3";BG:30;
@@ -2669,7 +2672,7 @@ ID:32;X:-189248;Y:-200130;D:-1;LR:"P Switch";ED:"P Switch - Start";
 ID:8;X:-191536;Y:-200144;D:-1;
 ID:8;X:-191728;Y:-200144;D:-1;
 ID:8;X:-190384;Y:-200144;D:-1;
-ID:94;X:-199488;Y:-200150;D:-1;FD:1;NM:1;
+ID:94;X:-199488;Y:-200150;D:-1;MG:"Welcome to Paradise Hills\, Mario. Sarasaland has expanded since your last visit\, and this is one of the newer areas developed. There's a castle to the south of here which you might want to check out. Good luck\, Mario!";FD:1;NM:1;
 ID:10;X:-186046;Y:-200160;D:-1;
 ID:109;X:-186880;Y:-200160;D:-1;
 ID:10;X:-186014;Y:-200160;D:-1;
@@ -2685,7 +2688,7 @@ ID:10;X:-186174;Y:-200160;D:-1;
 ID:10;X:-185886;Y:-200160;D:-1;
 ID:8;X:-195472;Y:-200176;D:-1;
 ID:8;X:-195856;Y:-200176;D:-1;
-ID:75;X:-186755;Y:-200182;D:-1;FD:1;NM:1;
+ID:75;X:-186755;Y:-200182;D:-1;MG:"This red arrow means that you're near the goal! There's a star at the end that you'll want to grab. Go for it\, Mario!";FD:1;NM:1;
 ID:10;X:-190206;Y:-200192;D:-1;
 ID:10;X:-190558;Y:-200192;D:-1;
 ID:109;X:-196800;Y:-200192;D:-1;
@@ -2747,13 +2750,13 @@ ID:109;X:-196736;Y:-200320;D:-1;
 ID:10;X:-192830;Y:-200320;D:1;
 ID:10;X:-192766;Y:-200320;D:1;
 ID:109;X:-197504;Y:-200352;D:-1;
-ID:121;X:-189376;Y:-200352;D:-1;
+ID:121;X:-189376;Y:-200352;D:-1;S1:1;
 ID:10;X:-192798;Y:-200352;D:1;
-ID:121;X:-186016;Y:-200352;D:-1;
+ID:121;X:-186016;Y:-200352;D:-1;S1:2;
 ID:10;X:-192766;Y:-200352;D:1;
 ID:10;X:-192830;Y:-200352;D:1;
 ID:1;X:-191936;Y:-200352;D:-1;
-ID:94;X:-197632;Y:-200374;D:-1;FD:1;NM:1;
+ID:94;X:-197632;Y:-200374;D:-1;MG:"This is Emerald Bluff. Once you cross this area\, it's a straight shot to Mushroom Village. Seems there's been some trouble there lately...";FD:1;NM:1;
 ID:10;X:-192798;Y:-200384;D:-1;
 ID:10;X:-192830;Y:-200384;D:-1;
 ID:10;X:-192766;Y:-200384;D:-1;

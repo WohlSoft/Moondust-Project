@@ -376,7 +376,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 // T|layer|id|x|y
                 bgodata = CreateLvlBgo();
                 dataReader.ReadDataLine(CSVDiscard(),
-                                        MakeCSVPostProcessor(&blockdata.layer, PGELayerOrDefault),
+                                        MakeCSVPostProcessor(&bgodata.layer, PGELayerOrDefault),
                                         &bgodata.id,
                                         &bgodata.x,
                                         &bgodata.y);
@@ -386,7 +386,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
             } else if(identifier == "N") {
                 // N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
                 npcdata = CreateLvlNpc();
-                long specialData; // We have to handle that later :(
+                double specialData;
                 int genType; // We have to handle that later :(
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&npcdata.layer, PGELayerOrDefault),
@@ -397,16 +397,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVPostProcessor(&npcdata.direct, [](int& value){value = value * -1;} ),
                                                          &npcdata.friendly,
                                                          &npcdata.nomove,
-                                                         MakeCSVPostProcessor(&npcdata.contents, [](long& value){
-                                                            switch(value)
-                                                            {
-                                                                case 1: value = 91; break;
-                                                                case 2: value = 96; break;
-                                                                case 3: value = 283; break;
-                                                                case 4: value = 284; break;
-                                                                case 5: value = 300; break;
-                                                            }
-                                                         })),
+                                                         &npcdata.contents),
                                         &specialData,
                                         MakeCSVSubReader(dataReader, ',',
                                                          MakeCSVPostProcessor(&npcdata.event_die, PGEUrlDecodeFunc),
@@ -430,13 +421,29 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVOptional(&npcdata.generator_angle_range, 360.0),
                                                          MakeCSVOptional(&npcdata.generator_initial_speed, 10.0)
                                                          ),
-                                        MakeCSVPostProcessor(&FileData.LevelName, PGEUrlDecodeFunc)
+                                        MakeCSVPostProcessor(&npcdata.msg, PGEUrlDecodeFunc)
                                         );
 
-                switch(specialData)
+                if(npcdata.contents>0)
+                {
+                    int contID = npcdata.contents;
+                    npcdata.contents = npcdata.id;
+                    switch(contID)
+                    {
+                        case 1: npcdata.id=91;break;
+                        case 2: npcdata.id=96;break;
+                        case 3: npcdata.id=283;break;
+                        case 4: npcdata.id=284;break;
+                        default:
+                        case 5: npcdata.id=300;break;
+                    }
+                }
+
+                npcdata.special_data = (long)round(specialData);
+                switch(npcdata.id)
                 {
                 case 15: case 39: case 86: //Bind "Is Boss" flag for supported NPC's
-                    npcdata.is_boss = (bool)specialData;
+                    npcdata.is_boss = (bool)npcdata.special_data;
                     npcdata.special_data = 0;
                     default: break;
                 }

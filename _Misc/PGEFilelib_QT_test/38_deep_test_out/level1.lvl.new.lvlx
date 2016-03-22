@@ -1,6 +1,3 @@
-HEAD
-TL:"Aren't you that plumber that everyone keeps talking about?  Here\, you can have what's in this chest.";SZ:0;
-HEAD_END
 SECTION
 SC:0;L:0;R:6176;T:-544;B:576;MZ:1;MF:"";BG:1;
 SC:1;L:1376;R:2176;T:-2560;B:-1960;MZ:4;MF:"";BG:7;
@@ -1113,11 +1110,11 @@ ID:3;X:2912;Y:512;D:-1;
 ID:1;X:2720;Y:512;D:-1;
 ID:1;X:2528;Y:512;D:-1;
 ID:1;X:992;Y:512;D:-1;
-ID:94;X:480;Y:490;D:-1;FD:1;NM:1;ET:"Toad Help";
+ID:94;X:480;Y:490;D:-1;MG:"Did you know that you can change your character at the world map screen?";FD:1;NM:1;ET:"Toad Help";
 ID:1;X:1408;Y:480;D:-1;
 ID:1;X:1984;Y:480;D:-1;
 ID:1;X:1664;Y:480;D:-1;
-ID:76;X:4448;Y:448;D:-1;
+ID:76;X:4448;Y:448;D:-1;S1:1;
 ID:6;X:4768;Y:416;D:-1;
 ID:6;X:864;Y:414;D:-1;
 ID:8;X:656;Y:400;D:-1;
@@ -1125,7 +1122,7 @@ ID:11;X:5760;Y:384;D:-1;
 ID:10;X:3266;Y:384;D:-1;
 ID:10;X:3490;Y:384;D:-1;
 ID:6;X:2592;Y:382;D:-1;
-ID:244;X:2272;Y:352;D:-1;
+ID:244;X:2272;Y:352;D:-1;S1:3;
 ID:10;X:3298;Y:352;D:-1;
 ID:10;X:3458;Y:352;D:-1;
 ID:8;X:1840;Y:336;D:-1;
@@ -1156,8 +1153,8 @@ ID:10;X:4610;Y:-320;D:-1;
 ID:10;X:4290;Y:-320;D:-1;
 ID:10;X:4546;Y:-320;D:-1;
 ID:32;X:-159264;Y:-160224;D:-1;LR:"Treasure 2";
-ID:94;X:-159328;Y:-160246;D:-1;FD:1;LR:"Toad 2";
-ID:94;X:-159328;Y:-160246;D:-1;FD:1;LR:"Toad 1";ET:"Toad Talk 1";
+ID:94;X:-159328;Y:-160246;D:-1;MG:"I hope that was helpful.";FD:1;LR:"Toad 2";
+ID:94;X:-159328;Y:-160246;D:-1;MG:"Aren't you that plumber that everyone keeps talking about?  Here\, you can have what's in this chest.";FD:1;LR:"Toad 1";ET:"Toad Talk 1";
 NPC_END
 DOORS
 IX:2096;IY:384;OX:-159632;OY:-160320;DT:1;ID:3;OD:1;WX:0;WY:0;
