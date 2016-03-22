@@ -670,8 +670,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                              if(customSize){
                                                                  nextSet.position_left = (SMBX64::sFloat(nextSet.expression_pos_x) ? 0 : (long)round(toDouble(nextSet.expression_pos_x)));
                                                                  nextSet.position_top = (SMBX64::sFloat(nextSet.expression_pos_y) ? 0 : (long)round(toDouble(nextSet.expression_pos_y)));
-                                                                 nextSet.position_right = (SMBX64::sFloat(nextSet.expression_pos_w) ? 0 : (long)round(toDouble(nextSet.expression_pos_w)) + nextSet.position_left);
-                                                                 nextSet.position_bottom = (SMBX64::sFloat(nextSet.expression_pos_h) ? 0 : (long)round(toDouble(nextSet.expression_pos_h)) + nextSet.position_top);
+                                                                 nextSet.position_right = (SMBX64::sFloat(nextSet.expression_pos_w) ? 0 : ((long)round(toDouble(nextSet.expression_pos_w)) + nextSet.position_left));
+                                                                 nextSet.position_bottom = (SMBX64::sFloat(nextSet.expression_pos_h) ? 0 : ((long)round(toDouble(nextSet.expression_pos_h)) + nextSet.position_top));
                                                              }
                                                              if(canAutoscroll){
                                                                  nextSet.autoscrol_x = (SMBX64::sFloat(nextSet.expression_autoscrool_x) ? 0 : toDouble(nextSet.expression_autoscrool_x));
@@ -717,7 +717,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                              bool customMusic = false;
                                                              long music_id;
                                                              fullReader.ReadDataLine(CSVDiscard(),
-                                                                                     MakeCSVPostProcessor(&nextSet.background_id, [&customMusic](long& value){
+                                                                                     MakeCSVPostProcessor(&nextSet.music_id, [&customMusic](long& value){
                                                                                          switch(value)
                                                                                          {
                                                                                              case 0: value = LevelEvent_Sets::LESet_Nothing; break;
