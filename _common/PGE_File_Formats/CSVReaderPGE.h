@@ -62,7 +62,8 @@ namespace CSVReader {
         {
             (void)out;
             (void)field;
-            static_assert(std::is_integral<T>::value, "No default converter for this type");
+            // This is a hackishy solution, but gcc checks static_assert, even if the template function is not actually used
+            static_assert(std::is_same<T, double>::value, "No default converter for this type");
         }
         static void ConvertInternal(double* out, const QString& field, identity<double>)
         {
@@ -105,6 +106,13 @@ namespace CSVReader {
             *out = field.toDouble(&ok);
             if(!ok)
                 throw std::invalid_argument("Could not convert to long double");
+        }
+        static void ConvertInternal(unsigned int* out, const QString& field, identity<unsigned int>)
+        {
+            bool ok = true;
+            *out = static_cast<unsigned int>(field.toULong(&ok));
+            if(!ok)
+                throw std::invalid_argument("Could not convert to unsigned int");
         }
         static void ConvertInternal(unsigned long* out, const QString& field, identity<unsigned long>)
         {

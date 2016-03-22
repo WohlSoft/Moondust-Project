@@ -471,7 +471,8 @@ namespace CSVReader {
         template<typename T>
         static void ConvertInternal(T* out, const StrType& field, identity<T>)
         {
-            static_assert(!std::is_integral<T>::value, "No default converter for this type");
+            // This is a hackishy solution, but gcc checks static_assert, even if the template function is not actually used
+            static_assert(std::is_same<T, double>::value, "No default converter for this type");
         }
         static void ConvertInternal(double* out, const StrType& field, identity<double>)
         {
