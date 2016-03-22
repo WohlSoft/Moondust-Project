@@ -269,7 +269,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
 
         while(!in.eof())
         {
-#if 1
             PGESTRING identifier = dataReader.ReadField<PGESTRING>(1);
             if(identifier == "A") {
                 // FIXME: Remove copy from line 77
@@ -519,14 +518,22 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
             } else if(identifier == "E") {
                 eventdata = CreateLvlEvent();
 
-                // Temp Field 5
-                PGESTRING moving_layers;
+                // Here we can just align the section id with the index of the set
+                // It is an unsafe method, however, we should be safe when reading from the file, where the data object is empty.
+                eventdata.sets.clear();
+                for(int q=0;q<(signed)FileData.sections.size(); q++)
+                {
+                    LevelEvent_Sets set;
+                    set.id=q;
+                    eventdata.sets.push_back(set);
+                }
 
                 // Temp Field 7
+/*
                 PGESTRINGList ev_sections;
                 PGESTRINGList ev_bgs;
                 PGESTRINGList ev_musics;
-
+*/
                 // Temp Field 8
                 PGESTRING effects;
 
@@ -540,6 +547,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                 float trigger_time_raw;
                 float timer_def_interval_raw;
 
+                // This variable is used for the spawn npc section.
+                // The first two values are static ones, after that they come in packages (see below)
+                int spawnNpcReaderCurrentIndex = 0;
                 dataReader.ReadDataLine(CSVDiscard(),
                                         MakeCSVPostProcessor(&eventdata.name, PGEUrlDecodeFunc),
                                         MakeCSVPostProcessor(&eventdata.msg, PGEUrlDecodeFunc),
@@ -553,7 +563,19 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVBatchReader(dataReader, QChar(','), &eventdata.layers_hide, PGEUrlDecodeFunc),
                                                          MakeCSVBatchReader(dataReader, QChar(','), &eventdata.layers_toggle, PGEUrlDecodeFunc)
                                                          ),
-                                        &moving_layers,
+                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
+                                            auto fieldReader = MakeDirectReader(nextFieldStr);
+                                            auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                            LevelEvent_MoveLayer movingLayer;
+                                            fullReader.ReadDataLine(MakeCSVPostProcessor(&movingLayer.name, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&movingLayer.expression_x, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&movingLayer.expression_y, PGEUrlDecodeFunc),
+                                                                    &movingLayer.way
+                                                                    );
+                                            movingLayer.speed_x = (SMBX64::sFloat(movingLayer.expression_x) ? 0.0f : toFloat(movingLayer.expression_x));
+                                            movingLayer.speed_y = (SMBX64::sFloat(movingLayer.expression_y) ? 0.0f : toFloat(movingLayer.expression_y));
+                                            eventdata.moving_layers.push_back(movingLayer);
+                                        }),
                                         MakeCSVSubReader(dataReader, ',',
                                                          &eventdata.ctrls_enable,
                                                          &eventdata.ctrl_drop,
@@ -569,13 +591,159 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          &eventdata.ctrl_lock_keyboard
                                                          ),
                                         MakeCSVSubReader(dataReader, '/',
-                                                         MakeCSVBatchReader(dataReader, QChar(':'), &ev_sections),
-                                                         MakeCSVBatchReader(dataReader, QChar(':'), &ev_bgs),
-                                                         MakeCSVBatchReader(dataReader, QChar(':'), &ev_musics)
+                                                         MakeCSVIterator(dataReader, ':', [&eventdata](const PGESTRING& nextFieldStr){
+                                                             auto fieldReader = MakeDirectReader(nextFieldStr);
+                                                             auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                                             int sectionID = fullReader.ReadField<int>(1) - 1;
+                                                             LevelEvent_Sets& nextSet = eventdata.sets[sectionID];
+                                                             bool customSize = false;
+                                                             bool canAutoscroll = false;
+                                                             fullReader.ReadDataLine(CSVDiscard(),
+                                                                                     MakeCSVPostProcessor(&nextSet.position_left, [&customSize](long& value){
+                                                                                         switch(value)
+                                                                                         {
+                                                                                             case 0: value = LevelEvent_Sets::LESet_Nothing; break;
+                                                                                             case 1: value = LevelEvent_Sets::LESet_ResetDefault; break;
+                                                                                             case 2: customSize = true; value = 0; break;
+                                                                                         }
+                                                                                     }),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_pos_x, PGEUrlDecodeFunc),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_pos_y, PGEUrlDecodeFunc),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_pos_w, PGEUrlDecodeFunc),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_pos_h, PGEUrlDecodeFunc),
+                                                                                     MakeCSVPostProcessor(&nextSet.autoscrol, [&canAutoscroll](bool& value) {canAutoscroll = value;}),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_autoscrool_x, PGEUrlDecodeFunc),
+                                                                                     MakeCSVPostProcessor(&nextSet.expression_autoscrool_y, PGEUrlDecodeFunc)
+                                                                                     );
+                                                             if(customSize){
+                                                                 nextSet.position_left = (SMBX64::sFloat(nextSet.expression_pos_x) ? 0 : (long)round(toFloat(nextSet.expression_pos_x)));
+                                                                 nextSet.position_top = (SMBX64::sFloat(nextSet.expression_pos_y) ? 0 : (long)round(toFloat(nextSet.expression_pos_y)));
+                                                                 nextSet.position_right = (SMBX64::sFloat(nextSet.expression_pos_w) ? 0 : (long)round(toFloat(nextSet.expression_pos_w)) + nextSet.position_left);
+                                                                 nextSet.position_bottom = (SMBX64::sFloat(nextSet.expression_pos_h) ? 0 : (long)round(toFloat(nextSet.expression_pos_h)) + nextSet.position_right);
+                                                             }
+                                                             if(canAutoscroll){
+                                                                 nextSet.autoscrol_x = (SMBX64::sFloat(nextSet.expression_autoscrool_x) ? 0 : toFloat(nextSet.expression_autoscrool_x));
+                                                                 nextSet.autoscrol_y = (SMBX64::sFloat(nextSet.expression_autoscrool_y) ? 0 : toFloat(nextSet.expression_autoscrool_y));
+                                                                 // Possible overwriting?
+                                                                 eventdata.move_camera_x = nextSet.autoscrol_x;
+                                                                 eventdata.move_camera_y = nextSet.autoscrol_y;
+                                                             }else{
+                                                                 nextSet.autoscrol_x = 0.f;
+                                                                 nextSet.autoscrol_y = 0.f;
+                                                                 // Doesn't even make sense:
+                                                                 // eventdata.move_camera_x = 0.f;
+                                                                 // eventdata.move_camera_y = 0.f;
+                                                             }
+                                                             eventdata.scroll_section = sectionID;
+                                                         }),
+                                                         MakeCSVIterator(dataReader, ':', [&eventdata](const PGESTRING& nextFieldStr){
+                                                             auto fieldReader = MakeDirectReader(nextFieldStr);
+                                                             auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                                             int sectionID = fullReader.ReadField<int>(1) - 1;
+                                                             LevelEvent_Sets& nextSet = eventdata.sets[sectionID];
+                                                             bool customBG = false;
+                                                             long bgID = 0;
+                                                             fullReader.ReadDataLine(CSVDiscard(),
+                                                                                     MakeCSVPostProcessor(&nextSet.background_id, [&customBG](long& value){
+                                                                                         switch(value)
+                                                                                         {
+                                                                                             case 0: value = LevelEvent_Sets::LESet_Nothing; break;
+                                                                                             case 1: value = LevelEvent_Sets::LESet_ResetDefault; break;
+                                                                                             case 2: customBG = true; value = 0; break;
+                                                                                         }
+                                                                                     }),
+                                                                                     &bgID
+                                                                                     );
+                                                             if(customBG)
+                                                                 nextSet.background_id = bgID;
+                                                         }),
+                                                         MakeCSVIterator(dataReader, ':', [&eventdata](const PGESTRING& nextFieldStr){
+                                                             auto fieldReader = MakeDirectReader(nextFieldStr);
+                                                             auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                                             int sectionID = fullReader.ReadField<int>(1) - 1;
+                                                             LevelEvent_Sets& nextSet = eventdata.sets[sectionID];
+                                                             bool customMusic = false;
+                                                             long music_id;
+                                                             fullReader.ReadDataLine(CSVDiscard(),
+                                                                                     MakeCSVPostProcessor(&nextSet.background_id, [&customMusic](long& value){
+                                                                                         switch(value)
+                                                                                         {
+                                                                                             case 0: value = LevelEvent_Sets::LESet_Nothing; break;
+                                                                                             case 1: value = LevelEvent_Sets::LESet_ResetDefault; break;
+                                                                                             case 2: customMusic = true; value = 0; break;
+                                                                                         }
+                                                                                     }),
+                                                                                     &music_id,
+                                                                                     MakeCSVPostProcessor(&nextSet.music_file, PGEUrlDecodeFunc)
+                                                                                     );
+                                                             if(customMusic)
+                                                                 nextSet.music_id = music_id;
+                                                         })
                                                          ),
-                                        &effects,
-                                        &spawn_npcs,
-                                        &update_var,
+                                        MakeCSVIterator(dataReader, '/', [&eventdata, &spawnNpcReaderCurrentIndex](const PGESTRING& nextFieldStr){
+                                            switch (spawnNpcReaderCurrentIndex) {
+                                            case 0:
+                                                if(SMBX64::uInt(nextFieldStr))
+                                                    throw std::invalid_argument("Cannot convert field 1 to int.");
+                                                eventdata.sound_id = toInt(nextFieldStr);
+                                                spawnNpcReaderCurrentIndex++;
+                                                break;
+                                            case 1:
+                                                if(SMBX64::uInt(nextFieldStr))
+                                                    throw std::invalid_argument("Cannot convert field 2 to int.");
+                                                eventdata.end_game = toInt(nextFieldStr);
+                                                spawnNpcReaderCurrentIndex++;
+                                                break;
+                                            default:
+                                                auto fieldReader = MakeDirectReader(nextFieldStr);
+                                                auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                                LevelEvent_SpawnEffect effect;
+                                                fullReader.ReadDataLine(&effect.id,
+                                                                        MakeCSVPostProcessor(&effect.expression_x, PGEUrlDecodeFunc),
+                                                                        MakeCSVPostProcessor(&effect.expression_y, PGEUrlDecodeFunc),
+                                                                        MakeCSVPostProcessor(&effect.expression_sx, PGEUrlDecodeFunc),
+                                                                        MakeCSVPostProcessor(&effect.expression_sy, PGEUrlDecodeFunc),
+                                                                        &effect.gravity,
+                                                                        &effect.fps,
+                                                                        &effect.max_life_time
+                                                                        );
+                                                effect.x = (SMBX64::sFloat(effect.expression_x) ? 0.0f : toFloat(effect.expression_x));
+                                                effect.y = (SMBX64::sFloat(effect.expression_y) ? 0.0f : toFloat(effect.expression_y));
+                                                effect.speed_x = (SMBX64::sFloat(effect.expression_sx) ? 0.0f : toFloat(effect.expression_sx));
+                                                effect.speed_y = (SMBX64::sFloat(effect.expression_sy) ? 0.0f : toFloat(effect.expression_sy));
+                                                eventdata.spawn_effects.push_back(effect);
+                                                break;
+                                            }
+                                        }),
+                                        // &effects,
+                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
+                                            auto fieldReader = MakeDirectReader(nextFieldStr);
+                                            auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                            LevelEvent_SpawnNPC spawnnpc;
+                                            fullReader.ReadDataLine(&spawnnpc.id,
+                                                                    MakeCSVPostProcessor(&spawnnpc.expression_x, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&spawnnpc.expression_y, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&spawnnpc.expression_sx, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&spawnnpc.expression_sy, PGEUrlDecodeFunc),
+                                                                    &spawnnpc.special
+                                                                    );
+                                            spawnnpc.x = (SMBX64::sFloat(spawnnpc.expression_x) ? 0.0f : toFloat(spawnnpc.expression_x));
+                                            spawnnpc.y = (SMBX64::sFloat(spawnnpc.expression_y) ? 0.0f : toFloat(spawnnpc.expression_y));
+                                            spawnnpc.speed_x = (SMBX64::sFloat(spawnnpc.expression_sx) ? 0.0f : toFloat(spawnnpc.expression_sx));
+                                            spawnnpc.speed_y = (SMBX64::sFloat(spawnnpc.expression_sy) ? 0.0f : toFloat(spawnnpc.expression_sy));
+                                            eventdata.spawn_npc.push_back(spawnnpc);
+                                        }),
+                                        // &spawn_npcs,
+                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
+                                            auto fieldReader = MakeDirectReader(nextFieldStr);
+                                            auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                            LevelEvent_UpdateVariable updVar;
+                                            fullReader.ReadDataLine(MakeCSVPostProcessor(&updVar.name, PGEUrlDecodeFunc),
+                                                                    MakeCSVPostProcessor(&updVar.newval, PGEUrlDecodeFunc)
+                                                                    );
+                                            eventdata.update_variable.push_back(updVar);
+                                        }),
+                                        // &update_var,
                                         MakeCSVSubReader(dataReader, '/',
                                                          MakeCSVSubReader(dataReader, ',',
                                                                           MakeCSVPostProcessor(&eventdata.trigger, PGEUrlDecodeFunc),
@@ -592,512 +760,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          )
 
                                         );
-
-                //FIXME: Implement in CSV Reader
-                PGESTRINGList EvMvLayers;
-                SMBX65_SplitSubLine(EvMvLayers, moving_layers);
-                for(int j=0; j<(signed)EvMvLayers.size(); j++)
-                {
-                    LevelEvent_MoveLayer ml;
-                    PGESTRING &dLine=EvMvLayers[j];
-
-                    PGESTRINGList movelayers;
-                    SplitCSVStr(movelayers, dLine);
-                    for(int k=0; k<(signed)movelayers.size(); k++)
-                    {
-                        PGESTRING &eLine=movelayers[k];
-                        switch(k)
-                        {
-                            case 0:
-                                ml.name=PGE_URLDEC(eLine);
-                                eventdata.movelayer=ml.name;
-                            break;
-                            case 1:
-                                ml.expression_x=PGE_URLDEC(eLine);
-                                if(SMBX64::sFloat(ml.expression_x))
-                                    ml.speed_x=0.0f;
-                                else
-                                    ml.speed_x=toFloat(ml.expression_x);
-                                eventdata.layer_speed_x=ml.speed_x;
-                            break;
-                            case 2:
-                                ml.expression_y=PGE_URLDEC(eLine);
-                                if(SMBX64::sFloat(ml.expression_y))
-                                    ml.speed_y=0.0f;
-                                else
-                                    ml.speed_y=toFloat(ml.expression_y);
-                                eventdata.layer_speed_y=ml.speed_y;
-                            break;
-                            case 3:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                ml.way=toInt(eLine);
-                            break;
-                        }
-                        eventdata.moving_layers.push_back(ml);
-                    }
-                }
-
-                //FIXME: Implement in CSV Reader
-                eventdata.sets.clear();
-                for(int q=0;q<(signed)FileData.sections.size(); q++)
-                {
-                    LevelEvent_Sets set;
-                    set.id=q;
-                    eventdata.sets.push_back(set);
-                }
-
-                int evSetsSize = ev_sections.size();
-                if(evSetsSize<(signed)ev_bgs.size())
-                    evSetsSize=ev_bgs.size();
-                if(evSetsSize<(signed)ev_musics.size())
-                    evSetsSize=ev_musics.size();
-
-                for(int j=0; j<evSetsSize; j++)
-                {
-                    //SECTIONS
-                    if(j<(signed)ev_sections.size())
-                    {
-                        PGESTRINGList params;
-                        SplitCSVStr(params, ev_sections[j]);
-                        //        es=id,stype,x,y,w,h,auto,sx,sy
-                        int id = -1;
-                        bool customSizes=false;
-                        bool autoscroll=false;
-                        for(int k=0; k<(signed)params.size();k++)
-                        {
-                            if(     (k>0)&&
-                                    ( (id<0) || (id>=(signed)eventdata.sets.size()) )
-                               )//Append sections
-                            {
-                                if(id<0) goto badfile;//Missmatched section ID!
-                                int last=eventdata.sets.size()-1;
-                                while(id>=(signed)eventdata.sets.size())
-                                {
-                                    LevelEvent_Sets set;
-                                    set.id=last;
-                                    eventdata.sets.push_back(set);
-                                    last++;
-                                }
-                            }
-                            PGESTRING &eLine=params[k];
-                            switch(k)
-                            {
-                            //id=section id
-                            case 0:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                id=toInt(eLine)-1;
-                                break;
-                            //stype=[0=don't change][1=default][2=custom]
-                            case 1:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                    switch(toInt(eLine))
-                                    {
-                                        case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing;
-                                        case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault;
-                                        case 2: customSizes=true;
-                                    }
-                                break;
-                            //x=left x coordinates for section [id][***urlencode!***][syntax]
-                            case 2:
-                                if(customSizes)
-                                {
-                                    eventdata.sets[id].expression_pos_x = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_pos_x))
-                                        eventdata.sets[id].position_left=0;
-                                    else
-                                        eventdata.sets[id].position_left=(long)round(toFloat(eventdata.sets[id].expression_pos_x));
-                                }
-                                break;
-                            //y=top y coordinates for section [id][***urlencode!***][syntax]
-                            case 3:
-                                if(customSizes)
-                                {
-                                    eventdata.sets[id].expression_pos_y = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_pos_y))
-                                        eventdata.sets[id].position_top=0;
-                                    else
-                                        eventdata.sets[id].position_top=(long)round(toFloat(eventdata.sets[id].expression_pos_y));
-                                } else {
-                                    eventdata.sets[id].position_top = 0;
-                                }
-                                break;
-                            //w=width for section [id][***urlencode!***][syntax]
-                            case 4:
-                                if(customSizes)
-                                {
-                                    eventdata.sets[id].expression_pos_w = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_pos_w))
-                                        eventdata.sets[id].position_right=0;
-                                    else
-                                        eventdata.sets[id].position_right=(long)round(toFloat(eventdata.sets[id].expression_pos_w))+
-                                                                           eventdata.sets[id].position_left;
-                                } else {
-                                    eventdata.sets[id].position_right = 0;
-                                }
-                                break;
-                            //h=height for section [id][***urlencode!***][syntax]
-                            case 5:
-                                if(customSizes)
-                                {
-                                    eventdata.sets[id].expression_pos_h = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_pos_h))
-                                        eventdata.sets[id].position_bottom=0;
-                                    else
-                                        eventdata.sets[id].position_bottom=(long)round(toFloat(eventdata.sets[id].expression_pos_h))+
-                                                                            eventdata.sets[id].position_top;
-                                } else {
-                                    eventdata.sets[id].position_bottom = 0;
-                                }
-                                break;
-                            //auto=enable autoscroll controls[0=false !0=true]
-                            case 6:
-                                autoscroll = (eLine!="0");
-                                eventdata.sets[id].autoscrol = autoscroll;
-                                break;
-                            //sx=move screen horizontal syntax[***urlencode!***][syntax]
-                            case 7:
-                                if(autoscroll)
-                                {
-                                    eventdata.sets[id].expression_autoscrool_x = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_autoscrool_x))
-                                        eventdata.sets[id].autoscrol_x=0.f;
-                                    else
-                                        eventdata.sets[id].autoscrol_x=toFloat(eventdata.sets[id].expression_autoscrool_x);
-                                    eventdata.scroll_section=id;
-                                    eventdata.move_camera_x = eventdata.sets[id].autoscrol_x;
-                                } else {
-                                    eventdata.sets[id].autoscrol_x = 0.f;
-                                    eventdata.scroll_section = id;
-                                    eventdata.move_camera_x = 0.f;
-                                }
-                                break;
-                            //sy=move screen vertical syntax[***urlencode!***][syntax]
-                            case 8:
-                                if(autoscroll)
-                                {
-                                    eventdata.sets[id].expression_autoscrool_y = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(eventdata.sets[id].expression_autoscrool_y))
-                                        eventdata.sets[id].autoscrol_y=0.f;
-                                    else
-                                        eventdata.sets[id].autoscrol_y=toFloat(eventdata.sets[id].expression_autoscrool_y);
-                                    eventdata.scroll_section=id;
-                                    eventdata.move_camera_y = eventdata.sets[id].autoscrol_y;
-                                } else {
-                                    eventdata.sets[id].autoscrol_y = 0.f;
-                                    eventdata.scroll_section = id;
-                                    eventdata.move_camera_y = 0.f;
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    //BACKGROUNDS
-                    if(j<(signed)ev_bgs.size())
-                    {
-                        PGESTRINGList params;
-                        SplitCSVStr(params, ev_bgs[j]);
-                        //eb=id,btype,backgroundid
-                        int id = -1;
-                        bool customBg=false;
-                        for(int k=0; k<(signed)params.size();k++)
-                        {
-                            if(     (k>0)&&
-                                    ( (id<0) || (id>=(signed)eventdata.sets.size()) )
-                               )//Append sections
-                            {
-                                if(id<0) goto badfile;//Missmatched section ID!
-                                int last=eventdata.sets.size()-1;
-                                while(id>=(signed)eventdata.sets.size())
-                                {
-                                    LevelEvent_Sets set;
-                                    set.id=last;
-                                    eventdata.sets.push_back(set);
-                                    last++;
-                                }
-                            }
-
-                            PGESTRING &eLine=params[k];
-                            switch(k)
-                            {
-                            //id=section id
-                            case 0:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                id=toInt(eLine)-1;
-                                break;
-                            //btype=[0=don't change][1=default][2=custom]
-                            case 1:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                    switch(toInt(eLine))
-                                    {
-                                        case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing;
-                                        case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault;
-                                        case 2: customBg=true;
-                                    }
-                                break;
-                            //backgroundid=[when btype=2]custom background id
-                            case 2:
-                                if(customBg)
-                                {
-                                    if(SMBX64::sFloat(eLine))
-                                        goto badfile;
-                                    eventdata.sets[id].background_id=(long)round(toFloat(eLine));
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    //em=id,mtype,musicid,customfile
-                    //  id=section id
-                    //  mtype=[0=don't change][1=default][2=custom]
-                    //  musicid=[when mtype=2]custom music id
-                    //  customfile=[when mtype=3]custom music file name[***urlencode!***]
-                    //MUSICS
-                    if(j<(signed)ev_musics.size())
-                    {
-                        PGESTRINGList params;
-                        SplitCSVStr(params, ev_musics[j]);
-                        //em=id,mtype,musicid,customfile
-                        int id = -1;
-                        bool customMusics=false;
-                        for(int k=0; k<(signed)params.size();k++)
-                        {
-                            if(     (k>0)&&
-                                    ( (id<0) || (id>=(signed)eventdata.sets.size()) )
-                               )//Append sections
-                            {
-                                if(id<0) goto badfile;//Missmatched section ID!
-                                int last=eventdata.sets.size()-1;
-                                while(id>=(signed)eventdata.sets.size())
-                                {
-                                    LevelEvent_Sets set;
-                                    set.id=last;
-                                    eventdata.sets.push_back(set);
-                                    last++;
-                                }
-                            }
-
-                            PGESTRING &eLine=params[k];
-                            switch(k)
-                            {
-                            //id=section id
-                            case 0:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                id=toInt(eLine)-1;
-                                break;
-                            //mtype=[0=don't change][1=default][2=custom]
-                            case 1:
-                                if(SMBX64::uInt(eLine))
-                                    goto badfile;
-                                    switch(toInt(eLine))
-                                    {
-                                        case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing;
-                                        case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault;
-                                        case 2:
-                                        default: customMusics=true;
-                                    }
-                                break;
-                            //musicid=[when mtype=2]custom music id
-                            case 2:
-                                if(customMusics)
-                                {
-                                    if(SMBX64::sFloat(eLine))
-                                        goto badfile;
-                                    eventdata.sets[id].music_id=(long)round(toFloat(eLine));
-                                }
-                                break;
-                            case 3:
-                                if(customMusics)
-                                {
-                                    eventdata.sets[id].music_file = PGE_URLDEC(eLine);
-                                    if(eventdata.sets[id].music_file=="0")
-                                        eventdata.sets[id].music_file.clear();
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                // FIXME: Implement in CSV Reader
-                PGESTRINGList Effects;
-                SMBX65_SplitSubLine(Effects, effects);
-                for(int j=0; j<(signed)Effects.size(); j++)
-                {
-                    PGESTRING &dLine=Effects[j];
-                    switch(j)
-                    {
-                        //sound=play sound number
-                        case 0:
-                            if(SMBX64::uInt(dLine))
-                                goto badfile;
-                            eventdata.sound_id = toInt(dLine);
-                        break;
-                        //    endgame=[0=none][1=bowser defeat]
-                        case 1:
-                            if(SMBX64::uInt(dLine))
-                                goto badfile;
-                            eventdata.end_game = toInt(dLine);
-                        break;
-                        default:
-                        {
-                            LevelEvent_SpawnEffect effect;
-                            PGESTRINGList EffectsToSpawn;
-                            SplitCSVStr(EffectsToSpawn, dLine);
-                            for(int k=0; k<(signed)EffectsToSpawn.size();k++)
-                            {
-                                //ce(n)=id,x,y,sx,sy,grv,fsp,life
-                                PGESTRING &eLine=EffectsToSpawn[k];
-                                switch(k)
-                                {
-                                //        id=effect id
-                                case 0:
-                                    if(SMBX64::uInt(eLine))
-                                        goto badfile;
-                                    effect.id = toInt(eLine);
-                                    break;
-                                //        x=effect position x[***urlencode!***][syntax]
-                                case 1:
-                                    effect.expression_x = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(effect.expression_x))
-                                        effect.x=0;
-                                    else
-                                        effect.x=(long)toFloat(effect.expression_x);
-                                    break;
-                                //        y=effect position y[***urlencode!***][syntax]
-                                case 2:
-                                    effect.expression_y = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(effect.expression_y))
-                                        effect.y=0;
-                                    else
-                                        effect.y=(long)toFloat(effect.expression_y);
-                                    break;
-                                //        sx=effect horizontal speed[***urlencode!***][syntax]
-                                case 3:
-                                    effect.expression_sx = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(effect.expression_sx))
-                                        effect.speed_x=0.f;
-                                    else
-                                        effect.speed_x=toFloat(effect.expression_sx);
-                                    break;
-                                //        sy=effect vertical speed[***urlencode!***][syntax]
-                                case 4:
-                                    effect.expression_sy = PGE_URLDEC(eLine);
-                                    if(SMBX64::sFloat(effect.expression_sy))
-                                        effect.speed_y=0.f;
-                                    else
-                                        effect.speed_y=toFloat(effect.expression_sy);
-                                    break;
-                                //        grv=to decide whether the effects are affected by gravity[0=false !0=true]
-                                case 5: effect.gravity = (eLine!="0"); break;
-                                //        fsp=frame speed of effect generated
-                                case 6:
-                                    if(SMBX64::uInt(eLine))
-                                        goto badfile;
-                                    effect.fps = toInt(eLine);
-                                    break;
-                                //        life=effect existed over this time will be destroyed.
-                                case 7:
-                                    if(SMBX64::uInt(eLine))
-                                        goto badfile;
-                                    effect.max_life_time = toInt(eLine);
-                                    break;
-                                }
-                            }
-                            eventdata.spawn_effects.push_back(effect);
-                        }
-                        break;
-                    }
-                }
-
-                // FIXME: Implement in CSV Reader
-                PGESTRINGList SpawnNPCs;
-                SMBX65_SplitSubLine(SpawnNPCs, spawn_npcs);
-                //cn(n)=id,x,y,sx,sy,sp
-                for(int j=0;j<(signed)SpawnNPCs.size(); j++)
-                {
-                    LevelEvent_SpawnNPC spawnnpc;
-                    PGESTRING &dLine=SpawnNPCs[j];
-                    PGESTRINGList SpawnNPC;
-                    SplitCSVStr(SpawnNPC, dLine);
-                    for(int k=0;k<(signed)SpawnNPC.size(); k++)
-                    {
-                        PGESTRING &eLine=SpawnNPC[k];
-                        switch(k)
-                        {
-                        //id=npc id
-                        case 0:
-                            if(SMBX64::uInt(eLine))
-                                goto badfile;
-                            spawnnpc.id=toInt(eLine);
-                            break;
-                        //x=npc position x[***urlencode!***][syntax]
-                        case 1:
-                            spawnnpc.expression_x = PGE_URLDEC(eLine);
-                            if(SMBX64::sFloat(spawnnpc.expression_x))
-                                spawnnpc.speed_x=0.f;
-                            else
-                                spawnnpc.speed_x=toFloat(spawnnpc.expression_x);
-                            break;
-                        //y=npc position y[***urlencode!***][syntax]
-                        case 2:
-                            spawnnpc.expression_y = PGE_URLDEC(eLine);
-                            if(SMBX64::sFloat(spawnnpc.expression_y))
-                                spawnnpc.speed_y=0.f;
-                            else
-                                spawnnpc.speed_y=toFloat(spawnnpc.expression_y);
-                            break;
-                        //sx=npc horizontal speed[***urlencode!***][syntax]
-                        case 3:
-                            spawnnpc.expression_sx = PGE_URLDEC(eLine);
-                            if(SMBX64::sFloat(spawnnpc.expression_sx))
-                                spawnnpc.speed_x=0.f;
-                            else
-                                spawnnpc.speed_x=toFloat(spawnnpc.expression_sx);
-                            break;
-                        //sy=npc vertical speed[***urlencode!***][syntax]
-                        case 4:
-                            spawnnpc.expression_sy = PGE_URLDEC(eLine);
-                            if(SMBX64::sFloat(spawnnpc.expression_sy))
-                                spawnnpc.speed_y=0.f;
-                            else
-                                spawnnpc.speed_y=toFloat(spawnnpc.expression_sy);
-                            break;
-                        //sp=advanced settings of generated npc
-                        case 5:
-                            if(SMBX64::sInt(eLine))
-                                goto badfile;
-                            spawnnpc.special=toInt(eLine);
-                            break;
-                        }
-                    }
-                    eventdata.spawn_npc.push_back(spawnnpc);
-                }
-
-                // FIXME: Implement in CSV Reader
-                LevelEvent_UpdateVariable updVar;
-                PGESTRINGList updVars;
-                SMBX65_SplitSubLine(updVars, update_var);
-                //    vc(n)=name,newvalue
-                for(int j=0; j<(signed)updVars.size(); j++)
-                {
-                    PGESTRING &dLine=updVars[j];
-                    switch(j)
-                    {
-                    //name=variable name[***urlencode!***]
-                    case 0:updVar.name=PGE_URLDEC(dLine); break;
-                    //newvalue=new value[***urlencode!***][syntax]
-                    case 1:updVar.newval=PGE_URLDEC(dLine); break;
-                    }
-                }
-                eventdata.update_variable.push_back(updVar);
-
 
                 eventdata.trigger_timer = (long)round(SMBX64::t65_to_ms(trigger_time_raw)/100.0);
                 eventdata.timer_def.interval = SMBX64::t65_to_ms(timer_def_interval_raw);
@@ -1131,8 +793,6 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
             } else {
                 dataReader.ReadDataLine();
             }
-#else
-#endif
         }//while is not EOF
     } catch(const std::exception& err)
     {
