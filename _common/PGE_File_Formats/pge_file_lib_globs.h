@@ -64,15 +64,15 @@
 #define PGE_FILES_INHERED public QObject
 typedef QString PGESTRING;
 #define PGESTRINGisEmpty() isEmpty()
-#define PGESTR_Simpl(str) str.simplified()
+inline PGESTRING PGESTR_Simpl(PGESTRING &str) {return str.simplified();}
 #define PGEGetChar(chr) chr.toLatin1()
-#define PGEChar QChar
-#define PGESTRINGList QStringList
+typedef QChar PGEChar;
+typedef QStringList PGESTRINGList;
 #define PGEVECTOR QVector
 #define PGELIST QList
 #define PGEPAIR QPair
 #define PGEMAP QMap
-#define PGEFILE QFile
+typedef QFile PGEFILE;
 #define PGE_SPLITSTRING(dst, src, sep) dst=src.split(sep);
 #define PGE_ReplSTRING(src, from, to) src.replace(from, to)
 #define PGE_RemSubSTRING(src, substr) src.remove(substr)
@@ -121,13 +121,13 @@ inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );
         return str;}
 #define PGEGetChar(chr) chr
-#define PGEChar char
-#define PGESTRINGList std::vector<std::string >
+typedef char PGEChar;
+typedef std::vector<std::string> PGESTRINGList;
 #define PGEVECTOR std::vector
 #define PGELIST std::vector
 #define PGEPAIR std::pair
 #define PGEMAP std::map
-#define PGEFILE std::fstream
+typedef std::fstream PGEFILE;
 namespace PGE_FileFormats_misc
 {
     void split(std::vector<std::string>& dest, const std::string& str, std::string separator);
