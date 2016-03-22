@@ -336,9 +336,9 @@ FreeImage_OpenMultiBitmapFromHandle(FREE_IMAGE_FORMAT fif, FreeImageIO *io, fi_h
 				PluginNode *node = list->FindNodeFromFIF(fif);
 			
 				if (node) {
-					std::auto_ptr<FIMULTIBITMAP> bitmap (new FIMULTIBITMAP);
-					std::auto_ptr<MULTIBITMAPHEADER> header (new MULTIBITMAPHEADER);
-					std::auto_ptr<FreeImageIO> tmp_io (new FreeImageIO (*io));
+                    std::unique_ptr<FIMULTIBITMAP> bitmap (new FIMULTIBITMAP);
+                    std::unique_ptr<MULTIBITMAPHEADER> header (new MULTIBITMAPHEADER);
+                    std::unique_ptr<FreeImageIO> tmp_io (new FreeImageIO (*io));
 					header->io = tmp_io.get();
 					header->m_filename = NULL;
 					header->node = node;
@@ -364,7 +364,7 @@ FreeImage_OpenMultiBitmapFromHandle(FREE_IMAGE_FORMAT fif, FreeImageIO *io, fi_h
 
 					if (!read_only) {
 						// set up the cache
-						std::auto_ptr<CacheFile> cache_file (new CacheFile("", TRUE));
+                        std::unique_ptr<CacheFile> cache_file (new CacheFile("", TRUE));
 						
 						if (cache_file->open()) {
 							header->m_cachefile = cache_file.release();
