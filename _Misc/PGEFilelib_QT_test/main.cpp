@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
     {
         cout << "==================DEEP TEST OF SMBX38A==================\n";
         QString path = "38a_deep_test/";
+        QString opath = "38_deep_test_out/";
         QDir testDir(path);
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
@@ -144,7 +145,7 @@ int main(int argc, char *argv[])
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
             if(FileFormats::ReadSMBX65by38ALvlFile(fileI, FileData))
             {
-                QFile testOutput(path+file+".new.lvlx");
+                QFile testOutput(opath+file+".new.lvlx");
                 testOutput.open(QIODevice::WriteOnly);
                 raw_new=FileFormats::WriteExtendedLvlFile(FileData);
                 QTextStream(&testOutput) << raw_new;
@@ -161,7 +162,7 @@ int main(int argc, char *argv[])
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
             if(FileFormats::ReadSMBX65by38ALvlFile_OLD(fileI, FileData))
             {
-                QFile testOutput(path+file+".old.lvlx");
+                QFile testOutput(opath+file+".old.lvlx");
                 testOutput.open(QIODevice::WriteOnly);
                 raw_old=FileFormats::WriteExtendedLvlFile(FileData);
                 QTextStream(&testOutput) << raw_old;
