@@ -80,6 +80,9 @@ HEADERS  += main_window.h \
     ../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
     ../_common/PGE_File_Formats/smbx64_macro.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
+    ../_common/PGE_File_Formats/CSVReader.h \
+    ../_common/PGE_File_Formats/CSVReaderPGE.h \
+    ../_common/PGE_File_Formats/CSVUtils.h \
     Music/audiocvt_sox_gui.h \
     common_features/app_path.h \
     version.h \

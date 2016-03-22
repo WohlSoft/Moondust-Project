@@ -361,6 +361,9 @@ HEADERS  += \
     ../_common/PGE_File_Formats/wld_filedata.h \
     ../_common/PGE_File_Formats/pge_file_lib_globs.h \
     ../_common/PGE_File_Formats/pge_file_lib_sys.h \
+    ../_common/PGE_File_Formats/CSVReader.h \
+    ../_common/PGE_File_Formats/CSVReaderPGE.h \
+    ../_common/PGE_File_Formats/CSVUtils.h \
     scenes/level/lvl_physenv.h \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
@@ -461,7 +464,6 @@ HEADERS  += \
     graphics/render/render_opengl31.h \
     scenes/level/lvl_player_switch.h \
     script/bindings/level/globalfuncs/luafuncs_level.h
-
 
 FORMS    += \
     data_configs/select_config.ui
