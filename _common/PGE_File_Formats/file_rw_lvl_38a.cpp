@@ -2149,12 +2149,12 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 1:
                                         if(SMBX64::uInt(eLine))
                                             goto badfile;
-                                            switch(toInt(eLine))
-                                            {
-                                                case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault;
-                                                case 2: customSizes=true;
-                                            }
+                                        switch(toInt(eLine))
+                                        {
+                                            case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing; break;
+                                            case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault; break;
+                                            case 2: customSizes=true; break;
+                                        }
                                         break;
                                     //x=left x coordinates for section [id][***urlencode!***][syntax]
                                     case 2:
@@ -2177,7 +2177,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             else
                                                 eventdata.sets[id].position_top=(long)round(toDouble(eventdata.sets[id].expression_pos_y));
                                         } else {
-                                            eventdata.sets[id].position_top = 0;
+                                            eventdata.sets[id].position_top = -1;
                                         }
                                         break;
                                     //w=width for section [id][***urlencode!***][syntax]
@@ -2191,7 +2191,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                                 eventdata.sets[id].position_right=(long)round(toDouble(eventdata.sets[id].expression_pos_w))+
                                                                                    eventdata.sets[id].position_left;
                                         } else {
-                                            eventdata.sets[id].position_right = 0;
+                                            eventdata.sets[id].position_right = -1;
                                         }
                                         break;
                                     //h=height for section [id][***urlencode!***][syntax]
@@ -2205,7 +2205,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                                 eventdata.sets[id].position_bottom=(long)round(toDouble(eventdata.sets[id].expression_pos_h))+
                                                                                     eventdata.sets[id].position_top;
                                         } else {
-                                            eventdata.sets[id].position_bottom = 0;
+                                            eventdata.sets[id].position_bottom = -1;
                                         }
                                         break;
                                     //auto=enable autoscroll controls[0=false !0=true]
@@ -2290,8 +2290,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             goto badfile;
                                             switch(toInt(eLine))
                                             {
-                                                case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing; break;
+                                                case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault; break;
                                             case 2: customBg=true; eventdata.sets[id].background_id=0; break;
                                             }
                                         break;
@@ -2353,8 +2353,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             goto badfile;
                                             switch(toInt(eLine))
                                             {
-                                                case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing; break;
+                                                case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault; break;
                                                 case 2:
                                                 default: customMusics=true; eventdata.sets[id].music_id = 0; break;
                                             }
