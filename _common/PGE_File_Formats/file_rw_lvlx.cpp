@@ -1557,7 +1557,25 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("MX", PGEFile::FloatS(FileData.events[i].layer_speed_x)); // Move layer X
                 TextData += PGEFile::value("MY", PGEFile::FloatS(FileData.events[i].layer_speed_y)); // Move layer Y
             }
-
+            if(!FileData.events[i].moving_layers.empty())
+            {
+                PGESTRINGList moveLayers;
+                for(int j=0;j<FileData.events[i].moving_layers.size();j++)
+                {
+                    LevelEvent_MoveLayer&mvl=FileData.events[i].moving_layers[j];
+                    PGESTRING moveLayer;
+                    if(mvl.name.isEmpty())
+                        continue;
+                    moveLayer += PGEFile::value("LN", PGEFile::qStrS(mvl.name));
+                    moveLayer += PGEFile::value("SX", PGEFile::FloatS(mvl.speed_x));
+                    moveLayer += PGEFile::value("SXX", PGEFile::qStrS(mvl.expression_x));
+                    moveLayer += PGEFile::value("SY", PGEFile::FloatS(mvl.speed_y));
+                    moveLayer += PGEFile::value("SYX", PGEFile::qStrS(mvl.expression_y));
+                    moveLayer += PGEFile::value("SY", PGEFile::IntS(mvl.way));
+                    moveLayers.push_back(moveLayer);
+                }
+                TextData += PGEFile::value("MLA", PGEFile::strArrayS(moveLayers)); // Move camera
+            }
             TextData += PGEFile::value("AS", PGEFile::IntS(FileData.events[i].scroll_section)); // Move camera
             TextData += PGEFile::value("AX", PGEFile::FloatS(FileData.events[i].move_camera_x)); // Move camera x
             TextData += PGEFile::value("AY", PGEFile::FloatS(FileData.events[i].move_camera_y)); // Move camera y
