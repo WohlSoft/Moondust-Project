@@ -1492,6 +1492,17 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(addArray) TextData += PGEFile::value("SM", PGEFile::strArrayS(musicSets));  // Change section's musics
 
 
+            addArray=false;
+            for(int ttt=0; ttt<(signed)FileData.events[i].sets.size(); ttt++)
+            {
+                musicSets.push_back(FileData.events[i].sets[ttt].music_file);
+            }
+            for(int tt=0; tt<(signed)musicSets.size(); tt++)
+            { if(!musicSets[tt].PGESTRINGisEmpty()) addArray=true; }
+
+            if(addArray) TextData += PGEFile::value("SMF", PGEFile::strArrayS(musicSets));  // Change section's music files
+
+
             PGESTRINGList backSets;
             addArray=false;
             for(int tt=0; tt<(signed)FileData.events[i].sets.size(); tt++)
@@ -1523,11 +1534,15 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 if(FileData.events[i].trigger_timer>0)
                     TextData += PGEFile::value("TD", PGEFile::IntS(FileData.events[i].trigger_timer)); // Trigger delay
             }
+            if(!FileData.events[i].trigger_script.PGESTRINGisEmpty())
+                TextData += PGEFile::value("TSCR", PGEFile::qStrS(FileData.events[i].trigger_script));
 
+            if(FileData.events[i].trigger_api_id != 0)
+                TextData += PGEFile::value("TAPI", PGEFile::IntS(FileData.events[i].trigger_api_id));
 
             if(FileData.events[i].nosmoke)
                 TextData += PGEFile::value("DS", PGEFile::BoolS(FileData.events[i].nosmoke)); // Disable Smoke
-            if(FileData.events[i].autostart>0)
+            if(FileData.events[i].autostart > 0 )
                 TextData += PGEFile::value("AU", PGEFile::IntS(FileData.events[i].autostart)); // Autostart event
             if(!FileData.events[i].autostart_condition.PGESTRINGisEmpty())
                 TextData += PGEFile::value("AUC", PGEFile::qStrS(FileData.events[i].autostart_condition)); // Autostart condition event
@@ -1557,6 +1572,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("MX", PGEFile::FloatS(FileData.events[i].layer_speed_x)); // Move layer X
                 TextData += PGEFile::value("MY", PGEFile::FloatS(FileData.events[i].layer_speed_y)); // Move layer Y
             }
+
             if(!FileData.events[i].moving_layers.empty())
             {
                 PGESTRINGList moveLayers;
@@ -1579,11 +1595,94 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                         moveLayer += PGEFile::value("MW", PGEFile::IntS(mvl.way));
                     moveLayers.push_back(moveLayer);
                 }
-                TextData += PGEFile::value("MLA", PGEFile::strArrayS(moveLayers)); // Move camera
+                TextData += PGEFile::value("MLA", PGEFile::strArrayS(moveLayers));
             }
+
+            //NPC's to spawn
+            if(!FileData.events[i].spawn_npc.empty())
+            {
+                PGESTRINGList spawnNPCs;
+                for(int j=0; j<FileData.events[i].spawn_npc.size(); j++)
+                {
+                    PGESTRING spawnNPC;
+                    LevelEvent_SpawnNPC &npc=FileData.events[i].spawn_npc[j];
+                    spawnNPC += PGEFile::value("ID", PGEFile::IntS(npc.id));
+                    if(npc.x!=0.0)
+                        spawnNPC += PGEFile::value("SX", PGEFile::FloatS(npc.x));
+                    if(!npc.expression_x.PGESTRINGisEmpty())
+                        spawnNPC += PGEFile::value("SXX", PGEFile::qStrS(npc.expression_x));
+                    if(npc.y!=0.0)
+                        spawnNPC += PGEFile::value("SY", PGEFile::FloatS(npc.y));
+                    if(!npc.expression_y.PGESTRINGisEmpty())
+                        spawnNPC += PGEFile::value("SYX", PGEFile::qStrS(npc.expression_y));
+                    if(npc.speed_x!=0.0)
+                        spawnNPC += PGEFile::value("SSX", PGEFile::FloatS(npc.speed_x));
+                    if(!npc.expression_sx.PGESTRINGisEmpty())
+                        spawnNPC += PGEFile::value("SSXX", PGEFile::qStrS(npc.expression_sx));
+                    if(npc.speed_y!=0.0)
+                        spawnNPC += PGEFile::value("SSY", PGEFile::FloatS(npc.speed_y));
+                    if(!npc.expression_sy.PGESTRINGisEmpty())
+                        spawnNPC += PGEFile::value("SSYX", PGEFile::qStrS(npc.expression_sy));
+                    if(npc.special!=0)
+                        spawnNPC += PGEFile::value("SSS", PGEFile::IntS(npc.special));
+                    spawnNPCs.push_back(spawnNPC);
+                }
+                TextData += PGEFile::value("SNPC", PGEFile::strArrayS(spawnNPCs));
+            }
+
+            //Effects to spawn
+            if(!FileData.events[i].spawn_effects.empty())
+            {
+                PGESTRINGList spawnEffects;
+                for(int j=0; j<FileData.events[i].spawn_effects.size(); j++)
+                {
+                    PGESTRING spawnEffect;
+                    LevelEvent_SpawnEffect &effect=FileData.events[i].spawn_effects[j];
+                    spawnEffect += PGEFile::value("FI", PGEFile::IntS(effect.id));
+                    if(effect.x!=0.0)
+                        spawnEffect += PGEFile::value("ID", PGEFile::FloatS(effect.x));
+                    if(!effect.expression_x.PGESTRINGisEmpty())
+                        spawnEffect += PGEFile::value("SXX", PGEFile::qStrS(effect.expression_x));
+                    if(effect.y!=0.0)
+                        spawnEffect += PGEFile::value("SY", PGEFile::FloatS(effect.y));
+                    if(!effect.expression_y.PGESTRINGisEmpty())
+                        spawnEffect += PGEFile::value("SYX", PGEFile::qStrS(effect.expression_y));
+                    if(effect.speed_x!=0.0)
+                        spawnEffect += PGEFile::value("SSX", PGEFile::FloatS(effect.speed_x));
+                    if(!effect.expression_sx.PGESTRINGisEmpty())
+                        spawnEffect += PGEFile::value("SSXX", PGEFile::qStrS(effect.expression_sx));
+                    if(effect.speed_y!=0.0)
+                        spawnEffect += PGEFile::value("SSY", PGEFile::FloatS(effect.speed_y));
+                    if(!effect.expression_sy.PGESTRINGisEmpty())
+                        spawnEffect += PGEFile::value("SSYX", PGEFile::qStrS(effect.expression_sy));
+                    if(effect.fps!=0)
+                        spawnEffect += PGEFile::value("FP", PGEFile::IntS(effect.fps));
+                    if(effect.max_life_time!=0)
+                        spawnEffect += PGEFile::value("TTL", PGEFile::IntS(effect.max_life_time));
+                    if(effect.gravity)
+                        spawnEffect += PGEFile::value("TTL", PGEFile::BoolS(effect.gravity));
+                    spawnEffects.push_back(spawnEffect);
+                }
+                TextData += PGEFile::value("SEF", PGEFile::strArrayS(spawnEffects));
+            }
+
             TextData += PGEFile::value("AS", PGEFile::IntS(FileData.events[i].scroll_section)); // Move camera
             TextData += PGEFile::value("AX", PGEFile::FloatS(FileData.events[i].move_camera_x)); // Move camera x
             TextData += PGEFile::value("AY", PGEFile::FloatS(FileData.events[i].move_camera_y)); // Move camera y
+
+            if(!FileData.events[i].update_variable.empty())
+            {
+                PGESTRINGList updateVars;
+                for(int j=0; j<FileData.events[i].update_variable.size(); j++)
+                {
+                    PGESTRING updateVar;
+                    LevelEvent_UpdateVariable &updVar = FileData.events[i].update_variable[j];
+                    updateVar += PGEFile::value("N", PGEFile::qStrS(updVar.name));
+                    updateVar += PGEFile::value("V", PGEFile::qStrS(updVar.newval));
+                    updateVars.push_back(updateVar);
+                }
+                TextData += PGEFile::value("UV", PGEFile::strArrayS(updateVars));
+            }
 
             TextData += "\n";
         }

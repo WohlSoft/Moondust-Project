@@ -414,7 +414,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          ),
                                         MakeCSVSubReader(dataReader, ',',
                                                          &npcdata.generator,
-                                                         MakeCSVOptional(&npcdata.generator_period, 0, nullptr, [](int& value){value = (int)((float)value / 65.f * 100.f);}),
+                                                         MakeCSVOptional(&npcdata.generator_period, 65, nullptr, [](int& value){ value = (int)round(((double)value/65.0)*10.0);}),
                                                          MakeCSVOptional(&genType, 0),
                                                          MakeCSVOptional(&npcdata.generator_custom_angle, 0.0),
                                                          MakeCSVOptional(&npcdata.generator_branches, 1),
@@ -1448,7 +1448,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 1:
                                         if( SMBX64::sInt(dLine) )
                                         goto badfile;
-                                        else npcdata.generator_period = (toFloat(dLine)/65.0)*100;
+                                        else npcdata.generator_period = (int)round((toDouble(dLine)/65.0)*10.0);//Convert into deci-seconds
                                     break;
                                 //    c3=generator effect
                                 //        c3-1[1=warp][0=projective][4=no effect]
@@ -2501,17 +2501,17 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                 case 1:
                                     spawnnpc.expression_x = PGE_URLDEC(eLine);
                                     if(SMBX64::sFloat(spawnnpc.expression_x))
-                                        spawnnpc.speed_x=0.f;
+                                        spawnnpc.x=0.f;
                                     else
-                                        spawnnpc.speed_x=toFloat(spawnnpc.expression_x);
+                                        spawnnpc.x=toFloat(spawnnpc.expression_x);
                                     break;
                                 //y=npc position y[***urlencode!***][syntax]
                                 case 2:
                                     spawnnpc.expression_y = PGE_URLDEC(eLine);
                                     if(SMBX64::sFloat(spawnnpc.expression_y))
-                                        spawnnpc.speed_y=0.f;
+                                        spawnnpc.y=0.f;
                                     else
-                                        spawnnpc.speed_y=toFloat(spawnnpc.expression_y);
+                                        spawnnpc.y=toFloat(spawnnpc.expression_y);
                                     break;
                                 //sx=npc horizontal speed[***urlencode!***][syntax]
                                 case 3:
@@ -2545,7 +2545,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                     {
                         LevelEvent_UpdateVariable updVar;
                         PGESTRINGList updVars;
-                        SMBX65_SplitSubLine(updVars, cLine);
+                        SplitCSVStr(updVars, cLine);
                         //    vc(n)=name,newvalue
                         for(int j=0; j<(signed)updVars.size(); j++)
                         {
@@ -2558,7 +2558,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                             case 1:updVar.newval=PGE_URLDEC(dLine); break;
                             }
                         }
-                        eventdata.update_variable.push_back(updVar);
+                        if(!updVar.name.PGESTRINGisEmpty())
+                            eventdata.update_variable.push_back(updVar);
                     } break;
                 //ene=nextevent/timer/apievent/scriptname
                 case 11:
