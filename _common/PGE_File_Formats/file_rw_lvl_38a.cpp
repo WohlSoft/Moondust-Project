@@ -612,9 +612,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVBatchReader(dataReader, ',', &eventdata.layers_hide, PGEUrlDecodeFunc),
                                                          MakeCSVBatchReader(dataReader, ',', &eventdata.layers_toggle, PGEUrlDecodeFunc)
                                                          ),
-                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
+                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr) {
                                             auto fieldReader = MakeDirectReader(nextFieldStr);
-                                            auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                            auto fullReader  = MakeCSVReaderForPGESTRING(&fieldReader, ',');
                                             LevelEvent_MoveLayer movingLayer;
                                             fullReader.ReadDataLine(MakeCSVPostProcessor(&movingLayer.name, PGEUrlDecodeFunc),
                                                                     MakeCSVPostProcessor(&movingLayer.expression_x, PGEUrlDecodeFunc),
@@ -2029,8 +2029,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             ml.way=toInt(eLine);
                                         break;
                                     }
-                                    eventdata.moving_layers.push_back(ml);
                                 }
+                                eventdata.moving_layers.push_back(ml);
                             }
                     } break;
                     //1,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0, 1

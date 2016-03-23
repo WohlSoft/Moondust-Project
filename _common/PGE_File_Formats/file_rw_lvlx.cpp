@@ -1560,18 +1560,23 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(!FileData.events[i].moving_layers.empty())
             {
                 PGESTRINGList moveLayers;
-                for(int j=0;j<FileData.events[i].moving_layers.size();j++)
+                for(int j=0; j<FileData.events[i].moving_layers.size(); j++)
                 {
-                    LevelEvent_MoveLayer&mvl=FileData.events[i].moving_layers[j];
+                    LevelEvent_MoveLayer &mvl=FileData.events[i].moving_layers[j];
                     PGESTRING moveLayer;
                     if(mvl.name.isEmpty())
                         continue;
                     moveLayer += PGEFile::value("LN", PGEFile::qStrS(mvl.name));
-                    moveLayer += PGEFile::value("SX", PGEFile::FloatS(mvl.speed_x));
-                    moveLayer += PGEFile::value("SXX", PGEFile::qStrS(mvl.expression_x));
-                    moveLayer += PGEFile::value("SY", PGEFile::FloatS(mvl.speed_y));
-                    moveLayer += PGEFile::value("SYX", PGEFile::qStrS(mvl.expression_y));
-                    moveLayer += PGEFile::value("SY", PGEFile::IntS(mvl.way));
+                    if(mvl.speed_x!=0.0)
+                        moveLayer += PGEFile::value("SX", PGEFile::FloatS(mvl.speed_x));
+                    if(!mvl.expression_x.PGESTRINGisEmpty())
+                        moveLayer += PGEFile::value("SXX", PGEFile::qStrS(mvl.expression_x));
+                    if(mvl.speed_y!=0.0)
+                        moveLayer += PGEFile::value("SY", PGEFile::FloatS(mvl.speed_y));
+                    if(!mvl.expression_y.PGESTRINGisEmpty())
+                        moveLayer += PGEFile::value("SYX", PGEFile::qStrS(mvl.expression_y));
+                    if( mvl.way != 0 )
+                        moveLayer += PGEFile::value("MW", PGEFile::IntS(mvl.way));
                     moveLayers.push_back(moveLayer);
                 }
                 TextData += PGEFile::value("MLA", PGEFile::strArrayS(moveLayers)); // Move camera
