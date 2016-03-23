@@ -722,7 +722,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                                                          {
                                                                                              case 0: value = LevelEvent_Sets::LESet_Nothing; break;
                                                                                              case 1: value = LevelEvent_Sets::LESet_ResetDefault; break;
-                                                                                             case 2: customMusic = true; value = 0; break;
+                                                                                             default: case 2: customMusic = true; value = 0; break;
                                                                                          }
                                                                                      }),
                                                                                      &music_id,
@@ -2292,7 +2292,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             {
                                                 case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing;
                                                 case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault;
-                                                case 2: customBg=true;
+                                            case 2: customBg=true; eventdata.sets[id].background_id=0; break;
                                             }
                                         break;
                                     //backgroundid=[when btype=2]custom background id
@@ -2345,7 +2345,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 0:
                                         if(SMBX64::uInt(eLine))
                                             goto badfile;
-                                        id=toInt(eLine)-1;
+                                        id = toInt(eLine)-1;
                                         break;
                                     //mtype=[0=don't change][1=default][2=custom]
                                     case 1:
@@ -2356,7 +2356,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                                 case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing;
                                                 case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault;
                                                 case 2:
-                                                default: customMusics=true;
+                                                default: customMusics=true; eventdata.sets[id].music_id = 0; break;
                                             }
                                         break;
                                     //musicid=[when mtype=2]custom music id
