@@ -36,7 +36,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
     MetaData FileData;
     #ifdef PGE_EDITOR
-    FileData.script = new ScriptHolder();
+    FileData.script.reset(new ScriptHolder());
     #endif
     ///////////////////////////////////////Begin file///////////////////////////////////////
     PGEFile pgeX_Data(RawData);
@@ -124,7 +124,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
             if(f_section.subTree.size()>0)
             {
                 if(!FileData.script)
-                    FileData.script = new ScriptHolder();
+                    FileData.script.reset(new ScriptHolder());
             }
 
             //Read subtree

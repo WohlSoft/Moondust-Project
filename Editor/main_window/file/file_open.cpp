@@ -215,11 +215,8 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                if(FileData.metaData.script != NULL)
-                {
-                    delete FileData.metaData.script;
-                    FileData.metaData.script = NULL;
-                }
+                if(FileData.metaData.script)
+                    FileData.metaData.script.reset();
 
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
                 WriteToLog(QtDebugMsg, "Meta-File was read!");

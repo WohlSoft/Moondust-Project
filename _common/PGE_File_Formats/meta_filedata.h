@@ -23,6 +23,7 @@
 #define META_FILEDATA_H
 
 #include "pge_file_lib_globs.h"
+#include <memory>
 
 //Editor's headers shouldn't appears in the engine
 #ifdef PGE_EDITOR
@@ -93,7 +94,7 @@ struct MetaData
     CrashData crash;
     //only for level
     //! (For levels only) If pointer is not null, level contains a script
-    ScriptHolder* script;
+    std::shared_ptr<ScriptHolder> script;
     #endif
 
     //! [Used by file parses] Contains a result of file parsing: if true - file was parsed successfully,

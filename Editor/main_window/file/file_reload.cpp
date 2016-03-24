@@ -91,10 +91,7 @@ void MainWindow::on_actionReload_triggered()
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
                 if(FileData.metaData.script)
-                {
-                    delete FileData.metaData.script;
-                    FileData.metaData.script = NULL;
-                }
+                    FileData.metaData.script.reset();
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
             }
             else

@@ -41,7 +41,7 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     LvlData = FileFormats::CreateLevelData();
-    LvlData.metaData.script = new ScriptHolder;
+    LvlData.metaData.script.reset(new ScriptHolder());
     LvlData.untitled = true;
     StartLvlData = LvlData;
 
@@ -359,7 +359,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
 
     //save additional meta data
     if( (!LvlData.metaData.bookmarks.isEmpty())
-        ||((LvlData.metaData.script!=NULL)&&(!LvlData.metaData.script->events().isEmpty())) )
+        ||((LvlData.metaData.script)&&(!LvlData.metaData.script->events().isEmpty())) )
     {
         file.setFileName(fileName+".meta");
         if (!file.open(QFile::WriteOnly | QFile::Text))
@@ -385,8 +385,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-    if(!LvlData.metaData.script)
-        LvlData.metaData.script = new ScriptHolder;
+    LvlData.metaData.script.reset(new ScriptHolder());
     bool modifystate = false;
     bool untitledstate = false;
     LvlData.modified = false;

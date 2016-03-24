@@ -281,7 +281,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
             if(f_section.subTree.size()>0)
             {
                 if(!FileData.metaData.script)
-                    FileData.metaData.script = new ScriptHolder();
+                    FileData.metaData.script.reset(new ScriptHolder());
             }
 
             //Read subtree

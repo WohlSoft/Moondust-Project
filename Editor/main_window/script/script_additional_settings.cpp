@@ -27,7 +27,7 @@ void MainWindow::on_actionAdditional_Settings_triggered()
         if(!activeLvlEditWin()->LvlData.metaData.script)
             return;
 
-        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script, this);
+        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script.get(), this);
 
         addSetting->exec();
         addSetting->cleanup();

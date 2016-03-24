@@ -164,7 +164,7 @@ WorldData FileFormats::CreateWorldData()
 
     //Meta-data
     #ifdef PGE_EDITOR
-    NewFileData.metaData.script = NULL;
+    NewFileData.metaData.script.reset();
     #endif
     NewFileData.metaData.ReadFileValid=true;
     NewFileData.metaData.ERROR_linenum=-1;
