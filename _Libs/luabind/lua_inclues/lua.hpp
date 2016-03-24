@@ -1,6 +1,4 @@
-// lua.hpp
-// Lua header files for C++
-// <<extern "C">> not supplied automatically because Lua also compiles as C++
+// C++ wrapper for LuaJIT header files.
 
 extern "C" {
 #ifdef USE_LUA_JIT
@@ -14,3 +12,4 @@ extern "C" {
 #include "lauxlib.h"
 #endif
 }
+

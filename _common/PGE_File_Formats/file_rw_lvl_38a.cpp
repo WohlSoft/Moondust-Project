@@ -414,7 +414,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          ),
                                         MakeCSVSubReader(dataReader, ',',
                                                          &npcdata.generator,
-                                                         MakeCSVOptional(&npcdata.generator_period, 0, nullptr, [](int& value){value = (int)((float)value / 65.f * 100.f);}),
+                                                         MakeCSVOptional(&npcdata.generator_period, 65, nullptr, [](int& value){ value = (int)round(((double)value/65.0)*10.0);}),
                                                          MakeCSVOptional(&genType, 0),
                                                          MakeCSVOptional(&npcdata.generator_custom_angle, 0.0),
                                                          MakeCSVOptional(&npcdata.generator_branches, 1),
@@ -558,9 +558,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                         //wy=warp to y on world map
                                         &doordata.world_y,
                                         //le=level exit
-                                        &doordata.lvl_o,
+                                        MakeCSVOptional(&doordata.lvl_o, false),
                                         //we=warp event[***urlencode!***]
-                                        MakeCSVPostProcessor(&doordata.event_enter, PGEUrlDecodeFunc)
+                                        MakeCSVOptional(&doordata.event_enter, "", nullptr, PGEUrlDecodeFunc)
                                         );
                 doordata.length_o = doordata.length_i;
                 doordata.isSetIn = (doordata.lvl_i ? false : true);
@@ -612,9 +612,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                          MakeCSVBatchReader(dataReader, ',', &eventdata.layers_hide, PGEUrlDecodeFunc),
                                                          MakeCSVBatchReader(dataReader, ',', &eventdata.layers_toggle, PGEUrlDecodeFunc)
                                                          ),
-                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr){
+                                        MakeCSVIterator(dataReader, '/', [&eventdata](const PGESTRING& nextFieldStr) {
                                             auto fieldReader = MakeDirectReader(nextFieldStr);
-                                            auto fullReader = MakeCSVReaderForPGESTRING(&fieldReader, ',');
+                                            auto fullReader  = MakeCSVReaderForPGESTRING(&fieldReader, ',');
                                             LevelEvent_MoveLayer movingLayer;
                                             fullReader.ReadDataLine(MakeCSVPostProcessor(&movingLayer.name, PGEUrlDecodeFunc),
                                                                     MakeCSVPostProcessor(&movingLayer.expression_x, PGEUrlDecodeFunc),
@@ -624,6 +624,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                             movingLayer.speed_x = (SMBX64::sFloat(movingLayer.expression_x) ? 0.0f : toFloat(movingLayer.expression_x));
                                             movingLayer.speed_y = (SMBX64::sFloat(movingLayer.expression_y) ? 0.0f : toFloat(movingLayer.expression_y));
                                             eventdata.moving_layers.push_back(movingLayer);
+                                            eventdata.movelayer = movingLayer.name;
+                                            eventdata.layer_speed_x = movingLayer.speed_x;
+                                            eventdata.layer_speed_y = movingLayer.speed_y;
                                         }),
                                         MakeCSVSubReader(dataReader, ',',
                                                          &eventdata.ctrls_enable,
@@ -665,15 +668,15 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                                                      MakeCSVPostProcessor(&nextSet.expression_autoscrool_y, PGEUrlDecodeFunc)
                                                                                      );
                                                              if(customSize){
-                                                                 nextSet.position_left = (SMBX64::sFloat(nextSet.expression_pos_x) ? 0 : (long)round(toFloat(nextSet.expression_pos_x)));
-                                                                 nextSet.position_top = (SMBX64::sFloat(nextSet.expression_pos_y) ? 0 : (long)round(toFloat(nextSet.expression_pos_y)));
-                                                                 nextSet.position_right = (SMBX64::sFloat(nextSet.expression_pos_w) ? 0 : (long)round(toFloat(nextSet.expression_pos_w)) + nextSet.position_left);
-                                                                 nextSet.position_bottom = (SMBX64::sFloat(nextSet.expression_pos_h) ? 0 : (long)round(toFloat(nextSet.expression_pos_h)) + nextSet.position_right);
+                                                                 nextSet.position_left = (SMBX64::sFloat(nextSet.expression_pos_x) ? 0 : (long)round(toDouble(nextSet.expression_pos_x)));
+                                                                 nextSet.position_top = (SMBX64::sFloat(nextSet.expression_pos_y) ? 0 : (long)round(toDouble(nextSet.expression_pos_y)));
+                                                                 nextSet.position_right = (SMBX64::sFloat(nextSet.expression_pos_w) ? 0 : ((long)round(toDouble(nextSet.expression_pos_w)) + nextSet.position_left));
+                                                                 nextSet.position_bottom = (SMBX64::sFloat(nextSet.expression_pos_h) ? 0 : ((long)round(toDouble(nextSet.expression_pos_h)) + nextSet.position_top));
                                                              }
                                                              if(canAutoscroll){
-                                                                 nextSet.autoscrol_x = (SMBX64::sFloat(nextSet.expression_autoscrool_x) ? 0 : toFloat(nextSet.expression_autoscrool_x));
-                                                                 nextSet.autoscrol_y = (SMBX64::sFloat(nextSet.expression_autoscrool_y) ? 0 : toFloat(nextSet.expression_autoscrool_y));
-                                                                 // Possible overwriting?
+                                                                 nextSet.autoscrol_x = (SMBX64::sFloat(nextSet.expression_autoscrool_x) ? 0 : toDouble(nextSet.expression_autoscrool_x));
+                                                                 nextSet.autoscrol_y = (SMBX64::sFloat(nextSet.expression_autoscrool_y) ? 0 : toDouble(nextSet.expression_autoscrool_y));
+                                                                 // Possible overwriting? // Yea, must be used last presented, anyway SMBX 1.3 supports alone autoscroll value per event :P
                                                                  eventdata.move_camera_x = nextSet.autoscrol_x;
                                                                  eventdata.move_camera_y = nextSet.autoscrol_y;
                                                              }else{
@@ -714,16 +717,16 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
                                                              bool customMusic = false;
                                                              long music_id;
                                                              fullReader.ReadDataLine(CSVDiscard(),
-                                                                                     MakeCSVPostProcessor(&nextSet.background_id, [&customMusic](long& value){
+                                                                                     MakeCSVPostProcessor(&nextSet.music_id, [&customMusic](long& value){
                                                                                          switch(value)
                                                                                          {
                                                                                              case 0: value = LevelEvent_Sets::LESet_Nothing; break;
                                                                                              case 1: value = LevelEvent_Sets::LESet_ResetDefault; break;
-                                                                                             case 2: customMusic = true; value = 0; break;
+                                                                                             default: case 2: customMusic = true; value = 0; break;
                                                                                          }
                                                                                      }),
                                                                                      &music_id,
-                                                                                     MakeCSVPostProcessor(&nextSet.music_file, PGEUrlDecodeFunc)
+                                                                                     MakeCSVOptional(&nextSet.music_file, "", nullptr, PGEUrlDecodeFunc)
                                                                                      );
                                                              if(customMusic)
                                                                  nextSet.music_id = music_id;
@@ -1445,7 +1448,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 1:
                                         if( SMBX64::sInt(dLine) )
                                         goto badfile;
-                                        else npcdata.generator_period = (toFloat(dLine)/65.0)*100;
+                                        else npcdata.generator_period = (int)round((toDouble(dLine)/65.0)*10.0);//Convert into deci-seconds
                                     break;
                                 //    c3=generator effect
                                 //        c3-1[1=warp][0=projective][4=no effect]
@@ -2026,8 +2029,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             ml.way=toInt(eLine);
                                         break;
                                     }
-                                    eventdata.moving_layers.push_back(ml);
                                 }
+                                eventdata.moving_layers.push_back(ml);
                             }
                     } break;
                     //1,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0, 1
@@ -2146,12 +2149,12 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 1:
                                         if(SMBX64::uInt(eLine))
                                             goto badfile;
-                                            switch(toInt(eLine))
-                                            {
-                                                case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault;
-                                                case 2: customSizes=true;
-                                            }
+                                        switch(toInt(eLine))
+                                        {
+                                            case 0: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_Nothing; break;
+                                            case 1: eventdata.sets[id].position_left=LevelEvent_Sets::LESet_ResetDefault; break;
+                                            case 2: customSizes=true; break;
+                                        }
                                         break;
                                     //x=left x coordinates for section [id][***urlencode!***][syntax]
                                     case 2:
@@ -2161,7 +2164,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             if(SMBX64::sFloat(eventdata.sets[id].expression_pos_x))
                                                 eventdata.sets[id].position_left=0;
                                             else
-                                                eventdata.sets[id].position_left=(long)round(toFloat(eventdata.sets[id].expression_pos_x));
+                                                eventdata.sets[id].position_left=(long)round(toDouble(eventdata.sets[id].expression_pos_x));
                                         }
                                         break;
                                     //y=top y coordinates for section [id][***urlencode!***][syntax]
@@ -2172,9 +2175,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             if(SMBX64::sFloat(eventdata.sets[id].expression_pos_y))
                                                 eventdata.sets[id].position_top=0;
                                             else
-                                                eventdata.sets[id].position_top=(long)round(toFloat(eventdata.sets[id].expression_pos_y));
+                                                eventdata.sets[id].position_top=(long)round(toDouble(eventdata.sets[id].expression_pos_y));
                                         } else {
-                                            eventdata.sets[id].position_top = 0;
+                                            eventdata.sets[id].position_top = -1;
                                         }
                                         break;
                                     //w=width for section [id][***urlencode!***][syntax]
@@ -2185,10 +2188,10 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             if(SMBX64::sFloat(eventdata.sets[id].expression_pos_w))
                                                 eventdata.sets[id].position_right=0;
                                             else
-                                                eventdata.sets[id].position_right=(long)round(toFloat(eventdata.sets[id].expression_pos_w))+
+                                                eventdata.sets[id].position_right=(long)round(toDouble(eventdata.sets[id].expression_pos_w))+
                                                                                    eventdata.sets[id].position_left;
                                         } else {
-                                            eventdata.sets[id].position_right = 0;
+                                            eventdata.sets[id].position_right = -1;
                                         }
                                         break;
                                     //h=height for section [id][***urlencode!***][syntax]
@@ -2199,10 +2202,10 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             if(SMBX64::sFloat(eventdata.sets[id].expression_pos_h))
                                                 eventdata.sets[id].position_bottom=0;
                                             else
-                                                eventdata.sets[id].position_bottom=(long)round(toFloat(eventdata.sets[id].expression_pos_h))+
+                                                eventdata.sets[id].position_bottom=(long)round(toDouble(eventdata.sets[id].expression_pos_h))+
                                                                                     eventdata.sets[id].position_top;
                                         } else {
-                                            eventdata.sets[id].position_bottom = 0;
+                                            eventdata.sets[id].position_bottom = -1;
                                         }
                                         break;
                                     //auto=enable autoscroll controls[0=false !0=true]
@@ -2287,9 +2290,9 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             goto badfile;
                                             switch(toInt(eLine))
                                             {
-                                                case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault;
-                                                case 2: customBg=true;
+                                                case 0: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_Nothing; break;
+                                                case 1: eventdata.sets[id].background_id=LevelEvent_Sets::LESet_ResetDefault; break;
+                                            case 2: customBg=true; eventdata.sets[id].background_id=0; break;
                                             }
                                         break;
                                     //backgroundid=[when btype=2]custom background id
@@ -2342,7 +2345,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                     case 0:
                                         if(SMBX64::uInt(eLine))
                                             goto badfile;
-                                        id=toInt(eLine)-1;
+                                        id = toInt(eLine)-1;
                                         break;
                                     //mtype=[0=don't change][1=default][2=custom]
                                     case 1:
@@ -2350,10 +2353,10 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             goto badfile;
                                             switch(toInt(eLine))
                                             {
-                                                case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing;
-                                                case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault;
+                                                case 0: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_Nothing; break;
+                                                case 1: eventdata.sets[id].music_id=LevelEvent_Sets::LESet_ResetDefault; break;
                                                 case 2:
-                                                default: customMusics=true;
+                                                default: customMusics=true; eventdata.sets[id].music_id = 0; break;
                                             }
                                         break;
                                     //musicid=[when mtype=2]custom music id
@@ -2362,7 +2365,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                         {
                                             if(SMBX64::sFloat(eLine))
                                                 goto badfile;
-                                            eventdata.sets[id].music_id=(long)round(toFloat(eLine));
+                                            eventdata.sets[id].music_id=(long)round(toDouble(eLine));
                                         }
                                         break;
                                     case 3:
@@ -2498,17 +2501,17 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                 case 1:
                                     spawnnpc.expression_x = PGE_URLDEC(eLine);
                                     if(SMBX64::sFloat(spawnnpc.expression_x))
-                                        spawnnpc.speed_x=0.f;
+                                        spawnnpc.x=0.f;
                                     else
-                                        spawnnpc.speed_x=toFloat(spawnnpc.expression_x);
+                                        spawnnpc.x=toFloat(spawnnpc.expression_x);
                                     break;
                                 //y=npc position y[***urlencode!***][syntax]
                                 case 2:
                                     spawnnpc.expression_y = PGE_URLDEC(eLine);
                                     if(SMBX64::sFloat(spawnnpc.expression_y))
-                                        spawnnpc.speed_y=0.f;
+                                        spawnnpc.y=0.f;
                                     else
-                                        spawnnpc.speed_y=toFloat(spawnnpc.expression_y);
+                                        spawnnpc.y=toFloat(spawnnpc.expression_y);
                                     break;
                                 //sx=npc horizontal speed[***urlencode!***][syntax]
                                 case 3:
@@ -2542,7 +2545,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                     {
                         LevelEvent_UpdateVariable updVar;
                         PGESTRINGList updVars;
-                        SMBX65_SplitSubLine(updVars, cLine);
+                        SplitCSVStr(updVars, cLine);
                         //    vc(n)=name,newvalue
                         for(int j=0; j<(signed)updVars.size(); j++)
                         {
@@ -2555,7 +2558,8 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                             case 1:updVar.newval=PGE_URLDEC(dLine); break;
                             }
                         }
-                        eventdata.update_variable.push_back(updVar);
+                        if(!updVar.name.PGESTRINGisEmpty())
+                            eventdata.update_variable.push_back(updVar);
                     } break;
                 //ene=nextevent/timer/apievent/scriptname
                 case 11:
@@ -2613,7 +2617,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                                             if(SMBX64::sFloat(eLine))
                                                 goto badfile;
                                             //Convert 1/65 seconds into milliseconds units
-                                            eventdata.timer_def.interval = SMBX64::t65_to_ms(toFloat(eLine));
+                                            eventdata.timer_def.interval = SMBX64::t65_to_ms(toDouble(eLine));
                                             break;
                                         //type=to choose the way timer counts[0=counting down][1=counting up]
                                         case 3:

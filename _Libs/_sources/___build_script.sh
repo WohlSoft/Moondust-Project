@@ -241,11 +241,11 @@ BuildMAD()
 
 BuildLUAJIT()
 {
-        UnArch 'luajit-2.0'
-
+        UnArch 'luajit'
+        
         ###########LuaJIT###########
         echo "==========LuaJIT============"
-        cd luajit-2.0
+        cd LuaJIT
         make PREFIX=$InstallTo BUILDMODE=static
         if [ $? -eq 0 ]
         then

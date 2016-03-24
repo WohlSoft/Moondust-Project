@@ -10,8 +10,8 @@ QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx:{
-QMAKE_CFLAGS += -Wno-unused-but-set-variable
-QMAKE_CXXFLAGS += -Wno-unused-but-set-variable
+QMAKE_CFLAGS += -Wno-unused-but-set-variable -Wno-deprecated-register
+QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-deprecated-register
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 

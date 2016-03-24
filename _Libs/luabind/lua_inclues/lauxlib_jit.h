@@ -12,7 +12,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include "lua.h"
+#include "lua_jit.h"
 
 
 #define luaL_getn(L,i)          ((int)lua_objlen(L, i))
