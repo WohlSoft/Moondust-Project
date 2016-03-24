@@ -121,7 +121,7 @@ UnArch 'flac-1.3.1'
 UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
-UnArch 'luajit-2.0'
+UnArch 'luajit'
 cp ../libmad-0.15.1b.patched_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
@@ -315,7 +315,7 @@ buildLuaJit()
 	NDKARCH="-march=armv7-a -mfloat-abi=softfp -Wl,--fix-cortex-a8"
 	###########LuaJIT###########
 	echo "==========LuaJIT============"
-	cd luajit-2.0
+	cd LuaJIT
 	make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_FLAGS="$NDKF $NDKARCH" PREFIX=$InstallTo BUILDMODE=static
 	if [ $? -eq 0 ]
 	then
