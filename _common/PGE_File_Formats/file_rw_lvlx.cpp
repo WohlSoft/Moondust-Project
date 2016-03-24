@@ -1576,11 +1576,11 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(!FileData.events[i].moving_layers.empty())
             {
                 PGESTRINGList moveLayers;
-                for(int j=0; j<FileData.events[i].moving_layers.size(); j++)
+                for(int j=0; j<(signed)FileData.events[i].moving_layers.size(); j++)
                 {
                     LevelEvent_MoveLayer &mvl=FileData.events[i].moving_layers[j];
                     PGESTRING moveLayer;
-                    if(mvl.name.isEmpty())
+                    if(mvl.name.PGESTRINGisEmpty())
                         continue;
                     moveLayer += PGEFile::value("LN", PGEFile::qStrS(mvl.name));
                     if(mvl.speed_x!=0.0)
@@ -1602,7 +1602,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(!FileData.events[i].spawn_npc.empty())
             {
                 PGESTRINGList spawnNPCs;
-                for(int j=0; j<FileData.events[i].spawn_npc.size(); j++)
+                for(int j=0; j<(signed)FileData.events[i].spawn_npc.size(); j++)
                 {
                     PGESTRING spawnNPC;
                     LevelEvent_SpawnNPC &npc=FileData.events[i].spawn_npc[j];
@@ -1634,7 +1634,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(!FileData.events[i].spawn_effects.empty())
             {
                 PGESTRINGList spawnEffects;
-                for(int j=0; j<FileData.events[i].spawn_effects.size(); j++)
+                for(int j=0; j<(signed)FileData.events[i].spawn_effects.size(); j++)
                 {
                     PGESTRING spawnEffect;
                     LevelEvent_SpawnEffect &effect=FileData.events[i].spawn_effects[j];
@@ -1673,7 +1673,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             if(!FileData.events[i].update_variable.empty())
             {
                 PGESTRINGList updateVars;
-                for(int j=0; j<FileData.events[i].update_variable.size(); j++)
+                for(int j=0; j<(signed)FileData.events[i].update_variable.size(); j++)
                 {
                     PGESTRING updateVar;
                     LevelEvent_UpdateVariable &updVar = FileData.events[i].update_variable[j];
