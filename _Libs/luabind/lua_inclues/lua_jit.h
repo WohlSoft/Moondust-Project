@@ -13,7 +13,7 @@
 #include <stddef.h>
 
 
-#include "luaconf.h"
+#include "luaconf_jit.h"
 
 
 #define LUA_VERSION	"Lua 5.1"
@@ -226,6 +226,7 @@ LUA_API int  (lua_status) (lua_State *L);
 #define LUA_GCSTEP		5
 #define LUA_GCSETPAUSE		6
 #define LUA_GCSETSTEPMUL	7
+#define LUA_GCISRUNNING		9
 
 LUA_API int (lua_gc) (lua_State *L, int what, int data);
 
