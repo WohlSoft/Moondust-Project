@@ -24,15 +24,15 @@
 #define LUA_INCLUDE_HPP_INCLUDED
 
 #ifndef LUABIND_CPLUSPLUS_LUA
-extern "C"
-{
-#endif
+#include "../lua_inclues/lua.hpp"
+//extern "C"
+//{
+//#endif
 
-	#include "lua.h"
-	#include "lauxlib.h"
-
-#ifndef LUABIND_CPLUSPLUS_LUA
-}
+//    #include "../lua_inclues/lua.hpp"
+//    //#include "lauxlib.h"
+//#ifndef LUABIND_CPLUSPLUS_LUA
+//}
 #endif
 
 #endif
