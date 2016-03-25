@@ -99,19 +99,19 @@ bool PGE_Window::init(QString WindowTitle)
         SDL_FreeSurface(sicon);
     }
 
-    WriteToLog(QtDebugMsg, "Create OpenGL context...");
+    LogDebug("Create OpenGL context...");
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     if(!checkSDLError()) return false;
 
     SDL_GL_MakeCurrent(window, glcontext);
     if(!checkSDLError()) return false;
 
-    WriteToLog(QtDebugMsg, "Toggle vsync...");
+    LogDebug("Toggle vsync...");
     toggleVSync(vsync);
     IsInit=true;
 
     //Init OpenGL (to work with textures, OpenGL should be load)
-    WriteToLog(QtDebugMsg, "Init OpenGL settings...");
+    LogDebug("Init OpenGL settings...");
     if(!GlRenderer::init())
     {
         checkSDLError();

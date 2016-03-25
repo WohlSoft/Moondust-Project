@@ -217,16 +217,16 @@ int main(int argc, char *argv[])
 
     //Load selected configuration pack
 
-    WriteToLog(QtDebugMsg, "Opening of the configuration package...");
+    LogDebug("Opening of the configuration package...");
     ConfigManager::setConfigPath(configPath);
 
-    WriteToLog(QtDebugMsg, "Initalization of basic properties...");
+    LogDebug("Initalization of basic properties...");
     if(!ConfigManager::loadBasics()) exit(1);
 
-    WriteToLog(QtDebugMsg, "Configuration package successfully loaded!");
+    LogDebug("Configuration package successfully loaded!");
 
     // Initalizing SDL
-    WriteToLog(QtDebugMsg, "Initialization of SDL...");
+    LogDebug("Initialization of SDL...");
     if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
     {
         QMessageBox::critical(NULL, "SDL Error",
@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    WriteToLog(QtDebugMsg, "Initialization of Audio subsystem...");
+    LogDebug("Initialization of Audio subsystem...");
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
         QMessageBox::warning(NULL, "Audio subsystem Error",
@@ -246,17 +246,17 @@ int main(int argc, char *argv[])
     }
     PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music);
 
-    WriteToLog(QtDebugMsg, "Build SFX index cache...");
+    LogDebug("Build SFX index cache...");
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
-    WriteToLog(QtDebugMsg, "Init main window...");
+    LogDebug("Init main window...");
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
 
-    WriteToLog(QtDebugMsg, "Init joystics...");
+    LogDebug("Init joystics...");
     g_AppSettings.initJoysticks();
     g_AppSettings.loadJoystickSettings();
 
-    WriteToLog(QtDebugMsg, "Clear screen...");
+    LogDebug("Clear screen...");
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glLoadIdentity();//Reset modelview matrix
     glFlush();
@@ -267,10 +267,10 @@ int main(int argc, char *argv[])
     GlRenderer::resetViewport();
 
     //Init font manager
-    WriteToLog(QtDebugMsg, "Init font manager...");
+    LogDebug("Init font manager...");
     FontManager::init();
 
-    WriteToLog(QtDebugMsg, "Showing window...");
+    LogDebug("Showing window...");
     SDL_ShowWindow(PGE_Window::window);
     SDL_PumpEvents();
 

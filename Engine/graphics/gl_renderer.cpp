@@ -207,7 +207,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     if(!sourceImage)
     {
-        WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
+        LogWarning(QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
         target = g_renderer->getDummyTexture();
         return;
@@ -242,7 +242,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     if((w<=0) || (h<=0))
     {
         FreeImage_Unload(sourceImage);
-        WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
+        LogWarning(QString("Error loading of image file: \n%1\nReason: %2.")
             .arg(path).arg("Zero image size!"));
         target = g_renderer->getDummyTexture();
         return;
@@ -302,10 +302,10 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     #endif
 
     #ifdef DEBUG_BUILD
-    WriteToLog(QtDebugMsg, QString("Mask merging of %1 passed in %2 milliseconds").arg(path).arg(maskElapsed));
-    WriteToLog(QtDebugMsg, QString("Binding time of %1 passed in %2 milliseconds").arg(path).arg(bindElapsed));
-    WriteToLog(QtDebugMsg, QString("Unload time of %1 passed in %2 milliseconds").arg(path).arg(unloadElapsed));
-    WriteToLog(QtDebugMsg, QString("Total Loading of texture %1 passed in %2 milliseconds (%3x%4)")
+    LogDebug(QString("Mask merging of %1 passed in %2 milliseconds").arg(path).arg(maskElapsed));
+    LogDebug(QString("Binding time of %1 passed in %2 milliseconds").arg(path).arg(bindElapsed));
+    LogDebug(QString("Unload time of %1 passed in %2 milliseconds").arg(path).arg(unloadElapsed));
+    LogDebug(QString("Total Loading of texture %1 passed in %2 milliseconds (%3x%4)")
                .arg(path).arg(totalTime.elapsed())
                .arg(w).arg(h));
     #endif

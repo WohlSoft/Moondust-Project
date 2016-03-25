@@ -25,17 +25,19 @@
 #include <QTextStream>
 #include <memory>
 
+#include "logger.h"
+
 class LogWriter
 {
 public:
     static QString DebugLogFile;
-    static QtMsgType logLevel;
+    static PGE_LogLevel logLevel;
     static bool   enabled;
     static bool   _file_is_opened;
     static std::shared_ptr<QFile>  _out_file;
     static std::shared_ptr<QTextStream>  _out_stream;
 
-    static void WriteToLog(QtMsgType type, QString msg);
+    static void WriteToLog(PGE_LogLevel type, QString msg);
     static void LoadLogSettings();
 
     static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);

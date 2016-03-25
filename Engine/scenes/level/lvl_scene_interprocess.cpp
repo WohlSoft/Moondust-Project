@@ -43,7 +43,7 @@ void LevelScene::process_InterprocessCommands()
             case IntProc::PlaceItem:
             {
                 QString raw = IntProc::getCMD();
-                WriteToLog(QtDebugMsg, raw);
+                LogDebug(raw);
 
                 LevelData got;
                 PGE_FileFormats_misc::RawTextInput raw_file(&raw);
@@ -51,7 +51,7 @@ void LevelScene::process_InterprocessCommands()
 
                 if(!got.ReadFileValid)
                 {
-                    WriteToLog(QtDebugMsg, FileFormats::errorString);
+                    LogDebug(FileFormats::errorString);
                     return;
                 }
 

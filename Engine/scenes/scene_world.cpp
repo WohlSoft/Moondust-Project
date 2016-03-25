@@ -224,14 +224,14 @@ void WorldScene::setGameState(EpisodeState *_state)
                     data.IntroLevel_file.append(".lvl");
 
             QString introLevelFile = gameState->WorldPath+"/"+data.IntroLevel_file;
-            WriteToLog(QtDebugMsg, "Opening intro level: "+introLevelFile);
+            LogDebug("Opening intro level: "+introLevelFile);
 
             if(QFileInfo(introLevelFile).exists())
             {
                 LevelData checking = FileFormats::OpenLevelFile(introLevelFile);
                 if(checking.ReadFileValid)
                 {
-                    WriteToLog(QtDebugMsg, "File valid, do exit!");
+                    LogDebug("File valid, do exit!");
                     gameState->LevelFile = introLevelFile;
                     gameState->LevelPath = checking.path;
                     if(data.HubStyledWorld)
@@ -253,7 +253,7 @@ void WorldScene::setGameState(EpisodeState *_state)
                 }
                 else
                 {
-                    WriteToLog(QtDebugMsg, "File invalid");
+                    LogDebug("File invalid");
                 }
             }
         }

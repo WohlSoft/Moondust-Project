@@ -19,7 +19,6 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <QString>
-#include <QtMsgHandler>
 
 enum class PGE_LogLevel {
     Debug=4,

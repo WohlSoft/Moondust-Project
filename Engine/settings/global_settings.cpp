@@ -42,14 +42,14 @@ void GlobalSettings::initJoysticks()
     for(int i=0; i<SDL_NumJoysticks();i++)
     {
         joysticks.push_back(SDL_JoystickOpen(i));
-        WriteToLog(QtDebugMsg, QString("=========================="));
-        WriteToLog(QtDebugMsg, QString("Josytick %1").arg(SDL_JoystickName(joysticks.last())));
-        WriteToLog(QtDebugMsg, QString("--------------------------"));
-        WriteToLog(QtDebugMsg, QString("Axes:    %1").arg(SDL_JoystickNumAxes(joysticks.last())));
-        WriteToLog(QtDebugMsg, QString("Balls:   %1").arg(SDL_JoystickNumBalls(joysticks.last())));
-        WriteToLog(QtDebugMsg, QString("Hats:    %1").arg(SDL_JoystickNumHats(joysticks.last())));
-        WriteToLog(QtDebugMsg, QString("Buttons: %1").arg(SDL_JoystickNumButtons(joysticks.last())));
-        WriteToLog(QtDebugMsg, QString("=========================="));
+        LogDebug(QString("=========================="));
+        LogDebug(QString("Josytick %1").arg(SDL_JoystickName(joysticks.last())));
+        LogDebug(QString("--------------------------"));
+        LogDebug(QString("Axes:    %1").arg(SDL_JoystickNumAxes(joysticks.last())));
+        LogDebug(QString("Balls:   %1").arg(SDL_JoystickNumBalls(joysticks.last())));
+        LogDebug(QString("Hats:    %1").arg(SDL_JoystickNumHats(joysticks.last())));
+        LogDebug(QString("Buttons: %1").arg(SDL_JoystickNumButtons(joysticks.last())));
+        LogDebug(QString("=========================="));
     }
 }
 

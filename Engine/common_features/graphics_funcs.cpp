@@ -108,9 +108,9 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     }
 
     #ifdef DEBUG_BUILD
-    WriteToLog(QtDebugMsg, QString("File read of texture %1 passed in %2 milliseconds").arg(file).arg(fReadTimeElapsed));
-    WriteToLog(QtDebugMsg, QString("Conv to 32-bit of %1 passed in %2 milliseconds").arg(file).arg(imgConvertElapsed));
-    WriteToLog(QtDebugMsg, QString("Total Loading of image %1 passed in %2 milliseconds").arg(file).arg(loadingTime.elapsed()));
+    LogDebug(QString("File read of texture %1 passed in %2 milliseconds").arg(file).arg(fReadTimeElapsed));
+    LogDebug(QString("Conv to 32-bit of %1 passed in %2 milliseconds").arg(file).arg(imgConvertElapsed));
+    LogDebug(QString("Total Loading of image %1 passed in %2 milliseconds").arg(file).arg(loadingTime.elapsed()));
     #endif
 //    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
 //    if(img)

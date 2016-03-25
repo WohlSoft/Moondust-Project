@@ -28,7 +28,7 @@
 #include "logger_sets.h"
 
 QString     LogWriter::DebugLogFile;
-QtMsgType   LogWriter::logLevel;
+PGE_LogLevel   LogWriter::logLevel;
 bool        LogWriter::enabled;
 
 bool LogWriter::_file_is_opened = false;
@@ -44,7 +44,7 @@ void LogWriter::LoadLogSettings()
             .arg(QTime().currentTime().hour())
             .arg(QTime().currentTime().minute())
             .arg(QTime().currentTime().second());
-    logLevel = QtDebugMsg;
+    logLevel = PGE_LogLevel::Debug;
 
     QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
@@ -59,25 +59,10 @@ void LogWriter::LoadLogSettings()
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
             DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
 
-        enabled = true;
-        switch( logSettings.value("log-level", "4").toInt() )
-        {
-            case 4:
-                logLevel=QtDebugMsg; break;
-            case 3:
-                logLevel=QtWarningMsg; break;
-            case 2:
-                logLevel=QtCriticalMsg; break;
-            case 1:
-                logLevel=QtFatalMsg; break;
-            case 0:
-            default:
-                enabled=false;
-                logLevel=QtFatalMsg; break;
-        }
-
+        logLevel = (PGE_LogLevel)logSettings.value("log-level", (int)PGE_LogLevel::Debug).toInt();
+        enabled = ((int)logLevel!=0);
     logSettings.endGroup();
-    qDebug()<< QString("LogLevel %1, log file %2").arg(logLevel).arg(DebugLogFile);
+    qDebug()<< QString("LogLevel %1, log file %2").arg((int)logLevel).arg(DebugLogFile);
 
     _out_file = std::make_shared<QFile>(DebugLogFile);
     if(_out_file.get()->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
@@ -91,20 +76,20 @@ void LogWriter::LoadLogSettings()
     }
 }
 
-void LogWriter::WriteToLog(QtMsgType type, QString msg)
+void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
 {
     if(!enabled) return; //if logging disabled
     if(!_file_is_opened)
     {
         switch (type)
         {
-            case QtDebugMsg:
+            case PGE_LogLevel::Debug:
                 qDebug() << msg; break;
-            case QtWarningMsg:
+            case PGE_LogLevel::Warning:
                 qWarning() << msg; break;
-            case QtCriticalMsg:
+            case PGE_LogLevel::Critical:
                 qCritical() << msg; break;
-            case QtFatalMsg:
+            case PGE_LogLevel::Fatal:
                 qCritical() << msg; break;
             default: break;
         }
@@ -115,33 +100,32 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
 
     switch (type)
     {
-        case QtDebugMsg:
-            if(logLevel==QtFatalMsg) return;
-        case QtWarningMsg:
-            if(logLevel==QtCriticalMsg) return;
-        case QtCriticalMsg:
-            if(logLevel==QtWarningMsg) return;
-        case QtFatalMsg:
+        case PGE_LogLevel::Debug:
+            if(logLevel==PGE_LogLevel::Fatal) return;
+        case PGE_LogLevel::Warning:
+            if(logLevel==PGE_LogLevel::Critical) return;
+        case PGE_LogLevel::Critical:
+            if(logLevel==PGE_LogLevel::Warning) return;
+        case PGE_LogLevel::Fatal:
             break;
-        default: break;
+        case PGE_LogLevel::NoLog: return;
     }
 
     switch (type)
     {
-        case QtDebugMsg:
+        case PGE_LogLevel::Debug:
             txt = QString("Debug: %1").arg(msg);
         break;
-        case QtWarningMsg:
+        case PGE_LogLevel::Warning:
             txt = QString("Warning: %1").arg(msg);
         break;
-        case QtCriticalMsg:
+        case PGE_LogLevel::Critical:
             txt = QString("Critical: %1").arg(msg);
         break;
-        case QtFatalMsg:
+        case PGE_LogLevel::Fatal:
             txt = QString("Fatal: %1").arg(msg);
         break;
-        default:
-            txt = QString("Info: %1").arg(msg);
+        case PGE_LogLevel::NoLog: return;
     }
 
     *_out_stream.get() << txt << "\n";
@@ -173,11 +157,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
     switch (type)
     {
         case QtDebugMsg:
-            if(logLevel==QtWarningMsg) return;
+            if(logLevel==PGE_LogLevel::Warning) return;
         case QtWarningMsg:
-            if(logLevel==QtCriticalMsg) return;
+            if(logLevel==PGE_LogLevel::Critical) return;
         case QtCriticalMsg:
-            if(logLevel==QtFatalMsg) return;
+            if(logLevel==PGE_LogLevel::Fatal) return;
         case QtFatalMsg:
             break;
         default: break;
@@ -239,7 +223,7 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
-void WriteToLog(QtMsgType type, QString msg)
+void WriteToLog(PGE_LogLevel type, QString msg)
 {
     LogWriter::WriteToLog(type, msg);
 }

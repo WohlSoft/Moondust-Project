@@ -25,7 +25,7 @@ bool ConfigManager::soundIniChanged()
     bool s=sound_lastIniFile_changed;
     sound_lastIniFile_changed=false;
     #ifdef DEBUG_BUILD
-    WriteToLog(QtDebugMsg, QString("Last Sounds.INI was changed: %1").arg(s));
+    LogDebug(QString("Last Sounds.INI was changed: %1").arg(s));
     #endif
     return s;
 }
@@ -164,7 +164,7 @@ void ConfigManager::buildSoundIndex()
     #define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
 
     #ifdef DEBUG_BUILD
-    WriteToLog(QtDebugMsg, QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
+    LogDebug(QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
     qDebug() << "Reserved audio channels: "<< RESERVE_CHANS_COMMAND;
     qDebug() << "SFX Index entries: " << main_sfx_index.size();
     #else

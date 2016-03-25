@@ -21,8 +21,21 @@
 #include <QString>
 #include <QtMsgHandler>
 
+enum class PGE_LogLevel {
+    Debug=4,
+    Warning=3,
+    Critical=2,
+    Fatal=1,
+    NoLog=0,
+};
+
 void LoadLogSettings();
 void CloseLog();
-void WriteToLog(QtMsgType type, QString msg);
+void WriteToLog(PGE_LogLevel type, QString msg);
+
+#define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg);
+#define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg);
+#define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg);
+#define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg);
 
 #endif // LOGGER_H

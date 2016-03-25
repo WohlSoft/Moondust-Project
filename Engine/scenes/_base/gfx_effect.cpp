@@ -146,7 +146,7 @@ void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
         break;
     }
 
-    WriteToLog(QtDebugMsg, QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.frameStyle).arg(frms)
+    LogDebug(QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.frameStyle).arg(frms)
                .arg(frame1).arg(frameE));
 
     _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);

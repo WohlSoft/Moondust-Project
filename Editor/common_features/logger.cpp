@@ -84,23 +84,8 @@ void LogWriter::LoadLogSettings()
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
             DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
         DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath()+"/"+logFileName;
-
-        enabled = true;
-        switch( logSettings.value("log-level", 3).toInt() )
-        {
-            case 4:
-                logLevel=PGE_LogLevel::Debug; break;
-            case 3:
-                logLevel=PGE_LogLevel::Warning; break;
-            case 2:
-                logLevel=PGE_LogLevel::Critical; break;
-            case 1:
-                logLevel=PGE_LogLevel::Fatal; break;
-            case 0:
-            default:
-                enabled=false;
-                logLevel=PGE_LogLevel::Fatal; break;
-        }
+        logLevel=(PGE_LogLevel)logSettings.value("log-level", (int)PGE_LogLevel::Warning).toInt();
+        enabled = ((int)logLevel!=0);
     logSettings.endGroup();
     qDebug()<< QString("LogLevel %1, log file %2").arg((int)logLevel).arg(DebugLogFile);
     qInstallMessageHandler(logMessageHandler);
