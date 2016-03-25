@@ -98,6 +98,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             .def("unregister", &LVL_Npc::unregister)         // Destroy NPC with no effects and no events
             .def("kill", &LVL_Npc::kill)
+            .def("harm", &LVL_Npc::harm)
 
             //Properties
             .property("id", &LVL_Npc::getID)
@@ -114,6 +115,14 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .property("health", &LVL_Npc::getHealth, &LVL_Npc::setHealth)
 
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
+
+            //Parameters
+            .def_readonly("killableByFire", &LVL_Npc::getKillByFire)
+            .def_readonly("killableByIce", &LVL_Npc::getKillByIce)
+            .def_readonly("killableByHammer", &LVL_Npc::getKillByHammer)
+            .def_readonly("killableByForcejump", &LVL_Npc::getKillByForcejump)
+            .def_readonly("killableByStatue", &LVL_Npc::getKillByStatue)
+            .def_readonly("killableByVehicle", &LVL_Npc::getKillByVehicle)
 
             //States
             .def_readonly("onGround", &LVL_Npc::onGround)

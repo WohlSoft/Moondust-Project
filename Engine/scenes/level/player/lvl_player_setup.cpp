@@ -204,3 +204,22 @@ void LVL_Player::setLocked(bool lock)
     setPaused(lock);
 }
 
+
+LVL_Npc *LVL_Player::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable)
+{
+    LevelNPC def = FileFormats::CreateLvlNpc();
+    def.id=npcID;
+    def.x=round(posX());
+    def.y=round(posY());
+    def.direct=_direction;
+    def.generator=false;
+    def.layer="Spawned NPCs";
+    def.attach_layer = "";
+    def.event_activate = "";
+    def.event_die = "";
+    def.event_talk = "";
+    def.event_emptylayer = "";
+    return _scene->spawnNPC(def,
+                           (LevelScene::NpcSpawnType)sp_type,
+                           (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
+}

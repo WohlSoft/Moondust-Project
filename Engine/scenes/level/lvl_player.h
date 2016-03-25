@@ -280,6 +280,7 @@ public:
         inline void setHealth(int _health) { health=_health; }
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}
         inline void setState(int _state) { setCharacterSafe(characterID, _state);}
+        LVL_Npc* lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable);
         bool isLuaPlayer;
         /********************Lua Stuff******************/
 

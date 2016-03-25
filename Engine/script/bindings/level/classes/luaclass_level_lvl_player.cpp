@@ -74,6 +74,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .def("onKeyPressed", &LVL_Player::lua_onKeyPressed, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyPressed)
             .def("onKeyReleased", &LVL_Player::lua_onKeyReleased, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyReleased)
 
+            .def("spawnNPC", &LVL_Player::lua_spawnNPC)
+
             .def("getKeyState", &LVL_Player::lua_getKeyState)
             .def("setAnimation", &LVL_Player::lua_setAnimation)
 
@@ -86,6 +88,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .def("setInvincible", &LVL_Player::setInvincible)
             .def_readonly("characterID", &LVL_Player::characterID)
             .def_readonly("stateID", &LVL_Player::stateID)
+            .property("direction", &LVL_Player::direction)
 
             .def_readonly("onGround", &LVL_Player::onGround)
             ;

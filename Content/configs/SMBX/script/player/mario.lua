@@ -36,7 +36,25 @@ end
 
 function marioPlayer:onKeyPressed(keyType)
     if(keyType==KEY_RUN)then
-        --Audio.playSoundByRole(SoundRoles.PlayerTail)
+        self:shoot()
+        Audio.playSound(18)
+    end
+end
+
+function marioPlayer:shoot()
+    local thrownNPC=self.plr_obj:spawnNPC(13, GENERATOR_APPEAR, SPAWN_UP, false)
+    if(thrownNPC~=nil)then
+        thrownNPC.motionSpeed = 256 + math.abs(self.plr_obj.speedX)*32
+        thrownNPC.direction = self.plr_obj.direction
+        if(self.plr_obj:getKeyState(KEY_UP))then
+            thrownNPC.speedY = -4
+        else
+            thrownNPC.speedY = 3
+        end
+        thrownNPC.center_x = self.plr_obj.center_x + self.plr_obj.direction*(self.plr_obj.width/2)
+        thrownNPC.center_y = self.plr_obj.center_y-16
+        thrownNPC.special1 = 0
+        thrownNPC.controller:setCharacter(self.plr_obj.characterID)
     end
 end
 
