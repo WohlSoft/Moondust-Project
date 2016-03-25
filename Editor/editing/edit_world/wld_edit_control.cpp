@@ -51,7 +51,6 @@ void WorldEdit::leaveEvent(QEvent * leaveEvent)
 WorldEdit::~WorldEdit()
 {
     delete ui;
-    MainWinConnect::pMainWin->updateMenus(NULL, true);
     LogDebug("WorldEdit -> Class destroyed");
 }
 

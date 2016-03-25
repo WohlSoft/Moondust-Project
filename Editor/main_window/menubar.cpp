@@ -30,15 +30,16 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     if(!force)
     {
         //Don't update if window is not active
-        if(this->isMinimized()) return;
-
-        if(!this->isActiveWindow())
-            qApp->setActiveWindow(this);
-        this->update();
+        if( this->isMinimized() )
+            return;
+        //if(!this->isActiveWindow())
+        //    qApp->setActiveWindow(this);
+        //this->update();
         //Don't update if this is - same subWindow
         if(subWindow==NULL)
         {
-            if(LastActiveSubWindow == ui->centralWidget->activeSubWindow())
+            //if(LastActiveSubWindow == ui->centralWidget->activeSubWindow())
+            if( !ui->centralWidget->subWindowList().isEmpty() )
                 return;
         }
         else
@@ -54,10 +55,11 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         qApp->setActiveWindow(this);
     }
 
-    if(subWindow==NULL)
-        LastActiveSubWindow = ui->centralWidget->activeSubWindow();
-    else
-        LastActiveSubWindow = subWindow;
+//    if(subWindow==NULL)
+//        LastActiveSubWindow = ui->centralWidget->activeSubWindow();
+//    else
+//
+    LastActiveSubWindow = subWindow;
 
     LogDebug(QString("Update menus"));
 

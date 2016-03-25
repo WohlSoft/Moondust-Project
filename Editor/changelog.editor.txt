@@ -10,6 +10,7 @@ Editor 0.3.1.10
 - NPC-Containers now supports saving of extra special properties for contents: LVLX and SMBX65-38A only, SMBX64 LVL supports extra special for one NPC container only
 - Better and stable interprocessing with engine based on stdin/stdout!
 - Added warning about alpha-testing of PGE Engine for newbies.
+- Resolved trouble with window focuses
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

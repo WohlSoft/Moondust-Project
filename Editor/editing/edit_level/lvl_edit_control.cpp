@@ -55,7 +55,6 @@ LevelEdit::~LevelEdit()
     //free(scene);
     delete ui;
     LvlData.metaData.script.reset();
-    MainWinConnect::pMainWin->updateMenus(NULL, true);
     LogDebug("LevelEdit -> Class destroyed");
 }
 
