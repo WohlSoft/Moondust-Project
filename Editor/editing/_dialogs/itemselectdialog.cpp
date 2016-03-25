@@ -368,12 +368,12 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
+    LogDebug("LevelTools -> Clear current");
     ui->Sel_List_BGO->clear();
     ui->Sel_List_Block->clear();
     ui->Sel_List_NPC->clear();
 
-    WriteToLog(QtDebugMsg, "LevelTools -> Declare new");
+    LogDebug("LevelTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
@@ -706,7 +706,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
+    LogDebug("WorldTools -> Clear current");
 
     util::memclear(ui->Sel_List_Tile);
     util::memclear(ui->Sel_List_Scenery);
@@ -718,7 +718,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     //util::memclear(ui->BlockItemsList);
     //util::memclear(ui->NPCItemsList);
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Declare new");
+    LogDebug("WorldTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
@@ -731,7 +731,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     unsigned int tableRows=0;
     unsigned int tableCols=0;
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table size");
+    LogDebug("WorldTools -> Table size");
 
     int roff = (removalFlags & TAB_TILE ? 0 : 1);
 
@@ -742,12 +742,12 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> set size");
+    LogDebug("WorldTools -> set size");
     ui->Sel_List_Tile->setRowCount(tableRows);
     ui->Sel_List_Tile->setColumnCount(tableCols);
     ui->Sel_List_Tile->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
+    LogDebug("WorldTools -> Table of tiles");
     foreach(obj_w_tile tileItem, conf->main_wtiles )
     {
             if(tileItem.animated)
@@ -802,7 +802,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
+    LogDebug("WorldTools -> List of sceneries");
     foreach(obj_w_scenery sceneItem, conf->main_wscene)
     {
             if(sceneItem.animated)
@@ -827,7 +827,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     roff = (removalFlags & TAB_TILE ? 0 : 1);
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size");
+    LogDebug("WorldTools -> Table of paths size");
     //get Table size
     foreach(obj_w_path pathItem, conf->main_wpaths )
     {
@@ -835,12 +835,12 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size define");
+    LogDebug("WorldTools -> Table of paths size define");
     ui->Sel_List_Path->setRowCount(tableRows);
     ui->Sel_List_Path->setColumnCount(tableCols);
     ui->Sel_List_Path->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
+    LogDebug("WorldTools -> Table of paths");
     foreach(obj_w_path pathItem, conf->main_wpaths )
     {
             if(pathItem.animated)
@@ -895,7 +895,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of levels");
+    LogDebug("WorldTools -> List of levels");
     foreach(obj_w_level levelItem, conf->main_wlevels)
     {
             if((conf->marker_wlvl.path==levelItem.id)||
@@ -918,7 +918,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             ui->Sel_List_Level->addItem( item );
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
+    LogDebug("WorldTools -> List of musics");
     for(int i=1; i<conf->main_music_wld.size(); i++)
     {
             obj_music &musicItem = conf->main_music_wld[i];
@@ -944,7 +944,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     //updateFilters();
 
-    WriteToLog(QtDebugMsg, "WorldTools -> done");
+    LogDebug("WorldTools -> done");
 }
 
 void ItemSelectDialog::updateFilters()

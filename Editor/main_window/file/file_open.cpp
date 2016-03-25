@@ -121,7 +121,7 @@ void MainWindow::on_OpenFile_triggered()
     //Check if data configs are valid
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
                              tr("Editor cannot open files:\nConfiguration package is loaded with errors.").arg(ConfStatus::configPath));
         //Show configuration status window
@@ -160,7 +160,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     //Check if data configs are valid
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
                              tr("Cannot open file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
         //Show configuration status window
@@ -190,7 +190,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     {
         LevelData FileData;
 
-        WriteToLog(QtDebugMsg, "> parsing level file format");
+        LogDebug("> parsing level file format");
         FileData = FileFormats::OpenLevelFile(FilePath);
 
         if( !FileData.ReadFileValid )
@@ -198,17 +198,17 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             return;
         }
-        WriteToLog(QtDebugMsg, "File was read!");
+        LogDebug("File was read!");
         FileData.filename = util::getBaseFilename(in_1.fileName());
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
 
         file.close();
-        WriteToLog(QtDebugMsg, "> Opem meta-file");
+        LogDebug("> Opem meta-file");
         file.setFileName(FilePath+".meta");
         if(QFileInfo(FilePath+".meta").exists())
         {
-            WriteToLog(QtDebugMsg, "> meta-file found, open them!");
+            LogDebug("> meta-file found, open them!");
             if (file.open(QIODevice::ReadOnly))
             {
                 QString metaRaw;
@@ -219,7 +219,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                     FileData.metaData.script.reset();
 
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
-                WriteToLog(QtDebugMsg, "Meta-File was read!");
+                LogDebug("Meta-File was read!");
             }
             else
             {
@@ -228,7 +228,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             }
         }
 
-        WriteToLog(QtDebugMsg, "Creating of sub-window");
+        LogDebug("Creating of sub-window");
         LevelEdit *child = createLvlChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) )
         {
@@ -236,7 +236,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->updateGeometry();
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
-            updateMenus(true);
+            //updateMenus(true);
             SetCurrentLevelSection(0);
             dock_LvlWarpProps->init();
             dock_LvlLayers->setLayersBox();
@@ -245,11 +245,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {
-            WriteToLog(QtDebugMsg, ">>File loading aborted");
+            LogDebug(">>File loading aborted");
             child->show();
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
             ui->centralWidget->activeSubWindow()->close();
-            WriteToLog(QtDebugMsg, ">>Windows closed");
+            LogDebug(">>Windows closed");
         }
     }
     else
@@ -287,7 +287,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->show();
             child->updateGeometry();
             child->ResetPosition();
-            updateMenus(true);
+            //updateMenus(true);
             dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
@@ -314,7 +314,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
-            updateMenus(true);
+            //updateMenus(true);
         } else {
             child->close();
         }

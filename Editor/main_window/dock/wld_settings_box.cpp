@@ -97,12 +97,12 @@ void WorldSettingsBox::setCurrentWorldSettings()
     {
         WorldEdit * edit = mw()->activeWldEditWin();
         if(!edit) return;
-        WriteToLog(QtDebugMsg, "-> Set Worldmap settings");
+        LogDebug("-> Set Worldmap settings");
 
-        WriteToLog(QtDebugMsg, "-> setTitle");
+        LogDebug("-> setTitle");
         ui->WLD_Title->setText( edit->WldData.EpisodeTitle );
 
-        WriteToLog(QtDebugMsg, "-> setText");
+        LogDebug("-> setText");
         ui->WLD_AutostartLvl->setText( edit->WldData.IntroLevel_file );
 
         ui->WLD_Stars->setValue( edit->WldData.stars );
@@ -114,7 +114,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
 
         ui->WLD_Credirs->setText( edit->WldData.authors );
 
-        WriteToLog(QtDebugMsg, "-> Character List");
+        LogDebug("-> Character List");
         //clear character list
         while(!WLD_CharacterCheckBoxes.isEmpty())
         {
@@ -123,7 +123,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
             WLD_CharacterCheckBoxes.erase(it);
         }
 
-        WriteToLog(QtDebugMsg, "-> Clear Menu");
+        LogDebug("-> Clear Menu");
         //ui->WLD_DisableCharacters
 
         //Create absence data
@@ -143,7 +143,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
             ui->WLD_DisableCharacters->layout()->addWidget(cur);
         }
 
-        WriteToLog(QtDebugMsg, "-> Done");
+        LogDebug("-> Done");
     }
     world_settings_lock_fields=false;
 }

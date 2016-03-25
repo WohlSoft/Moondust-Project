@@ -32,7 +32,7 @@ void TimeCounter::stop(QString msg, int items)
 {
     int counter = TickTack.elapsed();
     if(items>=0)
-        WriteToLog(QtDebugMsg, QString("Performance test-> %1 %2 in %3 ms").arg(items).arg(msg).arg(counter));
+        LogDebug(QString("Performance test-> %1 %2 in %3 ms").arg(items).arg(msg).arg(counter));
 }
 
 int TimeCounter::current()

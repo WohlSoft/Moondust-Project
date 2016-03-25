@@ -644,7 +644,7 @@ void NpcEdit::loadPreview()
     if((npc_id<=0)||(!pConfigs->main_npc.contains(npc_id)))
     {
         npc_id=1;
-        WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> NPC Entry not found"));
+        LogWarning(QString("NPC-Edit Preview -> NPC Entry not found"));
         npcImage = Themes::Image(Themes::dummy_npc);
         pConfigs->main_npc[1].copyTo(defaultNPC);
         defaultNPC.frames=1;
@@ -653,7 +653,7 @@ void NpcEdit::loadPreview()
     else
     {
         pConfigs->main_npc[npc_id].copyTo(defaultNPC);
-        WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.id).arg(defaultNPC.name));
+        LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.id).arg(defaultNPC.name));
         if(isUntitled)
             npcImage = *defaultNPC.cur_image;
         else
@@ -747,11 +747,11 @@ void NpcEdit::loadImageFile()
         } else {
             GraphicsHelps::loadQImage(tempImg, CustomImage);
         }
-        WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
-        WriteToLog(QtDebugMsg, QString("Loaded custom NPC image: %1").arg(CustomImage));
+        LogDebug(QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+        LogDebug(QString("Loaded custom NPC image: %1").arg(CustomImage));
         if(tempImg.isNull())
         {
-            WriteToLog(QtDebugMsg, QString("Loading custom NPC Image was failed, using default image"));
+            LogDebug(QString("Loading custom NPC Image was failed, using default image"));
             if(defaultNPC.cur_image)
                 npcImage = *defaultNPC.cur_image;
         } else {
@@ -763,7 +763,7 @@ void NpcEdit::loadImageFile()
     {
         if(defaultNPC.cur_image)
             npcImage = *defaultNPC.cur_image;
-        WriteToLog(QtDebugMsg, QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+        LogDebug(QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }
 }
 

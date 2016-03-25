@@ -27,7 +27,7 @@ void WldScene::buildAnimators()
 {
     int i;
 
-    WriteToLog(QtDebugMsg, "WorldAnimators -> Build tiles animator");
+    LogDebug("WorldAnimators -> Build tiles animator");
     for(i=0; i<pConfigs->main_wtiles.size(); i++)
     {
         SimpleAnimator * aniTile = new SimpleAnimator(
@@ -46,7 +46,7 @@ void WldScene::buildAnimators()
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldAnimators -> Build sceneries animator");
+    LogDebug("WorldAnimators -> Build sceneries animator");
     for(i=0; i<pConfigs->main_wscene.size(); i++)
     {
         SimpleAnimator * aniScene = new SimpleAnimator(
@@ -65,7 +65,7 @@ void WldScene::buildAnimators()
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldAnimators -> Build paths animator");
+    LogDebug("WorldAnimators -> Build paths animator");
     for(i=0; i<pConfigs->main_wpaths.size(); i++)
     {
         SimpleAnimator * aniPath = new SimpleAnimator(
@@ -84,7 +84,7 @@ void WldScene::buildAnimators()
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldAnimators -> Build levels animator");
+    LogDebug("WorldAnimators -> Build levels animator");
     for(i=0; i<pConfigs->main_wlevels.size(); i++)
     {
         SimpleAnimator * aniLevel = new SimpleAnimator(
@@ -102,10 +102,10 @@ void WldScene::buildAnimators()
         {
             index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
         }
-        WriteToLog(QtDebugMsg, "WorldAnimators -> Item made");
+        LogDebug("WorldAnimators -> Item made");
     }
 
-    WriteToLog(QtDebugMsg, "WorldAnimators -> done");
+    LogDebug("WorldAnimators -> done");
 }
 
 
@@ -119,8 +119,7 @@ void WldScene::startAnimation()
 
     if( q > GlobalSettings::animatorItemsLimit )
     {
-        WriteToLog(QtWarningMsg,
-           QString("Can't start animation: too many items on map: %1").arg(q));
+        LogWarning(QString("Can't start animation: too many items on map: %1").arg(q));
         return;
     }
 

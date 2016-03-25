@@ -102,11 +102,11 @@ void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
     MIX_Timidity_addToPathList(QString(ApplicationPath+"/timidity/").toLocal8Bit().data());
     if(Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096)<0)
     {
-        WriteToLog(QtWarningMsg, QString("Can't open audio: %1").arg(Mix_GetError()));
+        LogWarning(QString("Can't open audio: %1").arg(Mix_GetError()));
     }
     if(Mix_AllocateChannels(16)<0)
     {
-        WriteToLog(QtWarningMsg, QString("Can't allocate channels: %1").arg(Mix_GetError()));
+        LogWarning(QString("Can't allocate channels: %1").arg(Mix_GetError()));
     }
     #endif
 }
@@ -225,7 +225,7 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
         mp3Play->play();
     #elif USE_SDL_MIXER
 
-    WriteToLog(QtDebugMsg, QString("Play Sound (SDL2_mixer)"));
+    LogDebug(QString("Play Sound (SDL2_mixer)"));
     if(Mix_PlayChannel( -1, sound, 0 )==-1)
     {
         qDebug() << QString("Mix_PlayChannel: %1").arg(SDL_GetError());

@@ -63,7 +63,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {delete cursor;
         cursor=NULL;}
 
-    WriteToLog(QtDebugMsg, QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
+    LogDebug(QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
 
     switch(itemType)
     {

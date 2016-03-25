@@ -60,7 +60,7 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
         return false;
     if(items->size()==1)
     {
-        WriteToLog(QtDebugMsg, QString("Collision check: single item"));
+        LogDebug(QString("Collision check: single item"));
         return (itemCollidesWith(items->first(), NULL)!=NULL);
     }
 
@@ -89,8 +89,8 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
     PGE_ItemList CheckZone;
     queryItems(findZone, &CheckZone);
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, QString("Collision check: found items for check %1").arg(CheckZone.size()));
-    WriteToLog(QtDebugMsg, QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
+    LogDebug(QString("Collision check: found items for check %1").arg(CheckZone.size()));
+    LogDebug(QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
                .arg(findZone.y()).arg(findZone.width()).arg(findZone.height()));
     #endif
 
@@ -244,7 +244,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
           if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
           {   // Don't collide with sizable block
               #ifdef _DEBUG_
-              WriteToLog(QtDebugMsg, QString("sizable block") );
+              LogDebug(QString("sizable block") );
               #endif
               continue;
           }
@@ -265,23 +265,23 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
           bottomB = it->scenePos().y()+it->data(ITEM_HEIGHT).toReal();
 
           #ifdef _DEBUG_
-          WriteToLog(QtDebugMsg, QString("Collision check -> Item1 L%1 | T%2 | R%3 |  B%4")
+          LogDebug(QString("Collision check -> Item1 L%1 | T%2 | R%3 |  B%4")
                      .arg(leftA).arg(topA).arg(rightA).arg(bottomA));
-          WriteToLog(QtDebugMsg, QString("Collision check -> Item2 R%3 | B%4 | L%1 |  T%2")
+          LogDebug(QString("Collision check -> Item2 R%3 | B%4 | L%1 |  T%2")
                      .arg(leftB).arg(topB).arg(rightB).arg(bottomB));
 
-          WriteToLog(QtDebugMsg, QString("Collision check -> Item1 W%1, H%2")
+          LogDebug(QString("Collision check -> Item1 W%1, H%2")
                      .arg(item->data(ITEM_WIDTH).toReal()).arg(item->data(ITEM_HEIGHT).toReal()));
-          WriteToLog(QtDebugMsg, QString("Collision check -> Item2 W%1, H%2")
+          LogDebug(QString("Collision check -> Item2 W%1, H%2")
                      .arg(it->data(ITEM_WIDTH).toReal()).arg(it->data(ITEM_HEIGHT).toReal()));
 
-          WriteToLog(QtDebugMsg, QString("Collision check -> B%1 <= T%2 -> %3")
+          LogDebug(QString("Collision check -> B%1 <= T%2 -> %3")
                      .arg(bottomA).arg(topB).arg(bottomA <= topB));
-          WriteToLog(QtDebugMsg, QString("Collision check -> T%1 >= B%2 -> %3")
+          LogDebug(QString("Collision check -> T%1 >= B%2 -> %3")
                      .arg(topA).arg(bottomB).arg(topA >= bottomB));
-          WriteToLog(QtDebugMsg, QString("Collision check -> R%1 <= L%2 -> %3")
+          LogDebug(QString("Collision check -> R%1 <= L%2 -> %3")
                      .arg(rightA).arg(leftB).arg(rightA <= leftB));
-          WriteToLog(QtDebugMsg, QString("Collision check -> L%1 >= R%2 -> %3")
+          LogDebug(QString("Collision check -> L%1 >= R%2 -> %3")
                      .arg(leftA).arg(rightB).arg(leftA >= rightB));
 
           //Collision check -> Item1 L-199776 | T-200288 | R-199744 |  B-200256

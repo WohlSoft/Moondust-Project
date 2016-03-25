@@ -138,7 +138,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(!QFile::exists(block_ini))
     {
-        addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), PGE_LogLevel::Critical);
           return;
     }
 
@@ -173,7 +173,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(ConfStatus::total_blocks==0)
     {
-        addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -300,14 +300,14 @@ void dataconfigs::loadLevelBlocks()
 
           if( blockset.status()!=QSettings::NoError)
           {
-            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), PGE_LogLevel::Critical);
             break;
           }
        }
 
        if((unsigned int)main_block.stored()<block_total)
        {
-           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), QtWarningMsg);
+           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), PGE_LogLevel::Warning);
        }
 
 }

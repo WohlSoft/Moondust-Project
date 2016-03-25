@@ -54,7 +54,7 @@ bool WldScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
         return false;
     if(items->size()==1)
     {
-        WriteToLog(QtDebugMsg, QString("Collision check: single item"));
+        LogDebug(QString("Collision check: single item"));
         return (itemCollidesWith(items->first(), NULL)!=NULL);
     }
 
@@ -83,8 +83,8 @@ bool WldScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
     QList<QGraphicsItem *> CheckZone;
     queryItems(findZone, &CheckZone);
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, QString("Collision check: found items for check %1").arg(CheckZone.size()));
-    WriteToLog(QtDebugMsg, QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
+    LogDebug(QString("Collision check: found items for check %1").arg(CheckZone.size()));
+    LogDebug(QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
                .arg(findZone.y()).arg(findZone.width()).arg(findZone.height()));
     #endif
 

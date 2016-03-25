@@ -77,7 +77,7 @@ void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->last_bgo_arrayID=s->LvlData->bgo_array_id;
     s->last_npc_arrayID=s->LvlData->npc_array_id;
 
-    WriteToLog(QtDebugMsg, QString("Square mode %1").arg(s->EditingMode));
+    LogDebug(QString("Rectangle mode %1").arg(s->EditingMode));
     if(s->cursor)
     {
         QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->cursor);
@@ -203,11 +203,11 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     s->placeItemsByRectArray();
 
-                    //WriteToLog(QtDebugMsg, "clear collision buffer");
+                    //LogDebug("clear collision buffer");
                     s->emptyCollisionCheck = false;
                     s->collisionCheckBuffer.clear();
                     #ifdef _DEBUG_
-                    WriteToLog(QtDebugMsg, "Done");
+                    LogDebug("Done");
                     #endif
                     s->Debugger_updateItemList();
                     break;

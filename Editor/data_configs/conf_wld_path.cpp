@@ -64,7 +64,7 @@ void dataconfigs::loadWorldPaths()
 
     if(!QFile::exists(scene_ini))
     {
-        addError(QString("ERROR LOADING wld_paths.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_paths.ini: file does not exist"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -99,7 +99,7 @@ void dataconfigs::loadWorldPaths()
 
     if(ConfStatus::total_wpath==0)
     {
-        addError(QString("ERROR LOADING wld_paths.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_paths.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -154,7 +154,7 @@ void dataconfigs::loadWorldPaths()
 
         if( pathset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(pathset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(pathset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

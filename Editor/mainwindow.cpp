@@ -39,10 +39,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
     this->hide();
     setDefaults(); // Apply default common settings
 
-    WriteToLog(QtDebugMsg, QString("Set UI..."));
+    LogDebug(QString("Set UI..."));
     ui->setupUi(this);
 
-    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
+    LogDebug(QString("Setting Lang..."));
     setDefLang();
 
     setUiDefults(); //Apply default UI settings
@@ -78,7 +78,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
         else
         {
             delete cmanager;
-            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            LogCritical("<Configuration is not selected>");
             continueLoad = false;
             return;
         }
@@ -147,7 +147,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     {
         QMessageBox::critical(this, tr("Configuration error"),
                               tr("Configuration can't be loaded.\nSee in %1 for more information.").arg(LogWriter::DebugLogFile), QMessageBox::Ok);
-        WriteToLog(QtFatalMsg, "<Error, application closed>");
+        LogFatal("<Error, application closed>");
         continueLoad = false;
         return;
     }
@@ -226,7 +226,7 @@ void MainWindow::formatErrorMsgBox(QString filePath, QString errorMessage, int l
 //Toolbar context menu
 void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 {
-    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2").arg(pos.x()).arg(pos.y()));
+    LogDebug(QString("Main Menu's context menu called! %1 %2").arg(pos.x()).arg(pos.y()));
 
     QMenu *cu = new QMenu(this);
     QAction *test= cu->addAction("Nothing");
@@ -247,6 +247,6 @@ void MainWindow::showStatusMsg(QString msg, int time)
 
 void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
-    updateMenus(true);
+    updateMenus(ui->centralWidget->activeSubWindow(), true);
 }
 

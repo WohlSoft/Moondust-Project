@@ -102,7 +102,7 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
     if(mainImage.isNull())
     {
         animated=false;
-        WriteToLog(QtWarningMsg, "SimpleAnimator can't work with null images");
+        LogWarning("SimpleAnimator can't work with null images");
         return;
     }
 

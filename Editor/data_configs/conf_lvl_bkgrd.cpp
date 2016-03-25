@@ -191,7 +191,7 @@ void dataconfigs::loadLevelBackgrounds()
 
     if(!QFile::exists(bg_ini))
     {
-        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), PGE_LogLevel::Critical);
           return;
     }
 
@@ -215,7 +215,7 @@ void dataconfigs::loadLevelBackgrounds()
 
     if(ConfStatus::total_bg==0)
     {
-        addError(QString("ERROR LOADING lvl_bkgrd.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -231,7 +231,7 @@ void dataconfigs::loadLevelBackgrounds()
 
         if( bgset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 }

@@ -42,7 +42,7 @@ int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
-    WriteToLog(QtDebugMsg, "Clicked play music button");
+    LogDebug("Clicked play music button");
     setMusic(checked);
 }
 
@@ -78,12 +78,12 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
         case LevelMusic:
             if(id==mw->configs.music_custom_id)
             {
-                WriteToLog(QtDebugMsg, QString("get Custom music path"));
+                LogDebug(QString("get Custom music path"));
                 currentMusicPath = root + cmus;
             }
             else
             {
-                WriteToLog(QtDebugMsg, QString("get standart music path (level)"));
+                LogDebug(QString("get standart music path (level)"));
                 QString musicFile;
                 long j = mw->configs.getMusLvlI(id);
                 if(j>=0)
@@ -99,12 +99,12 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
         case WorldMusic:
             if(id==mw->configs.music_w_custom_id)
             {
-                WriteToLog(QtDebugMsg, QString("get Custom music path"));
+                LogDebug(QString("get Custom music path"));
                 currentMusicPath = root + cmus;
             }
             else
             {
-                WriteToLog(QtDebugMsg, QString("get standart music path (world)"));
+                LogDebug(QString("get standart music path (world)"));
                 QString musicFile;
                 long j = mw->configs.getMusWldI(id);
                 if(j>=0)
@@ -119,7 +119,7 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
             break;
         case SpecialMusic:
             {
-                WriteToLog(QtDebugMsg, QString("get standart music path (special)"));
+                LogDebug(QString("get standart music path (special)"));
                 QString musicFile;
                 long j = mw->configs.getMusSpcI(id);
                 if(j>=0)
@@ -134,7 +134,7 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
             break;
     }
 
-    WriteToLog(QtDebugMsg, QString("path is %1").arg(currentMusicPath));
+    LogDebug(QString("path is %1").arg(currentMusicPath));
 
     QString trackNum;
     if(currentMusicPath.contains('|'))
@@ -226,7 +226,7 @@ void MainWindow::setMusic(bool checked)
 
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for music not loaded"));
+        LogCritical(QString("Error! *.INI Configs for music not loaded"));
         return;
     }
 

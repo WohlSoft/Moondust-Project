@@ -36,7 +36,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     //Check if data configs are valid
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
                              tr("Cannot create NPC config file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
         //Show configuration status window
@@ -57,7 +57,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
         child->show();
     }
     delete npcList;
-    updateMenus(true);
+    //updateMenus(ui->centralWidget->activeSubWindow(), true);
 }
 
 
@@ -67,7 +67,7 @@ void MainWindow::on_actionNewLevel_triggered()
     //Check if data configs are valid
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
                              tr("Cannot create level file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
         //Show configuration status window
@@ -81,7 +81,7 @@ void MainWindow::on_actionNewLevel_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        updateMenus(true);
+        //updateMenus(ui->centralWidget->activeSubWindow(), true);
         SetCurrentLevelSection(0);
         on_actionSelect_triggered();
         dock_LvlWarpProps->init();
@@ -103,7 +103,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
     //Check if data configs are valid
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
                              tr("Cannot create world map file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
         //Show configuration status window
@@ -117,7 +117,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        updateMenus(true);
+        //updateMenus(ui->centralWidget->activeSubWindow(), true);
         on_actionSelect_triggered();
     } else {
         child->show();

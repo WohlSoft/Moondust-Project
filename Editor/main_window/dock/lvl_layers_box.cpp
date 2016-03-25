@@ -776,7 +776,7 @@ void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceSt
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
 
-    WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
+    LogDebug("Row Change at " + QString::number(sourceStart) +
                " " + QString::number(sourceEnd) +
                " to " + QString::number(destinationRow));
 
@@ -878,7 +878,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
 
-    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+    LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
                .arg(pos.x()).arg(pos.y())
                .arg(globPos.x()).arg(globPos.y()));
 

@@ -83,7 +83,7 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
-void dataconfigs::addError(QString bug, QtMsgType level)
+void dataconfigs::addError(QString bug, PGE_LogLevel level)
 {
     WriteToLog(level, QString("LoadConfig -> ")+bug);
     errorsList<<bug;
@@ -158,7 +158,7 @@ void dataconfigs::loadBasics()
         splash_logo = data_dir + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
-            WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
+            LogWarning(QString("Wrong splash image: %1").arg(splash_logo));
             splash_logo = "";//Themes::Image(Themes::splash);
         }
 
@@ -195,7 +195,7 @@ bool dataconfigs::loadconfigs()
     //dirs
     if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
     {
-        WriteToLog(QtCriticalMsg, QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
+        LogCritical(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
         return false;
     }
 
@@ -218,7 +218,7 @@ bool dataconfigs::loadconfigs()
         else
         if(!QDir(data_dir).exists()) //Check as absolute
         {
-            WriteToLog(QtCriticalMsg, QString("Config data path not exists: %1").arg(data_dir));
+            LogCritical(QString("Config data path not exists: %1").arg(data_dir));
             return false;
         }
 
@@ -251,7 +251,7 @@ bool dataconfigs::loadconfigs()
 
     if( mainset.status() != QSettings::NoError )
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
+        LogCritical(QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
         return false;
     }
 
@@ -345,21 +345,21 @@ bool dataconfigs::loadconfigs()
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
 
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-    WriteToLog(QtDebugMsg, QString("Config status 1"));
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
-    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
-    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
-    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
-    WriteToLog(QtDebugMsg, QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
-    WriteToLog(QtDebugMsg, QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
-    WriteToLog(QtDebugMsg, QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
-    WriteToLog(QtDebugMsg, QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
-    WriteToLog(QtDebugMsg, QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
-    WriteToLog(QtDebugMsg, QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
-    WriteToLog(QtDebugMsg, QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
-    WriteToLog(QtDebugMsg, QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
+    LogDebug(QString("-------------------------"));
+    LogDebug(QString("Config status 1"));
+    LogDebug(QString("-------------------------"));
+    LogDebug(QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
+    LogDebug(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
+    LogDebug(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
+    LogDebug(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
+    LogDebug(QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
+    LogDebug(QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
+    LogDebug(QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
+    LogDebug(QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
+    LogDebug(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
+    LogDebug(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
+    LogDebug(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
+    LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
 
     return true;
 }

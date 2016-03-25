@@ -165,7 +165,7 @@ void dataconfigs::loadLevelNPC()
 
     if(!QFile::exists(npc_ini))
     {
-        addError(QString("ERROR LOADING lvl_npc.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_npc.ini: file does not exist"), PGE_LogLevel::Critical);
           return;
     }
 
@@ -207,7 +207,7 @@ void dataconfigs::loadLevelNPC()
 
     if(ConfStatus::total_npc==0)
     {
-        addError(QString("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -479,13 +479,13 @@ void dataconfigs::loadLevelNPC()
 
         if( npcset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }
 
     if((unsigned int)main_npc.stored()<npc_total)
     {
-        addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.stored()), QtWarningMsg);
+        addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.stored()), PGE_LogLevel::Warning);
     }
 }

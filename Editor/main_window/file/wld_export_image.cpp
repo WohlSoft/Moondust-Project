@@ -70,12 +70,12 @@ void WorldEdit::ExportingReady() //slot
         ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
         if(ExportImage.exec()!=QDialog::Rejected)
         {
-            WriteToLog(QtDebugMsg, "ImageExport -> accepted");
+            LogDebug("ImageExport -> accepted");
             imgSize = ExportImage.imageSize;
-            WriteToLog(QtDebugMsg, QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
+            LogDebug(QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
         }
         else {
-            WriteToLog(QtDebugMsg, "ImageExport -> Rejected");
+            LogDebug("ImageExport -> Rejected");
             return;
         }
 
@@ -86,7 +86,7 @@ void WorldEdit::ExportingReady() //slot
         if((imgSize.width()<0)||(imgSize.height()<0))
             return;
 
-        WriteToLog(QtDebugMsg, "ImageExport -> Open file dialog");
+        LogDebug("ImageExport -> Open file dialog");
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
             latest_export_path + "/" +
@@ -94,11 +94,11 @@ void WorldEdit::ExportingReady() //slot
                                         .arg(scene->captutedSize.x())
                                         .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"));
 
-        WriteToLog(QtDebugMsg, "ImageExport -> Check file dialog...");
+        LogDebug("ImageExport -> Check file dialog...");
         if (fileName.isEmpty())
             return;
 
-        WriteToLog(QtDebugMsg, "ImageExport -> Start exporting...");
+        LogDebug("ImageExport -> Start exporting...");
         QFileInfo exported(fileName);
 
         QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);

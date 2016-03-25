@@ -52,7 +52,7 @@ Script::CompilerType ScriptHolder::usingCompilerType() const
 QString ScriptHolder::compileCode()
 {
     if(!m_usingCompiler){
-        WriteToLog(QtDebugMsg, "Failed to compile: No compiler is set!");
+        LogDebug("Failed to compile: No compiler is set!");
         return QString("");
     }
     m_usingCompiler->setEvents(m_events);

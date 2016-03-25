@@ -126,7 +126,7 @@ void WLD_SetPoint::goTo(long x, long y, bool SwitchToSection, QPoint offset)
         zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
     }
 
-    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+    LogDebug(QString("Pos: %1, zoom %2, scenePos: %3")
                .arg(ui->graphicsView->horizontalScrollBar()->value())
                .arg(zoom).arg(x));
 
@@ -179,22 +179,22 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
 
         QMessageBox::warning(this, tr("Configurations not loaded"),
                              tr("Cannot open level world %1:\nbecause object configurations are not loaded\n."
                                 "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
 
-        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
+        LogCritical(QString(" << close subWindow"));
 
         this->close();
 
-        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
+        LogCritical(QString(" << closed, return false"));
         return false;
     }
 
-    WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
+    LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
     scene = new WldScene(ui->graphicsView, configs, WldData, this);
@@ -387,13 +387,13 @@ void WLD_SetPoint::unloadData()
     scene->setMessageBoxItem(false);
 
     scene->clear();
-    WriteToLog(QtDebugMsg, "!<-Cleared->!");
+    LogDebug("!<-Cleared->!");
     scene->uTiles.clear();
     scene->uScenes.clear();
     scene->uPaths.clear();
     scene->uLevels.clear();
 
-    WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+    LogDebug("!<-Delete animators->!");
     while(! scene->animates_Tiles.isEmpty() )
     {
         SimpleAnimator* tmp = scene->animates_Tiles.first();
@@ -419,11 +419,11 @@ void WLD_SetPoint::unloadData()
         if(tmp!=NULL) delete tmp;
     }
 
-    WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+    LogDebug("!<-Delete scene->!");
     delete scene;
     scene = NULL;
     sceneCreated=false;
-    WriteToLog(QtDebugMsg, "!<-Deleted->!");
+    LogDebug("!<-Deleted->!");
 }
 
 QWidget *WLD_SetPoint::gViewPort()

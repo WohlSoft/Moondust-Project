@@ -157,7 +157,7 @@ void MainWindow::loadSettings()
 
            //Refresh state of menubars
            updateWindowMenu();
-           updateMenus(true);
+           updateMenus(ui->centralWidget->activeSubWindow(), true);
         }
 
     settings.endGroup();
@@ -327,21 +327,25 @@ void MainWindow::saveSettings()
         settings.setValue("log-path", LogWriter::DebugLogFile);
 
         if(LogWriter::enabled)
-            switch(LogWriter::logLevel)
-            {
-            case QtDebugMsg:
-                settings.setValue("log-level", "4"); break;
-            case QtWarningMsg:
-                settings.setValue("log-level", "3"); break;
-            case QtCriticalMsg:
-                settings.setValue("log-level", "2"); break;
-            case QtFatalMsg:
-                settings.setValue("log-level", "1"); break;
-            default:
-                settings.setValue("log-level", "4"); break;
-            }
+            settings.setValue("log-level", (int)LogWriter::logLevel);
         else
-            settings.setValue("log-level", "0");
+            settings.setValue("log-level", 0);
+//        if(LogWriter::enabled)
+//            switch(LogWriter::logLevel)
+//            {
+//            case QtDebugMsg:
+//                settings.setValue("log-level", (int)LogWriter::logLevel); break;
+//            case QtWarningMsg:
+//                settings.setValue("log-level", "3"); break;
+//            case QtCriticalMsg:
+//                settings.setValue("log-level", "2"); break;
+//            case QtFatalMsg:
+//                settings.setValue("log-level", "1"); break;
+//            default:
+//                settings.setValue("log-level", "4"); break;
+//            }
+//        else
+//            settings.setValue("log-level", "0");
     settings.endGroup();
 
     //Save settings of custom counters in the debugger

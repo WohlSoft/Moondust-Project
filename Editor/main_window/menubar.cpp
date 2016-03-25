@@ -25,7 +25,7 @@
 #include <mainwindow.h>
 #include <ui_lvl_sctc_props.h>
 
-void MainWindow::updateMenus(bool force)
+void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 {
     if(!force)
     {
@@ -36,7 +36,16 @@ void MainWindow::updateMenus(bool force)
             qApp->setActiveWindow(this);
         this->update();
         //Don't update if this is - same subWindow
-        if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
+        if(subWindow==NULL)
+        {
+            if(LastActiveSubWindow == ui->centralWidget->activeSubWindow())
+                return;
+        }
+        else
+        {
+            if(LastActiveSubWindow == subWindow)
+                return;
+        }
     }
     else
     {
@@ -45,9 +54,12 @@ void MainWindow::updateMenus(bool force)
         qApp->setActiveWindow(this);
     }
 
-    LastActiveSubWindow=ui->centralWidget->activeSubWindow();
+    if(subWindow==NULL)
+        LastActiveSubWindow = ui->centralWidget->activeSubWindow();
+    else
+        LastActiveSubWindow = subWindow;
 
-    WriteToLog(QtDebugMsg, QString("Update menus"));
+    LogDebug(QString("Update menus"));
 
     LevelEdit *lvlWin = activeLvlEditWin(LastActiveSubWindow);
     //NpcEdit *npcWin = activeNpcEditWin(LastActiveSubWindow);
@@ -235,7 +247,7 @@ void MainWindow::updateMenus(bool force)
 
         if( configs.check() )
         {
-            WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
+            LogCritical("*.INI Configs not loaded");
             return;
         }
 
@@ -271,7 +283,7 @@ void MainWindow::updateMenus(bool force)
             ui->actionLockWaters->setChecked(scn->lock_water);
             ui->actionLockDoors->setChecked(scn->lock_door);
 
-            WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
+            LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->opts.grid_show);
 
@@ -298,18 +310,18 @@ void MainWindow::updateMenus(bool force)
         if(wldWin->sceneCreated)
         {
             WldScene *scn = wldWin->scene;
-            WriteToLog(QtDebugMsg, "-> Get scene flags: locks");
+            LogDebug("-> Get scene flags: locks");
             ui->actionLockTiles->setChecked(scn->lock_tile);
             ui->actionLockScenes->setChecked(scn->lock_scene);
             ui->actionLockPaths->setChecked(scn->lock_path);
             ui->actionLockLevels->setChecked(scn->lock_level);
             ui->actionLockMusicBoxes->setChecked(scn->lock_musbox);
 
-            WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
+            LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->opts.grid_show);
 
-            WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
+            LogDebug("-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts = scn->opts;
             ui->actionUndo->setEnabled(scn->canUndo());
             ui->actionRedo->setEnabled(scn->canRedo());
@@ -330,7 +342,7 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
-    WriteToLog(QtDebugMsg, "-> Music Player");
+    LogDebug("-> Music Player");
     LvlMusPlay::updateMusic();
 
     setTileSetBox();

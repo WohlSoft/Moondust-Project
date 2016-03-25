@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     //Init log writer
     LoadLogSettings();
 
-    WriteToLog(QtDebugMsg, "--> Application started <--");
+    LogDebug("--> Application started <--");
 
     #ifdef Q_OS_ANDROID
     SDL_SetMainReady();
@@ -125,12 +125,12 @@ int main(int argc, char *argv[])
     //Init SDL Audio subsystem
     if(SDL_Init(SDL_INIT_AUDIO)<0)
     {
-        WriteToLog(QtWarningMsg, QString("Error of loading SDL: %1").arg(SDL_GetError()));
+        LogWarning(QString("Error of loading SDL: %1").arg(SDL_GetError()));
     }
 
     if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MODPLUG|MIX_INIT_MP3|MIX_INIT_OGG)<0)
     {
-        WriteToLog(QtWarningMsg, QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
+        LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
     }
     #endif
 
@@ -181,17 +181,17 @@ QuitFromEditor:
     FreeImage_DeInitialise();
 
     #ifdef USE_SDL_MIXER
-        WriteToLog(QtDebugMsg, "Free music buffer...");
+        LogDebug("Free music buffer...");
     PGE_MusPlayer::MUS_freeStream();
-        WriteToLog(QtDebugMsg, "Free sound buffer...");
+        LogDebug("Free sound buffer...");
     PGE_Sounds::freeBuffer();
-        WriteToLog(QtDebugMsg, "Closing audio...");
+        LogDebug("Closing audio...");
     Mix_CloseAudio();
-        WriteToLog(QtDebugMsg, "Closing SDL...");
+        LogDebug("Closing SDL...");
     SDL_Quit();
     #endif
 
-    WriteToLog(QtDebugMsg, "--> Application closed <--");
+    LogDebug("--> Application closed <--");
     QApplication::quit();
     QApplication::exit();
     delete a;

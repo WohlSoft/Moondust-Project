@@ -22,13 +22,24 @@
 #include <QtMsgHandler>
 
 enum class PGE_LogLevel {
-    PGE_DebugLog=0,
-    PGE_WarningLog,
-    PGE_CriticalLog=0,
-    PGE_FatalLog=0,
+    Debug=4,
+    Warning=3,
+    Critical=2,
+    Fatal=1,
+    NoLog=0,
 };
 
 void LoadLogSettings();
-void WriteToLog(QtMsgType type, QString msg, bool noConsole=false);
+void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole=false);
+
+#define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg, false);
+#define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg, false);
+#define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg, false);
+#define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg, false);
+
+#define LogDebugNC(msg) WriteToLog(PGE_LogLevel::Debug, msg, true);
+#define LogWarningNC(msg) WriteToLog(PGE_LogLevel::Warning, msg, true);
+#define LogCriticalNC(msg) WriteToLog(PGE_LogLevel::Critical, msg, true);
+#define LogFatalNC(msg) WriteToLog(PGE_LogLevel::Fatal, msg, true);
 
 #endif // LOGGER_H

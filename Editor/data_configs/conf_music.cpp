@@ -59,7 +59,7 @@ void dataconfigs::loadMusic()
 
     if(!QFile::exists(music_ini))
     {
-        addError(QString("ERROR LOADING music.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING music.ini: file does not exist"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -96,15 +96,15 @@ void dataconfigs::loadMusic()
 
     if(ConfStatus::total_music_lvl==0)
     {
-        addError(QString("ERROR LOADING music.ini: number of Level Music items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING music.ini: number of Level Music items not define, or empty config"), PGE_LogLevel::Critical);
     }
     if(ConfStatus::total_music_wld==0)
     {
-        addError(QString("ERROR LOADING music.ini: number of World Music items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING music.ini: number of World Music items not define, or empty config"), PGE_LogLevel::Critical);
     }
     if(ConfStatus::total_music_spc==0)
     {
-        addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), PGE_LogLevel::Critical);
     }
 
     main_music_wld.allocateSlots(music_wld_total);
@@ -133,7 +133,7 @@ void dataconfigs::loadMusic()
 
         if( musicset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }
@@ -165,7 +165,7 @@ void dataconfigs::loadMusic()
 
         if( musicset.status() != QSettings::NoError )
         {
-            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)), QtCriticalMsg);
+            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)), PGE_LogLevel::Critical);
             break;
         }
     }
@@ -196,7 +196,7 @@ void dataconfigs::loadMusic()
 
         if( musicset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

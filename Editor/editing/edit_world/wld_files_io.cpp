@@ -52,7 +52,7 @@ bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical("Error! *.INI configs not loaded");
         this->close();
         return false;
     }
@@ -377,12 +377,12 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical("Error! *.INI configs not loaded");
         this->close();
         return false;
     }
 
-    WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
+    LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
     scene = new WldScene(ui->graphicsView, configs, WldData, this);
@@ -492,13 +492,13 @@ void WorldEdit::closeEvent(QCloseEvent *event)
 
         scene->setMessageBoxItem(false);
         scene->clear();
-        WriteToLog(QtDebugMsg, "!<-Cleared->!");
+        LogDebug("!<-Cleared->!");
         scene->uTiles.clear();
         scene->uScenes.clear();
         scene->uPaths.clear();
         scene->uLevels.clear();
 
-        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+        LogDebug("!<-Delete animators->!");
         while(! scene->animates_Tiles.isEmpty() )
         {
             SimpleAnimator* tmp = scene->animates_Tiles.first();
@@ -524,10 +524,10 @@ void WorldEdit::closeEvent(QCloseEvent *event)
             if(tmp!=NULL) delete tmp;
         }
 
-        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+        LogDebug("!<-Delete scene->!");
         delete scene;
         sceneCreated=false;
-        WriteToLog(QtDebugMsg, "!<-Deleted->!");
+        LogDebug("!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
     } else {

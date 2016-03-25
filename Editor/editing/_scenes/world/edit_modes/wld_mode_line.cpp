@@ -73,7 +73,7 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    WriteToLog(QtDebugMsg, QString("Line mode %1").arg(s->EditingMode));
+    LogDebug(QString("Line mode %1").arg(s->EditingMode));
 
     s->last_tile_arrayID=s->WldData->tile_array_id;
     s->last_scene_arrayID=s->WldData->scene_array_id;

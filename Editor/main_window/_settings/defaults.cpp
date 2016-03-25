@@ -142,7 +142,7 @@ void MainWindow::setUiDefults()
     #endif
 //    #endif
 
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
 
     windowMapper = new QSignalMapper(this);

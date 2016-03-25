@@ -162,7 +162,7 @@ void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
     //Write crash message into the log file first
     crashMsg += QString("\n\n") + getStacktrace();
     //Also save crash report into log file
-    WriteToLog(QtFatalMsg, crashMsg, true);
+    LogFatalNC(crashMsg);
 
     //Then, emergency save all opened files into reserve folder
     attemptCrashsave();

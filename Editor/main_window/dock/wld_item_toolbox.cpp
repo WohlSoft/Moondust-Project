@@ -113,7 +113,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
+    LogDebug("WorldTools -> Clear current");
 
     ui->WLD_TilesList->clear();
     util::memclear(ui->WLD_SceneList);
@@ -124,7 +124,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     //util::memclear(ui->BlockItemsList);
     //util::memclear(ui->NPCItemsList);
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Declare new");
+    LogDebug("WorldTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
@@ -137,7 +137,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     unsigned int tableRows=0;
     unsigned int tableCols=0;
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table size");
+    LogDebug("WorldTools -> Table size");
     //get Table size
     foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
     {
@@ -145,12 +145,12 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> set size");
+    LogDebug("WorldTools -> set size");
     ui->WLD_TilesList->setRowCount(tableRows);
     ui->WLD_TilesList->setColumnCount(tableCols);
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
+    LogDebug("WorldTools -> Table of tiles");
     foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
     {
         tmpI = GraphicsHelps::squareImage(
@@ -175,7 +175,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
+    LogDebug("WorldTools -> List of sceneries");
     foreach(obj_w_scenery sceneItem, mw()->configs.main_wscene)
     {
             tmpI = GraphicsHelps::squareImage(
@@ -194,7 +194,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     tableRows=0;
     tableCols=0;
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size");
+    LogDebug("WorldTools -> Table of paths size");
     //get Table size
     foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
     {
@@ -202,12 +202,12 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size define");
+    LogDebug("WorldTools -> Table of paths size define");
     ui->WLD_PathsList->setRowCount(tableRows);
     ui->WLD_PathsList->setColumnCount(tableCols);
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
-    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
+    LogDebug("WorldTools -> Table of paths");
     foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
     {
         tmpI = GraphicsHelps::squareImage(
@@ -232,7 +232,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of levels");
+    LogDebug("WorldTools -> List of levels");
     foreach(obj_w_level levelItem, mw()->configs.main_wlevels)
     {
             if((mw()->configs.marker_wlvl.path==levelItem.id)||
@@ -252,7 +252,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             ui->WLD_LevelList->addItem( item );
     }
 
-    WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
+    LogDebug("WorldTools -> List of musics");
     {//Place zero music item <Silence>
         item = new QListWidgetItem();
         item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
@@ -286,7 +286,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     mw()->ui->menuNew->setEnabled(true);
     mw()->ui->actionNew->setEnabled(true);
-    WriteToLog(QtDebugMsg, "WorldTools -> done");
+    LogDebug("WorldTools -> done");
 }
 
 

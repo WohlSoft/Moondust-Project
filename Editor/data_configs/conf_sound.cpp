@@ -39,7 +39,7 @@ void dataconfigs::loadSound()
 
     if(!QFile::exists(sound_ini))
     {
-        addError(QString("ERROR LOADING sounds.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING sounds.ini: file does not exist"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -64,7 +64,7 @@ void dataconfigs::loadSound()
 
     if(ConfStatus::total_sound==0)
     {
-        addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
     //////////////////////////////
@@ -96,7 +96,7 @@ void dataconfigs::loadSound()
 
         if( soundset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

@@ -51,8 +51,8 @@ void WorldEdit::leaveEvent(QEvent * leaveEvent)
 WorldEdit::~WorldEdit()
 {
     delete ui;
-    MainWinConnect::pMainWin->updateMenus(true);
-    WriteToLog(QtDebugMsg, "WorldEdit -> Class destroyed");
+    MainWinConnect::pMainWin->updateMenus(NULL, true);
+    LogDebug("WorldEdit -> Class destroyed");
 }
 
 
@@ -145,7 +145,7 @@ void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
         zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
     }
 
-    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+    LogDebug(QString("Pos: %1, zoom %2, scenePos: %3")
                .arg(ui->graphicsView->horizontalScrollBar()->value())
                .arg(zoom).arg(x));
 
@@ -165,7 +165,7 @@ void WorldEdit::setCurrentSection(int /*scId*/)
 //    QPointF center = ui->graphicsView->viewport()->rect().center();
 //    center = ui->graphicsView->mapToScene( center.toPoint() );
 
-//    WriteToLog(QtDebugMsg, QString("Save current position %1 %2")
+//    LogDebug(QString("Save current position %1 %2")
 //               .arg(ui->graphicsView->horizontalScrollBar()->value())
 //               .arg(ui->graphicsView->verticalScrollBar()->value())
 //               );
@@ -193,7 +193,7 @@ void WorldEdit::setCurrentSection(int /*scId*/)
 
 //    scene->drawSpace();
 
-//    WriteToLog(QtDebugMsg, QString("Move to current section position"));
+//    LogDebug(QString("Move to current section position"));
 
 //    //Move to new section position
 //    if(sIsNew)
@@ -208,7 +208,7 @@ void WorldEdit::setCurrentSection(int /*scId*/)
 //        LvlData.sections[LvlData.CurSection].PositionY );
 //    }
 
-//    WriteToLog(QtDebugMsg, QString("Call to Draw intersection space"));
+//    LogDebug(QString("Call to Draw intersection space"));
 
 //    scene->update();
 //    ui->graphicsView->update();

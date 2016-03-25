@@ -111,13 +111,13 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
+    LogDebug("LevelTools -> Clear current");
 
     util::memclear(ui->BGOItemsList);
     util::memclear(ui->BlockItemsList);
     util::memclear(ui->NPCItemsList);
 
-    WriteToLog(QtDebugMsg, "LevelTools -> Declare new");
+    LogDebug("LevelTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
@@ -127,7 +127,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-    WriteToLog(QtDebugMsg, "LevelTools -> List ob blocks");
+    LogDebug("LevelTools -> List ob blocks");
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -224,7 +224,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-    WriteToLog(QtDebugMsg, "LevelTools -> List ob BGOs");
+    LogDebug("LevelTools -> List ob BGOs");
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -324,7 +324,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     tmpGrpList.clear();
 
 
-    WriteToLog(QtDebugMsg, "LevelTools -> List ob NPCs");
+    LogDebug("LevelTools -> List ob NPCs");
     //set custom NPC items from loaded level
     if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {

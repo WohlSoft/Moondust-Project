@@ -138,7 +138,7 @@ void MainWindow::on_actionReload_triggered()
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             LvlMusPlay::musicForceReset=true; //reset musics
-            updateMenus(true);
+            updateMenus(ui->centralWidget->activeSubWindow(), true);
 
             child->setFocus();
             //Restore saved section positions
@@ -155,13 +155,13 @@ void MainWindow::on_actionReload_triggered()
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
         } else {
-                WriteToLog(QtDebugMsg, ">>File loading aborted");
+                LogDebug(">>File loading aborted");
             child->show();
-                WriteToLog(QtDebugMsg, ">>Window showed");
+                LogDebug(">>Window showed");
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-                WriteToLog(QtDebugMsg, ">>Option set");
+                LogDebug(">>Option set");
             ui->centralWidget->activeSubWindow()->close();
-                WriteToLog(QtDebugMsg, ">>Windows closed");
+                LogDebug(">>Windows closed");
         }
     }
     else
@@ -208,7 +208,7 @@ void MainWindow::on_actionReload_triggered()
             statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
-            updateMenus(true);
+            updateMenus(ui->centralWidget->activeSubWindow(), true);
         } else {
             child->close();
             npcWindow->close();
@@ -292,7 +292,7 @@ void MainWindow::on_actionReload_triggered()
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
             child->updateGeometry();
             child->ResetPosition();
-            updateMenus(true);
+            updateMenus(ui->centralWidget->activeSubWindow(), true);
             dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
@@ -305,13 +305,13 @@ void MainWindow::on_actionReload_triggered()
 
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {
-            WriteToLog(QtDebugMsg, ">>File loading aborted");
+            LogDebug(">>File loading aborted");
             child->show();
-            WriteToLog(QtDebugMsg, ">>Window showed");
+            LogDebug(">>Window showed");
             if(activeChildWindow()==3) activeWldEditWin()->WldData.modified = false;
-            WriteToLog(QtDebugMsg, ">>Option set");
+            LogDebug(">>Option set");
             ui->centralWidget->activeSubWindow()->close();
-            WriteToLog(QtDebugMsg, ">>Windows closed");
+            LogDebug(">>Windows closed");
         }
 
     }

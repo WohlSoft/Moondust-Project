@@ -119,7 +119,7 @@ void LvlSectionProps::initDefaults()
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
     int i;
-        WriteToLog(QtDebugMsg, QString("Set level Section Data"));
+        LogDebug(QString("Set level Section Data"));
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
@@ -370,14 +370,14 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 
     if(mw()->configs.main_bg.stored()==0)
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));
+        LogCritical(QString("Error! *.INI Configs for backgrounds not loaded"));
         return;
     }
 
     //if(ui->LVLPropsBackImage->hasFocus())
     //{
     ui->LVLPropsBackImage->setEnabled(false);
-    WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
+    LogDebug("Change BG to "+QString::number(index));
     if(mw()->activeChildWindow()==1)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();

@@ -50,7 +50,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 void WldScene::selectionChanged()
 {
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, "Selection Changed!");
+    LogDebug("Selection Changed!");
     #endif
 }
 
@@ -65,7 +65,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     //using namespace wld_control;
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
+    LogDebug(QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
                .arg(contextMenuOpened).arg(DrawMode));
     #endif
 
@@ -82,7 +82,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mSum > 1 )
     {
         mouseEvent->accept();
-        WriteToLog(QtDebugMsg, QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
+        LogDebug(QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
         return;
     }
 
@@ -90,7 +90,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->buttons() & Qt::LeftButton )
     {
         mouseLeft=true;
-        WriteToLog(QtDebugMsg, QString("Left mouse button pressed [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Left mouse button pressed [edit mode: %1]").arg(EditingMode));
     }
     else
         mouseLeft=false;
@@ -98,16 +98,16 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->buttons() & Qt::MiddleButton )
     {
         mouseMid=true;
-        WriteToLog(QtDebugMsg, QString("Middle mouse button pressed [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Middle mouse button pressed [edit mode: %1]").arg(EditingMode));
     } else mouseMid=false;
 
     if( mouseEvent->buttons() & Qt::RightButton )
     {
         mouseRight=true;
-        WriteToLog(QtDebugMsg, QString("Right mouse button pressed [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Right mouse button pressed [edit mode: %1]").arg(EditingMode));
     } else mouseRight=false;
 
-    WriteToLog(QtDebugMsg, QString("Current editing mode %1").arg(EditingMode));
+    LogDebug(QString("Current editing mode %1").arg(EditingMode));
 
     if(CurrentMode) CurrentMode->mousePress(mouseEvent);
 
@@ -141,7 +141,7 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     MainWinConnect::pMainWin->dock_DebuggerBox->setMousePos(mouseEvent->scenePos().toPoint());
 
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
+    LogDebug(QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
     #endif
 
     contextMenuOpened=false;
@@ -178,18 +178,18 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         mouseLeft=false;
         isLeftMouse=true;
-        WriteToLog(QtDebugMsg, QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
     }
     if( mouseEvent->button() == Qt::MiddleButton )
     {
         mouseMid=false;
         isMiddleMouse=true;
-        WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
     }
     if( mouseEvent->button() == Qt::RightButton )
     {
         mouseRight=false;
-        WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
     }
 
     if(contextMenuOpened)

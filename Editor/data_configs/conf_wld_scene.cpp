@@ -64,7 +64,7 @@ void dataconfigs::loadWorldScene()
 
     if(!QFile::exists(scene_ini))
     {
-        addError(QString("ERROR LOADING wld_scenery.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_scenery.ini: file does not exist"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -99,7 +99,7 @@ void dataconfigs::loadWorldScene()
 
     if(ConfStatus::total_wscene==0)
     {
-        addError(QString("ERROR LOADING wld_scenery.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_scenery.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -156,7 +156,7 @@ void dataconfigs::loadWorldScene()
 
         if( sceneset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(sceneset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(sceneset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

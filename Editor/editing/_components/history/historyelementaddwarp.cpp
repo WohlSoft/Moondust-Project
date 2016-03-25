@@ -48,7 +48,7 @@ void HistoryElementAddWarp::undo()
     }
 
 
-    WriteToLog(QtDebugMsg, "HistoryManager -> check index");
+    LogDebug("HistoryManager -> check index");
 
     if(m_listindex < warplist->count()){
         if(m_array_id == warplist->itemData(m_listindex).toInt()){
@@ -56,7 +56,7 @@ void HistoryElementAddWarp::undo()
             warplist->removeItem(m_listindex);
         }
     }
-    WriteToLog(QtDebugMsg, QString("HistoryManager -> found = %1").arg(found));
+    LogDebug(QString("HistoryManager -> found = %1").arg(found));
 
 
     if(!found)
@@ -72,7 +72,7 @@ void HistoryElementAddWarp::undo()
             }
         }
     }
-    WriteToLog(QtDebugMsg, QString("HistoryManager -> found and removed = %1").arg(found));
+    LogDebug(QString("HistoryManager -> found and removed = %1").arg(found));
 
 
     if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);

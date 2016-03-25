@@ -237,7 +237,7 @@ private:
 
     void loadRotationTable();
 
-    void addError(QString bug, QtMsgType level=QtWarningMsg);
+    void addError(QString bug, PGE_LogLevel level=PGE_LogLevel::Warning);
 };
 
 

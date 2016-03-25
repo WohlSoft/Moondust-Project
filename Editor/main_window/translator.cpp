@@ -41,7 +41,7 @@ void MainWindow::setDefLang()
     /*
      * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
      */
-    WriteToLog(QtDebugMsg, QString("Lang->Translator loaging...."));
+    LogDebug(QString("Lang->Translator loaging...."));
 
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
@@ -53,11 +53,11 @@ void MainWindow::setDefLang()
             GlobalSettings::locale = settings.value("language", defaultLocale).toString();
     settings.endGroup();
 
-    WriteToLog(QtDebugMsg, QString("Lang->config was loaded"));
+    LogDebug(QString("Lang->config was loaded"));
 
-    WriteToLog(QtDebugMsg, QString("Lang->Setting slot...."));
+    LogDebug(QString("Lang->Setting slot...."));
     connect(ui->menuLanguage, SIGNAL(triggered(QAction *)), this, SLOT(slotLanguageChanged(QAction *)));
-    WriteToLog(QtDebugMsg, QString("Lang->set"));
+    LogDebug(QString("Lang->set"));
 
        m_langPath = ApplicationPath;
        m_langPath.append("/languages");
@@ -69,7 +69,7 @@ void MainWindow::setDefLang()
        QLocale::setDefault(locale);
 
        bool ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-                WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
+                LogDebug(QString("Translation: %1").arg((int)ok));
        if(ok)
         qApp->installTranslator(&m_translator);
        else
@@ -86,7 +86,7 @@ void MainWindow::setDefLang()
        qDebug() << "Common Translation: " << ok;
 
        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-                WriteToLog(QtDebugMsg, QString("Qt Translation: %1").arg((int)ok));
+                LogDebug(QString("Qt Translation: %1").arg((int)ok));
        if(ok)
         qApp->installTranslator(&m_translatorQt);
 
@@ -117,7 +117,7 @@ void MainWindow::langListSync()
             action->setCheckable(true);
             action->setData(locale);
 
-            WriteToLog(QtDebugMsg, QString("Locale: %1 %2").arg(m_langPath).arg(locale));
+            LogDebug(QString("Locale: %1 %2").arg(m_langPath).arg(locale));
 
             ui->menuLanguage->addAction(action);
 
@@ -138,7 +138,7 @@ void MainWindow::langListSync()
 
 void MainWindow::slotLanguageChanged(QAction* action)
 {
-    WriteToLog(QtDebugMsg, QString("Translation->SlotStarted"));
+    LogDebug(QString("Translation->SlotStarted"));
     if(0 != action)
     {
         // load the language depending on the action content
@@ -182,11 +182,11 @@ bool MainWindow::switchTranslator(QTranslator& translator, const QString& filena
     qApp->removeTranslator(&translator);
     // load the new translator
     bool ok = translator.load(filename);
-    WriteToLog(QtDebugMsg, QString("Translation: %1 %2").arg((int)ok).arg(filename));
+    LogDebug(QString("Translation: %1 %2").arg((int)ok).arg(filename));
 
     if(ok)
         qApp->installTranslator(&translator);
-    WriteToLog(QtDebugMsg, QString("Translation-> changed"));
+    LogDebug(QString("Translation-> changed"));
     return ok;
 }
 
@@ -210,7 +210,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             qDebug() << "Common Translation: " << ok;
 
 
-        WriteToLog(QtDebugMsg, QString("Translation-> try to retranslate"));
+        LogDebug(QString("Translation-> try to retranslate"));
 
         if(ok)
         {
@@ -220,10 +220,10 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             //Retranslate dock widgets
             emit languageSwitched();
 
-            WriteToLog(QtDebugMsg, QString("Translation-> done"));
+            LogDebug(QString("Translation-> done"));
         }
         else
-            WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
+            LogDebug(QString("Translation-> not changed (not okay)"));
 
         //Sync dynamic menus
         SyncRecentFiles();

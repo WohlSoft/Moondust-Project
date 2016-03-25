@@ -64,7 +64,7 @@ void dataconfigs::loadWorldTiles()
 
     if(!QFile::exists(tile_ini))
     {
-        addError(QString("ERROR LOADING wld_tiles.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_tiles.ini: file does not exist"),  PGE_LogLevel::Critical);
         return;
     }
 
@@ -99,7 +99,7 @@ void dataconfigs::loadWorldTiles()
 
     if(ConfStatus::total_wtile==0)
     {
-        addError(QString("ERROR LOADING wld_tiles.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_tiles.ini: number of items not define, or empty config"),  PGE_LogLevel::Critical);
         return;
     }
 
@@ -158,7 +158,7 @@ void dataconfigs::loadWorldTiles()
 
         if( tileset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(tileset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(tileset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

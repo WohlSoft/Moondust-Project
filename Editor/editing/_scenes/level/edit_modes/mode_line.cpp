@@ -81,7 +81,7 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(LvlPlacingItems::npcSpecialAutoIncrement)
         s->IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
 
-    WriteToLog(QtDebugMsg, QString("Line mode %1").arg(s->EditingMode));
+    LogDebug(QString("Line mode %1").arg(s->EditingMode));
 
     if(s->cursor)
     {
@@ -163,7 +163,7 @@ void LVL_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->cursor)
     {
-        WriteToLog(QtDebugMsg, "Line tool -> Placing items");
+        LogDebug("Line tool -> Placing items");
         s->placeItemsByRectArray();
 
         s->Debugger_updateItemList();

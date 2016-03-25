@@ -339,8 +339,8 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     else
     if(selected==newNpc)
     {
-        WriteToLog(QtDebugMsg, QString("NPC.txt path 1: %1").arg(NPCpath1));
-        WriteToLog(QtDebugMsg, QString("NPC.txt path 2: %1").arg(NPCpath2));
+        LogDebug(QString("NPC.txt path 1: %1").arg(NPCpath1));
+        LogDebug(QString("NPC.txt path 2: %1").arg(NPCpath2));
         if( (!m_scene->LvlData->untitled) && (QFileInfo( NPCpath2 ).exists()) )
         {
             MainWinConnect::pMainWin->OpenFile( NPCpath2 );

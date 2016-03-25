@@ -50,7 +50,7 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         this->close();
         return false;
     }
@@ -419,12 +419,12 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        LogCritical(QString("Error! *.INI configs not loaded"));
         this->close();
         return false;
     }
 
-    WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
+    LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
     scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
@@ -547,13 +547,13 @@ void LevelEdit::closeEvent(QCloseEvent *event)
 
         scene->setMessageBoxItem(false);
         scene->clear();
-        WriteToLog(QtDebugMsg, "!<-Cleared->!");
+        LogDebug("!<-Cleared->!");
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
         scene->uNPCs.clear();
 
-        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+        LogDebug("!<-Delete animators->!");
         while(! scene->animates_BGO.isEmpty() )
         {
             SimpleAnimator* tmp = scene->animates_BGO.first();
@@ -572,10 +572,10 @@ void LevelEdit::closeEvent(QCloseEvent *event)
             scene->animates_NPC.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+        LogDebug("!<-Delete scene->!");
         delete scene;
         sceneCreated=false;
-        WriteToLog(QtDebugMsg, "!<-Deleted->!");
+        LogDebug("!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
     } else {

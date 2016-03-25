@@ -33,14 +33,14 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     if(WinType==1)
         e=activeLvlEditWin();
 
-    WriteToLog(QtDebugMsg, "Set Current Section");
+    LogDebug("Set Current Section");
     if ((open==1)&&(e!=NULL)) // Only Set Checked section number without section select
     {
-        WriteToLog(QtDebugMsg, "get Current Section");
+        LogDebug("get Current Section");
         SectionId = e->LvlData.CurSection;
     }
 
-    WriteToLog(QtDebugMsg, "Set checkbox to");
+    LogDebug("Set checkbox to");
     ui->actionSection_1->setChecked( (SectionId==0) );
     ui->actionSection_2->setChecked( (SectionId==1) );
     ui->actionSection_3->setChecked( (SectionId==2) );
@@ -66,7 +66,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 
     if ((e!=NULL) && (open==0))
     {
-       WriteToLog(QtDebugMsg, "Call to setCurrentSection()");
+       LogDebug("Call to setCurrentSection()");
        e->setCurrentSection(SectionId);
     }
 

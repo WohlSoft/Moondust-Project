@@ -44,7 +44,7 @@ NpcEdit::NpcEdit(dataconfigs * configs, QWidget *parent) :
 NpcEdit::~NpcEdit()
 {
     delete ui;
-    MainWinConnect::pMainWin->updateMenus(true);
+    MainWinConnect::pMainWin->updateMenus(NULL, true);
 }
 
 void NpcEdit::closeEvent(QCloseEvent *event)

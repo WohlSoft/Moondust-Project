@@ -804,7 +804,7 @@ void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart, int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
 {
     lockSetEventSettings=true;
-    WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
+    LogDebug("Row Change at " + QString::number(sourceStart) +
                " " + QString::number(sourceEnd) +
                " to " + QString::number(destinationRow));
 
@@ -2095,13 +2095,13 @@ void LvlEventsBox::on_LVLEvent_playSnd_clicked()
         sndPath += mw()->configs.main_sound[i].file;
     }
 
-    WriteToLog(QtDebugMsg, QString("Test Sound -> path-1 %1").arg(sndPath));
+    LogDebug(QString("Test Sound -> path-1 %1").arg(sndPath));
 
     if(!found) return;
     if(!QFileInfo::exists(sndPath)) return;
 
     PGE_Sounds::SND_PlaySnd(sndPath);
-    WriteToLog(QtDebugMsg, QString("Test Sound -> done!"));
+    LogDebug(QString("Test Sound -> done!"));
 }
 
 

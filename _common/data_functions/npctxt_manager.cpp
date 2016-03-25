@@ -139,21 +139,21 @@ obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
 
     #ifdef PGE_EDITOR
-    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Width:    %1").arg(merged.width));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX h:    %1").arg(merged.gfx_h));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX w:    %1").arg(merged.gfx_w));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Grid size %1").arg(merged.grid));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
-    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
+    LogDebug(QString("-------------------------------------"));
+    LogDebug(QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
+    LogDebug(QString("NPC-Merge -> Height:   %1").arg(merged.height));
+    LogDebug(QString("NPC-Merge -> Width:    %1").arg(merged.width));
+    LogDebug(QString("NPC-Merge -> GFX h:    %1").arg(merged.gfx_h));
+    LogDebug(QString("NPC-Merge -> GFX w:    %1").arg(merged.gfx_w));
+    LogDebug(QString("NPC-Merge -> Grid size %1").arg(merged.grid));
+    LogDebug(QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
+    LogDebug(QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
+    LogDebug(QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
+    LogDebug(QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
+    LogDebug(QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
+    LogDebug(QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
+    LogDebug(QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
+    LogDebug(QString("-------------------------------------"));
     #endif
 
     return merged;

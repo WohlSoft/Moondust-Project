@@ -84,7 +84,7 @@ void dataconfigs::loadWorldLevels()
 
     if(!QFile::exists(level_ini))
     {
-        addError(QString("ERROR LOADING wld_levels.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_levels.ini: file does not exist"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -121,7 +121,7 @@ void dataconfigs::loadWorldLevels()
 
     if(ConfStatus::total_wlvl==0)
     {
-        addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -178,7 +178,7 @@ void dataconfigs::loadWorldLevels()
 
         if( levelset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

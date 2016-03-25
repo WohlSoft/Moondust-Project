@@ -144,8 +144,7 @@ void LvlScene::startAnimation()
 
     if( q > GlobalSettings::animatorItemsLimit )
     {
-        WriteToLog(QtWarningMsg,
-           QString("Can't start animation: too many items on map: %1").arg(q));
+        LogWarning(QString("Can't start animation: too many items on map: %1").arg(q));
         return;
     }
 

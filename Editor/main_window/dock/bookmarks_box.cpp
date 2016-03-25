@@ -219,7 +219,7 @@ void BookmarksBox::on_bookmarkList_customContextMenuRequested(const QPoint &pos)
 
     QPoint globPos = ui->bookmarkList->mapToGlobal(pos);
 
-    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+    LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
                .arg(pos.x()).arg(pos.y())
                .arg(globPos.x()).arg(globPos.y()));
 

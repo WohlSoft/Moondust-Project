@@ -77,7 +77,7 @@ void LVL_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->last_bgo_arrayID=s->LvlData->bgo_array_id;
     s->last_npc_arrayID=s->LvlData->npc_array_id;
 
-    WriteToLog(QtDebugMsg, QString("Circle mode %1").arg(s->EditingMode));
+    LogDebug(QString("Circle mode %1").arg(s->EditingMode));
     if(s->cursor)
     {
         drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint(),
@@ -179,11 +179,11 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 else
                 {
                     s->placeItemsByRectArray();
-                    //WriteToLog(QtDebugMsg, "clear collision buffer");
+                    //LogDebug("clear collision buffer");
                     s->emptyCollisionCheck = false;
                     s->collisionCheckBuffer.clear();
                     #ifdef _DEBUG_
-                    WriteToLog(QtDebugMsg, "Done");
+                    LogDebug("Done");
                     #endif
                     s->Debugger_updateItemList();
                     break;

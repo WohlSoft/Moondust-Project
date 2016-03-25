@@ -438,7 +438,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
         } else
             if(srcimg2.isNull())
-                WriteToLog(QtWarningMsg, "Draw BG -> second image is Null");
+                LogWarning("Draw BG -> second image is Null");
 
 
         if( R1H+RectPlus < sctH )

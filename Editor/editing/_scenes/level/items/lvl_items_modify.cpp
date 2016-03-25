@@ -484,7 +484,7 @@ void LvlScene::placeItemUnderCursor()
 
                 placePlayerPoint(pnt);
 
-                WriteToLog(QtDebugMsg, QString("Placing player point %1 with position %2 %3, %4")
+                LogDebug(QString("Placing player point %1 with position %2 %3, %4")
                            .arg(LvlPlacingItems::playerID+1)
                            .arg(cursor->scenePos().x())
                            .arg(cursor->scenePos().y())

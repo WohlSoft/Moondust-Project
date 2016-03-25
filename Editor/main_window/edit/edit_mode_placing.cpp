@@ -49,12 +49,12 @@ void MainWindow::on_actionRectFill_triggered(bool checked)
             {
                 case LvlScene::PLC_Block:
                    edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
-                   WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
+                   LogDebug(QString("Block Square draw -> %1").arg(checked));
 
                 break;
                 case LvlScene::PLC_BGO:
                    edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
-                   WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
+                   LogDebug(QString("BGO Square draw -> %1").arg(checked));
 
                 break;
 
@@ -78,22 +78,22 @@ void MainWindow::on_actionRectFill_triggered(bool checked)
             {
                 case WldScene::PLC_Tile:
                    edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
-                   WriteToLog(QtDebugMsg, QString("Tile Square draw -> %1").arg(checked));
+                   LogDebug(QString("Tile Square draw -> %1").arg(checked));
 
                 break;
                 case WldScene::PLC_Scene:
                    edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
-                   WriteToLog(QtDebugMsg, QString("Scenery Square draw -> %1").arg(checked));
+                   LogDebug(QString("Scenery Square draw -> %1").arg(checked));
 
                 break;
                 case WldScene::PLC_Path:
                    edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
-                   WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+                   LogDebug(QString("Path Square draw -> %1").arg(checked));
 
                 break;
                 case WldScene::PLC_Level:
                    edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
-                   WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+                   LogDebug(QString("Path Square draw -> %1").arg(checked));
 
                 break;
 
@@ -131,12 +131,12 @@ void MainWindow::on_actionCircleFill_triggered(bool checked)
         {
             case LvlScene::PLC_Block:
                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
-               WriteToLog(QtDebugMsg, QString("Block Circle draw -> %1").arg(checked));
+               LogDebug(QString("Block Circle draw -> %1").arg(checked));
 
             break;
             case LvlScene::PLC_BGO:
                edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
-               WriteToLog(QtDebugMsg, QString("BGO Circle draw -> %1").arg(checked));
+               LogDebug(QString("BGO Circle draw -> %1").arg(checked));
 
             break;
 
@@ -161,22 +161,22 @@ void MainWindow::on_actionCircleFill_triggered(bool checked)
         {
             case WldScene::PLC_Tile:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
-               WriteToLog(QtDebugMsg, QString("Tile Circle draw -> %1").arg(checked));
+               LogDebug(QString("Tile Circle draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Scene:
                edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
-               WriteToLog(QtDebugMsg, QString("Scenery Circle draw -> %1").arg(checked));
+               LogDebug(QString("Scenery Circle draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Path:
                edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Circle draw -> %1").arg(checked));
+               LogDebug(QString("Path Circle draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Level:
                edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Circle draw -> %1").arg(checked));
+               LogDebug(QString("Path Circle draw -> %1").arg(checked));
 
             break;
 
@@ -215,17 +215,17 @@ void MainWindow::on_actionLine_triggered(bool checked)
         {
             case LvlScene::PLC_Block:
                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
-               WriteToLog(QtDebugMsg, QString("Block Line draw -> %1").arg(checked));
+               LogDebug(QString("Block Line draw -> %1").arg(checked));
 
             break;
             case LvlScene::PLC_BGO:
                edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
-               WriteToLog(QtDebugMsg, QString("BGO Line draw -> %1").arg(checked));
+               LogDebug(QString("BGO Line draw -> %1").arg(checked));
 
             break;
             case LvlScene::PLC_NPC:
                edit->scene->setItemPlacer(2, LvlPlacingItems::npcSet.id );
-               WriteToLog(QtDebugMsg, QString("NPC Line draw -> %1").arg(checked));
+               LogDebug(QString("NPC Line draw -> %1").arg(checked));
 
             break;
 
@@ -250,22 +250,22 @@ void MainWindow::on_actionLine_triggered(bool checked)
         {
             case WldScene::PLC_Tile:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
-               WriteToLog(QtDebugMsg, QString("Tile Line draw -> %1").arg(checked));
+               LogDebug(QString("Tile Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Scene:
                edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
-               WriteToLog(QtDebugMsg, QString("Scenery Line draw -> %1").arg(checked));
+               LogDebug(QString("Scenery Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Path:
                edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
+               LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Level:
                edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
+               LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
 
@@ -328,22 +328,22 @@ void MainWindow::on_actionFill_triggered(bool checked)
         {
             case WldScene::PLC_Tile:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
-               WriteToLog(QtDebugMsg, QString("Tile Line draw -> %1").arg(checked));
+               LogDebug(QString("Tile Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Scene:
                edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
-               WriteToLog(QtDebugMsg, QString("Scenery Line draw -> %1").arg(checked));
+               LogDebug(QString("Scenery Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Path:
                edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
+               LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
             case WldScene::PLC_Level:
                edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
-               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
+               LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
 

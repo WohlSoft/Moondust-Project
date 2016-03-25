@@ -151,7 +151,7 @@ void dataconfigs::loadLevelBGO()
 
     if(!QFile::exists(bgo_ini))
     {
-        addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"),  PGE_LogLevel::Critical);
         return;
     }
 
@@ -177,7 +177,7 @@ void dataconfigs::loadLevelBGO()
 
     if(ConfStatus::total_bgo==0)
     {
-        addError(QString("ERROR LOADING lvl_bgo.ini: number of items not define, or empty config"), QtCriticalMsg);
+        addError(QString("ERROR LOADING lvl_bgo.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
@@ -192,7 +192,7 @@ void dataconfigs::loadLevelBGO()
 
         if( bgoset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

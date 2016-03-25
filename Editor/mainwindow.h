@@ -218,7 +218,7 @@ public:
         /// \brief updateMenus Refresh the menubars
         /// \param force Refresh menubar even if window is not active
         ///
-        void updateMenus(bool force=false);
+        void updateMenus(QMdiSubWindow *subWindow=NULL, bool force=false);
         void updateWindowMenu();   //!< Update "Window" Menu
 
     private slots:
