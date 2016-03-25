@@ -31,6 +31,16 @@ function luaPlayer:__setupEvents()
         if(type(self.controller.onKillNpc) == "function")then
             self.Has_onKillNpc = true
         end
+
+        self.Has_onKeyPressed = false
+        if(type(self.controller.onKeyPressed) == "function")then
+            self.Has_onKeyPressed = true
+        end
+
+        self.Has_onKeyReleased = false
+        if(type(self.controller.onKeyReleased) == "function")then
+            self.Has_onKeyReleased = true
+        end
     end
 end
 
@@ -106,6 +116,24 @@ function luaPlayer:onKillNpc(npcObj)
         end
     end
     BasePlayer.onKillNpc(self, onTakeNpc)
+end
+
+function luaPlayer:onKeyPressed(keyType)
+    if(not self.isInvalid and self.controller)then
+        if(self.Has_onKeyPressed)then
+            self.controller:onKeyPressed(keyType)
+        end
+    end
+    BasePlayer.onKeyPressed(self, keyType)
+end
+
+function luaPlayer:onKeyReleased(keyType)
+    if(not self.isInvalid and self.controller)then
+        if(self.Has_onKeyReleased)then
+            self.controller:onKeyReleased(keyType)
+        end
+    end
+    BasePlayer.onKeyReleased(self, keyType)
 end
 
 return luaPlayer

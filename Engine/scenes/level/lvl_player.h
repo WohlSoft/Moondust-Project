@@ -260,6 +260,15 @@ public:
                            L    `-._,
                             `-.__.-'
          ***********************************************/
+        /*Controller processing*/
+        void lua_processKeyEvents();
+        void lua_updateKey(bool& target_key, ControllableObject::KeyType ktype, bool &state);
+        controller_keys keys_prev;
+        inline bool lua_getKeyState(int keyType) { return getKeyState(keyType); }
+        virtual void lua_onKeyPressed(ControllableObject::KeyType) {}
+        virtual void lua_onKeyReleased(ControllableObject::KeyType) {}
+        /*---------------------*/
+
         virtual void lua_onInit() {}
         virtual void lua_onLoop(float) {}
         virtual void lua_onHarm(LVL_Player_harm_event*) {}
@@ -267,7 +276,6 @@ public:
         virtual void lua_onTakeNpc(LVL_Npc*) {}
         virtual void lua_onKillNpc(LVL_Npc*) {}
         inline void lua_setAnimation(int animationID, int framespeed) { animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed); }
-        inline bool lua_getKeyState(int keyType) { return getKeyState(keyType); }
         inline long getHealth() { return health; }
         inline void setHealth(int _health) { health=_health; }
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}

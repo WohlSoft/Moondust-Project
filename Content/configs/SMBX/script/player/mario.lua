@@ -24,7 +24,6 @@ function marioPlayer:onLoop(tickTime)
             end
         end
     end
-
 end
 
 function marioPlayer:onHarm(harmEvent)
@@ -33,6 +32,12 @@ end
 
 function marioPlayer:onTakeNpc(npcObj)
     ProcessPlayerPowerUP(self.plr_obj, npcObj)
+end
+
+function marioPlayer:onKeyPressed(keyType)
+    if(keyType==KEY_RUN)then
+        --Audio.playSoundByRole(SoundRoles.PlayerTail)
+    end
 end
 
 return marioPlayer

@@ -23,6 +23,36 @@
 #include <audio/pge_audio.h>
 #include <settings/debugger.h>
 
+void LVL_Player::lua_updateKey(bool& target_key, ControllableObject::KeyType ktype, bool &state)
+{
+    if(target_key!=state)
+    {
+        if(state)
+            lua_onKeyPressed(ktype);
+        else
+            lua_onKeyReleased(ktype);
+        target_key=state;
+    }
+}
+
+void LVL_Player::lua_processKeyEvents()
+{
+    try
+    {
+        lua_updateKey(keys_prev.left, KEY_LEFT, keys.left);
+        lua_updateKey(keys_prev.right, KEY_RIGHT, keys.right);
+        lua_updateKey(keys_prev.up, KEY_UP, keys.up);
+        lua_updateKey(keys_prev.down, KEY_DOWN, keys.down);
+        lua_updateKey(keys_prev.run, KEY_RUN, keys.run);
+        lua_updateKey(keys_prev.jump, KEY_JUMP, keys.jump);
+        lua_updateKey(keys_prev.alt_run, KEY_ALT_RUN, keys.alt_run);
+        lua_updateKey(keys_prev.alt_jump, KEY_ALT_JUMP, keys.alt_jump);
+        lua_updateKey(keys_prev.drop, KEY_DROP, keys.drop);
+        lua_updateKey(keys_prev.start, KEY_DROP, keys.start);
+    } catch (luabind::error& e) {
+        _scene->getLuaEngine()->postLateShutdownError(e);
+    }
+}
 
 void LVL_Player::update(float tickTime)
 {
@@ -140,6 +170,9 @@ void LVL_Player::update(float tickTime)
             floating_timer=floating_maxtime;
         }
     }
+
+    //Processing lua key events
+    lua_processKeyEvents();
 
     //Running key
     if(keys.run || keys.alt_run)

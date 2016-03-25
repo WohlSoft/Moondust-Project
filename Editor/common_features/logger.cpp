@@ -97,7 +97,7 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
 
     QString txt;
 
-    switch (type)
+    switch(type)
     {
         case PGE_LogLevel::Debug:
             if(logLevel==PGE_LogLevel::Fatal) return;
@@ -110,7 +110,7 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
         case PGE_LogLevel::NoLog: return;
     }
 
-    switch (type)
+    switch(type)
     {
         case PGE_LogLevel::Debug:
             txt = QString("Debug: %1").arg(msg);

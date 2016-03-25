@@ -46,6 +46,18 @@ void Binding_Level_ClassWrapper_LVL_Player::lua_onKillNpc(LVL_Npc *npc)
         call<void>("onKillNpc", npc);
 }
 
+void Binding_Level_ClassWrapper_LVL_Player::lua_onKeyPressed(ControllableObject::KeyType ktype)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onKeyPressed", ktype);
+}
+
+void Binding_Level_ClassWrapper_LVL_Player::lua_onKeyReleased(ControllableObject::KeyType ktype)
+{
+    if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
+        call<void>("onKeyReleased", ktype);
+}
+
 
 luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
 {
@@ -59,6 +71,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .def("onTransform", &LVL_Player::lua_onTransform, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTransform)
             .def("onTakeNpc", &LVL_Player::lua_onTakeNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTakeNpc)
             .def("onKillNpc", &LVL_Player::lua_onKillNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKillNpc)
+            .def("onKeyPressed", &LVL_Player::lua_onKeyPressed, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyPressed)
+            .def("onKeyReleased", &LVL_Player::lua_onKeyReleased, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyReleased)
 
             .def("getKeyState", &LVL_Player::lua_getKeyState)
             .def("setAnimation", &LVL_Player::lua_setAnimation)
