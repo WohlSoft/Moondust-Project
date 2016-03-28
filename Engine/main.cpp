@@ -40,8 +40,10 @@
 
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/smbx64.h>
+#include <PGE_File_Formats/pge_x.h>
 #include "fontman/font_manager.h"
 #include "gui/pge_msgbox.h"
+#include "gui/pge_textinputbox.h"
 
 #include "networking/intproc.h"
 
@@ -437,6 +439,10 @@ PlayWorldMap:
     {
         sceneResult = false;
         PGE_MsgBox::warn(QObject::tr("No opened files"));
+        if(g_AppSettings.debugMode)
+            goto ExitFromApplication;
+        else
+            goto MainMenu;
     }
     else
     {
@@ -444,10 +450,11 @@ PlayWorldMap:
         wScene->setGameState(&_game_state); //Load game state to the world map
         if(!sceneResult)
         {
-            SDL_Delay(50);
+            //SDL_Delay(50);
             PGE_MsgBox::error(QObject::tr("ERROR:\nFail to start world map\n\n"
                                             "%1")
                               .arg(wScene->getLastError()));
+            ExitCode = WldExit::EXIT_error;
         }
     }
 
@@ -474,6 +481,19 @@ PlayWorldMap:
         {
             PGE_MsgBox::warn(QObject::tr("Start level\n%1")
                           .arg(_game_state.LevelFile) );
+
+            PGE_TextInputBox text(NULL, "Type an exit code (signed integer)", PGE_BoxBase::msg_info_light,
+                                  PGE_Point(-1,-1),
+                                  ConfigManager::setup_message_box.box_padding,
+                                  ConfigManager::setup_message_box.sprite);
+            text.exec();
+
+            _game_state._recent_ExitCode_level  = LvlExit::EXIT_Neutral;
+            if(PGEFile::IsIntS(text.inputText()))
+            {
+                _game_state._recent_ExitCode_level = toInt(text.inputText());
+            }
+
             delete wScene;
             if(_game_state.isHubLevel) goto ExitFromApplication;
 
@@ -538,7 +558,8 @@ PlayLevel:
                     sceneResult = lScene->loadFileIP();
                     if((!sceneResult) && (!lScene->isExiting()))
                     {
-                        SDL_Delay(50);
+                        //SDL_Delay(50);
+                        ExitCode = WldExit::EXIT_error;
                         PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")
                                           .arg(lScene->getLastError()),
                                           PGE_MsgBox::msg_error);
