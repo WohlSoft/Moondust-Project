@@ -308,64 +308,89 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 }
 
 
+bool FileFormats::WriteNonSMBX64MetaDataF(PGESTRING filePath, MetaData &metaData)
+{
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, false, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteNonSMBX64MetaData(file, metaData);
+}
+
+bool FileFormats::WriteNonSMBX64MetaDataRaw(MetaData &metaData, PGESTRING &rawdata)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteNonSMBX64MetaData(file, metaData);
+}
+
 PGESTRING FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
 {
-    PGESTRING TextData;
+    PGESTRING raw;
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
+        return "";
+    WriteNonSMBX64MetaData(file, metaData);
+    return raw;
+}
+
+bool FileFormats::WriteNonSMBX64MetaData(PGE_FileFormats_misc::TextOutput &out, MetaData &metaData)
+{
     long i;
 
     //Bookmarks
     if(!metaData.bookmarks.empty())
     {
-        TextData += "META_BOOKMARKS\n";
+        out << "META_BOOKMARKS\n";
         for(i=0;i<(signed)metaData.bookmarks.size(); i++)
         {
             //Bookmark name
-            TextData += PGEFile::value("BM", PGEFile::qStrS(metaData.bookmarks[i].bookmarkName));
-            TextData += PGEFile::value("X", PGEFile::IntS(metaData.bookmarks[i].x));
-            TextData += PGEFile::value("Y", PGEFile::IntS(metaData.bookmarks[i].y));
-            TextData += "\n";
+            out << PGEFile::value("BM", PGEFile::qStrS(metaData.bookmarks[i].bookmarkName));
+            out << PGEFile::value("X", PGEFile::IntS(metaData.bookmarks[i].x));
+            out << PGEFile::value("Y", PGEFile::IntS(metaData.bookmarks[i].y));
+            out << "\n";
         }
-        TextData += "META_BOOKMARKS_END\n";
+        out << "META_BOOKMARKS_END\n";
 
         #ifdef PGE_EDITOR
         if(metaData.script)
         {
             if(!metaData.script->events().isEmpty())
             {
-                TextData += "META_SCRIPT_EVENTS\n";
+                out << "META_SCRIPT_EVENTS\n";
                 foreach(EventCommand* x, metaData.script->events())
                 {
-                    TextData += "EVENT\n";
+                    out << "EVENT\n";
                     if(!x->marker().isEmpty())
-                        TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
-                    TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
-                    TextData += "\n";
+                        out << PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                    out << PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                    out << "\n";
 
                     if(x->basicCommands().size()>0)
                     {
-                        TextData += "BASIC_COMMANDS\n";
+                        out << "BASIC_COMMANDS\n";
                         foreach(BasicCommand *y, x->basicCommands())
                         {
-                            TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                            out << PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
                             if(QString(y->metaObject()->className())=="MemoryCommand")
                             {
                                 MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
-                                TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
-                                TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
-                                TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
-                                TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                                out << PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                                out << PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                                out << PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                                out << PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
                             }
-                            TextData += "\n";
+                            out << "\n";
                         }
-                        TextData += "BASIC_COMMANDS_END\n";
+                        out << "BASIC_COMMANDS_END\n";
                     }
-                    TextData += "EVENT_END\n";
+                    out << "EVENT_END\n";
                 }
-                TextData += "META_SCRIPT_EVENTS_END\n";
+                out << "META_SCRIPT_EVENTS_END\n";
             }
         }
         #endif
     }
-    return TextData;
+    return true;
 }
 

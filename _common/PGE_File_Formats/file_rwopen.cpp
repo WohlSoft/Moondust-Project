@@ -101,6 +101,82 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
 }
 
 
+bool FileFormats::SaveLevelFile(LevelData &FileData, PGESTRING filePath, LevelFileFormat format, unsigned int FormatVersion)
+{
+    errorString.clear();
+    switch(format)
+    {
+    case LVL_PGEX:
+        {
+            if(!FileFormats::WriteExtendedLvlFileF(filePath, FileData))
+            {
+                errorString="Cannot save file "+filePath+".";
+                return false;
+            }
+            return true;
+        }
+        break;
+    case LVL_SMBX64:
+        {
+            smbx64LevelPrepare(FileData);
+
+            if(!FileFormats::WriteSMBX64LvlFileF( filePath, FileData, FormatVersion))
+            {
+                errorString="Cannot save file "+filePath+".";
+                return false;
+            }
+
+            //save additional meta data
+            if(
+                (!FileData.metaData.bookmarks.empty())
+            #ifdef PGE_EDITOR
+                ||((FileData.metaData.script)&&(!FileData.metaData.script->events().isEmpty()))
+            #endif
+                )
+            {
+                if(!FileFormats::WriteNonSMBX64MetaDataF(filePath+".meta", FileData.metaData))
+                {
+                    errorString="Cannot save file "+filePath+".meta.";
+                    return false;
+                }
+            }
+            return true;
+        }
+        break;
+    case LVL_SMBX38A:
+        break;
+    }
+    errorString = "Unsupported file type";
+    return false;
+}
+
+bool FileFormats::SaveLevelData(LevelData &FileData, PGESTRING &RawData, LevelFileFormat format, unsigned int FormatVersion)
+{
+    errorString.clear();
+    switch(format)
+    {
+    case LVL_PGEX:
+        {
+            RawData=WriteExtendedLvlFile(FileData);
+            return true;
+        }
+        break;
+    case LVL_SMBX64:
+        {
+            smbx64LevelPrepare(FileData);
+            RawData = WriteSMBX64LvlFile(FileData, FormatVersion);
+            return true;
+        }
+        break;
+    case LVL_SMBX38A:
+        break;
+    }
+    errorString = "Unsupported file type";
+    return false;
+}
+
+
+
 WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
 {
     errorString.clear();

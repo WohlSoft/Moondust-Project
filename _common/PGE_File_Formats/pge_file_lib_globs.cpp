@@ -403,6 +403,16 @@ namespace PGE_FileFormats_misc
     PGESTRING TextInput::getFilePath() { return _filePath; }
     void TextInput::setFilePath(PGESTRING path) { _filePath=path; }
     long TextInput::getCurrentLineNumber() { return _lineNumber; }
+
+
+    TextOutput::TextOutput() : _lineNumber(0) {}
+    TextOutput::~TextOutput(){}
+    int TextOutput::write(PGESTRING) { return 0; }
+    long long TextOutput::tell() {return 0;}
+    void TextOutput::seek(long long, TextOutput::positions) {}
+    PGESTRING TextOutput::getFilePath() { return _filePath;}
+    void TextOutput::setFilePath(PGESTRING path){ _filePath=path; }
+    long TextOutput::getCurrentLineNumber() { return _lineNumber; }
     /*****************BASE TEXT I/O CLASS***************************/
 
 
@@ -528,6 +538,98 @@ namespace PGE_FileFormats_misc
             { _pos = _data->size(); _isEOF=true; }
         else
             _isEOF=false;
+    }
+
+
+
+    RawTextOutput::RawTextOutput() : TextOutput(), _pos(0), _data(0) {}
+
+    RawTextOutput::RawTextOutput(PGESTRING *rawString, outputMode mode) : TextOutput(), _pos(0), _data(0)
+    {
+        open(rawString, mode);
+    }
+
+    RawTextOutput::~RawTextOutput() {}
+
+    bool RawTextOutput::open(PGESTRING *rawString, outputMode mode)
+    {
+        if(!rawString) return false;
+        _data = rawString;
+        _pos = 0;
+        _lineNumber = 0;
+        if(mode==truncate)
+            _data->clear();
+        else if(mode==append)
+            _pos = _data->size();
+        return true;
+    }
+
+    void RawTextOutput::close()
+    {
+        _data=NULL;
+        _pos=0;
+        _lineNumber = 0;
+    }
+
+    int RawTextOutput::write(PGESTRING buffer)
+    {
+        if(!_data) return -1;
+        int written=0;
+    fillEnd:
+        if(_pos >= (signed)_data->size())
+        {
+            int oldSize=_data->size();
+            _data->append(buffer);
+            _pos=_data->size();
+            written+=(_data->size()-oldSize);
+        }
+        else
+        {
+            while( ( _pos < _data->size() ) && (!IsEmpty(buffer)) )
+            {
+                _data[_pos++] = buffer[0];
+                written++;
+                PGE_RemStrRng(buffer, 0, 1);
+            }
+            if(!IsEmpty(buffer))
+                goto fillEnd;
+        }
+        return written;
+    }
+
+    long long RawTextOutput::tell()
+    {
+        return _pos;
+    }
+
+    void RawTextOutput::seek(long long pos, TextOutput::positions relativeTo)
+    {
+        if(!_data) return;
+        switch(relativeTo)
+        {
+        case current:
+            _pos += pos;
+        case end:
+            _pos = _data->size()+pos;
+        case begin:
+        default:
+            _pos = pos;
+        }
+        if(_pos<0) _pos = 0;
+        if(_pos>=(signed)_data->size())
+            { _pos = _data->size(); }
+    }
+
+    TextOutput &TextOutput::operator<<(const PGESTRING &s)
+    {
+        this->write(s);
+        return *this;
+    }
+
+    TextOutput &TextOutput::operator <<(const char *s)
+    {
+        this->write(s);
+        return *this;
     }
     /*****************RAW TEXT I/O CLASS***************************/
 
@@ -714,6 +816,160 @@ namespace PGE_FileFormats_misc
         stream.seekg(pos, s);
         #endif
     }
+
+
+
+
+    TextFileOutput::TextFileOutput() : TextOutput(), m_forceCRLF(false) {}
+
+    TextFileOutput::TextFileOutput(PGESTRING filePath, bool utf8, bool forceCRLF, TextOutput::outputMode mode) : TextOutput()
+    {
+        open(filePath, utf8, forceCRLF, mode);
+    }
+
+    TextFileOutput::~TextFileOutput()
+    {
+        #ifdef PGE_FILES_QT
+        file.close();
+        #else
+        if(stream)
+        {
+            stream.close();
+            stream.clear();
+        }
+        #endif
+    }
+
+    bool TextFileOutput::open(PGESTRING filePath, bool utf8, bool forceCRLF, TextOutput::outputMode mode)
+    {
+        m_forceCRLF=forceCRLF;
+        _filePath = filePath;
+        _lineNumber = 0;
+        #ifdef PGE_FILES_QT
+        bool state=false;
+        file.setFileName(filePath);
+        if(mode==truncate)
+            state=file.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        else if(mode==append)
+            state=file.open(QIODevice::WriteOnly|QIODevice::Append);
+        else
+            state=file.open(QIODevice::WriteOnly);
+        if(!state) return false;
+        if(!m_forceCRLF)
+        {
+            stream.setDevice(&file);
+            if(utf8) {
+                stream.setCodec("UTF-8");
+            } else {
+                stream.setAutoDetectUnicode(true);
+                stream.setLocale(QLocale::system());
+                stream.setCodec(QTextCodec::codecForLocale());
+            }
+        }
+        return true;
+        #else
+        (void)utf8;
+        if(mode==truncate)
+            stream.open(filePath, std::ios::binary|std::ios::out|std::ios::trunc);
+        else if(mode==append)
+            stream.open(filePath, std::ios::binary|std::ios::out|std::ios::app);
+        else
+            stream.open(filePath, std::ios::binary|std::ios::out);
+        return (bool)stream;
+        #endif
+    }
+
+    void TextFileOutput::close()
+    {
+        _filePath.clear();
+        _lineNumber = 0;
+        #ifdef PGE_FILES_QT
+        file.close();
+        #else
+        stream.close();
+        stream.clear();
+        #endif
+    }
+
+    int TextFileOutput::write(PGESTRING buffer)
+    {
+        int writtenBytes=0;
+        if(m_forceCRLF)
+        {
+            for(int i=0; i<(signed)buffer.size(); i++)
+            {
+                if(buffer[i]=='\n')
+                {
+                    //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+                    const char bytes[2] = {0x0D, 0x0A};
+                    #ifdef PGE_FILES_QT
+                    int bytesNum = file.write((const char*)(&bytes), 2);
+                    #else
+                    int bytesNum = 2;
+                    stream.write((const char*)(&bytes), 2);
+                    #endif
+                    if(bytesNum<0) return -1;
+                    writtenBytes += bytesNum;
+                }
+                else
+                {
+                    #ifdef PGE_FILES_QT
+                    const char byte[1] = {buffer[i].toLatin1()};
+                    int bytesNum = file.write((const char*)(&byte), 1);
+                    #else
+                    int bytesNum = 1;
+                    stream.write((const char*)(&buffer[i]), 1);
+                    #endif
+                    if(bytesNum<0) return -1;
+                    writtenBytes += bytesNum;
+                }
+            }
+        }
+        else
+        {
+            writtenBytes = buffer.size();
+            #ifdef PGE_FILES_QT
+            stream << buffer;
+            #else
+            stream.write((const char*)(buffer.c_str()), buffer.size());
+            #endif
+        }
+        return writtenBytes;
+    }
+
+    long long TextFileOutput::tell()
+    {
+        #ifdef PGE_FILES_QT
+        if(!m_forceCRLF)
+            return stream.pos();
+        else
+            return file.pos();
+        #else
+        return stream.tellg();
+        #endif
+    }
+
+    void TextFileOutput::seek(long long pos, TextOutput::positions relativeTo)
+    {
+        #ifdef PGE_FILES_QT
+        (void)relativeTo;
+        if(!m_forceCRLF)
+            stream.seek(pos);
+        else
+            file.seek(pos);
+        #else
+        std::ios_base::seekdir s;
+        switch(relativeTo)
+        {
+            case current: s=std::ios_base::cur; break;
+            case begin: s=std::ios_base::beg; break;
+            case end: s=std::ios_base::end; break;
+            default: s=std::ios_base::beg; break;
+        }
+        stream.seekg(pos, s);
+        #endif
+    }
+
     /*****************FILE TEXT I/O CLASS***************************/
 
 
@@ -840,7 +1096,5 @@ namespace PGE_FileFormats_misc
             }
         }
     }
-
-
 }
 

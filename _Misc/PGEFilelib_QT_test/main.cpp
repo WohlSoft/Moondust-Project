@@ -80,6 +80,9 @@ int main(int argc, char *argv[])
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
         printLevelInfo(level,cout);
+        FileFormats::SaveLevelFile(level, "test_out_64.lvl", FileFormats::LVL_SMBX64, 64);
+        FileFormats::SaveLevelFile(level, "test_out_50.lvl", FileFormats::LVL_SMBX64, 50);
+        FileFormats::SaveLevelFile(level, "test_out_01.lvl", FileFormats::LVL_SMBX64, 1);
     }
 
 

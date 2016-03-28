@@ -316,6 +316,41 @@ namespace PGE_FileFormats_misc
         long  _lineNumber;
     };
 
+    class TextOutput
+    {
+    public:
+        /*!
+         * \brief Relative positions of carriage
+         */
+        enum positions{
+            //! Relative to current position
+            current=0,
+            //! Relative to begin of file
+            begin,
+            //! Relative to end of file
+            end
+        };
+        enum outputMode{
+            truncate=0,
+            append,
+            overwrite
+        };
+
+        TextOutput();
+        virtual ~TextOutput();
+        virtual int write(PGESTRING buffer);
+        virtual long long tell();
+        virtual void seek(long long pos, positions relativeTo);
+        virtual PGESTRING getFilePath();
+        virtual void setFilePath(PGESTRING path);
+        virtual long getCurrentLineNumber();
+        TextOutput& operator<<(const PGESTRING &s);
+        TextOutput& operator<<(const char* s);
+    protected:
+        PGESTRING _filePath;
+        long  _lineNumber;
+    };
+
 
     class RawTextInput: public TextInput
     {
@@ -336,6 +371,22 @@ namespace PGE_FileFormats_misc
         long long _pos;
         PGESTRING* _data;
         bool _isEOF;
+    };
+
+    class RawTextOutput: public TextOutput
+    {
+    public:
+        RawTextOutput();
+        RawTextOutput(PGESTRING *rawString, outputMode mode=truncate);
+        virtual ~RawTextOutput();
+        bool open(PGESTRING *rawString, outputMode mode=truncate);
+        void close();
+        virtual int write(PGESTRING buffer);
+        virtual long long tell();
+        virtual void seek(long long _pos, positions relativeTo);
+    private:
+        long long _pos;
+        PGESTRING* _data;
     };
 
 
@@ -414,6 +465,70 @@ namespace PGE_FileFormats_misc
          */
         void seek(long long pos, positions relativeTo);
     private:
+        #ifdef PGE_FILES_QT
+        //! File handler used in Qt version of PGE file Library
+        QFile file;
+        //! File input stream used in Qt version of PGE file Library
+        QTextStream stream;
+        #else
+        //! File input stream used in STL version of PGE file Library
+        std::fstream stream;
+        #endif
+    };
+
+
+    class TextFileOutput: public TextOutput
+    {
+    public:
+        /*!
+         * \brief Checks is requested file exist
+         * \param filePath Full or relative path to the file
+         * \return true if file exists
+         */
+        static bool exists(PGESTRING filePath);
+        /*!
+         * \brief Constructor
+         */
+        TextFileOutput();
+        /*!
+         * \brief Constructor with pre-opening of the file
+         * \param filePath Full or relative path to the file
+         * \param utf8 Use UTF-8 encoding or will be used local 8-bin encoding
+         */
+        TextFileOutput(PGESTRING filePath, bool utf8=false, bool forceCRLF=false, outputMode mode=truncate);
+        /*!
+         * \brief Destructor
+         */
+        virtual ~TextFileOutput();
+        /*!
+         * \brief Opening of the file
+         * \param filePath Full or relative path to the file
+         * \param utf8 Use UTF-8 encoding or will be used local 8-bin encoding
+         */
+        bool open(PGESTRING filePath, bool utf8=false, bool forceCRLF=false, outputMode mode=truncate);
+        /*!
+         * \brief Close currently opened file
+         */
+        void close();
+        /*!
+         * \brief Reads requested number of characters from a file
+         * \param Maximal lenght of characters to read from file
+         * \return string contains requested line of characters
+         */
+        int write(PGESTRING buffer);
+        /*!
+         * \brief Returns current position of carriage relative to begin of file
+         * \return current position of carriage relative to begin of file
+         */
+        long long tell();
+        /*!
+         * \brief Changes position of carriage to specific file position
+         * \param pos Target position of carriage
+         * \param relativeTo defines relativity of target position of carriage (current position, begin of file or end of file)
+         */
+        void seek(long long pos, positions relativeTo);
+    private:
+        bool m_forceCRLF;
         #ifdef PGE_FILES_QT
         //! File handler used in Qt version of PGE file Library
         QFile file;

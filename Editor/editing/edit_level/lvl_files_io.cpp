@@ -311,7 +311,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         isSMBX64limit=true;
     }
 
-    if(isSMBX64limit)
+    if( isSMBX64limit )
     {
         if(!silent)
         {

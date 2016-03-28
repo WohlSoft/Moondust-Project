@@ -63,7 +63,17 @@ public:
      */
     static PGESTRING        WriteNonSMBX64MetaData(MetaData metaData);
 
+    static bool WriteNonSMBX64MetaDataF(PGESTRING  filePath, MetaData &metaData);
+    static bool WriteNonSMBX64MetaDataRaw(MetaData &metaData, PGESTRING &rawdata);
+    static bool WriteNonSMBX64MetaData(PGE_FileFormats_misc::TextOutput &out, MetaData /*Output*/ &metaData);
+
 /******************************Level files***********************************/
+    enum LevelFileFormat
+    {
+        LVL_PGEX=0,
+        LVL_SMBX64,
+        LVL_SMBX38A,
+    };
     /*!
      * \brief Parses a level file with auto-detection of a file type (SMBX1...64 LVL or PGE-LVLX)
      * \param filePath Full path to file which must be opened
@@ -76,6 +86,26 @@ public:
      * \return Level data structure (with initialized header data only)
      */
     static LevelData        OpenLevelFileHeader(PGESTRING filePath);
+
+    /*!
+     * \brief Save a level file to the disk
+     * \param FileData Level data structure
+     * \param filePath Path to file to save encoded in UTF-8 (for STL-version)
+     * \param format Target file format (PGE LVLX, SMBX1...64 LVL, SMBX-38A LVL)
+     * \param FormatVersion Version of target SMBX1...64 file. Takes no effect for other file formats
+     * \return true if file successfully saved
+     */
+    static bool             SaveLevelFile(LevelData &FileData, PGESTRING filePath, LevelFileFormat format, unsigned int FormatVersion=64);
+
+    /*!
+     * \brief Save a level file to the raw string
+     * \param FileData Level data structure
+     * \param filePath Path to file to save encoded in UTF-8 (for STL-version)
+     * \param format Target file format (PGE LVLX, SMBX1...64 LVL, SMBX-38A LVL)
+     * \param FormatVersion Version of target SMBX1...64 file. Takes no effect for other file formats
+     * \return true if data successfully generated
+     */
+    static bool             SaveLevelData(LevelData &FileData, PGESTRING &RawData, LevelFileFormat format, unsigned int FormatVersion=64);
 
 // SMBX64 LVL File
     /*!
@@ -106,6 +136,10 @@ public:
      * \return Raw data string in the SMBX1...64 level format
      */
     static PGESTRING        WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
+
+    static bool WriteSMBX64LvlFileF(PGESTRING  filePath, LevelData &FileData, int file_format=64);
+    static bool WriteSMBX64LvlFileRaw(LevelData &FileData, PGESTRING &rawdata, int file_format=64);
+    static bool WriteSMBX64LvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData /*output*/ &FileData, int file_format=64);
 
 // SMBX65-38A LVL File
     /*!
@@ -156,13 +190,16 @@ public:
     static bool ReadExtendedLvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
     static bool ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
 
-
     /*!
      * \brief Generates PGE-X Level file
      * \param FileData Level data structure
      * \return Raw data string in the PGE-X level format
      */
     static PGESTRING        WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
+
+    static bool WriteExtendedLvlFileF(PGESTRING  filePath, LevelData &FileData);
+    static bool WriteExtendedLvlFileRaw(LevelData &FileData, PGESTRING &rawdata);
+    static bool WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData /*output*/ &FileData);
 
 // Lvl Data
     /*!
