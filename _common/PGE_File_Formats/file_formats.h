@@ -325,6 +325,10 @@ public:
      * \return World map data structure
      */
     static WorldData        ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath);
+
+    static bool ReadExtendedWldFileF(PGESTRING  filePath, WorldData &FileData);
+    static bool ReadExtendedWldFileRaw(PGESTRING &rawdata, PGESTRING  filePath, WorldData &FileData);
+    static bool ReadExtendedWldFile(PGE_FileFormats_misc::TextInput &in, WorldData /*output*/ &FileData);
     /*!
      * \brief Generates raw data string in PGE-X World map format
      * \param FileData World map data structure

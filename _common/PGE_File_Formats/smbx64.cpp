@@ -35,7 +35,7 @@ namespace smbx64Format
 
     bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
     {
-        if(s.PGESTRINGisEmpty()) return false;
+        if(IsEmpty(s)) return false;
         int i, j;
         for(i=0;i<(signed)s.size();i++)
         {
@@ -61,7 +61,7 @@ bool SMBX64::uInt(PGESTRING in) // UNSIGNED INT
 bool SMBX64::sInt(PGESTRING in) // SIGNED INT
 {
     using namespace smbx64Format;
-    if(in.PGESTRINGisEmpty()) return true;
+    if(IsEmpty(in)) return true;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return true;
     if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return true;
@@ -75,7 +75,7 @@ bool SMBX64::sInt(PGESTRING in) // SIGNED INT
 bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
 {
     using namespace smbx64Format;
-    if(in.PGESTRINGisEmpty()) return true;
+    if(IsEmpty(in)) return true;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return true;
     if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return true;
@@ -148,7 +148,7 @@ bool SMBX64::wBool(PGESTRING in) //Worded BOOL
 
 bool SMBX64::dBool(PGESTRING in) //Digital BOOL
 {
-    if((in.size()!=1) || (in.PGESTRINGisEmpty()) )
+    if((in.size()!=1) || (IsEmpty(in)) )
         return true;
     return !((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
 }
@@ -162,12 +162,12 @@ bool SMBX64::wBoolR(PGESTRING in)
 PGESTRING SMBX64::StrToStr(PGESTRING in)
 {
     PGESTRING target = in;
-    if(target.PGESTRINGisEmpty())
+    if(IsEmpty(target))
         return target;
     if(target[0]==PGEChar('\"'))
-        target.PGE_RemSRng(0,1);
-    if((!target.PGESTRINGisEmpty()) && (target[target.size()-1]==PGEChar('\"')))
-        target.PGE_RemSRng(target.size()-1, 1);
+        PGE_RemStrRng(target, 0, 1);
+    if((!IsEmpty(target)) && (target[target.size()-1]==PGEChar('\"')))
+        PGE_RemStrRng(target, target.size()-1, 1);
 
     target=PGE_ReplSTRING(target, "\"", "\'");//Correct damaged by SMBX line
     return target;

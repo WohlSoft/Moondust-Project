@@ -555,7 +555,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.name = removeQuotes(Params[1]);
            else
                FileData.name = Params[1];
-               FileData.en_name=!FileData.name.PGESTRINGisEmpty();
+               FileData.en_name=!IsEmpty(FileData.name);
         }
        else
        if(Params[0]=="image")
@@ -564,7 +564,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.image = removeQuotes(Params[1]);
            else
                FileData.image= Params[1];
-               FileData.en_image=!FileData.image.PGESTRINGisEmpty();
+               FileData.en_image=!IsEmpty(FileData.image);
         }
        else
        if(Params[0]=="script")
@@ -573,7 +573,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.script = removeQuotes(Params[1]);
            else
                FileData.script= Params[1];
-               FileData.en_script=!FileData.script.PGESTRINGisEmpty();
+               FileData.en_script=!IsEmpty(FileData.script);
         }
        else
        if(Params[0]=="grid")
@@ -802,15 +802,15 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     {
         TextData += "noshell=" + fromNum((int)FileData.noshell) +"\n";
     }
-    if(FileData.en_name && !FileData.name.PGESTRINGisEmpty())
+    if(FileData.en_name && !IsEmpty(FileData.name))
     {
         TextData += "name=" + SMBX64::qStrS(FileData.name);
     }
-    if(FileData.en_image && !FileData.image.PGESTRINGisEmpty())
+    if(FileData.en_image && !IsEmpty(FileData.image))
     {
         TextData += "image=" + SMBX64::qStrS(FileData.image);
     }
-    if(FileData.en_script && !FileData.script.PGESTRINGisEmpty())
+    if(FileData.en_script && !IsEmpty(FileData.script))
     {
         TextData += "script=" + SMBX64::qStrS(FileData.script);
     }

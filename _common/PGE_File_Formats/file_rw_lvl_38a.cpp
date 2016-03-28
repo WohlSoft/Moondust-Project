@@ -252,7 +252,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
     LevelScript scriptdata;
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();
@@ -912,7 +912,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
     LevelScript scriptdata;
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();
@@ -2558,7 +2558,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in
                             case 1:updVar.newval=PGE_URLDEC(dLine); break;
                             }
                         }
-                        if(!updVar.name.PGESTRINGisEmpty())
+                        if(!IsEmpty(updVar.name))
                             eventdata.update_variable.push_back(updVar);
                     } break;
                 //ene=nextevent/timer/apievent/scriptname

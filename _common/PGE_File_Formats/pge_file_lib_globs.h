@@ -63,7 +63,6 @@
 #endif
 #define PGE_FILES_INHERED public QObject
 typedef QString PGESTRING;
-#define PGESTRINGisEmpty() isEmpty()
 inline PGESTRING PGESTR_Simpl(PGESTRING &str) {return str.simplified();}
 #define PGEGetChar(chr) chr.toLatin1()
 typedef QChar PGEChar;
@@ -73,19 +72,21 @@ typedef QStringList PGESTRINGList;
 #define PGEPAIR QPair
 #define PGEMAP QMap
 typedef QFile PGEFILE;
-#define PGE_SPLITSTRING(dst, src, sep) dst=src.split(sep);
-#define PGE_ReplSTRING(src, from, to) src.replace(from, to)
-#define PGE_RemSubSTRING(src, substr) src.remove(substr)
-#define PGE_RemSRng(pos, len) remove(pos, len)
-inline bool IsNULL(PGESTRING str) { return str.isNull(); }
-inline int toInt(PGESTRING str){ return str.toInt(); }
-inline float toFloat(PGESTRING str){ return str.toFloat(); }
-inline double toDouble(PGESTRING str){ return str.toDouble(); }
+inline void PGE_SPLITSTRING(PGESTRINGList &dst, PGESTRING &src, PGESTRING sep) { dst=src.split(sep); }
+inline PGESTRING PGE_ReplSTRING(PGESTRING &src, PGESTRING from, PGESTRING to) { return src.replace(from, to); }
+inline PGESTRING PGE_RemSubSTRING(PGESTRING &src, PGESTRING substr) { return src.remove(substr); }
+inline PGESTRING PGE_RemStrRng(PGESTRING &str, int pos, int len) { return str.remove(pos, len); }
+inline bool      IsNULL(PGESTRING str) { return str.isNull(); }
+inline bool      IsEmpty(PGESTRING &str) { return str.isEmpty(); }
+inline bool      IsEmpty(PGESTRINGList &str) { return str.isEmpty(); }
+inline int       toInt(PGESTRING str){ return str.toInt(); }
+inline float     toFloat(PGESTRING str){ return str.toFloat(); }
+inline double    toDouble(PGESTRING str){ return str.toDouble(); }
 inline PGESTRING removeSpaces(PGESTRING src) { return src.remove(' '); }
 template<typename T>
 PGESTRING fromNum(T num) { return QString::number(num); }
-#define PGE_URLENC(src) QUrl::toPercentEncoding(src).data()
-#define PGE_URLDEC(src) QUrl::fromPercentEncoding(src.toUtf8())
+inline PGESTRING PGE_URLENC(PGESTRING &src) { return QUrl::toPercentEncoding(src).data(); }
+inline PGESTRING PGE_URLDEC(PGESTRING &src) { return QUrl::fromPercentEncoding(src.toUtf8()); }
 namespace PGE_FileFormats_misc
 {
     std::string  base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
@@ -116,7 +117,6 @@ namespace PGE_FileFormats_misc
 #include <map>
 #define PGE_FILES_INGERED
 typedef std::string PGESTRING;
-#define PGESTRINGisEmpty() empty()
 inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );
         return str;}
@@ -144,15 +144,17 @@ namespace PGE_FileFormats_misc
     std::string base64_encodeA(std::string &source);
     std::string base64_decodeA(std::string &source);
 }
-#define PGE_SPLITSTRING(dst, src, sep) dst.clear(); PGE_FileFormats_misc::split(dst, src, sep);
+inline void PGE_SPLITSTRING(PGESTRINGList &dst, PGESTRING &src, PGESTRING sep) { dst.clear(); PGE_FileFormats_misc::split(dst, src, sep); }
 inline PGESTRING PGE_ReplSTRING(PGESTRING src, PGESTRING from, PGESTRING to) {
     PGE_FileFormats_misc::replaceAll(src, from, to);
     return src;
 }
 
 inline PGESTRING PGE_RemSubSTRING(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
-#define PGE_RemSRng(pos, len) erase(pos, len)
+inline PGESTRING PGE_RemStrRng(PGESTRING &str, int pos, int len) { return str.erase(pos, len); }
 inline bool IsNULL(PGESTRING str) { return (str.empty()!=0); }
+inline bool IsEmpty(PGESTRING &str) { return str.empty(); }
+inline bool IsEmpty(PGESTRINGList &str) { return str.empty(); }
 inline int toInt(PGESTRING str){ return std::atoi(str.c_str()); }
 inline float toFloat(PGESTRING str){ return std::atof(str.c_str()); }
 inline double toDouble(PGESTRING str){ return std::atof(str.c_str()); }
@@ -176,6 +178,32 @@ inline bool PGE_StartsWith(PGESTRING src, PGESTRING with)
 #else
     return !src.compare(0, with.size(), with);
 #endif
+}
+
+inline bool PGE_DetectSMBXFile(PGESTRING src)
+{
+    /*
+     * First line of SMBX1...64 file must contain number from 0 to 64
+     */
+    src.push_back('\n');//Append double line feed to end (for case if sent first line only)
+    src.push_back('\n');
+    if( (src.size() < 3) )
+        return false;//If line too short
+    if( (src[1] != '\n' ) && ( src[2]!='\n') )
+        return false;//If line contains no line feeds
+    if( (src[0]<'0') && (src[0]>'9'))
+        return false;//If first character is not numeric
+    if( (src[1]!='\n') && (src[1]<'0') && (src[1]>'9') )
+        return false;//If second character is not numeric and is not line feed
+    PGESTRING number;
+    number.push_back(src[0]);
+    if(src[1]!='\n')
+        number.push_back(src[1]);
+    int version = toInt(number);
+    if(version>64)//Unsupported version number!
+        return false;
+
+    return true;
 }
 
 /*!

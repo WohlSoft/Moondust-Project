@@ -160,15 +160,38 @@ badfile:
     return FileData;
 }
 
+bool FileFormats::ReadExtendedWldFileF(PGESTRING  filePath, WorldData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadExtendedWldFile(file, FileData);
+}
+
+bool FileFormats::ReadExtendedWldFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  WorldData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadExtendedWldFile(file, FileData);
+}
+
 WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
+{
+    WorldData FileData;
+    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
+    ReadExtendedWldFile(file, FileData);
+    return FileData;
+}
+
+//WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
+bool FileFormats::ReadExtendedWldFile(PGE_FileFormats_misc::TextInput &in, WorldData &FileData)
 {
      PGESTRING errorString;
      PGEX_FileBegin();
 
-     WorldData FileData = CreateWorldData();
+     PGESTRING filePath = in.getFilePath();
+
+     FileData = CreateWorldData();
 
      //Add path data
-     if(!filePath.PGESTRINGisEmpty())
+     if(!IsEmpty(filePath))
      {
          PGE_FileFormats_misc::FileInfo in_1(filePath);
          FileData.filename = in_1.basename();
@@ -185,7 +208,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
      WorldLevels lvlitem;
 
      ///////////////////////////////////////Begin file///////////////////////////////////////
-     PGEX_FileParseTree(RawData);
+     PGEX_FileParseTree(in.readAll());
 
      PGEX_FetchSection() //look sections
      {
@@ -421,14 +444,16 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
      errorString.clear(); //If no errors, clear string;
      FileData.ReadFileValid=true;
 
-     return FileData;
+     return true;
 
      badfile:    //If file format not corrects
          FileData.ERROR_info=errorString;
          FileData.ERROR_linenum=str_count;
          FileData.ERROR_linedata=line;
+
          FileData.ReadFileValid=false;
-     return FileData;
+
+     return false;
 }
 
 
@@ -448,17 +473,17 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     { bool x=FileData.nocharacter[z]; if(x) addArray=true; }
     //HEAD section
     if(
-            (!FileData.EpisodeTitle.PGESTRINGisEmpty())||
+            (!IsEmpty(FileData.EpisodeTitle))||
             (addArray)||
-            (!FileData.IntroLevel_file.PGESTRINGisEmpty())||
+            (!IsEmpty(FileData.IntroLevel_file))||
             (FileData.HubStyledWorld)||
             (FileData.restartlevel)||
             (FileData.stars>0)||
-            (!FileData.authors.PGESTRINGisEmpty())
+            (!IsEmpty(FileData.authors))
       )
     {
         TextData += "HEAD\n";
-            if(!FileData.EpisodeTitle.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.EpisodeTitle))
                 TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
 
             addArray=false;
@@ -467,7 +492,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
             if(addArray)
                 TextData += PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
 
-            if(!FileData.IntroLevel_file.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.IntroLevel_file))
                 TextData += PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
 
             if(FileData.HubStyledWorld)
@@ -477,7 +502,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
                 TextData += PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
             if(FileData.stars>0)
                 TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
-            if(!FileData.authors.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.authors))
                 TextData += PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
 
         TextData += "\n";
@@ -486,7 +511,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
 
     //////////////////////////////////////MetaData////////////////////////////////////////////////
     //Bookmarks
-    if(!FileData.metaData.bookmarks.PGESTRINGisEmpty())
+    if(!FileData.metaData.bookmarks.empty())
     {
         TextData += "META_BOOKMARKS\n";
         for(i=0;i<(signed)FileData.metaData.bookmarks.size(); i++)
@@ -516,7 +541,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     #endif
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
-    if(!FileData.tiles.PGESTRINGisEmpty())
+    if(!FileData.tiles.empty())
     {
         TextData += "TILES\n";
 
@@ -531,7 +556,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "TILES_END\n";
     }
 
-    if(!FileData.scenery.PGESTRINGisEmpty())
+    if(!FileData.scenery.empty())
     {
         TextData += "SCENERY\n";
 
@@ -546,7 +571,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "SCENERY_END\n";
     }
 
-    if(!FileData.paths.PGESTRINGisEmpty())
+    if(!FileData.paths.empty())
     {
         TextData += "PATHS\n";
 
@@ -561,7 +586,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "PATHS_END\n";
     }
 
-    if(!FileData.music.PGESTRINGisEmpty())
+    if(!FileData.music.empty())
     {
         TextData += "MUSICBOXES\n";
 
@@ -570,7 +595,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.music[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.music[i].x ));
             TextData += PGEFile::value("Y", PGEFile::IntS(FileData.music[i].y ));
-            if(!FileData.music[i].music_file.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.music[i].music_file))
                 TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.music[i].music_file ));
             TextData += "\n";
         }
@@ -579,7 +604,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     }
 
 
-    if(!FileData.levels.PGESTRINGisEmpty())
+    if(!FileData.levels.empty())
     {
         TextData += "LEVELS\n";
 
@@ -589,9 +614,9 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.levels[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.levels[i].x ));
             TextData += PGEFile::value("Y", PGEFile::IntS(FileData.levels[i].y ));
-            if(!FileData.levels[i].title.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.levels[i].title))
                 TextData += PGEFile::value("LT", PGEFile::qStrS(FileData.levels[i].title ));
-            if(!FileData.levels[i].lvlfile.PGESTRINGisEmpty())
+            if(!IsEmpty(FileData.levels[i].lvlfile))
                 TextData += PGEFile::value("LF", PGEFile::qStrS(FileData.levels[i].lvlfile ));
             if(FileData.levels[i].entertowarp!=defLvl.entertowarp)
                 TextData += PGEFile::value("EI", PGEFile::IntS(FileData.levels[i].entertowarp ));

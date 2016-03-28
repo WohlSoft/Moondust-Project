@@ -40,7 +40,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     starOnLevel        star_level;
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();

@@ -151,7 +151,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
     LevelEvent_Sets events_sets;
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();
@@ -490,7 +490,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
     if(ge(10)) {
         ////////////Layers Data//////////
         nextLine();
-        while((line!="next")&&(!in.eof())&&(!line.PGESTRINGisEmpty()))
+        while((line!="next")&&(!in.eof())&&(!IsEmpty(line)))
         {
 
                           strVar(layers.name, line);     //Layer name
@@ -506,7 +506,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
 
         ////////////Events Data//////////
         nextLine();
-        while((line!="")&&(!in.eof())&&(!line.PGESTRINGisEmpty()))
+        while((line!="")&&(!in.eof())&&(!IsEmpty(line)))
         {
             events = CreateLvlEvent();
 
@@ -585,7 +585,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); strVar(events.movelayer, line);  //Layer for movement
                 nextLine(); SFltVar(events.layer_speed_x, line); //Layer moving speed – horizontal
                 nextLine(); SFltVar(events.layer_speed_y, line); //Layer moving speed – vertical
-                if(!events.movelayer.PGESTRINGisEmpty())
+                if(!IsEmpty(events.movelayer))
                 {
                     LevelEvent_MoveLayer mvl;
                     mvl.name = events.movelayer;

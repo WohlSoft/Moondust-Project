@@ -45,29 +45,23 @@ LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
     firstLine = file.read(8);
     file.close();
 
-    PGE_FileFormats_misc::FileInfo in_1(filePath);
-
-    if(in_1.suffix() == "lvl")
-        {
-            if( PGE_StartsWith(firstLine, "SMBXFile") )
-            {
-                //Read SMBX65-38A LVL File
-                file.open(filePath, false);
-                if(!ReadSMBX65by38ALvlFile( file, data ))
-                    errorString = data.ERROR_info;
-            } else {
-                //Read SMBX LVL File
-                file.open(filePath, false);
-                if(!ReadSMBX64LvlFile( file, data ))
-                    errorString = data.ERROR_info;
-            }
-        }
+    if( PGE_StartsWith(firstLine, "SMBXFile") )
+    {
+        //Read SMBX65-38A LVL File
+        if(!ReadSMBX65by38ALvlFileF( filePath, data ))
+            errorString = data.ERROR_info;
+    }
+    else if(PGE_DetectSMBXFile(firstLine))
+    {
+        //Read SMBX LVL File
+        if(!ReadSMBX64LvlFileF( filePath, data ))
+            errorString = data.ERROR_info;
+    }
     else
-        {   //Read PGE LVLX File
-            file.open(filePath, true);
-            if(!ReadExtendedLvlFile( file, data ))
-                errorString = data.ERROR_info;
-        }
+    {   //Read PGE LVLX File
+        if(!ReadExtendedLvlFileF( filePath, data ))
+            errorString = data.ERROR_info;
+    }
     return data;
 }
 
@@ -89,31 +83,22 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
     firstLine = file.readLine();
     file.close();
 
-    PGE_FileFormats_misc::FileInfo in_1(filePath);
-    if(in_1.suffix() == "lvl")
-        {
-            if(PGE_StartsWith(firstLine, "SMBXFile"))
-            {
-                //Read SMBX65-38A LVL File
-                data = ReadSMBX65by38ALvlFileHeader( filePath );
-            } else {
-                //Read SMBX LVL File
-                data = ReadSMBX64LvlFileHeader( filePath );
-            }
-        }
+    if(PGE_StartsWith(firstLine, "SMBXFile"))
+    {
+        //Read SMBX65-38A LVL File
+        data = ReadSMBX65by38ALvlFileHeader( filePath );
+    }
+    else if(PGE_DetectSMBXFile(firstLine))
+    {
+        //Read SMBX LVL File
+        data = ReadSMBX64LvlFileHeader( filePath );
+    }
     else
-        {   //Read PGE LVLX File
-            data = ReadExtendedLvlFileHeader( filePath );
-        }
+    {   //Read PGE LVLX File
+        data = ReadExtendedLvlFileHeader( filePath );
+    }
     return data;
 }
-
-
-
-
-
-
-
 
 
 WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
@@ -122,6 +107,7 @@ WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
     PGE_FileFormats_misc::TextFileInput file;
     WorldData data;
 
+    PGESTRING firstLine;
     if(!file.open(filePath))
     {
         data.ERROR_info="Can't open file";
@@ -130,38 +116,50 @@ WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
         data.ReadFileValid = false;
         return data;
     }
+
+    firstLine = file.read(8);
     file.close();
 
-    PGE_FileFormats_misc::FileInfo in_1(filePath);
-
-    if(in_1.suffix() == "wld")
-        {   //Read SMBX WLD File
-            file.open(filePath, false);
-            data = ReadSMBX64WldFile( file.readAll(), filePath );
-        }
+    if( PGE_DetectSMBXFile(firstLine) )
+    {   //Read SMBX WLD File
+        if(!ReadSMBX64WldFileF( filePath, data ))
+            errorString = data.ERROR_info;
+    }
     else
-        {   //Read PGE WLDX File
-            file.open(filePath, true);
-            data = ReadExtendedWldFile( file.readAll(), filePath );
-        }
+    {   //Read PGE WLDX File
+        if(!ReadExtendedWldFileF( filePath, data ))
+            errorString = data.ERROR_info;
+    }
 
     return data;
 }
+
 
 WorldData FileFormats::OpenWorldFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     WorldData data;
-    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath))
+    {
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
+        data.ReadFileValid = false;
+        return data;
+    }
+    PGESTRING firstLine;
+    firstLine = file.readLine();
+    file.close();
 
-    if(in_1.suffix() == "wld")
-        {   //Read SMBX LVL File
-            data = ReadSMBX64WldFileHeader( filePath );
-        }
+    if( PGE_DetectSMBXFile(firstLine) )
+    {   //Read SMBX WLD File
+        data = ReadSMBX64WldFileHeader( filePath );
+    }
     else
-        {   //Read PGE LVLX File
-            data = ReadExtendedWldFileHeader( filePath );
-        }
+    {   //Read PGE WLDX File
+        data = ReadExtendedWldFileHeader( filePath );
+    }
     return data;
 }
 

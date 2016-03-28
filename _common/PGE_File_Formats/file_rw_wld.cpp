@@ -104,11 +104,11 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
         nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
-        FileData.authors += (FileData.author1.PGESTRINGisEmpty())? "" : FileData.author1+"\n";
-        FileData.authors += (FileData.author2.PGESTRINGisEmpty())? "" : FileData.author2+"\n";
-        FileData.authors += (FileData.author3.PGESTRINGisEmpty())? "" : FileData.author3+"\n";
-        FileData.authors += (FileData.author4.PGESTRINGisEmpty())? "" : FileData.author4+"\n";
-        FileData.authors += (FileData.author5.PGESTRINGisEmpty())? "" : FileData.author5;
+        FileData.authors += (IsEmpty(FileData.author1))? "" : FileData.author1+"\n";
+        FileData.authors += (IsEmpty(FileData.author2))? "" : FileData.author2+"\n";
+        FileData.authors += (IsEmpty(FileData.author3))? "" : FileData.author3+"\n";
+        FileData.authors += (IsEmpty(FileData.author4))? "" : FileData.author4+"\n";
+        FileData.authors += (IsEmpty(FileData.author5))? "" : FileData.author5;
     }
 
     FileData.ReadFileValid=true;
@@ -154,7 +154,7 @@ bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldDa
     FileData = CreateWorldData();
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();
@@ -217,11 +217,11 @@ bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldDa
         nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
-        FileData.authors += (FileData.author1.PGESTRINGisEmpty())? "" : FileData.author1+"\n";
-        FileData.authors += (FileData.author2.PGESTRINGisEmpty())? "" : FileData.author2+"\n";
-        FileData.authors += (FileData.author3.PGESTRINGisEmpty())? "" : FileData.author3+"\n";
-        FileData.authors += (FileData.author4.PGESTRINGisEmpty())? "" : FileData.author4+"\n";
-        FileData.authors += (FileData.author5.PGESTRINGisEmpty())? "" : FileData.author5;
+        FileData.authors += (IsEmpty(FileData.author1))? "" : FileData.author1+"\n";
+        FileData.authors += (IsEmpty(FileData.author2))? "" : FileData.author2+"\n";
+        FileData.authors += (IsEmpty(FileData.author3))? "" : FileData.author3+"\n";
+        FileData.authors += (IsEmpty(FileData.author4))? "" : FileData.author4+"\n";
+        FileData.authors += (IsEmpty(FileData.author5))? "" : FileData.author5;
     }
 
 

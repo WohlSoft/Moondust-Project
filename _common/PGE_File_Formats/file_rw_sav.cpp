@@ -69,7 +69,7 @@ bool FileFormats::ReadSMBX64SavFile(PGE_FileFormats_misc::TextInput &in, Gamesav
     FileData.untitled = false;
 
     //Add path data
-    if(!filePath.PGESTRINGisEmpty())
+    if(!IsEmpty(filePath))
     {
         PGE_FileFormats_misc::FileInfo in_1(filePath);
         FileData.filename = in_1.basename();

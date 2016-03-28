@@ -314,7 +314,7 @@ PGESTRING FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
     long i;
 
     //Bookmarks
-    if(!metaData.bookmarks.PGESTRINGisEmpty())
+    if(!metaData.bookmarks.empty())
     {
         TextData += "META_BOOKMARKS\n";
         for(i=0;i<(signed)metaData.bookmarks.size(); i++)

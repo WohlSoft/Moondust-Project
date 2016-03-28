@@ -49,7 +49,7 @@ namespace PGEExtendedFormat
 
     bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
     {
-        if(s.PGESTRINGisEmpty()) return false;
+        if(IsEmpty(s)) return false;
         int i, j;
         for(i=0;i<(signed)s.size();i++)
         {
@@ -95,8 +95,8 @@ PGEFile::PGEFile(PGESTRING _rawData)
 
 PGESTRING PGEFile::removeQuotes(PGESTRING str)
 {
-    PGESTRING target = str.PGE_RemSRng(0,1);
-    target = target.PGE_RemSRng(target.size()-1,1);
+    PGESTRING target = PGE_RemStrRng(str, 0, 1);
+    target = PGE_RemStrRng(target, target.size()-1, 1);
     return target;
 }
 
@@ -120,7 +120,8 @@ bool PGEFile::buildTreeFromRaw()
         PGEXsection.second.clear();
 
         //Skip empty parts
-        if(removeSpaces(PGEXsection.first).PGESTRINGisEmpty()) continue;
+        PGESTRING pgex_sectionName = removeSpaces(PGEXsection.first);
+        if(IsEmpty(pgex_sectionName)) continue;
 
         sectionOpened=true;
         PGESTRING data;
@@ -220,12 +221,14 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
         else
         {
             PGESTRINGList fields;
-            PGE_SPLITSTRING(fields, encodeEscape(src_data[q]), ";");
+            PGESTRING srcData_nc = encodeEscape(src_data[q]);
+            PGE_SPLITSTRING(fields, srcData_nc, ";");
             PGEX_Item dataItem;
             dataItem.type = PGEX_Struct;
             for(int i=0;i<(signed)fields.size();i++)
             {
-                if(removeSpaces(fields[i]).PGESTRINGisEmpty()) continue;
+                PGESTRING fields_ns = removeSpaces(fields[i]);
+                if(IsEmpty(fields_ns)) continue;
 
                 //Store data into list
 
@@ -294,7 +297,7 @@ bool PGEFile::IsHex(PGESTRING in) // Heximal string
 
 bool PGEFile::IsBool(PGESTRING in) // Boolean
 {
-    if((in.size()!=1) || (in.PGESTRINGisEmpty()) )
+    if((in.size()!=1) || (IsEmpty(in)) )
         return false;
     return ((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
 }
@@ -309,7 +312,7 @@ bool PGEFile::IsIntS(PGESTRING in) // Signed Int
 {
     using namespace PGEExtendedFormat;
 
-    if(in.PGESTRINGisEmpty()) return false;
+    if(IsEmpty(in)) return false;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return false;
     if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return false;
@@ -324,7 +327,7 @@ bool PGEFile::IsFloat(PGESTRING &in) // Float Point numeric
 {
     using namespace PGEExtendedFormat;
 
-    if(in.PGESTRINGisEmpty()) return false;
+    if(IsEmpty(in)) return false;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return false;
     if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return false;
@@ -464,7 +467,8 @@ PGELIST<PGESTRINGList > PGEFile::splitDataLine(PGESTRING src_data, bool *valid)
 
     for(int i=0;i<(signed)fields.size();i++)
     {
-        if(removeSpaces(fields[i]).PGESTRINGisEmpty()) continue;
+        PGESTRING fields_ns = removeSpaces(fields[i]);
+        if(IsEmpty(fields_ns)) continue;
         PGESTRINGList value;
         PGE_SPLITSTRING(value, fields[i], ":");
 
@@ -506,7 +510,7 @@ PGESTRING PGEFile::strArrayS(PGESTRINGList input)
 {
     PGESTRING output;
 
-    if(input.PGESTRINGisEmpty()) return PGESTRING("");
+    if(IsEmpty(input)) return PGESTRING("");
 
     output.append("[");
 
@@ -522,7 +526,7 @@ PGESTRING PGEFile::strArrayS(PGESTRINGList input)
 PGESTRING PGEFile::intArrayS(PGELIST<int> input)
 {
     PGESTRING output;
-    if(input.PGESTRINGisEmpty()) return PGESTRING("");
+    if(input.empty()) return PGESTRING("");
     output.append("[");
     for(int i=0; i< (signed)input.size(); i++)
     {
