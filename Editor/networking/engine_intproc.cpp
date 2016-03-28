@@ -148,6 +148,9 @@ void IntEngine::sendLevelBuffer()
         {
             output="HEAD\nEMPTY:1\nHEAD_END\n";
         }
+        #ifdef DEBUG_BUILD
+        qDebug()<<"Sent File data BEGIN >>>>>>>>>>>\n" << output << "\n<<<<<<<<<<<<Sent File data END";
+        #endif
 
         sendMessage(sendLvlx);
         QString output_e = base64_encode(output)+"\n";

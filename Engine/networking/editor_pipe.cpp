@@ -128,6 +128,15 @@ void EditorPipe::icomingData(QString in)
         IntProc::state="LVLX is valid: %1";
         IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
         qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
+        if(!accepted_lvl.ReadFileValid)
+        {
+            qDebug()<<"Error reason: " << accepted_lvl.ERROR_info;
+            qDebug()<<"line number: " << accepted_lvl.ERROR_linenum;
+            qDebug()<<"line contents: " << accepted_lvl.ERROR_linedata;
+            #ifdef DEBUG_BUILD
+            qDebug()<<"Invalid File data BEGIN >>>>>>>>>>>\n" << accepted_lvl_raw << "\n<<<<<<<<<<<<INVALID File data END";
+            #endif
+        }
         levelAccepted=true;
     }
     else
