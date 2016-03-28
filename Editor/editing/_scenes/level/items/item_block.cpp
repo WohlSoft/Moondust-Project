@@ -413,6 +413,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     }
 }
 
+bool ItemBlock::isSizable()
+{
+    return m_sizable;
+}
+
 void ItemBlock::setSlippery(bool slip)
 {
     m_data.slippery=slip;

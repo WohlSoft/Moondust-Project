@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
         QString path = "38a_deep_test/";
         QString opath = "38_deep_test_out/";
         QDir testDir(path);
+        testDir.mkdir("../38_deep_test_out");
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
         QFile("invalid_new.log").remove();
@@ -217,7 +218,19 @@ int main(int argc, char *argv[])
     }
 
     printLine(cout);
-    cout << "\n\nPGE-X Level Read test:" << endl;
+    cout << "\n\nPGE-X Level Read test №2:" << endl;
+    level = FileFormats::OpenLevelFile("test2.lvlx");
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nPGE-X Level Read test №1:" << endl;
     level = FileFormats::OpenLevelFile("test.lvlx");
     cout << level.filename << "\n";
     cout << level.path << "\n";

@@ -404,6 +404,8 @@ void TilesetConfigureDialog::showNotify()
         msg.setWindowTitle(tr("Tileset box editor"));
         msg.setWindowIcon(this->windowIcon());
         QCheckBox box;
+        box.setParent(this);
+        box.setWindowModality(Qt::WindowModal);
         box.setText(tr("Don't show this message again."));
         msg.setCheckBox(&box);
         msg.setText(tr("Welcome to tileset editor!\n\nThis is an editor of global tilesets.\n"

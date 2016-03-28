@@ -393,6 +393,7 @@ LevelSMBX64Event FileFormats::CreateLvlEvent()
     dummyEvent.sets.clear();
     for(int j=0; j< 21; j++)
     {
+        events_sets.id = j;
         events_sets.music_id=-1;
         events_sets.background_id=-1;
         events_sets.position_left=-1;
@@ -749,7 +750,7 @@ bool LevelSMBX64Event::ctrlKeyPressed()
 
 LevelEvent_Sets::LevelEvent_Sets()
 {
-    id            = 0;
+    id            = -1;
     music_id=       LESet_Nothing;
     background_id=  LESet_Nothing;
     position_left=  LESet_Nothing;

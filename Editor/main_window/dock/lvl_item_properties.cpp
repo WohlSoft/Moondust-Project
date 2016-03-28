@@ -269,7 +269,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             t_block = mw()->configs.main_block[1];
 
 
-        if((blockPtr<0) && (!dont_reset_props))
+        if(newItem && (!dont_reset_props))
         {
             LvlPlacingItems::blockSet.invisible = t_block.default_invisible_value;
             block.invisible = t_block.default_invisible_value;
@@ -306,6 +306,10 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
         ui->PROPS_BlockResize->setVisible( t_block.sizable );
+        ui->sizeOfBlock->setVisible( t_block.sizable && (!newItem) );
+        ui->BLOCK_Width->setValue(block.w);
+        ui->BLOCK_Height->setValue(block.h);
+
         ui->PROPS_BlockInvis->setChecked( block.invisible );
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
 
@@ -736,6 +740,91 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
     }
 
 }
+
+
+void LvlItemProperties::on_BLOCK_Width_editingFinished()
+{
+    if(LvlItemPropsLock) return;
+    if(LockItemProps) return;
+
+    if(blockPtr<0)
+    {
+        return;
+    }
+    else
+    if (mw()->activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(ITEM_TYPE).toString()=="Block")
+            {
+                ItemBlock* blk = ((ItemBlock*)item);
+                if(blk->isSizable())
+                {
+                    QRect oldSize = QRect(blk->m_data.x, blk->m_data.y, blk->m_data.w, blk->m_data.h);
+                    QRect newSize = QRect(blk->m_data.x, blk->m_data.y, ui->BLOCK_Width->value(), blk->m_data.h);
+                    if(oldSize!=newSize)
+                    {
+                        blk->setBlockSize(newSize);
+                        mw()->activeLvlEditWin()->scene->addResizeBlockHistory(blk->m_data,
+                                                                               oldSize.left(),
+                                                                               oldSize.top(),
+                                                                               oldSize.right(),
+                                                                               oldSize.bottom(),
+                                                                               newSize.left(),
+                                                                               newSize.top(),
+                                                                               newSize.right(),
+                                                                               newSize.bottom() );
+                    }
+                }
+            }
+        }
+    }
+}
+
+void LvlItemProperties::on_BLOCK_Height_editingFinished()
+{
+    if(LvlItemPropsLock) return;
+    if(LockItemProps) return;
+
+    if(blockPtr<0)
+    {
+        return;
+    }
+    else
+    if (mw()->activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(ITEM_TYPE).toString()=="Block")
+            {
+                ItemBlock* blk = ((ItemBlock*)item);
+                if(blk->isSizable())
+                {
+                    QRect oldSize = QRect(blk->m_data.x, blk->m_data.y, blk->m_data.w, blk->m_data.h);
+                    QRect newSize = QRect(blk->m_data.x, blk->m_data.y, blk->m_data.w, ui->BLOCK_Height->value());
+                    if(oldSize!=newSize)
+                    {
+                        blk->setBlockSize(newSize);
+                        mw()->activeLvlEditWin()->scene->addResizeBlockHistory(blk->m_data,
+                                                                               oldSize.left(),
+                                                                               oldSize.top(),
+                                                                               oldSize.right(),
+                                                                               oldSize.bottom(),
+                                                                               newSize.left(),
+                                                                               newSize.top(),
+                                                                               newSize.right(),
+                                                                               newSize.bottom() );
+                    }
+                }
+            }
+        }
+    }
+
+}
+
 
 void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
 {

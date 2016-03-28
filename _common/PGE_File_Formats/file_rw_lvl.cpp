@@ -547,6 +547,7 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 events.sets.clear();
                 for(i=0; i<21; i++)
                 {
+                    events_sets.id = i;
                     nextLine(); SIntVar(events_sets.music_id, line);        //Set Music
                     nextLine(); SIntVar(events_sets.background_id, line);   //Set Background
                     nextLine(); SIntVar(events_sets.position_left, line);   //Set Position to: LEFT
@@ -584,6 +585,16 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); strVar(events.movelayer, line);  //Layer for movement
                 nextLine(); SFltVar(events.layer_speed_x, line); //Layer moving speed – horizontal
                 nextLine(); SFltVar(events.layer_speed_y, line); //Layer moving speed – vertical
+                if(!events.movelayer.PGESTRINGisEmpty())
+                {
+                    LevelEvent_MoveLayer mvl;
+                    mvl.name = events.movelayer;
+                    mvl.speed_x = events.layer_speed_x;
+                    mvl.speed_y = events.layer_speed_y;
+                    mvl.expression_x = fromNum(events.layer_speed_x);
+                    mvl.expression_y = fromNum(events.layer_speed_y);
+                    events.moving_layers.push_back(mvl);
+                }
             }
 
             if(ge(33))
@@ -591,8 +602,15 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); SFltVar(events.move_camera_x, line); //Move screen horizontal speed
                 nextLine(); SFltVar(events.move_camera_y, line); //Move screen vertical speed
                 nextLine(); SIntVar(events.scroll_section, line); //Scroll section x, (in file value is x-1)
+                if( ((events.move_camera_x!=0.0f)||(events.move_camera_y!=0.0f)) && (events.scroll_section < (signed long)events.sets.size()) )
+                {
+                    events.sets[events.scroll_section].autoscrol=true;
+                    events.sets[events.scroll_section].autoscrol_x = events.move_camera_x;
+                    events.sets[events.scroll_section].autoscrol_y = events.move_camera_y;
+                    events.sets[events.scroll_section].expression_autoscrool_x = fromNum(events.move_camera_x);
+                    events.sets[events.scroll_section].expression_autoscrool_y = fromNum(events.move_camera_y);
+                }
             }
-
             events.array_id = FileData.events_array_id++;
 
         FileData.events.push_back(events);

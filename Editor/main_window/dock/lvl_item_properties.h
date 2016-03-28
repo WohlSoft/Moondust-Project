@@ -79,6 +79,8 @@ private slots:
 
     //Blocks
     void on_PROPS_BlockResize_clicked();
+    void on_BLOCK_Width_editingFinished();
+    void on_BLOCK_Height_editingFinished();
     void on_PROPS_BlockInvis_clicked(bool checked);
     void on_PROPS_BlkSlippery_clicked(bool checked);
     void on_PROPS_BlockIncludes_clicked();

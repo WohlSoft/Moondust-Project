@@ -65,6 +65,8 @@ public:
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
+    bool isSizable();
+
 private:
     QGraphicsItemGroup * m_grp;
     QGraphicsItem *      m_includedNPC;
