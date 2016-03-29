@@ -201,7 +201,7 @@ public:
     static bool WriteSMBX64LvlFileRaw(LevelData &FileData, PGESTRING &rawdata, int file_format=64);
     /*!
      * \brief Generates SMBX1...64 Level file data and saves it through file output descriptor
-     * \param [__inout] out File output descriptor
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData Target file path
      * \param [__in] file_format SMBX file format version number (from 0 to 64) [Example of level in SMBX0 format is intro.dat included with SMBX 1.0]
      * \return true if file successfully saved, false if error occouped
@@ -261,7 +261,7 @@ public:
     static bool WriteSMBX38ALvlFileRaw(LevelData &FileData, PGESTRING &rawdata);
     /*!
      * \brief Generates SMBX-38A Level file data and saves it through file output descriptor
-     * \param [__inout] out File output descriptor
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData Target file path
      * \return true if file successfully saved, false if error occouped
      */
@@ -315,7 +315,7 @@ public:
     static bool WriteExtendedLvlFileRaw(LevelData &FileData, PGESTRING &rawdata);
     /*!
      * \brief Generates PGE-X Level data and sends into file output descriptor
-     * \param [__out] out File output descriptor
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData Level data structure
      * \return true if file successfully saved, false if error occouped
      */
@@ -517,7 +517,7 @@ public:
     static bool WriteSMBX64WldFileRaw(WorldData &FileData, PGESTRING &rawdata, int file_format=64);
     /*!
      * \brief Writes world map data into file output descriptor of SMBX1...64 World map format
-     * \param [__inout] out File output descriptor
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData World map data structure
      * \param [__in] file_format SMBX file format version number (from 0 to 64) [Example of level in SMBX0 format is intro.dat included with SMBX 1.0]
      * \return true if file successfully saved, false if error occouped
@@ -570,7 +570,7 @@ public:
     static bool WriteExtendedWldFileRaw(WorldData &FileData, PGESTRING &rawdata);
     /*!
      * \brief Generates data into file output descriptor in PGE-X World map format
-     * \param [__inout] out
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData World map data structure
      * \return true if file successfully saved, false if error occouped
      */
@@ -674,7 +674,7 @@ public:
     static bool WriteExtendedSaveFileRaw(GamesaveData &FileData, PGESTRING &rawdata);
     /*!
      * \brief WriteExtendedWldFile
-     * \param [__inout] out
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData Game save data structure
      * \return true if file successfully saved, false if error occouped
      */
@@ -754,7 +754,7 @@ public:
     static bool WriteSMBX64ConfigFileRaw(SMBX64_ConfigFile &FileData, PGESTRING &rawdata, int file_format=64);
     /*!
      * \brief Writes data into file output descriptor of SMBX1...64 SMBX Engine specific config format
-     * \param [__inout] out File output descriptor
+     * \param [__inout] out Output file descriptor
      * \param [__in] FileData SMBX Engine specific config data structure
      * \param [__in] file_format SMBX file format version number (from 0 to 64) [Example of level in SMBX0 format is intro.dat included with SMBX 1.0]
      * \return true if file successfully saved, false if error occouped
@@ -764,14 +764,6 @@ public:
 
 /******************************NPC.txt file***********************************/
 // SMBX64 NPC.TXT File
-    /*!
-     * \brief Parses SMBX64 NPC.txt file
-     * \param file Full path to NPC.txt
-     * \param IgnoreBad Don't spawn warning message on errors in the file syntax
-     * \return NPC Customizing Config data structure
-     */
-    DEPRECATED(static NPCConfigFile    ReadNpcTXTFile(PGESTRING file, bool IgnoreBad=false));
-
     /*!
      * \brief Parses SMBX64 NPC.txt config data from file
      * \param [__in] filePath Filepath to open
@@ -794,13 +786,27 @@ public:
      */
     static bool ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &in, NPCConfigFile &FileData, bool IgnoreBad=false);
 
-
     /*!
-     * \brief Generates NPC.txt raw data string in SMBX64 NPC.txt format
-     * \param FileData NPC Customizing Config data structure
-     * \return raw data string in SMBX64 NPC.txt format
+     * \brief Saves world map data into file of SMBX64 NPC.txt config data format
+     * \param [__in] filePath Target file path
+     * \param [__in] FileData SMBX64 NPC.txt config data structure
+     * \return true if file successfully saved, false if error occouped
      */
-    static PGESTRING        WriteNPCTxtFile(NPCConfigFile FileData);
+    static bool WriteNPCTxtFileF(PGESTRING  filePath, NPCConfigFile &FileData);
+    /*!
+     * \brief Generates raw data string in SMBX64 NPC.txt config data format
+     * \param [__in] FileData SMBX64 NPC.txt config data structure
+     * \param [__out] rawdata Raw data string in SMBX64 NPC.txt config data format
+     * \return true if file successfully saved, false if error occouped
+     */
+    static bool WriteNPCTxtFileRaw(NPCConfigFile &FileData, PGESTRING &rawdata);
+    /*!
+     * \brief Generates data into file output descriptor in SMBX64 NPC.txt config data format
+     * \param [__inout] out Output file descriptor
+     * \param [__in] FileData World map data structure
+     * \return true if file successfully saved, false if error occouped
+     */
+    static bool WriteNPCTxtFile(PGE_FileFormats_misc::TextOutput &out, NPCConfigFile &FileData);
 
     /*!
      * \brief Initialize blank NPC Customizing Config data structure

@@ -35,23 +35,27 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
-{
-    NPCConfigFile data;
-    ReadNpcTXTFileF(file, data, IgnoreBad);
-    return data;
-}
-
-
 bool FileFormats::ReadNpcTXTFileF(PGESTRING filePath, NPCConfigFile &FileData, bool IgnoreBad)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, IgnoreBad);
+    errorString.clear();
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath, IgnoreBad))
+    {
+        errorString="Failed to open file for read";
+        return false;
+    }
     return ReadNpcTXTFile(file, FileData, IgnoreBad);
 }
 
 bool FileFormats::ReadNpcTXTFileRAW(PGESTRING &rawdata, NPCConfigFile &FileData, bool IgnoreBad)
 {
-    PGE_FileFormats_misc::RawTextInput file(&rawdata);
+    errorString.clear();
+    PGE_FileFormats_misc::RawTextInput file;
+    if(!file.open(&rawdata))
+    {
+        errorString="Failed to open raw string for read";
+        return false;
+    }
     return ReadNpcTXTFile(file, FileData, IgnoreBad);
 }
 
@@ -688,166 +692,185 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
 
 
 //*********************************************************
-//********WRITE FILE*******************************
+//****************WRITE FILE*******************************
 //*********************************************************
+bool FileFormats::WriteNPCTxtFileF(PGESTRING filePath, NPCConfigFile &FileData)
+{
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open file for write";
+        return false;
+    }
+    return WriteNPCTxtFile(file, FileData);
+}
+
+bool FileFormats::WriteNPCTxtFileRaw(NPCConfigFile &FileData, PGESTRING &rawdata)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open target raw string for write";
+        return false;
+    }
+    return WriteNPCTxtFile(file, FileData);
+}
 
 //Convert NPC Options structore to text for saving
-PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
+bool FileFormats::WriteNPCTxtFile(PGE_FileFormats_misc::TextOutput &out, NPCConfigFile &FileData)
 {
-
-    PGESTRING TextData;
     if(FileData.en_gfxoffsetx)
     {
-        TextData += "gfxoffsetx=" + fromNum(FileData.gfxoffsetx) +"\n";
+        out << "gfxoffsetx=" + fromNum(FileData.gfxoffsetx) +"\n";
     }
     if(FileData.en_gfxoffsety)
     {
-        TextData += "gfxoffsety=" + fromNum(FileData.gfxoffsety) +"\n";
+        out << "gfxoffsety=" + fromNum(FileData.gfxoffsety) +"\n";
     }
     if(FileData.en_gfxwidth)
     {
-        TextData += "gfxwidth=" + fromNum(FileData.gfxwidth) +"\n";
+        out << "gfxwidth=" + fromNum(FileData.gfxwidth) +"\n";
     }
     if(FileData.en_gfxheight)
     {
-        TextData += "gfxheight=" + fromNum(FileData.gfxheight) +"\n";
+        out << "gfxheight=" + fromNum(FileData.gfxheight) +"\n";
     }
     if(FileData.en_foreground)
     {
-        TextData += "foreground=" + fromNum((int)FileData.foreground) +"\n";
+        out << "foreground=" + fromNum((int)FileData.foreground) +"\n";
     }
     if(FileData.en_width)
     {
-        TextData += "width=" + fromNum(FileData.width) +"\n";
+        out << "width=" + fromNum(FileData.width) +"\n";
     }
     if(FileData.en_height)
     {
-        TextData += "height=" + fromNum(FileData.height) +"\n";
+        out << "height=" + fromNum(FileData.height) +"\n";
     }
 
     if(FileData.en_score)
     {
-        TextData += "score=" + fromNum(FileData.score) +"\n";
+        out << "score=" + fromNum(FileData.score) +"\n";
     }
     if(FileData.en_health)
     {
-        TextData += "health=" + fromNum(FileData.health) +"\n";
+        out << "health=" + fromNum(FileData.health) +"\n";
     }
 
     if(FileData.en_playerblock)
     {
-        TextData += "playerblock=" + fromNum((int)FileData.playerblock) +"\n";
+        out << "playerblock=" + fromNum((int)FileData.playerblock) +"\n";
     }
 
     if(FileData.en_playerblocktop)
     {
-        TextData += "playerblocktop=" + fromNum((int)FileData.playerblocktop) +"\n";
+        out << "playerblocktop=" + fromNum((int)FileData.playerblocktop) +"\n";
     }
 
     if(FileData.en_npcblock)
     {
-        TextData += "npcblock=" + fromNum((int)FileData.npcblock) +"\n";
+        out << "npcblock=" + fromNum((int)FileData.npcblock) +"\n";
     }
 
     if(FileData.en_npcblocktop)
     {
-        TextData += "npcblocktop=" + fromNum((int)FileData.npcblocktop) +"\n";
+        out << "npcblocktop=" + fromNum((int)FileData.npcblocktop) +"\n";
     }
     if(FileData.en_grabside)
     {
-        TextData += "grabside=" + fromNum((int)FileData.grabside) +"\n";
+        out << "grabside=" + fromNum((int)FileData.grabside) +"\n";
     }
     if(FileData.en_grabtop)
     {
-        TextData += "grabtop=" + fromNum((int)FileData.grabtop) +"\n";
+        out << "grabtop=" + fromNum((int)FileData.grabtop) +"\n";
     }
     if(FileData.en_jumphurt)
     {
-        TextData += "jumphurt=" + fromNum((int)FileData.jumphurt) +"\n";
+        out << "jumphurt=" + fromNum((int)FileData.jumphurt) +"\n";
     }
     if(FileData.en_nohurt)
     {
-        TextData += "nohurt=" + fromNum((int)FileData.nohurt) +"\n";
+        out << "nohurt=" + fromNum((int)FileData.nohurt) +"\n";
     }
     if(FileData.en_speed)
     {
-        TextData += "speed=" + fromNum(FileData.speed) +"\n";
+        out << "speed=" + fromNum(FileData.speed) +"\n";
     }
     if(FileData.en_noblockcollision)
     {
-        TextData += "noblockcollision=" + fromNum((int)FileData.noblockcollision) +"\n";
+        out << "noblockcollision=" + fromNum((int)FileData.noblockcollision) +"\n";
     }
     if(FileData.en_cliffturn)
     {
-        TextData += "cliffturn=" + fromNum((int)FileData.cliffturn) +"\n";
+        out << "cliffturn=" + fromNum((int)FileData.cliffturn) +"\n";
     }
     if(FileData.en_noyoshi)
     {
-        TextData += "noyoshi=" + fromNum((int)FileData.noyoshi) +"\n";
+        out << "noyoshi=" + fromNum((int)FileData.noyoshi) +"\n";
     }
     if(FileData.en_nofireball)
     {
-        TextData += "nofireball=" + fromNum((int)FileData.nofireball) +"\n";
+        out << "nofireball=" + fromNum((int)FileData.nofireball) +"\n";
     }
     if(FileData.en_nogravity)
     {
-        TextData += "nogravity=" + fromNum((int)FileData.nogravity) +"\n";
+        out << "nogravity=" + fromNum((int)FileData.nogravity) +"\n";
     }
     if(FileData.en_noiceball)
     {
-        TextData += "noiceball=" + fromNum((int)FileData.noiceball) +"\n";
+        out << "noiceball=" + fromNum((int)FileData.noiceball) +"\n";
     }
     if(FileData.en_frames)
     {
-        TextData += "frames=" + fromNum(FileData.frames) +"\n";
+        out << "frames=" + fromNum(FileData.frames) +"\n";
     }
     if(FileData.en_framespeed)
     {
-        TextData += "framespeed=" + fromNum(FileData.framespeed) +"\n";
+        out << "framespeed=" + fromNum(FileData.framespeed) +"\n";
     }
     if(FileData.en_framestyle)
     {
-        TextData += "framestyle=" + fromNum(FileData.framestyle) +"\n";
+        out << "framestyle=" + fromNum(FileData.framestyle) +"\n";
     }
 
 //Extended
     if(FileData.en_nohammer)
     {
-        TextData += "nohammer=" + fromNum((int)FileData.nohammer) +"\n";
+        out << "nohammer=" + fromNum((int)FileData.nohammer) +"\n";
     }
     if(FileData.en_noshell)
     {
-        TextData += "noshell=" + fromNum((int)FileData.noshell) +"\n";
+        out << "noshell=" + fromNum((int)FileData.noshell) +"\n";
     }
     if(FileData.en_name && !IsEmpty(FileData.name))
     {
-        TextData += "name=" + SMBX64::qStrS(FileData.name);
+        out << "name=" + SMBX64::qStrS(FileData.name);
     }
     if(FileData.en_image && !IsEmpty(FileData.image))
     {
-        TextData += "image=" + SMBX64::qStrS(FileData.image);
+        out << "image=" + SMBX64::qStrS(FileData.image);
     }
     if(FileData.en_script && !IsEmpty(FileData.script))
     {
-        TextData += "script=" + SMBX64::qStrS(FileData.script);
+        out << "script=" + SMBX64::qStrS(FileData.script);
     }
     if(FileData.en_grid)
     {
-        TextData += "grid=" + fromNum(FileData.grid) +"\n";
+        out << "grid=" + fromNum(FileData.grid) +"\n";
     }
     if(FileData.en_grid_offset_x)
     {
-        TextData += "gridoffsetx=" + fromNum(FileData.grid_offset_x) +"\n";
+        out << "gridoffsetx=" + fromNum(FileData.grid_offset_x) +"\n";
     }
     if(FileData.en_grid_offset_y)
     {
-        TextData += "gridoffsety=" + fromNum(FileData.grid_offset_y) +"\n";
+        out << "gridoffsety=" + fromNum(FileData.grid_offset_y) +"\n";
     }
     if(FileData.en_grid_align)
     {
-        TextData += "gridalign=" + fromNum(FileData.grid_align) +"\n";
+        out << "gridalign=" + fromNum(FileData.grid_align) +"\n";
     }
 
-    return TextData;
+    return true;
 }
 

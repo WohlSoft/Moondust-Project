@@ -33,13 +33,25 @@
 
 bool FileFormats::ReadNonSMBX64MetaDataF(PGESTRING filePath, MetaData &FileData)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    errorString.clear();
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath, false))
+    {
+        errorString="Failed to open file for read";
+        return false;
+    }
     return ReadNonSMBX64MetaDataFile(file, FileData);
 }
 
 bool FileFormats::ReadNonSMBX64MetaDataRaw(PGESTRING &rawdata, PGESTRING filePath, MetaData &FileData)
 {
-    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    errorString.clear();
+    PGE_FileFormats_misc::RawTextInput file;
+    if(!file.open(&rawdata, filePath))
+    {
+        errorString="Failed to open raw string for read";
+        return false;
+    }
     return ReadNonSMBX64MetaDataFile(file, FileData);
 }
 
@@ -332,17 +344,25 @@ bool FileFormats::ReadNonSMBX64MetaDataFile(PGE_FileFormats_misc::TextInput &in,
 
 bool FileFormats::WriteNonSMBX64MetaDataF(PGESTRING filePath, MetaData &metaData)
 {
+    errorString.clear();
     PGE_FileFormats_misc::TextFileOutput file;
     if(!file.open(filePath, false, false, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open file for write";
         return false;
+    }
     return WriteNonSMBX64MetaData(file, metaData);
 }
 
 bool FileFormats::WriteNonSMBX64MetaDataRaw(MetaData &metaData, PGESTRING &rawdata)
 {
+    errorString.clear();
     PGE_FileFormats_misc::RawTextOutput file;
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open raw string for write";
         return false;
+    }
     return WriteNonSMBX64MetaData(file, metaData);
 }
 

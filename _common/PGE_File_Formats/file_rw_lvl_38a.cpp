@@ -121,13 +121,33 @@ bool FileFormats::ReadSMBX38ALvlFileHeader(PGESTRING filePath, LevelData &FileDa
 
 bool FileFormats::ReadSMBX38ALvlFileF(PGESTRING  filePath, LevelData &FileData)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    errorString.clear();
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath, false))
+    {
+        errorString="Failed to open file for read";
+        FileData.ERROR_info = errorString;
+        FileData.ERROR_linedata = "";
+        FileData.ERROR_linenum = -1;
+        FileData.ReadFileValid = false;
+        return false;
+    }
     return ReadSMBX38ALvlFile(file, FileData);
 }
 
 bool FileFormats::ReadSMBX38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
 {
-    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    errorString.clear();
+    PGE_FileFormats_misc::RawTextInput file;
+    if(!file.open(&rawdata, filePath))
+    {
+        errorString="Failed to open raw string for read";
+        FileData.ERROR_info = errorString;
+        FileData.ERROR_linedata = "";
+        FileData.ERROR_linenum = -1;
+        FileData.ReadFileValid = false;
+        return false;
+    }
     return ReadSMBX38ALvlFile(file, FileData);
 }
 
@@ -2746,17 +2766,25 @@ badfile:
 
 bool FileFormats::WriteSMBX38ALvlFileF(PGESTRING filePath, LevelData &FileData)
 {
+    errorString.clear();
     PGE_FileFormats_misc::TextFileOutput file;
     if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open file for write";
         return false;
+    }
     return WriteSMBX38ALvlFile(file, FileData);
 }
 
 bool FileFormats::WriteSMBX38ALvlFileRaw(LevelData &FileData, PGESTRING &rawdata)
 {
+    errorString.clear();
     PGE_FileFormats_misc::RawTextOutput file;
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open raw string for write";
         return false;
+    }
     return WriteSMBX38ALvlFile(file, FileData);
 }
 

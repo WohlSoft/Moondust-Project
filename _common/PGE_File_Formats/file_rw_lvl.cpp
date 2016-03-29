@@ -89,13 +89,33 @@ badfile:
 
 bool FileFormats::ReadSMBX64LvlFileF(PGESTRING  filePath, LevelData &FileData)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    errorString.clear();
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath, false))
+    {
+        errorString="Failed to open file for read";
+        FileData.ERROR_info = errorString;
+        FileData.ERROR_linedata = "";
+        FileData.ERROR_linenum = -1;
+        FileData.ReadFileValid = false;
+        return false;
+    }
     return ReadSMBX64LvlFile(file, FileData);
 }
 
 bool FileFormats::ReadSMBX64LvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
 {
-    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    errorString.clear();
+    PGE_FileFormats_misc::RawTextInput file;
+    if(!file.open(&rawdata, filePath))
+    {
+        errorString = "Failed to open raw string for read";
+        FileData.ERROR_info = errorString;
+        FileData.ERROR_linedata = "";
+        FileData.ERROR_linenum = -1;
+        FileData.ReadFileValid = false;
+        return false;
+    }
     return ReadSMBX64LvlFile(file, FileData);
 }
 
@@ -640,17 +660,25 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
 
 bool FileFormats::WriteSMBX64LvlFileF(PGESTRING filePath, LevelData &FileData, int file_format)
 {
+    errorString.clear();
     PGE_FileFormats_misc::TextFileOutput file;
     if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Fail to open file for write";
         return false;
+    }
     return WriteSMBX64LvlFile(file, FileData, file_format);
 }
 
 bool FileFormats::WriteSMBX64LvlFileRaw(LevelData &FileData, PGESTRING &rawdata, int file_format)
 {
+    errorString.clear();
     PGE_FileFormats_misc::RawTextOutput file;
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Fail to open file for write";
         return false;
+    }
     return WriteSMBX64LvlFile(file, FileData, file_format);
 }
 

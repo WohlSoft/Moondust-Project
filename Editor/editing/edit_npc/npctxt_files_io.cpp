@@ -113,35 +113,17 @@ bool NpcEdit::saveAs()
 
 bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly)) {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    if(!FileFormats::WriteNPCTxtFileF(fileName, NpcData))
+    {
+        QApplication::restoreOverrideCursor();
         QMessageBox::warning(this, tr("File save error"),
                              tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
-                             .arg(file.errorString()));
+                             .arg(FileFormats::errorString));
         return false;
     }
-
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
-
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    QString raw = FileFormats::WriteNPCTxtFile(NpcData);
-    for(int i=0; i<raw.size(); i++)
-    {
-        if(raw[i]=='\n')
-        {
-            //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-            const char bytes[2] = {0x0D, 0x0A};
-            file.write((const char*)(&bytes), 2);
-        }
-        else
-        {
-            const char byte[1] = {raw[i].toLatin1()};
-            file.write((const char*)(&byte), 1);
-        }
-    }
-    file.close();
 
     QFileInfo fileI(fileName);
     unsigned int old_npc_id = npc_id;

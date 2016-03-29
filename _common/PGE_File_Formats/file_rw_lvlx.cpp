@@ -133,13 +133,25 @@ badfile:
 
 bool FileFormats::ReadExtendedLvlFileF(PGESTRING  filePath, LevelData &FileData)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, true);
+    errorString.clear();
+    PGE_FileFormats_misc::TextFileInput file;
+    if(!file.open(filePath, true))
+    {
+        errorString="Failed to open file for read";
+        return false;
+    }
     return ReadExtendedLvlFile(file, FileData);
 }
 
 bool FileFormats::ReadExtendedLvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
 {
-    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    errorString.clear();
+    PGE_FileFormats_misc::RawTextInput file;
+    if(!file.open(&rawdata, filePath))
+    {
+        errorString="Failed to open raw string for read";
+        return false;
+    }
     return ReadExtendedLvlFile(file, FileData);
 }
 
@@ -1464,17 +1476,25 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
 
 bool FileFormats::WriteExtendedLvlFileF(PGESTRING filePath, LevelData &FileData)
 {
+    errorString.clear();
     PGE_FileFormats_misc::TextFileOutput file;
     if(!file.open(filePath, false, false, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open file for write";
         return false;
+    }
     return WriteExtendedLvlFile(file, FileData);
 }
 
 bool FileFormats::WriteExtendedLvlFileRaw(LevelData &FileData, PGESTRING &rawdata)
 {
+    errorString.clear();
     PGE_FileFormats_misc::RawTextOutput file;
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+    {
+        errorString="Failed to open raw string for write";
         return false;
+    }
     return WriteExtendedLvlFile(file, FileData);
 }
 
