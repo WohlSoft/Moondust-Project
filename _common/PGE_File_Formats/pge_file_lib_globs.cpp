@@ -585,7 +585,7 @@ namespace PGE_FileFormats_misc
         }
         else
         {
-            while( ( _pos < _data->size() ) && (!IsEmpty(buffer)) )
+            while( ( _pos < (signed)_data->size() ) && (!IsEmpty(buffer)) )
             {
                 _data[_pos++] = buffer[0];
                 written++;

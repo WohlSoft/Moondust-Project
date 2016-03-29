@@ -266,19 +266,15 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
 bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 {
     using namespace lvl_file_io;
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_PGEX))
+    {
         if(!silent)
         QMessageBox::warning(this, tr("File save error"),
                              tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
-                             .arg(file.errorString()));
+                             .arg(FileFormats::errorString));
         return false;
     }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << FileFormats::WriteExtendedLvlFile(LvlData);
-    file.close();
     return true;
 }
 
@@ -327,61 +323,23 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         }
     }
 
-    //Apply SMBX64-specific things to entire array
-    FileFormats::smbx64LevelPrepare(LvlData);
-
-    QFile file(fileName);
-    if(!file.open(QFile::WriteOnly))
+    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX64, file_format))
     {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
+        if(!silent)
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName)
+                                 .arg(FileFormats::errorString));
         return false;
     }
 
-    QString raw = FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
-    for(int i=0; i<raw.size(); i++)
-    {
-        if(raw[i]=='\n')
-        {
-            //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-            const char bytes[2] = {0x0D, 0x0A};
-            file.write((const char*)(&bytes), 2);
-        }
-        else
-        {
-            const char byte[1] = {raw[i].toLatin1()};
-            file.write((const char*)(&byte), 1);
-        }
-    }
-    file.close();
-
-    //save additional meta data
-    if( (!LvlData.metaData.bookmarks.isEmpty())
-        ||((LvlData.metaData.script)&&(!LvlData.metaData.script->events().isEmpty())) )
-    {
-        file.setFileName(fileName+".meta");
-        if (!file.open(QFile::WriteOnly | QFile::Text))
-        {
-            QMessageBox::warning(this, tr("File save error"),
-                                 tr("Cannot save file %1:\n%2.")
-                                 .arg(fileName+".meta")
-                                 .arg(file.errorString()));
-            return false;
-        }
-        QTextStream out(&file);
-        out.setCodec("UTF-8");
-        out << FileFormats::WriteNonSMBX64MetaData(LvlData.metaData);
-        file.close();
-    }
     return true;
 }
 
 
 
 
-bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
+bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, LevelEditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;

@@ -10,6 +10,7 @@ public:
         F_NONE=-1,
         F_LVL=0,
         F_LVLX=1,
+        F_LVL38A=2
     };
     fType ftype;
     LevelData d;

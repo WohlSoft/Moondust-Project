@@ -363,10 +363,34 @@ return false;
 //****************WRITE FILE FORMAT************************
 //*********************************************************
 
+bool FileFormats::WriteSMBX64WldFileF(PGESTRING filePath, WorldData &FileData, int file_format)
+{
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX64WldFile(file, FileData, file_format);
+}
+
+bool FileFormats::WriteSMBX64WldFileRaw(WorldData &FileData, PGESTRING &rawdata, int file_format)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX64WldFile(file, FileData, file_format);
+}
 
 PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
 {
-    PGESTRING TextData;
+    PGESTRING raw;
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
+        return "";
+    WriteSMBX64WldFile(file, FileData, file_format);
+    return raw;
+}
+
+bool FileFormats::WriteSMBX64WldFile(PGE_FileFormats_misc::TextOutput &out, WorldData &FileData, int file_format)
+{
     int i;
 
     //Prevent out of range: 0....64
@@ -374,10 +398,8 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     else
     if(file_format>64) file_format = 64;
 
-
-
-    TextData += SMBX64::IntS(file_format);              //Format version
-    TextData += SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title
+    out << SMBX64::IntS(file_format);              //Format version
+    out << SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title
 
     FileData.nocharacter1 = (FileData.nocharacter.size()>0)?FileData.nocharacter[0]:false;
     FileData.nocharacter2 = (FileData.nocharacter.size()>1)?FileData.nocharacter[1]:false;
@@ -387,21 +409,21 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
 
     if(file_format>=55)
     {
-        TextData += SMBX64::BoolS(FileData.nocharacter1);
-        TextData += SMBX64::BoolS(FileData.nocharacter2);
-        TextData += SMBX64::BoolS(FileData.nocharacter3);
-        TextData += SMBX64::BoolS(FileData.nocharacter4);
+        out << SMBX64::BoolS(FileData.nocharacter1);
+        out << SMBX64::BoolS(FileData.nocharacter2);
+        out << SMBX64::BoolS(FileData.nocharacter3);
+        out << SMBX64::BoolS(FileData.nocharacter4);
         if(file_format>=56)
-            TextData += SMBX64::BoolS(FileData.nocharacter5);
+            out << SMBX64::BoolS(FileData.nocharacter5);
     }
     if(file_format>=3)
     {
-        TextData += SMBX64::qStrS(FileData.IntroLevel_file);
-        TextData += SMBX64::BoolS(FileData.HubStyledWorld);
-        TextData += SMBX64::BoolS(FileData.restartlevel);
+        out << SMBX64::qStrS(FileData.IntroLevel_file);
+        out << SMBX64::BoolS(FileData.HubStyledWorld);
+        out << SMBX64::BoolS(FileData.restartlevel);
     }
     if(file_format>=20)
-        TextData += SMBX64::IntS(FileData.stars);
+        out << SMBX64::IntS(FileData.stars);
 
     PGESTRINGList credits;
     PGE_SPLITSTRING(credits, FileData.authors, "\n");
@@ -413,70 +435,70 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
 
     if(file_format>=17)
     {
-        TextData += SMBX64::qStrS(FileData.author1);
-        TextData += SMBX64::qStrS(FileData.author2);
-        TextData += SMBX64::qStrS(FileData.author3);
-        TextData += SMBX64::qStrS(FileData.author4);
-        TextData += SMBX64::qStrS(FileData.author5);
+        out << SMBX64::qStrS(FileData.author1);
+        out << SMBX64::qStrS(FileData.author2);
+        out << SMBX64::qStrS(FileData.author3);
+        out << SMBX64::qStrS(FileData.author4);
+        out << SMBX64::qStrS(FileData.author5);
     }
 
     for(i=0;i<(signed)FileData.tiles.size();i++)
     {
-        TextData += SMBX64::IntS(FileData.tiles[i].x);
-        TextData += SMBX64::IntS(FileData.tiles[i].y);
-        TextData += SMBX64::IntS(FileData.tiles[i].id);
+        out << SMBX64::IntS(FileData.tiles[i].x);
+        out << SMBX64::IntS(FileData.tiles[i].y);
+        out << SMBX64::IntS(FileData.tiles[i].id);
     }
-    TextData += "\"next\"\n";//Separator
+    out << "\"next\"\n";//Separator
 
     for(i=0;i<(signed)FileData.scenery.size();i++)
     {
-        TextData += SMBX64::IntS(FileData.scenery[i].x);
-        TextData += SMBX64::IntS(FileData.scenery[i].y);
-        TextData += SMBX64::IntS(FileData.scenery[i].id);
+        out << SMBX64::IntS(FileData.scenery[i].x);
+        out << SMBX64::IntS(FileData.scenery[i].y);
+        out << SMBX64::IntS(FileData.scenery[i].id);
     }
-    TextData += "\"next\"\n";//Separator
+    out << "\"next\"\n";//Separator
 
     for(i=0;i<(signed)FileData.paths.size();i++)
     {
-        TextData += SMBX64::IntS(FileData.paths[i].x);
-        TextData += SMBX64::IntS(FileData.paths[i].y);
-        TextData += SMBX64::IntS(FileData.paths[i].id);
+        out << SMBX64::IntS(FileData.paths[i].x);
+        out << SMBX64::IntS(FileData.paths[i].y);
+        out << SMBX64::IntS(FileData.paths[i].id);
     }
-    TextData += "\"next\"\n";//Separator
+    out << "\"next\"\n";//Separator
 
     for(i=0;i<(signed)FileData.levels.size();i++)
     {
-        TextData += SMBX64::IntS(FileData.levels[i].x);
-        TextData += SMBX64::IntS(FileData.levels[i].y);
-        TextData += SMBX64::IntS(FileData.levels[i].id);
-        TextData += SMBX64::qStrS(FileData.levels[i].lvlfile);
-        TextData += SMBX64::qStrS(FileData.levels[i].title);
-        TextData += SMBX64::IntS(FileData.levels[i].top_exit);
-        TextData += SMBX64::IntS(FileData.levels[i].left_exit);
-        TextData += SMBX64::IntS(FileData.levels[i].bottom_exit);
-        TextData += SMBX64::IntS(FileData.levels[i].right_exit);
+        out << SMBX64::IntS(FileData.levels[i].x);
+        out << SMBX64::IntS(FileData.levels[i].y);
+        out << SMBX64::IntS(FileData.levels[i].id);
+        out << SMBX64::qStrS(FileData.levels[i].lvlfile);
+        out << SMBX64::qStrS(FileData.levels[i].title);
+        out << SMBX64::IntS(FileData.levels[i].top_exit);
+        out << SMBX64::IntS(FileData.levels[i].left_exit);
+        out << SMBX64::IntS(FileData.levels[i].bottom_exit);
+        out << SMBX64::IntS(FileData.levels[i].right_exit);
         if(file_format>=4)
-            TextData += SMBX64::IntS(FileData.levels[i].entertowarp);
+            out << SMBX64::IntS(FileData.levels[i].entertowarp);
         if(file_format>=22)
         {
-            TextData += SMBX64::BoolS(FileData.levels[i].alwaysVisible);
-            TextData += SMBX64::BoolS(FileData.levels[i].pathbg);
-            TextData += SMBX64::BoolS(FileData.levels[i].gamestart);
-            TextData += SMBX64::IntS(FileData.levels[i].gotox);
-            TextData += SMBX64::IntS(FileData.levels[i].gotoy);
-            TextData += SMBX64::BoolS(FileData.levels[i].bigpathbg);
+            out << SMBX64::BoolS(FileData.levels[i].alwaysVisible);
+            out << SMBX64::BoolS(FileData.levels[i].pathbg);
+            out << SMBX64::BoolS(FileData.levels[i].gamestart);
+            out << SMBX64::IntS(FileData.levels[i].gotox);
+            out << SMBX64::IntS(FileData.levels[i].gotoy);
+            out << SMBX64::BoolS(FileData.levels[i].bigpathbg);
         }
     }
-    TextData += "\"next\"\n";//Separator
+    out << "\"next\"\n";//Separator
 
     for(i=0;i<(signed)FileData.music.size();i++)
     {
-        TextData += SMBX64::IntS(FileData.music[i].x);
-        TextData += SMBX64::IntS(FileData.music[i].y);
-        TextData += SMBX64::IntS(FileData.music[i].id);
+        out << SMBX64::IntS(FileData.music[i].x);
+        out << SMBX64::IntS(FileData.music[i].y);
+        out << SMBX64::IntS(FileData.music[i].id);
     }
-    TextData += "\"next\"\n";//Separator
+    out << "\"next\"\n";//Separator
 
-
-    return TextData;
+    return true;
 }
+

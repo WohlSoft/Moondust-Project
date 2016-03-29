@@ -2820,7 +2820,7 @@ VARIABLES
 N:"NewVariable";V:"0";
 VARIABLES_END
 SCRIPTS
-N:"Scrip";L:2;S:"'Привет\, это я =)\n'????\,????!";
-N:"Script1";L:2;S:"'Привет\, это скрипт!\n\n'Давай сыграем в игру! =)\n'не\, это не пила\, просто скучно и я хочу играть!!!\n\n'???????\n' xD";
-N:"Script2";L:2;S:"'Script No.2 Name\:New Script\n'English scripts are not so fine\, because \n'it's dumb comment! \:P";
+N:"Scrip";L:2;S:"'пїЅпїЅпїЅпїЅпїЅпїЅ\, пїЅпїЅпїЅ пїЅ =)\n'????\,????! ";
+N:"Script1";L:2;S:"'пїЅпїЅпїЅпїЅпїЅпїЅ\, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!\n\n'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ! =)\n'пїЅпїЅ\, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ\, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!!!\n\n'???????\n' xD ";
+N:"Script2";L:2;S:"'Script No.2 Name\:New Script\n'English scripts are not so fine\, because \n'it's dumb comment! \:P ";
 SCRIPTS_END

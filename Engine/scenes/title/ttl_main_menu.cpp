@@ -589,10 +589,10 @@ int TitleScene::findEpisodes( void* )
     }
     else
     {
+        WorldData world;
         foreach(QString filename, files)
         {
-            WorldData world = FileFormats::OpenWorldFileHeader(filename);
-            if(world.ReadFileValid)
+            if( FileFormats::OpenWorldFileHeader( filename, world ) )
             {
                 QString title = world.EpisodeTitle;
                 QPair<QString,QString > file;
@@ -625,10 +625,10 @@ int TitleScene::findLevels( void* )
     }
     else
     {
+        LevelData level;
         foreach(QString file, files)
         {
-            LevelData level = FileFormats::OpenLevelFileHeader(filefind_folder+file);
-            if(level.ReadFileValid)
+            if( FileFormats::OpenLevelFileHeader(filefind_folder+file, level) )
             {
                 QString title = level.LevelName;
                 QPair<QString,QString > filex;

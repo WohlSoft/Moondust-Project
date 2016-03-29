@@ -357,8 +357,8 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
 
     if( lvlext.exactMatch(FilePath) )
     {
-        getLevelHead = FileFormats::OpenLevelFile(FilePath);
-        if( !getLevelHead.ReadFileValid ) return 0;
+        if(!FileFormats::OpenLevelFile( FilePath, getLevelHead ))
+            return 0;
 
         //qDebug() << "world "<< getLevelHead.stars << getLevelHead.filename;
 

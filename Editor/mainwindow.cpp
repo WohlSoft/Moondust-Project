@@ -216,9 +216,9 @@ void MainWindow::on_Exit_triggered()
 void MainWindow::formatErrorMsgBox(QString filePath, QString errorMessage, int lineNum, QString lineContents)
 {
     QMessageBox::warning(this, QObject::tr("Bad File"),
-                PGESTRING( QObject::tr("Bad file format\nFile: %1\n").arg(filePath)  //Print Bad data string
+                PGESTRING( QObject::tr("Bad file format\nFile: %1").arg(filePath+"\n")  //Print Bad data string
                         +( errorMessage.isEmpty()?"":errorMessage+"\n" ) //Print special error message
-                        +( lineNum < 0 ? "":QObject::tr("Line Number: %1\n").arg(lineNum))         //Print Line With error
+                        +( lineNum < 0 ? "":QObject::tr("Line Number: %1").arg(lineNum+"\n"))         //Print Line With error
                         +( lineContents.isEmpty()?"":QObject::tr("Line Data: %1").arg(lineContents)) ),
                          QMessageBox::Ok);
 }

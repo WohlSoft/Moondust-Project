@@ -221,15 +221,15 @@ void WorldScene::setGameState(EpisodeState *_state)
             //Fix file extension
             if((!data.IntroLevel_file.endsWith(".lvlx", Qt::CaseInsensitive))&&
                (!data.IntroLevel_file.endsWith(".lvl", Qt::CaseInsensitive)))
-                    data.IntroLevel_file.append(".lvl");
+                 data.IntroLevel_file.append(".lvl");
 
             QString introLevelFile = gameState->WorldPath+"/"+data.IntroLevel_file;
             LogDebug("Opening intro level: "+introLevelFile);
 
             if(QFileInfo(introLevelFile).exists())
             {
-                LevelData checking = FileFormats::OpenLevelFile(introLevelFile);
-                if(checking.ReadFileValid)
+                LevelData checking;
+                if( FileFormats::OpenLevelFile( introLevelFile, checking ) )
                 {
                     LogDebug("File valid, do exit!");
                     gameState->LevelFile = introLevelFile;
@@ -855,8 +855,8 @@ void WorldScene::updateCenter()
                 if(!y->data.lvlfile.isEmpty())
                 {
                     QString lvlPath=data.path+"/"+y->data.lvlfile;
-                    LevelData head = FileFormats::OpenLevelFileHeader(lvlPath);
-                    if(head.ReadFileValid)
+                    LevelData head;
+                    if( FileFormats::OpenLevelFileHeader(lvlPath, head) )
                     {
                         if(!y->data.title.isEmpty())
                         {
@@ -1308,8 +1308,7 @@ bool WorldScene::loadFile(QString filePath)
         return false;
     }
 
-    data = FileFormats::OpenWorldFile(filePath);
-    if(!data.ReadFileValid)
+    if( !FileFormats::OpenWorldFile(filePath, data) )
         errorMsg += "Bad file format\n";
     return data.ReadFileValid;
 }

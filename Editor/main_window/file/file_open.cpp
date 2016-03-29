@@ -191,9 +191,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         LevelData FileData;
 
         LogDebug("> parsing level file format");
-        FileData = FileFormats::OpenLevelFile(FilePath);
-
-        if( !FileData.ReadFileValid )
+        if( !FileFormats::OpenLevelFile(FilePath, FileData) )
         {
             formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             return;
@@ -218,7 +216,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 if(FileData.metaData.script)
                     FileData.metaData.script.reset();
 
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData( metaRaw );
                 LogDebug("Meta-File was read!");
             }
             else
@@ -256,8 +254,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     if((in_1.suffix().toLower() == "wld")||(in_1.suffix().toLower() == "wldx"))
     {
         WorldData FileData;
-        FileData= FileFormats::OpenWorldFile(FilePath);
-        if( !FileData.ReadFileValid )
+        if( !FileFormats::OpenWorldFile( FilePath, FileData ) )
         {
             formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             return;

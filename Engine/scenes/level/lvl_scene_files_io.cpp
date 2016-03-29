@@ -36,9 +36,9 @@ bool LevelScene::loadFile(QString filePath)
         return false;
     }
 
-    data = FileFormats::OpenLevelFile(filePath);
-    if(!data.ReadFileValid)
+    if( !FileFormats::OpenLevelFile(filePath, data) )
         errorMsg += "Bad file format\n";
+
     return data.ReadFileValid;
 }
 

@@ -71,12 +71,12 @@ void MainWindow::on_actionReload_triggered()
         }
 
         //Open level file
-        FileData = FileFormats::OpenLevelFile(filePath);
-
-        if( !FileData.ReadFileValid ){
+        if( !FileFormats::OpenLevelFile( filePath, FileData) )
+        {
             formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
-            return;}
+            return;
+        }
 
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
@@ -243,12 +243,12 @@ void MainWindow::on_actionReload_triggered()
                 save();
         }
 
-        FileData = FileFormats::OpenWorldFile(filePath);
-
-        if( !FileData.ReadFileValid ){
+        if( !FileFormats::OpenWorldFile( filePath, FileData ) )
+        {
             formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
-            return;}
+            return;
+        }
 
         QFileInfo finfo(filePath);
         FileData.filename = util::getBaseFilename(finfo.fileName());

@@ -254,53 +254,15 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                 isSMBX64limit=false;
         }
 
-        QFile file(fileName);
-        if (!file.open(QFile::WriteOnly))
+        if (!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(file.errorString()));
+                                 .arg(FileFormats::errorString));
             return false;
         }
         WldData.smbx64strict = true; //Enable SMBX64 standard strict mode
-
-
-        QString raw = FileFormats::WriteSMBX64WldFile(WldData, file_format);
-        for(int i=0; i<raw.size(); i++)
-        {
-            if(raw[i]=='\n')
-            {
-                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-                const char bytes[2] = {0x0D, 0x0A};
-                file.write((const char*)(&bytes), 2);
-            }
-            else
-            {
-                const char byte[1] = {raw[i].toLatin1()};
-                file.write((const char*)(&byte), 1);
-            }
-        }
-        file.close();
-
-        //save additional meta data
-        if(!WldData.metaData.bookmarks.isEmpty())
-        {
-            file.setFileName(fileName+".meta");
-            if (!file.open(QFile::WriteOnly | QFile::Text))
-            {
-                QMessageBox::warning(this, tr("File save error"),
-                                     tr("Cannot save file %1:\n%2.")
-                                     .arg(fileName+".meta")
-                                     .arg(file.errorString()));
-                return false;
-            }
-            QTextStream out(&file);
-            out.setCodec("UTF-8");
-            out << FileFormats::WriteNonSMBX64MetaData(WldData.metaData);
-            file.close();
-        }
-
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
@@ -309,19 +271,14 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     else if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
     {
         WldData.smbx64strict = false; //Disable strict mode
-
-        QFile file(fileName);
-        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        if( !FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX) )
+        {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(file.errorString()));
+                                 .arg(FileFormats::errorString));
             return false;
         }
-        QTextStream out(&file);
-        out.setCodec("UTF-8");
-        out << FileFormats::WriteExtendedWldFile(WldData);
-        file.close();
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////

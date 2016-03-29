@@ -79,13 +79,13 @@ public:
      * \param filePath Full path to file which must be opened
      * \return Level data structure
      */
-    static LevelData        OpenLevelFile(PGESTRING filePath);
+    static bool OpenLevelFile(PGESTRING filePath, LevelData &FileData);
     /*!
      * \brief Parses a level file header only with auto-detection of a file type (SMBX1...64 LVL or PGE-LVLX)
      * \param filePath Full path to file which must be opened
      * \return Level data structure (with initialized header data only)
      */
-    static LevelData        OpenLevelFileHeader(PGESTRING filePath);
+    static bool OpenLevelFileHeader(PGESTRING filePath, LevelData &data);
 
     /*!
      * \brief Save a level file to the disk
@@ -159,6 +159,7 @@ public:
     static bool ReadSMBX65by38ALvlFileF(PGESTRING  filePath, LevelData &FileData);
     static bool ReadSMBX65by38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, LevelData &FileData);
     static bool ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData /*output*/ &FileData);
+
     static bool ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, LevelData &FileData);
 
     /*!
@@ -282,7 +283,7 @@ public:
      * \brief Appends internal layers and events if not exists
      * \param FileData initalized and filled level file
      */
-    static void LevelAddInternalEvents(LevelData &FileData);
+    static void             LevelAddInternalEvents(LevelData &FileData);
 
     /*!
      * \brief Optimizing level data for SMBX64 Standard requirements
@@ -308,18 +309,47 @@ public:
 
 
 /******************************World file***********************************/
+    enum WorldFileFormat{
+        WLD_PGEX=0,
+        WLD_SMBX64,
+        WLD_SMBX38A
+    };
+
     /*!
      * \brief Parses a world map file with auto-detection of a file type (SMBX1...64 LVL or PGE-WLDX)
      * \param filePath Full path to file which must be opened
-     * \return World data structure
+     * \param data World data structure
+     * \return true on success file reading, false if error was occouped
      */
-    static WorldData        OpenWorldFile(PGESTRING filePath);
+    static bool OpenWorldFile(PGESTRING filePath, WorldData &data);
     /*!
      * \brief Parses a world map file header only with auto-detection of a file type (SMBX1...64 LVL or PGE-WLDX)
      * \param filePath Full path to file which must be opened
-     * \return World data structure (with initialized header data only)
+     * \param data World data structure (with initialized header data only)
+     * \return true on success file reading, false if error was occouped
      */
-    static WorldData        OpenWorldFileHeader(PGESTRING filePath);
+    static bool OpenWorldFileHeader(PGESTRING filePath, WorldData &data);
+
+    /*!
+     * \brief Save a world file to the disk
+     * \param FileData World data structure
+     * \param filePath Path to file to save encoded in UTF-8 (for STL-version)
+     * \param format Target file format (PGE WLDX, SMBX1...64 WLD, SMBX-38A WLD)
+     * \param FormatVersion Version of target SMBX1...64 file. Takes no effect for other file formats
+     * \return true if file successfully saved
+     */
+    static bool             SaveWorldFile(WorldData &FileData, PGESTRING filePath, WorldFileFormat format, unsigned int FormatVersion=64);
+
+    /*!
+     * \brief Save a world map file to the raw string
+     * \param FileData World data structure
+     * \param filePath Path to file to save encoded in UTF-8 (for STL-version)
+     * \param format Target file format (PGE WLDX, SMBX1...64 WLD, SMBX-38A WLD)
+     * \param FormatVersion Version of target SMBX1...64 file. Takes no effect for other file formats
+     * \return true if data successfully generated
+     */
+    static bool             SaveWorldData(WorldData &FileData, PGESTRING &RawData, WorldFileFormat format, unsigned int FormatVersion=64);
+
 
 // SMBX64 WLD File
     /*!
@@ -348,6 +378,10 @@ public:
      */
     static PGESTRING        WriteSMBX64WldFile(WorldData FileData, int file_format=64);
 
+    static bool WriteSMBX64WldFileF(PGESTRING  filePath, WorldData &FileData, int file_format=64);
+    static bool WriteSMBX64WldFileRaw(WorldData &FileData, PGESTRING &rawdata, int file_format=64);
+    static bool WriteSMBX64WldFile(PGE_FileFormats_misc::TextOutput &out, WorldData /*output*/ &FileData, int file_format=64);
+
 // PGE Extended World map File
     /*!
      * \brief Parsed PGE-X World map file header only
@@ -372,6 +406,10 @@ public:
      * \return Raw data string in PGE-X World map format
      */
     static PGESTRING        WriteExtendedWldFile(WorldData FileData);
+
+    static bool WriteExtendedWldFileF(PGESTRING  filePath, WorldData &FileData);
+    static bool WriteExtendedWldFileRaw(WorldData &FileData, PGESTRING &rawdata);
+    static bool WriteExtendedWldFile(PGE_FileFormats_misc::TextOutput &out, WorldData /*output*/ &FileData);
 
 //Wld Data
     /*!

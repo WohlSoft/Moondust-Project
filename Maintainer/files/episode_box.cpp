@@ -23,12 +23,29 @@ EpisodeBox_level::~EpisodeBox_level()
 bool EpisodeBox_level::open(QString filePath)
 {
     fPath=filePath;
-    if(fPath.endsWith(".lvlx", Qt::CaseInsensitive))
-        ftype=F_LVLX;
-    else if(fPath.endsWith(".lvl", Qt::CaseInsensitive))
-        ftype=F_LVL;
-    d = FileFormats::OpenLevelFile(filePath);
-    qDebug()<< "Opened level, is valid ="<<d.ReadFileValid << filePath;
+
+    PGE_FileFormats_misc::TextFileInput file;
+    if(file.open(fPath))
+    {
+        PGESTRING firstLine = file.read(8);
+        file.close();
+        if( PGE_StartsWith( firstLine, "SMBXFile" ) )
+        {
+            ftype = F_LVL38A;
+            FileFormats::ReadSMBX65by38ALvlFileF(filePath, d);
+        }
+        else if( PGE_DetectSMBXFile( firstLine ) )
+        {
+            ftype = F_LVL;
+            FileFormats::ReadSMBX64LvlFileF(filePath, d);
+        }
+        else
+        {
+            ftype = F_LVLX;
+            FileFormats::ReadExtendedLvlFileF(filePath, d);
+        }
+        qDebug()<< "Opened level, is valid = " << d.ReadFileValid << filePath;
+    }
     return d.ReadFileValid;
 }
 
@@ -60,37 +77,18 @@ void EpisodeBox_level::save()
 
     if(ftype==F_LVL)
     {
-        QFile file(fPath);
-        if(!file.open(QFile::WriteOnly))
-        {
+        if(!FileFormats::SaveLevelFile(d, fPath, FileFormats::LVL_SMBX64, 64))
             return;
-        }
-
-        QString raw = FileFormats::WriteSMBX64LvlFile(d,64);
-        for(int i=0; i<raw.size(); i++)
-        {
-            if(raw[i]=='\n')
-            {
-                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-                const char bytes[2] = {0x0D, 0x0A};
-                file.write((const char*)(&bytes), 2);
-            }
-            else
-            {
-                const char byte[1] = {raw[i].toLatin1()};
-                file.write((const char*)(&byte), 1);
-            }
-        }
-        file.close();
-    } else {
-        QFile file(fPath);
-        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    }
+    else if(ftype==F_LVL38A)
+    {
+        if(!FileFormats::SaveLevelFile(d, fPath, FileFormats::LVL_SMBX38A))
             return;
-        }
-        QTextStream out(&file);
-        out.setCodec("UTF-8");
-        out << FileFormats::WriteExtendedLvlFile(d);
-        file.close();
+    }
+    else
+    {
+        if(!FileFormats::SaveLevelFile(d, fPath, FileFormats::LVL_PGEX))
+            return;
     }
 }
 
@@ -110,7 +108,7 @@ EpisodeBox_world::~EpisodeBox_world()
 bool EpisodeBox_world::open(QString filePath)
 {
     fPath=filePath;
-    d = FileFormats::OpenWorldFile(filePath);
+    FileFormats::OpenWorldFile(filePath, d);
     qDebug()<< "Opened world, valud="<<d.ReadFileValid<< filePath;
     return d.ReadFileValid;
 }
@@ -118,15 +116,7 @@ bool EpisodeBox_world::open(QString filePath)
 void EpisodeBox_world::save()
 {
     if(!d.ReadFileValid) return;
-
-    QFile file(fPath);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        return;
-    }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << FileFormats::WriteExtendedWldFile(d);
-    file.close();
+    FileFormats::WriteExtendedWldFileF(fPath, d);
 }
 
 

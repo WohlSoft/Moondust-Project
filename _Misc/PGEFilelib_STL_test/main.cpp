@@ -53,7 +53,7 @@ int main()
     std::ofstream fout;
     printLine();
     cout << "\n\nSMBX64 Level Read Header test:" << endl;
-    level=FileFormats::ReadSMBX64LvlFileHeader("test.lvl");
+    level = FileFormats::ReadSMBX64LvlFileHeader("test.lvl");
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -65,7 +65,7 @@ int main()
     printLine();
 
     cout << "\n\nSMBX64 Level Read test:" << endl;
-    level = FileFormats::OpenLevelFile("test.lvl");
+    FileFormats::OpenLevelFile("test.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -75,17 +75,9 @@ int main()
         printLevelInfo(level);
     }
 
-    fout.open("test_out_64.lvl", std::ios::out);
-    fout<<FileFormats::WriteSMBX64LvlFile(level, 64);
-    fout.close();
-
-    fout.open("test_out_45.lvl", std::ios::out);
-    fout<<FileFormats::WriteSMBX64LvlFile(level, 45);
-    fout.close();
-
-    fout.open("test_out_1.lvl", std::ios::out);
-    fout<<FileFormats::WriteSMBX64LvlFile(level, 1);
-    fout.close();
+    FileFormats::SaveLevelFile(level, "test_out_64.lvl", FileFormats::LVL_SMBX64, 64);
+    FileFormats::SaveLevelFile(level, "test_out_45.lvl", FileFormats::LVL_SMBX64, 45);
+    FileFormats::SaveLevelFile(level, "test_out_1.lvl", FileFormats::LVL_SMBX64, 1);
 
 
     printLine();
@@ -104,7 +96,7 @@ int main()
 
     printLine();
     cout << "\n\nSMBX65-38A Level Read test:" << endl;
-    level=FileFormats::OpenLevelFile("test_65-38a.lvl");
+    FileFormats::OpenLevelFile("test_65-38a.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -130,7 +122,7 @@ int main()
 
     printLine();
     cout << "\n\nPGE-X Level Read test:" << endl;
-    level = FileFormats::OpenLevelFile("test.lvlx");
+    FileFormats::OpenLevelFile("test.lvlx", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -164,7 +156,7 @@ int main()
 
     printLine();
     cout << "\n\nSMBX64 World Read test:" << endl;
-    world = FileFormats::OpenWorldFile("test.wld");
+    FileFormats::OpenWorldFile("test.wld", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)
@@ -192,7 +184,7 @@ int main()
 
     printLine();
     cout << "\n\nPGE-X World Read test:" << endl;
-    world = FileFormats::OpenWorldFile("test.wldx");
+    FileFormats::OpenWorldFile("test.wldx", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)

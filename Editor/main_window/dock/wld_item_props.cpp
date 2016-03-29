@@ -450,8 +450,8 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
         getLevelHead.LevelName = "";
         if( lvlext.exactMatch(FilePath) )
         {
-            getLevelHead = FileFormats::OpenLevelFileHeader(FilePath); //function in file_formats.cpp
-            if( !getLevelHead.ReadFileValid ) return;
+            if( !FileFormats::OpenLevelFileHeader(FilePath, getLevelHead) )
+                return;
         }
 
         file.close();

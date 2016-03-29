@@ -5,6 +5,7 @@
 
 //for DEEP test of SMBX38A
 #include <QDir>
+#include <QElapsedTimer>
 
 void printLevelInfo(LevelData &lvl, QTextStream &cout)
 {
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
     printLine(cout);
 
     cout << "\n\nSMBX64 Level Read test:" << endl;
-    level = FileFormats::OpenLevelFile("test.lvl");
+    FileFormats::OpenLevelFile("test.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
-    level=FileFormats::ReadSMBX65by38ALvlFileHeader("test_65-38a.lvl");
+    level = FileFormats::ReadSMBX65by38ALvlFileHeader("test_65-38a.lvl");
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -100,7 +101,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nSMBX65-38A Level Read test:" << endl;
-    level=FileFormats::OpenLevelFile("test_65-38a.lvl");
+    FileFormats::OpenLevelFile("test_65-38a.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -108,10 +109,7 @@ int main(int argc, char *argv[])
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
         printLevelInfo(level,cout);
-        QFile testOutput("test_65-38a-out.lvlx");
-        testOutput.open(QIODevice::WriteOnly);
-        QTextStream(&testOutput) << FileFormats::WriteExtendedLvlFile(level);
-        testOutput.close();
+        FileFormats::WriteExtendedLvlFileF("test_65-38a-out.lvlx", level);
     }
 
     /**********************DEEP TEST OF SMBX38A files*********************/
@@ -123,21 +121,24 @@ int main(int argc, char *argv[])
         testDir.mkdir("../38_deep_test_out");
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
-        QFile("invalid_new.log").remove();
-        QFile("invalid_old.log").remove();
-        QFile("differents.log").remove();
-
         QFile newInvalid("invalid_new.log");
-        newInvalid.open(QIODevice::Append);
+        newInvalid.open(QIODevice::WriteOnly|QIODevice::Truncate);
         QTextStream niout(&newInvalid);
 
         QFile oldInvalid("invalid_old.log");
-        oldInvalid.open(QIODevice::Append);
+        oldInvalid.open(QIODevice::WriteOnly|QIODevice::Truncate);
         QTextStream oiout(&oldInvalid);
 
         QFile diffs("differents.log");
-        diffs.open(QIODevice::Append);
+        diffs.open(QIODevice::WriteOnly|QIODevice::Truncate);
         QTextStream diout(&diffs);
+
+        QFile times("times.log");
+        times.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        QTextStream timesout(&times);
+
+        QElapsedTimer meter;
+        meter.start();
 
         foreach(QString file, files)
         {
@@ -148,14 +149,15 @@ int main(int argc, char *argv[])
 
             FileData = FileFormats::CreateLevelData();
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
             if(FileFormats::ReadSMBX65by38ALvlFile(fileI, FileData))
             {
-                QFile testOutput(opath+file+".new.lvlx");
-                testOutput.open(QIODevice::WriteOnly);
-                raw_new=FileFormats::WriteExtendedLvlFile(FileData);
-                QTextStream(&testOutput) << raw_new;
-                testOutput.flush();
-                testOutput.close();
+                qint64 got = meter.elapsed();
+                timesout << file << " NEW ->\t" << got << "\t\t";
+
+                FileFormats::WriteExtendedLvlFileF(opath+file+".new.lvlx", FileData);
+                FileFormats::WriteExtendedLvlFileRaw(FileData, raw_new);
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
@@ -164,17 +166,17 @@ int main(int argc, char *argv[])
                 newInvalid.flush();
             }
 
-
             FileData = FileFormats::CreateLevelData();
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
             if(FileFormats::ReadSMBX65by38ALvlFile_OLD(fileI, FileData))
             {
-                QFile testOutput(opath+file+".old.lvlx");
-                testOutput.open(QIODevice::WriteOnly);
-                raw_old=FileFormats::WriteExtendedLvlFile(FileData);
-                QTextStream(&testOutput) << raw_old;
-                testOutput.flush();
-                testOutput.close();
+                qint64 got = meter.elapsed();
+                timesout << file << " OLD ->\t" << got << "\n";
+
+                FileFormats::WriteExtendedLvlFileF(opath+file+".old.lvlx", FileData);
+                FileFormats::WriteExtendedLvlFileRaw(FileData, raw_old);
             } else {
                 cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 oiout << path+file << "\r\nInfo: "
@@ -222,7 +224,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nPGE-X Level Read test №2:" << endl;
-    level = FileFormats::OpenLevelFile("test2.lvlx");
+    FileFormats::OpenLevelFile("test2.lvlx", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -234,7 +236,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nPGE-X Level Read test №1:" << endl;
-    level = FileFormats::OpenLevelFile("test.lvlx");
+    FileFormats::OpenLevelFile("test.lvlx", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -247,7 +249,7 @@ int main(int argc, char *argv[])
     WorldData world;
     printLine(cout);
     cout << "\n\nSMBX64 World Read Header test:" << endl;
-    world=FileFormats::ReadSMBX64WldFileHeader("test.wld");
+    world = FileFormats::ReadSMBX64WldFileHeader("test.wld");
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)
@@ -259,7 +261,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nSMBX64 World Read test:" << endl;
-    world = FileFormats::OpenWorldFile("test.wld");
+    FileFormats::OpenWorldFile("test.wld", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)
@@ -271,7 +273,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nPGE-X World Read Header test:" << endl;
-    world=FileFormats::ReadExtendedWldFileHeader("test.wldx");
+    world = FileFormats::ReadExtendedWldFileHeader("test.wldx");
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)
@@ -283,7 +285,7 @@ int main(int argc, char *argv[])
 
     printLine(cout);
     cout << "\n\nPGE-X World Read test:" << endl;
-    world = FileFormats::OpenWorldFile("test.wldx");
+    FileFormats::OpenWorldFile("test.wldx", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)

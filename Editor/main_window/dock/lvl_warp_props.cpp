@@ -1060,8 +1060,12 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                 tr("Can't open the file."), QMessageBox::Ok);
                 return;
         }
-        WorldData FileData = FileFormats::OpenWorldFile(wldPath);
-        if( !FileData.ReadFileValid ) return;
+        WorldData FileData;
+        if( !FileFormats::OpenWorldFile( wldPath, FileData ) )
+        {
+            mw()->formatErrorMsgBox(wldPath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            return;
+        }
 
         WLD_SetPoint * pointDialog = new WLD_SetPoint;
 

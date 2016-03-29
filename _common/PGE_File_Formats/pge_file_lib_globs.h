@@ -189,18 +189,20 @@ inline bool PGE_DetectSMBXFile(PGESTRING src)
     src.push_back('\n');
     if( (src.size() < 3) )
         return false;//If line too short
-    if( (src[1] != '\n' ) && ( src[2]!='\n') )
-        return false;//If line contains no line feeds
-    if( (src[0]<'0') && (src[0]>'9'))
+    if( ( src[1] != '\n' ) && ( src[2] != '\n') &&
+        ( src[1] != '\r' ) && ( src[2] != '\r') )
+        return false;//If line contains no line feeds (also possible CRLF)
+    if( ( src[0] < '0' ) && ( src[0] > '9' ) )
         return false;//If first character is not numeric
-    if( (src[1]!='\n') && (src[1]<'0') && (src[1]>'9') )
+    if( ( src[1] != '\r' ) && ( src[1] != '\n' ) && ( src[1] < '0' ) && ( src[1] > '9' ) )
         return false;//If second character is not numeric and is not line feed
+
     PGESTRING number;
     number.push_back(src[0]);
-    if(src[1]!='\n')
+    if( ( src[1] != '\n' ) && ( src[1] != '\r' ) )
         number.push_back(src[1]);
     int version = toInt(number);
-    if(version>64)//Unsupported version number!
+    if( version > 64 )//Unsupported version number!
         return false;
 
     return true;

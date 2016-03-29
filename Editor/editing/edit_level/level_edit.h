@@ -46,7 +46,7 @@ public:
     //QGraphicsScene LvlScene;
 
     bool newFile(dataconfigs &configs, LevelEditingSettings options);
-    bool loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options);
+    bool loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, LevelEditingSettings options);
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);

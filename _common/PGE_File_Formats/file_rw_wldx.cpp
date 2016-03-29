@@ -462,9 +462,34 @@ bool FileFormats::ReadExtendedWldFile(PGE_FileFormats_misc::TextInput &in, World
 //****************WRITE FILE FORMAT************************
 //*********************************************************
 
+bool FileFormats::WriteExtendedWldFileF(PGESTRING filePath, WorldData &FileData)
+{
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, false, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteExtendedWldFile(file, FileData);
+}
+
+bool FileFormats::WriteExtendedWldFileRaw(WorldData &FileData, PGESTRING &rawdata)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteExtendedWldFile(file, FileData);
+}
+
 PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
 {
-    PGESTRING TextData;
+    PGESTRING raw;
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
+        return "";
+    WriteExtendedWldFile(file, FileData);
+    return raw;
+}
+
+bool FileFormats::WriteExtendedWldFile(PGE_FileFormats_misc::TextOutput &out, WorldData &FileData)
+{
     long i;
     bool addArray=false;
 
@@ -482,168 +507,168 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
             (!IsEmpty(FileData.authors))
       )
     {
-        TextData += "HEAD\n";
+        out << "HEAD\n";
             if(!IsEmpty(FileData.EpisodeTitle))
-                TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
+                out << PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
 
             addArray=false;
             for(int z=0; z<(signed)FileData.nocharacter.size();z++)
             { bool x=FileData.nocharacter[z]; if(x) addArray=true; }
             if(addArray)
-                TextData += PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
+                out << PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
 
             if(!IsEmpty(FileData.IntroLevel_file))
-                TextData += PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
+                out << PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
 
             if(FileData.HubStyledWorld)
-                TextData += PGEFile::value("HB", PGEFile::BoolS(FileData.HubStyledWorld)); // Hub-styled episode
+                out << PGEFile::value("HB", PGEFile::BoolS(FileData.HubStyledWorld)); // Hub-styled episode
 
             if(FileData.restartlevel)
-                TextData += PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
+                out << PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
             if(FileData.stars>0)
-                TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
+                out << PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
             if(!IsEmpty(FileData.authors))
-                TextData += PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
+                out << PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
 
-        TextData += "\n";
-        TextData += "HEAD_END\n";
+        out << "\n";
+        out << "HEAD_END\n";
     }
 
     //////////////////////////////////////MetaData////////////////////////////////////////////////
     //Bookmarks
     if(!FileData.metaData.bookmarks.empty())
     {
-        TextData += "META_BOOKMARKS\n";
+        out << "META_BOOKMARKS\n";
         for(i=0;i<(signed)FileData.metaData.bookmarks.size(); i++)
         {
             //Bookmark name
-            TextData += PGEFile::value("BM", PGEFile::qStrS(FileData.metaData.bookmarks[i].bookmarkName));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.metaData.bookmarks[i].x));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.metaData.bookmarks[i].y));
-            TextData += "\n";
+            out << PGEFile::value("BM", PGEFile::qStrS(FileData.metaData.bookmarks[i].bookmarkName));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.metaData.bookmarks[i].x));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.metaData.bookmarks[i].y));
+            out << "\n";
         }
-        TextData += "META_BOOKMARKS_END\n";
+        out << "META_BOOKMARKS_END\n";
     }
 
     #ifdef PGE_EDITOR
     //Some System information
     if(FileData.metaData.crash.used)
     {
-        TextData += "META_SYS_CRASH\n";
-            TextData += PGEFile::value("UT", PGEFile::BoolS(FileData.metaData.crash.untitled));
-            TextData += PGEFile::value("MD", PGEFile::BoolS(FileData.metaData.crash.modifyed));
-            TextData += PGEFile::value("N", PGEFile::qStrS(FileData.metaData.crash.filename));
-            TextData += PGEFile::value("P", PGEFile::qStrS(FileData.metaData.crash.path));
-            TextData += PGEFile::value("FP", PGEFile::qStrS(FileData.metaData.crash.fullPath));
-            TextData += "\n";
-        TextData += "META_SYS_CRASH_END\n";
+        out << "META_SYS_CRASH\n";
+            out << PGEFile::value("UT", PGEFile::BoolS(FileData.metaData.crash.untitled));
+            out << PGEFile::value("MD", PGEFile::BoolS(FileData.metaData.crash.modifyed));
+            out << PGEFile::value("N", PGEFile::qStrS(FileData.metaData.crash.filename));
+            out << PGEFile::value("P", PGEFile::qStrS(FileData.metaData.crash.path));
+            out << PGEFile::value("FP", PGEFile::qStrS(FileData.metaData.crash.fullPath));
+            out << "\n";
+        out << "META_SYS_CRASH_END\n";
     }
     #endif
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
     if(!FileData.tiles.empty())
     {
-        TextData += "TILES\n";
+        out << "TILES\n";
 
         for(i=0; i<(signed)FileData.tiles.size();i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.tiles[i].id ));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.tiles[i].x ));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.tiles[i].y ));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.tiles[i].id ));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.tiles[i].x ));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.tiles[i].y ));
+            out << "\n";
         }
 
-        TextData += "TILES_END\n";
+        out << "TILES_END\n";
     }
 
     if(!FileData.scenery.empty())
     {
-        TextData += "SCENERY\n";
+        out << "SCENERY\n";
 
         for(i=0; i<(signed)FileData.scenery.size();i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.scenery[i].id ));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.scenery[i].x ));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.scenery[i].y ));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.scenery[i].id ));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.scenery[i].x ));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.scenery[i].y ));
+            out << "\n";
         }
 
-        TextData += "SCENERY_END\n";
+        out << "SCENERY_END\n";
     }
 
     if(!FileData.paths.empty())
     {
-        TextData += "PATHS\n";
+        out << "PATHS\n";
 
         for(i=0; i<(signed)FileData.paths.size();i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.paths[i].id ));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.paths[i].x ));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.paths[i].y ));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.paths[i].id ));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.paths[i].x ));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.paths[i].y ));
+            out << "\n";
         }
 
-        TextData += "PATHS_END\n";
+        out << "PATHS_END\n";
     }
 
     if(!FileData.music.empty())
     {
-        TextData += "MUSICBOXES\n";
+        out << "MUSICBOXES\n";
 
         for(i=0; i<(signed)FileData.music.size();i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.music[i].id ));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.music[i].x ));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.music[i].y ));
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.music[i].id ));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.music[i].x ));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.music[i].y ));
             if(!IsEmpty(FileData.music[i].music_file))
-                TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.music[i].music_file ));
-            TextData += "\n";
+                out << PGEFile::value("MF", PGEFile::qStrS(FileData.music[i].music_file ));
+            out << "\n";
         }
 
-        TextData += "MUSICBOXES_END\n";
+        out << "MUSICBOXES_END\n";
     }
 
 
     if(!FileData.levels.empty())
     {
-        TextData += "LEVELS\n";
+        out << "LEVELS\n";
 
         WorldLevels defLvl = CreateWldLevel();
         for(i=0; i<(signed)FileData.levels.size();i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.levels[i].id ));
-            TextData += PGEFile::value("X", PGEFile::IntS(FileData.levels[i].x ));
-            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.levels[i].y ));
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.levels[i].id ));
+            out << PGEFile::value("X", PGEFile::IntS(FileData.levels[i].x ));
+            out << PGEFile::value("Y", PGEFile::IntS(FileData.levels[i].y ));
             if(!IsEmpty(FileData.levels[i].title))
-                TextData += PGEFile::value("LT", PGEFile::qStrS(FileData.levels[i].title ));
+                out << PGEFile::value("LT", PGEFile::qStrS(FileData.levels[i].title ));
             if(!IsEmpty(FileData.levels[i].lvlfile))
-                TextData += PGEFile::value("LF", PGEFile::qStrS(FileData.levels[i].lvlfile ));
+                out << PGEFile::value("LF", PGEFile::qStrS(FileData.levels[i].lvlfile ));
             if(FileData.levels[i].entertowarp!=defLvl.entertowarp)
-                TextData += PGEFile::value("EI", PGEFile::IntS(FileData.levels[i].entertowarp ));
+                out << PGEFile::value("EI", PGEFile::IntS(FileData.levels[i].entertowarp ));
             if(FileData.levels[i].left_exit!=defLvl.left_exit)
-                TextData += PGEFile::value("EL", PGEFile::IntS(FileData.levels[i].left_exit ));
+                out << PGEFile::value("EL", PGEFile::IntS(FileData.levels[i].left_exit ));
             if(FileData.levels[i].top_exit!=defLvl.top_exit)
-                TextData += PGEFile::value("ET", PGEFile::IntS(FileData.levels[i].top_exit ));
+                out << PGEFile::value("ET", PGEFile::IntS(FileData.levels[i].top_exit ));
             if(FileData.levels[i].right_exit!=defLvl.right_exit)
-                TextData += PGEFile::value("ER", PGEFile::IntS(FileData.levels[i].right_exit ));
+                out << PGEFile::value("ER", PGEFile::IntS(FileData.levels[i].right_exit ));
             if(FileData.levels[i].bottom_exit!=defLvl.bottom_exit)
-                TextData += PGEFile::value("EB", PGEFile::IntS(FileData.levels[i].bottom_exit ));
+                out << PGEFile::value("EB", PGEFile::IntS(FileData.levels[i].bottom_exit ));
             if(FileData.levels[i].gotox!=defLvl.gotox)
-                TextData += PGEFile::value("WX", PGEFile::IntS(FileData.levels[i].gotox ));
+                out << PGEFile::value("WX", PGEFile::IntS(FileData.levels[i].gotox ));
             if(FileData.levels[i].gotoy!=defLvl.gotoy)
-                TextData += PGEFile::value("WY", PGEFile::IntS(FileData.levels[i].gotoy ));
+                out << PGEFile::value("WY", PGEFile::IntS(FileData.levels[i].gotoy ));
             if(FileData.levels[i].alwaysVisible)
-                TextData += PGEFile::value("AV", PGEFile::BoolS(FileData.levels[i].alwaysVisible ));
+                out << PGEFile::value("AV", PGEFile::BoolS(FileData.levels[i].alwaysVisible ));
             if(FileData.levels[i].gamestart)
-                TextData += PGEFile::value("SP", PGEFile::BoolS(FileData.levels[i].gamestart ));
+                out << PGEFile::value("SP", PGEFile::BoolS(FileData.levels[i].gamestart ));
             if(FileData.levels[i].pathbg)
-                TextData += PGEFile::value("BP", PGEFile::BoolS(FileData.levels[i].pathbg ));
+                out << PGEFile::value("BP", PGEFile::BoolS(FileData.levels[i].pathbg ));
             if(FileData.levels[i].bigpathbg)
-                TextData += PGEFile::value("BG", PGEFile::BoolS(FileData.levels[i].bigpathbg ));
-            TextData += "\n";
+                out << PGEFile::value("BG", PGEFile::BoolS(FileData.levels[i].bigpathbg ));
+            out << "\n";
         }
 
-        TextData += "LEVELS_END\n";
+        out << "LEVELS_END\n";
     }
-    return TextData;
+    return true;
 }
