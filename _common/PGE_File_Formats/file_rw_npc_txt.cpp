@@ -45,7 +45,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 
 bool FileFormats::ReadNpcTXTFileF(PGESTRING filePath, NPCConfigFile &FileData, bool IgnoreBad)
 {
-    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    PGE_FileFormats_misc::TextFileInput file(filePath, IgnoreBad);
     return ReadNpcTXTFile(file, FileData, IgnoreBad);
 }
 
@@ -89,9 +89,9 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
     //Read NPC.TXT File config
     #define NextLine(line) line = inf.readCVSLine();
 
-    NextLine(line)
-    while(!IsNULL(line))
+    do
     {
+       NextLine(line)
        PGESTRING ln = line;
        if(PGE_RemSubSTRING(line, " ")=="")
        {
@@ -661,8 +661,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
            unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+"\n";
        }
 
-    NextLine(line)
-    }
+    } while(!inf.eof());
 
     #ifdef PGE_EDITOR
     if(!IgnoreBad)
