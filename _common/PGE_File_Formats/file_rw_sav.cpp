@@ -46,14 +46,6 @@ bool FileFormats::ReadSMBX64SavFileRaw(PGESTRING &rawdata, PGESTRING  filePath, 
     return ReadSMBX64SavFile(file, FileData);
 }
 
-GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePath)
-{
-    GamesaveData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadSMBX64SavFile(file, FileData);
-    return FileData;
-}
-
 bool FileFormats::ReadSMBX64SavFile(PGE_FileFormats_misc::TextInput &in, GamesaveData &FileData)
 {
     SMBX64_FileBegin();

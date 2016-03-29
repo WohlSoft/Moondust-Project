@@ -29,9 +29,24 @@
 #endif
 #endif
 
-GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath)
+//*********************************************************
+//****************READ FILE FORMAT*************************
+//*********************************************************
+bool FileFormats::ReadExtendedSaveFileF(PGESTRING filePath, GamesaveData &FileData)
 {
-    GamesaveData FileData = CreateGameSaveData();
+    PGE_FileFormats_misc::TextFileInput file(filePath, true);
+    return ReadExtendedSaveFile(file, FileData);
+}
+
+bool FileFormats::ReadExtendedSaveFileRaw(PGESTRING &rawdata, PGESTRING filePath, GamesaveData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadExtendedSaveFile(file, FileData);
+}
+
+bool FileFormats::ReadExtendedSaveFile(PGE_FileFormats_misc::TextInput &in, GamesaveData &FileData)
+{
+    FileData = CreateGameSaveData();
     PGESTRING errorString;
     PGEX_FileBegin();
 
@@ -40,9 +55,10 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     starOnLevel        star_level;
 
     //Add path data
-    if(!IsEmpty(filePath))
+    PGESTRING fPath = in.getFilePath();
+    if(!IsEmpty(fPath))
     {
-        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        PGE_FileFormats_misc::FileInfo in_1(fPath);
         FileData.filename = in_1.basename();
         FileData.path = in_1.dirpath();
     }
@@ -54,7 +70,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     FileData.modified = false;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    PGEX_FileParseTree(RawData);
+    PGEX_FileParseTree(in.readAll());
     PGEX_FetchSection()
     {
         PGEX_FetchSection_begin()
@@ -208,113 +224,132 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     errorString.clear(); //If no errors, clear string;
     FileData.ReadFileValid=true;
 
-    return FileData;
+    return true;
 
-    badfile:    //If file format not corrects
+badfile:    //If file format not corrects
     FileData.ERROR_info=errorString;
     FileData.ERROR_linenum=str_count;
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
 
-PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
+bool FileFormats::WriteExtendedSaveFileF(PGESTRING filePath, GamesaveData &FileData)
 {
-    PGESTRING TextData;
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, false, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteExtendedSaveFile(file, FileData);
+}
+
+bool FileFormats::WriteExtendedSaveFileRaw(GamesaveData &FileData, PGESTRING &rawdata)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteExtendedSaveFile(file, FileData);
+}
+
+bool FileFormats::WriteExtendedSaveFile(PGE_FileFormats_misc::TextOutput &out, GamesaveData &FileData)
+{
     long i;
 
-    TextData += "SAVE_HEADER\n";
-    TextData += PGEFile::value("LV", PGEFile::IntS(FileData.lives));
-    TextData += PGEFile::value("CN", PGEFile::IntS(FileData.coins));
-    TextData += PGEFile::value("PT", PGEFile::IntS(FileData.points));
-    TextData += PGEFile::value("TS", PGEFile::IntS(FileData.totalStars));
-    TextData += PGEFile::value("WX", PGEFile::IntS(FileData.worldPosX));
-    TextData += PGEFile::value("WY", PGEFile::IntS(FileData.worldPosY));
-    TextData += PGEFile::value("HW", PGEFile::IntS(FileData.last_hub_warp));
-    TextData += PGEFile::value("MI", PGEFile::IntS(FileData.musicID));
-    TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.musicFile));
-    TextData += PGEFile::value("GC", PGEFile::BoolS(FileData.gameCompleted));
-    TextData += "\n";
-    TextData += "SAVE_HEADER_END\n";
+    out << "SAVE_HEADER\n";
+    out << PGEFile::value("LV", PGEFile::IntS(FileData.lives));
+    out << PGEFile::value("CN", PGEFile::IntS(FileData.coins));
+    out << PGEFile::value("PT", PGEFile::IntS(FileData.points));
+    out << PGEFile::value("TS", PGEFile::IntS(FileData.totalStars));
+    out << PGEFile::value("WX", PGEFile::IntS(FileData.worldPosX));
+    out << PGEFile::value("WY", PGEFile::IntS(FileData.worldPosY));
+    out << PGEFile::value("HW", PGEFile::IntS(FileData.last_hub_warp));
+    out << PGEFile::value("MI", PGEFile::IntS(FileData.musicID));
+    out << PGEFile::value("MF", PGEFile::qStrS(FileData.musicFile));
+    out << PGEFile::value("GC", PGEFile::BoolS(FileData.gameCompleted));
+    out << "\n";
+    out << "SAVE_HEADER_END\n";
 
     if(!FileData.characterStates.empty())
     {
-        TextData += "CHARACTERS\n";
+        out << "CHARACTERS\n";
         for(i=0;i< (signed)FileData.characterStates.size(); i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.characterStates[i].id));
-            TextData += PGEFile::value("ST", PGEFile::IntS(FileData.characterStates[i].state));
-            TextData += PGEFile::value("IT", PGEFile::IntS(FileData.characterStates[i].itemID));
-            TextData += PGEFile::value("MT", PGEFile::IntS(FileData.characterStates[i].mountType));
-            TextData += PGEFile::value("MI", PGEFile::IntS(FileData.characterStates[i].mountID));
-            TextData += PGEFile::value("HL", PGEFile::IntS(FileData.characterStates[i].health));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.characterStates[i].id));
+            out << PGEFile::value("ST", PGEFile::IntS(FileData.characterStates[i].state));
+            out << PGEFile::value("IT", PGEFile::IntS(FileData.characterStates[i].itemID));
+            out << PGEFile::value("MT", PGEFile::IntS(FileData.characterStates[i].mountType));
+            out << PGEFile::value("MI", PGEFile::IntS(FileData.characterStates[i].mountID));
+            out << PGEFile::value("HL", PGEFile::IntS(FileData.characterStates[i].health));
+            out << "\n";
         }
-        TextData += "CHARACTERS_END\n";
+        out << "CHARACTERS_END\n";
     }
 
     if(!FileData.currentCharacter.empty())
     {
-        TextData += "CHARACTERS_PER_PLAYERS\n";
+        out << "CHARACTERS_PER_PLAYERS\n";
         for(i=0;i< (signed)FileData.currentCharacter.size(); i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.currentCharacter[i]));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.currentCharacter[i]));
+            out << "\n";
         }
-        TextData += "CHARACTERS_PER_PLAYERS_END\n";
+        out << "CHARACTERS_PER_PLAYERS_END\n";
     }
 
     if(!FileData.visibleLevels.empty())
     {
-        TextData += "VIZ_LEVELS\n";
+        out << "VIZ_LEVELS\n";
         for(i=0;i< (signed)FileData.visibleLevels.size(); i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visibleLevels[i].first));
-            TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visibleLevels[i].second));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.visibleLevels[i].first));
+            out << PGEFile::value("V", PGEFile::BoolS(FileData.visibleLevels[i].second));
+            out << "\n";
         }
-        TextData += "VIZ_LEVELS_END\n";
+        out << "VIZ_LEVELS_END\n";
     }
 
     if(!FileData.visiblePaths.empty())
     {
-        TextData += "VIZ_PATHS\n";
+        out << "VIZ_PATHS\n";
         for(i=0;i< (signed)FileData.visiblePaths.size(); i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visiblePaths[i].first));
-            TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visiblePaths[i].second));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.visiblePaths[i].first));
+            out << PGEFile::value("V", PGEFile::BoolS(FileData.visiblePaths[i].second));
+            out << "\n";
         }
-        TextData += "VIZ_PATHS_END\n";
+        out << "VIZ_PATHS_END\n";
     }
 
     if(!FileData.visibleScenery.empty())
     {
-        TextData += "VIZ_SCENERY\n";
+        out << "VIZ_SCENERY\n";
         for(i=0;i< (signed)FileData.visibleScenery.size(); i++)
         {
-            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visibleScenery[i].first));
-            TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visibleScenery[i].second));
-            TextData += "\n";
+            out << PGEFile::value("ID", PGEFile::IntS(FileData.visibleScenery[i].first));
+            out << PGEFile::value("V", PGEFile::BoolS(FileData.visibleScenery[i].second));
+            out << "\n";
         }
-        TextData += "VIZ_SCENERY_END\n";
+        out << "VIZ_SCENERY_END\n";
     }
 
     if(!FileData.gottenStars.empty())
     {
-        TextData += "STARS\n";
+        out << "STARS\n";
         for(i=0;i< (signed)FileData.gottenStars.size(); i++)
         {
-            TextData += PGEFile::value("L", PGEFile::qStrS(FileData.gottenStars[i].first));
-            TextData += PGEFile::value("S", PGEFile::IntS(FileData.gottenStars[i].second));
-            TextData += "\n";
+            out << PGEFile::value("L", PGEFile::qStrS(FileData.gottenStars[i].first));
+            out << PGEFile::value("S", PGEFile::IntS(FileData.gottenStars[i].second));
+            out << "\n";
         }
-        TextData += "STARS_END\n";
+        out << "STARS_END\n";
     }
 
-    TextData += "\n";
-    return TextData;
+    out << "\n";
+    return true;
 }
+
 

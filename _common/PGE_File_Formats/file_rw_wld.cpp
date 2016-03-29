@@ -27,19 +27,18 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
+bool FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath, WorldData &FileData)
 {
     SMBX64_FileBegin();
     int str_count=0;
     errorString.clear();
-    WorldData FileData;
     FileData = CreateWorldData();
 
     PGE_FileFormats_misc::TextFileInput in;
     if(!in.open(filePath, false))
     {
         FileData.ReadFileValid=false;
-        return FileData;
+        return false;
     }
 
     PGE_FileFormats_misc::FileInfo in_1(filePath);
@@ -113,15 +112,17 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
 
     FileData.ReadFileValid=true;
     in.close();
-    return FileData;
+    return true;
 badfile:
     in.close();
     FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
     FileData.ERROR_linenum=str_count;
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
+
+
 
 bool FileFormats::ReadSMBX64WldFileF(PGESTRING  filePath, WorldData &FileData)
 {
@@ -135,16 +136,6 @@ bool FileFormats::ReadSMBX64WldFileRaw(PGESTRING &rawdata, PGESTRING  filePath, 
     return ReadSMBX64WldFile(file, FileData);
 }
 
-WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
-{
-    WorldData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadSMBX64WldFile(file, FileData);
-    return FileData;
-}
-
-
-//WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldData &FileData)
 {
     SMBX64_FileBegin();
@@ -377,16 +368,6 @@ bool FileFormats::WriteSMBX64WldFileRaw(WorldData &FileData, PGESTRING &rawdata,
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
         return false;
     return WriteSMBX64WldFile(file, FileData, file_format);
-}
-
-PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
-{
-    PGESTRING raw;
-    PGE_FileFormats_misc::RawTextOutput file;
-    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
-        return "";
-    WriteSMBX64WldFile(file, FileData, file_format);
-    return raw;
 }
 
 bool FileFormats::WriteSMBX64WldFile(PGE_FileFormats_misc::TextOutput &out, WorldData &FileData, int file_format)

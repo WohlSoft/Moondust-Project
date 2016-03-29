@@ -53,7 +53,7 @@ int main()
     std::ofstream fout;
     printLine();
     cout << "\n\nSMBX64 Level Read Header test:" << endl;
-    level = FileFormats::ReadSMBX64LvlFileHeader("test.lvl");
+    FileFormats::ReadSMBX64LvlFileHeader("test.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -82,7 +82,7 @@ int main()
 
     printLine();
     cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
-    level=FileFormats::ReadSMBX65by38ALvlFileHeader("test_65-38a.lvl");
+    FileFormats::ReadSMBX38ALvlFileHeader("test_65-38a.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -110,7 +110,7 @@ int main()
 
     printLine();
     cout << "\n\nPGE-X Level Read Header test:" << endl;
-    level=FileFormats::ReadExtendedLvlFileHeader("test.lvlx");
+    FileFormats::ReadExtendedLvlFileHeader("test.lvlx", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
     if(!level.ReadFileValid)
@@ -136,9 +136,7 @@ int main()
     FileFormats::smbx64LevelSortBlocks(level);
     FileFormats::smbx64LevelSortBGOs(level);
 
-    fout.open("test_out.lvlx", std::ios::out);
-    fout<<FileFormats::WriteExtendedLvlFile(level);
-    fout.close();
+    FileFormats::WriteExtendedLvlFileF("test_out.lvlx", level);
 
 
     WorldData world;
@@ -194,10 +192,7 @@ int main()
         printWorldInfo(world);
     }
 
-    fout.open("test_out.wldx", std::ios::out);
-    fout<<FileFormats::WriteExtendedWldFile(world);
-    fout.close();
-
+    FileFormats::WriteExtendedWldFileF("test_out.wldx", world);
 
     PGE_FileFormats_misc::FileInfo x("shit.txt");
     cout << "\n\n\n";

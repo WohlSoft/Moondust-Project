@@ -79,24 +79,33 @@ bool Installer::associateFiles()
         QFile wx(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wldx"));
 
         success = l.open(QIODevice::WriteOnly);
+        QString raw;
         if(success){
-            l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::CreateLevelData()).toStdString().c_str()));
+            LevelData indata = FileFormats::CreateLevelData();
+            FileFormats::WriteSMBX64LvlFileRaw(indata, raw, 64);
+            l.write(QByteArray(raw.toStdString().c_str()));
             l.close();
         }
         success = w.open(QIODevice::WriteOnly);
         if(success){
-            w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::CreateWorldData()).toStdString().c_str()));
+            WorldData indata = FileFormats::CreateWorldData();
+            FileFormats::WriteSMBX64WldFileRaw(indata, raw, 64);
+            w.write(QByteArray(raw.toStdString().c_str()));
             w.close();
         }
         success = lx.open(QIODevice::WriteOnly);
         if(success){
-            lx.write(QByteArray(FileFormats::WriteExtendedLvlFile(FileFormats::CreateLevelData()).toStdString().c_str()));
-            lx.close();
+            LevelData indata = FileFormats::CreateLevelData();
+            FileFormats::WriteExtendedLvlFileRaw(indata, raw);
+            l.write(QByteArray(raw.toStdString().c_str()));
+            l.close();
         }
         success = wx.open(QIODevice::WriteOnly);
         if(success){
-            wx.write(QByteArray(FileFormats::WriteExtendedWldFile(FileFormats::CreateWorldData()).toStdString().c_str()));
-            wx.close();
+            WorldData indata = FileFormats::CreateWorldData();
+            FileFormats::WriteExtendedWldFileRaw(indata, raw);
+            w.write(QByteArray(raw.toStdString().c_str()));
+            w.close();
         }
 
 

@@ -33,36 +33,15 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-//LevelData FileFormats::ReadExtendedLevelFile(PGEFILE &inf)
-//{
-//    #ifdef PGE_FILES_QT
-//    QTextStream in(&inf);   //Read File
-//    in.setCodec("UTF-8");
-//    #define FileBuffer in.readAll()
-//    #define FileName inf.fileName()
-//    #else
-//    std::string buffer;
-//    while(inf.peek()!=EOF)
-//    {
-//        buffer+= inf.get();
-//    }
-//    #define FileBuffer buffer
-//    #define FileName "unknown.lvlx"
-//    #endif
-//    return ReadExtendedLvlFile(FileBuffer, FileName );
-//}
-
-
-LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
+bool FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath, LevelData &FileData)
 {
-    LevelData FileData;
     CreateLevelHeader(FileData);
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, true))
     {
         FileData.ReadFileValid=false;
-        return FileData;
+        return false;
     }
 
     PGESTRING line;
@@ -140,14 +119,17 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 
     FileData.ReadFileValid=true;
 
-    return FileData;
+    return true;
+
 badfile:
     FileData.ERROR_info="Invalid file format";
     FileData.ERROR_linenum=str_count;
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
+
+
 
 bool FileFormats::ReadExtendedLvlFileF(PGESTRING  filePath, LevelData &FileData)
 {
@@ -161,15 +143,6 @@ bool FileFormats::ReadExtendedLvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath
     return ReadExtendedLvlFile(file, FileData);
 }
 
-LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath)
-{
-    LevelData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadSMBX64LvlFile(file, FileData);
-    return FileData;
-}
-
-//LevelData FileFormats::ReadExtendedLvlFile(PGESTRING &RawData, PGESTRING filePath)
 bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
 {
     PGESTRING errorString;
@@ -1503,16 +1476,6 @@ bool FileFormats::WriteExtendedLvlFileRaw(LevelData &FileData, PGESTRING &rawdat
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
         return false;
     return WriteExtendedLvlFile(file, FileData);
-}
-
-PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
-{
-    PGESTRING raw;
-    PGE_FileFormats_misc::RawTextOutput file;
-    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
-        return "";
-    WriteExtendedLvlFile(file, FileData);
-    return raw;
 }
 
 bool FileFormats::WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData &FileData)

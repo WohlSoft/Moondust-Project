@@ -594,32 +594,14 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             worldmap.IntroLevel_file = "templevel.lvl";
             worldmap.restartlevel = true;
 
-            QFile file(newEpisode+"/tempworld.wld");
-            if(!file.open(QFile::WriteOnly))
+            if(!FileFormats::WriteSMBX64WldFileF(newEpisode+"/tempworld.wld", worldmap, 64))
             {
                 QMessageBox::warning(this, tr("File save error"),
                                      tr("Cannot save file %1:\n%2.")
                                      .arg(newEpisode+"/tempworld.wld")
-                                     .arg(file.errorString()));
+                                     .arg(FileFormats::errorString));
                 return;
             }
-
-            QString raw = FileFormats::WriteSMBX64WldFile(worldmap, 64);
-            for(int i=0; i<raw.size(); i++)
-            {
-                if(raw[i]=='\n')
-                {
-                    //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-                    const char bytes[2] = {0x0D, 0x0A};
-                    file.write((const char*)(&bytes), 2);
-                }
-                else
-                {
-                    const char byte[1] = {raw[i].toLatin1()};
-                    file.write((const char*)(&byte), 1);
-                }
-            }
-            file.close();
 
             QString command=smbxPath+ConfStatus::SmbxEXE_Name;
             QStringList params;

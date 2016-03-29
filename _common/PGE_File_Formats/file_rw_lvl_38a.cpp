@@ -60,18 +60,20 @@ constexpr std::function<void(T&)> MakeMinFunc(T min){
     };
 }
 
+//*********************************************************
+//****************READ FILE FORMAT*************************
+//*********************************************************
 
-LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
+bool FileFormats::ReadSMBX38ALvlFileHeader(PGESTRING filePath, LevelData &FileData)
 {
     errorString.clear();
-    LevelData FileData;
     CreateLevelHeader(FileData);
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, false))
     {
         FileData.ReadFileValid=false;
-        return FileData;
+        return false;
     }
     PGE_FileFormats_misc::FileInfo in_1(filePath);
     FileData.filename = in_1.basename();
@@ -109,32 +111,24 @@ LevelData FileFormats::ReadSMBX65by38ALvlFileHeader(PGESTRING filePath)
                 "Caused by: \n" + PGESTRING(exception_to_pretty_string(err).c_str());
         FileData.ERROR_linenum = inf.getCurrentLineNumber();
         FileData.ERROR_linedata = "";
+        return false;
     }
-
     FileData.CurSection = 0;
     FileData.playmusic = 0;
 
-    return FileData;
+    return true;
 }
 
-bool FileFormats::ReadSMBX65by38ALvlFileF(PGESTRING  filePath, LevelData &FileData)
+bool FileFormats::ReadSMBX38ALvlFileF(PGESTRING  filePath, LevelData &FileData)
 {
     PGE_FileFormats_misc::TextFileInput file(filePath, false);
-    return ReadSMBX65by38ALvlFile(file, FileData);
+    return ReadSMBX38ALvlFile(file, FileData);
 }
 
-bool FileFormats::ReadSMBX65by38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
+bool FileFormats::ReadSMBX38ALvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath,  LevelData &FileData)
 {
     PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
-    return ReadSMBX65by38ALvlFile(file, FileData);
-}
-
-LevelData FileFormats::ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath)
-{
-    LevelData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadSMBX65by38ALvlFile(file, FileData);
-    return FileData;
+    return ReadSMBX38ALvlFile(file, FileData);
 }
 
 struct LevelEvent_layers
@@ -211,7 +205,7 @@ constexpr int SMBX65_NpcGeneratorDirections[29] =
 
 
 //LevelData FileFormats::ReadSMBX65by38ALvlFile(PGESTRING RawData, PGESTRING filePath)
-bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
+bool FileFormats::ReadSMBX38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
 {
     SMBX65_FileBeginN();
     PGESTRING filePath = in.getFilePath();
@@ -871,7 +865,7 @@ bool FileFormats::ReadSMBX65by38ALvlFile(PGE_FileFormats_misc::TextInput &in, Le
 
 
 
-bool FileFormats::ReadSMBX65by38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
+bool FileFormats::ReadSMBX38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
 {
     SMBX65_FileBegin();
     PGESTRING filePath = in.getFilePath();
@@ -2746,13 +2740,30 @@ badfile:
 }
 
 
-PGESTRING WriteSMBX65by38ALvlFile(LevelData FileData, int file_format)
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
+
+bool FileFormats::WriteSMBX38ALvlFileF(PGESTRING filePath, LevelData &FileData)
 {
-    (void)file_format;//reserved!
-    return "";
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX38ALvlFile(file, FileData);
 }
 
+bool FileFormats::WriteSMBX38ALvlFileRaw(LevelData &FileData, PGESTRING &rawdata)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX38ALvlFile(file, FileData);
+}
 
+bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData &FileData)
+{
+    return false;
+}
 
 
 

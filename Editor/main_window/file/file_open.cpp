@@ -178,7 +178,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     if (!file.open(QIODevice::ReadOnly))
     {
         QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
+        tr("Can't open the file: %1").arg(file.errorString()), QMessageBox::Ok);
         return;
     }
 
@@ -200,31 +200,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         FileData.filename = util::getBaseFilename(in_1.fileName());
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
-
         file.close();
-        LogDebug("> Opem meta-file");
-        file.setFileName(FilePath+".meta");
-        if(QFileInfo(FilePath+".meta").exists())
-        {
-            LogDebug("> meta-file found, open them!");
-            if (file.open(QIODevice::ReadOnly))
-            {
-                QString metaRaw;
-                QTextStream meta(&file);
-                meta.setCodec("UTF-8");
-                metaRaw = meta.readAll();
-                if(FileData.metaData.script)
-                    FileData.metaData.script.reset();
-
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData( metaRaw );
-                LogDebug("Meta-File was read!");
-            }
-            else
-            {
-                QMessageBox::critical(this, tr("File open error"),
-                tr("Can't open the file."), QMessageBox::Ok);
-            }
-        }
 
         LogDebug("Creating of sub-window");
         LevelEdit *child = createLvlChild();
@@ -261,23 +237,6 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         }
 
         file.close();
-        file.setFileName(FilePath+".meta");
-        if(QFileInfo(FilePath+".meta").exists())
-        {
-            if (file.open(QIODevice::ReadOnly))
-            {
-                QString metaRaw;
-                QTextStream meta(&file);
-                meta.setCodec("UTF-8");
-                metaRaw = meta.readAll();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
-            }
-            else
-            {
-                QMessageBox::critical(this, tr("File open error"),
-                tr("Can't open the file."), QMessageBox::Ok);
-            }
-        }
 
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
@@ -304,8 +263,12 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     else
     if(in_1.suffix().toLower() == "txt")
     {
-        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(FilePath);
-        if( !FileData.ReadFileValid ) return;
+        NPCConfigFile FileData;
+        if( !FileFormats::ReadNpcTXTFileF(FilePath, FileData) )
+        {
+            QMessageBox::critical(this, QObject::tr("File open error"), tr("Can't read the file"), QMessageBox::Ok);
+            return;
+        }
 
         NpcEdit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
@@ -321,13 +284,12 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     {
         GamesaveData FileData;
 
-        QTextStream in(&file);   //Read File
-        in.setAutoDetectUnicode(true);
-        in.setLocale(QLocale::system());
-        in.setCodec(QTextCodec::codecForLocale());
-
         QString statistics;
-        FileData = FileFormats::ReadSMBX64SavFile( in.readAll(), file.fileName() );
+        if(!FileFormats::ReadSMBX64SavFileF( FilePath, FileData))
+        {
+            formatErrorMsgBox( FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata );
+            return;
+        }
 
         statistics+= QString("SMBX Game Save file version %1\n\n").arg(FileData.version);
         if(FileData.gameCompleted)

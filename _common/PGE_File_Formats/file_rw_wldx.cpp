@@ -40,16 +40,15 @@
 //    return ReadExtendedWldFile( in.readAll(), inf.fileName() );
 //}
 
-WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
+bool FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath, WorldData &FileData)
 {
-    WorldData FileData;
     FileData = CreateWorldData();
 
     PGE_FileFormats_misc::TextFileInput  inf;
     if(!inf.open(filePath, true))
     {
         FileData.ReadFileValid=false;
-        return FileData;
+        return false;
     }
 
     PGESTRING line;
@@ -150,14 +149,15 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
     FileData.ReadFileValid=true;
 
     inf.close();
-    return FileData;
+    return true;
+
 badfile:
     inf.close();
     FileData.ERROR_info="Invalid file format";
     FileData.ERROR_linenum=str_count;
     FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
-    return FileData;
+    return false;
 }
 
 bool FileFormats::ReadExtendedWldFileF(PGESTRING  filePath, WorldData &FileData)
@@ -172,15 +172,6 @@ bool FileFormats::ReadExtendedWldFileRaw(PGESTRING &rawdata, PGESTRING  filePath
     return ReadExtendedWldFile(file, FileData);
 }
 
-WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
-{
-    WorldData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadExtendedWldFile(file, FileData);
-    return FileData;
-}
-
-//WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
 bool FileFormats::ReadExtendedWldFile(PGE_FileFormats_misc::TextInput &in, WorldData &FileData)
 {
      PGESTRING errorString;
@@ -476,16 +467,6 @@ bool FileFormats::WriteExtendedWldFileRaw(WorldData &FileData, PGESTRING &rawdat
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
         return false;
     return WriteExtendedWldFile(file, FileData);
-}
-
-PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
-{
-    PGESTRING raw;
-    PGE_FileFormats_misc::RawTextOutput file;
-    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
-        return "";
-    WriteExtendedWldFile(file, FileData);
-    return raw;
 }
 
 bool FileFormats::WriteExtendedWldFile(PGE_FileFormats_misc::TextOutput &out, WorldData &FileData)
