@@ -130,10 +130,12 @@ void LVL_Npc::transformTo_x(long id)
     else
         targetZ = LevelScene::Z_npcStd;
 
-    z_index += targetZ+setup->z_offset;
+    z_index = targetZ + setup->z_offset;
 
-    LevelScene::zCounter += 0.00000001;
-    z_index += LevelScene::zCounter;
+    _scene->zCounter += 0.0000000000001L;
+    z_index += _scene->zCounter;
+    if( _scene->zCounter >= 1.0L )
+        _scene->zCounter=0.0L;
 
     long tID = ConfigManager::getNpcTexture(_npc_id);
     if( tID >= 0 )

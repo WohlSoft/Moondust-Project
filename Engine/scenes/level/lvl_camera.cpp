@@ -219,7 +219,7 @@ void PGE_LevelCamera::update(float ticks)
 
 void PGE_LevelCamera::sortElements()
 {
-    if(_objects_to_render_stored<=1) return; //Nothing to sort!
+    if( _objects_to_render_stored <= 1 ) return; //Nothing to sort!
     QStack<int> beg;
     QStack<int> end;
     PGE_Phys_Object* piv;
@@ -234,13 +234,17 @@ void PGE_LevelCamera::sortElements()
             piv=_objects_to_render[L];
             while (L<R)
             {
-                while ((_objects_to_render[R]->zIndex()>=piv->zIndex()) && (L<R)) R--;
-                if (L<R) _objects_to_render[L++]=_objects_to_render[R];
+                while( ( _objects_to_render[R]->zIndex() >= piv->zIndex() )  && (L<R) ) R--;
+                if (L<R) _objects_to_render[L++] = _objects_to_render[R];
 
-                while ((_objects_to_render[L]->zIndex()<=piv->zIndex()) && (L<R)) L++;
+                while( ( _objects_to_render[L]->zIndex() <= piv->zIndex() ) && (L<R) ) L++;
                 if (L<R) _objects_to_render[R--]=_objects_to_render[L];
             }
-            _objects_to_render[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+            _objects_to_render[L] = piv;
+            beg.push_back(L+1);
+            end.push_back(end[i]);
+            end[i++]=(L);
+
             if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
             {
                 swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;

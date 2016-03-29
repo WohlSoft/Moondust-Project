@@ -171,34 +171,34 @@ public:
     void collectGarbagePlayers();
 
     /**************Z-Layers**************/
-    static double zCounter;
+    long double zCounter;
 
-    static const double Z_backImage; //Background
+    static const long double Z_backImage; //Background
 
     //Background-2
-    static const double Z_BGOBack2; // backround BGO
+    static const long double Z_BGOBack2; // backround BGO
 
-    static const double Z_blockSizable; // sizable blocks
+    static const long double Z_blockSizable; // sizable blocks
 
     //Background-1
-    static const double Z_BGOBack1; // backround BGO
+    static const long double Z_BGOBack1; // backround BGO
 
-    static const double Z_npcBack; // background NPC
-    static const double Z_Block; // standart block
-    static const double Z_npcStd; // standart NPC
-    static const double Z_Player; //player Point
+    static const long double Z_npcBack; // background NPC
+    static const long double Z_Block; // standart block
+    static const long double Z_npcStd; // standart NPC
+    static const long double Z_Player; //player Point
 
     //Foreground-1
-    static const double Z_BGOFore1; // foreground BGO
-    static const double Z_BlockFore; //LavaBlock
-    static const double Z_npcFore; // foreground NPC
+    static const long double Z_BGOFore1; // foreground BGO
+    static const long double Z_BlockFore; //LavaBlock
+    static const long double Z_npcFore; // foreground NPC
     //Foreground-2
-    static const double Z_BGOFore2; // foreground BGO
+    static const long double Z_BGOFore2; // foreground BGO
 
-    static const double Z_sys_PhysEnv;
-    static const double Z_sys_door;
-    static const double Z_sys_interspace1; // interSection space layer
-    static const double Z_sys_sctBorder; // section Border
+    static const long double Z_sys_PhysEnv;
+    static const long double Z_sys_door;
+    static const long double Z_sys_interspace1; // interSection space layer
+    static const long double Z_sys_sctBorder; // section Border
     /**************Z-Layers**************/
 
 

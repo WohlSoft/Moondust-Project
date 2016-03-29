@@ -108,8 +108,8 @@ void LVL_Block::transformTo_x(long id)
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
-                ((double)data.y/1000000000.0) + 1 -
-                ((double)data.w *0.00000000000001);
+                ((long double)data.y/1000000000.0L) + 1 -
+                ((long double)data.w *0.00000000000001L);
     }
     else
     {
@@ -118,8 +118,10 @@ void LVL_Block::transformTo_x(long id)
             z_index = LevelScene::Z_BlockFore;
         else
             z_index = LevelScene::Z_Block;
-        LevelScene::zCounter += 0.0000000001;
-        z_index += LevelScene::zCounter;
+        _scene->zCounter += 0.0000000000001L;
+        z_index += _scene->zCounter;
+        if( _scene->zCounter >= 1.0L )
+            _scene->zCounter=0.0L;
     }
 
     bool do_init_player_switch=((setup->animator_ID==0)&&(setup->plSwitch_Button));
@@ -578,9 +580,9 @@ void LVL_Block::destroy(bool playEffect)
     }
 }
 
-GLdouble LVL_Block::zIndex()
+long double LVL_Block::zIndex()
 {
-    if(fadeOffset!=0.f)
+    if( fadeOffset != 0.f )
         return z_index+10;
     else
         return z_index;

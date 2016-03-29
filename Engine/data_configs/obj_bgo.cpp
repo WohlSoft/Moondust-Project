@@ -75,7 +75,6 @@ bool ConfigManager::loadLevelBGO()
             sbgo.group = bgoset.value("group", "_NoGroup").toString();
             sbgo.category = bgoset.value("category", "_Other").toString();
             //sbgo.grid = bgoset.value("grid", default_grid).toInt();
-
             {
                 QString tmpStr=bgoset.value("view", "background").toString();
 
@@ -96,7 +95,7 @@ bool ConfigManager::loadLevelBGO()
 
             sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
             sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
-            sbgo.zOffset = bgoset.value("z-offset", "0").toInt();
+            sbgo.zOffset = bgoset.value("z-offset", 0.0).toDouble();
             imgFile = bgoset.value("image", "").toString();
             {
                 QString err;

@@ -50,7 +50,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     _width_half = 0.0f;
     _height_half = 0.0f;
 
-    z_index = 0.0;
+    z_index = 0.0L;
     isRectangle = true;
 
     slippery_surface = false;
@@ -618,7 +618,7 @@ LVL_Section *PGE_Phys_Object::sct()
     return _parentSection;
 }
 
-GLdouble PGE_Phys_Object::zIndex()
+long double PGE_Phys_Object::zIndex()
 {
     return z_index;
 }

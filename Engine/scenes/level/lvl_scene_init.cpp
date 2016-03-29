@@ -276,6 +276,7 @@ bool LevelScene::init_items()
         }
     }
 
+    zCounter = 0.0L;
 
     //qDebug()<<"Build sections";
     for(int i=0;i<data.sections.size();i++)

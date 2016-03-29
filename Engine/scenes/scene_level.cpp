@@ -76,6 +76,8 @@ LevelScene::LevelScene()
 
     data.ReadFileValid = false;
 
+    zCounter = 0.0L;
+
     /**************************/
     placingMode=false;
     placingMode_item_type=0;

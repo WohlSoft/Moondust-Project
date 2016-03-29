@@ -38,7 +38,7 @@ struct obj_bgo
     int view; //-1, 0, 1, 2
     int offsetX;
     int offsetY;
-    int zOffset;
+    long double zOffset;
     //    image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
     QString image_n;
     QString mask_n;

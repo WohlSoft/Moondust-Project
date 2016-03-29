@@ -53,8 +53,8 @@ void LVL_Bgo::transformTo_x(long id)
     }
     data.id=id;
     setup = &ConfigManager::lvl_bgo_indexes[data.id];
-    double targetZ = 0;
-    double zOffset = setup->zOffset;
+    long double targetZ = 0.0L;
+    long double zOffset = (long double)setup->zOffset;
     int zMode = data.z_mode;
 
     if(zMode==LevelBGO::ZDefault)
@@ -71,21 +71,23 @@ void LVL_Bgo::transformTo_x(long id)
     switch(zMode)
     {
         case LevelBGO::Background2:
-            targetZ = LevelScene::Z_BGOBack2 + zOffset + data.z_offset; break;
+            targetZ = LevelScene::Z_BGOBack2 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Background1:
-            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Foreground1:
-            targetZ = LevelScene::Z_BGOFore1 + zOffset + data.z_offset; break;
+            targetZ = LevelScene::Z_BGOFore1 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Foreground2:
-            targetZ = LevelScene::Z_BGOFore2 + zOffset + data.z_offset; break;
+            targetZ = LevelScene::Z_BGOFore2 + zOffset + (long double)data.z_offset; break;
         default:
-            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + (long double)data.z_offset; break;
     }
 
-    z_index += targetZ;
+    z_index = targetZ;
 
-    LevelScene::zCounter += 0.00000001;
-    z_index += LevelScene::zCounter;
+    _scene->zCounter += 0.0000000000001L;
+    z_index += _scene->zCounter;
+    if( _scene->zCounter >= 1.0L )
+        _scene->zCounter=0.0L;
 
     long tID = ConfigManager::getBgoTexture(data.id);
     if( tID >= 0 )

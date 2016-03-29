@@ -79,12 +79,12 @@ void CharacterSwitcherEngine::refreshState()
     {
         for(int i=0; i<m_switches.size();i++)
         {
-            CharacterSwitchState &sw=m_switches[i];
-            int needed=sw.CharacterID;
+            CharacterSwitchState &sw = m_switches[i];
+            int needed = sw.CharacterID;
             bool found=false;
             for(int j=1; j<=m_scene->numberOfPlayers; j++)
             {
-                if(needed==m_scene->gameState->getPlayerState(j).characterID) { found=true; break; }
+                if( needed == m_scene->gameState->getPlayerState(j).characterID ) { found=true; break; }
             }
             if(found)
             {

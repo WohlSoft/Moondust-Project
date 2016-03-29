@@ -78,7 +78,7 @@ public:
     void destroy(bool playEffect=false);
     directions hitDirection;
 
-    GLdouble zIndex();
+    long double zIndex();
 
     /**************Fader**************/
     float fadeOffset;

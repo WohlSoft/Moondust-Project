@@ -198,8 +198,8 @@ public:
 
     PGE_Texture texture;
     GLuint texId;
-    virtual GLdouble zIndex();
-    GLdouble z_index;
+    virtual long double zIndex();
+    long double z_index;
 
     /**************************Layer member****************************/
     virtual void show();
