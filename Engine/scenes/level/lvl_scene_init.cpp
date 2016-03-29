@@ -210,6 +210,16 @@ bool LevelScene::loadConfigs()
             ConfigManager::buildSoundIndex();
     }
 
+    //Set paths
+    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
+    ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
+    ConfigManager::Dir_NPC.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPC() );
+    ConfigManager::Dir_NPCScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPCScript() );
+    ConfigManager::Dir_PlayerScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayerScript() );
+    ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
+    ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
         if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
@@ -221,16 +231,6 @@ bool LevelScene::loadConfigs()
         if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
     success = ConfigManager::loadLevelEffects();  //!< Effects
         if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
-
-    //Set paths
-    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
-    ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
-    ConfigManager::Dir_NPC.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPC() );
-    ConfigManager::Dir_NPCScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPCScript() );
-    ConfigManager::Dir_PlayerScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayerScript() );
-    ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
-    ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
 
     if(!success) exitLevelCode = LvlExit::EXIT_Error;
 abortInit:

@@ -223,8 +223,6 @@ long  ConfigManager::getNpcTexture(long npcID)
         npcSetup->textureID = level_textures[id].texture;
         npcSetup->isInit = true;
 
-        loadNpcTxtConfig(npcID);
-
         //Also, load and init animator
         if( (npcSetup->shared_ani)&&((npcSetup->frames > 1)||(npcSetup->framestyle > 0)) )
         {

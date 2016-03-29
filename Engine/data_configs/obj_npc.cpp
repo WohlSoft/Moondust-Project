@@ -28,11 +28,11 @@
 #include <QDir>
 
 /*****Level NPC************/
-PGE_DataArray<obj_npc>   ConfigManager::lvl_npc_indexes;
-NPC_GlobalSetup           ConfigManager::marker_npc;
-CustomDirManager ConfigManager::Dir_NPC;
-CustomDirManager ConfigManager::Dir_NPCScript;
-QList<AdvNpcAnimator > ConfigManager::Animator_NPC;
+PGE_DataArray<obj_npc>      ConfigManager::lvl_npc_indexes;
+NPC_GlobalSetup             ConfigManager::marker_npc;
+CustomDirManager            ConfigManager::Dir_NPC;
+CustomDirManager            ConfigManager::Dir_NPCScript;
+QList<AdvNpcAnimator >      ConfigManager::Animator_NPC;
 /*****Level NPC************/
 
 bool ConfigManager::loadLevelNPC()
@@ -98,7 +98,6 @@ bool ConfigManager::loadLevelNPC()
 
     for(i=1; i<= npc_total; i++)
     {
-
         snpc.isInit = false;
         snpc.image = NULL;
         snpc.textureArrayId = 0;
@@ -372,7 +371,6 @@ bool ConfigManager::loadLevelNPC()
 
         snpc.climbable       =      npcset.value("is-climbable", "0").toBool();
 
-
         //Editor specific flags
         long iTmp;
         iTmp =      npcset.value("default-friendly", "-1").toInt();
@@ -391,10 +389,11 @@ bool ConfigManager::loadLevelNPC()
             snpc.default_special = (iTmp>=0);
             snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
-
         snpc.id = i;
         lvl_npc_indexes.storeElement(snpc.id, snpc);
 
+        //Process NPC.txt if possible
+        loadNpcTxtConfig(i);
     skipNPC:
     npcset.endGroup();
         if( npcset.status() != QSettings::NoError )
@@ -423,10 +422,23 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
     PGESTRING file = Dir_NPC.getCustomFile(PGESTRING("npc-%1.txt").arg(npcID));
     if( file.isEmpty() )
         return;
+
     if( !FileFormats::ReadNpcTXTFileF(file, npcTxt, true) )
         return;
-    if(npcSetup->isInit)
-        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
-    else
-        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image_size.w(), npcSetup->image_size.h()));
+
+    PGESTRING image = npcSetup->image_n;
+
+    //Take updated image info
+    if( npcTxt.en_image && ( !npcTxt.image.isEmpty() ) && (npcTxt.image != npcSetup->image_n) )
+    {
+        image = Dir_NPC.getCustomFile(npcTxt.image);
+        GraphicsHelps::getImageMetrics(image, &npcSetup->image_size);
+    } else {
+        image = Dir_NPC.getCustomFile(npcSetup->image_n);
+        GraphicsHelps::getImageMetrics(image, &npcSetup->image_size);
+    }
+//    if(npcSetup->isInit)
+//        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
+//    else
+    *npcSetup = mergeNPCConfigs( *npcSetup, npcTxt, QSize(npcSetup->image_size.w(), npcSetup->image_size.h()));
 }

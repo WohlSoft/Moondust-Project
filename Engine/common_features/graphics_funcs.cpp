@@ -273,6 +273,26 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
 //        rmask, gmask, bmask, amask);
 //}
 
+bool GraphicsHelps::getImageMetrics(QString imageFile, PGE_Size* imgSize)
+{
+    if(!imgSize)
+        return false;
+    FIBITMAP* img = loadImage(imageFile);
+    if(!img)
+    {
+        return false;
+    }
+    else
+    {
+        int w = FreeImage_GetWidth(img);
+        int h = FreeImage_GetHeight(img);
+        imgSize->setSize(w, h);
+        GraphicsHelps::closeImage(img);
+    }
+    return true;
+}
+
+
 void GraphicsHelps::getMakedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
 {
     if( in_imgName.isEmpty() )
@@ -306,18 +326,8 @@ void GraphicsHelps::getMakedImageInfo(QString rootDir, QString in_imgName, QStri
 
     if(imgSize)
     {
-        FIBITMAP* img = loadImage(rootDir+in_imgName);
-        if(!img)
-        {
-            out_errStr="Invalid image file!";
-        }
-        else
-        {
-            int w = FreeImage_GetWidth(img);
-            int h = FreeImage_GetHeight(img);
-            imgSize->setSize(w, h);
-            GraphicsHelps::closeImage(img);
-        }
+        if(!getImageMetrics(rootDir+in_imgName, imgSize))
+            out_errStr = "Invalid image file";
     }
 }
 
