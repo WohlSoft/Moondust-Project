@@ -730,7 +730,7 @@ namespace CSVReader {
          *
          */
         template<typename... Values>
-        CSVReader& ReadDataLine(Values... allValues)
+        CSVReader& ReadDataLine(Values&&... allValues)
         {
             this->_lineTracker++;
             this->_currentCharIndex = 0;
@@ -738,7 +738,7 @@ namespace CSVReader {
             this->_fieldTracker = 0; // We need the tracker at 0 (because of out of range exception)
             if (_requireReadLine)
                 this->_currentLine = _reader->read_line();
-            ReadNext(allValues...);
+            ReadNext(std::forward<Values>(allValues)...);
             _requireReadLine = true;
 
 
