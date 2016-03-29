@@ -27,6 +27,9 @@
 #include <QDir>
 #endif
 
+//*********************************************************
+//****************READ FILE FORMAT*************************
+//*********************************************************
 bool FileFormats::ReadSMBX64ConfigFileF(PGESTRING  filePath, SMBX64_ConfigFile &FileData)
 {
     PGE_FileFormats_misc::TextFileInput file(filePath, false);
@@ -104,19 +107,42 @@ bool FileFormats::ReadSMBX64ConfigFile(PGE_FileFormats_misc::TextInput &in, SMBX
     return false;
 }
 
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
+bool FileFormats::WriteSMBX64ConfigFileF(PGESTRING filePath, SMBX64_ConfigFile &FileData, int file_format)
+{
+    PGE_FileFormats_misc::TextFileOutput file;
+    if(!file.open(filePath, false, true, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX64ConfigFile(file, FileData, file_format);
+}
 
+bool FileFormats::WriteSMBX64ConfigFileRaw(SMBX64_ConfigFile &FileData, PGESTRING &rawdata, int file_format)
+{
+    PGE_FileFormats_misc::RawTextOutput file;
+    if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
+        return false;
+    return WriteSMBX64ConfigFile(file, FileData, file_format);
+}
 
 PGESTRING FileFormats::WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int file_format)
 {
-    PGESTRING TextData;
+    PGESTRING raw;
+    WriteSMBX64ConfigFileRaw(FileData, raw, file_format);
+    return raw;
+}
+
+bool FileFormats::WriteSMBX64ConfigFile(PGE_FileFormats_misc::TextOutput &out, SMBX64_ConfigFile &FileData, int file_format)
+{
     int i=0;
     //Prevent out of range: 0....64
     if(file_format<0) file_format = 0;
     else
     if(file_format>64) file_format = 64;
 
-    TextData += SMBX64::IntS(file_format);              //Format version
-    if(file_format>=16) TextData += SMBX64::BoolS(file_format);              //Format version
+    out << SMBX64::IntS(file_format);   //Format version
+    if(file_format>=16) out << SMBX64::BoolS(FileData.fullScreen);
 
     while(FileData.players.size()>2)
     {
@@ -126,30 +152,29 @@ PGESTRING FileFormats::WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int fi
 
     for(i=0;i<((signed)FileData.players.size()); i++)
     {
-        TextData += SMBX64::IntS(FileData.players[i].controllerType);
-        TextData += SMBX64::IntS(FileData.players[i].k_up);
-        TextData += SMBX64::IntS(FileData.players[i].k_down);
-        TextData += SMBX64::IntS(FileData.players[i].k_left);
-        TextData += SMBX64::IntS(FileData.players[i].k_right);
-        TextData += SMBX64::IntS(FileData.players[i].k_run);
-        TextData += SMBX64::IntS(FileData.players[i].k_jump);
-        TextData += SMBX64::IntS(FileData.players[i].k_drop);
-        TextData += SMBX64::IntS(FileData.players[i].k_pause);
+        out << SMBX64::IntS(FileData.players[i].controllerType);
+        out << SMBX64::IntS(FileData.players[i].k_up);
+        out << SMBX64::IntS(FileData.players[i].k_down);
+        out << SMBX64::IntS(FileData.players[i].k_left);
+        out << SMBX64::IntS(FileData.players[i].k_right);
+        out << SMBX64::IntS(FileData.players[i].k_run);
+        out << SMBX64::IntS(FileData.players[i].k_jump);
+        out << SMBX64::IntS(FileData.players[i].k_drop);
+        out << SMBX64::IntS(FileData.players[i].k_pause);
         if(file_format>=19)
         {
-            TextData += SMBX64::IntS(FileData.players[i].k_altjump);
-            TextData += SMBX64::IntS(FileData.players[i].k_altrun);
+            out << SMBX64::IntS(FileData.players[i].k_altjump);
+            out << SMBX64::IntS(FileData.players[i].k_altrun);
         }
-        TextData += SMBX64::IntS(FileData.players[i].j_run);
-        TextData += SMBX64::IntS(FileData.players[i].j_jump);
-        TextData += SMBX64::IntS(FileData.players[i].j_drop);
-        TextData += SMBX64::IntS(FileData.players[i].j_pause);
+        out << SMBX64::IntS(FileData.players[i].j_run);
+        out << SMBX64::IntS(FileData.players[i].j_jump);
+        out << SMBX64::IntS(FileData.players[i].j_drop);
+        out << SMBX64::IntS(FileData.players[i].j_pause);
         if(file_format>=19)
         {
-            TextData += SMBX64::IntS(FileData.players[i].j_altjump);
-            TextData += SMBX64::IntS(FileData.players[i].j_altrun);
+            out << SMBX64::IntS(FileData.players[i].j_altjump);
+            out << SMBX64::IntS(FileData.players[i].j_altrun);
         }
     }
-
-    return TextData;
+    return true;
 }

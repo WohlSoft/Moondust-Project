@@ -421,9 +421,10 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
     }
     obj_npc* npcSetup=&lvl_npc_indexes[npcID];
     PGESTRING file = Dir_NPC.getCustomFile(PGESTRING("npc-%1.txt").arg(npcID));
-    if(file.isEmpty()) return;
-    npcTxt=FileFormats::ReadNpcTXTFile(file, true);
-    if(!npcTxt.ReadFileValid) return;
+    if( file.isEmpty() )
+        return;
+    if( !FileFormats::ReadNpcTXTFileF(file, npcTxt, true) )
+        return;
     if(npcSetup->isInit)
         *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
     else

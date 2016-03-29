@@ -35,38 +35,56 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-
 NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
-    PGESTRING errorString;
+    NPCConfigFile data;
+    ReadNpcTXTFileF(file, data, IgnoreBad);
+    return data;
+}
+
+
+bool FileFormats::ReadNpcTXTFileF(PGESTRING filePath, NPCConfigFile &FileData, bool IgnoreBad)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadNpcTXTFile(file, FileData, IgnoreBad);
+}
+
+bool FileFormats::ReadNpcTXTFileRAW(PGESTRING &rawdata, NPCConfigFile &FileData, bool IgnoreBad)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata);
+    return ReadNpcTXTFile(file, FileData, IgnoreBad);
+}
+
+bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfigFile &FileData, bool IgnoreBad)
+{
+    //PGESTRING errorString;
     //int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
     PGESTRINGList Params;
     PGESTRING unknownLines;
-    NPCConfigFile FileData = CreateEmpytNpcTXT();
+    /*NPCConfigFile */FileData = CreateEmpytNpcTXT();
 
-    if(!PGE_FileFormats_misc::TextFileInput::exists(file))
-    {
-        FileData.ReadFileValid=false;
-        errorString="File not exists: "+file;
-        #ifdef PGE_EDITOR
-        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
-        QObject::tr("File is not exist"), QMessageBox::Ok);
-        #endif
-        return FileData;
-    }
-    PGE_FileFormats_misc::TextFileInput inf;
-    if(!inf.open(file))
-    {
-        FileData.ReadFileValid=false;
-        errorString="Can't open file to read: "+file;
-        #ifdef PGE_EDITOR
-        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
-        QObject::tr("Can't read the file"), QMessageBox::Ok);
-        #endif
-        return FileData;
-    }
+//    if(!PGE_FileFormats_misc::TextFileInput::exists(file))
+//    {
+//        FileData.ReadFileValid=false;
+//        errorString="File not exists: "+file;
+//        #ifdef PGE_EDITOR
+//        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
+//        QObject::tr("File is not exist"), QMessageBox::Ok);
+//        #endif
+//        return FileData;
+//    }
+//    if(!inf.open(file))
+//    {
+//        FileData.ReadFileValid=false;
+//        errorString="Can't open file to read: "+file;
+//        #ifdef PGE_EDITOR
+//        QMessageBox::critical(MainWinConnect::pMainWin, QObject::tr("File open error"),
+//        QObject::tr("Can't read the file"), QMessageBox::Ok);
+//        #endif
+//        return FileData;
+//    }
 
     //Read NPC.TXT File config
     #define NextLine(line) line = inf.readCVSLine();
@@ -658,7 +676,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     #endif
 
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
 //No more need
     //badfile:    //If file format not corrects

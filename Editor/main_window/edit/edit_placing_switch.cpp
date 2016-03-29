@@ -196,8 +196,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                        buffer.blocks.push_back(LvlPlacingItems::blockSet);
                        buffer.layers.clear();
                        buffer.events.clear();
-                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
-                       IntEngine::sendItemPlacing("BLOCK_PLACE\nBLOCK_PLACE_END\n"+encoded);
+                       QString encoded;
+                       if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+                           IntEngine::sendItemPlacing("BLOCK_PLACE\nBLOCK_PLACE_END\n"+encoded);
                    }
                    break;
                }
@@ -219,8 +220,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                        buffer.bgo.push_back(LvlPlacingItems::bgoSet);
                        buffer.layers.clear();
                        buffer.events.clear();
-                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
-                       IntEngine::sendItemPlacing("BGO_PLACE\nBGO_PLACE_END\n"+encoded);
+                       QString encoded;
+                       if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+                           IntEngine::sendItemPlacing("BGO_PLACE\nBGO_PLACE_END\n"+encoded);
                    }
 
                    break;
@@ -247,8 +249,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                        buffer.npc.push_back(LvlPlacingItems::npcSet);
                        buffer.layers.clear();
                        buffer.events.clear();
-                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
-                       IntEngine::sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n"+encoded);
+                       QString encoded;
+                       if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+                           IntEngine::sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n"+encoded);
                    }
 
                    break;

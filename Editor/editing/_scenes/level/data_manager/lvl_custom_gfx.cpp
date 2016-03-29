@@ -396,7 +396,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 if(file.open(QIODevice::ReadOnly))
                 {
                     file.close();
-                    sets = FileFormats::ReadNpcTXTFile(CustomTxt, true);
+                    FileFormats::ReadNpcTXTFileF(CustomTxt, sets, true);
                     npctxt = true;
                     custom = true;
                 }

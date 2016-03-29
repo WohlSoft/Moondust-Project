@@ -32,17 +32,16 @@ struct LevelEvent_layers
     PGESTRING toggle;
 };
 
-LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
+bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileData)
 {
     errorString.clear();
-    LevelData FileData;
     CreateLevelHeader(FileData);
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, false))
     {
         FileData.ReadFileValid=false;
-        return FileData;
+        return false;
     }
     PGE_FileFormats_misc::FileInfo in_1(filePath);
     FileData.filename = in_1.basename();
@@ -78,14 +77,14 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     FileData.playmusic=0;
 
     FileData.ReadFileValid=true;
+    return true;
 
-    return FileData;
 badfile:
     FileData.ReadFileValid=false;
     FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
     FileData.ERROR_linenum=inf.getCurrentLineNumber();
     FileData.ERROR_linedata=line;
-    return FileData;
+    return false;
 }
 
 bool FileFormats::ReadSMBX64LvlFileF(PGESTRING  filePath, LevelData &FileData)
@@ -98,14 +97,6 @@ bool FileFormats::ReadSMBX64LvlFileRaw(PGESTRING &rawdata, PGESTRING  filePath, 
 {
     PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
     return ReadSMBX64LvlFile(file, FileData);
-}
-
-LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
-{
-    LevelData FileData;
-    PGE_FileFormats_misc::RawTextInput file(&RawData, filePath);
-    ReadSMBX64LvlFile(file, FileData);
-    return FileData;
 }
 
 bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelData &FileData)
@@ -661,16 +652,6 @@ bool FileFormats::WriteSMBX64LvlFileRaw(LevelData &FileData, PGESTRING &rawdata,
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
         return false;
     return WriteSMBX64LvlFile(file, FileData, file_format);
-}
-
-PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
-{
-    PGESTRING raw;
-    PGE_FileFormats_misc::RawTextOutput file;
-    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
-        return "";
-    WriteSMBX64LvlFile(file, FileData, file_format);
-    return raw;
 }
 
 bool FileFormats::WriteSMBX64LvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData &FileData, int file_format)

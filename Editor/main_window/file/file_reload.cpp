@@ -77,29 +77,8 @@ void MainWindow::on_actionReload_triggered()
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;
         }
-
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
-
-        QFile file(filePath+".meta");
-        if(QFileInfo(filePath+".meta").exists())
-        {
-            if (file.open(QIODevice::ReadOnly))
-            {
-                QString metaRaw;
-                QTextStream meta(&file);
-                meta.setCodec("UTF-8");
-                metaRaw = meta.readAll();
-                if(FileData.metaData.script)
-                    FileData.metaData.script.reset();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
-            }
-            else
-            {
-                QMessageBox::critical(this, tr("File open error"),
-                tr("Can't open the file."), QMessageBox::Ok);
-            }
-        }
 
         //Remember last section ID and positions!
         int lastSection=0;
@@ -193,8 +172,12 @@ void MainWindow::on_actionReload_triggered()
 //            return;
 //        }
 
-        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(filePath);
-        if( !FileData.ReadFileValid ) return;
+        NPCConfigFile FileData;
+        if( !FileFormats::ReadNpcTXTFileF(filePath, FileData) )
+        {
+            QMessageBox::critical(this, QObject::tr("File open error"), tr("Can't read the file"), QMessageBox::Ok);
+            return;
+        }
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         activeNpcEditWin()->isModyfied = false;
         activeNpcEditWin()->close();
@@ -255,24 +238,6 @@ void MainWindow::on_actionReload_triggered()
         FileData.path = finfo.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeWldEditWin()->WldData.modified = false;
-
-        QFile file(filePath+".meta");
-        if(QFileInfo(filePath+".meta").exists())
-        {
-            if (file.open(QIODevice::ReadOnly))
-            {
-                QString metaRaw;
-                QTextStream meta(&file);
-                meta.setCodec("UTF-8");
-                metaRaw = meta.readAll();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
-            }
-            else
-            {
-                QMessageBox::critical(this, tr("File open error"),
-                tr("Can't open the file."), QMessageBox::Ok);
-            }
-        }
 
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         QMdiSubWindow *worldWindow = ui->centralWidget->activeSubWindow();

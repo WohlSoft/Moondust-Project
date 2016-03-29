@@ -133,7 +133,8 @@ void IntEngine::sendLevelBuffer()
     if(engine)
     {
         qDebug() << "Attempt to send LVLX buffer";
-        QString output=FileFormats::WriteExtendedLvlFile(testBuffer);
+        QString output;
+        FileFormats::WriteExtendedLvlFileRaw(testBuffer, output);
 
         QString sendLvlx;
         if(!testBuffer.path.isEmpty())

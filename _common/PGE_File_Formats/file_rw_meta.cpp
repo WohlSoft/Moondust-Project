@@ -27,19 +27,33 @@
 #include <QMessageBox>
 #endif
 
-MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
+//*********************************************************
+//****************READ FILE FORMAT*************************
+//*********************************************************
+
+bool FileFormats::ReadNonSMBX64MetaDataF(PGESTRING filePath, MetaData &FileData)
+{
+    PGE_FileFormats_misc::TextFileInput file(filePath, false);
+    return ReadNonSMBX64MetaDataFile(file, FileData);
+}
+
+bool FileFormats::ReadNonSMBX64MetaDataRaw(PGESTRING &rawdata, PGESTRING filePath, MetaData &FileData)
+{
+    PGE_FileFormats_misc::RawTextInput file(&rawdata, filePath);
+    return ReadNonSMBX64MetaDataFile(file, FileData);
+}
+
+bool FileFormats::ReadNonSMBX64MetaDataFile(PGE_FileFormats_misc::TextInput &in, MetaData &FileData)
 {
     PGESTRING errorString;
     int str_count=0;        //Line Counter
     PGESTRING line;           //Current Line data
 
-
-    MetaData FileData;
     #ifdef PGE_EDITOR
     FileData.script.reset(new ScriptHolder());
     #endif
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    PGEFile pgeX_Data(RawData);
+    PGEFile pgeX_Data(in.readAll());
     if( !pgeX_Data.buildTreeFromRaw() )
     {
         errorString = pgeX_Data.lastError();
@@ -293,7 +307,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
     errorString.clear(); //If no errors, clear string;
     FileData.ReadFileValid=true;
-    return FileData;
+    return true;
 
     badfile:    //If file format is not correct
     //BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
@@ -304,9 +318,17 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING &RawData)
 
     FileData.bookmarks.clear();
 
-    return FileData;
+    return false;
 }
 
+
+
+
+
+
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
 
 bool FileFormats::WriteNonSMBX64MetaDataF(PGESTRING filePath, MetaData &metaData)
 {
@@ -322,16 +344,6 @@ bool FileFormats::WriteNonSMBX64MetaDataRaw(MetaData &metaData, PGESTRING &rawda
     if(!file.open(&rawdata, PGE_FileFormats_misc::TextOutput::truncate))
         return false;
     return WriteNonSMBX64MetaData(file, metaData);
-}
-
-PGESTRING FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
-{
-    PGESTRING raw;
-    PGE_FileFormats_misc::RawTextOutput file;
-    if(!file.open(&raw, PGE_FileFormats_misc::TextOutput::truncate))
-        return "";
-    WriteNonSMBX64MetaData(file, metaData);
-    return raw;
 }
 
 bool FileFormats::WriteNonSMBX64MetaData(PGE_FileFormats_misc::TextOutput &out, MetaData &metaData)
