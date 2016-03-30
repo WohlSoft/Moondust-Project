@@ -40,6 +40,8 @@
 #include <QDesktopWidget>
 #include <cstring>
 #include <QDirIterator>
+#include <QJsonObject>
+#include <QJsonDocument>
 #endif
 
 static void pge_engine_alphatestingNotify(MainWindow*parent)
@@ -136,9 +138,9 @@ void MainWindow::on_action_doTest_triggered()
         qDebug() << "Started";
 
         //Stop music playback in the PGE!
-        on_actionPlayMusic_triggered(false);
         setMusicButton(false);
-        PGE_MusPlayer::MUS_stopMusic();
+        on_actionPlayMusic_triggered(false);
+        //PGE_MusPlayer::MUS_stopMusic();
     }
     else
         return;
@@ -266,7 +268,8 @@ void MainWindow::on_action_testSettings_triggered()
 }
 
 
-#define DUMMY_WORLD_GENERATION
+#define DIRECT_SMBX_TESTING
+//#define OLD_DUMMY_WORLD_GENERATION
 //#define USE_DIRECT_LEVELTEST_LUNALUA_0_7_3 //Until Rednaxela will implement full level testing thing
 #define SHARED_FILEPATH_SENDING
 //#define DO_WINAPI_TRICKS //Just junk test with attempt to embedd SMBX Editor's window as built-in subwindow (works creepy and buggy, so, try on your own risk! xD)
@@ -275,7 +278,7 @@ void MainWindow::on_action_testSettings_triggered()
 static QWidget *test=NULL;
 #endif
 
-#if defined(Q_OS_WIN) && defined(DUMMY_WORLD_GENERATION)
+#if defined(Q_OS_WIN) && defined(DIRECT_SMBX_TESTING)
 enum LunaLoaderResult {
     LUNALOADER_OK = 0,
     LUNALOADER_CREATEPROCESS_FAIL,
@@ -290,10 +293,32 @@ static void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD
 static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
                                       const wchar_t *cmdLineArgs,
                                       const wchar_t *workingDir,
-                                      PROCESS_INFORMATION &pi) {
+                                      PROCESS_INFORMATION &pi,
+                                      HANDLE* phInputWrite=NULL ) {
     STARTUPINFO si;
     memset(&si, 0, sizeof(si));
     memset(&pi, 0, sizeof(pi));
+    HANDLE hInputRead = 0;
+
+    if( phInputWrite )
+    {
+        SECURITY_ATTRIBUTES sa;
+        // Set up the security attributes struct.
+        sa.nLength= sizeof(SECURITY_ATTRIBUTES);
+        sa.lpSecurityDescriptor = NULL;
+        sa.bInheritHandle = TRUE;
+
+        if( ! CreatePipe(&hInputRead, phInputWrite, &sa, 0))
+        {
+            hInputRead     = 0;
+            *phInputWrite  = 0;
+        }
+        si.dwFlags = STARTF_USESTDHANDLES;
+        si.hStdInput = hInputRead;
+        si.cb = sizeof(si);
+        // Don't let child process take the write handle here
+        SetHandleInformation(*phInputWrite, HANDLE_FLAG_INHERIT, 0);
+    }
 
     // Prepare command line
     size_t pos = 0;
@@ -315,7 +340,7 @@ static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
         cmdLine,          // Command line
         NULL,             // Process handle not inheritable
         NULL,             // Thread handle not inheritable
-        FALSE,            // Set handle inheritance to FALSE
+        TRUE,             // Set handle inheritance to FALSE
         CREATE_SUSPENDED, // Create in suspended state
         NULL,             // Use parent's environment block
         workingDir,       // Use parent's starting directory
@@ -412,7 +437,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
     Q_UNUSED(mlocker);
 
  #ifdef Q_OS_WIN
-    #ifdef DUMMY_WORLD_GENERATION
+    #ifdef DIRECT_SMBX_TESTING
     if(activeChildWindow()==1)
     {
         #ifdef SHARED_FILEPATH_SENDING
@@ -447,6 +472,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 }
             }
 
+        #ifdef OLD_DUMMY_WORLD_GENERATION
             QString tempPath = smbxPath+"/worlds/";
             QString tempName = "tmp.PgeWorld.DeleteMe";
             QString newEpisode = tempPath+tempName+"/";
@@ -589,7 +615,8 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 }
             }
 
-            WorldData worldmap = FileFormats::CreateWorldData();
+            WorldData worldmap;
+            FileFormats::CreateWorldData(worldmap);
             worldmap.EpisodeTitle = "_temp_episode_pge";
             worldmap.IntroLevel_file = "templevel.lvl";
             worldmap.restartlevel = true;
@@ -660,6 +687,51 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             }
             #endif
 
+        #else
+
+            QString command = smbxPath+ConfStatus::SmbxEXE_Name;
+            QStringList params;
+
+            params << "--waitForIPC";
+
+            //{"jsonrpc": "2.0", "method": "testLevel", "params":
+            //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}]},
+            //"id": 3}
+
+            //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
+
+            QJsonDocument jsonOut;
+            QJsonObject jsonObj;
+            jsonObj["jsonrpc"] = "2.0";
+            jsonObj["method"] = "testLevel";
+            //jsonOut.setObject(QJsonObject());
+                QJsonObject JSONparams;
+                LevelEdit* ed = activeLvlEditWin();
+                if(!ed)
+                {
+                    QMessageBox::critical(this, "Internal error", "Can't start level testing, because activeLvlEditWin() returned NULL");
+                    return;
+                }
+                if( !ed->isUntitled )
+                    JSONparams["filename"] = ed->curFile;
+                else
+                    JSONparams["filename"] = ApplicationPath+"/untitled.lvl";
+
+                QString LVLRawData;
+                //To don't affect level data state, need to make a separated copy of structure
+                LevelData LVLDataCopy = ed->LvlData;
+                //Generate actual SMBX64 Level file data
+                FileFormats::WriteSMBX64LvlFileRaw(LVLDataCopy, LVLRawData, 64);
+                //Set CRLF
+                LVLRawData.replace("\n", "\r\n");
+                //Store data into JSON
+                JSONparams["leveldata"] = LVLRawData;
+
+            jsonObj["params"] = JSONparams;
+            jsonObj["id"] = 3;
+            jsonOut.setObject(jsonObj);
+            QByteArray outputJSON = jsonOut.toJson();
+        #endif //OLD_DUMMY_WORLD_GENERATION
             QString argString;
             for (int i=0; i<params.length(); i++) {
                 if (i > 0) {
@@ -668,17 +740,36 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 argString += params[i];
             }
 
+            HANDLE hInputWrite;
+
             LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
                                                  argString.toStdWString().c_str(),
                                                  smbxPath.toStdWString().c_str(),
-                                                 m_luna_pi);
+                                                 m_luna_pi,
+                                                 &hInputWrite);
 
             if(res==LUNALOADER_OK)
             {
-                //Stop music playback in the PGE!
-                on_actionPlayMusic_triggered(false);
-                setMusicButton(false);
-                PGE_MusPlayer::MUS_stopMusic();
+                //Converting JSON data into net string
+                std::string dataToSend = outputJSON.toStdString();
+                int len = dataToSend.size();
+                std::string len_std = std::to_string(len) + ":";
+                dataToSend.insert(0, len_std.c_str(), len_std.size());
+                dataToSend.push_back(',');
+
+                DWORD writtenBytes=0;
+
+                //Send data to SMBX
+                if(WriteFile(hInputWrite,
+                          (LPCVOID)dataToSend.c_str(),
+                          (DWORD)dataToSend.size(),
+                          &writtenBytes, NULL)==TRUE)
+                {
+                    //Stop music playback in the PGE!
+                    setMusicButton(false);
+                    on_actionPlayMusic_triggered(false);
+                    //PGE_MusPlayer::MUS_stopMusic();
+                }
             } else {
                 QString luna_error="Unknown error";
 
@@ -696,6 +787,10 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
                 QMessageBox::Ok);
             }
+
+            if(hInputWrite)
+                CloseHandle(hInputWrite);
+
         #ifdef SHARED_FILEPATH_SENDING
         }
         else //Attempt to attach into running SMBX Editor
