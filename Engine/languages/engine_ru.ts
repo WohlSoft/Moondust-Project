@@ -168,12 +168,12 @@ and retry your recent action to take more detail info.</source>
         <translation type="vanished">Работа движка была прервана</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="439"/>
+        <location filename="../main.cpp" line="441"/>
         <source>No opened files</source>
         <translation>Нет открытых файлов</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="448"/>
+        <location filename="../main.cpp" line="454"/>
         <source>ERROR:
 Fail to start world map
 
@@ -184,14 +184,14 @@ Fail to start world map
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="475"/>
+        <location filename="../main.cpp" line="482"/>
         <source>Start level
 %1</source>
         <translation>Запуск уровняl
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="618"/>
+        <location filename="../main.cpp" line="640"/>
         <source>Warp exit
 
 Exit to:
@@ -206,7 +206,7 @@ Enter to: %2</source>
 Вход в: %2</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="663"/>
+        <location filename="../main.cpp" line="685"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Уровень быз завершён с ошибкой.
@@ -420,35 +420,31 @@ Enter to: %2</source>
         <translation>&lt;уровни не найдены&gt;</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
         <source>File open error</source>
-        <translation>Ошибка открытия файла</translation>
+        <translation type="vanished">Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
         <source>File is not exist</source>
-        <translation>Файл не существует</translation>
+        <translation type="vanished">Файл не существует</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="66"/>
         <source>Can&apos;t read the file</source>
-        <translation>Невозможно прочитать файл</translation>
+        <translation type="vanished">Невозможно прочитать файл</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="653"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="674"/>
         <source>Unknown values are presented</source>
         <translation>Представлены неизвестные значения</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="654"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="675"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Ваш файл имеет неизвестные значения,
 которые будут удалены когда вы сохраните файл</translation>
     </message>
     <message>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="320"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="334"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Фатальная ошибка: Невозможно найти начальную секцию.

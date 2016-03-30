@@ -164,12 +164,12 @@ recent action to take more detail info.</translation>
         <translation type="vanished">Engine was interrupted</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="439"/>
+        <location filename="../main.cpp" line="441"/>
         <source>No opened files</source>
         <translation>No opened files</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="448"/>
+        <location filename="../main.cpp" line="454"/>
         <source>ERROR:
 Fail to start world map
 
@@ -180,14 +180,14 @@ Fail to start world map
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="475"/>
+        <location filename="../main.cpp" line="482"/>
         <source>Start level
 %1</source>
         <translation>Start level
 %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="618"/>
+        <location filename="../main.cpp" line="640"/>
         <source>Warp exit
 
 Exit to:
@@ -202,7 +202,7 @@ Exit to:
 Enter to: %2</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="663"/>
+        <location filename="../main.cpp" line="685"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Level was closed with error.
@@ -416,35 +416,31 @@ Enter to: %2</translation>
         <translation>&lt;levels not found&gt;</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
         <source>File open error</source>
-        <translation>File open error</translation>
+        <translation type="vanished">File open error</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
         <source>File is not exist</source>
-        <translation>File is not exist</translation>
+        <translation type="vanished">File is not exist</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="66"/>
         <source>Can&apos;t read the file</source>
-        <translation>Can&apos;t read the file</translation>
+        <translation type="vanished">Can&apos;t read the file</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="653"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="674"/>
         <source>Unknown values are presented</source>
         <translation>Unknown values are presented</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="654"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="675"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Your file have an unknown values which will be removed
  when you will save file</translation>
     </message>
     <message>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="320"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="334"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Fatal error: Impossible to find start section.
