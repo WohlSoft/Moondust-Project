@@ -569,6 +569,7 @@ PlayLevel:
                 else
                 {
                     sceneResult = false;
+                    ExitCode = WldExit::EXIT_error;
                     PGE_MsgBox msgBox(NULL, QString("No opened files"),
                                       PGE_MsgBox::msg_warn);
                     msgBox.exec();
