@@ -33,7 +33,8 @@ WorldData WldScene::copy(bool cut)
     //Get Selected Items
     QList<QGraphicsItem*> selectedList = selectedItems();
 
-    WorldData copyData=FileFormats::CreateWorldData();
+    WorldData copyData;
+    FileFormats::CreateWorldData(copyData);
 
     if (!selectedList.isEmpty())
     {

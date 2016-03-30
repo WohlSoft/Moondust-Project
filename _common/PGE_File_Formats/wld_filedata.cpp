@@ -121,15 +121,30 @@ WorldMusic FileFormats::CreateWldMusicbox()
     return dummyMusicBox;
 }
 
-WorldData FileFormats::CreateWorldData()
+void FileFormats::CreateWorldHeader(WorldData &NewFileData)
 {
-    WorldData NewFileData;
-
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
     NewFileData.smbx64strict = false;
+    NewFileData.filename = "";
+    NewFileData.path = "";
 
+    NewFileData.RecentFormat = WorldData::PGEX;
+    NewFileData.RecentFormatVersion = 64;
+
+    NewFileData.ERROR_info = "";
+    NewFileData.ERROR_linedata = "";
+    NewFileData.ERROR_linenum = -1;
+
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_info="";
+    NewFileData.metaData.ERROR_linedata="";
+    NewFileData.metaData.ERROR_linenum=-1;
+    //Meta-data
+    #ifdef PGE_EDITOR
+    NewFileData.metaData.script.reset();
+    #endif
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;
     NewFileData.currentMusic = 0;
@@ -154,21 +169,30 @@ WorldData FileFormats::CreateWorldData()
     NewFileData.HubStyledWorld = false;
     NewFileData.restartlevel = false;
 
-    NewFileData.tile_array_id = 0;
-    NewFileData.scene_array_id = 0;
-    NewFileData.path_array_id = 0;
-    NewFileData.level_array_id = 0;
-    NewFileData.musicbox_array_id = 0;
-
     NewFileData.stars = 0;
+}
 
-    //Meta-data
-    #ifdef PGE_EDITOR
-    NewFileData.metaData.script.reset();
-    #endif
-    NewFileData.metaData.ReadFileValid=true;
-    NewFileData.metaData.ERROR_linenum=-1;
 
+void FileFormats::CreateWorldData(WorldData &NewFileData)
+{
+    CreateWorldHeader(NewFileData);
+
+    NewFileData.tiles.clear();
+    NewFileData.tile_array_id = 0;
+    NewFileData.scenery.clear();
+    NewFileData.scene_array_id = 0;
+    NewFileData.paths.clear();
+    NewFileData.path_array_id = 0;
+    NewFileData.levels.clear();
+    NewFileData.level_array_id = 0;
+    NewFileData.music.clear();
+    NewFileData.musicbox_array_id = 0;
+}
+
+WorldData FileFormats::CreateWorldData()
+{
+    WorldData NewFileData;
+    CreateWorldData(NewFileData);
     return NewFileData;
 }
 

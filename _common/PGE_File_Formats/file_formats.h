@@ -578,6 +578,16 @@ public:
 
 //Wld Data
     /*!
+     * \brief Initializes world map structure header
+     * \param [__out] NewFileData World map data structure with initialized header only
+     */
+    static void CreateWorldHeader(WorldData &NewFileData);
+    /*!
+     * \brief Generates blank initialized World map data structure
+     * \param [__out] NewFileData World map data structure
+     */
+    static void CreateWorldData(WorldData &NewFileData);
+    /*!
      * \brief Generates blank initialized World map data structure
      * \return World map data structure
      */

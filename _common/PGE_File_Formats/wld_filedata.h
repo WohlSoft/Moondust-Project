@@ -103,6 +103,22 @@ struct WorldData
     PGESTRING ERROR_info;
     PGESTRING ERROR_linedata;
     int       ERROR_linenum;
+    /*!
+     * \brief File format
+     */
+    enum FileFormat
+    {
+        //! PGE-X WLDX file format
+        PGEX=0,
+        //! SMBX1...64 WLD file format
+        SMBX64,
+        //! SMBX-38A WLD file format
+        SMBX38A
+    };
+    //! Recently used (open or save) file format
+    int RecentFormat;
+    //! Recently used format version (for SMBX1...64 files only)
+    int RecentFormatVersion;
 
     PGESTRING EpisodeTitle;
     bool nocharacter1;

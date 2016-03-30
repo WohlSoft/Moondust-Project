@@ -80,7 +80,7 @@ void IntEngine::init(QProcess *engine_proc)
 
 void IntEngine::quit()
 {
-    testBuffer = FileFormats::CreateLevelData();
+    FileFormats::CreateLevelData(testBuffer);
     if(engine)
     {
         engine->close();

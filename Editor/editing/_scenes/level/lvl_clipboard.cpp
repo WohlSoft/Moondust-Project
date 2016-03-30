@@ -32,7 +32,8 @@ LevelData LvlScene::copy(bool cut)
     //Get Selected Items
     QList<QGraphicsItem*> selectedList = selectedItems();
 
-    LevelData copyData=FileFormats::CreateLevelData();
+    LevelData copyData;
+    FileFormats::CreateLevelData(copyData);
     copyData.layers.clear();
     copyData.events.clear();
 

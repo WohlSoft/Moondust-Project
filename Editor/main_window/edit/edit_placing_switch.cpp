@@ -192,7 +192,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::CreateLevelData();
+                       LevelData buffer;
+                       FileFormats::CreateLevelData(buffer);
                        buffer.blocks.push_back(LvlPlacingItems::blockSet);
                        buffer.layers.clear();
                        buffer.events.clear();
@@ -216,7 +217,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::CreateLevelData();
+                       LevelData buffer;
+                       FileFormats::CreateLevelData(buffer);
                        buffer.bgo.push_back(LvlPlacingItems::bgoSet);
                        buffer.layers.clear();
                        buffer.events.clear();
@@ -245,7 +247,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::CreateLevelData();
+                       LevelData buffer;
+                       FileFormats::CreateLevelData(buffer);
                        buffer.npc.push_back(LvlPlacingItems::npcSet);
                        buffer.layers.clear();
                        buffer.events.clear();

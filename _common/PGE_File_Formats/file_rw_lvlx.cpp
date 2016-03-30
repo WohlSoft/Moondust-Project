@@ -36,6 +36,7 @@
 bool FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath, LevelData &FileData)
 {
     CreateLevelHeader(FileData);
+    FileData.RecentFormat = LevelData::PGEX;
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, true))
@@ -162,6 +163,7 @@ bool FileFormats::ReadExtendedLvlFile(PGE_FileFormats_misc::TextInput &in, Level
     PGESTRING line;  /*Current Line data*/
     //LevelData FileData;
     CreateLevelData(FileData);
+    FileData.RecentFormat = LevelData::PGEX;
 
     //Add path data
     if(filePath.size() > 0)
@@ -1501,6 +1503,8 @@ bool FileFormats::WriteExtendedLvlFileRaw(LevelData &FileData, PGESTRING &rawdat
 bool FileFormats::WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData &FileData)
 {
     long i;
+
+    FileData.RecentFormat = LevelData::PGEX;
 
     //Count placed stars on this level
     FileData.stars=0;

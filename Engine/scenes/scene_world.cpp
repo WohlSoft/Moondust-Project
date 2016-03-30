@@ -133,7 +133,7 @@ WorldScene::WorldScene()
     _playStopSnd=false;
     _playDenySnd=false;
 
-    data = FileFormats::CreateWorldData();
+    FileFormats::CreateWorldData(data);
 
     pathOpeningInProcess=false;
     pathOpener.setScene(this);

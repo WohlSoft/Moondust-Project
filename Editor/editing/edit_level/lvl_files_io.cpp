@@ -40,7 +40,7 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
-    LvlData = FileFormats::CreateLevelData();
+    FileFormats::CreateLevelData(LvlData);
     LvlData.metaData.script.reset(new ScriptHolder());
     LvlData.untitled = true;
     StartLvlData = LvlData;

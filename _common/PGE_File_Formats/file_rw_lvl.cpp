@@ -37,6 +37,9 @@ bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileDat
     errorString.clear();
     CreateLevelHeader(FileData);
 
+    FileData.RecentFormat = LevelData::SMBX64;
+    FileData.RecentFormatVersion = 64;
+
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, false))
     {
@@ -55,6 +58,8 @@ bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileDat
     if( SMBX64::uInt(line) ) //File format number
         goto badfile;
     else file_format = toInt(line);
+
+    FileData.RecentFormatVersion = file_format;
 
     if(file_format >= 17)
     {
@@ -128,6 +133,8 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
 
     int i;                  //counters
     CreateLevelData(FileData);
+    FileData.RecentFormat=LevelData::SMBX64;
+    FileData.RecentFormatVersion = 64;
     FileData.LevelName="";
     FileData.stars=0;
     FileData.CurSection=0;
@@ -176,6 +183,8 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
     ///////////////////////////////////////Begin file///////////////////////////////////////
     nextLine();   //Read first line
     UIntVar(file_format, line);//File format number
+
+    FileData.RecentFormatVersion = file_format;
 
     if(ge(17))
     {
@@ -703,6 +712,9 @@ bool FileFormats::WriteSMBX64LvlFile(PGE_FileFormats_misc::TextOutput &out, Leve
     if(file_format<0) file_format = 0;
     else
     if(file_format>64) file_format = 64;
+
+    FileData.RecentFormat = LevelData::SMBX64;
+    FileData.RecentFormatVersion = file_format;
 
     out << SMBX64::IntS(file_format);                     //Format version
     if(file_format>=17)

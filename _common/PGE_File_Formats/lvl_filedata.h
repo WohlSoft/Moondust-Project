@@ -239,7 +239,7 @@ struct LevelNPC
         //! Down-Right NPC Generator direction
         NPC_GEN_DOWN_RIGHT = 11,
         //! Right-Up NPC Generator direction
-        NPC_GEN_RIGHT_UP = 12,
+        NPC_GEN_RIGHT_UP = 12
     };
     //! Generator direction [1] up, [2] left, [3] down, [4] right
     int generator_direct;
@@ -250,7 +250,9 @@ struct LevelNPC
     {
         NPC_GENERATOR_APPEAR=0,
         NPC_GENERATOR_WARP=1,
-        NPC_GENERATPR_PROJECTILE=2
+        NPC_GENERATPR_PROJECTILE=2,
+        NPC_GENERATPR_CUSTOM1=3,
+        NPC_GENERATPR_CUSTOM2=4
     };
     //! Generator type 0 - instant appearence, 1 - warp, 2 - projectile shoot
     int generator_type;
@@ -809,6 +811,22 @@ struct LevelData
     PGESTRING ERROR_linedata;
     //! Number of line where error was occouped
     int       ERROR_linenum;
+    /*!
+     * \brief File format
+     */
+    enum FileFormat
+    {
+        //! PGE-X LVLX File Format
+        PGEX=0,
+        //! SMBX1...64 LVL File format
+        SMBX64,
+        //! SMBX-38A LVL File Format
+        SMBX38A
+    };
+    //! Recently used (open or save) file format
+    int RecentFormat;
+    //! Recently used format version (for SMBX1...64 files only)
+    int RecentFormatVersion;
 
     //! Understandable name of the level
     PGESTRING LevelName;

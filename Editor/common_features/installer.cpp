@@ -81,28 +81,32 @@ bool Installer::associateFiles()
         success = l.open(QIODevice::WriteOnly);
         QString raw;
         if(success){
-            LevelData indata = FileFormats::CreateLevelData();
+            LevelData indata;
+            FileFormats::CreateLevelData(indata);
             FileFormats::WriteSMBX64LvlFileRaw(indata, raw, 64);
             l.write(QByteArray(raw.toStdString().c_str()));
             l.close();
         }
         success = w.open(QIODevice::WriteOnly);
         if(success){
-            WorldData indata = FileFormats::CreateWorldData();
+            WorldData indata;
+            FileFormats::CreateWorldData(indata);
             FileFormats::WriteSMBX64WldFileRaw(indata, raw, 64);
             w.write(QByteArray(raw.toStdString().c_str()));
             w.close();
         }
         success = lx.open(QIODevice::WriteOnly);
         if(success){
-            LevelData indata = FileFormats::CreateLevelData();
+            LevelData indata;
+            FileFormats::CreateLevelData(indata);
             FileFormats::WriteExtendedLvlFileRaw(indata, raw);
             l.write(QByteArray(raw.toStdString().c_str()));
             l.close();
         }
         success = wx.open(QIODevice::WriteOnly);
         if(success){
-            WorldData indata = FileFormats::CreateWorldData();
+            WorldData indata;
+            FileFormats::CreateWorldData(indata);
             FileFormats::WriteExtendedWldFileRaw(indata, raw);
             w.write(QByteArray(raw.toStdString().c_str()));
             w.close();

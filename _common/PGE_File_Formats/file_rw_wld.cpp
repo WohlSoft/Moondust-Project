@@ -32,7 +32,9 @@ bool FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath, WorldData &FileDat
     SMBX64_FileBegin();
     int str_count=0;
     errorString.clear();
-    FileData = CreateWorldData();
+    CreateWorldHeader(FileData);
+    FileData.RecentFormat = WorldData::SMBX64;
+    FileData.RecentFormatVersion = 64;
 
     PGE_FileFormats_misc::TextFileInput in;
     if(!in.open(filePath, false))
@@ -57,6 +59,8 @@ bool FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath, WorldData &FileDat
     if( SMBX64::uInt(line) ) //File format number
         goto badfile;
     else file_format=toInt(line);
+
+    FileData.RecentFormatVersion = file_format;
 
     nextLine();
     FileData.EpisodeTitle = removeQuotes(line);
@@ -142,7 +146,10 @@ bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldDa
     PGESTRING filePath = in.getFilePath();
     //SMBX64_File( RawData );
 
-    FileData = CreateWorldData();
+    CreateWorldData(FileData);
+
+    FileData.RecentFormat = WorldData::SMBX64;
+    FileData.RecentFormatVersion = 64;
 
     //Add path data
     if(!IsEmpty(filePath))
@@ -166,6 +173,8 @@ bool FileFormats::ReadSMBX64WldFile(PGE_FileFormats_misc::TextInput &in, WorldDa
 
     nextLine();   //Read first line
     UIntVar(file_format, line);//File format number
+
+    FileData.RecentFormatVersion = file_format;
 
     nextLine(); strVar(FileData.EpisodeTitle, line);
 
@@ -378,6 +387,9 @@ bool FileFormats::WriteSMBX64WldFile(PGE_FileFormats_misc::TextOutput &out, Worl
     if(file_format<0) file_format = 0;
     else
     if(file_format>64) file_format = 64;
+
+    FileData.RecentFormat = WorldData::SMBX64;
+    FileData.RecentFormatVersion = file_format;
 
     out << SMBX64::IntS(file_format);              //Format version
     out << SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title

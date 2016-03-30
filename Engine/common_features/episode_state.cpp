@@ -86,7 +86,7 @@ PlayerState EpisodeState::getPlayerState(int playerID)
             break;
         }
     }
-        return ch;
+    return ch;
 }
 
 void EpisodeState::setPlayerState(int playerID, PlayerState &state)

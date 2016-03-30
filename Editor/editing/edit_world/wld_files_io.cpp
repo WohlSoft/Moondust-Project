@@ -42,7 +42,7 @@ bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
-    WldData = FileFormats::CreateWorldData();
+    FileFormats::CreateWorldData(WldData);
     WldData.modified = true;
     WldData.untitled = true;
     StartWldData = WldData;

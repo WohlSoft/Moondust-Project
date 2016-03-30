@@ -68,6 +68,7 @@ bool FileFormats::ReadSMBX38ALvlFileHeader(PGESTRING filePath, LevelData &FileDa
 {
     errorString.clear();
     CreateLevelHeader(FileData);
+    FileData.RecentFormat = LevelData::SMBX38A;
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, false))
@@ -199,27 +200,32 @@ void SMBX65_SplitLine(PGESTRINGList &dst, PGESTRING &Src, char sep='|')
 
 /***********  Pre-defined values dependent to NPC Generator Effect field value  **************/
 
-/*  FIELD to Types/Directions conversion table
-0	1	2	3	4 <- types ___ directions
-                          /
-0	0	0	0	0       0
-0	5	0	0	17      1
-0	6	0	0	18      2
-0	7	0	0	19      3
-0	8	0	0	20  	4
-0	13	0	0	25      9
-0	14	0	0	26      10
-0	15	0	0	27      11
-0	16	0	0	28      12
+/*
+
+FIELD to Types/Directions conversion table
+2	1	0	3	4 <- types (PGE/SMBX64)
+0	1	2	3	4 <- types (SMBX-38A)
+                          ___ directions
+                         /
+0	0	0	0	0	    0
+1	5	9	13	17	    1
+2	6	10	14	18      2
+3	7	11	15	19      3
+4	8	12	16	20      4
+9	13	17	21	25      9
+10	14	18	22	26      10
+11	15	19	23	27      11
+12	16	20	24	28      12
+
 */
 
 constexpr int SMBX65_NpcGeneratorTypes[29] =
   //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
-  { 0,0,0,0,0,1,1,1,1,0,0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4};
+  { 0,2,2,2,2,1,1,1,1,0,0, 0, 0, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4 };
 
 constexpr int SMBX65_NpcGeneratorDirections[29] =
   //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
-  { 0,0,0,0,0,1,2,3,4,0,0, 0, 0, 9, 10,11,12, 1, 2, 3, 4, 0, 0, 0, 0,9, 10,11,12};
+  { 0,1,2,3,4,1,2,3,4,9,10,11,12,1, 2, 3, 4, 1, 2, 3, 4, 9, 10,11,12,9, 10,11,12};
 
 /**********************************************************************************************/
 
@@ -231,6 +237,8 @@ bool FileFormats::ReadSMBX38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelD
     PGESTRING filePath = in.getFilePath();
     errorString.clear();
     CreateLevelData(FileData);
+
+    FileData.RecentFormat = LevelData::SMBX38A;
 
     FileData.LevelName = "" ;
     FileData.stars = 0;
@@ -448,8 +456,8 @@ bool FileFormats::ReadSMBX38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelD
                         case 2: npcdata.id=96;break;
                         case 3: npcdata.id=283;break;
                         case 4: npcdata.id=284;break;
-                        default:
                         case 5: npcdata.id=300;break;
+                        default: npcdata.contents = 0; //Invalid container type
                     }
                 }
 
@@ -891,6 +899,8 @@ bool FileFormats::ReadSMBX38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, Le
     PGESTRING filePath = in.getFilePath();
     errorString.clear();
     CreateLevelData(FileData);
+
+    FileData.RecentFormat = LevelData::SMBX38A;
 
     FileData.LevelName="";
     FileData.stars=0;
@@ -2790,6 +2800,461 @@ bool FileFormats::WriteSMBX38ALvlFileRaw(LevelData &FileData, PGESTRING &rawdata
 
 bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, LevelData &FileData)
 {
+    long i = 0;
+    FileData.RecentFormat = LevelData::SMBX38A;
+
+    //Count placed stars on this level
+    FileData.stars=0;
+    for(i=0;i<(signed)FileData.npc.size();i++)
+    {
+        if(FileData.npc[i].is_star)
+            FileData.stars++;
+    }
+
+    //========================================================
+    //Data type markers:
+    //A 	    – Level header settings
+    //P1, P2 	– Player spawn points
+    //M       – Section settings
+    //B       – blocks
+    //T       – Background objects
+    //N       – Non-playable characters
+    //Q       – Liquid/Environment boxes
+    //W       – Warp entries
+    //L       – Layers
+    //E       – Events
+    //V       – Local level variables
+    //S       – UTF-8 encoded local level scripts
+    //Su      – ASCII-encoded local level scripts
+    //--------------------------------------------------------
+    //line 1:
+    //    SMBXFile??
+    //    ??=Version number
+    out << "SMBXFile66\n";
+    //next line: level settings
+    //    A|param1|param2[|param3|param4]
+    //    []=optional
+    out << "A";
+    //    param1=the number of stars on this level
+    out << "|" << fromNum(FileData.stars);
+    //    param2=level title
+    out << "|" << PGE_URLENC(FileData.LevelName);
+    if(!IsEmpty(FileData.open_level_on_fail))
+    {
+        //    param3=a filename, when player died, the player will be sent to this level.
+        out << "|" << PGE_URLENC(FileData.open_level_on_fail);
+        //    param4=normal entrance / to warp [0-WARPMAX]
+        out << "|" << fromNum(FileData.open_level_on_fail_warpID);
+    }
+    out << "\n";
+
+    //next line: player start points
+    for(i=0;i<(signed)FileData.players.size(); i++)
+    {
+    //    P1|x1|y1
+    //    P2|x2|y2
+        PlayerPoint &pl=FileData.players[i];
+        out << "P" << fromNum(pl.id);
+    //    x1=first player position x
+    //    x2=second player position x
+        out << "|" << fromNum(pl.x);
+    //    y1=first player position y
+    //    y2=second player position y
+        out << "|" << fromNum(pl.y);
+        out << "\n";
+    }
+
+    //next line: section properties
+    for(i=0; i<(signed)FileData.sections.size(); i++)
+    {
+    //    M|id|x|y|w|h|b1|b2|b3|b4|b5|b6|music|background|musicfile
+        LevelSection &sct = FileData.sections[i];
+        out << "M";
+    //    id=[1-SectionMAX]
+        out << "|" << fromNum(sct.id+1);
+    //    x=Left size[-left/+right]
+        out << "|" << fromNum(sct.size_left);
+    //    y=Top size[-down/+up]
+        out << "|" << fromNum(sct.size_top);
+    //    w=width of the section[if (w < 800) w = 800]
+        out << "|" << fromNum(sct.size_right-sct.size_left);
+    //    h=height of the section[if (h < 600) h = 600]
+        out << "|" << fromNum(sct.size_bottom-sct.size_top);
+    //    b1=under water?[0=false !0=true]
+        out << "|" << fromNum((int)sct.underwater);
+    //    b2=is x-level wrap[0=false !0=true]
+        out << "|" << fromNum(sct.wrap_h);
+    //    b3=enable off screen exit[0=false !0=true]
+        out << "|" << fromNum((int)sct.OffScreenEn);
+    //    b4=no turn back(x)[0=no x-scrolllock 1=scrolllock left 2=scrolllock right]
+        if((!sct.lock_left_scroll) && (!sct.lock_right_scroll))
+            out << "|" << fromNum(0);
+        else if((sct.lock_left_scroll) && (!sct.lock_right_scroll))
+            out << "|" << fromNum(1);
+        else
+            out << "|" << fromNum(2);
+    //    b5=no turn back(y)[0=no y-scrolllock 1=scrolllock up 2=scrolllock down]
+        if((!sct.lock_up_scroll) && (!sct.lock_down_scroll))
+            out << "|" << fromNum(0);
+        else if((sct.lock_up_scroll) && (!sct.lock_down_scroll))
+            out << "|" << fromNum(1);
+        else
+            out << "|" << fromNum(2);
+    //    b6=is y-level wrap[0=false !0=true]
+        out << "|" << fromNum(sct.wrap_v);
+    //    music=music number[same as smbx1.3]
+        out << "|" << fromNum(sct.music_id);
+    //    background=background number[same as the filename in 'background2' folder]
+        out << "|" << fromNum(sct.background);
+    //    musicfile=custom music file[***urlencode!***]
+        out << "|" << PGE_URLENC(sct.music_file);
+        out << "\n";
+    }
+
+    //next line: blocks
+    for(i=0; i<(signed)FileData.blocks.size(); i++)
+    {
+    //    B|layer|id|x|y|contain|b1|b2|e1,e2,e3|w|h
+        LevelBlock &blk = FileData.blocks[i];
+        out << "B";
+    //    layer=layer name["" == "Default"][***urlencode!***]
+        out << "|" << PGE_URLENC(blk.layer);
+    //    id=block id
+        out << "|" << fromNum(blk.id);
+    //    x=block position x
+        out << "|" << fromNum(blk.x);
+    //    y=block position y
+        out << "|" << fromNum(blk.y);
+    //    contain=containing npc number
+    //        [1001-1000+NPCMAX] npc-id
+    //        [1-999] coin number
+    //        [0] nothing
+        out << "|" << fromNum(blk.npc_id<0 ? (-1 * blk.npc_id) : (blk.npc_id+1000) );
+    //    b1=slippery[0=false !0=true]
+        out << "|" << fromNum((int)blk.slippery);
+    //    b2=invisible[0=false !0=true]
+        out << "|" << fromNum((int)blk.invisible);
+    //    e1=block destory event name[***urlencode!***]
+        out << "|" << PGE_URLENC(blk.event_destroy);
+    //    e2=block hit event name[***urlencode!***]
+        out << "|" << PGE_URLENC(blk.event_hit);
+    //    e3=no more object in layer event name[***urlencode!***]4
+        out << "|" << PGE_URLENC(blk.event_emptylayer);
+    //    w=width
+        out << "|" << fromNum(blk.w);
+    //    h=height
+        out << "|" << fromNum(blk.h);
+        out << "\n";
+    }
+
+
+    //next line: backgrounds
+    for(i=0; i<(signed)FileData.bgo.size(); i++)
+    {
+    //    T|layer|id|x|y
+        LevelBGO &bgo = FileData.bgo[i];
+        out << "T";
+    //    layer=layer name["" == "Default"][***urlencode!***]
+        out << "|" << PGE_URLENC(bgo.layer);
+    //    id=background id
+        out << "|" << fromNum(bgo.id);
+    //    x=background position x
+        out << "|" << fromNum(bgo.x);
+    //    y=background position y
+        out << "|" << fromNum(bgo.y);
+        out << "\n";
+    }
+
+    //next line: npcs
+    for(i=0; i<(signed)FileData.npc.size(); i++)
+    {
+        LevelNPC &npc = FileData.npc[i];
+        //Pre-convert some data into SMBX-38A compatible format
+        int npcID = npc.id;
+        int containerType = 0;
+        int specialData = npc.special_data;
+        switch(npcID)//Convert npcID and contents ID into container type
+        {
+            case 91:  containerType=1; break;
+            case 96:  containerType=2; break;
+            case 283: containerType=3; break;
+            case 284: containerType=4; break;
+            case 300: containerType=5; break;
+            default:
+            containerType=0; break;
+        }
+        if(containerType != 0)
+        {
+            //Set NPC-ID of contents as main NPC-ID for this NPC
+            npcID = npc.contents;
+        }
+
+        //Convert "Is Boss" flag into special ID
+        switch(npc.id)
+        {
+            case 15: case 39: case 86:
+            if(npc.is_boss)
+            {
+                specialData = (int)npc.is_boss;
+            }
+            default: break;
+        }
+        //Convert generator type and direction into SMBX-38A Compatible format
+        int genType_1 = npc.generator_type;
+        //Swap "Appear" and "Projectile" types
+        switch(genType_1)
+        {
+            case 0: genType_1 = 2;break;
+            case 2: genType_1 = 0;break;
+        }
+        int genType_2 = npc.direct;
+        int genType = (genType_1 != 0) ? ( (4*genType_1) + genType_2 ) : 0 ;
+
+    //    N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
+        out << "N";
+    //    layer=layer name["" == "Default"][***urlencode!***]
+        out << "|" << PGE_URLENC(npc.layer);
+    //    id=npc id
+        out << "|" << fromNum(npcID);
+    //    x=npc position x
+        out << "|" << fromNum(npc.x);
+    //    y=npc position y
+        out << "|" << fromNum(npc.y);
+    //    b1=[1]left [0]random [-1]right
+            out << "|" << fromNum( -1 * npc.direct );
+    //    b2=friendly npc
+            out << "," << fromNum((int)npc.friendly);
+    //    b3=don't move npc
+            out << "," << fromNum((int)npc.nomove);
+    //    b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
+            out << "," << fromNum( containerType );
+    //    sp=special option
+        out << "|" << fromNum( specialData );
+    //        [***urlencode!***]
+    //        e1=death event
+        out << "|" << PGE_URLENC(npc.event_die);
+    //        e2=talk event
+            out << "," << PGE_URLENC(npc.event_talk);
+    //        e3=activate event
+            out << "," << PGE_URLENC(npc.event_activate);
+    //        e4=no more object in layer event
+            out << "," << PGE_URLENC(npc.event_emptylayer);
+    //        e5=grabed event
+            out << "," << PGE_URLENC(npc.event_grab);
+    //        e6=next frame event
+            out << "," << PGE_URLENC(npc.event_nextframe);
+    //        e7=touch event
+            out << "," << PGE_URLENC(npc.event_touch);
+    //        a1=layer name to attach
+            out << "|" << PGE_URLENC(npc.attach_layer);
+    //        a2=variable name to send
+            out << "," << PGE_URLENC(npc.send_id_to_variable);
+    //    c1=generator enable
+        out << "|" << fromNum((int)npc.generator);
+    //        [if c1!=0]
+        if(npc.generator)
+        {
+    //        c2=generator period[1 frame]
+            //Convert deciseconds into frames with rounding
+            out << "," << fromNum( (int)round(((double)npc.generator_period * 100.0)/65.0) );
+    //        c3=generator effect
+    //            c3-1 [1=warp][0=projective][4=no effect]
+    //            c3-2 [0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]
+    //                if (c3-2)!=0
+    //                c3=4*(c3-1)+(c3-2)
+    //                else
+    //                c3=0
+            out << "," << fromNum(genType);
+    //        c4=generator direction[angle][when c3=0]
+            out << "," << fromNum(npc.generator_custom_angle);
+    //        c5=batch[when c3=0][MAX=32]
+            out << "," << fromNum(npc.generator_branches);
+    //        c6=angle range[when c3=0]
+            out << "," << fromNum(npc.generator_angle_range);
+    //        c7=speed[when c3=0][float]
+            out << "," << fromNum(npc.generator_initial_speed);
+        }
+    //    msg=message by this npc talkative[***urlencode!***]
+        if(!IsEmpty(npc.msg))
+        {
+            out << "," << PGE_URLENC(npc.msg);
+        }
+        out << "\n";
+    }
+
+
+    //next line: waters
+    //    Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
+    //    layer=layer name["" == "Default"][***urlencode!***]
+    //    x=position x
+    //    y=position y
+    //    w=width
+    //    h=height
+    //    b1=liquid type
+    //        01-Water[friction=0.5]
+    //        02-Quicksand[friction=0.1]
+    //        03-Custom Water
+    //        04-Gravitational Field
+    //        05-Event Once
+    //        06-Event Always
+    //        07-NPC Event Once
+    //        08-NPC Event Always
+    //        09-Click Event
+    //        10-Collision Script
+    //        11-Click Script
+    //        12-Collision Event
+    //        13-Air
+    //    b2=friction
+    //    b3=Acceleration Direction
+    //    b4=Acceleration
+    //    b5=Maximum Velocity
+    //    event=touch event
+
+
+
+    //next line: warps
+    //    W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
+    //    layer=layer name["" == "Default"][***urlencode!***]
+    //    x=entrance position x
+    //    y=entrance postion y
+    //    ex=exit position x
+    //    ey=exit position y
+    //    type=[1=pipe][2=door][0=instant]
+    //    enterd=entrance direction[1=up 2=left 3=down 4=right]
+    //    exitd=exit direction[1=up 2=left 3=down 4=right]
+    //    sn=need stars for enter
+    //    msg=a message when you have not enough stars
+    //    hide=hide the star number in this warp
+    //    locked=locked
+    //    noyoshi=no yoshi
+    //    canpick=allow npc
+    //    bomb=need a bomb
+    //    hide=hide the entry scene
+    //    anpc=allow npc interlevel
+    //    mini=Mini-Only
+    //    size=Warp Size(pixel)
+    //    lik=warp to level[***urlencode!***]
+    //    liid=normal enterance / to warp[0-WARPMAX]
+    //    noexit=level entrance
+    //    wx=warp to x on world map
+    //    wy=warp to y on world map
+    //    le=level exit
+    //    we=warp event[***urlencode!***]
+
+
+
+    //next line: layers
+    //    L|name|status
+    //    name=layer name[***urlencode!***]
+    //    status=is hidden layer
+
+
+
+    //next line: events
+    //    E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
+    //    name=event name[***urlencode!***]
+    //    msg=show message after start event[***urlencode!***]
+    //    ea=val,syntax
+    //        val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
+    //        syntax=condidtion expression[***urlencode!***]
+    //    el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn
+    //        b=no smoke[0=false !0=true]
+    //        [***urlencode!***]
+    //        s(n)=show layer
+    //        l(n)=hide layer
+    //        t(n)=toggle layer
+    //    elm=elm1/elm2...elmn
+    //        elm(n)=layername,horizontal syntax,vertical syntax,way
+    //        layername=layer name for movement[***urlencode!***]
+    //        horizontal syntax,vertical syntax[***urlencode!***][syntax]
+    //        way=[0=by speed][1=by Coordinate]
+    //    epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
+    //        b1=enable player controls
+    //        b2=drop
+    //        b3=alt run
+    //        b4=run
+    //        b5=jump
+    //        b6=alt jump
+    //        b7=up
+    //        b8=down
+    //        b9=left
+    //        b10=right
+    //        b11=start
+    //        b12=lock keyboard
+    //    eps=esection/ebackground/emusic
+    //        esection=es1:es2...esn
+    //        ebackground=eb1:eb2...ebn
+    //        emusic=em1:em2...emn
+    //            es=id,x,y,w,h,auto,sx,sy
+    //                id=section id
+    //                stype=[0=don't change][1=default][2=custom]
+    //                x=left x coordinates for section [id][***urlencode!***][syntax]
+    //                y=top y coordinates for section [id][***urlencode!***][syntax]
+    //                w=width for section [id][***urlencode!***][syntax]
+    //                h=height for section [id][***urlencode!***][syntax]
+    //                auto=enable autoscroll controls[0=false !0=true]
+    //                sx=move screen horizontal syntax[***urlencode!***][syntax]
+    //                sy=move screen vertical syntax[***urlencode!***][syntax]
+    //            eb=id,btype,backgroundid
+    //                id=section id
+    //                btype=[0=don't change][1=default][2=custom]
+    //                backgroundid=[when btype=2]custom background id
+    //            em=id,mtype,musicid,customfile
+    //                id=section id
+    //                mtype=[0=don't change][1=default][2=custom]
+    //                musicid=[when mtype=2]custom music id
+    //                customfile=[when mtype=3]custom music file name[***urlencode!***]
+    //    eef=sound/endgame/ce1/ce2...cen
+    //        sound=play sound number
+    //        endgame=[0=none][1=bowser defeat]
+    //        ce(n)=id,x,y,sx,sy,grv,fsp,life
+    //            id=effect id
+    //            x=effect position x[***urlencode!***][syntax]
+    //            y=effect position y[***urlencode!***][syntax]
+    //            sx=effect horizontal speed[***urlencode!***][syntax]
+    //            sy=effect vertical speed[***urlencode!***][syntax]
+    //            grv=to decide whether the effects are affected by gravity[0=false !0=true]
+    //            fsp=frame speed of effect generated
+    //            life=effect existed over this time will be destroyed.
+    //    ecn=cn1/cn2...cnn
+    //        cn(n)=id,x,y,sx,sy,sp
+    //            id=npc id
+    //            x=npc position x[***urlencode!***][syntax]
+    //            y=npc position y[***urlencode!***][syntax]
+    //            sx=npc horizontal speed[***urlencode!***][syntax]
+    //            sy=npc vertical speed[***urlencode!***][syntax]
+    //            sp=advanced settings of generated npc
+    //    evc=vc1/vc2...vcn
+    //        vc(n)=name,newvalue
+    //            name=variable name[***urlencode!***]
+    //            newvalue=new value[***urlencode!***][syntax]
+    //    ene=nextevent/timer/apievent/scriptname
+    //        nextevent=name,delay
+    //            name=trigger event name[***urlencode!***]
+    //            delay=trigger delay[1 frame]
+    //        timer=enable,count,interval,type,show
+    //            enable=enable the game timer controlling[0=false !0=true]
+    //            count=set the time left of the game timer
+    //            interval=set the time count interval of the game timer
+    //            type=to choose the way timer counts[0=counting down][1=counting up]
+    //            show=to choose whether the game timer is showed in hud[0=false !0=true]
+    //        apievent=the id of apievent
+    //        scriptname=script name[***urlencode!***]
+
+
+    //next line: variables
+    //    V|name|value
+    //    name=variable name[***urlencode!***]
+    //    value=initial value of the variable
+
+
+    //next line: scripts
+    //    S|name|script
+    //    Su|name|scriptu
+    //    name=name of script[***urlencode!***]
+    //    script=script[***base64encode!***][utf-8]
+    //    scriptu=script[***base64encode!***][ASCII]
+
     return false;
 }
 

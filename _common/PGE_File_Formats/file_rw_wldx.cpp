@@ -42,7 +42,8 @@
 
 bool FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath, WorldData &FileData)
 {
-    FileData = CreateWorldData();
+    CreateWorldHeader(FileData);
+    FileData.RecentFormat = WorldData::PGEX;
 
     PGE_FileFormats_misc::TextFileInput  inf;
     if(!inf.open(filePath, true))
@@ -179,7 +180,8 @@ bool FileFormats::ReadExtendedWldFile(PGE_FileFormats_misc::TextInput &in, World
 
      PGESTRING filePath = in.getFilePath();
 
-     FileData = CreateWorldData();
+     CreateWorldData(FileData);
+     FileData.RecentFormat = WorldData::PGEX;
 
      //Add path data
      if(!IsEmpty(filePath))
@@ -473,6 +475,8 @@ bool FileFormats::WriteExtendedWldFile(PGE_FileFormats_misc::TextOutput &out, Wo
 {
     long i;
     bool addArray=false;
+
+    FileData.RecentFormat = WorldData::PGEX;
 
     addArray=false;
     for(int z=0; z<(signed)FileData.nocharacter.size();z++)

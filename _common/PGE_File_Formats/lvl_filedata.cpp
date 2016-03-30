@@ -484,35 +484,6 @@ PlayerPoint FileFormats::CreateLvlPlayerPoint(int id)
     return dummyPlayer;
 }
 
-void FileFormats::CreateLevelHeader(LevelData &NewFileData)
-{
-    NewFileData.ReadFileValid = true;
-    NewFileData.modified = true;
-    NewFileData.untitled = true;
-    NewFileData.smbx64strict = false;
-
-    NewFileData.CurSection=0;
-    NewFileData.playmusic=0;
-
-    NewFileData.LevelName = "";
-    NewFileData.stars = 0;
-
-    NewFileData.bgo_array_id = 1;
-    NewFileData.blocks_array_id = 1;
-    NewFileData.doors_array_id = 1;
-    NewFileData.events_array_id = 1;
-    NewFileData.layers_array_id = 1;
-    NewFileData.npc_array_id = 1;
-    NewFileData.physenv_array_id = 1;
-
-    //Meta-data
-    #ifdef PGE_EDITOR
-    NewFileData.metaData.script = NULL;
-    #endif
-    NewFileData.metaData.ReadFileValid=true;
-    NewFileData.metaData.ERROR_linenum=-1;
-}
-
 void FileFormats::LevelAddInternalEvents(LevelData &FileData)
 {
     LevelLayer layers;
@@ -595,21 +566,45 @@ void FileFormats::LevelAddInternalEvents(LevelData &FileData)
     }
 }
 
-void FileFormats::CreateLevelData(LevelData &NewFileData)
+
+void FileFormats::CreateLevelHeader(LevelData &NewFileData)
 {
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
     NewFileData.smbx64strict = false;
 
+    NewFileData.RecentFormat = LevelData::PGEX;
+    NewFileData.RecentFormatVersion = 64;
+
+    NewFileData.ERROR_info = "";
+    NewFileData.ERROR_linedata = "";
+    NewFileData.ERROR_linenum = -1;
+
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;
+    NewFileData.filename = "";
+    NewFileData.path = "";
+
+    NewFileData.open_level_on_fail = "";
+    NewFileData.open_level_on_fail_warpID = 0;
 
     NewFileData.LevelName = "";
     NewFileData.stars = 0;
 
-    NewFileData.open_level_on_fail = "";
-    NewFileData.open_level_on_fail_warpID = 0;
+    //Meta-data
+    #ifdef PGE_EDITOR
+    NewFileData.metaData.script = NULL;
+    #endif
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_info="";
+    NewFileData.metaData.ERROR_linedata="";
+    NewFileData.metaData.ERROR_linenum=-1;
+}
+
+void FileFormats::CreateLevelData(LevelData &NewFileData)
+{
+    CreateLevelHeader(NewFileData);
 
     NewFileData.bgo_array_id = 1;
     NewFileData.blocks_array_id = 1;
@@ -618,13 +613,6 @@ void FileFormats::CreateLevelData(LevelData &NewFileData)
     NewFileData.layers_array_id = 1;
     NewFileData.npc_array_id = 1;
     NewFileData.physenv_array_id = 1;
-
-    //Meta-data
-    #ifdef PGE_EDITOR
-    NewFileData.metaData.script = NULL;
-    #endif
-    NewFileData.metaData.ReadFileValid=true;
-    NewFileData.metaData.ERROR_linenum=-1;
 
     NewFileData.sections.clear();
     //Create Section array
@@ -637,7 +625,6 @@ void FileFormats::CreateLevelData(LevelData &NewFileData)
     }
 
     NewFileData.players.clear();
-
     //Create players array
     //PlayerPoint players = dummyLvlPlayerPoint();
     //    for(int i=0; i<2;i++)
