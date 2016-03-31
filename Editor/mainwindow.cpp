@@ -198,6 +198,23 @@ MainWindow::~MainWindow()
 #ifdef Q_OS_WIN
     if(pge_thumbbar)
         delete pge_thumbbar;
+
+    DWORD lpExitCode=0;
+    if(GetExitCodeProcess(m_luna_pi.hProcess, &lpExitCode))
+    {
+        if(lpExitCode==STILL_ACTIVE)
+        {
+            WaitForSingleObject(m_luna_pi.hProcess, 100);
+            TerminateProcess(m_luna_pi.hProcess, lpExitCode);
+            CloseHandle(m_luna_pi.hProcess);
+        }
+    }
+
+    if(m_luna_ipc_pipe)
+    {
+        CloseHandle(m_luna_ipc_pipe);
+        m_luna_ipc_pipe = 0;
+    }
 #endif
     delete ui;
 }

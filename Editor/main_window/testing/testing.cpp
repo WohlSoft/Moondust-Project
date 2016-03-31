@@ -492,7 +492,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
     Q_UNUSED(mlocker);
 
 #ifdef Q_OS_WIN
-    if(activeChildWindow()==1)
+    if( activeChildWindow() == 1 )
     {
         // Is SMBX Editor already running. If running,
         // do old method - send path to already running editor
@@ -527,12 +527,24 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                             //Stop music playback in the PGE Editor!
                             setMusicButton(false);
                             on_actionPlayMusic_triggered(false);
+
+                            //Set focus to SMBX Window
+                            HWND smbxTestingWind = FindWindowA("ThunderRT6FormDC", NULL);
+
+                            if(smbxTestingWind)
+                            {
+                                //Restore window
+                                SetForegroundWindow(smbxTestingWind);
+                                ShowWindow(smbxTestingWind, SW_SHOW);
+                                SetFocus(smbxTestingWind);
+                            }
                         }
                     }
                     else if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
-                                         tr("SMBX Engine is already testing another level.\n"
-                                            "Do you want to abort current testing process?"),
-                                         QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+                             tr("SMBX Engine is already testing another level.\n"
+                                "Do you want to abort current testing process?"),
+                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort)
+                    {
                         WaitForSingleObject(m_luna_pi.hProcess, 100);
                         TerminateProcess(m_luna_pi.hProcess, lpExitCode);
                         CloseHandle(m_luna_pi.hProcess);
