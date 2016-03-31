@@ -26,6 +26,20 @@ obj_npc::obj_npc()
     isValid     = false;
     animator_id = 0;
     cur_image   = NULL;
+    id = 0;
+    gfx_offset_x = 0;
+    gfx_offset_y = 0;
+    gfx_w = 32;
+    gfx_h = 32;
+    grid = 32;
+    grid_offset_x = 0;
+    grid_offset_y = 0;
+    grid_attach_style = 0;
+    framestyle = 0;
+    frames = 1;
+    framespeed = 80;
+    width = 32;
+    height = 32;
 }
 
 void obj_npc::copyTo(obj_npc &npc)
