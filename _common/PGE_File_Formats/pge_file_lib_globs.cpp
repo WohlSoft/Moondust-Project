@@ -189,7 +189,7 @@ namespace PGE_FileFormats_misc
     QString      base64_encodeA(QString &source)
     {
         return QString::fromStdString(
-                    base64_encode(reinterpret_cast<const unsigned char*>(source.toLocal8Bit().data()),
+                    base64_encode(reinterpret_cast<const unsigned char*>(source.toLatin1().data()),
                                   source.size())
                                      );
     }
@@ -197,12 +197,14 @@ namespace PGE_FileFormats_misc
     QString      base64_decodeA(QString &source)
     {
         std::string sout=base64_decode(source.toStdString());
-        return QString::fromLocal8Bit(sout.data(), sout.size());
+        return QString::fromLatin1(sout.data(), sout.size());
     }
 
     QString      base64_encode(QString &source)
     {
         std::string out(source.toUtf8().data());
+        if( (out.size()==0) || (out[out.size()-1]!='\0') )
+            out.push_back('\0');
         return QString::fromStdString(
                     base64_encode(reinterpret_cast<const unsigned char*>(out.data()),
                                   out.size())
@@ -351,6 +353,13 @@ namespace PGE_FileFormats_misc
 
             for (j = 0; (j < i - 1); j++) ret += char_array_3[j];
         }
+        //Remove zero from end
+        if(ret.size()>0)
+        {
+            if(ret[ret.size()-1]=='\0')
+                ret.resize(ret.size()-1);
+        }
+
         return ret;
     }
 

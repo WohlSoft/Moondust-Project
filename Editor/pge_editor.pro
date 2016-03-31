@@ -417,7 +417,9 @@ SOURCES += main.cpp\
     main_window/testing/testing_settings.cpp \
     common_features/file_mapper.cpp \
     editing/_scenes/level/edit_modes/mode_circle.cpp \
-    editing/_scenes/world/edit_modes/wld_mode_circle.cpp
+    editing/_scenes/world/edit_modes/wld_mode_circle.cpp \
+    main_window/dock/variables_box.cpp \
+    main_window/script/script_editor.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -617,7 +619,9 @@ HEADERS  += defines.h \
     common_features/data_array.h \
     common_features/file_mapper.h \
     editing/_scenes/level/edit_modes/mode_circle.h \
-    editing/_scenes/world/edit_modes/wld_mode_circle.h
+    editing/_scenes/world/edit_modes/wld_mode_circle.h \
+    main_window/dock/variables_box.h \
+    main_window/script/script_editor.h
 
 FORMS    += \
     common_features/crashhandler.ui \
@@ -666,7 +670,9 @@ FORMS    += \
     main_window/dock/wld_settings_box.ui \
     main_window/dock/lvl_events_box.ui \
     main_window/tip_of_day/tip_of_day.ui \
-    main_window/testing/testing_settings.ui
+    main_window/testing/testing_settings.ui \
+    main_window/dock/variables_box.ui \
+    main_window/script/script_editor.ui
 
 
 

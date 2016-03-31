@@ -49,9 +49,10 @@ public:
     bool loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, LevelEditingSettings options);
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
-    bool saveFile(const QString &fileName, const bool addToRecent = true);
-    bool saveSMBX64LVL(QString fileName, bool silent=false);//!< Saves a SMBX Level file format
+    bool saveFile(const QString &fileName, const bool addToRecent = true, bool *out_WarningIsAborted = 0);
     bool savePGEXLVL(QString fileName, bool silent=false); //!< Saves a PGE Extended Level file format
+    bool saveSMBX64LVL(QString fileName, bool silent=false, bool *out_WarningIsAborted = 0);//!< Saves a SMBX Level file format
+    bool saveSMBX38aLVL(QString fileName, bool silent=false); //!< Saves SMBX38A Level file format
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
     void makeCrashState();

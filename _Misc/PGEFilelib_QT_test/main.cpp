@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     }
 
     printLine(cout);
-    cout << "\n\nSMBX65-38A Level Read test:" << endl;
+    cout << "\n\nSMBX65-38A Level Read test #1:" << endl;
     FileFormats::OpenLevelFile("test_65-38a.lvl", level);
     cout << level.filename << "\n";
     cout << level.path << "\n";
@@ -110,6 +110,19 @@ int main(int argc, char *argv[])
     } else {
         printLevelInfo(level,cout);
         FileFormats::WriteExtendedLvlFileF("test_65-38a-out.lvlx", level);
+    }
+
+    printLine(cout);
+    cout << "\n\nSMBX65-38A Level Read test #2:" << endl;
+    FileFormats::OpenLevelFile("test-38a-2.lvl", level);
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+        FileFormats::WriteExtendedLvlFileF("test_65-38a-2-out.lvlx", level);
     }
 
     /**********************DEEP TEST OF SMBX38A files*********************/

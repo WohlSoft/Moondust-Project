@@ -3387,29 +3387,65 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
         out << fromNum(evt.sound_id);
     //        endgame=[0=none][1=bowser defeat]
         out << "/" << fromNum(evt.end_game);
+        for(int j=0; j<evt.spawn_effects.size(); j++)
+        {
+            LevelEvent_SpawnEffect &eff = evt.spawn_effects[j];
     //        ce(n)=id,x,y,sx,sy,grv,fsp,life
     //            id=effect id
+            out        << fromNum(eff.id);
     //            x=effect position x[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(eff.expression_x);
     //            y=effect position y[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(eff.expression_y);
     //            sx=effect horizontal speed[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(eff.expression_sx);
     //            sy=effect vertical speed[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(eff.expression_sy);
     //            grv=to decide whether the effects are affected by gravity[0=false !0=true]
+            out << "," << fromNum((int)eff.gravity);
     //            fsp=frame speed of effect generated
+            out << "," << fromNum(eff.fps);
     //            life=effect existed over this time will be destroyed.
+            out << "," << fromNum(eff.max_life_time);
+            if(j<(evt.spawn_effects.size()-1))
+                out << "/";
+        }
         out << "|";
+
     //    ecn=cn1/cn2...cnn
+        for(int j=0; j<evt.spawn_npc.size(); j++)
+        {
+            LevelEvent_SpawnNPC &snpc = evt.spawn_npc[j];
     //        cn(n)=id,x,y,sx,sy,sp
+            if(j>0)
+                out << "/";
     //            id=npc id
+            out        << fromNum(snpc.id);
     //            x=npc position x[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(snpc.expression_x);
     //            y=npc position y[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(snpc.expression_y);
     //            sx=npc horizontal speed[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(snpc.expression_sx);
     //            sy=npc vertical speed[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(snpc.expression_sy);
     //            sp=advanced settings of generated npc
+            out << "," << fromNum(snpc.special);
+        }
         out << "|";
     //    evc=vc1/vc2...vcn
+        for(int j=0; j<evt.update_variable.size(); j++)
+        {
+            LevelEvent_UpdateVariable &uvar= evt.update_variable[j];
+            if(j>0)
+            out << "/";
     //        vc(n)=name,newvalue
+            out        << PGE_URLENC( uvar.name );
     //            name=variable name[***urlencode!***]
+            out << "," << PGE_URLENC( uvar.newval );
     //            newvalue=new value[***urlencode!***][syntax]
+        }
+
         out << "|";
     //    ene=nextevent/timer/apievent/scriptname
     //        nextevent=name,delay
@@ -3435,22 +3471,38 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
         out << "\n";
     }
 
-
     //next line: variables
+    for(i=0; i<(signed)FileData.variables.size(); i++)
+    {
+        LevelVariable &var = FileData.variables[i];
     //    V|name|value
+        out << "V";
     //    name=variable name[***urlencode!***]
+        out << "|" << PGE_URLENC(var.name);
     //    value=initial value of the variable
-
+        if(SMBX64::sInt(var.value))//if is not signed integer, set value as zero
+            out << "|" << fromNum(0);
+        else
+            out << "|" << var.value;
+        out << "\n";
+    }
 
     //next line: scripts
+    for(i=0; i<(signed)FileData.scripts.size(); i++)
+    {
+        LevelScript &script= FileData.scripts[i];
     //    S|name|script
+        out << "S";
     //    Su|name|scriptu
     //    name=name of script[***urlencode!***]
+        out << "|" << PGE_URLENC(script.name);
     //    script=script[***base64encode!***][utf-8]
+        out << "|" << PGE_BASE64ENC(script.script);
     //    scriptu=script[***base64encode!***][ASCII]
+        out << "\n";
+    }
 
-
-    return false;
+    return true;
 }
 
 

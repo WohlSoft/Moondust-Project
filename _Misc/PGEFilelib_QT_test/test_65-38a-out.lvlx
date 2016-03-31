@@ -2820,7 +2820,7 @@ VARIABLES
 N:"NewVariable";V:"0";
 VARIABLES_END
 SCRIPTS
-N:"Scrip";L:2;S:"'Привет\, это я =)\n'????\,????!";
-N:"Script1";L:2;S:"'Привет\, это скрипт!\n\n'Давай сыграем в игру! =)\n'не\, это не пила\, просто скучно и я хочу играть!!!\n\n'???????\n' xD";
-N:"Script2";L:2;S:"'Script No.2 Name\:New Script\n'English scripts are not so fine\, because \n'it's dumb comment! \:P";
+N:"Scrip";L:2;S:"'ГЏГ°ГЁГўГҐГІ\, ГЅГІГ® Гї =)\n'????\,????!";
+N:"Script1";L:2;S:"'ГЏГ°ГЁГўГҐГІ\, ГЅГІГ® Г±ГЄГ°ГЁГЇГІ!\r\n\r\n'Г„Г ГўГ Г© Г±Г»ГЈГ°Г ГҐГ¬ Гў ГЁГЈГ°Гі! =)\r\n'Г­ГҐ\, ГЅГІГ® Г­ГҐ ГЇГЁГ«Г \, ГЇГ°Г®Г±ГІГ® Г±ГЄГіГ·Г­Г® ГЁ Гї ГµГ®Г·Гі ГЁГЈГ°Г ГІГј!!!\r\n\r\n'???????\r\n' xD";
+N:"Script2";L:2;S:"'Script No.2 Name\:New Script\r\n'English scripts are not so fine\, because \r\n'it's dumb comment! \:P";
 SCRIPTS_END

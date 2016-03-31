@@ -550,6 +550,7 @@ PGESTRING PGEFile::encodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
     output=PGE_ReplSTRING(output, "\\n", "==n==");
+    output=PGE_ReplSTRING(output, "\\r", "==r==");
     output=PGE_ReplSTRING(output, "\\\"", "==q==");
     output=PGE_ReplSTRING(output, "\\\\", "==sl==");
     output=PGE_ReplSTRING(output, "\\;", "==Sc==");
@@ -565,6 +566,7 @@ PGESTRING PGEFile::decodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
     output=PGE_ReplSTRING(output, "==n==", "\\n");
+    output=PGE_ReplSTRING(output, "==r==", "\\r");
     output=PGE_ReplSTRING(output, "==q==", "\\\"");
     output=PGE_ReplSTRING(output, "==sl==","\\\\");
     output=PGE_ReplSTRING(output, "==Sc==", "\\;");
@@ -589,6 +591,7 @@ PGESTRING PGEFile::restoreString(PGESTRING input)
 {
     PGESTRING output = input;
     output=PGE_ReplSTRING(output, "\\n", "\n");
+    output=PGE_ReplSTRING(output, "\\r", "\r");
     output=PGE_ReplSTRING(output, "\\\"", "\"");
     output=PGE_ReplSTRING(output, "\\;", ";");
     output=PGE_ReplSTRING(output, "\\:", ":");
@@ -605,6 +608,7 @@ PGESTRING PGEFile::escapeString(PGESTRING input)
     PGESTRING output = input;
     output=PGE_ReplSTRING(output, "\\", "\\\\");
     output=PGE_ReplSTRING(output, "\n", "\\n");
+    output=PGE_ReplSTRING(output, "\r", "\\r");
     output=PGE_ReplSTRING(output, "\"", "\\\"");
     output=PGE_ReplSTRING(output, ";", "\\;");
     output=PGE_ReplSTRING(output, ":", "\\:");
