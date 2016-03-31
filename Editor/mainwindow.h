@@ -752,6 +752,7 @@ public:
         #ifdef _WIN32
         //! LunaLoader process information
         PROCESS_INFORMATION m_luna_pi;
+        HANDLE m_luna_ipc_pipe;
         #endif
 
 // ////////////////////Unsorted slots/////////////////////////////

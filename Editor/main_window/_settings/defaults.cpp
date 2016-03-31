@@ -72,6 +72,7 @@ void MainWindow::setDefaults()
 #ifdef Q_OS_WIN
     pge_thumbbar = NULL;
     m_luna_pi={0, 0, 0, 0};
+    m_luna_ipc_pipe=0;
 #endif
 }
 
