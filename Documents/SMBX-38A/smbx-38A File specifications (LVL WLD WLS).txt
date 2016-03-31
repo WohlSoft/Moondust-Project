@@ -1,4 +1,4 @@
-========================================================
+﻿========================================================
 SMBX-38A file formats
 ========================================================
 Developed by Chinese developer named as 5438A38A for usage in re-developed SMBX 1.4.x
@@ -181,7 +181,7 @@ next line: warps
 next line: layers
 	L|name|status
 	name=layer name[***urlencode!***]
-	status=is hidden layer
+	status=is vizible layer
 next line: events
 	E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
 	name=event name[***urlencode!***]
