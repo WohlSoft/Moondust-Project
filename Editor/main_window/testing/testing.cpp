@@ -424,6 +424,68 @@ static bool SMBXEditorIsStarted()
 }
 #endif//Q_OS_WIN
 
+#ifdef Q_OS_WIN
+static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
+{
+    //{"jsonrpc": "2.0", "method": "testLevel", "params":
+    //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}]},
+    //"id": 3}
+
+    //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
+
+    if( (hInputWrite == 0) || (ed == NULL) )
+    {
+        return false;
+    }
+
+    QJsonDocument jsonOut;
+    QJsonObject jsonObj;
+    jsonObj["jsonrpc"] = "2.0";
+    jsonObj["method"] = "testLevel";
+
+        QJsonObject JSONparams;
+
+        if( !ed->isUntitled )
+            JSONparams["filename"] = ed->curFile;
+        else
+            JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
+
+        QString LVLRawData;
+        //To don't affect level data state, need to make a separated copy of structure
+        LevelData LVLDataCopy = ed->LvlData;
+        //Generate actual SMBX64 Level file data
+        FileFormats::WriteSMBX64LvlFileRaw(LVLDataCopy, LVLRawData, 64);
+        //Set CRLF
+        LVLRawData.replace("\n", "\r\n");
+        //Store data into JSON
+        JSONparams["leveldata"] = LVLRawData;
+
+    jsonObj["params"] = JSONparams;
+    jsonObj["id"] = 3;
+    jsonOut.setObject(jsonObj);
+    QByteArray outputJSON = jsonOut.toJson();
+
+    //Converting JSON data into net string
+    std::string dataToSend = outputJSON.toStdString();
+    int len = dataToSend.size();
+    std::string len_std = std::to_string(len) + ":";
+    dataToSend.insert(0, len_std.c_str(), len_std.size());
+    dataToSend.push_back(',');
+
+    DWORD writtenBytes=0;
+
+    //Send data to SMBX
+    if(WriteFile(hInputWrite,
+              (LPCVOID)dataToSend.c_str(),
+              (DWORD)dataToSend.size(),
+              &writtenBytes, NULL)==TRUE)
+    {
+        return true;
+    }
+    return false;
+}
+#endif//Q_OS_WIN
+
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
     QMutexLocker mlocker(&engine_mutex);
@@ -451,14 +513,29 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             {
                 if(lpExitCode==STILL_ACTIVE)
                 {
-                    if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
+                    if( m_luna_ipc_pipe != 0 )
+                    {
+                        LevelEdit* ed = activeLvlEditWin();
+                        if(!ed)
+                        {
+                            QMessageBox::critical(this, "Internal error", "Can't start level testing, because activeLvlEditWin() returned NULL");
+                            return;
+                        }
+
+                        if ( SendLevelDataToLunaLuaSMBX(ed, m_luna_ipc_pipe) )
+                        {
+                            //Stop music playback in the PGE Editor!
+                            setMusicButton(false);
+                            on_actionPlayMusic_triggered(false);
+                        }
+                    }
+                    else if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
                                          tr("SMBX Engine is already testing another level.\n"
                                             "Do you want to abort current testing process?"),
                                          QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
                         WaitForSingleObject(m_luna_pi.hProcess, 100);
                         TerminateProcess(m_luna_pi.hProcess, lpExitCode);
                         CloseHandle(m_luna_pi.hProcess);
-
                     }
                     return;
                 }
@@ -674,43 +751,12 @@ void MainWindow::on_actionRunTestSMBX_triggered()
              **********************************************/
                 params << "--waitForIPC";
 
-                //{"jsonrpc": "2.0", "method": "testLevel", "params":
-                //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}]},
-                //"id": 3}
-
-                //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
-
-                QJsonDocument jsonOut;
-                QJsonObject jsonObj;
-                jsonObj["jsonrpc"] = "2.0";
-                jsonObj["method"] = "testLevel";
-
-                    QJsonObject JSONparams;
-                    LevelEdit* ed = activeLvlEditWin();
-                    if(!ed)
-                    {
-                        QMessageBox::critical(this, "Internal error", "Can't start level testing, because activeLvlEditWin() returned NULL");
-                        return;
-                    }
-                    if( !ed->isUntitled )
-                        JSONparams["filename"] = ed->curFile;
-                    else
-                        JSONparams["filename"] = ApplicationPath+"/untitled.lvl";
-
-                    QString LVLRawData;
-                    //To don't affect level data state, need to make a separated copy of structure
-                    LevelData LVLDataCopy = ed->LvlData;
-                    //Generate actual SMBX64 Level file data
-                    FileFormats::WriteSMBX64LvlFileRaw(LVLDataCopy, LVLRawData, 64);
-                    //Set CRLF
-                    LVLRawData.replace("\n", "\r\n");
-                    //Store data into JSON
-                    JSONparams["leveldata"] = LVLRawData;
-
-                jsonObj["params"] = JSONparams;
-                jsonObj["id"] = 3;
-                jsonOut.setObject(jsonObj);
-                QByteArray outputJSON = jsonOut.toJson();
+                LevelEdit* ed = activeLvlEditWin();
+                if(!ed)
+                {
+                    QMessageBox::critical(this, "Internal error", "Can't start level testing, because activeLvlEditWin() returned NULL");
+                    return;
+                }
 
                 QString argString;
                 for (int i=0; i<params.length(); i++)
@@ -722,30 +768,22 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                     argString += params[i];
                 }
 
-                HANDLE hInputWrite;
+                // Make sure any old pipe handle is closed
+                if(m_luna_ipc_pipe)
+                {
+                    CloseHandle(m_luna_ipc_pipe);
+                    m_luna_ipc_pipe = 0;
+                }
 
                 LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
                                                      argString.toStdWString().c_str(),
                                                      smbxPath.toStdWString().c_str(),
                                                      m_luna_pi,
-                                                     &hInputWrite);
+                                                     &m_luna_ipc_pipe);
 
                 if(res==LUNALOADER_OK)
                 {
-                    //Converting JSON data into net string
-                    std::string dataToSend = outputJSON.toStdString();
-                    int len = dataToSend.size();
-                    std::string len_std = std::to_string(len) + ":";
-                    dataToSend.insert(0, len_std.c_str(), len_std.size());
-                    dataToSend.push_back(',');
-
-                    DWORD writtenBytes=0;
-
-                    //Send data to SMBX
-                    if(WriteFile(hInputWrite,
-                              (LPCVOID)dataToSend.c_str(),
-                              (DWORD)dataToSend.size(),
-                              &writtenBytes, NULL)==TRUE)
+                    if (SendLevelDataToLunaLuaSMBX(ed, m_luna_ipc_pipe))
                     {
                         //Stop music playback in the PGE Editor!
                         setMusicButton(false);
@@ -768,9 +806,6 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                     tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
                     QMessageBox::Ok);
                 }
-
-                if(hInputWrite)
-                    CloseHandle(hInputWrite);
             }//Do LunaLUA direct testing launch
         }
         else //Attempt to attach into running SMBX Editor
