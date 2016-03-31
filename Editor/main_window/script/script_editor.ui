@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ScriptEditor</class>
+ <widget class="QMainWindow" name="ScriptEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>607</width>
+    <height>452</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QMdiArea" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>607</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAddScript">
+    <property name="title">
+     <string>Add script</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionImportFile"/>
+   </widget>
+   <widget class="QMenu" name="menuRemoveScript">
+    <property name="title">
+     <string>Remove script</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuScript">
+    <property name="title">
+     <string>Script</string>
+    </property>
+    <addaction name="actionExportAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionCloseScriptEditor"/>
+   </widget>
+   <addaction name="menuScript"/>
+   <addaction name="menuAddScript"/>
+   <addaction name="menuRemoveScript"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExportAs">
+   <property name="text">
+    <string>Export as...</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionImport_2">
+   <property name="text">
+    <string>Import from file...</string>
+   </property>
+  </action>
+  <action name="actionCloseScriptEditor">
+   <property name="text">
+    <string>Close script editor</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionImportFile">
+   <property name="text">
+    <string>Import from file...</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
