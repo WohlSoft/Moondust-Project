@@ -528,16 +528,15 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                             setMusicButton(false);
                             on_actionPlayMusic_triggered(false);
 
-                            //Set focus to SMBX Window
-                            HWND smbxTestingWind = FindWindowA("ThunderRT6FormDC", NULL);
-
-                            if(smbxTestingWind)
-                            {
-                                //Restore window
-                                SetForegroundWindow(smbxTestingWind);
-                                ShowWindow(smbxTestingWind, SW_SHOW);
-                                SetFocus(smbxTestingWind);
-                            }
+                            // //Set focus to SMBX Window
+                            // HWND smbxTestingWind = FindWindowA("ThunderRT6FormDC", NULL);
+                            // if(smbxTestingWind)
+                            // {
+                            //     //Restore window
+                            //     SetForegroundWindow(smbxTestingWind);
+                            //     ShowWindow(smbxTestingWind, SW_SHOW);
+                            //     SetFocus(smbxTestingWind);
+                            // }
                         }
                     }
                     else if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
