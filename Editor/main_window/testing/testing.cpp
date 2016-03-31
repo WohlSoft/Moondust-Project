@@ -451,10 +451,15 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
             JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
 
         QString LVLRawData;
-        //To don't affect level data state, need to make a separated copy of structure
-        LevelData LVLDataCopy = ed->LvlData;
-        //Generate actual SMBX64 Level file data
-        FileFormats::WriteSMBX64LvlFileRaw(LVLDataCopy, LVLRawData, 64);
+        //To don't affect level data state, need to remember recently used file format and version identifier
+        {
+            int recentFormatBackup = ed->LvlData.RecentFormat;
+            int recentFormatVBackup = ed->LvlData.RecentFormatVersion;
+            //Generate actual SMBX64 Level file data
+            FileFormats::WriteSMBX64LvlFileRaw(ed->LvlData, LVLRawData, 64);
+            ed->LvlData.RecentFormat = recentFormatBackup;
+            ed->LvlData.RecentFormatVersion = recentFormatVBackup;
+        }
         //Set CRLF
         LVLRawData.replace("\n", "\r\n");
         //Store data into JSON
