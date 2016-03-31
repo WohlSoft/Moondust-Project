@@ -85,10 +85,9 @@ inline double    toDouble(PGESTRING str){ return str.toDouble(); }
 inline PGESTRING removeSpaces(PGESTRING src) { return src.remove(' '); }
 template<typename T>
 PGESTRING fromNum(T num) { return QString::number(num); }
-inline PGESTRING PGE_URLENC(PGESTRING &src) { return QUrl::toPercentEncoding(src).data(); }
-inline PGESTRING PGE_URLDEC(PGESTRING &src) { return QUrl::fromPercentEncoding(src.toUtf8()); }
 namespace PGE_FileFormats_misc
 {
+    PGESTRING    url_encode(const PGESTRING &sSrc);
     std::string  base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
     std::string  base64_encode(std::string const& source);
     std::string  base64_decode(std::string const& encoded_string);
@@ -99,6 +98,8 @@ namespace PGE_FileFormats_misc
     QString      base64_encodeA(QString &source);
     QString      base64_decodeA(QString &source);
 }
+inline PGESTRING PGE_URLENC(PGESTRING &src) { return PGE_FileFormats_misc::url_encode(src); }
+inline PGESTRING PGE_URLDEC(PGESTRING &src) { return QUrl::fromPercentEncoding(src.toUtf8()); }
 #define PGE_BASE64ENC(src)   PGE_FileFormats_misc::base64_encode(src)
 #define PGE_BASE64DEC(src)   PGE_FileFormats_misc::base64_decode(src)
 #define PGE_BASE64ENC_W(src) PGE_FileFormats_misc::base64_encodeW(src)
@@ -134,7 +135,7 @@ namespace PGE_FileFormats_misc
     void replaceAll(std::string& str, const std::string& from, const std::string& to);
     void RemoveSub(std::string& sInput, const std::string& sub);
     bool hasEnding (std::string const &fullString, std::string const &ending);
-    PGESTRING url_encode(const std::string &sSrc);
+    PGESTRING url_encode(const PGESTRING &sSrc);
     PGESTRING url_decode(const std::string &sSrc);
     std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
     std::string base64_encode(std::string const& source);

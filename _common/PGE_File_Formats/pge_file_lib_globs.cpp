@@ -15,7 +15,6 @@
 namespace PGE_FileFormats_misc
 {
 #ifndef PGE_FILES_QT
-
     void split(std::vector<std::string>& dest, const std::string& str, std::string separator)
     {
         #ifdef _MSC_VER
@@ -57,7 +56,39 @@ namespace PGE_FileFormats_misc
             return false;
         }
     }
+#endif
 
+    PGESTRING url_encode(const PGESTRING & sSrc)
+    {
+       const char DEC2HEX[16 + 1] = "0123456789ABCDEF";
+       #ifndef PGE_FILES_QT
+       const unsigned char * pSrc = (const unsigned char *)sSrc.c_str();
+       #else
+       std::string ssSrc = sSrc.toStdString();
+       const unsigned char * pSrc = (const unsigned char *)ssSrc.c_str();
+       #endif
+       const int SRC_LEN = sSrc.length();
+       unsigned char * const pStart = new unsigned char[SRC_LEN * 3];
+       unsigned char * pEnd = pStart;
+       const unsigned char * const SRC_END = pSrc + SRC_LEN;
+
+       for (; pSrc < SRC_END; ++pSrc)
+       {
+          //Do full encoding!
+          *pEnd++ = '%';
+          *pEnd++ = DEC2HEX[*pSrc >> 4];
+          *pEnd++ = DEC2HEX[*pSrc & 0x0F];
+       }
+       #ifndef PGE_FILES_QT
+       PGESTRING sResult((char *)pStart, (char *)pEnd);
+       #else
+       PGESTRING sResult=QString::fromUtf8((char *)pStart, (int)(pEnd-pStart));
+       #endif
+       delete [] pStart;
+       return sResult;
+    }
+
+#ifndef PGE_FILES_QT
     const char HEX2DEC[256] =
     {
         /*       0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F */
@@ -81,58 +112,6 @@ namespace PGE_FileFormats_misc
         /* E */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
         /* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
     };
-
-    // Only alphanum is safe.
-    const char SAFE[256] =
-    {
-        /*      0 1 2 3  4 5 6 7  8 9 A B  C D E F */
-        /* 0 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* 1 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* 2 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* 3 */ 1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0,
-
-        /* 4 */ 0,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
-        /* 5 */ 1,1,1,1, 1,1,1,1, 1,1,1,0, 0,0,0,0,
-        /* 6 */ 0,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
-        /* 7 */ 1,1,1,1, 1,1,1,1, 1,1,1,0, 0,0,0,0,
-
-        /* 8 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* 9 */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* A */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* B */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-
-        /* C */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* D */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* E */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        /* F */ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-    };
-
-    PGESTRING url_encode(const std::string & sSrc)
-    {
-       const char DEC2HEX[16 + 1] = "0123456789ABCDEF";
-       const unsigned char * pSrc = (const unsigned char *)sSrc.c_str();
-       const int SRC_LEN = sSrc.length();
-       unsigned char * const pStart = new unsigned char[SRC_LEN * 3];
-       unsigned char * pEnd = pStart;
-       const unsigned char * const SRC_END = pSrc + SRC_LEN;
-
-       for (; pSrc < SRC_END; ++pSrc)
-       {
-          if (SAFE[*pSrc])
-             *pEnd++ = *pSrc;
-          else
-          {
-             // escape this char
-             *pEnd++ = '%';
-             *pEnd++ = DEC2HEX[*pSrc >> 4];
-             *pEnd++ = DEC2HEX[*pSrc & 0x0F];
-          }
-       }
-
-       std::string sResult((char *)pStart, (char *)pEnd);
-       delete [] pStart;
-       return sResult;
-    }
 
     PGESTRING url_decode(const std::string & sSrc)
     {

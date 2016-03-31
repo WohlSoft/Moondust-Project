@@ -117,8 +117,10 @@ int main(int argc, char *argv[])
         cout << "==================DEEP TEST OF SMBX38A==================\n";
         QString path = "38a_deep_test/";
         QString opath = "38_deep_test_out/";
+        QString wpath = "38_deep_test_outNew/";
         QDir testDir(path);
         testDir.mkdir("../38_deep_test_out");
+        testDir.mkdir("../38_deep_test_outNew");
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
         QFile newInvalid("invalid_new.log");
@@ -156,6 +158,9 @@ int main(int argc, char *argv[])
             {
                 qint64 got = meter.elapsed();
                 timesout << file << " NEW ->\t" << got << "\t\t";
+
+                FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
+
                 FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;

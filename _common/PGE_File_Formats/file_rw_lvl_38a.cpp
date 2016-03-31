@@ -436,7 +436,7 @@ bool FileFormats::ReadSMBX38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelD
                                                          ),
                                         MakeCSVSubReader(dataReader, ',',
                                                          &npcdata.generator,
-                                                         MakeCSVOptional(&npcdata.generator_period, 65, nullptr, [](int& value){ value = (int)round(((double)value/65.0)*10.0);}),
+                                                         MakeCSVOptional(&npcdata.generator_period, 65, nullptr, [](int& value){ value = (int)round( ((double)value*10.0) /65.0);} ),
                                                          MakeCSVOptional(&genType, 0),
                                                          MakeCSVOptional(&npcdata.generator_custom_angle, 0.0),
                                                          MakeCSVOptional(&npcdata.generator_branches, 1),
@@ -1472,7 +1472,7 @@ bool FileFormats::ReadSMBX38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, Le
                                     case 1:
                                         if( SMBX64::sInt(dLine) )
                                         goto badfile;
-                                        else npcdata.generator_period = (int)round((toDouble(dLine)/65.0)*10.0);//Convert into deci-seconds
+                                        else npcdata.generator_period = (int)round( (toDouble(dLine)*10.0)/65.0 );//Convert into deci-seconds
                                     break;
                                 //    c3=generator effect
                                 //        c3-1[1=warp][0=projective][4=no effect]
@@ -1910,10 +1910,10 @@ bool FileFormats::ReadSMBX38ALvlFile_OLD(PGE_FileFormats_misc::TextInput &in, Le
                     {
                         layerdata.name=PGE_URLDEC(cLine);
                     } break;
-                //    status=is hidden layer
+                //    status=is vizible layer
                 case 2:
                     {
-                        layerdata.hidden = (cLine=="0");
+                        layerdata.hidden = (cLine == "0");
                     } break;
                 }
             }
@@ -2811,6 +2811,8 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
             FileData.stars++;
     }
 
+    #define layerNotDef(lr) ( ((lr) != "Default") ? PGE_URLENC(lr) : "" )
+
     //========================================================
     //Data type markers:
     //A 	    – Level header settings
@@ -2918,7 +2920,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
         LevelBlock &blk = FileData.blocks[i];
         out << "B";
     //    layer=layer name["" == "Default"][***urlencode!***]
-        out << "|" << PGE_URLENC(blk.layer);
+        out << "|" << layerNotDef(blk.layer);
     //    id=block id
         out << "|" << fromNum(blk.id);
     //    x=block position x
@@ -2929,7 +2931,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //        [1001-1000+NPCMAX] npc-id
     //        [1-999] coin number
     //        [0] nothing
-        out << "|" << fromNum(blk.npc_id<0 ? (-1 * blk.npc_id) : (blk.npc_id+1000) );
+        out << "|" << fromNum(blk.npc_id <= 0 ? (-1 * blk.npc_id) : (blk.npc_id+1000) );
     //    b1=slippery[0=false !0=true]
         out << "|" << fromNum((int)blk.slippery);
     //    b2=invisible[0=false !0=true]
@@ -2937,9 +2939,9 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //    e1=block destory event name[***urlencode!***]
         out << "|" << PGE_URLENC(blk.event_destroy);
     //    e2=block hit event name[***urlencode!***]
-        out << "|" << PGE_URLENC(blk.event_hit);
+        out << "," << PGE_URLENC(blk.event_hit);
     //    e3=no more object in layer event name[***urlencode!***]4
-        out << "|" << PGE_URLENC(blk.event_emptylayer);
+        out << "," << PGE_URLENC(blk.event_emptylayer);
     //    w=width
         out << "|" << fromNum(blk.w);
     //    h=height
@@ -2955,7 +2957,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
         LevelBGO &bgo = FileData.bgo[i];
         out << "T";
     //    layer=layer name["" == "Default"][***urlencode!***]
-        out << "|" << PGE_URLENC(bgo.layer);
+        out << "|" << layerNotDef(bgo.layer);
     //    id=background id
         out << "|" << fromNum(bgo.id);
     //    x=background position x
@@ -3007,13 +3009,13 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
             case 0: genType_1 = 2;break;
             case 2: genType_1 = 0;break;
         }
-        int genType_2 = npc.direct;
-        int genType = (genType_1 != 0) ? ( (4*genType_1) + genType_2 ) : 0 ;
+        int genType_2 = npc.generator_direct;
+        int genType = (genType_2 != 0) ? ( (4*genType_1) + genType_2 ) : 0 ;
 
     //    N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
         out << "N";
     //    layer=layer name["" == "Default"][***urlencode!***]
-        out << "|" << PGE_URLENC(npc.layer);
+        out << "|" << layerNotDef(npc.layer);
     //    id=npc id
         out << "|" << fromNum(npcID);
     //    x=npc position x
@@ -3056,7 +3058,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
         {
     //        c2=generator period[1 frame]
             //Convert deciseconds into frames with rounding
-            out << "," << fromNum( (int)round(((double)npc.generator_period * 100.0)/65.0) );
+            out << "," << fromNum( (int)round(  ((double)npc.generator_period * 65.0) / 10.0 )  );
     //        c3=generator effect
     //            c3-1 [1=warp][0=projective][4=no effect]
     //            c3-2 [0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]
@@ -3075,21 +3077,103 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
             out << "," << fromNum(npc.generator_initial_speed);
         }
     //    msg=message by this npc talkative[***urlencode!***]
-        if(!IsEmpty(npc.msg))
-        {
-            out << "," << PGE_URLENC(npc.msg);
-        }
+        out << "|" << PGE_URLENC(npc.msg);
         out << "\n";
     }
 
+    //next line: warps
+    for(i=0; i<(signed)FileData.doors.size(); i++)
+    {
+        LevelDoor &door = FileData.doors[i];
+
+        if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
+            if(!door.isSetIn) continue; // Skip broken warp entry
+        if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
+            if(!door.isSetOut) continue; // Skip broken warp entry
+
+        int oDirect = door.odirect;
+        switch(oDirect)//Convert from SMBX64/PGE-X into SMBX-38A compatible form
+        {
+            case LevelDoor::EXIT_UP:    oDirect = 1; break;
+            case LevelDoor::EXIT_LEFT:  oDirect = 2; break;
+            case LevelDoor::EXIT_DOWN:  oDirect = 3; break;
+            case LevelDoor::EXIT_RIGHT: oDirect = 4; break;
+        }
+
+    //    W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
+        out << "W";
+    //    layer=layer name["" == "Default"][***urlencode!***]
+        out << "|" << layerNotDef(door.layer);
+    //    x=entrance position x
+        out << "|" << fromNum(door.ix);
+    //    y=entrance postion y
+        out << "|" << fromNum(door.iy);
+    //    ex=exit position x
+        out << "|" << fromNum(door.ox);
+    //    ey=exit position y
+        out << "|" << fromNum(door.oy);
+    //    type=[1=pipe][2=door][0=instant]
+        out << "|" << fromNum(door.type);
+    //    enterd=entrance direction[1=up 2=left 3=down 4=right]
+        out << "|" << fromNum(door.idirect);
+    //    exitd=exit direction[1=up 2=left 3=down 4=right]
+        out << "|" << fromNum(oDirect);
+    //    sn=need stars for enter
+        out << "|" << fromNum(door.stars);
+    //    msg=a message when you have not enough stars
+        out << "," << PGE_URLENC(door.stars_msg);
+    //    hide=hide the star number in this warp
+        out << "," << fromNum((int)door.star_num_hide);
+    //    locked=locked
+        out << "|" << fromNum((int)door.locked);
+    //    noyoshi=no yoshi
+        out << "," << fromNum((int)door.novehicles);
+    //    canpick=allow npc
+        out << "," << fromNum((int)door.allownpc);
+    //    bomb=need a bomb
+        out << "," << fromNum((int)door.need_a_bomb);
+    //    hide=hide the entry scene
+        out << "," << fromNum((int)door.hide_entering_scene);
+    //    anpc=allow npc interlevel
+        out << "," << fromNum((int)door.allownpc_interlevel);
+    //    mini=Mini-Only
+        out << "," << fromNum((int)door.special_state_required);
+    //    size=Warp Size(pixel)
+        out << "," << fromNum(door.length_i);
+    //    lik=warp to level[***urlencode!***]
+        out << "|" << PGE_URLENC(door.lname);
+    //    liid=normal enterance / to warp[0-WARPMAX]
+        out << "|" << fromNum(door.warpto);
+    //    noexit=level entrance
+        out << "|" << fromNum((int)door.lvl_i);
+    //    wx=warp to x on world map
+        out << "|" << fromNum(door.world_x);
+    //    wy=warp to y on world map
+        out << "|" << fromNum(door.world_y);
+    //    le=level exit
+        out << "|" << fromNum((int)door.lvl_o);
+    //    we=warp event[***urlencode!***]
+        out << "|" << PGE_URLENC(door.event_enter);
+        out << "\n";
+    }
 
     //next line: waters
+    for(i=0; i<(signed)FileData.physez.size(); i++)
+    {
+        LevelPhysEnv &pez = FileData.physez[i];
+        /*TRIVIA: It is NOT a PEZ candy brand, just "Physical Environment Zone" :-P*/
     //    Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event
+        out << "Q";
     //    layer=layer name["" == "Default"][***urlencode!***]
+        out << "|" << layerNotDef(pez.layer);
     //    x=position x
+        out << "|" << fromNum(pez.x);
     //    y=position y
+        out << "|" << fromNum(pez.y);
     //    w=width
+        out << "|" << fromNum(pez.w);
     //    h=height
+        out << "|" << fromNum(pez.h);
     //    b1=liquid type
     //        01-Water[friction=0.5]
     //        02-Quicksand[friction=0.1]
@@ -3104,109 +3188,205 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //        11-Click Script
     //        12-Collision Event
     //        13-Air
+        out << "|" << fromNum((pez.env_type+1));
     //    b2=friction
+        out << "," << fromNum(pez.friction);
     //    b3=Acceleration Direction
+        out << "," << fromNum(pez.accel_direct);
     //    b4=Acceleration
+        out << "," << fromNum(pez.accel);
     //    b5=Maximum Velocity
+        out << "," << fromNum(pez.max_velocity);
     //    event=touch event
+        out << "|" << PGE_URLENC(pez.touch_event);
+        out << "\n";
+    }
 
-
-
-    //next line: warps
-    //    W|layer|x|y|ex|ey|type|enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size|lik|liid|noexit|wx|wy|le|we
-    //    layer=layer name["" == "Default"][***urlencode!***]
-    //    x=entrance position x
-    //    y=entrance postion y
-    //    ex=exit position x
-    //    ey=exit position y
-    //    type=[1=pipe][2=door][0=instant]
-    //    enterd=entrance direction[1=up 2=left 3=down 4=right]
-    //    exitd=exit direction[1=up 2=left 3=down 4=right]
-    //    sn=need stars for enter
-    //    msg=a message when you have not enough stars
-    //    hide=hide the star number in this warp
-    //    locked=locked
-    //    noyoshi=no yoshi
-    //    canpick=allow npc
-    //    bomb=need a bomb
-    //    hide=hide the entry scene
-    //    anpc=allow npc interlevel
-    //    mini=Mini-Only
-    //    size=Warp Size(pixel)
-    //    lik=warp to level[***urlencode!***]
-    //    liid=normal enterance / to warp[0-WARPMAX]
-    //    noexit=level entrance
-    //    wx=warp to x on world map
-    //    wy=warp to y on world map
-    //    le=level exit
-    //    we=warp event[***urlencode!***]
-
-
-
+    for(i=0; i<(signed)FileData.layers.size(); i++)
+    {
+        LevelLayer &lyr = FileData.layers[i];
     //next line: layers
     //    L|name|status
+        out << "L";
     //    name=layer name[***urlencode!***]
-    //    status=is hidden layer
+        out << "|" << PGE_URLENC(lyr.name);
+    //    status=is vizible layer
+        out << "|" << fromNum((int)(!lyr.hidden));
+        out << "\n";
+    }
 
 
 
     //next line: events
+    for(i=0; i<(signed)FileData.events.size(); i++)
+    {
+        LevelSMBX64Event &evt = FileData.events[i];
     //    E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene
+        out << "E";
     //    name=event name[***urlencode!***]
+        out << "|" << PGE_URLENC(evt.name);
     //    msg=show message after start event[***urlencode!***]
+        out << "|" << PGE_URLENC(evt.msg);
     //    ea=val,syntax
     //        val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]
+        out << "|" << fromNum(evt.autostart);
     //        syntax=condidtion expression[***urlencode!***]
+        out << "," << PGE_URLENC(evt.autostart_condition);
     //    el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn
     //        b=no smoke[0=false !0=true]
+        out << "|" << fromNum((int)evt.nosmoke);
     //        [***urlencode!***]
+        out << "/";
     //        s(n)=show layer
+        for(int j=0; j<evt.layers_show.size();j++)
+        {
+            if(j>0) out << ","; out << PGE_URLENC(evt.layers_show[j]);
+        }
+        out << "/";
     //        l(n)=hide layer
+        for(int j=0; j<evt.layers_hide.size();j++)
+        {
+            if(j>0) out << ","; out << PGE_URLENC(evt.layers_hide[j]);
+        }
+        out << "/";
     //        t(n)=toggle layer
+        for(int j=0; j<evt.layers_toggle.size();j++)
+        {
+            if(j>0) out << ","; out << PGE_URLENC(evt.layers_toggle[j]);
+        }
+
+        out << "|";
     //    elm=elm1/elm2...elmn
+        for(int j=0; j<evt.moving_layers.size(); j++)
+        {
+            if(j>0) out << "/";
     //        elm(n)=layername,horizontal syntax,vertical syntax,way
     //        layername=layer name for movement[***urlencode!***]
+            out << PGE_URLENC(evt.moving_layers[j].name);
     //        horizontal syntax,vertical syntax[***urlencode!***][syntax]
+            out << "," << PGE_URLENC(evt.moving_layers[j].expression_x);
+            out << "," << PGE_URLENC(evt.moving_layers[j].expression_y);
     //        way=[0=by speed][1=by Coordinate]
+            out << "," << fromNum(evt.moving_layers[j].way);
+        }
+
+        out << "|";
     //    epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12
     //        b1=enable player controls
+        out << fromNum(evt.ctrls_enable);
     //        b2=drop
+        out << "," << fromNum(evt.ctrl_drop);
     //        b3=alt run
+        out << "," << fromNum(evt.ctrl_altrun);
     //        b4=run
+        out << "," << fromNum(evt.ctrl_run);
     //        b5=jump
+        out << "," << fromNum(evt.ctrl_jump);
     //        b6=alt jump
+        out << "," << fromNum(evt.ctrl_altjump);
     //        b7=up
+        out << "," << fromNum(evt.ctrl_up);
     //        b8=down
+        out << "," << fromNum(evt.ctrl_down);
     //        b9=left
+        out << "," << fromNum(evt.ctrl_left);
     //        b10=right
+        out << "," << fromNum(evt.ctrl_right);
     //        b11=start
+        out << "," << fromNum(evt.ctrl_start);
     //        b12=lock keyboard
+        out << "," << fromNum(evt.ctrl_lock_keyboard);
+
+        out << "|";
     //    eps=esection/ebackground/emusic
     //        esection=es1:es2...esn
     //        ebackground=eb1:eb2...ebn
     //        emusic=em1:em2...emn
+        bool size_set_added=false;
+        for(int j=0; j<evt.sets.size(); j++)
+        {
+            int section_pos = evt.sets[j].position_left;
+            switch( section_pos )
+            {
+                case -1: section_pos=0; continue; break;
+                case -2: section_pos=1;break;
+                default: section_pos=2;break;
+            }
+
     //            es=id,x,y,w,h,auto,sx,sy
+            if(size_set_added) out << ":";
+            size_set_added=true;
     //                id=section id
+            out        << fromNum(evt.sets[j].id);
     //                stype=[0=don't change][1=default][2=custom]
+            out << "," << fromNum( section_pos );
     //                x=left x coordinates for section [id][***urlencode!***][syntax]
+            out << "," << PGE_URLENC( evt.sets[j].expression_pos_x );
     //                y=top y coordinates for section [id][***urlencode!***][syntax]
+            out << "," << PGE_URLENC( evt.sets[j].expression_pos_y);
     //                w=width for section [id][***urlencode!***][syntax]
+            out << "," << PGE_URLENC( evt.sets[j].expression_pos_w);
     //                h=height for section [id][***urlencode!***][syntax]
-    //                auto=enable autoscroll controls[0=false !0=true]
+            out << "," << PGE_URLENC( evt.sets[j].expression_pos_h);
+    //                auto=enable autoscroll controls[0=false !0=tru
+            out << "," << fromNum( (int)evt.sets[j].autoscrol );
     //                sx=move screen horizontal syntax[***urlencode!***][syntax]
+            out << "," << PGE_URLENC( evt.sets[j].expression_autoscrool_x );
     //                sy=move screen vertical syntax[***urlencode!***][syntax]
+            out << "," << PGE_URLENC( evt.sets[j].expression_autoscrool_y );
+        }
+        out << "/";
+
+        bool bg_set_added=false;
+        for(int j=0; j<evt.sets.size(); j++)
+        {
+            int section_bg = evt.sets[j].background_id;
+            switch( section_bg )
+            {
+                case -1: section_bg=0; continue; break;
+                case -2: section_bg=1; break;
+                default: section_bg=2; break;
+            }
     //            eb=id,btype,backgroundid
+            if(bg_set_added) out << ":";
+            bg_set_added=true;
     //                id=section id
+            out        << fromNum(evt.sets[j].id);
     //                btype=[0=don't change][1=default][2=custom]
+            out << "," << fromNum(section_bg);
     //                backgroundid=[when btype=2]custom background id
+            out << "," << fromNum( evt.sets[j].background_id >=0 ? evt.sets[j].background_id : 0 );
+        }
+        out << "/";
+
+        bool muz_set_added=false;
+        for(int j=0; j<evt.sets.size(); j++)
+        {
+            int section_muz = evt.sets[j].music_id;
+            switch( section_muz )
+            {
+                case -1: section_muz=0; continue; break;
+                case -2: section_muz=1;break;
+                default: section_muz=2;break;
+            }
     //            em=id,mtype,musicid,customfile
+            if(muz_set_added) out << ":";
+            muz_set_added=true;
     //                id=section id
+            out       << fromNum(evt.sets[j].id);
     //                mtype=[0=don't change][1=default][2=custom]
+            out << "," << fromNum(section_muz);
     //                musicid=[when mtype=2]custom music id
+            out << "," << fromNum( evt.sets[j].music_id >= 0 ? evt.sets[j].music_id : 0 );
     //                customfile=[when mtype=3]custom music file name[***urlencode!***]
+            out << "," << PGE_URLENC( evt.sets[j].music_file );
+        }
+        out << "|";
     //    eef=sound/endgame/ce1/ce2...cen
     //        sound=play sound number
+        out << fromNum(evt.sound_id);
     //        endgame=[0=none][1=bowser defeat]
+        out << "/" << fromNum(evt.end_game);
     //        ce(n)=id,x,y,sx,sy,grv,fsp,life
     //            id=effect id
     //            x=effect position x[***urlencode!***][syntax]
@@ -3216,6 +3396,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //            grv=to decide whether the effects are affected by gravity[0=false !0=true]
     //            fsp=frame speed of effect generated
     //            life=effect existed over this time will be destroyed.
+        out << "|";
     //    ecn=cn1/cn2...cnn
     //        cn(n)=id,x,y,sx,sy,sp
     //            id=npc id
@@ -3224,22 +3405,35 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //            sx=npc horizontal speed[***urlencode!***][syntax]
     //            sy=npc vertical speed[***urlencode!***][syntax]
     //            sp=advanced settings of generated npc
+        out << "|";
     //    evc=vc1/vc2...vcn
     //        vc(n)=name,newvalue
     //            name=variable name[***urlencode!***]
     //            newvalue=new value[***urlencode!***][syntax]
+        out << "|";
     //    ene=nextevent/timer/apievent/scriptname
     //        nextevent=name,delay
     //            name=trigger event name[***urlencode!***]
+        out        << PGE_URLENC(evt.trigger);
     //            delay=trigger delay[1 frame]
+        out << "," << fromNum( (int)round(((double)evt.trigger_timer * 65.0) / 10.0) );
     //        timer=enable,count,interval,type,show
     //            enable=enable the game timer controlling[0=false !0=true]
+        out << "/" << fromNum( (int)evt.timer_def.enable );
     //            count=set the time left of the game timer
+        out << "," << fromNum( evt.timer_def.count );
     //            interval=set the time count interval of the game timer
+        out << "," << fromNum( (int)round(SMBX64::ms_to_65(evt.timer_def.interval)) );
     //            type=to choose the way timer counts[0=counting down][1=counting up]
+        out << "," << fromNum( evt.timer_def.count_dir );
     //            show=to choose whether the game timer is showed in hud[0=false !0=true]
+        out << "," << fromNum( evt.timer_def.show );
     //        apievent=the id of apievent
+        out << "/" << fromNum( evt.trigger_api_id );
     //        scriptname=script name[***urlencode!***]
+        out << "/" << PGE_URLENC( evt.trigger_script );
+        out << "\n";
+    }
 
 
     //next line: variables
@@ -3254,6 +3448,7 @@ bool FileFormats::WriteSMBX38ALvlFile(PGE_FileFormats_misc::TextOutput &out, Lev
     //    name=name of script[***urlencode!***]
     //    script=script[***base64encode!***][utf-8]
     //    scriptu=script[***base64encode!***][ASCII]
+
 
     return false;
 }
