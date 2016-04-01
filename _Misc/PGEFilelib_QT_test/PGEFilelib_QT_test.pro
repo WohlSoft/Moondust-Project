@@ -9,6 +9,8 @@ INCLUDEPATH += ../../_common/
 TEMPLATE = app
 DEFINES += PGE_FILES_QT
 
+DESTDIR += $$PWD
+
 SOURCES += main.cpp \
     ../../_common/PGE_File_Formats/file_formats.cpp \
     ../../_common/PGE_File_Formats/file_rw_lvl.cpp \
