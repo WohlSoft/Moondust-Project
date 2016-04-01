@@ -448,10 +448,6 @@ namespace CSVReader {
     // ========= Special Attributes END ===========
 
 
-
-    template<typename T>
-    struct identity { typedef T type; };
-
     /*
     * The Default CSV Converter uses the STL library to do the most of the conversion.
     */
@@ -461,56 +457,43 @@ namespace CSVReader {
     template<class StrType>
     struct DefaultCSVConverter
     {
-        template<typename T>
-        static void Convert(T* out, const StrType& field)
-        {
-            ConvertInternal(out, field, identity<T>());
-        }
-
-    private:
-        template<typename T>
-        static void ConvertInternal(T* /*out*/, const StrType& /*field*/, identity<T>)
-        {
-            // This is a hackishy solution, but gcc checks static_assert, even if the template function is not actually used
-            static_assert(std::is_same<T, double>::value, "No default converter for this type");
-        }
-        static void ConvertInternal(double* out, const StrType& field, identity<double>)
+        static void Convert(double* out, const StrType& field)
         {
             *out = std::stod(field);
         }
-        static void ConvertInternal(float* out, const StrType& field, identity<float>)
+        static void Convert(float* out, const StrType& field)
         {
             *out = std::stof(field);
         }
-        static void ConvertInternal(int* out, const StrType& field, identity<int>)
+        static void Convert(int* out, const StrType& field)
         {
             *out = std::stoi(field);
         }
-        static void ConvertInternal(long* out, const StrType& field, identity<long>)
+        static void Convert(long* out, const StrType& field)
         {
             *out = std::stol(field);
         }
-        static void ConvertInternal(long long* out, const StrType& field, identity<long long>)
+        static void Convert(long long* out, const StrType& field)
         {
             *out = std::stoll(field);
         }
-        static void ConvertInternal(long double* out, const StrType& field, identity<long double>)
+        static void Convert(long double* out, const StrType& field)
         {
             *out = std::stold(field);
         }
-        static void ConvertInternal(unsigned int* out, const StrType& field, identity<unsigned int>)
+        static void Convert(unsigned int* out, const StrType& field)
         {
             *out = static_cast<unsigned int>(std::stoul(field));
         }
-        static void ConvertInternal(unsigned long* out, const StrType& field, identity<unsigned long>)
+        static void Convert(unsigned long* out, const StrType& field)
         {
             *out = std::stoul(field);
         }
-        static void ConvertInternal(unsigned long long* out, const StrType& field, identity<unsigned long long>)
+        static void Convert(unsigned long long* out, const StrType& field)
         {
             *out = std::stoull(field);
         }
-        static void ConvertInternal(bool* out, const StrType& field, identity<bool>)
+        static void Convert(bool* out, const StrType& field)
         {
             if(field == "0" || field == "") // FIXME: Is it correct? Or too hackish?
                 *out = false;
@@ -519,7 +502,7 @@ namespace CSVReader {
             else
                 throw std::invalid_argument(std::string("Could not convert to bool (must be empty, \"0\", \"!0\" or \"1\"), got \"") + field + std::string("\""));
         }
-        static void ConvertInternal(StrType* out, const StrType& field, identity<StrType>)
+        static void Convert(StrType* out, const StrType& field)
         {
             *out = field;
         }
@@ -591,7 +574,7 @@ namespace CSVReader {
                                   + std::to_string(this->_lineTracker) + "!", this->_fieldTracker, this->_lineTracker);
         }
         template<class T, class... RestValues>
-        void ReadNext(T nextVal, RestValues... restVals)
+        void ReadNext(T nextVal, RestValues&&... restVals)
         {
             static_assert(std::is_pointer<T>::value, "All values which are unpacked must be pointers (except CSVDiscard, CSVVaildate, CSVDiscard, CSVOptional, CSVSubReader)!");
             ThrowIfOutOfBounds();
@@ -600,19 +583,19 @@ namespace CSVReader {
             this->SafeConvert(nextVal, this->NextField());
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... RestValues>
-        void ReadNext(CSVDiscard, RestValues... restVals)
+        void ReadNext(CSVDiscard, RestValues&&... restVals)
         {
             this->_fieldTracker++;
             this->SkipField();
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class ValidateT, class... RestValues>
-        void ReadNext(CSVValidator<ValidateT> nextVal, RestValues... restVals)
+        void ReadNext(CSVValidator<ValidateT> nextVal, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -622,11 +605,11 @@ namespace CSVReader {
                 throw std::logic_error("Validation failed at field " + std::to_string(this->_fieldTracker) + " at line " + std::to_string(this->_lineTracker) + "!");
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class PostProcessorT, class... RestValues>
-        void ReadNext(CSVPostProcessor<PostProcessorT> nextVal, RestValues... restVals)
+        void ReadNext(CSVPostProcessor<PostProcessorT> nextVal, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -636,11 +619,11 @@ namespace CSVReader {
             nextVal.PostProcess();
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class OptionalT, class... RestValues>
-        void ReadNext(CSVOptional<OptionalT> optionalObj, RestValues... restVals)
+        void ReadNext(CSVOptional<OptionalT> optionalObj, RestValues&&... restVals)
         {
             // If we already reached the end, then assign default
             if (this->_currentCharIndex >= StrTUtils::length(this->_currentLine)) {
@@ -655,11 +638,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues... restVals)
+        void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -673,11 +656,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues... restVals)
+        void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -691,11 +674,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVIterator<Args...> iteratorObj, RestValues... restVals)
+        void ReadNext(CSVIterator<Args...> iteratorObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -709,7 +692,7 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         void ReadNext() {}
@@ -828,7 +811,7 @@ namespace CSVReader {
     struct CSVSubReader
     {
     public:
-        CSVSubReader(CharT sep, Values... allValues) : _sep(sep), _val(allValues...)
+        CSVSubReader(CharT sep, Values&&... allValues) : _sep(sep), _val(allValues...)
         {}
 
         void ReadDataLine(const StrT& val)
@@ -854,9 +837,9 @@ namespace CSVReader {
      * \see CSVSubReader
      */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class SubChar, class... RestValues>
-    constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues... values)
+    constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues&&... values)
     {
-        return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, values...);
+        return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, std::forward<RestValues>(values)...);
     }
 
 
