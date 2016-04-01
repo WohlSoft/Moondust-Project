@@ -1,7 +1,6 @@
 *.log
-*out.lvl*
-*out-old.lvl*
-*out??.lvl*
+*out.lvlx
+*out??.lvl
 debug
 release
 test_out*

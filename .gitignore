@@ -105,17 +105,6 @@ libSDL2_mixer.so
 libSDL2_mixer.dll
 libSDL2_mixer.dylib
 
-/_Misc/PGEFilelib_QT_test/debug
-/_Misc/PGEFilelib_STL_test/debug
-/_Misc/PGEFilelib_QT_test/release
-/_Misc/PGEFilelib_STL_test/release
-/_Misc/PGEFilelib_QT_test/PGEFilelib_QT_test
-/_Misc/PGEFilelib_STL_test/PGEFilelib_STL_test
-/_Misc/PGEFilelib_QT_test/PGEFilelib_QT_test.exe
-/_Misc/PGEFilelib_STL_test/PGEFilelib_STL_test.exe
-/_Misc/PGEFilelib_QT_test/test_out*
-/_Misc/PGEFilelib_STL_test/test_out*
-
 #Doxygen-generated technical documentations
 /Documents/Doxygen/Engine/
 /Documents/Doxygen/Editor/
