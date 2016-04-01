@@ -1,8 +1,81 @@
 #include <iostream>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_globs.h>
+#include "dirent/dirent.h"
+#include <ctime>
 
 using namespace std;
+
+class ElapsedTimer{
+public:
+    ElapsedTimer() : recent(0) {}
+    void start() { recent=clock();}
+    void restart() { recent=clock();}
+    clock_t elapsed() { return clock()-recent;}
+    clock_t recent;
+};
+
+class TheDir
+{
+public:
+    TheDir() {}
+    TheDir(std::string path) : m_path(path) {}
+    int mkdir(std::string where)
+    {
+        std::string fullPath = m_path + "/" + where;
+        return ::mkdir( fullPath.c_str() );
+    }
+
+    std::vector<std::string > entryList()
+    {
+        std::vector<std::string > list;
+        DIR *dir;
+        struct dirent *ent;
+        dir = opendir( m_path.c_str() );
+
+        if (dir != NULL)
+        {
+            /* print all the files and directories within directory */
+            while ((ent = readdir (dir)) != NULL) {
+            switch (ent->d_type)
+            {
+                case DT_REG:
+                  //printf ("%*.*s\n", ent->d_namlen, ent->d_namlen, ent->d_name);
+                    {
+                        std::string file=ent->d_name;
+                        list.push_back(file);
+                    }
+                  break;
+
+                case DT_DIR:
+                  //printf ("%s (dir)\n", ent->d_name);
+                  break;
+                default:
+                    {
+                        std::string file=ent->d_name;
+                        list.push_back(file);
+                    }
+                }
+            }
+            closedir(dir);
+        } else {
+            std::cout<< "\n" << "Directory not found! " << m_path << "\n";
+        }
+        return list;
+    }
+    std::string m_path;
+};
+
+std::string flString(std::string str, int lenght)
+{
+    std::string fn;
+    fn.resize(lenght);
+    for(int i=0;i<lenght; i++)
+        fn[i]=' ';
+    for(int i=0;(i<(signed)str.size()) && (i<(signed)str.size()); i++)
+        fn[i]=str[i];
+    return fn;
+}
 
 void printLevelInfo(LevelData &lvl)
 {
@@ -198,6 +271,258 @@ int main()
     cout << "BNam: " << x.basename() << endl;
     cout << "Sufx: " << x.suffix() << endl;
     cout << "Dirt: " << x.dirpath() << endl;
+
+
+
+    //Deep tests of the level file formats
+    #define ENABLE_SMBX64_DEEPTEST
+    #define ENABLE_SMBX38A_DEEPTEST
+    #define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
+
+    #ifdef ENABLE_SMBX64_DEEPTEST
+    /**********************DEEP TEST OF SMBX64 files*********************/
+    {
+        //#define GENERATE_LVLX_FILES
+        cout << "==================DEEP TEST OF SMBX64==================\n";
+        std::string path = "../PGEFileLib_test_files/smbx64/";
+        std::string wpath = "../PGEFileLib_test_files/smbx64_out/";
+        #ifdef GENERATE_LVLX_FILES
+        QString xpath = "../PGEFileLib_test_files/pgex/";
+        #endif
+        TheDir testDir(path);
+        testDir.mkdir("../smbx64_out/");
+        #ifdef GENERATE_LVLX_FILES
+        testDir.mkdir("../pgex/");
+        #endif
+        vector<string> files = testDir.entryList();
+
+        std::ofstream niout;
+        niout.open("invalid_s64.log", std::ios::out);
+
+        std::ofstream timesout;
+        timesout.open("times_s64.log", std::ios::out);
+
+        ElapsedTimer meter;
+        meter.start();
+
+        for(int i=0; i<(signed)files.size(); i++)
+        {
+            std::string file=files[i];
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            LevelData FileDataNew;
+
+            FileDataNew = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
+            if(FileFormats::ReadSMBX64LvlFile(fileI, FileDataNew))
+            {
+                clock_t got = meter.elapsed();
+                timesout << flString(file, 30) << "\tREAD\t" << flString(std::to_string(got), 20);
+
+                meter.restart();
+                FileFormats::smbx64LevelPrepare(FileDataNew);
+                FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.RecentFormatVersion);
+                got = meter.elapsed();
+                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout.flush();
+                #ifdef GENERATE_LVLX_FILES
+                FileFormats::WriteExtendedLvlFileF(xpath+file+"x", FileDataNew);
+                #endif
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\nInfo: "
+                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                niout.flush();
+            }
+            cout.flush();
+        }
+        niout.close();
+        cout << "==================DEEP TEST OF SMBX64=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
+    #endif //ENABLE_SMBX64_DEEPTEST
+
+    #ifdef ENABLE_SMBX38A_DEEPTEST
+    /**********************DEEP TEST OF SMBX38A files*********************/
+    {
+        cout << "==================DEEP TEST OF SMBX38A==================\n";
+        std::string path = "../PGEFileLib_test_files/smbx38a/";
+        string opath = "../PGEFileLib_test_files/smbx38a_lvlx_diffs/";
+        string wpath = "../PGEFileLib_test_files/smbx38a_out/";
+        TheDir testDir(path);
+        testDir.mkdir("../smbx38a_lvlx_diffs");
+        testDir.mkdir("../smbx38a_out");
+        vector<string> files = testDir.entryList();
+
+        std::ofstream niout;
+        niout.open("invalid_new.log", std::ios::out);
+
+        std::ofstream  oiout;
+        oiout.open("invalid_old.log", std::ios::out);
+
+        std::ofstream diout;
+        diout.open("differents.log", std::ios::out);
+
+        std::ofstream timesout;
+        timesout.open("times.log", std::ios::out);
+
+        ElapsedTimer meter;
+        meter.start();
+
+        for(int i=0; i<(signed)files.size(); i++)
+        {
+            std::string file=files[i];
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            string raw_old;
+            string raw_new;
+            LevelData FileDataNew;
+            LevelData FileDataOld;
+
+            clock_t time_old=0;
+            clock_t time_new=0;
+
+            FileDataNew = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
+            if(FileFormats::ReadSMBX38ALvlFile(fileI, FileDataNew))
+            {
+                clock_t got = meter.elapsed();
+                time_new=got;
+                timesout << flString(file, 30) << " NEW ->\t" <<  flString(std::to_string(got), 20) << "\t";
+                FileFormats::smbx64CountStars( FileDataNew );
+                meter.restart();
+                FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
+                got = meter.elapsed();
+                timesout << "WRITE ->\t" << flString(std::to_string(got), 20) << "\t";
+
+                FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\nInfo: "
+                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                niout.flush();
+            }
+
+            FileDataOld = FileFormats::CreateLevelData();
+            fileI.close();
+
+            fileI.open(path+file, false);
+            meter.restart();
+            if(FileFormats::ReadSMBX38ALvlFile_OLD(fileI, FileDataOld))
+            {
+                clock_t got = meter.elapsed();
+                time_old=got;
+                timesout << " OLD ->\t" << flString(std::to_string(got), 20);
+                if(time_old>time_new)
+                    timesout << " NEW READS FASTER";
+                else if(time_old<time_new)
+                    timesout << " OLD READS FASTER";
+                else
+                    timesout << " BOTH ARE SAME";
+                timesout << "\n";
+                FileFormats::smbx64CountStars( FileDataOld );
+                FileFormats::WriteExtendedLvlFileRaw(FileDataOld, raw_old);
+            } else {
+                cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                oiout << path+file << "\r\nInfo: "
+                      << FileDataOld.ERROR_info << "\r\nlinedata" << FileDataOld.ERROR_linedata
+                      << "\r\nline:" << FileDataOld.ERROR_linenum << "\r\n\r\n";
+                oiout.flush();
+            }
+
+            if(raw_old.empty())
+                continue;
+            if(raw_new.empty())
+                continue;
+            if(raw_old != raw_new)
+            {
+                cout << "FILES ARE DIFFERENT\n";
+                diout << path+file << "\r\n";
+                diout.flush();
+                FileFormats::WriteExtendedLvlFileF(opath+file+".old.lvlx", FileDataNew);
+                FileFormats::WriteExtendedLvlFileF(opath+file+".new.lvlx", FileDataOld);
+            } else {
+                //Remove similar files!
+                //QFile(opath+file+".old.lvlx").remove();
+                //QFile(opath+file+".new.lvlx").remove();
+            }
+            cout.flush();
+        }
+        oiout.close();
+        niout.close();
+        diout.close();
+        cout << "==================DEEP TEST OF SMBX38A=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
+    #endif//ENABLE_SMBX38A_DEEPTEST
+
+
+    #if defined(ENABLE_SMBX64_DEEPTEST) && defined(ENABLE_PGEX_DEEPTEST)
+    /**********************DEEP TEST OF PGE-X files*********************/
+    {
+        cout << "==================DEEP TEST OF PGE-X==================\n";
+        string path = "../PGEFileLib_test_files/pgex/";
+        string wpath = "../PGEFileLib_test_files/pgex_out/";
+        TheDir testDir(path);
+        testDir.mkdir("../pgex_out");
+        vector<string> files = testDir.entryList();
+
+        std::ofstream niout;
+        niout.open("invalid_pgex.log", std::ios::out);
+
+        std::ofstream timesout;
+        timesout.open("times_pgex.log", std::ios::out);
+
+        ElapsedTimer meter;
+        meter.start();
+
+        for(int i=0; i<(signed)files.size(); i++)
+        {
+            string file=files[i];
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            LevelData FileDataNew;
+
+            FileDataNew = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
+            if(FileFormats::ReadExtendedLvlFile(fileI, FileDataNew))
+            {
+                clock_t got = meter.elapsed();
+                timesout << flString(file, 30) << "\tREAD\t" << flString(std::to_string(got), 20);
+
+                meter.restart();
+                FileFormats::smbx64CountStars( FileDataNew );
+                FileFormats::WriteExtendedLvlFileF(wpath+file, FileDataNew);
+                got = meter.elapsed();
+                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout.flush();
+
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\nInfo: "
+                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                niout.flush();
+            }
+            cout.flush();
+        }
+        niout.close();
+        cout << "==================DEEP TEST OF PGE-X=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
+    #endif
+
+    cout << "!!!!!!!!!!!!!!!!!!!!!EVERYTHING HAS BEEN DONE!!!!!!!!!!!!!!!!!!!!!\n";
+
+
     return 0;
 }
 

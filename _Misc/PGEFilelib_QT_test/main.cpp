@@ -135,7 +135,104 @@ int main(int argc, char *argv[])
         FileFormats::WriteExtendedLvlFileF("test_65-38a-2-out.lvlx", level);
     }
 
-    //Deep tests
+    printLine(cout);
+    cout << "\n\nPGE-X Level Read Header test:" << endl;
+    FileFormats::ReadExtendedLvlFileHeader("test.lvlx", level);
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nPGE-X Level Read test №2:" << endl;
+    FileFormats::OpenLevelFile("test2.lvlx", level);
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nPGE-X Level Read test №1:" << endl;
+    FileFormats::OpenLevelFile("test.lvlx", level);
+    cout << level.filename << "\n";
+    cout << level.path << "\n";
+    if(!level.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printLevelInfo(level,cout);
+    }
+
+    WorldData world;
+    printLine(cout);
+    cout << "\n\nSMBX64 World Read Header test:" << endl;
+    FileFormats::ReadSMBX64WldFileHeader("test.wld", world);
+    cout << world.filename << "\n";
+    cout << world.path << "\n";
+    if(!world.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printWorldInfo(world,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nSMBX64 World Read test:" << endl;
+    FileFormats::OpenWorldFile("test.wld", world);
+    cout << world.filename << "\n";
+    cout << world.path << "\n";
+    if(!world.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printWorldInfo(world,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nPGE-X World Read Header test:" << endl;
+    FileFormats::ReadExtendedWldFileHeader("test.wldx", world);
+    cout << world.filename << "\n";
+    cout << world.path << "\n";
+    if(!world.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printWorldInfo(world,cout);
+    }
+
+    printLine(cout);
+    cout << "\n\nPGE-X World Read test:" << endl;
+    FileFormats::OpenWorldFile("test.wldx", world);
+    cout << world.filename << "\n";
+    cout << world.path << "\n";
+    if(!world.ReadFileValid)
+    {
+        cout << "Invalid file\n" << FileFormats::errorString;
+    } else {
+        printWorldInfo(world,cout);
+    }
+
+
+    PGE_FileFormats_misc::FileInfo x("melw.shit.LvlVX");
+    cout << "\n\n\n";
+    cout << "Name: " << x.filename() << endl;
+    cout << "FPat: " << x.fullPath() << endl;
+    cout << "BNam: " << x.basename() << endl;
+    cout << "Sufx: " << x.suffix() << endl;
+    cout << "Dirt: " << x.dirpath() << endl;
+
+
+
+
+    //Deep tests of the level file formats
     #define ENABLE_SMBX64_DEEPTEST
     #define ENABLE_SMBX38A_DEEPTEST
     #define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
@@ -143,13 +240,18 @@ int main(int argc, char *argv[])
     #ifdef ENABLE_SMBX64_DEEPTEST
     /**********************DEEP TEST OF SMBX64 files*********************/
     {
+        //#define GENERATE_LVLX_FILES
         cout << "==================DEEP TEST OF SMBX64==================\n";
         QString path = "../PGEFileLib_test_files/smbx64/";
         QString wpath = "../PGEFileLib_test_files/smbx64_out/";
+        #ifdef GENERATE_LVLX_FILES
         QString xpath = "../PGEFileLib_test_files/pgex/";
+        #endif
         QDir testDir(path);
         testDir.mkdir("../smbx64_out/");
+        #ifdef GENERATE_LVLX_FILES
         testDir.mkdir("../pgex/");
+        #endif
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
         QFile newInvalid("invalid_s64.log");
@@ -183,7 +285,9 @@ int main(int argc, char *argv[])
                 got = meter.elapsed();
                 timesout << "\tWRITE\t" << got << "\r\n";
                 timesout.flush();
+                #ifdef GENERATE_LVLX_FILES
                 FileFormats::WriteExtendedLvlFileF(xpath+file+"x", FileDataNew);
+                #endif
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
@@ -239,6 +343,9 @@ int main(int argc, char *argv[])
             LevelData FileDataNew;
             LevelData FileDataOld;
 
+            qint64 time_old=0;
+            qint64 time_new=0;
+
             FileDataNew = FileFormats::CreateLevelData();
             fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
 
@@ -246,6 +353,7 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX38ALvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
+                time_new=got;
                 timesout << flString(file, 30) << " NEW ->\t" <<  flString(QString::number(got), 20) << "\t";
                 FileFormats::smbx64CountStars( FileDataNew );
                 meter.restart();
@@ -269,7 +377,15 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX38ALvlFile_OLD(fileI, FileDataOld))
             {
                 qint64 got = meter.elapsed();
-                timesout << " OLD ->\t" << got << "\n";
+                time_old=got;
+                timesout << " OLD ->\t" << flString(QString::number(got), 20);
+                if(time_old>time_new)
+                    timesout << " NEW READS FASTER";
+                else if(time_old<time_new)
+                    timesout << " OLD READS FASTER";
+                else
+                    timesout << " BOTH ARE SAME";
+                timesout << "\n";
                 FileFormats::smbx64CountStars( FileDataOld );
                 FileFormats::WriteExtendedLvlFileRaw(FileDataOld, raw_old);
             } else {
@@ -366,99 +482,9 @@ int main(int argc, char *argv[])
     /*********************************************************************/
     #endif
 
-    printLine(cout);
-    cout << "\n\nPGE-X Level Read Header test:" << endl;
-    FileFormats::ReadExtendedLvlFileHeader("test.lvlx", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printLevelInfo(level,cout);
-    }
+    cout << "!!!!!!!!!!!!!!!!!!!!!EVERYTHING HAS BEEN DONE!!!!!!!!!!!!!!!!!!!!!\n";
+    cout.flush();
 
-    printLine(cout);
-    cout << "\n\nPGE-X Level Read test №2:" << endl;
-    FileFormats::OpenLevelFile("test2.lvlx", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printLevelInfo(level,cout);
-    }
-
-    printLine(cout);
-    cout << "\n\nPGE-X Level Read test №1:" << endl;
-    FileFormats::OpenLevelFile("test.lvlx", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printLevelInfo(level,cout);
-    }
-
-    WorldData world;
-    printLine(cout);
-    cout << "\n\nSMBX64 World Read Header test:" << endl;
-    FileFormats::ReadSMBX64WldFileHeader("test.wld", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printWorldInfo(world,cout);
-    }
-
-    printLine(cout);
-    cout << "\n\nSMBX64 World Read test:" << endl;
-    FileFormats::OpenWorldFile("test.wld", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printWorldInfo(world,cout);
-    }
-
-    printLine(cout);
-    cout << "\n\nPGE-X World Read Header test:" << endl;
-    FileFormats::ReadExtendedWldFileHeader("test.wldx", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printWorldInfo(world,cout);
-    }
-
-    printLine(cout);
-    cout << "\n\nPGE-X World Read test:" << endl;
-    FileFormats::OpenWorldFile("test.wldx", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
-    {
-        cout << "Invalid file\n" << FileFormats::errorString;
-    } else {
-        printWorldInfo(world,cout);
-    }
-
-
-    PGE_FileFormats_misc::FileInfo x("melw.shit.LvlVX");
-    cout << "\n\n\n";
-    cout << "Name: " << x.filename() << endl;
-    cout << "FPat: " << x.fullPath() << endl;
-    cout << "BNam: " << x.basename() << endl;
-    cout << "Sufx: " << x.suffix() << endl;
-    cout << "Dirt: " << x.dirpath() << endl;
 
     a.exit(0);
     return 0;

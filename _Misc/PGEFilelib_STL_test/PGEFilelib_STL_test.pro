@@ -50,4 +50,5 @@ HEADERS += \
     ../../_common/PGE_File_Formats/ConvertUTF.h \
     ../../_common/PGE_File_Formats/charsetconvert.h \
     ../../_common/PGE_File_Formats/CSVReader.h \
-    ../../_common/PGE_File_Formats/CSVReaderPGE.h
+    ../../_common/PGE_File_Formats/CSVReaderPGE.h \
+    dirent/dirent.h
