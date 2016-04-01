@@ -448,10 +448,6 @@ namespace CSVReader {
     // ========= Special Attributes END ===========
 
 
-
-    template<typename T>
-    struct identity { typedef T type; };
-
     /*
     * The Default CSV Converter uses the STL library to do the most of the conversion.
     */
@@ -461,56 +457,43 @@ namespace CSVReader {
     template<class StrType>
     struct DefaultCSVConverter
     {
-        template<typename T>
-        static void Convert(T* out, const StrType& field)
-        {
-            ConvertInternal(out, field, identity<T>());
-        }
-
-    private:
-        template<typename T>
-        static void ConvertInternal(T* /*out*/, const StrType& /*field*/, identity<T>)
-        {
-            // This is a hackishy solution, but gcc checks static_assert, even if the template function is not actually used
-            static_assert(std::is_same<T, double>::value, "No default converter for this type");
-        }
-        static void ConvertInternal(double* out, const StrType& field, identity<double>)
+        static void Convert(double* out, const StrType& field)
         {
             *out = std::stod(field);
         }
-        static void ConvertInternal(float* out, const StrType& field, identity<float>)
+        static void Convert(float* out, const StrType& field)
         {
             *out = std::stof(field);
         }
-        static void ConvertInternal(int* out, const StrType& field, identity<int>)
+        static void Convert(int* out, const StrType& field)
         {
             *out = std::stoi(field);
         }
-        static void ConvertInternal(long* out, const StrType& field, identity<long>)
+        static void Convert(long* out, const StrType& field)
         {
             *out = std::stol(field);
         }
-        static void ConvertInternal(long long* out, const StrType& field, identity<long long>)
+        static void Convert(long long* out, const StrType& field)
         {
             *out = std::stoll(field);
         }
-        static void ConvertInternal(long double* out, const StrType& field, identity<long double>)
+        static void Convert(long double* out, const StrType& field)
         {
             *out = std::stold(field);
         }
-        static void ConvertInternal(unsigned int* out, const StrType& field, identity<unsigned int>)
+        static void Convert(unsigned int* out, const StrType& field)
         {
             *out = static_cast<unsigned int>(std::stoul(field));
         }
-        static void ConvertInternal(unsigned long* out, const StrType& field, identity<unsigned long>)
+        static void Convert(unsigned long* out, const StrType& field)
         {
             *out = std::stoul(field);
         }
-        static void ConvertInternal(unsigned long long* out, const StrType& field, identity<unsigned long long>)
+        static void Convert(unsigned long long* out, const StrType& field)
         {
             *out = std::stoull(field);
         }
-        static void ConvertInternal(bool* out, const StrType& field, identity<bool>)
+        static void Convert(bool* out, const StrType& field)
         {
             if(field == "0" || field == "") // FIXME: Is it correct? Or too hackish?
                 *out = false;
@@ -519,7 +502,7 @@ namespace CSVReader {
             else
                 throw std::invalid_argument(std::string("Could not convert to bool (must be empty, \"0\", \"!0\" or \"1\"), got \"") + field + std::string("\""));
         }
-        static void ConvertInternal(StrType* out, const StrType& field, identity<StrType>)
+        static void Convert(StrType* out, const StrType& field)
         {
             *out = field;
         }
