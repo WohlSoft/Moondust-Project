@@ -574,7 +574,7 @@ namespace CSVReader {
                                   + std::to_string(this->_lineTracker) + "!", this->_fieldTracker, this->_lineTracker);
         }
         template<class T, class... RestValues>
-        void ReadNext(T nextVal, RestValues... restVals)
+        void ReadNext(T nextVal, RestValues&&... restVals)
         {
             static_assert(std::is_pointer<T>::value, "All values which are unpacked must be pointers (except CSVDiscard, CSVVaildate, CSVDiscard, CSVOptional, CSVSubReader)!");
             ThrowIfOutOfBounds();
@@ -583,19 +583,19 @@ namespace CSVReader {
             this->SafeConvert(nextVal, this->NextField());
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... RestValues>
-        void ReadNext(CSVDiscard, RestValues... restVals)
+        void ReadNext(CSVDiscard, RestValues&&... restVals)
         {
             this->_fieldTracker++;
             this->SkipField();
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class ValidateT, class... RestValues>
-        void ReadNext(CSVValidator<ValidateT> nextVal, RestValues... restVals)
+        void ReadNext(CSVValidator<ValidateT> nextVal, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -605,11 +605,11 @@ namespace CSVReader {
                 throw std::logic_error("Validation failed at field " + std::to_string(this->_fieldTracker) + " at line " + std::to_string(this->_lineTracker) + "!");
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class PostProcessorT, class... RestValues>
-        void ReadNext(CSVPostProcessor<PostProcessorT> nextVal, RestValues... restVals)
+        void ReadNext(CSVPostProcessor<PostProcessorT> nextVal, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -619,11 +619,11 @@ namespace CSVReader {
             nextVal.PostProcess();
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class OptionalT, class... RestValues>
-        void ReadNext(CSVOptional<OptionalT> optionalObj, RestValues... restVals)
+        void ReadNext(CSVOptional<OptionalT> optionalObj, RestValues&&... restVals)
         {
             // If we already reached the end, then assign default
             if (this->_currentCharIndex >= StrTUtils::length(this->_currentLine)) {
@@ -638,11 +638,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues... restVals)
+        void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -656,11 +656,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues... restVals)
+        void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -674,11 +674,11 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         template<class... Args, class... RestValues>
-        void ReadNext(CSVIterator<Args...> iteratorObj, RestValues... restVals)
+        void ReadNext(CSVIterator<Args...> iteratorObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -692,7 +692,7 @@ namespace CSVReader {
             }
 
             this->_fieldTracker++;
-            ReadNext(restVals...);
+            ReadNext(std::forward<RestValues>(restVals)...);
         }
 
         void ReadNext() {}
@@ -811,7 +811,7 @@ namespace CSVReader {
     struct CSVSubReader
     {
     public:
-        CSVSubReader(CharT sep, Values... allValues) : _sep(sep), _val(allValues...)
+        CSVSubReader(CharT sep, Values&&... allValues) : _sep(sep), _val(allValues...)
         {}
 
         void ReadDataLine(const StrT& val)
@@ -837,9 +837,9 @@ namespace CSVReader {
      * \see CSVSubReader
      */
     template<class Reader, class StrT, class CharT, class StrTUtils, class Converter, class SubChar, class... RestValues>
-    constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues... values)
+    constexpr CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...> MakeCSVSubReader(const CSVReader<Reader, StrT, CharT, StrTUtils, Converter>&, SubChar sep, RestValues&&... values)
     {
-        return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, values...);
+        return CSVSubReader<Reader, StrT, CharT, StrTUtils, Converter, RestValues...>(sep, std::forward<RestValues>(values)...);
     }
 
 
