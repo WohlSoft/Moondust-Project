@@ -455,7 +455,11 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
         {
             int recentFormatBackup = ed->LvlData.RecentFormat;
             int recentFormatVBackup = ed->LvlData.RecentFormatVersion;
+
             //Generate actual SMBX64 Level file data
+            //TODO: Maybe we should undo that earlier optimization, and copy LvlData after all?
+            //      We do need to call smbx64LevelPrepare after all...
+            FileFormats::smbx64LevelPrepare(ed->LvlData);
             FileFormats::WriteSMBX64LvlFileRaw(ed->LvlData, LVLRawData, 64);
             ed->LvlData.RecentFormat = recentFormatBackup;
             ed->LvlData.RecentFormatVersion = recentFormatVBackup;
