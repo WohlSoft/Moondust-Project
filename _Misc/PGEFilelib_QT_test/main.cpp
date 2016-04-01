@@ -52,6 +52,16 @@ void printLine(QTextStream &cout)
     cout.flush();
 }
 
+QString flString(QString str, int lenght)
+{
+    QString fn;
+    fn.resize(lenght);
+    fn.fill(' ', lenght);
+    for(int i=0;(i<str.size()) && (i<str.size()); i++)
+        fn[i]=str[i];
+    return fn;
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -165,12 +175,7 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX64LvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
-                QString fn;
-                fn.resize(30);
-                fn.fill(' ', 30);
-                for(int i=0;(i<file.size()) && (i<fn.size()); i++)
-                    fn[i]=file[i];
-                timesout <<  fn << "\tREAD\t" << got;
+                timesout << flString(file, 30) << "\tREAD\t" << flString(QString::number(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64LevelPrepare(FileDataNew);
@@ -241,9 +246,12 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX38ALvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
-                timesout << file << " NEW ->\t" << got << "\t\t";
+                timesout << flString(file, 30) << " NEW ->\t" <<  flString(QString::number(got), 20) << "\t";
                 FileFormats::smbx64CountStars( FileDataNew );
+                meter.restart();
                 FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
+                got = meter.elapsed();
+                timesout << "WRITE ->\t" << flString(QString::number(got), 20) << "\t";
 
                 FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
             } else {
@@ -261,7 +269,7 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX38ALvlFile_OLD(fileI, FileDataOld))
             {
                 qint64 got = meter.elapsed();
-                timesout << file << " OLD ->\t" << got << "\n";
+                timesout << " OLD ->\t" << got << "\n";
                 FileFormats::smbx64CountStars( FileDataOld );
                 FileFormats::WriteExtendedLvlFileRaw(FileDataOld, raw_old);
             } else {
@@ -333,12 +341,7 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadExtendedLvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
-                QString fn;
-                fn.resize(30);
-                fn.fill(' ', 30);
-                for(int i=0;(i<file.size()) && (i<fn.size()); i++)
-                    fn[i]=file[i];
-                timesout <<  fn << "\tREAD\t" << got;
+                timesout << flString(file, 30) << "\tREAD\t" << flString(QString::number(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64CountStars( FileDataNew );
