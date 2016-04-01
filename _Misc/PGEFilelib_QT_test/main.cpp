@@ -125,15 +125,86 @@ int main(int argc, char *argv[])
         FileFormats::WriteExtendedLvlFileF("test_65-38a-2-out.lvlx", level);
     }
 
+    //Deep tests
+    #define ENABLE_SMBX64_DEEPTEST
+    #define ENABLE_SMBX38A_DEEPTEST
+    #define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
+
+    #ifdef ENABLE_SMBX64_DEEPTEST
+    /**********************DEEP TEST OF SMBX64 files*********************/
+    {
+        cout << "==================DEEP TEST OF SMBX64==================\n";
+        QString path = "../PGEFileLib_test_files/smbx64/";
+        QString wpath = "../PGEFileLib_test_files/smbx64_out/";
+        QString xpath = "../PGEFileLib_test_files/pgex/";
+        QDir testDir(path);
+        testDir.mkdir("../smbx64_out/");
+        testDir.mkdir("../pgex/");
+        QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
+
+        QFile newInvalid("invalid_s64.log");
+        newInvalid.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        QTextStream niout(&newInvalid);
+
+        QFile times("times_s64.log");
+        times.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        QTextStream timesout(&times);
+
+        QElapsedTimer meter;
+        meter.start();
+
+        foreach(QString file, files)
+        {
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            LevelData FileDataNew;
+
+            FileDataNew = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
+            if(FileFormats::ReadSMBX64LvlFile(fileI, FileDataNew))
+            {
+                qint64 got = meter.elapsed();
+                QString fn;
+                fn.resize(30);
+                fn.fill(' ', 30);
+                for(int i=0;(i<file.size()) && (i<fn.size()); i++)
+                    fn[i]=file[i];
+                timesout <<  fn << "\tREAD\t" << got;
+
+                meter.restart();
+                FileFormats::smbx64LevelPrepare(FileDataNew);
+                FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.RecentFormatVersion);
+                got = meter.elapsed();
+                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout.flush();
+                FileFormats::WriteExtendedLvlFileF(xpath+file+"x", FileDataNew);
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\nInfo: "
+                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                newInvalid.flush();
+            }
+            cout.flush();
+        }
+        newInvalid.close();
+        cout << "==================DEEP TEST OF SMBX64=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
+    #endif //ENABLE_SMBX64_DEEPTEST
+
+    #ifdef ENABLE_SMBX38A_DEEPTEST
     /**********************DEEP TEST OF SMBX38A files*********************/
     {
         cout << "==================DEEP TEST OF SMBX38A==================\n";
-        QString path = "38a_deep_test/";
-        QString opath = "38_deep_test_out/";
-        QString wpath = "38_deep_test_outNew/";
+        QString path = "../PGEFileLib_test_files/smbx38a/";
+        QString opath = "../PGEFileLib_test_files/smbx38a_lvlx_diffs/";
+        QString wpath = "../PGEFileLib_test_files/smbx38a_out/";
         QDir testDir(path);
-        testDir.mkdir("../38_deep_test_out");
-        testDir.mkdir("../38_deep_test_outNew");
+        testDir.mkdir("../smbx38a_lvlx_diffs");
+        testDir.mkdir("../smbx38a_out");
         QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
 
         QFile newInvalid("invalid_new.log");
@@ -171,10 +242,10 @@ int main(int argc, char *argv[])
             {
                 qint64 got = meter.elapsed();
                 timesout << file << " NEW ->\t" << got << "\t\t";
+                FileFormats::smbx64CountStars( FileDataNew );
+                FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
 
                 FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
-
-                FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
@@ -191,6 +262,7 @@ int main(int argc, char *argv[])
             {
                 qint64 got = meter.elapsed();
                 timesout << file << " OLD ->\t" << got << "\n";
+                FileFormats::smbx64CountStars( FileDataOld );
                 FileFormats::WriteExtendedLvlFileRaw(FileDataOld, raw_old);
             } else {
                 cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
@@ -225,6 +297,71 @@ int main(int argc, char *argv[])
         cout.flush();
     }
     /*********************************************************************/
+    #endif//ENABLE_SMBX38A_DEEPTEST
+
+
+    #if defined(ENABLE_SMBX64_DEEPTEST) && defined(ENABLE_PGEX_DEEPTEST)
+    /**********************DEEP TEST OF PGE-X files*********************/
+    {
+        cout << "==================DEEP TEST OF PGE-X==================\n";
+        QString path = "../PGEFileLib_test_files/pgex/";
+        QString wpath = "../PGEFileLib_test_files/pgex_out/";
+        QDir testDir(path);
+        testDir.mkdir("../pgex_out");
+        QStringList files = testDir.entryList(QDir::NoDotAndDotDot|QDir::Files);
+
+        QFile newInvalid("invalid_pgex.log");
+        newInvalid.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        QTextStream niout(&newInvalid);
+
+        QFile times("times_pgex.log");
+        times.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        QTextStream timesout(&times);
+
+        QElapsedTimer meter;
+        meter.start();
+
+        foreach(QString file, files)
+        {
+            PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
+            LevelData FileDataNew;
+
+            FileDataNew = FileFormats::CreateLevelData();
+            fileI.seek(0, PGE_FileFormats_misc::TextInput::begin);
+
+            meter.restart();
+            if(FileFormats::ReadExtendedLvlFile(fileI, FileDataNew))
+            {
+                qint64 got = meter.elapsed();
+                QString fn;
+                fn.resize(30);
+                fn.fill(' ', 30);
+                for(int i=0;(i<file.size()) && (i<fn.size()); i++)
+                    fn[i]=file[i];
+                timesout <<  fn << "\tREAD\t" << got;
+
+                meter.restart();
+                FileFormats::smbx64CountStars( FileDataNew );
+                FileFormats::WriteExtendedLvlFileF(wpath+file, FileDataNew);
+                got = meter.elapsed();
+                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout.flush();
+
+            } else {
+                cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
+                niout << path+file << "\r\nInfo: "
+                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                newInvalid.flush();
+            }
+            cout.flush();
+        }
+        newInvalid.close();
+        cout << "==================DEEP TEST OF PGE-X=END==============\n";
+        cout.flush();
+    }
+    /*********************************************************************/
+    #endif
 
     printLine(cout);
     cout << "\n\nPGE-X Level Read Header test:" << endl;

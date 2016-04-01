@@ -25,12 +25,7 @@ namespace smbx64Format
 
     bool isDegit(PGEChar c)
     {
-        for(int i=0;i<uint_vc_len;i++)
-        {
-            if(PGEGetChar(c)==uint_vc[i])
-                return true;
-        }
-        return false;
+        return ( (c>='0') && (c<='9') );
     }
 
     bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
@@ -50,35 +45,56 @@ namespace smbx64Format
 }
 
 // /////////////Validators///////////////
-//returns TRUE on wrong data
+//returns FALSE on wrong data
 
-bool SMBX64::uInt(PGESTRING in) // UNSIGNED INT
+bool SMBX64::IsUInt(PGESTRING in) // UNSIGNED INT
 {
     using namespace smbx64Format;
-    return !isValid(in, uint_vc, uint_vc_len);
+    #ifdef PGE_FILES_QT
+    PGEChar* data = in.data();
+    #else
+    PGEChar* data = (char*)in.data();
+    #endif
+    int strSize = in.size();
+    for(int i=0; i<strSize; i++)
+    {
+        PGEChar c = *data++;
+        if((c<'0')||(c>'9')) return false;
+    }
+    return true;
 }
 
-bool SMBX64::sInt(PGESTRING in) // SIGNED INT
+bool SMBX64::IsSInt(PGESTRING in) // SIGNED INT
 {
     using namespace smbx64Format;
-    if(IsEmpty(in)) return true;
+    if(IsEmpty(in)) return false;
 
-    if((in.size()==1)&&(!isDegit(in[0])))          return true;
-    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return true;
+    if( (in.size()==1) && (!isDegit(in[0])) )           return false;
+    if( (!isDegit(in[0])) && (PGEGetChar(in[0]) != '-') ) return false;
 
-    for(int i=1; i<(signed)in.size(); i++)
-        if(!isDegit(in[i])) return true;
+    #ifdef PGE_FILES_QT
+    PGEChar* data = in.data()+1;
+    #else
+    PGEChar* data = (char*)in.data()+1;
+    #endif
+    int strSize = in.size();
+    for(int i=1; i<strSize; i++)
+    {
+        PGEChar c = *data++;
+        if((c<'0')||(c>'9')) return false;
+    }
 
-    return false;
+    return true;
 }
 
-bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
+bool SMBX64::IsFloat(PGESTRING &in) // SIGNED FLOAT
 {
     using namespace smbx64Format;
+
     if(IsEmpty(in)) return true;
 
-    if((in.size()==1)&&(!isDegit(in[0])))          return true;
-    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return true;
+    if((in.size()==1)&&(!isDegit(in[0])))          return false;
+    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return false;
 
     bool decimal=false;
     bool pow10  =false;
@@ -91,7 +107,7 @@ bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
             {
                 in[i]='.';//replace comma with a dot
                 decimal=true;
-                if(i==((signed)in.size()-1)) return true;
+                if(i==((signed)in.size()-1)) return false;
                 continue;
             }
         }
@@ -100,7 +116,7 @@ bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
             if((PGEGetChar(in[i])=='E')||(PGEGetChar(in[i])=='e'))
             {
                 pow10=true;
-                if(i==((signed)in.size()-1)) return true;
+                if(i==((signed)in.size()-1)) return false;
                 continue;
             }
         }
@@ -111,21 +127,21 @@ bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
                 sign=true;
                 if((PGEGetChar(in[i])=='+')||(PGEGetChar(in[i])=='-'))
                 {
-                    if(i==((signed)in.size()-1)) return true;
+                    if(i==((signed)in.size()-1)) return false;
                     continue;
                 }
             }
         }
-        if(!isDegit(in[i])) return true;
+        if(!isDegit(in[i])) return false;
     }
-    return false;
+    return true;
 }
 
-bool SMBX64::qStr(PGESTRING in) // QUOTED STRING
+bool SMBX64::IsQuotedString(PGESTRING in) // QUOTED STRING
 {
     //This is INVERTED validator. If false - good, true - bad.
-    #define QStrGOOD false
-    #define QStrBAD true
+    #define QStrGOOD true
+    #define QStrBAD false
     int i=0;
     for(i=0; i<(signed)in.size();i++)
     {
@@ -141,16 +157,16 @@ bool SMBX64::qStr(PGESTRING in) // QUOTED STRING
     return QStrGOOD;
 }
 
-bool SMBX64::wBool(PGESTRING in) //Worded BOOL
+bool SMBX64::IsCSVBool(PGESTRING in) //Worded BOOL
 {
-    return !( (in=="#TRUE#")||(in=="#FALSE#") );
+    return ( (in=="#TRUE#")||(in=="#FALSE#") );
 }
 
-bool SMBX64::dBool(PGESTRING in) //Digital BOOL
+bool SMBX64::IsBool(PGESTRING in) //Digital BOOL
 {
     if((in.size()!=1) || (IsEmpty(in)) )
         return true;
-    return !((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
+    return ((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
 }
 
 //Convert from string to internal data

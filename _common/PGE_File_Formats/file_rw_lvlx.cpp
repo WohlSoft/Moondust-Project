@@ -1516,12 +1516,13 @@ bool FileFormats::WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, Le
 
     //HEAD section
     if( (!IsEmpty(FileData.LevelName))||
-        (FileData.stars>0) ||
+        (FileData.stars > 0) ||
         (!IsEmpty(FileData.open_level_on_fail))||
         (FileData.open_level_on_fail_warpID>0))
     {
         out << "HEAD\n";
-        out << PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
+        if(!IsEmpty(FileData.LevelName))
+            out << PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
         out << PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
         if(!IsEmpty(FileData.open_level_on_fail))
             out << PGEFile::value("DL", PGEFile::qStrS(FileData.open_level_on_fail)); // Open level on fail
@@ -2100,82 +2101,84 @@ bool FileFormats::WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, Le
                 PGESTRING sectionSettings;
                 LevelEvent_Sets &x = FileData.events[i].sets[tt];
                 sectionSettings += PGEFile::value("ID", PGEFile::IntS(x.id));
+                bool customSize = (x.position_left != LevelEvent_Sets::LESet_Nothing)&&
+                                  (x.position_left != LevelEvent_Sets::LESet_ResetDefault);
                 if( x.position_left != -1 )
                 {
                     sectionSettings += PGEFile::value("SL", PGEFile::IntS(x.position_left));
                     hasParams=true;
                 }
-                if( x.position_top != 0 )
+                if( customSize && (x.position_top != 0) )
                 {
                     sectionSettings += PGEFile::value("ST", PGEFile::IntS(x.position_top));
                     hasParams=true;
                 }
-                if( x.position_bottom != 0 )
+                if( customSize && (x.position_bottom != 0) )
                 {
                     sectionSettings += PGEFile::value("SB", PGEFile::IntS(x.position_bottom));
                     hasParams=true;
                 }
-                if( x.position_right != 0 )
+                if( customSize && (x.position_right != 0) )
                 {
                     sectionSettings += PGEFile::value("SR", PGEFile::IntS(x.position_right));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_pos_x) && (x.expression_pos_x != "0"))
+                if( !IsEmpty(x.expression_pos_x) && (x.expression_pos_x != "0") )
                 {
                     sectionSettings += PGEFile::value("SXX", PGEFile::qStrS(x.expression_pos_x));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_pos_y) && (x.expression_pos_y != "0"))
+                if( !IsEmpty(x.expression_pos_y) && (x.expression_pos_y != "0") )
                 {
                     sectionSettings += PGEFile::value("SYX", PGEFile::qStrS(x.expression_pos_y));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_pos_w) && (x.expression_pos_w != "0"))
+                if( !IsEmpty(x.expression_pos_w) && (x.expression_pos_w != "0") )
                 {
                     sectionSettings += PGEFile::value("SWX", PGEFile::qStrS(x.expression_pos_w));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_pos_h) && (x.expression_pos_h != "0"))
+                if( !IsEmpty(x.expression_pos_h) && (x.expression_pos_h != "0") )
                 {
                     sectionSettings += PGEFile::value("SHX", PGEFile::qStrS(x.expression_pos_h));
                     hasParams=true;
                 }
-                if(x.music_id != -1)
+                if( x.music_id != LevelEvent_Sets::LESet_Nothing )
                 {
                     sectionSettings += PGEFile::value("MI", PGEFile::IntS(x.music_id));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.music_file))
+                if( !IsEmpty(x.music_file) )
                 {
                     sectionSettings += PGEFile::value("MF", PGEFile::qStrS(x.music_file));
                     hasParams=true;
                 }
-                if(x.background_id != -1)
+                if( x.background_id != LevelEvent_Sets::LESet_Nothing )
                 {
                     sectionSettings += PGEFile::value("BG", PGEFile::IntS(x.background_id));
                     hasParams=true;
                 }
-                if(x.autoscrol)
+                if( x.autoscrol )
                 {
                     sectionSettings += PGEFile::value("AS", PGEFile::BoolS(x.autoscrol));
                     hasParams=true;
                 }
-                if(x.autoscrol_x!=0.0f)
+                if( x.autoscrol_x != 0.0f )
                 {
                     sectionSettings += PGEFile::value("AX", PGEFile::FloatS(x.autoscrol_x));
                     hasParams=true;
                 }
-                if(x.autoscrol_y != 0.0f)
+                if( x.autoscrol_y != 0.0f )
                 {
                     sectionSettings += PGEFile::value("AY", PGEFile::FloatS(x.autoscrol_y));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_autoscrool_x) && (x.expression_autoscrool_x != "0"))
+                if( !IsEmpty(x.expression_autoscrool_x) && (x.expression_autoscrool_x != "0") )
                 {
                     sectionSettings += PGEFile::value("AXX", PGEFile::qStrS(x.expression_autoscrool_x));
                     hasParams=true;
                 }
-                if(!IsEmpty(x.expression_autoscrool_y) && (x.expression_autoscrool_y != "0"))
+                if( !IsEmpty(x.expression_autoscrool_y) && (x.expression_autoscrool_y != "0") )
                 {
                     sectionSettings += PGEFile::value("AYX", PGEFile::qStrS(x.expression_autoscrool_y));
                     hasParams=true;
@@ -2320,25 +2323,25 @@ bool FileFormats::WriteExtendedLvlFile(PGE_FileFormats_misc::TextOutput &out, Le
                     if(effect.x!=0.0)
                         spawnEffect += PGEFile::value("SX", PGEFile::FloatS(effect.x));
 
-                    if(!IsEmpty(effect.expression_x))
+                    if(!IsEmpty(effect.expression_x) && (effect.expression_x != "0"))
                         spawnEffect += PGEFile::value("SXX", PGEFile::qStrS(effect.expression_x));
 
                     if(effect.y!=0.0)
                         spawnEffect += PGEFile::value("SY", PGEFile::FloatS(effect.y));
 
-                    if(!IsEmpty(effect.expression_y))
+                    if(!IsEmpty(effect.expression_y) && (effect.expression_y != "0"))
                         spawnEffect += PGEFile::value("SYX", PGEFile::qStrS(effect.expression_y));
 
                     if(effect.speed_x!=0.0)
                         spawnEffect += PGEFile::value("SSX", PGEFile::FloatS(effect.speed_x));
 
-                    if(!IsEmpty(effect.expression_sx))
+                    if(!IsEmpty(effect.expression_sx) && (effect.expression_sx != "0"))
                         spawnEffect += PGEFile::value("SSXX", PGEFile::qStrS(effect.expression_sx));
 
                     if(effect.speed_y!=0.0)
                         spawnEffect += PGEFile::value("SSY", PGEFile::FloatS(effect.speed_y));
 
-                    if(!IsEmpty(effect.expression_sy))
+                    if(!IsEmpty(effect.expression_sy) && (effect.expression_sy != "0"))
                         spawnEffect += PGEFile::value("SSYX", PGEFile::qStrS(effect.expression_sy));
 
                     if(effect.fps!=0)

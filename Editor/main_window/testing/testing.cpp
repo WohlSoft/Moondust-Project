@@ -536,16 +536,6 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                             //Stop music playback in the PGE Editor!
                             setMusicButton(false);
                             on_actionPlayMusic_triggered(false);
-
-                            // //Set focus to SMBX Window
-                            // HWND smbxTestingWind = FindWindowA("ThunderRT6FormDC", NULL);
-                            // if(smbxTestingWind)
-                            // {
-                            //     //Restore window
-                            //     SetForegroundWindow(smbxTestingWind);
-                            //     ShowWindow(smbxTestingWind, SW_SHOW);
-                            //     SetFocus(smbxTestingWind);
-                            // }
                         }
                     }
                     else if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
@@ -848,7 +838,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                    "Will be created a temporary file. Do you want to continue?"),
                 QMessageBox::Yes|QMessageBox::Abort);
 
-                if(ret==QMessageBox::Abort)
+                if( ret == QMessageBox::Abort )
                     return;
 
                 //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder

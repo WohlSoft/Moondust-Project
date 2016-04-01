@@ -55,7 +55,7 @@ bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileDat
     #define nextLineH() line = inf.readCVSLine();
 
     nextLineH();   //Read first line
-    if( SMBX64::uInt(line) ) //File format number
+    if( !SMBX64::IsUInt(line) ) //File format number
         goto badfile;
     else file_format = toInt(line);
 
@@ -64,7 +64,7 @@ bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileDat
     if(file_format >= 17)
     {
         nextLineH();   //Read second Line
-        if( SMBX64::uInt(line) ) //File format number
+        if( !SMBX64::IsUInt(line) ) //File format number
             goto badfile;
         else FileData.stars=toInt(line);   //Number of stars
     } else FileData.stars=0;
@@ -72,7 +72,7 @@ bool FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath, LevelData &FileDat
     if(file_format >= 60)
     {
         nextLineH();   //Read third line
-        if( SMBX64::qStr(line) ) //LevelTitle
+        if( !SMBX64::IsQuotedString(line) ) //LevelTitle
             FileData.LevelName = line;
         else
             FileData.LevelName = removeQuotes(line); //remove quotes
@@ -334,8 +334,8 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
          npcdata = CreateLvlNpc();
 
 
-                     parseLine( SMBX64::sFloat(line), npcdata.x, round(toDouble(line)));
-         nextLine(); parseLine( SMBX64::sFloat(line), npcdata.y, round(toDouble(line)));
+                     parseLine( SMBX64::IsFloat(line), npcdata.x, round(toDouble(line)));
+         nextLine(); parseLine( SMBX64::IsFloat(line), npcdata.y, round(toDouble(line)));
          nextLine(); SIntVar(npcdata.direct, line); //NPC direction
          nextLine(); UIntVar(npcdata.id, line); //NPC id
 
@@ -605,14 +605,12 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
                 nextLine(); strVar(events.movelayer, line);  //Layer for movement
                 nextLine(); SFltVar(events.layer_speed_x, line); //Layer moving speed – horizontal
                 nextLine(); SFltVar(events.layer_speed_y, line); //Layer moving speed – vertical
-                if(!IsEmpty(events.movelayer))
+                if( !IsEmpty(events.movelayer) )
                 {
                     LevelEvent_MoveLayer mvl;
                     mvl.name = events.movelayer;
                     mvl.speed_x = events.layer_speed_x;
                     mvl.speed_y = events.layer_speed_y;
-                    mvl.expression_x = fromNum(events.layer_speed_x);
-                    mvl.expression_y = fromNum(events.layer_speed_y);
                     events.moving_layers.push_back(mvl);
                 }
             }
@@ -805,7 +803,7 @@ bool FileFormats::WriteSMBX64LvlFile(PGE_FileFormats_misc::TextOutput &out, Leve
         if(npcID!=0)
         {
             npcID+=1000;
-            if(file_format<=64)
+            if(file_format < 18)
             {
                 long xnpcID = npcID;
                 //Convert NPC-ID value from SMBX64 to SMBX1/2

@@ -39,12 +39,7 @@ namespace PGEExtendedFormat
 
     bool isDegit(PGEChar c)
     {
-        for(int i=0;i<uint_vc_len;i++)
-        {
-            if(PGEGetChar(c)==uint_vc[i])
-                return true;
-        }
-        return false;
+        return ( (c>='0') && (c<='9') );
     }
 
     bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
@@ -305,7 +300,18 @@ bool PGEFile::IsBool(PGESTRING in) // Boolean
 bool PGEFile::IsIntU(PGESTRING in) // Unsigned Int
 {
     using namespace PGEExtendedFormat;
-    return isValid(in, uint_vc, uint_vc_len);
+    #ifdef PGE_FILES_QT
+    PGEChar* data = in.data();
+    #else
+    PGEChar* data = (char*)in.data();
+    #endif
+    int strSize = in.size();
+    for(int i=0; i<strSize; i++)
+    {
+        PGEChar c = *data++;
+        if((c<'0')||(c>'9')) return false;
+    }
+    return true;
 }
 
 bool PGEFile::IsIntS(PGESTRING in) // Signed Int
@@ -314,11 +320,20 @@ bool PGEFile::IsIntS(PGESTRING in) // Signed Int
 
     if(IsEmpty(in)) return false;
 
-    if((in.size()==1)&&(!isDegit(in[0])))          return false;
-    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return false;
+    if( (in.size()==1) && (!isDegit(in[0])) )           return false;
+    if( (!isDegit(in[0])) && (PGEGetChar(in[0]) != '-') ) return false;
 
-    for(int i=1; i<(signed)in.size(); i++)
-        if(!isDegit(in[i])) return false;
+    #ifdef PGE_FILES_QT
+    PGEChar* data = in.data()+1;
+    #else
+    PGEChar* data = (char*)in.data()+1;
+    #endif
+    int strSize = in.size();
+    for(int i=1; i<strSize; i++)
+    {
+        PGEChar c = *data++;
+        if((c<'0')||(c>'9')) return false;
+    }
 
     return true;
 }

@@ -55,17 +55,22 @@ void FileFormats::smbx64LevelPrepare(LevelData &lvl)
     }
 
     //Mark & Count Stars
-    lvl.stars = 0;
-    for(int q=0; q< (signed)lvl.npc.size(); q++)
+    lvl.stars = smbx64CountStars(lvl);
+}
+
+int FileFormats::smbx64CountStars(LevelData &lvl)
+{
+    int stars = 0;
+    for(int q=0; q<(signed)lvl.npc.size(); q++)
     {
-        lvl.npc[q].is_star = ((lvl.npc[q].id==97)||(lvl.npc[q].id==196));
-        if((lvl.npc[q].is_star) && (lvl.npc[q].friendly))
+        LevelNPC &npc = lvl.npc[q];
+        npc.is_star = ( (npc.id == 97) || (npc.id == 196) ) && !npc.friendly;
+        if( npc.is_star )
         {
-            lvl.npc[q].is_star=false;
-        } else {
-            lvl.stars+=1;
+            stars += 1;
         }
     }
+    return stars;
 }
 
 void FileFormats::smbx64LevelSortBlocks(LevelData &lvl)
@@ -741,9 +746,9 @@ LevelEvent_Sets::LevelEvent_Sets()
     music_id=       LESet_Nothing;
     background_id=  LESet_Nothing;
     position_left=  LESet_Nothing;
-    position_top=   LESet_Nothing;
-    position_bottom=LESet_Nothing;
-    position_right= LESet_Nothing;
+    position_top=   0;
+    position_bottom=0;
+    position_right= 0;
     autoscrol     = false;
     autoscrol_x   = 0.f;
     autoscrol_y   = 0.f;

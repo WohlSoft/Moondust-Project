@@ -264,7 +264,7 @@ namespace PGE_FileFormats_misc
     }
     #endif
 
-    std::string base64_encode(std::string &source)
+    std::string base64_encode(std::string const &source)
     {
         return base64_encode(reinterpret_cast<const unsigned char*>(source.c_str()), source.size());
     }

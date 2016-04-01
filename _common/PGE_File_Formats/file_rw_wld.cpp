@@ -56,7 +56,7 @@ bool FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath, WorldData &FileDat
     FileData.smbx64strict = true;
 
     nextLine();   //Read first Line
-    if( SMBX64::uInt(line) ) //File format number
+    if( !SMBX64::IsUInt(line) ) //File format number
         goto badfile;
     else file_format=toInt(line);
 

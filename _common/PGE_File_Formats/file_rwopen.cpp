@@ -126,6 +126,7 @@ bool FileFormats::SaveLevelFile(LevelData &FileData, PGESTRING filePath, LevelFi
     {
     case LVL_PGEX:
         {
+            smbx64CountStars(FileData);
             if(!FileFormats::WriteExtendedLvlFileF(filePath, FileData))
             {
                 errorString="Cannot save file "+filePath+".";
@@ -163,12 +164,14 @@ bool FileFormats::SaveLevelFile(LevelData &FileData, PGESTRING filePath, LevelFi
         }
         break;
     case LVL_SMBX38A:
-        if(!FileFormats::WriteSMBX38ALvlFileF(filePath, FileData))
         {
-            errorString="Cannot save file "+filePath+".";
-            return false;
+            if(!FileFormats::WriteSMBX38ALvlFileF(filePath, FileData))
+            {
+                errorString="Cannot save file "+filePath+".";
+                return false;
+            }
+            return true;
         }
-        return true;
         break;
     }
     errorString = "Unsupported file type";
@@ -182,6 +185,7 @@ bool FileFormats::SaveLevelData(LevelData &FileData, PGESTRING &RawData, LevelFi
     {
     case LVL_PGEX:
         {
+            smbx64CountStars(FileData);
             WriteExtendedLvlFileRaw(FileData, RawData);
             return true;
         }
@@ -194,6 +198,10 @@ bool FileFormats::SaveLevelData(LevelData &FileData, PGESTRING &RawData, LevelFi
         }
         break;
     case LVL_SMBX38A:
+        {
+            FileFormats::WriteSMBX38ALvlFileRaw(FileData, RawData);
+            return true;
+        }
         break;
     }
     errorString = "Unsupported file type";

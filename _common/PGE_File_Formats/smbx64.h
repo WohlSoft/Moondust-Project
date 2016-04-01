@@ -44,39 +44,39 @@ public:
     /*!
      * \brief Validate Unsigned Integer value
      * \param in raw value
-     * \return true if value is INVALID
+     * \return true if value is valid
      */
-    static bool uInt(PGESTRING in);
+    static bool IsUInt(PGESTRING in);
     /*!
      * \brief Validate Signed Integer value
      * \param in raw value
-     * \return true if value is INVALID
+     * \return true if value is valid
      */
-    static bool sInt(PGESTRING in);
+    static bool IsSInt(PGESTRING in);
     /*!
      * \brief Validate Floating Point value
      * \param in raw value
-     * \return true if value is INVALID
+     * \return true if value is valid
      */
-    static bool sFloat(PGESTRING &in);
+    static bool IsFloat(PGESTRING &in);
     /*!
      * \brief Validate quoted string value
      * \param in raw value
-     * \return true if value is INVALID
+     * \return true if value is valid
      */
-    static bool qStr(PGESTRING in);
+    static bool IsQuotedString(PGESTRING in);
     /*!
      * \brief Validate CSV-boolean value (#TRUE# or #FALSE#)
      * \param in raw value
      * \return true if value is INVALID
      */
-    static bool wBool(PGESTRING in);
+    static bool IsCSVBool(PGESTRING in);
     /*!
      * \brief Validate digital boolean value (0 or 1)
      * \param in raw value
      * \return true if value is INVALID
      */
-    static bool dBool(PGESTRING in);
+    static bool IsBool(PGESTRING in);
 
     /*!
      * \brief Converts CVS-bool raw string into boolean value

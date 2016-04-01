@@ -407,6 +407,12 @@ public:
      */
     static void             smbx64LevelPrepare(LevelData &lvl);
     /*!
+     * \brief Counts number of SMBX-64 Stars (NPC-97 and NPC-196). Friendly NPC's are not counts as stars.
+     * \param [__inout] lvl Level data structure
+     * \return number of found SMBX-64 stars
+     */
+    static int smbx64CountStars(LevelData &lvl);
+    /*!
      * \brief Sorts blocks array by Y->X positions in the given level data structure.
      *        By SMBX64 standard, blocks array must be sorted because it is required for
      *        NPC's collision detection algorithm of SMBX Engine

@@ -133,7 +133,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::sInt(Params[1]))
+           if(!SMBX64::IsSInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed intger!>\n";
            }
@@ -148,7 +148,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::sInt(Params[1]))
+           if(!SMBX64::IsSInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed intger!>\n";
            }
@@ -164,7 +164,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -179,7 +179,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -195,7 +195,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -210,7 +210,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -225,7 +225,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -240,7 +240,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -257,7 +257,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -272,7 +272,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -287,7 +287,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -302,7 +302,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -317,7 +317,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -332,7 +332,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -347,7 +347,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -362,7 +362,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -377,7 +377,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -392,7 +392,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -407,7 +407,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -422,7 +422,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -437,7 +437,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::sFloat(Params[1]))
+           if(!SMBX64::IsFloat(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed floating point number!>\n";
            }
@@ -452,7 +452,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -467,7 +467,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -482,7 +482,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -497,7 +497,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -512,7 +512,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be from 0 to 3!>\n";
            }
@@ -527,7 +527,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
               unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -545,7 +545,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -560,7 +560,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
         {
            Params[1] = PGESTR_Simpl(Params[1]);
            Params[1]=PGE_RemSubSTRING(Params[1], " ");//Delete spaces
-           if(SMBX64::dBool(Params[1]))
+           if(!SMBX64::IsBool(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be 1 or 0!>\n";
            }
@@ -573,7 +573,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="name")
         {
-           if(!SMBX64::qStr(Params[1]))
+           if(SMBX64::IsQuotedString(Params[1]))
                FileData.name = removeQuotes(Params[1]);
            else
                FileData.name = Params[1];
@@ -582,7 +582,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="image")
         {
-           if(!SMBX64::qStr(Params[1]))
+           if(SMBX64::IsQuotedString(Params[1]))
                FileData.image = removeQuotes(Params[1]);
            else
                FileData.image= Params[1];
@@ -591,7 +591,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="script")
         {
-           if(!SMBX64::qStr(Params[1]))
+           if(SMBX64::IsQuotedString(Params[1]))
                FileData.script = removeQuotes(Params[1]);
            else
                FileData.script= Params[1];
@@ -600,7 +600,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="grid")
         {
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned integer!>\n";
            } else {
@@ -615,7 +615,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="gridoffsetx")
         {
-           if(SMBX64::sInt(Params[1]))
+           if(!SMBX64::IsSInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed integer!>\n";
            } else {
@@ -630,7 +630,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="gridoffsety")
         {
-           if(SMBX64::sInt(Params[1]))
+           if(!SMBX64::IsSInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be signed integer!>\n";
            } else {
@@ -645,7 +645,7 @@ bool FileFormats::ReadNpcTXTFile(PGE_FileFormats_misc::TextInput &inf, NPCConfig
        else
        if(Params[0]=="gridalign")
         {
-           if(SMBX64::uInt(Params[1]))
+           if(!SMBX64::IsUInt(Params[1]))
            {
                unknownLines += fromNum(inf.getCurrentLineNumber())+": "+line+" <Should be unsigned integer!>\n";
            } else {

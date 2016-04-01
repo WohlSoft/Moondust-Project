@@ -50,7 +50,6 @@ int main()
 {
     //cout << FileFormats::WriteExtendedLvlFile(FileFormats::dummyLvlDataArray()) << endl;
     LevelData level;
-    std::ofstream fout;
     printLine();
     cout << "\n\nSMBX64 Level Read Header test:" << endl;
     FileFormats::ReadSMBX64LvlFileHeader("test.lvl", level);
@@ -142,7 +141,7 @@ int main()
     WorldData world;
     printLine();
     cout << "\n\nSMBX64 World Read Header test:" << endl;
-    world=FileFormats::ReadSMBX64WldFileHeader("test.wld");
+    FileFormats::ReadSMBX64WldFileHeader("test.wld", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)
@@ -164,13 +163,11 @@ int main()
         printWorldInfo(world);
     }
 
-    fout.open("test_out_64.wld", std::ios::out);
-    fout<<FileFormats::WriteSMBX64WldFile(world, 64);
-    fout.close();
+    FileFormats::WriteSMBX64WldFileF("test_out_64.wld", world, 64);
 
     printLine();
     cout << "\n\nPGE-X World Read Header test:" << endl;
-    world=FileFormats::ReadExtendedWldFileHeader("test.wldx");
+    FileFormats::ReadExtendedWldFileHeader("test.wldx", world);
     cout << world.filename << "\n";
     cout << world.path << "\n";
     if(!world.ReadFileValid)

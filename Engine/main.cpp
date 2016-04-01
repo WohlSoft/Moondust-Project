@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
             if(tmp.size()>1)
             {
                 configPath = tmp.last();
-                if(!SMBX64::qStr(configPath))
+                if(SMBX64::IsQuotedString(configPath))
                 {
                     configPath = FileFormats::removeQuotes(configPath);
                 }

@@ -21,7 +21,7 @@
 #include <common_features/mainwinconnect.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
-#include <PGE_File_Formats/smbx64.h>
+#include <PGE_File_Formats/pge_x.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>
@@ -30,7 +30,7 @@ static int FileName_to_npcID(QString filename)
 {
     QStringList tmp = filename.split(QChar('-'));
 
-    if((tmp.size()==2) && (!SMBX64::uInt(tmp[1])))
+    if((tmp.size()==2) && (PGEFile::IsIntU(tmp[1])))
         return tmp[1].toInt();
 
     return 0;
