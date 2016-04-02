@@ -23,10 +23,8 @@
 
 #if defined(__unix__) || defined(__APPLE__)
 #include <sys/types.h>
-    #if defined(__APPLE__)
+    #if defined(__APPLE__) || defined __x86_64__ || !defined __USE_FILE_OFFSET64
         #define PGEFileManSize off_t
-    #elif defined __x86_64__ || !defined __USE_FILE_OFFSET64
-        #define PGEFileManSize __off_t
     #else
         #define PGEFileManSize __off64_t
     #endif
