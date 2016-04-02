@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -169,6 +169,7 @@
     <addaction name="menuLanguage"/>
     <addaction name="actionShow_Development_Console"/>
     <addaction name="actionSMBX_like_GUI"/>
+    <addaction name="actionModern_GUI"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -284,15 +285,6 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <widget class="QMenu" name="menuGlobal_configuration">
-     <property name="title">
-      <string>Global configuration</string>
-     </property>
-     <addaction name="actionCurConfig"/>
-     <addaction name="actionLoad_configs"/>
-     <addaction name="separator"/>
-     <addaction name="actionChangeConfig"/>
-    </widget>
     <widget class="QMenu" name="menuPattles_and_tilesets">
      <property name="title">
       <string>Palettes and tilesets</string>
@@ -321,7 +313,6 @@
      <addaction name="actionFixWrongMasks"/>
      <addaction name="actionClear_NPC_garbadge"/>
     </widget>
-    <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
     <addaction name="separator"/>
     <addaction name="actionReload"/>
@@ -393,6 +384,15 @@
     <addaction name="menuSwitch_Compiler"/>
     <addaction name="actionCompile_To"/>
    </widget>
+   <widget class="QMenu" name="menuConfiguration">
+    <property name="title">
+     <string>Configuration</string>
+    </property>
+    <addaction name="actionCurConfig"/>
+    <addaction name="actionLoad_configs"/>
+    <addaction name="separator"/>
+    <addaction name="actionChangeConfig"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
@@ -400,6 +400,7 @@
    <addaction name="menuWorld"/>
    <addaction name="menuTest"/>
    <addaction name="menuScript"/>
+   <addaction name="menuConfiguration"/>
    <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
@@ -695,7 +696,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -2748,11 +2749,16 @@
     <string notr="true"/>
    </property>
   </action>
+  <action name="actionModern_GUI">
+   <property name="text">
+    <string>Modern GUI</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Engine/_resources/engine.qrc"/>
   <include location="_resources/editor.qrc"/>
+  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

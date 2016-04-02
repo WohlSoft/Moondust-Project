@@ -61,6 +61,20 @@ void MainWindow::on_actionSMBX_like_GUI_triggered()
 }
 
 
+void MainWindow::on_actionModern_GUI_triggered()
+{
+    setTabView();
+
+    if(activeChildWindow()==1)
+        on_actionLVLToolBox_triggered(true);
+    else
+    if(activeChildWindow()==3)
+        on_actionWLDToolBox_triggered(true);
+
+    on_actionTilesetBox_triggered(false);
+
+}
+
 
 void MainWindow::on_actionChange_log_triggered()
 {

@@ -454,6 +454,7 @@ public:
         void on_actionTipOfDay_triggered();
         void on_actionAbout_triggered();
         void on_actionSMBX_like_GUI_triggered();
+        void on_actionModern_GUI_triggered();
         void on_actionChange_log_triggered();
         void on_actionCheckUpdates_triggered();
 // ////////////////////////////////////////////////////////
@@ -761,6 +762,7 @@ public:
 public slots:
     protected:
     private slots:
+
 
 signals:
     void closeEditor();
