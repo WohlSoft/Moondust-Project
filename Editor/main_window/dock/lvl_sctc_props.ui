@@ -144,7 +144,7 @@
        <item row="1" column="0">
         <widget class="QCheckBox" name="LVLPropsWrapVertical">
          <property name="text">
-          <string>Wrap vertucally</string>
+          <string>Wrap vertically</string>
          </property>
         </widget>
        </item>
