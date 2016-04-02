@@ -463,8 +463,9 @@ namespace PGE_FileFormats_misc
             cur = (*_data)[(int)_pos++];
             if(_pos>=(signed)_data->size())
                 { _pos = _data->size(); _isEOF=true; }
-            if((cur!='\r') && (cur!='\n')) buffer.push_back(cur);
-        } while((cur != '\n') && (cur!=',') && !_isEOF);
+            if( (cur!='\r') && (cur!='\n') )
+                buffer.push_back(cur);
+        } while( (cur != '\n') && !_isEOF );
         _lineNumber++;
         return buffer;
     }
@@ -687,7 +688,14 @@ namespace PGE_FileFormats_misc
     {
         #ifdef PGE_FILES_QT
         if(!file.isOpen()) return "";
-        return stream.read(len);
+        char *buf = new char[len+1];
+        buf[0]='\0';
+        int gotten = file.read(buf, len);
+        if(gotten >= 0)
+            buf[gotten] = '\0';
+        QString out(buf);
+        delete[] buf;
+        return std::move(out);//stream.read(len);
         #else
         if(!stream) return "";
         std::string buf(len + 1, '\0');
@@ -716,22 +724,22 @@ namespace PGE_FileFormats_misc
     PGESTRING TextFileInput::readCVSLine()
     {
         bool quoteIsOpen=false;
-        PGESTRING buffer;
+        std::string buffer;
         #ifdef PGE_FILES_QT
-        QString cur;
+        char cur;
         if(!file.isOpen()) return "";
         do{
-            cur = stream.read(1);
-            if(cur=="\"")
+            file.getChar(&cur);
+            if(cur=='\"')
                 quoteIsOpen=!quoteIsOpen;
             else
             {
-                if((cur!="\r") && (((cur!="\n")&&(cur!=",")) ||(quoteIsOpen)) )
+                if( (cur!='\r') && (((cur!='\n') &&(cur!=',')) || (quoteIsOpen)) )
                     buffer.push_back(cur);
-                if(cur == "\n") _lineNumber++;
+                if(cur == '\n') _lineNumber++;
             }
-        } while( (((cur != "\n")&&(cur!=","))||quoteIsOpen) && !stream.atEnd() );
-        return buffer;
+        } while( (((cur != '\n')&&(cur!=','))||quoteIsOpen) && !file.atEnd() );
+        return QString::fromStdString(buffer);
         #else
         if(!stream) return "";
         char cur;
@@ -772,7 +780,7 @@ namespace PGE_FileFormats_misc
     bool TextFileInput::eof()
     {
         #ifdef PGE_FILES_QT
-        return stream.atEnd();
+        return file.atEnd();
         #else
         return stream.eof();
         #endif
@@ -781,7 +789,7 @@ namespace PGE_FileFormats_misc
     long long TextFileInput::tell()
     {
         #ifdef PGE_FILES_QT
-        return stream.pos();
+        return file.pos();
         #else
         return stream.tellg();
         #endif
@@ -791,7 +799,13 @@ namespace PGE_FileFormats_misc
     {
         #ifdef PGE_FILES_QT
         (void)relativeTo;
-        stream.seek(pos);
+        switch(relativeTo)
+        {
+            case current: file.seek(file.pos()+pos); break;
+            case begin: file.seek(pos); stream.seek(pos); break;
+            case end: file.seek(file.size()-pos); break;
+            default: file.seek(pos); stream.seek(pos); break;
+        }
         #else
         std::ios_base::seekdir s;
         switch(relativeTo)

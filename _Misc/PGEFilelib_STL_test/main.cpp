@@ -2,7 +2,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_globs.h>
 #include "dirent/dirent.h"
-#include <ctime>
+#include <time.h>
 
 using namespace std;
 
@@ -11,7 +11,7 @@ public:
     ElapsedTimer() : recent(0) {}
     void start() { recent=clock();}
     void restart() { recent=clock();}
-    clock_t elapsed() { return clock()-recent;}
+    clock_t elapsed() { return ((clock()-recent)*1000)/CLOCKS_PER_SEC; }
     clock_t recent;
 };
 
@@ -23,7 +23,23 @@ public:
     int mkdir(std::string where)
     {
         std::string fullPath = m_path + "/" + where;
+        #ifdef _WIN32
         return ::mkdir( fullPath.c_str() );
+        #else
+        return ::mkdir( fullPath.c_str(), 0755 );
+        #endif
+    }
+
+    static bool stringCompare( const string &left, const string &right )
+    {
+       for( string::const_iterator lit = left.begin(), rit = right.begin(); lit != left.end() && rit != right.end(); ++lit, ++rit )
+          if( tolower( *lit ) < tolower( *rit ) )
+             return true;
+          else if( tolower( *lit ) > tolower( *rit ) )
+             return false;
+       if( left.size() < right.size() )
+          return true;
+       return false;
     }
 
     std::vector<std::string > entryList()
@@ -61,6 +77,7 @@ public:
         } else {
             std::cout<< "\n" << "Directory not found! " << m_path << "\n";
         }
+        std::sort( list.begin(), list.end(), stringCompare );
         return list;
     }
     std::string m_path;
@@ -318,13 +335,13 @@ int main()
             if(FileFormats::ReadSMBX64LvlFile(fileI, FileDataNew))
             {
                 clock_t got = meter.elapsed();
-                timesout << flString(file, 30) << "\tREAD\t" << flString(std::to_string(got), 20);
+                timesout << flString(file, 30) << " READ -> " << flString(std::to_string(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64LevelPrepare(FileDataNew);
                 FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.RecentFormatVersion);
                 got = meter.elapsed();
-                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout << " WRITE -> " << got << "\n";
                 timesout.flush();
                 #ifdef GENERATE_LVLX_FILES
                 FileFormats::WriteExtendedLvlFileF(xpath+file+"x", FileDataNew);
@@ -392,12 +409,12 @@ int main()
             {
                 clock_t got = meter.elapsed();
                 time_new=got;
-                timesout << flString(file, 30) << " NEW ->\t" <<  flString(std::to_string(got), 20) << "\t";
+                timesout << flString(file, 30) << " NEW -> " <<  flString(std::to_string(got), 20);
                 FileFormats::smbx64CountStars( FileDataNew );
                 meter.restart();
                 FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
                 got = meter.elapsed();
-                timesout << "WRITE ->\t" << flString(std::to_string(got), 20) << "\t";
+                timesout << " WRITE -> " << flString(std::to_string(got), 20);
 
                 FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
             } else {
@@ -417,7 +434,7 @@ int main()
             {
                 clock_t got = meter.elapsed();
                 time_old=got;
-                timesout << " OLD ->\t" << flString(std::to_string(got), 20);
+                timesout << " OLD -> " << flString(std::to_string(got), 20);
                 if(time_old>time_new)
                     timesout << " NEW READS FASTER";
                 else if(time_old<time_new)
@@ -495,13 +512,13 @@ int main()
             if(FileFormats::ReadExtendedLvlFile(fileI, FileDataNew))
             {
                 clock_t got = meter.elapsed();
-                timesout << flString(file, 30) << "\tREAD\t" << flString(std::to_string(got), 20);
+                timesout << flString(file, 30) << " READ -> " << flString(std::to_string(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64CountStars( FileDataNew );
                 FileFormats::WriteExtendedLvlFileF(wpath+file, FileDataNew);
                 got = meter.elapsed();
-                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout << " WRITE -> " << got << "\n";
                 timesout.flush();
 
             } else {

@@ -277,13 +277,13 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadSMBX64LvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
-                timesout << flString(file, 30) << "\tREAD\t" << flString(QString::number(got), 20);
+                timesout << flString(file, 30) << " READ -> " << flString(QString::number(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64LevelPrepare(FileDataNew);
                 FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.RecentFormatVersion);
                 got = meter.elapsed();
-                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout << " WRITE -> " << got << "\r\n";
                 timesout.flush();
                 #ifdef GENERATE_LVLX_FILES
                 FileFormats::WriteExtendedLvlFileF(xpath+file+"x", FileDataNew);
@@ -354,12 +354,12 @@ int main(int argc, char *argv[])
             {
                 qint64 got = meter.elapsed();
                 time_new=got;
-                timesout << flString(file, 30) << " NEW ->\t" <<  flString(QString::number(got), 20) << "\t";
+                timesout << flString(file, 30) << " NEW -> " <<  flString(QString::number(got), 20);
                 FileFormats::smbx64CountStars( FileDataNew );
                 meter.restart();
                 FileFormats::WriteExtendedLvlFileRaw(FileDataNew, raw_new);
                 got = meter.elapsed();
-                timesout << "WRITE ->\t" << flString(QString::number(got), 20) << "\t";
+                timesout << " WRITE -> " << flString(QString::number(got), 20);
 
                 FileFormats::WriteSMBX38ALvlFileF(wpath+file, FileDataNew);
             } else {
@@ -378,7 +378,7 @@ int main(int argc, char *argv[])
             {
                 qint64 got = meter.elapsed();
                 time_old=got;
-                timesout << " OLD ->\t" << flString(QString::number(got), 20);
+                timesout << " OLD -> " << flString(QString::number(got), 20);
                 if(time_old>time_new)
                     timesout << " NEW READS FASTER";
                 else if(time_old<time_new)
@@ -457,13 +457,13 @@ int main(int argc, char *argv[])
             if(FileFormats::ReadExtendedLvlFile(fileI, FileDataNew))
             {
                 qint64 got = meter.elapsed();
-                timesout << flString(file, 30) << "\tREAD\t" << flString(QString::number(got), 20);
+                timesout << flString(file, 30) << " READ -> " << flString(QString::number(got), 20);
 
                 meter.restart();
                 FileFormats::smbx64CountStars( FileDataNew );
                 FileFormats::WriteExtendedLvlFileF(wpath+file, FileDataNew);
                 got = meter.elapsed();
-                timesout << "\tWRITE\t" << got << "\r\n";
+                timesout << " WRITE -> " << got << "\r\n";
                 timesout.flush();
 
             } else {
