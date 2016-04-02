@@ -6,7 +6,7 @@
 
 // prints the explanatory string of an exception. If the exception is nested,
 // recurses to print the explanatory of the exception it holds
-std::string exception_to_pretty_string(const std::exception& e, int level = 0)
+inline std::string exception_to_pretty_string(const std::exception& e, int level = 0)
 {
     std::string prettyString = std::string(level, ' ') + "exception: " + std::string(e.what()) + "\n";
     try {

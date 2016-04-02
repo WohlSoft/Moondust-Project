@@ -37,11 +37,11 @@ namespace CSVReader {
         explicit parse_error(const char* msg, int line, int field) : std::logic_error(msg), _line(line), _field(field) {}
         explicit parse_error(std::string msg, int line, int field) : parse_error(msg.c_str(), line, field) {}
 
-        inline int get_line_number()
+        inline int get_line_number() const
         {
             return _line;
         }
-        inline int get_field_number()
+        inline int get_field_number() const
         {
             return _field;
         }

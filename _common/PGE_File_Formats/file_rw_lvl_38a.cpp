@@ -941,22 +941,42 @@ bool FileFormats::ReadSMBX38ALvlFile(PGE_FileFormats_misc::TextInput &in, LevelD
                 dataReader.ReadDataLine();
             }
         }//while is not EOF
-    } catch(const std::exception& err)
+    }
+    catch(const std::exception& err)
     {
+        // First we try to extract the line number out of the nested exception.
+        const std::exception* curErr = &err;
+        const std::nested_exception* possibleNestedException = dynamic_cast<const std::nested_exception*>(curErr);
+        if(possibleNestedException){
+            try{
+                std::rethrow_exception(possibleNestedException->nested_ptr());
+            }catch(const parse_error& parseErr){
+                FileData.ERROR_linenum = parseErr.get_line_number();
+            }catch(...){
+                // Do Nothing
+            }
+        }
+
+
+        // Now fill in the error data.
         FileData.ReadFileValid=false;
         FileData.ERROR_info = "Invalid file format, detected file SMBX-" + fromNum(newest_file_format) + "format\n"
                 "Caused by: \n" + PGESTRING(exception_to_pretty_string(err).c_str());
-        FileData.ERROR_linenum = in.getCurrentLineNumber();
+
+        // If we were unable to find error line number from the exception, then get the line number from the file reader.
+        if(FileData.ERROR_linenum == 0)
+            FileData.ERROR_linenum = in.getCurrentLineNumber();
+
         FileData.ERROR_linedata = "";
         return false;
     }
 
     LevelAddInternalEvents(FileData);
 
-    FileData.CurSection=0;
-    FileData.playmusic=0;
+    FileData.CurSection = 0;
+    FileData.playmusic = 0;
 
-    FileData.ReadFileValid=true;
+    FileData.ReadFileValid = true;
     return true;
 }
 
