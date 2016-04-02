@@ -916,11 +916,10 @@ namespace PGE_FileFormats_misc
                 else
                 {
                     #ifdef PGE_FILES_QT
-                    const char byte[1] = {buffer[i].toLatin1()};
-                    int bytesNum = file.write((const char*)(&byte), 1);
+                    int bytesNum = (int)file.putChar(buffer[i].toLatin1());
                     #else
                     int bytesNum = 1;
-                    stream.write((const char*)(&buffer[i]), 1);
+                    stream.put(buffer[i]);
                     #endif
                     if(bytesNum<0) return -1;
                     writtenBytes += bytesNum;
