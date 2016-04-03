@@ -50,7 +50,7 @@ struct obj_bgo{
     int zLayer; //-1, 0, 1, 2
     int offsetX;
     int offsetY;
-    int zOffset;
+    double zOffset;
 
     QString image_n;
     QString mask_n;

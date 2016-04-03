@@ -101,7 +101,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 
     sbgo.offsetX =      setup->value("offset-x", (merge_with? merge_with->offsetX : 0)).toInt();
     sbgo.offsetY =      setup->value("offset-y", (merge_with? merge_with->offsetY : 0)).toInt();
-    sbgo.zOffset =      setup->value("z-offset", (merge_with? merge_with->zOffset : 0)).toInt();
+    sbgo.zOffset =      setup->value("z-offset", (merge_with? merge_with->zOffset : 0.0)).toDouble();
 
     sbgo.image_n =      setup->value("image", (merge_with? merge_with->image_n : "")).toString();
     /***************Load image*******************/

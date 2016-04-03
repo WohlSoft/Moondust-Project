@@ -27,14 +27,15 @@
 
 //Built-in order priorities per SMBX-64 BGO's
 const int _smbx64_bgo_sort_priorities[190] = {
-    44,25,27,25,33,27,27,27,27,27,5,4,13,3,37,2,2,30,30,30,18,18,51,51,51,7,29,29,33,1,
-    28,28,33,39,39,24,37,34,1,1,1,1,5,5,56,56,3,48,59,58,58,14,14,14,14,14,14,11,14,4,
-    5,34,34,1,6,5,19,55,55,47,47,47,47,47,1,0,1,1,8,33,20,6,7,37,21,37,46,46,31,31,
-    31,46,22,38,38,39,5,39,17,47,8,8,23,46,46,50,46,34,34,9,10,10,10,26,11,12,12,12,24,24,
-    21,21,21,21,21,22,22,22,41,43,42,11,12,32,32,32,53,53,45,45,46,20,54,21,54,22,22,23,23,19,
-    20,24,9,52,52,52,52,5,5,8,49,20,40,7,6,6,7,7,6,16,16,5,36,35,35,35,35,35,35,35,
-    35,35,35,35,15,9,57,57,13,13
+    52,36,36,36,36,36,36,36,36,36,12,8,36,4,36,36,36,36,36,36,36,36,88,88,88,24,36,36,
+    36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,88,88,36,60,92,88,88,32,36,36,36,
+    36,36,36,36,16,12,36,36,36,24,20,36,88,88,68,64,64,64,64,4,4,4,4,28,36,36,24,24,36,
+    36,36,76,76,36,36,36,76,36,36,36,36,36,36,80,36,36,36,36,76,72,88,76,36,36,36,36,
+    36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,40,48,44,36,36,36,36,36,88,88,
+    56,56,64,36,84,36,88,36,36,36,36,36,36,36,36,88,88,88,88,20,20,36,36,36,36,24,24,
+    24,24,24,24,36,36,20,36,36,36,36,36,36,36,36,36,36,36,36,36,36,88,88,36,36
 };
+
 
 void FileFormats::smbx64LevelPrepare(LevelData &lvl)
 {
@@ -152,18 +153,20 @@ void FileFormats::smbx64LevelSortBGOs(LevelData &lvl)
             {
                 while ( (
                             (lvl.bgo[R].smbx64_sp_apply > piv.smbx64_sp_apply)||
-                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x > piv.x))||
-                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
-                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id))
+                          /*((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x > piv.x))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id))*/
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].array_id >= piv.array_id))
                          ) && (L<R) ) R--;
                 if (L<R) lvl.bgo[L++]=lvl.bgo[R];
 
                 while (
                        (
                            (lvl.bgo[L].smbx64_sp_apply < piv.smbx64_sp_apply)||
-                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x < piv.x))||
-                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y < piv.y))||
-                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y == piv.y) && (lvl.bgo[L].array_id <= piv.array_id))
+                         /*((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[L].x < piv.x))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y < piv.y))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y == piv.y) && (lvl.bgo[L].array_id <= piv.array_id))*/
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[L].array_id <= piv.array_id))
                         ) && (L<R)) L++;
                 if (L<R) lvl.bgo[R--]=lvl.bgo[L];
             }
