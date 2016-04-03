@@ -96,6 +96,63 @@ int main(int argc, char *argv[])
         FileFormats::SaveLevelFile(level, "test_out_01.lvl", FileFormats::LVL_SMBX64, 1);
     }
 
+    #define BGO_ORDER_RESEARCH
+    #ifdef BGO_ORDER_RESEARCH
+    //Make a dummy level for BGO Order priority grabbing test
+    {
+        LevelData bgo_test = FileFormats::CreateLevelData();
+        bgo_test.sections[0].size_left=0;
+        bgo_test.sections[0].size_top=0;
+        bgo_test.sections[0].size_right=800;
+        bgo_test.sections[0].size_bottom=600;
+        for(int i=1; i<=190; i++)
+        {
+            LevelBGO bgo = FileFormats::CreateLvlBgo();
+            bgo.id = i;
+            bgo_test.bgo.push_back(bgo);
+        }
+        FileFormats::SaveLevelFile(bgo_test, "test_BGO_Test_out.lvl", FileFormats::LVL_SMBX64, 64);
+    }
+    //take set of different files and build a table of BGOs
+    {
+        #define NumOfFiles 12
+        LevelData tonnOfBGOs[NumOfFiles];
+        const char *fileNames[NumOfFiles] = {
+            "test_BGO_Test_noBlocks.lvl",
+            "test_BGO_Test_SzBlocks1.lvl",
+            "test_BGO_Test_SzBlocks2.lvl",
+            "test_BGO_Test_SzBlocks3.lvl",
+
+            "test_BGO_Test_SzBlocks4.lvl",
+            "test_BGO_Test_SzBlocks5.lvl",
+            "test_BGO_Test_SzBlocks6.lvl",
+            "test_BGO_Test_SzBlocks7.lvl",
+
+            "test_BGO_Test_SzBlocks8.lvl",
+            "test_BGO_Test_SzBlocks9.lvl",
+            "test_BGO_Test_SzBlocks0.lvl",
+            "test_BGO_Test_SzBlocksX.lvl"
+        };
+        for(int i=0; i<NumOfFiles; i++)
+        {
+            FileFormats::OpenLevelFile(fileNames[i], tonnOfBGOs[i]);
+        }
+        QFile listOfBGOs("bgos_table_out.csv");
+        listOfBGOs.open(QIODevice::WriteOnly|QIODevice::Text);
+        QTextStream lobout(&listOfBGOs);
+        for(int i=0;i<190; i++)
+        {
+            for(int j=0;j<NumOfFiles; j++)
+            {
+                lobout << tonnOfBGOs[j].bgo[i].id << (j<(NumOfFiles-1) ? "," : "");
+            }
+            lobout << "\n";
+        }
+        listOfBGOs.close();
+
+    }
+    #endif
+
 
     printLine(cout);
     cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
@@ -233,9 +290,9 @@ int main(int argc, char *argv[])
 
 
     //Deep tests of the level file formats
-    #define ENABLE_SMBX64_DEEPTEST
-    #define ENABLE_SMBX38A_DEEPTEST
-    #define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
+    //#define ENABLE_SMBX64_DEEPTEST
+    //#define ENABLE_SMBX38A_DEEPTEST
+    //#define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
 
     #ifdef ENABLE_SMBX64_DEEPTEST
     /**********************DEEP TEST OF SMBX64 files*********************/

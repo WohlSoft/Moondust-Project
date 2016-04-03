@@ -9,3 +9,5 @@ PGEFilelib_QT_test
 PGEFilelib_QT_test.exe
 PGEFilelib_STL_test
 PGEFilelib_STL_test.exe
+LunaSavedVars*.txt
+
