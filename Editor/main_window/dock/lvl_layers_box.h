@@ -33,8 +33,6 @@ public slots:
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 
 private slots:
-    void on_LvlLayersBox_visibilityChanged(bool visible);
-
     void on_AddLayer_clicked();
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
 

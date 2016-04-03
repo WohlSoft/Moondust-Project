@@ -43,6 +43,8 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionDebugger, SLOT(setChecked(bool)));
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(on_DEBUG_RefreshCoutners_clicked()));
     #ifdef Q_OS_WIN
     setFloating(true);
     #endif
@@ -71,13 +73,6 @@ DebuggerBox::~DebuggerBox()
 void DebuggerBox::re_translate()
 {
     ui->retranslateUi(this);
-}
-
-void DebuggerBox::on_DebuggerBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionDebugger->setChecked(visible);
-    if(visible)
-        on_DEBUG_RefreshCoutners_clicked();
 }
 
 void MainWindow::on_actionDebugger_triggered(bool checked)

@@ -30,7 +30,6 @@ public slots:
     void Debugger_saveCustomCounters();
 
 private slots:
-    void on_DebuggerBox_visibilityChanged(bool visible);
     void on_DEBUG_GotoPoint_clicked();
 
     void on_DEBUG_AddCustomCounter_clicked();

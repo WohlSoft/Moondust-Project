@@ -4,6 +4,14 @@
 #include "../../mainwindow.h"
 #include <ui_mainwindow.h>
 
+
+void MainWindow::on_actionVariables_triggered(bool checked)
+{
+    dock_VariablesBox->setVisible(checked);
+    if(checked) dock_VariablesBox->raise();
+}
+
+
 VariablesBox::VariablesBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -17,6 +25,8 @@ VariablesBox::VariablesBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionVariables, SLOT(setChecked(bool)));
+
     setFloating(true);
     setGeometry(
                 mwg.x()+mwg.width()-width()-GOffset,
@@ -24,7 +34,8 @@ VariablesBox::VariablesBox(QWidget *parent) :
                 width(),
                 height()
                 );
-
+    mw()->docks_level_and_world.
+          addState(this, &GlobalSettings::VariablesBoxVis);
 }
 
 VariablesBox::~VariablesBox()
@@ -35,4 +46,9 @@ VariablesBox::~VariablesBox()
 void VariablesBox::re_translate()
 {
     ui->retranslateUi(this);
+}
+
+void VariablesBox::refreshInformation()
+{
+
 }

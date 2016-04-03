@@ -30,6 +30,13 @@
 #include "lvl_warp_props.h"
 #include "ui_lvl_warp_props.h"
 
+void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
+{
+    dock_LvlWarpProps->setVisible(checked);
+    if(checked) dock_LvlWarpProps->raise();
+}
+
+
 LvlWarpBox::LvlWarpBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -44,6 +51,7 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionWarpsAndDoors, SLOT(setChecked(bool)));
     #ifdef Q_OS_WIN
     setFloating(true);
     #endif
@@ -99,18 +107,6 @@ void LvlWarpBox::re_translate()
     ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
     lockWarpSetSettings=false;
 }
-
-void LvlWarpBox::on_LvlWarpBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionWarpsAndDoors->setChecked(visible);
-}
-
-void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
-{
-    dock_LvlWarpProps->setVisible(checked);
-    if(checked) dock_LvlWarpProps->raise();
-}
-
 
 void LvlWarpBox::init()
 {

@@ -67,6 +67,7 @@ void MainWindow::loadSettings()
         GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", false).toBool();
         GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", false).toBool();
         GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", false).toBool();
+        GlobalSettings::VariablesBoxVis = settings.value("variables-box-visible", false).toBool();
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
@@ -125,6 +126,7 @@ void MainWindow::loadSettings()
         dock_TilesetBox->setFloating(settings.value("tileset-box-float", FloatDocks).toBool());
         dock_DebuggerBox->setFloating(settings.value("debugger-box-float", FloatDocks).toBool());
         dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", FloatDocks).toBool());
+        dock_VariablesBox->setFloating(settings.value("variables-box-float", FloatDocks).toBool());
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
@@ -140,6 +142,7 @@ void MainWindow::loadSettings()
         dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
         dock_DebuggerBox->restoreGeometry(settings.value("debugger-box-geometry", dock_DebuggerBox->saveGeometry()).toByteArray());
         dock_BookmarksBox->restoreGeometry(settings.value("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry()).toByteArray());
+        dock_VariablesBox->restoreGeometry(settings.value("variables-box-geometry", dock_VariablesBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
@@ -220,6 +223,7 @@ void MainWindow::saveSettings()
     settings.setValue("tileset-box-visible", GlobalSettings::TilesetBoxVis);
     settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
     settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
+    settings.setValue("variables-box-visible", GlobalSettings::VariablesBoxVis);
 
     settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
     settings.setValue("level-section-set-float", dock_LvlSectionProps->isFloating());
@@ -235,6 +239,7 @@ void MainWindow::saveSettings()
     settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
     settings.setValue("debugger-box-float", dock_DebuggerBox->isFloating());
     settings.setValue("bookmarks-box-float", dock_BookmarksBox->isFloating());
+    settings.setValue("variables-box-float", dock_VariablesBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
     settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
@@ -251,6 +256,7 @@ void MainWindow::saveSettings()
     settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
     settings.setValue("debugger-box-geometry", dock_DebuggerBox->saveGeometry());
     settings.setValue("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry());
+    settings.setValue("variables-box-geometry", dock_VariablesBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());

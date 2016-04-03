@@ -75,8 +75,6 @@ public slots:
 
 
 private slots:
-    void on_LvlItemProperties_visibilityChanged(bool visible);
-
     //Blocks
     void on_PROPS_BlockResize_clicked();
     void on_BLOCK_Width_editingFinished();

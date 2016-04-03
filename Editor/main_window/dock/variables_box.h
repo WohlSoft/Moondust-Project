@@ -21,6 +21,7 @@ public:
 
 public slots:
     void re_translate();
+    void refreshInformation();
 
 private:
     Ui::VariablesBox *ui;

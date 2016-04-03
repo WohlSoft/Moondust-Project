@@ -109,6 +109,7 @@ void MainWindow::setUiDefults()
     dock_TilesetBox      = new TilesetItemBox(this);
     dock_BookmarksBox    = new BookmarksBox(this);
     dock_DebuggerBox     = new DebuggerBox(this);
+    dock_VariablesBox    = new VariablesBox(this);
 
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
 

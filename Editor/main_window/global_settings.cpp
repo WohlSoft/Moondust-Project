@@ -56,6 +56,7 @@ bool GlobalSettings::LevelSearchBoxVis=false;
 bool GlobalSettings::TilesetBoxVis=false;
 bool GlobalSettings::DebuggerBoxVis=false;
 bool GlobalSettings::BookmarksBoxVis=false;
+bool GlobalSettings::VariablesBoxVis=false;
 
 bool GlobalSettings::MidMouse_allowDuplicate=true;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=true;

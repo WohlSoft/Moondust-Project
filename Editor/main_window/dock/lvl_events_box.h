@@ -53,8 +53,6 @@ public slots:
     long getEventArrayIndex();
 
 private slots:
-    void on_LvlEventsBox_visibilityChanged(bool visible);
-
     void on_LVLEvents_List_itemSelectionChanged();
     void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
 

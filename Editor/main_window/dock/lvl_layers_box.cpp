@@ -48,6 +48,7 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLayersBox, SLOT(setChecked(bool)));
     #ifdef Q_OS_WIN
     setFloating(true);
     #endif
@@ -75,11 +76,6 @@ LvlLayersBox::~LvlLayersBox()
 void LvlLayersBox::re_translate()
 {
     ui->retranslateUi(this);
-}
-
-void LvlLayersBox::on_LvlLayersBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionLayersBox->setChecked(visible);
 }
 
 void MainWindow::on_actionLayersBox_triggered(bool checked)

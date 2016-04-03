@@ -29,7 +29,6 @@ public slots:
     void re_translate();
 
 private slots:
-    void on_BookmarksBox_visibilityChanged(bool visible);
     void on_bookmarkList_customContextMenuRequested(const QPoint &pos);
     void DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow);
     void on_bookmarkList_doubleClicked(const QModelIndex &index);

@@ -38,6 +38,7 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionBookmarkBox, SLOT(setChecked(bool)));
     setFloating(true);
     setGeometry(
                 mwg.x()+mwg.width()-width()-GOffset,
@@ -69,12 +70,6 @@ void MainWindow::on_actionBookmarkBox_triggered(bool checked)
 {
     dock_BookmarksBox->setVisible(checked);
     if(checked) dock_BookmarksBox->raise();
-}
-
-
-void BookmarksBox::on_BookmarksBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionBookmarkBox->setChecked(visible);
 }
 
 void BookmarksBox::on_bookmarkAdd_clicked()

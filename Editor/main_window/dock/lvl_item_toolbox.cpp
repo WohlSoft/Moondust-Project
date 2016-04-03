@@ -51,6 +51,7 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLVLToolBox, SLOT(setChecked(bool)));
 
     mw()->docks_level.
           addState(this, &GlobalSettings::LevelItemBoxVis);
@@ -77,14 +78,6 @@ void MainWindow::on_actionLVLToolBox_triggered(bool checked)
     dock_LvlItemBox->setVisible(checked);
     if(checked) dock_LvlItemBox->raise();
 }
-
-// Level tool box show/hide
-void LevelItemBox::on_LevelItemBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionLVLToolBox->setChecked(visible);
-}
-
-
 
 void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 {

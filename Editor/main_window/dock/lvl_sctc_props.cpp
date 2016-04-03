@@ -52,6 +52,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
                    this, SLOT(switchResizeMode(bool)));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionSection_Settings, SLOT(setChecked(bool)));
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
                    this, SLOT(setSMBX64Strict(bool)));
 
@@ -73,7 +74,6 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     connect(mw()->ui->actionLevUnderW, SIGNAL(triggered(bool)), this, SLOT(on_LVLPropsUnderWater_clicked(bool)));
     connect(mw()->ui->actionLevUnderW, SIGNAL(triggered(bool)), ui->LVLPropsUnderWater, SLOT(setChecked(bool)));
 
-    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionSection_Settings, SLOT(setChecked(bool)));
     connect(mw()->ui->actionSection_Settings, SIGNAL(triggered(bool)), this, SLOT(setVisible(bool)));
 
     mw()->docks_level.

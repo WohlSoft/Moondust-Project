@@ -34,8 +34,6 @@ public slots:
     void clearFilter();
 
 private slots:
-    void on_LevelItemBox_visibilityChanged(bool visible);
-
     void on_BlockUniform_clicked(bool checked);
     void on_BGOUniform_clicked(bool checked);
     void on_NPCUniform_clicked(bool checked);

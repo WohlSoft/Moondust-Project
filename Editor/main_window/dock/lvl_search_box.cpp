@@ -44,6 +44,7 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLVLSearchBox, SLOT(setChecked(bool)));
     #ifdef Q_OS_WIN
     setFloating(true);
     #endif
@@ -238,11 +239,6 @@ QComboBox *LvlSearchBox::cbox_event_npc_empty_layer()
 void LvlSearchBox::re_translate()
 {
     ui->retranslateUi(this);
-}
-
-void LvlSearchBox::on_LvlSearchBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionLVLSearchBox->setChecked(visible);
 }
 
 void MainWindow::on_actionLVLSearchBox_triggered(bool checked)

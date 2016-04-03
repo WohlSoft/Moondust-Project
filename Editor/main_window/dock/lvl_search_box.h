@@ -45,8 +45,6 @@ public slots:
     void resetNPCSearch();
 
 private slots:
-    void on_LvlSearchBox_visibilityChanged(bool visible);
-
     void on_FindStartNPC_clicked();
     void on_Find_Button_TypeBlock_clicked();
     void on_Find_Button_TypeBGO_clicked();

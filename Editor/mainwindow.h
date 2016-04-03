@@ -504,7 +504,7 @@ public:
 // ///////////////////////////////////////////////////////
 
 
-// ///////////////////// Bookmarks ////////////////////////        
+// ///////////////////// Bookmarks ////////////////////////
     public:
         BookmarksBox * dock_BookmarksBox;
 
@@ -512,6 +512,13 @@ public:
         void on_actionBookmarkBox_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ///////////////////// Variables ////////////////////////
+    public:
+        VariablesBox * dock_VariablesBox;
+
+    private slots:
+        void on_actionVariables_triggered(bool checked);
+// ////////////////////////////////////////////////////////
 
 #ifdef Q_OS_WIN
 // ////////////////// Windows Extras //////////////////////
@@ -762,7 +769,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

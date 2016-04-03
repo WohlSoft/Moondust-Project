@@ -49,6 +49,7 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelEvents, SLOT(setChecked(bool)));
     #ifdef Q_OS_WIN
     setFloating(true);
     #endif
@@ -120,12 +121,6 @@ void LvlEventsBox::re_translate()
     reloadSoundsList();
     lockSetEventSettings=false;
     LvlEventBoxLock=false;
-}
-
-
-void LvlEventsBox::on_LvlEventsBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionLevelEvents->setChecked(visible);
 }
 
 void MainWindow::on_actionLevelEvents_triggered(bool checked)

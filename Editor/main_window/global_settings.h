@@ -101,6 +101,7 @@ public:
     static bool TilesetBoxVis;
     static bool DebuggerBoxVis;
     static bool BookmarksBoxVis;
+    static bool VariablesBoxVis;
 
     // Editor flags
     static bool MidMouse_allowDuplicate;

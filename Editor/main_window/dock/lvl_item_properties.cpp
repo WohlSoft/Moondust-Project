@@ -83,6 +83,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelProp, SLOT(setChecked(bool)));
 
     #ifdef Q_OS_WIN
     setFloating(true);
@@ -162,11 +163,6 @@ void LvlItemProperties::re_translate()
 
     ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
     LvlItemPropsLock=false;
-}
-
-void LvlItemProperties::on_LvlItemProperties_visibilityChanged(bool visible)
-{
-    mw()->ui->action_Placing_ShowProperties->setChecked(visible);
 }
 
 void LvlItemProperties::mousePressEvent(QMouseEvent *event)

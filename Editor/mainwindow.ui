@@ -262,6 +262,7 @@
     <addaction name="actionLevelEvents"/>
     <addaction name="actionLVLSearchBox"/>
     <addaction name="actionWLD_SearchBox"/>
+    <addaction name="actionVariables"/>
     <addaction name="separator"/>
     <addaction name="actionBookmarkBox"/>
     <addaction name="actionTilesetBox"/>
@@ -2422,6 +2423,9 @@
    <property name="text">
     <string>Fill</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+F</string>
+   </property>
   </action>
   <action name="actionCDATA_clear_unused">
    <property name="text">
@@ -2752,6 +2756,14 @@
   <action name="actionModern_GUI">
    <property name="text">
     <string>Modern GUI</string>
+   </property>
+  </action>
+  <action name="actionVariables">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Variables</string>
    </property>
   </action>
  </widget>
