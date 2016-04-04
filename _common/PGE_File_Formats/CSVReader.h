@@ -641,8 +641,8 @@ namespace CSVReader {
             ReadNext(std::forward<RestValues>(restVals)...);
         }
 
-        template<class... Args, class... RestValues>
-        void ReadNext(CSVSubReader<Args...> subReaderObj, RestValues&&... restVals)
+        template<class SubReader, class SubStrT, class SubCharT, class SubStrTUtils, class SubConverter, class... SubValues, class... RestValues>
+        void ReadNext(CSVSubReader<SubReader, SubStrT, SubCharT, SubStrTUtils, SubConverter, SubValues...> subReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -659,8 +659,9 @@ namespace CSVReader {
             ReadNext(std::forward<RestValues>(restVals)...);
         }
 
-        template<class... Args, class... RestValues>
-        void ReadNext(CSVBatchReader<Args...> subBatchReaderObj, RestValues&&... restVals)
+        template<class ReaderContainerValueT, class ReaderContainer, class ReaderContainerUtils, 
+            class ReaderStrT, class ReaderCharT, class ReaderStrTUtils, class ReaderConverter, class... RestValues>
+            void ReadNext(CSVBatchReader<ReaderContainerValueT, ReaderContainer, ReaderContainerUtils, ReaderStrT, ReaderCharT, ReaderStrTUtils, ReaderConverter> subBatchReaderObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
@@ -677,8 +678,8 @@ namespace CSVReader {
             ReadNext(std::forward<RestValues>(restVals)...);
         }
 
-        template<class... Args, class... RestValues>
-        void ReadNext(CSVIterator<Args...> iteratorObj, RestValues&&... restVals)
+        template<class IterStrT, class IterCharT, class IterStrTUtils, class IterConverter, class... RestValues>
+        void ReadNext(CSVIterator<IterStrT, IterCharT, IterStrTUtils, IterConverter> iteratorObj, RestValues&&... restVals)
         {
             ThrowIfOutOfBounds();
 
