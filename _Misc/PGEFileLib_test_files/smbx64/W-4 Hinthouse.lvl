@@ -20727,11 +20727,11 @@
 4
 "Default"
 -198464
--200608
+-200512
 64
 "Default"
 -198464
--200512
+-200608
 64
 "Default"
 -198432
@@ -20739,11 +20739,11 @@
 64
 "Default"
 -198368
--200512
+-200608
 64
 "Default"
 -198368
--200608
+-200512
 64
 "Default"
 -198336
@@ -20795,15 +20795,15 @@
 64
 "Default"
 -197568
--200224
-64
-"Default"
--197568
 -200544
 64
 "Default"
+-197568
+-200224
+64
+"Default"
 -197472
--200160
+-200192
 93
 "Default"
 -197472
@@ -20811,7 +20811,7 @@
 93
 "Default"
 -197472
--200192
+-200160
 93
 "Default"
 -197408
@@ -20839,11 +20839,11 @@
 35
 "Default"
 -196928
--200384
+-200288
 64
 "Default"
 -196928
--200288
+-200384
 64
 "Default"
 -196832
@@ -21021,21 +21021,6 @@
 ""
 ""
 ""
--198944
--200214
-1
-94
-#FALSE#
-"These Guys don't believe me. But i've told them, where to find the hidden Path in 'Outer Forest'."
-#TRUE#
-#FALSE#
-#FALSE#
-"Default"
-""
-""
-"Toad d talk again"
-""
-""
 -198816
 -200214
 -1
@@ -21051,6 +21036,21 @@
 "Toad f talk again"
 ""
 ""
+-198944
+-200214
+1
+94
+#FALSE#
+"These Guys don't believe me. But i've told them, where to find the hidden Path in 'Outer Forest'."
+#TRUE#
+#FALSE#
+#FALSE#
+"Default"
+""
+""
+"Toad d talk again"
+""
+""
 -198880
 -200214
 1
@@ -21064,6 +21064,21 @@
 ""
 ""
 "Toad e talk again"
+""
+""
+-199043
+-200246
+-1
+75
+#FALSE#
+"They're so annoying - they don't want to tell me their Secrets !"
+#TRUE#
+#TRUE#
+#FALSE#
+"Default"
+""
+""
+""
 ""
 ""
 -199456
@@ -21096,21 +21111,6 @@
 "Toad c talk again"
 ""
 ""
--199043
--200246
--1
-75
-#FALSE#
-"They're so annoying - they don't want to tell me their Secrets !"
-#TRUE#
-#TRUE#
-#FALSE#
-"Default"
-""
-""
-""
-""
-""
 -198560
 -200278
 -1
@@ -21131,21 +21131,6 @@
 -1
 94
 #FALSE#
-"Just ask the other Toads, if you need some Hints !"
-#TRUE#
-#TRUE#
-#FALSE#
-"Toad a2"
-""
-""
-""
-""
-""
--200064
--200374
--1
-94
-#FALSE#
 "Nice - you have finally arrived."
 #TRUE#
 #TRUE#
@@ -21154,6 +21139,21 @@
 ""
 ""
 "Toad a talk again"
+""
+""
+-200064
+-200374
+-1
+94
+#FALSE#
+"Just ask the other Toads, if you need some Hints !"
+#TRUE#
+#TRUE#
+#FALSE#
+"Toad a2"
+""
+""
+""
 ""
 ""
 -198976
@@ -21206,6 +21206,21 @@
 -1
 71
 #FALSE#
+"I wonder, where they two are. They said, that we shall meet each other at this Place."
+#TRUE#
+#TRUE#
+#FALSE#
+"Miles a"
+""
+""
+"Miles talk again"
+""
+""
+-199488
+-200514
+-1
+71
+#FALSE#
 "But your Face is somehow familiar to me...ah - now i get it !"
 #TRUE#
 #TRUE#
@@ -21229,21 +21244,6 @@
 ""
 ""
 ""
-""
-""
--199488
--200514
--1
-71
-#FALSE#
-"I wonder, where they two are. They said, that we shall meet each other at this Place."
-#TRUE#
-#TRUE#
-#FALSE#
-"Miles a"
-""
-""
-"Miles talk again"
 ""
 ""
 -199492
