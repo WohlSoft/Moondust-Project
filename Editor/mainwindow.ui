@@ -697,7 +697,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../Engine/_resources/engine.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -2424,7 +2424,7 @@
     <string>Fill</string>
    </property>
    <property name="shortcut">
-    <string>Shift+F</string>
+    <string notr="true">Shift+F</string>
    </property>
   </action>
   <action name="actionCDATA_clear_unused">
@@ -2769,8 +2769,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="_resources/editor.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
+  <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>
