@@ -6,6 +6,11 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <title>Platformer Game Engine - Editor &gt; Level editing &gt; Level items &gt; Background objects</title>
 <link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.auto-style1 {
+	text-align: center;
+}
+</style>
 </head>
 
 <body>
@@ -104,23 +109,36 @@ middle or in the end of array:</p>
 <p style="text-align: center">
 &nbsp;</p>
 <p style="text-align: left">
-SMBX renger algorythm displaying BGOs by it's array order. On first BGO, which 
-marked as "Foreground", will made all next BGOs foreground too, even if haven't 
-"foreground" marker. Knowing this feature, is possible to force display 
-background BGOs as foreground.</p>
-<p style="text-align: left">
-This working only from SMBX and only in fullscreen mode.</p>
+SMBX Renger algorythm displaying BGOs by special groups - layers, and BGO order 
+is very important for this case. So, if we are will do a change of the order, we 
+are will let a first BGO, which 
+marked as "Foreground", to made all next BGOs to be foreground too, even if 
+there are hasn't a 
+"foreground" flag. Knowing this thing is possible to force display 
+any background BGOs as foreground.</p>
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: left">
-For it can work, you must place on the map the one of BGO with "Foreground" mark 
-(what already displaying as foreground) in the any place.</p>
+To allow this feature work, you must to place to the map any of true "Foreground" 
+BGO in the any position (if your level has no those BGO&#39;s, place one of them out 
+of section to get it on the level space). This trick requires a one of 
+foreground BGO under our BGO&#39;s which we are want to make foreground too.</p>
 <p style="text-align: center">
-<img alt="" height="693" src="../screenshots/LevelEditing/Items/bgo_hack/_001_bgo_hack.png" width="991"></p>
+<img alt="" src="../screenshots/LevelEditing/Items/bgo_hack/_001_bgo_hack.png"></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Don't forget</strong>, if you saving into 
-SMBX LVL file format, in next time you must redefine the sorting priority value, 
-because in not saving in SMBX file format.</p>
+<p style="text-align: left"><strong>Don't forget</strong>, that if you saving 
+file into 
+SMBX1...64 LVL format, on next open of this file you must to redefine the sorting priority value 
+again, 
+because in doesn&#39;t saving into SMBX level file. Backup saved into LVLX file 
+format is suggested.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: center"><strong>Result of BGO hack in action<br></strong>
+(bush in the right drawn over playable characters)</p>
+<p class="auto-style1">
+<img alt="" src="../screenshots/LevelEditing/Items/bgo_hack/Pseudo-Foreground_BGO.png"></p>
+<p class="auto-style1">
+&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 
 

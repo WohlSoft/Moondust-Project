@@ -44,6 +44,15 @@ warp.</p>
 <p style="text-align: left;"><strong>Locked</strong> - This flag will
 close door with a&nbsp;lock. To open this warp player should take a
 key. When key was applied, warp will be opened for entering.</p>
+<p style="text-align: left;"><strong>Need a bomb </strong>- This flag will
+close door with a&nbsp;lock. To open this warp need to explode lock with any 
+explosive projectile, bomb, etc. When explosion happen arround, warp will be 
+opened for entering.</p>
+<p style="text-align: left;"><strong>Special state only</strong> - This flag 
+will disallow entering of players in any states excpept one special (which 
+defined in the configuration)</p>
+<p style="text-align: left;"><strong>Two-way warp</strong> - Allows player 
+entering into this warp from both sides.</p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;">Special flags:</p>
 <p style="text-align: left;"><strong>Level entrance</strong> - this
@@ -54,9 +63,21 @@ definition of target warp ID.</p>
 <p style="text-align: left;"><strong>Level exit</strong> -&nbsp;this option allows
 to use&nbsp;alone point. When playable character enter into this warp, level exiting will be caused.</p>
 <p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;">Values and options:</p>
+<p style="text-align: left;"><strong>Values and options:</strong></p>
+<p style="text-align: left;">Stars lock. Stars - are <span class="ref_result">a 
+collectable conventional units which are identifies entrance permissions to 
+specific warps / rooms / sections / levels. There are can be used to make games 
+be more interested with a quest to find those units. In various games stars are 
+has different name. For example, in the A2XT game, there are
+<span style="text-decoration: underline">leeks</span>.</span></p>
+<p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;"><strong>Stars needed</strong> - This is a limit of 
 star number. Player can enter into this warp when&nbsp;he/she collect a definied number of stars.</p>
+<p style="text-align: left;"><strong>Need a stars message</strong> - Show this 
+message on attempt to enter into this warp without necessary number of stars.</p>
+<p style="text-align: left;"><strong>Don&#39;t show stars number</strong> - if this 
+warp follows to another level, number of stars on target level are will not be 
+shown.</p>
 <p style="text-align: left;"></p>
 <p style="text-align: left;"><strong>X and Y</strong> - This is an exit
 to world map with target coordinates. If coordinates are defined, this
@@ -78,16 +99,18 @@ warp point by ID.</p><p style="text-align: left;"><span style="font-weight: bold
 <p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left;">&nbsp;</p>
 <h3 style="text-align: left;"><strong><a name="Warp_types">Warp types</a></strong></h3>
-<p style="text-align: left;">The warps have a three types: Instant, Pipe and 
-Door.</p>
+<p style="text-align: left;">The warps have a three types: Instant, Pipe, Door 
+and Portal (not available in SMBX 1.3).</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/006_WarpTypes.png" height="82" width="104"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/006_WarpTypes.png"></p>
 <p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;"><strong>Instant</strong> - Player will be instantly 
-teleported on any contact with entrance warp point.</p>
+<p style="text-align: left;"><strong>Instant</strong> or <strong>Portal</strong> - Player will be instantly 
+teleported on any contact with entrance warp point. Different between Instant 
+and Portal is that Instant zeroes X speed after teleport, but when player 
+entered into the Portal, player keeps same motion/flying speed.</p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/008_Instants.png" height="363" width="478"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/008_Instants.png"></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: left;"><strong>Door</strong> - Player can enter into this 
 warp only when it contacted with entrance point and when player will press up key.</p>
@@ -102,11 +125,11 @@ with entrance warp point and press the key equal to defined direction.
 Player will be exited from exit point with definied exit direction.</p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/009_Pipes1.png" height="502" width="474">
-<img alt="" src="../screenshots/LevelEditing/Warps/011_Pipes3.png" height="210" width="415"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/009_Pipes1.png">&nbsp;
+<img alt="" src="../screenshots/LevelEditing/Warps/011_Pipes3.png"></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/010_Pipes2.png" height="312" width="481"> </p>
+<img alt="" src="../screenshots/LevelEditing/Warps/010_Pipes2.png"> </p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left;">&nbsp;</p>
@@ -133,7 +156,7 @@ placed point when you press a point button.</p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: center;"><em>Placing of the Exit warp point to the map</em></p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/005_setExit.png" height="533" width="710">
+<img alt="" src="../screenshots/LevelEditing/Warps/005_setExit.png">
 
 </p>
 <p style="text-align: left;">
@@ -150,10 +173,13 @@ saved into the file. <span style="text-decoration: underline;">Exclusion:</span>
 <p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left;">&nbsp;</p>
 <h3 style="text-align: left;"><a name="Two-way_warp">Two-way warp</a></h3>
-<p style="text-align: left;">To make a&nbsp;two-way warps, you should make a second 
+<p style="text-align: left;">To make a&nbsp;two-way warps just use a &quot;Two-side 
+warp&quot;, and player will be able enter to this warp from both sides. However SMBX 
+engine doesn&#39;t supports that, and if you making levels to play on it, you should 
+to make a second 
 warp entry with opposide point placements:</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/012_two-way_doors.png" height="228" width="463"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/012_two-way_doors.png"></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
@@ -161,12 +187,12 @@ warp entry with opposide point placements:</p>
 <h3 style="text-align: left;"><a name="Locked_warp">Locked warp</a></h3>
 <p style="text-align: left;">Locked warp - is a warp with closed entrance which possible to open with a key:</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/018_locked_door.png" height="151" width="155"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/018_locked_door.png"></p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;">To make a locked door, you need to set the&nbsp;"Locked" flag into the 'checked' state:</p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: center;">
-<img alt="" src="../screenshots/LevelEditing/Warps/019_Locked_door.png" height="205" width="475"></p>
+<img alt="" src="../screenshots/LevelEditing/Warps/019_Locked_door.png"></p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left;">&nbsp;</p>
