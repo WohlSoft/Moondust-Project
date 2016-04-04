@@ -228,9 +228,15 @@ bool FileFormats::ReadSMBX64LvlFile(PGE_FileFormats_misc::TextInput &in, LevelDa
     }
 
     if(lt(8))
-        for(;i<21;i++) { section = CreateLvlSection(); section.id=i;
-                            FileData.sections.push_back(section); }
-
+        for(;i<21;i++)
+        {
+            section = CreateLvlSection();
+            section.id=i;
+            if(i < (signed)FileData.sections.size())
+                FileData.sections[i]=section;//Replace if already exists
+            else
+                FileData.sections.push_back(section); //Add Section in main array
+        }
 
     //Player's point config
     for(i=0;i<2;i++)
