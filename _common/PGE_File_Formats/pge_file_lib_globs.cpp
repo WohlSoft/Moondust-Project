@@ -898,33 +898,29 @@ namespace PGE_FileFormats_misc
         int writtenBytes=0;
         if(m_forceCRLF)
         {
+            #ifdef PGE_FILES_QT
+            buffer.replace("\n", "\r\n");
+            writtenBytes = file.write(buffer.toLocal8Bit());
+            #else
             for(int i=0; i<(signed)buffer.size(); i++)
             {
                 if(buffer[i]=='\n')
                 {
                     //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
                     const char bytes[2] = {0x0D, 0x0A};
-                    #ifdef PGE_FILES_QT
-                    int bytesNum = file.write((const char*)(&bytes), 2);
-                    #else
                     int bytesNum = 2;
                     stream.write((const char*)(&bytes), 2);
-                    #endif
                     if(bytesNum<0) return -1;
                     writtenBytes += bytesNum;
                 }
                 else
                 {
-                    #ifdef PGE_FILES_QT
-                    int bytesNum = (int)file.putChar(buffer[i].toLatin1());
-                    #else
                     int bytesNum = 1;
                     stream.put(buffer[i]);
-                    #endif
-                    if(bytesNum<0) return -1;
                     writtenBytes += bytesNum;
                 }
             }
+            #endif
         }
         else
         {
