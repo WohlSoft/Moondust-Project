@@ -36,11 +36,13 @@ const long double LevelScene::Z_Player =        35.0L; //player Point
 
 //Foreground-1
 const long double LevelScene::Z_BGOFore1 =      50.0L; // foreground BGO
-const long double LevelScene::Z_BlockFore =     100.0L; //LavaBlock
-const long double LevelScene::Z_npcFore =       150.0L; // foreground NPC
+const long double LevelScene::Z_npcFore =       100.0L; // foreground NPC
+const long double LevelScene::Z_BlockFore =     150.0L; // foreground blocks
+
 //Foreground-2
 const long double LevelScene::Z_BGOFore2 =      160.0L; // foreground BGO
 
+//System layer
 const long double LevelScene::Z_sys_PhysEnv =   500.0L;
 const long double LevelScene::Z_sys_door =      700.0L;
 const long double LevelScene::Z_sys_interspace1 = 1000.0L; // interSection space layer

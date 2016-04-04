@@ -122,7 +122,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
                                     (WldData.EpisodeTitle.isEmpty()?curFile:util::filePath(WldData.EpisodeTitle)):curFile;
 
     QString fileSMBX64="SMBX64 (1.3) World map file (*.wld)";
-    QString fileSMBXany="SMBX0...64 Level file (*.wld) [choose version]";
+    QString fileSMBXany="SMBX0...64 Level file [choose version] (*.wld)";
     QString filePGEX="Extended World map file (*.wldx)";
 
     QString selectedFilter;

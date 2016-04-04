@@ -34,6 +34,7 @@ if($handle && $bini)
     while(($line = fgets($handle)) !== false)
     {
         if($line=="") continue;
+
         $line = str_replace("\n", "", $line);
         $params = explode(",", $line);
 

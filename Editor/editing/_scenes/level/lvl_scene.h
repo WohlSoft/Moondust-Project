@@ -115,8 +115,8 @@ public:
         int Z_npcStd; // standart NPC
         int Z_Player; //playerPointZ
         int Z_BGOFore1; // foreground BGO
-        int Z_BlockFore; // lava block
         int Z_npcFore; // foreground NPC
+        int Z_BlockFore; // Foreground blocks (lava blocks)
         int Z_BGOFore2; // foreground BGO
 
 

@@ -66,10 +66,12 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     Z_Player = 35; //player Point
     //Foreground-1
     Z_BGOFore1 = 50; // foreground BGO
-    Z_BlockFore = 100; //LavaBlock
-    Z_npcFore = 150; // foreground NPC
+    Z_npcFore = 100; // foreground NPC
+    Z_BlockFore = 150; //foreground BLOCK
     //Foreground-2
     Z_BGOFore2 = 160; // foreground BGO
+
+    //System foreground
     Z_sys_PhysEnv = 500;
     Z_sys_door = 700;
     Z_sys_interspace1 = 1000; // interSection space layer

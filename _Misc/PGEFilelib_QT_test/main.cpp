@@ -290,9 +290,9 @@ int main(int argc, char *argv[])
 
 
     //Deep tests of the level file formats
-    //#define ENABLE_SMBX64_DEEPTEST
-    //#define ENABLE_SMBX38A_DEEPTEST
-    //#define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
+    #define ENABLE_SMBX64_DEEPTEST
+    #define ENABLE_SMBX38A_DEEPTEST
+    #define ENABLE_PGEX_DEEPTEST //required SMBX64 deeptest to pre-generate LVLX files!
 
     #ifdef ENABLE_SMBX64_DEEPTEST
     /**********************DEEP TEST OF SMBX64 files*********************/

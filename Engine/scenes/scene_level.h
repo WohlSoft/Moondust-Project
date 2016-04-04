@@ -190,11 +190,12 @@ public:
 
     //Foreground-1
     static const long double Z_BGOFore1; // foreground BGO
-    static const long double Z_BlockFore; //LavaBlock
     static const long double Z_npcFore; // foreground NPC
+    static const long double Z_BlockFore; // foreground blocks
     //Foreground-2
     static const long double Z_BGOFore2; // foreground BGO
 
+    //System layer
     static const long double Z_sys_PhysEnv;
     static const long double Z_sys_door;
     static const long double Z_sys_interspace1; // interSection space layer

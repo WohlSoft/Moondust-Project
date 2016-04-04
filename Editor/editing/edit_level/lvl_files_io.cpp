@@ -125,25 +125,32 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
                                     (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
 
     QString fileSMBX64  = "SMBX64 (1.3) Level file (*.lvl)";
-    QString fileSMBXany = "SMBX0...64 Level file (*.lvl) [choose version]";
+    QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.lvl)";
     QString fileSMBX38A = "SMBX-38a Level file (*.lvl)";
     QString filePGEX    = "Extended Level file (*.lvlx)";
 
     QString selectedFilter;
-    switch(LvlData.RecentFormat)
+    if(isUntitled)
     {
-    case LevelData::PGEX:
-        selectedFilter = filePGEX;
-        break;
-    case LevelData::SMBX64:
-        if( LvlData.RecentFormatVersion >= 64 )
-            selectedFilter = fileSMBX64;
-        else
-            selectedFilter = fileSMBXany;
-        break;
-    case LevelData::SMBX38A:
-        selectedFilter = fileSMBX38A;
-        break;
+        selectedFilter = fileSMBX64;
+    }
+    else
+    {
+        switch(LvlData.RecentFormat)
+        {
+        case LevelData::PGEX:
+            selectedFilter = filePGEX;
+            break;
+        case LevelData::SMBX64:
+            if( LvlData.RecentFormatVersion >= 64 )
+                selectedFilter = fileSMBX64;
+            else
+                selectedFilter = fileSMBXany;
+            break;
+        case LevelData::SMBX38A:
+            selectedFilter = fileSMBX38A;
+            break;
+        }
     }
 
     QString filter =
