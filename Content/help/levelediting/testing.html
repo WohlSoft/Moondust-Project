@@ -23,7 +23,7 @@
 <h1 style="text-align: left">Level editing &gt; Testing</h1>
 <h3 style="text-align: left"><a name="Internal_testing">Internal testing</a></h3>
 <h3 style="text-align: left">
-<img alt="" height="109" src="../screenshots/menus/005_test.png" width="202"></h3>
+<img alt="" src="../screenshots/menus/005_test.png"></h3>
 <p style="text-align: left"><span class="auto-style2"><strong>&lt;Be careful, 
 Engine part is </strong></span><span class="auto-style1"><strong>under 
 construction,</strong></span><span class="auto-style2"><strong> and a lots of 
@@ -31,15 +31,48 @@ features wasn't implemented yet&gt;</strong></span></p>
 <p style="text-align: left">To be possible test levels internally, you should 
 install the engine part.</p>
 <p style="text-align: left">To start testing, open the [ Test -&gt; Run testing] 
-menu item, and current state of level will be tested in the engine part.</p>
+menu item, and current state of the level will be played in the PGE Engine 
+application.</p>
 <p style="text-align: left"><em>Highly recommended to read PGE Engine manual
 </em>described in the <span style="text-decoration: underline">
 <a href="https://raw.githubusercontent.com/Wohlhabend-Networks/PGE-Project/master/Content/readmes/Engine.Readme.txt" target="_blank">
 Engine.Readme.txt</a></span> file included with PGE Engine.</p>
 <p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left"><a name="Testing in the SMBX Engine">Testing in the 
+SMBX Engine</a> (Windows-version only, can be used on the Wine) </h3>
+<p style="text-align: left">You can use old SMBX Engine to test your levels 
+which you made.<br><strong>Pre-requirements:</strong></p>
+<ul>
+	<li>
+	<p style="text-align: left"><strong>Installed and configured
+	<a href="http://wohlsoft.ru/config_packs/pack_info.php?pack=SMBXInt/" target="_blank">SMBX 
+Integration</a> configuration package (to configure it, run the &quot;configure.exe&quot; 
+	and then choice actual path to SMBX to integrate config pack with it)</strong></p>
+	</li>
+	<li>
+	<p style="text-align: left"><strong>LunaLUA 0.7.3.1 is required, or 
+	automatic level tests are will not work. You still be able to run test in 
+	the SMBX Engine, but if LunaLUA is not installed, PGE Editor will generate a 
+	dummy episode which you can run to start a test of your level file.</strong></p>
+	</li>
+</ul>
+<p style="text-align: left">If you have everything installed and configured, you 
+can start a level testing in the SMBX with opening the [ Test -&gt; Test in SMBX ] 
+menu item. Game must be launched. If it wasn&#39;t launched or you got an error 
+message, you may wrongly configured something. For example, LunaLUA requires 
+pre-installed MSVCR2015 package (Installer has been included with every LunaLUA 
+package).</p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="How_to_run_test_with_SMBX">How to run test 
-with SMBX 1.3</a> </h3>
+<p style="text-align: left"><strong>In-editor tests</strong></p>
+<p style="text-align: left">If&nbsp; you already ranned a level editor, when you 
+try to start a level test in the PGE, it will be forwarden into already running 
+SMBX Editor and you can do test of the level with using features from old editor 
+platform..</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left"><a name="How_to_run_test_with_SMBX">How to run 
+manual test 
+with Vanilla SMBX 1.3</a> </h3>
 <p style="text-align: left; text-decoration: underline;"><strong>Note: </strong>
 <em><strong>This manual is actual for Vanilla SMBX builds (Official builds &lt;= 
 1.3 built by Redigit before 2011 year).</strong></em></p>
@@ -48,14 +81,14 @@ LunaLUA-SMBX, here is ability to run direct test, but you must download &quot;<a
 Integration</a>&quot; configuration package and configure it with &#39;configure.exe&#39; 
 tool included with configuration package.</strong></em></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Before engine part will be completed, you still can run tests of 
-your levels through internal SMBX Editor.</p>
-<p style="text-align: left"><em>You need to use only SMBX 1.3 or 1.3.0.1, saved 
-by PGE Editor files are not compatible with older versions of SMBX if you will 
-wasn&#39;t chosen a target version number of SMBX1...64 file.</em></p>
+<p style="text-align: left"><em>You need to use only SMBX 1.3 or 1.3.0.1, files saved 
+by PGE Editor files are not compatible with older versions of SMBX by default. 
+If you have older SMBX version, you must choice a file format &quot;SMBX1...64 file 
+[choice version]&quot; and then choice a version code of SMBX version which you have.</em></p>
 <p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Actions sequence:</strong></p>
 <p style="text-align: left">1) Run PGE Editor first and open necessary level or 
-create and save them.</p>
+create and save it.</p>
 <p style="text-align: left">2) Open the SMBX in editor mode. <strong>Both 
 application must be ran!</strong>&nbsp; (PGE Editor and SMBX)</p>
 <p style="text-align: left">3) Open by SMBX Editor same level file which already 
