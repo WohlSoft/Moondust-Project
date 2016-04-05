@@ -123,8 +123,35 @@ can use more options than SMBX. Unknown options will be ignored by SMBX.</p>
 	shell or other NPCs) (*)</td></tr>
 <tr><td style="border: 1px solid #000000; width: 129px">name=</td>
 	<td style="border: 1px solid #000000; width: 119px;">"string" or string</td>
-	<td style="border: 1px solid #000000; width: 352px;">Defining the NPC's name which will be 
+	<td style="border: 1px solid #000000; width: 352px;">Defines the NPC's name which will be 
 	used in the editor.</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">health=</td>
+	<td style="border: 1px solid #000000; width: 119px;">[+numbers]</td>
+	<td style="border: 1px solid #000000; width: 352px;">Defines the health 
+	value of NPC.<br>Useful for creation of powerful enemies or bosses.</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">grid=</td>
+	<td style="border: 1px solid #000000; width: 119px;">[+numbers]</td>
+	<td style="border: 1px solid #000000; width: 352px;">Re-defines alignment 
+	grid size for this NPC</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px; height: 22px;">gridoffsetx=</td>
+	<td style="border: 1px solid #000000; width: 119px; height: 22px;">[+/-numbers]</td>
+	<td style="border: 1px solid #000000; width: 352px; height: 22px;">Defines horisontal 
+	offset at aligned by grid coordinate value</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">gridoffsety=</td>
+	<td style="border: 1px solid #000000; width: 119px;">[+/-numbers]</td>
+	<td style="border: 1px solid #000000; width: 352px;">Defines vertical offset at aligned by grid coordinate value</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">gridalign=</td>
+	<td style="border: 1px solid #000000; width: 119px;">[+numbers]</td>
+	<td style="border: 1px solid #000000; width: 352px;">Defines align mode: 0 - 
+	at center of the global cell, 1 - at edge of the global cell.</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">image=</td>
+	<td style="border: 1px solid #000000; width: 119px;">&quot;string&quot; or string</td>
+	<td style="border: 1px solid #000000; width: 352px;">Defines the sprite 
+	image file name. Allows to have a custom image file names.</td></tr>
+<tr><td style="border: 1px solid #000000; width: 129px">script=</td>
+	<td style="border: 1px solid #000000; width: 119px;">&quot;string&quot; or string</td>
+	<td style="border: 1px solid #000000; width: 352px; height: 21px;">Custom 
+	NPC-AI Algorithm script.</td></tr>
 </table>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
@@ -160,11 +187,11 @@ they make the level crash on load.</p>
 <span style="color: #FF0000">Note: Original SMBX have a 
 bug:</span> </b><strong>do not use decimal values in 
 NPC codes if you want use them with SMBX. It causes crashing of SMBX on some people. 
-In the PGE this bug absence, and you have a full freedom for use decimal 
+In the PGE and in the LunaLUA-SMBX this bug absence, and you have a full freedom for use decimal 
 values. But if you want use decimal values inside SMBX, you must have in the 
 "International standards" settings the dot "." character instead a comma "," 
-character as decimal separator.</strong></p>
-<p style="text-align: left">&nbsp;</p>
+character as decimal separator. LunaLUA-SMBX fixes this bug with forcing SMBX 
+Engine to think that current standards are configured to &quot;United States&quot;.</strong></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
@@ -311,7 +338,8 @@ frames with round rotation (NPC should can adhease to celling and walls).</p>
 <p style="text-align: left"><strong>Algorithmic animation</strong></p>
 <p style="text-align: left">- Animated with special animation algorithm. The NPC 
 have algorithmic pre-defined frame sequance, and you can't redefine them if you 
-will use your NPC in the SMBX.</p>
+will use your NPC in the SMBX.<br>To redefine animation you must edit / 
+customize NPC-AI script for that purpose.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated_style_alg.png" style="vertical-align: middle">&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani_alg.gif" style="vertical-align: middle"></p>
