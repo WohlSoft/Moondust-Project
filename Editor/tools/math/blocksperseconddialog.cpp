@@ -23,7 +23,7 @@
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond(65.0),
+    m_framesPerSecond(1000.0/15.6),
     ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
@@ -32,7 +32,7 @@ BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(unsigned int defBlockSize, QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond(65.0),
+    m_framesPerSecond(1000.0/15.6),
     ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
@@ -46,7 +46,8 @@ BlocksPerSecondDialog::~BlocksPerSecondDialog()
 
 void BlocksPerSecondDialog::on_buttonBox_accepted()
 {
-    if(ui->spinBlocks->value() == 0.0 || ui->spinSecond->value() == 0.0){
+    if(ui->spinBlocks->value() == 0.0 || ui->spinSecond->value() == 0.0)
+    {
         QMessageBox::warning(this, "Error", "Seconds value or blocks value must be non-zero.");
         return;
     }

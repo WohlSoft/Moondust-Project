@@ -25,7 +25,8 @@
 
 #include "collision_checks.h"
 
-const float PGE_Phys_Object::_smbxTickTime=1000.f/65.f;
+const float PGE_Phys_Object::_smbxTickTime = 15.6;
+//1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 
 float PGE_Phys_Object::SMBXTicksToTime(float ticks)
 {

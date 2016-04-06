@@ -57,7 +57,7 @@
       <string> blocks</string>
      </property>
      <property name="decimals">
-      <number>5</number>
+      <number>17</number>
      </property>
      <property name="minimum">
       <double>0.000010000000000</double>
@@ -79,7 +79,7 @@
       <string> second</string>
      </property>
      <property name="decimals">
-      <number>6</number>
+      <number>17</number>
      </property>
      <property name="minimum">
       <double>0.000001000000000</double>

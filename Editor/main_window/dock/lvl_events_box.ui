@@ -145,7 +145,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1456</y>
+         <y>-526</y>
          <width>257</width>
          <height>1951</height>
         </rect>
@@ -194,7 +194,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-52</y>
+             <y>0</y>
              <width>237</width>
              <height>450</height>
             </rect>
@@ -418,6 +418,12 @@
               <property name="sizeType">
                <enum>QSizePolicy::MinimumExpanding</enum>
               </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
              </spacer>
             </item>
            </layout>
@@ -488,7 +494,7 @@
             <item row="3" column="0">
              <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spX">
               <property name="decimals">
-               <number>5</number>
+               <number>17</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -521,7 +527,7 @@
             <item row="5" column="0">
              <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spY">
               <property name="decimals">
-               <number>5</number>
+               <number>17</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -658,7 +664,7 @@
             <item row="2" column="0" colspan="2">
              <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
               <property name="decimals">
-               <number>5</number>
+               <number>17</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -671,7 +677,7 @@
             <item row="4" column="0" colspan="2">
              <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
               <property name="decimals">
-               <number>5</number>
+               <number>17</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -702,6 +708,12 @@
               </property>
               <property name="sizeType">
                <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
              </spacer>
             </item>
@@ -1252,6 +1264,12 @@
               </property>
               <property name="sizeType">
                <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
              </spacer>
             </item>
