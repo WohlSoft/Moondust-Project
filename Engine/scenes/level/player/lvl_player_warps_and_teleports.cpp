@@ -128,7 +128,7 @@ void LVL_Player::processWarpChecking()
         if(!wasEntered)
         {
             WarpTo(contactedWarp->data.ox, contactedWarp->data.oy, contactedWarp->data.type);
-            wasEnteredTimeout= ((contactedWarp->data.type==LevelDoor::WARP_INSTANT) ? 400 : 0);
+            wasEnteredTimeout= ((contactedWarp->data.type==LevelDoor::WARP_INSTANT) ? 400 : 200);
             wasEntered = true;
             _scene->events.triggerEvent(contactedWarp->data.event_enter);
         }
