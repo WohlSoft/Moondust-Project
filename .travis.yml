@@ -47,7 +47,9 @@ before_install:
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
-  - sudo mkdir -p /Users/StaticQt/;
+  - git submodule init;
+    git submodule update;
+    sudo mkdir -p /Users/StaticQt/;
     sudo chown -R travis /Users/StaticQt/;
     wget http://wohlsoft.ru/docs/Software/QtBuilts/qt-5.5.1-static-osx-10.11.1.tar.gz -O /Users/StaticQt/qt-5.5.1-static-osx-10.11.1.tar.gz;
     Bak=~+;
