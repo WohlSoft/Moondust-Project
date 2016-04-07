@@ -41,11 +41,8 @@ os: unstable
 # clone directory
 clone_folder: C:\_Repos\PGE-Project
 clone_depth:  3  # clone entire repository history if not defined
-- cmd: >-
-    git clone --recursive https://github.com/Wohlhabend-Networks/PGE-Project.git --depth 3
-    cd PGE-Project
-
-
+- cmd: git clone --recursive https://github.com/Wohlhabend-Networks/PGE-Project.git --depth 3
+    
 # Uncommend those two lines to enable RDP (which can be used to debug stuff and test built stuff)
 # init:
 # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
