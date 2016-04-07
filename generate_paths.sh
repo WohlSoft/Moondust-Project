@@ -8,7 +8,7 @@ fi
 
 QMAKE_PATH=qmake
 LRELEASE_PATH=lrelease
-QT_VERSION=5.5.1_static
+QT_VERSION=5.6.0_static
 
 OPEN_GEDIT=true
 for var in "$@"
