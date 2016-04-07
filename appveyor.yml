@@ -41,15 +41,13 @@ os: unstable
 # clone directory
 clone_folder: C:\_Repos\PGE-Project
 clone_depth:  3  # clone entire repository history if not defined
-clone_script:
-- cmd: >-
-    git clone --recursive https://github.com/Wohlhabend-Networks/PGE-Project.git --depth 3
-    cd PGE-Project
 # Uncommend those two lines to enable RDP (which can be used to debug stuff and test built stuff)
 # init:
 # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
+  - git submodule init
+  - git submodule update
   - echo set QtDir=C:\Qt\5.5\mingw492_32\bin>> _paths.bat
   - echo set MinGW=C:\Qt\Tools\mingw492_32\bin>> _paths.bat
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
