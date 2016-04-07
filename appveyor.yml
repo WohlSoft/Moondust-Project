@@ -40,8 +40,11 @@ os: unstable
 
 # clone directory
 clone_folder: C:\_Repos\PGE-Project
+clone_depth:  3  # clone entire repository history if not defined
+- cmd: >-
+    git clone --recursive https://github.com/Wohlhabend-Networks/PGE-Project.git --depth 3
+    cd PGE-Project
 
-clone_depth:  1   # clone entire repository history if not defined
 
 # Uncommend those two lines to enable RDP (which can be used to debug stuff and test built stuff)
 # init:
