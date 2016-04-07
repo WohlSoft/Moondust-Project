@@ -40,6 +40,7 @@ public:
     };
     static RenderEngineType setRenderer(RenderEngineType rtype=RENDER_AUTO);
 
+    static void setup_OpenGL21();
     static void setup_OpenGL31();
 
     static bool init();
@@ -82,6 +83,7 @@ public:
     static GLuint QImage2Texture(QImage *img);
     static void deleteTexture(PGE_Texture &tx);
     static void deleteTexture(GLuint tx);
+
 private:
     //static void initDummyTexture();
     //static PGE_Texture _dummyTexture;

@@ -124,6 +124,9 @@ public:
     //! List of all available joysticks
     QList<SDL_Joystick*> joysticks;
 
+    //! Code of the renderer device (OpenGL 3, OpenGL 2, Software render)
+    int renderer_device;
+
     /*!
      * \brief Load settings to specific control key map through opened config file inside specified INI-group
      * \param map Keyboard control map structure which contains key ID's per each control key

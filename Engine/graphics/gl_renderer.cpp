@@ -51,6 +51,7 @@
 
 #include <audio/pge_audio.h>
 
+#include "render/render_opengl21.h"
 #include "render/render_opengl31.h"
 
 #include <QDir>
@@ -65,6 +66,7 @@
 
 static Render_Base      g_dummy;//Empty renderer
 static Render_OpenGL31  g_opengl31;
+static Render_OpenGL21  g_opengl21;
 
 Render_Base      *g_renderer=&g_dummy;
 
@@ -115,13 +117,94 @@ void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean norm
 void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer);
 #endif
 
+static bool detectOpenGL2()
+{
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);//3
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
+
+    SDL_Window* dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
+                                         SDL_WINDOWPOS_CENTERED,
+                                         SDL_WINDOWPOS_CENTERED,
+                                         10, 10, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
+    if(!dummy)
+        return false;
+
+    SDL_GLContext glcontext = SDL_GL_CreateContext(dummy);
+    if(!glcontext)
+    {
+        SDL_DestroyWindow(dummy);
+        return false;
+    }
+
+    SDL_GL_DeleteContext(glcontext);
+    SDL_DestroyWindow(dummy);
+
+    SDL_ClearError();
+    return true;
+}
+
+
+static bool detectOpenGL3()
+{
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);//3
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+
+    SDL_Window* dummy = SDL_CreateWindow("OpenGL 3 probe dummy window",
+                                         SDL_WINDOWPOS_CENTERED,
+                                         SDL_WINDOWPOS_CENTERED,
+                                         10, 10, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
+    if(!dummy)
+        return false;
+
+    SDL_GLContext glcontext = SDL_GL_CreateContext(dummy);
+    if(!glcontext)
+    {
+        SDL_DestroyWindow(dummy);
+        return false;
+    }
+
+    SDL_GL_DeleteContext(glcontext);
+    SDL_DestroyWindow(dummy);
+
+    SDL_ClearError();
+    return true;
+}
+
+
+
 GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineType rtype)
 {
     if(rtype==RENDER_AUTO)
     {
-
-    } else {
-
+        if(detectOpenGL3())
+        {
+            rtype=RENDER_OPENGL_3_1;
+            LogDebug("OpenGL 3.1 detected!");
+        }
+        else if(detectOpenGL2())
+        {
+            rtype=RENDER_OPENGL_2_1;
+            LogDebug("OpenGL 2.1 detected!");
+        }
+        else
+        {
+            rtype=RENDER_INVALID;
+            LogCritical("OpenGL not detected!");
+        }
     }
     return rtype;
 }
@@ -131,6 +214,13 @@ void GlRenderer::setup_OpenGL31()
     g_renderer=&g_opengl31;
     g_renderer->set_SDL_settings();
 }
+
+void GlRenderer::setup_OpenGL21()
+{
+    g_renderer=&g_opengl21;
+    g_renderer->set_SDL_settings();
+}
+
 
 bool GlRenderer::init()
 {

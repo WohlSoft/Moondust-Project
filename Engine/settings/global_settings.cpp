@@ -188,6 +188,8 @@ void GlobalSettings::resetDefaults()
     player1_keyboard.right.val      = SDL_SCANCODE_RIGHT;
     player1_keyboard.up.val         = SDL_SCANCODE_UP;
     player1_keyboard.down.val       = SDL_SCANCODE_DOWN;
+
+    renderer_device     = 0;
 }
 
 void GlobalSettings::apply()

@@ -63,7 +63,23 @@ bool PGE_Window::checkSDLError(int line)
 bool PGE_Window::init(QString WindowTitle)
 {
 
-    GlRenderer::setup_OpenGL31();
+    #ifdef __APPLE__
+    GlRenderer::setup_OpenGL21();
+    #else
+    //Detect renderer
+    GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
+    if(rtype==GlRenderer::RENDER_INVALID)
+    {
+        QMessageBox::critical(NULL, "OpenGL not found!",
+            QString("Unable to find OpenGL support!\n%1")
+            .arg( SDL_GetError() ), QMessageBox::Ok);
+    }
+    if(rtype==GlRenderer::RENDER_OPENGL_3_1)
+        GlRenderer::setup_OpenGL31();
+    else
+        GlRenderer::setup_OpenGL21();
+    #endif
+
 
     GlRenderer::setViewportSize(Width, Height);
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,

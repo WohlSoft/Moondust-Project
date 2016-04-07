@@ -306,7 +306,8 @@ SOURCES += \
     graphics/render/render_base.cpp \
     graphics/render/render_opengl31.cpp \
     scenes/level/lvl_player_switch.cpp \
-    script/bindings/level/globalfuncs/luafuncs_level.cpp
+    script/bindings/level/globalfuncs/luafuncs_level.cpp \
+    graphics/render/render_opengl21.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -463,7 +464,8 @@ HEADERS  += \
     graphics/render/render_base.h \
     graphics/render/render_opengl31.h \
     scenes/level/lvl_player_switch.h \
-    script/bindings/level/globalfuncs/luafuncs_level.h
+    script/bindings/level/globalfuncs/luafuncs_level.h \
+    graphics/render/render_opengl21.h
 
 FORMS    += \
     data_configs/select_config.ui
