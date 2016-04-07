@@ -211,7 +211,7 @@ void CalibrationMain::saveConfig(QString fileName, bool customPath)
 
     //ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
-    int i, j;
+    int x, y;
 
     conf.clear();
 
@@ -224,21 +224,22 @@ void CalibrationMain::saveConfig(QString fileName, bool customPath)
         conf.setValue("over-top-grab", frameOverTopGrab);
     conf.endGroup();
 
-    for(i=0; i<10;i++)
+    for(x=0; x<10;x++)
     {
-        for(j=0; j<10;j++)
+        for(y=0; y<10;y++)
         {
-            if(framesX[i][j].used)
+            if(framesX[x][y].used)
             {
-                conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-                conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
-                conf.setValue("width", frameWidth);
-                conf.setValue("offsetX", framesX[i][j].offsetX);
-                conf.setValue("offsetY", framesX[i][j].offsetY);
-                conf.setValue("used", framesX[i][j].used);
-                if(framesX[i][j].isDuck) conf.setValue("duck", framesX[i][j].isDuck);
-                if(framesX[i][j].isRightDir) conf.setValue("isRightDir", framesX[i][j].isRightDir);
-                if(framesX[i][j].showGrabItem) conf.setValue("showGrabItem", framesX[i][j].showGrabItem);
+                conf.beginGroup("frame-"+QString::number(x)+"-"+QString::number(y));
+            // Don't save width and height parameters!
+                //conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
+                //conf.setValue("width", frameWidth);
+                conf.setValue("offsetX", framesX[x][y].offsetX);
+                conf.setValue("offsetY", framesX[x][y].offsetY);
+                conf.setValue("used", framesX[x][y].used);
+                if(framesX[x][y].isDuck) conf.setValue("duck", framesX[x][y].isDuck);
+                if(framesX[x][y].isRightDir) conf.setValue("isRightDir", framesX[x][y].isRightDir);
+                if(framesX[x][y].showGrabItem) conf.setValue("showGrabItem", framesX[x][y].showGrabItem);
                 conf.endGroup();
             }
         }
