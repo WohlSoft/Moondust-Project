@@ -50,6 +50,7 @@ Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
 
 void Render_OpenGL31::set_SDL_settings()
 {
+    SDL_GL_ResetAttributes();
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);

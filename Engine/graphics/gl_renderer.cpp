@@ -119,6 +119,7 @@ void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei strid
 
 static bool detectOpenGL2()
 {
+    SDL_GL_ResetAttributes();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
@@ -126,8 +127,8 @@ static bool detectOpenGL2()
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);//3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
 
     SDL_Window* dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
                                          SDL_WINDOWPOS_CENTERED,
@@ -139,7 +140,17 @@ static bool detectOpenGL2()
     SDL_GLContext glcontext = SDL_GL_CreateContext(dummy);
     if(!glcontext)
     {
+        LogDebug(QString("SDL Error of OpenGL 2 probe: ")+SDL_GetError());
         SDL_DestroyWindow(dummy);
+        return false;
+    }
+    const char* sdl_error = SDL_GetError();
+    if(sdl_error[0]!='\0')
+    {
+        LogDebug(QString("SDL Error of OpenGL 2 probe: ")+sdl_error);
+        SDL_GL_DeleteContext(glcontext);
+        SDL_DestroyWindow(dummy);
+        SDL_ClearError();
         return false;
     }
 
@@ -153,6 +164,7 @@ static bool detectOpenGL2()
 
 static bool detectOpenGL3()
 {
+    SDL_GL_ResetAttributes();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
@@ -173,7 +185,17 @@ static bool detectOpenGL3()
     SDL_GLContext glcontext = SDL_GL_CreateContext(dummy);
     if(!glcontext)
     {
+        LogDebug(QString("SDL Error of OpenGL 3 probe: ")+SDL_GetError());
         SDL_DestroyWindow(dummy);
+        return false;
+    }
+    const char* sdl_error = SDL_GetError();
+    if(sdl_error[0]!='\0')
+    {
+        LogDebug(QString("SDL Error of OpenGL 3 probe: ")+sdl_error);
+        SDL_GL_DeleteContext(glcontext);
+        SDL_DestroyWindow(dummy);
+        SDL_ClearError();
         return false;
     }
 

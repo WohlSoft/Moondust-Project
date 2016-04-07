@@ -14,6 +14,7 @@
 - Improved onHarm/onKill events on NPC-AI
 - Added new NPC-AI events, functions and variables
 - Added a support of collision toggling from lua
+- Added ability to use OpenGL 2 if not possible to use OpenGL 3 (also with support of compatibility with video cards which are not supports non-power of two textures)
 
 0.2.5
 - Fixed crash on NPC placement with inter-processing

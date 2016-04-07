@@ -86,6 +86,7 @@ Render_OpenGL21::Render_OpenGL21() : Render_Base("OpenGL 2.1"),
 
 void Render_OpenGL21::set_SDL_settings()
 {
+    SDL_GL_ResetAttributes();
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
@@ -95,8 +96,8 @@ void Render_OpenGL21::set_SDL_settings()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);//3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 
     //  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
