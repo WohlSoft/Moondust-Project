@@ -743,6 +743,8 @@ public:
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
     private slots:
+        void testingFinished();
+
         void on_action_doTest_triggered();
         void on_action_doSafeTest_triggered();
 
@@ -769,6 +771,7 @@ public:
 public slots:
     protected:
     private slots:
+
 
 signals:
     void closeEditor();

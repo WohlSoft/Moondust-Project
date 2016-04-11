@@ -78,6 +78,18 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
     /************************Alpha-testing notify*****************************/
 }
 
+static bool recentMusicPlayingState = false;
+
+
+void MainWindow::testingFinished()
+{
+    if(recentMusicPlayingState)
+    {
+        setMusicButton(true);
+        on_actionPlayMusic_triggered(true);
+    }
+}
+
 
 void MainWindow::on_action_doTest_triggered()
 {
@@ -137,6 +149,7 @@ void MainWindow::on_action_doTest_triggered()
         if(engine_proc.waitForStarted())
         {
             qDebug() << "Started";
+            recentMusicPlayingState = ui->actionPlayMusic->isChecked();
             //Stop music playback in the PGE Editor!
             setMusicButton(false);
             on_actionPlayMusic_triggered(false);
@@ -221,6 +234,7 @@ void MainWindow::on_action_doSafeTest_triggered()
     engine_proc.start(command, args);
     if( engine_proc.waitForStarted() )
     {
+        recentMusicPlayingState = ui->actionPlayMusic->isChecked();
         //Stop music playback in the PGE Editor!
         setMusicButton(false);
         on_actionPlayMusic_triggered(false);
@@ -749,6 +763,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 engine_proc.start(command, params);
                 if(engine_proc.waitForStarted())
                 {
+                    recentMusicPlayingState = ui->actionPlayMusic->isChecked();
                     //Stop music
                     setMusicButton(false);
                     on_actionPlayMusic_triggered(false);
@@ -795,6 +810,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 {
                     if (SendLevelDataToLunaLuaSMBX(ed, m_luna_ipc_pipe))
                     {
+                        recentMusicPlayingState = ui->actionPlayMusic->isChecked();
                         //Stop music playback in the PGE Editor!
                         setMusicButton(false);
                         on_actionPlayMusic_triggered(false);
@@ -954,6 +970,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 if(DevConsole::isConsoleShown())
                     DevConsole::log("Sent Message (Hopefully it worked)");
 
+                recentMusicPlayingState = ui->actionPlayMusic->isChecked();
                 //Stop music playback in the PGE Editor!
                 setMusicButton(false);
                 on_actionPlayMusic_triggered(false);
