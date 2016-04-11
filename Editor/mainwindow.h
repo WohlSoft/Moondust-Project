@@ -140,11 +140,21 @@ public:
         ///
         void openFilesByArgs(QStringList args);
 
+        /*!
+         * \brief Show a status bar message text
+         * \param msg Message to show
+         * \param time time in milliseconds how long message must be shown
+         */
         void showStatusMsg(QString msg, int time=2000); //Send status message
 
+        /*!
+         * \brief Apply icons/cusors/images theme from selected path (where valid theme.ini is located)
+         * \param themeDir Path to the valid PGE Editor theme package
+         */
         void applyTheme(QString themeDir="");
 
-        bool continueLoad; //!< Is need to continue or abort loading operation and close editor
+        //! Startup-only flag, used for case is need to continue loading process or exit from editor application
+        bool continueLoad;
 
         ///
         /// \brief loadSettings load settings from configuration file
@@ -163,6 +173,10 @@ public:
         ///
         bool getCurrentSceneCoordinates(qreal &x, qreal &y);
     signals:
+        /*!
+         * \brief Set SMBX64 strict mode (unsupported properties are will be greyed/disabled)
+         * \param enabled SMBX64 strict mode enable state
+         */
         void setSMBX64Strict(bool enabled);
 
     private:
@@ -182,15 +196,30 @@ public:
         ///
         void setUiDefults();
 
-        DockVizibilityManager docks_level; //!< Manager of level specific toolboxes
-        DockVizibilityManager docks_world; //!< Manager of world specific toolboxes
-        DockVizibilityManager docks_level_and_world; //!< Manager of level and world editors toolboxes
+        //! Manager of level specific toolboxes
+        DockVizibilityManager docks_level;
+        //! Manager of world specific toolboxes
+        DockVizibilityManager docks_world;
+        //! Manager of level and world editors toolboxes
+        DockVizibilityManager docks_level_and_world;
 
     public slots:
-        void save();         //!< Save current file
-        void save_as();      //!< Save current file with asking for save path
-        void close_sw();     //!< Close current sub window
-        void save_all();     //!< Save all opened files
+        /*!
+         * \brief Save current file
+         */
+        void save();
+        /*!
+         * \brief Save current file with asking for save path
+         */
+        void save_as();
+        /*!
+         * \brief Close current sub window
+         */
+        void close_sw();
+        /*!
+         * \brief Save all opened files
+         */
+        void save_all();
 
         ///
         /// \brief OpenFile - Open file in the editor
@@ -203,10 +232,18 @@ public:
         ///
         void on_actionReload_triggered();
 
-        void on_action_openEpisodeFolder_triggered(); //!< Open folder where current file is located
-        void on_action_openCustomFolder_triggered();  //!< Open folder which contains level/worldmap specific stuff
+        /*!
+         * \brief Open folder where current file is located
+         */
+        void on_action_openEpisodeFolder_triggered();
+        /*!
+         * \brief Open folder which contains level/worldmap specific stuff
+         */
+        void on_action_openCustomFolder_triggered();
     private:
-        bool _is_reloading;
+
+        //! Is file reloading process
+        std::atomic_bool _is_reloading;
     public slots:
 
         ///
@@ -219,56 +256,134 @@ public:
         /// \param force Refresh menubar even if window is not active
         ///
         void updateMenus(QMdiSubWindow *subWindow=NULL, bool force=false);
-        void updateWindowMenu();   //!< Update "Window" Menu
+        /*!
+         * \brief Update "Window" Menu
+         */
+        void updateWindowMenu();
 
     private slots:
-        void on_actionShow_Development_Console_triggered();     //!< Open Developement Console
+        /*!
+         * \brief Open Developement Console
+         */
+        void on_actionShow_Development_Console_triggered();
+        /*!
+         * \brief Toggle full-screen mode
+         * \param checked Full screen mode state
+         */
         void on_actionSwitch_to_Fullscreen_triggered(bool checked);
 
         //New file
+        /*!
+         * \brief Open level editing sub-window with a blank file
+         */
         void on_actionNewLevel_triggered();
+        /*!
+         * \brief Open NPC.TXT editing sub-window with a blank file
+         */
         void on_actionNewNPC_config_triggered();
+        /*!
+         * \brief Open world map editing sub-window with a blank file
+         */
         void on_actionNewWorld_map_triggered();
 
         //File menu
+        /*!
+         * \brief "New" menuitem (show submenu with file type to create)
+         */
         void on_actionNew_triggered();
+        /*!
+         * \brief Show open dialog to select exist file to open
+         */
         void on_OpenFile_triggered();
+        /*!
+         * \brief Save current file, or save as if file is untitled
+         */
         void on_actionSave_triggered();
+        /*!
+         * \brief Open save dialog to save current file in custom place or in different file format
+         */
         void on_actionSave_as_triggered();
+        /*!
+         * \brief Close current file
+         */
         void on_actionClose_triggered();
+        /*!
+         * \brief Save all unsaved files
+         */
         void on_actionSave_all_triggered();
 
-        void on_actionExport_to_image_triggered();      //!< Export current workspace into image
+        /*!
+         * \brief Export current workspace into image file
+         */
+        void on_actionExport_to_image_triggered();
+        /*!
+         * \brief Export level section of current file into image file
+         */
         void on_actionExport_to_image_section_triggered();
-
-        void on_actionApplication_settings_triggered(); //!< Open application settings
-
-        void on_Exit_triggered();                       //!< Exit from application
-
+        /*!
+         * \brief Open application settings
+         */
+        void on_actionApplication_settings_triggered();
+        /*!
+         * \brief Exit from application
+         */
+        void on_Exit_triggered();
+        /*!
+         * \brief Custom context menu of the main window
+         * \param pos Position of the mouse cursor
+         */
         void on_MainWindow_customContextMenuRequested(const QPoint &pos);
 // ///////////////////////////////////////////////////////////
 
 
 // //////////////////Miltilanguage///////////////////////////
     private slots:
-        void slotLanguageChanged(QAction *action);  //!< Change language to selected in the language menu
+        /*!
+         * \brief Change language to selected in the language menu
+         * \param action Menuitem onject pointer
+         */
+        void slotLanguageChanged(QAction *action);
     private:
+        /*!
+         * \brief Load language by two-letter code (en, ru, de, it, es, etc.)
+         * \param rLanguage Two-letter language name (en, ru, de, it, es, etc.)
+         */
         void loadLanguage(const QString& rLanguage);
+        /*!
+         * \brief Init settings of the translator and initialize default language
+         */
         void setDefLang();
+        /*!
+         * \brief Switch translator module
+         * \param translator Translator module
+         * \param filename Path to the translation file
+         * \return true if successfully loaded, false on any error
+         */
         bool switchTranslator(QTranslator &translator, const QString &filename);
+        /*!
+         * \brief Syncronize state of the languages menu
+         */
         void langListSync();
-        QTranslator     m_translator;   /**< contains the translations for this application */
-        QTranslator     m_translatorQt; /**< contains the translations for qt */
-        QString         m_currLang;     /**< contains the currently loaded language */
-        QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+        //! contains the translations for this application
+        QTranslator     m_translator;
+        //! contains the translations for qt
+        QTranslator     m_translatorQt;
+        //! contains the currently loaded language
+        QString         m_currLang;
+        //! Path of language files. This is always fixed to /languages
+        QString         m_langPath;
     signals:
+        //! Is editor language was switched
         void languageSwitched();
 // ///////////////////////////////////////////////////////////
 
 
 // /////////////// Recent Files ///////////////////////////
     public slots:
-        void SyncRecentFiles();     //!< Refresh recent file list from list
+        /*!
+         * \brief Refresh recent file list from list
+         */
+        void SyncRecentFiles();
 
         ///
         /// \brief AddToRecentFiles Add item into recent file list
@@ -277,18 +392,49 @@ public:
         void AddToRecentFiles(QString FilePath);
 
         //RecentFiles Menu Items
+        /*!
+         * \brief Open recent file #1
+         */
         void on_action_recent1_triggered();
+        /*!
+         * \brief Open recent file #2
+         */
         void on_action_recent2_triggered();
+        /*!
+         * \brief Open recent file #3
+         */
         void on_action_recent3_triggered();
+        /*!
+         * \brief Open recent file #4
+         */
         void on_action_recent4_triggered();
+        /*!
+         * \brief Open recent file #5
+         */
         void on_action_recent5_triggered();
+        /*!
+         * \brief Open recent file #6
+         */
         void on_action_recent6_triggered();
+        /*!
+         * \brief Open recent file #7
+         */
         void on_action_recent7_triggered();
+        /*!
+         * \brief Open recent file #8
+         */
         void on_action_recent8_triggered();
+        /*!
+         * \brief Open recent file #9
+         */
         void on_action_recent9_triggered();
+        /*!
+         * \brief Open recent file #10
+         */
         void on_action_recent10_triggered();
     private:
-        QList<QString> recentOpen;  //!< Recent files list
+        //! List of recent files
+        QList<QString> recentOpen;
 // ////////////////////////////////////////////////////////
 
 
@@ -300,26 +446,88 @@ public:
         ///
         int activeChildWindow();
         int activeChildWindow(QMdiSubWindow* wnd);
-        LevelEdit   *activeLvlEditWin();                        //!< Active Window type 1
+        /*!
+         * \brief Retreives pointer to level editing window if current window is level editor sub-window
+         * \return Pointer to level sub-window, NULL if current window is not a level editor window
+         */
+        LevelEdit   *activeLvlEditWin();
+        /*!
+         * \brief Casts generic subwindow class into Level Editor sub-window type
+         * \param wnd Generic sub-window pointer
+         * \return Level Editor sub-window or NULL if given pointer is not a level editor
+         */
         LevelEdit   *activeLvlEditWin(QMdiSubWindow *wnd);
-        NpcEdit     *activeNpcEditWin();                        //!< Active Window type 2
+        /*!
+         * \brief Retreives pointer to NPC.TXT editing window if current window is NPC.TXT editor sub-window
+         * \return Pointer to NPC.TXT sub-window, NULL if current window is not a NPC.TXT editor window
+         */
+        NpcEdit     *activeNpcEditWin();
+        /*!
+         * \brief Casts generic subwindow class into NPC.TXT Editor sub-window type
+         * \param wnd Generic sub-window pointer
+         * \return NPC.TXT Editor sub-window or NULL if given pointer is not a NPC.TXT editor
+         */
         NpcEdit     *activeNpcEditWin(QMdiSubWindow *wnd);
-        WorldEdit   *activeWldEditWin();                        //!< Active Window type 3
+        /*!
+         * \brief Retreives pointer to world map editing window if current window is world map editor sub-window
+         * \return Pointer to world map sub-window, NULL if current window is not a world map editor window
+         */
+        WorldEdit   *activeWldEditWin();
+        /*!
+         * \brief Casts generic subwindow class into World map Editor sub-window type
+         * \param wnd Generic sub-window pointer
+         * \return World map Editor sub-window or NULL if given pointer is not a World map editor
+         */
         WorldEdit   *activeWldEditWin(QMdiSubWindow *wnd);
-        int subWins();                                          //!< Returns number of opened subwindows
-        QList<QMdiSubWindow*> allEditWins();                    //!< Returns all opened subwindows
+        /*!
+         * \brief Count of existing sub-windows
+         * \return Number of currently opened sub-windows
+         */
+        int subWins();
+        /*!
+         * \brief Returns all opened sub-windows
+         * \return List of currently opened sub-windows
+         */
+        QList<QMdiSubWindow*> allEditWins();
 
     public slots:
-        LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow
-        NpcEdit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
-        WorldEdit   *createWldChild();  //!< Create empty World map Editing subWindow
+        /*!
+         * \brief Create empty Level Editing sub-window
+         * \return Level Editor pointer or NULL if creating of sub-window failed
+         */
+        LevelEdit   *createLvlChild();
+        /*!
+         * \brief Create empty NPC.TXT Editing sub-window
+         * \return NPC.TXT Editor pointer or NULL if creating of sub-window failed
+         */
+        NpcEdit     *createNPCChild();
+        /*!
+         * \brief Create empty World Map Editing sub-window
+         * \return World Map Editor pointer or NULL if creating of sub-window failed
+         */
+        WorldEdit   *createWldChild();
+        /*!
+         * \brief Switch specific sub-window
+         * \param window Genertic QWidget pointer to sub-window to activated
+         */
+        void setActiveSubWindow(QWidget *window);
 
-        void setActiveSubWindow(QWidget *window);  //!< Switch to target subWindow
-
-        void SWCascade();   //!< Cascade subWindows
-        void SWTile();      //!< Tile subWindows
-        void setSubView();  //!< Switch Sub Windows view mode
-        void setTabView();  //!< Cascade Tabs view mode
+        /*!
+         * \brief Cascade sub-windows
+         */
+        void SWCascade();
+        /*!
+         * \brief Tile sub-windows
+         */
+        void SWTile();
+        /*!
+         * \brief Switch Sub Windows view mode
+         */
+        void setSubView();
+        /*!
+         * \brief Switch Tabs view mode
+         */
+        void setTabView();
 
 
         // //////////////////SubWindows mapper///////////////////
@@ -330,14 +538,18 @@ public:
         /// \return pointer to subWindow which case with target file
         ///
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
+        /*!
+         * \brief Sub-windows mapper
+         */
         QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
 
         // /////////////// Latest Active Window ///////////////////
-    public slots:
-        void recordSwitchedWindow(QMdiSubWindow * window);
-        void recordRemovedWindow(QObject* possibleDeletedWindow);
+//    public slots://Junk functions, causes shit with music
+//        void recordSwitchedWindow(QMdiSubWindow * window);
+//        void recordRemovedWindow(QObject* possibleDeletedWindow);
     private:
+        //! Last activated sub-window pointer
         QMdiSubWindow* LastActiveSubWindow;
         // ////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////
@@ -500,7 +712,7 @@ public:
         void on_actionPlayMusic_triggered(bool checked);
 
     private:
-        QSlider* muVol;
+        QSlider* m_ui_musicVolume;
 // ///////////////////////////////////////////////////////
 
 
@@ -694,6 +906,7 @@ public:
 
 // ////////////////////World Settings toolbox /////////////////
     public:
+        //! World settings dock widget
         WorldSettingsBox* dock_WldSettingsBox;
 
     private slots:
@@ -706,6 +919,7 @@ public:
 
 // ////////////////////World Item toolbox /////////////////
     public:
+        //! World map item box
         WorldItemBox * dock_WldItemBox;
 
     private slots:
@@ -714,15 +928,21 @@ public:
 
 // ///////////////World Item Properties box //////////////////
     public:
+        //! World map item properties box
         WLD_ItemProps * dock_WldItemProps;
 // ///////////////////////////////////////////////////////////
 
 
 // //////////////////// World Search box /////////////////////////
     public:
+        //! World map search box
         WldSearchBox* dock_WldSearchBox;
 
     private slots:
+        /*!
+         * \brief Show/Hide world map search box
+         * \param checked Visibility state
+         */
         void on_actionWLD_SearchBox_triggered(bool checked);
 
 // ///////////////////////////////////////////////////////////////
@@ -743,15 +963,37 @@ public:
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
     private slots:
+        /*!
+         * \brief Unlocks music button and starts music if that was started pre-testing state
+         */
         void testingFinished();
+        /*!
+         * \brief Stops music playing and locks music button
+         */
+        void stopMusicForTesting();
 
+        /*!
+         * \brief Starts level testing in PGE Engine with interprocess communication (File saving is not needed)
+         */
         void on_action_doTest_triggered();
+        /*!
+         * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
+         */
         void on_action_doSafeTest_triggered();
 
+        /*!
+         * \brief Starts PGE Engine with current configuration package selected
+         */
         void on_action_Start_Engine_triggered();
+        /*!
+         * \brief Settings of testing
+         */
         void on_action_testSettings_triggered();
 
     public slots:
+        /*!
+         * \brief Starts testing in the hacked with LunaLUA SMBX Engine if possible (Only for Windows builds)
+         */
         void on_actionRunTestSMBX_triggered();
 
     private:
@@ -771,7 +1013,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

@@ -18,6 +18,7 @@
 
 #ifndef BOOLRESETER_H
 #define BOOLRESETER_H
+#include <atomic>
 ///
 /// \brief The BoolReseter class
 ///
@@ -28,8 +29,10 @@ class BoolReseter
 {
 public:
     BoolReseter(bool* _var, bool _to=false);
+    BoolReseter(std::atomic_bool* _var, bool _to=false);
     ~BoolReseter();
     bool *var;
+    std::atomic_bool* atomic_var;
     bool to;
 };
 

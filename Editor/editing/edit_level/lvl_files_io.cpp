@@ -567,9 +567,6 @@ void LevelEdit::closeEvent(QCloseEvent *event)
 
     if(maybeSave()) {
         stopAutoUpdateTimer();
-
-        LvlMusPlay::stopMusic();
-
         scene->setMessageBoxItem(false);
         scene->clear();
         LogDebug("!<-Cleared->!");

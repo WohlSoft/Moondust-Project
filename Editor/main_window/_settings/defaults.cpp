@@ -212,20 +212,20 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setTabsClosable(true);
 
     /*********************Music volume regulator*************************/
-    muVol = new QSlider(Qt::Horizontal, ui->EditionToolBar);
-    muVol->setMaximumWidth(70);
-    muVol->setMinimumWidth(70);
-    muVol->setMinimum(0);
+    m_ui_musicVolume = new QSlider(Qt::Horizontal, ui->EditionToolBar);
+    m_ui_musicVolume->setMaximumWidth(70);
+    m_ui_musicVolume->setMinimumWidth(70);
+    m_ui_musicVolume->setMinimum(0);
     #ifndef MIX_MAX_VOLUME
     #define MIX_MAX_VOLUME 128
     #endif
-    muVol->setMaximum(MIX_MAX_VOLUME);
-    muVol->setValue(GlobalSettings::musicVolume);
+    m_ui_musicVolume->setMaximum(MIX_MAX_VOLUME);
+    m_ui_musicVolume->setValue(GlobalSettings::musicVolume);
 
-    MusPlayer.setVolume(muVol->value());
-    ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
+    MusPlayer.setVolume(m_ui_musicVolume->value());
+    ui->EditionToolBar->insertWidget(ui->actionAnimation, m_ui_musicVolume);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
-    connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
+    connect(m_ui_musicVolume, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
     /*********************Music volume regulator*************************/
 
     /*********************Zoom field*************************/

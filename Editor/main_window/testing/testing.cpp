@@ -44,6 +44,10 @@
 #include <QJsonDocument>
 #endif
 
+/*!
+ * \brief Shows a notification about PGE Engine alpha-testing
+ * \param parent Pointer to parent main window
+ */
 static void pge_engine_alphatestingNotify(MainWindow*parent)
 {
     /************************Alpha-testing notify*****************************/
@@ -78,11 +82,17 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
     /************************Alpha-testing notify*****************************/
 }
 
+//! Recent state of the music playing button
 static bool recentMusicPlayingState = false;
 
 
+/*!
+ * \brief Unlocks music button and starts music if that was started pre-testing state
+ */
 void MainWindow::testingFinished()
 {
+    ui->actionPlayMusic->setEnabled(true);
+    m_ui_musicVolume->setEnabled(true);
     if(recentMusicPlayingState)
     {
         setMusicButton(true);
@@ -90,7 +100,21 @@ void MainWindow::testingFinished()
     }
 }
 
+/*!
+ * \brief Stops music playing and locks music button
+ */
+void MainWindow::stopMusicForTesting()
+{
+    recentMusicPlayingState = ui->actionPlayMusic->isChecked();
+    setMusicButton(false);
+    on_actionPlayMusic_triggered(false);
+    ui->actionPlayMusic->setEnabled(false);
+    m_ui_musicVolume->setEnabled(false);
+}
 
+/*!
+ * \brief Starts level testing in PGE Engine with interprocess communication (File saving is not needed)
+ */
 void MainWindow::on_action_doTest_triggered()
 {
 
@@ -149,10 +173,8 @@ void MainWindow::on_action_doTest_triggered()
         if(engine_proc.waitForStarted())
         {
             qDebug() << "Started";
-            recentMusicPlayingState = ui->actionPlayMusic->isChecked();
             //Stop music playback in the PGE Editor!
-            setMusicButton(false);
-            on_actionPlayMusic_triggered(false);
+            stopMusicForTesting();
         } else {
             qWarning() << "Failed to start PGE Engine!" << command << "with args" << args;
         }
@@ -163,6 +185,9 @@ void MainWindow::on_action_doTest_triggered()
 }
 
 
+/*!
+ * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
+ */
 void MainWindow::on_action_doSafeTest_triggered()
 {
     pge_engine_alphatestingNotify(this);
@@ -234,15 +259,15 @@ void MainWindow::on_action_doSafeTest_triggered()
     engine_proc.start(command, args);
     if( engine_proc.waitForStarted() )
     {
-        recentMusicPlayingState = ui->actionPlayMusic->isChecked();
         //Stop music playback in the PGE Editor!
-        setMusicButton(false);
-        on_actionPlayMusic_triggered(false);
+        stopMusicForTesting();
     }
 
 }
 
-
+/*!
+ * \brief Starts PGE Engine with current configuration package selected
+ */
 void MainWindow::on_action_Start_Engine_triggered()
 {
     QString command;
@@ -278,7 +303,9 @@ void MainWindow::on_action_Start_Engine_triggered()
 
 }
 
-
+/*!
+ * \brief Settings of testing
+ */
 void MainWindow::on_action_testSettings_triggered()
 {
     TestingSettings testingSetup(this);
@@ -509,6 +536,9 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
 }
 #endif//Q_OS_WIN
 
+/*!
+ * \brief Starts testing in the hacked with LunaLUA SMBX Engine if possible (Only for Windows builds)
+ */
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
     QMutexLocker mlocker(&engine_mutex);
@@ -763,10 +793,8 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 engine_proc.start(command, params);
                 if(engine_proc.waitForStarted())
                 {
-                    recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-                    //Stop music
-                    setMusicButton(false);
-                    on_actionPlayMusic_triggered(false);
+                    //Stop music playback in the PGE Editor!
+                    stopMusicForTesting();
                 }
                 return;
 

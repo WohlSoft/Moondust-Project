@@ -42,7 +42,7 @@ NpcEdit *MainWindow::createNPCChild()
 
     ui->centralWidget->updateGeometry();
 
-    npcWindow->connect(npcWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
+    //npcWindow->connect(npcWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
 
     return child;
 }
@@ -78,7 +78,7 @@ LevelEdit *MainWindow::createLvlChild()
 
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
-    levelWindow->connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
+    //levelWindow->connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
     return child;
 }
 
@@ -107,7 +107,7 @@ WorldEdit *MainWindow::createWldChild()
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
 
-    worldWindow->connect(worldWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
+    //worldWindow->connect(worldWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
 
     return child;
 }
@@ -147,16 +147,16 @@ int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
  * This class should help to record the latest actie window anyway.
  */
 
-void MainWindow::recordSwitchedWindow(QMdiSubWindow *window)
-{
-    LastActiveSubWindow = window;
-}
+//void MainWindow::recordSwitchedWindow(QMdiSubWindow *window)
+//{
+//    LastActiveSubWindow = window;
+//}
 
-void MainWindow::recordRemovedWindow(QObject *possibleDeletedWindow)
-{
-    if((QObject*)possibleDeletedWindow == LastActiveSubWindow)
-        LastActiveSubWindow = 0;
-}
+//void MainWindow::recordRemovedWindow(QObject *possibleDeletedWindow)
+//{
+//    if((QObject*)possibleDeletedWindow == LastActiveSubWindow)
+//        LastActiveSubWindow = 0;
+//}
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {

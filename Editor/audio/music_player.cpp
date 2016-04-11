@@ -166,18 +166,30 @@ void LvlMusPlay::updateMusic()
 {
     int w_id = MainWinConnect::pMainWin->activeChildWindow();
 
-    if(w_id==1)
+    switch(w_id)
     {
+    case 0:
+        setNoMusic();
+        updatePlayerState(false);
+        break;
+    case 1:
         MainWinConnect::pMainWin->dock_LvlSectionProps->loadMusic();
+        break;
+    case 2:
+        setNoMusic();
+        updatePlayerState(false);
+        break;
+    case 3:
+        {
+            WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
+            if(!w) return;
+            setMusic(LvlMusPlay::WorldMusic, w->currentMusic, w->currentCustomMusic);
+            updatePlayerState(true);
+        }
+        break;
+    default: break;
     }
-    else
-    if(w_id==3)
-    {
-        WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
-        if(!w) return;
-        setMusic(LvlMusPlay::WorldMusic, w->currentMusic, w->currentCustomMusic);
-        updatePlayerState(true);
-    }
+
 }
 
 void LvlMusPlay::updatePlayerState(bool playing)
@@ -240,8 +252,8 @@ void MainWindow::setMusicButton(bool checked)
 
 int MainWindow::musicVolume()
 {
-    if(muVol)
-        return muVol->value();
+    if(m_ui_musicVolume)
+        return m_ui_musicVolume->value();
     else
         return 128;
 }

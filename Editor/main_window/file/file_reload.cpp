@@ -108,7 +108,7 @@ void MainWindow::on_actionReload_triggered()
         //ui->centralWidget->activeSubWindow()->close();
         LevelEdit *child = chLvlWin;//createLvlChild();
         LvlMusPlay::setNoMusic();
-        setMusic(false);
+        setMusic();
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
         {
             child->show();

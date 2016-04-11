@@ -411,7 +411,7 @@ void LvlSectionProps::loadMusic()
                     edit->LvlData.sections[edit->LvlData.CurSection].music_id,
                     edit->LvlData.sections[edit->LvlData.CurSection].music_file);
     }
-    mw()->setMusic(mw()->ui->actionPlayMusic->isChecked());
+    mw()->setMusic();
 }
 
 
