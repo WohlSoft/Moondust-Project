@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -124,6 +124,7 @@ static int fluidsynth_loadsong_RW_internal(FluidSynthMidiSong *song, void *data)
     if ((buffer = (char*) SDL_malloc(size))) {
         if(SDL_RWread(src, buffer, size, 1) == 1) {
             if (fluidsynth.fluid_player_add_mem(song->player, buffer, size) == FLUID_OK) {
+                SDL_free(buffer);
                 return 1;
             } else {
                 Mix_SetError("FluidSynth failed to load in-memory song");
