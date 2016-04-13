@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname=''
+dlname='../bin/SDL2.dll'
 
 # Names of this library.
-library_names=''
+library_names='libSDL2.dll.a'
 
 # The name of the static archive.
 old_library='libSDL2.a'
@@ -17,7 +17,7 @@ old_library='libSDL2.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -lpthread -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
+dependency_libs=' -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='C:/_Repos/PGE-Project/_Libs/_sources/SDL/SDL-b2fd76446eee/lib'
+libdir='C:/_Repos/PGE-Project/_Libs/_builds/win32/lib'

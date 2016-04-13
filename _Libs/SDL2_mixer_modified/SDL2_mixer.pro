@@ -33,6 +33,7 @@ win32:{
         QMAKE_LFLAGS += -Wl,--add-stdcall-alias
         DEFINES +=FORCE_STDCALLS
     }
+    RC_FILE = version.rc
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L$$PWD/../_builds/linux/lib
