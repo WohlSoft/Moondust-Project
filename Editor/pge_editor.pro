@@ -419,7 +419,8 @@ SOURCES += main.cpp\
     editing/_scenes/level/edit_modes/mode_circle.cpp \
     editing/_scenes/world/edit_modes/wld_mode_circle.cpp \
     main_window/dock/variables_box.cpp \
-    main_window/script/script_editor.cpp
+    main_window/script/script_editor.cpp \
+    common_features/animation_timer.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -621,7 +622,8 @@ HEADERS  += defines.h \
     editing/_scenes/level/edit_modes/mode_circle.h \
     editing/_scenes/world/edit_modes/wld_mode_circle.h \
     main_window/dock/variables_box.h \
-    main_window/script/script_editor.h
+    main_window/script/script_editor.h \
+    common_features/animation_timer.h
 
 FORMS    += \
     common_features/crashhandler.ui \

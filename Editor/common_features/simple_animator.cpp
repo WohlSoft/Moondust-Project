@@ -20,19 +20,22 @@
 #include "logger.h"
 
 SimpleAnimator::SimpleAnimator(QObject *parent)
-    :QObject(parent)
+    :QObject(parent), TimedAnimation()
 {
     QPixmap dummy;
     setSettings(dummy, false, 1, 64, 0, -1, false, false);
 }
 
 SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
-    QObject(parent)
+    QObject(parent), TimedAnimation(a)
 {
     mainImage = a.mainImage;
     animated = a.animated;
     frameFirst = a.frameFirst;
     frameLast = a.frameLast;
+    frame_sequance_enabled=a.frame_sequance_enabled;
+    frame_sequance=a.frame_sequance;
+    frame_sequance_cur=a.frame_sequance_cur;
     CurrentFrame = a.CurrentFrame;
     frameCurrent = a.frameCurrent;
     bidirectional = a.bidirectional;
@@ -43,12 +46,16 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     frameHeight = a.frameHeight;
     frameSize = a.frameSize;
     frames = a.frames;
-    connect(
-                &timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-    if(a.timer.isActive())
-        start();
+
+    //Inherets!
+    frame_delay = a.frameCurrent;
+    ticks_left  = a.ticks_left;
+//    connect(
+//                &timer, SIGNAL(timeout()),
+//                this,
+//                SLOT( nextFrame() ) );
+//    if(a.timer.isActive())
+//        start();
 }
 
 SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
@@ -58,6 +65,9 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
     frameFirst = a.frameFirst;
     frameLast = a.frameLast;
     CurrentFrame = a.CurrentFrame;
+    frame_sequance_enabled = a.frame_sequance_enabled;
+    frame_sequance = a.frame_sequance;
+    frame_sequance_cur = a.frame_sequance_cur;
     frameCurrent = a.frameCurrent;
     bidirectional = a.bidirectional;
     reverce = a.reverce;
@@ -67,17 +77,22 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
     frameHeight = a.frameHeight;
     frameSize = a.frameSize;
     frames = a.frames;
-    connect(
-                &timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-    if(a.timer.isActive())
-        start();
+
+    //Inherets!
+    frame_delay = a.frameCurrent;
+    ticks_left  = a.ticks_left;
+
+//    connect(
+//                &timer, SIGNAL(timeout()),
+//                this,
+//                SLOT( nextFrame() ) );
+//    if(a.timer.isActive())
+//        start();
     return *this;
 }
 
 SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid, QObject *parent)
-    : QObject(parent)
+    : QObject(parent), TimedAnimation()
 {
     setSettings(sprite, enables, framesq, fspeed, First, Last, rev, bid);
 }
@@ -93,10 +108,14 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
     frameLast = Last;
     CurrentFrame = 0;
 
+    frame_sequance_enabled=false;
+    frame_sequance_cur=0;
+
     bidirectional = bid;
     reverce = rev;
 
-    speed=fspeed;
+    speed = fspeed;
+    frame_delay = fspeed;
     framesQ = framesq;
 
     if(mainImage.isNull())
@@ -120,11 +139,28 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
 
     createAnimationFrames();
 
-    setFrame(frameFirst);
-    connect(
-                &timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
+    resetFrame();
+
+//    connect(
+//                &timer, SIGNAL(timeout()),
+//                this,
+//                SLOT( nextFrame() ) );
+}
+
+//FIXME!! Implement support of frame-sequences in the frameNext!!!
+void SimpleAnimator::setFrameSequance(QList<int> sequance)
+{
+    frame_sequance=sequance;
+    frame_sequance_enabled=true;
+    frame_sequance_cur=0;
+    //animationFinished=false;
+    if(!frame_sequance.isEmpty())
+    {
+        CurrentFrame = frame_sequance[frame_sequance_cur];
+        //pos1 = CurrentFrame/framesQ;
+        //pos2 = CurrentFrame/framesQ + 1.0/framesQ;
+        //manual_ticks = speed;
+    }
 }
 
 
@@ -174,7 +210,6 @@ void SimpleAnimator::nextFrame()
                     CurrentFrame=frameLast;
             }
         }
-
     }
     else
     { // Direct animation
@@ -224,7 +259,13 @@ void SimpleAnimator::stop()
 {
     if(!animated) return;
     timer.stop();
+    resetFrame();
+}
+
+void SimpleAnimator::resetFrame()
+{
     setFrame(frameFirst);
+    ticks_left = 0.0f;
 }
 
 

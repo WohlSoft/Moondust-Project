@@ -58,6 +58,7 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
             break;
         }
     }
+    itemList->updateGeometry();
 }
 
 void util::memclear(QListWidget *wid)
@@ -105,7 +106,11 @@ bool util::contains(const QComboBox *b, const QString &s)
     return false;
 }
 
-
+/*!
+ * \brief Clears string from invalid file path characters
+ * \param s source file path string
+ * \return String clear from ivalid characters in the file paths
+ */
 QString util::filePath(QString s)
 {
     QString t = s;
@@ -142,4 +147,43 @@ QString util::getBaseFilename(QString str)
         }
     }
     return str;
+}
+
+
+#define CSV2IntArr_CODE(source, dest, func, def)\
+    \
+    if(!source.isEmpty())\
+    {\
+        bool ok;\
+        QStringList tmlL = source.split(',', QString::SkipEmptyParts);\
+        foreach(QString fr, tmlL)\
+        {\
+            dest.push_back(fr.func(&ok));\
+            if(!ok) dest.pop_back();\
+        }\
+        if(dest.isEmpty()) dest.push_back(def);\
+    }\
+    else\
+    {\
+        dest.push_back(def);\
+    }
+
+void util::CSV2IntArr(QString source, QList<int> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toInt, 0)
+}
+
+void util::CSV2IntArr(QString source, QVector<int> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toInt, 0)
+}
+
+void util::CSV2DoubleArr(QString source, QList<double> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toDouble, 0.0)
+}
+
+void util::CSV2DoubleArr(QString source, QVector<double> &dest)
+{
+    CSV2IntArr_CODE(source, dest, toDouble, 0.0)
 }

@@ -32,7 +32,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
 
-    UserNPCs uNPC;
+    //UserNPCs uNPC;
     QImage tempImg;
 
     bool WrongImagesDetected=false;
@@ -262,6 +262,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
             t_block.animator_id = animates_Blocks.size();
             animates_Blocks.push_back( aniBlock );
+            animator.registerAnimation( aniBlock );
 
             uBlocks.storeElement(i, t_block);
             if(custom)
@@ -341,6 +342,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             t_bgo.animator_id = animates_BGO.size();
 
             animates_BGO.push_back( aniBGO );
+
+            animator.registerAnimation( aniBGO );
 
         uBGOs.storeElement(i, t_bgo);
         if(custom)

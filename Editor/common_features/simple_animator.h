@@ -26,7 +26,9 @@
 #include <QVector>
 #include <QMutexLocker>
 
-class SimpleAnimator : public QObject
+#include "animation_timer.h"
+
+class SimpleAnimator : public QObject, public TimedAnimation
 {
     Q_OBJECT
 public:
@@ -41,14 +43,17 @@ public:
     void setSettings(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                    bool rev=false, bool bid=false);
 
+    void setFrameSequance(QList<int> sequance);
+
     void setFrame(int y);
 
     void start();
     void stop();
 
+    void resetFrame();
+
     int speed;
 
-private slots:
     void nextFrame();
 
 private:
@@ -56,6 +61,10 @@ private:
 
     QPixmap mainImage; //Whole image
     QVector<QPixmap> frames; //Whole image
+
+    bool       frame_sequance_enabled;
+    QList<int> frame_sequance;
+    int        frame_sequance_cur;
 
     void createAnimationFrames();
     int CurrentFrame;

@@ -70,6 +70,7 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     CurrentFrame = 0;
 
     frame_sequance_enabled=false;
+    frame_sequance_cur=0;
 
     manual_ticks = fspeed;
 

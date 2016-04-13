@@ -50,6 +50,7 @@ void LvlScene::buildAnimators()
                               );
 
         animates_BGO.push_back( aniBGO );
+        animator.registerAnimation( aniBGO );
         t_bgo.animator_id = animates_BGO.size()-1;
         uBGOs.storeElement(i, t_bgo);
     }
@@ -108,6 +109,7 @@ void LvlScene::buildAnimators()
                               );
 
         animates_Blocks.push_back( aniBlock );
+        animator.registerAnimation( aniBlock );
         t_block.animator_id = animates_Blocks.size()-1;
         uBlocks.storeElement(i, t_block);
     }
@@ -148,14 +150,15 @@ void LvlScene::startAnimation()
         return;
     }
 
-    foreach(SimpleAnimator * bgoA, animates_BGO)
-    {
-        bgoA->start();
-    }
-    foreach(SimpleAnimator * blockA, animates_Blocks)
-    {
-        blockA->start();
-    }
+    animator.start(32);
+//    foreach(SimpleAnimator * bgoA, animates_BGO)
+//    {
+//        bgoA->start();
+//    }
+//    foreach(SimpleAnimator * blockA, animates_Blocks)
+//    {
+//        blockA->start();
+//    }
     foreach(AdvNpcAnimator * npcA, animates_NPC)
     {
         npcA->start();
@@ -166,17 +169,18 @@ void LvlScene::startAnimation()
 void LvlScene::stopAnimation()
 {
     int i=0;
-    int size=animates_BGO.size();
-    for(i=0;i<size; i++)
-    {
-        animates_BGO[i]->stop();
-    }
-    size=animates_Blocks.size();
-    for(i=0;i<size; i++)
-    {
-        animates_Blocks[i]->stop();
-    }
-    size=animates_NPC.size();
+//    int size=animates_BGO.size();
+//    for(i=0;i<size; i++)
+//    {
+//        animates_BGO[i]->stop();
+//    }
+//    size=animates_Blocks.size();
+//    for(i=0;i<size; i++)
+//    {
+//        animates_Blocks[i]->stop();
+//    }
+    animator.stop();
+    int size=animates_NPC.size();
     for(i=0;i<size; i++)
     {
         animates_NPC[i]->stop();

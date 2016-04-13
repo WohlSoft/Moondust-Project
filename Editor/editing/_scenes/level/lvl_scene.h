@@ -164,6 +164,9 @@ public:
         QList<SimpleAnimator * > animates_Blocks;
         QList<AdvNpcAnimator * > animates_NPC;
 
+        //! Main animation processor
+        AnimationTimer      animator;
+
         void buildAnimators();
 
         void startAnimation();

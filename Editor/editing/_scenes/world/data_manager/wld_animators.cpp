@@ -40,6 +40,7 @@ void WldScene::buildAnimators()
                               );
 
         animates_Tiles.push_back( aniTile );
+        animator.registerAnimation( aniTile );
         if(pConfigs->main_wtiles[i].id < (unsigned int)index_tiles.size())
         {
             index_tiles[pConfigs->main_wtiles[i].id].ai = animates_Tiles.size()-1;
@@ -59,6 +60,7 @@ void WldScene::buildAnimators()
                               );
 
         animates_Scenery.push_back( aniScene );
+        animator.registerAnimation( aniScene );
         if(pConfigs->main_wscene[i].id < (unsigned int)index_scenes.size())
         {
             index_scenes[pConfigs->main_wscene[i].id].ai = animates_Scenery.size()-1;
@@ -78,6 +80,7 @@ void WldScene::buildAnimators()
                               );
 
         animates_Paths.push_back( aniPath );
+        animator.registerAnimation( aniPath );
         if(pConfigs->main_wpaths[i].id < (unsigned int)index_paths.size())
         {
             index_paths[pConfigs->main_wpaths[i].id].ai = animates_Paths.size()-1;
@@ -97,6 +100,7 @@ void WldScene::buildAnimators()
                               );
 
         animates_Levels.push_back( aniLevel );
+        animator.registerAnimation( aniLevel );
 
         if(pConfigs->main_wlevels[i].id < (unsigned int)index_levels.size())
         {
@@ -123,22 +127,24 @@ void WldScene::startAnimation()
         return;
     }
 
-    foreach(SimpleAnimator * tile, animates_Tiles)
-    {
-        tile->start();
-    }
-    foreach(SimpleAnimator * scene, animates_Scenery)
-    {
-        scene->start();
-    }
-    foreach(SimpleAnimator * path, animates_Paths)
-    {
-        path->start();
-    }
-    foreach(SimpleAnimator * lvl, animates_Levels)
-    {
-        lvl->start();
-    }
+    animator.start(32);
+
+//    foreach(SimpleAnimator * tile, animates_Tiles)
+//    {
+//        tile->start();
+//    }
+//    foreach(SimpleAnimator * scene, animates_Scenery)
+//    {
+//        scene->start();
+//    }
+//    foreach(SimpleAnimator * path, animates_Paths)
+//    {
+//        path->start();
+//    }
+//    foreach(SimpleAnimator * lvl, animates_Levels)
+//    {
+//        lvl->start();
+//    }
 
 
 }
@@ -147,23 +153,23 @@ void WldScene::startAnimation()
 
 void WldScene::stopAnimation()
 {
-
-    foreach(SimpleAnimator * tile, animates_Tiles)
-    {
-        tile->stop();
-    }
-    foreach(SimpleAnimator * scene, animates_Scenery)
-    {
-        scene->stop();
-    }
-    foreach(SimpleAnimator * path, animates_Paths)
-    {
-        path->stop();
-    }
-    foreach(SimpleAnimator * lvl, animates_Levels)
-    {
-        lvl->stop();
-    }
+//    foreach(SimpleAnimator * tile, animates_Tiles)
+//    {
+//        tile->stop();
+//    }
+//    foreach(SimpleAnimator * scene, animates_Scenery)
+//    {
+//        scene->stop();
+//    }
+//    foreach(SimpleAnimator * path, animates_Paths)
+//    {
+//        path->stop();
+//    }
+//    foreach(SimpleAnimator * lvl, animates_Levels)
+//    {
+//        lvl->stop();
+//    }
+    animator.stop();
 
     update();
 }

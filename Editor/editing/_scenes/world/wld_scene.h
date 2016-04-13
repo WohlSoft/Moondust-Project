@@ -141,6 +141,9 @@ public:
         QList<SimpleAnimator * > animates_Paths;
         QList<SimpleAnimator * > animates_Levels;
 
+        //! Main animation processor
+        AnimationTimer      animator;
+
         void buildAnimators();
 
         void startAnimation();

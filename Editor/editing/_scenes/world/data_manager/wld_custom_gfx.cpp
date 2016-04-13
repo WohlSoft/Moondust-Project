@@ -158,6 +158,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                                   pConfigs->main_wtiles[i].framespeed
                                   );
             animates_Tiles.push_back( aniTile );
+            animator.registerAnimation( aniTile );
             index_tiles[pConfigs->main_wtiles[i].id].i = i;
             index_tiles[pConfigs->main_wtiles[i].id].ai = animates_Tiles.size()-1;
 
@@ -229,6 +230,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                                   pConfigs->main_wscene[i].framespeed
                                   );
             animates_Scenery.push_back( aniScene );
+            animator.registerAnimation( aniScene );
             index_scenes[pConfigs->main_wscene[i].id].i = i;
             index_scenes[pConfigs->main_wscene[i].id].ai = animates_Scenery.size()-1;
 
@@ -296,6 +298,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                                   pConfigs->main_wpaths[i].framespeed
                                   );
             animates_Paths.push_back( aniPath );
+            animator.registerAnimation( aniPath );
             index_paths[pConfigs->main_wpaths[i].id].i = i;
             index_paths[pConfigs->main_wpaths[i].id].ai = animates_Paths.size()-1;
 
@@ -363,6 +366,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                                   pConfigs->main_wlevels[i].framespeed
                                   );
             animates_Levels.push_back( aniLevel );
+            animator.registerAnimation( aniLevel );
             index_levels[pConfigs->main_wlevels[i].id].i = i;
             index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
 

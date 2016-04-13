@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QList>
 
 struct obj_block
 {
@@ -86,6 +87,8 @@ struct obj_block
     int framespeed;
 
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
+
+    QList<int>   frame_sequence;//Custom editor specific frame sequence
 
     unsigned int display_frame;
 

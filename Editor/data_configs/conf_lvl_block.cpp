@@ -17,6 +17,7 @@
  */
 
 #include <common_features/graphics_funcs.h>
+#include <common_features/util.h>
 #include <main_window/global_settings.h>
 
 #include "data_configs.h"
@@ -75,6 +76,8 @@ void obj_block::copyTo(obj_block &block)
     block.framespeed=framespeed;
 
     block.frame_h=frame_h; //Hegth of the frame. Calculating automatically
+
+    block.frame_sequence = frame_sequence;
 
     block.display_frame=display_frame;
 
@@ -206,6 +209,12 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
                                                 qreal(sblock.image.height())
                                                 /sblock.frames)
                                           : sblock.image.height());
+
+        tmpStr = setup->value("frame-sequence", "").toString();
+        if(tmpStr.isEmpty() && merge_with)
+            sblock.frame_sequence = merge_with->frame_sequence;
+        else
+            util::CSV2IntArr(tmpStr, sblock.frame_sequence);
 
         sblock.display_frame =          setup->value("display-frame", "0").toInt();
 
