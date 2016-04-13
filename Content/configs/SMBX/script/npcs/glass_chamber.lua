@@ -16,7 +16,7 @@ function glassChamber:onActivated()
 end
 
 function glassChamber:onHarm(harmEvent)
-    self.cur_frame=self.frames-(self.npc_obj.health-damage)
+    self.cur_frame=self.frames-(self.npc_obj.health-harmEvent.damage)
     self.npc_obj:setSequence({self.cur_frame})
 end
 
