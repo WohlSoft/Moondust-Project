@@ -60,6 +60,15 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.display_frame   = display_frame;
 }
 
+/*!
+ * \brief Loads signe BGO configuration
+ * \param sbgo Target BGO structure
+ * \param section Name of INI-section where look for a BGO
+ * \param merge_with Source of already loaded BGO structure to provide default settings per every BGO
+ * \param iniFile INI-file where look for a BGO
+ * \param setup loaded INI-file descriptor to load from global nested INI-file
+ * \return true on success loading, false if error has occouped
+ */
 bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
 {
     bool valid=true;
@@ -70,10 +79,11 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     setup->beginGroup( section );
 
 
-    sbgo.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
+    sbgo.name = setup->value("name", (merge_with? merge_with->name : section) ).toString();
     if(sbgo.name=="")
     {
         addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
+        valid=false;
         goto abort;
     }
 
@@ -103,7 +113,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     sbgo.offsetY =      setup->value("offset-y", (merge_with? merge_with->offsetY : 0)).toInt();
     sbgo.zOffset =      setup->value("z-offset", (merge_with? merge_with->zOffset : 0.0)).toDouble();
 
-    sbgo.image_n =      setup->value("image", (merge_with? merge_with->image_n : "")).toString();
+    sbgo.image_n =      setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
     /***************Load image*******************/
     if(!merge_with)
     {
@@ -115,6 +125,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
         if(!errStr.isEmpty())
         {
             addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
+            valid=false;
             goto abort;
         }
     }

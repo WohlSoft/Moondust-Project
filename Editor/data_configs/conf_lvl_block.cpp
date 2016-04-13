@@ -90,41 +90,146 @@ void obj_block::copyTo(obj_block &block)
 
 }
 
+/*!
+ * \brief Loads signe block configuration
+ * \param sblock Target block structure
+ * \param section Name of INI-section where look for a block
+ * \param merge_with Source of already loaded block structure to provide default settings per every block
+ * \param iniFile INI-file where look for a block
+ * \param setup loaded INI-file descriptor to load from global nested INI-file
+ * \return true on success loading, false if error has occouped
+ */
+bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal=!setup;
+    QString tmpStr, errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-//long dataconfigs::getBlockI(unsigned long itemID)
-//{
-//    long j;
-//    bool found=false;
+    setup->beginGroup( section );
 
-//    if(itemID < (unsigned int)index_blocks.size())
-//    {
-//        j = index_blocks[itemID].i;
+    sblock.name =       setup->value("name", (merge_with? merge_with->name : section) ).toString();
 
-//        if(j < main_block.size())
-//        {
-//            if( main_block[j].id == itemID)
-//                found=true;
-//        }
-//    }
+        if(sblock.name=="")
+        {
+            addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
+            valid=false;
+            goto abort;
+        }
 
-//    if(!found)
-//    {
-//        for(j=0; j < main_block.size(); j++)
-//        {
-//            if(main_block[j].id==itemID)
-//            {
-//                found=true;
-//                break;
-//            }
-//        }
-//    }
+        sblock.group =      setup->value("group", (merge_with? merge_with->group : "_NoGroup")).toString();
+        sblock.category =   setup->value("category", (merge_with? merge_with->category : "_Other")).toString();
+        sblock.grid =       setup->value("grid", (merge_with ? merge_with->grid : default_grid)).toInt();
 
-//    if(!found) j=-1;
-//    return j;
-//}
+        sblock.image_n =           setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(blockPath,
+           sblock.image_n, sblock.mask_n,
+           sblock.image,
+           errStr);
 
+        if(!errStr.isEmpty())
+        {
+            valid=false;
+            addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
+            goto abort;
+        }
+        /***************Load image*end***************/
 
-static QString Temp01="";
+        sblock.sizable =                setup->value("sizable", (merge_with? merge_with->sizable : false)).toBool();
+        sblock.danger =                 setup->value("danger", (merge_with? merge_with->danger : 0)).toInt();
+        sblock.collision =              setup->value("collision", (merge_with? merge_with->collision : 1)).toInt();
+        sblock.slopeslide =             setup->value("slope-slide", (merge_with? merge_with->slopeslide : 0)).toBool();
+        sblock.phys_shape =             setup->value("shape-type", (merge_with? merge_with->phys_shape : 0)).toInt();
+        sblock.lava =                   setup->value("lava", (merge_with? merge_with->lava : false)).toBool();
+        sblock.destroyable =            setup->value("destroyable", (merge_with? merge_with->destroyable : false)).toBool();
+        sblock.destroyable_by_bomb =    setup->value("destroyable-by-bomb", (merge_with? merge_with->destroyable_by_bomb : false)).toBool();
+        sblock.destroyable_by_fireball= setup->value("destroyable-by-fireball", (merge_with? merge_with->destroyable_by_fireball : false)).toBool();
+
+        tmpStr = setup->value("spawn-on-destroy", "0").toString();
+        if(tmpStr != "0" )
+        {
+            QStringList tmpStrL =  tmpStr.split("-", QString::SkipEmptyParts);
+            if(tmpStrL.size()==2)
+            {
+                if(tmpStrL[0]=="npc")
+                    sblock.spawn_obj = 1;
+                else
+                if(tmpStrL[0]=="block")
+                     sblock.spawn_obj = 2;
+                else
+                if(tmpStrL[0]=="bgo")
+                     sblock.spawn_obj = 3;
+                // 1 - NPC, 2 - block, 3 - BGO
+                sblock.spawn_obj_id = tmpStrL[1].toInt();
+            }
+            else // if syntax error in config
+            {
+                sblock.spawn = false;
+                sblock.spawn_obj = 0;
+                sblock.spawn_obj_id = 0;
+            }
+        }
+        else
+        {
+            sblock.spawn = (merge_with? merge_with->spawn : 0);
+            sblock.spawn_obj = (merge_with? merge_with->spawn_obj : 0);
+            sblock.spawn_obj_id = (merge_with? merge_with->spawn_obj_id : 0);
+        }
+
+        //sblock.effect=                  setup->value("destroy-effect", (merge_with? merge_with->effect : 1)).toInt();
+        //sblock.bounce =                 setup->value("bounce", "0").toBool();
+        //sblock.hitable =                setup->value("hitable", "0").toBool();
+        //sblock.transfororm_on_hit_into= setup->value("transform-onhit-into", "2").toInt();
+        sblock.algorithm =              setup->value("algorithm", (merge_with? (int)merge_with->algorithm : 2)).toInt();
+
+        tmpStr = setup->value("view", "0").toString();
+        if(tmpStr!="0")
+        {
+            sblock.view = 0;//0 by default
+            if(tmpStr=="background")
+                sblock.view = 0;
+            else if(tmpStr=="foreground")
+                sblock.view = 1;
+        } else {
+            sblock.view = merge_with ? merge_with->view : 0;
+        }
+
+        sblock.animated =               setup->value("animated", (merge_with? merge_with->animated : false)).toBool();
+        sblock.animation_rev =          setup->value("animation-reverse", (merge_with? merge_with->animation_rev : false)).toBool(); //Reverse animation
+        sblock.animation_bid =          setup->value("animation-bidirectional", (merge_with? merge_with->animation_bid : false)).toBool(); //Bidirectional animation
+        sblock.frames =                 setup->value("frames", (merge_with? merge_with->frames : 1)).toInt();
+        sblock.framespeed =             setup->value("framespeed", (merge_with? merge_with->framespeed : 125)).toInt();
+
+        sblock.frame_h =               (sblock.animated?
+                                            qRound(
+                                                qreal(sblock.image.height())
+                                                /sblock.frames)
+                                          : sblock.image.height());
+
+        sblock.display_frame =          setup->value("display-frame", "0").toInt();
+
+        long iTmp;
+        iTmp =  setup->value("default-invisible", (merge_with? merge_with->default_invisible : -1)).toInt();
+            sblock.default_invisible = (iTmp>=0);
+            sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+
+        iTmp = setup->value("default-slippery", (merge_with? merge_with->default_slippery : -1)).toInt();
+            sblock.default_slippery = (iTmp>=0);
+            sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+
+        iTmp = setup->value("default-npc-content", (merge_with? merge_with->default_content : -1)).toInt();
+            sblock.default_content = (iTmp>=0);
+            sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
+
+        sblock.isValid = true;
+
+    abort:
+        setup->endGroup();
+        if(internal) delete setup;
+    return valid;
+}
+
 
 void dataconfigs::loadLevelBlocks()
 {
@@ -160,15 +265,6 @@ void dataconfigs::loadLevelBlocks()
 
     ConfStatus::total_blocks = block_total;
 
-    //creation of empty indexes of arrayElements
-//    blocksIndexes blockIndex;
-//    for(i=0;i<=block_total; i++)
-//    {
-//        blockIndex.i=i;
-//        blockIndex.type=0;
-//        index_blocks.push_back(blockIndex);
-//    }
-
     main_block.allocateSlots(block_total);
 
     if(ConfStatus::total_blocks==0)
@@ -177,137 +273,26 @@ void dataconfigs::loadLevelBlocks()
         return;
     }
 
-        for(i=1; i<=block_total; i++)
+    for(i=1; i<=block_total; i++)
+    {
+        emit progressValue(i);
+        //QString errStr;
+        //blockset.beginGroup( QString("block-%1").arg(i) );
+        if( loadLevelBlock(sblock, QString("block-"+QString::number(i)), 0, "", &blockset) )
         {
-            emit progressValue(i);
-            QString errStr;
-
-            blockset.beginGroup( QString("block-%1").arg(i) );
-
-                sblock.name =       blockset.value("name", QString("block %1").arg(i) ).toString();
-
-                if(sblock.name=="")
-                {
-                    addError(QString("BLOCK-%1 Item name isn't defined").arg(i));
-                    goto skipBLOCK;
-                }
-
-                sblock.group =      blockset.value("group", "_NoGroup").toString();
-                sblock.category =   blockset.value("category", "_Other").toString();
-                sblock.grid =       blockset.value("grid", default_grid).toInt();
-
-                sblock.image_n =           blockset.value("image", "").toString();
-                /***************Load image*******************/
-                GraphicsHelps::loadMaskedImage(blockPath,
-                   sblock.image_n, sblock.mask_n,
-                   sblock.image,
-                   errStr);
-
-                if(!errStr.isEmpty())
-                {
-                    addError(QString("BLOCK-%1 %2").arg(i).arg(errStr));
-                    goto skipBLOCK;
-                }
-                /***************Load image*end***************/
-
-                sblock.sizable =                blockset.value("sizable", "0").toBool();
-                sblock.danger =                 blockset.value("danger", "0").toInt();
-                sblock.collision =              blockset.value("collision", "1").toInt();
-                sblock.slopeslide =             blockset.value("slope-slide", "0").toBool();
-                sblock.phys_shape =             blockset.value("fixture-type", "0").toInt();// Leaved for compatibility
-                sblock.phys_shape =             blockset.value("shape-type", sblock.phys_shape).toInt();//new value-name
-                sblock.lava =                   blockset.value("lava", "0").toBool();
-                sblock.destroyable =            blockset.value("destroyable", "0").toBool();
-                sblock.destroyable_by_bomb =    blockset.value("destroyable-by-bomb", "0").toBool();
-                sblock.destroyable_by_fireball= blockset.value("destroyable-by-fireball", "0").toBool();
-
-                Temp01 =     blockset.value("spawn-on-destroy", "0").toString();
-                if(Temp01!="0")
-                {
-                    tmp =  Temp01.split("-", QString::SkipEmptyParts);
-                    if(tmp.size()==2)
-                    {
-                        if(tmp[0]=="npc")
-                            sblock.spawn_obj = 1;
-                        else
-                        if(tmp[0]=="block")
-                             sblock.spawn_obj = 2;
-                        else
-                        if(tmp[0]=="bgo")
-                             sblock.spawn_obj = 3;
-                        // 1 - NPC, 2 - block, 3 - BGO
-                        sblock.spawn_obj_id = tmp[1].toInt();
-                    }
-                    else // if syntax error in config
-                    {
-                        sblock.spawn = false;
-                        sblock.spawn_obj = 0;
-                        sblock.spawn_obj_id = 0;
-                    }
-                }
-                else
-                {
-                    sblock.spawn = false;
-                    sblock.spawn_obj = 0;
-                    sblock.spawn_obj_id = 0;
-                }
-
-                sblock.effect=                  blockset.value("destroy-effect", "1").toInt();
-
-                sblock.bounce =                 blockset.value("bounce", "0").toBool();
-                sblock.hitable =                blockset.value("hitable", "0").toBool();
-                sblock.transfororm_on_hit_into= blockset.value("transform-onhit-into", "2").toInt();
-                sblock.algorithm =              blockset.value("algorithm", "2").toInt();
-                sblock.view =             (int)(blockset.value("view", "background").toString()=="foreground");
-                sblock.animated =               blockset.value("animated", "0").toBool();
-                sblock.animation_rev =          blockset.value("animation-reverse", "0").toBool(); //Reverse animation
-                sblock.animation_bid =          blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
-                sblock.frames =                 blockset.value("frames", "1").toInt();
-                sblock.framespeed =             blockset.value("framespeed", "125").toInt();
-
-                sblock.frame_h =               (sblock.animated?
-                                                    qRound(
-                                                        qreal(sblock.image.height())
-                                                        /sblock.frames)
-                                                  : sblock.image.height());
-
-                sblock.display_frame =          blockset.value("display-frame", "0").toInt();
-
-                long iTmp;
-                iTmp =  blockset.value("default-invisible", "-1").toInt();
-                    sblock.default_invisible = (iTmp>=0);
-                    sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
-
-                iTmp = blockset.value("default-slippery", "-1").toInt();
-                    sblock.default_slippery = (iTmp>=0);
-                    sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
-
-                iTmp = blockset.value("default-npc-content", "-1").toInt();
-                    sblock.default_content = (iTmp>=0);
-                    sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
-
-                sblock.isValid = true;
-                sblock.id = i;
-                main_block.storeElement(i, sblock);
-
-                /************Add to Index***************
-                if(i < (unsigned int)index_blocks.size())
-                    index_blocks[i].i = i-1;
-                ************Add to Index***************/
-
-            skipBLOCK:
-            blockset.endGroup();
-
-          if( blockset.status()!=QSettings::NoError)
-          {
+            sblock.id = i;
+            main_block.storeElement(i, sblock);
+        }
+        if( blockset.status()!=QSettings::NoError)
+        {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), PGE_LogLevel::Critical);
             break;
-          }
-       }
+        }
+    }
 
-       if((unsigned int)main_block.stored()<block_total)
-       {
-           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), PGE_LogLevel::Warning);
-       }
+    if((unsigned int)main_block.stored()<block_total)
+    {
+        addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), PGE_LogLevel::Warning);
+    }
 
 }

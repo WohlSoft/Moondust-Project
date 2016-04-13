@@ -195,9 +195,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->id)+".txt", true);
             if(!CustomTxt.isEmpty())
             {
-                //Not implemented yet!
-                //pConfigs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
-                //custom=true;
+                pConfigs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
+                custom=true;
             }
 
             QString CustomFile=uLVL.getCustomFile(t_block.image_n, true);

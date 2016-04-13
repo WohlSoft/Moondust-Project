@@ -138,7 +138,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                             Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, &j),
                             QSize(48,48));
 
-                item = new QListWidgetItem( QString("block-%1").arg(block.id) );
+                item = new QListWidgetItem( block.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(block.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -235,7 +235,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                             Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, &j),
                             QSize(48,48));
 
-                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
+                item = new QListWidgetItem( bgo.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(bgo.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );

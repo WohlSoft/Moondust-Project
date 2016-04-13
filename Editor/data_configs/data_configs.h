@@ -183,6 +183,7 @@ public:
     void loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
+    bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile="", QSettings *setup=0);
     bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=0, QString iniFile="", QSettings *setup=0);
 
     inline QString getBgoPath()  {return bgoPath;}
