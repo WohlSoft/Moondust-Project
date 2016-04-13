@@ -271,7 +271,8 @@ HEADERS += \
     modplug/stdafx.h \
     modplug/tables.h \
     resample/my_resample.h \
-    gme/GZipHelper.h
+    gme/GZipHelper.h \
+    mixer.h
 
 SOURCES += \
     dynamic_flac.c \

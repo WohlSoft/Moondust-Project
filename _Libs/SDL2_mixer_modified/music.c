@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -30,6 +30,7 @@
 #include <SDL2/SDL_timer.h>
 
 #include "SDL_mixer_ext.h"
+#include "mixer.h"
 
 #ifdef CMD_MUSIC
 #include "music_cmd.h"
@@ -212,9 +213,9 @@ static void (*music_finished_hook)(void) = NULL;
 
 void SDLCALLCC Mix_HookMusicFinished(void (*music_finished)(void))
 {
-    SDL_LockAudio();
+    Mix_LockAudio();
     music_finished_hook = music_finished;
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 }
 
 
@@ -1073,6 +1074,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #endif
         break;
 #endif
+
     default:
         Mix_SetError("Unrecognized music format");
         break;
@@ -1095,19 +1097,19 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
 {
     if ( music ) {
         /* Stop the music if it's currently playing */
-        SDL_LockAudio();
+        Mix_LockAudio();
         if ( music == music_playing ) {
             /* Wait for any fade out to finish */
             while ( music->fading == MIX_FADING_OUT ) {
-                SDL_UnlockAudio();
+                Mix_UnlockAudio();
                 SDL_Delay(100);
-                SDL_LockAudio();
+                Mix_LockAudio();
             }
             if ( music == music_playing ) {
                 music_internal_halt();
             }
         }
-        SDL_UnlockAudio();
+        Mix_UnlockAudio();
         switch (music->type) {
 #ifdef CMD_MUSIC
             case MUS_CMD:
@@ -1213,11 +1215,11 @@ Mix_MusicType SDLCALLCC Mix_GetMusicType(const Mix_Music *music)
     if ( music ) {
         type = music->type;
     } else {
-        SDL_LockAudio();
+        Mix_LockAudio();
         if ( music_playing ) {
             type = music_playing->type;
         }
-        SDL_UnlockAudio();
+        Mix_UnlockAudio();
     }
     return(type);
 }
@@ -1553,12 +1555,12 @@ int SDLCALLCC Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double pos
     music->fade_steps = ms/ms_per_step;
 
     /* Play the puppy */
-    SDL_LockAudio();
+    Mix_LockAudio();
     /* If the current music is fading out, wait for the fade to complete */
     while ( music_playing && (music_playing->fading == MIX_FADING_OUT) ) {
-        SDL_UnlockAudio();
+        Mix_UnlockAudio();
         SDL_Delay(100);
-        SDL_LockAudio();
+        Mix_LockAudio();
     }
     music_active = 1;
     if (loops == 1) {
@@ -1567,7 +1569,7 @@ int SDLCALLCC Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double pos
     }
     music_loops = loops;
     retval = music_internal_play(music, position);
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(retval);
 }
@@ -1631,7 +1633,7 @@ int SDLCALLCC Mix_SetMusicPosition(double position)
 {
     int retval;
 
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing ) {
         retval = music_internal_position(position);
         if ( retval < 0 ) {
@@ -1641,7 +1643,7 @@ int SDLCALLCC Mix_SetMusicPosition(double position)
         Mix_SetError("Music isn't playing");
         retval = -1;
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(retval);
 }
@@ -1761,11 +1763,11 @@ int SDLCALLCC Mix_VolumeMusic(int volume)
         volume = SDL_MIX_MAXVOLUME;
     }
     music_volume = volume;
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing ) {
         music_internal_volume(music_volume);
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
     return(prev_volume);
 }
 
@@ -1868,14 +1870,14 @@ skip:
 }
 int SDLCALLCC Mix_HaltMusic(void)
 {
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing ) {
         music_internal_halt();
         if ( music_finished_hook ) {
             music_finished_hook();
         }
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(0);
 }
@@ -1895,7 +1897,7 @@ int SDLCALLCC Mix_FadeOutMusic(int ms)
         return 1;
     }
 
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing) {
                 int fade_steps = (ms + ms_per_step - 1)/ms_per_step;
                 if ( music_playing->fading == MIX_NO_FADING ) {
@@ -1916,7 +1918,7 @@ int SDLCALLCC Mix_FadeOutMusic(int ms)
         music_playing->fade_steps = fade_steps;
         retval = 1;
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(retval);
 }
@@ -1925,11 +1927,11 @@ Mix_Fading SDLCALLCC Mix_FadingMusic(void)
 {
     Mix_Fading fading = MIX_NO_FADING;
 
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing ) {
         fading = music_playing->fading;
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(fading);
 }
@@ -2083,11 +2085,11 @@ int SDLCALLCC Mix_PlayingMusic(void)
 {
     int playing = 0;
 
-    SDL_LockAudio();
+    Mix_LockAudio();
     if ( music_playing ) {
         playing = music_loops || music_internal_playing();
     }
-    SDL_UnlockAudio();
+    Mix_UnlockAudio();
 
     return(playing);
 }

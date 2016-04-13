@@ -97,6 +97,7 @@ static int read_config_file(const char *name)
         ctl->cmsg(CMSG_ERROR, VERB_NORMAL, 
         "%s: line %d: Must specify exactly one patch name\n",
           name, line);
+        close_file(fp);
         return -2;
       }
     strncpy(def_instr_name, w[1], 255);
@@ -279,6 +280,7 @@ static int read_config_file(const char *name)
       {
     ctl->cmsg(CMSG_ERROR, VERB_NORMAL, "%s: line %d: bad patch option %s\n",
       name, line, w[j]);
+    close_file(fp);
     return -2;
       }
     }
