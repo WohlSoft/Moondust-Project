@@ -250,7 +250,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     {
         SDL_memcpy( stream, (Uint8*)buf, dest_len );
     } else {
-        SDL_MixAudio( stream, (Uint8*)buf, dest_len, music->volume);
+        SDL_MixAudioFormat( stream, (Uint8*)buf, mixer.format, dest_len, music->volume );
     }
     return len-dest_len;
 }
