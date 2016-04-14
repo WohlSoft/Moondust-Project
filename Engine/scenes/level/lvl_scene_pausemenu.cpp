@@ -26,15 +26,25 @@ void LevelScene::initPauseMenu1()
     _pauseMenu_opened=false;
     _pauseMenuID=1;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct(QObject::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
-                         ConfigManager::setup_menu_box.box_padding,
-                         ConfigManager::setup_menu_box.sprite);
+
+
+    _pauseMenu.construct(
+                //% "Pause"
+                qtTrId("LVL_MENU_PAUSE_TTL"),
+                PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                ConfigManager::setup_menu_box.box_padding,
+                ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
+
     QStringList items;
-    items<<QObject::tr("Continue");
-    items<<QObject::tr("Save and continue");
-    items<<QObject::tr("Save and quit");
-    items<<QObject::tr("Exit without saving");
+    //% "Continue"
+    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    //% "Save and continue"
+    items << qtTrId("LVL_MENU_PAUSE_CONTINUESAVE");
+    //% "Save and quit"
+    items << qtTrId("LVL_MENU_PAUSE_EXITSAVE");
+    //% "Exit without saving"
+    items << qtTrId("LVL_MENU_PAUSE_EXITNOSAVE");
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -47,13 +57,20 @@ void LevelScene::initPauseMenu2()
     _pauseMenu_opened=false;
     _pauseMenuID=2;
     _pauseMenu.setParentScene(this);
-    _pauseMenu.construct(QObject::tr("Pause"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
-                         ConfigManager::setup_menu_box.box_padding,
-                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.construct(
+                //% "Pause"
+                qtTrId("LVL_MENU_PAUSE_TTL"),
+                PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                ConfigManager::setup_menu_box.box_padding,
+                ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
+
     QStringList items;
-    items<<QObject::tr("Continue");
-    items<<QObject::tr("Quit");
+    //% "Continue"
+    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    //% "Quit"
+    items << qtTrId("LVL_MENU_PAUSE_EXIT");
+
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);

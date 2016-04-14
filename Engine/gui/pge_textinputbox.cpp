@@ -410,7 +410,8 @@ void PGE_TextInputBox::info(QString msg)
     }
     else
     {
-        QMessageBox::information(NULL, QObject::tr("Information"), msg, QMessageBox::Ok);
+                                       //% "Information"
+        QMessageBox::information(NULL, qtTrId("MSGBOX_INFO"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::info(std::string msg)
@@ -428,7 +429,8 @@ void PGE_TextInputBox::warn(QString msg)
     }
     else
     {
-        QMessageBox::warning(NULL, QObject::tr("Warning"), msg, QMessageBox::Ok);
+                                   //% "Warning"
+        QMessageBox::warning(NULL, qtTrId("MSGBOX_WARN"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::warn(std::string msg)
@@ -447,7 +449,8 @@ void PGE_TextInputBox::error(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QObject::tr("Error"), msg, QMessageBox::Ok);
+                                    //% "Error"
+        QMessageBox::critical(NULL, qtTrId("MSGBOX_ERROR"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::error(std::string msg)
@@ -466,7 +469,8 @@ void PGE_TextInputBox::fatal(QString msg)
     }
     else
     {
-        QMessageBox::critical(NULL, QObject::tr("Fatal"), msg, QMessageBox::Ok);
+                                    //% "Fatal"
+        QMessageBox::critical(NULL, qtTrId("MSGBOX_FATAL"), msg, QMessageBox::Ok);
     }
 }
 //void PGE_TextInputBox::fatal(std::string msg)

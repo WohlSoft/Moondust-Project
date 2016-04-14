@@ -331,8 +331,9 @@ bool LevelScene::init_items()
         LVL_Section *t_sct = getSection(sID);
         if(!t_sct)
         {
-            _errorString = QObject::tr("Fatal error: Impossible to find start section.\n"
-                                       "Are you placed player start point (or entrance warp point) too far off of the section(s)?");
+            /*% "Fatal error: Impossible to find start section.\n"
+                "Are you placed player start point (or entrance warp point) too far off of the section(s)?" */
+            _errorString = qtTrId("LVL_ERROR_NOSECTIONS");
             return false;
         }
 

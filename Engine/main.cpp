@@ -438,7 +438,8 @@ PlayWorldMap:
     if(episode.worldfile.isEmpty())
     {
         sceneResult = false;
-        PGE_MsgBox::warn(QObject::tr("No opened files"));
+                         //% "No opened files"
+        PGE_MsgBox::warn(qtTrId("ERROR_NO_OPEN_FILES_MSG"));
         if(g_AppSettings.debugMode)
             goto ExitFromApplication;
         else
@@ -450,10 +451,8 @@ PlayWorldMap:
         wScene->setGameState(&_game_state); //Load game state to the world map
         if(!sceneResult)
         {
-            //SDL_Delay(50);
-            PGE_MsgBox::error(QObject::tr("ERROR:\nFail to start world map\n\n"
-                                            "%1")
-                              .arg(wScene->getLastError()));
+            //% "ERROR:\nFail to start world map\n\n%1"
+            PGE_MsgBox::error(qtTrId("ERROR_FAIL_START_WLD").arg(wScene->getLastError()));
             ExitCode = WldExit::EXIT_error;
         }
     }
@@ -479,10 +478,12 @@ PlayWorldMap:
     {
         if(ExitCode==WldExit::EXIT_beginLevel)
         {
-            PGE_MsgBox::warn(QObject::tr("Start level\n%1")
+                        //% "Start level\n%1"
+            PGE_MsgBox::warn(qtTrId("MSG_START_LEVEL")
                           .arg(_game_state.LevelFile) );
 
-            PGE_TextInputBox text(NULL, "Type an exit code (signed integer)", PGE_BoxBase::msg_info_light,
+                                        //% "Type an exit code (signed integer)"
+            PGE_TextInputBox text(NULL, qtTrId("MSG_WLDTEST_EXIT_CODE"), PGE_BoxBase::msg_info_light,
                                   PGE_Point(-1,-1),
                                   ConfigManager::setup_message_box.box_padding,
                                   ConfigManager::setup_message_box.sprite);
@@ -637,8 +638,8 @@ PlayLevel:
                    {
                        if(!fileToOpen.isEmpty())
                        {
-                           PGE_MsgBox::warn(QObject::tr("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
-                                         .arg(fileToOpen).arg(entranceID));
+                                           //% "Warp exit\n\nExit to:\n%1\n\nEnter to: %2"
+                           PGE_MsgBox::warn( qtTrId("LVL_EXIT_WARP_INFO") .arg(fileToOpen) .arg(entranceID) );
                        }
                        playAgain = false;
                    }
@@ -682,7 +683,8 @@ PlayLevel:
                 {
                     end_level_jump = (_game_state.isEpisode)? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     playAgain = false;
-                    PGE_MsgBox::error(QObject::tr("Level was closed with error.\n%1").arg(lScene->errorString()));
+                                        //% "Level was closed with error.\n%1"
+                    PGE_MsgBox::error(qtTrId("LVL_ERROR_LVLCLOSED").arg(lScene->errorString()));
                 }
                 break;
             default:

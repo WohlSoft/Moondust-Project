@@ -41,17 +41,41 @@ android:{
 
 include($$PWD/../_common/build_props.pri)
 
-translates.path = $$LANGUAGES_TARGET
-translates.files += $$PWD/languages/*.qm
-translates.files += $$PWD/languages/*.png
+#translates.path = $$LANGUAGES_TARGET
+#translates.files += $$PWD/languages/*.qm
+#translates.files += $$PWD/languages/*.png
+#tr_update.commands = lupdate $$PWD/pge_engine.pro
+mkpath($$LANGUAGES_TARGET)
+tr_release.commands = lrelease $$PWD/pge_editor.pro
+#tr_release.depends = tr_update
+translates.commands += $(COPY) $$PWD/languages/*.qm $$LANGUAGES_TARGET && $(COPY) $$PWD/languages/*.png $$LANGUAGES_TARGET
+translates.depends = tr_release
+#QMAKE_EXTRA_TARGETS += tr_update
+QMAKE_EXTRA_TARGETS += tr_release translates
+#POST_TARGETDEPS += tr_update
+POST_TARGETDEPS += tr_release translates
+
+TRANSLATIONS += languages/editor_en.ts \
+    languages/editor_ru.ts \
+    languages/editor_uk.ts \
+    languages/editor_de.ts \
+    languages/editor_pl.ts \
+    languages/editor_es.ts \
+    languages/editor_nl.ts \
+    languages/editor_it.ts \
+    languages/editor_fr.ts \
+    languages/editor_pt.ts \
+    languages/editor_ja.ts \
+    languages/editor_zh.ts \
+    languages/editor_bg.ts \
+    languages/editor_id.ts
+
 
 #DEFINES += USE_QMEDIAPLAYER
 #!android:{
 #DEFINES += USE_SDL_MIXER
 #}
 DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES PGE_FILES_QT USE_SDL_MIXER
-
-INSTALLS = translates
 
 android:{
     themes.path = /assets/themes
@@ -121,21 +145,6 @@ else
 {
     QT -= multimedia
 }
-
-TRANSLATIONS += languages/editor_en.ts \
-    languages/editor_ru.ts \
-    languages/editor_uk.ts \
-    languages/editor_de.ts \
-    languages/editor_pl.ts \
-    languages/editor_es.ts \
-    languages/editor_nl.ts \
-    languages/editor_it.ts \
-    languages/editor_fr.ts \
-    languages/editor_pt.ts \
-    languages/editor_ja.ts \
-    languages/editor_zh.ts \
-    languages/editor_bg.ts \
-    languages/editor_id.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \

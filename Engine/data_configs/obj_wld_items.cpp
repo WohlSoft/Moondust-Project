@@ -74,7 +74,8 @@ bool ConfigManager::loadWorldTiles()
     wld_tiles.allocateSlots(tiles_total);
 
 //    emit progressMax(tiles_total);
-//    emit progressTitle(QObject::tr("Loading Tiles..."));
+//                    //% "Loading Tiles..."
+//    emit progressTitle(qtTrId("WLD_LOADING_TILES"));
 
     if(tiles_total==0)
     {

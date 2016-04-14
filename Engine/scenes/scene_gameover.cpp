@@ -48,12 +48,17 @@ void GameOverScene::render()
 
 int GameOverScene::exec()
 {
-    PGE_QuestionBox continueOrQuit(this, QObject::tr("Game Over!"), PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    PGE_QuestionBox continueOrQuit(this,
+                                   //% "Game Over!"
+                                   qtTrId("GAMEOVER_TITLE"),
+                                   PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                                    ConfigManager::setup_menu_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
     QStringList items;
-    items<<QObject::tr("Continue");
-    items<<QObject::tr("Quit");
+    //% "Continue"
+    items << qtTrId("GAMEOVER_CONTINUE");
+    //% "Quit"
+    items << qtTrId("GAMEOVER_EXIT");
     continueOrQuit.addMenuItems(items);
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();

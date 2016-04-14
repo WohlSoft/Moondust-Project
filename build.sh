@@ -52,13 +52,13 @@ fi
 
 #=======================================================================
 # build translations of the editor
-cd Editor
-$LRelease *.pro
-checkState
-cd ../Engine
-$LRelease *.pro
-checkState
-cd ..
+#cd Editor
+#$LRelease *.pro
+#checkState
+#cd ../Engine
+#$LRelease -idbased *.pro
+#checkState
+#cd ..
 #=======================================================================
 # build all components
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
