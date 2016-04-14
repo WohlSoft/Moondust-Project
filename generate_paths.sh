@@ -9,6 +9,7 @@ fi
 QMAKE_PATH=qmake
 LRELEASE_PATH=lrelease
 QT_VERSION=5.6.0_static
+QT_PATH=~/Qt/$QT_VERSION/bin/
 
 OPEN_GEDIT=true
 for var in "$@"
@@ -18,6 +19,7 @@ do
                 OPEN_GEDIT=false
             ;;
         semaphore) #Change paths ti Semaphore-CI compatible
+                QT_PATH=/home/runner/Qt/$QT_VERSION/bin/
                 QMAKE_PATH=/home/runner/Qt/$QT_VERSION/bin/qmake
                 LRELEASE_PATH=/home/runner/Qt/$QT_VERSION/bin/lrelease
             ;;
@@ -27,6 +29,7 @@ done
 echo "#===============================================================================================" > _paths.sh
 echo "#=================PLEASE SET UP THE ABLSOLUTE PATHS TO QMAKE AND TO LRELEASE====================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
+echo "QT_PATH=\"$QT_PATH\"; #" >> _paths.sh
 echo "QMake=\"$QMAKE_PATH\"; #" >> _paths.sh
 echo "#QMake=\"qmake-qt5\"; # for CentOS" >> _paths.sh
 echo "" >> _paths.sh

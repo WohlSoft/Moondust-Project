@@ -68,7 +68,8 @@ before_install:
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-  - echo "QMake=\"qmake\"" > _paths.sh;
+  - echo "QT_PATH=\"/Users/StaticQt/5.5.1/bin/\"" > _paths.sh;
+    echo "QMake=\"qmake\"" > _paths.sh;
     echo "LRelease=\"lrelease\"" >> _paths.sh;
     echo "" >> _paths.sh;
     chmod u+x _paths.sh;
