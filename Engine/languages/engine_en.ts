@@ -428,12 +428,12 @@ Enter to: %2</translation>
         <translation type="vanished">Can&apos;t read the file</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="674"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="676"/>
         <source>Unknown values are presented</source>
         <translation>Unknown values are presented</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="675"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="677"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Your file have an unknown values which will be removed

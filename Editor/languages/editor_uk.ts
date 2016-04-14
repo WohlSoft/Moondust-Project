@@ -3242,214 +3242,214 @@ or delete them first with &apos;Delete Section&apos; option.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="437"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="443"/>
         <source>Layers movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="566"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="687"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="572"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="693"/>
         <source>Horisontal speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="510"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="543"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="631"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="644"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="516"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="549"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="650"/>
         <source>bps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="517"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="694"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="523"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="700"/>
         <source>Vertical speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="477"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="483"/>
         <source>Set moving layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="584"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="590"/>
         <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="618"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="624"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="391"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="722"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="734"/>
         <source>Section settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="762"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="774"/>
         <source>Current section:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="784"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="796"/>
         <source>Set size and position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="796"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="808"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="991"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1071"/>
         <source>Don&apos;t change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="815"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="827"/>
         <source>Capture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="828"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="992"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1066"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="840"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1004"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1078"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="847"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1361"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="859"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1379"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="869"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="881"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="885"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="897"/>
         <source>Define new:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="916"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="926"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1375"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="938"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1393"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="967"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
         <source>Set music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1005"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1017"/>
         <source>Replace music to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1053"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
         <source>Set background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1073"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
         <source>Replace background to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1142"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1154"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1227"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1239"/>
         <source>Do end game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1189"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1201"/>
         <source>Play sound:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1214"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1226"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1267"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1285"/>
         <source>Display message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1238"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1250"/>
         <source>Nothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1243"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1255"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1285"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1303"/>
         <source>Player Control hold keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1326"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1344"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1340"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1358"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1319"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1337"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1333"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1351"/>
         <source>Drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1347"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1365"/>
         <source>Alt-run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1354"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1372"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1368"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1386"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1382"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1400"/>
         <source>Alt-jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1416"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1434"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1457"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1475"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3900,17 +3900,17 @@ All elements of this layer will be removed too!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="364"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="366"/>
         <source>Search User NPCs %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="486"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="488"/>
         <source>Wrong custom images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="487"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="489"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -6315,78 +6315,78 @@ Configuration package loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="101"/>
-        <location filename="../main_window/testing/testing.cpp" line="172"/>
-        <location filename="../main_window/testing/testing.cpp" line="249"/>
+        <location filename="../main_window/testing/testing.cpp" line="137"/>
+        <location filename="../main_window/testing/testing.cpp" line="210"/>
+        <location filename="../main_window/testing/testing.cpp" line="288"/>
         <source>Engine is not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="102"/>
-        <location filename="../main_window/testing/testing.cpp" line="173"/>
+        <location filename="../main_window/testing/testing.cpp" line="138"/>
+        <location filename="../main_window/testing/testing.cpp" line="211"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="110"/>
-        <location filename="../main_window/testing/testing.cpp" line="181"/>
+        <location filename="../main_window/testing/testing.cpp" line="146"/>
+        <location filename="../main_window/testing/testing.cpp" line="219"/>
         <source>Engine already runned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="111"/>
-        <location filename="../main_window/testing/testing.cpp" line="182"/>
+        <location filename="../main_window/testing/testing.cpp" line="147"/>
+        <location filename="../main_window/testing/testing.cpp" line="220"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="199"/>
-        <location filename="../main_window/testing/testing.cpp" line="212"/>
-        <location filename="../main_window/testing/testing.cpp" line="828"/>
+        <location filename="../main_window/testing/testing.cpp" line="237"/>
+        <location filename="../main_window/testing/testing.cpp" line="250"/>
+        <location filename="../main_window/testing/testing.cpp" line="872"/>
         <source>Save file first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="200"/>
-        <location filename="../main_window/testing/testing.cpp" line="213"/>
+        <location filename="../main_window/testing/testing.cpp" line="238"/>
+        <location filename="../main_window/testing/testing.cpp" line="251"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="250"/>
+        <location filename="../main_window/testing/testing.cpp" line="289"/>
         <source>Engine is not found: 
 %1
 Please, check the application directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="513"/>
+        <location filename="../main_window/testing/testing.cpp" line="557"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="514"/>
+        <location filename="../main_window/testing/testing.cpp" line="558"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="541"/>
+        <location filename="../main_window/testing/testing.cpp" line="585"/>
         <source>SMBX Test is already runned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="542"/>
+        <location filename="../main_window/testing/testing.cpp" line="586"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="569"/>
+        <location filename="../main_window/testing/testing.cpp" line="613"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -6400,111 +6400,111 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="808"/>
+        <location filename="../main_window/testing/testing.cpp" line="852"/>
         <source>process execution is failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="563"/>
+        <location filename="../main_window/testing/testing.cpp" line="607"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="57"/>
+        <location filename="../main_window/testing/testing.cpp" line="61"/>
         <source>PGE Engine testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="60"/>
+        <location filename="../main_window/testing/testing.cpp" line="64"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="62"/>
+        <location filename="../main_window/testing/testing.cpp" line="66"/>
         <source>Hello! This is a test in PGE Engine.
 PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. Currently, it&apos;s experimental and has not implemented many features yet. Some features may not be implemented or may work incorrectly. If you are making levels or episodes for the old SMBX Engine and you want to run a test with a complete feature-set, please run level tests in the SMBX Engine. Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE specific levels or episodes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="810"/>
+        <location filename="../main_window/testing/testing.cpp" line="854"/>
         <source>patching has failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="815"/>
+        <location filename="../main_window/testing/testing.cpp" line="859"/>
         <source>Failed to launch LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="816"/>
+        <location filename="../main_window/testing/testing.cpp" line="860"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="829"/>
+        <location filename="../main_window/testing/testing.cpp" line="873"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="836"/>
+        <location filename="../main_window/testing/testing.cpp" line="880"/>
         <source>Incompatible file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="837"/>
+        <location filename="../main_window/testing/testing.cpp" line="881"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="848"/>
-        <location filename="../main_window/testing/testing.cpp" line="896"/>
-        <location filename="../main_window/testing/testing.cpp" line="911"/>
-        <location filename="../main_window/testing/testing.cpp" line="926"/>
-        <location filename="../main_window/testing/testing.cpp" line="935"/>
-        <location filename="../main_window/testing/testing.cpp" line="976"/>
+        <location filename="../main_window/testing/testing.cpp" line="892"/>
+        <location filename="../main_window/testing/testing.cpp" line="940"/>
+        <location filename="../main_window/testing/testing.cpp" line="955"/>
+        <location filename="../main_window/testing/testing.cpp" line="970"/>
+        <location filename="../main_window/testing/testing.cpp" line="979"/>
+        <location filename="../main_window/testing/testing.cpp" line="1021"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="849"/>
+        <location filename="../main_window/testing/testing.cpp" line="893"/>
         <source>Fail to create temp file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="870"/>
+        <location filename="../main_window/testing/testing.cpp" line="914"/>
         <source>SMBX Level test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="871"/>
+        <location filename="../main_window/testing/testing.cpp" line="915"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="897"/>
+        <location filename="../main_window/testing/testing.cpp" line="941"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="912"/>
+        <location filename="../main_window/testing/testing.cpp" line="956"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="927"/>
+        <location filename="../main_window/testing/testing.cpp" line="971"/>
         <source>Could not map view of file (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="936"/>
+        <location filename="../main_window/testing/testing.cpp" line="980"/>
         <source>Too long path: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="974"/>
-        <location filename="../main_window/testing/testing.cpp" line="977"/>
+        <location filename="../main_window/testing/testing.cpp" line="1019"/>
+        <location filename="../main_window/testing/testing.cpp" line="1022"/>
         <source>Failed to find SMBX Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6630,14 +6630,14 @@ Overwrite?</source>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="51"/>
         <location filename="../main_window/script/script_compile.cpp" line="74"/>
-        <location filename="../main_window/testing/testing.cpp" line="741"/>
+        <location filename="../main_window/testing/testing.cpp" line="785"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="52"/>
         <location filename="../main_window/script/script_compile.cpp" line="75"/>
-        <location filename="../main_window/testing/testing.cpp" line="742"/>
+        <location filename="../main_window/testing/testing.cpp" line="786"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
@@ -7686,7 +7686,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="172"/>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="183"/>
         <source>Loading BGOs...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7696,7 +7696,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_block.cpp" line="159"/>
+        <location filename="../data_configs/conf_lvl_block.cpp" line="273"/>
         <source>Loading Blocks...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7763,12 +7763,12 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="674"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="676"/>
         <source>Unknown values are presented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="675"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="677"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation type="unfinished"></translation>
@@ -9009,27 +9009,27 @@ Bottom:	%4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="177"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="178"/>
         <source>Search User Sceneries %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="244"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="246"/>
         <source>Search User Paths %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="311"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="314"/>
         <source>Search User Levels %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="383"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="387"/>
         <source>Wrong custom images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="384"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="388"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
