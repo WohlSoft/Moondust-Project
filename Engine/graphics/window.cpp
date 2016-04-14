@@ -63,6 +63,7 @@ bool PGE_Window::checkSDLError(int line)
 bool PGE_Window::init(QString WindowTitle)
 {
 
+    //#if 1
     #ifdef __APPLE__
     GlRenderer::setup_OpenGL21();
     #else
@@ -157,12 +158,21 @@ void PGE_Window::toggleVSync(bool vsync)
        SDL_GL_SetSwapInterval(1);
        TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
        TicksPerSecond=1000.0f/TimeOfFrame;
-       if(checkSDLError()) {
+
+       const char *error = SDL_GetError();
+       if (*error == '\0')
+       {   //Vertical syncronization is supported
            g_AppSettings.timeOfFrame=TimeOfFrame;
            g_AppSettings.TicksPerSecond=TicksPerSecond;
        } else {
+           //Vertical syncronization is NOT supported
+           SDL_ClearError();
            TimeOfFrame=g_AppSettings.timeOfFrame;
            TicksPerSecond=g_AppSettings.TicksPerSecond;
+           //Disable vertical syncronization because unsupported
+           g_AppSettings.vsync=false;
+           PGE_Window::vsync=false;
+           SDL_GL_SetSwapInterval(0);
        }
    } else {
        SDL_GL_SetSwapInterval(0);
