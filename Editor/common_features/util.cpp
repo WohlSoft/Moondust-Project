@@ -149,28 +149,17 @@ QString util::getBaseFilename(QString str)
     return str;
 }
 
-template< class T >
-struct TypeIsInt
+template<class TList>
+inline void CSV2IntArr_CODE(const QString& source, TList& dest, const typename TList::value_type& def)
 {
-    static const bool value = false;
-};
-
-template<>
-struct TypeIsInt< int >
-{
-    static const bool value = true;
-};
-
-template<typename T, class TList>
-inline void CSV2IntArr_CODE(QString source, TList dest, T def)
-{
+    typedef typename TList::value_type T;
     if(!source.isEmpty())
     {
         bool ok;
         QStringList tmlL = source.split(',', QString::SkipEmptyParts);
         foreach(QString fr, tmlL)
         {
-            if(TypeIsInt<T>::value)
+            if(std::is_same<T, int>::value)
                 dest.push_back(fr.toInt(&ok));
             else
                 dest.push_back(fr.toDouble(&ok));
@@ -186,20 +175,20 @@ inline void CSV2IntArr_CODE(QString source, TList dest, T def)
 
 void util::CSV2IntArr(QString source, QList<int> &dest)
 {
-    CSV2IntArr_CODE<int, QList<int>>(source, dest, 0);
+    CSV2IntArr_CODE(source, dest, 0);
 }
 
 void util::CSV2IntArr(QString source, QVector<int> &dest)
 {
-    CSV2IntArr_CODE<int, QVector<int>>(source, dest, 0);
+    CSV2IntArr_CODE(source, dest, 0);
 }
 
 void util::CSV2DoubleArr(QString source, QList<double> &dest)
 {
-    CSV2IntArr_CODE<double, QList<double>>(source, dest, 0.0);
+    CSV2IntArr_CODE(source, dest, 0.0);
 }
 
 void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 {
-    CSV2IntArr_CODE<double, QVector<double>>(source, dest, 0.0);
+    CSV2IntArr_CODE(source, dest, 0.0);
 }
