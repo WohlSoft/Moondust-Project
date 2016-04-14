@@ -341,6 +341,8 @@ void TitleScene::render()
 
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
+    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
+
     if(_bgIsLoaded)
     {
         GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2,

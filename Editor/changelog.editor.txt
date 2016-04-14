@@ -13,6 +13,7 @@ Editor 0.3.1.10
 - Resolved trouble with window focuses
 - Added ability to set absolute values of sizable block size from block properties tool box
 - Finally implemented true BGO's order priority table which results right order of the BGOs in comparison with SMBX Editor
+- Added Polish translation of the editor
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

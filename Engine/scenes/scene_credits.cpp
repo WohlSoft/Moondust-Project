@@ -193,6 +193,7 @@ void CreditsScene::render()
 
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
+    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2, PGE_Window::Height/2 - background.h/2);
 
     for(int i=0;i<imgs.size();i++)

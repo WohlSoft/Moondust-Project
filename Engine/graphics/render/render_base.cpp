@@ -90,8 +90,8 @@ void Render_Base::setTextureColor(float /*Red*/, float /*Green*/, float /*Blue*/
 void Render_Base::renderTextureCur(float /*x*/, float /*y*/, float /*w*/, float /*h*/, float /*ani_top*/, float /*ani_bottom*/, float /*ani_left*/, float /*ani_right*/)
 {}
 
-void Render_Base::renderTextureCur(float /*x*/, float /*y*/)
-{}
+//void Render_Base::renderTextureCur(float /*x*/, float /*y*/)
+//{}
 
 void Render_Base::getCurWidth(GLint &/*w*/)
 {}

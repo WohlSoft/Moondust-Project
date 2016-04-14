@@ -88,8 +88,8 @@ public:
     static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false);
     static int getFontID(QString fontName);
 
-    static GLuint getChar1(QChar _x);
-    static GLuint getChar2(QChar _x);
+    static void getChar1(QChar _x, int px_size, PGE_Texture &tex);
+    static void getChar2(QChar _x, int px_size, PGE_Texture &tex);
 
     static QFont font();
     enum DefaultFont
@@ -109,24 +109,42 @@ public:
     static QString cropText(QString text, int max_symbols);
 
     /****Deprecated functions*******/
-    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
+    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, PGE_Texture *texture, bool borders=false);
     static void SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int fontFlags, QRgb color,
-                                          QString &text, GLuint *texture, bool borders=false);
+                                          QString &text, PGE_Texture *texture, bool borders=false);
 
-    static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
-    static GLuint TextToTexture(QString text, PGE_Rect rectangle, int alignFlags, bool borders=false);
+    struct TTFCharType
+    {
+        QChar c;
+        int px_size;
+        bool operator==(const TTFCharType cht) const
+        {
+            return ((c == cht.c) && (px_size == cht.px_size));
+        }
+    };
 
 private:
     static bool isInit;
     //static TTF_Font * defaultFont;
-    static GLuint textTexture;
-    static QHash<QChar, GLuint> fontTable_1;
-    static QHash<QChar, GLuint> fontTable_2;
+    //static PGE_Texture textTexture;
+    friend uint qHash(const TTFCharType &struc);
+    static QHash<TTFCharType, PGE_Texture> fontTable_1;
+    static QHash<TTFCharType, PGE_Texture> fontTable_2;
     static QHash<QString, int> fonts;
     static int fontID;
     static bool double_pixled;
 
     static QFont *defaultFont;
 };
+
+inline uint qHash(const FontManager::TTFCharType &struc)
+{
+    uint result = struc.c.unicode();
+
+    result <<=(sizeof(quint8)*8);
+    result = result|struc.px_size;
+
+    return result;
+}
 
 #endif // FONT_MANAGER_H

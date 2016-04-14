@@ -303,6 +303,7 @@ void Render_OpenGL31::renderRectBR(float _left, float _top, float _right, float 
                          red, green, blue, alpha };
 
     GLubyte indices[] = {
+        //0, 1, 3, 2
         0, 1, 2, // (bottom left - top left - top right)
         0, 2, 3  // (bottom left - top right - bottom right)
     };
@@ -340,19 +341,20 @@ void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y)
     };
 
     GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
+        0, 1, 3, 2
+        //0, 1, 2, // (bottom left - top left - top right)
+        //0, 2, 3  // (bottom left - top right - bottom right)
     };
 
-    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
+//    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
 
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
     glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 
     setUnbindTexture();
 }
@@ -371,7 +373,7 @@ void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y, floa
     setRenderTexture( texture->texture );
     setAlphaBlending();
 
-    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+    //glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     GLfloat Vertices[] = {
         left, top, 0,
         right, top, 0,
@@ -385,19 +387,18 @@ void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y, floa
         ani_left, ani_bottom
     };
     GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
+        0, 1, 3, 2
+        //0, 1, 2, // (bottom left - top left - top right)
+        //0, 2, 3  // (bottom left - top right - bottom right)
     };
-
-    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
-                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
-
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
+//    GLfloat Colors[] = { color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha,
+//                         color_level_red, color_level_green, color_level_blue, color_level_alpha };
+    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
     glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 
     setUnbindTexture();
 }
@@ -477,56 +478,58 @@ void Render_OpenGL31::renderTextureCur(float x, float y, float w, float h, float
         ani_left, ani_bottom
     };
 
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
+    GLubyte indices[] =
+    {
+        0, 1, 3, 2
+        //0, 1, 2, // (bottom left - top left - top right)
+        //0, 2, 3  // (bottom left - top right - bottom right)
     };
 
     glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
     glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }
 
-void Render_OpenGL31::renderTextureCur(float x, float y)
-{
-    GLint w;
-    GLint h;
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
-    if(w<0) return;
-    if(h<0) return;
+//void Render_OpenGL31::renderTextureCur(float x, float y)
+//{
+//    GLint w;
+//    GLint h;
+//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
+//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
+//    if(w<0) return;
+//    if(h<0) return;
 
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+//    PGE_PointF point;
+//        point = MapToGl(x, y);
+//    float left = point.x();
+//    float top = point.y();
+//        point = MapToGl(x+w, y+h);
+//    float right = point.x();
+//    float bottom = point.y();
 
-    GLfloat Vertices[] = {
-        left, top, 0,
-        right, top, 0,
-        right, bottom, 0,
-        left, bottom, 0
-    };
-    GLfloat TexCoord[] = {
-        0.f, 0.f,
-        1.f, 0.f,
-        1.f, 1.f,
-        0.f, 1.f
-    };
-    GLubyte indices[] = {
-        0, 1, 2, // (bottom left - top left - top right)
-        0, 2, 3  // (bottom left - top right - bottom right)
-    };
+//    GLfloat Vertices[] = {
+//        left, top, 0,
+//        right, top, 0,
+//        right, bottom, 0,
+//        left, bottom, 0
+//    };
+//    GLfloat TexCoord[] = {
+//        0.f, 0.f,
+//        1.f, 0.f,
+//        1.f, 1.f,
+//        0.f, 1.f
+//    };
+//    GLubyte indices[] = {
+//        0, 1, 2, // (bottom left - top left - top right)
+//        0, 2, 3  // (bottom left - top right - bottom right)
+//    };
 
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-}
+//    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
+//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
+//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+//}
 
 void Render_OpenGL31::getCurWidth(GLint &w)
 {

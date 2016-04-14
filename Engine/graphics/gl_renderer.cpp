@@ -425,27 +425,42 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     return;
 }
 
-GLuint GlRenderer::QImage2Texture(QImage *img)
+GLuint GlRenderer::QImage2Texture(QImage *img, PGE_Texture &tex)
 {
-    if(!img) return 0;
-    QImage text_image = GraphicsHelps::convertToGLFormat(*img);//.mirrored(false, true);
+    if(!img)
+        return 0;
+    QImage text_image = GraphicsHelps::convertToGLFormat(*img).mirrored(false, true);
 
-    GLuint texture=0;
-    #ifdef PGE_USE_OpenGL_2_1
-    glEnable(GL_TEXTURE_2D);
-    #endif
-    glGenTextures(1, &texture);  GLERRORCHECK();
-    glBindTexture(GL_TEXTURE_2D, texture);  GLERRORCHECK();
-    glTexImage2D(GL_TEXTURE_2D, 0,  4,
-                 text_image.width(),
-                 text_image.height(),
-                 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 text_image.bits() );  GLERRORCHECK();
-    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
-    #ifdef PGE_USE_OpenGL_2_1
-    glDisable(GL_TEXTURE_2D);
-    #endif
-    return texture;
+    if(tex.inited)
+        deleteTexture(tex);
+
+    QRgb upperColor = text_image.pixel(0,0);
+    QRgb lowerColor = text_image.pixel(0,text_image.height()-1);
+
+    tex.ColorUpper.r = float(qRed(upperColor))/255.0f;
+    tex.ColorUpper.b = float(qBlue(upperColor))/255.0f;
+    tex.ColorUpper.g = float(qGreen(upperColor))/255.0f;
+
+    tex.ColorLower.r = float(qRed(lowerColor))/255.0f;
+    tex.ColorLower.b = float(qBlue(lowerColor))/255.0f;
+    tex.ColorLower.g = float(qGreen(lowerColor))/255.0f;
+
+    tex.nOfColors = GL_RGBA;
+    tex.format = GL_BGRA;
+    tex.w = text_image.width();
+    tex.h = text_image.height();
+
+    g_renderer->loadTexture(tex, tex.w, tex.h, text_image.bits());
+//    glGenTextures(1, &tex.texture);  GLERRORCHECK();
+//    glBindTexture(GL_TEXTURE_2D, tex.texture);  GLERRORCHECK();
+//    glTexImage2D(GL_TEXTURE_2D, 0,  4,
+//                 tex.w,
+//                 tex.h,
+//                 0, tex.nOfColors, GL_UNSIGNED_BYTE,
+//                 text_image.bits() );  GLERRORCHECK();
+//    tex.inited = true;
+//    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
+    return tex.texture;
 }
 
 void GlRenderer::deleteTexture(PGE_Texture &tx)
@@ -685,10 +700,10 @@ void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_
     g_renderer->renderTextureCur(x, y, w, h, ani_top, ani_bottom, ani_left, ani_right);
 }
 
-void GlRenderer::renderTextureCur(float x, float y)
-{
-    g_renderer->renderTextureCur(x, y);
-}
+//void GlRenderer::renderTextureCur(float x, float y)
+//{
+//    g_renderer->renderTextureCur(x, y);
+//}
 
 void GlRenderer::getCurWidth(GLint &w)
 {

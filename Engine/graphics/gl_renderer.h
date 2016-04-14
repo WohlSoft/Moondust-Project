@@ -63,7 +63,7 @@ public:
     static void BindTexture(GLuint &texture_id);
     static void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     static void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!< Draw currently binded texture
-    static void renderTextureCur(float x, float y);
+    //static void renderTextureCur(float x, float y);
     static void getCurWidth(GLint &w);
     static void getCurHeight(GLint &h);
     static void UnBindTexture();
@@ -80,7 +80,7 @@ public:
 
     static PGE_Texture loadTexture(QString path, QString maskPath="");
     static void loadTextureP(PGE_Texture &target, QString path, QString maskPath="");
-    static GLuint QImage2Texture(QImage *img);
+    static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);
     static void deleteTexture(GLuint tx);
 

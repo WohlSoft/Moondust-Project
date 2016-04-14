@@ -1011,6 +1011,7 @@ void WorldScene::render()
     if(!isInit)
         goto renderBlack;
 
+    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     if(backgroundTex.w>0)
         GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width/2 - backgroundTex.w/2, PGE_Window::Height/2 - backgroundTex.h/2);
 
@@ -1037,6 +1038,7 @@ void WorldScene::render()
         double renderY = posY+16-(viewportRect.height()/2);
 
         //Render items
+        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
         const int render_sz = _itemsToRender.size();
         WorldNode** render_obj = _itemsToRender.data();
         for(int i=0; i<render_sz; i++)

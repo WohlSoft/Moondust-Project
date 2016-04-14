@@ -433,6 +433,8 @@ void LevelScene::render()
     int c=0;
 
     if(!isInit) goto renderBlack;
+
+    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     for(QList<PGE_LevelCamera>::iterator it=cameras.begin();it!=cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);

@@ -91,7 +91,7 @@ public:
 
     virtual void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
-    virtual void renderTextureCur(float x, float y);
+    //virtual void renderTextureCur(float x, float y);
     virtual void getCurWidth(GLint &w);
     virtual void getCurHeight(GLint &h);
     virtual void UnBindTexture();
