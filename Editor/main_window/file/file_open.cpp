@@ -168,6 +168,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         return;
     }
 
+    QMdiSubWindow *newSubWin = NULL;
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
@@ -203,7 +204,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         file.close();
 
         LogDebug("Creating of sub-window");
-        LevelEdit *child = createLvlChild();
+        LevelEdit *child = createLvlChild(&newSubWin);
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) )
         {
             child->show();
@@ -220,9 +221,9 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 
         } else {
             LogDebug(">>File loading aborted");
-            child->show();
-            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-            ui->centralWidget->activeSubWindow()->close();
+            //child->show();
+            child->LvlData.modified = false;
+            newSubWin->close();
             LogDebug(">>Windows closed");
         }
     }
@@ -238,7 +239,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 
         file.close();
 
-        WorldEdit *child = createWldChild();
+        WorldEdit *child = createWldChild(&newSubWin);
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
             child->updateGeometry();
@@ -252,7 +253,10 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             }
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {
+            LogDebug(">>File loading aborted");
             child->close();
+            newSubWin->close();
+            LogDebug(">>Windows closed");
         }
 
         //QMessageBox::information(this, tr("Dummy"),
@@ -270,13 +274,14 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             return;
         }
 
-        NpcEdit *child = createNPCChild();
+        NpcEdit *child = createNPCChild(&newSubWin);
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
             //updateMenus(true);
         } else {
             child->close();
+            newSubWin->close();
         }
     }
     else

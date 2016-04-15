@@ -23,7 +23,7 @@
 #include <mainwindow.h>
 
 //Edit NPC
-NpcEdit *MainWindow::createNPCChild()
+NpcEdit *MainWindow::createNPCChild(QMdiSubWindow **npcWindow_out)
 {
     QMdiSubWindow *npcWindow = new QMdiSubWindow(ui->centralWidget);
     NpcEdit *child = new NpcEdit(&configs, npcWindow);
@@ -42,6 +42,9 @@ NpcEdit *MainWindow::createNPCChild()
 
     ui->centralWidget->updateGeometry();
 
+    if(npcWindow_out)
+        *npcWindow_out = npcWindowP;
+
     //npcWindow->connect(npcWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
 
     return child;
@@ -50,7 +53,7 @@ NpcEdit *MainWindow::createNPCChild()
 
 
 //Edit LEVEL
-LevelEdit *MainWindow::createLvlChild()
+LevelEdit *MainWindow::createLvlChild(QMdiSubWindow **levelWindow_out)
 {
     QMdiSubWindow *levelWindow = new QMdiSubWindow(ui->centralWidget);
     LevelEdit *child = new LevelEdit(levelWindow);
@@ -76,6 +79,9 @@ LevelEdit *MainWindow::createLvlChild()
     levelWindowP->update();
     ui->centralWidget->updateGeometry();
 
+    if(levelWindow_out)
+        *levelWindow_out = levelWindowP;
+
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
     //levelWindow->connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
@@ -83,7 +89,7 @@ LevelEdit *MainWindow::createLvlChild()
 }
 
 //Edit WORLD
-WorldEdit *MainWindow::createWldChild()
+WorldEdit *MainWindow::createWldChild(QMdiSubWindow **worldWindow_out)
 {
     QMdiSubWindow *worldWindow = new QMdiSubWindow(ui->centralWidget);
     WorldEdit *child = new WorldEdit(worldWindow);
@@ -92,17 +98,20 @@ WorldEdit *MainWindow::createWldChild()
     worldWindow->setWidget(child);
     worldWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(worldWindow);
-    levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
+    QMdiSubWindow * worldWindowP = ui->centralWidget->addSubWindow(worldWindow);
+    worldWindowP->setAttribute(Qt::WA_DeleteOnClose);
 
-    levelWindowP->setGeometry(
+    worldWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              860, 680);
-    levelWindowP->setWindowIcon(Themes::icon(Themes::world_16));
-    levelWindowP->updateGeometry();
-    levelWindowP->update();
+    worldWindowP->setWindowIcon(Themes::icon(Themes::world_16));
+    worldWindowP->updateGeometry();
+    worldWindowP->update();
     ui->centralWidget->updateGeometry();
+
+    if(worldWindow_out)
+        *worldWindow_out = worldWindowP;
 
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));

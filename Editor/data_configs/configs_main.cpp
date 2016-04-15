@@ -192,10 +192,12 @@ bool dataconfigs::loadconfigs()
     default_grid=0;
     errorsList.clear();
 
+    LogDebugQD("=== Starting of global configuration loading ===");
+
     //dirs
     if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
     {
-        LogCritical(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
+        LogCriticalQD(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
         return false;
     }
 
@@ -208,6 +210,7 @@ bool dataconfigs::loadconfigs()
 
     QString customAppPath = ApplicationPath;
 
+    LogDebugQD("Loading main.ini...");
     mainset.beginGroup("main");
         customAppPath = mainset.value("application-path", ApplicationPath).toString();
         customAppPath.replace('\\', '/');
@@ -251,7 +254,7 @@ bool dataconfigs::loadconfigs()
 
     if( mainset.status() != QSettings::NoError )
     {
-        LogCritical(QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
+        LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
         return false;
     }
 
@@ -272,6 +275,7 @@ bool dataconfigs::loadconfigs()
     mainset.endGroup();
 
 
+    LogDebugQD("Loading some of engine.ini...");
     //Basic settings of engine
     QString engine_ini = config_dir + "engine.ini";
     if(QFile::exists(engine_ini)) //Load if exist, is not required
@@ -306,35 +310,47 @@ bool dataconfigs::loadconfigs()
 
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
+        LogDebugQD("Loading of lvl_bkgrd.ini...");
     loadLevelBackgrounds();
+        LogDebugQD("Loading of lvl_bgo.ini...");
     loadLevelBGO();
+        LogDebugQD("Loading of lvl_blocks.ini...");
     loadLevelBlocks();
+        LogDebugQD("Loading of lvl_npc.ini...");
     loadLevelNPC();
     ///////////////////////////////////////Level items////////////////////////////////////////////
 
     ///////////////////////////////////////World map items////////////////////////////////////////
+        LogDebugQD("Loading of wld_tiles.ini...");
     loadWorldTiles();
+        LogDebugQD("Loading of wld_scenery.ini...");
     loadWorldScene();
+        LogDebugQD("Loading of wld_paths.ini...");
     loadWorldPaths();
+        LogDebugQD("Loading of wld_levels.ini...");
     loadWorldLevels();
     ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
     ///////////////////////////////////////Music////////////////////////////////////////////
+        LogDebugQD("Loading of music.ini...");
     loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
     ///////////////////////////////////////Sound////////////////////////////////////////////
+        LogDebugQD("Loading of sounds.ini...");
     loadSound();
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
 
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
+        LogDebugQD("Loading global tilesets INI files...");
     loadTilesets();
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
 
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
+        LogDebugQD("Loading rotation_table.ini...");
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
 
@@ -345,21 +361,21 @@ bool dataconfigs::loadconfigs()
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
 
-    LogDebug(QString("-------------------------"));
-    LogDebug(QString("Config status 1"));
-    LogDebug(QString("-------------------------"));
-    LogDebug(QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
-    LogDebug(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
-    LogDebug(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
-    LogDebug(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
-    LogDebug(QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
-    LogDebug(QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
-    LogDebug(QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
-    LogDebug(QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
-    LogDebug(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
-    LogDebug(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
-    LogDebug(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
-    LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
+    LogDebugQD(QString("-------------------------"));
+    LogDebugQD(QString("Config status 1"));
+    LogDebugQD(QString("-------------------------"));
+    LogDebugQD(QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
+    LogDebugQD(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
+    LogDebugQD(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
+    LogDebugQD(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
+    LogDebugQD(QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
+    LogDebugQD(QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
+    LogDebugQD(QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
+    LogDebugQD(QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
+    LogDebugQD(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
+    LogDebugQD(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
+    LogDebugQD(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
+    LogDebugQD(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
 
     return true;
 }

@@ -560,12 +560,25 @@ void LevelEdit::closeEvent(QCloseEvent *event)
     if(!sceneCreated)
     {
         event->accept();
+        goto clearScene;
         return;
     }
     else
+    {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+    }
 
-    if(maybeSave()) {
+    if( maybeSave() )
+    {
+        goto clearScene;
+    } else {
+        event->ignore();
+    }
+
+    return;
+clearScene:
+    if(scene)
+    {
         stopAutoUpdateTimer();
         scene->setMessageBoxItem(false);
         scene->clear();
@@ -596,12 +609,9 @@ void LevelEdit::closeEvent(QCloseEvent *event)
         }
         LogDebug("!<-Delete scene->!");
         delete scene;
+        scene = NULL;
         sceneCreated=false;
         LogDebug("!<-Deleted->!");
-        //ui->graphicsView->cl
-        event->accept();
-    } else {
-        event->ignore();
     }
 }
 

@@ -23,6 +23,8 @@
 #include <QSettings>
 #include <QtDebug>
 #include <QDate>
+#include <QMutex>
+#include <QMutexLocker>
 
 #include <dev_console/devconsole.h>
 
@@ -244,8 +246,11 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
+static  QMutex logger_mutex;
+
 void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
 {
+    QMutexLocker muLocker(&logger_mutex); Q_UNUSED(muLocker);
     LogWriter::WriteToLog(type, msg);
 
     if(noConsole)

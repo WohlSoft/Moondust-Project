@@ -19,6 +19,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <QString>
+#include <QtDebug>
 
 enum class PGE_LogLevel {
     Debug=4,
@@ -31,14 +32,22 @@ enum class PGE_LogLevel {
 void LoadLogSettings();
 void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole=false);
 
+// Regular loggers
 #define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg, false);
 #define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg, false);
 #define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg, false);
 #define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg, false);
 
+// Regular loggers with disabled console logging
 #define LogDebugNC(msg) WriteToLog(PGE_LogLevel::Debug, msg, true);
 #define LogWarningNC(msg) WriteToLog(PGE_LogLevel::Warning, msg, true);
 #define LogCriticalNC(msg) WriteToLog(PGE_LogLevel::Critical, msg, true);
 #define LogFatalNC(msg) WriteToLog(PGE_LogLevel::Fatal, msg, true);
+
+// Thread-save loggers
+#define LogDebugQD(msg)     qDebug() << (msg);
+#define LogWarningQD(msg)   qWarning() << (msg);
+#define LogCriticalQD(msg)  qCritical() << (msg);
+#define LogFatalQD(msg)     qFatal() << (msg);
 
 #endif // LOGGER_H

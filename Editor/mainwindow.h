@@ -495,17 +495,17 @@ public:
          * \brief Create empty Level Editing sub-window
          * \return Level Editor pointer or NULL if creating of sub-window failed
          */
-        LevelEdit   *createLvlChild();
+        LevelEdit   *createLvlChild(QMdiSubWindow **levelWindow_out = 0);
         /*!
          * \brief Create empty NPC.TXT Editing sub-window
          * \return NPC.TXT Editor pointer or NULL if creating of sub-window failed
          */
-        NpcEdit     *createNPCChild();
+        NpcEdit     *createNPCChild(QMdiSubWindow **npcWindow_out = 0);
         /*!
          * \brief Create empty World Map Editing sub-window
          * \return World Map Editor pointer or NULL if creating of sub-window failed
          */
-        WorldEdit   *createWldChild();
+        WorldEdit   *createWldChild(QMdiSubWindow **worldWindow_out = 0);
         /*!
          * \brief Switch specific sub-window
          * \param window Genertic QWidget pointer to sub-window to activated
