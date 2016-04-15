@@ -48,7 +48,7 @@ include($$PWD/../_common/build_props.pri)
 mkpath($$LANGUAGES_TARGET)
 tr_release.commands = lrelease $$PWD/pge_editor.pro
 #tr_release.depends = tr_update
-translates.commands += $(COPY) $$PWD/languages/*.qm $$LANGUAGES_TARGET $$escape_expand(\n\t) $(COPY) $$PWD/languages/*.png $$LANGUAGES_TARGET
+translates.commands += $(COPY) $$PWD/languages/*.qm \"$$LANGUAGES_TARGET\" $$escape_expand(\n\t) $(COPY) $$PWD/languages/*.png \"$$LANGUAGES_TARGET\"
 translates.depends = tr_release
 #QMAKE_EXTRA_TARGETS += tr_update
 QMAKE_EXTRA_TARGETS += tr_release translates

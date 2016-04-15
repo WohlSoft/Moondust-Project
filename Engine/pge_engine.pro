@@ -117,7 +117,7 @@ mkpath($$LANGUAGES_TARGET)
 #tr_update.commands = lupdate $$PWD/pge_engine.pro
 tr_release.commands = lrelease -idbased $$PWD/pge_engine.pro
 #tr_release.depends = tr_update
-translates.commands = $(COPY) $$PWD/languages/*.qm $$LANGUAGES_TARGET
+translates.commands = $(COPY) $$PWD/languages/*.qm \"$$LANGUAGES_TARGET\"
 translates.depends = tr_release
 #QMAKE_EXTRA_TARGETS += tr_update
 QMAKE_EXTRA_TARGETS += tr_release translates
