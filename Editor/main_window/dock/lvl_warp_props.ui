@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>768</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
-    <height>727</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -160,12 +160,21 @@ Every warp points pair requires a warp entry</string>
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QGroupBox" name="warpBoxDirect">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
+       </size>
+      </property>
       <property name="title">
        <string>Pipe direction</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>4</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -197,6 +206,9 @@ Every warp points pair requires a warp entry</string>
           <bool>false</bool>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -383,7 +395,7 @@ Every warp points pair requires a warp entry</string>
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -399,7 +411,7 @@ Every warp points pair requires a warp entry</string>
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -430,6 +442,9 @@ Every warp points pair requires a warp entry</string>
           <set>Qt::AlignCenter</set>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -560,7 +575,7 @@ Every warp points pair requires a warp entry</string>
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -576,7 +591,7 @@ Every warp points pair requires a warp entry</string>
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -651,24 +666,33 @@ Every warp points pair requires a warp entry</string>
        <enum>Qt::Vertical</enum>
       </property>
       <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
+       <enum>QSizePolicy::MinimumExpanding</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
         <width>0</width>
-        <height>0</height>
+        <height>2</height>
        </size>
       </property>
      </spacer>
     </item>
     <item row="5" column="0">
      <widget class="QGroupBox" name="warpBoxWD">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>130</height>
+       </size>
+      </property>
       <property name="title">
        <string>Level door</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
         <number>1</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
        </property>
        <property name="leftMargin">
         <number>1</number>
@@ -733,6 +757,21 @@ If this flag is enabled, possible to place exit point only.</string>
        <property name="spacing">
         <number>1</number>
        </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
@@ -782,6 +821,21 @@ when you exited from a level through this warp</string>
        <string>Main</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,80,0">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <property name="horizontalSpacing">
         <number>2</number>
        </property>
@@ -794,13 +848,7 @@ when you exited from a level through this warp</string>
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Ignored</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>115</width>
-           <height>15</height>
-          </size>
+          <enum>QSizePolicy::MinimumExpanding</enum>
          </property>
         </spacer>
        </item>
@@ -1250,10 +1298,19 @@ Special state of playable character is defining by current configuration package
     </item>
     <item row="5" column="1">
      <widget class="QGroupBox" name="warpBoxWTL">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>130</height>
+       </size>
+      </property>
       <property name="title">
        <string>Warp to other level</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3" columnstretch="80,80,0">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -1299,12 +1356,6 @@ If value is zero, start level at pre-declared player start points.</string>
         <spacer name="verticalSpacer_10">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
          </property>
         </spacer>
        </item>
@@ -1375,6 +1426,24 @@ to another level through this warp.</string>
        <string>Cannon shoot exit</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,0" columnstretch="0,90">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item row="1" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
