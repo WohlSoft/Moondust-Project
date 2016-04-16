@@ -25,7 +25,7 @@ class AnimationTimer: public QObject
     Q_OBJECT
 
 public:
-    AnimationTimer(QObject *parent=0);
+    explicit AnimationTimer(QObject *parent=0);
     ~AnimationTimer() {}
     /*!
      * \brief Adds specific animator into processing list

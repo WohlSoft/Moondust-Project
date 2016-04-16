@@ -9,6 +9,7 @@ AnimationTimer::AnimationTimer(QObject *parent) : QObject(parent)
 
 void AnimationTimer::registerAnimation(TimedAnimation *animator)
 {
+    if(animator->frame_delay <= 0) return;
     registered_animators.push_back(animator);
 }
 

@@ -7,10 +7,11 @@
 #include <QPair>
 #include <QPoint>
 #include <QPainter>
+#include <QSharedPointer>
 
 #include "simple_animator.h"
 
-typedef QPair<QPoint, SimpleAnimator > SplashPiece;
+typedef QPair<QPoint, QSharedPointer<SimpleAnimator> > SplashPiece;
 
 class EditorSpashScreen : public QSplashScreen
 {
@@ -44,6 +45,7 @@ private:
     int     _percents;
     QString _label;
 
+    AnimationTimer animator;
     QVector<SplashPiece > animations;
     qreal opacity;
     qreal width_ratio;

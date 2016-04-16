@@ -46,12 +46,13 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(Qt::white);
     for(int i=0; i<animations.size(); i++)
     {
+        QPixmap frame = animations[i].second->image();
         QRect x;
         x.setX(animations[i].first.x() RatioWidth);
         x.setY(animations[i].first.y() RatioHeight);
-        x.setWidth(animations[i].second.image().width() RatioWidth);
-        x.setHeight(animations[i].second.image().height() RatioHeight);
-        painter->drawPixmap(x, animations[i].second.image());
+        x.setWidth(frame.width() RatioWidth);
+        x.setHeight(frame.height() RatioHeight);
+        painter->drawPixmap(x, frame);
     }
 
     painter->setBrush(QBrush(Qt::black));
@@ -76,24 +77,16 @@ void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int 
     if(pixmap.isNull()) return;
 
     SplashPiece ani;
-    ani.first = p;
-//    #ifdef Q_OS_ANDROID
-//    ani.first.setX(p.x());
-//    ani.first.setY(p.y()*height_ratio);
-//    QSize oldSize = pixmap.size();
-//    QPixmap newImg= pixmap.scaled(oldSize.width()*width_ratio, oldSize.height()*height_ratio, Qt::KeepAspectRatio);
-//    pixmap=newImg;
-//    #endif
-    ani.second.setSettings(pixmap, true, frames, speed);
     animations.push_back(ani);
+    SplashPiece &aniP = animations.last();
+    aniP.first = p;
+    aniP.second = QSharedPointer<SimpleAnimator>(new SimpleAnimator(pixmap, true, frames, speed));
+    animator.registerAnimation(aniP.second.data());
 }
 
 void EditorSpashScreen::startAnimations()
 {
-    for(int i=0; i<animations.size(); i++)
-    {
-        animations[i].second.start();
-    }
+    animator.start(32);
     scaler.start();
 }
 

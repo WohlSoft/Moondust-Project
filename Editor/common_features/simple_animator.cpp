@@ -22,6 +22,8 @@
 SimpleAnimator::SimpleAnimator(QObject *parent)
     :QObject(parent), TimedAnimation()
 {
+    frame_delay = 0;
+    ticks_left  = 0.0f;
     QPixmap dummy;
     setSettings(dummy, false, 1, 64, 0, -1, false, false);
 }
@@ -48,7 +50,7 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     frames = a.frames;
 
     //Inherets!
-    frame_delay = a.frameCurrent;
+    frame_delay = a.frame_delay;
     ticks_left  = a.ticks_left;
 //    connect(
 //                &timer, SIGNAL(timeout()),
@@ -79,7 +81,7 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
     frames = a.frames;
 
     //Inherets!
-    frame_delay = a.frameCurrent;
+    frame_delay = a.frame_delay;
     ticks_left  = a.ticks_left;
 
 //    connect(
@@ -107,6 +109,7 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
     frameFirst = First;
     frameLast = Last;
     CurrentFrame = 0;
+    ticks_left = 0.0f;
 
     frame_sequance_enabled=false;
     frame_sequance_cur=0;
