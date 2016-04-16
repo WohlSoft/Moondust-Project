@@ -161,6 +161,7 @@ void LevelEdit::ExportingReady() //slot
 
         qApp->processEvents();
         QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
+        img.fill(Qt::transparent);
 
         if(!progress.wasCanceled()) progress.setValue(20);
 
