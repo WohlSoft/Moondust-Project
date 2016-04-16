@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>914</width>
+    <width>916</width>
     <height>750</height>
    </rect>
   </property>
@@ -184,6 +184,12 @@
    <header>common_features/graphicsworkspace.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>graphicsView</tabstop>
+  <tabstop>ResetPosition</tabstop>
+  <tabstop>GotoPoint</tabstop>
+  <tabstop>animation</tabstop>
+ </tabstops>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>

@@ -53,6 +53,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    virtual void keyPressEvent(QKeyEvent *e);
 
 public slots:
     void pointSelected(QPoint p);
