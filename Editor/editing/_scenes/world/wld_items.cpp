@@ -29,12 +29,6 @@ void WldScene::setPoint(QPoint p)
      selectedPoint = p;
      selectedPointNotUsed=false;
 
-     if(!pointAnimation)
-     {
-        pointAnimation = new SimpleAnimator(pointImg, true, 4, 64);
-        pointAnimation->start();
-     }
-
      if(!pointTarget)
      {
          pointTarget = new ItemPoint(this, NULL);
@@ -49,12 +43,7 @@ void WldScene::setPoint(QPoint p)
 
 void WldScene::unserPointSelector()
 {
-     if(pointTarget) delete pointTarget;
-        pointTarget = NULL;
-     if(pointAnimation)
-     {
-         pointAnimation->stop();
-         delete pointAnimation;
-     }
-        pointAnimation = NULL;
+    if(pointTarget)
+        delete pointTarget;
+    pointTarget = NULL;
 }

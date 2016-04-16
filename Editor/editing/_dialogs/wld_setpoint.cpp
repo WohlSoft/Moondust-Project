@@ -54,7 +54,8 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 
 WLD_SetPoint::~WLD_SetPoint()
 {
-    if(scene) delete scene;
+    if(scene)
+        delete scene;
     delete ui;
 }
 
@@ -372,6 +373,12 @@ void WLD_SetPoint::closeEvent(QCloseEvent *event)
 
     unloadData();
     event->accept();
+}
+
+void WLD_SetPoint::keyPressEvent(QKeyEvent *e)
+{
+    ui->graphicsView->setFocus(Qt::PopupFocusReason);
+    QDialog::keyPressEvent(e);
 }
 
 

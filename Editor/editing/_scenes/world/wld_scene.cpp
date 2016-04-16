@@ -46,7 +46,7 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     pConfigs = &configs; // Pointer to Main Configs
     WldData = &FileData; //Ad pointer to level data
     _viewPort = parentView;
-    _edit=NULL;
+    _edit = NULL;
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), "WorldEdit")==0)
@@ -66,25 +66,25 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     EraserEnabled = false;
     PasteFromBuffer = false;
     disableMoveItems = false;
-    DrawMode=false;
+    DrawMode = false;
 
-    mouseLeft=false; //Left mouse key is pressed
-    mouseMid=false;  //Middle mouse key is pressed
-    mouseRight=false;//Right mouse key is pressed
+    mouseLeft = false; //Left mouse key is pressed
+    mouseMid = false;  //Middle mouse key is pressed
+    mouseRight = false;//Right mouse key is pressed
 
-    mouseMoved=false; //Mouse was moved with right mouseKey
+    mouseMoved  = false; //Mouse was moved with right mouseKey
 
-    MousePressEventOnly=false;
-    MouseMoveEventOnly=false;
-    MouseReleaseEventOnly=false;
+    MousePressEventOnly   = false;
+    MouseMoveEventOnly    = false;
+    MouseReleaseEventOnly = false;
 
-    last_tile_arrayID=0;
-    last_scene_arrayID=0;
-    last_path_arrayID=0;
-    last_level_arrayID=0;
-    last_musicbox_arrayID=0;
+    last_tile_arrayID     = 0;
+    last_scene_arrayID    = 0;
+    last_path_arrayID     = 0;
+    last_level_arrayID    = 0;
+    last_musicbox_arrayID = 0;
 
-    isSelectionDialog=false;
+    isSelectionDialog = false;
 
     //Editing process flags
     IsMoved = false;
@@ -92,17 +92,19 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
 
     emptyCollisionCheck = false;
 
-    placingItem=0;
+    placingItem = 0;
 
     pResizer = NULL;
 
     contextMenuOpened = false;
 
     selectedPoint = QPoint(0, 0);
-    selectedPointNotUsed=true;
+    selectedPointNotUsed = true;
     pointTarget = NULL;
-    pointAnimation = NULL;
-    pointImg=QPixmap(":/images/set_point.png");
+    pointImg = QPixmap(":/images/set_point.png");
+
+    pointAnimation.setSettings(pointImg, true, 4, 64);
+    animator.registerAnimation(&pointAnimation);
 
     cursor = NULL;
     resetCursor();

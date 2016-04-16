@@ -212,7 +212,7 @@ public:
 
     // ///////////////////Point selector/////////////////////////
     public:
-        SimpleAnimator * pointAnimation;
+        SimpleAnimator pointAnimation;
         QPixmap pointImg;
         bool isSelectionDialog; // If scene created in the point selection dialog
                                 // disable all cols via activeWldEditWin()-> and disable rightclick

@@ -60,7 +60,8 @@ void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     }
     else
     {
-       painter->drawPixmap(m_scene->pointAnimation->image().rect(), m_scene->pointAnimation->image(), m_scene->pointAnimation->image().rect());
+        QPixmap image = m_scene->pointAnimation.image();
+        painter->drawPixmap(image.rect(), image, image.rect());
     }
 
     if(this->isSelected())
