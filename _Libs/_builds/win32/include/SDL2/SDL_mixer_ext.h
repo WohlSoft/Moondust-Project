@@ -53,7 +53,7 @@ extern "C" {
 */
 #define SDL_MIXER_MAJOR_VERSION 2
 #define SDL_MIXER_MINOR_VERSION 0
-#define SDL_MIXER_PATCHLEVEL    0
+#define SDL_MIXER_PATCHLEVEL    1
 
 /* This macro can be used to fill a version structure with the compile-time
  * version of the SDL_mixer library.
@@ -154,6 +154,9 @@ typedef struct _Mix_Music Mix_Music;
 
 /* Open the mixer with a certain audio format */
 extern DECLSPEC int SDLCALL Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);
+
+/* Open the mixer with specific device and certain audio format */
+extern DECLSPEC int SDLCALL Mix_OpenAudioDevice(int frequency, Uint16 format, int channels, int chunksize, const char* device, int allowed_changes);
 
 /* Dynamically change the number of channels managed by the mixer.
    If decreasing the number of channels, the upper channels are
@@ -271,7 +274,7 @@ extern DECLSPEC void * SDLCALL Mix_GetMusicHookData(void);
  * Add your own callback when a channel has finished playing. NULL
  *  to disable callback. The callback may be called from the mixer's audio
  *  callback or it could be called as a result of Mix_HaltChannel(), etc.
- *  do not call SDL_LockAudio() from this callback; you will either be
+ *  do not call Mix_LockAudio() from this callback; you will either be
  *  inside the audio callback, or SDL_mixer will explicitly lock the audio
  *  before calling your callback.
  */
@@ -297,7 +300,7 @@ extern DECLSPEC void SDLCALL Mix_ChannelFinished(void (*channel_finished)(int ch
  *  to be mixed with the rest of the channels and music for the final output
  *  stream.
  *
- * DO NOT EVER call SDL_LockAudio() from your callback function!
+ * DO NOT EVER call Mix_LockAudio() from your callback function!
  */
 typedef void (*Mix_EffectFunc_t)(int chan, void *stream, int len, void *udata);
 
@@ -308,7 +311,7 @@ typedef void (*Mix_EffectFunc_t)(int chan, void *stream, int len, void *udata);
  *  a channel via Mix_AllocateChannels(), or unregister a callback while
  *  it's still playing.
  *
- * DO NOT EVER call SDL_LockAudio() from your callback function!
+ * DO NOT EVER call Mix_LockAudio() from your callback function!
  */
 typedef void (*Mix_EffectDone_t)(int chan, void *udata);
 
@@ -354,7 +357,7 @@ typedef void (*Mix_EffectDone_t)(int chan, void *udata);
  *  through Mix_SetPostMix() runs, and then the stream goes to the audio
  *  device.
  *
- * DO NOT EVER call SDL_LockAudio() from your callback function!
+ * DO NOT EVER call Mix_LockAudio() from your callback function!
  *
  * returns zero if error (no such channel), nonzero if added.
  *  Error messages can be retrieved from Mix_GetError().
