@@ -67,7 +67,7 @@ void TitleScene::processMenu()
         menustates[_currentMenu].first = menu.currentItemI();
         menustates[_currentMenu].second = menu.offset();
 
-        QString value = menu.currentItem().value;
+        QString value = menu.currentItem().item_key;
         switch(_currentMenu)
         {
             case menu_main:
@@ -428,22 +428,25 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                                      PGE_Window::vsync=g_AppSettings.vsync;
                                                      PGE_Window::toggleVSync(g_AppSettings.vsync);
                                                      g_AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
-                                                 }
+                                                     menu.setEnabled("phys_step", !PGE_Window::vsync);
+                                                 },
+                                                 PGE_Window::vsyncIsSupported
                                              );
 
                                                                                             //% "Frame time (ms.)"
                         menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 16, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
-                                            [this]()->void{
-                                                if(!PGE_Window::vsync)
-                                                {
-                                                    PGE_Window::TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
-                                                    PGE_Window::TimeOfFrame=g_AppSettings.timeOfFrame;
-                                                    g_AppSettings.TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
-                                                    this->updateTickValue();
-                                                } else {
-                                                    g_AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
-                                                }
-                                            }
+                                                [this]()->void{
+                                                    if(!PGE_Window::vsync)
+                                                    {
+                                                        PGE_Window::TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
+                                                        PGE_Window::TimeOfFrame=g_AppSettings.timeOfFrame;
+                                                        g_AppSettings.TicksPerSecond=1000.0f/g_AppSettings.timeOfFrame;
+                                                        this->updateTickValue();
+                                                    } else {
+                                                        g_AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
+                                                    }
+                                                },
+                                                !PGE_Window::vsync
                                             );
                     break;
                     case menu_controls:
@@ -551,7 +554,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setItemsNumber(5);
                 //Build list of episodes
                 for(int i=0;i<filefind_found_files.size();i++)
-                    menu.addMenuItem(filefind_found_files[i].first, filefind_found_files[i].second);
+                {
+                    QPair<QString, QString >&item = filefind_found_files[i];
+                    bool enabled=true;
+                    if(i==0) enabled = (item.first != "noworlds");
+                    menu.addMenuItem(item.first, item.second, []()->void{}, enabled);
+                }
                 menu.sort();
             }
         break;
@@ -570,9 +578,14 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             {
                 menu.setPos(300, 350);
                 menu.setItemsNumber(5);
-                //Build list of episodes
+                //Build list of levels
                 for(int i=0;i<filefind_found_files.size();i++)
-                    menu.addMenuItem(filefind_found_files[i].first, filefind_found_files[i].second);
+                {
+                    QPair<QString, QString >&item = filefind_found_files[i];
+                    bool enabled=true;
+                    if(i==0) enabled = (item.first != "noworlds");
+                    menu.addMenuItem(item.first, item.second, []()->void{}, enabled);
+                }
                 menu.sort();
             }
         break;

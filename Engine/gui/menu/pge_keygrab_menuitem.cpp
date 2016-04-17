@@ -117,8 +117,9 @@ void PGE_KeyGrabMenuItem::pushKey(int scancode)
 void PGE_KeyGrabMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
+    float colorLevel = m_enabled ? 1.0 : 0.5;
     if(chosing)
-        FontManager::printText(QString("..."), x+valueOffset, y);
+        FontManager::printText(QString("..."), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
     else
     if(targetKey)
     {
@@ -129,16 +130,16 @@ void PGE_KeyGrabMenuItem::render(int x, int y)
                                        .arg(targetKey->val)
                                        .arg(targetKey->id)
                                        .arg(targetKey->type)
-                                       , x+valueOffset, y, _font_id);
+                                       , x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
             else
-                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id);
+                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
         }
         else
         {
             if(targetKey->val!=-1)
-                FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)targetKey->val)), x+valueOffset, y, _font_id);
+                FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)targetKey->val)), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
             else
-                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id);
+                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
         }
     }
 }

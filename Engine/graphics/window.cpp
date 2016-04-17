@@ -36,6 +36,7 @@ int PGE_Window::MaxFPS=250;
 float PGE_Window::TicksPerSecond=1000.0f/15.0f;
 int PGE_Window::TimeOfFrame=15;
 bool PGE_Window::vsync=true;
+bool PGE_Window::vsyncIsSupported=true;
 
 bool PGE_Window::showDebugInfo=false;
 bool PGE_Window::showPhysicsDebug=false;
@@ -160,16 +161,22 @@ void PGE_Window::toggleVSync(bool vsync)
        //const char *error = SDL_GetError();
        if( SDL_GL_SetSwapInterval(1) == 0 )
        {
+           //Vertical syncronization is supported
+           vsyncIsSupported = true;
+
            TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
            TicksPerSecond=1000.0f/TimeOfFrame;
-           //Vertical syncronization is supported
+
            g_AppSettings.timeOfFrame=TimeOfFrame;
            g_AppSettings.TicksPerSecond=TicksPerSecond;
            SDL_ClearError();
        } else {
            //Vertical syncronization is NOT supported
+           vsyncIsSupported = false;
+
            TimeOfFrame=g_AppSettings.timeOfFrame;
            TicksPerSecond=g_AppSettings.TicksPerSecond;
+
            //Disable vertical syncronization because unsupported
            g_AppSettings.vsync=false;
            PGE_Window::vsync=false;

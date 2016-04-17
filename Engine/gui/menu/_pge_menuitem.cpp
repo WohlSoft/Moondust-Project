@@ -23,9 +23,10 @@
 PGE_Menuitem::PGE_Menuitem()
 {
     this->title = "";
-    this->value = "";
+    this->item_key = "";
     this->extAction = []()->void{};
     this->valueOffset=350;
+    this->m_enabled=true;
     this->_font_id=0;
     this->_width=0;
 }
@@ -36,10 +37,11 @@ PGE_Menuitem::~PGE_Menuitem()
 PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
 {
     this->title = _it.title;
-    this->value = _it.value;
+    this->item_key = _it.item_key;
     this->type = _it.type;
     this->extAction = _it.extAction;
     this->valueOffset = _it.valueOffset;
+    this->m_enabled = _it.m_enabled;
     this->_font_id = _it._font_id;
     this->_width=_it._width;
 }
@@ -52,8 +54,8 @@ void PGE_Menuitem::toggle() {}
 
 void PGE_Menuitem::render(int x, int y)
 {
-    FontManager::printText(title, x, y, _font_id);
-    //FontManager::SDL_string_render2D(x,y, &textTexture);
+    float colorLevel = m_enabled ? 1.0 : 0.5;
+    FontManager::printText(title, x, y, _font_id, colorLevel, colorLevel, colorLevel);
 }
 
 

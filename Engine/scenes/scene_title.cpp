@@ -34,7 +34,7 @@
 SDL_Thread *                     TitleScene::filefind_thread=NULL;
 QString                          TitleScene::filefind_folder="";
 QList<QPair<QString, QString > > TitleScene::filefind_found_files;
-bool                             TitleScene::filefind_finished=false;
+std::atomic_bool                 TitleScene::filefind_finished(false);
 
 TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
@@ -341,10 +341,9 @@ void TitleScene::render()
 
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
-    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-
     if(_bgIsLoaded)
     {
+        GlRenderer::setTextureColor(1.0f, 1.0f,1.0f,1.0f);
         GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2,
                                   PGE_Window::Height/2 - background.h/2);
     }
@@ -352,6 +351,7 @@ void TitleScene::render()
     for(int i=0;i<imgs.size();i++)
     {
         AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::setTextureColor(1.0f, 1.0f,1.0f,1.0f);
         GlRenderer::renderTexture(&imgs[i].t,
                                   imgs[i].x,
                                   imgs[i].y,
@@ -408,6 +408,7 @@ void TitleScene::renderMouse()
 
     if(_cursorIsLoaded)
     {
+        GlRenderer::setTextureColor(1.0f, 1.0f,1.0f,1.0f);
         GlRenderer::renderTexture(&cursor, posX, posY);
     }
     else

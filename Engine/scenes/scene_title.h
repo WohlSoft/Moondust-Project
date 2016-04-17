@@ -131,7 +131,7 @@ public:
     static SDL_Thread *                     filefind_thread;
     static QString                          filefind_folder;
     static QList<QPair<QString, QString > > filefind_found_files;
-    static bool                             filefind_finished;
+    static std::atomic_bool                 filefind_finished;
     /**********************file_finder************************/
 
 private:
