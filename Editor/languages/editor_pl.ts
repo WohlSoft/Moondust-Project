@@ -969,7 +969,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="46"/>
         <source>Mouse coordinates</source>
-        <translation>Koordynaty myszky</translation>
+        <translation>Koordynaty myszki</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="104"/>
@@ -1136,7 +1136,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
         <location filename="../main_window/file/lvl_export_image.ui" line="70"/>
         <location filename="../main_window/file/lvl_export_image.ui" line="83"/>
         <source> px</source>
-        <translation>piksel</translation>
+        <translation> piksel</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="32"/>
@@ -1699,12 +1699,12 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="120"/>
         <source>No Vehicles</source>
-        <translation>Pojazdy niedozwolonw</translation>
+        <translation>Bez pojazdów</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="124"/>
         <source>Allow NPC</source>
-        <translation>Zezwalaj na nszenie NPC</translation>
+        <translation>Noś NPC</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="128"/>
@@ -2686,7 +2686,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
 Please, check the application directory.</source>
         <translation>Nie można uruchomić aplikacji: 
 %1
-Proszę sparwdź folder aplikacji.</translation>
+Proszę sprawdź folder aplikacji.</translation>
     </message>
 </context>
 <context>
@@ -3081,7 +3081,7 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="226"/>
         <source> sec.</source>
-        <translation>sekundy.</translation>
+        <translation> sekundy.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="237"/>
@@ -3961,7 +3961,7 @@ Bloki:			%2
 Objekty tła:	%3
 NPC:	%4
 Wejścia do przejść:		%5
-Sekcje:	%6</translation>
+Woda, ruchome piaski itp.:	%6</translation>
     </message>
 </context>
 <context>
@@ -4060,17 +4060,17 @@ Sekcje:	%6</translation>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="211"/>
         <source>Ev. Destroyed:</source>
-        <translation>Ev Zniszczony:</translation>
+        <translation>Event zniszczenia:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="218"/>
         <source>Ev. Hited</source>
-        <translation>Ev. Uderzony</translation>
+        <translation>Event uderzenia</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="225"/>
         <source>Ev. Layer Empty:</source>
-        <translation>Ev. Pusta warstwa:</translation>
+        <translation>Event pustej warstwy:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="267"/>
@@ -4272,7 +4272,7 @@ Sekcje:	%6</translation>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="147"/>
         <source>Wrap vertically</source>
-        <translation>Połącz ggórną i dolną stronę</translation>
+        <translation>Połącz górną i dolną stronę</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="157"/>
@@ -4375,7 +4375,7 @@ Sekcje:	%6</translation>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1184"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation>Zezwalaj na noszenie przedmiotów</translation>
+        <translation>Noś NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1194"/>
@@ -4385,7 +4385,7 @@ Sekcje:	%6</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="836"/>
         <source>Set Exit</source>
-        <translation>Ustaw wyjśćie</translation>
+        <translation>Ustaw wyjście</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="833"/>
@@ -4911,7 +4911,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="1365"/>
         <source>Underwater</source>
-        <translation>Podowdny</translation>
+        <translation>Podwodny</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2245"/>
@@ -4981,7 +4981,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="1530"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Powróc do lewego dolnego rogu sekcji albo x=0 y=0 na mapie świata</translation>
+        <translation>Powróć do lewego dolnego rogu sekcji albo x=0 y=0 na mapie świata</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2040"/>
@@ -4991,7 +4991,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2043"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Powróc do lewego górnego rogu sekcji albo x=0 y=0 na mapie świata</translation>
+        <translation>Powróć do lewego górnego rogu sekcji albo x=0 y=0 na mapie świata</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2167"/>
@@ -5535,7 +5535,7 @@ Proszę, wybierz jeden plik z listy:</translation>
         <location filename="../mainwindow.ui" line="1899"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translatorcomment>?????????</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Umieszczaj przedmioty z podobną ochroną&lt;/p&gt;&lt;p&gt;(Jeżeli włączone, operacja poruszania będzie wolniejsza)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nie używaj limitów umieszczania (możesz przesuwać i umieszczać przedmioty na sobie)&lt;/p&gt;&lt;p&gt;(Jeżeli włączone, operacja poruszania będzie wolniejsza)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1914"/>
@@ -5905,7 +5905,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2657"/>
         <source>Convert Audio (SoX)...</source>
-        <translation>Konwertuj dźięk (SoX)...</translation>
+        <translation>Konwertuj dźwięk (SoX)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2662"/>
@@ -5946,7 +5946,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2706"/>
         <source>Open custom data folder</source>
-        <translation>Otwiera folder na własne dane</translation>
+        <translation>Otwórz folder na własne dane</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2709"/>
@@ -7158,7 +7158,7 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../defines.h" line="183"/>
         <source>Allow NPC</source>
-        <translation>Zezwalaj na noszenie NPC</translation>
+        <translation>Noś NPC</translation>
     </message>
     <message>
         <location filename="../defines.h" line="184"/>
@@ -7599,7 +7599,7 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../defines.h" line="279"/>
         <source>Total stars</source>
-        <translation>Ilośc gwiazdek</translation>
+        <translation>Ilość gwiazdek</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="127"/>
@@ -7636,7 +7636,7 @@ Forum: engine.wohlnet.ru/forum</translation>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="143"/>
         <source>Quit command [SIGQUIT]</source>
-        <translation>Komenda wyjści [SIGQUIT]</translation>
+        <translation>Komenda wyjścia [SIGQUIT]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="144"/>
@@ -7712,7 +7712,7 @@ Powód: %1
     <message>
         <location filename="../data_configs/conf_lvl_bgo.cpp" line="183"/>
         <source>Loading BGOs...</source>
-        <translation>ładowanie obiektów tła...</translation>
+        <translation>Ładowanie obiektów tła...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="211"/>
@@ -7732,32 +7732,32 @@ Powód: %1
     <message>
         <location filename="../data_configs/conf_music.cpp" line="88"/>
         <source>Loading Music...</source>
-        <translation>ładowanie muzyki...</translation>
+        <translation>Ładowanie muzyki...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_sound.cpp" line="60"/>
         <source>Loading Sound...</source>
-        <translation>ładowanie dźwięku...</translation>
+        <translation>Ładowanie dźwięku...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_level.cpp" line="108"/>
         <source>Loading Level images...</source>
-        <translation>ładowanie obrazów poziomu....</translation>
+        <translation>Ładowanie obrazów poziomu...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_path.cpp" line="86"/>
         <source>Loading Paths images...</source>
-        <translation>ładowanie ścieżki...</translation>
+        <translation>Ładowanie ścieżki...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_scene.cpp" line="86"/>
         <source>Loading Sceneries...</source>
-        <translation>ładowanie scenerii...</translation>
+        <translation>Ładowanie scenerii...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_tile.cpp" line="86"/>
         <source>Loading Tiles...</source>
-        <translation>ładowanie planszy...</translation>
+        <translation>Ładowanie planszy...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="235"/>
@@ -7912,17 +7912,17 @@ Maksymalny numer bloków muzyki to %2.</translation>
     <message>
         <location filename="../data_configs/conf_rotation_tables.cpp" line="54"/>
         <source>Loading rotation rules table...</source>
-        <translation>ładowanie tabeli obracania...</translation>
+        <translation>Ładowanie tabeli obracania...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_tilesets.cpp" line="37"/>
         <source>Loading Tilesets...</source>
-        <translation>ładowanie tilesetu...</translation>
+        <translation>Ładowanie tilesetu...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_tilesets.cpp" line="63"/>
         <source>Loading Tileset groups...</source>
-        <translation>ładowanie grup tilesetu...</translation>
+        <translation>Ładowanie grup tilesetu...</translation>
     </message>
     <message>
         <location filename="../data_configs/configs_main.cpp" line="343"/>
@@ -8288,7 +8288,7 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation>Witamy w edytorez tilesetów!
+        <translation>Witamy w edytorze tilesetów!
 
 Wszystkie tilesety stworzone w edytorze zosaną zapisane do folderu:
 %1
@@ -9855,7 +9855,7 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
 Please, check the application directory.</source>
         <translation>Nie można uruchomić aplikacji: 
 %1
-Proszę sparwdź folder aplikacji.</translation>
+Proszę sprawdź folder aplikacji.</translation>
     </message>
 </context>
 <context>
@@ -9946,7 +9946,7 @@ Proszę sparwdź folder aplikacji.</translation>
 Please, check the application directory.</source>
         <translation>Nie można uruchomić aplikacji: 
 %1
-Proszę sparwdź folder aplikacji.</translation>
+Proszę sprawdź folder aplikacji.</translation>
     </message>
 </context>
 <context>
