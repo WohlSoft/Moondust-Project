@@ -66,6 +66,8 @@ bool PGE_Window::init(QString WindowTitle)
     //#if 1
     #ifdef __APPLE__
     GlRenderer::setup_OpenGL21();
+    #elif __ANDROID__
+    GlRenderer::setup_OpenGL31();
     #else
     //Detect renderer
     GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
@@ -146,33 +148,33 @@ void PGE_Window::toggleVSync(bool vsync)
        int display_count = 0, display_index = 0;
        SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
        if ((display_count = SDL_GetNumVideoDisplays()) < 1) {
-           SDL_Log("SDL_GetNumVideoDisplays returned: %i", display_count);
+           LogWarning(QString("SDL_GetNumVideoDisplays returned: %1").arg(display_count));
            return;
        }
        if (SDL_GetCurrentDisplayMode(display_index, &mode) != 0) {
-           SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
+           LogWarning(QString("SDL_GetDisplayMode failed: %1").arg(SDL_GetError()));
            return;
        }
        //SDL_Log("SDL_GetDisplayMode(0, 0, &mode):\t\t%i bpp\t%i x %i",
        //SDL_BITSPERPIXEL(mode.format), mode.w, mode.h);
-       SDL_GL_SetSwapInterval(1);
-       TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
-       TicksPerSecond=1000.0f/TimeOfFrame;
-
-       const char *error = SDL_GetError();
-       if (*error == '\0')
-       {   //Vertical syncronization is supported
+       //const char *error = SDL_GetError();
+       if( SDL_GL_SetSwapInterval(1) == 0 )
+       {
+           TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
+           TicksPerSecond=1000.0f/TimeOfFrame;
+           //Vertical syncronization is supported
            g_AppSettings.timeOfFrame=TimeOfFrame;
            g_AppSettings.TicksPerSecond=TicksPerSecond;
+           SDL_ClearError();
        } else {
            //Vertical syncronization is NOT supported
-           SDL_ClearError();
            TimeOfFrame=g_AppSettings.timeOfFrame;
            TicksPerSecond=g_AppSettings.TicksPerSecond;
            //Disable vertical syncronization because unsupported
            g_AppSettings.vsync=false;
            PGE_Window::vsync=false;
            SDL_GL_SetSwapInterval(0);
+           SDL_ClearError();
        }
    } else {
        SDL_GL_SetSwapInterval(0);
