@@ -66,6 +66,7 @@ void PGE_IntMenuItem::right()
 void PGE_IntMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
+    float colorLevel = m_enabled ? 1.0 : 0.5;
     if(intvalue)
-        FontManager::printText(QString::number(*intvalue), x+valueOffset, y, _font_id);
+        FontManager::printText(QString::number(*intvalue), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }

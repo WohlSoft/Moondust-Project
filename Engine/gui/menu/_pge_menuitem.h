@@ -33,10 +33,11 @@ public:
     PGE_Menuitem operator=(const PGE_Menuitem &_it)
     {
         this->title = _it.title;
-        this->value = _it.value;
+        this->item_key = _it.item_key;
         this->_width = _it._width;
         this->type = _it.type;
         this->valueOffset = _it.valueOffset;
+        this->m_enabled = _it.m_enabled;
         this->_font_id = _it._font_id;
         this->extAction = _it.extAction;
         return *this;
@@ -49,7 +50,7 @@ public:
     virtual void render(int x, int y);
 
     QString title;
-    QString value;
+    QString item_key;
     enum itemType{
         ITEM_Normal=0,
         ITEM_Bool,
@@ -60,7 +61,10 @@ public:
     };
 
     itemType type;
-    int valueOffset;//!< X-offset where must be rendered value label
+    //! X-offset where must be rendered value label
+    int valueOffset;
+    //! Is menuitem enabled
+    bool m_enabled;
 protected:
     std::function<void()> extAction;
     int _width;

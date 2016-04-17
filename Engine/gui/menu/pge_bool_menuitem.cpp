@@ -46,8 +46,9 @@ void PGE_BoolMenuItem::right()
 void PGE_BoolMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
+    float colorLevel = m_enabled ? 1.0 : 0.5;
     if(flag)
-        FontManager::printText((*flag)?"ON":"OFF", x+valueOffset, y, _font_id);
+        FontManager::printText((*flag)?"ON":"OFF", x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }
 
 void PGE_BoolMenuItem::toggle()

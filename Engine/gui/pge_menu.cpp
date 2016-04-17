@@ -93,6 +93,7 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
     _items_keygrabs= menu._items_keygrabs;
 
     _items  = menu._items;
+    _items_index = menu._items_index;
     _selector = menu._selector;
     _scroll_up = menu._selector;
     _scroll_down = menu._scroll_down;
@@ -114,13 +115,14 @@ PGE_Menu::~PGE_Menu()
     GlRenderer::deleteTexture( _scroll_down );
 }
 
-void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _extAction)
+void PGE_Menu::addMenuItem(QString item_key, QString title, std::function<void()> _extAction, bool enabled)
 {
     PGE_Menuitem item;
-    item.value = value;
-    item.type=PGE_Menuitem::ITEM_Normal;
-    item.title = (title.isEmpty() ? value : title);
+    item.item_key = item_key;
+    item.type = PGE_Menuitem::ITEM_Normal;
+    item.title = (title.isEmpty() ? item_key : title);
     item._font_id = _font_id;
+    item.m_enabled = enabled;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
@@ -134,17 +136,20 @@ void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _
     }
     item.extAction=_extAction;
     _items_normal.push_back(item);
-    _items.push_back( &_items_normal.last() );
+    PGE_Menuitem *itemP = &_items_normal.last();
+    _items.push_back( itemP );
+    _items_index[item_key] = itemP;
     refreshRect();
 }
 
-void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::function<void()> _extAction)
+void PGE_Menu::addBoolMenuItem(bool *flag, QString item_key, QString title, std::function<void()> _extAction, bool enabled)
 {
     PGE_BoolMenuItem item;
     item.flag = flag;
-    item.value = value;
+    item.item_key = item_key;
     item.title = (title.isEmpty() ? "unknown flag" : title);
     item._font_id = _font_id;
+    item.m_enabled = enabled;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
@@ -158,20 +163,23 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::fu
     }
     item.extAction=_extAction;
     _items_bool.push_back(item);
-    _items.push_back( &_items_bool.last() );
+    PGE_Menuitem *itemP = &_items_bool.last();
+    _items.push_back( itemP );
+    _items_index[item_key] = itemP;
     refreshRect();
 }
 
-void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate, std::function<void()> _extAction)
+void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString item_key, QString title, bool rotate, std::function<void()> _extAction, bool enabled)
 {
     PGE_IntMenuItem item;
     item.intvalue = intvalue;
-    item.value = value;
+    item.item_key = item_key;
     item.min=min;
     item.max=max;
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown integer" : title);
     item._font_id = _font_id;
+    item.m_enabled = enabled;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
@@ -185,15 +193,17 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     }
     item.extAction=_extAction;
     _items_int.push_back(item);
-    _items.push_back( &_items_int.last() );
+    PGE_Menuitem *itemP = &_items_int.last();
+    _items.push_back( itemP );
+    _items_index[item_key] = itemP;
     refreshRect();
 }
 
-void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QString value, QString title, bool rotate, std::function<void()> _extAction)
+void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QString item_key, QString title, bool rotate, std::function<void()> _extAction, bool enabled)
 {
     PGE_NamedIntMenuItem item;
     item.intvalue = intvalue;
-    item.value = value;
+    item.item_key = item_key;
     item.items=_items;
     if(intvalue)
         for(int i=0; i<_items.size(); i++)
@@ -204,6 +214,7 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown named integer" : title);
     item._font_id = _font_id;
+    item.m_enabled = enabled;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
@@ -217,18 +228,21 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     }
     item.extAction=_extAction;
     _items_named_int.push_back(item);
-    PGE_Menu::_items.push_back( &_items_named_int.last() );
+    PGE_Menuitem *itemP = &_items_named_int.last();
+    this->_items.push_back( itemP );
+    _items_index[item_key] = itemP;
     refreshRect();
 }
 
-void PGE_Menu::addKeyGrabMenuItem(KM_Key *key, QString value, QString title,
-                                  SDL_Joystick* joystick_device)
+void PGE_Menu::addKeyGrabMenuItem(KM_Key *key, QString item_key, QString title,
+                                  SDL_Joystick* joystick_device, bool enabled)
 {
     PGE_KeyGrabMenuItem item;
     item.targetKey = key;
-    item.value = value;
+    item.item_key = item_key;
     item.title = (title.isEmpty() ? "unknown key-grabber" : title);
     item._font_id = _font_id;
+    item.m_enabled = enabled;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
@@ -249,8 +263,18 @@ void PGE_Menu::addKeyGrabMenuItem(KM_Key *key, QString value, QString title,
 
     item.menu = this;
     _items_keygrabs.push_back(item);
-    _items.push_back( &_items_keygrabs.last() );
+    PGE_Menuitem *itemP = &_items_keygrabs.last();
+    _items.push_back( itemP );
+    _items_index[item_key] = itemP;
     refreshRect();
+}
+
+void PGE_Menu::setEnabled(QString menuitem_key, bool enabled)
+{
+    if(_items_index.contains(menuitem_key))
+    {
+        _items_index[menuitem_key]->m_enabled = enabled;
+    }
 }
 
 void PGE_Menu::setValueOffset(int offset)
@@ -272,6 +296,7 @@ void PGE_Menu::setItemWidth(int width)
 void PGE_Menu::clear()
 {
     _items.clear();
+    _items_index.clear();
     _items_normal.clear();
     _items_bool.clear();
     _items_int.clear();
@@ -347,34 +372,45 @@ void PGE_Menu::scrollDown()
 
 void PGE_Menu::selectLeft()
 {
-    if(_items.size()>0)
-        _items[_currentItem]->left();
+    if(_items.size()<=0) return;
+    PGE_Menuitem * selected = _items[_currentItem];
+    if(!selected->m_enabled) return;
+    selected->left();
 }
 
 void PGE_Menu::selectRight()
 {
-    if(_items.size()>0)
-        _items[_currentItem]->right();
+    if(_items.size()<=0) return;
+    PGE_Menuitem * selected = _items[_currentItem];
+    if(!selected->m_enabled) return;
+    selected->right();
 }
 
 void PGE_Menu::acceptItem()
 {
     if(_items.size()<=0) return;
 
-    if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Bool)
+    PGE_Menuitem * selected = _items[_currentItem];
+    if(!selected->m_enabled)
     {
-        _items[_currentItem]->toggle();
+        //Do nothing if menu item is disabled!
+        return;
     }
-    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Int)
+
+    if(selected->type==PGE_Menuitem::ITEM_Bool)
+    {
+        selected->toggle();
+    }
+    else if(selected->type==PGE_Menuitem::ITEM_Int)
     {}
-    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_NamedInt)
+    else if(selected->type==PGE_Menuitem::ITEM_NamedInt)
     {
-        _items[_currentItem]->right();
+        selected->right();
     }
-    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_KeyGrab)
+    else if(selected->type==PGE_Menuitem::ITEM_KeyGrab)
     {
         PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
-        static_cast<PGE_KeyGrabMenuItem*>(_items[_currentItem])->grabKey();
+        static_cast<PGE_KeyGrabMenuItem*>(selected)->grabKey();
         setKeygrabViaKey(true);
     }
     else
@@ -383,7 +419,7 @@ void PGE_Menu::acceptItem()
         _EndSelection=true;
         _accept=true;
         if((_currentItem<_items.size())&&(_currentItem>=0))
-            _items[_currentItem]->extAction();
+            selected->extAction();
     }
 }
 
@@ -551,7 +587,7 @@ const PGE_Menuitem PGE_Menu::currentItem()
     {
         PGE_Menuitem dummy;
         dummy.title="";
-        dummy.value="";
+        dummy.item_key="";
         return dummy;
     }
 }

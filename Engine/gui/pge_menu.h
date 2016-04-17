@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QList>
+#include <QHash>
 #include <QPair>
 #include <common_features/pge_texture.h>
 #include <common_features/rect.h>
@@ -48,14 +49,21 @@ public:
     ~PGE_Menu();
 
     void addMenuItem(QString value, QString title="",
-                     std::function<void()> _extAction=([]()->void{}));
+                     std::function<void()> _extAction=([]()->void{}), bool enabled=true);
     void addBoolMenuItem(bool *flag, QString value, QString title="",
-                         std::function<void()> _extAction=([]()->void{}));
+                         std::function<void()> _extAction=([]()->void{}), bool enabled=true);
     void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
-                        std::function<void()> _extAction=([]()->void{}) );
+                        std::function<void()> _extAction=([]()->void{}), bool enabled=true );
     void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
-                        std::function<void()> _extAction=([]()->void{}) );
-    void addKeyGrabMenuItem(KM_Key *key, QString value, QString title, SDL_Joystick *joystick_device=NULL);
+                        std::function<void()> _extAction=([]()->void{}), bool enabled=true );
+    void addKeyGrabMenuItem(KM_Key *key, QString item_key, QString title, SDL_Joystick *joystick_device=NULL, bool enabled=true);
+
+    /*!
+     * \brief Change enable state of element by value key
+     * \param value Unique value key to identify menu item
+     * \param enabled enabled state
+     */
+    void setEnabled(QString menuitem_key, bool enabled);
 
     void setValueOffset(int offset);
     void setItemWidth(int width);
@@ -139,6 +147,7 @@ private:
     QList<PGE_KeyGrabMenuItem > _items_keygrabs;
 
     QList<PGE_Menuitem *> _items;
+    QHash<QString, PGE_Menuitem *> _items_index;
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     bool namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();

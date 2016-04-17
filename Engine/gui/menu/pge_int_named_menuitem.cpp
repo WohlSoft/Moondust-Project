@@ -69,7 +69,8 @@ void PGE_NamedIntMenuItem::right()
 void PGE_NamedIntMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
+    float colorLevel = m_enabled ? 1.0 : 0.5;
     if(!items.isEmpty())
-        FontManager::printText(items[curItem].label, x+valueOffset, y, _font_id);
+        FontManager::printText(items[curItem].label, x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }
 

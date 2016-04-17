@@ -32,6 +32,7 @@ public:
     static int Height;
     static int MaxFPS;
     static bool vsync;
+    static bool vsyncIsSupported;
     static float TicksPerSecond;
     static int TimeOfFrame;
     static bool showDebugInfo;
