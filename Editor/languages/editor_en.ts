@@ -5486,50 +5486,50 @@ Physical env. zones:	 %6</translation>
         <translation>Warps and Doors</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="782"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="821"/>
         <source>Main</source>
         <translation>Main</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="883"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="931"/>
         <source>Layer:</source>
         <translation>Layer:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1174"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1222"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
         <translation>Deny vehicles</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1184"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1232"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
         <translation>Allow items</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1194"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1242"/>
         <source>Locked</source>
         <translation>Locked</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="836"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="884"/>
         <source>Set Exit</source>
         <translation>Set Exit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="833"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="881"/>
         <source>Place exit point or quickly jump to already placed</source>
         <translation>Place exit point or quickly jump to already placed</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="846"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1090"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="894"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1138"/>
         <source>Point already placed</source>
         <translation>Point already placed</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="960"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1008"/>
         <source>Defines a type of warp:
 0 - Instant, player will be teleported with zero of movement speed.
 1 - Pipe, directional warp entrance and exit.
@@ -5542,88 +5542,88 @@ Physical env. zones:	 %6</translation>
 3 - Portal, player will be teleported with keeping movelent speed as-is.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="980"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1028"/>
         <source>0 - Instant</source>
         <translation>0 - Instant</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="985"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1033"/>
         <source>1 - Pipe</source>
         <translation>1 - Pipe</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="990"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1038"/>
         <source>2 - Door</source>
         <translation>2 - Door</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="995"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1043"/>
         <source>3 - Portal</source>
         <translation>3 - Portal</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1003"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1051"/>
         <source>Message which will be shown
 if required number of stars is not collected</source>
         <translation>Message which will be shown
 if required number of stars is not collected</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1011"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1059"/>
         <source>Need stars message</source>
         <translation>Need stars message</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1018"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1066"/>
         <source>Need stars</source>
         <translation>Stars needed</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1031"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1079"/>
         <source>Required number of a stars
 to enter this warp</source>
         <translation>Required number of a stars
 to enter this warp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1042"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1090"/>
         <source>Warp type</source>
         <translation>Warp type</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1049"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1097"/>
         <source>If this warp following to a level, number of existing
 and collected stars will not be shown.</source>
         <translation>If this warp following to a level, number of existing
 and collected stars will not be shown.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1053"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1101"/>
         <source>Don&apos;t show stars number</source>
         <translation>Don&apos;t show stars number</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1070"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1118"/>
         <source>Place entrance point or quickly jump to already placed</source>
         <translation>Place entrance point or quickly jump to already placed</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1073"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1121"/>
         <source>Set Entrance</source>
         <translation>Set Entrance</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1124"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1172"/>
         <source>On-Enter event:</source>
         <translation>On-Enter event:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1131"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1179"/>
         <source>Trigger event when player will enter into this warp</source>
         <translation>Trigger event when player will enter into this warp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1168"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1216"/>
         <source>Any mounted vehicles are will be removed
 when player will pass this warp.
 There are will be restored back when player
@@ -5634,165 +5634,165 @@ There are will be restored back when player
 finish level or lose it.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1181"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1229"/>
         <source>Player can pass warp together with carried NPC.</source>
         <translation>Player can pass warp together with carried NPC.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1191"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1239"/>
         <source>Entrance closed with a lock. Need a key to open it.</source>
         <translation>Entrance closed with a lock. Need a key to open it.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1201"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1249"/>
         <source>To be able enter into this warp, lock exlosion is needed.</source>
         <translation>To be able enter into this warp, lock exlosion is needed.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1204"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1252"/>
         <source>Bomb needed</source>
         <translation>Bomb needed</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1211"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1259"/>
         <source>Player with special state only can enter into this warp.
 Special state of playable character is defining by current configuration package settings.</source>
         <translation>Player with special state only can enter into this warp.
 Special state of playable character is defining by current configuration package settings.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1215"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1263"/>
         <source>Sp. State only</source>
         <translation>Sp. State only</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1241"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1289"/>
         <source>Allow entering from both sides of this warp.</source>
         <translation>Allow entering from both sides of this warp.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1244"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1292"/>
         <source>Two-way warp</source>
         <translation>Two-way warp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1375"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1426"/>
         <source>Cannon shoot exit</source>
         <translation>Cannon shoot exit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1381"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1450"/>
         <source>Projectile speed:</source>
         <translation>Projectile speed:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1388"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1457"/>
         <source>How fast will fly player when it will be shooted.
 Unit is a pixels per 1/65 seconds.</source>
         <translation>How fast will fly player when it will be shooted.
 Unit is a pixels per 1/65 seconds.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1405"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1474"/>
         <source>When player will exit from this warp, it will be shooted by defined direction</source>
         <translation>When player will exit from this warp, it will be shooted by defined direction</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1408"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1477"/>
         <source>Cannon exit</source>
         <translation>Cannon exit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="164"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="170"/>
         <source>Pipe direction</source>
         <translation>Pipe direction</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="191"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="200"/>
         <source>Entrance</source>
         <translation>Entrance</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="237"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="598"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="249"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="613"/>
         <source>Down</source>
         <translation>Down</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="267"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="487"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="279"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="502"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="297"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="539"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="309"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="554"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="346"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="457"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="358"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="472"/>
         <source>Up</source>
         <translation>Up</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="427"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="439"/>
         <source>Exit</source>
         <translation>Exit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="730"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="754"/>
         <source>Warp to World map</source>
         <translation>Go to World Map Position</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="739"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="778"/>
         <source>X:</source>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="746"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="761"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="785"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="800"/>
         <source>Target coordinates of player on the world map
 when you exited from a level through this warp</source>
         <translation>Target coordinates of player on the world map
 when you exited from a level through this warp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="754"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="793"/>
         <source>Y:</source>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="769"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="808"/>
         <source>Browse world map for setting a target exit point</source>
         <translation>Browse world map for setting a target exit point</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="772"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="811"/>
         <source>Set</source>
         <translation>Set</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="667"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="688"/>
         <source>Level door</source>
         <translation>Level door</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="688"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="712"/>
         <source>Entering into this warp causes exiting of the level.
 If this flag enabled, possible to place entrance point only.</source>
         <translation>Entering into this warp causes exiting of the level.
 If this flag enabled, possible to place entrance point only.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="692"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="716"/>
         <source>Exit only</source>
         <translation>Exit only</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="699"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="723"/>
         <source>Disables any possibility to enter into this warp.
 Use this flag if you plan use it for level entrances only.
 If this flag is enabled, possible to place exit point only.</source>
@@ -5801,27 +5801,27 @@ Use this flag if you plan use it for level entrances only.
 If this flag is enabled, possible to place exit point only.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="704"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="728"/>
         <source>Enter only</source>
         <translation>Enter only</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1254"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1308"/>
         <source>Warp to other level</source>
         <translation>Warp to level</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1275"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1332"/>
         <source>If this field is not empty, player will exit this level and will start this level.</source>
         <translation>If this field is not empty, player will exit this level and will start this level.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1282"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1339"/>
         <source>Level file:</source>
         <translation>Level file:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1289"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1346"/>
         <source>Declares Warp-ID of target level if value is not zero.
 Player will enter into target level through specific warp point.
 If value is zero, start level at pre-declared player start points.</source>
@@ -5830,12 +5830,12 @@ Player will enter into target level through specific warp point.
 If value is zero, start level at pre-declared player start points.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1326"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1377"/>
         <source>Browse for another level file</source>
         <translation>Browse for another level file</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1339"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1390"/>
         <source>Show blank screen instead of loading screen.
 In the SMBX Engine level loading screen showing
 a current playable character(s) and number of lives.</source>
@@ -5844,25 +5844,25 @@ In the SMBX Engine level loading screen showing
 a current playable character(s) and number of lives.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1344"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1395"/>
         <source>Hide level enter screen</source>
         <translation>Hide level enter screen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1351"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1402"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
         <translation>Enter at warp #</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1361"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1412"/>
         <source>Keep carried NPC when player entering
 to another level through this warp.</source>
         <translation>Keep carried NPC when player entering
 to another level through this warp.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1365"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1416"/>
         <source>Allow inter-level NPC</source>
         <translation>Allow inter-level NPC</translation>
     </message>
@@ -8238,9 +8238,9 @@ Please, select necessary world map in a list:</source>
 Please, select necessary world map in a list:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="180"/>
-        <location filename="../main_window/file/file_reload.cpp" line="57"/>
-        <location filename="../main_window/file/file_reload.cpp" line="214"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
+        <location filename="../main_window/file/file_reload.cpp" line="59"/>
+        <location filename="../main_window/file/file_reload.cpp" line="218"/>
         <source>File open error</source>
         <translation>File open error</translation>
     </message>
@@ -8249,9 +8249,9 @@ Please, select necessary world map in a list:</translation>
         <translation type="vanished">Can&apos;t open the file!.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="51"/>
-        <location filename="../main_window/file/file_reload.cpp" line="153"/>
-        <location filename="../main_window/file/file_reload.cpp" line="208"/>
+        <location filename="../main_window/file/file_reload.cpp" line="53"/>
+        <location filename="../main_window/file/file_reload.cpp" line="156"/>
+        <location filename="../main_window/file/file_reload.cpp" line="211"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="35"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
@@ -8259,9 +8259,9 @@ Please, select necessary world map in a list:</translation>
         <translation>File not saved</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="52"/>
-        <location filename="../main_window/file/file_reload.cpp" line="154"/>
-        <location filename="../main_window/file/file_reload.cpp" line="209"/>
+        <location filename="../main_window/file/file_reload.cpp" line="54"/>
+        <location filename="../main_window/file/file_reload.cpp" line="157"/>
+        <location filename="../main_window/file/file_reload.cpp" line="212"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="36"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="45"/>
@@ -8269,40 +8269,40 @@ Please, select necessary world map in a list:</translation>
         <translation>File not saved to disk.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="58"/>
-        <location filename="../main_window/file/file_reload.cpp" line="215"/>
+        <location filename="../main_window/file/file_reload.cpp" line="60"/>
+        <location filename="../main_window/file/file_reload.cpp" line="219"/>
         <source>Can&apos;t open the file.
 File not exist.</source>
         <translation>Can&apos;t open the file.
 File does not exist.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="64"/>
-        <location filename="../main_window/file/file_reload.cpp" line="160"/>
-        <location filename="../main_window/file/file_reload.cpp" line="220"/>
+        <location filename="../main_window/file/file_reload.cpp" line="66"/>
+        <location filename="../main_window/file/file_reload.cpp" line="163"/>
+        <location filename="../main_window/file/file_reload.cpp" line="225"/>
         <source>Reload file and custom stuff</source>
         <translation>Reload file and custom data</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="65"/>
-        <location filename="../main_window/file/file_reload.cpp" line="161"/>
-        <location filename="../main_window/file/file_reload.cpp" line="221"/>
+        <location filename="../main_window/file/file_reload.cpp" line="67"/>
+        <location filename="../main_window/file/file_reload.cpp" line="164"/>
+        <location filename="../main_window/file/file_reload.cpp" line="226"/>
         <source>Do you want to save before reload stuff?</source>
         <translation>Do you want to save before reloading?</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="77"/>
-        <location filename="../main_window/file/file_reload.cpp" line="232"/>
+        <location filename="../main_window/file/file_reload.cpp" line="79"/>
+        <location filename="../main_window/file/file_reload.cpp" line="237"/>
         <source>Reloading error</source>
         <translation>Reload Error</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="118"/>
+        <location filename="../main_window/file/file_reload.cpp" line="120"/>
         <source>Level file reloaded</source>
         <translation>Level file reloaded</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="191"/>
+        <location filename="../main_window/file/file_reload.cpp" line="193"/>
         <source>NPC Config reloaded</source>
         <translation>NPC Config reloaded</translation>
     </message>
@@ -8331,7 +8331,7 @@ File does not exist.</translation>
         <translation type="vanished">Remove layer and keep items</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="212"/>
+        <location filename="../main_window/file/file_open.cpp" line="213"/>
         <source>Level file loaded</source>
         <translation>Level file loaded</translation>
     </message>
@@ -8371,39 +8371,39 @@ Configuration package loaded with errors.</source>
 The configuration pack was loaded, but contains error.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
+        <location filename="../main_window/file/file_open.cpp" line="182"/>
         <source>Can&apos;t open the file: %1</source>
         <translation>Can&apos;t open the file: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="253"/>
-        <location filename="../main_window/file/file_reload.cpp" line="271"/>
+        <location filename="../main_window/file/file_open.cpp" line="254"/>
+        <location filename="../main_window/file/file_reload.cpp" line="277"/>
         <source>World map file loaded</source>
         <translation>World map file loaded</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="269"/>
-        <location filename="../main_window/file/file_reload.cpp" line="178"/>
+        <location filename="../main_window/file/file_open.cpp" line="273"/>
+        <location filename="../main_window/file/file_reload.cpp" line="181"/>
         <source>Can&apos;t read the file</source>
         <translation>Can&apos;t read the file</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="275"/>
+        <location filename="../main_window/file/file_open.cpp" line="279"/>
         <source>NPC Config loaded</source>
         <translation>NPC Config loaded</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="360"/>
+        <location filename="../main_window/file/file_open.cpp" line="365"/>
         <source>Game save statistics</source>
         <translation>Game save statistics</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="367"/>
+        <location filename="../main_window/file/file_open.cpp" line="372"/>
         <source>Bad file</source>
         <translation>Bad File</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="368"/>
+        <location filename="../main_window/file/file_open.cpp" line="373"/>
         <source>This file have unknown extension</source>
         <translation>This file has an unknown extension</translation>
     </message>
@@ -10483,8 +10483,8 @@ File: %1</translation>
         <translation>Line Data: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="269"/>
-        <location filename="../main_window/file/file_reload.cpp" line="178"/>
+        <location filename="../main_window/file/file_open.cpp" line="273"/>
+        <location filename="../main_window/file/file_reload.cpp" line="181"/>
         <source>File open error</source>
         <translation>File open error</translation>
     </message>
@@ -10635,7 +10635,7 @@ The maximum number of Music Boxes is %2.</translation>
         <translation>Loading Tileset groups...</translation>
     </message>
     <message>
-        <location filename="../data_configs/configs_main.cpp" line="343"/>
+        <location filename="../data_configs/configs_main.cpp" line="359"/>
         <source>Finishing loading...</source>
         <translation>Finishing loading...</translation>
     </message>
@@ -11803,24 +11803,24 @@ Data may be corrupted!</translation>
         <translation type="vanished">Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="163"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="164"/>
         <source>Read file error</source>
         <translation>Read file error</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="164"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="165"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Cannot read file %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="184"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="185"/>
         <source>Configurations not loaded</source>
         <translation>Configurations not loaded</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="185"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="186"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -11829,57 +11829,57 @@ because object configurations are not loaded
 Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="227"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="228"/>
         <source>Loading World map data</source>
         <translation>Loading World map data</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="227"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="228"/>
         <source>Abort</source>
         <translation>Abort</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="228"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="229"/>
         <source>Loading World data</source>
         <translation>Loading World data</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="277"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="278"/>
         <source>1/%1 Loading user data</source>
         <translation>1/%1 Loading custom data</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="285"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="286"/>
         <source>1/%1 Applying Tiles</source>
         <translation>1/%1 Applying Tiles</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="294"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="295"/>
         <source>2/%1 Applying Sceneries...</source>
         <translation>2/%1 Applying Sceneries...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="303"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="304"/>
         <source>3/%1 Applying Paths...</source>
         <translation>3/%1 Applying Paths...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="312"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="313"/>
         <source>4/%1 Applying Levels...</source>
         <translation>4/%1 Applying Levels...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="322"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="323"/>
         <source>5/%1 Applying Musics...</source>
         <translation>5/%1 Applying Music Boxes...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="466"/>
         <source>Point is not selected</source>
         <translation>Point is not selected</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="459"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="466"/>
         <source>Select the point on the world map first.</source>
         <translation>Select a point on the world map first.</translation>
     </message>
