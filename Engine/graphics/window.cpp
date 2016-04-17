@@ -127,7 +127,9 @@ bool PGE_Window::init(QString WindowTitle)
     if(!checkSDLError()) return false;
 
     LogDebug("Toggle vsync...");
+    vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
     toggleVSync(vsync);
+    LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
     IsInit=true;
 
     //Init OpenGL (to work with textures, OpenGL should be load)
