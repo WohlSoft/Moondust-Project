@@ -583,10 +583,6 @@ clearScene:
         scene->setMessageBoxItem(false);
         scene->clear();
         LogDebug("!<-Cleared->!");
-        scene->uBGOs.clear();
-        scene->uBGs.clear();
-        scene->uBlocks.clear();
-        scene->uNPCs.clear();
 
         LogDebug("!<-Delete animators->!");
         while(! scene->animates_BGO.isEmpty() )
@@ -607,6 +603,12 @@ clearScene:
             scene->animates_NPC.pop_front();
             if(tmp!=NULL) delete tmp;
         }
+
+        scene->uBGOs.clear();
+        scene->uBGs.clear();
+        scene->uBlocks.clear();
+        scene->uNPCs.clear();
+
         LogDebug("!<-Delete scene->!");
         delete scene;
         scene = NULL;

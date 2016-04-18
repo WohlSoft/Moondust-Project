@@ -345,7 +345,9 @@ void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     }
     else
     {
-       painter->drawPixmap(m_scene->musicBoxImg.rect(), m_scene->musicBoxImg, m_scene->musicBoxImg.rect());
+       painter->drawPixmap(m_scene->musicBoxImg.rect(),
+                           m_scene->musicBoxImg,
+                           m_scene->musicBoxImg.rect());
     }
 
     if(this->isSelected())

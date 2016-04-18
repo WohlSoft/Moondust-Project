@@ -151,30 +151,9 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     return scn->animates_NPC[animator]->wholeImage();
                 else
                     return scn->animates_NPC[animator]->image(-1, npc.display_frame);
-                /*
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_npc.size())
-                {
-                    j = scn->index_npc[ItemID].gi-1;
-                    animator = scn->index_npc[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_npc.size()) j=0;
-
-                if( confId != NULL)
-                    * confId = j;
-
-                if(whole)
-                    return scn->animates_NPC[animator]->wholeImage();
-                else
-                    return scn->animates_NPC[animator]->image(-1, main->configs.main_npc[j].display_frame);
-                 */
             }
             else
             {
-                /*int j=0;
-                bool noimage=true;*/
                 QPixmap tImg;
                 //Check Index exists
                 obj_npc & npc= main->configs.main_npc[ItemID];
@@ -192,28 +171,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     else
                         tImg = npc.image;
                 }
-
-                /*
-                j= main->configs.getNpcI(ItemID);
-
-                if(j>=0)
-                {   //get neccesary element directly
-                    tImg = main->configs.main_npc[j].image;
-                    noimage=false;
-                }
-
-                if( confId != NULL)
-                    * confId = j;
-
-                if((noimage)||(tImg.isNull()))
-                {
-                    tImg = Themes::Image(Themes::dummy_npc);
-                }
-                else
-                {
-                    if(!whole)
-                        tImg= tImg.copy(0, main->configs.main_npc[j].gfx_h*main->configs.main_npc[j].display_frame, main->configs.main_npc[j].image.width(), main->configs.main_npc[j].gfx_h );
-                }*/
                 return tImg;
             }
             break;
@@ -231,23 +188,16 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeWldEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_tiles.size())
-                {
-                    j = scn->index_tiles[ItemID].i;
-                    animator = scn->index_tiles[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_wtiles.size()) j=0;
+                obj_w_tile & tile= scn->uTiles[ItemID];
+                long animator=tile.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = tile.id;
 
                 if(whole)
                     return scn->animates_Tiles[animator]->wholeImage();
                 else
-                    return scn->animates_Tiles[animator]->image(main->configs.main_wtiles[j].display_frame);
+                    return scn->animates_Tiles[animator]->image(tile.display_frame);
             }
             else
             {
@@ -255,22 +205,22 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 long j=0;
 
                 //Check for index
-                j = main->configs.getTileI(ItemID);
+                obj_w_tile &tile = main->configs.main_wtiles[ItemID];
 
                 if( confId != NULL)
                     * confId = j;
 
-                if(j>=0)
+                if(tile.isValid)
                 {
                     if(j >= main->configs.main_wtiles.size()) j=0;
 
                     if((!whole)&&(main->configs.main_wtiles[j].animated))
-                        tmpI = main->configs.main_wtiles[j].image.copy(0,
-                                    (int)round(main->configs.main_wtiles[j].image.height() / main->configs.main_wtiles[j].frames)*main->configs.main_wtiles[j].display_frame,
-                                    main->configs.main_wtiles[j].image.width(),
-                                    (int)round(main->configs.main_wtiles[j].image.height() / main->configs.main_wtiles[j].frames));
+                        tmpI = tile.image.copy(0,
+                                (int)round(tile.image.height() / tile.frames) * tile.display_frame,
+                                tile.image.width(),
+                                (int)round(tile.image.height() / tile.frames));
                     else
-                        tmpI = main->configs.main_wtiles[j].image;
+                        tmpI = tile.image;
                 }
 
                 return tmpI;
@@ -291,46 +241,35 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeWldEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_scenes.size())
-                {
-                    j = scn->index_scenes[ItemID].i;
-                    animator = scn->index_scenes[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_wscene.size()) j=0;
+                obj_w_scenery & scenery= scn->uScenes[ItemID];
+                long animator=scenery.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = scenery.id;
 
                 if(whole)
                     return scn->animates_Scenery[animator]->wholeImage();
                 else
-                    return scn->animates_Scenery[animator]->image(main->configs.main_wscene[j].display_frame);
+                    return scn->animates_Scenery[animator]->image(scenery.display_frame);
             }
             else
             {
                 QPixmap tmpI;
-                long j=0;
 
-                //Check for index
-                j = main->configs.getSceneI(ItemID);
+                obj_w_scenery & scenery= main->configs.main_wscene[ItemID];
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = scenery.id;
 
-                if(j>=0)
+                if(scenery.isValid)
                 {
-                    if(j >= main->configs.main_wscene.size()) j=0;
-
-                    if((!whole)&&(main->configs.main_wscene[j].animated))
-                        tmpI = main->configs.main_wscene[j].image.copy(0,
-                                    (int)round(main->configs.main_wscene[j].image.height() / main->configs.main_wscene[j].frames)*main->configs.main_wscene[j].display_frame,
-                                    main->configs.main_wscene[j].image.width(),
-                                    (int)round(main->configs.main_wscene[j].image.height() / main->configs.main_wscene[j].frames));
+                    if((scenery.animated)&&(!whole))
+                        tmpI = scenery.image.copy(0,
+                                    (int)round(scenery.image.height() / scenery.frames) * scenery.display_frame,
+                                    scenery.image.width(),
+                                    (int)round(scenery.image.height() / scenery.frames));
                     else
-                        tmpI = main->configs.main_wscene[j].image;
+                        tmpI = scenery.image;
                 }
 
                 return tmpI;
@@ -351,46 +290,35 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeWldEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_paths.size())
-                {
-                    j = scn->index_paths[ItemID].i;
-                    animator = scn->index_paths[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_wpaths.size()) j=0;
+                obj_w_path & wpath= scn->uPaths[ItemID];
+                long animator=wpath.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = wpath.id;
 
                 if(whole)
                     return scn->animates_Paths[animator]->wholeImage();
                 else
-                    return scn->animates_Paths[animator]->image(main->configs.main_wpaths[j].display_frame);
+                    return scn->animates_Paths[animator]->image(wpath.display_frame);
             }
             else
             {
                 QPixmap tmpI;
-                long j=0;
 
-                //Check for index
-                j = main->configs.getPathI(ItemID);
+                obj_w_path & wpath= main->configs.main_wpaths[ItemID];
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = wpath.id;
 
-                if(j>=0)
+                if(wpath.isValid)
                 {
-                    if(j >= main->configs.main_wpaths.size()) j=0;
-
-                    if((!whole)&&(main->configs.main_wpaths[j].animated))
-                        tmpI = main->configs.main_wpaths[j].image.copy(0,
-                                    (int)round(main->configs.main_wpaths[j].image.height() / main->configs.main_wpaths[j].frames)*main->configs.main_wpaths[j].display_frame,
-                                    main->configs.main_wpaths[j].image.width(),
-                                    (int)round(main->configs.main_wpaths[j].image.height() / main->configs.main_wpaths[j].frames));
+                    if((wpath.animated)&&(!whole))
+                        tmpI = wpath.image.copy(0,
+                                    (int)round(wpath.image.height() / wpath.frames) * wpath.display_frame,
+                                    wpath.image.width(),
+                                    (int)round(wpath.image.height() / wpath.frames));
                     else
-                        tmpI = main->configs.main_wpaths[j].image;
+                        tmpI = wpath.image;
                 }
 
                 return tmpI;
@@ -411,46 +339,35 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeWldEditWin()->scene;
 
-                long j=0;
-                long animator=0;
-                if(ItemID < (unsigned int)scn->index_levels.size())
-                {
-                    j = scn->index_levels[ItemID].i;
-                    animator = scn->index_levels[ItemID].ai;
-                }
-
-                if(j >= main->configs.main_wlevels.size()) j=0;
+                obj_w_level & level= scn->uLevels[ItemID];
+                long animator=level.animator_id;
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = level.id;
 
                 if(whole)
                     return scn->animates_Levels[animator]->wholeImage();
                 else
-                    return scn->animates_Levels[animator]->image(main->configs.main_wlevels[j].display_frame);
+                    return scn->animates_Levels[animator]->image(level.display_frame);
             }
             else
             {
                 QPixmap tmpI;
-                long j=0;
 
-                //Check for index
-                j = main->configs.getWLevelI(ItemID);
+                obj_w_level & level= main->configs.main_wlevels[ItemID];
 
                 if( confId != NULL)
-                    * confId = j;
+                    * confId = level.id;
 
-                if(j>=0)
+                if(level.isValid)
                 {
-                    if(j >= main->configs.main_wlevels.size()) j=0;
-
-                    if((!whole)&&(main->configs.main_wlevels[j].animated))
-                        tmpI = main->configs.main_wlevels[j].image.copy(0,
-                                    (int)round(main->configs.main_wlevels[j].image.height() / main->configs.main_wlevels[j].frames)*main->configs.main_wlevels[j].display_frame,
-                                    main->configs.main_wlevels[j].image.width(),
-                                    (int)round(main->configs.main_wlevels[j].image.height() / main->configs.main_wlevels[j].frames));
+                    if((level.animated)&&(!whole))
+                        tmpI = level.image.copy(0,
+                                    (int)round(level.image.height() / level.frames) * level.display_frame,
+                                    level.image.width(),
+                                    (int)round(level.image.height() / level.frames));
                     else
-                        tmpI = main->configs.main_wlevels[j].image;
+                        tmpI = level.image;
                 }
 
                 return tmpI;

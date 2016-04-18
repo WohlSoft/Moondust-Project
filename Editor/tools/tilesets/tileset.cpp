@@ -248,39 +248,51 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     }
     case ItemTypes::WLD_Tile:
     {
-        long tarIndex = m_conf->getTileI(id);
-        if(tarIndex==-1)
-            return QPixmap(m_baseSize, m_baseSize);
-        return Items::getItemGFX(m_type, m_conf->main_wtiles[tarIndex].id, false, NULL, scn)
+        if(!m_conf->main_wtiles.contains(id))
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
+        return Items::getItemGFX(m_type, id, false, NULL, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
     case ItemTypes::WLD_Path:
     {
-        long tarIndex = m_conf->getPathI(id);
-        if(tarIndex==-1)
-            return QPixmap(m_baseSize, m_baseSize);
-        return Items::getItemGFX(m_type, m_conf->main_wpaths[tarIndex].id, false, NULL, scn)
+        if(!m_conf->main_wpaths.contains(id))
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
+        return Items::getItemGFX(m_type, id, false, NULL, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
     case ItemTypes::WLD_Scenery:
     {
-        long tarIndex = m_conf->getSceneI(id);
-        if(tarIndex==-1)
-            return QPixmap(m_baseSize, m_baseSize);
+        if(!m_conf->main_wscene.contains(id))
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, m_conf->main_wscene[tarIndex].id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
     case ItemTypes::WLD_Level:
     {
-        long tarIndex = m_conf->getWLevelI(id);
-        if(tarIndex==-1)
-            return QPixmap(m_baseSize, m_baseSize);
+        if(!m_conf->main_wlevels.contains(id))
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, m_conf->main_wlevels[tarIndex].id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }

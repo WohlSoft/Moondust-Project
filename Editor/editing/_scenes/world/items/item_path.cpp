@@ -328,7 +328,9 @@ void ItemPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         return;
     }
     if(m_scene->animates_Paths.size()>m_animatorID)
-        painter->drawPixmap(m_imageSize, m_scene->animates_Paths[m_animatorID]->image(), m_imageSize);
+        painter->drawPixmap(m_imageSize,
+                            m_scene->animates_Paths[m_animatorID]->wholeImage(),
+                            m_scene->animates_Paths[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -346,10 +348,10 @@ void ItemPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
 void ItemPath::setAnimator(long aniID)
 {
     if(aniID<m_scene->animates_Paths.size())
-    m_imageSize = QRectF(0,0,
-                m_scene->animates_Paths[aniID]->image().width(),
-                m_scene->animates_Paths[aniID]->image().height()
-                );
+    {
+        QRect frameRect = m_scene->animates_Paths[aniID]->frameRect();
+        m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
+    }
 
     this->setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())) ); //width
     this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())) ); //height

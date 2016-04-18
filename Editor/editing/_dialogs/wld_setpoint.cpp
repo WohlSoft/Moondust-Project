@@ -395,10 +395,6 @@ void WLD_SetPoint::unloadData()
 
     scene->clear();
     LogDebug("!<-Cleared->!");
-    scene->uTiles.clear();
-    scene->uScenes.clear();
-    scene->uPaths.clear();
-    scene->uLevels.clear();
 
     LogDebug("!<-Delete animators->!");
     while(! scene->animates_Tiles.isEmpty() )
@@ -425,6 +421,15 @@ void WLD_SetPoint::unloadData()
         scene->animates_Levels.pop_front();
         if(tmp!=NULL) delete tmp;
     }
+
+    scene->uScenes_old.clear();
+    scene->uPaths_old.clear();
+    scene->uLevels_old.clear();
+
+    scene->uTiles.clear();
+    scene->uScenes.clear();
+    scene->uPaths.clear();
+    scene->uLevels.clear();
 
     LogDebug("!<-Delete scene->!");
     delete scene;

@@ -23,55 +23,20 @@
 #include <QPixmap>
 
 ////////////////////World map items///////////////////////////
-struct obj_w_tile{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        unsigned long row;
-        unsigned long col;
-
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
+struct obj_w_tile
+{
+    obj_w_tile();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
 
-struct obj_w_scenery{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_w_tile &tile);
 
-struct obj_w_level{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_path{
     unsigned long id;
         QString image_n;
         QString mask_n;
@@ -84,7 +49,89 @@ struct obj_w_path{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
+};
+
+struct obj_w_scenery
+{
+    obj_w_scenery();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_w_scenery &scenery);
+
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+    unsigned int grid;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
+};
+
+struct obj_w_level
+{
+    obj_w_level();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_w_level &level);
+
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+    unsigned int grid;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
+};
+
+struct obj_w_path
+{
+    obj_w_path();
+    bool isValid;
+    unsigned long animator_id;
+    QPixmap * cur_image;
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+
+    /*!
+     * \brief Quickly copies all properties except images
+     * \param Target bgo configuration body
+     */
+    void copyTo(obj_w_path &wpath);
+
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        unsigned long row;
+        unsigned long col;
+    unsigned int grid;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
     unsigned int display_frame;
 };
 

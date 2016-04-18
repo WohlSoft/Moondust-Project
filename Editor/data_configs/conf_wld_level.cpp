@@ -53,6 +53,38 @@ long dataconfigs::getWLevelI(unsigned long itemID)
     return j;
 }
 
+obj_w_level::obj_w_level()
+{
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
+}
+
+void obj_w_level::copyTo(obj_w_level &level)
+{
+    /* for internal usage */
+    level.isValid         = isValid;
+    level.animator_id     = animator_id;
+    level.cur_image       = cur_image;
+    if(cur_image==NULL)
+        level.cur_image   = &image;
+    level.frame_h         = frame_h;
+    /* for internal usage */
+
+    level.id              = id;
+    level.group           = group;
+    level.category        = category;
+    level.grid            = grid;
+
+    level.image_n         = image_n;
+    level.mask_n          = mask_n;
+
+    level.animated        = animated;
+    level.frames          = frames;
+    level.framespeed      = framespeed;
+    level.display_frame   = display_frame;
+}
+
 long dataconfigs::getCharacterI(unsigned long itemID)
 {
     long j;
@@ -93,7 +125,6 @@ void dataconfigs::loadWorldLevels()
     levelset.setIniCodec("UTF-8");
 
     main_wlevels.clear();   //Clear old
-    index_wlvl.clear();
 
     levelset.beginGroup("levels-main");
         levels_total = levelset.value("total", "0").toInt();
@@ -109,15 +140,17 @@ void dataconfigs::loadWorldLevels()
 
     ConfStatus::total_wlvl = levels_total;
 
+    main_wlevels.allocateSlots(levels_total);
+
     //creation of empty indexes of arrayElements
-        wLevelIndexes levelIndex;
-        for(i=0;i<=levels_total; i++)
-        {
-            levelIndex.i=i;
-            levelIndex.type=0;
-            levelIndex.ai=0;
-            index_wlvl.push_back(levelIndex);
-        }
+    //wLevelIndexes levelIndex;
+    //for(i=0;i<=levels_total; i++)
+    //{
+    //    levelIndex.i=i;
+    //    levelIndex.type=0;
+    //    levelIndex.ai=0;
+    //    index_wlvl.push_back(levelIndex);
+    //}
 
     if(ConfStatus::total_wlvl==0)
     {
@@ -162,18 +195,12 @@ void dataconfigs::loadWorldLevels()
 
         slevel.display_frame = levelset.value("display-frame", "0").toInt();
 
+        slevel.isValid = true;
 
         slevel.id = i;
-        main_wlevels.push_back(slevel);
+        main_wlevels.storeElement(i, slevel);
 
-        /************Add to Index***************/
-        if(i <= (unsigned int)index_wlvl.size())
-        {
-            index_wlvl[i].i = i;
-        }
-        /************Add to Index***************/
-
-        skipLevel:
+    skipLevel:
         levelset.endGroup();
 
         if( levelset.status() != QSettings::NoError )
@@ -184,7 +211,7 @@ void dataconfigs::loadWorldLevels()
 
     if((unsigned int)main_wlevels.size()<levels_total)
     {
-        addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(main_wlevels.size()));
+        addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(main_wlevels.stored()));
     }
 }
 

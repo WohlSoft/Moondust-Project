@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/items.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
 
@@ -69,18 +70,12 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     {
     case 0: //Tiles
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_tile tileConf;
+        long j=0;
+        obj_w_tile &tileConf = uTiles[itemID];
 
-        getConfig_Tile(itemID, j, animator, tileConf, &noimage);
+        tImg = Items::getItemGFX(ItemTypes::WLD_Tile, itemID, false, &j);
 
-        if(!noimage)
-        {
-            tImg = animates_Tiles[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        if(tImg.isNull())
         {
             tImg=uTileImg;
         }

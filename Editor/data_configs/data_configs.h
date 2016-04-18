@@ -125,10 +125,10 @@ public:
     npc_Markers marker_npc;
 
     //World map items
-    QList<obj_w_tile > main_wtiles;
-    QList<obj_w_path > main_wpaths;
-    QList<obj_w_scenery > main_wscene;
-    QList<obj_w_level > main_wlevels;
+    PGE_DataArray<obj_w_tile > main_wtiles;
+    PGE_DataArray<obj_w_path > main_wpaths;
+    PGE_DataArray<obj_w_scenery > main_wscene;
+    PGE_DataArray<obj_w_level > main_wlevels;
     wld_levels_Markers marker_wlvl;
 
     //Indexes
@@ -162,10 +162,8 @@ public:
 
     // Get Item of Index
     long getNpcI(unsigned long itemID);
-    //long getBlockI(unsigned long itemID);
-    //long getBgoI(unsigned long itemID);
 
-    long getTileI(unsigned long itemID);
+
     long getSceneI(unsigned long itemID);
     long getPathI(unsigned long itemID);
     long getWLevelI(unsigned long itemID);

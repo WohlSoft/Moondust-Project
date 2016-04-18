@@ -178,16 +178,17 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_World)
-                for(int i = 0; i < dynamic_cast<WldScene *>(scn)->uTiles.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<WldScene *>(scn)->index_tiles[
-                                dynamic_cast<WldScene *>(scn)->uTiles[i].id].i
-                                      );
+            {
+                WldScene * sc=dynamic_cast<WldScene *>(scn);
+                for(int i = 0; i < sc->custom_Tiles.size(); ++i) {
+                    m_model->addPiece( sc->custom_Tiles[i]->id );
                 }
+            }
 
         }
         else
-        for(int i = 0; i < m_conf->main_wtiles.size(); ++i){
+        for(int i = 1; i < m_conf->main_wtiles.size(); ++i)
+        {
             m_model->addPiece(i);
         }
         break;
@@ -197,16 +198,15 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_World)
-                for(int i = 0; i < dynamic_cast<WldScene *>(scn)->uScenes.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<WldScene *>(scn)->index_scenes[
-                                dynamic_cast<WldScene *>(scn)->uScenes[i].id].i
-                                      );
+            {
+                WldScene * sc=dynamic_cast<WldScene *>(scn);
+                for(int i = 0; i < sc->custom_Scenes.size(); ++i) {
+                    m_model->addPiece( sc->custom_Scenes[i]->id );
                 }
-
+            }
         }
         else
-        for(int i = 0; i < m_conf->main_wscene.size(); ++i){
+        for(int i = 1; i < m_conf->main_wscene.size(); ++i) {
             m_model->addPiece(i);
         }
         break;
@@ -215,16 +215,15 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_World)
-                for(int i = 0; i < dynamic_cast<WldScene *>(scn)->uPaths.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<WldScene *>(scn)->index_paths[
-                                dynamic_cast<WldScene *>(scn)->uPaths[i].id].i
-                                      );
+            {
+                WldScene * sc=dynamic_cast<WldScene *>(scn);
+                for(int i = 0; i < sc->custom_Paths.size(); ++i) {
+                    m_model->addPiece( sc->custom_Paths[i]->id );
                 }
-
+            }
         }
         else
-        for(int i = 0; i < m_conf->main_wpaths.size(); ++i){
+        for(int i = 1; i < m_conf->main_wpaths.size(); ++i){
             m_model->addPiece(i);
         }
         break;
@@ -233,13 +232,12 @@ void TilesetConfigureDialog::setUpItems(int type)
         if(custom)
         {
             if(mode==GFX_World)
-                for(int i = 0; i < dynamic_cast<WldScene *>(scn)->uLevels.size(); ++i){
-                    m_model->addPiece(
-                                dynamic_cast<WldScene *>(scn)->index_levels[
-                                dynamic_cast<WldScene *>(scn)->uLevels[i].id].i
-                                      );
+            {
+                WldScene * sc=dynamic_cast<WldScene *>(scn);
+                for(int i = 0; i < sc->custom_Levels.size(); ++i) {
+                    m_model->addPiece( sc->custom_Levels[i]->id );
                 }
-
+            }
         }
         else
         for(int i = 0; i < m_conf->main_wlevels.size(); ++i){

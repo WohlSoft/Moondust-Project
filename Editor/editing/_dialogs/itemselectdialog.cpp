@@ -216,9 +216,11 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(sceneryTab)
     {
-        foreach (obj_w_scenery sceneryItem, conf->main_wscene) {
+        for(int i=0; i < conf->main_wscene.size(); i++)
+        {
+            obj_w_scenery &sceneryItem = conf->main_wscene[i];
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
+            QListWidgetItem* item = new QListWidgetItem(QString("scene-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
             item->setIcon( QIcon( sceneryItem.image ) );
             item->setData(3, QString::number(sceneryItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -228,9 +230,11 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(levelTab)
     {
-        foreach (obj_w_level levelItem, conf->main_wlevels) {
+        for(int i=0; i < conf->main_wlevels.size(); i++)
+        {
+            obj_w_level &levelItem = conf->main_wlevels[i];
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(levelItem.id), ui->Sel_List_Level);
+            QListWidgetItem* item = new QListWidgetItem(QString("level-%1").arg(levelItem.id), ui->Sel_List_Level);
             item->setIcon( QIcon( levelItem.image ) );
             item->setData(3, QString::number(levelItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -244,7 +248,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_music &musicItem = conf->main_music_wld[i];
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id), ui->Sel_List_Music);
+            QListWidgetItem* item = new QListWidgetItem(QString("wldmusic-%1").arg(musicItem.id), ui->Sel_List_Music);
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png") ) );
             item->setData(3, QString::number(musicItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -736,8 +740,9 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     int roff = (removalFlags & TAB_TILE ? 0 : 1);
 
     //get Table size
-    foreach(obj_w_tile tileItem, conf->main_wtiles )
+    for(int i=1; i<conf->main_wtiles.size(); i++)
     {
+        obj_w_tile &tileItem = conf->main_wtiles[i];
         if(tableRows<tileItem.row+1+roff) tableRows=tileItem.row+1+roff;
         if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
     }
@@ -748,15 +753,16 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     ui->Sel_List_Tile->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebug("WorldTools -> Table of tiles");
-    foreach(obj_w_tile tileItem, conf->main_wtiles )
+    for(int i=1; i<conf->main_wtiles.size(); i++)
     {
-            if(tileItem.animated)
-                tmpI = tileItem.image.copy(0,
-                            (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
-                            tileItem.image.width(),
-                            (int)round(tileItem.image.height() / tileItem.frames));
-            else
-                tmpI = tileItem.image;
+        obj_w_tile &tileItem = conf->main_wtiles[i];
+        if(tileItem.animated)
+            tmpI = tileItem.image.copy(0,
+                        (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
+                        tileItem.image.width(),
+                        (int)round(tileItem.image.height() / tileItem.frames));
+        else
+            tmpI = tileItem.image;
 
         QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.row, tileItem.col);
 
@@ -803,23 +809,24 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebug("WorldTools -> List of sceneries");
-    foreach(obj_w_scenery sceneItem, conf->main_wscene)
+    for(int i=1; i<conf->main_wscene.size(); i++)
     {
-            if(sceneItem.animated)
-                tmpI = sceneItem.image.copy(0,
-                            (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
-                            sceneItem.image.width(),
-                            (int)round(sceneItem.image.height() / sceneItem.frames));
-            else
-                tmpI = sceneItem.image;
+        obj_w_scenery &sceneItem=conf->main_wscene[i];
+        if(sceneItem.animated)
+            tmpI = sceneItem.image.copy(0,
+                        (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
+                        sceneItem.image.width(),
+                        (int)round(sceneItem.image.height() / sceneItem.frames));
+        else
+            tmpI = sceneItem.image;
 
-            item = new QListWidgetItem();
-            item->setIcon( QIcon( tmpI ) );
-            item->setText( NULL );
-            item->setData(3, QString::number(sceneItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        item = new QListWidgetItem();
+        item->setIcon( QIcon( tmpI ) );
+        item->setText( NULL );
+        item->setData(3, QString::number(sceneItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-            ui->Sel_List_Scenery->addItem( item );
+        ui->Sel_List_Scenery->addItem( item );
     }
 
     tableRows=0;
@@ -829,8 +836,9 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("WorldTools -> Table of paths size");
     //get Table size
-    foreach(obj_w_path pathItem, conf->main_wpaths )
+    for( int i=1; i<conf->main_wpaths.size(); i++ )
     {
+        obj_w_path &pathItem = conf->main_wpaths[i];
         if(tableRows<pathItem.row+1+roff) tableRows=pathItem.row+1+roff;
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
     }
@@ -841,15 +849,17 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     ui->Sel_List_Path->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebug("WorldTools -> Table of paths");
-    foreach(obj_w_path pathItem, conf->main_wpaths )
+    for( int i=1; i<conf->main_wpaths.size(); i++ )
     {
-            if(pathItem.animated)
-                tmpI = pathItem.image.copy(0,
-                            (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
-                            pathItem.image.width(),
-                            (int)round(pathItem.image.height() / pathItem.frames));
-            else
-                tmpI = pathItem.image;
+        obj_w_path &pathItem = conf->main_wpaths[i];
+
+        if(pathItem.animated)
+            tmpI = pathItem.image.copy(0,
+                        (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
+                        pathItem.image.width(),
+                        (int)round(pathItem.image.height() / pathItem.frames));
+        else
+            tmpI = pathItem.image;
 
         QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.row, pathItem.col);
 
@@ -869,7 +879,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-    if(roff==1){
+    if(roff==1)
+    {
         QTableWidgetItem * Titem = ui->Sel_List_Path->item(0, 0);
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
@@ -896,26 +907,27 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebug("WorldTools -> List of levels");
-    foreach(obj_w_level levelItem, conf->main_wlevels)
+    for(int i=0; i < conf->main_wlevels.size(); i++)
     {
-            if((conf->marker_wlvl.path==levelItem.id)||
-               (conf->marker_wlvl.bigpath==levelItem.id))
-                continue;
-            if(levelItem.animated)
-                tmpI = levelItem.image.copy(0,
-                            (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
-                            levelItem.image.width(),
-                            (int)round(levelItem.image.height() / levelItem.frames));
-            else
-                tmpI = levelItem.image;
+        obj_w_level &levelItem = conf->main_wlevels[i];
+        if((conf->marker_wlvl.path==levelItem.id)||
+           (conf->marker_wlvl.bigpath==levelItem.id))
+            continue;
+        if(levelItem.animated)
+            tmpI = levelItem.image.copy(0,
+                        (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
+                        levelItem.image.width(),
+                        (int)round(levelItem.image.height() / levelItem.frames));
+        else
+            tmpI = levelItem.image;
 
-            item = new QListWidgetItem();
-            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-            item->setText( NULL );
-            item->setData(3, QString::number(levelItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        item = new QListWidgetItem();
+        item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+        item->setText( NULL );
+        item->setData(3, QString::number(levelItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-            ui->Sel_List_Level->addItem( item );
+        ui->Sel_List_Level->addItem( item );
     }
 
     LogDebug("WorldTools -> List of musics");

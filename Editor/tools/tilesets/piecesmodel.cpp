@@ -90,38 +90,42 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_TILE)
     {
+        obj_w_tile& tile = m_conf->main_wtiles[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::WLD_Tile,
-                                    m_conf->main_wtiles[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
+                                    tile.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), tile.id);
     }
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
+        obj_w_scenery& scenery = m_conf->main_wscene[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::WLD_Scenery,
-                                    m_conf->main_wscene[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_wscene[index].id);
+                            Items::getItemGFX(ItemTypes::WLD_Scenery,
+                            scenery.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), scenery.id);
     }
     else
     if(m_type==WORLDPIECE_PATH)
     {
+        obj_w_path& wpath = m_conf->main_wpaths[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::WLD_Path,
-                                    m_conf->main_wpaths[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
+                                Items::getItemGFX(ItemTypes::WLD_Path,
+                                wpath.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), wpath.id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
+        obj_w_level& wlevel = m_conf->main_wlevels[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::WLD_Level,
-                                    m_conf->main_wlevels[index].id, false, NULL, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_wlevels[index].id);
+                                    wlevel.id, false, NULL, scn), QSize(32,32) ));
+        pixmapId.insert(pixmaps.size(), wlevel.id);
     }
     endInsertRows();
 }

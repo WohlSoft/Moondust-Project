@@ -18,64 +18,6 @@
 
 #include "../wld_scene.h"
 
-void WldScene::getConfig_Tile(unsigned long item_id, long &array_index, long &animator_id, obj_w_tile &mergedSet, bool *ok)
-{
-    bool noimage=true, found=false;
-    int j, item_i = 0;
-    long animator=0;
-
-    //Check Index exists
-    if(item_id < (unsigned int)index_tiles.size())
-    {
-        j = index_tiles[item_id].i;
-        item_i = j;
-        animator = index_tiles[item_id].ai;
-
-        if(j<pConfigs->main_wtiles.size())
-        {
-            if(pConfigs->main_wtiles[j].id == item_id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_wtiles.size();j++)
-        {
-            if(pConfigs->main_wtiles[j].id==item_id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-                //if(!isUser)
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_wtiles.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
-
-    array_index = item_i;
-    animator_id = animator;
-    mergedSet = pConfigs->main_wtiles[item_i];
-
-    mergedSet.image = QPixmap(0,0);
-
-    if(ok)
-    {
-        *ok = noimage;
-    }
-}
-
 void WldScene::getConfig_Scenery(unsigned long item_id, long &array_index, long &animator_id, obj_w_scenery &mergedSet, bool *ok)
 {
     bool noimage=true, found=false;

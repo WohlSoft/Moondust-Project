@@ -139,10 +139,11 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("WorldTools -> Table size");
     //get Table size
-    foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
+    for(int i=1; i < mw()->configs.main_wtiles.size(); i++)
     {
-        if(tableRows<tileItem.row+1) tableRows=tileItem.row+1;
-        if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
+        obj_w_tile &tileItem = mw()->configs.main_wtiles[i];
+        if( tableRows < (tileItem.row+1) ) tableRows = tileItem.row + 1;
+        if( tableCols < (tileItem.col+1) ) tableCols = tileItem.col + 1;
     }
 
     LogDebug("WorldTools -> set size");
@@ -151,8 +152,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebug("WorldTools -> Table of tiles");
-    foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
+    for(int i=1; i < mw()->configs.main_wtiles.size(); i++)
     {
+        obj_w_tile &tileItem = mw()->configs.main_wtiles[i];
         tmpI = GraphicsHelps::squareImage(
                     Items::getItemGFX(ItemTypes::WLD_Tile, tileItem.id),
                     QSize(32,32));
@@ -176,8 +178,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebug("WorldTools -> List of sceneries");
-    foreach(obj_w_scenery sceneItem, mw()->configs.main_wscene)
+    for(int i=1; i<mw()->configs.main_wscene.size(); i++)
     {
+            obj_w_scenery &sceneItem = mw()->configs.main_wscene[i];
             tmpI = GraphicsHelps::squareImage(
                         Items::getItemGFX(ItemTypes::WLD_Scenery, sceneItem.id),
                         QSize(32,32));
@@ -196,8 +199,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("WorldTools -> Table of paths size");
     //get Table size
-    foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
+    for(int i=1; i < mw()->configs.main_wpaths.size(); i++ )
     {
+        obj_w_path &pathItem = mw()->configs.main_wpaths[i];
         if(tableRows<pathItem.row+1) tableRows=pathItem.row+1;
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
     }
@@ -208,8 +212,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebug("WorldTools -> Table of paths");
-    foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
+    for(int i=1; i < mw()->configs.main_wpaths.size(); i++ )
     {
+        obj_w_path &pathItem = mw()->configs.main_wpaths[i];
         tmpI = GraphicsHelps::squareImage(
                     Items::getItemGFX(ItemTypes::WLD_Path, pathItem.id),
                     QSize(32,32));
@@ -233,23 +238,25 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebug("WorldTools -> List of levels");
-    foreach(obj_w_level levelItem, mw()->configs.main_wlevels)
+    for(int i=0; i<mw()->configs.main_wlevels.size(); i++)
     {
-            if((mw()->configs.marker_wlvl.path==levelItem.id)||
-               (mw()->configs.marker_wlvl.bigpath==levelItem.id))
-                continue;
+        obj_w_level& levelItem = mw()->configs.main_wlevels[i];
 
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::WLD_Level, levelItem.id),
-                        QSize(32,32));
+        if((mw()->configs.marker_wlvl.path==levelItem.id)||
+           (mw()->configs.marker_wlvl.bigpath==levelItem.id))
+            continue;
 
-            item = new QListWidgetItem();
-            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-            item->setText( NULL );
-            item->setData(3, QString::number(levelItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        tmpI = GraphicsHelps::squareImage(
+                    Items::getItemGFX(ItemTypes::WLD_Level, levelItem.id),
+                    QSize(32,32));
 
-            ui->WLD_LevelList->addItem( item );
+        item = new QListWidgetItem();
+        item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+        item->setText( NULL );
+        item->setData(3, QString::number(levelItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+        ui->WLD_LevelList->addItem( item );
     }
 
     LogDebug("WorldTools -> List of musics");

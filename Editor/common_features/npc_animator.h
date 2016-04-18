@@ -39,7 +39,9 @@ public:
     void buildAnimator(QPixmap &sprite, obj_npc &config);
 
     QPixmap image(int dir, int frame=-1);
-    QPixmap wholeImage();
+    QPixmap &wholeImage();
+
+    QRect  &frameRect(int dir);
 
     void setFrameL(int y);
     void setFrameR(int y);
@@ -57,10 +59,10 @@ private slots:
 private:
     obj_npc setup;
 
-    QPixmap mainImage;
+    QPixmap *mainImage;
 
-    QVector<QPixmap> frames; //Whole image
-    void createAnimationFrames();
+    //QVector<QPixmap> frames; //Whole image
+    //void createAnimationFrames();
 
     bool animated;
 
@@ -87,10 +89,11 @@ private:
     int frameCurrent;
     QTimer * timer;
 
-    int framesQ;
-    int frameSize; // size of one frame
+    int framesCountOneSide;
+    int framesCountTotal;
+    int frameHeight; // size of one frame
     int frameWidth; // sprite width
-    int frameHeight; //sprite height
+    int spriteHeight; //sprite height
 
     //Animation alhorithm
     bool aniDirectL;
@@ -101,6 +104,9 @@ private:
 
     int frameCurrentL;
     int frameCurrentR;
+
+    QRect   frame_rect_L;
+    QRect   frame_rect_R;
 
     int frameFirstL;
     int frameLastL;

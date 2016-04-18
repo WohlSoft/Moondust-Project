@@ -38,16 +38,16 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     frame_sequance_enabled=a.frame_sequance_enabled;
     frame_sequance=a.frame_sequance;
     frame_sequance_cur=a.frame_sequance_cur;
+    frame_rect = a.frame_rect;
     CurrentFrame = a.CurrentFrame;
-    frameCurrent = a.frameCurrent;
     bidirectional = a.bidirectional;
     reverce = a.reverce;
-    speed = a.speed;
-    framesQ = a.framesQ;
+    frameDelay = a.frameDelay;
+    framesCount = a.framesCount;
     frameWidth = a.frameWidth;
     frameHeight = a.frameHeight;
-    frameSize = a.frameSize;
-    frames = a.frames;
+    frameHeight = a.frameHeight;
+    //frames = a.frames;
 
     //Inherets!
     frame_delay = a.frame_delay;
@@ -70,15 +70,15 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
     frame_sequance_enabled = a.frame_sequance_enabled;
     frame_sequance = a.frame_sequance;
     frame_sequance_cur = a.frame_sequance_cur;
-    frameCurrent = a.frameCurrent;
+    frame_rect = a.frame_rect;
     bidirectional = a.bidirectional;
     reverce = a.reverce;
-    speed = a.speed;
-    framesQ = a.framesQ;
+    frameDelay = a.frameDelay;
+    framesCount = a.framesCount;
     frameWidth = a.frameWidth;
     frameHeight = a.frameHeight;
-    frameSize = a.frameSize;
-    frames = a.frames;
+    frameHeight = a.frameHeight;
+    //frames = a.frames;
 
     //Inherets!
     frame_delay = a.frame_delay;
@@ -104,7 +104,7 @@ SimpleAnimator::~SimpleAnimator()
 
 void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
-    mainImage = sprite;
+    mainImage = &sprite;
     animated = enables;
     frameFirst = First;
     frameLast = Last;
@@ -117,30 +117,31 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
     bidirectional = bid;
     reverce = rev;
 
-    speed = fspeed;
+    frameDelay = fspeed;
     frame_delay = fspeed;
-    framesQ = framesq;
+    framesCount = framesq;
 
-    if(mainImage.isNull())
+    if(mainImage->isNull())
     {
         animated=false;
         LogWarning("SimpleAnimator can't work with null images");
         return;
     }
 
-    frameWidth = mainImage.width();
-    frameHeight = mainImage.height();
+    frameWidth = mainImage->width();
+    spriteHeight = mainImage->height();
 
     // Frame must not be less than 1 pixel
-    if(framesQ>frameHeight) framesQ=frameHeight;
+    if( framesCount > spriteHeight)
+        framesCount = frameHeight;
 
     if(animated)
-        frameSize = qRound(qreal(frameHeight/framesQ));
+        frameHeight = qRound(qreal(spriteHeight/framesCount));
     else
-        frameSize = frameHeight;
+        frameHeight = spriteHeight;
     framePos = QPoint(0,0);
 
-    createAnimationFrames();
+    //createAnimationFrames();
 
     resetFrame();
 
@@ -171,23 +172,34 @@ void SimpleAnimator::setFrameSequance(QList<int> sequance)
 
 QPixmap SimpleAnimator::image(int frame)
 {
-    if(frames.isEmpty())
-    {   //If animator haven't frames, return red sqare
-        QPixmap tmp = QPixmap(QSize(32,32));
-        tmp.fill(QColor(Qt::red));
-        return tmp;
-    }
-
-    // QMutexLocker locker(&mutex); //Glitch protection
-    if((frame<0)||(frame>=frames.size()))
-        return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-    else
-        return frames[frame];//mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
+//    if(frames.isEmpty())
+//    {   //If animator haven't frames, return red sqare
+//        QPixmap tmp = QPixmap(QSize(32,32));
+//        tmp.fill(QColor(Qt::red));
+//        return tmp;
+//    }
+    if( frame<0 || frame >= framesCount)
+        frame = CurrentFrame;
+//    if((frame<0)||(frame>=frames.size()))
+//        return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+//    else
+//        return frames[frame];//mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
+    return mainImage->copy(QRect(0, frame * frameHeight, frameWidth, frameHeight ));
 }
 
-QPixmap SimpleAnimator::wholeImage()
+QRect &SimpleAnimator::frameRect()
 {
-    return mainImage;
+    return frame_rect;
+}
+
+QRectF SimpleAnimator::frameRectF()
+{
+    return QRectF(frame_rect);
+}
+
+QPixmap &SimpleAnimator::wholeImage()
+{
+    return *mainImage;
 }
 
 
@@ -208,7 +220,7 @@ void SimpleAnimator::nextFrame()
             {
                  // Return to last frame;
                 if(frameLast<0)
-                    CurrentFrame=frames.size()-1;
+                    CurrentFrame=framesCount-1;
                 else
                     CurrentFrame=frameLast;
             }
@@ -217,7 +229,7 @@ void SimpleAnimator::nextFrame()
     else
     { // Direct animation
         CurrentFrame++;
-        if(((CurrentFrame>=frames.size())&&(frameLast<0))||
+        if(((CurrentFrame>=framesCount)&&(frameLast<0))||
            ((CurrentFrame>frameLast)&&(frameLast>=0)))
         {
             if(bidirectional)
@@ -231,37 +243,38 @@ void SimpleAnimator::nextFrame()
             }
         }
     }
+
+    frame_rect.setRect(0, frameHeight*CurrentFrame, frameWidth, frameHeight);
 }
 
-void SimpleAnimator::createAnimationFrames()
-{
-    for(int i=0;i<framesQ;i++)
-    {
-        frames.push_back( mainImage.copy(QRect(framePos.x(), frameSize *i, frameWidth, frameSize )) );
-    }
-}
+//void SimpleAnimator::createAnimationFrames()
+//{
+//    for(int i=0; (i < framesCount); i++)
+//    {
+//        frames.push_back( mainImage.copy(QRect(framePos.x(), frameHeight*i, frameWidth, frameHeight )) );
+//    }
+//}
 
 
 void SimpleAnimator::setFrame(int y)
 {
-    if(y>=frames.size()) y= frameFirst;
-    if(y<frameFirst) y = (frameLast<0)? frames.size()-1 : frameLast;
+    //if(y>=frames.size()) y= frameFirst;
+    if(y>=framesCount) y = frameFirst;
+    //if(y<frameFirst) y = (frameLast<0)? frames.size()-1 : frameLast;
+    if(y<frameFirst) y = (frameLast<0)? framesCount-1 : frameLast;
     CurrentFrame = y;
+    frame_rect.setRect(0, frameHeight*y, frameWidth, frameHeight);
 }
 
 void SimpleAnimator::start()
 {
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
-
-    timer.setTimerType(Qt::PreciseTimer);
-    timer.start(speed);
 }
 
 void SimpleAnimator::stop()
 {
     if(!animated) return;
-    timer.stop();
     resetFrame();
 }
 

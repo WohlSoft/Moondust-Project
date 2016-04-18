@@ -34,13 +34,8 @@
 
 void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 {
-    bool noimage=true;
-    long item_i = 0;
-    long animator=0;
-    obj_w_tile mergedSet;
-
-    //Check Index exists
-    getConfig_Tile(tile.id, item_i, animator, mergedSet, &noimage);
+    obj_w_tile &mergedSet = uTiles[tile.id];
+    long animator = mergedSet.animator_id;
 
     QPoint newPos = QPoint(tile.x, tile.y);
     if(toGrid)

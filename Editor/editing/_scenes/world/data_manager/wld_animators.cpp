@@ -28,90 +28,99 @@ void WldScene::buildAnimators()
     int i;
 
     LogDebug("WorldAnimators -> Build tiles animator");
-    for(i=0; i<pConfigs->main_wtiles.size(); i++)
+    uTiles.clear();
+    uTiles.allocateSlots(pConfigs->main_wtiles.total());
+    for(i=1; i<pConfigs->main_wtiles.size(); i++)
     {
+        obj_w_tile & objTile = pConfigs->main_wtiles[i];
+        obj_w_tile t_tile;
+        objTile.copyTo(t_tile);
         SimpleAnimator * aniTile = new SimpleAnimator(
-                         ((pConfigs->main_wtiles[i].image.isNull())?
-                                uTileImg:
-                               pConfigs->main_wtiles[i].image),
-                              pConfigs->main_wtiles[i].animated,
-                              pConfigs->main_wtiles[i].frames,
-                              pConfigs->main_wtiles[i].framespeed
-                              );
+                          ((t_tile.cur_image->isNull())?
+                            uTileImg:
+                           *t_tile.cur_image),
+                            t_tile.animated,
+                            t_tile.frames,
+                            t_tile.framespeed
+                           );
 
         animates_Tiles.push_back( aniTile );
         animator.registerAnimation( aniTile );
-        if(pConfigs->main_wtiles[i].id < (unsigned int)index_tiles.size())
-        {
-            index_tiles[pConfigs->main_wtiles[i].id].ai = animates_Tiles.size()-1;
-        }
+        t_tile.animator_id = animates_Tiles.size()-1;
+        uTiles.storeElement(i, t_tile);
     }
 
     LogDebug("WorldAnimators -> Build sceneries animator");
-    for(i=0; i<pConfigs->main_wscene.size(); i++)
+    uScenes.clear();
+    uScenes.allocateSlots(pConfigs->main_wscene.total());
+    for(i=1; i<pConfigs->main_wscene.size(); i++)
     {
+        obj_w_scenery & objScenery = pConfigs->main_wscene[i];
+        obj_w_scenery t_scene;
+        objScenery.copyTo(t_scene);
         SimpleAnimator * aniScene = new SimpleAnimator(
-                         ((pConfigs->main_wscene[i].image.isNull())?
+                         ((t_scene.cur_image->isNull())?
                                 uSceneImg:
-                               pConfigs->main_wscene[i].image),
-                              pConfigs->main_wscene[i].animated,
-                              pConfigs->main_wscene[i].frames,
-                              pConfigs->main_wscene[i].framespeed
+                               *t_scene.cur_image),
+                                t_scene.animated,
+                                t_scene.frames,
+                                t_scene.framespeed
                               );
 
         animates_Scenery.push_back( aniScene );
         animator.registerAnimation( aniScene );
-        if(pConfigs->main_wscene[i].id < (unsigned int)index_scenes.size())
-        {
-            index_scenes[pConfigs->main_wscene[i].id].ai = animates_Scenery.size()-1;
-        }
+        t_scene.animator_id = animates_Scenery.size()-1;
+        uScenes.storeElement(i, t_scene);
     }
 
     LogDebug("WorldAnimators -> Build paths animator");
-    for(i=0; i<pConfigs->main_wpaths.size(); i++)
+    uPaths.clear();
+    uPaths.allocateSlots(pConfigs->main_wpaths.total());
+    for(i=1; i<pConfigs->main_wpaths.size(); i++)
     {
-        SimpleAnimator * aniPath = new SimpleAnimator(
-                         ((pConfigs->main_wpaths[i].image.isNull())?
-                                uPathImg:
-                               pConfigs->main_wpaths[i].image),
-                              pConfigs->main_wpaths[i].animated,
-                              pConfigs->main_wpaths[i].frames,
-                              pConfigs->main_wpaths[i].framespeed
+        obj_w_path & objPath = pConfigs->main_wpaths[i];
+        obj_w_path t_path;
+        objPath.copyTo(t_path);
+        SimpleAnimator * aniScene = new SimpleAnimator(
+                         ((t_path.cur_image->isNull())?
+                                uSceneImg:
+                               *t_path.cur_image),
+                                t_path.animated,
+                                t_path.frames,
+                                t_path.framespeed
                               );
 
-        animates_Paths.push_back( aniPath );
-        animator.registerAnimation( aniPath );
-        if(pConfigs->main_wpaths[i].id < (unsigned int)index_paths.size())
-        {
-            index_paths[pConfigs->main_wpaths[i].id].ai = animates_Paths.size()-1;
-        }
+        animates_Paths.push_back( aniScene );
+        animator.registerAnimation( aniScene );
+        t_path.animator_id = animates_Paths.size()-1;
+        uPaths.storeElement(i, t_path);
     }
 
     LogDebug("WorldAnimators -> Build levels animator");
+    uLevels.clear();
+    uLevels.allocateSlots(pConfigs->main_wlevels.total());
     for(i=0; i<pConfigs->main_wlevels.size(); i++)
     {
-        SimpleAnimator * aniLevel = new SimpleAnimator(
-                         ((pConfigs->main_wlevels[i].image.isNull())?
-                                uLevelImg:
-                               pConfigs->main_wlevels[i].image),
-                              pConfigs->main_wlevels[i].animated,
-                              pConfigs->main_wlevels[i].frames,
-                              pConfigs->main_wlevels[i].framespeed
+        obj_w_level& objLevel = pConfigs->main_wlevels[i];
+        obj_w_level  t_level;
+        objLevel.copyTo(t_level);
+        SimpleAnimator * aniScene = new SimpleAnimator(
+                         ((t_level.cur_image->isNull())?
+                                uSceneImg:
+                               *t_level.cur_image),
+                                t_level.animated,
+                                t_level.frames,
+                                t_level.framespeed
                               );
 
-        animates_Levels.push_back( aniLevel );
-        animator.registerAnimation( aniLevel );
-
-        if(pConfigs->main_wlevels[i].id < (unsigned int)index_levels.size())
-        {
-            index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
-        }
-        LogDebug("WorldAnimators -> Item made");
+        animates_Levels.push_back( aniScene );
+        animator.registerAnimation( aniScene );
+        t_level.animator_id = animates_Levels.size()-1;
+        uLevels.storeElement(i, t_level);
     }
 
     LogDebug("WorldAnimators -> done");
 }
-
 
 
 void WldScene::startAnimation()
@@ -126,50 +135,13 @@ void WldScene::startAnimation()
         LogWarning(QString("Can't start animation: too many items on map: %1").arg(q));
         return;
     }
-
     animator.start(32);
-
-//    foreach(SimpleAnimator * tile, animates_Tiles)
-//    {
-//        tile->start();
-//    }
-//    foreach(SimpleAnimator * scene, animates_Scenery)
-//    {
-//        scene->start();
-//    }
-//    foreach(SimpleAnimator * path, animates_Paths)
-//    {
-//        path->start();
-//    }
-//    foreach(SimpleAnimator * lvl, animates_Levels)
-//    {
-//        lvl->start();
-//    }
-
-
 }
 
 
 
 void WldScene::stopAnimation()
 {
-//    foreach(SimpleAnimator * tile, animates_Tiles)
-//    {
-//        tile->stop();
-//    }
-//    foreach(SimpleAnimator * scene, animates_Scenery)
-//    {
-//        scene->stop();
-//    }
-//    foreach(SimpleAnimator * path, animates_Paths)
-//    {
-//        path->stop();
-//    }
-//    foreach(SimpleAnimator * lvl, animates_Levels)
-//    {
-//        lvl->stop();
-//    }
     animator.stop();
-
     update();
 }

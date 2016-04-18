@@ -56,7 +56,6 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     }
 
     //Indexes
-    index_tiles = pConfigs->index_wtiles; //Applaying blocks indexes
     index_scenes = pConfigs->index_wscene;
     index_paths = pConfigs->index_wpaths;
     index_levels = pConfigs->index_wlvl;
@@ -213,10 +212,9 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
 WldScene::~WldScene()
 {
     if(messageBox) delete messageBox;
-    uTiles.clear();
-    uScenes.clear();
-    uPaths.clear();
-    uLevels.clear();
+    uScenes_old.clear();
+    uPaths_old.clear();
+    uLevels_old.clear();
 
     while(!EditModes.isEmpty())
     {

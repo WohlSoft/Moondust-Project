@@ -123,17 +123,30 @@ public:
 
     // ///////////////////GFX Manager////////////////////////
     public:
+        //! Common container of pre-loaded images
+        QList<QPixmap> custom_images;
+
         //Object Indexing:
-        QList<wTileIndexes > index_tiles;
         QList<wSceneIndexes > index_scenes;
         QList<wPathIndexes > index_paths;
         QList<wLevelIndexes > index_levels;
 
         //Custom data containers
-        QList<UserIMGs > uTiles;
-        QList<UserIMGs > uScenes;
-        QList<UserIMGs > uPaths;
-        QList<UserIMGs > uLevels;
+        QList<UserIMGs > uScenes_old;
+        QList<UserIMGs > uPaths_old;
+        QList<UserIMGs > uLevels_old;
+
+        PGE_DataArray<obj_w_tile > uTiles;
+        QList<obj_w_tile* > custom_Tiles;
+
+        PGE_DataArray<obj_w_scenery > uScenes;
+        QList<obj_w_scenery* > custom_Scenes;
+
+        PGE_DataArray<obj_w_path > uPaths;
+        QList<obj_w_path* > custom_Paths;
+
+        PGE_DataArray<obj_w_level > uLevels;
+        QList<obj_w_level* > custom_Levels;
 
         //Animators
         QList<SimpleAnimator * > animates_Tiles;
@@ -149,7 +162,6 @@ public:
         void startAnimation();
         void stopAnimation();
 
-        void getConfig_Tile(unsigned long item_id, long &array_index, long &animator_id, obj_w_tile &mergedSet, bool *ok=0);
         void getConfig_Scenery(unsigned long item_id, long &array_index, long &animator_id, obj_w_scenery &mergedSet, bool *ok=0);
         void getConfig_Path(unsigned long item_id, long &array_index, long &animator_id, obj_w_path &mergedSet, bool *ok=0);
         void getConfig_Level(unsigned long item_id, long &array_index, long &animator_id, obj_w_level &mergedSet, bool *ok=0);
