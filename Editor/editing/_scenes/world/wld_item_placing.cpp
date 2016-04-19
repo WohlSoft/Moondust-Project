@@ -89,7 +89,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
 
         long w = tImg.width();
-        long h = tImg.height()/( (tileConf.animated)?tileConf.frames:1);
+        long h = tImg.height();
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -135,7 +135,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h*tileConf.display_frame,w,h));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -184,9 +184,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
-        long iw = tImg.width();
-        long ih = tImg.height()/( (sceneConf.animated)?sceneConf.frames:1);
-
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
@@ -216,8 +213,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setRectDrawer(); return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x= qRound(qreal(tImg.width()) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(tImg.height()) / 2);
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
@@ -228,7 +225,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setCircleDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,ih * sceneConf.display_frame ,iw,ih));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -273,7 +270,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::PathSet.id = itemID;
 
         long w = tImg.width();
-        long h = tImg.height()/( (pathConf.animated)?pathConf.frames:1);
+        long h = tImg.height();
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -318,7 +315,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h * pathConf.display_frame, w ,h));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -366,9 +363,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
 
-        long iw = tImg.width();
-        long ih = tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1);
-
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
@@ -405,20 +399,18 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setCircleDrawer(); return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x = qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y = qRound(qreal(h) / 2);
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0, ih * wlevelConf.display_frame ,iw,ih));
+        cursor = addPixmap(tImg);
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
-        int imgOffsetY = (int)qRound( -qreal(
-                  tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1))
-                  + WldPlacingItems::gridSz);
+        int imgOffsetY = (int)qRound( -qreal(tImg.height()) + WldPlacingItems::gridSz);
 
         ((QGraphicsPixmapItem*)cursor)->setOffset(imgOffsetX, imgOffsetY );
 

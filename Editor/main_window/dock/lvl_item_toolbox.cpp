@@ -81,9 +81,9 @@ void MainWindow::on_actionLVLToolBox_triggered(bool checked)
 
 void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 {
-    if( (mw()->activeChildWindow() != 1) )
-        return;
-    if( (setGrp) )
+//    if( (mw()->activeChildWindow() != 1) )
+//        return;
+    if( (setGrp) && ( mw()->activeChildWindow() != 1 ) )
         return;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -133,7 +133,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> List ob blocks");
     //set custom Block items from loaded level
-    if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
+    if( (ui->BlockCatList->currentText()==customLabel) && (setCat) && (setGrp) )
     {
         for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
         {

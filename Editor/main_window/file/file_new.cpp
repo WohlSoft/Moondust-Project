@@ -82,12 +82,11 @@ void MainWindow::on_actionNewLevel_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        //updateMenus(ui->centralWidget->activeSubWindow(), true);
+        dock_LvlItemBox->setLvlItemBoxes(false, false);
         SetCurrentLevelSection(0);
         on_actionSelect_triggered();
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
-
         if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
         LvlMusPlay::musicForceReset=true; //reset musics
         on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
@@ -119,7 +118,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        //updateMenus(ui->centralWidget->activeSubWindow(), true);
+        dock_WldItemBox->setWldItemBoxes(false, false);
         on_actionSelect_triggered();
     } else {
         if( activeWldEditWin(SubWindow) )

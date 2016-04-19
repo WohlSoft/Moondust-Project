@@ -152,7 +152,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               );
         animates_Tiles.push_back( aniTile );
         animator.registerAnimation( aniTile );
-
+        t_tile.animator_id = animates_Tiles.size()-1;
         uTiles.storeElement(i, t_tile);
         if(custom)
         {
@@ -225,7 +225,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               );
         animates_Scenery.push_back( aniTile );
         animator.registerAnimation( aniTile );
-
+        t_scenery.animator_id = animates_Scenery.size()-1;
         uScenes.storeElement(i, t_scenery);
         if(custom)
         {
@@ -297,7 +297,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               );
         animates_Paths.push_back( aniTile );
         animator.registerAnimation( aniTile );
-
+        t_path.animator_id = animates_Paths.size()-1;
         uPaths.storeElement(i, t_path);
         if(custom)
         {
@@ -370,7 +370,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               );
         animates_Levels.push_back( aniTile );
         animator.registerAnimation( aniTile );
-
+        t_level.animator_id = animates_Levels.size()-1;
         uLevels.storeElement(i, t_level);
         if(custom)
         {

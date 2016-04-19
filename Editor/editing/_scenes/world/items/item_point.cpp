@@ -24,6 +24,10 @@ void ItemPoint::construct()
 {
     this->setData(ITEM_WIDTH, QString::number(32));
     this->setData(ITEM_HEIGHT, QString::number(32));
+    m_imageSize.setX(0);
+    m_imageSize.setY(0);
+    m_imageSize.setWidth(32);
+    m_imageSize.setHeight(32);
 }
 
 ItemPoint::ItemPoint(QGraphicsItem *parent)

@@ -275,8 +275,8 @@ void dataconfigs::loadLevelNPC()
         /****************Calculating of default frame height******************/
         switch(snpc.framestyle)
         {
-            case 0: defGFX_h = (int)round(snpc.image.height() / snpc.frames); break;
-            case 1: defGFX_h = (int)round((snpc.image.height() / snpc.frames)/2 ); break;
+            case 0: defGFX_h = (int)round( snpc.image.height()/snpc.frames );   break;
+            case 1: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/2); break;
             case 2: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
             case 3: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
             case 4: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/8); break;
@@ -473,9 +473,7 @@ void dataconfigs::loadLevelNPC()
             snpc.default_special = (iTmp>=0);
             snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
-
-
-
+        snpc.isValid = true;
         snpc.id = i;
         main_npc.storeElement(i, snpc);
 

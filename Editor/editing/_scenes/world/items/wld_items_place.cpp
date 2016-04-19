@@ -133,8 +133,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 {
     long animator=0, pathAnimator=0, bPathAnimator=0;
-
-    obj_w_level &mergedSet = uLevels[path.id];
+    obj_w_level &mergedSet = uLevels[level.id];
     animator =      mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
