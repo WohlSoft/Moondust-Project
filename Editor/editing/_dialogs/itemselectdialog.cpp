@@ -55,6 +55,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     isMultiSelect=false;
 
+    LvlScene *scene_lvl = NULL;
+    WldScene *scene_wld = NULL;
+    LevelEdit *edit_lvl = MainWinConnect::pMainWin->activeLvlEditWin();
+    if(edit_lvl)
+    {
+        scene_lvl = edit_lvl->sceneCreated ? edit_lvl->scene : 0;
+    }
+    WorldEdit *edit_wld = MainWinConnect::pMainWin->activeWldEditWin();
+    if(edit_wld)
+    {
+        scene_wld = edit_wld->sceneCreated ? edit_wld->scene : 0;
+    }
+
     QFont font;
     font.setItalic(true);
     QListWidgetItem * empBlock = new QListWidgetItem(ui->Sel_List_Block);
@@ -157,19 +170,20 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(blockTab)
     {
-        for(int i=1; i<conf->main_block.size(); i++) //Add user images
+        PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->uBlocks : &conf->main_block;
+        for(int i=1; i< array->size(); i++) //Add user images
         {
-            obj_block *blockItem = &conf->main_block[i];
+            obj_block &blockItem = (*array)[i];
             QPixmap tmpI = GraphicsHelps::squareImage(
-                                blockItem->image.copy(0,
-                                             blockItem->frame_h*blockItem->display_frame,
-                                                blockItem->image.width(),
-                                                blockItem->frame_h),
-                                                      QSize(16,16));
+                                blockItem.image.copy(0,
+                                            blockItem.frame_h * blockItem.display_frame,
+                                            blockItem.image.width(),
+                                            blockItem.frame_h),
+                                                  QSize(16,16));
 
-            QListWidgetItem* item = new QListWidgetItem( blockItem->name, ui->Sel_List_Block);
+            QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(blockItem->id) );
+            item->setData(3, QString::number( blockItem.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Block->addItem(item);
         }
@@ -177,19 +191,20 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(bgoTab)
     {
-        for(int i=1; i<conf->main_bgo.size(); i++) //Add user images
+        PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->uBGOs : &conf->main_bgo;
+        for(int i=1; i< array->size(); i++) //Add user images
         {
-            obj_bgo *bgoD = &conf->main_bgo[i];
+            obj_bgo &bgoD = (*array)[i];
             QPixmap tmpI = GraphicsHelps::squareImage(
-                                bgoD->image.copy(0,
-                                             bgoD->frame_h*bgoD->display_frame,
-                                                bgoD->image.width(),
-                                                bgoD->frame_h),
+                                bgoD.image.copy(0,
+                                             bgoD.frame_h * bgoD.display_frame,
+                                                bgoD.image.width(),
+                                                bgoD.frame_h),
                                                       QSize(16,16));
 
-            QListWidgetItem* item = new QListWidgetItem( bgoD->name, ui->Sel_List_BGO );
+            QListWidgetItem* item = new QListWidgetItem( bgoD.name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgoD->id) );
+            item->setData(3, QString::number(bgoD.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_BGO->addItem(item);
         }
@@ -197,9 +212,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(npcTab)
     {
-        for(int i=1; i<conf->main_npc.size(); i++) //Add user images
+        PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->uNPCs : &conf->main_npc;
+        for(int i=1; i< array->size(); i++) //Add user images
         {
-            obj_npc &npcItem = conf->main_npc[i];
+            obj_npc &npcItem = (*array)[i];
             //Add category
             QPixmap tmpI = GraphicsHelps::squareImage(
                         npcItem.image.copy(0,npcItem.gfx_h*npcItem.display_frame, npcItem.image.width(), npcItem.gfx_h ),
@@ -216,9 +232,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(sceneryTab)
     {
-        for(int i=0; i < conf->main_wscene.size(); i++)
+        PGE_DataArray<obj_w_scenery>* array = scene_wld ? &scene_wld->uScenes : &conf->main_wscene;
+        for(int i=1; i<array->size(); i++)
         {
-            obj_w_scenery &sceneryItem = conf->main_wscene[i];
+            obj_w_scenery &sceneryItem = (*array)[i];
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("scene-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
             item->setIcon( QIcon( sceneryItem.image ) );
@@ -230,9 +247,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(levelTab)
     {
-        for(int i=0; i < conf->main_wlevels.size(); i++)
+        PGE_DataArray<obj_w_level>* array = scene_wld ? &scene_wld->uLevels : &conf->main_wlevels;
+        for(int i=0; i<array->size(); i++)
         {
-            obj_w_level &levelItem = conf->main_wlevels[i];
+            obj_w_level &levelItem = (*array)[i];
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("level-%1").arg(levelItem.id), ui->Sel_List_Level);
             item->setIcon( QIcon( levelItem.image ) );
@@ -244,7 +262,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(musicTab)
     {
-        for(int i=1; i<conf->main_music_wld.size(); i++)
+        for(int i=1; i < conf->main_music_wld.size(); i++)
         {
             obj_music &musicItem = conf->main_music_wld[i];
             //Add category
@@ -357,6 +375,13 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
+    LvlScene *scene_lvl = NULL;
+    LevelEdit *edit_lvl = MainWinConnect::pMainWin->activeLvlEditWin();
+    if(edit_lvl)
+    {
+        scene_lvl = edit_lvl->sceneCreated ? edit_lvl->scene : 0;
+    }
+
     if(!setCat)
     {
         lock_cat=true;
@@ -390,12 +415,11 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     //set custom Block items from loaded level
     if((ui->Sel_Combo_CategoryBlock->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        if(scene_lvl)
         {
-            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
+            for(int i=0; i<scene_lvl->custom_Blocks.size(); i++)
             {
-                obj_block &block=*edit->scene->custom_Blocks[i];
+                obj_block &block=*(scene_lvl->custom_Blocks[i]);
 
                 if(block.animated)
                     tmpI = block.cur_image->copy(0,
@@ -491,29 +515,27 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     //set custom BGO items from loaded level
     if((ui->Sel_Combo_CategoryBGO->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        if(scene_lvl)
         {
-
-            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            foreach(obj_bgo* bgo, edit->scene->custom_BGOs)
+            for(int i=0; i<scene_lvl->custom_BGOs.size(); i++)
             {
-                if(bgo->animated)
-                    tmpI = bgo->cur_image->copy(0,
-                                (int)round(bgo->cur_image->height() / bgo->frames) * bgo->display_frame,
-                                bgo->cur_image->width(),
-                                (int)round(bgo->cur_image->height() / bgo->frames));
+                obj_bgo &bgo = *(scene_lvl->custom_BGOs[i]);
+                if(bgo.animated)
+                    tmpI = bgo.cur_image->copy(0,
+                                (int)round(bgo.cur_image->height() / bgo.frames) * bgo.display_frame,
+                                bgo.cur_image->width(),
+                                (int)round(bgo.cur_image->height() / bgo.frames));
                 else
-                    tmpI = *bgo->cur_image;
+                    tmpI = *bgo.cur_image;
 
-                item = new QListWidgetItem( QString("bgo-%1").arg(bgo->id) );
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo->id) );
+                item->setData(3, QString::number(bgo.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );
             }
         }
-
     }
     else
     //set BGO item box from global array
@@ -592,16 +614,13 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     //set custom NPC items from loaded level
     if((ui->Sel_Combo_CategoryNPC->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        if(edit_lvl)
         {
-            //long j=0;
-            //bool isIndex=false;
-            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
-            for(int i=0; i<edit->scene->custom_NPCs.size();i++)
+            for(int i=0; i<scene_lvl->custom_NPCs.size();i++)
             {
-                obj_npc& npc = *edit->scene->custom_NPCs[i];
+                obj_npc& npc = *(scene_lvl->custom_NPCs[i]);
 
-                tmpI = GraphicsHelps::squareImage(edit->scene->getNPCimg(npc.id),QSize(16,16));
+                tmpI = GraphicsHelps::squareImage(edit_lvl->scene->getNPCimg(npc.id),QSize(16,16));
 
                 item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -610,9 +629,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
                 ui->Sel_List_NPC->addItem( item );
             }
-
         }
-
     }
     else
     //set NPC item box from global config

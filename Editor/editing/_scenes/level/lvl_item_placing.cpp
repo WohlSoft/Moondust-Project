@@ -88,19 +88,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
     case 0: //blocks
         {
-            long j;
             obj_block &blockC = uBlocks[itemID];
-
-            tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, &j);
-
+            tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, this);
             if(tImg.isNull())
             {
                 tImg = uBlockImg;
             }
-
             if(!blockC.isValid)
             {
-                blockC=pConfigs->main_block[1];
+                blockC = pConfigs->main_block[1];
+                blockC.image = uBlockImg;
             }
 
             LvlPlacingItems::gridSz=blockC.grid;
@@ -209,17 +206,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
     case 1: //bgos
     {
-        long j;
         obj_bgo& bgoC = uBGOs[itemID];
-        tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
+        tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, this);
         if(tImg.isNull())
         {
             tImg=uBgoImg;
         }
-
         if(!bgoC.isValid)
         {
-            bgoC=pConfigs->main_bgo[1];
+            bgoC = pConfigs->main_bgo[1];
+            bgoC.image = uBgoImg;
         }
 
 
@@ -310,6 +306,11 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
         obj_npc &mergedSet = uNPCs[itemID];
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
+        if(!mergedSet.isValid)
+        {
+            mergedSet = pConfigs->main_npc[1];
+            mergedSet.image = uNpcImg;
+        }
 
         if( (itemID != LvlPlacingItems::npcSet.id) || (placingItem!=PLC_NPC) )
             LvlPlacingItems::npcSet.layer = "Default";

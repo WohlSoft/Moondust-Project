@@ -21,38 +21,6 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getSceneI(unsigned long itemID)
-{
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_wscene.size())
-    {
-        j = index_wscene[itemID].i;
-
-        if(j < main_wscene.size())
-        {
-            if( main_wscene[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_wscene.size(); j++)
-        {
-            if(main_wscene[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
-}
-
 obj_w_scenery::obj_w_scenery()
 {
     isValid     = false;
@@ -104,7 +72,6 @@ void dataconfigs::loadWorldScene()
     sceneset.setIniCodec("UTF-8");
 
     main_wscene.clear();   //Clear old
-    index_wscene.clear();
 
     sceneset.beginGroup("scenery-main");
         scenery_total = sceneset.value("total", "0").toInt();

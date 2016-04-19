@@ -289,18 +289,13 @@ bool ItemLevel::itemTypeIsLocked()
 
 void ItemLevel::transformTo(long target_id)
 {
-    if(target_id<1) return;
+    if(target_id < 0) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_level mergedSet;
+    if(!m_scene->uLevels.contains(target_id))
+        return;
 
-    //Get Level settings
-    m_scene->getConfig_Level(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_level &mergedSet = m_scene->uLevels[target_id];
+    long animator = mergedSet.animator_id;
 
     m_data.id = target_id;
     setLevelData(m_data, &mergedSet, &animator, &m_pathID, &m_bPathID);

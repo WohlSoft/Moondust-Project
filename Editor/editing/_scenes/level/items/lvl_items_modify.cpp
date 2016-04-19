@@ -185,7 +185,7 @@ void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
     else
     if( ObjType == "Water")
     {
-        dataToStore.physez << dynamic_cast<ItemWater *>(item)->m_data;
+        dataToStore.physez << dynamic_cast<ItemPhysEnv *>(item)->m_data;
     }
     else
     if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
@@ -238,7 +238,7 @@ void LvlScene::placeAll(const LevelData &data)
     {
         //place them back
         LvlData->physez.push_back(water);
-        placeWater(water);
+        placeEnvironmentZone(water);
     }
 
     foreach (LevelDoor door, data.doors)
@@ -652,10 +652,10 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
             else
             if( objType=="Water" )
             {
-                if((lock_water)|| (dynamic_cast<ItemWater *>(*it)->m_locked) ) continue;
+                if((lock_water)|| (dynamic_cast<ItemPhysEnv *>(*it)->m_locked) ) continue;
 
-                historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->m_data);
-                dynamic_cast<ItemWater *>(*it)->removeFromArray();
+                historyBuffer.physez.push_back(dynamic_cast<ItemPhysEnv *>(*it)->m_data);
+                dynamic_cast<ItemPhysEnv *>(*it)->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
             }

@@ -46,7 +46,7 @@ void TilesetItemButton::applyItem(const int &i, const int &id, const int &width,
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
-    QPixmap p = GraphicsHelps::squareImage(Items::getItemGFX(i,id, false, NULL, scn), QSize(wid,hei));//.scaled(wid,hei,Qt::KeepAspectRatio);
+    QPixmap p = GraphicsHelps::squareImage(Items::getItemGFX(i, id, false, scn), QSize(wid,hei));
     if(p.isNull()){
         m_drawItem = QPixmap(wid,hei);
         return;

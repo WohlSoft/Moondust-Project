@@ -36,7 +36,6 @@
 #include "obj_npc.h"
 #include "obj_BG.h"
 #include "obj_wld_items.h"
-#include "dc_indexing.h"
 #include "obj_tilesets.h"
 #include "obj_rotation_table.h"
 
@@ -131,12 +130,6 @@ public:
     PGE_DataArray<obj_w_level > main_wlevels;
     wld_levels_Markers marker_wlvl;
 
-    //Indexes
-    QList<wTileIndexes > index_wtiles;
-    QList<wPathIndexes > index_wpaths;
-    QList<wSceneIndexes > index_wscene;
-    QList<wLevelIndexes > index_wlvl;
-
     //Common items
     unsigned long music_custom_id;
     unsigned long music_w_custom_id;
@@ -160,13 +153,6 @@ public:
     //Debug
     QStringList errorsList;
 
-    // Get Item of Index
-    long getNpcI(unsigned long itemID);
-
-
-    long getSceneI(unsigned long itemID);
-    long getPathI(unsigned long itemID);
-    long getWLevelI(unsigned long itemID);
     long getCharacterI(unsigned long itemID);
 
     long getSndI(unsigned long itemID);

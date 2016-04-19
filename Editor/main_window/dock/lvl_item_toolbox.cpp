@@ -81,7 +81,18 @@ void MainWindow::on_actionLVLToolBox_triggered(bool checked)
 
 void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 {
-    if((setGrp)&&(mw()->activeChildWindow()!=1)) return;
+    if( (mw()->activeChildWindow() != 1) )
+        return;
+    if( (setGrp) )
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    if((edit==NULL) || (!edit->sceneCreated))
+        return;
+
+    LvlScene* scene = edit->scene;
+    if(!scene)
+        return;
 
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
@@ -124,34 +135,27 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(mw()->activeChildWindow()==1)
+        for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
         {
-            long j=0;
-            LevelEdit * edit = mw()->activeLvlEditWin();
+            obj_block &block = *scene->custom_Blocks[i];
 
-            if((edit!=NULL) &&(edit->sceneCreated))
-            for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
-            {
-                obj_block &block = *edit->scene->custom_Blocks[i];
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, edit->scene),
+                        QSize(48,48));
 
-                tmpI = GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, &j),
-                            QSize(48,48));
+            item = new QListWidgetItem( block.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(block.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-                item = new QListWidgetItem( block.name );
-                item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(block.id) );
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-                ui->BlockItemsList->addItem( item );
-            }
+            ui->BlockItemsList->addItem( item );
         }
     }
     else
     //set Block item box from global configs
-    for(int i=1; i<mw()->configs.main_block.size(); i++)
+    for(int i=1; i < scene->uBlocks.size(); i++)
     {
-        obj_block &blockItem =  mw()->configs.main_block[i];
+        obj_block &blockItem =  scene->uBlocks[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)
@@ -221,36 +225,25 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(mw()->activeChildWindow()==1)
+        for(int i=0; i < scene->custom_BGOs.size(); i++)
         {
-            long j=0;
-            //bool isIndex=false;
-            LevelEdit * edit = mw()->activeLvlEditWin();
+            obj_bgo &bgo = *scene->custom_BGOs[i];
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, edit->scene),
+                        QSize(48,48));
 
-            if((edit!=NULL) && (edit->sceneCreated))
-            for(int i=0; i<edit->scene->custom_BGOs.size(); i++)
-            {
-                obj_bgo &bgo = *edit->scene->custom_BGOs[i];
-                tmpI = GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, &j),
-                            QSize(48,48));
-
-                item = new QListWidgetItem( bgo.name );
-                item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo.id) );
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-                ui->BGOItemsList->addItem( item );
-            }
-
+            item = new QListWidgetItem( bgo.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(bgo.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->BGOItemsList->addItem( item );
         }
-
     }
     else
     //set BGO item box from global array
-    for(int i=1; i<mw()->configs.main_bgo.size(); i++)
+    for(int i=1; i<scene->uBGOs.size(); i++)
     {
-        obj_bgo &bgoItem = mw()->configs.main_bgo[i];
+        obj_bgo &bgoItem = scene->uBGOs[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)
@@ -319,37 +312,29 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> List ob NPCs");
     //set custom NPC items from loaded level
-    if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
+    if( (ui->NPCCatList->currentText()==customLabel) && (setCat) && (setGrp) )
     {
-        if(mw()->activeChildWindow()==1)
+        for(int i=0; i< scene->custom_NPCs.size(); i++)
         {
-            //long j=0;
-            //bool isIndex=false;
-            LevelEdit * edit = mw()->activeLvlEditWin();
-            if((edit!=NULL)&&(edit->sceneCreated))
-            for(int i=0; i<edit->scene->custom_NPCs.size(); i++)
-            {
-                obj_npc &npc = *edit->scene->custom_NPCs[i];
+            obj_npc &npc = *edit->scene->custom_NPCs[i];
 
-                tmpI = GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::LVL_NPC, npc.id),
-                            QSize(48,48));
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_NPC, npc.id),
+                        QSize(48,48));
 
-                item = new QListWidgetItem( npc.name.isEmpty() ? QString("npc-%1").arg(npc.id) : npc.name );
-                item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(npc.id) );
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            item = new QListWidgetItem( npc.name.isEmpty() ? QString("npc-%1").arg(npc.id) : npc.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(npc.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-                ui->NPCItemsList->addItem( item );
-            }
+            ui->NPCItemsList->addItem( item );
         }
-
     }
     else
     //set NPC item box from global config
-    for(int i=1; i < mw()->configs.main_npc.size(); i++)
+    for(int i=1; i < scene->uNPCs.size(); i++)
     {
-        obj_npc &npcItem=mw()->configs.main_npc[i];
+        obj_npc &npcItem = scene->uNPCs[i];
         //Add Group
         found = false;
         if(tmpList.size()!=0)

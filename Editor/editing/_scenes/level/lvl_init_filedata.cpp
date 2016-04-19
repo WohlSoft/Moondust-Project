@@ -106,7 +106,7 @@ void LvlScene::setWaters(QProgressDialog &progress)
     for(i=0; i<LvlData->physez.size(); i++)
     {
         //add Water to scene
-        placeWater(LvlData->physez[i]);
+        placeEnvironmentZone(LvlData->physez[i]);
 
         if(progress.wasCanceled())
             //progress.setValue(progress.value()+1);

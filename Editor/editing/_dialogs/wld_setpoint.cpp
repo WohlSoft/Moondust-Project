@@ -422,10 +422,6 @@ void WLD_SetPoint::unloadData()
         if(tmp!=NULL) delete tmp;
     }
 
-    scene->uScenes_old.clear();
-    scene->uPaths_old.clear();
-    scene->uLevels_old.clear();
-
     scene->uTiles.clear();
     scene->uScenes.clear();
     scene->uPaths.clear();

@@ -131,7 +131,7 @@ void LvlScene::hideWarpsAndDoors(bool visible)
 
     foreach (QGraphicsItem* i, items()) {
         if(i->data(ITEM_TYPE).toString()=="Water"){
-            i->setVisible(!localLayers[((ItemWater*)i)->m_data.layer].hidden && visible);
+            i->setVisible(!localLayers[((ItemPhysEnv*)i)->m_data.layer].hidden && visible);
         }else if(i->data(ITEM_TYPE).toString()=="Door_exit" || i->data(ITEM_TYPE).toString()=="Door_enter"){
             i->setVisible(!localLayers[((ItemDoor*)i)->m_data.layer].hidden && visible);
         }
@@ -191,9 +191,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayer layer, LvlData->layers)
             {
-                if( dynamic_cast<ItemWater *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemPhysEnv *>(tmp)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemWater *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemPhysEnv *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -269,7 +269,7 @@ void LvlScene::setLocked(int type, bool lock)
         case 4://Water
             if((*it)->data(ITEM_TYPE).toString()=="Water")
             {
-                ItemWater *i=qgraphicsitem_cast<ItemWater *>(*it);
+                ItemPhysEnv *i=qgraphicsitem_cast<ItemPhysEnv *>(*it);
                 if(i) i->setLocked(lock);
             }
             break;
@@ -351,10 +351,10 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                 else
                 if(SelItem->data(ITEM_TYPE).toString()=="Water")
                 {
-                    modData.physez.push_back(dynamic_cast<ItemWater *>(SelItem)->m_data);
-                    dynamic_cast<ItemWater *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemWater *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemWater *>(SelItem)->arrayApply();
+                    modData.physez.push_back(dynamic_cast<ItemPhysEnv *>(SelItem)->m_data);
+                    dynamic_cast<ItemPhysEnv *>(SelItem)->m_data.layer = lr.name;
+                    dynamic_cast<ItemPhysEnv *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemPhysEnv *>(SelItem)->arrayApply();
                 }
                 else
                 if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")  ||

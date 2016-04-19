@@ -200,16 +200,11 @@ void ItemPath::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_path mergedSet;
+    if(!m_scene->uPaths.contains(target_id))
+        return;
 
-    //Get Path settings
-    m_scene->getConfig_Path(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_path &mergedSet = m_scene->uPaths[target_id];
+    long animator=mergedSet.animator_id;
 
     m_data.id = target_id;
     setPathData(m_data, &mergedSet, &animator);

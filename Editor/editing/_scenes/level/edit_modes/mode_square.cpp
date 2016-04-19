@@ -170,7 +170,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 LvlPlacingItems::waterSet.array_id = s->LvlData->physenv_array_id;
                 s->LvlData->physez.push_back(LvlPlacingItems::waterSet);
 
-                s->placeWater(LvlPlacingItems::waterSet, true);
+                s->placeEnvironmentZone(LvlPlacingItems::waterSet, true);
                 LevelData plWater;
                 plWater.physez.push_back(LvlPlacingItems::waterSet);
                 s->addPlaceHistory(plWater);

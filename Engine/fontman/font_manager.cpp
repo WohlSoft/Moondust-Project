@@ -696,14 +696,8 @@ void FontManager::getChar1(QChar _x, int px_size, PGE_Texture &tex)
         x.drawText(text_image.rect(), s);
         x.end();
 
-        //if(double_pixled)
-        //{
-        //    //Pixelizing
-        //    text_image = text_image.scaled(text_image.width()/2, text_image.height()/2);
-        //    text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
-        //}
         GlRenderer::QImage2Texture(&text_image, c);
-        //return c.texture;
+
         tex = c;
     }
 }

@@ -82,7 +82,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
         else
         if( ObjType == "Water")
         {
-            sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->m_data.x, dynamic_cast<ItemWater *>(it)->m_data.y);
+            sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
             gridSize = qRound(qreal(pConfigs->default_grid)/2);
         }
         else
@@ -182,7 +182,7 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
         else
         if( ObjType == "Water")
         {
-            sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->m_data.x, dynamic_cast<ItemWater *>(it)->m_data.y);
+            sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
             gridSize = qRound(qreal(pConfigs->default_grid)/2);
         }
         else
@@ -426,7 +426,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
                 dynamic_cast<ItemBlock *>(item)->setBlockSize(targetRect);
             else
             if(item->data(ITEM_TYPE)=="Water")
-                dynamic_cast<ItemWater *>(item)->setRectSize(targetRect);
+                dynamic_cast<ItemPhysEnv *>(item)->setRectSize(targetRect);
         }
 
         applyArrayForItem(item);

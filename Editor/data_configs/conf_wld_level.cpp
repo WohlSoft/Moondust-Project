@@ -21,38 +21,6 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getWLevelI(unsigned long itemID)
-{
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_wlvl.size())
-    {
-        j = index_wlvl[itemID].i;
-
-        if(j < main_wlevels.size())
-        {
-            if( main_wlevels[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_wlevels.size(); j++)
-        {
-            if(main_wlevels[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
-}
-
 obj_w_level::obj_w_level()
 {
     isValid     = false;

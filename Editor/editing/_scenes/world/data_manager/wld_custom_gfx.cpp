@@ -29,16 +29,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
 {
     int i;
 
-    UserIMGs uScenery;
-    UserIMGs uPath;
-    UserIMGs uLevel;
     QImage tempImg;
-
     bool WrongImagesDetected=false;
-
-    uScenes_old.clear();
-    uPaths_old.clear();
-    uLevels_old.clear();
 
     uTiles.clear();
     uScenes.clear();

@@ -21,38 +21,6 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getPathI(unsigned long itemID)
-{
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_wpaths.size())
-    {
-        j = index_wpaths[itemID].i;
-
-        if(j < main_wpaths.size())
-        {
-            if( main_wpaths[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_wpaths.size(); j++)
-        {
-            if(main_wpaths[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
-}
-
 obj_w_path::obj_w_path()
 {
     isValid     = false;

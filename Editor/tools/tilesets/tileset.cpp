@@ -220,7 +220,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -233,7 +233,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -242,7 +242,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         if(!m_conf->main_npc.contains(id))
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -254,7 +254,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             xxx.fill(Qt::red);
             return xxx;
         }
-        return Items::getItemGFX(m_type, id, false, NULL, scn)
+        return Items::getItemGFX(m_type, id, false, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -266,7 +266,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             xxx.fill(Qt::red);
             return xxx;
         }
-        return Items::getItemGFX(m_type, id, false, NULL, scn)
+        return Items::getItemGFX(m_type, id, false, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -279,7 +279,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -292,7 +292,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, NULL, scn),
+                    Items::getItemGFX(m_type, id, false, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }

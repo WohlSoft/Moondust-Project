@@ -26,13 +26,13 @@
 #include "item_door.h"
 #include "../newlayerbox.h"
 
-ItemWater::ItemWater(QGraphicsItem *parent)
+ItemPhysEnv::ItemPhysEnv(QGraphicsItem *parent)
     : LvlBaseItem(parent)
 {
     construct();
 }
 
-ItemWater::ItemWater(LvlScene *parentScene, QGraphicsItem *parent)
+ItemPhysEnv::ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent)
     : LvlBaseItem(parentScene, parent)
 {
     construct();
@@ -44,7 +44,7 @@ ItemWater::ItemWater(LvlScene *parentScene, QGraphicsItem *parent)
     setLocked(m_scene->lock_water);
 }
 
-void ItemWater::construct()
+void ItemPhysEnv::construct()
 {
     m_waterSize = QSize(32,32);
     m_penWidth=2;
@@ -69,13 +69,13 @@ void ItemWater::construct()
     setData(ITEM_HEIGHT, (int)m_data.h);
 }
 
-ItemWater::~ItemWater()
+ItemPhysEnv::~ItemPhysEnv()
 {
     m_scene->unregisterElement(this);
 }
 
 
-void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
+void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
     m_scene->contextMenuOpened = true; //bug protector
 
@@ -234,8 +234,8 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                     {
                         if(SelItem->data(ITEM_TYPE).toString()=="Water")
                         {
-                            modData.physez.push_back(((ItemWater *)SelItem)->m_data);
-                            ((ItemWater *)SelItem)->setType(i);
+                            modData.physez.push_back(((ItemPhysEnv *)SelItem)->m_data);
+                            ((ItemPhysEnv *)SelItem)->setType(i);
                         }
                     }
                     m_scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
@@ -248,7 +248,7 @@ void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 }
 
 ///////////////////MainArray functions/////////////////////////////
-void ItemWater::setLayer(QString layer)
+void ItemPhysEnv::setLayer(QString layer)
 {
     foreach(LevelLayer lr, m_scene->LvlData->layers)
     {
@@ -262,7 +262,7 @@ void ItemWater::setLayer(QString layer)
     }
 }
 
-void ItemWater::arrayApply()
+void ItemPhysEnv::arrayApply()
 {
     bool found=false;
 
@@ -300,7 +300,7 @@ void ItemWater::arrayApply()
     m_scene->registerElement(this);
 }
 
-void ItemWater::removeFromArray()
+void ItemPhysEnv::removeFromArray()
 {
     bool found=false;
     if(m_data.index < (unsigned int)m_scene->LvlData->physez.size())
@@ -326,17 +326,17 @@ void ItemWater::removeFromArray()
 }
 
 
-void ItemWater::returnBack()
+void ItemPhysEnv::returnBack()
 {
     this->setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemWater::sourcePos()
+QPoint ItemPhysEnv::sourcePos()
 {
     return QPoint(m_data.x, m_data.y);
 }
 
-void ItemWater::updateColor()
+void ItemPhysEnv::updateColor()
 {
     switch(m_data.env_type)
     {
@@ -384,14 +384,14 @@ void ItemWater::updateColor()
     m_pen.setColor(m_color);
 }
 
-bool ItemWater::itemTypeIsLocked()
+bool ItemPhysEnv::itemTypeIsLocked()
 {
     if(!m_scene)
         return false;
     return m_scene->lock_water;
 }
 
-void ItemWater::setType(int tp)
+void ItemPhysEnv::setType(int tp)
 {
     m_data.env_type=tp;
     updateColor();
@@ -399,7 +399,7 @@ void ItemWater::setType(int tp)
     arrayApply();
 }
 
-void ItemWater::setRectSize(QRect rect)
+void ItemPhysEnv::setRectSize(QRect rect)
 {
     m_data.x = rect.x();
     m_data.y = rect.y();
@@ -411,7 +411,7 @@ void ItemWater::setRectSize(QRect rect)
     arrayApply();
 }
 
-void ItemWater::setSize(QSize sz)
+void ItemPhysEnv::setSize(QSize sz)
 {
     m_waterSize = sz;
     m_data.w = sz.width();
@@ -421,7 +421,7 @@ void ItemWater::setSize(QSize sz)
 }
 
 
-void ItemWater::setWaterData(LevelPhysEnv inD)
+void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
 {
     m_data = inD;
     m_waterSize = QSize(m_data.w, m_data.h);
@@ -434,7 +434,7 @@ void ItemWater::setWaterData(LevelPhysEnv inD)
     m_scene->registerElement(this);
 }
 
-void ItemWater::drawWater()
+void ItemPhysEnv::drawWater()
 {
 //    long x, y, h, w;
 
@@ -463,14 +463,14 @@ void ItemWater::drawWater()
 //    this->setPolygon( QPolygonF(points) );
 }
 
-QRectF ItemWater::boundingRect() const
+QRectF ItemPhysEnv::boundingRect() const
 {
     return QRectF(-1,-1,
                   m_waterSize.width()+m_penWidth,
                   m_waterSize.height()+m_penWidth);
 }
 
-void ItemWater::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void ItemPhysEnv::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setPen(m_pen);
     painter->setBrush(Qt::NoBrush);

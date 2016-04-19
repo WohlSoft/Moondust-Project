@@ -160,15 +160,6 @@ void obj_npc::copyTo(obj_npc &npc)
     npc.default_special_value       = default_special_value;
 }
 
-long dataconfigs::getNpcI(unsigned long itemID)
-{
-    if((itemID>0) && main_npc.contains(itemID))
-        return itemID;
-    else
-        return -1;
-}
-
-
 void dataconfigs::loadLevelNPC()
 {
     unsigned int i;

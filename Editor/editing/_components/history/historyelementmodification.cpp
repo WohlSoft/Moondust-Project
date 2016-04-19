@@ -202,7 +202,7 @@ void HistoryElementModification::processPhysEnv(const LevelPhysEnv &sourcePhysEn
     Q_UNUSED(sourcePhysEnv)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
-        ((ItemWater*)item)->removeFromArray();
+        ((ItemPhysEnv*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
     }

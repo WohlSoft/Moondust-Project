@@ -334,7 +334,7 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             else
             if((it->data(ITEM_TYPE).toString()=="Water"))
             {
-                if((lock_water)|| dynamic_cast<ItemWater*>(it)->m_locked) continue;
+                if((lock_water)|| dynamic_cast<ItemPhysEnv*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="Door_enter")||(it->data(ITEM_TYPE).toString()=="Door_exit"))

@@ -56,10 +56,10 @@ void HistoryElementResizeWater::redo()
 
 void HistoryElementResizeWater::historyUndoResizeWater(const LevelPhysEnv &/*orig*/, QGraphicsItem *item)
 {
-    ((ItemWater *)item)->setRectSize(m_oldSize);
+    ((ItemPhysEnv *)item)->setRectSize(m_oldSize);
 }
 
 void HistoryElementResizeWater::historyRedoResizeWater(const LevelPhysEnv &/*orig*/, QGraphicsItem *item)
 {
-    ((ItemWater *)item)->setRectSize(m_newSize);
+    ((ItemPhysEnv *)item)->setRectSize(m_newSize);
 }

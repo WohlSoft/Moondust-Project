@@ -70,14 +70,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     {
     case 0: //Tiles
     {
-        long j=0;
         obj_w_tile &tileConf = uTiles[itemID];
-
-        tImg = Items::getItemGFX(ItemTypes::WLD_Tile, itemID, false, &j);
-
+        tImg = Items::getItemGFX(ItemTypes::WLD_Tile, itemID, false, this);
         if(tImg.isNull())
         {
             tImg=uTileImg;
+        }
+        if(!tileConf.isValid)
+        {
+            tileConf = pConfigs->main_wtiles[1];
+            tileConf.image = uTileImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -159,20 +161,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 1: //Sceneries
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_scenery sceneConf;
-
-        getConfig_Scenery(itemID, j, animator, sceneConf, &noimage);
-
-        if(!noimage)
-        {
-            tImg = animates_Scenery[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        obj_w_scenery &sceneConf = uScenes[itemID];
+        tImg = Items::getItemGFX(ItemTypes::WLD_Scenery, itemID, false, this);
+        if(tImg.isNull())
         {
             tImg=uSceneImg;
+        }
+        if(!sceneConf.isValid)
+        {
+            sceneConf = pConfigs->main_wscene[1];
+            sceneConf.image = uSceneImg;
         }
 
         WldPlacingItems::gridSz=qRound(qreal(pConfigs->default_grid)/2);
@@ -257,20 +255,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 2: //Path
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_path pathConf;
-
-        getConfig_Path(itemID, j, animator, pathConf, &noimage);
-
-        if(!noimage)
-        {
-            tImg = animates_Paths[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        obj_w_path &pathConf = uPaths[itemID];
+        tImg = Items::getItemGFX(ItemTypes::WLD_Path, itemID, false, this);
+        if(tImg.isNull())
         {
             tImg=uPathImg;
+        }
+        if(!pathConf.isValid)
+        {
+            pathConf = pConfigs->main_wpaths[1];
+            pathConf.image = uPathImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -352,21 +346,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
     case 3: //Level
     {
-
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_level wlevelConf;
-
-        getConfig_Level(itemID, j, animator, wlevelConf, &noimage);
-
-        if(!noimage)
+        obj_w_level &wlevelConf = uLevels[itemID];
+        tImg = Items::getItemGFX(ItemTypes::WLD_Level, itemID, false, this);
+        if(tImg.isNull())
         {
-            tImg = animates_Levels[animator]->wholeImage();
+            tImg = uLevelImg;
         }
-
-        if((noimage)||(tImg.isNull()))
+        if(!wlevelConf.isValid)
         {
-            tImg=uLevelImg;
+            wlevelConf = pConfigs->main_wlevels[0];
+            wlevelConf.image = uLevelImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -451,9 +440,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {
             setFloodFiller(); return;
         }
-
         SwitchEditingMode(MODE_PlacingNew);
-
         break;
     }
 

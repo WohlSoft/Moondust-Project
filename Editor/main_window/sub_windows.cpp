@@ -124,10 +124,9 @@ WorldEdit *MainWindow::createWldChild(QMdiSubWindow **worldWindow_out)
 
 
 //Common functions
-
 int MainWindow::activeChildWindow()
 {
-    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+    if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
     {
         return activeChildWindow(activeSubWindow);
     }

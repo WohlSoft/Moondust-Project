@@ -22,7 +22,15 @@
 #include "items.h"
 #include "app_path.h"
 
-QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  *confId, QGraphicsScene *scene)
+/*!
+ * \brief Retreives sprite or single frame of the requested element
+ * \param itemType Type of the element (Block, BGO, NPC, Terrain tile, World map scenery, Path tile, Level tile)
+ * \param ItemID ID of requested element
+ * \param whole Retreive whole srite, overwise single default frame will be retured
+ * \param scene Pointer to edit scene, if NULL, current active scene will be retreived
+ * \return Pixmap which contains requested sprite
+ */
+QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, QGraphicsScene *scene)
 {
     MainWindow *main = MainWinConnect::pMainWin;
 
@@ -45,9 +53,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_block & block= scn->uBlocks[ItemID];
                 long animator=block.animator_id;
 
-                if( confId != NULL)
-                    * confId = ItemID;
-
                 if(whole)
                     return scn->animates_Blocks[animator]->wholeImage();
                 else
@@ -59,9 +64,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 //Check for index
                 obj_block & block= main->configs.main_block[ItemID];
-
-                if( confId != NULL)
-                    * confId = ItemID;
 
                 if(block.isValid)
                 {
@@ -96,9 +98,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_bgo & bgo= scn->uBGOs[ItemID];
                 long animator=bgo.animator_id;
 
-                if( confId != NULL)
-                    * confId = bgo.id;
-
                 if(whole)
                     return scn->animates_BGO[animator]->wholeImage();
                 else
@@ -109,9 +108,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 QPixmap tmpI;
 
                 obj_bgo & bgo= main->configs.main_bgo[ItemID];
-
-                if( confId != NULL)
-                    * confId = bgo.id;
 
                 if(bgo.isValid)
                 {
@@ -144,8 +140,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 obj_npc & npc= scn->uNPCs[ItemID];
                 long animator=npc.animator_id;
-                if( confId != NULL)
-                    * confId = npc.id;
 
                 if(whole)
                     return scn->animates_NPC[animator]->wholeImage();
@@ -155,12 +149,9 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
             else
             {
                 QPixmap tImg;
+
                 //Check Index exists
                 obj_npc & npc= main->configs.main_npc[ItemID];
-
-                if( confId != NULL)
-                     *confId = npc.id;
-
                 if(npc.isValid)
                 {
                     if(!whole)
@@ -191,9 +182,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_w_tile & tile= scn->uTiles[ItemID];
                 long animator=tile.animator_id;
 
-                if( confId != NULL)
-                    * confId = tile.id;
-
                 if(whole)
                     return scn->animates_Tiles[animator]->wholeImage();
                 else
@@ -206,9 +194,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 //Check for index
                 obj_w_tile &tile = main->configs.main_wtiles[ItemID];
-
-                if( confId != NULL)
-                    * confId = j;
 
                 if(tile.isValid)
                 {
@@ -244,9 +229,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_w_scenery & scenery= scn->uScenes[ItemID];
                 long animator=scenery.animator_id;
 
-                if( confId != NULL)
-                    * confId = scenery.id;
-
                 if(whole)
                     return scn->animates_Scenery[animator]->wholeImage();
                 else
@@ -257,9 +239,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 QPixmap tmpI;
 
                 obj_w_scenery & scenery= main->configs.main_wscene[ItemID];
-
-                if( confId != NULL)
-                    * confId = scenery.id;
 
                 if(scenery.isValid)
                 {
@@ -293,9 +272,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_w_path & wpath= scn->uPaths[ItemID];
                 long animator=wpath.animator_id;
 
-                if( confId != NULL)
-                    * confId = wpath.id;
-
                 if(whole)
                     return scn->animates_Paths[animator]->wholeImage();
                 else
@@ -306,9 +282,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 QPixmap tmpI;
 
                 obj_w_path & wpath= main->configs.main_wpaths[ItemID];
-
-                if( confId != NULL)
-                    * confId = wpath.id;
 
                 if(wpath.isValid)
                 {
@@ -342,9 +315,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 obj_w_level & level= scn->uLevels[ItemID];
                 long animator=level.animator_id;
 
-                if( confId != NULL)
-                    * confId = level.id;
-
                 if(whole)
                     return scn->animates_Levels[animator]->wholeImage();
                 else
@@ -355,9 +325,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 QPixmap tmpI;
 
                 obj_w_level & level= main->configs.main_wlevels[ItemID];
-
-                if( confId != NULL)
-                    * confId = level.id;
 
                 if(level.isValid)
                 {
@@ -372,7 +339,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 return tmpI;
             }
-
             break;
         }
     default:

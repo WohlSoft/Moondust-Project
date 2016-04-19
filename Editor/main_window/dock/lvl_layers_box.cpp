@@ -312,10 +312,10 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->m_data.layer==layerName)
+            if(((ItemPhysEnv *)(*it))->m_data.layer==layerName)
             {
-                delData.physez.push_back(((ItemWater *)(*it))->m_data);
-                ((ItemWater *)(*it))->removeFromArray();
+                delData.physez.push_back(((ItemPhysEnv *)(*it))->m_data);
+                ((ItemPhysEnv *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
@@ -420,7 +420,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->m_data.layer==layerName)
+            if(((ItemPhysEnv *)(*it))->m_data.layer==layerName)
             {
                 (*it)->setVisible(visible);
             }
@@ -478,10 +478,10 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->m_data.layer==layerName)
+            if(((ItemPhysEnv *)(*it))->m_data.layer==layerName)
             {
-                ((ItemWater *)(*it))->m_data.layer = newLayerName;
-                ((ItemWater *)(*it))->arrayApply();
+                ((ItemPhysEnv *)(*it))->m_data.layer = newLayerName;
+                ((ItemPhysEnv *)(*it))->arrayApply();
             }
         }
         else
@@ -568,12 +568,12 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         else
         if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
-            if(((ItemWater *)(*it))->m_data.layer==layerName)
+            if(((ItemPhysEnv *)(*it))->m_data.layer==layerName)
             {
-                modData.physez.push_back(((ItemWater *)(*it))->m_data);
-                ((ItemWater *)(*it))->m_data.layer = newLayerName;
+                modData.physez.push_back(((ItemPhysEnv *)(*it))->m_data);
+                ((ItemPhysEnv *)(*it))->m_data.layer = newLayerName;
                 (*it)->setVisible(visible);
-                ((ItemWater *)(*it))->arrayApply();
+                ((ItemPhysEnv *)(*it))->arrayApply();
             }
         }
         else

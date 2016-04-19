@@ -65,7 +65,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), block.name);
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::LVL_Block,
-                                    block.id, false, NULL, scn), QSize(32,32) ));
+                                    block.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), block.id);
     }
     else
@@ -75,7 +75,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), bgo.name);
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::LVL_BGO,
-                                    bgo.id, false, NULL, scn), QSize(32,32) ));
+                                    bgo.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), bgo.id);
     }
     else
@@ -84,7 +84,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::LVL_NPC,
-                                    m_conf->main_npc[index].id, false, NULL, scn), QSize(32,32) ));
+                                    m_conf->main_npc[index].id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
     }
     else
@@ -94,7 +94,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::WLD_Tile,
-                                    tile.id, false, NULL, scn), QSize(32,32) ));
+                                    tile.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), tile.id);
     }
     else
@@ -104,7 +104,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                             Items::getItemGFX(ItemTypes::WLD_Scenery,
-                            scenery.id, false, NULL, scn), QSize(32,32) ));
+                            scenery.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), scenery.id);
     }
     else
@@ -114,7 +114,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                                 Items::getItemGFX(ItemTypes::WLD_Path,
-                                wpath.id, false, NULL, scn), QSize(32,32) ));
+                                wpath.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), wpath.id);
     }
     else
@@ -124,7 +124,7 @@ void PiecesModel::addPiece(const int &index)
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
                            Items::getItemGFX(ItemTypes::WLD_Level,
-                                    wlevel.id, false, NULL, scn), QSize(32,32) ));
+                                    wlevel.id, false, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), wlevel.id);
     }
     endInsertRows();

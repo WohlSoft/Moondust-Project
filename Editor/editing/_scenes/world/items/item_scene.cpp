@@ -213,16 +213,11 @@ void ItemScene::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_scenery mergedSet;
+    if(!m_scene->uScenes.contains(target_id))
+        return;
 
-    //Get Scenery settings
-    m_scene->getConfig_Scenery(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_scenery &mergedSet = m_scene->uScenes[target_id];
+    long animator=mergedSet.animator_id;
 
     m_data.id = target_id;
     setSceneData(m_data, &mergedSet, &animator);
