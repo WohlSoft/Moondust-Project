@@ -71,7 +71,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     case 0: //Tiles
     {
         obj_w_tile &tileConf = uTiles[itemID];
-        tImg = Items::getItemGFX(ItemTypes::WLD_Tile, itemID, false, this);
+        Items::getItemGFX(&tileConf, tImg, false);
         if(tImg.isNull())
         {
             tImg=uTileImg;
@@ -162,7 +162,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     case 1: //Sceneries
     {
         obj_w_scenery &sceneConf = uScenes[itemID];
-        tImg = Items::getItemGFX(ItemTypes::WLD_Scenery, itemID, false, this);
+        Items::getItemGFX(&sceneConf, tImg, false);
         if(tImg.isNull())
         {
             tImg=uSceneImg;
@@ -253,7 +253,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     case 2: //Path
     {
         obj_w_path &pathConf = uPaths[itemID];
-        tImg = Items::getItemGFX(ItemTypes::WLD_Path, itemID, false, this);
+        Items::getItemGFX(&pathConf, tImg, false);
         if(tImg.isNull())
         {
             tImg=uPathImg;
@@ -344,7 +344,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     case 3: //Level
     {
         obj_w_level &wlevelConf = uLevels[itemID];
-        tImg = Items::getItemGFX(ItemTypes::WLD_Level, itemID, false, this);
+        Items::getItemGFX(&wlevelConf, tImg, false);
         if(tImg.isNull())
         {
             tImg = uLevelImg;

@@ -42,18 +42,20 @@ void TilesetItemButton::setConfig(dataconfigs *config)
     m_config = config;
 }
 
-void TilesetItemButton::applyItem(const int &i, const int &id, const int &width, const int &height)
+void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &width, const int &height)
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
-    QPixmap p = GraphicsHelps::squareImage(Items::getItemGFX(i, id, false, scn), QSize(wid,hei));
-    if(p.isNull()){
-        m_drawItem = QPixmap(wid,hei);
+    QPixmap p;
+    Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
+    if(p.isNull())
+    {
+        m_drawItem = QPixmap(wid, hei);
         return;
     }
     m_drawItem = p;
     m_id = (unsigned int)id;
-    m_itemType = static_cast<ItemTypes::itemTypes>(i);
+    m_itemType = static_cast<ItemTypes::itemTypes>(type_i);
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)

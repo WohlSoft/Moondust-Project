@@ -123,8 +123,8 @@ void tileset::dropEvent(QDropEvent *event)
         int objID;
         stream >> objID;
 
-        //QPixmap scaledPix = pixmap.scaled(m_baseSize, m_baseSize,Qt::KeepAspectRatio);
-        QPixmap scaledPix = getScaledPixmapById(objID);
+        QPixmap scaledPix;
+        Items::getItemGFX(m_type, objID, scaledPix, scn, false, QSize(m_baseSize, m_baseSize));
 
         piecePixmaps.append(scaledPix);
         pieceRects.append(square);
@@ -208,100 +208,6 @@ const QRect tileset::targetSquare(const QPoint &position) const
     return QRect(position.x()/getBaseSize() * getBaseSize(), position.y()/getBaseSize() * getBaseSize(), getBaseSize(), getBaseSize());
 }
 
-QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
-{
-    switch (m_type) {
-    case ItemTypes::LVL_Block:
-    {
-        if(!m_conf->main_block.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, scn),
-                    QSize(m_baseSize,m_baseSize));
-        break;
-    }
-    case ItemTypes::LVL_BGO:
-    {
-        if(!m_conf->main_bgo.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, scn),
-                    QSize(m_baseSize,m_baseSize));
-        break;
-    }
-    case ItemTypes::LVL_NPC:
-    {
-        if(!m_conf->main_npc.contains(id))
-            return QPixmap(m_baseSize, m_baseSize);
-        return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, scn),
-                    QSize(m_baseSize,m_baseSize));
-        break;
-    }
-    case ItemTypes::WLD_Tile:
-    {
-        if(!m_conf->main_wtiles.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return Items::getItemGFX(m_type, id, false, scn)
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
-        break;
-    }
-    case ItemTypes::WLD_Path:
-    {
-        if(!m_conf->main_wpaths.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return Items::getItemGFX(m_type, id, false, scn)
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
-        break;
-    }
-    case ItemTypes::WLD_Scenery:
-    {
-        if(!m_conf->main_wscene.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, scn),
-                    QSize(m_baseSize,m_baseSize));
-        break;
-    }
-    case ItemTypes::WLD_Level:
-    {
-        if(!m_conf->main_wlevels.contains(id))
-        {
-            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
-            xxx.fill(Qt::red);
-            return xxx;
-        }
-        return GraphicsHelps::squareImage(
-                    Items::getItemGFX(m_type, id, false, scn),
-                    QSize(m_baseSize,m_baseSize));
-        break;
-    }
-    default:
-        break;
-    }
-    return QPixmap(m_baseSize, m_baseSize);
-}
-
 QString tileset::getMimeType()
 {
     switch (m_type) {
@@ -378,7 +284,9 @@ void tileset::loadSimpleTileset(const SimpleTileset &tileset)
     setType(tileset.type);
     setName(tileset.tileSetName);
     for(int i = 0; i < tileset.items.size(); ++i){
-        piecePixmaps.append(getScaledPixmapById(tileset.items[i].id));
+        QPixmap scaledPix;
+        Items::getItemGFX( m_type, tileset.items[i].id, scaledPix, scn, false, QSize(m_baseSize, m_baseSize) );
+        piecePixmaps.append(scaledPix);
         pieceRects.append(QRect(tileset.items[i].col*m_baseSize, tileset.items[i].row*m_baseSize, m_baseSize, m_baseSize));
         pieceID.append(tileset.items[i].id);
     }

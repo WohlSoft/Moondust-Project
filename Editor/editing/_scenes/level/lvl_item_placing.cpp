@@ -89,7 +89,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 0: //blocks
         {
             obj_block &blockC = uBlocks[itemID];
-            tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, this);
+            Items::getItemGFX(&blockC, tImg, false);
             if(tImg.isNull())
             {
                 tImg = uBlockImg;
@@ -207,7 +207,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 1: //bgos
     {
         obj_bgo& bgoC = uBGOs[itemID];
-        tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, this);
+        Items::getItemGFX(&bgoC, tImg, false);
         if(tImg.isNull())
         {
             tImg=uBgoImg;

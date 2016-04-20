@@ -20,6 +20,7 @@
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/data_array.h>
+#include <common_features/items.h>
 
 #include <editing/_dialogs/musicfilelist.h>
 
@@ -175,15 +176,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_block &blockItem = (*array)[i];
-            QPixmap *image = blockItem.cur_image;
-            if(!image)
-                image = &blockItem.image;
-            QPixmap tmpI = GraphicsHelps::squareImage(
-                                image->copy(0,
-                                            blockItem.frame_h*blockItem.display_frame,
-                                            image->width(),
-                                            blockItem.frame_h),
-                                                  QSize(16,16));
+            QPixmap tmpI;
+            Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number( blockItem.id ) );
@@ -198,16 +192,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_bgo &bgoD = (*array)[i];
-            QPixmap *image = bgoD.cur_image;
-            if(!image)
-                image = &bgoD.image;
-            QPixmap tmpI = GraphicsHelps::squareImage(
-                                image->copy(0,
-                                             bgoD.frame_h * bgoD.display_frame,
-                                                image->width(),
-                                                bgoD.frame_h),
-                                                QSize(16,16));
-
+            QPixmap tmpI;
+            Items::getItemGFX(&bgoD, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( bgoD.name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(bgoD.id) );
@@ -222,17 +208,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_npc &npcItem = (*array)[i];
-            QPixmap *image = npcItem.cur_image;
-            if(!image)
-                image = &npcItem.image;
-            //Add category
-            QPixmap tmpI = GraphicsHelps::squareImage(
-                        image->copy(0,
-                                    npcItem.gfx_h*npcItem.display_frame,
-                                    image->width(),
-                                    npcItem.gfx_h ),
-                        QSize(16,16) );
-
+            QPixmap tmpI;
+            Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( npcItem.name, ui->Sel_List_NPC );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(npcItem.id) );
@@ -250,7 +227,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             obj_w_scenery &sceneryItem = (*array)[i];
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("scene-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
-            item->setIcon( QIcon( sceneryItem.image ) );
+            QPixmap tmpI;
+            Items::getItemGFX(&sceneryItem, tmpI, false, QSize(16,16));
+            item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(sceneryItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Scenery->addItem(item);
@@ -265,7 +244,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             obj_w_level &levelItem = (*array)[i];
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("level-%1").arg(levelItem.id), ui->Sel_List_Level);
-            item->setIcon( QIcon( levelItem.image ) );
+            QPixmap tmpI;
+            Items::getItemGFX(&levelItem, tmpI, false, QSize(16,16));
+            item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(levelItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Level->addItem(item);
@@ -432,15 +413,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             for(int i=0; i < scene_lvl->custom_Blocks.size(); i++)
             {
                 obj_block &block=*(scene_lvl->custom_Blocks[i]);
-
-                if(block.animated)
-                    tmpI = block.cur_image->copy(0,
-                                (int)round(block.cur_image->height() / block.frames) * block.display_frame,
-                                block.cur_image->width(),
-                                (int)round(block.cur_image->height() / block.frames));
-                else
-                    tmpI = *block.cur_image;
-
+                Items::getItemGFX(&block, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( block.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(block.id) );
@@ -485,17 +458,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                     ((blockItem.group==grp_blocks)||(grp_blocks==allLabel)||(grp_blocks==""))&&
                     ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
             {
-                QPixmap *image = blockItem.cur_image;
-                if(!image)
-                    image = &blockItem.image;
-                if(blockItem.animated)
-                    tmpI = image->copy(0,
-                                (int)round(image->height() / blockItem.frames) * blockItem.display_frame,
-                                image->width(),
-                                (int)round(image->height() / blockItem.frames));
-                else
-                    tmpI = *image;
-
+                Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( blockItem.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(blockItem.id) );
@@ -537,14 +500,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             for(int i=0; i<scene_lvl->custom_BGOs.size(); i++)
             {
                 obj_bgo &bgo = *(scene_lvl->custom_BGOs[i]);
-                if(bgo.animated)
-                    tmpI = bgo.cur_image->copy(0,
-                                (int)round(bgo.cur_image->height() / bgo.frames) * bgo.display_frame,
-                                bgo.cur_image->width(),
-                                (int)round(bgo.cur_image->height() / bgo.frames));
-                else
-                    tmpI = *bgo.cur_image;
-
+                Items::getItemGFX(&bgo, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( bgo.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(bgo.id) );
@@ -590,16 +546,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                     ((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
                )
             {
-                QPixmap *image = bgoItem.cur_image;
-                if(!image)
-                    image = &bgoItem.image;
-                if(bgoItem.animated)
-                    tmpI = image->copy(0,
-                                (int)round(image->height() / bgoItem.frames)*bgoItem.display_frame,
-                                image->width(),
-                                (int)round(image->height() / bgoItem.frames) );
-                else
-                    tmpI = *image;
+                Items::getItemGFX(&bgoItem, tmpI, false, QSize(16,16));
 
                 item = new QListWidgetItem( bgoItem.name );
                 item->setIcon( QIcon( tmpI ) );
@@ -641,9 +588,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             for(int i=0; i<scene_lvl->custom_NPCs.size();i++)
             {
                 obj_npc& npc = *(scene_lvl->custom_NPCs[i]);
-
-                tmpI = GraphicsHelps::squareImage(edit_lvl->scene->getNPCimg(npc.id),QSize(16,16));
-
+                Items::getItemGFX(&npc, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( npc.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(npc.id) );
@@ -688,14 +633,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                     ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
               )
             {
-                QPixmap *image = npcItem.cur_image;
-                if(!image)
-                    image = &npcItem.image;
-                tmpI = GraphicsHelps::squareImage(image->copy(0,
-                                                              0,
-                                                              image->width(),
-                                                              npcItem.gfx_h ),
-                                                  QSize(16,16));
+                Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( npcItem.name );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(npcItem.id) );
@@ -813,27 +751,17 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i<array_tiles->size(); i++)
     {
         obj_w_tile &tileItem = (*array_tiles)[i];
-        QPixmap *image = tileItem.cur_image;
-        if(!image)
-            image = &tileItem.image;
-        if(tileItem.animated)
-            tmpI = image->copy(0,
-                        (int)round(image->height() / tileItem.frames) * tileItem.display_frame,
-                        image->width(),
-                        (int)round(image->height() / tileItem.frames));
-        else
-            tmpI = *image;
-
+        Items::getItemGFX(&tileItem, tmpI, false, QSize(32, 32));
         QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.row, tileItem.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(tileItem.id) );
-            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Tile->setRowHeight(tileItem.row, 34);
             ui->Sel_List_Tile->setColumnWidth(tileItem.col, 34);
@@ -858,7 +786,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, 0 );
-            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Tile->setRowHeight(0, 34);
             ui->Sel_List_Tile->setColumnWidth(0, 34);
@@ -872,17 +800,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i<array_scenes->size(); i++)
     {
         obj_w_scenery &sceneItem=(*array_scenes)[i];
-        QPixmap *image = sceneItem.cur_image;
-        if(!image)
-            image = &sceneItem.image;
-        if(sceneItem.animated)
-            tmpI = image->copy(0,
-                        (int)round(image->height() / sceneItem.frames) * sceneItem.display_frame,
-                        image->width(),
-                        (int)round(image->height() / sceneItem.frames));
-        else
-            tmpI = *image;
-
+        Items::getItemGFX(&sceneItem, tmpI, false, QSize(32, 32));
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
         item->setText( NULL );
@@ -915,27 +833,18 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for( int i=1; i<array_paths->size(); i++ )
     {
         obj_w_path &pathItem = (*array_paths)[i];
-        QPixmap *image = pathItem.cur_image;
-        if(!image)
-            image = &pathItem.image;
-        if(pathItem.animated)
-            tmpI = image->copy(0,
-                        (int)round(image->height() / pathItem.frames)*pathItem.display_frame,
-                        image->width(),
-                        (int)round(image->height() / pathItem.frames));
-        else
-            tmpI = *image;
+        Items::getItemGFX(&pathItem, tmpI, false, QSize(32, 32));
 
         QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.row, pathItem.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(pathItem.id) );
-            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Path->setRowHeight(pathItem.row+roff, 34);
             ui->Sel_List_Path->setColumnWidth(pathItem.col, 34);
@@ -979,20 +888,10 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
            (conf->marker_wlvl.bigpath==levelItem.id))
             continue;
 
-        QPixmap *image = levelItem.cur_image;
-        if(!image)
-            image = &levelItem.image;
-
-        if(levelItem.animated)
-            tmpI = image->copy(0,
-                        (int)round(image->height() / levelItem.frames)*levelItem.display_frame,
-                        levelItem.image.width(),
-                        (int)round(image->height() / levelItem.frames));
-        else
-            tmpI = *image;
+        Items::getItemGFX(&levelItem, tmpI, false, QSize(32, 32));
 
         item = new QListWidgetItem();
-        item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+        item->setIcon( QIcon( tmpI ) );
         item->setText( NULL );
         item->setData(3, QString::number(levelItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );

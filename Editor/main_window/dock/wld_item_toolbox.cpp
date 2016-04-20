@@ -88,9 +88,14 @@ void MainWindow::on_actionWLDToolBox_triggered(bool checked)
 
 void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 {
-    if((setGrp)&&(mw()->activeChildWindow()!=3)) return;
+    if( (setGrp) && (mw()->activeChildWindow() !=3) )
+        return;
     WorldEdit *edit = mw()->activeWldEditWin();
-    if(!edit) return;
+    if( (edit==NULL) || (!edit->sceneCreated) )
+        return;
+    WldScene* scene = edit->scene;
+    if(!scene)
+        return;
 
     allWLabel    = MainWindow::tr("[all]");
     customWLabel = MainWindow::tr("[custom]");
@@ -136,9 +141,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebugQD("WorldTools -> Table size");
     //get Table size
-    for(int i=1; i < mw()->configs.main_wtiles.size(); i++)
+    for(int i=1; i < scene->uTiles.size(); i++)
     {
-        obj_w_tile &tileItem = mw()->configs.main_wtiles[i];
+        obj_w_tile &tileItem = scene->uTiles[i];
         if( tableRows < (tileItem.row+1) ) tableRows = tileItem.row + 1;
         if( tableCols < (tileItem.col+1) ) tableCols = tileItem.col + 1;
     }
@@ -149,12 +154,10 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebugQD("WorldTools -> Table of tiles");
-    for(int i=1; i < mw()->configs.main_wtiles.size(); i++)
+    for(int i=1; i < scene->uTiles.size(); i++)
     {
-        obj_w_tile &tileItem = mw()->configs.main_wtiles[i];
-        tmpI = GraphicsHelps::squareImage(
-                    Items::getItemGFX(ItemTypes::WLD_Tile, tileItem.id), QSize(32,32)
-                    );
+        obj_w_tile &tileItem = scene->uTiles[i];
+        Items::getItemGFX(&tileItem, tmpI, false, QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
 
@@ -175,10 +178,10 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebugQD("WorldTools -> List of sceneries");
-    for(int i=1; i<mw()->configs.main_wscene.size(); i++)
+    for(int i=1; i<scene->uScenes.size(); i++)
     {
-            obj_w_scenery &sceneItem = mw()->configs.main_wscene[i];
-            tmpI = GraphicsHelps::squareImage( Items::getItemGFX(ItemTypes::WLD_Scenery, sceneItem.id), QSize(32,32) );
+            obj_w_scenery &sceneItem = scene->uScenes[i];
+            Items::getItemGFX(&sceneItem, tmpI, false, QSize(32,32));
 
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI ) );
@@ -194,9 +197,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebugQD("WorldTools -> Table of paths size");
     //get Table size
-    for(int i=1; i < mw()->configs.main_wpaths.size(); i++ )
+    for(int i=1; i < scene->uPaths.size(); i++ )
     {
-        obj_w_path &pathItem = mw()->configs.main_wpaths[i];
+        obj_w_path &pathItem = scene->uPaths[i];
         if( tableRows < (pathItem.row+1) ) tableRows=pathItem.row + 1;
         if( tableCols < (pathItem.col+1) ) tableCols=pathItem.col + 1;
     }
@@ -207,10 +210,10 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebugQD("WorldTools -> Table of paths");
-    for(int i=1; i < mw()->configs.main_wpaths.size(); i++ )
+    for(int i=1; i < scene->uPaths.size(); i++ )
     {
-        obj_w_path &pathItem = mw()->configs.main_wpaths[i];
-        tmpI = GraphicsHelps::squareImage( Items::getItemGFX(ItemTypes::WLD_Path, pathItem.id), QSize(32,32) );
+        obj_w_path &pathItem = scene->uPaths[i];
+        Items::getItemGFX(&pathItem, tmpI, false, QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
 
@@ -231,15 +234,15 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebugQD("WorldTools -> List of levels");
-    for(int i=0; i<mw()->configs.main_wlevels.size(); i++)
+    for(int i=0; i < scene->uLevels.size(); i++)
     {
-        obj_w_level& levelItem = mw()->configs.main_wlevels[i];
+        obj_w_level& levelItem = scene->uLevels[i];
 
         if((mw()->configs.marker_wlvl.path==levelItem.id)||
            (mw()->configs.marker_wlvl.bigpath==levelItem.id))
             continue;
 
-        tmpI = GraphicsHelps::squareImage( Items::getItemGFX(ItemTypes::WLD_Level, levelItem.id), QSize(32,32) );
+        Items::getItemGFX(&levelItem, tmpI, false, QSize(32,32));
 
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );

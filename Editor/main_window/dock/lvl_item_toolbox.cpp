@@ -138,11 +138,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
         {
             obj_block &block = *scene->custom_Blocks[i];
-
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, edit->scene),
-                        QSize(48,48));
-
+            Items::getItemGFX(&block, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( block.name );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(block.id) );
@@ -185,10 +181,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                 ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
         {
 
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_Block, blockItem.id),
-                        QSize(48,48));
-
+            Items::getItemGFX(&blockItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( blockItem.name );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(blockItem.id) );
@@ -228,9 +221,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         for(int i=0; i < scene->custom_BGOs.size(); i++)
         {
             obj_bgo &bgo = *scene->custom_BGOs[i];
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, edit->scene),
-                        QSize(48,48));
+            Items::getItemGFX(&bgo, tmpI, false, QSize(48,48));
 
             item = new QListWidgetItem( bgo.name );
             item->setIcon( QIcon( tmpI ) );
@@ -274,10 +265,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
            )
         {
 
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_BGO, bgoItem.id),
-                        QSize(48,48));
-
+            Items::getItemGFX(&bgoItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( bgoItem.name );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(bgoItem.id) );
@@ -318,9 +306,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             obj_npc &npc = *edit->scene->custom_NPCs[i];
 
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_NPC, npc.id),
-                        QSize(48,48));
+            Items::getItemGFX(&npc, tmpI, false, QSize(48,48));
 
             item = new QListWidgetItem( npc.name.isEmpty() ? QString("npc-%1").arg(npc.id) : npc.name );
             item->setIcon( QIcon( tmpI ) );
@@ -364,11 +350,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                 ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
           )
         {
-
-            tmpI = GraphicsHelps::squareImage(
-                        Items::getItemGFX(ItemTypes::LVL_NPC, npcItem.id),
-                        QSize(48,48));
-
+            Items::getItemGFX(&npcItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( npcItem.name );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(npcItem.id) );

@@ -58,73 +58,76 @@ QVariant PiecesModel::data(const QModelIndex &index, int role) const
 void PiecesModel::addPiece(const int &index)
 {
     beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
+    LvlScene * scene_lvl = dynamic_cast<LvlScene*>(scn);
+    WldScene * scene_wld = dynamic_cast<WldScene*>(scn);
 
     if(m_type==LEVELPIECE_BLOCK)
     {
-        obj_block& block = m_conf->main_block[index];
+        obj_block& block = scene_lvl ? scene_lvl->uBlocks[index] : m_conf->main_block[index];
         pixmapNames.insert(pixmaps.size(), block.name);
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::LVL_Block,
-                                    block.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&block, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), block.id);
     }
     else
     if(m_type==LEVELPIECE_BGO)
     {
-        obj_bgo& bgo = m_conf->main_bgo[index];
+        obj_bgo& bgo = scene_lvl ? scene_lvl->uBGOs[index] : m_conf->main_bgo[index];
         pixmapNames.insert(pixmaps.size(), bgo.name);
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::LVL_BGO,
-                                    bgo.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&bgo, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), bgo.id);
     }
     else
     if(m_type==LEVELPIECE_NPC)
     {
-        pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::LVL_NPC,
-                                    m_conf->main_npc[index].id, false, scn), QSize(32,32) ));
-        pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
+        obj_npc& npc = scene_lvl ? scene_lvl->uNPCs[index] : m_conf->main_npc[index];
+        pixmapNames.insert(pixmaps.size(), npc.name);
+        QPixmap img;
+        Items::getItemGFX(&npc, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
+        pixmapId.insert(pixmaps.size(), npc.id);
     }
     else
     if(m_type==WORLDPIECE_TILE)
     {
-        obj_w_tile& tile = m_conf->main_wtiles[index];
+        obj_w_tile& tile = scene_wld ? scene_wld->uTiles[index] : m_conf->main_wtiles[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::WLD_Tile,
-                                    tile.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&tile, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), tile.id);
     }
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
-        obj_w_scenery& scenery = m_conf->main_wscene[index];
+        obj_w_scenery& scenery = scene_wld ? scene_wld->uScenes[index] : m_conf->main_wscene[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                            Items::getItemGFX(ItemTypes::WLD_Scenery,
-                            scenery.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&scenery, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), scenery.id);
     }
     else
     if(m_type==WORLDPIECE_PATH)
     {
-        obj_w_path& wpath = m_conf->main_wpaths[index];
+        obj_w_path& wpath = scene_wld ? scene_wld->uPaths[index] : m_conf->main_wpaths[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                                Items::getItemGFX(ItemTypes::WLD_Path,
-                                wpath.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&wpath, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), wpath.id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
-        obj_w_level& wlevel = m_conf->main_wlevels[index];
+        obj_w_level& wlevel = scene_wld ? scene_wld->uLevels[index] : m_conf->main_wlevels[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
-                           Items::getItemGFX(ItemTypes::WLD_Level,
-                                    wlevel.id, false, scn), QSize(32,32) ));
+        QPixmap img;
+        Items::getItemGFX(&wlevel, img, false, QSize(32,32));
+        pixmaps.insert(pixmaps.size(), img);
         pixmapId.insert(pixmaps.size(), wlevel.id);
     }
     endInsertRows();
@@ -132,16 +135,16 @@ void PiecesModel::addPiece(const int &index)
 
 QString PiecesModel::getMimeType() const
 {
-    switch (m_type) {
-    case LEVELPIECE_BLOCK: return QString("text/x-pge-piece-block");
-    case LEVELPIECE_BGO: return QString("text/x-pge-piece-bgo");
-    case LEVELPIECE_NPC: return QString("text/x-pge-piece-npc");
-    case WORLDPIECE_TILE: return QString("text/x-pge-piece-tile");
-    case WORLDPIECE_SCENERY: return QString("text/x-pge-piece-scenery");
-    case WORLDPIECE_PATH: return QString("text/x-pge-piece-path");
-    case WORLDPIECE_LEVEL: return QString("text/x-pge-piece-level");
-    default:
-        break;
+    switch (m_type)
+    {
+        case LEVELPIECE_BLOCK:      return QString("text/x-pge-piece-block");
+        case LEVELPIECE_BGO:        return QString("text/x-pge-piece-bgo");
+        case LEVELPIECE_NPC:        return QString("text/x-pge-piece-npc");
+        case WORLDPIECE_TILE:       return QString("text/x-pge-piece-tile");
+        case WORLDPIECE_SCENERY:    return QString("text/x-pge-piece-scenery");
+        case WORLDPIECE_PATH:       return QString("text/x-pge-piece-path");
+        case WORLDPIECE_LEVEL:      return QString("text/x-pge-piece-level");
+        default: break;
     }
     return QString("image/x-pge-piece");
 }
