@@ -35,6 +35,12 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
     obj_block &mergedSet = uBlocks[block.id];
     long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_block[1];
+        mergedSet.image = uBlockImg;
+    }
 
     QPoint newPos = QPoint(block.x, block.y);
     if(toGrid)
@@ -61,6 +67,12 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
     obj_bgo &mergedSet = uBGOs[bgo.id];
     long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_bgo[1];
+        mergedSet.image = uBgoImg;
+    }
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
@@ -88,6 +100,12 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
     obj_npc &mergedSet = uNPCs[npc.id];
     long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_npc[1];
+        mergedSet.image = uNpcImg;
+    }
 
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
@@ -111,7 +129,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
 
 
-void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
+void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
 {
     QPoint newPos = QPoint(water.x, water.y);
     if(toGrid)
@@ -121,10 +139,10 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
         water.y = newPos.y();
     }
 
-    ItemWater *WATERItem = new ItemWater(this);
-    WATERItem->setWaterData(water);
+    ItemPhysEnv *PhysEnvItem = new ItemPhysEnv(this);
+    PhysEnvItem->setPhysEnvData(water);
 
-    if(PasteFromBuffer) WATERItem->setSelected(true);
+    if(PasteFromBuffer) PhysEnvItem->setSelected(true);
 }
 
 

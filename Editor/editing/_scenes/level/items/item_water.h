@@ -24,20 +24,20 @@
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"
 
-class ItemWater : public LvlBaseItem
+class ItemPhysEnv : public LvlBaseItem
 {
     Q_OBJECT
     void construct();
 public:
-    ItemWater(QGraphicsItem *parent=0);
-    ItemWater(LvlScene *parentScene, QGraphicsItem *parent=0);
-    ~ItemWater();
+    ItemPhysEnv(QGraphicsItem *parent=0);
+    ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent=0);
+    ~ItemPhysEnv();
 
     void setSize(QSize sz);
     void setRectSize(QRect rect);
 
     void setType(int tp);
-    void setWaterData(LevelPhysEnv inD);
+    void setPhysEnvData(LevelPhysEnv inD);
 
     void drawWater();
 

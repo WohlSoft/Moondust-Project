@@ -806,12 +806,12 @@ void HistoryElementItemSetting::historyRedoSettingsChangeNPCNPC(const LevelNPC &
 
 void HistoryElementItemSetting::historyUndoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item)
 {
-    ((ItemWater*)item)->setType(sourcePhysEnv.env_type);
+    ((ItemPhysEnv*)item)->setType(sourcePhysEnv.env_type);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsTypeWater(const LevelPhysEnv &/*sourcePhysEnv*/, QGraphicsItem *item)
 {
-    ((ItemWater*)item)->setType(m_modData.toBool() ? 0 : 1);
+    ((ItemPhysEnv*)item)->setType(m_modData.toBool() ? 0 : 1);
 }
 
 void HistoryElementItemSetting::historyUndoSettingsTwoWayDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)

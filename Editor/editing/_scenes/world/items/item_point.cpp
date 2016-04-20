@@ -24,6 +24,10 @@ void ItemPoint::construct()
 {
     this->setData(ITEM_WIDTH, QString::number(32));
     this->setData(ITEM_HEIGHT, QString::number(32));
+    m_imageSize.setX(0);
+    m_imageSize.setY(0);
+    m_imageSize.setWidth(32);
+    m_imageSize.setHeight(32);
 }
 
 ItemPoint::ItemPoint(QGraphicsItem *parent)
@@ -60,8 +64,8 @@ void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     }
     else
     {
-        QPixmap image = m_scene->pointAnimation.image();
-        painter->drawPixmap(image.rect(), image, image.rect());
+        QPixmap &image = m_scene->pointAnimation.wholeImage();
+        painter->drawPixmap(m_imageSize, image, m_scene->pointAnimation.frameRectF());
     }
 
     if(this->isSelected())

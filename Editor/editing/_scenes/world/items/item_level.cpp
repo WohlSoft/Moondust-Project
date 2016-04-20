@@ -289,18 +289,13 @@ bool ItemLevel::itemTypeIsLocked()
 
 void ItemLevel::transformTo(long target_id)
 {
-    if(target_id<1) return;
+    if(target_id < 0) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_level mergedSet;
+    if(!m_scene->uLevels.contains(target_id))
+        return;
 
-    //Get Level settings
-    m_scene->getConfig_Level(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_level &mergedSet = m_scene->uLevels[target_id];
+    long animator = mergedSet.animator_id;
 
     m_data.id = target_id;
     setLevelData(m_data, &mergedSet, &animator, &m_pathID, &m_bPathID);
@@ -456,7 +451,9 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     if(m_data.bigpathbg)
     {
         if(m_scene->animates_Levels.size()>m_bPathID)
-            painter->drawPixmap(m_imageSizeBP, m_scene->animates_Levels[m_bPathID]->image(), m_scene->animates_Levels[m_bPathID]->image().rect());
+            painter->drawPixmap(m_imageSizeBP,
+                                m_scene->animates_Levels[m_bPathID]->wholeImage(),
+                                m_scene->animates_Levels[m_bPathID]->frameRect());
         else
             painter->drawRect(QRect(0,0,32,32));
     }
@@ -465,13 +462,17 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     if(m_data.pathbg)
     {
         if(m_scene->animates_Levels.size()>m_pathID)
-            painter->drawPixmap(m_imageSizeP, m_scene->animates_Levels[m_pathID]->image(), m_scene->animates_Levels[m_pathID]->image().rect());
+            painter->drawPixmap(m_imageSizeP,
+                                m_scene->animates_Levels[m_pathID]->wholeImage(),
+                                m_scene->animates_Levels[m_pathID]->frameRect());
         else
             painter->drawRect(QRect(0,0,32,32));
     }
 
     if(m_scene->animates_Levels.size()>m_animatorID)
-        painter->drawPixmap(m_imageSize, m_scene->animates_Levels[m_animatorID]->image(), m_scene->animates_Levels[m_animatorID]->image().rect());
+        painter->drawPixmap(m_imageSize,
+                            m_scene->animates_Levels[m_animatorID]->wholeImage(),
+                            m_scene->animates_Levels[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -491,36 +492,29 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
 {
     if(aniID < m_scene->animates_Levels.size())
     {
-    m_imgOffsetX = (int)qRound( -( qreal(m_scene->animates_Levels[aniID]->image().width() - m_gridSize)  / 2 ) );
-    m_imgOffsetY = (int)qRound( -qreal(m_scene->animates_Levels[aniID]->image().height()) + m_gridSize );
-    m_imageSize = QRectF(m_imgOffsetX,m_imgOffsetY,
-                m_scene->animates_Levels[aniID]->image().width(),
-                m_scene->animates_Levels[aniID]->image().height()
-                );
+        QRect frameRect = m_scene->animates_Levels[aniID]->frameRect();
+        m_imgOffsetX = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
+        m_imgOffsetY = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
+        m_imageSize = QRectF(m_imgOffsetX,m_imgOffsetY, frameRect.width(), frameRect.height() );
     }
 
     if(path < m_scene->animates_Levels.size())
     {
-    m_imgOffsetXp = (int)qRound( -( qreal(m_scene->animates_Levels[path]->image().width() - m_gridSize)  / 2 ) );
-    m_imgOffsetYp = (int)qRound( -qreal(m_scene->animates_Levels[path]->image().height()) + m_gridSize );
-    m_imageSizeP = QRectF(m_imgOffsetXp,m_imgOffsetYp,
-                m_scene->animates_Levels[path]->image().width(),
-                m_scene->animates_Levels[path]->image().height()
-                );
+        QRect frameRect = m_scene->animates_Levels[path]->frameRect();
+        m_imgOffsetXp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
+        m_imgOffsetYp = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
+        m_imageSizeP = QRectF(m_imgOffsetXp,m_imgOffsetYp, frameRect.width(), frameRect.height() );
     }
 
     if(bPath < m_scene->animates_Levels.size())
     {
-    m_imgOffsetXbp = (int)qRound( -( qreal(m_scene->animates_Levels[bPath]->image().width() - m_gridSize)  / 2 ) );
-    m_imgOffsetYbp = (int)qRound( -qreal(m_scene->animates_Levels[bPath]->image().height()) + qreal(m_gridSize)*1.25);
-    m_imageSizeBP = QRectF(m_imgOffsetXbp,m_imgOffsetYbp,
-                m_scene->animates_Levels[bPath]->image().width(),
-                m_scene->animates_Levels[bPath]->image().height()
-                );
+        QRect frameRect = m_scene->animates_Levels[bPath]->frameRect();
+        m_imgOffsetXbp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
+        m_imgOffsetYbp = (int)qRound( -qreal(frameRect.height()) + qreal(m_gridSize)*1.25);
+        m_imageSizeBP = QRectF(m_imgOffsetXbp,m_imgOffsetYbp, frameRect.width(), frameRect.height() );
     }
 
-
-    m_imageSizeTarget=m_imageSize;
+    m_imageSizeTarget = m_imageSize;
 
     if(m_data.bigpathbg)
     {

@@ -448,10 +448,6 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         scene->setMessageBoxItem(false);
         scene->clear();
         LogDebug("!<-Cleared->!");
-        scene->uTiles.clear();
-        scene->uScenes.clear();
-        scene->uPaths.clear();
-        scene->uLevels.clear();
 
         LogDebug("!<-Delete animators->!");
         while(! scene->animates_Tiles.isEmpty() )

@@ -200,16 +200,11 @@ void ItemTile::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_tile mergedSet;
+    if(!m_scene->uTiles.contains(target_id))
+        return;
 
-    //Get Tile settings
-    m_scene->getConfig_Tile(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_tile &mergedSet = m_scene->uTiles[target_id];
+    long animator=mergedSet.animator_id;
 
     m_data.id = target_id;
     setTileData(m_data, &mergedSet, &animator);
@@ -327,7 +322,9 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         return;
     }
     if(m_scene->animates_Tiles.size()>m_animatorID)
-        painter->drawPixmap(m_imageSize, m_scene->animates_Tiles[m_animatorID]->image(), m_imageSize);
+        painter->drawPixmap(m_imageSize,
+                            m_scene->animates_Tiles[m_animatorID]->wholeImage(),
+                            m_scene->animates_Tiles[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -345,10 +342,10 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
 void ItemTile::setAnimator(long aniID)
 {
     if(aniID<m_scene->animates_Tiles.size())
-    m_imageSize = QRectF(0,0,
-                m_scene->animates_Tiles[aniID]->image().width(),
-                m_scene->animates_Tiles[aniID]->image().height()
-                );
+    {
+        QRect frameRect = m_scene->animates_Tiles[aniID]->frameRect();
+        m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
+    }
 
     setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())) ); //width
     setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())) ); //height

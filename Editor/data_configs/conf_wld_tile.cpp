@@ -21,38 +21,39 @@
 
 #include "data_configs.h"
 
-long dataconfigs::getTileI(unsigned long itemID)
+obj_w_tile::obj_w_tile()
 {
-    long j;
-    bool found=false;
-
-    if(itemID < (unsigned int)index_wtiles.size())
-    {
-        j = index_wtiles[itemID].i;
-
-        if(j < main_wtiles.size())
-        {
-            if( main_wtiles[j].id == itemID)
-                found=true;
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0; j < main_wtiles.size(); j++)
-        {
-            if(main_wtiles[j].id==itemID)
-            {
-                found=true;
-                break;
-            }
-        }
-    }
-
-    if(!found) j=-1;
-    return j;
+    isValid     = false;
+    animator_id = 0;
+    cur_image   = NULL;
 }
 
+void obj_w_tile::copyTo(obj_w_tile &tile)
+{
+    /* for internal usage */
+    tile.isValid         = isValid;
+    tile.animator_id     = animator_id;
+    tile.cur_image       = cur_image;
+    if(cur_image==NULL)
+        tile.cur_image   = &image;
+    tile.frame_h         = frame_h;
+    /* for internal usage */
+
+    tile.id              = id;
+    tile.group           = group;
+    tile.category        = category;
+    tile.grid            = grid;
+
+    tile.image_n         = image_n;
+    tile.mask_n          = mask_n;
+
+    tile.animated        = animated;
+    tile.frames          = frames;
+    tile.framespeed      = framespeed;
+    tile.display_frame   = display_frame;
+    tile.row             = row;
+    tile.col             = col;
+}
 
 void dataconfigs::loadWorldTiles()
 {
@@ -73,7 +74,6 @@ void dataconfigs::loadWorldTiles()
     tileset.setIniCodec("UTF-8");
 
     main_wtiles.clear();   //Clear old
-    index_wtiles.clear();
 
     tileset.beginGroup("tiles-main");
         tiles_total = tileset.value("total", "0").toInt();
@@ -87,21 +87,13 @@ void dataconfigs::loadWorldTiles()
 
     ConfStatus::total_wtile = tiles_total;
 
-    //creation of empty indexes of arrayElements
-        wTileIndexes tileIndex;
-        for(i=0;i<=tiles_total; i++)
-        {
-            tileIndex.i=i;
-            tileIndex.type=0;
-            tileIndex.ai=0;
-            index_wtiles.push_back(tileIndex);
-        }
-
     if(ConfStatus::total_wtile==0)
     {
         addError(QString("ERROR LOADING wld_tiles.ini: number of items not define, or empty config"),  PGE_LogLevel::Critical);
         return;
     }
+
+    main_wtiles.allocateSlots(tiles_total);
 
     for(i=1; i<=tiles_total; i++)
     {
@@ -143,17 +135,12 @@ void dataconfigs::loadWorldTiles()
         stile.row =             tileset.value("row", "0").toInt();
         stile.col =             tileset.value("col", "0").toInt();
 
+        stile.isValid = true;
 
         stile.id = i;
-        main_wtiles.push_back(stile);
-        /************Add to Index***************/
-        if(i <= (unsigned int)index_wtiles.size())
-        {
-            index_wtiles[i].i = i-1;
-        }
-        /************Add to Index***************/
+        main_wtiles.storeElement(i, stile);
 
-        skipTile:
+     skipTile:
         tileset.endGroup();
 
         if( tileset.status() != QSettings::NoError )
@@ -162,9 +149,9 @@ void dataconfigs::loadWorldTiles()
         }
     }
 
-    if((unsigned int)main_wtiles.size()<tiles_total)
+    if((unsigned int)main_wtiles.stored()<tiles_total)
     {
-        addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(main_wtiles.size()));
+        addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(main_wtiles.stored()));
     }
 }
 

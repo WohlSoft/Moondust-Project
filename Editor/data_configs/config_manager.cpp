@@ -256,6 +256,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
             smbx_compatible =  guiset.value("smbx-compatible", false).toBool();
         guiset.endGroup();
 
+        QPixmap splashImg;
         //Default splash image
         if(splash_logo.isEmpty())
             splash_logo = ":/images/splash_editor.png";
@@ -268,8 +269,11 @@ ConfigManager::ConfigManager(QWidget *parent) :
             }
         }
 
+        splashImg.load(splash_logo);
+        GraphicsHelps::squareImageR(splashImg, QSize(70, 40));
+
         item = new QListWidgetItem( configName );
-        item->setData(Qt::DecorationRole, GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(70,40)));
+        item->setData(Qt::DecorationRole, splashImg);
         item->setData(3, c);
         item->setData(Qt::UserRole + 1, configDesc);
         item->setData(Qt::UserRole + 2, smbx_compatible);

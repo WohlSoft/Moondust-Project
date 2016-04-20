@@ -228,7 +228,7 @@ public:
         void placeBlock(LevelBlock &block, bool toGrid=false);
         void placeBGO(LevelBGO &bgo, bool toGrid=false);
         void placeNPC(LevelNPC &npc, bool toGrid=false);
-        void placeWater(LevelPhysEnv &water, bool toGrid=false);
+        void placeEnvironmentZone(LevelPhysEnv &water, bool toGrid=false);
         void placePlayerPoint(PlayerPoint plr, bool init=false);
 
         void placeDoor(LevelDoor &door, bool toGrid=false);

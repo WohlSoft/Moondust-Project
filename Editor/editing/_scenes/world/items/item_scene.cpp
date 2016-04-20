@@ -213,16 +213,11 @@ void ItemScene::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_scenery mergedSet;
+    if(!m_scene->uScenes.contains(target_id))
+        return;
 
-    //Get Scenery settings
-    m_scene->getConfig_Scenery(target_id, item_i, animator, mergedSet, &noimage);
-
-    if(noimage)
-        return;//Don't transform, target item is not found
+    obj_w_scenery &mergedSet = m_scene->uScenes[target_id];
+    long animator=mergedSet.animator_id;
 
     m_data.id = target_id;
     setSceneData(m_data, &mergedSet, &animator);
@@ -338,7 +333,9 @@ void ItemScene::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         return;
     }
     if(m_scene->animates_Scenery.size()>m_animatorID)
-        painter->drawPixmap(m_imageSize, m_scene->animates_Scenery[m_animatorID]->image(), m_imageSize);
+        painter->drawPixmap(m_imageSize,
+                            m_scene->animates_Scenery[m_animatorID]->wholeImage(),
+                            m_scene->animates_Scenery[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -356,10 +353,10 @@ void ItemScene::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 void ItemScene::setAnimator(long aniID)
 {
     if(aniID<m_scene->animates_Scenery.size())
-    m_imageSize = QRectF(0,0,
-                m_scene->animates_Scenery[aniID]->image().width(),
-                m_scene->animates_Scenery[aniID]->image().height()
-                );
+    {
+        QRect frameRect = m_scene->animates_Scenery[aniID]->frameRect();
+        m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
+    }
 
     this->setData(ITEM_WIDTH, QString::number( m_gridSize ) ); //width
     this->setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height

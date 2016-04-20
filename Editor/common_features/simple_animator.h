@@ -39,7 +39,9 @@ public:
                     bool rev=false, bool bid=false, QObject *parent=0);
     ~SimpleAnimator();
     QPixmap image(int frame=-1);
-    QPixmap wholeImage();
+    QRect &frameRect();
+    QRectF frameRectF();
+    QPixmap &wholeImage();
     void setSettings(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                    bool rev=false, bool bid=false);
 
@@ -52,21 +54,23 @@ public:
 
     void resetFrame();
 
-    int speed;
+    int frameDelay;
 
     void nextFrame();
 
 private:
     QMutex	mutex;
 
-    QPixmap mainImage; //Whole image
-    QVector<QPixmap> frames; //Whole image
+    QPixmap *mainImage; //Whole image
+    //QVector<QPixmap> frames; //Whole image
 
     bool       frame_sequance_enabled;
     QList<int> frame_sequance;
     int        frame_sequance_cur;
 
-    void createAnimationFrames();
+    QRect      frame_rect;
+
+    //void createAnimationFrames();
     int CurrentFrame;
 
     bool animated;
@@ -74,13 +78,15 @@ private:
     bool bidirectional;
     bool reverce;
 
-    int frameCurrent;
-    QTimer timer;
     QPoint framePos;
-    int framesQ;
-    int frameSize; // size of one frame
+    //! Number of pre-defined frames
+    int framesCount;
+    //! Height of one frame
+    int frameHeight;
+    //! Width of one frame
     int frameWidth; // sprite width
-    int frameHeight; //sprite height
+    //! Height of entire sprite
+    int spriteHeight; //sprite height
 
     //Animation alhorithm
     int frameFirst;

@@ -77,7 +77,6 @@ protected:
 private:
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
-    QPixmap getScaledPixmapById(const unsigned int &id) const;
     QString getMimeType();
 
     GFXMode mode;

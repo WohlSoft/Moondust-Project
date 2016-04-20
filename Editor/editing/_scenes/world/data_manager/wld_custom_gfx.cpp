@@ -29,12 +29,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
 {
     int i;
 
-    UserIMGs uTile;
-    UserIMGs uScenery;
-    UserIMGs uPath;
-    UserIMGs uLevel;
     QImage tempImg;
-
     bool WrongImagesDetected=false;
 
     uTiles.clear();
@@ -101,72 +96,71 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Tiles %1")
-                    .arg(QString::number(pConfigs->main_wtiles.size()) ) );
+                    .arg(QString::number(pConfigs->main_wtiles.stored()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
 
+    uTiles.allocateSlots(pConfigs->main_wtiles.total());
     uWLD.setDefaultDir(pConfigs->getTilePath());
     //Load Tiles
-    for(i=0; i<pConfigs->main_wtiles.size(); i++) //Add user images
+    for(i=1; i<pConfigs->main_wtiles.size(); i++) //Add user images
     {
+        obj_w_tile &tileD = pConfigs->main_wtiles[i];
+        obj_w_tile  t_tile;
+        tileD.copyTo(t_tile);
         bool custom=false;
 
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wtiles[i].image_n, true);
-            if(!CustomImg.isEmpty())
+        QString CustomTxt = uWLD.getCustomFile("tile-" + QString::number(t_tile.id)+".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt=uWLD.getCustomFile("tile-" + QString::number(t_tile.id)+".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            //FIXME! Implement that at config pack side and uncommend those lines
+            //pConfigs->loadWorldTile(t_tile, "tile", tileD, CustomTxt);
+            //custom=true;
+        }
+
+        QString CustomImage = uWLD.getCustomFile(t_tile.image_n, true);
+        if(! CustomImage.isEmpty() )
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wtiles[i].mask_n, false);
-                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
-                } else {
-                    GraphicsHelps::loadQImage(tempImg, CustomImg);
-                }                
-
-                if(tempImg.isNull())
-                    WrongImagesDetected=true;
-                else
-                    uTile.image=std::move(QPixmap::fromImage(tempImg));
-
-                uTile.id = pConfigs->main_wtiles[i].id;
-                uTiles.push_back(uTile);
-                custom=true;
-
-                //Apply index;
-                if(uTile.id < (unsigned int)index_tiles.size())
-                {
-                    index_tiles[uTile.id].type = 1;
-                    //index_tiles[uTile.id].i = (uTiles.size()-1);
-                }
+                QString CustomMask = uWLD.getCustomFile(t_tile.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+            } else {
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
+            if(tempImg.isNull())
+                WrongImagesDetected=true;
+            else
+            {
+                custom_images.push_back(QPixmap::fromImage(tempImg));
+                t_tile.cur_image = &custom_images.last();
+            }
+            custom=true;
+        }
 
-//            WriteToLog(QtDebugMsg, QString("SimpleAnimator").arg(i));
+        SimpleAnimator * aniTile = new SimpleAnimator(
+                            ((t_tile.cur_image->isNull())?
+                            uTileImg : *t_tile.cur_image
+                               ),
+                              t_tile.animated,
+                              t_tile.frames,
+                              t_tile.framespeed
+                              );
+        animates_Tiles.push_back( aniTile );
+        animator.registerAnimation( aniTile );
+        t_tile.animator_id = animates_Tiles.size()-1;
+        uTiles.storeElement(i, t_tile);
+        if(custom)
+        {
+            custom_Tiles.push_back(&uTiles[i]);//Register Terrain tile as customized
+        }
 
-            SimpleAnimator * aniTile = new SimpleAnimator(
-                        ((custom)?
-                             ((uTiles.last().image.isNull())?
-                                uTileImg:
-                                    uTiles.last().image)
-                                 :
-                             ((pConfigs->main_wtiles[i].image.isNull())?
-                                uTileImg:
-                                   pConfigs->main_wtiles[i].image)
-                             ),
-                                  pConfigs->main_wtiles[i].animated,
-                                  pConfigs->main_wtiles[i].frames,
-                                  pConfigs->main_wtiles[i].framespeed
-                                  );
-            animates_Tiles.push_back( aniTile );
-            animator.registerAnimation( aniTile );
-            index_tiles[pConfigs->main_wtiles[i].id].i = i;
-            index_tiles[pConfigs->main_wtiles[i].id].ai = animates_Tiles.size()-1;
-
-//            WriteToLog(QtDebugMsg, QString("SimpleProgress").arg(i));
         if(progress.wasCanceled())
             return;
-
-//        WriteToLog(QtDebugMsg, QString("done").arg(i));
     }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -181,58 +175,62 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-
+    uScenes.allocateSlots(pConfigs->main_wscene.total());
     uWLD.setDefaultDir(pConfigs->getScenePath());
     //Load Sceneries
-    for(i=0; i<pConfigs->main_wscene.size(); i++) //Add user images
+    for(i=1; i<pConfigs->main_wscene.size(); i++) //Add user images
     {
-
+        obj_w_scenery &sceneryD = pConfigs->main_wscene[i];
+        obj_w_scenery  t_scenery;
+        sceneryD.copyTo(t_scenery);
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wscene[i].image_n, true);
-            if(!CustomImg.isEmpty())
+
+        QString CustomTxt = uWLD.getCustomFile("scene-" + QString::number(t_scenery.id)+".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt=uWLD.getCustomFile("scene-" + QString::number(t_scenery.id)+".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            //FIXME! Implement that at config pack side and uncommend those lines
+            //pConfigs->loadWorldScenery(t_scenery, "scene", sceneryD, CustomTxt);
+            //custom=true;
+        }
+
+        QString CustomImage = uWLD.getCustomFile(t_scenery.image_n, true);
+        if(! CustomImage.isEmpty() )
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wscene[i].mask_n, false);
-                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
-                } else {
-                    GraphicsHelps::loadQImage(tempImg, CustomImg);
-                }
-                if(tempImg.isNull())
-                    WrongImagesDetected=true;
-                else
-                    uScenery.image=std::move(QPixmap::fromImage(tempImg));
-
-                uScenery.id = pConfigs->main_wscene[i].id;
-                uScenes.push_back(uScenery);
-                custom=true;
-
-                //Apply index;
-                if(uScenery.id < (unsigned int)index_scenes.size())
-                {
-                    index_scenes[uScenery.id].type = 1;
-                    //index_scenes[uScenery.id].i = (uScenes.size()-1);
-                }
+                QString CustomMask = uWLD.getCustomFile(t_scenery.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+            } else {
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
+            if(tempImg.isNull())
+                WrongImagesDetected=true;
+            else
+            {
+                custom_images.push_back(QPixmap::fromImage(tempImg));
+                t_scenery.cur_image = &custom_images.last();
+            }
+            custom=true;
+        }
 
-            SimpleAnimator * aniScene = new SimpleAnimator(
-                        ((custom)?
-                             ((uScenes.last().image.isNull())?
-                                uSceneImg:
-                                    uScenes.last().image)
-                                 :
-                             ((pConfigs->main_wscene[i].image.isNull())?
-                                uSceneImg:
-                                   pConfigs->main_wscene[i].image)
-                             ),
-                                  pConfigs->main_wscene[i].animated,
-                                  pConfigs->main_wscene[i].frames,
-                                  pConfigs->main_wscene[i].framespeed
-                                  );
-            animates_Scenery.push_back( aniScene );
-            animator.registerAnimation( aniScene );
-            index_scenes[pConfigs->main_wscene[i].id].i = i;
-            index_scenes[pConfigs->main_wscene[i].id].ai = animates_Scenery.size()-1;
+        SimpleAnimator * aniTile = new SimpleAnimator(
+                            ((t_scenery.cur_image->isNull())?
+                            uSceneImg : *t_scenery.cur_image
+                               ),
+                              t_scenery.animated,
+                              t_scenery.frames,
+                              t_scenery.framespeed
+                              );
+        animates_Scenery.push_back( aniTile );
+        animator.registerAnimation( aniTile );
+        t_scenery.animator_id = animates_Scenery.size()-1;
+        uScenes.storeElement(i, t_scenery);
+        if(custom)
+        {
+            custom_Scenes.push_back(&uScenes[i]);//Register Terrain tile as customized
+        }
 
         if(progress.wasCanceled())
             return;
@@ -249,58 +247,62 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-
+    uPaths.allocateSlots(pConfigs->main_wpaths.total());
     uWLD.setDefaultDir(pConfigs->getPathPath());
     //Load Path tiles
-    for(i=0; i<pConfigs->main_wpaths.size(); i++) //Add user images
+    for(i=1; i<pConfigs->main_wpaths.size(); i++) //Add user images
     {
-
+        obj_w_path &pathD = pConfigs->main_wpaths[i];
+        obj_w_path t_path;
+        pathD.copyTo(t_path);
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n, true);
-            if( !CustomImg.isEmpty() )
+
+        QString CustomTxt = uWLD.getCustomFile("path-" + QString::number(t_path.id)+".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt=uWLD.getCustomFile("path-" + QString::number(t_path.id)+".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            //FIXME! Implement that at config pack side and uncommend those lines
+            //pConfigs->loadWorldPath(t_path, "path", pathD, CustomTxt);
+            //custom=true;
+        }
+
+        QString CustomImage = uWLD.getCustomFile(t_path.image_n, true);
+        if(! CustomImage.isEmpty() )
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].mask_n, false);
-                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
-                } else {
-                    GraphicsHelps::loadQImage(tempImg, CustomImg);
-                }
-                if(tempImg.isNull())
-                    WrongImagesDetected=true;
-                else
-                    uPath.image=std::move(QPixmap::fromImage(tempImg));
-
-                uPath.id = pConfigs->main_wpaths[i].id;
-                uPaths.push_back(uPath);
-                custom=true;
-
-                //Apply index;
-                if(uPath.id < (unsigned int)index_paths.size())
-                {
-                    index_paths[uPath.id].type = 1;
-                    //index_paths[uPath.id].i = (uPaths.size()-1);
-                }
+                QString CustomMask = uWLD.getCustomFile(t_path.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+            } else {
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
+            if(tempImg.isNull())
+                WrongImagesDetected=true;
+            else
+            {
+                custom_images.push_back(QPixmap::fromImage(tempImg));
+                t_path.cur_image = &custom_images.last();
+            }
+            custom=true;
+        }
 
-            SimpleAnimator * aniPath = new SimpleAnimator(
-                        ((custom)?
-                             ((uPaths.last().image.isNull())?
-                                uPathImg:
-                                    uPaths.last().image)
-                                 :
-                             ((pConfigs->main_wpaths[i].image.isNull())?
-                                uPathImg:
-                                   pConfigs->main_wpaths[i].image)
-                             ),
-                                  pConfigs->main_wpaths[i].animated,
-                                  pConfigs->main_wpaths[i].frames,
-                                  pConfigs->main_wpaths[i].framespeed
-                                  );
-            animates_Paths.push_back( aniPath );
-            animator.registerAnimation( aniPath );
-            index_paths[pConfigs->main_wpaths[i].id].i = i;
-            index_paths[pConfigs->main_wpaths[i].id].ai = animates_Paths.size()-1;
+        SimpleAnimator * aniTile = new SimpleAnimator(
+                            ((t_path.cur_image->isNull())?
+                            uPathImg : *t_path.cur_image
+                               ),
+                              t_path.animated,
+                              t_path.frames,
+                              t_path.framespeed
+                              );
+        animates_Paths.push_back( aniTile );
+        animator.registerAnimation( aniTile );
+        t_path.animator_id = animates_Paths.size()-1;
+        uPaths.storeElement(i, t_path);
+        if(custom)
+        {
+            custom_Paths.push_back(&uPaths[i]);//Register Terrain tile as customized
+        }
 
         if(progress.wasCanceled())
             return;
@@ -317,58 +319,63 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-
+    uLevels.allocateSlots(pConfigs->main_wlevels.total());
     uWLD.setDefaultDir(pConfigs->getWlvlPath());
+
     //Load Level tiles
-    for(i=0; i<pConfigs->main_wlevels.size(); i++) //Add user images
+    for(i=0; i<pConfigs->main_wlevels.size(); i++)//Add user images
     {
-
+        obj_w_level &levelD = pConfigs->main_wlevels[i];
+        obj_w_level t_level;
+        levelD.copyTo(t_level);
         bool custom=false;
-            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wlevels[i].image_n, true);
-            if(!CustomImg.isEmpty())
+
+        QString CustomTxt = uWLD.getCustomFile("level-" + QString::number(t_level.id)+".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt=uWLD.getCustomFile("level-" + QString::number(t_level.id)+".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            //FIXME! Implement that at config pack side and uncommend those lines
+            //pConfigs->loadWorldLevel(t_level, "level", sceneryD, CustomTxt);
+            //custom=true;
+        }
+
+        QString CustomImage = uWLD.getCustomFile(t_level.image_n, true);
+        if(! CustomImage.isEmpty() )
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask = uWLD.getCustomFile(pConfigs->main_wlevels[i].mask_n, false);
-                    GraphicsHelps::loadQImage(tempImg, CustomImg, CustomMask);
-                } else {
-                    GraphicsHelps::loadQImage(tempImg, CustomImg);
-                }
-                if(tempImg.isNull())
-                    WrongImagesDetected=true;
-                else
-                    uLevel.image=std::move(QPixmap::fromImage(tempImg));
-
-                uLevel.id = pConfigs->main_wlevels[i].id;
-                uLevels.push_back(uLevel);
-                custom=true;
-
-                //Apply index;
-                if(uLevel.id < (unsigned int)index_levels.size())
-                {
-                    index_levels[uLevel.id].type = 1;
-                    //index_levels[uLevel.id].i = (uLevels.size()-1);
-                }
+                QString CustomMask = uWLD.getCustomFile(t_level.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+            } else {
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
+            if(tempImg.isNull())
+                WrongImagesDetected=true;
+            else
+            {
+                custom_images.push_back(QPixmap::fromImage(tempImg));
+                t_level.cur_image = &custom_images.last();
+            }
+            custom=true;
+        }
 
-            SimpleAnimator * aniLevel = new SimpleAnimator(
-                        ((custom)?
-                             ((uLevels.last().image.isNull())?
-                                uLevelImg:
-                                    uLevels.last().image)
-                                 :
-                             ((pConfigs->main_wlevels[i].image.isNull())?
-                                uLevelImg:
-                                   pConfigs->main_wlevels[i].image)
-                             ),
-                                  pConfigs->main_wlevels[i].animated,
-                                  pConfigs->main_wlevels[i].frames,
-                                  pConfigs->main_wlevels[i].framespeed
-                                  );
-            animates_Levels.push_back( aniLevel );
-            animator.registerAnimation( aniLevel );
-            index_levels[pConfigs->main_wlevels[i].id].i = i;
-            index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
+        SimpleAnimator * aniTile = new SimpleAnimator(
+                            ((t_level.cur_image->isNull())?
+                            uLevelImg : *t_level.cur_image
+                               ),
+                              t_level.animated,
+                              t_level.frames,
+                              t_level.framespeed
+                              );
+        animates_Levels.push_back( aniTile );
+        animator.registerAnimation( aniTile );
+        t_level.animator_id = animates_Levels.size()-1;
+        uLevels.storeElement(i, t_level);
+        if(custom)
+        {
+            custom_Levels.push_back(&uLevels[i]);//Register Terrain tile as customized
+        }
 
         if(progress.wasCanceled())
             return;

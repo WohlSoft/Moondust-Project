@@ -34,13 +34,14 @@
 
 void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 {
-    bool noimage=true;
-    long item_i = 0;
-    long animator=0;
-    obj_w_tile mergedSet;
-
-    //Check Index exists
-    getConfig_Tile(tile.id, item_i, animator, mergedSet, &noimage);
+    obj_w_tile &mergedSet = uTiles[tile.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_wtiles[1];
+        mergedSet.image = uTileImg;
+    }
 
     QPoint newPos = QPoint(tile.x, tile.y);
     if(toGrid)
@@ -65,12 +66,14 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 
 void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 {
-    bool noimage=true;
-    long item_i = 0;
-    long animator=0;
-    obj_w_scenery mergedSet;
-
-    getConfig_Scenery(scenery.id, item_i, animator, mergedSet, &noimage);
+    obj_w_scenery &mergedSet = uScenes[scenery.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_wscene[1];
+        mergedSet.image = uSceneImg;
+    }
 
     QPoint newPos = QPoint(scenery.x, scenery.y);
     if(toGrid)
@@ -95,12 +98,14 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 
 void WldScene::placePath(WorldPaths &path, bool toGrid)
 {
-    bool noimage=true;
-    long item_i=0;
-    long animator=0;
-    obj_w_path mergedSet;
-
-    getConfig_Path(path.id, item_i, animator, mergedSet, &noimage);
+    obj_w_path &mergedSet = uPaths[path.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_wpaths[1];
+        mergedSet.image = uPathImg;
+    }
 
     QPoint newPos = QPoint(path.x, path.y);
     if(toGrid)
@@ -127,14 +132,17 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 
 void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 {
-    bool noimage=true;
-    long item_i = 0, q=0;
     long animator=0, pathAnimator=0, bPathAnimator=0;
-    obj_w_level mergedSet,tmp;
-
-    getConfig_Level(level.id, item_i, animator, mergedSet, &noimage);
-    getConfig_Level(pConfigs->marker_wlvl.path, q, pathAnimator, tmp);
-    getConfig_Level(pConfigs->marker_wlvl.bigpath, q, bPathAnimator, tmp);
+    obj_w_level &mergedSet = uLevels[level.id];
+    animator =      mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = pConfigs->main_wlevels[0];
+        mergedSet.image = uLevelImg;
+    }
+    pathAnimator =  uLevels[pConfigs->marker_wlvl.path].animator_id;
+    bPathAnimator = uLevels[pConfigs->marker_wlvl.bigpath].animator_id;
 
     QPoint newPos = QPoint(level.x, level.y);
     if(toGrid)

@@ -288,6 +288,7 @@ void MainWindow::on_actionFill_triggered(bool checked)
         ui->actionFill->setVisible(true);
         ui->actionFloodSectionOnly->setVisible(true);
         ui->actionFloodSectionOnly->setEnabled(checked);
+        ui->actionFloodSectionOnly->setChecked(LvlPlacingItems::noOutSectionFlood);
 
     if (activeChildWindow()==1)
     {

@@ -131,7 +131,7 @@ void HistoryElementRemoveLayer::removePhysEnv(const LevelPhysEnv &sourcePhysEnv,
     Q_UNUSED(sourcePhysEnv)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
-        ((ItemWater*)item)->removeFromArray();
+        ((ItemPhysEnv*)item)->removeFromArray();
         scene->removeItem(item);
         delete item;
     }

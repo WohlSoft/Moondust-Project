@@ -99,14 +99,20 @@ void lazyFixTool_doMagicIn(QString path, QString q, QString OPath)
         mask = image.alphaChannel();
         mask.invertPixels();
 
+        QImage outImage(image.size(), QImage::Format_RGB888);
+        outImage.fill(Qt::black);
+        QPainter xxx(&outImage);
+        QRect imgRect(image.rect());
+        xxx.drawImage(imgRect, image, imgRect);
+
         //Save after fix
         //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
         QString saveTo = OPath+(tmp[0].toLower())+".gif";
 
         //overwrite source image (convert BMP to GIF)
-        if(!GraphicsHelps::toGif(image, saveTo ) ) //Write gif
+        if(!GraphicsHelps::toGif(outImage, saveTo ) ) //Write gif
         {
-            image.save(saveTo, "BMP"); //If failed, write BMP
+            outImage.save(saveTo, "BMP"); //If failed, write BMP
         }
 
         saveTo = QString(OPath+(tmp[0].toLower())+"m.gif");

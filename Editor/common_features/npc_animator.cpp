@@ -19,13 +19,39 @@
 #include "logger.h"
 #include "npc_animator.h"
 
+static  QPixmap *tempImage=NULL;
+static  int AdvNpcAnimator_count=0;
+
+inline void constructTempImage()
+{
+    if(!tempImage)
+    {
+        tempImage = new QPixmap(QSize(32,32));
+        tempImage->fill(QColor(Qt::red));
+    }
+    AdvNpcAnimator_count++;
+}
+
+inline void destroyTempImage()
+{
+    AdvNpcAnimator_count--;
+    if((AdvNpcAnimator_count<=0)&&(tempImage))
+    {
+        delete tempImage;
+        tempImage = NULL;
+    }
+}
+
 AdvNpcAnimator::AdvNpcAnimator():
     timer(NULL)
-{}
+{
+    constructTempImage();
+}
 
 AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config):
     timer(NULL)
 {
+    constructTempImage();
     buildAnimator(sprite, config);
 }
 
@@ -33,6 +59,7 @@ AdvNpcAnimator::~AdvNpcAnimator()
 {
     if(timer)
         delete timer;
+    destroyTempImage();
 }
 
 void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
@@ -42,16 +69,16 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         timer->stop();
         delete timer;
     }
-    frames.clear();
+    //frames.clear();
 
-    mainImage = sprite;
+    mainImage = &sprite;
     setup = config;
 
     animated = false;
     aniBiDirect=false;
     curDirect = -1;
     frameStep = 1;
-    frameSize=1;
+    frameHeight=1;
 
     CurrentFrameL=0; //Real frame
     CurrentFrameR=0; //Real frame
@@ -64,7 +91,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
     frameLastR=-1; //to unlimited frameset
 
     animated = true;
-    framesQ = setup.frames;
+
     frameSpeed = setup.framespeed;
     frameStyle = setup.framestyle;
     frameStep = 1;
@@ -83,17 +110,30 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 
     //bool refreshFrames = updFrames;
 
-    frameSize = setup.gfx_h; // height of one frame
-    frameWidth = setup.gfx_w; //width of target image
+    frameHeight = setup.gfx_h; // height of one frame
+    frameWidth  = setup.gfx_w; //width of target image
 
-    frameHeight = mainImage.height(); // Height of target image
+    spriteHeight = mainImage->height(); // Height of target image
+
+    framesCountOneSide = setup.frames;
+    //int framesMod = spriteHeight % frameHeight;
+    //int roundedSpriteHeight = (spriteHeight-framesMod) / frameHeight;
+    int framesZoneHeight = 0;
+    framesCountTotal = 0;
+    while( framesZoneHeight < spriteHeight )
+    {
+        framesCountTotal++;
+        framesZoneHeight += frameHeight;
+    }
+    //framesCountTotal = (int)ceil((float)spriteHeight / (float)frameHeight);
 
     //Protectors
-    if(frameSize<=0) frameSize=1;
-    if(frameSize>mainImage.height()) frameSize = mainImage.height();
+    if(frameHeight <= 0) frameHeight=1;
+    if(frameHeight > spriteHeight) frameHeight = spriteHeight;
 
-    if(frameWidth<=0) frameWidth=1;
-    if(frameWidth>mainImage.width()) frameWidth = mainImage.width();
+    if( frameWidth <= 0) frameWidth=1;
+    if( frameWidth>mainImage->width() )
+        frameWidth = mainImage->width();
 
     //    int dir=direction;
 
@@ -156,33 +196,33 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         switch(frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesQ = setup.frames*4;
+            framesCountOneSide = setup.frames*4;
 
              //left
                 frameFirstL = 0;
-                frameLastL = (int)(framesQ-(framesQ/4)*3)-1;
+                frameLastL = (int)(framesCountOneSide-(framesCountOneSide/4)*3)-1;
              //Right
-                frameFirstR = (int)(framesQ-(framesQ/4)*3);
-                frameLastR = (int)(framesQ/2)-1;
+                frameFirstR = (int)(framesCountOneSide-(framesCountOneSide/4)*3);
+                frameLastR = (int)(framesCountOneSide/2)-1;
 
             break;
         case 1: //Left-Right sprite
-            framesQ=setup.frames*2;
+            framesCountOneSide=setup.frames*2;
              //left
                 frameFirstL = 0;
-                frameLastL = (int)(framesQ / 2)-1;
+                frameLastL = (int)(framesCountOneSide / 2)-1;
              //Right
-                frameFirstR = (int)(framesQ / 2);
-                frameLastR = framesQ-1;
+                frameFirstR = (int)(framesCountOneSide / 2);
+                frameLastR = framesCountOneSide-1;
 
             break;
         case 0: //Single sprite
         default:
             frameFirstL = 0;
-            frameLastL = framesQ-1;
+            frameLastL = framesCountOneSide-1;
 
             frameFirstR = 0;
-            frameLastR = framesQ-1;
+            frameLastR = framesCountOneSide-1;
             break;
         }
     }
@@ -201,56 +241,62 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 
     timer->setTimerType(Qt::PreciseTimer);
 
-    createAnimationFrames();
+    //createAnimationFrames();
     setFrameL(frameFirstL);
     setFrameR(frameFirstR);
 }
 
 QPixmap AdvNpcAnimator::image(int dir, int frame)
 {
-    if(frames.isEmpty())
-    {   //If animator haven't frames, return red sqare
-        QPixmap tmp = QPixmap(QSize(32,32));
-        tmp.fill(QColor(Qt::red));
-        return tmp;
-    }
-
-    if((frame<0)||(frame>=frames.size()))
+    if( (frame<0) ||(frame >= framesCountTotal) )
     {
-        if(dir<0)
-            return frames[CurrentFrameL];
-        else if(dir==0)
-            return frames[CurrentFrameL];
+        if(dir<=0)
+            return mainImage->copy(0, CurrentFrameL*frame, frameWidth, frameHeight);//frames[CurrentFrameL];
         else
-            return frames[CurrentFrameR];
+            return mainImage->copy(0, CurrentFrameR*frame, frameWidth, frameHeight);//frames[CurrentFrameR];
     }
-    else return frames[frame];
+    else
+    {
+        return mainImage->copy(0, frameHeight*frame, frameWidth, frameHeight);
+    }
 }
 
-QPixmap AdvNpcAnimator::wholeImage()
+QPixmap &AdvNpcAnimator::wholeImage()
 {
-    return mainImage;
+    return *mainImage;
+}
+
+QRect &AdvNpcAnimator::frameRect(int dir)
+{
+    if(dir<=0)
+        return frame_rect_L;
+    else
+        return frame_rect_R;
 }
 
 void AdvNpcAnimator::setFrameL(int y)
 {
-    if(frames.isEmpty()) return;
+    //if(frames.isEmpty()) return;
 
     //Out of range protection
-    if( y < frameFirstL) y = (frameLastL<0)? frames.size()-1 : frameLastL;
-    if( y >= frames.size()) y = (frameFirstL<frames.size()) ? frameFirstL : 0;
+    if( y < frameFirstL) y = (frameLastL<0)? framesCountTotal-1 : frameLastL;
+    if( y >= framesCountTotal) y = (frameFirstL < framesCountTotal) ? frameFirstL : 0;
     CurrentFrameL = y;
+
+    frame_rect_L.setRect(0, frameHeight*CurrentFrameL, frameWidth, frameHeight);
 }
 
 void AdvNpcAnimator::setFrameR(int y)
 {
-    if(frames.isEmpty()) return;
+    //if(frames.isEmpty()) return;
 
     //Out of range protection
-    if( y < frameFirstR) y = (frameLastR<0)? frames.size()-1 : frameLastR;
-    if( y >= frames.size()) y = (frameFirstR<frames.size()) ? frameFirstR : 0;
+    if( y < frameFirstR) y = (frameLastR<0)? framesCountTotal-1 : frameLastR;
+    if( y >= framesCountTotal) y = (frameFirstR < framesCountTotal) ? frameFirstR : 0;
 
     CurrentFrameR = y;
+
+    frame_rect_R.setRect(0, frameHeight*CurrentFrameR, frameWidth, frameHeight);
 }
 
 void AdvNpcAnimator::start()
@@ -280,7 +326,7 @@ void AdvNpcAnimator::nextFrame()
         //frameCurrent += frameSize * frameStep;
         frameCurrentL += frameStep;
 
-        if ( ((frameCurrentL >= frames.size()-(frameStep-1) )&&(frameLastL<=-1)) ||
+        if ( ((frameCurrentL >= framesCountTotal-(frameStep-1) )&&(frameLastL<=-1)) ||
              ((frameCurrentL > frameLastL )&&(frameLastL>=0)) )
             {
                 if(!aniBiDirect)
@@ -303,7 +349,7 @@ void AdvNpcAnimator::nextFrame()
             {
                 if(!aniBiDirect)
                 {
-                    frameCurrentL = ((frameLastL==-1)? frames.size()-1 : frameLastL);
+                    frameCurrentL = ((frameLastL==-1)? framesCountTotal-1 : frameLastL);
                 }
                 else
                 {
@@ -320,7 +366,7 @@ void AdvNpcAnimator::nextFrame()
         //frameCurrent += frameSize * frameStep;
         frameCurrentR += frameStep;
 
-        if ( ((frameCurrentR >= frames.size()-(frameStep-1) )&&(frameLastR<=-1)) ||
+        if ( ((frameCurrentR >= framesCountTotal-(frameStep-1) )&&(frameLastR<=-1)) ||
              ((frameCurrentR > frameLastR )&&(frameLastR>=0)) )
             {
                 if(!aniBiDirect)
@@ -343,7 +389,7 @@ void AdvNpcAnimator::nextFrame()
             {
                 if(!aniBiDirect)
                 {
-                    frameCurrentR = ((frameLastR==-1)? frames.size()-1 : frameLastR);
+                    frameCurrentR = ((frameLastR==-1)? framesCountTotal-1 : frameLastR);
                 }
                 else
                 {
@@ -357,11 +403,11 @@ void AdvNpcAnimator::nextFrame()
     emit onFrame();
 }
 
-void AdvNpcAnimator::createAnimationFrames()
-{
-    frames.clear();
-    for(int i=0; (frameSize*i < frameHeight); i++)
-    {
-        frames.push_back( mainImage.copy(QRect(0, frameSize*i, frameWidth, frameSize )) );
-    }
-}
+//void AdvNpcAnimator::createAnimationFrames()
+//{
+//    frames.clear();
+//    for(int i=0; (frameHeight*i < spriteHeight); i++)
+//    {
+//        frames.push_back( mainImage.copy(QRect(0, frameHeight*i, frameWidth, frameHeight )) );
+//    }
+//}

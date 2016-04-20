@@ -36,14 +36,25 @@ public:
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
 
-    static QImage fromBMP(QString& file);
-    static QImage fromGIF(QString& file);
+    static QImage  fromBMP(QString& file);
+    static QImage  fromGIF(QString& file);
     static QPixmap loadPixmap(QString file);
-    static QImage loadQImage(QString file);
+    static QImage  loadQImage(QString file);
 
     static void loadQImage(QImage &target, QString file, QString maskPath = "");
 
-    static QPixmap squareImage(QPixmap image, QSize targetSize);
+    /*!
+     * \brief Resizes image to requested size with keeping aspect ration, but with making convas of requested size as-is (empty space will be filled with transparency)
+     * \param imageInOut Image to scale
+     * \param targetSize Image size to process
+     */
+    static void squareImageR(QPixmap &imageInOut, QSize targetSize);
+
+    /*!
+     * \brief Converts number into image where that number has been drawn
+     * \param number Target number to draw
+     * \return Image with drawn number value
+     */
     static QPixmap drawDegitFont(int number);
 
     static bool toGif(QImage& img, QString& path);

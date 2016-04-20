@@ -95,7 +95,7 @@ void MainWindow::on_actionAutocode_Lunadll_Original_Language_triggered()
         LevelEdit* lvledit = activeLvlEditWin();
         if(lvledit->LvlData.metaData.script){
             lvledit->LvlData.metaData.script->setUsingCompiler(new AutocodeCompiler(QList<EventCommand*>()));
-            updateMenus(ui->centralWidget->activeSubWindow(), true);
+            updateMenus(LastActiveSubWindow, true);
         }
     }
 }
@@ -106,7 +106,7 @@ void MainWindow::on_actionLunaLua_triggered()
         LevelEdit* lvledit = activeLvlEditWin();
         if(lvledit->LvlData.metaData.script){
             lvledit->LvlData.metaData.script->setUsingCompiler(new LunaLuaCompiler(QList<EventCommand*>()));
-            updateMenus(ui->centralWidget->activeSubWindow(), true);
+            updateMenus(LastActiveSubWindow, true);
         }
     }
 }

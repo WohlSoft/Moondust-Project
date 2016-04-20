@@ -404,7 +404,7 @@ void MainWindow::updateWindowMenu()
         text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
-        action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
+        action->setChecked( windows[i] == LastActiveSubWindow );
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));

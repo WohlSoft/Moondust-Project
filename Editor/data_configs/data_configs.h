@@ -36,7 +36,6 @@
 #include "obj_npc.h"
 #include "obj_BG.h"
 #include "obj_wld_items.h"
-#include "dc_indexing.h"
 #include "obj_tilesets.h"
 #include "obj_rotation_table.h"
 
@@ -125,17 +124,11 @@ public:
     npc_Markers marker_npc;
 
     //World map items
-    QList<obj_w_tile > main_wtiles;
-    QList<obj_w_path > main_wpaths;
-    QList<obj_w_scenery > main_wscene;
-    QList<obj_w_level > main_wlevels;
+    PGE_DataArray<obj_w_tile > main_wtiles;
+    PGE_DataArray<obj_w_path > main_wpaths;
+    PGE_DataArray<obj_w_scenery > main_wscene;
+    PGE_DataArray<obj_w_level > main_wlevels;
     wld_levels_Markers marker_wlvl;
-
-    //Indexes
-    QList<wTileIndexes > index_wtiles;
-    QList<wPathIndexes > index_wpaths;
-    QList<wSceneIndexes > index_wscene;
-    QList<wLevelIndexes > index_wlvl;
 
     //Common items
     unsigned long music_custom_id;
@@ -160,15 +153,6 @@ public:
     //Debug
     QStringList errorsList;
 
-    // Get Item of Index
-    long getNpcI(unsigned long itemID);
-    //long getBlockI(unsigned long itemID);
-    //long getBgoI(unsigned long itemID);
-
-    long getTileI(unsigned long itemID);
-    long getSceneI(unsigned long itemID);
-    long getPathI(unsigned long itemID);
-    long getWLevelI(unsigned long itemID);
     long getCharacterI(unsigned long itemID);
 
     long getSndI(unsigned long itemID);
