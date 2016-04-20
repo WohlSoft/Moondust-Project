@@ -523,6 +523,17 @@ void LvlScene::setRectDrawer()
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
+    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    {
+        QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+        QPainter p(&oneCell);
+        p.setBrush(Qt::NoBrush);
+        p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+        p.drawRect(0,0, LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        brush.setTexture(oneCell);
+    }
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -567,6 +578,17 @@ void LvlScene::setCircleDrawer()
     if(addH==LvlPlacingItems::gridSz) addH=0;
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
+
+    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    {
+        QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+        QPainter p(&oneCell);
+        p.setBrush(Qt::NoBrush);
+        p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+        p.drawRect(0,0, LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        brush.setTexture(oneCell);
+    }
 
     cursor = addEllipse(0,0,1,1, pen, brush);
 

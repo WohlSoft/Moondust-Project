@@ -124,13 +124,6 @@ void LVL_ModeSquare::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                         ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                         ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                         );
-
-            if(((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
-                    (s->placingItem==LvlScene::PLC_BGO))
-            {
-                item_rectangles::drawMatrix(s, QRect (cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
-                                               QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
-            }
         }
 
 }
@@ -153,6 +146,13 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             return;
         }
         // ///////////////////////////////////////////////////////////////
+
+        if(((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
+                (s->placingItem==LvlScene::PLC_BGO))
+        {
+            item_rectangles::drawMatrix(s, QRect (cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+                                           QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
+        }
 
         switch(s->placingItem)
         {

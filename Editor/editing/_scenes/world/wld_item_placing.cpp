@@ -520,6 +520,14 @@ void WldScene::setRectDrawer()
     WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
     WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
 
+    QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
+    oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+    QPainter p(&oneCell);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    brush.setTexture(oneCell);
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -556,6 +564,14 @@ void WldScene::setCircleDrawer()
     if(addH==WldPlacingItems::gridSz) addH=0;
     WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
     WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+
+    QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
+    oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+    QPainter p(&oneCell);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    brush.setTexture(oneCell);
 
     cursor = addEllipse(0,0,1,1, pen, brush);
 

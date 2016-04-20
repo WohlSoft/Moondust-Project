@@ -121,13 +121,6 @@ void LVL_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
         cur->setRect(0,0, hs.width(), hs.height());
         cur->setPos(((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                     ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y()));
-
-        if( ((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
-                (s->placingItem==LvlScene::PLC_BGO))
-        {
-            item_rectangles::drawRound(s, QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
-                                                QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
-        }
     }
 
 }
@@ -151,6 +144,13 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             return;
         }
         // ///////////////////////////////////////////////////////////////
+
+        if( ((s->placingItem==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
+                (s->placingItem==LvlScene::PLC_BGO))
+        {
+            item_rectangles::drawRound(s, QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+                                                QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
+        }
 
         switch(s->placingItem)
         {
