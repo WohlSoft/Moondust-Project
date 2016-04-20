@@ -46,7 +46,6 @@ QList<SimpleAnimator >   ConfigManager::Animator_WldLevel;
 wld_levels_Markers       ConfigManager::marker_wlvl;
 /*****World Levels************/
 
-
 bool ConfigManager::loadWorldTiles()
 {
     unsigned int i;
@@ -125,7 +124,6 @@ bool ConfigManager::loadWorldTiles()
         stile.display_frame =   tileset.value("display-frame", "0").toInt();
         stile.row =             tileset.value("row", "0").toInt();
         stile.col =             tileset.value("col", "0").toInt();
-
 
         stile.id = i;
         wld_tiles.storeElement(stile.id, stile);

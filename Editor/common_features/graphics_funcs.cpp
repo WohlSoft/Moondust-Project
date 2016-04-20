@@ -484,27 +484,37 @@ void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
     }
 }
 
-
-QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
+void GraphicsHelps::squareImageR(QPixmap &imageInOut, QSize targetSize)
 {
-    QPixmap target = QPixmap(targetSize);
-    target.fill(Qt::transparent);
+    if(imageInOut.isNull())
+        return;
+
+    if(targetSize.isNull())
+    {
+        if(imageInOut.width() > imageInOut.height())
+        {
+            targetSize.setWidth(imageInOut.height());
+            targetSize.setHeight(imageInOut.height());
+        } else {
+            targetSize.setWidth(imageInOut.width());
+            targetSize.setHeight(imageInOut.width());
+        }
+    }
     QPixmap source;
-
-    if( ( targetSize.width() < image.width() ) || ( targetSize.height() < image.height() ))
-        source = image.scaled(targetSize, Qt::KeepAspectRatio);
+    if( ( targetSize.width() < imageInOut.width() ) || ( targetSize.height() < imageInOut.height() ))
+        source = imageInOut.scaled(targetSize, Qt::KeepAspectRatio);
     else
-        source = image;
+        source = imageInOut;
 
-    QPainter p(&target);
+    imageInOut = std::move(QPixmap(targetSize));
+    imageInOut.fill(Qt::transparent);
 
-    int targetX = qRound( ( ( qreal(target.width()) - qreal(source.width()) ) / 2 ) );
-    int targetY = qRound( ( ( qreal(target.height()) - qreal(source.height()) ) / 2 ) );
+    QPainter p(&imageInOut);
 
-    p.drawPixmap( targetX, targetY,source.width(),source.height(), source );
-
+    int targetX = qRound( ( ( qreal(imageInOut.width()) - qreal(source.width()) ) / 2 ) );
+    int targetY = qRound( ( ( qreal(imageInOut.height()) - qreal(source.height()) ) / 2 ) );
+    p.drawPixmap( targetX, targetY, source.width(), source.height(), source );
     p.end();
-    return target;
 }
 
 QPixmap GraphicsHelps::drawDegitFont(int number)
@@ -512,10 +522,8 @@ QPixmap GraphicsHelps::drawDegitFont(int number)
     QPixmap font=QPixmap(":/fonts/degits.png");
     QString text=QString::number(number);
     QPixmap img(text.size()*18, 16);
-
     img.fill(Qt::transparent);
     QPainter p(&img);
-
     for(int i=0; i<text.size(); i++)
     {
         p.drawPixmap(QRect(18*i, 0, 16,16), font, QRect(0, QString(text[i]).toInt()*16, 16,16));

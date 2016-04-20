@@ -176,7 +176,7 @@ void HistoryElementChangedNewLayer::historyUndoChangeLayerWater(const LevelPhysE
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    ItemWater* targetItem = (ItemWater*)item;
+    ItemPhysEnv* targetItem = (ItemPhysEnv*)item;
     QString oldLayer = physEnv.layer;
     targetItem->m_data.layer = oldLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)
@@ -285,7 +285,7 @@ void HistoryElementChangedNewLayer::historyRedoChangeLayerWater(const LevelPhysE
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    ItemWater* targetItem = (ItemWater*)item;
+    ItemPhysEnv* targetItem = (ItemPhysEnv*)item;
     QString newLayer = m_newLayer.name;
     targetItem->m_data.layer = newLayer;
     foreach(LevelLayer lr, lvlScene->LvlData->layers)

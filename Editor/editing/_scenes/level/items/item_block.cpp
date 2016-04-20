@@ -667,9 +667,15 @@ void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*optio
     if(m_scene->animates_Blocks.size()>m_animatorID)
     {
         if(m_sizable)
-            painter->drawPixmap(m_imageSize, m_currentImage, m_imageSize);
+        {
+            painter->drawPixmap(m_imageSize,
+                                m_currentImage,
+                                m_imageSize);
+        }
         else
-            painter->drawPixmap(m_imageSize, m_scene->animates_Blocks[m_animatorID]->image(), m_imageSize);
+            painter->drawPixmap(m_imageSize,
+                                m_scene->animates_Blocks[m_animatorID]->wholeImage(),
+                                m_scene->animates_Blocks[m_animatorID]->frameRect() );
     }
     else
         painter->drawRect(QRect(0,0,32,32));
@@ -687,10 +693,10 @@ void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*optio
 void ItemBlock::setAnimator(long aniID)
 {
     if(aniID<m_scene->animates_Blocks.size())
-    m_imageSize = QRectF(0,0,
-                m_scene->animates_Blocks[aniID]->image().width(),
-                m_scene->animates_Blocks[aniID]->image().height()
-                );
+    {
+        QRect frameRect = m_scene->animates_Blocks[aniID]->frameRect();
+        m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
+    }
     if(!m_sizable)
     {
         m_data.w = qRound(m_imageSize.width()); //width

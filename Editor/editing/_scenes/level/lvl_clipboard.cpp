@@ -75,7 +75,7 @@ LevelData LvlScene::copy(bool cut)
             else
             if( ObjType == "Water")
             {
-                ItemWater* sourceWater = (ItemWater *)(*it);
+                ItemPhysEnv* sourceWater = (ItemPhysEnv *)(*it);
                 copyData.physez.push_back(sourceWater->m_data);
                 if(cut){
                     sourceWater->removeFromArray();
@@ -197,7 +197,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpWater.y = (long)pos.y() + water.y - baseY;
         LvlData->npc_array_id++;
         dumpWater.array_id = LvlData->npc_array_id;
-        placeWater(dumpWater);
+        placeEnvironmentZone(dumpWater);
         LvlData->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
     }

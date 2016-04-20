@@ -66,7 +66,7 @@ QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 bool LvlPlacingItems::sizableBlock=false;
 
 bool LvlPlacingItems::overwriteMode=false;
-bool LvlPlacingItems::noOutSectionFlood=false;
+bool LvlPlacingItems::noOutSectionFlood=true;
 
 LvlPlacingItems::PlaceMode LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
@@ -88,19 +88,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
     case 0: //blocks
         {
-            long j;
             obj_block &blockC = uBlocks[itemID];
-
-            tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, &j);
-
+            Items::getItemGFX(&blockC, tImg, false);
             if(tImg.isNull())
             {
                 tImg = uBlockImg;
             }
-
             if(!blockC.isValid)
             {
-                blockC=pConfigs->main_block[1];
+                blockC = pConfigs->main_block[1];
+                blockC.image = uBlockImg;
             }
 
             LvlPlacingItems::gridSz=blockC.grid;
@@ -209,17 +206,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
     case 1: //bgos
     {
-        long j;
         obj_bgo& bgoC = uBGOs[itemID];
-        tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
+        Items::getItemGFX(&bgoC, tImg, false);
         if(tImg.isNull())
         {
             tImg=uBgoImg;
         }
-
         if(!bgoC.isValid)
         {
-            bgoC=pConfigs->main_bgo[1];
+            bgoC = pConfigs->main_bgo[1];
+            bgoC.image = uBgoImg;
         }
 
 
@@ -310,6 +306,11 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
         obj_npc &mergedSet = uNPCs[itemID];
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
+        if(!mergedSet.isValid)
+        {
+            mergedSet = pConfigs->main_npc[1];
+            mergedSet.image = uNpcImg;
+        }
 
         if( (itemID != LvlPlacingItems::npcSet.id) || (placingItem!=PLC_NPC) )
             LvlPlacingItems::npcSet.layer = "Default";
@@ -522,6 +523,17 @@ void LvlScene::setRectDrawer()
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
+    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    {
+        QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+        QPainter p(&oneCell);
+        p.setBrush(Qt::NoBrush);
+        p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+        p.drawRect(0,0, LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        brush.setTexture(oneCell);
+    }
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -566,6 +578,17 @@ void LvlScene::setCircleDrawer()
     if(addH==LvlPlacingItems::gridSz) addH=0;
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
+
+    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    {
+        QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+        QPainter p(&oneCell);
+        p.setBrush(Qt::NoBrush);
+        p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+        p.drawRect(0,0, LvlPlacingItems::itemW, LvlPlacingItems::itemH);
+        brush.setTexture(oneCell);
+    }
 
     cursor = addEllipse(0,0,1,1, pen, brush);
 

@@ -261,11 +261,11 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             if( ObjType == "Water")
             {
                 //Applay move into main array
-                historySourceBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->m_data);
+                historySourceBuffer.physez.push_back(dynamic_cast<ItemPhysEnv *>(*it)->m_data);
                 //dynamic_cast<ItemWater *>(*it)->waterData.x = (long)(*it)->scenePos().x();
                 //dynamic_cast<ItemWater *>(*it)->waterData.y = (long)(*it)->scenePos().y();
-                dynamic_cast<ItemWater *>(*it)->arrayApply();
-                historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->m_data);
+                dynamic_cast<ItemPhysEnv *>(*it)->arrayApply();
+                historyBuffer.physez.push_back(dynamic_cast<ItemPhysEnv *>(*it)->m_data);
                 s->LvlData->modified = true;
             }
             else
@@ -403,7 +403,7 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     else
     if( ObjType == "Water")
     {
-        sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->m_data.x, dynamic_cast<ItemWater *>(it)->m_data.y);
+        sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
         gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
     }
     else

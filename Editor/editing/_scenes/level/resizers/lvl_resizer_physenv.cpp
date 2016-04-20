@@ -33,10 +33,10 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
 
-        int x = ((ItemWater *)targetRect)->m_data.x;
-        int y = ((ItemWater *)targetRect)->m_data.y;
-        int w = ((ItemWater *)targetRect)->m_data.w;
-        int h = ((ItemWater *)targetRect)->m_data.h;
+        int x = ((ItemPhysEnv *)targetRect)->m_data.x;
+        int y = ((ItemPhysEnv *)targetRect)->m_data.y;
+        int w = ((ItemPhysEnv *)targetRect)->m_data.w;
+        int h = ((ItemPhysEnv *)targetRect)->m_data.h;
 
         pResizer = new ItemResizer( QSize(w, h), Qt::darkYellow, 16 );
         this->addItem(pResizer);
@@ -63,19 +63,19 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
                 long y = pResizer->pos().y();
                 long w = pResizer->_width;
                 long h = pResizer->_height;
-                long oldX = ((ItemWater *)pResizer->targetItem)->m_data.x;
-                long oldY = ((ItemWater *)pResizer->targetItem)->m_data.y;
-                long oldW = ((ItemWater *)pResizer->targetItem)->m_data.w;
-                long oldH = ((ItemWater *)pResizer->targetItem)->m_data.h;
-                ((ItemWater *)pResizer->targetItem)->m_data.x = x;
-                ((ItemWater *)pResizer->targetItem)->m_data.y = y;
-                ((ItemWater *)pResizer->targetItem)->m_data.w = w;
-                ((ItemWater *)pResizer->targetItem)->m_data.h = h;
+                long oldX = ((ItemPhysEnv *)pResizer->targetItem)->m_data.x;
+                long oldY = ((ItemPhysEnv *)pResizer->targetItem)->m_data.y;
+                long oldW = ((ItemPhysEnv *)pResizer->targetItem)->m_data.w;
+                long oldH = ((ItemPhysEnv *)pResizer->targetItem)->m_data.h;
+                ((ItemPhysEnv *)pResizer->targetItem)->m_data.x = x;
+                ((ItemPhysEnv *)pResizer->targetItem)->m_data.y = y;
+                ((ItemPhysEnv *)pResizer->targetItem)->m_data.w = w;
+                ((ItemPhysEnv *)pResizer->targetItem)->m_data.h = h;
 
-                ((ItemWater *)pResizer->targetItem)->setRectSize( QRect(x,y,w,h) );
+                ((ItemPhysEnv *)pResizer->targetItem)->setRectSize( QRect(x,y,w,h) );
                 LvlData->modified = true;
 
-                addResizeWaterHistory(((ItemWater *)pResizer->targetItem)->m_data, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
+                addResizeWaterHistory(((ItemPhysEnv *)pResizer->targetItem)->m_data, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();

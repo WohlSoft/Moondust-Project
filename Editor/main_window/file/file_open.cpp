@@ -22,6 +22,8 @@
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_layers_box.h>
+#include <main_window/dock/lvl_item_toolbox.h>
+#include <main_window/dock/wld_item_toolbox.h>
 #include <main_window/dock/wld_settings_box.h>
 #include <common_features/bool_reseter.h>
 #include <common_features/util.h>
@@ -210,8 +212,8 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->show();
             child->updateGeometry();
             child->ResetPosition();
+            dock_LvlItemBox->setLvlItemBoxes(false, false);
             statusBar()->showMessage(tr("Level file loaded"), 2000);
-            //updateMenus(true);
             SetCurrentLevelSection(0);
             dock_LvlWarpProps->init();
             dock_LvlLayers->setLayersBox();
@@ -244,7 +246,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->show();
             child->updateGeometry();
             child->ResetPosition();
-            //updateMenus(true);
+            dock_WldItemBox->setWldItemBoxes(false, false);
             dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {

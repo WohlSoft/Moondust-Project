@@ -46,13 +46,14 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(Qt::white);
     for(int i=0; i<animations.size(); i++)
     {
-        QPixmap frame = animations[i].second->image();
+        QPixmap &frame = animations[i].second->wholeImage();
+        QRect frameRect = animations[i].second->frameRect();
         QRect x;
         x.setX(animations[i].first.x() RatioWidth);
         x.setY(animations[i].first.y() RatioHeight);
-        x.setWidth(frame.width() RatioWidth);
-        x.setHeight(frame.height() RatioHeight);
-        painter->drawPixmap(x, frame);
+        x.setWidth(frameRect.width() RatioWidth);
+        x.setHeight(frameRect.height() RatioHeight);
+        painter->drawPixmap(x, frame, frameRect);
     }
 
     painter->setBrush(QBrush(Qt::black));

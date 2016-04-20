@@ -160,7 +160,7 @@ void MainWindow::loadSettings()
 
            //Refresh state of menubars
            updateWindowMenu();
-           updateMenus(ui->centralWidget->activeSubWindow(), true);
+           updateMenus(NULL, true);
         }
 
     settings.endGroup();

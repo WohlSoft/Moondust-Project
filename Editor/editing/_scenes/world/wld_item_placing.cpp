@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/items.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
 
@@ -69,20 +70,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     {
     case 0: //Tiles
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_tile tileConf;
-
-        getConfig_Tile(itemID, j, animator, tileConf, &noimage);
-
-        if(!noimage)
-        {
-            tImg = animates_Tiles[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        obj_w_tile &tileConf = uTiles[itemID];
+        Items::getItemGFX(&tileConf, tImg, false);
+        if(tImg.isNull())
         {
             tImg=uTileImg;
+        }
+        if(!tileConf.isValid)
+        {
+            tileConf = pConfigs->main_wtiles[1];
+            tileConf.image = uTileImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -92,7 +89,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
 
         long w = tImg.width();
-        long h = tImg.height()/( (tileConf.animated)?tileConf.frames:1);
+        long h = tImg.height();
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -138,7 +135,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h*tileConf.display_frame,w,h));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -164,20 +161,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 1: //Sceneries
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_scenery sceneConf;
-
-        getConfig_Scenery(itemID, j, animator, sceneConf, &noimage);
-
-        if(!noimage)
-        {
-            tImg = animates_Scenery[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        obj_w_scenery &sceneConf = uScenes[itemID];
+        Items::getItemGFX(&sceneConf, tImg, false);
+        if(tImg.isNull())
         {
             tImg=uSceneImg;
+        }
+        if(!sceneConf.isValid)
+        {
+            sceneConf = pConfigs->main_wscene[1];
+            sceneConf.image = uSceneImg;
         }
 
         WldPlacingItems::gridSz=qRound(qreal(pConfigs->default_grid)/2);
@@ -190,9 +183,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
-
-        long iw = tImg.width();
-        long ih = tImg.height()/( (sceneConf.animated)?sceneConf.frames:1);
 
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
@@ -223,8 +213,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setRectDrawer(); return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x= qRound(qreal(tImg.width()) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(tImg.height()) / 2);
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
@@ -235,7 +225,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setCircleDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,ih * sceneConf.display_frame ,iw,ih));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -262,20 +252,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 2: //Path
     {
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_path pathConf;
-
-        getConfig_Path(itemID, j, animator, pathConf, &noimage);
-
-        if(!noimage)
-        {
-            tImg = animates_Paths[animator]->wholeImage();
-        }
-
-        if((noimage)||(tImg.isNull()))
+        obj_w_path &pathConf = uPaths[itemID];
+        Items::getItemGFX(&pathConf, tImg, false);
+        if(tImg.isNull())
         {
             tImg=uPathImg;
+        }
+        if(!pathConf.isValid)
+        {
+            pathConf = pConfigs->main_wpaths[1];
+            pathConf.image = uPathImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -284,7 +270,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::PathSet.id = itemID;
 
         long w = tImg.width();
-        long h = tImg.height()/( (pathConf.animated)?pathConf.frames:1);
+        long h = tImg.height();
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -329,7 +315,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h * pathConf.display_frame, w ,h));
+        cursor = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -357,21 +343,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
     case 3: //Level
     {
-
-        long j=0, animator=0;
-        bool noimage=true;
-        obj_w_level wlevelConf;
-
-        getConfig_Level(itemID, j, animator, wlevelConf, &noimage);
-
-        if(!noimage)
+        obj_w_level &wlevelConf = uLevels[itemID];
+        Items::getItemGFX(&wlevelConf, tImg, false);
+        if(tImg.isNull())
         {
-            tImg = animates_Levels[animator]->wholeImage();
+            tImg = uLevelImg;
         }
-
-        if((noimage)||(tImg.isNull()))
+        if(!wlevelConf.isValid)
         {
-            tImg=uLevelImg;
+            wlevelConf = pConfigs->main_wlevels[0];
+            wlevelConf.image = uLevelImg;
         }
 
         WldPlacingItems::gridSz=pConfigs->default_grid;
@@ -381,9 +362,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
-
-        long iw = tImg.width();
-        long ih = tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1);
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -421,20 +399,18 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setCircleDrawer(); return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x = qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y = qRound(qreal(h) / 2);
 
         if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0, ih * wlevelConf.display_frame ,iw,ih));
+        cursor = addPixmap(tImg);
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
-        int imgOffsetY = (int)qRound( -qreal(
-                  tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1))
-                  + WldPlacingItems::gridSz);
+        int imgOffsetY = (int)qRound( -qreal(tImg.height()) + WldPlacingItems::gridSz);
 
         ((QGraphicsPixmapItem*)cursor)->setOffset(imgOffsetX, imgOffsetY );
 
@@ -456,9 +432,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {
             setFloodFiller(); return;
         }
-
         SwitchEditingMode(MODE_PlacingNew);
-
         break;
     }
 
@@ -546,6 +520,14 @@ void WldScene::setRectDrawer()
     WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
     WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
 
+    QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
+    oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+    QPainter p(&oneCell);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    brush.setTexture(oneCell);
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -582,6 +564,14 @@ void WldScene::setCircleDrawer()
     if(addH==WldPlacingItems::gridSz) addH=0;
     WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
     WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+
+    QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
+    oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
+    QPainter p(&oneCell);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
+    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    brush.setTexture(oneCell);
 
     cursor = addEllipse(0,0,1,1, pen, brush);
 

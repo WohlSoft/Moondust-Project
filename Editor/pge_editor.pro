@@ -344,7 +344,6 @@ SOURCES += main.cpp\
     common_features/resizer/corner_grabber.cpp \
     data_configs/conf_rotation_tables.cpp \
     editing/_scenes/level/items/lvl_base_item.cpp \
-    editing/_scenes/world/data_manager/wld_config_index.cpp \
     editing/_scenes/world/items/wld_base_item.cpp \
     main_window/help.cpp \
     tools/debugger/custom_counter.cpp \
@@ -466,7 +465,6 @@ HEADERS  += defines.h \
     data_configs/configstatus.h \
     data_configs/custom_data.h \
     data_configs/data_configs.h \
-    data_configs/dc_indexing.h \
     data_configs/obj_BG.h \
     data_configs/obj_bgo.h \
     data_configs/obj_block.h \

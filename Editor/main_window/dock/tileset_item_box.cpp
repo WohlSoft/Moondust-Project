@@ -381,6 +381,16 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
 {
     if(lockTilesetBox) return;
 
+    QGraphicsScene * scene = NULL;
+
+    LevelEdit *lvlEdit = mw()->activeLvlEditWin();
+    WorldEdit *wldEdit = mw()->activeWldEditWin();
+
+    if((lvlEdit) && (lvlEdit->sceneCreated))
+        scene=lvlEdit->scene;
+    else if((wldEdit) && (wldEdit->sceneCreated))
+        scene=wldEdit->scene;
+
     QTabWidget* cat = ui->TileSetsCategories;
     if(!(cat->tabText(tabIndex) == "Custom"))
     {
@@ -444,7 +454,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                             for(int k=0; k<s.items.size(); k++)
                             {
                                 SimpleTilesetItem &item = s.items[k];
-                                TilesetItemButton* tbutton = new TilesetItemButton(&mw()->configs, NULL, tilesetNameWrapper);
+                                TilesetItemButton* tbutton = new TilesetItemButton(&mw()->configs, scene, tilesetNameWrapper);
                                 tbutton->applySize(32,32);
                                 tbutton->applyItem(s.type, item.id);
                                 l->addWidget(tbutton, item.row, item.col);
@@ -504,7 +514,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                 for(int k=0; k<s.items.size(); k++)
                 {
                     SimpleTilesetItem &item = s.items[k];
-                    TilesetItemButton* tbutton = new TilesetItemButton(&mw()->configs, NULL, tilesetNameWrapper);
+                    TilesetItemButton* tbutton = new TilesetItemButton(&mw()->configs, scene, tilesetNameWrapper);
                     tbutton->applySize(32,32);
                     tbutton->applyItem(s.type, item.id);
                     l->addWidget(tbutton, item.row, item.col);
@@ -513,7 +523,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                     }
                     connect(tbutton, SIGNAL(clicked(int,ulong)), mw(), SLOT(SwitchPlacingItem(int,ulong)));
                 }
-                QPushButton* b = new QPushButton(Themes::icon(Themes::pencil),"",tilesetNameWrapper);
+                QPushButton* b = new QPushButton(Themes::icon(Themes::pencil), "", tilesetNameWrapper);
                 b->setMaximumSize(32,32);
                 b->setFlat(true);
                 l->addWidget(b, 0, mostRighter);
@@ -523,7 +533,8 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
     }
 }
 
-QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets(){
+QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets()
+{
     QVector<SimpleTileset> ctsets;
 
     QString path;

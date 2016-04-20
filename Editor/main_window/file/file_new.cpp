@@ -75,25 +75,25 @@ void MainWindow::on_actionNewLevel_triggered()
         return;
     }
 
-    LevelEdit *child = createLvlChild();
+    QMdiSubWindow * SubWindow;
+    LevelEdit *child = createLvlChild(&SubWindow);
     if(child->newFile(configs, GlobalSettings::LvlOpts))
     {
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        //updateMenus(ui->centralWidget->activeSubWindow(), true);
+        dock_LvlItemBox->setLvlItemBoxes(false, false);
         SetCurrentLevelSection(0);
         on_actionSelect_triggered();
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
-
         if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
         LvlMusPlay::musicForceReset=true; //reset musics
         on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
     } else {
-        child->show();
-        if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-        ui->centralWidget->activeSubWindow()->close();
+        if( activeLvlEditWin(SubWindow) )
+            activeLvlEditWin(SubWindow)->LvlData.modified = false;
+        SubWindow->close();
     }
 }
 
@@ -111,18 +111,19 @@ void MainWindow::on_actionNewWorld_map_triggered()
         return;
     }
 
-    WorldEdit *child = createWldChild();
+    QMdiSubWindow* SubWindow;
+    WorldEdit *child = createWldChild(&SubWindow);
     if(child->newFile(configs, GlobalSettings::LvlOpts))
     {
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        //updateMenus(ui->centralWidget->activeSubWindow(), true);
+        dock_WldItemBox->setWldItemBoxes(false, false);
         on_actionSelect_triggered();
     } else {
-        child->show();
-        if(activeChildWindow()==3) activeWldEditWin()->WldData.modified = false;
-        ui->centralWidget->activeSubWindow()->close();
+        if( activeWldEditWin(SubWindow) )
+            activeWldEditWin(SubWindow)->WldData.modified = false;
+        SubWindow->close();
     }
 }
 

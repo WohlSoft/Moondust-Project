@@ -190,93 +190,89 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bool custom=false;
 
-            QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->id)+".ini", true);
-            if(CustomTxt.isEmpty())
-                CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->id)+".txt", true);
-            if(!CustomTxt.isEmpty())
+        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->id)+".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->id)+".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            pConfigs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
+            custom=true;
+        }
+
+        QString CustomFile=uLVL.getCustomFile(t_block.image_n, true);
+        if(!CustomFile.isEmpty())
+        {
+            if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
             {
-                pConfigs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
-                custom=true;
+                QString CustomMask = uLVL.getCustomFile(t_block.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask);
+            } else {
+                GraphicsHelps::loadQImage(tempImg, CustomFile);
             }
-
-            QString CustomFile=uLVL.getCustomFile(t_block.image_n, true);
-            if(!CustomFile.isEmpty())
+            if(tempImg.isNull())
+                WrongImagesDetected=true;
+            else
             {
-                if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
-                {
-                    QString CustomMask = uLVL.getCustomFile(t_block.mask_n, false);
-                    GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask);
-                } else {
-                    GraphicsHelps::loadQImage(tempImg, CustomFile);
-                }
-                if(tempImg.isNull())
-                    WrongImagesDetected=true;
-                else
-                {
-                    custom_images.push_back(QPixmap::fromImage(tempImg));
-                    t_block.cur_image = &custom_images.last();
-                }
-                custom=true;
+                custom_images.push_back(QPixmap::fromImage(tempImg));
+                t_block.cur_image = &custom_images.last();
             }
+            custom=true;
+        }
 
-            int frameFirst;
-            int frameLast;
+        int frameFirst;
+        int frameLast;
 
-            switch(t_block.algorithm)
+        switch(t_block.algorithm)
+        {
+            case 1: // Invisible block
             {
-                case 1: // Invisible block
-                {
-                    frameFirst = 5;
-                    frameLast = 6;
-                    break;
-                }
-                case 3: //Player's character block
-                {
-                    frameFirst = 0;
-                    frameLast = 1;
-                    break;
-                }
-                case 4: //Player's character switch
-                {
-                    frameFirst = 0;
-                    frameLast = 3;
-                    break;
-                }
-                default: //Default block
-                {
-                    frameFirst = 0;
-                    frameLast = -1;
-                    break;
-                }
+                frameFirst = 5;
+                frameLast = 6;
+                break;
             }
-
-            SimpleAnimator * aniBlock = new SimpleAnimator(
-                        ((t_block.cur_image->isNull())?
-                                uBlockImg : *t_block.cur_image),
-                                  t_block.animated,
-                                  t_block.frames,
-                                  t_block.framespeed, frameFirst,frameLast,
-                                  t_block.animation_rev,
-                                  t_block.animation_bid
-                                  );
-
-            t_block.animator_id = animates_Blocks.size();
-            animates_Blocks.push_back( aniBlock );
-            animator.registerAnimation( aniBlock );
-
-            uBlocks.storeElement(i, t_block);
-            if(custom)
+            case 3: //Player's character block
             {
-                custom_Blocks.push_back(&uBlocks[i]);//Register BGO as customized
+                frameFirst = 0;
+                frameLast = 1;
+                break;
             }
+            case 4: //Player's character switch
+            {
+                frameFirst = 0;
+                frameLast = 3;
+                break;
+            }
+            default: //Default block
+            {
+                frameFirst = 0;
+                frameLast = -1;
+                break;
+            }
+        }
 
-            #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
-            #endif
-    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-    if(progress.wasCanceled())
-        /*progress.setValue(progress.value()+1);
-    else*/ return;
+        SimpleAnimator * aniBlock = new SimpleAnimator(
+                    ((t_block.cur_image->isNull())?
+                            uBlockImg : *t_block.cur_image),
+                              t_block.animated,
+                              t_block.frames,
+                              t_block.framespeed, frameFirst,frameLast,
+                              t_block.animation_rev,
+                              t_block.animation_bid
+                              );
+
+        t_block.animator_id = animates_Blocks.size();
+        animates_Blocks.push_back( aniBlock );
+        animator.registerAnimation( aniBlock );
+
+        uBlocks.storeElement(i, t_block);
+        if(custom)
+        {
+            custom_Blocks.push_back(&uBlocks[i]);//Register BGO as customized
+        }
+
+        //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        if(progress.wasCanceled())
+            return;
     }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -339,11 +335,10 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                               t_bgo.frames,
                               t_bgo.framespeed
                               );
-            t_bgo.animator_id = animates_BGO.size();
 
-            animates_BGO.push_back( aniBGO );
-
-            animator.registerAnimation( aniBGO );
+        t_bgo.animator_id = animates_BGO.size();
+        animates_BGO.push_back( aniBGO );
+        animator.registerAnimation( aniBGO );
 
         uBGOs.storeElement(i, t_bgo);
         if(custom)
@@ -351,10 +346,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             custom_BGOs.push_back(&uBGOs[i]);//Register BGO as customized
         }
 
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
-            /*progress.setValue(progress.value()+1);
-        else*/ return;
+            return;
     }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -472,7 +466,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  custom_NPCs.push_back(&uNPCs[i]);
              }
 
-         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+         //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
          if(progress.wasCanceled())
              return;
     }

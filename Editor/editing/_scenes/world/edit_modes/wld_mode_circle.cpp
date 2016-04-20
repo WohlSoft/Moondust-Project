@@ -117,9 +117,6 @@ void WLD_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                     ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                     ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                     );
-
-        item_rectangles::drawRound(s, QRect (cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
-                                    QSize(WldPlacingItems::itemW, WldPlacingItems::itemH) );
     }
 }
 
@@ -139,6 +136,11 @@ void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             s->cursor->hide();
             return;
         }
+
+        item_rectangles::drawRound(s,
+                                   QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+                                   QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                   );
 
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();

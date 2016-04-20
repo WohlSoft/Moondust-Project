@@ -807,10 +807,8 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
             else
                 _internal_animator->buildAnimator(*m_localProps.cur_image, m_localProps);
             _internal_animator->start();
-            m_imageSize = QRectF(0,0,
-                        _internal_animator->image(-1).width(),
-                        _internal_animator->image(-1).height()
-                        );
+            QRect frameRect = _internal_animator->frameRect(-1);
+            m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height() );
             m_animated = true;
             m_extAnimator=false;
         }
@@ -880,7 +878,9 @@ void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
     if(!m_extAnimator)
     {
         if(_internal_animator)
-            painter->drawPixmap(m_offseted, _internal_animator->image(m_direction), _internal_animator->image(m_direction).rect());
+            painter->drawPixmap(m_offseted,
+                                _internal_animator->wholeImage(),
+                                _internal_animator->frameRect(m_direction));
         else
             painter->drawRect(QRect(0,0,32,32));
     } else {
@@ -891,7 +891,9 @@ void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
         }
 
         if(m_scene->animates_NPC.size()>m_animatorID)
-            painter->drawPixmap(m_offseted, m_scene->animates_NPC[m_animatorID]->image(m_direction), m_scene->animates_NPC[m_animatorID]->image(m_direction).rect());
+            painter->drawPixmap(m_offseted,
+                                m_scene->animates_NPC[m_animatorID]->wholeImage(),
+                                m_scene->animates_NPC[m_animatorID]->frameRect(m_direction));
         else
             painter->drawRect(QRect(0,0,32,32));
 
@@ -917,10 +919,10 @@ void ItemNPC::setAnimator(long aniID)
     if(m_DisableScene) return;
 
     if(aniID<m_scene->animates_NPC.size())
-    m_imageSize = QRectF(0,0,
-                m_scene->animates_NPC[aniID]->image(-1).width(),
-                m_scene->animates_NPC[aniID]->image(-1).height()
-                );
+    {
+        QRect frameRect = m_scene->animates_NPC[aniID]->frameRect(-1);
+        m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
+    }
 
     this->setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())) ); //width
     this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())) ); //height

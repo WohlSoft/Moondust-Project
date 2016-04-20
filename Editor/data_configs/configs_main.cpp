@@ -368,10 +368,10 @@ bool dataconfigs::loadconfigs()
     LogDebugQD(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
     LogDebugQD(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
     LogDebugQD(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
-    LogDebugQD(QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
-    LogDebugQD(QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
-    LogDebugQD(QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
-    LogDebugQD(QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
+    LogDebugQD(QString("Loaded Tiles           %1/%2").arg(main_wtiles.stored()).arg(ConfStatus::total_wtile));
+    LogDebugQD(QString("Loaded Sceneries       %1/%2").arg(main_wscene.stored()).arg(ConfStatus::total_wscene));
+    LogDebugQD(QString("Loaded Path images     %1/%2").arg(main_wpaths.stored()).arg(ConfStatus::total_wpath));
+    LogDebugQD(QString("Loaded Level images    %1/%2").arg(main_wlevels.stored()).arg(ConfStatus::total_wlvl));
     LogDebugQD(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
     LogDebugQD(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
     LogDebugQD(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
@@ -388,10 +388,10 @@ bool dataconfigs::check()
     (main_bg.stored()<=0)||
     (main_block.stored()<=0)||
     (main_npc.stored()<=0)||
-    (main_wtiles.size()<=0)||
-    (main_wscene.size()<=0)||
-    (main_wpaths.size()<=0)||
-    (main_wlevels.size()<=0)||
+    (main_wtiles.stored()<=0)||
+    (main_wscene.stored()<=0)||
+    (main_wpaths.stored()<=0)||
+    (main_wlevels.stored()<=0)||
     (main_music_lvl.stored()<=0)||
     (main_music_wld.stored()<=0)||
     (main_music_spc.stored()<=0)||
