@@ -77,7 +77,8 @@ before_install:
 # ==============================================================================
 # Building of dependencies of PGE
 # ==============================================================================
-  - bash build_deps.sh no-pause
+  - bash build_deps.sh no-pause;
+    bash -c "date +\"%Y-%m-%d %H:%M:%S\">/home/travis/build_date_dev_osx.txt"
 
 install: true
 
@@ -98,5 +99,5 @@ after_success:
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword $FTPServer
+  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /home/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
 

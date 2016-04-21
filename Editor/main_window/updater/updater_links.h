@@ -24,8 +24,29 @@
 
 //#define STABLE_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_stable.txt"
 //#define DEVEL_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_dev.txt"
-#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_stable_date.txt"
-#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_dev.txt"
+//#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_stable_date.txt"
+
+#ifdef _WIN32
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_stable_win32.txt"
+#elif __gnu_linux__
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_stable_linux.txt"
+#elif __APPLE__
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_stable_osx.txt"
+#else
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_stable_linux.txt"
+#endif
+
+
+#ifdef _WIN32
+#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_dev_win32.txt"
+#elif __gnu_linux__
+#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_dev_linux.txt"
+#elif __APPLE__
+#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_dev_osx.txt"
+#else
+#define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_Builds/_versions/build_date_dev_linux.txt"
+#endif
+
 
 #endif // UPDATER_LINKS_H
 
