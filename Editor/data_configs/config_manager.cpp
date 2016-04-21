@@ -52,7 +52,7 @@ ListDelegate::ListDelegate(QObject *parent)
 
 ListDelegate::~ListDelegate() {}
 
-void ListDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+void ListDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
     QRect r = option.rect;
 
@@ -224,8 +224,9 @@ ConfigManager::ConfigManager(QWidget *parent) :
     }
 
     ui->configList->setItemDelegate(new ListDelegate(ui->configList));
-    ui->configList->setStyleSheet("{paint-alternating-row-colors-for-empty-area:1;"
-                                  "alternate-background-color: #2C2C2C;}");
+    ui->configList->setStyleSheet("* { paint-alternating-row-colors-for-empty-area: true; "
+                                  "alternate-background-color: #2C2C2CFF; }");
+
     foreach(configPackPair confD, config_paths)
     {
         QString c=confD.first;
