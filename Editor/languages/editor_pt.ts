@@ -681,12 +681,12 @@ Também pode dar um duplo clique em um item para ter o mesmo efeito.</translatio
         <translation>Pedir em todas as incializações</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_manager.cpp" line="285"/>
+        <location filename="../data_configs/config_manager.cpp" line="289"/>
         <source>Config packs are not found</source>
         <translation>Pacotes de configuração não encontrados</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_manager.cpp" line="291"/>
+        <location filename="../data_configs/config_manager.cpp" line="295"/>
         <source>Available configuration packages are not found!&lt;br&gt;
 Please download and install them into directory&lt;br&gt;
 &lt;br&gt;
@@ -834,7 +834,7 @@ Pegue quaisquer pacotes de configuração aqui:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paisagem para mundo (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
@@ -1061,7 +1061,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="169"/>
         <source>Contents</source>
-        <translation type="unfinished">Conteúdos</translation>
+        <translation>Conteúdos</translation>
     </message>
     <message>
         <source>Items</source>
@@ -2257,6 +2257,135 @@ Apenas 27 caracteres por linha</translation>
     </message>
 </context>
 <context>
+    <name>ItemPhysEnv</name>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="93"/>
+        <source>Layer: </source>
+        <translation type="unfinished">Camada:</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="96"/>
+        <source>Add to new layer...</source>
+        <translation type="unfinished">Adicionar a nova camada...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
+        <source>[hidden]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
+        <source>Environment type</source>
+        <translation type="unfinished">Tipo de ambiente</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="125"/>
+        <source>Water</source>
+        <translation type="unfinished">Água</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="126"/>
+        <source>Quicksand</source>
+        <translation type="unfinished">Areia movediça</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="127"/>
+        <source>Custom liquid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <source>Gravitational Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <source>Touch Event (Once)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <source>Touch Event (Every frame)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <source>NPC Touch Event (Once)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <source>NPC Touch Event (Every frame)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <source>Mouse click Event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <source>Collision script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <source>Mouse click Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <source>Collision Event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <source>Air chamber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
+        <source>Copy preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
+        <source>Position: Left, Top, Right, Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="146"/>
+        <source>Resize</source>
+        <translation type="unfinished">Redimensionar</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
+        <source>Copy</source>
+        <translation type="unfinished">Copiar</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
+        <source>Cut</source>
+        <translation type="unfinished">Cortar</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
+        <source>Preferences has been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ItemPlayerPoint</name>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
@@ -2482,28 +2611,28 @@ Apenas 27 caracteres por linha</translation>
         <translation>Dados extras:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1222"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="87"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1203"/>
         <source>[Empty]</source>
         <translation>[Vazio]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="130"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="145"/>
         <source>NPC from List</source>
         <translation>NPC da lista</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="131"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="146"/>
         <source>Coins</source>
         <translation>Moedas</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1088"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1069"/>
         <source>Please, save file</source>
         <translation>Por favor, salve o arquivo</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1088"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1069"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
     </message>
@@ -2572,134 +2701,44 @@ Apenas 27 caracteres por linha</translation>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="93"/>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation type="vanished">Camada:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="96"/>
         <source>Add to new layer...</source>
-        <translation>Adicionar a nova camada...</translation>
+        <translation type="vanished">Adicionar a nova camada...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="104"/>
-        <source>[hidden]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
-        <translation>Tipo de ambiente</translation>
+        <translation type="vanished">Tipo de ambiente</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="127"/>
-        <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
-        <source>Gravitational Field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
-        <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
-        <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
-        <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
-        <source>NPC Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
-        <source>Mouse click Event</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
-        <source>Collision script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
-        <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
-        <source>Collision Event</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
-        <source>Air chamber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
-        <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
-        <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
-        <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="182"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="194"/>
-        <source>Preferences has been copied: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="125"/>
         <source>Water</source>
-        <translation>Água</translation>
+        <translation type="vanished">Água</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="126"/>
         <source>Quicksand</source>
-        <translation>Areia movediça</translation>
+        <translation type="vanished">Areia movediça</translation>
     </message>
     <message>
         <source>Show zone range data</source>
         <translation type="vanished">Mostrar dados da zona de alcance</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="146"/>
         <source>Resize</source>
-        <translation>Redimensionar</translation>
+        <translation type="vanished">Redimensionar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation type="vanished">Copiar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
         <source>Cut</source>
-        <translation>Cortar</translation>
+        <translation type="vanished">Cortar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
         <source>Remove</source>
-        <translation>Remover</translation>
+        <translation type="vanished">Remover</translation>
     </message>
     <message>
         <source>Physical environment range</source>
@@ -3846,8 +3885,14 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2031"/>
         <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
+Message limits: max line lenth is 27 characters</source>
         <translation>Por favor, insira a mensagm
+Apenas 27 caracteres por linha</translation>
+    </message>
+    <message>
+        <source>Please, enter message
+Message limits: max line lenth is 28 characters</source>
+        <translation type="vanished">Por favor, insira a mensagm
 Apenas 28 caracteres por linha</translation>
     </message>
 </context>
@@ -4291,22 +4336,22 @@ All elements of this layer will be removed too!</source>
         <translation>Procurar blocos do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="287"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="283"/>
         <source>Search User BGOs %1</source>
         <translation>Procurar objetos decorativos do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="366"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="360"/>
         <source>Search User NPCs %1</source>
         <translation>Procurar NPCs do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="488"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="482"/>
         <source>Wrong custom images</source>
         <translation>Imagens customizadas com defeito</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="489"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="483"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -6373,18 +6418,18 @@ Escolha qual da lista quer utilizar:</translation>
         <translation>Converter áudio (SoX)...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="353"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="690"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="86"/>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="95"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="368"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="678"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="97"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="100"/>
         <source>[all]</source>
         <translation>[tudo]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="354"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="691"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="87"/>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="96"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="369"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="679"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="98"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="101"/>
         <source>[custom]</source>
         <translation>[personalizada]</translation>
     </message>
@@ -6413,7 +6458,7 @@ Escolha qual da lista quer utilizar:</translation>
         <location filename="../main_window/file/file_save.cpp" line="77"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
         <location filename="../main_window/tools/data_configs.cpp" line="53"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="201"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
@@ -6463,7 +6508,7 @@ Para trabalhar com ela, reinicie o aplicativo, por favor.</translation>
         <translation>[nada]</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
+        <location filename="../main_window/file/file_open.cpp" line="183"/>
         <location filename="../main_window/file/file_reload.cpp" line="59"/>
         <location filename="../main_window/file/file_reload.cpp" line="218"/>
         <source>File open error</source>
@@ -6535,8 +6580,8 @@ Arquivo não existente.</translation>
         <location filename="../main_window/file/file_new.cpp" line="40"/>
         <location filename="../main_window/file/file_new.cpp" line="71"/>
         <location filename="../main_window/file/file_new.cpp" line="107"/>
-        <location filename="../main_window/file/file_open.cpp" line="125"/>
-        <location filename="../main_window/file/file_open.cpp" line="164"/>
+        <location filename="../main_window/file/file_open.cpp" line="127"/>
+        <location filename="../main_window/file/file_open.cpp" line="166"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6564,68 +6609,68 @@ Configuration package loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="70"/>
-        <location filename="../main_window/file/file_open.cpp" line="105"/>
+        <location filename="../main_window/file/file_open.cpp" line="72"/>
+        <location filename="../main_window/file/file_open.cpp" line="107"/>
         <source>Untitled file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="70"/>
-        <location filename="../main_window/file/file_open.cpp" line="105"/>
+        <location filename="../main_window/file/file_open.cpp" line="72"/>
+        <location filename="../main_window/file/file_open.cpp" line="107"/>
         <source>Please save file to the disk first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="126"/>
+        <location filename="../main_window/file/file_open.cpp" line="128"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="165"/>
+        <location filename="../main_window/file/file_open.cpp" line="167"/>
         <source>Cannot open file:
 Configuration package loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="182"/>
+        <location filename="../main_window/file/file_open.cpp" line="184"/>
         <source>Can&apos;t open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="213"/>
+        <location filename="../main_window/file/file_open.cpp" line="216"/>
         <source>Level file loaded</source>
         <translation>Arquivo de nível carregado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="254"/>
+        <location filename="../main_window/file/file_open.cpp" line="256"/>
         <location filename="../main_window/file/file_reload.cpp" line="277"/>
         <source>World map file loaded</source>
         <translation>Arquivo de mundo carregado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="273"/>
+        <location filename="../main_window/file/file_open.cpp" line="275"/>
         <location filename="../main_window/file/file_reload.cpp" line="181"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="279"/>
+        <location filename="../main_window/file/file_open.cpp" line="281"/>
         <source>NPC Config loaded</source>
         <translation>Configuração de NPC carregado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="365"/>
+        <location filename="../main_window/file/file_open.cpp" line="367"/>
         <source>Game save statistics</source>
         <translation>Salvas as estatísticas de jogo</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="372"/>
+        <location filename="../main_window/file/file_open.cpp" line="374"/>
         <source>Bad file</source>
         <translation>Arquivo rejeitado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="373"/>
+        <location filename="../main_window/file/file_open.cpp" line="375"/>
         <source>This file have unknown extension</source>
         <translation>Este arquivo tem um formato/extensão desconhecida</translation>
     </message>
@@ -6652,7 +6697,7 @@ Configuration package loaded with errors.</source>
         <translation>Salvando arquivos...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="133"/>
+        <location filename="../main_window/file/file_open.cpp" line="135"/>
         <source>Open file</source>
         <translation>Abrir arquivo</translation>
     </message>
@@ -6981,47 +7026,47 @@ Um arquivo temporário será criado. Continuar?</translation>
         <translation>Selecione diretório com dados personalizados para importar</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="139"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="156"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="145"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="162"/>
         <source>File is untitled</source>
         <translation>Arquivo está sem título</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="140"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="157"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="146"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="163"/>
         <source>File doesn&apos;t use custom graphics.
 </source>
         <translation>Arquivo não usa gráficos personalizados.
 </translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="190"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="196"/>
         <source>Nothing to do</source>
         <translation>Nada a fazer</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="191"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="197"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
         <translation>O arquivo não usa gráficos GIF com máscaras transparentes ou não usa gráficos personalizados.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="201"/>
         <source>Fixing of masks...</source>
         <translation>Corrigindo máscaras...</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="57"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="196"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="202"/>
         <source>Please wait...</source>
         <translation>Aguarde...</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="225"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="231"/>
         <source>Done</source>
         <translation>Feito</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="226"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="232"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
         <translation>Máscaras foram corrigidas.
@@ -8291,7 +8336,7 @@ Razão: Violação do Segmentação de Sinal [SIGSERV]
         <translation type="unfinished">Carregando blocos...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_lvl_npc.cpp" line="211"/>
+        <location filename="../data_configs/conf_lvl_npc.cpp" line="202"/>
         <source>Loading NPCs...</source>
         <translation type="unfinished">Carregando NPCs...</translation>
     </message>
@@ -8306,7 +8351,7 @@ Razão: Violação do Segmentação de Sinal [SIGSERV]
         <translation type="unfinished">Carregando sons...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="108"/>
+        <location filename="../data_configs/conf_wld_level.cpp" line="107"/>
         <source>Loading Level images...</source>
         <translation type="unfinished">Carregando Imagens de Níveis...</translation>
     </message>
@@ -8316,7 +8361,7 @@ Razão: Violação do Segmentação de Sinal [SIGSERV]
         <translation type="unfinished">Carregando Imagens de Caminhos...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="86"/>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
         <source>Loading Sceneries...</source>
         <translation type="unfinished">Carregando objetos de cenário...</translation>
     </message>
@@ -8360,7 +8405,7 @@ Arquivo: %1</translation>
         <translation type="unfinished">Dados da linha: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="273"/>
+        <location filename="../main_window/file/file_open.cpp" line="275"/>
         <location filename="../main_window/file/file_reload.cpp" line="181"/>
         <source>File open error</source>
         <translation type="unfinished">Erro ao abrir arquivo</translation>
@@ -8870,44 +8915,44 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="265"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="263"/>
         <source>Please enter a filename!</source>
         <translation>Por favor, insira o nome do arquivo!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="266"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="264"/>
         <source>Filename:</source>
         <translation>Nome do arquivo:</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="316"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="314"/>
         <source>Open Tileset</source>
         <translation>Abrir tileset</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="338"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="336"/>
         <source>Failed to load tileset!</source>
         <translation>Falhou ao carregar o tilestet!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="338"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="336"/>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
         <translation>Falhou ao carregar o tilestet!
 Os dados podem estar corrompidos!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="404"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="402"/>
         <source>Tileset box editor</source>
         <translation>Editor de caixas do tileset</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="409"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="407"/>
         <source>Don&apos;t show this message again.</source>
         <translation>Não exibir mais.</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="411"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="409"/>
         <source>Welcome to tileset editor!
 
 This is an editor of global tilesets.
@@ -8926,22 +8971,22 @@ Isto é, os arquivos lá salvos podem ser utilizados globalmente neste pacote de
 Se quiser criar tilesets específicos para o mundo/nível que usem gráficos personalizados, por favor abrar o editor de Itens das Caixas do Tileset e encontre o botão &apos;Novo Tileset&apos; na aba &quot;Personalizado&quot;.</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="428"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="426"/>
         <source>Remove tileset</source>
         <translation>Remover tileset</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="429"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="427"/>
         <source>Do you want to remove this tileset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="435"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="433"/>
         <source>Tileset removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="435"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="433"/>
         <source>Tileset has been removed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9589,12 +9634,12 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation>5/%1 Aplicando músicas...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="466"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="467"/>
         <source>Point is not selected</source>
         <translation>Ponto não selecionado</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="466"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="467"/>
         <source>Select the point on the world map first.</source>
         <translation>Selecione um ponto no mapa primeiro.</translation>
     </message>
@@ -9722,32 +9767,32 @@ Fundo:	%4</translation>
 <context>
     <name>WldScene</name>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="98"/>
         <source>Search User Tiles %1</source>
         <translation>Procurar tiles do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="178"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="172"/>
         <source>Search User Sceneries %1</source>
         <translation>Procurar objetos de cenário do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="246"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="244"/>
         <source>Search User Paths %1</source>
         <translation>Procurar caminhos do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="314"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="316"/>
         <source>Search User Levels %1</source>
         <translation>Procurar níveis do usuário %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="387"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="394"/>
         <source>Wrong custom images</source>
         <translation>Imagens customizadas com defeito</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="388"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="395"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -10353,17 +10398,17 @@ Deseja salvar sua mudanças?</translation>
         <translation>Caixa de música</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="259"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="260"/>
         <source>[Silence]</source>
         <translation>[Silêncio]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="348"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="345"/>
         <source>Please, save file</source>
         <translation>Por favor, salve o arquivo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="348"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="345"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
     </message>

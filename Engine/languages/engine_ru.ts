@@ -374,48 +374,48 @@ Are you placed player start point (or entrance warp point) too far off of the se
         <translation>Вкл. вертик. синхр</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="435"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="437"/>
         <source>Frame time (ms.)</source>
         <translation>Время кадра (мс)</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER1">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="453"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="456"/>
         <source>Player 1 controls</source>
         <translation>Первый игрок</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER2">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="455"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="458"/>
         <source>Player 2 controls</source>
         <translation>Второй игрок</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_KEYBOARD">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="502"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="505"/>
         <source>Keyboard</source>
         <translation>Клавиатура</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_JOYSTICK">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="508"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="511"/>
         <source>Joystick: %1</source>
         <translation>Джойстик: %1</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_INPUT_TYPE">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="512"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="515"/>
         <source>Input:</source>
         <translation>Ввод:</translation>
     </message>
     <message id="MSG_PLEASEWAIT">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="542"/>
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="563"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="571"/>
         <source>Please wait...</source>
         <translation>Пожалуйста, подождите...</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="617"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="630"/>
         <source>&lt;episodes not found&gt;</source>
         <translation>&lt;эпизоды не найдены&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="654"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="667"/>
         <source>&lt;levels not found&gt;</source>
         <translation>&lt;уровни не найдены&gt;</translation>
     </message>
