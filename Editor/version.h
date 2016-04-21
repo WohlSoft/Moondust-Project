@@ -27,11 +27,11 @@
 #define _BUILD_VER "<empty>"
 #endif
 
-//Version of this program
-#define _LATEST_STABLE "0.3.1.10"
-
 #define _FILE_VERSION "0.3.1.10"
 #define _FILE_RELEASE ""
+
+//Version of this program
+#define _LATEST_STABLE  _FILE_VERSION "-" _BUILD_VER
 
 #define _VF1 0
 #define _VF2 3

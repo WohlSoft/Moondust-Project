@@ -24,7 +24,7 @@
 
 //#define STABLE_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_stable.txt"
 //#define DEVEL_CHECK "https://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_dev.txt"
-#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_stable.txt"
+#define STABLE_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_stable_date.txt"
 #define DEVEL_CHECK "http://wohlsoft.ru/docs/_laboratory/_versions/editor_dev.txt"
 
 #endif // UPDATER_LINKS_H
