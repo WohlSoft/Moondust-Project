@@ -32,29 +32,30 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
 {
     QString toSearch;
     toSearch = searchEdit->text();
-    for(int i = 0; i < itemList->count(); i++){
-        if(toSearch.isEmpty()){
-            itemList->setRowHidden(i,false);
+    for(int i = 0; i < itemList->count(); i++)
+    {
+        QListWidgetItem * item = itemList->item(i);
+        if(toSearch.isEmpty()) {
+            itemList->setItemHidden(item, false);
             continue;
-        }
-        if(typeBox->currentIndex()==0){ //search by text
-            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
-                itemList->setRowHidden(i,true);
-            }else{
-                itemList->setRowHidden(i,false);
+        } else if(typeBox->currentIndex()==0) { //search by text
+            if( !item->text().contains(toSearch, Qt::CaseInsensitive) ) {
+                itemList->setItemHidden(item, true);
+            } else {
+                itemList->setItemHidden(item, false);
             }
-        }else if(typeBox->currentIndex()==1){ //search by id
+        } else if(typeBox->currentIndex()==1) { //search by id
             bool conv = false;
             int toIdSearch = toSearch.toInt(&conv);
-            if(!conv){ //cannot convert
+            if(!conv) { //cannot convert
                 break;
             }
-            if(itemList->item(i)->data(3).toInt()==toIdSearch){
-                itemList->setRowHidden(i,false);
-            }else{
-                itemList->setRowHidden(i,true);
+            if( item->data(3).toInt() == toIdSearch ) {
+                itemList->setItemHidden(item, false);
+            } else {
+                itemList->setItemHidden(item, true);
             }
-        }else{//else do nothing
+        } else {//else do nothing
             break;
         }
     }
