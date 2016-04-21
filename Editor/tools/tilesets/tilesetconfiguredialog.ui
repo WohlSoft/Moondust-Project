@@ -199,10 +199,17 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QPushButton" name="delete_me">
      <property name="text">
       <string>Delete this tileset</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="defaultOnly">
+     <property name="text">
+      <string>Show default only</string>
      </property>
     </widget>
    </item>

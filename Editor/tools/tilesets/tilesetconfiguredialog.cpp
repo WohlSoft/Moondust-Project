@@ -37,7 +37,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
 
     scn = scene;
     mode = GFX_Staff;
-    if(scene!=NULL)
+    if(scene != NULL)
     {
         if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
         else
@@ -45,6 +45,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     }
 
     ui->customOnly->setVisible(mode!=GFX_Staff);
+    ui->defaultOnly->setVisible(mode!=GFX_Staff);
     ui->specific->setVisible(mode!=GFX_Staff);
     ui->specific->setChecked(mode!=GFX_Staff);
     ui->delete_me->setVisible(false);
@@ -107,9 +108,12 @@ void TilesetConfigureDialog::setUpTileset(int type)
 void TilesetConfigureDialog::setUpItems(int type)
 {
     bool custom = ( (mode!=GFX_Staff) && (ui->customOnly->isChecked()) );
+    bool defstuff = ( (mode!=GFX_Staff) && (ui->defaultOnly->isChecked()) );
 
     delete m_model;
     ui->listView->setModel(m_model = (new PiecesModel(m_conf, toPieceType(type), 32, scn)));
+    LvlScene * lvl_scene = dynamic_cast<LvlScene *>(scn);
+    WldScene * wld_scene = dynamic_cast<WldScene *>(scn);
 
     switch (type)
     {
@@ -118,16 +122,29 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::ListMode);
         if(custom)
         {
-            if(mode==GFX_Level)
+            if( lvl_scene && (mode==GFX_Level) )
             {
-                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
-                for(int i = 0; i < sc->custom_Blocks.size(); ++i) {
-                    m_model->addPiece(sc->custom_Blocks[i]->id);
+                for(int i = 0; i < lvl_scene->custom_Blocks.size(); ++i) {
+                    m_model->addPiece(lvl_scene->custom_Blocks[i]->id);
                 }
             }
         }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( lvl_scene && (mode==GFX_Level) )
+            {
+                for(int i = 0; i < lvl_scene->custom_Blocks.size(); ++i) {
+                    customElements[lvl_scene->custom_Blocks[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_block.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
+            }
+        }
         else
-        for(int i = 1; i < m_conf->main_block.size(); ++i){
+        for(int i = 1; i < m_conf->main_block.size(); ++i) {
             m_model->addPiece(i);
         }
         break;
@@ -137,12 +154,25 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::ListMode);
         if(custom)
         {
-            if(mode==GFX_Level)
+            if( lvl_scene && (mode==GFX_Level) )
             {
-                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
-                for(int i = 0; i < sc->custom_BGOs.size(); ++i) {
-                    m_model->addPiece( sc->custom_BGOs[i]->id );
+                for(int i = 0; i < lvl_scene->custom_BGOs.size(); ++i) {
+                    m_model->addPiece( lvl_scene->custom_BGOs[i]->id );
                 }
+            }
+        }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( lvl_scene && (mode==GFX_Level) )
+            {
+                for(int i = 0; i < lvl_scene->custom_BGOs.size(); ++i) {
+                    customElements[lvl_scene->custom_BGOs[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_bgo.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
             }
         }
         else
@@ -157,12 +187,25 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::ListMode);
         if(custom)
         {
-            if(mode==GFX_Level)
+            if( lvl_scene && (mode==GFX_Level) )
             {
-                LvlScene * sc=dynamic_cast<LvlScene *>(scn);
-                for(int i = 0; i < sc->custom_NPCs.size(); ++i) {
-                    m_model->addPiece( sc->custom_NPCs[i]->id );
+                for(int i = 0; i < lvl_scene->custom_NPCs.size(); ++i) {
+                    m_model->addPiece( lvl_scene->custom_NPCs[i]->id );
                 }
+            }
+        }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( lvl_scene && (mode==GFX_Level) )
+            {
+                for(int i = 0; i < lvl_scene->custom_NPCs.size(); ++i) {
+                    customElements[lvl_scene->custom_NPCs[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_npc.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
             }
         }
         else
@@ -177,14 +220,26 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::IconMode);
         if(custom)
         {
-            if(mode==GFX_World)
+            if( wld_scene && (mode==GFX_World) )
             {
-                WldScene * sc=dynamic_cast<WldScene *>(scn);
-                for(int i = 0; i < sc->custom_Tiles.size(); ++i) {
-                    m_model->addPiece( sc->custom_Tiles[i]->id );
+                for(int i = 0; i < wld_scene->custom_Tiles.size(); ++i) {
+                    m_model->addPiece( wld_scene->custom_Tiles[i]->id );
                 }
             }
-
+        }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( wld_scene && (mode==GFX_World) )
+            {
+                for(int i = 0; i < wld_scene->custom_Tiles.size(); ++i) {
+                    customElements[wld_scene->custom_Tiles[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_wtiles.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
+            }
         }
         else
         for(int i = 1; i < m_conf->main_wtiles.size(); ++i)
@@ -197,12 +252,25 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::IconMode);
         if(custom)
         {
-            if(mode==GFX_World)
+            if( wld_scene && (mode==GFX_World) )
             {
-                WldScene * sc=dynamic_cast<WldScene *>(scn);
-                for(int i = 0; i < sc->custom_Scenes.size(); ++i) {
-                    m_model->addPiece( sc->custom_Scenes[i]->id );
+                for(int i = 0; i < wld_scene->custom_Scenes.size(); ++i) {
+                    m_model->addPiece( wld_scene->custom_Scenes[i]->id );
                 }
+            }
+        }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( wld_scene && (mode==GFX_World) )
+            {
+                for(int i = 0; i < wld_scene->custom_Scenes.size(); ++i) {
+                    customElements[wld_scene->custom_Scenes[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_wscene.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
             }
         }
         else
@@ -214,12 +282,25 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::IconMode);
         if(custom)
         {
-            if(mode==GFX_World)
+            if( wld_scene && (mode==GFX_World) )
             {
-                WldScene * sc=dynamic_cast<WldScene *>(scn);
-                for(int i = 0; i < sc->custom_Paths.size(); ++i) {
-                    m_model->addPiece( sc->custom_Paths[i]->id );
+                for(int i = 0; i < wld_scene->custom_Paths.size(); ++i) {
+                    m_model->addPiece( wld_scene->custom_Paths[i]->id );
                 }
+            }
+        }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( wld_scene && (mode==GFX_World) )
+            {
+                for(int i = 0; i < wld_scene->custom_Paths.size(); ++i) {
+                    customElements[wld_scene->custom_Paths[i]->id] = i;
+                }
+            }
+            for(int i = 1; i < m_conf->main_wpaths.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
             }
         }
         else
@@ -231,16 +312,29 @@ void TilesetConfigureDialog::setUpItems(int type)
         ui->listView->setViewMode(QListView::IconMode);
         if(custom)
         {
-            if(mode==GFX_World)
+            if( wld_scene && (mode==GFX_World) )
             {
-                WldScene * sc=dynamic_cast<WldScene *>(scn);
-                for(int i = 0; i < sc->custom_Levels.size(); ++i) {
-                    m_model->addPiece( sc->custom_Levels[i]->id );
+                for(int i = 0; i < wld_scene->custom_Levels.size(); ++i) {
+                    m_model->addPiece( wld_scene->custom_Levels[i]->id );
                 }
             }
         }
+        else if(defstuff)
+        {
+            QHash<int, int> customElements;
+            if( wld_scene && (mode==GFX_World) )
+            {
+                for(int i = 0; i < wld_scene->custom_Levels.size(); ++i) {
+                    customElements[wld_scene->custom_Levels[i]->id] = i;
+                }
+            }
+            for(int i = 0; i < m_conf->main_wlevels.size(); ++i) {
+                if(!customElements.contains(i))
+                    m_model->addPiece(i);
+            }
+        }
         else
-        for(int i = 0; i < m_conf->main_wlevels.size(); ++i){
+        for(int i = 0; i < m_conf->main_wlevels.size(); ++i) {
             m_model->addPiece(i);
         }
         break;
@@ -379,9 +473,18 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
 void TilesetConfigureDialog::on_customOnly_clicked()
 {
     if(mode==GFX_Staff) return;
+    ui->defaultOnly->setChecked(false);
     setUpItems(ui->comboBox->currentIndex());
 
 }
+
+void TilesetConfigureDialog::on_defaultOnly_clicked()
+{
+    if(mode==GFX_Staff) return;
+    ui->customOnly->setChecked(false);
+    setUpItems(ui->comboBox->currentIndex());
+}
+
 
 void TilesetConfigureDialog::showEvent(QShowEvent *event)
 {
@@ -434,3 +537,4 @@ void TilesetConfigureDialog::on_delete_me_clicked()
         this->close();
     }
 }
+
