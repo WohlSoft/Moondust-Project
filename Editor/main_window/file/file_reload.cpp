@@ -84,19 +84,20 @@ void MainWindow::on_actionReload_triggered()
 
         //Remember last section ID and positions!
         int lastSection=0;
-        QMap<int, QPair<long, long> > sectionPoss;
+        QHash<int, QPair<long, long> > sectionPoss;
         lastSection = lvlEdit->LvlData.CurSection;
-        SetCurrentLevelSection(lastSection);//Need to remember position of current section
+        SetCurrentLevelSection(lastSection); //Need to remember position of current section
+
         for(int i=0; i<lvlEdit->LvlData.sections.size(); i++)
         {
             LevelSection sct = lvlEdit->LvlData.sections[i];
-            sectionPoss[sct.id]=QPair<long, long >(sct.PositionX, sct.PositionY);
+            sectionPoss[sct.id] = QPair<long, long >(sct.PositionX, sct.PositionY);
         }
 
-        lvlEdit->close();//Close old widget without closing of sub-window
+        long posX = lvlEdit->scene->_viewPort->horizontalScrollBar()->value();
+        long posY = lvlEdit->scene->_viewPort->verticalScrollBar()->value();
 
-        //Get pointer to current sub-window
-        //QMdiSubWindow *window = LastActiveSubWindow;
+        lvlEdit->close();//Close old widget without closing of sub-window
 
         //Get geometry of current subwindow
         wnGeom = LastActiveSubWindow->geometry();
@@ -122,23 +123,30 @@ void MainWindow::on_actionReload_triggered()
             updateMenus(LastActiveSubWindow, true);
 
             child->setFocus();
+
             //Restore saved section positions
             for(int i=0; i<child->LvlData.sections.size(); i++)
             {
                 if(sectionPoss.contains(child->LvlData.sections[i].id))
                 {
-                    child->LvlData.sections[i].PositionX=sectionPoss[child->LvlData.sections[i].id].first;
-                    child->LvlData.sections[i].PositionY=sectionPoss[child->LvlData.sections[i].id].second;
+                    QPair<long, long> &sct = sectionPoss[child->LvlData.sections[i].id];
+                    child->LvlData.sections[i].PositionX = sct.first;
+                    child->LvlData.sections[i].PositionY = sct.second;
                 }
             }
 
             SetCurrentLevelSection(lastSection);
 
-            if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-        } else {
-                LogDebug(">>File loading aborted");
-            //child->show();
-                LogDebug(">>Window showed");
+            child->scene->_viewPort->horizontalScrollBar()->setValue(posX);
+            child->scene->_viewPort->verticalScrollBar()->setValue(posY);
+
+            if(GlobalSettings::autoPlayMusic)
+                ui->actionPlayMusic->setChecked(true);
+        }
+        else
+        {
+            LogDebug(">>File loading aborted");
+            LogDebug(">>Window showed");
             child->LvlData.modified = false;
                 LogDebug(">>Option set");
             LastActiveSubWindow->close();
