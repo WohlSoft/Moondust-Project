@@ -41,10 +41,9 @@ env:
   - PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 before_script:
-  - echo 'Europe/Moscow' | sudo tee /etc/timezone
-  - sudo dpkg-reconfigure --frontend noninteractive tzdata
-  - sudo ntpdate ntp.ubuntu.com;
+  - sudo systemsetup -settimezone Europe/Moscow;
     echo $(date)
+
 
 before_install:
 # ==============================================================================
