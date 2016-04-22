@@ -83,7 +83,7 @@ before_install:
 # Building of dependencies of PGE
 # ==============================================================================
   - bash build_deps.sh no-pause;
-    bash -c "date +\"%Y-%m-%d %H:%M:%S\">/Users/travis/build_date_dev_osx.txt"
+    bash -c "TZ=Europe/Moscow date +\"%Y-%m-%d %H:%M:%S\">/Users/travis/build_date_dev_osx.txt"
 
 install: true
 
