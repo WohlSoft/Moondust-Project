@@ -66,6 +66,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         whiteList << "*.tileset.ini"; //PGE Tilesets
 
         whiteList << "effect-*.gif"; //All SMBX64 effects
+        whiteList << "effect-*.png";
 
         whiteList << "mario-*.gif"; //All SMBX64 playable characters
         whiteList << "peach-*.gif";
@@ -74,9 +75,15 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         whiteList << "link-*.gif";
         whiteList << "yoshit-*.gif";
         whiteList << "yoshib-*.gif";
+        whiteList << "mario-*.png";
+        whiteList << "peach-*.png";
+        whiteList << "toad-*.png";
+        whiteList << "luigi-*.png";
+        whiteList << "link-*.png";
+        whiteList << "yoshit-*.png";
+        whiteList << "yoshib-*.png";
 
-
-        QString npcFile = "npc-%1.gif|npc-%1.txt|npc-%1m.txt";
+        QString npcFile = "npc-%1.png|npc-%1.gif|npc-%1.txt|npc-%1m.txt";
 
         typedef QPair<unsigned long, QStringList > bossNPC;
         QList<bossNPC > bossNPCs;
@@ -206,7 +213,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         bossNPCs << bossNPC(227, npcFile.arg(224).split('|') );
 
         //Add into white SMBX64 dependencied of exists ID
-        for(int q=0;q<box->LvlData.npc.size();q++)
+        for(int q=0; q < box->LvlData.npc.size(); q++)
         {
             bool isConainer=false;
 
@@ -294,6 +301,10 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         whiteList << "background-98m.gif";
         whiteList << "background-160.gif"; //star lock
         whiteList << "background-160m.gif";
+        whiteList << "background-98.png"; //door lock
+        whiteList << "background-98m.png";
+        whiteList << "background-160.png"; //star lock
+        whiteList << "background-160m.png";
 
 
         for(int i=0; i < filesForRemove.size(); i++)
