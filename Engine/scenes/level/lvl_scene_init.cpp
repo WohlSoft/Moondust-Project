@@ -239,7 +239,12 @@ abortInit:
 
 bool LevelScene::init_items()
 {
+    //Global script path
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    //Episode path
+    luaEngine.appendLuaScriptPath(data.path);
+    //Level custom path
+    luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
     luaEngine.setCoreFile(":/script/maincore_level.lua");
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
