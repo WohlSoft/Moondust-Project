@@ -40,6 +40,12 @@ env:
 # Default build. Release.
   - PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
+before_script:
+  - echo 'Europe/Moscow' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
+  - sudo ntpdate ntp.ubuntu.com;
+    echo $(date)
+
 before_install:
 # ==============================================================================
 # Downloading and unpacking of pre-built static Qt 5.5.1 on OS X 10.11.1
