@@ -131,8 +131,8 @@ void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
         {
             if(scene->isInSection(x,y,i,padding))
             {
-                    MainWinConnect::pMainWin->SetCurrentLevelSection(i);
-                    break;
+                MainWinConnect::pMainWin->SetCurrentLevelSection(i);
+                break;
             }
         }
     }
@@ -228,7 +228,7 @@ void LevelEdit::setCurrentSection(int scId)
 
     update();
 
-    if(sIsNew) MainWinConnect::pMainWin->on_actionReset_position_triggered();
+    if(sIsNew) MainWinConnect::pMainWin->on_actionGotoLeftBottom_triggered();
 }
 
 

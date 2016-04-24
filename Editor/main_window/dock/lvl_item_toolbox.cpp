@@ -126,7 +126,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     QPixmap tmpI;
 
     QStringList tmpList, tmpGrpList;
-    bool found = false;
+    bool needToAdd = false;
 
     tmpList.clear();
     tmpGrpList.clear();
@@ -152,35 +152,56 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i < scene->uBlocks.size(); i++)
     {
         obj_block &blockItem =  scene->uBlocks[i];
+
         //Add Group
-        found = false;
-        if(tmpList.size()!=0)
-            foreach(QString grp, tmpGrpList)
+        needToAdd = true;
+        if( blockItem.group.isEmpty() )
+        {
+            needToAdd=false;
+        } //Skip empty values
+        else
+        if(!tmpList.isEmpty())
+        {
+            foreach( QString grp, tmpGrpList )
             {
-                if(blockItem.group.isEmpty())
-                {found=true; break;}//Skip empty values
-                if(blockItem.group==grp)
-                {found=true; break;}
+                if(blockItem.group == grp)
+                {
+                    needToAdd=false; break;
+                }
             }
-        if(!found) tmpGrpList.push_back(blockItem.group);
+        }
+        if(needToAdd)
+        {
+            tmpGrpList.push_back(blockItem.group);
+        }
 
         //Add category
-        found = false;
-        if(tmpList.size()!=0)
-            foreach(QString cat, tmpList)
+        needToAdd = true;
+        if( (blockItem.group != grp_blocks) && (grp_blocks != allLabel) )
+        {
+            needToAdd=false;
+        }
+        else if( !tmpList.isEmpty() )
+        {
+            foreach( QString cat, tmpList )
             {
-                if(blockItem.category==cat)
-                {found=true; break;}
-                if((blockItem.group!=grp_blocks)&&(grp_blocks!=allLabel))
-                {found=true; break;}
+                if( blockItem.category == cat )
+                {
+                    needToAdd=false; break;
+                }
             }
-        if(!found) tmpList.push_back(blockItem.category);
+        }
+
+        if(needToAdd)
+        {
+            tmpList.push_back(blockItem.category);
+        }
 
         if(
-                ((blockItem.group==grp_blocks)||(grp_blocks==allLabel)||(grp_blocks==""))&&
-                ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
+            ( (blockItem.group == grp_blocks) || ( grp_blocks == allLabel) || (grp_blocks == "") )&&
+            ( (blockItem.category == cat_blocks) || ( cat_blocks == allLabel) )
+          )
         {
-
             Items::getItemGFX(&blockItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( blockItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -191,6 +212,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         }
 
     }
+
     tmpList.sort();
     tmpList.push_front(customLabel);
     tmpList.push_front(allLabel);
@@ -235,36 +257,58 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i<scene->uBGOs.size(); i++)
     {
         obj_bgo &bgoItem = scene->uBGOs[i];
+
         //Add Group
-        found = false;
-        if(tmpList.size()!=0)
+        needToAdd = true;
+        if(bgoItem.group.isEmpty())
+        {
+            needToAdd=false;
+        }//Skip empty values
+        else
+        if(!tmpList.isEmpty())
+        {
             foreach(QString grp, tmpGrpList)
             {
-                if(bgoItem.group.isEmpty())
-                {found=true;break;}//Skip empty values
                 if(bgoItem.group==grp)
-                {found=true; break;}
+                {
+                    needToAdd=false;
+                    break;
+                }
             }
-        if(!found) tmpGrpList.push_back(bgoItem.group);
+        }
+        if(needToAdd)
+        {
+            tmpGrpList.push_back(bgoItem.group);
+        }
 
         //Add category
-        found = false;
-        if(tmpList.size()!=0)
+        needToAdd = true;
+        if( (bgoItem.group != grp_bgo) && (grp_bgo != allLabel) )
+        {
+            needToAdd = false;
+        }
+        else
+        if(!tmpList.isEmpty())
+        {
             foreach(QString cat, tmpList)
             {
                 if(bgoItem.category==cat)
-                {found = true; break;}
-                if((bgoItem.group!=grp_bgo)&&(grp_bgo!=allLabel))
-                {found = true; break;}
+                {
+                    needToAdd = false; break;
+                }
             }
-        if(!found) tmpList.push_back(bgoItem.category);
+        }
+
+        if(needToAdd)
+        {
+            tmpList.push_back(bgoItem.category);
+        }
 
         if(
-                ((bgoItem.group==grp_bgo)||(grp_bgo==allLabel)||(grp_bgo==""))&&
-                ((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
-           )
+            ( (bgoItem.group==grp_bgo) || (grp_bgo==allLabel) || (grp_bgo=="") )&&
+            ( (bgoItem.category==cat_bgos) || (cat_bgos==allLabel) )
+          )
         {
-
             Items::getItemGFX(&bgoItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( bgoItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -321,33 +365,55 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i < scene->uNPCs.size(); i++)
     {
         obj_npc &npcItem = scene->uNPCs[i];
+
         //Add Group
-        found = false;
-        if(tmpList.size()!=0)
+        needToAdd = true;
+        if( npcItem.group.isEmpty() )
+        {
+            needToAdd=false;
+        }//Skip empty values
+        else
+        if(!tmpList.isEmpty())
+        {
             foreach(QString grp, tmpGrpList)
             {
-                if(npcItem.group.isEmpty())
-                {found=true;break;}//Skip empty values
-                if(npcItem.group==grp)
-                {found=true; break;}
+                if( npcItem.group==grp )
+                {
+                    needToAdd=false; break;
+                }
             }
-        if(!found) tmpGrpList.push_back(npcItem.group);
+        }
+
+        if(needToAdd)
+        {
+            tmpGrpList.push_back(npcItem.group);
+        }
 
         //Add category
-        found = false;
-        if(tmpList.size()!=0)
+        needToAdd = true;
+        if( (npcItem.group != grp_npc) && (grp_npc != allLabel) )
+        {
+            needToAdd = false;
+        }
+        else
+        if( !tmpList.isEmpty() )
+        {
             foreach(QString cat, tmpList)
             {
                 if(npcItem.category==cat)
-                {found = true; break;}
-                if((npcItem.group!=grp_npc)&&(grp_npc!=allLabel))
-                {found = true; break;}
+                {
+                    needToAdd = false; break;
+                }
             }
-        if(!found) tmpList.push_back(npcItem.category);
+        }
+        if(needToAdd)
+        {
+            tmpList.push_back(npcItem.category);
+        }
 
         if(
-                ((npcItem.group==grp_npc)||(grp_npc==allLabel)||(grp_npc==""))&&
-                ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
+            ( (npcItem.group==grp_npc) || (grp_npc==allLabel) || (grp_npc=="") )&&
+            ( (npcItem.category==cat_npcs) || (cat_npcs==allLabel) )
           )
         {
             Items::getItemGFX(&npcItem, tmpI, false, QSize(48,48));

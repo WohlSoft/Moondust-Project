@@ -760,11 +760,12 @@ public:
     public slots:
         //Switch section
         void SetCurrentLevelSection(int SctId, int open=0);
-        void on_actionReset_position_triggered();
+        void on_actionGotoLeftBottom_triggered();
+        void on_actionGotoLeftTop_triggered();
+        void on_actionGotoTopRight_triggered();
+        void on_actionGotoRightBottom_triggered();
 
     private slots:
-        void on_actionGo_to_Section_triggered();
-
         void on_actionSection_1_triggered();
         void on_actionSection_2_triggered();
         void on_actionSection_3_triggered();

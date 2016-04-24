@@ -115,6 +115,8 @@
         <file>images/cat_builder/cat_builder_128_logo.png</file>
         <file>credits.html</file>
         <file>images/circle_fill.png</file>
+        <file>images/goto_right_bottom.png</file>
+        <file>images/goto_top_right.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

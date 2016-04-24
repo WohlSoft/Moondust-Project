@@ -166,8 +166,10 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     ui->actionZoomReset->setEnabled( (WinType==1) || (WinType==3) );
     zoom->setEnabled( (WinType==1) || (WinType==3));
 
-    ui->actionReset_position->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionGo_to_Section->setEnabled( (WinType==1) );
+    ui->actionGotoLeftBottom->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionGotoLeftTop->setEnabled( (WinType==1) );
+    ui->actionGotoTopRight->setEnabled( (WinType==1) );
+    ui->actionGotoRightBottom->setEnabled( (WinType==1) );
 
     ui->actionSection_1->setEnabled( (WinType==1) );
     ui->actionSection_2->setEnabled( (WinType==1) );
