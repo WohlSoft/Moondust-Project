@@ -291,10 +291,6 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
     tx.setTop(texture.top()/this->styleTexture.h);
     tx.setBottom(texture.bottom()/this->styleTexture.h);
 
-    PGE_RectF blockG;
-    blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
-    blockG.setBottomRight( GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ) );
-
     GlRenderer::renderTextureCur( target.x()+block.x(),
                                   target.y()+block.y(),
                                   block.width(),

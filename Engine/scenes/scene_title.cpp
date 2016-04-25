@@ -379,7 +379,7 @@ void TitleScene::render()
                                "ØÙÚÛÜÝÞß÷ © ®\n\n"
                                "Ich bin glücklich!\n\n"
                                "Как хорошо, что всё работает!\n"
-                               "Живіть всі дружно!", 10, 100, 0, 1.75, 1.0, 0.7, 1.0);
+                               "Живіть всі дружно!", 10, 100, 0, 0.75, 1.0, 0.7, 1.0);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
 //        FontManager::printText("0123456789\n"
 //                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"

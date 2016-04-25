@@ -34,13 +34,6 @@
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_thread.h>
-//#ifdef __APPLE__
-//    //#include <OpenGL/glu.h>
-//#else
-//    #ifndef ANDROID
-//    //#include <GL/glu.h>
-//    #endif
-//#endif
 
 #include "gl_debug.h"
 
@@ -78,46 +71,8 @@ SDL_Thread *GlRenderer::thread = NULL;
 
 int GlRenderer::window_w=800;
 int GlRenderer::window_h=600;
-float GlRenderer::scale_x=1.0f;
-float GlRenderer::scale_y=1.0f;
 float GlRenderer::offset_x=0.0f;
 float GlRenderer::offset_y=0.0f;
-float GlRenderer::viewport_x=0;
-float GlRenderer::viewport_y=0;
-float GlRenderer::viewport_scale_x=1.0f;
-float GlRenderer::viewport_scale_y=1.0f;
-float GlRenderer::viewport_w=800;
-float GlRenderer::viewport_h=600;
-float GlRenderer::viewport_w_half=400;
-float GlRenderer::viewport_h_half=300;
-
-float GlRenderer::color_level_red=1.0;
-float GlRenderer::color_level_green=1.0;
-float GlRenderer::color_level_blue=1.0;
-float GlRenderer::color_level_alpha=1.0;
-
-float GlRenderer::color_binded_texture[16] = { 1.0f, 1.0f, 1.0f, 1.0f,
-                                               1.0f, 1.0f, 1.0f, 1.0f,
-                                               1.0f, 1.0f, 1.0f, 1.0f,
-                                               1.0f, 1.0f, 1.0f, 1.0f };
-
-//PGE_Texture GlRenderer::_dummyTexture;
-
-//#define PGE_USE_OpenGL_2_1
-//#define PGE_USE_OpenGL_3_2
-#ifdef PGE_USE_OpenGL_3_2
-void glBindBuffer(GLenum target, GLuint buffer);
-void glGenBuffers(GLsizei n, GLuint* buffers);
-void glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage);
-void glDeleteBuffers(GLsizei n, const GLuint * buffers);
-
-void glGenVertexArrays(GLsizei n, GLuint *arrays);
-void glBindVertexArray(GLuint array);
-GLboolean glIsVertexArray(GLuint array);
-void glDeleteVertexArrays(GLsizei n, const GLuint *arrays);
-void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer);
-void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer);
-#endif
 
 static bool detectOpenGL2()
 {
@@ -511,10 +466,6 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
 void GlRenderer::deleteTexture(GLuint tx)
 {
     g_renderer->deleteTexture(tx);
-//    #ifdef PGE_USE_OpenGL_2_1
-//    glDisable(GL_TEXTURE_2D);
-//    #endif
-//    glDeleteTextures( 1, &tx );
 }
 
 QString GlRenderer::ScreenshotPath = "";
@@ -625,17 +576,6 @@ bool GlRenderer::ready()
     return _isReady;
 }
 
-
-void GlRenderer::setRGB(float Red, float Green, float Blue, float Alpha)
-{
-    g_renderer->setRGB(Red, Green, Blue, Alpha);
-}
-
-void GlRenderer::resetRGB()
-{
-    g_renderer->resetRGB();
-}
-
 void GlRenderer::flush()
 {
     g_renderer->flush();
@@ -654,17 +594,6 @@ void GlRenderer::setClearColor(float r, float g, float b, float a)
 void GlRenderer::clearScreen()
 {
     g_renderer->clearScreen();
-}
-
-
-PGE_PointF GlRenderer::MapToGl(PGE_Point point)
-{
-    return g_renderer->MapToGl(point.x(), point.y());
-}
-
-PGE_PointF GlRenderer::MapToGl(float x, float y)
-{
-    return g_renderer->MapToGl(x, y);
 }
 
 PGE_Point GlRenderer::MapToScr(PGE_Point point)
@@ -739,16 +668,6 @@ void GlRenderer::setTextureColor(float Red, float Green, float Blue, float Alpha
 void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     g_renderer->renderTextureCur(x, y, w, h, ani_top, ani_bottom, ani_left, ani_right);
-}
-
-void GlRenderer::getCurWidth(GLint &w)
-{
-    g_renderer->getCurWidth(w);
-}
-
-void GlRenderer::getCurHeight(GLint &h)
-{
-    g_renderer->getCurHeight(h);
 }
 
 void GlRenderer::UnBindTexture()

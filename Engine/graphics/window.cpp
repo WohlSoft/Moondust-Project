@@ -64,11 +64,10 @@ bool PGE_Window::checkSDLError(int line)
 bool PGE_Window::init(QString WindowTitle)
 {
 
-    #if 0
-    GlRenderer::setup_OpenGL21();
-    //GlRenderer::setup_SW_SDL();
-    #elif __ANDROID__
-    GlRenderer::setup_OpenGL31();
+    #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
+    GlRenderer::setup_SW_SDL();
+    //GlRenderer::setup_OpenGL21();
+    //GlRenderer::setup_OpenGL31();
     #else
     //Detect renderer
     GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
@@ -97,7 +96,8 @@ bool PGE_Window::init(QString WindowTitle)
                               SDL_WINDOW_RESIZABLE|
                               SDL_WINDOW_HIDDEN|
                               GlRenderer::SDL_InitFlags() );
-    if(!checkSDLError()) return false;
+    if(!checkSDLError())
+        return false;
 
     SDL_SetWindowMinimumSize(window, Width, Height);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
@@ -112,7 +112,8 @@ bool PGE_Window::init(QString WindowTitle)
     }
 
     GraphicsHelps::initSDLImage();
-    if(!checkSDLError()) return false;
+    if(!checkSDLError())
+        return false;
 
     FIBITMAP*img;
 #ifdef Q_OS_MACX
@@ -131,13 +132,12 @@ bool PGE_Window::init(QString WindowTitle)
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     LogDebug("Init OpenGL settings...");
-    if(!GlRenderer::init())
+    if( !GlRenderer::init() )
     {
         checkSDLError();
         IsInit=false;
         return false;
     }
-
     LogDebug("Toggle vsync...");
     vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
     toggleVSync(vsync);
@@ -201,12 +201,8 @@ bool PGE_Window::uninit()
         qDebug() << "Setting windowed failed : "<<SDL_GetError();
         return -1;
     }
-
-    SDL_HideWindow(window);
-    //SDL_PumpEvents();
+    SDL_HideWindow( window );
     GlRenderer::uninit();
-    SDL_GL_DeleteContext(glcontext);
-    //SDL_GL_DeleteContext(glcontext_background);
     GraphicsHelps::closeSDLImage();
     SDL_DestroyWindow(window);
     SDL_Quit();

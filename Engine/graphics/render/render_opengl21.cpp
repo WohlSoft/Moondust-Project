@@ -74,14 +74,7 @@ Render_OpenGL21::Render_OpenGL21() : Render_Base("OpenGL 2.1"),
     viewport_w_half(400.0f),
     viewport_h_half(300.0f),
     //Texture render color levels
-    color_level_red(1.0f),
-    color_level_green(1.0f),
-    color_level_blue(1.0f),
-    color_level_alpha(1.0f),
-    color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f,
-                         1.0f, 1.0f, 1.0f, 1.0f}
+    color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
 void Render_OpenGL21::set_SDL_settings()
@@ -151,6 +144,7 @@ bool Render_OpenGL21::init()
 bool Render_OpenGL21::uninit()
 {
     glDeleteTextures( 1, &(_dummyTexture.texture) );
+    SDL_GL_DeleteContext( PGE_Window::glcontext );
     return true;
 }
 
@@ -337,13 +331,7 @@ static inline void setAlphaBlending()
 
 void Render_OpenGL21::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+    PGE_RectF rect = MapToGl(x, y, w, h);
 
     setRenderColors();
     setAlphaBlending();
@@ -354,31 +342,26 @@ void Render_OpenGL21::renderRect(float x, float y, float w, float h, GLfloat red
     } else {
         glBegin(GL_LINE_LOOP);
     }
-    glVertex2f(left, top);
-    glVertex2f(right, top);
-    glVertex2f(right, bottom);
-    glVertex2f(left, bottom);
+    glVertex2f(rect.left(), rect.top());
+    glVertex2f(rect.right(), rect.top());
+    glVertex2f(rect.right(), rect.bottom());
+    glVertex2f(rect.left(), rect.bottom());
     glEnd(); GLERRORCHECK();
 }
 
 void Render_OpenGL21::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    PGE_PointF point;
-        point = MapToGl(_left, _top);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(_right, _bottom);
-    float right = point.x();
-    float bottom = point.y();
+    PGE_RectF rect = MapToGlSI(_left, _top, _right, _bottom);
 
     setRenderColors();
     setAlphaBlending();
+
     glColor4f(red, green, blue, alpha);
     glBegin(GL_QUADS);
-    glVertex2f(left, top);
-    glVertex2f(right, top);
-    glVertex2f(right, bottom);
-    glVertex2f(left, bottom);
+    glVertex2f(rect.left(), rect.top());
+    glVertex2f(rect.right(), rect.top());
+    glVertex2f(rect.right(), rect.bottom());
+    glVertex2f(rect.left(), rect.bottom());
     glEnd();GLERRORCHECK();
 }
 
@@ -386,23 +369,17 @@ void Render_OpenGL21::renderTexture(PGE_Texture *texture, float x, float y)
 {
     if(!texture) return;
 
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+texture->w, y+texture->h);
-    float right = point.x();
-    float bottom = point.y();
+    PGE_RectF rect = MapToGl(x, y, (float)texture->w, (float)texture->h);
 
     setRenderTexture( texture->texture );
     setAlphaBlending();
 
     glColor4f( color_binded_texture[0], color_binded_texture[1], color_binded_texture[2], color_binded_texture[3]);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);   glVertex2f(left, top);
-    glTexCoord2f(1.0f, 0.0f);   glVertex2f(right, top);
-    glTexCoord2f(1.0f, 1.0f);   glVertex2f(right, bottom);
-    glTexCoord2f(0.0f, 1.0f);  glVertex2f(left, bottom);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f(rect.left(),  rect.top());
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(rect.right(), rect.top());
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(rect.right(), rect.bottom());
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f(rect.left(),  rect.bottom());
     glEnd();GLERRORCHECK();
     setUnbindTexture();
 }
@@ -410,25 +387,33 @@ void Render_OpenGL21::renderTexture(PGE_Texture *texture, float x, float y)
 void Render_OpenGL21::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     if(!texture) return;
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
+
+    PGE_RectF rect = MapToGl(x, y, w, h);
 
     setRenderTexture( texture->texture );
     setAlphaBlending();
+
     glColor4f( color_binded_texture[0], color_binded_texture[1], color_binded_texture[2], color_binded_texture[3]);
     glBegin(GL_QUADS);
-    glTexCoord2f(ani_left, ani_top);     glVertex2f(left, top);
-    glTexCoord2f(ani_right, ani_top);    glVertex2f(right, top);
-    glTexCoord2f(ani_right, ani_bottom); glVertex2f(right, bottom);
-    glTexCoord2f(ani_left, ani_bottom);  glVertex2f(left, bottom);
+    glTexCoord2f(ani_left, ani_top);     glVertex2f(rect.left(),  rect.top());
+    glTexCoord2f(ani_right, ani_top);    glVertex2f(rect.right(), rect.top());
+    glTexCoord2f(ani_right, ani_bottom); glVertex2f(rect.right(), rect.bottom());
+    glTexCoord2f(ani_left, ani_bottom);  glVertex2f(rect.left(),  rect.bottom());
     glEnd();GLERRORCHECK();
 
     setUnbindTexture();
+}
+
+void Render_OpenGL21::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+{
+    PGE_RectF rect = MapToGl(x, y, w, h);
+    glColor4f( color_binded_texture[0], color_binded_texture[1], color_binded_texture[2], color_binded_texture[3]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(ani_left, ani_top);     glVertex2f(rect.left(),  rect.top());
+    glTexCoord2f(ani_right, ani_top);    glVertex2f(rect.right(), rect.top());
+    glTexCoord2f(ani_right, ani_bottom); glVertex2f(rect.right(), rect.bottom());
+    glTexCoord2f(ani_left, ani_bottom);  glVertex2f(rect.left(),  rect.bottom());
+    glEnd(); GLERRORCHECK();
 }
 
 void Render_OpenGL21::BindTexture(PGE_Texture *texture)
@@ -437,72 +422,12 @@ void Render_OpenGL21::BindTexture(PGE_Texture *texture)
     setAlphaBlending();
 }
 
-void Render_OpenGL21::setRGB(float Red, float Green, float Blue, float Alpha)
-{
-    color_level_red=Red;
-    color_level_green=Green;
-    color_level_blue=Blue;
-    color_level_alpha=Alpha;
-}
-
-void Render_OpenGL21::resetRGB()
-{
-    color_level_red=1.f;
-    color_level_green=1.f;
-    color_level_blue=1.f;
-    color_level_alpha=1.f;
-}
-
 void Render_OpenGL21::setTextureColor(float Red, float Green, float Blue, float Alpha)
 {
     color_binded_texture[0]=Red;
     color_binded_texture[1]=Green;
     color_binded_texture[2]=Blue;
     color_binded_texture[3]=Alpha;
-
-    color_binded_texture[4]=Red;
-    color_binded_texture[5]=Green;
-    color_binded_texture[6]=Blue;
-    color_binded_texture[7]=Alpha;
-
-    color_binded_texture[8]=Red;
-    color_binded_texture[9]=Green;
-    color_binded_texture[10]=Blue;
-    color_binded_texture[11]=Alpha;
-
-    color_binded_texture[12]=Red;
-    color_binded_texture[13]=Green;
-    color_binded_texture[14]=Blue;
-    color_binded_texture[15]=Alpha;
-}
-
-void Render_OpenGL21::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
-{
-    PGE_PointF point;
-        point = MapToGl(x, y);
-    float left = point.x();
-    float top = point.y();
-        point = MapToGl(x+w, y+h);
-    float right = point.x();
-    float bottom = point.y();
-
-    glColor4f( color_binded_texture[0], color_binded_texture[1], color_binded_texture[2], color_binded_texture[3]);
-    glBegin(GL_QUADS);
-    glTexCoord2f(ani_left, ani_top);        glVertex2f(left, top);
-    glTexCoord2f(ani_right, ani_top);       glVertex2f(right, top);
-    glTexCoord2f(ani_right, ani_bottom);    glVertex2f(right, bottom);
-    glTexCoord2f(ani_left, ani_bottom);     glVertex2f(left, bottom);
-    glEnd(); GLERRORCHECK();
-}
-
-void Render_OpenGL21::getCurWidth(GLint &w)
-{
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
-}
-
-void Render_OpenGL21::getCurHeight(GLint &h)
-{
-    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT, &h); GLERRORCHECK();
 }
 
 void Render_OpenGL21::UnBindTexture()
@@ -510,16 +435,24 @@ void Render_OpenGL21::UnBindTexture()
     setUnbindTexture();
 }
 
-PGE_PointF Render_OpenGL21::MapToGl(PGE_Point point)
+PGE_RectF Render_OpenGL21::MapToGl(float x, float y, float w, float h)
 {
-    return MapToGl(point.x(), point.y());
+    PGE_RectF rect;
+    rect.setLeft( roundf(x)/(viewport_w_half)-1.0f );
+    rect.setTop(  (viewport_h-(roundf(y)))/viewport_h_half-1.0f );
+    rect.setRight(  roundf(x+w)/(viewport_w_half)-1.0f);
+    rect.setBottom(  (viewport_h-(roundf(y+h)))/viewport_h_half-1.0f);
+    return rect;
 }
 
-PGE_PointF Render_OpenGL21::MapToGl(float x, float y)
+PGE_RectF Render_OpenGL21::MapToGlSI(float left, float top, float right, float bottom)
 {
-    double nx1 = roundf(x)/(viewport_w_half)-1.0;
-    double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
-    return PGE_PointF(nx1, ny1);
+    PGE_RectF rect;
+    rect.setLeft( roundf(left)/(viewport_w_half)-1.0f );
+    rect.setTop(  (viewport_h-(roundf(top)))/viewport_h_half-1.0f );
+    rect.setRight(  roundf(right)/(viewport_w_half)-1.0f);
+    rect.setBottom(  (viewport_h-(roundf(bottom)))/viewport_h_half-1.0f);
+    return rect;
 }
 
 PGE_Point Render_OpenGL21::MapToScr(PGE_Point point)

@@ -600,6 +600,8 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
         int height=32;
         int width=32;
 
+        GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
+
         foreach(QChar cx, text)
         {
             switch(cx.toLatin1())

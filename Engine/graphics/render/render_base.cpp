@@ -89,42 +89,17 @@ void Render_Base::renderTexture(PGE_Texture */*texture*/, float /*x*/,
                                 float /*ani_right*/)
 {}
 
+void Render_Base::renderTextureCur(float /*x*/, float /*y*/, float /*w*/, float /*h*/, float /*ani_top*/, float /*ani_bottom*/, float /*ani_left*/, float /*ani_right*/)
+{}
+
 void Render_Base::BindTexture(PGE_Texture */*texture*/)
-{}
-
-void Render_Base::setRGB(float /*Red*/, float /*Green*/, float /*Blue*/, float /*Alpha*/)
-{}
-
-void Render_Base::resetRGB()
 {}
 
 void Render_Base::setTextureColor(float /*Red*/, float /*Green*/, float /*Blue*/, float /*Alpha*/)
 {}
 
-void Render_Base::renderTextureCur(float /*x*/, float /*y*/, float /*w*/, float /*h*/, float /*ani_top*/, float /*ani_bottom*/, float /*ani_left*/, float /*ani_right*/)
-{}
-
-//void Render_Base::renderTextureCur(float /*x*/, float /*y*/)
-//{}
-
-void Render_Base::getCurWidth(GLint &/*w*/)
-{}
-
-void Render_Base::getCurHeight(GLint &/*h*/)
-{}
-
 void Render_Base::UnBindTexture()
 {}
-
-PGE_PointF Render_Base::MapToGl(PGE_Point point)
-{
-    return PGE_PointF(point);
-}
-
-PGE_PointF Render_Base::MapToGl(float x, float y)
-{
-    return PGE_PointF(x, y);
-}
 
 PGE_Point Render_Base::MapToScr(PGE_Point point)
 {

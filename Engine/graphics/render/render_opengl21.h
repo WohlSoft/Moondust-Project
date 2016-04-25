@@ -2,6 +2,7 @@
 #define RENDER_OPENGL21_H
 
 #include "render_base.h"
+#include <common_features/rectf.h>
 
 #ifndef __ANDROID__
 class Render_OpenGL21 : public Render_Base
@@ -43,23 +44,18 @@ public:
     virtual void renderRect(float x, float y, float w, float h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f, bool filled=true);
     virtual void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
     virtual void renderTexture(PGE_Texture *texture, float x, float y);
-    virtual void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
+    virtual void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0.0f, float ani_bottom=1.0f, float ani_left=0.0f, float ani_right=1.0f);
+    virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0.0f, float ani_bottom=1.0f, float ani_left=0.0f, float ani_right=1.0f);
 
     virtual void BindTexture(PGE_Texture *texture);
-
-    virtual void setRGB(float Red, float Green, float Blue, float Alpha=1.0);
-    virtual void resetRGB();
-
     virtual void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
-    virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
-    virtual void getCurWidth(GLint &w);
-    virtual void getCurHeight(GLint &h);
     virtual void UnBindTexture();
 
-    PGE_PointF MapToGl(PGE_Point point);
-    PGE_PointF MapToGl(float x, float y);
-    PGE_Point  MapToScr(PGE_Point point);
-    PGE_Point  MapToScr(int x, int y);
+    PGE_RectF MapToGl(float x, float y, float w, float h);
+    PGE_RectF MapToGlSI(float left, float top, float right, float bottom);
+
+    PGE_Point MapToScr(PGE_Point point);
+    PGE_Point MapToScr(int x, int y);
     int  alignToCenter(int x, int w);
 private:
     PGE_Texture _dummyTexture;
@@ -87,13 +83,7 @@ private:
     float viewport_w_half;
     float viewport_h_half;
 
-    //Texture render color levels
-    float color_level_red;
-    float color_level_green;
-    float color_level_blue;
-    float color_level_alpha;
-
-    float color_binded_texture[16];
+    float color_binded_texture[4];
 };
 
 #else
