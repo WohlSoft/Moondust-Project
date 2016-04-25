@@ -11,6 +11,11 @@ Render_Base::Render_Base(QString renderer_name) :
 void Render_Base::set_SDL_settings()
 {}
 
+unsigned int Render_Base::SDL_InitFlags()
+{
+    return 0;
+}
+
 bool Render_Base::init()
 {
     return false;
@@ -53,6 +58,18 @@ void Render_Base::setViewportSize(int /*w*/, int /*h*/)
 void Render_Base::setWindowSize(int /*w*/, int /*h*/)
 {}
 
+void Render_Base::flush()
+{}
+
+void Render_Base::repaint()
+{}
+
+void Render_Base::setClearColor(float /*r*/, float /*g*/, float /*b*/, float /*a*/)
+{}
+
+void Render_Base::clearScreen()
+{}
+
 void Render_Base::renderRect(float /*x*/, float /*y*/, float /*w*/, float /*h*/, GLfloat /*red*/, GLfloat /*green*/, GLfloat /*blue*/, GLfloat /*alpha*/, bool /*filled*/)
 {}
 
@@ -73,9 +90,6 @@ void Render_Base::renderTexture(PGE_Texture */*texture*/, float /*x*/,
 {}
 
 void Render_Base::BindTexture(PGE_Texture */*texture*/)
-{}
-
-void Render_Base::BindTexture(GLuint &/*texture_id*/)
 {}
 
 void Render_Base::setRGB(float /*Red*/, float /*Green*/, float /*Blue*/, float /*Alpha*/)

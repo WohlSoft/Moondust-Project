@@ -146,8 +146,8 @@ void LVL_Npc::transformTo_x(long id)
         animator_ID = setup->animator_ID;
     }
 
-    warpFrameW = texture.w;
-    warpFrameH = texture.h;
+    warpFrameW = texture.frame_w;
+    warpFrameH = texture.frame_h;
 
     if(_isInited)
     {

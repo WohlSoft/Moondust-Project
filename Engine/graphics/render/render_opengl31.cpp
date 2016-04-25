@@ -2,6 +2,7 @@
 
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h> // SDL 2 Library
@@ -74,11 +75,22 @@ void Render_OpenGL31::set_SDL_settings()
     //  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
     //  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
     //  SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
-        //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+}
+
+unsigned int Render_OpenGL31::SDL_InitFlags()
+{
+    return SDL_WINDOW_OPENGL;
 }
 
 bool Render_OpenGL31::init()
 {
+    LogDebug("Create OpenGL context...");
+    PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window); // Creating of the OpenGL Context
+    if(!PGE_Window::checkSDLError()) return false;
+    SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
+    if(!PGE_Window::checkSDLError()) return false;
+
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
     //Initialize clear color
@@ -200,6 +212,26 @@ void Render_OpenGL31::setWindowSize(int w, int h)
     window_w=w;
     window_h=h;
     resetViewport();
+}
+
+void Render_OpenGL31::flush()
+{
+    glFlush();
+}
+
+void Render_OpenGL31::repaint()
+{
+    SDL_GL_SwapWindow(PGE_Window::window);
+}
+
+void Render_OpenGL31::setClearColor(float r, float g, float b, float a)
+{
+    glClearColor( r, g, b, a ); GLERRORCHECK();
+}
+
+void Render_OpenGL31::clearScreen()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GLERRORCHECK();
 }
 
 
@@ -409,12 +441,6 @@ void Render_OpenGL31::BindTexture(PGE_Texture *texture)
     setAlphaBlending();
 }
 
-void Render_OpenGL31::BindTexture(GLuint &texture_id)
-{
-    setRenderTexture( texture_id );
-    setAlphaBlending();
-}
-
 void Render_OpenGL31::setRGB(float Red, float Green, float Blue, float Alpha)
 {
     color_level_red=Red;
@@ -490,46 +516,6 @@ void Render_OpenGL31::renderTextureCur(float x, float y, float w, float h, float
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
     glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }
-
-//void Render_OpenGL31::renderTextureCur(float x, float y)
-//{
-//    GLint w;
-//    GLint h;
-//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
-//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
-//    if(w<0) return;
-//    if(h<0) return;
-
-//    PGE_PointF point;
-//        point = MapToGl(x, y);
-//    float left = point.x();
-//    float top = point.y();
-//        point = MapToGl(x+w, y+h);
-//    float right = point.x();
-//    float bottom = point.y();
-
-//    GLfloat Vertices[] = {
-//        left, top, 0,
-//        right, top, 0,
-//        right, bottom, 0,
-//        left, bottom, 0
-//    };
-//    GLfloat TexCoord[] = {
-//        0.f, 0.f,
-//        1.f, 0.f,
-//        1.f, 1.f,
-//        0.f, 1.f
-//    };
-//    GLubyte indices[] = {
-//        0, 1, 2, // (bottom left - top left - top right)
-//        0, 2, 3  // (bottom left - top right - bottom right)
-//    };
-
-//    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-//}
 
 void Render_OpenGL31::getCurWidth(GLint &w)
 {

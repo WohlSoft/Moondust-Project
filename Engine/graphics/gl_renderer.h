@@ -36,12 +36,15 @@ public:
         RENDER_AUTO=0,
         RENDER_OPENGL_2_1,
         RENDER_OPENGL_3_1,
-        RENDER_SDL2
+        RENDER_SW_SDL
     };
     static RenderEngineType setRenderer(RenderEngineType rtype=RENDER_AUTO);
 
     static void setup_OpenGL21();
     static void setup_OpenGL31();
+    static void setup_SW_SDL();
+
+    static unsigned int SDL_InitFlags();
 
     static bool init();
     static bool uninit();
@@ -53,6 +56,20 @@ public:
     static bool ready();
     static void setRGB(float Red, float Green, float Blue, float Alpha=1.0);
     static void resetRGB();
+    static void flush();
+    static void repaint();
+    /*!
+     * \brief Changed color to clear screen
+     * \param r level of red (from 0.0 to 1.0)
+     * \param g level of green (from 0.0 to 1.0)
+     * \param b level of blue (from 0.0 to 1.0)
+     * \param a level of alpha (from 0.0 to 1.0)
+     */
+    static void setClearColor(float r, float g, float b, float a);
+    /*!
+     * \brief Clear screen with pre-defined clear color
+     */
+    static void clearScreen();
 
     static void renderTexture(PGE_Texture *texture, float x, float y); //!<Render texture as-is
     static void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!<Render matrix animation fragment
@@ -60,10 +77,8 @@ public:
     static void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 
     static void BindTexture(PGE_Texture *texture);
-    static void BindTexture(GLuint &texture_id);
     static void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     static void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!< Draw currently binded texture
-    //static void renderTextureCur(float x, float y);
     static void getCurWidth(GLint &w);
     static void getCurHeight(GLint &h);
     static void UnBindTexture();
@@ -83,7 +98,6 @@ public:
     static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);
     static void deleteTexture(GLuint tx);
-
 private:
     //static void initDummyTexture();
     //static PGE_Texture _dummyTexture;

@@ -57,10 +57,7 @@ Scene::Scene(TypeOfScene _type)
 
 Scene::~Scene()
 {
-    //Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
+    GlRenderer::clearScreen();
 }
 
 void Scene::onKeyInput(int)

@@ -60,7 +60,7 @@ private:
     {
         RasChar() {valid=false;}
         bool valid;
-        GLuint tx;
+        PGE_Texture* tx;
         int padding_left;  //!< Crop left
         int padding_right; //!< Crop right
         float l;//!< left

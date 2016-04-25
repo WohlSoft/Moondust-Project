@@ -8,6 +8,7 @@ class Render_OpenGL31 : public Render_Base
 public:
     Render_OpenGL31();
     virtual void set_SDL_settings();
+    virtual unsigned int SDL_InitFlags();
     virtual bool init();
     virtual bool uninit();
     virtual void initDummyTexture();
@@ -22,20 +23,34 @@ public:
     virtual void setViewportSize(int w, int h);
     virtual void setWindowSize(int w, int h);
 
+    virtual void flush();
+    virtual void repaint();
+
+    /*!
+     * \brief Changed color to clear screen
+     * \param r level of red (from 0.0 to 1.0)
+     * \param g level of green (from 0.0 to 1.0)
+     * \param b level of blue (from 0.0 to 1.0)
+     * \param a level of alpha (from 0.0 to 1.0)
+     */
+    virtual void setClearColor(float r, float g, float b, float a);
+    /*!
+     * \brief Clear screen with pre-defined clear color
+     */
+    virtual void clearScreen();
+
     virtual void renderRect(float x, float y, float w, float h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f, bool filled=true);
     virtual void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
     virtual void renderTexture(PGE_Texture *texture, float x, float y);
     virtual void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
 
     virtual void BindTexture(PGE_Texture *texture);
-    virtual void BindTexture(GLuint &texture_id);
 
     virtual void setRGB(float Red, float Green, float Blue, float Alpha=1.0);
     virtual void resetRGB();
 
     virtual void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
-    //virtual void renderTextureCur(float x, float y);
     virtual void getCurWidth(GLint &w);
     virtual void getCurHeight(GLint &h);
     virtual void UnBindTexture();

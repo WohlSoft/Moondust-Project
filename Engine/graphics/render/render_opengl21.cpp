@@ -111,12 +111,24 @@ void Render_OpenGL21::set_SDL_settings()
     //  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
     //  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
     //  SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
-        //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+}
+
+unsigned int Render_OpenGL21::SDL_InitFlags()
+{
+    return SDL_WINDOW_OPENGL;
 }
 
 bool Render_OpenGL21::init()
 {
     #ifndef __ANDROID__
+
+    LogDebug("Create OpenGL context...");
+    PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window); // Creating of the OpenGL Context
+    if(!PGE_Window::checkSDLError()) return false;
+    SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
+    if(!PGE_Window::checkSDLError()) return false;
+
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
     //Initialize clear color
@@ -275,7 +287,25 @@ void Render_OpenGL21::setWindowSize(int w, int h)
     resetViewport();
 }
 
+void Render_OpenGL21::flush()
+{
+    glFlush();
+}
 
+void Render_OpenGL21::repaint()
+{
+    SDL_GL_SwapWindow(PGE_Window::window);
+}
+
+void Render_OpenGL21::setClearColor(float r, float g, float b, float a)
+{
+    glClearColor( r, g, b, a ); GLERRORCHECK();
+}
+
+void Render_OpenGL21::clearScreen()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GLERRORCHECK();
+}
 
 static inline void setRenderColors()
 {
@@ -407,12 +437,6 @@ void Render_OpenGL21::BindTexture(PGE_Texture *texture)
     setAlphaBlending();
 }
 
-void Render_OpenGL21::BindTexture(GLuint &texture_id)
-{
-    setRenderTexture( texture_id );
-    setAlphaBlending();
-}
-
 void Render_OpenGL21::setRGB(float Red, float Green, float Blue, float Alpha)
 {
     color_level_red=Red;
@@ -470,32 +494,6 @@ void Render_OpenGL21::renderTextureCur(float x, float y, float w, float h, float
     glTexCoord2f(ani_left, ani_bottom);     glVertex2f(left, bottom);
     glEnd(); GLERRORCHECK();
 }
-
-//void Render_OpenGL21::renderTextureCur(float x, float y)
-//{
-//    GLint w;
-//    GLint h;
-//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WIDTH, &w); GLERRORCHECK();
-//    glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_HEIGHT,&h); GLERRORCHECK();
-//    if(w<0) return;
-//    if(h<0) return;
-
-//    PGE_PointF point;
-//        point = MapToGl(x, y);
-//    float left = point.x();
-//    float top = point.y();
-//        point = MapToGl(x+w, y+h);
-//    float right = point.x();
-//    float bottom = point.y();
-
-//    glColor4f( color_binded_texture[0], color_binded_texture[1], color_binded_texture[2], color_binded_texture[3]);
-//    glBegin(GL_QUADS);
-//    glTexCoord2f(0.0f, 0.0f);   glVertex2f(left, top);
-//    glTexCoord2f(1.0f, 0.0f);   glVertex2f(right, top);
-//    glTexCoord2f(1.0f, 1.0f);   glVertex2f(right, bottom);
-//    glTexCoord2f(0.0f, 1.0f);   glVertex2f(left, bottom);
-//    glEnd();GLERRORCHECK();
-//}
 
 void Render_OpenGL21::getCurWidth(GLint &w)
 {

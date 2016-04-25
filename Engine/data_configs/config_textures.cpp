@@ -164,7 +164,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
                                /double(bgoSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = bgoSetup->frame_h;
+            level_textures[id].frame_h = bgoSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
@@ -492,7 +492,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
                                /double(bgSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = bgSetup->frame_h;
+            level_textures[id].frame_h = bgSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
@@ -579,7 +579,7 @@ long  ConfigManager::getTileTexture(long tileID)
                                /double(tileSetup->frames));
 
             //store animated texture value back
-            world_textures[id].h = tileSetup->frame_h;
+            world_textures[id].frame_h = tileSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
@@ -649,7 +649,7 @@ long  ConfigManager::getSceneryTexture(long sceneryID)
                                /double(scenerySetup->frames));
 
             //store animated texture value back
-            world_textures[id].h = scenerySetup->frame_h;
+            world_textures[id].frame_h = scenerySetup->frame_h;
 
             SimpleAnimator animator(
                             true,
@@ -719,7 +719,7 @@ long  ConfigManager::getWldPathTexture(long pathID)
                                /double(pathSetup->frames));
 
             //store animated texture value back
-            world_textures[id].h = pathSetup->frame_h;
+            world_textures[id].frame_h = pathSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
@@ -790,7 +790,7 @@ long  ConfigManager::getWldLevelTexture(long levelID)
                                /double(lvlSetup->frames));
 
             //store animated texture value back
-            world_textures[id].h = lvlSetup->frame_h;
+            world_textures[id].frame_h = lvlSetup->frame_h;
 
             SimpleAnimator animator(
                             true,

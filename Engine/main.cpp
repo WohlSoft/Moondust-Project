@@ -259,10 +259,9 @@ int main(int argc, char *argv[])
     g_AppSettings.loadJoystickSettings();
 
     LogDebug("Clear screen...");
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glLoadIdentity();//Reset modelview matrix
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
+    GlRenderer::clearScreen();
+    GlRenderer::flush();
+    GlRenderer::repaint();
 
     if(g_AppSettings.fullScreen) qDebug()<<"Toggle fullscreen...";
     PGE_Window::setFullScreen(g_AppSettings.fullScreen);

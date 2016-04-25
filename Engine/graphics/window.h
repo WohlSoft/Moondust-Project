@@ -43,7 +43,6 @@ public:
     static bool isReady();
     static void setCursorVisibly(bool viz);
     static void clean();
-    static void rePaint();
 
     static SDL_Window *window;
     static SDL_GLContext glcontext_background;

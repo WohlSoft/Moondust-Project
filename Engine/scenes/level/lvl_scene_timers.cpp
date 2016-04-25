@@ -38,10 +38,7 @@ void LevelScene::drawLoader()
 
     if(!loading_Ani) return;
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-
+    GlRenderer::clearScreen();
 
     GlRenderer::renderRect(0,0,PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, 1.0f);
 
@@ -146,8 +143,8 @@ void LevelScene::loaderStep()
 
     drawLoader();
 
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
+    GlRenderer::flush();
+    GlRenderer::repaint();
 
     loader_timer_id = SDL_AddTimer(loaderSpeed, &LevelScene::nextLoadAniFrame, this);
     doLoaderStep = false;

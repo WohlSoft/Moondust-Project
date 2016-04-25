@@ -53,6 +53,7 @@
 
 #include "render/render_opengl21.h"
 #include "render/render_opengl31.h"
+#include "render/render_swsdl.h"
 
 #include <QDir>
 #include <QImage>
@@ -67,6 +68,7 @@
 static Render_Base      g_dummy;//Empty renderer
 static Render_OpenGL31  g_opengl31;
 static Render_OpenGL21  g_opengl21;
+static Render_SW_SDL    g_swsdl;
 
 Render_Base      *g_renderer=&g_dummy;
 
@@ -214,17 +216,22 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
 {
     if(rtype==RENDER_AUTO)
     {
+        #ifndef __APPLE__
         if(detectOpenGL3())
         {
             rtype=RENDER_OPENGL_3_1;
             LogDebug("OpenGL 3.1 detected!");
         }
-        else if(detectOpenGL2())
+        else
+        #endif
+        #ifndef __ANDROID__
+        if(detectOpenGL2())
         {
             rtype=RENDER_OPENGL_2_1;
             LogDebug("OpenGL 2.1 detected!");
-        }
+        }//RENDER_SDL2
         else
+        #endif
         {
             rtype=RENDER_INVALID;
             LogCritical("OpenGL not detected!");
@@ -239,9 +246,20 @@ void GlRenderer::setup_OpenGL31()
     g_renderer->set_SDL_settings();
 }
 
+unsigned int GlRenderer::SDL_InitFlags()
+{
+    return g_renderer->SDL_InitFlags();
+}
+
 void GlRenderer::setup_OpenGL21()
 {
     g_renderer=&g_opengl21;
+    g_renderer->set_SDL_settings();
+}
+
+void GlRenderer::setup_SW_SDL()
+{
+    g_renderer = &g_swsdl;
     g_renderer->set_SDL_settings();
 }
 
@@ -383,6 +401,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     target.format = GL_BGRA;
     target.w = w;
     target.h = h;
+    target.frame_w = w;
+    target.frame_h = h;
 
 //    #ifdef PGE_USE_OpenGL_2_1
 //    glEnable(GL_TEXTURE_2D);
@@ -451,6 +471,8 @@ GLuint GlRenderer::QImage2Texture(QImage *img, PGE_Texture &tex)
     tex.format = GL_BGRA;
     tex.w = text_image.width();
     tex.h = text_image.height();
+    tex.frame_w = tex.w;
+    tex.frame_h = tex.h;
 
     g_renderer->loadTexture(tex, tex.w, tex.h, text_image.bits());
 //    glGenTextures(1, &tex.texture);  GLERRORCHECK();
@@ -479,6 +501,8 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
     tx.inited=false;
     tx.w=0;
     tx.h=0;
+    tx.frame_w=0;
+    tx.frame_h=0;
     tx.texture_layout=NULL; tx.format=0;tx.nOfColors=0;
     tx.ColorUpper.r=0; tx.ColorUpper.g=0; tx.ColorUpper.b=0;
     tx.ColorLower.r=0; tx.ColorLower.g=0; tx.ColorLower.b=0;
@@ -612,6 +636,26 @@ void GlRenderer::resetRGB()
     g_renderer->resetRGB();
 }
 
+void GlRenderer::flush()
+{
+    g_renderer->flush();
+}
+
+void GlRenderer::repaint()
+{
+    g_renderer->repaint();
+}
+
+void GlRenderer::setClearColor(float r, float g, float b, float a)
+{
+    g_renderer->setClearColor(r, g, b, a);
+}
+
+void GlRenderer::clearScreen()
+{
+    g_renderer->clearScreen();
+}
+
 
 PGE_PointF GlRenderer::MapToGl(PGE_Point point)
 {
@@ -687,11 +731,6 @@ void GlRenderer::BindTexture(PGE_Texture *texture)
     g_renderer->BindTexture(texture);
 }
 
-void GlRenderer::BindTexture(GLuint &texture_id)
-{
-    g_renderer->BindTexture(texture_id);
-}
-
 void GlRenderer::setTextureColor(float Red, float Green, float Blue, float Alpha)
 {
     g_renderer->setTextureColor(Red, Green, Blue, Alpha);
@@ -701,11 +740,6 @@ void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_
 {
     g_renderer->renderTextureCur(x, y, w, h, ani_top, ani_bottom, ani_left, ani_right);
 }
-
-//void GlRenderer::renderTextureCur(float x, float y)
-//{
-//    g_renderer->renderTextureCur(x, y);
-//}
 
 void GlRenderer::getCurWidth(GLint &w)
 {

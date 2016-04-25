@@ -135,9 +135,7 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 TitleScene::~TitleScene()
 {
     //Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
+    GlRenderer::clearScreen();
 
     if(_cursorIsLoaded)
     {
@@ -335,9 +333,7 @@ void TitleScene::update()
 
 void TitleScene::render()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
+    GlRenderer::clearScreen();
 
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
@@ -428,7 +424,7 @@ int TitleScene::exec()
     menuChain.clear();
 
     //Set black color clearer
-    glClearColor(0.f, 0.f, 0.f, 1.0f);
+    GlRenderer::setClearColor(0.f, 0.f, 0.f, 1.0f);
 
     for(int i=menuFirst; i<menuLast;i++)
         menustates[(CurrentMenu)i] = menustate(0, 0);
@@ -449,8 +445,8 @@ int TitleScene::exec()
         render();
         renderMouse();
 
-        glFlush();
-        PGE_Window::rePaint();
+        GlRenderer::flush();
+        GlRenderer::repaint();
 
         if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks()-start_render)) )
         {

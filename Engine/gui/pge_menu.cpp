@@ -835,6 +835,7 @@ void PGE_Menu::render()
                 else
                 {
                     //scroll left texture todo
+                    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
                     GlRenderer::renderTexture(&_scroll_up, posX, posY);
                 }
             }
@@ -849,6 +850,7 @@ void PGE_Menu::render()
                 }
                 else
                 {
+                    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
                     GlRenderer::renderTexture(&_scroll_up, posX, posY);
                 }
             }
@@ -883,6 +885,7 @@ void PGE_Menu::render()
                 else
                 {
                     //scroll right texture todo
+                    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
                     GlRenderer::renderTexture(&_scroll_down, posX, posY);
                 }
             }
@@ -900,6 +903,7 @@ void PGE_Menu::render()
                 }
                 else
                 {
+                    GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
                     GlRenderer::renderTexture(&_scroll_down, posX, posY);
                 }
             }
@@ -939,6 +943,7 @@ void PGE_Menu::render()
                 else if (alignment == menuAlignment::VERTICLE)
                     y_offset=(_item_height/2)-(_selector.h/2);
                 //todo: put renderTexture inside their respective ifstatement once texture is complete
+                GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
                 GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }

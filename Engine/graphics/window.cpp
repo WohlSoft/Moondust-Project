@@ -64,30 +64,39 @@ bool PGE_Window::checkSDLError(int line)
 bool PGE_Window::init(QString WindowTitle)
 {
 
-    //#if 1
-    #ifdef __APPLE__
+    #if 0
     GlRenderer::setup_OpenGL21();
+    //GlRenderer::setup_SW_SDL();
     #elif __ANDROID__
     GlRenderer::setup_OpenGL31();
     #else
     //Detect renderer
     GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
-    if(rtype==GlRenderer::RENDER_INVALID)
+    if( rtype==GlRenderer::RENDER_INVALID )
     {
         QMessageBox::critical(NULL, "OpenGL not found!",
-            QString("Unable to find OpenGL support!\n%1")
+            QString("Unable to find OpenGL support!\n%1\n\nSoftware renderer will be started.")
             .arg( SDL_GetError() ), QMessageBox::Ok);
+
+        rtype = GlRenderer::RENDER_SW_SDL;
+
     }
     if(rtype==GlRenderer::RENDER_OPENGL_3_1)
         GlRenderer::setup_OpenGL31();
-    else
+    else if(rtype==GlRenderer::RENDER_OPENGL_2_1)
         GlRenderer::setup_OpenGL21();
+    else if(rtype==GlRenderer::RENDER_SW_SDL)
+        GlRenderer::setup_SW_SDL();
     #endif
 
-
     GlRenderer::setViewportSize(Width, Height);
-    window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
+    window = SDL_CreateWindow(WindowTitle.toStdString().c_str(),
+                              SDL_WINDOWPOS_CENTERED,
+                              SDL_WINDOWPOS_CENTERED,
+                              Width, Height,
+                              SDL_WINDOW_RESIZABLE|
+                              SDL_WINDOW_HIDDEN|
+                              GlRenderer::SDL_InitFlags() );
     if(!checkSDLError()) return false;
 
     SDL_SetWindowMinimumSize(window, Width, Height);
@@ -118,18 +127,6 @@ bool PGE_Window::init(QString WindowTitle)
         GraphicsHelps::closeImage(img);
         SDL_FreeSurface(sicon);
     }
-
-    LogDebug("Create OpenGL context...");
-    glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    if(!checkSDLError()) return false;
-
-    SDL_GL_MakeCurrent(window, glcontext);
-    if(!checkSDLError()) return false;
-
-    LogDebug("Toggle vsync...");
-    vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
-    toggleVSync(vsync);
-    LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
     IsInit=true;
 
     //Init OpenGL (to work with textures, OpenGL should be load)
@@ -140,6 +137,11 @@ bool PGE_Window::init(QString WindowTitle)
         IsInit=false;
         return false;
     }
+
+    LogDebug("Toggle vsync...");
+    vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
+    toggleVSync(vsync);
+    LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
 
     return true;
 }
@@ -235,18 +237,10 @@ void PGE_Window::setCursorVisibly(bool viz)
 void PGE_Window::clean()
 {
     if(window==NULL) return;
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-    glFlush();
-    rePaint();
-}
-
-void PGE_Window::rePaint()
-{
-    if(window==NULL) return;
-    SDL_GL_SwapWindow(window);
+    GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    GlRenderer::clearScreen();
+    GlRenderer::flush();
+    GlRenderer::repaint();
 }
 
 int PGE_Window::setFullScreen(bool fs)

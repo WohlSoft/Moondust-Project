@@ -162,11 +162,7 @@ void LevelScene::processPhysics(float ticks)
 
 LevelScene::~LevelScene()
 {
-    //Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-
+    GlRenderer::clearScreen();
     layers.members.clear();
 
     switch_blocks.clear();
@@ -427,11 +423,9 @@ void LevelScene::processEvents()
 
 void LevelScene::render()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-    int c=0;
+    GlRenderer::clearScreen();
 
+    int c=0;
     if(!isInit) goto renderBlack;
 
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -693,7 +687,7 @@ int LevelScene::exec()
      #define PassedTime (SDL_GetTicks()-start_common)
 
     //Set black color clearer
-    glClearColor(0.f, 0.f, 0.f, 1.0f);
+    GlRenderer::setClearColor(0.f, 0.f, 0.f, 1.0f);
 
     /****************Initial update***********************/
     //Apply musics and backgrounds
@@ -741,8 +735,8 @@ int LevelScene::exec()
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            glFlush();
-            PGE_Window::rePaint();
+            GlRenderer::flush();
+            GlRenderer::repaint();
             stop_render=SDL_GetTicks();
             doUpdate_render = frameSkip? uTickf+(stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;

@@ -23,6 +23,8 @@ PGE_Texture::PGE_Texture()
     inited=false;
     w=0;
     h=0;
+    frame_w=0;
+    frame_h=0;
     texture_layout=NULL; format=0;nOfColors=0;
     ColorUpper.r=0; ColorUpper.g=0; ColorUpper.b=0;
     ColorLower.r=0; ColorLower.g=0; ColorLower.b=0;

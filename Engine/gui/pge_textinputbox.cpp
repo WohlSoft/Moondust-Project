@@ -223,8 +223,8 @@ void PGE_TextInputBox::exec()
         update(uTickf);
         PGE_BoxBase::render();
         render();
-        glFlush();
-        PGE_Window::rePaint();
+        GlRenderer::flush();
+        GlRenderer::repaint();
 
         if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks() - start_render)) )
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );

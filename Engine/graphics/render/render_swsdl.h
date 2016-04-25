@@ -1,15 +1,17 @@
-#ifndef RENDER_OPENGL21_H
-#define RENDER_OPENGL21_H
+#ifndef RENDER_SW_SDL_H
+#define RENDER_SW_SDL_H
 
+#include <common_features/rect.h>
 #include "render_base.h"
 
-#ifndef __ANDROID__
-class Render_OpenGL21 : public Render_Base
+struct SDL_Surface;
+struct SDL_Renderer;
+struct SDL_Texture;
+class Render_SW_SDL : public Render_Base
 {
 public:
-    Render_OpenGL21();
+    Render_SW_SDL();
     virtual void set_SDL_settings();
-    virtual unsigned int SDL_InitFlags();
     virtual bool init();
     virtual bool uninit();
     virtual void initDummyTexture();
@@ -52,6 +54,7 @@ public:
 
     virtual void setTextureColor(float Red, float Green, float Blue, float Alpha=1.0f);
     virtual void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);
+    //virtual void renderTextureCur(float x, float y);
     virtual void getCurWidth(GLint &w);
     virtual void getCurHeight(GLint &h);
     virtual void UnBindTexture();
@@ -63,6 +66,35 @@ public:
     int  alignToCenter(int x, int w);
 private:
     PGE_Texture _dummyTexture;
+
+    //!The surface contained by the window
+    SDL_Surface* screenSurface;
+
+    //!The window renderer
+    SDL_Renderer* m_gRenderer;
+
+    unsigned char m_clearColor[4];
+
+    SDL_Texture* m_currentTexture;
+    PGE_Rect     m_currentTextureRect;
+
+    //! Internal bank of textures
+    std::vector<SDL_Texture*> m_textureBank;
+
+    inline void setRenderTexture(GLuint &tID)
+    {
+        m_currentTexture = (tID >= m_textureBank.size()) ? NULL : m_textureBank[tID];
+    }
+
+    inline void setUnbindTexture()
+    {
+        m_currentTexture = NULL;
+    }
+
+    inline void setRenderColors()
+    {
+        setUnbindTexture();
+    }
 
     //Virtual resolution of renderable zone
     int window_w;
@@ -96,15 +128,4 @@ private:
     float color_binded_texture[16];
 };
 
-#else
-
-class Render_OpenGL21 : public Render_Base
-{
-public:
-    virtual bool init();
-    virtual bool uninit();
-}
-
-#endif
-
-#endif // RENDER_OPENGL21_H
+#endif // RENDER_SW_SDL_H

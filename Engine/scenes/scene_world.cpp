@@ -179,7 +179,7 @@ void WorldScene::setGameState(EpisodeState *_state)
     if(!_state) return;
     gameState = _state;
 
-    numOfPlayers=_state->numOfPlayers;
+    numOfPlayers = _state->numOfPlayers;
 
     points = gameState->game_state.points;
     coins  = gameState->game_state.coins;
@@ -1021,10 +1021,7 @@ void WorldScene::saveElementsVisibility()
 
 void WorldScene::render()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-
+    GlRenderer::clearScreen();
     if(!isInit)
         goto renderBlack;
 
@@ -1223,7 +1220,7 @@ void WorldScene::processEvents()
 int WorldScene::exec()
 {
     worldIsContinues=true;
-    glClearColor(0.0, 0.0, 0.0, 1.0f);
+    GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     //World scene's Loop
  Uint32 start_render=0;
@@ -1265,8 +1262,8 @@ int WorldScene::exec()
         {
             start_render = SDL_GetTicks();
             render();
-            glFlush();
-            PGE_Window::rePaint();
+            GlRenderer::flush();
+            GlRenderer::repaint();
 
             stop_render = SDL_GetTicks();
             doUpdate_render = frameSkip ? uTickf+(stop_render-start_render) : 0;

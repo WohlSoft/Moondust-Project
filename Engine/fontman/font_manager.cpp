@@ -152,6 +152,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
         qWarning() <<"Failed to load font texture! Invalid image!";
     }
     textures.push_back(fontTexture);
+    PGE_Texture *loadedTexture = &textures.last();
 
     if((letter_width==0)||(letter_height==0))
     {
@@ -209,7 +210,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
         RasChar rch;
         rch.valid=true;
-        rch.tx = fontTexture.texture;
+        rch.tx = loadedTexture;
         rch.l = charPosY.toFloat(&okY)/matrix_width;
         rch.r = (charPosY.toFloat(&okY)+1.0)/matrix_width;
         rch.padding_left=(charX.size()>1)? QString(charX[1]).toInt():0;
@@ -342,16 +343,6 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
         }
         else
         {
-            /* //Temporary don't render TTF
-            GLuint charTex;
-            charTex = ttf_borders ? FontManager::getChar2(cx) : FontManager::getChar1(cx);
-            if(charTex!=0)
-            {
-                GlRenderer::BindTexture(charTex);
-                GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
-                GlRenderer::renderTextureCur(x+offsetX-rch.padding_left,
-                                             y+offsetY);
-            }*/
             PGE_Texture c;
             if(ttf_borders)
                 FontManager::getChar2(cx, letter_width, c);
