@@ -1,6 +1,7 @@
 #ifndef RENDER_SW_SDL_H
 #define RENDER_SW_SDL_H
 
+#include <vector>
 #include <common_features/rect.h>
 #include "render_base.h"
 
