@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2016 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <SDL2/SDL_rect.h>
 #include "render_swsdl.h"
 
@@ -117,9 +135,28 @@ void Render_SW_SDL::loadTexture(PGE_Texture &target, int width, int height, unsi
                                          FI_RGBA_ALPHA_MASK );
     texture = SDL_CreateTextureFromSurface(m_gRenderer, surface);
     SDL_FreeSurface(surface);
-    target.texture = m_textureBank.size();
-    //SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-    m_textureBank.push_back(texture);
+
+checkStackAgain:
+    if( !m_textureFreeNumbers.empty() )
+    {
+        GLuint textureID;
+        do {//Fetch one of free texture numbers
+            textureID = m_textureFreeNumbers.top();
+            m_textureFreeNumbers.pop();
+            //Repeat if texture ID is useless: if id is larger than texture bank
+        } while( !m_textureFreeNumbers.empty() && (textureID >= m_textureBank.size()) );
+        //If texture still useles,
+        if( m_textureFreeNumbers.empty() && (textureID >= m_textureBank.size()) )
+            goto checkStackAgain;//Push new texture to the tail of the texture bank
+
+        target.texture = textureID;
+        m_textureBank[ textureID ] = texture;
+
+    } else {
+        //Push new texture to the tail of the texture bank
+        target.texture = m_textureBank.size();
+        m_textureBank.push_back( texture );
+    }
     target.inited = true;
 }
 
@@ -132,16 +169,19 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     }
     SDL_Texture* corpse = m_textureBank[tx.texture];
     SDL_DestroyTexture( corpse );
-    m_textureBank.erase(m_textureBank.begin()+tx.texture);
+    if(tx.texture != (m_textureBank.size()-1))
+    {
+        //If entry deleted from middle, remember that number to use it again
+        m_textureFreeNumbers.push( tx.texture );
+        m_textureBank[tx.texture] = NULL;
+    } else {
+        //If entry deleted from tail, delete it and all null elements between next not-null
+        do{
+            m_textureBank.pop_back();
+        } while( (!m_textureBank.empty()) && (m_textureBank.back() != NULL) );
+    }
     tx.texture = 0;
     tx.inited=false;
-}
-
-void Render_SW_SDL::deleteTexture(GLuint tx)
-{
-    SDL_Texture* corpse = m_textureBank[tx];
-    SDL_DestroyTexture(corpse);
-    m_textureBank.erase(m_textureBank.begin()+tx);
 }
 
 void Render_SW_SDL::getScreenPixels(int x, int y, int w, int h, unsigned char *pixels)

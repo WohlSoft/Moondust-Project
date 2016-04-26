@@ -90,7 +90,6 @@ public:
     static void loadTextureP(PGE_Texture &target, QString path, QString maskPath="");
     static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);
-    static void deleteTexture(GLuint tx);
 private:
 
     //Virtual resolution of renderable zone

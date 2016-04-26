@@ -1,4 +1,20 @@
-#ifndef NO_SDL
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2016 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "SdlMusPlayer.h"
 #include <gui/pge_msgbox.h>
@@ -7,19 +23,17 @@
 #include <common_features/file_mapper.h>
 
 /***********************************PGE_MusPlayer********************************************/
-bool PGE_MusPlayer::isLoaded=false;
-Mix_Music *PGE_MusPlayer::play_mus = NULL;
-QString PGE_MusPlayer::currentTrack="";
-int PGE_MusPlayer::volume=100;
-int PGE_MusPlayer::sRate=44100;
-bool PGE_MusPlayer::showMsg=true;
-QString PGE_MusPlayer::showMsg_for="";
-Uint64 PGE_MusPlayer::sCount = 0;
-Uint64 PGE_MusPlayer::musSCount = 0;
-SDL_mutex* PGE_MusPlayer::sampleCountMutex = NULL;
-
-
-
+bool        PGE_MusPlayer::isLoaded=false;
+Mix_Music * PGE_MusPlayer::play_mus = NULL;
+QString     PGE_MusPlayer::currentTrack="";
+int         PGE_MusPlayer::volume=100;
+int         PGE_MusPlayer::sRate=44100;
+bool        PGE_MusPlayer::showMsg=true;
+QString     PGE_MusPlayer::showMsg_for="";
+Uint64      PGE_MusPlayer::sCount = 0;
+Uint64      PGE_MusPlayer::musSCount = 0;
+SDL_mutex*  PGE_MusPlayer::sampleCountMutex = NULL;
+/********************************************************************************************/
 
 int PGE_MusPlayer::initAudio(int sampleRate, int allocateChannels, int bufferSize)
 {
@@ -29,14 +43,17 @@ int PGE_MusPlayer::initAudio(int sampleRate, int allocateChannels, int bufferSiz
     MIX_Timidity_addToPathList(QString(ApplicationPath+"/timidity/").toLocal8Bit().data());
     if(isLoaded) Mix_CloseAudio();
     ret = Mix_OpenAudio(sRate, AUDIO_S16, 2, bufferSize);
-    if(ret==-1) return ret;
-    Mix_AllocateChannels(allocateChannels);
+    if( ret == -1)
+        return ret;
+
+    Mix_AllocateChannels( allocateChannels );
 
     // Reset the audio sample count and set the post mix callback
     if (sampleCountMutex == NULL)
     {
         sampleCountMutex = SDL_CreateMutex();
     }
+
     // Reset music sample count
     if (SDL_LockMutex(sampleCountMutex) == 0)
     {
@@ -46,11 +63,9 @@ int PGE_MusPlayer::initAudio(int sampleRate, int allocateChannels, int bufferSiz
         SDL_UnlockMutex(sampleCountMutex);
     }
     isLoaded = true;
+
     return ret;
 }
-
-
-
 
 void PGE_MusPlayer::MUS_playMusic()
 {
@@ -66,18 +81,13 @@ void PGE_MusPlayer::MUS_playMusic()
 				musSCount = 0;
 				SDL_UnlockMutex(sampleCountMutex);
 			}
-
 			Mix_PlayMusic(play_mus, -1);
 		}
 		else
-		if(Mix_PausedMusic()==1)
+        if(Mix_PausedMusic() == 1)
 		{
 			Mix_ResumeMusic();
 		}
-	}
-	else
-	{
-		//MessageBoxA(0, std::string(std::string("Play nothing:")+std::string(Mix_GetError())).c_str(), "Error", 0);
     }
 }
 
@@ -178,9 +188,9 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 {
     if(!isLoaded) return;
 
-    if(currentTrack==musFile)
+    if( currentTrack == musFile )
 	{
-		if(Mix_PlayingMusic()==1)
+        if( Mix_PlayingMusic() == 1 )
 			return;
 	}
 
@@ -195,11 +205,15 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 
     if(!play_mus)
 	{
-		if(showMsg_for!=musFile)
+        if( showMsg_for != musFile )
 			showMsg=true;
 		if(showMsg)
 		{
-            PGE_MsgBox::warn(QString("Mix_LoadMUS: %1\n%2").arg(musFile).arg(Mix_GetError()));
+            PGE_MsgBox::warn(
+                              QString("Mix_LoadMUS: %1\n%2")
+                              .arg( musFile )
+                              .arg(Mix_GetError())
+                              );
             showMsg_for = QString(musFile);
 			showMsg=false;
 		}
@@ -223,7 +237,7 @@ void PGE_MusPlayer::postMixCallback(void *udata, Uint8 *stream, int len)
 		sCount += len/4;
 
 		// (Approximate) sample count for only when music is playing
-		if ((Mix_PlayingMusic() == 1) && (Mix_PausedMusic() == 0))
+        if( (Mix_PlayingMusic() == 1) && (Mix_PausedMusic() == 0) )
 		{
 			musSCount += len/4;
 		}
@@ -265,7 +279,7 @@ void PGE_MusPlayer::freeStream()
 {
     if(play_mus)
         Mix_FreeMusic(play_mus);
-    play_mus=NULL;
+    play_mus = NULL;
 }
 
 
@@ -342,5 +356,3 @@ void PGE_Sounds::clearSoundBuffer()
 	chunksBuffer.clear();
     Mix_ReserveChannels(0);
 }
-
-#endif

@@ -79,12 +79,6 @@ static bool isGL_Error()
     return glGetError() != GL_NO_ERROR;
 }
 
-static bool isSDL_Error()
-{
-    const char* sdl_error = SDL_GetError();
-    return sdl_error[0]!='\0';
-}
-
 static bool isGlExtensionSupported( const char* ext, const unsigned char * exts )
 {
     return (strstr((const char*)exts, ext) != NULL);
@@ -138,7 +132,7 @@ static bool detectOpenGL2()
         goto sdl_error;
     }
 
-    if(isSDL_Error())
+    if(PGE_Window::isSdlError())
     {
         errorPlace = "after context creating";
         goto sdl_error;
@@ -393,7 +387,7 @@ static bool detectOpenGL3()
         goto sdl_error;
     }
 
-    if( isSDL_Error() )
+    if( PGE_Window::isSdlError() )
     {
         errorPlace="after context creating";
         goto sdl_error;
@@ -876,15 +870,6 @@ GLuint GlRenderer::QImage2Texture(QImage *img, PGE_Texture &tex)
     tex.frame_h = tex.h;
 
     g_renderer->loadTexture(tex, tex.w, tex.h, text_image.bits());
-//    glGenTextures(1, &tex.texture);  GLERRORCHECK();
-//    glBindTexture(GL_TEXTURE_2D, tex.texture);  GLERRORCHECK();
-//    glTexImage2D(GL_TEXTURE_2D, 0,  4,
-//                 tex.w,
-//                 tex.h,
-//                 0, tex.nOfColors, GL_UNSIGNED_BYTE,
-//                 text_image.bits() );  GLERRORCHECK();
-//    tex.inited = true;
-//    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     return tex.texture;
 }
 
@@ -893,10 +878,6 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
     if( (tx.inited) && (tx.texture != g_renderer->getDummyTexture().texture))
     {
         g_renderer->deleteTexture(tx);
-//        #ifdef PGE_USE_OpenGL_2_1
-//        glDisable(GL_TEXTURE_2D);
-//        #endif
-//        glDeleteTextures( 1, &(tx.texture) );
     }
     tx.inited = false;
     tx.inited=false;
@@ -907,11 +888,6 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
     tx.texture_layout=NULL; tx.format=0;tx.nOfColors=0;
     tx.ColorUpper.r=0; tx.ColorUpper.g=0; tx.ColorUpper.b=0;
     tx.ColorLower.r=0; tx.ColorLower.g=0; tx.ColorLower.b=0;
-}
-
-void GlRenderer::deleteTexture(GLuint tx)
-{
-    g_renderer->deleteTexture(tx);
 }
 
 QString GlRenderer::ScreenshotPath = "";

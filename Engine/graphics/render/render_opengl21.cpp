@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2016 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "render_opengl21.h"
 
 #ifndef __ANDROID__
@@ -114,13 +132,28 @@ unsigned int Render_OpenGL21::SDL_InitFlags()
 
 bool Render_OpenGL21::init()
 {
-    #ifndef __ANDROID__
-
     LogDebug("Create OpenGL context...");
-    PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window); // Creating of the OpenGL Context
-    if(!PGE_Window::checkSDLError()) return false;
+
+    //Creating of the OpenGL Context
+    PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window);
+    if( !PGE_Window::glcontext )
+    {
+        LogWarning( QString("GL 2.1: Failed to create context! ") + SDL_GetError() );
+        return false;
+    }
+
+    if( PGE_Window::isSdlError() )
+    {
+        LogWarning( QString("GL 2.1: Failed to init context! ") + SDL_GetError() );
+        return false;
+    }
+
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
-    if(!PGE_Window::checkSDLError()) return false;
+    if( PGE_Window::isSdlError() )
+    {
+        LogWarning( QString("GL 2.1: Failed to set context as current! ") + SDL_GetError() );
+        return false;
+    }
 
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
 
@@ -132,13 +165,9 @@ bool Render_OpenGL21::init()
     glEnable(GL_TEXTURE_2D); GLERRORCHECK();
 
     g_OpenGL2_convertToPowof2 = isNonPowOf2Supported();
-
     LogDebug(QString("OpenGL 2.1: Non-Pow-of-two textures supported: %1").arg(g_OpenGL2_convertToPowof2));
 
     return true;
-    #else
-    return false;
-    #endif
 }
 
 bool Render_OpenGL21::uninit()
@@ -217,11 +246,6 @@ void Render_OpenGL21::loadTexture(PGE_Texture &target, int width, int height, un
 void Render_OpenGL21::deleteTexture(PGE_Texture &tx)
 {
     glDeleteTextures( 1, &(tx.texture) );
-}
-
-void Render_OpenGL21::deleteTexture(GLuint tx)
-{
-    glDeleteTextures( 1, &tx );
 }
 
 void Render_OpenGL21::getScreenPixels(int x, int y, int w, int h, unsigned char *pixels)
@@ -474,11 +498,13 @@ int Render_OpenGL21::alignToCenter(int x, int w)
 
 bool Render_OpenGL21::init()
 {
+    LogWarning(QString("GL 2.1: this renderer is not supported!"));
     return false;
 }
 
 bool Render_OpenGL21::uninit()
 {
+    LogWarning(QString("GL 2.1: this renderer is not supported!"));
     return false;
 }
 #endif

@@ -25,6 +25,8 @@
 
 #include <QString>
 
+#define SDLCHECKERROR() PGE_Window::checkSDLError(__FILE__, __LINE__, __FUNCTION__)
+
 class PGE_Window
 {
 public:
@@ -52,7 +54,10 @@ public:
 
     static int processEvents(SDL_Event &event);
 
-    static bool checkSDLError(int line = -1);
+    static bool isSdlError();
+    static bool checkSDLError(const char *fn, int line, const char *func);
+    static void printSDLWarn(QString info);
+    static void printSDLError(QString info);
 private:
     static bool IsInit;
     static bool showCursor;
