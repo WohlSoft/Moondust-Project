@@ -692,53 +692,25 @@ void GlRenderer::setup_SW_SDL()
     g_renderer->set_SDL_settings();
 }
 
-
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())
         return false;
 
-    /*
-    glewExperimental = GL_TRUE; // Needed for a Core-mode OpenGL
-    if( glewInit() != GLEW_OK )
-    {
-        GLERROR("Impossible to initialize GLEW");
-        return false;
-    }
-    GLERRORCHECK();*/
-
-    g_renderer->init();
-
-//    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
-
-//    //Initialize clear color
-//    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
-
-//    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
-//    glDepthFunc(GL_NEVER); GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
-
-//    glEnable(GL_BLEND); GLERRORCHECK();
-//    #ifndef PGE_USE_OpenGL_3_2
-//    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
-//    #endif
-
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
-    _isReady=true;
 
-    g_renderer->resetViewport();
-
-    //Init dummy texture;
-    g_renderer->initDummyTexture();
-
-    return true;
+    _isReady = g_renderer->init();
+    if(_isReady)
+    {
+        g_renderer->resetViewport();
+        g_renderer->initDummyTexture();
+    }
+    return _isReady;
 }
 
 bool GlRenderer::uninit()
 {
-    //glDisable(GL_TEXTURE_2D);
-    //glDeleteTextures( 1, &(_dummyTexture.texture) );
-    g_renderer->uninit();
-    return false;
+    return g_renderer->uninit();
 }
 
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)

@@ -62,7 +62,7 @@ bool Render_SW_SDL::init()
     m_gRenderer = SDL_CreateRenderer( PGE_Window::window, -1, SDL_RENDERER_SOFTWARE );
     if(!m_gRenderer)
     {
-        LogWarning("SW SDL: Failed to initialize screen surface!");
+        LogWarning(QString("SW SDL: Failed to initialize screen surface! ") + SDL_GetError());
         return false;
     }
 
