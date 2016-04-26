@@ -80,10 +80,12 @@ struct cmdArgs
         debugMode=false;
         testWorld=false;
         testLevel=false;
+        rendererType = GlRenderer::RENDER_AUTO;
     }
     bool debugMode;
     bool testWorld;
     bool testLevel;
+    GlRenderer::RenderEngineType rendererType;
 } _flags;
 
 int main(int argc, char *argv[])
@@ -176,6 +178,26 @@ int main(int argc, char *argv[])
             g_AppSettings.interprocessing=true;
         }
         else
+        if(param == ("--render-auto"))
+        {
+            _flags.rendererType = GlRenderer::RENDER_AUTO;
+        }
+        else
+        if(param == ("--render-gl2"))
+        {
+            _flags.rendererType = GlRenderer::RENDER_OPENGL_2_1;
+        }
+        else
+        if(param == ("--render-gl3"))
+        {
+            _flags.rendererType = GlRenderer::RENDER_OPENGL_3_1;
+        }
+        else
+        if(param == ("--render-sw"))
+        {
+            _flags.rendererType = GlRenderer::RENDER_SW_SDL;
+        }
+        else
         {
             fileToOpen = param;
         }
@@ -252,7 +274,12 @@ int main(int argc, char *argv[])
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
     LogDebug("Init main window...");
-    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
+    if( !PGE_Window::init(
+                QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER,
+                _flags.rendererType
+                        )
+           )
+        exit(1);
 
     LogDebug("Init joystics...");
     g_AppSettings.initJoysticks();

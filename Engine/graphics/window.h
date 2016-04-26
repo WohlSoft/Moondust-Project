@@ -37,7 +37,7 @@ public:
     static int TimeOfFrame;
     static bool showDebugInfo;
     static bool showPhysicsDebug;
-    static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
+    static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand", int renderType=0);
     static void toggleVSync(bool vsync);
     static bool uninit();
     static bool isReady();

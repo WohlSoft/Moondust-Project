@@ -61,7 +61,7 @@ bool PGE_Window::checkSDLError(int line)
     return true;
 }
 
-bool PGE_Window::init(QString WindowTitle)
+bool PGE_Window::init(QString WindowTitle, int renderType)
 {
 
     #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
@@ -70,7 +70,7 @@ bool PGE_Window::init(QString WindowTitle)
     //GlRenderer::setup_OpenGL31();
     #else
     //Detect renderer
-    GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
+    GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer( (GlRenderer::RenderEngineType)renderType );
     if( rtype==GlRenderer::RENDER_INVALID )
     {
         QMessageBox::critical(NULL, "OpenGL not found!",
