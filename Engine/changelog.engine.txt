@@ -1,3 +1,8 @@
+post-0.2.5.1
+- Improved testing of the renderers support to avoid accidental running of the unsupported renderer
+- Added software renderer support for video cards which are not suports OpenGL
+- Added abiltiy to manually choice a renderer (by --render-gl3, --render-gl2 or by --render-sw arguments)
+
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
 - Added more physical environment zones types, include air chambers for underwater sections

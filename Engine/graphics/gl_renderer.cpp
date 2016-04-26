@@ -85,65 +85,257 @@ static bool isSDL_Error()
     return sdl_error[0]!='\0';
 }
 
+static bool isGlExtensionSupported( const char* ext, const unsigned char * exts )
+{
+    return (strstr((const char*)exts, ext) != NULL);
+}
+
+#ifndef __ANDROID__
 static bool detectOpenGL2()
 {
+    QString errorPlace;
+    SDL_GLContext glcontext;
+    SDL_Window* dummy;
+    GLubyte* sExtensions = NULL;
+    GLuint test_texture = 0;
+    unsigned char dummy_texture[] = {
+        0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0,
+        0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0,
+        0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0,
+        0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0
+    };
+
     SDL_GL_ResetAttributes();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);//3
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
 #ifdef __APPLE__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
 #endif
 
-    SDL_Window* dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
+    LogDebug("GL2PROBE: Create hidden window");
+    dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          10, 10, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
-    if(!dummy)
-        return false;
 
-    SDL_GLContext glcontext = SDL_GL_CreateContext(dummy);
+    if(!dummy)
+    {
+        errorPlace = "on window creation";
+        goto sdl_error;
+    }
+
+    LogDebug("GL2PROBE: Create context");
+    glcontext = SDL_GL_CreateContext(dummy);
     if(!glcontext)
     {
-        LogDebug(QString("SDL Error of OpenGL 2 probe: ")+SDL_GetError());
-        SDL_DestroyWindow(dummy);
-        return false;
+        errorPlace = "on context creating";
+        goto sdl_error;
     }
 
     if(isSDL_Error())
     {
-        LogDebug( QString("SDL Error of OpenGL 2 probe: ")+SDL_GetError() );
-        SDL_GL_DeleteContext(glcontext);
-        SDL_DestroyWindow(dummy);
-        SDL_ClearError();
-        return false;
+        errorPlace = "after context creating";
+        goto sdl_error;
     }
 
+    LogDebug("GL2PROBE: take extensions list");
+    sExtensions = (GLubyte*)glGetString(GL_EXTENSIONS);
+    if( !sExtensions )
+    {
+        errorPlace = "on extensions list taking";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check GL_EXT_bgra");
+    if(!isGlExtensionSupported("GL_EXT_bgra", sExtensions))
+    {
+        errorPlace = "(GL_EXT_bgra is missing)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glEnable(GL_BLEND)");
+    glEnable(GL_BLEND);
+    if( isGL_Error() )
+    {
+        errorPlace="on glEnable(GL_BLEND)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glEnable(GL_TEXTURE_2D)");
+    glEnable(GL_TEXTURE_2D);
+    if( isGL_Error() )
+    {
+        errorPlace="on glEnable(GL_TEXTURE_2D)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glGenTextures");
+    glGenTextures( 1, &test_texture );
+    if( isGL_Error() )
+    {
+        errorPlace="on glGenTextures( 1, &test_texture )";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBindTexture");
+    glBindTexture( GL_TEXTURE_2D, test_texture );
+    if( isGL_Error() )
+    {
+        errorPlace="on glBindTexture( GL_TEXTURE_2D, test_texture  (#1))";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glTexImage2D");
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 4, 4, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, dummy_texture);
+    if( isGL_Error() )
+    {
+        errorPlace="on glTexImage2D(GL_TEXTURE_2D, ..... )";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBindTexture");
+    glBindTexture( GL_TEXTURE_2D, 0);
+    if( isGL_Error() )
+    {
+        errorPlace="on glBindTexture( GL_TEXTURE_2D, 0 )";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBindTexture");
+    glBindTexture( GL_TEXTURE_2D, test_texture );
+    if( isGL_Error() )
+    {
+        errorPlace="on glBindTexture( GL_TEXTURE_2D, test_texture ) (#2)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glTexParameteri");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    if( isGL_Error() )
+    {
+        errorPlace="on glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glTexParameteri");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    if( isGL_Error() )
+    {
+        errorPlace="on glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glTexParameteri");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    if( isGL_Error() )
+    {
+        errorPlace="on glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glTexParameteri");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    if( isGL_Error() )
+    {
+        errorPlace="on glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBlendFunc");
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    if( isGL_Error() )
+    {
+        errorPlace="on glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glColor4f");
+    glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+    if( isGL_Error() )
+    {
+        errorPlace="on glColor4f(0.5f, 0.5f, 0.5f, 0.5f)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBegin,glEnd");
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f(0.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(1.0f, 0.0f);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(1.0f, 1.0f);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f(0.0f, 1.0f);
+    glEnd();
+    if( isGL_Error() )
+    {
+        errorPlace="on glBegin,glEnd";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glBindTexture");
+    glBindTexture( GL_TEXTURE_2D, 0);
+    if( isGL_Error() )
+    {
+        errorPlace="on glBindTexture( GL_TEXTURE_2D, 0 ) (#2)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glDisable(GL_TEXTURE_2D)");
+    glDisable(GL_TEXTURE_2D);
+    if( isGL_Error() )
+    {
+        errorPlace="on glDisable(GL_TEXTURE_2D)";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: check glDeleteTextures");
+    glDeleteTextures( 1, &test_texture );
+    if( isGL_Error() )
+    {
+        errorPlace="on glDeleteTextures( 1, &test_texture )";
+        goto gl_error;
+    }
+
+    LogDebug("GL2PROBE: All tests passed");
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
     return true;
+
+gl_error:
+    LogDebug(QString("GL Error of the OpenGL 2 probe ") + errorPlace + ": " + getGlErrorStr( glGetError() ) );
+    if(glcontext)
+        SDL_GL_DeleteContext( glcontext );
+    if(dummy)
+        SDL_DestroyWindow(dummy);
+    SDL_ClearError();
+    return false;
+
+sdl_error:
+    LogDebug(QString("SDL Error of OpenGL 2 probe ") + errorPlace + ": " + SDL_GetError());
+    if(glcontext)
+        SDL_GL_DeleteContext( glcontext );
+    if(dummy)
+        SDL_DestroyWindow(dummy);
+    SDL_ClearError();
+    return false;
 }
+#endif
 
 #ifndef __APPLE__
-static bool isGlExtensionSupported( const char* ext, const unsigned char * exts )
-{
-    return (strstr((const char*)exts, ext) != NULL);
-}
-
 static bool detectOpenGL3()
 {
     QString errorPlace;
     SDL_GLContext glcontext;
     SDL_Window* dummy;
-    GLuint test_texture = 0;
     GLubyte* sExtensions = NULL;
+    GLuint test_texture = 0;
     unsigned char dummy_texture[] = {
         0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0,
         0,0,0,0,  0,0,0,0,   0,0,0,0,  0,0,0,0,
@@ -182,12 +374,16 @@ static bool detectOpenGL3()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
 
+    LogDebug("GL3PROBE: Create hidden window");
     dummy = SDL_CreateWindow("OpenGL 3 probe dummy window",
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          10, 10, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if(!dummy)
+    {
+        errorPlace="on window creation";
         goto sdl_error;
+    }
 
     LogDebug("GL3PROBE: Create context");
     glcontext = SDL_GL_CreateContext(dummy);
@@ -396,7 +592,7 @@ static bool detectOpenGL3()
     }
 
     LogDebug("GL3PROBE: All tests passed");
-    SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DeleteContext( glcontext );
     SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
@@ -405,7 +601,7 @@ static bool detectOpenGL3()
 gl_error:
     LogDebug(QString("GL Error of the OpenGL 3 probe ") + errorPlace + ": " + getGlErrorStr( glGetError() ) );
     if(glcontext)
-        SDL_GL_DeleteContext(glcontext);
+        SDL_GL_DeleteContext( glcontext );
     if(dummy)
         SDL_DestroyWindow(dummy);
     SDL_ClearError();
@@ -414,7 +610,7 @@ gl_error:
 sdl_error:
     LogDebug(QString("SDL Error of OpenGL 3 probe ") + errorPlace + ": " + SDL_GetError());
     if(glcontext)
-        SDL_GL_DeleteContext(glcontext);
+        SDL_GL_DeleteContext( glcontext );
     if(dummy)
         SDL_DestroyWindow(dummy);
     SDL_ClearError();
@@ -447,6 +643,28 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
             rtype=RENDER_INVALID;
             LogCritical("OpenGL not detected!");
         }
+    #ifndef __APPLE__
+    } else if(rtype == RENDER_OPENGL_3_1) {
+        if(detectOpenGL3())
+        {
+            LogDebug("OpenGL 3.1 selected and detected!");
+        } else {
+            rtype = RENDER_INVALID;
+            LogWarning("OpenGL 3.1 selected, but proble failed!");
+        }
+    #endif
+    #ifndef __ANDROID__
+    } else if(rtype == RENDER_OPENGL_2_1) {
+        if(detectOpenGL2())
+        {
+            LogDebug("OpenGL 2.1 selected and detected!");
+        } else {
+            rtype = RENDER_INVALID;
+            LogWarning("OpenGL 2.1 selected, but proble failed!");
+        }
+    #endif
+    } else if(rtype == RENDER_SW_SDL) {
+        LogDebug("SDL Software renderer selected!");
     }
     return rtype;
 }
