@@ -169,16 +169,16 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     }
     SDL_Texture* corpse = m_textureBank[tx.texture];
     SDL_DestroyTexture( corpse );
-    if(tx.texture != (m_textureBank.size()-1))
+    if( tx.texture != (m_textureBank.size()-1) )
     {
         //If entry deleted from middle, remember that number to use it again
         m_textureFreeNumbers.push( tx.texture );
-        m_textureBank[tx.texture] = NULL;
+        m_textureBank[ tx.texture ] = NULL;
     } else {
         //If entry deleted from tail, delete it and all null elements between next not-null
-        do{
+        do {
             m_textureBank.pop_back();
-        } while( (!m_textureBank.empty()) && (m_textureBank.back() != NULL) );
+        } while( (m_textureBank.size() != 1) && (m_textureBank.back() == NULL) );
     }
     tx.texture = 0;
     tx.inited=false;
