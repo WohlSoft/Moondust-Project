@@ -216,14 +216,14 @@ void WorldScene::setGameState(EpisodeState *_state)
         }
 
         //open Intro level
-        if(!data.IntroLevel_file.isEmpty())
+        if( !data.IntroLevel_file.isEmpty() )
         {
             //Fix file extension
             if((!data.IntroLevel_file.endsWith(".lvlx", Qt::CaseInsensitive))&&
                (!data.IntroLevel_file.endsWith(".lvl", Qt::CaseInsensitive)))
                  data.IntroLevel_file.append(".lvl");
 
-            QString introLevelFile = gameState->WorldPath+"/"+data.IntroLevel_file;
+            QString introLevelFile = gameState->WorldPath + "/" + data.IntroLevel_file;
             LogDebug("Opening intro level: "+introLevelFile);
 
             if(QFileInfo(introLevelFile).exists())
@@ -437,9 +437,13 @@ bool WorldScene::loadConfigs()
 
     //Load INI-files
     success = ConfigManager::loadWorldTiles();   //!< Tiles
+        if(!success) { _errorString="Fail on terrain tiles config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
     success = ConfigManager::loadWorldScenery(); //!< Scenery
+        if(!success) { _errorString="Fail on sceneries config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
     success = ConfigManager::loadWorldPaths();   //!< Paths
+        if(!success) { _errorString="Fail on paths config loading";  exitWorldCode = WldExit::EXIT_error; goto abortInit;}
     success = ConfigManager::loadWorldLevels();  //!< Levels
+        if(!success) { _errorString="Fail on level entrances config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
 
     //Set paths
     ConfigManager::Dir_Tiles.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldTiles() );
@@ -449,7 +453,36 @@ bool WorldScene::loadConfigs()
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
     ConfigManager::Dir_PlayerWld.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPlayable() );
 
+    //Validate all playable characters until use game state!
+    if(gameState)
+    {
+        for(int i=1; i<= numOfPlayers; i++)
+        {
+            PlayerState st = gameState->getPlayerState(i);
+            if( !ConfigManager::playable_characters.contains(st.characterID) )
+            {
+                         //% "Invalid playable character ID"
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                            + QString::number(st.characterID);
+                errorMsg = _errorString;
+                success = false;
+                break;
+            }
+            else
+            if( !ConfigManager::playable_characters[st.characterID].states.contains(st.stateID) )
+            {
+                         //% "Invalid playable character state ID"
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                            + QString::number(st.stateID);
+                errorMsg = _errorString;
+                success = false;
+                break;
+            }
+        }
+    }
+
     if(!success) exitWorldCode = WldExit::EXIT_error;
+abortInit:
     return success;
 }
 

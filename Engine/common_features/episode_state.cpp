@@ -74,12 +74,12 @@ PlayerState EpisodeState::getPlayerState(int playerID)
     ch._chsetup.id=1;
     ch._chsetup.state=1;
 
-    if(!game_state.currentCharacter.isEmpty() && (playerID>0) && (playerID<=game_state.currentCharacter.size()) )
+    if( !game_state.currentCharacter.isEmpty() && (playerID>0) && (playerID<=game_state.currentCharacter.size()) )
         ch.characterID = game_state.currentCharacter[playerID-1];
 
-    for(int i=0;i<game_state.characterStates.size(); i++)
+    for(int i=0; i<game_state.characterStates.size(); i++)
     {
-        if(game_state.characterStates[i].id==ch.characterID)
+        if(game_state.characterStates[i].id == ch.characterID)
         {
             ch.stateID=game_state.characterStates[i].state;
             ch._chsetup=game_state.characterStates[i];
@@ -91,31 +91,35 @@ PlayerState EpisodeState::getPlayerState(int playerID)
 
 void EpisodeState::setPlayerState(int playerID, PlayerState &state)
 {
-    if(playerID<1) return;
-    if(state.characterID<1) return;
-    if(state.stateID<1) return;
+    if(playerID < 1) return;
+    if(state.characterID < 1) return;
+    if(state.stateID < 1) return;
 
-    state._chsetup.id=state.characterID;
-    state._chsetup.state=state.stateID;
+    state._chsetup.id = state.characterID;
+    state._chsetup.state = state.stateID;
 
     //If playerID bigger than stored states - append, or replace exists
-    if(playerID>game_state.currentCharacter.size())
+    if(playerID > game_state.currentCharacter.size())
     {
-        while(playerID>game_state.currentCharacter.size())
-            game_state.currentCharacter.push_back(state.characterID);
+        while( playerID > game_state.currentCharacter.size() )
+            game_state.currentCharacter.push_back( state.characterID );
     }
     else
+    {
         game_state.currentCharacter[playerID-1]=state.characterID;
+    }
 
     //If characterID bigger than stored entries - append, or replace exists
     if( state.characterID > game_state.characterStates.size() )
     {
         while( state.characterID > game_state.characterStates.size() )
         {
-            saveCharState st;
-            st = FileFormats::CreateSavCharacterState();
-            st.id=(game_state.characterStates.size()+1);
-            st.state=1;
+            saveCharState st = FileFormats::CreateSavCharacterState();
+            st.id = (game_state.characterStates.size()+1);
+            if( st.id == state.characterID )
+                st = state._chsetup;
+            else
+                st.state = 1;
             game_state.characterStates.push_back(st);
         }
     } else {

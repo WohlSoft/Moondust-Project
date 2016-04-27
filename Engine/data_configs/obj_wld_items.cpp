@@ -340,7 +340,7 @@ bool ConfigManager::loadWorldPaths()
         addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.stored()));
         PGE_MsgBox::warn(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(wld_scenery.stored()));
     }
-    return false;
+    return true;
 }
 
 

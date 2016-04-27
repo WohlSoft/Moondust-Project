@@ -124,36 +124,43 @@ and retry your recent action to take more detail info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="261"/>
+        <location filename="../main.cpp" line="376"/>
         <source>Unable to init SDL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="472"/>
+        <location filename="../main.cpp" line="599"/>
+        <location filename="../main.cpp" line="741"/>
         <source>No opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="485"/>
+        <location filename="../main.cpp" line="612"/>
         <source>ERROR:
 Fail to start world map
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="WLD_ERROR_LVLCLOSED">
+        <location filename="../main.cpp" line="630"/>
+        <source>World map was closed with error.
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="512"/>
+        <location filename="../main.cpp" line="647"/>
         <source>Start level
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="516"/>
+        <location filename="../main.cpp" line="649"/>
         <source>Type an exit code (signed integer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="672"/>
+        <location filename="../main.cpp" line="807"/>
         <source>Warp exit
 
 Exit to:
@@ -163,13 +170,25 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="717"/>
+        <location filename="../main.cpp" line="852"/>
         <source>Level was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="244"/>
+        <location filename="../scenes/scene_world.cpp" line="465"/>
+        <source>Invalid playable character ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERROR_LVL_UNKNOWN_PL_STATE">
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="254"/>
+        <location filename="../scenes/scene_world.cpp" line="475"/>
+        <source>Invalid playable character state ID</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="341"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="369"/>
         <source>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation type="unfinished"></translation>
@@ -222,34 +241,34 @@ Are you placed player start point (or entrance warp point) too far off of the se
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="487"/>
-        <location filename="../scenes/scene_world.cpp" line="514"/>
+        <location filename="../scenes/scene_world.cpp" line="520"/>
+        <location filename="../scenes/scene_world.cpp" line="547"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="494"/>
-        <location filename="../scenes/scene_world.cpp" line="521"/>
+        <location filename="../scenes/scene_world.cpp" line="527"/>
+        <location filename="../scenes/scene_world.cpp" line="554"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="496"/>
+        <location filename="../scenes/scene_world.cpp" line="529"/>
         <source>Save and continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="498"/>
+        <location filename="../scenes/scene_world.cpp" line="531"/>
         <source>Save and quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="500"/>
+        <location filename="../scenes/scene_world.cpp" line="533"/>
         <source>Exit without saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="523"/>
+        <location filename="../scenes/scene_world.cpp" line="556"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

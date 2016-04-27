@@ -809,9 +809,10 @@ int LevelScene::exitType()
 void LevelScene::setGameState(EpisodeState *_gameState)
 {
     gameState = _gameState;
-    numberOfPlayers = gameState->numOfPlayers;
+    numberOfPlayers = 1;
     if(gameState)
     {
+        numberOfPlayers = gameState->numOfPlayers;
         if(gameState->isEpisode && !gameState->isHubLevel)
             initPauseMenu2();
         else
