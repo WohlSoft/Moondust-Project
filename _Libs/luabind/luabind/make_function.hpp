@@ -79,7 +79,11 @@ namespace luabind {
                 bool exception_caught = invoke_defer(L, impl, ctx, results);
 				if(exception_caught) lua_error(L);
 # else
-				results = invoke(L, *impl, ctx, impl->f, Signature(), impl->policies);
+	#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
+				results = invoke(L, *impl, ctx, impl->f, Signature(), InjectorList());
+	#else
+				results = invoke<InjectorList, Signature>(L, *impl, ctx, impl->f);
+	#endif
 # endif
 				if(!ctx) {
 					ctx.format_error(L, impl);

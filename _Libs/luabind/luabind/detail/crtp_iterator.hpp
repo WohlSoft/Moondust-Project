@@ -21,7 +21,7 @@ namespace luabind {
 
 			CRTP operator++(int)
 			{ 
-				CRTP tmp(*this);
+				CRTP tmp(upcast());
 				upcast().increment();
 				return tmp; 
 			}

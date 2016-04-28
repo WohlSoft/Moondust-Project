@@ -70,7 +70,7 @@ namespace {
 				return NULL;
 			}
 		}
-		return *touserdata<detail::function_object*>(getupvalue(fn, 1));
+		return *touserdata<detail::function_object*>(std::get<1>(getupvalue(fn, 1)));
 	}
 
 	std::string get_function_name(argument const& fn) {

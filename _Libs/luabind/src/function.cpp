@@ -73,14 +73,14 @@ namespace
 LUABIND_API void add_overload(
     object const& context, char const* name, object const& fn)
 {
-    function_object* f = *touserdata<function_object*>(getupvalue(fn, 1));
+    function_object* f = *touserdata<function_object*>(std::get<1>(getupvalue(fn, 1)));
     f->name = name;
 
     if (object overloads = context[name])
     {
         if (is_luabind_function(overloads) && is_luabind_function(fn))
         {
-            f->next = *touserdata<function_object*>(getupvalue(overloads, 1));
+            f->next = *touserdata<function_object*>(std::get<1>(getupvalue(overloads, 1)));
             f->keepalive = overloads;
         }
     }

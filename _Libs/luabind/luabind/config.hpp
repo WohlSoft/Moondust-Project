@@ -70,7 +70,7 @@
 // C code has undefined behavior, lua is written in C).
 
 #ifdef LUABIND_DYNAMIC_LINK
-# if defined (BOOST_WINDOWS)
+# if defined (_WIN32)
 #  ifdef LUABIND_BUILDING
 #   define LUABIND_API __declspec(dllexport)
 #  else

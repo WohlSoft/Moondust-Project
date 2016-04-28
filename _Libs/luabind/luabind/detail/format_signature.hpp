@@ -138,9 +138,12 @@ LUABIND_TYPE_TO_STRING(luabind::argument)
 			  , true
 			  , typename meta::pop_front<Signature>::type()
 			);
-			lua_pushstring(L, ")");
-
-			lua_concat(L, static_cast<int>(meta::size<Signature>::value) * 2 + 2);
+            lua_pushstring(L, ")");
+            size_t sz = meta::size<Signature>::value;
+            size_t ncat = sz * 2 + 2;
+            if (sz == 1)
+                ++ncat;
+            lua_concat(L, ncat);
 		}
 
 	} // namespace detail
