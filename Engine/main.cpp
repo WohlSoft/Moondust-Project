@@ -124,6 +124,26 @@ struct cmdArgs
     GlRenderer::RenderEngineType rendererType;
 } _flags;
 
+/*!
+ * \brief Apply test settings to the game state
+ * \param state Reference to the current episode state
+ */
+static void applyTestSettings(EpisodeState &state)
+{
+    state.numOfPlayers = _flags.test_NumPlayers;
+    for(int i=0; i<4; i++)
+    {
+        if( _flags.test_Characters[i] == -1 )
+            continue;
+        PlayerState st = state.getPlayerState(i+1);
+        st.characterID = _flags.test_Characters[i];
+        st.stateID = _flags.test_States[i];
+        st._chsetup.id = _flags.test_Characters[i];
+        st._chsetup.state = _flags.test_States[i];
+        state.setPlayerState(i+1, st);
+    }
+}
+
 int main(int argc, char *argv[])
 {
     CrashHandler::initSigs();
@@ -432,18 +452,7 @@ int main(int argc, char *argv[])
         _game_state.reset();
 
         //Apply custom game parameters from command line
-        _game_state.numOfPlayers = _flags.test_NumPlayers;
-        for(int i=0; i<4; i++)
-        {
-            if( _flags.test_Characters[i] == -1 )
-                continue;
-            PlayerState st = _game_state.getPlayerState(i+1);
-            st.characterID = _flags.test_Characters[i];
-            st.stateID = _flags.test_States[i];
-            st._chsetup.id = _flags.test_Characters[i];
-            st._chsetup.state = _flags.test_States[i];
-            _game_state.setPlayerState(i+1, st);
-        }
+        applyTestSettings(_game_state);
 
         if(
            (fileToOpen.endsWith(".lvl", Qt::CaseInsensitive))
@@ -478,7 +487,11 @@ int main(int argc, char *argv[])
     }
 
     if(g_AppSettings.interprocessing)
+    {
+        //Apply custom game parameters from command line
+        applyTestSettings(_game_state);
         goto PlayLevel;
+    }
 
 LoadingScreen:
     {
