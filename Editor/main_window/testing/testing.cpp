@@ -522,6 +522,20 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
         else
             JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
 
+        QJsonArray JSONPlayers;
+        QJsonObject JSONPlayer1, JSONPlayer2;
+            SETTINGS_TestSettings t = GlobalSettings::testing;
+            JSONPlayer1["character"] = t.p1_char;
+            JSONPlayer1["powerup"]   = t.p1_state;
+            JSONPlayer2["character"] = t.p2_char;
+            JSONPlayer2["powerup"]   = t.p2_state;
+
+            JSONPlayers.push_back(JSONPlayer1);
+        if(t.numOfPlayers>1)
+            JSONPlayers.push_back(JSONPlayer2);
+
+        JSONparams["players"] = JSONPlayers;
+
         QString LVLRawData;
         //To don't affect level data state, need to remember recently used file format and version identifier
         {
