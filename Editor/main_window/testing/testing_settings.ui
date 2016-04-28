@@ -14,8 +14,8 @@
    <string>Testing settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../Engine/_resources/engine.qrc">
-    <normaloff>:/cat.ico</normaloff>:/cat.ico</iconset>
+   <iconset resource="../../_resources/editor.qrc">
+    <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="1" column="1">

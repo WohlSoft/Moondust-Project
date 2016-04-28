@@ -52,11 +52,13 @@ public:
     void setAskAgain(bool _x);
     bool askAgain;
 
+    bool isConfigured();
 private slots:
     void on_configList_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonBox_accepted();
 
 private:
+    bool checkForConfigureTool();
     Ui::ConfigManager *ui;
 };
 
