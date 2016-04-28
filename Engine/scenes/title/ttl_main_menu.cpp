@@ -435,7 +435,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                              );
 
                                                                                             //% "Frame time (ms.)"
-                        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 16, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
+                        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
                                                 [this]()->void{
                                                     if(!PGE_Window::vsync)
                                                     {
