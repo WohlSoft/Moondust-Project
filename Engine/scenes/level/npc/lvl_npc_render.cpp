@@ -59,9 +59,9 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     float wOfs = offset.x()/warpFrameW;//Relative X offset
                     float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
-                    tPos.setLeft(tPos.left()+wOfs+(warpSpriteOffset*wOfsF));
+                    tPos.setLeft( tPos.left()+wOfs+(warpSpriteOffset*wOfsF) );
                     npc.setLeft( npc.left()+offset.x() );
-                    npc.setRight( npc.right()-(warpSpriteOffset*_width) );
+                    npc.setRight( npc.right()-(warpSpriteOffset * frameSize.w()) );
                 }
                 break;
             case WARP_TOP://Up entrance, down exit
@@ -130,13 +130,25 @@ void LVL_Npc::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6")
+        QString warpingInfo;
+        if(isWarping)
+        {
+            switch(warpDirectO)
+            {
+            case WARP_LEFT:     warpingInfo="LEFT"; break;
+            case WARP_RIGHT:    warpingInfo="RIGHT"; break;
+            case WARP_TOP:      warpingInfo="TOP"; break;
+            case WARP_BOTTOM:   warpingInfo="BOTTOM"; break;
+            }
+        }
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6  %7")
                                .arg(collided_top.size())
                                .arg(collided_left.size())
                                .arg(collided_center.size())
                                .arg(collided_right.size())
                                .arg(collided_bottom.size())
                                .arg(collision_speed_add.size())
+                               .arg(warpingInfo)
                                , round(20+posX()-camX), -50+round(posY()-camY), 3);
     }
 }

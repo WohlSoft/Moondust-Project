@@ -26,8 +26,6 @@ TestingSettings::TestingSettings(QWidget *parent) :
         case 2:
         ui->np_2p->setChecked(true);break;
     }
-    // TEMPORARY NOTIFICATION
-    //connect(this, SIGNAL(windowShown()), SLOT(showNotifyTmp()), Qt::QueuedConnection);
 }
 
 TestingSettings::~TestingSettings()
@@ -61,13 +59,4 @@ void TestingSettings::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
     qApp->processEvents();
     emit windowShown();
-}
-
-
-void TestingSettings::showNotifyTmp()
-{
-    QMessageBox::information(this, tr("WIP"),
-                             tr("Hello!\nThis dialog is not finished yet.\n"
-                                "Those preferences will makes no effect on a testing "
-                                "process before it will be fininshed. Sorry."));
 }
