@@ -282,7 +282,16 @@ ConfigManager::ConfigManager(QWidget *parent) :
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->configList->addItem( item);
     }
+}
 
+ConfigManager::~ConfigManager()
+{
+    util::memclear(ui->configList);
+    delete ui;
+}
+
+bool ConfigManager::hasConfigPacks()
+{
     //Warning message: if no installed config packs
     if(ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).isEmpty())
     {
@@ -306,16 +315,10 @@ ConfigManager::ConfigManager(QWidget *parent) :
         msgBox.move( QPoint( screenRect.width()/2 - mSize.width()/2,
             screenRect.height()/2 - mSize.height()/2 ) );
         msgBox.setIcon(QMessageBox::Warning);
-
         msgBox.exec();
+        return false;
     }
-
-}
-
-ConfigManager::~ConfigManager()
-{
-    util::memclear(ui->configList);
-    delete ui;
+    return true;
 }
 
 ///
