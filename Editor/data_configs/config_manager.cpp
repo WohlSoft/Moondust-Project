@@ -415,11 +415,11 @@ bool ConfigManager::isConfigured()
 bool ConfigManager::checkForConfigureTool()
 {
     #if defined(Q_OS_WIN) || defined(Q_OS_LINUX) || defined(Q_OS_OSX)
-    #ifdef Q_OS_WIN
+    #if defined(Q_OS_WIN)
     #define CONFIGURE_TOOL "configure.exe"
-    #elif Q_OS_OSX
+    #elif defined(Q_OS_OSX)
     #define CONFIGURE_TOOL "configure_osx"
-    #elif Q_OS_LINUX
+    #elif defined(Q_OS_LINUX)
     #define CONFIGURE_TOOL "configure_linux"
     #endif
     QString configureToolApp = currentConfigPath + CONFIGURE_TOOL;
