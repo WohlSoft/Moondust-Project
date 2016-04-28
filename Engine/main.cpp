@@ -306,6 +306,12 @@ int main(int argc, char *argv[])
             _flags.rendererType = GlRenderer::RENDER_SW_SDL;
         }
         else
+        if(param == ("--render-vsync"))
+        {
+            g_AppSettings.vsync = true;
+            PGE_Window::vsync = true;
+        }
+        else
         {
             param = FileFormats::removeQuotes( param );
             if( QFileInfo(param).exists() )
