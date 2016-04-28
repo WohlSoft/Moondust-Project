@@ -30,8 +30,6 @@ void MainWindow::initWindowsThumbnail()
     pge_thumbbar->addButton(thumbbnt_save);
     pge_thumbbar->addButton(thumbbnt_open);
 
-
-
     pge_thumbbar->setIconicPixmapNotificationsEnabled(true);
     connect(pge_thumbbar, SIGNAL(iconicThumbnailPixmapRequested()), this, SLOT(updateWindowsExtrasPixmap()));
     connect(pge_thumbbar, SIGNAL(iconicLivePreviewPixmapRequested()), this, SLOT(updateWindowsExtrasPixmap()));
@@ -43,18 +41,20 @@ void MainWindow::updateWindowsExtrasPixmap()
     if(QSysInfo::WindowsVersion<QSysInfo::WV_VISTA) return;
     QRect viewPort;
 
-    if(!LastActiveSubWindow){
+    if(!LastActiveSubWindow) {
         drawWindowsDefaults();
         return;
     }
 
-    if(activeChildWindow(LastActiveSubWindow) == 1){
+    if(activeChildWindow(LastActiveSubWindow) == 1) {
         LevelEdit* edit = qobject_cast<LevelEdit*>(LastActiveSubWindow->widget());
-        viewPort = edit->scene->getViewportRect();
-    }else if(activeChildWindow(LastActiveSubWindow) == 3){
+        if(edit->sceneCreated)
+            viewPort = edit->scene->getViewportRect();
+    } else if(activeChildWindow(LastActiveSubWindow) == 3) {
         WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
-        viewPort = edit->scene->getViewportRect();
-    }else{
+        if(edit->sceneCreated)
+            viewPort = edit->scene->getViewportRect();
+    } else {
         drawWindowsDefaults();
         return;
     }
@@ -64,20 +64,24 @@ void MainWindow::updateWindowsExtrasPixmap()
     QPainter thumbPainter(&thumbPixmap);
     QPainter livePreviewPainter(&livePreviewPixmap);
 
-    if(activeChildWindow(LastActiveSubWindow) == 1){
+    if(activeChildWindow(LastActiveSubWindow) == 1) {
         LevelEdit* edit = qobject_cast<LevelEdit*>(LastActiveSubWindow->widget());
-        edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
-        edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
-    }else if(activeChildWindow(LastActiveSubWindow) == 3){
+        if(edit->sceneCreated)
+        {
+            edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
+            edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
+        }
+    } else if(activeChildWindow(LastActiveSubWindow) == 3) {
         WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
-        edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
-        edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
-    }else{
+        if(edit->sceneCreated)
+        {
+            edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
+            edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
+        }
+    } else {
         drawWindowsDefaults();
         return;
     }
-
-
 
     if(pge_thumbbar){
         pge_thumbbar->setIconicThumbnailPixmap(thumbPixmap);

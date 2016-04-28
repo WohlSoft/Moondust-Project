@@ -476,8 +476,9 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         }
 
         LogDebug("!<-Delete scene->!");
+        sceneCreated = false;
         delete scene;
-        sceneCreated=false;
+        scene = NULL;
         LogDebug("!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
