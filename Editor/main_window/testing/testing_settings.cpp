@@ -27,7 +27,7 @@ TestingSettings::TestingSettings(QWidget *parent) :
         ui->np_2p->setChecked(true);break;
     }
     // TEMPORARY NOTIFICATION
-    connect(this, SIGNAL(windowShown()), SLOT(showNotifyTmp()), Qt::QueuedConnection);
+    //connect(this, SIGNAL(windowShown()), SLOT(showNotifyTmp()), Qt::QueuedConnection);
 }
 
 TestingSettings::~TestingSettings()

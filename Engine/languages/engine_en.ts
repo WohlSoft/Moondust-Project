@@ -126,18 +126,18 @@ and retry your recent action to take more detail info.</translation>
         <translation>Fatal</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="376"/>
+        <location filename="../main.cpp" line="402"/>
         <source>Unable to init SDL!</source>
         <translation>Unable to init SDL!</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="599"/>
-        <location filename="../main.cpp" line="741"/>
+        <location filename="../main.cpp" line="618"/>
+        <location filename="../main.cpp" line="760"/>
         <source>No opened files</source>
         <translation>No opened files</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="612"/>
+        <location filename="../main.cpp" line="631"/>
         <source>ERROR:
 Fail to start world map
 
@@ -148,26 +148,26 @@ Fail to start world map
 %1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="630"/>
+        <location filename="../main.cpp" line="649"/>
         <source>World map was closed with error.
 %1</source>
         <translation>World map was closed with error.
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="647"/>
+        <location filename="../main.cpp" line="666"/>
         <source>Start level
 %1</source>
         <translation>Start level
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="649"/>
+        <location filename="../main.cpp" line="668"/>
         <source>Type an exit code (signed integer)</source>
         <translation>Type an exit code (signed integer)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="807"/>
+        <location filename="../main.cpp" line="826"/>
         <source>Warp exit
 
 Exit to:
@@ -182,7 +182,7 @@ Exit to:
 Enter to: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="852"/>
+        <location filename="../main.cpp" line="871"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Level was closed with error.
@@ -203,9 +203,11 @@ Enter to: %2</translation>
     <message id="LVL_ERROR_NOSECTIONS">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="369"/>
         <source>Fatal error: Impossible to find start section.
-Are you placed player start point (or entrance warp point) too far off of the section(s)?</source>
+Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
+        <oldsource>Fatal error: Impossible to find start section.
+Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
         <translation>Fatal error: Impossible to find start section.
-Are you placed player start point (or entrance warp point) too far off of the section(s)?</translation>
+Did you placed player start point (or entrance warp point) too far off of the section(s)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="33"/>

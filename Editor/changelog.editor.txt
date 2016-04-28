@@ -6,6 +6,7 @@ Editor post-0.3.1.10
 - Fixed empty category entry wihth appears on some groups in blocks and BGO lists
 - Added ability to show default only elements in the tilesets editor box
 - Added "Top-Right" and "Right-Bottom" section sides for camera position reset
+- Test are finally working
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names

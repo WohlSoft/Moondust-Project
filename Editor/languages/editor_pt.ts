@@ -263,31 +263,36 @@
         <translation type="unfinished">2 - Porta</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="703"/>
+        <location filename="../main_window/tools/app_settings.ui" line="696"/>
+        <source>3 - Portal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="708"/>
         <source>View</source>
         <translation>Visualização</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="745"/>
+        <location filename="../main_window/tools/app_settings.ui" line="750"/>
         <source>Level item Toolbox</source>
         <translation>Caixa de ferramentas de itens do nível</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="715"/>
-        <location filename="../main_window/tools/app_settings.ui" line="751"/>
-        <location filename="../main_window/tools/app_settings.ui" line="786"/>
+        <location filename="../main_window/tools/app_settings.ui" line="720"/>
+        <location filename="../main_window/tools/app_settings.ui" line="756"/>
+        <location filename="../main_window/tools/app_settings.ui" line="791"/>
         <source>Display tabs horizontal</source>
         <translation>Guias horizontais</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="722"/>
-        <location filename="../main_window/tools/app_settings.ui" line="758"/>
-        <location filename="../main_window/tools/app_settings.ui" line="793"/>
+        <location filename="../main_window/tools/app_settings.ui" line="727"/>
+        <location filename="../main_window/tools/app_settings.ui" line="763"/>
+        <location filename="../main_window/tools/app_settings.ui" line="798"/>
         <source>Display tabs vertical</source>
         <translation>Guias verticais</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="709"/>
+        <location filename="../main_window/tools/app_settings.ui" line="714"/>
         <source>World item Toolbox</source>
         <translation>Caixa de ferramentas de itens do mundo</translation>
     </message>
@@ -312,57 +317,57 @@
         <translation type="unfinished">Configurações da seção</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="768"/>
+        <location filename="../main_window/tools/app_settings.ui" line="773"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="780"/>
+        <location filename="../main_window/tools/app_settings.ui" line="785"/>
         <source>Tilesets Item Toolbox</source>
         <translation>Caixa de ferramentas de tileset</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="804"/>
+        <location filename="../main_window/tools/app_settings.ui" line="809"/>
         <source>Loging</source>
         <translation>Logging</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="810"/>
+        <location filename="../main_window/tools/app_settings.ui" line="815"/>
         <source>Log level</source>
         <translation>Logar level</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="820"/>
+        <location filename="../main_window/tools/app_settings.ui" line="825"/>
         <source>Browse</source>
         <translation>Procurar</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="827"/>
+        <location filename="../main_window/tools/app_settings.ui" line="832"/>
         <source>Log file</source>
         <translation>Arquivo de log</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="835"/>
+        <location filename="../main_window/tools/app_settings.ui" line="840"/>
         <source>Disable logging</source>
         <translation>Desabilitar logging</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="840"/>
+        <location filename="../main_window/tools/app_settings.ui" line="845"/>
         <source>Fatal</source>
         <translation>Fatal</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="845"/>
+        <location filename="../main_window/tools/app_settings.ui" line="850"/>
         <source>Crytical</source>
         <translation>Crítico</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="850"/>
+        <location filename="../main_window/tools/app_settings.ui" line="855"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="855"/>
+        <location filename="../main_window/tools/app_settings.ui" line="860"/>
         <source>Debug</source>
         <translation>Depurar</translation>
     </message>
@@ -6764,14 +6769,14 @@ Configuration package loaded with errors.</source>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="137"/>
-        <location filename="../main_window/testing/testing.cpp" line="210"/>
-        <location filename="../main_window/testing/testing.cpp" line="288"/>
+        <location filename="../main_window/testing/testing.cpp" line="225"/>
+        <location filename="../main_window/testing/testing.cpp" line="319"/>
         <source>Engine is not found</source>
         <translation>Engine não encontrada</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="138"/>
-        <location filename="../main_window/testing/testing.cpp" line="211"/>
+        <location filename="../main_window/testing/testing.cpp" line="226"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
@@ -6781,28 +6786,28 @@ Por favor, verifique a pasta do aplicativo.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="146"/>
-        <location filename="../main_window/testing/testing.cpp" line="219"/>
+        <location filename="../main_window/testing/testing.cpp" line="234"/>
         <source>Engine already runned</source>
         <translation>Engine já em execução</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="147"/>
-        <location filename="../main_window/testing/testing.cpp" line="220"/>
+        <location filename="../main_window/testing/testing.cpp" line="235"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>A engine está testando outro nível.
 Quer parar o teste atual?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="237"/>
-        <location filename="../main_window/testing/testing.cpp" line="250"/>
-        <location filename="../main_window/testing/testing.cpp" line="872"/>
+        <location filename="../main_window/testing/testing.cpp" line="268"/>
+        <location filename="../main_window/testing/testing.cpp" line="281"/>
+        <location filename="../main_window/testing/testing.cpp" line="903"/>
         <source>Save file first</source>
         <translation>Salve primeiro</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="238"/>
-        <location filename="../main_window/testing/testing.cpp" line="251"/>
+        <location filename="../main_window/testing/testing.cpp" line="269"/>
+        <location filename="../main_window/testing/testing.cpp" line="282"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation>Para o rodar o teste, salve o arquivo primeiro!
@@ -6820,36 +6825,36 @@ Settings will available soon.</source>
 Em breve esta opção estará disponível.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="289"/>
+        <location filename="../main_window/testing/testing.cpp" line="320"/>
         <source>Engine is not found: 
 %1
 Please, check the application directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="557"/>
+        <location filename="../main_window/testing/testing.cpp" line="588"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="558"/>
+        <location filename="../main_window/testing/testing.cpp" line="589"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="585"/>
+        <location filename="../main_window/testing/testing.cpp" line="616"/>
         <source>SMBX Test is already runned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="586"/>
+        <location filename="../main_window/testing/testing.cpp" line="617"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="613"/>
+        <location filename="../main_window/testing/testing.cpp" line="644"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -6863,12 +6868,12 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="852"/>
+        <location filename="../main_window/testing/testing.cpp" line="883"/>
         <source>process execution is failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="607"/>
+        <location filename="../main_window/testing/testing.cpp" line="638"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6889,87 +6894,87 @@ PGE Engine is the in-development part of the PGE Project which implements a game
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="854"/>
+        <location filename="../main_window/testing/testing.cpp" line="885"/>
         <source>patching has failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="859"/>
+        <location filename="../main_window/testing/testing.cpp" line="890"/>
         <source>Failed to launch LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="860"/>
+        <location filename="../main_window/testing/testing.cpp" line="891"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="873"/>
+        <location filename="../main_window/testing/testing.cpp" line="904"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>Para rodar o teste no SMBX, salve o arquivo primeiro!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="880"/>
+        <location filename="../main_window/testing/testing.cpp" line="911"/>
         <source>Incompatible file format</source>
         <translation>Formato incompatível</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="881"/>
+        <location filename="../main_window/testing/testing.cpp" line="912"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation>Para ser capaz de testar o arquivo no SMBX, o arquivo deve ser salvo no Formato SMBX64.
 Um arquivo temporário será criado. Continuar?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="892"/>
-        <location filename="../main_window/testing/testing.cpp" line="940"/>
-        <location filename="../main_window/testing/testing.cpp" line="955"/>
-        <location filename="../main_window/testing/testing.cpp" line="970"/>
-        <location filename="../main_window/testing/testing.cpp" line="979"/>
-        <location filename="../main_window/testing/testing.cpp" line="1021"/>
+        <location filename="../main_window/testing/testing.cpp" line="923"/>
+        <location filename="../main_window/testing/testing.cpp" line="971"/>
+        <location filename="../main_window/testing/testing.cpp" line="986"/>
+        <location filename="../main_window/testing/testing.cpp" line="1001"/>
+        <location filename="../main_window/testing/testing.cpp" line="1010"/>
+        <location filename="../main_window/testing/testing.cpp" line="1052"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="893"/>
+        <location filename="../main_window/testing/testing.cpp" line="924"/>
         <source>Fail to create temp file %1</source>
         <translation>Não foi possível criar o arquivo temporário %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="914"/>
+        <location filename="../main_window/testing/testing.cpp" line="945"/>
         <source>SMBX Level test</source>
         <translation>Teste de Level no SMBx</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="915"/>
+        <location filename="../main_window/testing/testing.cpp" line="946"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation>Gostaria de salvar antes de iniciar o teste?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="941"/>
+        <location filename="../main_window/testing/testing.cpp" line="972"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation>SMBX com LunaDLL não está rodando!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="956"/>
+        <location filename="../main_window/testing/testing.cpp" line="987"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation>Não foi possível enviar a localização do arquivo para LunaDLL: (%1)</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="971"/>
+        <location filename="../main_window/testing/testing.cpp" line="1002"/>
         <source>Could not map view of file (%1).</source>
         <translatorcomment>Is &apos;map&apos; a verb on an adjective?</translatorcomment>
         <translation>Não foi possível mapear a vista do arquivo (%1).</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="980"/>
+        <location filename="../main_window/testing/testing.cpp" line="1011"/>
         <source>Too long path: </source>
         <translation>Caminho longo demais:</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="1019"/>
-        <location filename="../main_window/testing/testing.cpp" line="1022"/>
+        <location filename="../main_window/testing/testing.cpp" line="1050"/>
+        <location filename="../main_window/testing/testing.cpp" line="1053"/>
         <source>Failed to find SMBX Window</source>
         <translation>Falha ao procurar a janela do SMBX</translation>
     </message>
@@ -7098,14 +7103,14 @@ Substituir?</translation>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="51"/>
         <location filename="../main_window/script/script_compile.cpp" line="74"/>
-        <location filename="../main_window/testing/testing.cpp" line="785"/>
+        <location filename="../main_window/testing/testing.cpp" line="816"/>
         <source>File save error</source>
         <translation>Erro ao salvar arquivo</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="52"/>
         <location filename="../main_window/script/script_compile.cpp" line="75"/>
-        <location filename="../main_window/testing/testing.cpp" line="786"/>
+        <location filename="../main_window/testing/testing.cpp" line="817"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Não foi possível salvar o arquivo %1:
@@ -8710,103 +8715,175 @@ ao salvar o arquivo</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="39"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="203"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="37"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="273"/>
+        <source>ch1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="42"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="278"/>
+        <source>ch2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="47"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="283"/>
+        <source>ch3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="52"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="288"/>
+        <source>ch4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="57"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="293"/>
+        <source>ch5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="65"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="265"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="46"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="213"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="72"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="301"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="79"/>
-        <source>Extra settings</source>
+        <location filename="../main_window/testing/testing_settings.ui" line="80"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="309"/>
+        <source>st1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="85"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="314"/>
+        <source>st2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="90"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="319"/>
+        <source>st3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="95"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="324"/>
+        <source>st4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="100"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="329"/>
+        <source>st5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="105"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="334"/>
+        <source>st6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="110"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="339"/>
+        <source>st7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="141"/>
+        <source>Extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="147"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="92"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="154"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="95"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="157"/>
         <source>Chuck Norris</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="102"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="164"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="105"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="167"/>
         <source>World freedom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="112"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="174"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="115"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="177"/>
         <source>God mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="122"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="184"/>
         <source>Allows you to fly up to the space!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="125"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="187"/>
         <source>Unlimited flying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="145"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="207"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="155"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="217"/>
         <source>Number of players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="161"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="223"/>
         <source>1 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="168"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="230"/>
         <source>2 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="197"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="259"/>
         <source>1 Player settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.cpp" line="61"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="69"/>
         <source>WIP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.cpp" line="62"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="70"/>
         <source>Hello!
 This dialog is not finished yet.
 Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
