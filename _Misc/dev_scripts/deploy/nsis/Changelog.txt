@@ -1,0 +1,7 @@
+0.5.0
+- Added ability to remember recent installed components to allow quick update of them
+- Added portable mode based on INI-file instead of registry
+- Added skipping intro and license pages if PGE already installed
+
+0.3.0
+- First release by tb1024
