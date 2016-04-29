@@ -216,8 +216,10 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionSection_21->setIcon(section21);
 
 
-    ui->actionReset_position->setIcon(Themes::icon(Themes::section_goto_left_bottom));
-    ui->actionGo_to_Section->setIcon(Themes::icon(Themes::section_goto_left_top));
+    ui->actionGotoLeftBottom->setIcon(Themes::icon(Themes::section_goto_left_bottom));
+    ui->actionGotoLeftTop->setIcon(Themes::icon(Themes::section_goto_left_top));
+    ui->actionGotoTopRight->setIcon(Themes::icon(Themes::section_goto_top_right));
+    ui->actionGotoRightBottom->setIcon(Themes::icon(Themes::section_goto_right_bottom));
 
 
 

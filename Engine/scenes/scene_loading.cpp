@@ -53,12 +53,10 @@ LoadingScene::LoadingScene() : Scene(Loading)
 
 LoadingScene::~LoadingScene()
 {
-    //glDisable(GL_TEXTURE_2D);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black background color
+    //Black background color
+    GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     //Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
+    GlRenderer::clearScreen();
 
     GlRenderer::deleteTexture( background );
 
@@ -160,10 +158,7 @@ void LoadingScene::update()
 
 void LoadingScene::render()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-
+    GlRenderer::clearScreen();
     GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
 
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -197,8 +192,8 @@ int LoadingScene::exec()
         processEvents();
         update();
         render();
-        glFlush();
-        PGE_Window::rePaint();
+        GlRenderer::flush();
+        GlRenderer::repaint();
 
         if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks()-start_render)))
         {

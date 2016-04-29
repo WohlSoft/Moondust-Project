@@ -51,7 +51,8 @@ PGE_BoxBase::~PGE_BoxBase()
 void PGE_BoxBase::setParentScene(Scene *_parentScene)
 {
     parentScene = _parentScene;
-    if(!parentScene) glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    if(!parentScene)
+        GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void PGE_BoxBase::exec()
@@ -66,8 +67,7 @@ void PGE_BoxBase::render()
         parentScene->render();
     else
     {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //glLoadIdentity();
+        GlRenderer::clearScreen();
     }
 }
 
@@ -291,10 +291,6 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
     tx.setTop(texture.top()/this->styleTexture.h);
     tx.setBottom(texture.bottom()/this->styleTexture.h);
 
-    PGE_RectF blockG;
-    blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
-    blockG.setBottomRight( GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ) );
-
     GlRenderer::renderTextureCur( target.x()+block.x(),
                                   target.y()+block.y(),
                                   block.width(),
@@ -303,32 +299,4 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
                                   tx.bottom(),
                                   tx.left(),
                                   tx.right() );
-//    GLfloat Vertices[] = {
-//        (float)blockG.left(),  (float)blockG.top(), 0,
-//        (float)blockG.right(), (float)blockG.top(), 0,
-//        (float)blockG.right(), (float)blockG.bottom(), 0,
-//        (float)blockG.left(),  (float)blockG.bottom(), 0
-//    };
-//    GLfloat TexCoord[] = {
-//        (float)tx.left(), (float)tx.top(),
-//        (float)tx.right(),(float)tx.top(),
-//        (float)tx.right(),(float)tx.bottom(),
-//        (float)tx.left(), (float)tx.bottom()
-//    };
-//    GLubyte indices[] = {
-//        0, 1, 2, // (bottom left - top left - top right)
-//        0, 2, 3  // (bottom left - top right - bottom right)
-//    };
-
-//    GLfloat Colors[] = { 1.0f, 1.0f, 1.0f, 1.0f,
-//                         1.0f, 1.0f, 1.0f, 1.0f,
-//                         1.0f, 1.0f, 1.0f, 1.0f,
-//                         1.0f, 1.0f, 1.0f, 1.0f,
-//                         1.0f, 1.0f, 1.0f, 1.0f,
-//                         1.0f, 1.0f, 1.0f, 1.0f, };
-
-//    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-//    glVertexPointer(3, GL_FLOAT, 0, Vertices); GLERRORCHECK();
-//    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
 }

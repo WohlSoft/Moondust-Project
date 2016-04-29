@@ -25,6 +25,8 @@
 
 #include <QString>
 
+#define SDLCHECKERROR() PGE_Window::checkSDLError(__FILE__, __LINE__, __FUNCTION__)
+
 class PGE_Window
 {
 public:
@@ -37,13 +39,12 @@ public:
     static int TimeOfFrame;
     static bool showDebugInfo;
     static bool showPhysicsDebug;
-    static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
+    static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand", int renderType=0);
     static void toggleVSync(bool vsync);
     static bool uninit();
     static bool isReady();
     static void setCursorVisibly(bool viz);
     static void clean();
-    static void rePaint();
 
     static SDL_Window *window;
     static SDL_GLContext glcontext_background;
@@ -53,7 +54,10 @@ public:
 
     static int processEvents(SDL_Event &event);
 
-    static bool checkSDLError(int line = -1);
+    static bool isSdlError();
+    static bool checkSDLError(const char *fn, int line, const char *func);
+    static void printSDLWarn(QString info);
+    static void printSDLError(QString info);
 private:
     static bool IsInit;
     static bool showCursor;

@@ -2028,7 +2028,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
         if(i<0) return;
 
         ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::EVENT, edit->LvlData.events[i].msg, false,
-                tr("Please, enter message\nMessage limits: max line lenth is 28 characters"), "", this);
+                tr("Please, enter message\nMessage limits: max line lenth is 27 characters"), "", this);
         util::DialogToCenter(msgBox);
         if(msgBox->exec()==QDialog::Accepted)
         {

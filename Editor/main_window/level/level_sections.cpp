@@ -78,12 +78,17 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 }
 
 
-void MainWindow::on_actionReset_position_triggered()
+void MainWindow::on_actionGotoLeftBottom_triggered()
 {
     if (activeChildWindow()==1)
     {
-        LevelEdit *e=activeLvlEditWin();
-        if(e) e->ResetPosition();
+        LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return;
+        int SectionId = edit->LvlData.CurSection;
+        int xb = edit->LvlData.sections[SectionId].size_left;
+        int yb = edit->LvlData.sections[SectionId].size_bottom -
+                 edit->scene->_viewPort->viewport()->height() + 10;
+        edit->goTo(xb, yb, false, QPoint(-10, 10));
     }
     else
     if (activeChildWindow()==3)
@@ -93,18 +98,51 @@ void MainWindow::on_actionReset_position_triggered()
     }
 }
 
-void MainWindow::on_actionGo_to_Section_triggered()
+void MainWindow::on_actionGotoLeftTop_triggered()
 {
     qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
     if(WinType==1)
     {
-            LevelEdit* edit = activeLvlEditWin();
-            if(!edit) return;
-            int SectionId = edit->LvlData.CurSection;
-            int xb = edit->LvlData.sections[SectionId].size_left;
-            int yb = edit->LvlData.sections[SectionId].size_top;
-            edit->goTo(xb, yb, false, QPoint(-10, -10));
+        LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return;
+        int SectionId = edit->LvlData.CurSection;
+        int xb = edit->LvlData.sections[SectionId].size_left;
+        int yb = edit->LvlData.sections[SectionId].size_top;
+        edit->goTo(xb, yb, false, QPoint(-10, -10));
+    }
+}
+
+void MainWindow::on_actionGotoTopRight_triggered()
+{
+    qApp->setActiveWindow(this);
+    int WinType = activeChildWindow();
+    if(WinType==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return;
+        int SectionId = edit->LvlData.CurSection;
+        int xb = edit->LvlData.sections[SectionId].size_right -
+                edit->scene->_viewPort->viewport()->width() + 10;
+        int yb = edit->LvlData.sections[SectionId].size_top;
+        edit->goTo(xb, yb, false, QPoint(10, -10));
+    }
+}
+
+void MainWindow::on_actionGotoRightBottom_triggered()
+{
+    qApp->setActiveWindow(this);
+    int WinType = activeChildWindow();
+    if(WinType==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return;
+        int SectionId = edit->LvlData.CurSection;
+        int xb = edit->LvlData.sections[SectionId].size_right -
+                 edit->scene->_viewPort->viewport()->width() + 10;
+        int yb = edit->LvlData.sections[SectionId].size_bottom -
+                 edit->scene->_viewPort->viewport()->height() + 10;
+        edit->goTo(xb, yb, false, QPoint(10, 10));
     }
 }
 

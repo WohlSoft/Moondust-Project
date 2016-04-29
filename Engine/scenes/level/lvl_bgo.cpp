@@ -99,7 +99,7 @@ void LVL_Bgo::transformTo_x(long id)
     }
     if(!_isInited)
         posRect.setPos(data.x, data.y);
-    setSize(texture.w, texture.h);
+    setSize(texture.frame_w, texture.frame_h);
 }
 
 void LVL_Bgo::render(double camX, double camY)

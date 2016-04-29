@@ -21,7 +21,7 @@
 #                             created 2015-11-25
 #--------------------------------------------------------------------------------
 
-version: 0.3.3.3.{build}
+version: 0.3.3.4.{build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}

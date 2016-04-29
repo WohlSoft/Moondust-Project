@@ -76,14 +76,44 @@ void LuaEngine::init()
     lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_debug);
     lua_call(L,0,0);
+    lua_pushcfunction(L, luaopen_os);
+    lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_package);
     lua_call(L,0,0);
     #ifdef USE_LUA_JIT
-    lua_pushcfunction(L, luaopen_jit);
-    lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_bit);
     lua_call(L,0,0);
+    lua_pushcfunction(L, luaopen_ffi);
+    lua_call(L,0,0);
+    lua_pushcfunction(L, luaopen_jit);
+    lua_call(L,0,0);
     #endif
+
+    //SOCKET TESTING STUFF
+    lua_pushcfunction(L, luaopen_io);
+    lua_call(L,0,0);
+
+    lua_getfield(L, LUA_GLOBALSINDEX, "package");
+    lua_getfield(L, -1, "preload");
+
+    //lua_pushcfunction(L, luaopen_socket_core);
+    //lua_setfield(L, -2, "socket.core");
+
+    //lua_pushcfunction(L, luaopen_mime_core);
+    //lua_setfield(L, -2, "mime.core");
+
+    //Remove unsafe apis
+    {
+        luabind::object _G =    luabind::globals(L);
+        luabind::object osTable = _G["os"];
+        osTable["execute"] =    luabind::object();
+        osTable["exit"] =       luabind::object();
+        //osTable["getenv"] =   object();
+        osTable["remove"] =     luabind::object();
+        osTable["rename"] =     luabind::object();
+        osTable["setlocal"] =   luabind::object();
+        osTable["tmpname"] =    luabind::object();
+    }
 
     //Activate Luabind for out state
     luabind::open(L);
@@ -92,21 +122,34 @@ void LuaEngine::init()
     luabind::set_pcall_callback(&push_pcall_handler);
 
     //Complete the lua script path
-    if(!m_luaScriptPath.endsWith("/"))
-        m_luaScriptPath += "/";
+    QString fullPaths;
+    for(int i=0; i<m_luaScriptPaths.size(); i++)
+    {
+        QString luaPath = m_luaScriptPaths[i];
+        if(!luaPath.isEmpty())
+        if(!luaPath.endsWith("/"))
+            luaPath += "/";
+        fullPaths += luaPath + "?.lua";
+        if(i < (m_luaScriptPaths.size()-1))
+            fullPaths.append(';');
+    }
 
     //Add config package path
-    if(m_luaScriptPath != ""){
+    if(fullPaths != "")
+    {
         luabind::object _G = luabind::globals(L);
         luabind::object package = _G["package"];
         std::string allPaths = luabind::object_cast<std::string>(package["path"]);
-        allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
+        //allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
+        allPaths += std::string(";") +  fullPaths.toStdString();
         package["path"] = allPaths;
     }
 
     //Add error reporter
-    if(!m_errorReporterFunc){
-        m_errorReporterFunc = [this](const QString& errMsg, const QString& stacktrace) {
+    if(!m_errorReporterFunc)
+    {
+        m_errorReporterFunc = [this](const QString& errMsg, const QString& stacktrace)
+        {
             qWarning() << "Lua-Error: ";
             qWarning() << "Error Message: " << errMsg;
             qWarning() << "Stacktrace: \n" << stacktrace;
@@ -345,7 +388,14 @@ QString LuaEngine::getLuaScriptPath() const
 
 void LuaEngine::setLuaScriptPath(const QString &luaScriptPath)
 {
+    m_luaScriptPaths.clear();
+    m_luaScriptPaths.append(luaScriptPath);
     m_luaScriptPath = luaScriptPath;
+}
+
+void LuaEngine::appendLuaScriptPath(const QString &luaScriptPath)
+{
+    m_luaScriptPaths.append(luaScriptPath);
 }
 
 Scene *LuaEngine::getBaseScene() const

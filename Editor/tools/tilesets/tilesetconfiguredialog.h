@@ -56,9 +56,11 @@ private slots:
     void on_OpenTileset_clicked();
 
     void on_customOnly_clicked();
+    void on_defaultOnly_clicked();
     void showEvent( QShowEvent * event );
     void showNotify();
     void on_delete_me_clicked();
+
 
 signals:
     void windowShowed();

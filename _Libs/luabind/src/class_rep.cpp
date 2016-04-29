@@ -300,7 +300,7 @@ int luabind::detail::class_rep::static_class_gettable(lua_State* L)
 	return 1;
 }
 
-bool luabind::detail::is_class_rep(lua_State* L, int index)
+LUABIND_API bool luabind::detail::is_class_rep(lua_State* L, int index)
 {
 	if (lua_getmetatable(L, index) == 0) return false;
 

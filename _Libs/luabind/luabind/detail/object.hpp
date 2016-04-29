@@ -333,13 +333,13 @@ namespace luabind {
 	}
 
 	template <class ValueWrapper>
-	inline object getupvalue(ValueWrapper const& value, int index)
+	inline std::tuple<const char*, object> getupvalue(ValueWrapper const& value, int index)
 	{
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(value);
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, value);
 		detail::stack_pop pop(interpreter, 2);
-		lua_getupvalue(interpreter, -1, index);
-		return object(from_stack(interpreter, -1));
+		const char* name = lua_getupvalue(interpreter, -1, index);		
+		return std::make_tuple(name, object(from_stack(interpreter, -1)));
 	}
 
 	template <class ValueWrapper1, class ValueWrapper2>

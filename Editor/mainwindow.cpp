@@ -71,7 +71,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     if( (askConfigAgain) || ( configPath.isEmpty() ) )
     {
         //Ask for configuration
-        if(cmanager->exec()==QDialog::Accepted)
+        if( cmanager->hasConfigPacks() && (cmanager->exec()==QDialog::Accepted) )
         {
             configPath = cmanager->currentConfigPath;
         }

@@ -168,7 +168,7 @@ int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<NpcEdit *>(activeSubWindow->widget());
     return 0;
 }
@@ -182,7 +182,7 @@ NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
 
 LevelEdit *MainWindow::activeLvlEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<LevelEdit *>(activeSubWindow->widget());
     return 0;
 }
@@ -196,7 +196,7 @@ LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
 
 WorldEdit *MainWindow::activeWldEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<WorldEdit *>(activeSubWindow->widget());
     return 0;
 }
@@ -252,8 +252,8 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::close_sw()
 {
-    if(ui->centralWidget->subWindowList().size()>0)
-        ui->centralWidget->activeSubWindow()->close();
+    if( (ui->centralWidget->subWindowList().size() > 0) && (LastActiveSubWindow) )
+        LastActiveSubWindow->close();
 }
 
 

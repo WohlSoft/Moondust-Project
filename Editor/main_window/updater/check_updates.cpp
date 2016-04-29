@@ -25,6 +25,9 @@
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
 
+#include <QDateTime>
+#include <QStringList>
+
 #include "updater_links.h"
 
 #include "check_updates.h"
@@ -56,6 +59,130 @@ void UpdateChecker::on_close_clicked()
 {
     this->close();
 }
+
+static int Month2Code(QString &mon)
+{
+    if(mon=="Jan")
+        return 1;
+    else if(mon=="Feb")
+        return 2;
+    else if(mon=="Mar")
+        return 3;
+    else if(mon=="Apr")
+        return 4;
+    else if(mon=="May")
+        return 5;
+    else if(mon=="Jun")
+        return 6;
+    else if(mon=="Jul")
+        return 7;
+    else if(mon=="Aug")
+        return 8;
+    else if(mon=="Sep")
+        return 9;
+    else if(mon=="Oct")
+        return 10;
+    else if(mon=="Nov")
+        return 11;
+    else if(mon=="Dec")
+        return 12;
+    else
+        return 1;
+}
+
+static int BuildDateToTimestamp(const char *buildTime)
+{
+    QString src(buildTime);
+    int result=0;
+    QDate date;
+    QTime time;
+    int years = 0;
+    int months = 0;
+    int days = 0;
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+
+    src.replace(' ', '-');
+    src.replace('.', '-');
+    src.replace(':', '-');
+    QStringList datetime = src.split('-');
+
+    for(int i=0; i<datetime.size(); i++)
+    {
+        QString &elem = datetime[i];
+        switch(i)
+        {
+        case 0:
+            months = Month2Code(elem); break;
+        case 1:
+            days = elem.toInt(); break;
+        case 2:
+            years = elem.toLong(); break;
+        case 3:
+            hours = elem.toLong(); break;
+        case 4:
+            minutes = elem.toLong(); break;
+        case 5:
+            seconds = elem.toLong(); break;
+        }
+    }
+
+    date.setDate(years, months, days);
+    time.setHMS(hours, minutes, seconds);
+
+    result = QDateTime(date, time).toTime_t();
+    return result;
+}
+
+static int DatetimeToTimestamp(QString src)
+{
+    int result=0;
+    QDate date;
+    QTime time;
+    int years = 0;
+    int months = 0;
+    int days = 0;
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+
+    src.replace(' ', '-');
+    src.replace('.', '-');
+    src.replace(':', '-');
+    QStringList datetime = src.split('-');
+
+    for(int i=0; i<datetime.size(); i++)
+    {
+        QString &elem = datetime[i];
+        switch(i)
+        {
+        case 0:
+            years = elem.toInt(); break;
+        case 1:
+            months = elem.toInt(); break;
+        case 2:
+            days = elem.toInt(); break;
+        case 3:
+            hours = elem.toInt(); break;
+        case 4:
+            minutes = elem.toInt(); break;
+        case 5:
+            seconds = elem.toInt(); break;
+        }
+    }
+    date.setDate(years, months, days);
+    time.setHMS(hours, minutes, seconds);
+
+    result = QDateTime(date, time).toTime_t();
+    return result;
+}
+
+//static int DatetimeToTimestamp(const char *buildTime)
+//{
+//    QString src(buildTime);
+//    return DatetimeToTimestamp(src);
+//}
 
 
 
@@ -182,28 +309,36 @@ void UpdateChecker::httpFinished()
         //QString fileName = QFileInfo(QUrl(urlLineEdit->text()).path()).fileName();
         //statusLabel->setText(tr("Downloaded %1 to %2.").arg(fileName).arg(QDir::currentPath()));
         QString latest = QString::fromLocal8Bit(buffer);
-        latest.remove('\n');
-        latest.remove(' ');
         latest = latest.trimmed();
+        latest.remove('\n');
+
+        bool isLatest = ( DatetimeToTimestamp(latest) <= BuildDateToTimestamp(_DATE_OF_BUILD) );
 
         switch(which_version)
         {
         case V_STABLE:
-            qDebug()<< QString("%1").arg(_LATEST_STABLE) << "vs" << latest;
-            qDebug()<< VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest) << " win!" <<
-            (( QString("%1").arg(_LATEST_STABLE) == VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest))?"fresh":"old");
-            if(QString("%1").arg(_LATEST_STABLE) == VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest))
-                ui->updatesStable->setText(QString("<span style=\"color:#005500;\">%1</span>").arg(tr("You have a latest version!")));
+            //qDebug() << QString("%1").arg(_LATEST_STABLE) << "vs" << latest;
+
+            qDebug() << QString("%1").arg(_DATE_OF_BUILD) << "vs" << latest;
+            //qDebug() << VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest) << " win!" <<
+            qDebug() << ( isLatest ? "fresh" : "old" );
+
+            //( ( QString("%1").arg(_LATEST_STABLE) == VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest) ) ? "fresh" : "old" );
+            //if( QString("%1").arg(_LATEST_STABLE) == VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest) )
+
+            if( isLatest )
+                ui->updatesStable->setText( QString( "<span style=\"color:#005500;\">%1</span>" )
+                                            .arg( tr("You have a latest version!" ) ) );
             else
-                ui->updatesStable->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">%2</a></span>")
-                                           .arg(STABLE_LINK).arg(tr("Available new update!")));
+                ui->updatesStable->setText( QString( "<span style=\"color:#0000FF;\"><a href=\"%1\">%2</a></span>" )
+                                            .arg(STABLE_LINK).arg( tr("Available new update!") ) );
             break;
         case V_DEVEL:
-            if(latest == QString("%1").arg(_DATE_OF_BUILD))
-                ui->updatesAlpha->setText(QString("<span style=\"color:#005500;\">%1</span>").arg(tr("You have a latest version!")));
+            if( isLatest )
+                ui->updatesAlpha->setText( QString("<span style=\"color:#005500;\">%1</span>").arg( tr("You have a latest version!") ) );
             else
-                ui->updatesAlpha->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">%3 %2</a></span>")
-                                           .arg(DEVEL_LINK).arg(latest).arg(tr("Latest update is")));
+                ui->updatesAlpha->setText( QString("<span style=\"color:#0000FF;\"><a href=\"%1\">%3 %2</a></span>" )
+                                           .arg(DEVEL_LINK).arg(latest).arg( tr("Latest update is") ) );
             break;
         }
     }

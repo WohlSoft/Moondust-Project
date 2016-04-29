@@ -24,7 +24,8 @@ int PGE_ProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option
 //    Combobox fix by Guilherme Nascimento:
 //    http://stackoverflow.com/questions/20554940/qcombobox-pop-up-expanding-and-qtwebkit
 
-    if(hint == QStyle::SH_ComboBox_Popup) {
+    if(hint == QStyle::SH_ComboBox_Popup)
+    {
         const QComboBox *combo = (QComboBox *) widget;//convert qwidget in QComboBox
         const QObjectList a = combo->children();
         const int j = a.count();

@@ -110,16 +110,16 @@ void LVL_Background::setBg(obj_BG &bg)
                         {
                             LVL_Background_strip x;
                             if( i-1 <  bg.magic_splits_i.size())
-                                x.top = (i==0 ? 0.0 : ((double)bg.magic_splits_i[i-1]/(double)txData1.h) );
+                                x.top = (i==0 ? 0.0 : ((double)bg.magic_splits_i[i-1]/(double)txData1.frame_h) );
                             else
                                 x.top = 0.0;
 
                             if( i <  bg.magic_splits_i.size())
-                                x.bottom = (double)bg.magic_splits_i[i] / (double)txData1.h;
+                                x.bottom = (double)bg.magic_splits_i[i] / (double)txData1.frame_h;
                             else
                                 x.bottom = 1.0;
 
-                            x.height = ( (i<bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.h)
+                            x.height = ( (i<bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.frame_h)
                                                  - (i==0 ? 0.0 : (bg.magic_splits_i[i-1]) );
 
                             if( i <  bg.magic_speeds_i.size())
@@ -217,22 +217,22 @@ void LVL_Background::draw(float x, float y, float w, float h)
 
     if(setup.repeat_h>0)
     {
-        imgPos_X = (int)round((box.left()-x)/setup.repeat_h) % (int)round(txData1.w);
+        imgPos_X = (int)round((box.left()-x)/setup.repeat_h) % (int)round(txData1.frame_w);
     }
     else
     {
-        if(txData1.w < w) //If image height less than screen
+        if(txData1.frame_w < w) //If image height less than screen
             imgPos_X = 0;
         else
 
-        if( sWidth > (double)txData1.w )
+        if( sWidth > (double)txData1.frame_w )
         {
             imgPos_X =
                     (box.left()-x)
                     /
                     (
                         (sWidth - w)/
-                        (txData1.w - w)
+                        (txData1.frame_w - w)
                     );
         }
         else
@@ -257,31 +257,31 @@ void LVL_Background::draw(float x, float y, float w, float h)
     {
         case 2: //Repeat vertical with paralax coefficient =2
             imgPos_Y = (setup.attached==1)?
-                    (int)round((box.top()-y)/2) % (int)round(txData1.h):
-                    (int)round((box.bottom()+h-y)/2) % (int)round(txData1.h);
+                    (int)round((box.top()-y)/2) % (int)round(txData1.frame_h):
+                    (int)round((box.bottom()+h-y)/2) % (int)round(txData1.frame_h);
             break;
         case 1: //Zero Repeat
-            imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.h);
+            imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.frame_h);
             break;
         case 0: //Proportional repeat
         default:
 
-            if(txData1.h < h) //If image height less than screen
-                imgPos_Y = (setup.attached==1) ? 0 : (h-txData1.h);
+            if(txData1.frame_h < h) //If image height less than screen
+                imgPos_Y = (setup.attached==1) ? 0 : (h-txData1.frame_h);
             else
 
-            if( sHeight > (double)txData1.h )
+            if( sHeight > (double)txData1.frame_h )
                 imgPos_Y =
                         (box.top()-y)
                         /
                         (
                             (sHeight - h)/
-                            (txData1.h - h)
+                            (txData1.frame_h - h)
                         );
-            else if(sHeight == (double)txData1.h)
+            else if(sHeight == (double)txData1.frame_h)
                 imgPos_Y = box.top()-y;
             else
-                imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.h);
+                imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.frame_h);
             break;
     }
 
@@ -297,12 +297,12 @@ void LVL_Background::draw(float x, float y, float w, float h)
     if(bgType==tiled)
     {
         verticalRepeats=0;
-        lenght_v -= txData1.h;
-        imgPos_Y -= txData1.h * ( (setup.attached==0)? -1 : 1 );
-        while(lenght_v <= h*2  ||  (lenght_v <=txData1.h*2))
+        lenght_v -= txData1.frame_h;
+        imgPos_Y -= txData1.frame_h * ( (setup.attached==0)? -1 : 1 );
+        while(lenght_v <= h*2  ||  (lenght_v <=txData1.frame_h*2))
         {
             verticalRepeats++;
-            lenght_v += txData1.h;
+            lenght_v += txData1.frame_h;
         }
     }
 
@@ -311,7 +311,7 @@ void LVL_Background::draw(float x, float y, float w, float h)
     {
         draw_x = imgPos_X;
         lenght = 0;
-        while((lenght <= w*2) || (lenght <=txData1.w*2))
+        while((lenght <= w*2) || (lenght <=txData1.frame_w*2))
         {
             int magicRepeat=1;
             if(isMagic)
@@ -320,7 +320,7 @@ void LVL_Background::draw(float x, float y, float w, float h)
             }
             else
             {
-                backgrndG.setRect(draw_x, imgPos_Y, txData1.w, txData1.h);
+                backgrndG.setRect(draw_x, imgPos_Y, txData1.frame_w, txData1.frame_h);
             }
 
             int drawedHeight=0;
@@ -330,9 +330,9 @@ void LVL_Background::draw(float x, float y, float w, float h)
             {
                 if(isMagic)
                 {
-                    draw_x = (int)round((box.left()-x)/strips[mg].repeat_h) % (int)round(txData1.w);
+                    draw_x = (int)round((box.left()-x)/strips[mg].repeat_h) % (int)round(txData1.frame_w);
                     draw_x += lenght;
-                    backgrndG.setRect(draw_x, imgPos_Y+drawedHeight, txData1.w, strips[mg].height);
+                    backgrndG.setRect(draw_x, imgPos_Y+drawedHeight, txData1.frame_w, strips[mg].height);
                     drawedHeight += strips[mg].height;
                     d_top = strips[mg].top;
                     d_bottom = strips[mg].bottom;
@@ -344,14 +344,14 @@ void LVL_Background::draw(float x, float y, float w, float h)
                                           backgrndG.width(), backgrndG.height(),
                                           d_top, d_bottom);
             }
-            lenght += txData1.w;
-            draw_x += txData1.w;
+            lenght += txData1.frame_w;
+            draw_x += txData1.frame_w;
         }
 
         verticalRepeats--;
         if(verticalRepeats>0)
         {
-            imgPos_Y += txData1.h * ( (setup.attached==0)? -1 : 1 );
+            imgPos_Y += txData1.frame_h * ( (setup.attached==0)? -1 : 1 );
         }
     }
 
@@ -360,27 +360,27 @@ void LVL_Background::draw(float x, float y, float w, float h)
         ani_x = AniPos(0,1);
 
         if(setup.second_attached==0) // over first
-            imgPos_Y = box.bottom()-y-txData1.h - txData2.h;
+            imgPos_Y = box.bottom()-y-txData1.frame_h - txData2.frame_h;
         else
         if(setup.second_attached==1) //bottom
-            imgPos_Y = box.bottom()-y - txData2.h;
+            imgPos_Y = box.bottom()-y - txData2.frame_h;
             else
         if(setup.second_attached==2) //top
             imgPos_Y = 0; //pCamera->s_bottom-y-txData1.h - txData2.h;
 
-        int imgPos_X = (int)round((box.left()-x)/setup.second_repeat_h) % (int)round(txData2.w);
+        int imgPos_X = (int)round((box.left()-x)/setup.second_repeat_h) % (int)round(txData2.frame_w);
 
         lenght = 0;
-        while((lenght <= w*2) || (lenght <=txData1.w*2))
+        while((lenght <= w*2) || (lenght <=txData1.frame_w*2))
         {
-            backgrndG.setRect(imgPos_X, imgPos_Y, txData2.w, txData2.h);
+            backgrndG.setRect(imgPos_X, imgPos_Y, txData2.frame_w, txData2.frame_h);
             GlRenderer::renderTexture(&txData2,
                                       backgrndG.left(),
                                       backgrndG.top(),
                                       backgrndG.width(), backgrndG.height(),
                                       ani_x.first, ani_x.second);
-            lenght += txData2.w;
-            imgPos_X += txData2.w;
+            lenght += txData2.frame_w;
+            imgPos_X += txData2.frame_w;
         }
     }
 }

@@ -23,7 +23,7 @@ void LVL_PlayerDef::setCharacterID(int _id)
     if(ConfigManager::playable_characters.contains(_id))
         _characterID=_id;
     else
-        _characterID=-1;
+        _characterID = 1; //First character by default
 }
 
 void LVL_PlayerDef::setState(int _state)
@@ -33,10 +33,10 @@ void LVL_PlayerDef::setState(int _state)
         if(ConfigManager::playable_characters[_characterID].states.contains(_state))
             _currentState=_state;
         else
-            _currentState=1;
+            _currentState=1; //First state by default
     }
     else
-        _currentState=1;
+        _currentState=1; //First state by default
 }
 
 void LVL_PlayerDef::setPlayerID(int id)
@@ -64,7 +64,7 @@ int LVL_PlayerDef::width()
     if(_characterID>=0)
         return ConfigManager::playable_characters[_characterID].states[_currentState].width;
     else
-        return -1;
+        return 1;
 }
 
 int LVL_PlayerDef::height()
@@ -72,7 +72,7 @@ int LVL_PlayerDef::height()
     if(_characterID>=0)
         return ConfigManager::playable_characters[_characterID].states[_currentState].height;
     else
-        return -1;
+        return 1;
 }
 
 int LVL_PlayerDef::heightDuck()
@@ -80,6 +80,6 @@ int LVL_PlayerDef::heightDuck()
     if(_characterID>=0)
         return ConfigManager::playable_characters[_characterID].states[_currentState].duck_height;
     else
-        return -1;
+        return 1;
 }
 

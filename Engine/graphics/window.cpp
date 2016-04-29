@@ -48,98 +48,139 @@ SDL_GLContext PGE_Window::glcontext;
 bool PGE_Window::IsInit=false;
 bool PGE_Window::showCursor=true;
 
-bool PGE_Window::checkSDLError(int line)
+bool PGE_Window::isSdlError()
+{
+    const char *error = SDL_GetError();
+    return (*error != '\0');
+}
+
+bool PGE_Window::checkSDLError(const char* fn, int line, const char* func)
 {
     const char *error = SDL_GetError();
     if (*error != '\0')
     {
-        PGE_MsgBox::warn(QString("SDL Error: %1").arg(error)+((line != -1)?
-            QString(" + line: %i").arg(line) : "") );
+        PGE_MsgBox::warn( QString("SDL Error: %1\nFile: %2\nFunction: %3\nLine: %4")
+                          .arg(error)
+                          .arg(fn)
+                          .arg(func)
+                          .arg(line));
+        SDL_ClearError();
+        return true;
+    }
+    return false;
+}
+
+void PGE_Window::printSDLWarn(QString info)
+{
+    PGE_MsgBox::warn( QString("%1\nSDL Error: %2")
+                              .arg(info)
+                              .arg( SDL_GetError() )
+                      );
+}
+
+void PGE_Window::printSDLError(QString info)
+{
+    PGE_MsgBox::error( QString("%1\nSDL Error: %2")
+                              .arg(info)
+                              .arg( SDL_GetError() )
+                      );
+}
+
+bool PGE_Window::init(QString WindowTitle, int renderType)
+{
+
+    #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
+    GlRenderer::setup_SW_SDL();
+    //GlRenderer::setup_OpenGL21();
+    //GlRenderer::setup_OpenGL31();
+    #else
+    //Detect renderer
+    GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer( (GlRenderer::RenderEngineType)renderType );
+    if( rtype == GlRenderer::RENDER_INVALID )
+    {
+                //% "Unable to find OpenGL support!\nSoftware renderer will be started.\n"
+        printSDLWarn( qtTrId("RENDERER_NO_OPENGL_ERROR") );
+        SDL_ClearError();
+        rtype = GlRenderer::RENDER_SW_SDL;
+    }
+
+    switch(rtype)
+    {
+        case GlRenderer::RENDER_OPENGL_3_1: GlRenderer::setup_OpenGL31(); break;
+        case GlRenderer::RENDER_OPENGL_2_1: GlRenderer::setup_OpenGL21(); break;
+        case GlRenderer::RENDER_SW_SDL:     GlRenderer::setup_SW_SDL(); break;
+        default:
+                        //% "Renderer is not selected!"
+            printSDLError( qtTrId("NO_RENDERER_ERROR") );
+            return false;
+    }
+    #endif
+
+    GlRenderer::setViewportSize(Width, Height);
+    window = SDL_CreateWindow( WindowTitle.toStdString().c_str(),
+                               SDL_WINDOWPOS_CENTERED,
+                               SDL_WINDOWPOS_CENTERED,
+                               Width, Height,
+                               SDL_WINDOW_RESIZABLE|
+                               SDL_WINDOW_HIDDEN|
+                               GlRenderer::SDL_InitFlags() );
+    if( window == NULL )
+    {
+                    //% "Unable to create window!"
+        printSDLError( qtTrId("WINDOW_CREATE_ERROR") );
         SDL_ClearError();
         return false;
     }
-    return true;
-}
 
-bool PGE_Window::init(QString WindowTitle)
-{
-
-    //#if 1
-    #ifdef __APPLE__
-    GlRenderer::setup_OpenGL21();
-    #elif __ANDROID__
-    GlRenderer::setup_OpenGL31();
-    #else
-    //Detect renderer
-    GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer();
-    if(rtype==GlRenderer::RENDER_INVALID)
+    if( isSdlError() )
     {
-        QMessageBox::critical(NULL, "OpenGL not found!",
-            QString("Unable to find OpenGL support!\n%1")
-            .arg( SDL_GetError() ), QMessageBox::Ok);
+                    //% "Unable to create window!"
+        printSDLError( qtTrId("WINDOW_CREATE_ERROR") );
+        SDL_ClearError();
+        return false;
     }
-    if(rtype==GlRenderer::RENDER_OPENGL_3_1)
-        GlRenderer::setup_OpenGL31();
-    else
-        GlRenderer::setup_OpenGL21();
-    #endif
-
-
-    GlRenderer::setViewportSize(Width, Height);
-    window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
-    if(!checkSDLError()) return false;
 
     SDL_SetWindowMinimumSize(window, Width, Height);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
-    if(window == NULL)
-    {
-        // If failed to create window - exiting
-        QMessageBox::critical(NULL, "SDL Error",
-            QString("Unable to create window!\n%1")
-            .arg( SDL_GetError() ), QMessageBox::Ok);
-        return false;
-    }
+    GraphicsHelps::initFreeImage();
 
-    GraphicsHelps::initSDLImage();
-    if(!checkSDLError()) return false;
-
-    FIBITMAP*img;
-#ifdef Q_OS_MACX
+    FIBITMAP* img;
+    #ifdef Q_OS_MACX
     img = GraphicsHelps::loadImageRC(":/icon/cat_256.png");
-#else
+    #else
     img = GraphicsHelps::loadImageRC(":/icon/cat_16.png");
-#endif
+    #endif
     if(img)
     {
-        SDL_Surface *sicon=GraphicsHelps::fi2sdl(img);
+        SDL_Surface *sicon = GraphicsHelps::fi2sdl(img);
         SDL_SetWindowIcon(window, sicon);
         GraphicsHelps::closeImage(img);
         SDL_FreeSurface(sicon);
+        if( isSdlError() )
+        {
+                       //% "Unable to setup window icon!"
+            printSDLWarn( qtTrId("WINDOW_ICON_INIT_ERROR") );
+            SDL_ClearError();
+        }
     }
-
-    LogDebug("Create OpenGL context...");
-    glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    if(!checkSDLError()) return false;
-
-    SDL_GL_MakeCurrent(window, glcontext);
-    if(!checkSDLError()) return false;
-
-    LogDebug("Toggle vsync...");
-    vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
-    toggleVSync(vsync);
-    LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
     IsInit=true;
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     LogDebug("Init OpenGL settings...");
-    if(!GlRenderer::init())
+    if( !GlRenderer::init() )
     {
-        checkSDLError();
+                   //% "Unable to initialize renderer context!"
+        printSDLError( qtTrId("RENDERER_CONTEXT_INIT_ERROR") );
+        SDL_ClearError();
         IsInit=false;
         return false;
     }
+
+    LogDebug( "Toggle vsync..." );
+    vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
+    toggleVSync(vsync);
+    LogDebug( QString("V-Sync supported: %1").arg(vsyncIsSupported) );
 
     return true;
 }
@@ -196,16 +237,12 @@ bool PGE_Window::uninit()
     // Swith to WINDOWED mode
     if (SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
     {
-        qDebug() << "Setting windowed failed : "<<SDL_GetError();
-        return -1;
+        LogWarning(QString("Setting windowed failed: ") + SDL_GetError ());
+        return false;
     }
-
-    SDL_HideWindow(window);
-    //SDL_PumpEvents();
+    SDL_HideWindow( window );
     GlRenderer::uninit();
-    SDL_GL_DeleteContext(glcontext);
-    //SDL_GL_DeleteContext(glcontext_background);
-    GraphicsHelps::closeSDLImage();
+    GraphicsHelps::closeFreeImage();
     SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;
@@ -235,18 +272,10 @@ void PGE_Window::setCursorVisibly(bool viz)
 void PGE_Window::clean()
 {
     if(window==NULL) return;
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    //glLoadIdentity();
-    glFlush();
-    rePaint();
-}
-
-void PGE_Window::rePaint()
-{
-    if(window==NULL) return;
-    SDL_GL_SwapWindow(window);
+    GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    GlRenderer::clearScreen();
+    GlRenderer::flush();
+    GlRenderer::repaint();
 }
 
 int PGE_Window::setFullScreen(bool fs)
@@ -257,10 +286,10 @@ int PGE_Window::setFullScreen(bool fs)
         if(fs)
         {
             // Swith to FULLSCREEN mode
-            if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
+            if( SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0 )
             {
                 //Hide mouse cursor in full screen mdoe
-                qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
+                LogWarning(QString ("Setting fullscreen failed: ") + SDL_GetError() );
                 return -1;
             }
             SDL_ShowCursor(SDL_DISABLE);
@@ -273,9 +302,9 @@ int PGE_Window::setFullScreen(bool fs)
                 SDL_ShowCursor(SDL_ENABLE);
 
             // Swith to WINDOWED mode
-            if (SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
+            if( SDL_SetWindowFullscreen(window, SDL_FALSE) < 0 )
             {
-                qDebug() <<"Setting windowed failed : "<<SDL_GetError();
+                LogWarning(QString ("Setting windowed failed: ") + SDL_GetError() );
                 return -1;
             }
             return 0;
@@ -289,15 +318,11 @@ int PGE_Window::setFullScreen(bool fs)
 SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
 {
    Uint32 flags = SDL_GetWindowFlags(win);
-
-   if(flags & SDL_WINDOW_FULLSCREEN_DESKTOP) return SDL_TRUE; // return SDL_TRUE if fullscreen
-
-   return SDL_FALSE; // Return SDL_FALSE if windowed
+   return ( flags & SDL_WINDOW_FULLSCREEN_DESKTOP ) ? SDL_TRUE : SDL_FALSE;
 }
 
 /// Toggles On/Off FullScreen
 /// @returns -1 on error, 1 on Set fullscreen successful, 0 on Set Windowed successful
-
 int PGE_Window::SDL_ToggleFS(SDL_Window *win)
 {
     if(!win)
@@ -312,7 +337,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
         // Swith to WINDOWED mode
         if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
         {
-            qDebug() <<"Setting windowed failed : "<<SDL_GetError();
+            LogWarning(QString ("Setting windowed failed: ") + SDL_GetError() );
             return -1;
         }
         return 0;
@@ -322,13 +347,12 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     if (SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
     {
         //Hide mouse cursor in full screen mdoe
-        qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
+        LogWarning(QString ("Setting fullscreen failed: ") + SDL_GetError() );
         return -1;
     }
     SDL_ShowCursor(SDL_DISABLE);
     return 1;
 }
-
 
 
 int PGE_Window::processEvents(SDL_Event &event)
@@ -361,11 +385,11 @@ int PGE_Window::processEvents(SDL_Event &event)
               break;
               #endif
               case SDLK_F2:
-                  PGE_Window::showPhysicsDebug=!PGE_Window::showPhysicsDebug;
+                  PGE_Window::showPhysicsDebug = !PGE_Window::showPhysicsDebug;
                   return 2;
               break;
               case SDLK_F3:
-                  PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
+                  PGE_Window::showDebugInfo = !PGE_Window::showDebugInfo;
                   return 2;
               break;
               case SDLK_F12:

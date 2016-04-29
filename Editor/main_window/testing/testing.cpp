@@ -165,6 +165,21 @@ void MainWindow::on_action_doTest_triggered()
         args << "--debug";
         args << "--config=\""+configs.config_dir+"\"";
         args << "--interprocessing";//activeLvlEditWin()->curFile;
+        SETTINGS_TestSettings t = GlobalSettings::testing;
+        args << QString("--num-players=%1").arg(t.numOfPlayers);
+        args << QString("--p1c=%1").arg(t.p1_char);
+        args << QString("--p1s=%1").arg(t.p1_state);
+        args << QString("--p2c=%1").arg(t.p2_char);
+        args << QString("--p2s=%1").arg(t.p2_state);
+        if(t.xtra_chuck) args << "--debug-chucknorris";
+        if(t.xtra_god) args << "--debug-pagan-god";
+        if(t.xtra_flyup) args << "--debug-superman";
+        if(t.xtra_worldfreedom) args << "--debug-worldfreedom";
+        if(t.xtra_physdebug) args << "--debug-physics";
+        if(t.xtra_debug)
+            args << "--debug-print=yes";
+        else
+            args << "--debug-print=no";
 
         IntEngine::setTestLvlBuffer(edit->LvlData);
 
@@ -229,6 +244,22 @@ void MainWindow::on_action_doSafeTest_triggered()
     QStringList args;
     args << "--debug";
     args << "--config=\""+configs.config_dir+"\"";
+
+    SETTINGS_TestSettings t = GlobalSettings::testing;
+    args << QString("--num-players=%1").arg(t.numOfPlayers);
+    args << QString("--p1c=%1").arg(t.p1_char);
+    args << QString("--p1s=%1").arg(t.p1_state);
+    args << QString("--p2c=%1").arg(t.p2_char);
+    args << QString("--p2s=%1").arg(t.p2_state);
+    if(t.xtra_chuck) args << "--debug-chucknorris";
+    if(t.xtra_god) args << "--debug-pagan-god";
+    if(t.xtra_flyup) args << "--debug-superman";
+    if(t.xtra_worldfreedom) args << "--debug-worldfreedom";
+    if(t.xtra_physdebug) args << "--debug-physics";
+    if(t.xtra_debug)
+        args << "--debug-print=yes";
+    else
+        args << "--debug-print=no";
 
     if(activeChildWindow()==1)
     {
@@ -490,6 +521,20 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
             JSONparams["filename"] = ed->curFile;
         else
             JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
+
+        QJsonArray JSONPlayers;
+        QJsonObject JSONPlayer1, JSONPlayer2;
+            SETTINGS_TestSettings t = GlobalSettings::testing;
+            JSONPlayer1["character"] = t.p1_char;
+            JSONPlayer1["powerup"]   = t.p1_state;
+            JSONPlayer2["character"] = t.p2_char;
+            JSONPlayer2["powerup"]   = t.p2_state;
+
+            JSONPlayers.push_back(JSONPlayer1);
+        if(t.numOfPlayers>1)
+            JSONPlayers.push_back(JSONPlayer2);
+
+        JSONparams["players"] = JSONPlayers;
 
         QString LVLRawData;
         //To don't affect level data state, need to remember recently used file format and version identifier

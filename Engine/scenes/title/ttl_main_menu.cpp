@@ -18,6 +18,7 @@
 
 #include <QDir>
 
+#include <common_features/logger.h>
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
 #include <graphics/window.h>
@@ -434,7 +435,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                              );
 
                                                                                             //% "Frame time (ms.)"
-                        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 16, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
+                        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
                                                 [this]()->void{
                                                     if(!PGE_Window::vsync)
                                                     {
@@ -594,7 +595,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     }
     PGE_Rect menuBox = menu.rect();
     menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
-    qDebug()<<"Menuitem ID: "<<menustates[_menu].first << ", scrolling offset: "<<menustates[_menu].second;
+    LogDebug( QString("Menuitem ID: ") + menustates[_menu].first + ", scrolling offset: " + menustates[_menu].second );
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
 }
@@ -679,12 +680,9 @@ int TitleScene::findLevels( void* )
                 filex.first = filefind_folder+file;
                 filex.second = (title.isEmpty()?file:title);
                 filefind_found_files.push_back(filex);
-                //QString title = level.LevelName;
-                //menu.addMenuItem(filefind_folder+file, (title.isEmpty()?file:title));
             }
         }
     }
-
     filefind_finished=true;
 
     return 0;

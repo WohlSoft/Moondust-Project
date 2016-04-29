@@ -189,7 +189,8 @@ void Scene::processEffects(float ticks)
 }
 
 
-const float Scene_Effect::timeStep= (1000.f/65.f);
+const float Scene_Effect::timeStep= 15.6;
+//1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 
 Scene_Effect::Scene_Effect()
 {
@@ -282,8 +283,8 @@ void Scene_Effect::update(float ticks)
 
 void Scene_Effect::iterateStep(float ticks)
 {
-    posRect.setX(posRect.x()+m_velocityX * (timeStep/ticks));
-    posRect.setY(posRect.y()+m_velocityY * (timeStep/ticks));
+    posRect.setX( posRect.x() + m_velocityX * (ticks/timeStep) );
+    posRect.setY( posRect.y() + m_velocityY * (ticks/timeStep) );
 
     float accelCof=ticks/1000.0f;
     if(phys_setup.decelerate_x!=0)

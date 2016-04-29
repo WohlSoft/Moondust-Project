@@ -17,7 +17,6 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
-    void showNotifyTmp();
 signals:
     void windowShown();
 

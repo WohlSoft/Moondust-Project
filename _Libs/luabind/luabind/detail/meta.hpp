@@ -85,11 +85,34 @@ namespace luabind { namespace meta
 	template< typename List, unsigned int Index, template< typename > class T >
 	struct transform;
 
-	template< typename List, template< typename > class T >
+	template< typename List, unsigned int Index, template< typename > class Function >
+	using transform_t = typename transform< List, Index, Function >::type;
+
+	template< typename List, template< typename > class Function >
 	struct transform_all;
+
+	template< typename List, template< typename > class Function >
+	using transform_all_t = typename transform_all< List, Function >::type;
+
 
 	template< typename T, unsigned int start, unsigned int end >
 	struct sub_range;
+
+	/*
+	aliases
+	*/
+	template< typename T >
+	using pop_front_t = typename pop_front<T>::type;
+
+	template< typename T1, typename... Types >
+	using join_t = typename join< T1, Types... >::type;
+
+	template< typename T, unsigned int start, unsigned int end >
+	using sub_range_t = typename sub_range< T, start, end >::type;
+
+	template< typename T, unsigned int index >
+	using get_t = typename get< T, index >::type;
+
 
 	// Used as terminator on type and index lists
 	struct null_type {};
@@ -183,8 +206,6 @@ namespace luabind { namespace meta
 	/*
 	Index access to type list
 	*/
-
-
 	template< typename Element0, typename... Elements, unsigned int Index >
 	struct get< type_list<Element0, Elements...>, Index > {
 		using type = typename get< type_list<Elements...>, Index - 1 >::type;
@@ -202,16 +223,14 @@ namespace luabind { namespace meta
 		static_assert(size< type_list< int > >::value == 1, "Bad Index");
 	};
 
+	/*
+	Join Type Lists
+	*/
 	template< typename... Types1, typename... Types2 >
 	struct join< type_list< Types1... >, type_list< Types2... > >
 	{
 		using type = type_list< Types1..., Types2... >;
 	};
-
-	/*
-	template< typename List, unsigned int Index, typename T >
-	struct replace;
-	*/
 
 	namespace detail {
 		template< typename HeadList, typename TailList, typename Type, unsigned int Index >
@@ -233,30 +252,23 @@ namespace luabind { namespace meta
 	{
 		using TypeList = type_list< Types... >;
 
-		using type = typename meta::join< 
-						typename meta::sub_range< TypeList, 0, Index >::type, meta::type_list<Type>,
-						typename meta::sub_range< TypeList, Index + 1, sizeof...(Types) >::type 
-					>::type;
+		using type = join_t< 
+						sub_range_t< TypeList, 0, Index >,
+						meta::type_list<Type>,
+						sub_range_t< TypeList, Index + 1, sizeof...(Types) > 
+					>;
 	};
 
-	namespace detail {
-		template< typename HeadList, typename TailList, template< typename > class Type, unsigned int Index >
-		struct enwrap_helper;
-
-		template< typename... HeadTypes, typename CurrentType, typename... TailTypes, template< typename > class Type, unsigned int Index >
-		struct enwrap_helper< type_list< HeadTypes... >, type_list< CurrentType, TailTypes... >, Type, Index> {
-			using type = typename enwrap_helper< type_list< HeadTypes..., CurrentType >, type_list<TailTypes...>, Type, Index - 1 >::type;
-		};
-
-		template< typename... HeadTypes, typename CurrentType, typename... TailTypes, template< typename > class Type >
-		struct enwrap_helper< type_list< HeadTypes... >, type_list< CurrentType, TailTypes... >, Type, 0> {
-			using type = type_list< HeadTypes..., Type<CurrentType>, TailTypes... >;
-		};
-	}
-
-	template< typename... Types, unsigned int Index, template< typename >  class Type >
-	struct enwrap< type_list< Types... >, Index, Type > {
-		using type = typename detail::enwrap_helper< type_list< >, type_list< Types... >, Type, Index >::type;
+	/*
+	Enwrap all elements of a type list in an template
+	*/
+	template< typename... Types, unsigned int Index, template< typename >  class Enwrapper >
+	struct enwrap< type_list< Types... >, Index, Enwrapper > {
+		using type = join_t<
+			sub_range_t< type_list<Types...>, 0, Index >,
+			Enwrapper< get_t< type_list<Types...>, Index> >,
+			sub_range_t< type_list<Types...>, Index+1, sizeof...(Types) >
+		>;
 	};
 
 	template< typename... Types, template< typename > class Enwrapper >
@@ -265,37 +277,28 @@ namespace luabind { namespace meta
 		using type = type_list< Enwrapper< Types >... >;
 	};
 
-	namespace detail {
-		template< typename HeadList, typename TailList, template< typename > class Type, unsigned int Index >
-		struct transform_helper;
+	/*
+	Transform a certain element of a type list
+	*/
+	template< typename T, unsigned int Index, template< typename > class Function >
+	struct transform;
 
-		template< typename... HeadTypes, typename CurrentType, typename... TailTypes, template< typename > class Type, unsigned int Index >
-		struct transform_helper< type_list< HeadTypes... >, type_list< CurrentType, TailTypes... >, Type, Index> {
-			using type = typename transform_helper< type_list< HeadTypes..., CurrentType >, type_list<TailTypes...>, Type, Index - 1 >::type;
-		};
-
-		template< typename... HeadTypes, typename CurrentType, typename... TailTypes, template< typename > class Type >
-		struct transform_helper< type_list< HeadTypes... >, type_list< CurrentType, TailTypes... >, Type, 0> {
-			using type = type_list< HeadTypes..., typename Type<CurrentType>::type, TailTypes... >;
-		};
-	}
-
-	template< typename... Types, unsigned int Index, template< typename >  class Type >
-	struct transform< type_list< Types... >, Index, Type > {
-		using type = typename detail::transform_helper< type_list< >, type_list< Types... >, Type, Index >::type;
+	template< typename... Types, unsigned int Index, template< typename > class Function >
+	struct transform< type_list< Types... >, Index, Function > {
+		using type = join_t<
+			sub_range_t< type_list<Types...>, 0, Index >,
+			typename Function< get_t< type_list<Types...>, Index> >::type,
+			sub_range_t< type_list<Types...>, Index + 1, sizeof...(Types) >	
+		>;
 	};
-
-
-	template< typename Type0, typename... Types, template< typename >  class Type >
-	struct transform_all< type_list< Type0, Types... >, Type > {
-		using type = typename push_front< typename transform_all< type_list<Types...>, Type >::type, typename Type<Type0>::type >::type;
+	
+	/*
+	Transform all elements of a type list
+	*/
+	template< typename... Types, template< typename >  class Function >
+	struct transform_all< type_list< Types... >, Function > {
+		using type = type_list< typename Function<Types>::type... >;
 	};
-
-	template< template< typename >  class Type >
-	struct transform_all< type_list< >, Type > {
-		using type = type_list< >;
-	};
-
 
 	/*
 	Tuple from type list
@@ -363,48 +366,49 @@ namespace luabind { namespace meta
 	Index index list
 	*/
 
-	template< unsigned int Index0, unsigned int... Indices, unsigned int Index >
-	struct get< index_list<Index0, Indices...>, Index > {
-		enum { value = get< index_list<Indices...>, Index - 1 >::value };
-	};
+	namespace detail {
 
-	template< unsigned int Index0, unsigned int... Indices >
-	struct get< index_list<Index0, Indices...>, 0 >
-	{
-		enum { value = Index0 };
-	};
+		template< unsigned int Index, unsigned int Value0, unsigned int... Values >
+		struct get_iterate {
+			static const unsigned int value = get_iterate< Index - 1, Values... >::value;
+		};
 
-	template< unsigned int Index >
-	struct get< index_list< >, Index >
-	{
-		static_assert(size< index_list< Index > >::value == 1, "Bad Index");
-	};
+		template< unsigned int Value0, unsigned int... Values >
+		struct get_iterate< 0, Value0, Values... > {
+			static const unsigned int value = Value0;
+		};
 
-	template< >
-	struct get< index_list< >, 0 >
+	}
+
+	template< unsigned int... Values, unsigned int Index >
+	struct get< index_list< Values... >, Index >
 	{
+		static_assert(sizeof...(Values) > Index, "Bad Index");
+		static const unsigned int value = detail::get_iterate< Index, Values... >::value;
 	};
 
 	/*
 	Index list size
 	*/
 
-	template< >
-	struct size< index_list< > >  {
-		enum { value = 0 };
+	template< unsigned int... Values >
+	struct size< index_list< Values... > >  {
+		static const unsigned int value = sizeof...(Values);
 	};
 
-	template< unsigned int Index0, unsigned int... Indices >
-	struct size< index_list< Index0, Indices... > >  {
-		enum { value = 1 + size< index_list< Indices... > >::value };
-	};
 
+	/*
+	Index list push front
+	*/
 	template< unsigned int... Indices, unsigned int Index >
 	struct push_front< index_list< Indices... >, index<Index> >
 	{
 		using type = index_list< Index, Indices... >;
 	};
 
+	/*
+	Index list push back
+	*/
 	template< unsigned int... Indices, unsigned int Index >
 	struct push_back< index_list< Indices... >, index<Index> >
 	{
@@ -412,9 +416,8 @@ namespace luabind { namespace meta
 	};
 
 	/*
-	pop_front
+	Index list pop_front
 	*/
-
 	template< unsigned int Index0, unsigned int... Indices >
 	struct pop_front< index_list< Index0, Indices... > > {
 		using type = index_list< Indices... >;
@@ -425,14 +428,15 @@ namespace luabind { namespace meta
 		using type = index_list<  >;
 	};
 
-
+	/*
+	Index list range creation
+	*/
 	namespace detail {
 
 		template< unsigned int curr, unsigned int end, unsigned int... Indices >
 		struct make_index_range :
 			public make_index_range< curr + 1, end, Indices..., curr >
 		{
-			static_assert(end >= curr, "end must be greater or equal to start");
 		};
 
 		template< unsigned int end, unsigned int... Indices >
@@ -443,6 +447,10 @@ namespace luabind { namespace meta
 
 	}
 
+	/*
+		make_index_range< start, end >
+		Creates the index list list of range [start, end)
+	*/
 	template< unsigned int start, unsigned int end >
 	struct make_index_range {
 		static_assert(end >= start, "end must be greater than or equal to start");
@@ -452,12 +460,8 @@ namespace luabind { namespace meta
 	template< unsigned int start, unsigned int end >
 	using index_range = typename make_index_range<start, end>::type;
 
-	/*
-	Exracts the first N elements of an index list and creates a new index list from them
-	*/
-
 	namespace detail {
-
+		// These implementation are not really efficient...
 		template< typename SourceList, typename IndexList >
 		struct sub_range_index;
 
@@ -465,7 +469,7 @@ namespace luabind { namespace meta
 		struct sub_range_index< SourceList, index_list< Indices... > > {
 			using type = index_list< get< SourceList, Indices >::value... >;
 		};
-
+		
 		template< typename SourceList, typename IndexList >
 		struct sub_range_type;
 
@@ -476,6 +480,9 @@ namespace luabind { namespace meta
 
 	}
 
+	/*
+	Index list sub_range [start, end)
+	*/
 	template< unsigned int start, unsigned int end, unsigned int... Indices >
 	struct sub_range< index_list<Indices...>, start, end >
 	{
@@ -483,6 +490,9 @@ namespace luabind { namespace meta
 		using type = typename detail::sub_range_index< index_list<Indices...>, typename make_index_range<start, end>::type >::type;
 	};
 
+	/*
+	Type list sub_range [start, end)
+	*/
 	template< unsigned int start, unsigned int end, typename... Types >
 	struct sub_range< type_list<Types...>, start, end >
 	{
@@ -490,28 +500,35 @@ namespace luabind { namespace meta
 		using type = typename detail::sub_range_type< type_list<Types...>, typename make_index_range<start, end>::type >::type;
 	};
 
-	template< typename IndexList, unsigned int Index >
-	struct push_back_index;
+	/*
+	Index list sum
+	*/
 
-	template< unsigned int... Indices, unsigned int Index >
-	struct push_back_index< index_list< Indices... >, Index >
-	{
-		using type = index_list< Indices..., Index >;
-	};
+	namespace detail {
 
+		template< typename T, T... Values >
+		struct sum_values;
+
+		template< typename T, T Value0, T... Values >
+		struct sum_values< T, Value0, Values... > {
+			static const T value = Value0 + sum_values< T, Values... >::value;
+		};
+
+		template< typename T >
+		struct sum_values< T >
+		{
+			static const T value = 0;
+		};
+
+	}
 
 	template< typename T >
 	struct sum;
 	
-	template< unsigned int Arg0, unsigned int... Args >
-	struct sum< index_list<Arg0, Args...> >
+	template< unsigned int... Args >
+	struct sum< index_list<Args...> >
 	{
-		enum{ value = Arg0 + sum<index_list<Args...>>::value };
-	};
-
-	template< >
-	struct sum< index_list< > > {
-		enum {value = 0};
+		static const unsigned int value = detail::sum_values<unsigned int, Args...>::value;
 	};
 
 	/*

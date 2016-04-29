@@ -610,9 +610,9 @@ clearScene:
         scene->uNPCs.clear();
 
         LogDebug("!<-Delete scene->!");
+        sceneCreated = false;
         delete scene;
         scene = NULL;
-        sceneCreated=false;
         LogDebug("!<-Deleted->!");
     }
 }

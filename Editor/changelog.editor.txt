@@ -1,3 +1,13 @@
+Editor post-0.3.1.10
+- Added Polish translation of the editor
+- Optimized performance and memory usage
+- Fixed some inabilities to show custom graphics in the item selection dialogs
+- Flood fill will never fill out of section by default (to allow filling out of section, need to unchec a special flag in the "Edit" menu)
+- Fixed empty category entry wihth appears on some groups in blocks and BGO lists
+- Added ability to show default only elements in the tilesets editor box
+- Added "Top-Right" and "Right-Bottom" section sides for camera position reset
+- Test are finally working
+
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
 - Level list dialog now looks for level files in sub directories (is possible to collect levels into sub-directories to don't flood episode root folder)
@@ -13,10 +23,6 @@ Editor 0.3.1.10
 - Resolved trouble with window focuses
 - Added ability to set absolute values of sizable block size from block properties tool box
 - Finally implemented true BGO's order priority table which results right order of the BGOs in comparison with SMBX Editor
-- Added Polish translation of the editor
-- Optimized performance and memory usage
-- Fixed some inabilities to show custom graphics in the item selection dialogs
-- Flood fill will never fill out of section by default (to allow filling out of section, need to unchec a special flag in the "Edit" menu)
 
 Editor 0.3.1.9
 - Fixed bug with removed warp entrance point and after placing it again

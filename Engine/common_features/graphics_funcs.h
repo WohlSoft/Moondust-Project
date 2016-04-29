@@ -45,13 +45,12 @@ class GraphicsHelps
 public:
     /*!
      * \brief Initializes FreeImage
-     * \return always true
      */
-    static bool  initSDLImage();
+    static void  initFreeImage();
     /*!
      * \brief DeInitializes FreeImage
      */
-    static void  closeSDLImage();
+    static void  closeFreeImage();
     /*!
      * \brief Loads image from a disk
      * \param file full or relative path to the file
@@ -78,13 +77,6 @@ public:
      * \param FreeImage descriptor to loaded image
      */
     static void closeImage(FIBITMAP *img);
-
-
-
-    /*
-    static void   putPixel(SDL_Surface *surface, int x, int y, Uint32 color);
-    static Uint32 getPixel(SDL_Surface *surface, int x, int y);
-    */
 
     /*!
      * \brief Merges mask and foreground image with bit blitting algorithm

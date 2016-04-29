@@ -40,6 +40,11 @@ env:
 # Default build. Release.
   - PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
+before_script:
+  - sudo systemsetup -settimezone Europe/Moscow;
+    echo $(date)
+
+
 before_install:
 # ==============================================================================
 # Downloading and unpacking of pre-built static Qt 5.5.1 on OS X 10.11.1
@@ -77,7 +82,8 @@ before_install:
 # ==============================================================================
 # Building of dependencies of PGE
 # ==============================================================================
-  - bash build_deps.sh no-pause
+  - bash build_deps.sh no-pause;
+    bash -c "TZ=Europe/Moscow date +\"%Y-%m-%d %H:%M:%S\">/Users/travis/build_date_dev_osx.txt"
 
 install: true
 
@@ -98,5 +104,5 @@ after_success:
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; exit" -u $FTPUser,$FTPPassword $FTPServer
+  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
 

@@ -203,7 +203,7 @@ namespace luabind { namespace detail
         class_id_map* m_classes;
 	};
 
-	bool is_class_rep(lua_State* L, int index);
+	LUABIND_API bool is_class_rep(lua_State* L, int index);
 
 }}
 

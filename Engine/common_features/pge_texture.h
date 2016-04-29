@@ -35,6 +35,8 @@ struct PGE_Texture
     GLuint texture; // Texture object handle
     int w; //Width of the texture.
     int h; //Height of the texture.
+    int frame_w;//Width of animated frame
+    int frame_h;//Height of animated frame
     bool inited; //Texture is valid and loaded
     GLubyte *texture_layout;
     GLenum format;

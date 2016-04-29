@@ -28,7 +28,7 @@ int VersionCmp::str2ver(QString verSuffix)
         return RELEASE;
     }
     else
-        return 0;
+        return RELEASE;
 }
 
 QString VersionCmp::compare(QString ver1, QString ver2)
@@ -49,9 +49,9 @@ QString VersionCmp::compare(QString ver1, QString ver2)
         ver1s.pop_back();
     }
     else
-        vers1[4]=RELEASE;
+        vers1[4] = RELEASE;
 
-    if(ver2.split('-').size()>1)
+    if( ver2.split('-').size() > 1 )
     {
         vers2[4] = str2ver(ver2s.last());
         ver2s.pop_back();
@@ -60,7 +60,7 @@ QString VersionCmp::compare(QString ver1, QString ver2)
         vers2[4]=RELEASE;
 
     int c=0;
-    while((!ver1s.isEmpty())&&(c<6))
+    while( (!ver1s.isEmpty()) && (c<6) )
     {
         vers1[c]=ver1s.first().toLong(&ok);
         if(!ok) return ver1;

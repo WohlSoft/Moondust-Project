@@ -110,7 +110,7 @@ BuildSrcOnly()
 	fi
 	cd ..
 }
-LatestSDL='SDL-aa9904a56acf'
+LatestSDL='SDL-6ad89111cb4f'
 UnArch $LatestSDL
 #UnArch 'SDL2_mixer-2.0.0'
 UnArch 'libogg-1.3.2'

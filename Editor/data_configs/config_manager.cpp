@@ -23,6 +23,7 @@
 #include <QtWin>
 #include <QSysInfo>
 #endif
+#include <QProcess>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -52,7 +53,7 @@ ListDelegate::ListDelegate(QObject *parent)
 
 ListDelegate::~ListDelegate() {}
 
-void ListDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+void ListDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
     QRect r = option.rect;
 
@@ -224,8 +225,9 @@ ConfigManager::ConfigManager(QWidget *parent) :
     }
 
     ui->configList->setItemDelegate(new ListDelegate(ui->configList));
-    ui->configList->setStyleSheet("{paint-alternating-row-colors-for-empty-area:1;"
-                                  "alternate-background-color: #2C2C2C;}");
+    ui->configList->setStyleSheet("* { paint-alternating-row-colors-for-empty-area: true; "
+                                  "alternate-background-color: #2C2C2CFF; }");
+
     foreach(configPackPair confD, config_paths)
     {
         QString c=confD.first;
@@ -281,7 +283,16 @@ ConfigManager::ConfigManager(QWidget *parent) :
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->configList->addItem( item);
     }
+}
 
+ConfigManager::~ConfigManager()
+{
+    util::memclear(ui->configList);
+    delete ui;
+}
+
+bool ConfigManager::hasConfigPacks()
+{
     //Warning message: if no installed config packs
     if(ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).isEmpty())
     {
@@ -305,16 +316,10 @@ ConfigManager::ConfigManager(QWidget *parent) :
         msgBox.move( QPoint( screenRect.width()/2 - mSize.width()/2,
             screenRect.height()/2 - mSize.height()/2 ) );
         msgBox.setIcon(QMessageBox::Warning);
-
         msgBox.exec();
+        return false;
     }
-
-}
-
-ConfigManager::~ConfigManager()
-{
-    util::memclear(ui->configList);
-    delete ui;
+    return true;
 }
 
 ///
@@ -383,7 +388,8 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
     currentConfig = item->data(3).toString();
     currentConfigPath = item->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
-    this->accept();
+    if( checkForConfigureTool() )
+        this->accept();
 }
 
 void ConfigManager::on_buttonBox_accepted()
@@ -392,5 +398,68 @@ void ConfigManager::on_buttonBox_accepted()
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
     currentConfigPath = ui->configList->selectedItems().first()->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
-    this->accept();
+    if( checkForConfigureTool() )
+        this->accept();
+}
+
+bool ConfigManager::isConfigured()
+{
+    bool isConfigured = false;
+    QSettings settings( currentConfigPath+"main.ini", QSettings::IniFormat );
+    settings.beginGroup("main");
+    isConfigured = settings.value("application-path-configured", false).toBool();
+    settings.endGroup();
+    return isConfigured;
+}
+
+bool ConfigManager::checkForConfigureTool()
+{
+    #if defined(Q_OS_WIN) || defined(Q_OS_LINUX) || defined(Q_OS_OSX)
+    #if defined(Q_OS_WIN)
+    #define CONFIGURE_TOOL "configure.exe"
+    #elif defined(Q_OS_OSX)
+    #define CONFIGURE_TOOL "configure_osx"
+    #elif defined(Q_OS_LINUX)
+    #define CONFIGURE_TOOL "configure_linux"
+    #endif
+    QString configureToolApp = currentConfigPath + CONFIGURE_TOOL;
+
+    //If configure tool has been detected
+    if( QFile(configureToolApp).exists() )
+    {
+        if( !isConfigured() )
+        {
+            QMessageBox::StandardButton reply =
+                            QMessageBox::information(this, tr("Configuration package is not configured!"),
+                                             tr("Found a configurable configuration package, but it is not configured.\n"
+                                                "Are you want to configure it with configuration tool?")
+                                                +QString("\n\n%1").arg( configureToolApp ),
+                                                     QMessageBox::Yes|QMessageBox::No);
+            if(reply==QMessageBox::Yes)
+            {
+                this->hide();
+                QProcess configureToolProc;
+                configureToolProc.setWorkingDirectory(currentConfigPath);
+                configureToolProc.setProgram( configureToolApp );
+                int reply = configureToolProc.execute( configureToolApp );
+                if(reply != 0)
+                {
+                    this->show();
+                    return false;
+                }
+                //If still not configured
+                if( !isConfigured() )
+                {
+                    this->show();
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    #endif
+    return true;
 }

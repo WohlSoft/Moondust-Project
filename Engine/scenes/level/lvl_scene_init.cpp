@@ -77,7 +77,7 @@ bool LevelScene::setEntrance(int entr)
     }
     else
     {
-        for(int i=0;i<data.doors.size(); i++)
+        for(int i=0; i<data.doors.size(); i++)
         {
             if(data.doors[i].array_id==(unsigned int)entr)
             {
@@ -232,6 +232,34 @@ bool LevelScene::loadConfigs()
     success = ConfigManager::loadLevelEffects();  //!< Effects
         if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
 
+    //Validate all playable characters until use game state!
+    if(gameState)
+    {
+        for(int i=1; i<= numberOfPlayers; i++)
+        {
+            PlayerState st = gameState->getPlayerState(i);
+            if( !ConfigManager::playable_characters.contains(st.characterID) )
+            {
+                         //% "Invalid playable character ID"
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                            + QString::number(st.characterID);
+                errorMsg = _errorString;
+                success = false;
+                break;
+            }
+            else
+            if( !ConfigManager::playable_characters[st.characterID].states.contains(st.stateID) )
+            {
+                         //% "Invalid playable character state ID"
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                            + QString::number(st.stateID);
+                errorMsg = _errorString;
+                success = false;
+                break;
+            }
+        }
+    }
+
     if(!success) exitLevelCode = LvlExit::EXIT_Error;
 abortInit:
     return success;
@@ -239,7 +267,12 @@ abortInit:
 
 bool LevelScene::init_items()
 {
+    //Global script path
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    //Episode path
+    luaEngine.appendLuaScriptPath(data.path);
+    //Level custom path
+    luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
     luaEngine.setCoreFile(":/script/maincore_level.lua");
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
@@ -332,8 +365,9 @@ bool LevelScene::init_items()
         if(!t_sct)
         {
             /*% "Fatal error: Impossible to find start section.\n"
-                "Are you placed player start point (or entrance warp point) too far off of the section(s)?" */
+                "Did you placed player start point (or entrance warp point) too far off of the section(s)?" */
             _errorString = qtTrId("LVL_ERROR_NOSECTIONS");
+            errorMsg = _errorString;
             return false;
         }
 
@@ -445,6 +479,7 @@ bool LevelScene::init_items()
     if(added_players<=0 && !isWarpEntrance)
     {
         _errorString="No defined players!";
+        errorMsg = _errorString;
         return false;
     }
 

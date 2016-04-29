@@ -95,7 +95,7 @@ BuildSrc()
 
 BuildSDL()
 {
-        LatestSDL='SDL-aa9904a56acf'
+        LatestSDL='SDL-6ad89111cb4f'
         UnArch $LatestSDL
 
         ###########SDL2###########

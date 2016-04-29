@@ -33,6 +33,8 @@ WorldNode::WorldNode()
     type=unknown;
     texture.w=0;
     texture.h=0;
+    texture.frame_w=0;
+    texture.frame_h=0;
     texture.texture=0;
     animatorID=0;
     animated=false;
@@ -113,8 +115,8 @@ bool WldTileItem::init()
     setup = ConfigManager::wld_tiles[data.id];
     animated   = setup.animated;
     animatorID = setup.animator_ID;
-    w = texture.w;
-    h = texture.h;
+    w = texture.frame_w;
+    h = texture.frame_h;
     return true;
 }
 
@@ -170,8 +172,8 @@ bool WldSceneryItem::init()
 
     animated   = setup.animated;
     animatorID = setup.animator_ID;
-    w = texture.w;
-    h = texture.h;
+    w = texture.frame_w;
+    h = texture.frame_h;
     return true;
 }
 
@@ -224,8 +226,8 @@ bool WldPathItem::init()
 
     animated   = setup.animated;
     animatorID = setup.animator_ID;
-    w = texture.w;
-    h = texture.h;
+    w = texture.frame_w;
+    h = texture.frame_h;
     return true;
 }
 
@@ -300,12 +302,12 @@ bool WldLevelItem::init()
     animatorID = setup.animator_ID;
     w = ConfigManager::default_grid;
     h = ConfigManager::default_grid;
-    offset_x = (ConfigManager::default_grid/2)-(texture.w/2);
-    offset_y = ConfigManager::default_grid-texture.h;
-    _path_offset_x = (ConfigManager::default_grid/2)-(_path_tex.w/2);
-    _path_offset_y = ConfigManager::default_grid-_path_tex.h;
-    _path_big_offset_x = (ConfigManager::default_grid/2)-(_path_big_tex.w/2);
-    _path_big_offset_y = ConfigManager::default_grid-_path_big_tex.h+(ConfigManager::default_grid/4);
+    offset_x = (ConfigManager::default_grid/2)-(texture.frame_w/2);
+    offset_y = ConfigManager::default_grid-texture.frame_h;
+    _path_offset_x = (ConfigManager::default_grid/2)-(_path_tex.frame_w/2);
+    _path_offset_y = ConfigManager::default_grid-_path_tex.frame_h;
+    _path_big_offset_x = (ConfigManager::default_grid/2)-(_path_big_tex.frame_w/2);
+    _path_big_offset_y = ConfigManager::default_grid-_path_big_tex.frame_h+(ConfigManager::default_grid/4);
     return true;
 }
 
@@ -319,7 +321,7 @@ void WldLevelItem::render(float rx, float ry)
     if(data.bigpathbg)
         GlRenderer::renderTexture(&_path_big_tex, rx+_path_big_offset_x, ry+_path_big_offset_y);
 
-    GlRenderer::renderTexture(&texture, rx+offset_x, ry+offset_y, texture.w, texture.h, a.first, a.second);
+    GlRenderer::renderTexture(&texture, rx+offset_x, ry+offset_y, texture.frame_w, texture.frame_h, a.first, a.second);
 }
 
 

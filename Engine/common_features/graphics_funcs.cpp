@@ -38,24 +38,15 @@
 #endif
 #include <FreeImageLite.h>
 
-#include <QtDebug>
-
-bool GraphicsHelps::initSDLImage()
+void GraphicsHelps::initFreeImage()
 {
     FreeImage_Initialise();
-//    int imgFlags = IMG_INIT_PNG;
-//    if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-//        return false;
-//    }
-    return true;
 }
 
-void GraphicsHelps::closeSDLImage()
+void GraphicsHelps::closeFreeImage()
 {
     FreeImage_DeInitialise();
-    //IMG_Quit();
 }
-
 
 FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
@@ -112,20 +103,6 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     LogDebug(QString("Conv to 32-bit of %1 passed in %2 milliseconds").arg(file).arg(imgConvertElapsed));
     LogDebug(QString("Total Loading of image %1 passed in %2 milliseconds").arg(file).arg(loadingTime.elapsed()));
     #endif
-//    SDL_Surface* img=IMG_Load( file.toUtf8().data() );
-//    if(img)
-//    {
-//        if(img->format->format!=SDL_PIXELFORMAT_RGBA8888)//!=
-//        {
-//            SDL_Surface* formattedSurf = SDL_ConvertSurfaceFormat(img,
-//                                                                  SDL_PIXELFORMAT_RGBA8888,
-//                                                                  0);
-//            SDL_FreeSurface(img);
-//            return formattedSurf;
-//        }
-//    } else {
-//        qWarning()<<"Failed to load image:" << file << " Error string: "<< IMG_GetError();
-//    }
     return img;
 }
 
@@ -167,30 +144,6 @@ SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
         w, h, 32, w*4, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, FI_RGBA_ALPHA_MASK);
     return surf;
 }
-
-
-/*
-void GraphicsHelps::putPixel(SDL_Surface * surface, int x, int y, Uint32 color)
-{
-    if( SDL_MUSTLOCK(surface) )
-            SDL_LockSurface(surface);
-
-    Uint8 * pixel = (Uint8*)surface->pixels;
-    pixel += (y * surface->pitch) + (x * sizeof(Uint32));
-    *((Uint32*)pixel) = color;
-
-    if( SDL_MUSTLOCK(surface) )
-        SDL_UnlockSurface(surface);
-}
-
-Uint32 GraphicsHelps::getPixel(SDL_Surface *surface, int x, int y)
-{
-    Uint8 * pixel = (Uint8*)surface->pixels;
-    pixel += (y * surface->pitch) + (x * sizeof(Uint32));
-    return *((Uint32*)pixel);
-}
-*/
-
 
 void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
 {
@@ -247,31 +200,6 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
     FreeImage_Unload(mask);
 }
 
-//SDL_Surface* GraphicsHelps::QImage_toSDLSurface(const QImage &sourceImage)
-//{
-//    // Ensure that the source image is in the correct pixel format
-//    QImage image = sourceImage;
-//    if (image.format() != QImage::Format_ARGB32)
-//        image = image.convertToFormat(QImage::Format_ARGB32);
-
-//    // QImage stores each pixel in ARGB format
-//    // Mask appropriately for the endianness
-//#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-//    Uint32 amask = 0x000000ff;
-//    Uint32 rmask = 0x0000ff00;
-//    Uint32 gmask = 0x00ff0000;
-//    Uint32 bmask = 0xff000000;
-//#else
-//    Uint32 amask = 0xff000000;
-//    Uint32 rmask = 0x00ff0000;
-//    Uint32 gmask = 0x0000ff00;
-//    Uint32 bmask = 0x000000ff;
-//#endif
-
-//    return SDL_CreateRGBSurfaceFrom((void*)image.constBits(),
-//        image.width(), image.height(), image.depth(), image.bytesPerLine(),
-//        rmask, gmask, bmask, amask);
-//}
 
 bool GraphicsHelps::getImageMetrics(QString imageFile, PGE_Size* imgSize)
 {

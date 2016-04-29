@@ -35,18 +35,30 @@ class ConfigManager : public QDialog
 public:
     explicit ConfigManager(QWidget *parent = 0);
     ~ConfigManager();
+    /*!
+     * \brief Checks availability of configuration packages and spawns message box if config packs are not presented
+     * \return true if config packs are presented, false if no config packs are found
+     */
+    bool hasConfigPacks();
+    //! Currently selected configuration package name
     QString currentConfig;
+    //! Path to currently selected configuration package
     QString currentConfigPath;
+    //! Default theme pack associate with this configuration package
     QString themePack;
+    //! Returns preloaded configuration package
     QString isPreLoaded();
+    //! Is necessary to ask for configuration package or load already preloaded config pack
     void setAskAgain(bool _x);
     bool askAgain;
 
+    bool isConfigured();
 private slots:
     void on_configList_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonBox_accepted();
 
 private:
+    bool checkForConfigureTool();
     Ui::ConfigManager *ui;
 };
 

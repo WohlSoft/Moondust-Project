@@ -34,6 +34,7 @@
 #include <luabind/detail/conversion_policies/lua_proxy_converter.hpp>
 #include <luabind/detail/conversion_policies/native_converter.hpp>
 #include <luabind/detail/conversion_policies/function_converter.hpp>
+#include <luabind/shared_ptr_converter.hpp>
 
 namespace luabind {
 

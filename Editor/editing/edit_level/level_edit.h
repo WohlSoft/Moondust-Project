@@ -87,7 +87,7 @@ public:
 
     LvlScene * scene;
 
-    bool sceneCreated;
+    std::atomic_bool sceneCreated;
     bool isUntitled;
 
     QString curFile;
