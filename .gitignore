@@ -67,6 +67,8 @@ Makefile.*
 /_Misc/SDLMusPlayer/app_process
 /_Misc/SDLMusPlayer/android-build
 /_Misc/SDLMusPlayer/android-libpge_engine.so*
+#NSIS-output file
+/_Misc/dev_scripts/deploy/nsis/pge-online-downloader.exe
 
 #compiled translation
 editor_*.qm

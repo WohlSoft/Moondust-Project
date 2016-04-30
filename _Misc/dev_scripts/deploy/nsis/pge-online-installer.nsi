@@ -497,29 +497,29 @@ LangString DESC_SM ${LANG_ENGLISH} "Add a shortcut to the start menu."
 
 Section "Add PGE path into PATH environment" SecPathEnv
     ;Tell the user
-	DetailPrint "Add PGE path into PATH environment..."
-	;Add PATH variables
-	ReadRegStr $0 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" 'Path'
-	${StrContains} $2 $INSTDIR $0
-	StrCmp $2 "" needtoaddpath
-	  goto pathalreadyadded
-	needtoaddpath:
-	  StrCpy $1 "$0;$INSTDIR"
+    DetailPrint "Add PGE path into PATH environment..."
+    ;Add PATH variables
+    ReadRegStr $0 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" 'Path'
+    ${StrContains} $2 $INSTDIR $0
+    StrCmp $2 "" needtoaddpath
+      goto pathalreadyadded
+    needtoaddpath:
+      StrCpy $1 "$0;$INSTDIR"
     WriteRegStr HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" 'Path' $1
-	pathalreadyadded:
+    pathalreadyadded:
     ;Register component
     StrCpy $NEW "$NEW [SecPathEnv.${SecPathEnv}]"
 SectionEnd
-LangString DESC_PathEnv ${LANG_ENGLISH} "Add PGE path into PATH environment for easier access to GIFs2PNG, PNG2GIFs, LazyFixTool from terminal."
+LangString DESC_PathEnv ${LANG_ENGLISH} "Add PGE path into PATH environment for easier access to GIFs2PNG, PNG2GIFs, LazyFixTool from terminal. WARNING: This option is not recomended on Windows 10!"
 
 Section "Uninstall"
-	DetailPrint "Removing shortcuts..."
-	RMDir /r "$SMPROGRAMS\PGE Project"
-	Delete "$DESKTOP\PGE Editor.lnk"
-	Delete "$DESKTOP\Play PGE Games.lnk"
-	DetailPrint "Removing PGE directory and files inside..."
-	RMDir /r "$INSTDIR"
-    !insertmacro SaveParameter "InstalledComponents" ""
+    DetailPrint "Removing shortcuts..."
+    RMDir /r "$SMPROGRAMS\PGE Project"
+    Delete "$DESKTOP\PGE Editor.lnk"
+    Delete "$DESKTOP\Play PGE Games.lnk"
+    DetailPrint "Removing PGE directory and files inside..."
+    RMDir /r "$INSTDIR"
+    DeleteRegKey ${REG_ROOT} "${REG_KEY}"
 SectionEnd
 
 ;Installed components
