@@ -274,7 +274,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="696"/>
         <source>3 - Portal</source>
-        <translation type="unfinished">3 - Portal</translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="708"/>
@@ -11068,14 +11068,14 @@ The maximum number of Music Boxes is %2.</translation>
         <location filename="../main_window/testing/testing_settings.ui" line="265"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation>PLSET_Character</translation>
+        <translation>Character</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="72"/>
         <location filename="../main_window/testing/testing_settings.ui" line="301"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
-        <translation>PLSET_State</translation>
+        <translation>State</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="80"/>

@@ -274,7 +274,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="696"/>
         <source>3 - Portal</source>
-        <translation type="unfinished">3 - Портал</translation>
+        <translation>3 - Портал</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="708"/>
