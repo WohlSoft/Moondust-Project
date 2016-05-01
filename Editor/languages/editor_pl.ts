@@ -257,7 +257,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="696"/>
         <source>3 - Portal</source>
-        <translation type="unfinished">3 - Portal</translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="708"/>
@@ -5794,12 +5794,12 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2780"/>
         <source>Go to top-right of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>Idź do górnego prawego rogu sekcji</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2792"/>
         <source>Go to right-bottom of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>Idź do prawego dolnego rogu sekcji</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2238"/>
@@ -8156,31 +8156,31 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <location filename="../main_window/testing/testing_settings.ui" line="37"/>
         <location filename="../main_window/testing/testing_settings.ui" line="273"/>
         <source>ch1</source>
-        <translation type="unfinished"></translation>
+        <translation>ch1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="42"/>
         <location filename="../main_window/testing/testing_settings.ui" line="278"/>
         <source>ch2</source>
-        <translation type="unfinished"></translation>
+        <translation>ch2</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="47"/>
         <location filename="../main_window/testing/testing_settings.ui" line="283"/>
         <source>ch3</source>
-        <translation type="unfinished"></translation>
+        <translation>ch3</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="52"/>
         <location filename="../main_window/testing/testing_settings.ui" line="288"/>
         <source>ch4</source>
-        <translation type="unfinished"></translation>
+        <translation>ch4</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="57"/>
         <location filename="../main_window/testing/testing_settings.ui" line="293"/>
         <source>ch5</source>
-        <translation type="unfinished"></translation>
+        <translation>ch5</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="65"/>
@@ -8200,43 +8200,43 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <location filename="../main_window/testing/testing_settings.ui" line="80"/>
         <location filename="../main_window/testing/testing_settings.ui" line="309"/>
         <source>st1</source>
-        <translation type="unfinished"></translation>
+        <translation>st1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="85"/>
         <location filename="../main_window/testing/testing_settings.ui" line="314"/>
         <source>st2</source>
-        <translation type="unfinished"></translation>
+        <translation>st2</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="90"/>
         <location filename="../main_window/testing/testing_settings.ui" line="319"/>
         <source>st3</source>
-        <translation type="unfinished"></translation>
+        <translation>st3</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="95"/>
         <location filename="../main_window/testing/testing_settings.ui" line="324"/>
         <source>st4</source>
-        <translation type="unfinished"></translation>
+        <translation>st4</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="100"/>
         <location filename="../main_window/testing/testing_settings.ui" line="329"/>
         <source>st5</source>
-        <translation type="unfinished"></translation>
+        <translation>st5</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="105"/>
         <location filename="../main_window/testing/testing_settings.ui" line="334"/>
         <source>st6</source>
-        <translation type="unfinished"></translation>
+        <translation>st6</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="110"/>
         <location filename="../main_window/testing/testing_settings.ui" line="339"/>
         <source>st7</source>
-        <translation type="unfinished"></translation>
+        <translation>st7</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="141"/>
@@ -8425,7 +8425,7 @@ Ustawienia nie będą miały efektu na testowaniu, dopóki nie zostanie skończo
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="212"/>
         <source>Show default only</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż tylko domyślne</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="24"/>
