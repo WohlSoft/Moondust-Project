@@ -144,12 +144,14 @@ move ".\%TarGzArName%" "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 SET PGECommon=
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\*.dll"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\license.txt"
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\GPL*.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\LICENSE.*.txt"
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\SDL2_mixer_ext.License.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\languages"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\help"
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt3
-SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\bearer"
-SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
+rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\bearer"
+rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\platforms"
 :noDynamicQt3
@@ -163,6 +165,7 @@ SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\tools"
 SET PGEEngine=
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\pge_engine.exe"
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\Engine.Readme.txt"
+SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\changelog.engine.txt"
 
 SET PGETools=
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\GIFs2PNG.exe"
@@ -173,7 +176,7 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_calibrator.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
-echo Packing of editor data
+echo Packing of Online-Install packages data
 "%SEVENZIP%\7z" a -tzip "install-pge-common-dev-win32.zip" %PGECommon%
 "%SEVENZIP%\7z" a -tzip "install-pge-editor-dev-win32.zip" %PGEEditor%
 "%SEVENZIP%\7z" a -tzip "install-pge-engine-dev-win32.zip" %PGEEngine%
@@ -193,4 +196,3 @@ echo ERROR: 7zip not found: %SEVENZIP%
 echo.
 :exitFrom
 if not "%1"=="nopause" pause
-
