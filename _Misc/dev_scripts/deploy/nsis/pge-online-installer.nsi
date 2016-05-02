@@ -58,7 +58,7 @@ InstallDirRegKey ${REG_ROOT} "${REG_KEY}" "InstallLocation"
 !insertmacro MUI_PAGE_FINISH
 ;Uninstaller pages
 !insertmacro MUI_UNPAGE_CONFIRM
-!insertmacro MUI_UNPAGE_DIRECTORY
+;!insertmacro MUI_UNPAGE_DIRECTORY
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 ;Set the language
@@ -193,7 +193,12 @@ SubSection "Main components" SubSecComp
 		;Set output folder
 		SetOutPath $INSTDIR
 		;Download the file
-		inetc::get "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-common-dev-win32.zip" "common_libs.zip"
+		NSISdl::download "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-common-dev-win32.zip" "common_libs.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it.
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\common_libs.zip" "$OUTDIR"
@@ -226,7 +231,12 @@ SubSection "Main components" SubSecComp
 		;Set output folder
 		SetOutPath $INSTDIR
 		;Download the file
-		inetc::get "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-editor-dev-win32.zip" "editor.zip"
+		NSISdl::download "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-editor-dev-win32.zip" "editor.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it.
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\editor.zip" "$OUTDIR"
@@ -259,7 +269,12 @@ SubSection "Main components" SubSecComp
 		;Set output folder
 		SetOutPath $INSTDIR
 		;Download the file
-		inetc::get "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-engine-dev-win32.zip" "engine.zip"
+		NSISdl::download "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-engine-dev-win32.zip" "engine.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\engine.zip" "$OUTDIR"
@@ -293,7 +308,12 @@ SubSection "Main components" SubSecComp
 		;Delete the previous.
 		Delete "$INSTDIR\manual_editor.html"
 		;Download the file
-		inetc::get "http://wohlsoft.ru/PGE/_downloads/pge_help_standalone.zip" "help.zip"
+		NSISdl::download "http://wohlsoft.ru/PGE/_downloads/pge_help_standalone.zip" "help.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\help.zip" "$OUTDIR"
@@ -312,7 +332,12 @@ SubSection "Main components" SubSecComp
 		;Set output folder
 		SetOutPath $INSTDIR
 		;Download the file
-		inetc::get "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-tools-dev-win32.zip" "tools.zip"
+		NSISdl::download "http://wohlsoft.ru/PGE/_downloads/win32/online-install/install-pge-tools-dev-win32.zip" "tools.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\tools.zip" "$OUTDIR"
@@ -348,7 +373,12 @@ SubSection "Config Packs (Must select one)" SubSecCfg
 		;Set output folder
 		SetOutPath "$INSTDIR\configs\"
 		;Download file
-		inetc::get "http://wohlsoft.ru/docs/_configs/SMBXInt/SMBX_Integration.zip" "SMBXIntegrator.zip"
+		NSISdl::download "http://wohlsoft.ru/docs/_configs/SMBXInt/SMBX_Integration.zip" "SMBXIntegrator.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\SMBXIntegrator.zip" "$OUTDIR"
@@ -371,7 +401,12 @@ SubSection "Config Packs (Must select one)" SubSecCfg
 		;Set Output Path
 		SetOutPath "$INSTDIR\configs\"
 		;Download file
-		inetc::get "http://wohlsoft.ru/docs/_configs/SMBX13/SMBX_13_compatible.zip" "smbxcfg.zip"
+		NSISdl::download "http://wohlsoft.ru/docs/_configs/SMBX13/SMBX_13_compatible.zip" "smbxcfg.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;ExtractIt()
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\smbxcfg.zip" "$OUTDIR"
@@ -389,7 +424,12 @@ SubSection "Config Packs (Must select one)" SubSecCfg
 		;Set output folder
 		SetOutPath "$INSTDIR\configs"
 		;Download the file
-		inetc::get "http://wohlsoft.ru/docs/_configs/A2MBXT/Raocow_talkhaus_full.zip" "raocow.zip"
+		NSISdl::download "http://wohlsoft.ru/docs/_configs/A2MBXT/Raocow_talkhaus_full.zip" "raocow.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it.
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\raocow.zip" "$OUTDIR"
@@ -408,7 +448,12 @@ SubSection "Config Packs (Must select one)" SubSecCfg
 		;Set output folder
 		SetOutPath "$INSTDIR\configs"
 		;Download the file
-		inetc::get "http://wohlsoft.ru/docs/_configs/SMBX_Redrawn/SMBX_Redrawn_full.zip" "redrawn.zip"
+		NSISdl::download "http://wohlsoft.ru/docs/_configs/SMBX_Redrawn/SMBX_Redrawn_full.zip" "redrawn.zip"
+        Pop $R0 ;Get the return value
+          StrCmp $R0 "success" +3
+            MessageBox MB_OK|MB_ICONSTOP "Download failed: $R0"
+            Quit
+
 		;Extract it.
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\redrawn.zip" "$OUTDIR"
@@ -519,7 +564,18 @@ Section "Uninstall"
     Delete "$DESKTOP\Play PGE Games.lnk"
     DetailPrint "Removing PGE directory and files inside..."
     RMDir /r "$INSTDIR"
+    #Remove installer's key
     DeleteRegKey ${REG_ROOT} "${REG_KEY}"
+    DeleteRegKey ${REG_ROOT} "Software\Wohlhabend Networks"
+    #Remove file associations
+    DeleteRegKey HKCU "Software\Classes\.lvlx"
+    DeleteRegKey HKCU "Software\Classes\PGEWohlstand.Level"
+    DeleteRegKey HKCU "Software\Classes\.wldx"
+    DeleteRegKey HKCU "Software\Classes\PGEWohlstand.World"
+    DeleteRegKey HKCU "Software\Classes\.lvl"
+    DeleteRegKey HKCU "Software\Classes\SMBX64.Level"
+    DeleteRegKey HKCU "Software\Classes\.wld"
+    DeleteRegKey HKCU "Software\Classes\SMBX64.World"
 SectionEnd
 
 ;Installed components
