@@ -21,7 +21,7 @@ OutFile "pge-online-downloader.exe"
 Caption "PGE Online Installer (wohlsoft.ru mirror)"
 
 ;Set the text at the bottom, AKA branding text
-BrandingText "tb1024's PGE Online Downloader v0.5.0. Platformer Game Engine is (C) Wohlstand."
+BrandingText "tb1024's PGE Online Downloader v0.5.1. Platformer Game Engine is (C) Wohlstand."
 
 ;Branding images
 !define MUI_WELCOMEFINISHPAGE_BITMAP "pge_editor_installer.bmp"
@@ -241,6 +241,7 @@ SubSection "Main components" SubSecComp
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\editor.zip" "$OUTDIR"
 		DetailPrint "Extracting finished."
+
         StrCmp $IsPortable "0" regMode portableMode
         portableMode:
             WriteINIStr "$INSTDIR\pge_editor.ini" "Main" "force-portable" "true"
@@ -250,7 +251,6 @@ SubSection "Main components" SubSecComp
             DetailPrint "Running the configurator..."
             ExecWait '"$OUTDIR\pge_editor.exe" --install' $0
             DetailPrint "Configurator returned $0"
-            WriteINIStr "$INSTDIR\pge_editor.ini" "Main" "force-portable" "false"
         dirsDone:
 		;Delete the zip.
 		Delete "$OUTDIR\editor.zip"
@@ -288,7 +288,6 @@ SubSection "Main components" SubSecComp
             DetailPrint "Running the configurator..."
             ExecWait '"$OUTDIR\pge_engine.exe" --install' $0
             DetailPrint "Configurator returned $0"
-            WriteINIStr "$INSTDIR\pge_engine.ini" "Main" "force-portable" "false"
         dirsDone:
 		;Delete the zip.
 		Delete "$OUTDIR\engine.zip"
@@ -351,7 +350,6 @@ SubSection "Main components" SubSecComp
             DetailPrint "Running the configurator..."
             ExecWait '"$OUTDIR\pge_calibrator.exe" --install' $0
             DetailPrint "Configurator returned $0"
-            WriteINIStr "$INSTDIR\pge_calibrator.ini" "Main" "force-portable" "false"
         dirsDone:
 		;Delete the zip
 		Delete "$OUTDIR\tools.zip"
@@ -563,7 +561,13 @@ Section "Uninstall"
     Delete "$DESKTOP\PGE Editor.lnk"
     Delete "$DESKTOP\Play PGE Games.lnk"
     DetailPrint "Removing PGE directory and files inside..."
+    #Delete portable configs if presented
+    Delete "$INSTDIR\pge_editor.ini"
+    Delete "$INSTDIR\pge_engine.ini"
+    Delete "$INSTDIR\pge_calibrator.ini"
+    #Delete install directory
     RMDir /r "$INSTDIR"
+    DetailPrint "Removing PGE registry keys..."
     #Remove installer's key
     DeleteRegKey ${REG_ROOT} "${REG_KEY}"
     DeleteRegKey ${REG_ROOT} "Software\Wohlhabend Networks"
@@ -600,7 +604,7 @@ Function .onInit
     doPortableInit:
         StrCpy $IsPortable "1"
     skipPortableInit:
-    
+
     StrCpy $INSTDIR "$PROGRAMFILES\PGE"
     
     ;Detect already-installed preferences
