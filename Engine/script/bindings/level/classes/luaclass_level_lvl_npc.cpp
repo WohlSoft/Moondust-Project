@@ -80,6 +80,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("onHarm", &LVL_Npc::lua_onHarm, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onHarm)
             .def("onTransform", &LVL_Npc::lua_onTransform, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onTransform)
 
+            .def("transformTo", &LVL_Npc::transformTo)
+
             //Functions
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)
             .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)

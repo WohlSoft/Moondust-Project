@@ -318,7 +318,9 @@ SOURCES += \
     scenes/level/lvl_player_switch.cpp \
     script/bindings/level/globalfuncs/luafuncs_level.cpp \
     graphics/render/render_opengl21.cpp \
-    graphics/render/render_swsdl.cpp
+    graphics/render/render_swsdl.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level_blocks.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level_bgo.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -477,7 +479,9 @@ HEADERS  += \
     scenes/level/lvl_player_switch.h \
     script/bindings/level/globalfuncs/luafuncs_level.h \
     graphics/render/render_opengl21.h \
-    graphics/render/render_swsdl.h
+    graphics/render/render_swsdl.h \
+    script/bindings/level/globalfuncs/luafuncs_level_blocks.h \
+    script/bindings/level/globalfuncs/luafuncs_level_bgo.h
 
 FORMS    += \
     data_configs/select_config.ui

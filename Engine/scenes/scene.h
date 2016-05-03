@@ -34,6 +34,38 @@
 
 #include <chrono>
 
+struct LoopTiming
+{
+    inline LoopTiming()
+    {
+        start_render    = 0;
+        stop_render     = 0;
+        doUpdate_render = 0.0f;
+        start_physics   = 0;
+        stop_physics    = 0;
+        start_events    = 0;
+        stop_events     = 0;
+        start_common    = 0;
+    }
+
+    inline Uint32 passedCommonTime()
+    {
+        return SDL_GetTicks() - start_common;
+    }
+
+    Uint32 start_render;
+    Uint32 stop_render;
+    float doUpdate_render;
+
+    Uint32 start_physics;
+    Uint32 stop_physics;
+
+    Uint32 start_events;
+    Uint32 stop_events;
+
+    Uint32 start_common;
+};
+
 class Scene
 {
     void construct();

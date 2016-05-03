@@ -352,8 +352,6 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
     {
         case PGE_Phys_Object::LVLBlock:
         {
-            contacted_blocks[(intptr_t)collided]=collided;
-
             //Don't collide with blocks if disabled!
             if(disableBlockCollision) break;
 
@@ -378,6 +376,8 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 #endif
                 break;
             }
+
+            contacted_blocks[(intptr_t)collided]=collided;
 
             if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
                 ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )

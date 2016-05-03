@@ -73,6 +73,7 @@ public:
     int taskToTransform_t;
     void transformTo(long id, int type=0);
     void transformTo_x(long id);
+    LVL_Block* transformedFromBlock;
 
     void update(float tickTime);
     void render(double camX, double camY);

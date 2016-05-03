@@ -70,7 +70,7 @@ public:
 
     int taskToTransform;
     int taskToTransform_t;
-    void transformTo(long id, int type=0);
+    void transformTo(long id, int type=2);
     void transformTo_x(long id);
 
     void hit(directions _dir=up);

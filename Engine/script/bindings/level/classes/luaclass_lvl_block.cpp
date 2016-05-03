@@ -22,12 +22,13 @@ luabind::scope LVL_Block::bindToLua()
 {
     using namespace luabind;
     return
-        class_<LVL_Block, PGE_Phys_Object, detail::null_type, LVL_Block>("Block")
+        class_<LVL_Block, PGE_Phys_Object, detail::null_type, LVL_Block>("BaseBlock")
             .def(constructor<>())
             //Functions
             .def("remove", &LVL_Block::destroy)
             .def("hit", static_cast<void(LVL_Block::*)(LVL_Block::directions)>(&LVL_Block::hit))
             .def("hit", static_cast<void(LVL_Block::*)(bool, LVL_Player*, int)>(&LVL_Block::hit))
+            .def("transformTo", &LVL_Block::transformTo)
 
             //Properties
             .property("id", &LVL_Block::lua_getID)
@@ -35,7 +36,8 @@ luabind::scope LVL_Block::bindToLua()
             .property("contentNPC_ID", &LVL_Block::lua_contentID, &LVL_Block::lua_setContentID)
             .property("invisible", &LVL_Block::lua_invisible, &LVL_Block::lua_setInvisible)
             .property("slippery", &LVL_Block::lua_slippery, &LVL_Block::lua_setSlippery)
-            .property("isSolid", &LVL_Block::lua_isSolid);
+            .property("isSolid", &LVL_Block::lua_isSolid)
+            .def_readonly("is_destroyed", &LVL_Block::destroyed);
 }
 
 

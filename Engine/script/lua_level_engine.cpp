@@ -13,6 +13,8 @@
 #include "bindings/level/classes/luaclass_level_playerposdetector.h"
 #include "bindings/level/classes/luaclass_level_contact_detector.h"
 
+#include "bindings/level/globalfuncs/luafuncs_level_blocks.h"
+#include "bindings/level/globalfuncs/luafuncs_level_bgo.h"
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_npc.h"
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_player.h"
 #include "bindings/level/globalfuncs/luafuncs_level.h"
@@ -136,6 +138,8 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_ClassWrapper_LVL_NPC::HarmEvent_bindToLua(),
         Binding_Level_ClassWrapper_LVL_NPC::KillEvent_bindToLua(),
         Binding_Level_GlobalFuncs_Player::bindToLua(),
+        Binding_Level_GlobalFuncs_BLOCKS::bindToLua(),
+        Binding_Level_GlobalFuncs_BGO::bindToLua(),
         Binding_Level_GlobalFuncs_NPC::bindToLua(),
         Binding_Level_CommonFuncs::bindToLua(),
         LVL_Block::bindToLua(),

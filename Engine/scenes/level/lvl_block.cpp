@@ -77,7 +77,26 @@ void LVL_Block::transformTo(long id, int type)
     }
     if(type==1)//Other NPC
     {
-        // :-P
+        LevelNPC def = FileFormats::CreateLvlNpc();
+        def.id=id;
+        def.x = round(posX());
+        def.y = round(posY());
+        def.direct = 0;
+        def.generator = false;
+        def.layer = data.layer;
+        def.attach_layer = "";
+        def.event_activate = "";
+        def.event_die = "";
+        def.event_talk = "";
+        def.event_emptylayer = "";
+        LVL_Npc * npc = _scene->spawnNPC(def,
+                            LevelScene::GENERATOR_APPEAR,
+                            LevelScene::SPAWN_UP, true);
+        if(npc)
+        {
+            npc->transformedFromBlock = this;
+        }
+        destroy( false );
     }
 }
 
@@ -447,7 +466,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
     if((setup->destroyable)&&(data.npc_id==0))
     {
-        destroy(true);
+        destroy( true );
         return;
     }
 
@@ -558,13 +577,14 @@ void LVL_Block::hit(bool isUp, LVL_Player *, int numHits)
 
 void LVL_Block::destroy(bool playEffect)
 {
-    (void)playEffect;
-
-    if(setup->destroy_sound_id==0)
-        PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
-    else
-        PGE_Audio::playSound(setup->destroy_sound_id);
-    destroyed=true;
+    if( playEffect )
+    {
+        if( setup->destroy_sound_id == 0 )
+            PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
+        else
+            PGE_Audio::playSound(setup->destroy_sound_id);
+    }
+    destroyed = true;
     QString oldLayer=data.layer;
     _scene->layers.removeRegItem(data.layer, this);
     data.layer="Destroyed Blocks";

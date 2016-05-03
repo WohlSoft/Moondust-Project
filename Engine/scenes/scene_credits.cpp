@@ -205,26 +205,40 @@ void CreditsScene::render()
 
 int CreditsScene::exec()
 {
-    //Level scene's Loop
-    Uint32 start_render;
     doExit=false;
+    LoopTiming times;
+    times.start_common = SDL_GetTicks();
+    bool frameSkip = g_AppSettings.frameSkip;
 
     GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black background color
 
     while(running)
     {
-        start_render=SDL_GetTicks();
+        times.start_common = SDL_GetTicks();
 
         processEvents();
         update();
-        render();
 
-        GlRenderer::flush();
-        GlRenderer::repaint();
-
-        if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks()-start_render)))
+        times.stop_render=0;
+        times.start_render=0;
+        /**********************Process rendering of stuff****************************/
+        if((PGE_Window::vsync)||(times.doUpdate_render<=0.f))
         {
-            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_render) );
+            times.start_render = SDL_GetTicks();
+            /**********************Render everything***********************/
+            render();
+            GlRenderer::flush();
+            GlRenderer::repaint();
+            times.stop_render=SDL_GetTicks();
+            times.doUpdate_render = frameSkip ? uTickf+(times.stop_render-times.start_render) : 0;
+        }
+        times.doUpdate_render -= uTickf;
+        if(times.stop_render < times.start_render) { times.stop_render=0; times.start_render=0; }
+        /****************************************************************************/
+
+        if( (!PGE_Window::vsync) && ( uTick > (signed)times.passedCommonTime() ) )
+        {
+            SDL_Delay( uTick - times.passedCommonTime() );
         }
     }
     return 0;

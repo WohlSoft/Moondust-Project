@@ -30,6 +30,8 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     animator_ID=0;
     killed=false;
 
+    transformedFromBlock = NULL;
+
     isActivated=false;
     deActivatable=true;
     reSpawnable=true;

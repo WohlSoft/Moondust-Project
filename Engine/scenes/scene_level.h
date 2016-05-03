@@ -386,6 +386,9 @@ public:
     LVL_NpcsArray& getNpcs();
     LVL_NpcsArray& getActiveNpcs();
 
+    LVL_BlocksArray& getBlocks();
+    LVL_BgosArray&   getBGOs();
+
 private:
     IndexTree tree;
 

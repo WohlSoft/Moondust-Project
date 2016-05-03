@@ -22,7 +22,7 @@ luabind::scope LVL_Bgo::bindToLua()
 {
     using namespace luabind;
     return
-        class_<LVL_Bgo, PGE_Phys_Object, detail::null_type, LVL_Bgo>("BGO")
+        class_<LVL_Bgo, PGE_Phys_Object, detail::null_type, LVL_Bgo>("BaseBGO")
             .def(constructor<>())
             //Properties
             .property("id", &LVL_Bgo::lua_getID);

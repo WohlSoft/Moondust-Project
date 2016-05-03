@@ -669,22 +669,8 @@ int LevelScene::exec()
     doExit=false;
     running=true;
 
-    //Level scene's Loop
-    Uint32 start_render=0;
-    Uint32 stop_render=0;
-    float doUpdate_render=0;
-
-    Uint32 start_physics=0;
-    Uint32 stop_physics=0;
-
-    Uint32 start_events=0;
-    Uint32 stop_events=0;
-    //float junkTicks=0.0f;
-
-    //StTimePt start_common=StClock::now();
-    Uint32 start_common = SDL_GetTicks();
-    //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
-     #define PassedTime (SDL_GetTicks()-start_common)
+    LoopTiming times;
+    times.start_common = SDL_GetTicks();
 
     //Set black color clearer
     GlRenderer::setClearColor(0.f, 0.f, 0.f, 1.0f);
@@ -697,6 +683,7 @@ int LevelScene::exec()
         if(i==0) cameras[i].cur_section->playMusic();
         cameras[i].cur_section->initBG();
     }
+
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     player1Controller->resetControls();
     player2Controller->resetControls();
@@ -708,52 +695,49 @@ int LevelScene::exec()
 
     while(running)
     {
-        //start_common = StClock::now();
-        start_common = SDL_GetTicks();
+        times.start_common = SDL_GetTicks();
 
-        debug_TimeCounted+=uTickf;
+        debug_TimeCounted += uTickf;
 
-        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) times.start_events = SDL_GetTicks();
         /**********************Update common events and controllers******************/
         processEvents();
         /****************************************************************************/
-        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
-        if(PGE_Window::showDebugInfo) debug_event_delay = (stop_events-start_events);
+        if(PGE_Window::showDebugInfo) times.stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay = (times.stop_events-times.start_events);
 
-        start_physics=SDL_GetTicks();
+        times.start_physics=SDL_GetTicks();
         /**********************Update physics and game progess***********************/
         update();
         /****************************************************************************/
-        stop_physics=SDL_GetTicks();
-        if(PGE_Window::showDebugInfo) debug_phys_delay  = (stop_physics-start_physics);
+        times.stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay  = (times.stop_physics-times.start_physics);
 
-        stop_render=0;
-        start_render=0;
+        times.stop_render=0;
+        times.start_render=0;
         /**********************Process rendering of stuff****************************/
-        if((PGE_Window::vsync)||(doUpdate_render<=0.f))
+        if((PGE_Window::vsync)||(times.doUpdate_render<=0.f))
         {
-            start_render = SDL_GetTicks();
+            times.start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
             GlRenderer::flush();
             GlRenderer::repaint();
-            stop_render=SDL_GetTicks();
-            doUpdate_render = frameSkip? uTickf+(stop_render-start_render) : 0;
-            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
+            times.stop_render=SDL_GetTicks();
+            times.doUpdate_render = frameSkip? uTickf+(times.stop_render-times.start_render) : 0;
+            if(PGE_Window::showDebugInfo) debug_render_delay = times.stop_render-times.start_render;
         }
-        doUpdate_render -= uTickf;
-        if(stop_render < start_render) { stop_render=0; start_render=0; }
+        times.doUpdate_render -= uTickf;
+        if(times.stop_render < times.start_render) { times.stop_render=0; times.start_render=0; }
         /****************************************************************************/
 
-        //printf("U-%08.5f, P-%08.5f, J-%08.5f", uTickf, PassedTime, junkTicks);
-        //fflush(stdout);
-        if( (!PGE_Window::vsync) && (uTick > (signed)PassedTime) )
+        if( (!PGE_Window::vsync) && (uTick > (signed)times.passedCommonTime()) )
         {
             if(!slowTimeMode)
-                SDL_Delay( uTick-PassedTime );
+                SDL_Delay( uTick-times.passedCommonTime() );
             else
-                SDL_Delay( uTick-PassedTime+300 );
-        } else if(slowTimeMode) SDL_Delay( uTick-PassedTime+300 );
+                SDL_Delay( uTick - times.passedCommonTime() + 300 );
+        } else if(slowTimeMode) SDL_Delay( uTick - times.passedCommonTime() + 300 );
     }
     return exitLevelCode;
 }
@@ -830,6 +814,15 @@ LevelScene::LVL_NpcsArray &LevelScene::getActiveNpcs()
     return active_npcs;
 }
 
+LevelScene::LVL_BlocksArray &LevelScene::getBlocks()
+{
+    return blocks;
+}
+
+LevelScene::LVL_BgosArray &LevelScene::getBGOs()
+{
+    return bgos;
+}
 
 LevelScene::LVL_PlayersArray& LevelScene::getPlayers()
 {

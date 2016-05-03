@@ -81,16 +81,30 @@ void LVL_Npc::transformTo(long id, int type)
 
     if(type==2)//block
     {
-    //        transformTask_block t;
-    //        t.block = this;
-    //        t.id=id;
-    //        t.type=type;
-
-        //_scene->block_transforms.push_back(t);
+        LevelBlock def = FileFormats::CreateLvlBlock();
+        if( transformedFromBlock )
+        {
+            def = transformedFromBlock->data;
+            _scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
+            _scene->layers.registerItem(def.layer, transformedFromBlock);
+            transformedFromBlock->setPos( round(posX()), round(posY()) );
+            transformedFromBlock->destroyed = false;
+            transformedFromBlock->transformTo(id, 2);
+        } else {
+            def.x = round( posX() );
+            def.y = round( posY() );
+            def.layer = data.layer;
+            def.w = round( width() );
+            def.h = round( height() );
+            def.id = id;
+            _scene->spawnBlock(def);
+        }
+        this->unregister();
     }
+
     if(type==1)//Other NPC
     {
-        // :-P
+        transformTo_x(id);
     }
 }
 
