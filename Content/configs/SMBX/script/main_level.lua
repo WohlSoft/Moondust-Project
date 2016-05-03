@@ -2,6 +2,9 @@
 -- utils
 smbx_utils = require("utils/smbx_utils")
 
+-- P-Switch implementation
+pSwitch = require("utils/p-switch")
+
 -- ID's of switches
 GREEN_SW  = 1
 RED_SW    = 2
@@ -17,6 +20,11 @@ function plr_healthUp(plr)
                 plr.health = 2
         end
     end
+end
+
+function onLoop(tickTime)
+    -- Renderer.printText("Oh, shit! "..tostring(tickTime), 10, 10, 0, 15, 0xFF0000FF)
+    pSwitch.process(tickTime)
 end
 
 -- Processes player powerup system
@@ -89,6 +97,21 @@ function processPlayerHarm(plr, harmEvent)
         Audio.playSoundByRole(SoundRoles.PlayerHarm)
     end
 end
+
+-- is block a bricks?
+function block_isBricks(blockID)
+    if(blockID==4)then
+        return true
+    elseif(blockID==188)then
+        return true
+    elseif(blockID==60)then
+        return true
+    elseif(blockID==90)then
+        return true
+    end
+    return false
+end
+
 
 -- is NPC a coin?
 function npc_isCoin(npcID)

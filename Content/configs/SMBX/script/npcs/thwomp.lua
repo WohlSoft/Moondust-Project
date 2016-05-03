@@ -6,10 +6,12 @@ local AI_WAITING_ON_GROUND = 2
 local AI_MOVING_UP = 3
 
 function thwomp:initProps()
-
     -- Currents
     self.cur_mode = AI_WATCHING
     self.cur_wait_ticks = 0
+    self.npc_obj.y = self.initial_y
+    self.npc_obj.speedX = 0
+    self.npc_obj.speedY = 0
 end
 
 function thwomp:__init(npc_obj)

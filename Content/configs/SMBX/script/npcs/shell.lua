@@ -16,6 +16,7 @@ end
 
 function shell:__init(npc_obj)
     self.npc_obj = npc_obj
+    self.contacts = npc_obj:installContactDetector()
     self:initProps()
 end
 
@@ -24,17 +25,34 @@ function shell:onActivated()
 end
 
 function shell:onLoop(tickTime)
+    if(self.cur_mode == AI_RUNNING)then
+        if(self.contacts:detected())then
+            local NPCs= self.contacts:getNPCs()
+            for K,Npc in pairs(NPCs) do
+                if(npc_isShell(Npc.id))then
+                    if(Npc.controller.cur_mode == AI_RUNNING)then
+                        self.npc_obj:kill(NPC_DAMAGE_BY_KICK)
+                    end
+                end
+                Npc:kill(NPC_DAMAGE_BY_KICK)
+            end
+        end
+    end
 end
 
 function shell:onHarm(harmEvent)
-    harmEvent.cancel=true
-    harmEvent.damage=0
-    self:toggleState()
+    if( (harmEvent.reason_code ~= BaseNPC.DAMAGE_LAVABURN) and (harmEvent.reason_code ~= BaseNPC.DAMAGE_BY_KICK) )then
+        harmEvent.cancel=true
+        harmEvent.damage=0
+        self:toggleState()
+    end
 end
 
 function shell:onKill(killEvent)
-    killEvent.cancel=true
-    self:toggleState()
+    if( (killEvent.reason_code ~= BaseNPC.DAMAGE_LAVABURN) and (killEvent.reason_code ~= BaseNPC.DAMAGE_BY_KICK) )then
+        killEvent.cancel=true
+        self:toggleState()
+    end
 end
 
 function shell:toggleState()
