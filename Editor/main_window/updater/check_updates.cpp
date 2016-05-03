@@ -90,10 +90,10 @@ static int Month2Code(QString &mon)
         return 1;
 }
 
-static int BuildDateToTimestamp(const char *buildTime)
+static unsigned int BuildDateToTimestamp(const char *buildTime)
 {
     QString src(buildTime);
-    int result=0;
+    unsigned int result=0;
     QDate date;
     QTime time;
     int years = 0;
@@ -103,10 +103,11 @@ static int BuildDateToTimestamp(const char *buildTime)
     int minutes = 0;
     int seconds = 0;
 
+    src = src.simplified();
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-');
+    QStringList datetime = src.split('-', QString::SkipEmptyParts);
 
     for(int i=0; i<datetime.size(); i++)
     {
@@ -135,9 +136,9 @@ static int BuildDateToTimestamp(const char *buildTime)
     return result;
 }
 
-static int DatetimeToTimestamp(QString src)
+static unsigned int DatetimeToTimestamp(QString src)
 {
-    int result=0;
+    unsigned int result=0;
     QDate date;
     QTime time;
     int years = 0;
@@ -147,10 +148,11 @@ static int DatetimeToTimestamp(QString src)
     int minutes = 0;
     int seconds = 0;
 
+    src = src.simplified();
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-');
+    QStringList datetime = src.split('-', QString::SkipEmptyParts);
 
     for(int i=0; i<datetime.size(); i++)
     {
