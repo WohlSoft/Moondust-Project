@@ -29,6 +29,8 @@ luabind::scope LVL_Block::bindToLua()
             .def("hit", static_cast<void(LVL_Block::*)(LVL_Block::directions)>(&LVL_Block::hit))
             .def("hit", static_cast<void(LVL_Block::*)(bool, LVL_Player*, int)>(&LVL_Block::hit))
             .def("transformTo", &LVL_Block::transformTo)
+            .def_readonly("transformedFromBlockID", &LVL_Block::transformedFromBlockID)
+            .def_readonly("transformedFromNpcID", &LVL_Block::transformedFromNpcID)
 
             //Properties
             .property("id", &LVL_Block::lua_getID)

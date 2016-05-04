@@ -81,6 +81,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("onTransform", &LVL_Npc::lua_onTransform, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onTransform)
 
             .def("transformTo", &LVL_Npc::transformTo)
+            .def_readonly("transformedFromBlockID", &LVL_Npc::transformedFromBlockID)
+            .def_readonly("transformedFromNpcID", &LVL_Npc::transformedFromNpcID)
 
             //Functions
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)

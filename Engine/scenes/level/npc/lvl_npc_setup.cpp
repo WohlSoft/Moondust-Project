@@ -90,6 +90,8 @@ void LVL_Npc::transformTo(long id, int type)
             transformedFromBlock->setPos( round(posX()), round(posY()) );
             transformedFromBlock->destroyed = false;
             transformedFromBlock->transformTo(id, 2);
+            transformedFromBlock->transformedFromNpcID = data.id;
+            transformedFromBlock->setCenterPos(posRect.center().x(), posRect.center().y());
         } else {
             def.x = round( posX() );
             def.y = round( posY() );
@@ -97,7 +99,12 @@ void LVL_Npc::transformTo(long id, int type)
             def.w = round( width() );
             def.h = round( height() );
             def.id = id;
-            _scene->spawnBlock(def);
+            LVL_Block* res = _scene->spawnBlock(def);
+            if(res)
+            {
+                res->transformedFromNpcID = data.id;
+                res->setCenterPos(posRect.center().x(), posRect.center().y());
+            }
         }
         this->unregister();
     }
@@ -128,7 +135,8 @@ void LVL_Npc::transformTo_x(long id)
         if(!ConfigManager::lvl_npc_indexes.contains(id))
             return;
         setup = &ConfigManager::lvl_npc_indexes[id];
-        _npc_id=id;
+        transformedFromNpcID = _npc_id;
+        _npc_id = id;
     } else {
         _npc_id=id;
         posRect.setPos(data.x, data.y);

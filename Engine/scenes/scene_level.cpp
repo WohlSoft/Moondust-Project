@@ -498,14 +498,20 @@ void LevelScene::render()
     {
         //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
-        int dpos=100;
-        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\nNPC's: %5, Active %6")
+        int dpos=60;
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\n"
+                                       "NPC's: %5, Active %6; BLOCKS: %7")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
                                .arg(debug_player_foots)
                                .arg(uTickf)
                                .arg(npcs.size())
-                               .arg(active_npcs.size()), 10,dpos);
+                               .arg(active_npcs.size())
+                               .arg(blocks.size()), 10, dpos);
+        dpos+=35;
+        FontManager::printText(QString("Vizible objects: %1")
+                               .arg(!cameras.isEmpty() ? cameras[0].renderObjects_count() : 0 ), 10, dpos);
+
         dpos+=35;
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")

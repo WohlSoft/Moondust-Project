@@ -47,6 +47,10 @@ LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
 
     taskToTransform=-1;
     taskToTransform_t=0;
+
+    transformedFromBlockID = -1;
+    transformedFromNpcID = -1;
+
     _isInited=false;
 }
 
@@ -95,6 +99,8 @@ void LVL_Block::transformTo(long id, int type)
         if(npc)
         {
             npc->transformedFromBlock = this;
+            npc->transformedFromBlockID = data.id;
+            npc->setCenterPos(posRect.center().x(), posRect.center().y());
         }
         destroy( false );
     }
@@ -118,6 +124,7 @@ void LVL_Block::transformTo_x(long id)
             if(_scene->switch_blocks.contains(setup->switch_ID))
                 _scene->switch_blocks[setup->switch_ID].removeAll(this);
         }
+        transformedFromBlockID = data.id;//Remember transform source
     } else
         newSetup = &ConfigManager::lvl_block_indexes[data.id];
     data.id = id;

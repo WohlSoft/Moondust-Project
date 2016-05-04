@@ -11,13 +11,29 @@ function p_switch.toggle()
     for K,Blk in pairs(allBlocks)do
         if( (not Blk.is_destroyed) and (Blk.contentNPC_ID == 0) )then
             if(Blk.id==4)then
-                Blk:transformTo(10, 1)
+                if(Blk.transformedFromNpcID==251)then
+                    Blk:transformTo(251, 1)
+                elseif(Blk.transformedFromNpcID==252)then
+                    Blk:transformTo(252, 1)
+                elseif(Blk.transformedFromNpcID==253)then
+                    Blk:transformTo(253, 1)
+                else
+                    Blk:transformTo(10, 1)
+                end
             elseif(Blk.id == 188)then
                 Blk:transformTo(88, 1)
             elseif(Blk.id == 60)then
                 Blk:transformTo(88, 1)
             elseif(Blk.id == 89)then
-                Blk:transformTo(33, 1)
+                if(Blk.transformedFromNpcID==258)then
+                    Blk:transformTo(258, 1)
+                else
+                    Blk:transformTo(33, 1)
+                end
+            elseif(Blk.id == 280)then
+                Blk:transformTo(103, 1)
+            elseif(Blk.id == 293)then
+                Blk:transformTo(138, 1)
             end
         end
     end
@@ -30,8 +46,20 @@ function p_switch.toggle()
         elseif(Npc.id==258)then
             Npc:transformTo(89, 2)
         elseif(Npc.id==88)then
-            Npc:transformTo(60, 2)
+            if(Npc.transformedFromBlockID==60)then
+                Npc:transformTo(60, 2)
+            else
+                Npc:transformTo(188, 2)
+            end
         elseif(Npc.id==103)then
+            Npc:transformTo(280, 2)
+        elseif(Npc.id==138)then
+            Npc:transformTo(293, 2)
+        elseif(Npc.id==251)then
+            Npc:transformTo(4, 2)
+        elseif(Npc.id==252)then
+            Npc:transformTo(4, 2)
+        elseif(Npc.id==253)then
             Npc:transformTo(4, 2)
         end
     end

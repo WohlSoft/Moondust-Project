@@ -25,5 +25,8 @@ for((i=329,r=71,c=0;i<=400;i+=1,c+=1)); do printf "[tile-$i]\nimage=tile-$i.gif\
 
 for((i=329;i<=400;i+=1)); do cp dummy_tile.gif tile-$i.gif; done
 
+for((i=191;i<=200;i+=1)); do cp dummy_bgo.gif background-$i.gif; done
+for((i=191;i<=200;i+=1)); do cp dummy_bgom.gif background-"$i"m.gif; done
+
 
 

@@ -31,6 +31,8 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     killed=false;
 
     transformedFromBlock = NULL;
+    transformedFromBlockID = -1;
+    transformedFromNpcID = -1;
 
     isActivated=false;
     deActivatable=true;

@@ -74,6 +74,8 @@ public:
     void transformTo(long id, int type=0);
     void transformTo_x(long id);
     LVL_Block* transformedFromBlock;
+    int transformedFromBlockID;
+    int transformedFromNpcID;
 
     void update(float tickTime);
     void render(double camX, double camY);
