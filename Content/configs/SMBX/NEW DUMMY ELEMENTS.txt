@@ -13,3 +13,17 @@ Total BGOs usable: "background-1" to "background-200" (background 201 is not usa
 
 There are no additional level-backgrounds ("background2-XX") usable, though.
 
+
+
+
+Bash loops:
+
+for((i=191;i<=200;i+=1)); do printf "[background-$i]\nimage=\"background-$i.gif\"\nname=\"Dummy BGO #$i\"\ngroup=\"Dummy BGOs\"\ncategory=\"Dummy BGOs\"\nview=background\nanimated=0\nframes=1\nsmbx64-sort-priority=0\n\n"; done;
+
+
+for((i=329,r=71,c=0;i<=400;i+=1,c+=1)); do printf "[tile-$i]\nimage=tile-$i.gif\nrow=$r\ncol=$c\n\n"; if [ $c -eq 4 ]; then c=-1; ((r++)); fi; done;
+
+for((i=329;i<=400;i+=1)); do cp dummy_tile.gif tile-$i.gif; done
+
+
+
