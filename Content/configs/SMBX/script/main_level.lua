@@ -1,6 +1,8 @@
-
 -- utils
 smbx_utils = require("utils/smbx_utils")
+
+-- Item Types (Is coin, shell, radish, fire plant, etc.) Checker
+itemTypes = require("utils/item_types")
 
 -- P-Switch implementation
 pSwitch = require("utils/p-switch")
@@ -98,100 +100,32 @@ function processPlayerHarm(plr, harmEvent)
     end
 end
 
--- is block a bricks?
-function block_isBricks(blockID)
-    if(blockID==4)then
-        return true
-    elseif(blockID==188)then
-        return true
-    elseif(blockID==60)then
-        return true
-    elseif(blockID==90)then
-        return true
-    end
-    return false
-end
-
-
 -- is NPC a coin?
 function npc_isCoin(npcID)
-    if(npcID==10)then
-        return true
-    elseif(npcID==33)then
-        return true
-    elseif(npcID==88)then
-        return true
-    elseif(npcID==103)then
-        return true
-    elseif(npcID==138)then
-        return true
-    elseif(npcID==152)then
-        return true
-    elseif((npcID>=251) and (npcID<=253))then
-        return true
-    elseif(npcID==258)then
-        return true
-    elseif(npcID==274)then
-        return true
-    end
-    return false
+    return itemTypes.isNpcCoin(npcID)
 end
 
 -- Is NPC a Radish?
 function npc_isRadish(npcID)
-    if(npcID==9)then
-        return true
-    elseif(npcID==184)then
-        return true
-    elseif(npcID==185)then
-        return true
-    elseif(npcID==249)then
-        return true
-    end
-    return false
+    return itemTypes.isNpcRadish(npcID)
 end
 
 -- Is NPC a Fire Plant?
 function npc_isFirePlant(npcID)
-    if(npcID==14)then
-        return true
-    elseif(npcID==182)then
-        return true
-    elseif(npcID==183)then
-        return true
-    end
-    return false
+    return itemTypes.isNpcFirePlant(npcID)
 end
 
 -- Is NPC an Ice Plant?
 function npc_isIcePlant(npcID)
-    if(npcID==264)then
-        return true
-    elseif(npcID==277)then
-        return true
-    end
-    return false
+    return itemTypes.isNpcIcePlant(npcID)
 end
 
--- Is NPC a Fire Plant?
+-- Is NPC a Shell?
 function npc_isShell(npcID)
-    if(npcID==5)then
-        return true
-    elseif(npcID==7)then
-        return true
-    elseif(npcID==24)then
-        return true
-    elseif(npcID==73)then
-        return true
-    elseif((npcID>=113)and(npcID<=116))then
-        return true
-    elseif(npcID==172)then
-        return true
-    elseif(npcID==174)then
-        return true
-    --elseif(npcID==195)then
-    --    return true
-    end
-    return false
+    return itemTypes.isNpcShell(npcID)
 end
 
+-- is block a bricks?
+function block_isBricks(blockID)
+    return itemTypes.isBlockBrick(npcID)
+end
