@@ -1,0 +1,15 @@
+by Sednaiur » Mon May 02, 2016 9:04 pm 
+
+Sorry about the delay.
+Here are the new elements and their specs.
+The amount of elements are as follows (all of them are un-animated and 32x32 pixels in size):
+
+Total worldmap tiles usable: "tile-1" to "tile-400" (tile 401 is not usable anymore). There are 72 new tiles.
+Total paths usable: "path-1" to "path-100" (path 101 is not usable anymore). There are 68 new paths, all using a mask/transparency.
+Total levels usable: "level-1" to "level-100" (level 101 is not usable anymore). There are 68 new levels, all using a mask/transparency.
+Total sceneries usable: "scene-1" to "scene-100" (scene 101 is not usable anymore). There are 35 new sceneries, all using a mask/transparency.
+Total blocks usable: "block-1" to "block-700" (block 701 is not usable anymore). There are 62 new blocks which are all using a mask/transparency.
+Total BGOs usable: "background-1" to "background-200" (background 201 is not usable anymore). There are 10 new BGOs which are all using a mask/transparency.
+
+There are no additional level-backgrounds ("background2-XX") usable, though.
+
