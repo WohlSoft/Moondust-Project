@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     Music/audiocvt_sox_gui.cpp \
     common_features/app_path.cpp \
     files/episode_box.cpp \
-    common_features/logger.cpp
+    common_features/logger.cpp \
+    EpisodeCvt/episode_converter.cpp
 
 HEADERS  += main_window.h \
     ../_common/PGE_File_Formats/file_formats.h \
@@ -88,7 +89,9 @@ HEADERS  += main_window.h \
     version.h \
     files/episode_box.h \
     common_features/logger.h \
-    common_features/logger_sets.h
+    common_features/logger_sets.h \
+    EpisodeCvt/episode_converter.h
 
 FORMS    += main_window.ui \
-    Music/audiocvt_sox_gui.ui
+    Music/audiocvt_sox_gui.ui \
+    EpisodeCvt/episode_converter.ui

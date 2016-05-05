@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>415</width>
-    <height>270</height>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
      <x>10</x>
      <y>100</y>
      <width>391</width>
-     <height>121</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="title">
@@ -59,12 +59,25 @@
      <string>Batch conversion of musics</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="episode_converter">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>70</y>
+      <width>391</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Levels and Episodes format converting/fixing</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="quitOut">
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>230</y>
+     <y>300</y>
      <width>85</width>
      <height>26</height>
     </rect>

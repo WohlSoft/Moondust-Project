@@ -20,6 +20,8 @@ private slots:
 
     void on_music_converter_batch_clicked();
 
+    void on_episode_converter_clicked();
+
 private:
     Ui::MaintainerMain *ui;
 };

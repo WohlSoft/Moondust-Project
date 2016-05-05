@@ -27,3 +27,8 @@ void MaintainerMain::on_music_converter_batch_clicked()
     mus.exec();
     this->show();
 }
+
+void MaintainerMain::on_episode_converter_clicked()
+{
+
+}
