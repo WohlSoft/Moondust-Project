@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
     if(Mix_OpenAudio(44100, AUDIO_S16, 2, 4096)==-1)
         error(Mix_GetError());
 
+    //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
+    MIX_SetLockMIDIArgs(1);
+
     MainWindow w;
 
     //Set acception of external file openings

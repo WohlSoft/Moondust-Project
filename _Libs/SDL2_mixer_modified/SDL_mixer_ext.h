@@ -689,6 +689,9 @@ extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
 
 extern DECLSPEC int SDLCALL MIX_SetMidiDevice(int device);
 
+/* Disables support of MIDI file arguments */
+extern DECLSPEC void SDLCALL MIX_SetLockMIDIArgs(int lock_midiargs);
+
 /* We'll use SDL for reporting errors */
 #define Mix_SetError    SDL_SetError
 #define Mix_GetError    SDL_GetError

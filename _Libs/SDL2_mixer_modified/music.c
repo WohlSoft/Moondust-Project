@@ -95,7 +95,11 @@ static int music_volume = MIX_MAX_VOLUME;
 static int mididevice_next    = MIDI_ADLMIDI;
 static int mididevice_current = MIDI_ADLMIDI;
 
-static int need_reset_midi = 1;//Reset MIDI settings every file reopening (to allow right argument passing)
+/* Reset MIDI settings every file reopening (to allow right argument passing) */
+static int need_reset_midi = 1;
+
+/* Denies MIDI arguments */
+static int lock_midi_args = 0;
 
 struct _Mix_Music {
     Mix_MusicType type;
@@ -964,7 +968,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
 #ifdef MID_MUSIC
     case MUS_MID:
         music->type = MUS_MID;
-        if(need_reset_midi == 1)
+        if( (need_reset_midi == 1) || (lock_midi_args == 0) )
         {
             mididevice_next = 0;
             #ifdef USE_ADL_MIDI
@@ -1573,10 +1577,12 @@ int SDLCALLCC Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double pos
 
     return(retval);
 }
+
 int SDLCALLCC Mix_FadeInMusic(Mix_Music *music, int loops, int ms)
 {
     return Mix_FadeInMusicPos(music, loops, ms, 0.0);
 }
+
 int SDLCALLCC Mix_PlayMusic(Mix_Music *music, int loops)
 {
     return Mix_FadeInMusicPos(music, loops, 0, 0.0);
@@ -2349,4 +2355,9 @@ int SDLCALLCC MIX_SetMidiDevice(int device)
             return -1;
             break;
     }
+}
+
+void SDLCALLCC MIX_SetLockMIDIArgs(int lock_midiargs)
+{
+    lock_midi_args = lock_midiargs;
 }
