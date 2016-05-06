@@ -1,6 +1,6 @@
 #include "luafuncs_core_renderer.h"
 
-#include <scenes/scene_title.h>
+#include <scenes/scene.h>
 #include <fontman/font_manager.h>
 
 void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, lua_State *L)

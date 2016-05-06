@@ -320,7 +320,8 @@ SOURCES += \
     graphics/render/render_opengl21.cpp \
     graphics/render/render_swsdl.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_blocks.cpp \
-    script/bindings/level/globalfuncs/luafuncs_level_bgo.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_bgo.cpp \
+    script/bindings/core/classes/luaclass_core_graphics.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -481,7 +482,8 @@ HEADERS  += \
     graphics/render/render_opengl21.h \
     graphics/render/render_swsdl.h \
     script/bindings/level/globalfuncs/luafuncs_level_blocks.h \
-    script/bindings/level/globalfuncs/luafuncs_level_bgo.h
+    script/bindings/level/globalfuncs/luafuncs_level_bgo.h \
+    script/bindings/core/classes/luaclass_core_graphics.h
 
 FORMS    += \
     data_configs/select_config.ui

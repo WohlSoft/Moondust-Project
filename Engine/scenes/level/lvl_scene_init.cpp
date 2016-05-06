@@ -273,6 +273,8 @@ bool LevelScene::init_items()
     luaEngine.appendLuaScriptPath(data.path);
     //Level custom path
     luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
+    luaEngine.setFileSearchPath(data.path + "/" + data.filename);
+
     luaEngine.setCoreFile(":/script/maincore_level.lua");
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");

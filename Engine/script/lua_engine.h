@@ -74,6 +74,12 @@ public:
     void setLuaScriptPath(const QString &luaScriptPath);
     void appendLuaScriptPath(const QString &luaScriptPath);
 
+    /*!
+     * \brief Set a path where look for a various files (images, sounds, etc.)
+     * \param path Root path where look various files
+     */
+    void setFileSearchPath(const QString &path);
+
     bool shouldShutdown() const;
     void setLateShutdown(bool value);
 

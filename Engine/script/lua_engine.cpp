@@ -11,7 +11,9 @@
 #include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
 #include "bindings/core/globalfuncs/luafuncs_core_settings.h"
 #include "bindings/core/events/luaevents_core_engine.h"
+
 #include "bindings/core/classes/luaclass_core_simpleevent.h"
+#include "bindings/core/classes/luaclass_core_graphics.h"
 
 #include <QFile>
 #include <sstream>
@@ -46,6 +48,9 @@ LuaEngine::LuaEngine(Scene *scene) : m_lateShutdown(false), m_luaScriptPath(""),
 
 LuaEngine::~LuaEngine()
 {
+    //Clear all user caches
+    Binding_Core_Graphics::clearCache();
+
     if(isValid())
         shutdown();
 }
@@ -319,6 +324,8 @@ void LuaEngine::bindCore()
     if(m_baseScene){
         luabind::module(L)[
             Binding_Core_GlobalFuncs_Renderer::bindToLua(),
+            Binding_Core_Graphics::PGETexture_bindToLua(),
+            Binding_Core_Graphics::bindToLua(),
             Binding_Core_GlobalFuncs_Effect::bindToLua()
         ];
     }
@@ -396,6 +403,11 @@ void LuaEngine::setLuaScriptPath(const QString &luaScriptPath)
 void LuaEngine::appendLuaScriptPath(const QString &luaScriptPath)
 {
     m_luaScriptPaths.append(luaScriptPath);
+}
+
+void LuaEngine::setFileSearchPath(const QString &path)
+{
+    Binding_Core_Graphics::setRootPath(path);
 }
 
 Scene *LuaEngine::getBaseScene() const
