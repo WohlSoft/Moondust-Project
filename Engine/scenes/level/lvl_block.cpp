@@ -490,6 +490,47 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             if(data.npc_id==0)
                 transformTo(setup->transfororm_on_hit_into, 2);
         }
+
+        if(!_scene->player_states.isEmpty())
+            _scene->player_states[0].appendCoins(1);
+
+        //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
+        {
+            SpawnEffectDef effect;
+            effect.id = 11;
+            effect.startX = (float)posCenterX();
+            effect.startY = (float)top()-16;
+            effect.gravity = 13.0f;
+            effect.start_delay = 0.0f;
+            effect.max_vel_y = 25.f;
+            effect.velocityY = -6.5f;
+            effect.delay = 1000;
+            effect.animationLoops = 0;
+            effect.frame_sequence.clear();
+            effect.frame_sequence.append(0);
+            effect.frame_sequence.append(1);
+            effect.frame_sequence.append(2);
+            effect.frame_sequence.append(3);
+            effect.framespeed = 64;
+            _scene->launchStaticEffect(effect, true);
+
+            effect.id = 11;
+            effect.startX = (float)posCenterX();
+            effect.startY = (float)top()-16;
+            effect.gravity = 0.0f;
+            effect.start_delay = 1000.0f;
+            effect.max_vel_y = 25.f;
+            effect.velocityY = 0;
+            effect.animationLoops = 1;
+            effect.frame_sequence.clear();
+            effect.frame_sequence.append(4);
+            effect.frame_sequence.append(5);
+            effect.frame_sequence.append(6);
+            effect.framespeed = 175;
+            effect.delay = 0;
+            _scene->launchStaticEffect(effect, true);
+        }
+
     }
     else
     if(data.npc_id>0)
@@ -590,6 +631,15 @@ void LVL_Block::destroy(bool playEffect)
             PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         else
             PGE_Audio::playSound(setup->destroy_sound_id);
+
+        Scene_Effect_Phys p;
+        p.decelerate_x=1.5;
+        p.max_vel_y=25;
+        #define ROFFSET ((float(rand()%10))*0.1)
+        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -3.0f+ROFFSET, -6.0f+ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -4.0f+ROFFSET, -7.0f+ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  3.0f+ROFFSET, -6.0f+ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  4.0f+ROFFSET, -7.0f+ROFFSET, 18.0f, 0, p);
     }
     destroyed = true;
     QString oldLayer=data.layer;

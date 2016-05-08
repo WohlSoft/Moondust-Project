@@ -37,8 +37,11 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 {
     posRect.setWidth(800);
     posRect.setHeight(600);
-    offset_x=0;
-    offset_y=0;
+    render_x=0.0f;
+    render_y=0.0f;
+    offset_x=0.0f;
+    offset_y=0.0f;
+    playerID = 0;
     section = 0;
     cur_section = NULL;
     fader.setNull();
@@ -62,8 +65,12 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene)
 {
+    render_x=cam.render_x;
+    render_y=cam.render_y;
     offset_x=cam.offset_x;
     offset_y=cam.offset_y;
+
+    playerID = cam.playerID;
 
     posRect = cam.posRect;
 
@@ -119,10 +126,36 @@ double PGE_LevelCamera::posY()
     return posRect.y()+offset_y;
 }
 
+float PGE_LevelCamera::renderX()
+{
+    return render_x;
+}
+
+float PGE_LevelCamera::renderY()
+{
+    return render_y;
+}
+
+double PGE_LevelCamera::centerX()
+{
+    return (double)render_x+(posRect.width()/2.0);
+}
+
+double PGE_LevelCamera::centerY()
+{
+    return (double)render_y+(posRect.height()/2.0);
+}
+
 void PGE_LevelCamera::setPos(float x, float y)
 {
     posRect.setPos(round(x), round(y));
     _applyLimits();
+}
+
+void PGE_LevelCamera::setRenderPos(float x, float y)
+{
+    render_x = x;
+    render_y = y;
 }
 
 void PGE_LevelCamera::setCenterPos(float x, float y)

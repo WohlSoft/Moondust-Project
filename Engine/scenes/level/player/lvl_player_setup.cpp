@@ -22,6 +22,7 @@
 #include <audio/pge_audio.h>
 #include <data_configs/config_manager.h>
 
+#include <script/bindings/level/classes/luaclass_level_playerstate.h>
 
 bool LVL_Player::isInited()
 {
@@ -121,6 +122,12 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
 
     characterID = CharacterID;
     stateID = _stateID;
+    //Refresh global state
+    if(global_state)
+    {
+        global_state->setCharacterID( CharacterID );
+        global_state->setStateID( _stateID );
+    }
 
     if(_isInited)
     {
@@ -187,7 +194,11 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
     PlayerState x = _scene->getGameState()->getPlayerState(playerID);
     characterID = x.characterID;
     stateID     = x._chsetup.state;
-    if(_isInited) setCharacter(characterID, stateID);
+    health      = x._chsetup.health;
+    if(global_state)
+        global_state->setHealth(health);
+    if( _isInited )
+        setCharacter(characterID, stateID);
 }
 
 
@@ -222,4 +233,11 @@ LVL_Npc *LVL_Player::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpa
     return _scene->spawnNPC(def,
                            (LevelScene::NpcSpawnType)sp_type,
                            (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
+}
+
+void LVL_Player::setHealth(int _health)
+{
+    health=_health;
+    if(global_state)
+        global_state->setHealth(_health);
 }

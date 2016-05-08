@@ -114,12 +114,12 @@ QString ConfigManager::PathLevelPlayerScript()
     return playerScriptPath;
 }
 
-QString ConfigManager::PathWorldMusic()
+QString ConfigManager::PathMusic()
 {
     return dirs.music;
 }
 
-QString ConfigManager::PathWorldSound()
+QString ConfigManager::PathSound()
 {
     return dirs.sounds;
 }

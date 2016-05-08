@@ -12,6 +12,7 @@
 #include "bindings/level/classes/luaclass_level_inareadetector.h"
 #include "bindings/level/classes/luaclass_level_playerposdetector.h"
 #include "bindings/level/classes/luaclass_level_contact_detector.h"
+#include "bindings/level/classes/luaclass_level_playerstate.h"
 
 #include "bindings/level/globalfuncs/luafuncs_level_blocks.h"
 #include "bindings/level/globalfuncs/luafuncs_level_bgo.h"
@@ -141,9 +142,11 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_GlobalFuncs_BLOCKS::bindToLua(),
         Binding_Level_GlobalFuncs_BGO::bindToLua(),
         Binding_Level_GlobalFuncs_NPC::bindToLua(),
+        lua_LevelPlayerState::bindToLua(),
         Binding_Level_CommonFuncs::bindToLua(),
         LVL_Block::bindToLua(),
-        LVL_Bgo::bindToLua()
+        LVL_Bgo::bindToLua(),
+        PGE_LevelCamera::bindToLua()
     ];
     Binding_Global_Constants::bindToLua(getNativeState());
 

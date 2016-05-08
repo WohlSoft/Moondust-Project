@@ -24,6 +24,9 @@
 #include <common_features/fader.h>
 #include <common_features/rectf.h>
 
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
+
 #include <QList>
 #include <PGE_File_Formats/file_formats.h>
 #include <queue>
@@ -94,9 +97,18 @@ public:
      */
     double posY();
 
+    float renderX();
+
+    float renderY();
+
+    double centerX();
+
+    double centerY();
+
     void init(float x, float y, float w, float h);
 
     void setPos(float x, float y);
+    void setRenderPos(float x, float y);
     void setCenterPos(float x, float y);
     void setSize(int w, int h);
     void setOffset(int x, int y);
@@ -120,8 +132,14 @@ public:
 
     PGE_RectF posRect;
 
+    float render_x;
+    float render_y;
+
     float offset_x;
     float offset_y;
+
+    //! ID of player who owns this camera
+    int playerID;
 
     /**************Fader**************/
     PGE_Fader fader;
@@ -137,6 +155,11 @@ public:
     float _autoscrollVelocityY;
     PGE_RectF limitBox;
     /**************Autoscrool**************/
+
+    /**************LUA Binding*************/
+    static luabind::scope bindToLua();
+    /**************************************/
+
 private:
     void _applyLimits();
     void sortElements();

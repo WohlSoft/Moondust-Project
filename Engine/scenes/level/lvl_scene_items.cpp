@@ -225,14 +225,23 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     }
     player->setParentSection(sct);
     player->z_index = Z_Player;
-    player->setPlayerPointInfo(playerData);
+
+    player->global_state = (
+                ((unsigned)player_states.size() > (playerData.id-1)) ?
+                &player_states[(playerData.id-1)] : NULL );
+
+    player->setPlayerPointInfo( playerData );
     player->init();
     players.push_back(player);
 
     if(playerData.id==1)
+    {
         player1Controller->registerInControl(player);
+    }
     else if(playerData.id==2)
+    {
         player2Controller->registerInControl(player);
+    }
 
     if(byWarp)
     {

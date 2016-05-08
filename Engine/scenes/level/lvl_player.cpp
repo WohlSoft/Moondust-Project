@@ -27,6 +27,7 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     isLocked = false;
     _no_render = false;
     _isInited = false;
+    global_state = NULL;
     isLuaPlayer = false;
 
     isExiting = false;
@@ -115,6 +116,7 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
 
 LVL_Player::~LVL_Player()
 {}
+
 
 
 

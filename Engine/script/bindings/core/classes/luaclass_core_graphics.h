@@ -20,11 +20,15 @@ public:
      */
     static PGE_Texture* loadImage(std::string filePath);
 
-    static void drawImage(PGE_Texture*texture, float xPos, float yPos, lua_State *L);
-    static void drawImage(PGE_Texture*texture, float xPos, float yPos, float opacity, lua_State *L);
+    static luabind::object getPixelData(const PGE_Texture*img, int& width, int& height, lua_State *L);
 
-    static void drawImage(PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, lua_State *L);
-    static void drawImage(PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L);
+    static void drawImage(const PGE_Texture*texture, float xPos, float yPos, lua_State *L);
+    static void drawImage(const PGE_Texture*texture, float xPos, float yPos, float opacity, lua_State *L);
+
+    static void drawImage(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, lua_State *L);
+    static void drawImage(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L);
+
+    static float alignToCenter(float x, float width);
 
     /*!
      * Remove all cached textures

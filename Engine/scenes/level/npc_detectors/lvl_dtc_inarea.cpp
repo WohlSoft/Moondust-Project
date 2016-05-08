@@ -1,4 +1,7 @@
 #include "lvl_dtc_inarea.h"
+
+#include <script/bindings/level/classes/luaclass_level_lvl_npc.h>
+#include <script/bindings/level/classes/luaclass_level_lvl_player.h>
 #include "../../scene_level.h"
 
 InAreaDetector::InAreaDetector(LVL_Npc *parent, PGE_RectF range, int filters)
@@ -47,6 +50,10 @@ void InAreaDetector::processDetector()
     detectedBLK.clear();
     detectedBGO.clear();
     detectedNPC.clear();
+    detectedBlocks.clear();
+    detectedBGOs.clear();
+    detectedNPCs.clear();
+    detectedPlayers.clear();
 
     QVector<PGE_Phys_Object*> bodies;
     _scene->queryItems(_trapZone, &bodies);
@@ -65,6 +72,7 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Player* p= dynamic_cast<LVL_Player*>(visibleBody);
                     if(!p) continue;
+                    detectedPlayers.push_back(p);
                     detectedPLR[p->data.id]=1;
                     break;
                 }
@@ -72,6 +80,7 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Bgo* b= dynamic_cast<LVL_Bgo*>(visibleBody);
                     if(!b) continue;
+                    detectedBGOs.push_back(b);
                     detectedBGO[b->data.id]=1;
                     break;
                 }
@@ -79,6 +88,7 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Npc* n= dynamic_cast<LVL_Npc*>(visibleBody);
                     if(!n) continue;
+                    detectedNPCs.push_back(n);
                     detectedNPC[n->_npc_id]=1;
                     break;
                 }
@@ -86,6 +96,8 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Block* s= dynamic_cast<LVL_Block*>(visibleBody);
                     if(!s) continue;
+                    if(!s->destroyed)
+                        detectedBlocks.push_back(s);
                     detectedBLK[s->data.id]=1;
                     break;
                 }
@@ -137,6 +149,73 @@ int InAreaDetector::contacts()
 PGE_RectF InAreaDetector::trapZone()
 {
     return _trapZone;
+}
+
+luabind::adl::object InAreaDetector::getBlocks(lua_State *L)
+{
+    luabind::object tableOfBlocks = luabind::newtable(L);
+    int i = 1;
+    for(QList<LVL_Block*>::iterator it=detectedBlocks.begin(); it != detectedBlocks.end();it++)
+    {
+        if((*it)->type!=PGE_Phys_Object::LVLBlock) continue;
+        LVL_Block* block=static_cast<LVL_Block*>(*it);
+        if( block )
+        {
+            tableOfBlocks[i++] = block;
+        }
+    }
+    return tableOfBlocks;
+}
+
+luabind::adl::object InAreaDetector::getBGOs(lua_State *L)
+{
+    luabind::object tableOfBGOs = luabind::newtable(L);
+    int i = 1;
+    for(QList<LVL_Bgo*>::iterator it = detectedBGOs.begin(); it != detectedBGOs.end();it++)
+    {
+        if((*it)->type!=PGE_Phys_Object::LVLBGO) continue;
+        LVL_Bgo* bgo=static_cast<LVL_Bgo*>(*it);
+        if( bgo ){
+            tableOfBGOs[i++] = bgo;
+        }
+    }
+    return tableOfBGOs;
+}
+
+luabind::adl::object InAreaDetector::getNPCs(lua_State *L)
+{
+    luabind::object tableOfNPCs = luabind::newtable(L);
+    int i = 1;
+    for(QList<LVL_Npc*>::iterator it = detectedNPCs.begin(); it != detectedNPCs.end(); it++)
+    {
+        if((*it)->type!=PGE_Phys_Object::LVLNPC) continue;
+        LVL_Npc* npc=static_cast<LVL_Npc*>(*it);
+        Binding_Level_ClassWrapper_LVL_NPC* possibleLuaNPC = dynamic_cast<Binding_Level_ClassWrapper_LVL_NPC*>(npc);
+        if(possibleLuaNPC ){
+            tableOfNPCs[i++] = possibleLuaNPC;
+        }else{
+            tableOfNPCs[i++] = npc;
+        }
+    }
+    return tableOfNPCs;
+}
+
+luabind::adl::object InAreaDetector::getPlayers(lua_State *L)
+{
+    luabind::object tableOfPlayers = luabind::newtable(L);
+    int i = 1;
+    for(QList<LVL_Player*>::iterator it = detectedPlayers.begin(); it != detectedPlayers.end(); it++)
+    {
+        if((*it)->type!=PGE_Phys_Object::LVLPlayer) continue;
+        LVL_Player* player = static_cast<LVL_Player*>(*it);
+        Binding_Level_ClassWrapper_LVL_Player* possibleLuaPlayer = dynamic_cast<Binding_Level_ClassWrapper_LVL_Player*>(player);
+        if(possibleLuaPlayer){
+            tableOfPlayers[i++] = possibleLuaPlayer;
+        }else{
+            tableOfPlayers[i++] = player;
+        }
+    }
+    return tableOfPlayers;
 }
 
 

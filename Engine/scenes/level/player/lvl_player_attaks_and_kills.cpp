@@ -231,6 +231,9 @@ void LVL_Player::kill(deathReason reason)
     isAlive = false;
     kill_reason = reason;
 
+    if(global_state)
+        global_state->setHealth( 0 );
+
     setPaused(true);
     if(kill_reason==DEAD_burn)
     {

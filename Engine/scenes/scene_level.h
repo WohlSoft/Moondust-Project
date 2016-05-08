@@ -27,7 +27,6 @@
 #include <common_features/episode_state.h>
 #include <common_features/event_queue.h>
 #include <common_features/point.h>
-
 #include <common_features/RTree/RTree.h>
 
 #include <gui/pge_menubox.h>
@@ -54,6 +53,7 @@
 #include <data_configs/custom_data.h>
 
 #include <script/lua_level_engine.h>
+#include <script/bindings/level/classes/luaclass_level_playerstate.h>
 
 #include <PGE_File_Formats/file_formats.h>
 #include <QString>
@@ -320,6 +320,8 @@ private:
     LVL_SectionsList    sections;
 
 public:
+    QList<lua_LevelPlayerState>    player_states;
+
     typedef QVector<LVL_Player* >  LVL_PlayersArray;
     typedef QVector<LVL_Block* >   LVL_BlocksArray;
     typedef QVector<LVL_Bgo* >     LVL_BgosArray;

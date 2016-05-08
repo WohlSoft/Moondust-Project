@@ -22,7 +22,7 @@ local RAIL_HORIZONTAL = 71
 local RAIL_VERTICAL = 72
 local REVERSER_1 = 70
 local REVERSER_2 = 100
-local CHECK_DELAY = 32
+local CHECK_DELAY = 24
 
 function platform:initProps()
     self.direction = DIR_AUTO
@@ -30,6 +30,9 @@ function platform:initProps()
     self.state = self.npc_obj.direction
     self.npc_obj.gravity = 1
     self.found = false
+    self.needCorrection = false
+    self.oldSpeedX = 0
+    self.oldSpeedY = 0
     self.check_time_left = CHECK_DELAY
 end
 
@@ -43,16 +46,99 @@ function platform:onActivated()
     self:initProps()
 end
 
+function platform:findXfromY( blk, y )
+    local ratio = blk.width / blk.height
+    return blk.left + ((y - blk.top) * ratio)
+end
+
+function platform:findYfromX( blk, x )
+    local ratio = blk.height / blk.width
+    return blk.top + ((x - blk.left) * ratio)
+end
+
+function platform:findXfromY_R( blk, y )
+    local ratio = blk.width / blk.height
+    return blk.left + blk.width - ((y - blk.top) * ratio)
+end
+
+function platform:lookForCorrection( blk )
+    self.oldSpeedX = self.npc_obj.speedX
+    self.oldSpeedY = self.npc_obj.speedY
+    if(blk.id==RAIL_DIAGONAL_1)then
+        local diagonal = self:findXfromY(blk, self.npc_obj.center_y)
+        if( self.npc_obj.center_x < diagonal)then
+            self.npc_obj.speedX = self.npc_obj.speedX+diagonal-self.npc_obj.center_x
+            self.needCorrection = true
+        elseif( self.npc_obj.center_x > diagonal)then
+            self.npc_obj.speedX = self.npc_obj.speedX+diagonal-self.npc_obj.center_x
+            self.needCorrection = true
+        end
+    elseif(blk.id==RAIL_DIAGONAL_2)then
+        local diagonal = self:findXfromY_R(blk, self.npc_obj.center_y)
+        if( self.npc_obj.center_x < diagonal)then
+            self.npc_obj.speedX = self.npc_obj.speedX+diagonal-self.npc_obj.center_x
+            self.needCorrection = true
+        elseif( self.npc_obj.center_x > diagonal)then
+            self.npc_obj.speedX = self.npc_obj.speedX+diagonal-self.npc_obj.center_x
+            self.needCorrection = true
+        end
+    elseif(blk.id==RAIL_HORIZONTAL)then
+        if(self.npc_obj.center_y < blk.center_y)then
+            self.npc_obj.speedY = blk.center_y-self.npc_obj.center_y
+            self.needCorrection = true
+        elseif(self.npc_obj.center_y > blk.center_y)then
+            self.npc_obj.speedY = blk.center_y-self.npc_obj.center_y
+            self.needCorrection = true
+        end
+    elseif(blk.id==RAIL_VERTICAL)then
+        if(self.npc_obj.center_x < blk.center_x)then
+            self.npc_obj.speedX = blk.center_x-self.npc_obj.center_x
+            self.needCorrection = true
+        elseif(self.npc_obj.center_x > blk.center_x)then
+            self.npc_obj.speedX = blk.center_x-self.npc_obj.center_x
+            self.needCorrection = true
+        end
+    end
+end
+
+
 function platform:isCollidesCenter(blk)
     if(blk==nil)then
         return false;
-    elseif(self.npc_obj.center_x > blk.right)then
+    end
+    
+    local speedLeft = -1
+    local speedRight = -1
+    local speedTop = -1
+    local speedBottom = -1
+
+    if(self.npc_obj.speedX > 0)then
+        speedRight = 4
+        -- Renderer.printText("111111!", 10, 10)
+    elseif(self.npc_obj.speedX < 0)then
+        speedLeft = 4
+        -- Renderer.printText("222222!", 10, 10)
+    else
+        speedLeft = 4
+        speedRight = 4
+        -- Renderer.printText("333333!", 10, 10)
+    end
+    if(self.npc_obj.speedY > 0)then
+        speedBottom = 4
+    elseif(self.npc_obj.speedY < 0)then
+        speedTop = 4
+    else
+        speedTop = 4
+        speedBottom = 4
+    end
+    
+    if(self.npc_obj.center_x-speedLeft > blk.right)then
         return false;
-    elseif(self.npc_obj.center_x < blk.left)then
+    elseif(self.npc_obj.center_x+speedRight < blk.left)then
         return false;
-    elseif(self.npc_obj.center_y > blk.bottom)then
+    elseif(self.npc_obj.center_y-speedTop > blk.bottom)then
         return false;
-    elseif(self.npc_obj.center_y < blk.top)then
+    elseif(self.npc_obj.center_y+speedBottom < blk.top)then
         return false;
     else
         return true;
@@ -62,6 +148,10 @@ end
 function platform:onLoop(tickTime)
     if(self.state==ST_ON)then
         if(self.found)then
+            if(self.needCorrection)then
+                self.npc_obj.speedX = self.oldSpeedX
+                self.npc_obj.speedY = self.oldSpeedY
+            end
             if(self.direction==DIR_LEFT) then
                 self.npc_obj.speedX=-self.speed
                 self.npc_obj.speedY=0
@@ -87,7 +177,7 @@ function platform:onLoop(tickTime)
                 self.npc_obj.speedX=-self.speed
                 self.npc_obj.speedY=self.speed
             else
-                self.npc_obj.gravity=1
+                self.npc_obj.gravity = 1.0
             end
         end
 
@@ -99,24 +189,83 @@ function platform:onLoop(tickTime)
                 local bgos= self.contacts:getBGOs()
                 self.found=false
                 for K,Blk in pairs(bgos) do
-                    if(Blk.right==1)then
-                        Renderer.printText("meow", 10, 10)
-                    end
                     if(self:isCollidesCenter(Blk)) then
                         if(Blk.id==RAIL_DIAGONAL_1)then
                             self.found=true
-                            if(self.npc_obj.speedX>0)then
-                                self.direction=DIR_RIGHT_DOWN
+                            -- X<0
+                            if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
+                                self.direction = DIR_LEFT_UP
+                            -- X>0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY == 0) )then
+                                self.direction = DIR_RIGHT_DOWN
+                            -- Y<0
+                            elseif( (self.npc_obj.speedX == 0) and (self.npc_obj.speedY < 0) )then
+                                self.direction = DIR_LEFT_UP
+                            -- Y>0                                
+                            elseif( (self.npc_obj.speedX == 0) and (self.npc_obj.speedY > 0) )then
+                                self.direction = DIR_RIGHT_DOWN
+                            -- X<0  Y<0
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY < 0) )then
+                                self.direction = DIR_LEFT_UP
+                            -- X>0  Y>0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY > 0) )then
+                                self.direction = DIR_RIGHT_DOWN
+                            -- X>0  Y<0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY < 0)
+                                and ( math.abs(self.npc_obj.speedY) > math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_LEFT_UP
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY < 0) 
+                                and ( math.abs(self.npc_obj.speedY) < math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_RIGHT_DOWN
+                            -- X<0  Y>0
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY > 0)
+                                and ( math.abs(self.npc_obj.speedY) < math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_LEFT_UP
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY > 0) 
+                                and ( math.abs(self.npc_obj.speedY) > math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_RIGHT_DOWN
                             else
-                                self.direction=DIR_LEFT_UP
+                                self.direction = DIR_RIGHT_DOWN
                             end
+                            self:lookForCorrection(Blk)
                         elseif(Blk.id==RAIL_DIAGONAL_2)then
                             self.found=true
-                            if(self.npc_obj.speedX>0)then
-                                self.direction=DIR_UP_RIGHT
+                            -- X<0
+                            if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
+                                self.direction = DIR_DOWN_LEFT
+                            -- X>0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY == 0) )then
+                                self.direction = DIR_UP_RIGHT
+                            -- Y<0
+                            elseif( (self.npc_obj.speedX == 0) and (self.npc_obj.speedY < 0) )then
+                                self.direction = DIR_UP_RIGHT
+                            -- Y>0                                
+                            elseif( (self.npc_obj.speedX == 0) and (self.npc_obj.speedY > 0) )then
+                                self.direction = DIR_DOWN_LEFT
+                            -- X<0  Y>0
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY > 0) )then
+                                self.direction = DIR_DOWN_LEFT
+                            -- X>0  Y<0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY < 0) )then
+                                self.direction = DIR_UP_RIGHT
+                            -- X<0  Y<0
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY < 0)
+                                and ( math.abs(self.npc_obj.speedY) > math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_UP_RIGHT
+                            elseif( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY < 0) 
+                                and ( math.abs(self.npc_obj.speedY) < math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_DOWN_LEFT
+                            -- X>0  Y>0
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY > 0)
+                                and ( math.abs(self.npc_obj.speedY) > math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_DOWN_LEFT
+                            elseif( (self.npc_obj.speedX > 0) and (self.npc_obj.speedY > 0) 
+                                and ( math.abs(self.npc_obj.speedY) < math.abs(self.npc_obj.speedX) ) )then
+                                self.direction = DIR_UP_RIGHT
                             else
-                                self.direction=DIR_DOWN_LEFT
+                                self.direction = DIR_UP_RIGHT
                             end
+                            self:lookForCorrection(Blk)
                         elseif(Blk.id==RAIL_HORIZONTAL)then
                             self.found=true
                             if(self.npc_obj.speedX>0)then
@@ -124,6 +273,7 @@ function platform:onLoop(tickTime)
                             else
                                 self.direction=DIR_LEFT
                             end
+                            self:lookForCorrection(Blk)
                         elseif(Blk.id==RAIL_VERTICAL)then
                             self.found=true
                             if(self.npc_obj.speedY>0)then
@@ -131,6 +281,7 @@ function platform:onLoop(tickTime)
                             else
                                 self.direction=DIR_UP
                             end
+                            self:lookForCorrection(Blk)
                         elseif(Blk.id==REVERSER_1 or Blk.id==REVERSER_2)then
                             self.found=true
                             if(self.direction==DIR_LEFT) then
@@ -156,9 +307,9 @@ function platform:onLoop(tickTime)
                     end
                 end
                 if(self.found)then
-                    self.npc_obj.gravity=0
+                    self.npc_obj.gravity = 0.0
                 else
-                    self.npc_obj.gravity=1
+                    self.npc_obj.gravity = 1.0
                 end
             end
         end
@@ -174,6 +325,9 @@ function platform:onLoop(tickTime)
             end
         end
     end
+
+    -- Renderer.printText("PF:".." I:"..tostring(self.found).." X: "..tostring(self.npc_obj.speedX).." Y: "..tostring(self.npc_obj.speedY), 10, 80)
+    
 end
 
 return platform

@@ -41,6 +41,9 @@
 
 #include <common_features/logger.h>
 
+#include <script/lua_event.h>
+#include <script/bindings/core/events/luaevents_core_engine.h>
+
 #include <QElapsedTimer>
 
 QElapsedTimer debug_TimeReal;
@@ -399,7 +402,23 @@ void LevelScene::update()
 
         //update cameras
         for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
+        {
             cam->update(uTickf);
+
+            //! --------------DRAW HUD--------------------------------------
+            LuaEngine* sceneLuaEngine = getLuaEngine();
+            if(sceneLuaEngine)
+            {
+                if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown())
+                {
+                    LuaEvent drawHUDEvent = BindingCore_Events_Engine::createDrawLevelHUDEvent(sceneLuaEngine,
+                                                                                              &(*cam),
+                                                                                              &player_states[(*cam).playerID-1]);
+                    sceneLuaEngine->dispatchEvent(drawHUDEvent);
+                }
+            }
+            //! ------------------------------------------------------------
+        }
 
         //Clear garbage (be careful!)
         //luaEngine.runGarbageCollector();
@@ -434,7 +453,7 @@ void LevelScene::render()
         PGE_LevelCamera* cam=&(*it);
 
         if(numberOfPlayers>1)
-            GlRenderer::setViewport(0, cam->h()*c,cam->w(), cam->h());
+            GlRenderer::setViewport(cam->renderX(), cam->renderY(), cam->w(), cam->h());
 
         cam->drawBackground();
 

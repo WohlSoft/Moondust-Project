@@ -36,6 +36,7 @@ public:
     virtual void loadTexture(PGE_Texture &target, int width, int height, unsigned char* RGBApixels);
     virtual void deleteTexture(PGE_Texture &tx);
     virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
+    virtual void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
     virtual void setViewport(int x, int y, int w, int h);
 
     virtual void resetViewport();

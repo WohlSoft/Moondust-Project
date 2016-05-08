@@ -1,10 +1,14 @@
 #ifndef LUACLASS_CORE_LVL_PLAYER_H
 #define LUACLASS_CORE_LVL_PLAYER_H
 
-#include <scenes/level/lvl_player.h>
-
-#include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
+#include <luabind/luabind.hpp>
+#include <luabind/function.hpp>
+#include <luabind/class.hpp>
+#include <luabind/detail/call_function.hpp>
+#include <luabind/operator.hpp>
+
+#include <scenes/level/lvl_player.h>
 
 class Binding_Level_ClassWrapper_LVL_Player : public LVL_Player, public luabind::wrap_base
 {

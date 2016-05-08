@@ -152,6 +152,12 @@ void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
     _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);
     _effect.posRect.setSize(_effect.texture.w, _effect.texture.h/frms);
 
+    if(!effect_def.frame_sequence.isEmpty())
+    {
+        frms = effect_def.frame_sequence.size();
+        _effect.animator.setFrameSequance(effect_def.frame_sequence);
+    }
+
     if(centered)
         _effect.posRect.setPos(effect_def.startX-_effect.posRect.width()/2,
                                effect_def.startY-_effect.posRect.height()/2);
@@ -160,7 +166,7 @@ void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
 
     if( effect_def.delay > 0 )
     {
-        _effect._limit_delay=true;
+        _effect._limit_delay = true;
         _effect._delay = effect_def.delay;
     }
 
@@ -272,9 +278,10 @@ void Scene_Effect::update(float ticks)
     animator.manualTick(ticks);
     if(_limit_delay)
     {
-        _delay-=ticks;
+        _delay -= ticks;
         //I changed this because we don't want the animator to stop our effect if we specify a custom delay also!
-        if((_delay<=0.0f) & animator.isFinished()) _finished=true;
+        if( (_delay<=0.0f) || animator.isFinished() )
+            _finished=true;
     }
     if(!_limit_delay & animator.isFinished())
         _finished=true;

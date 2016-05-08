@@ -57,7 +57,8 @@ function fireball:onLoop(tickTime)
 end
 
 function fireball:setCharacter(charID)
-    self.ani_sequence = {charID-1, charID, charID+1, charID+2}
+    local framePos = (charID-1)*4
+    self.ani_sequence = {framePos, framePos+1, framePos+2, framePos+3}
     self.npc_obj:setSequence(self.ani_sequence)
 end
 

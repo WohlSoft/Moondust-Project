@@ -34,6 +34,7 @@ SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
     delay = c.delay;
 
     framespeed = c.framespeed;
+    frame_sequence = c.frame_sequence;
     velocityX = c.velocityX;
     velocityY = c.velocityY;
     gravity = c.gravity;

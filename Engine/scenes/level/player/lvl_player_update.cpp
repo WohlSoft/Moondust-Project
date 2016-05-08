@@ -328,6 +328,22 @@ void LVL_Player::update(float tickTime)
                 else
                     applyAccel(-force, 0);
             }
+
+            if( (keys.left || keys.right) && turning && _onGround )
+            {
+                SpawnEffectDef effect;
+                effect.id = 74;
+                effect.startX = (float)posCenterX();
+                effect.startY = (float)bottom()+2.0f;
+                effect.gravity = 0.f;
+                effect.start_delay = 0.0f;
+                effect.velocityY = 0.f;
+                effect.delay = 0;
+                effect.animationLoops = 1;
+                effect.framespeed = 64;
+                _scene->launchStaticEffect(effect, true);
+            }
+
         }
     }
 

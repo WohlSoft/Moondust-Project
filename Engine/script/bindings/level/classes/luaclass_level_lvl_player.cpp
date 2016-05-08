@@ -1,5 +1,6 @@
-#include "luaclass_level_lvl_player.h"
+#include "luaclass_level_playerstate.h"
 
+#include "luaclass_level_lvl_player.h"
 #include <script/lua_global.h>
 
 Binding_Level_ClassWrapper_LVL_Player::Binding_Level_ClassWrapper_LVL_Player() : LVL_Player()
@@ -76,8 +77,10 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
 
             .def("spawnNPC", &LVL_Player::lua_spawnNPC)
 
-            .def("getKeyState", &LVL_Player::lua_getKeyState)
+            .def("getKeyState",  &LVL_Player::lua_getKeyState)
             .def("setAnimation", &LVL_Player::lua_setAnimation)
+            .def("playAnimationOnce", &LVL_Player::lua_playAnimationOnce)
+            .property("globalState",  &LVL_Player::global_state)
 
             .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
 
@@ -91,6 +94,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
             .property("direction", &LVL_Player::direction)
 
             .def_readonly("onGround", &LVL_Player::onGround)
+            .def_readonly("isDucking", &LVL_Player::ducking)
             ;
 
 }

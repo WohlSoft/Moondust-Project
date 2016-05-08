@@ -284,6 +284,20 @@ void Render_SW_SDL::clearScreen()
     SDL_RenderClear( m_gRenderer );
 }
 
+void Render_SW_SDL::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
+{
+    if(!tx) return;
+    setRenderTexture( ((PGE_Texture *)tx)->texture );
+    int pitch, w, h, a;
+    void *pixels;
+    SDL_SetTextureBlendMode(m_currentTexture, SDL_BLENDMODE_BLEND);
+    SDL_QueryTexture(m_currentTexture, NULL, &a, &w, &h);
+    SDL_LockTexture(m_currentTexture, NULL, &pixels, &pitch);
+    memcpy( pixelData, pixels, pitch*h);
+    SDL_UnlockTexture(m_currentTexture);
+    setUnbindTexture();
+}
+
 void Render_SW_SDL::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
     SDL_Rect aRect = scaledRect(x, y, w, h);

@@ -61,6 +61,9 @@ void Render_Base::deleteTexture(PGE_Texture &/*tx*/)
 void Render_Base::getScreenPixels(int /*x*/, int /*y*/, int /*w*/, int /*h*/, unsigned char */*pixels*/)
 {}
 
+void Render_Base::getPixelData(const PGE_Texture */*tx*/, unsigned char */*pixelData*/)
+{}
+
 void Render_Base::setViewport(int /*x*/, int /*y*/, int /*w*/, int /*h*/)
 {}
 

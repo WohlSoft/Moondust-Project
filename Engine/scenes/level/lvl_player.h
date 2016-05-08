@@ -43,6 +43,7 @@ public:
 
 class LVL_Section;
 class LVL_Block;
+class lua_LevelPlayerState;
 
 class LVL_Player :
         public PGE_Phys_Object,
@@ -260,11 +261,14 @@ public:
                            L    `-._,
                             `-.__.-'
          ***********************************************/
+
+        lua_LevelPlayerState *global_state;
+
         /*Controller processing*/
         void lua_processKeyEvents();
         void lua_updateKey(bool& target_key, ControllableObject::KeyType ktype, bool &state);
         controller_keys keys_prev;
-        inline bool lua_getKeyState(int keyType) { return getKeyState(keyType); }
+        inline bool  lua_getKeyState(int keyType) { return getKeyState(keyType); }
         virtual void lua_onKeyPressed(ControllableObject::KeyType) {}
         virtual void lua_onKeyReleased(ControllableObject::KeyType) {}
         /*---------------------*/
@@ -275,9 +279,18 @@ public:
         virtual void lua_onTransform(long, long) {}
         virtual void lua_onTakeNpc(LVL_Npc*) {}
         virtual void lua_onKillNpc(LVL_Npc*) {}
-        inline void lua_setAnimation(int animationID, int framespeed) { animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed); }
+        inline void lua_playAnimationOnce(int animationID, int speed, bool fixed_speed, bool locked, int skipLastFrames)
+        {
+            animator.playOnce((MatrixAnimator::MatrixAnimates)animationID,
+                              _direction, speed, fixed_speed,
+                              locked, skipLastFrames);
+        }
+        inline void lua_setAnimation(int animationID, int framespeed)
+        {
+            animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed);
+        }
         inline long getHealth() { return health; }
-        inline void setHealth(int _health) { health=_health; }
+        void setHealth(int _health);
         inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}
         inline void setState(int _state) { setCharacterSafe(characterID, _state);}
         LVL_Npc* lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable);

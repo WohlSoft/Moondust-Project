@@ -35,5 +35,16 @@ function toadPlayer:onTakeNpc(npcObj)
     ProcessPlayerPowerUP(self.plr_obj, npcObj)
 end
 
+function toadPlayer:onKeyPressed(keyType)
+    if( (self.plr_obj.stateID==3) and (keyType==KEY_RUN) and (not self.plr_obj.isDucking) )then
+        self.plr_obj:playAnimationOnce(7, 128, true, false, 1)
+        ShootFireball(self.plr_obj)
+    end
+    if( (self.plr_obj.stateID==6) and (keyType==KEY_RUN) and (not self.plr_obj.isDucking) )then
+        self.plr_obj:playAnimationOnce(7, 128, true, false, 1)
+        ShootHammer(self.plr_obj)
+    end
+end
+
 return toadPlayer
 

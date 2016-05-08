@@ -154,15 +154,15 @@ void Scene::updateLua()
 
 void Scene::render()
 {
-    if(!fader.isNull())
-    {
-        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
-    }
-
     const int sz = renderFunctions.size();
     const std::function<void()>* fn = renderFunctions.data();
     for(int i=0;i<sz; i++){//Call all render functions
         (fn[i])();
+    }
+
+    if(!fader.isNull())
+    {
+        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
 }
 

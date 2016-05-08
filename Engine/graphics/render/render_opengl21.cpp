@@ -352,6 +352,14 @@ static inline void setAlphaBlending()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
 }
 
+void Render_OpenGL21::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
+{
+    if(!tx)
+        return;
+    setRenderTexture(((PGE_Texture *)tx)->texture);
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixelData);
+    setUnbindTexture();
+}
 
 void Render_OpenGL21::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {

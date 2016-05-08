@@ -890,6 +890,18 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
     tx.ColorLower.r=0; tx.ColorLower.g=0; tx.ColorLower.b=0;
 }
 
+int GlRenderer::getPixelDataSize(const PGE_Texture *tx)
+{
+    if(!tx)
+        return 0;
+    return (tx->w * tx->h * 4);
+}
+
+void GlRenderer::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
+{
+    g_renderer->getPixelData(tx, pixelData);
+}
+
 QString GlRenderer::ScreenshotPath = "";
 
 struct PGE_GL_shoot{

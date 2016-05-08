@@ -9,5 +9,9 @@ luabind::scope Binding_Level_Class_InAreaDetector::bindToLua()
         class_<InAreaDetector>("InAreaDetector")
             .def("detected", static_cast<bool(InAreaDetector::*)()>(&InAreaDetector::detected))
             .def("detected", static_cast<bool(InAreaDetector::*)(long, long)>(&InAreaDetector::detected))
-            .def("contacts", &InAreaDetector::contacts);
+            .def("getBlocks",  &InAreaDetector::getBlocks)
+            .def("getBGOs",    &InAreaDetector::getBGOs)
+            .def("getNPCs",    &InAreaDetector::getNPCs)
+            .def("getPlayers", &InAreaDetector::getPlayers)
+            .def("contacts",   &InAreaDetector::contacts);
 }

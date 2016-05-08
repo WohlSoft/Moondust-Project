@@ -4,6 +4,9 @@
 #include <data_configs/config_manager.h>
 #include <scenes/scene.h>
 
+//#include <luabind/adopt_policy.hpp>
+//#include <luabind/out_value_policy.hpp>
+
 //! Cached textures
 QHash<QString, PGE_Texture> Binding_Core_Graphics::textureCache;
 
@@ -37,6 +40,30 @@ PGE_Texture *Binding_Core_Graphics::loadImage(std::string filePath)
     return &textureCache[fPath];
 }
 
+luabind::adl::object Binding_Core_Graphics::getPixelData(const PGE_Texture *img, int &width, int &height, lua_State *L)
+{
+    if ( !img || !img->inited || (img->texture==0) ) {
+            luaL_error(L, "Internal error: Failed to find image resource!");
+            return luabind::object();
+    }
+    luabind::object returnTable = luabind::newtable(L);
+    int bufferSize = GlRenderer::getPixelDataSize(img);
+    if(bufferSize==0)
+    {
+        luaL_error(L, "Internal error: Invalid image resource!");
+        return luabind::object();
+    }
+    unsigned char* buffer = new unsigned char[bufferSize];
+    GlRenderer::getPixelData(img, buffer);
+    int i = 1;
+    for(i=1; i <= bufferSize; ++i)
+    {
+        returnTable[i] = buffer[i];
+    }
+    width  = img->w;
+    height = img->h;
+    return returnTable;
+}
 
 void Binding_Core_Graphics::clearCache()
 {
@@ -48,42 +75,30 @@ void Binding_Core_Graphics::clearCache()
     textureCache.clear();
 }
 
-luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()
-{
-    using namespace luabind;
-    return
-        class_<PGE_Texture>("LuaImageResource")
-            //Properties
-            .property("w", &PGE_Texture::w)
-            .property("h", &PGE_Texture::h)
-            .property("texture", &PGE_Texture::texture);
-}
-
-
-void Binding_Core_Graphics::drawImage(PGE_Texture *texture, float xPos, float yPos, lua_State *L)
+void Binding_Core_Graphics::drawImage(const PGE_Texture *texture, float xPos, float yPos, lua_State *L)
 {
     drawImage(texture, xPos, yPos, 1.0f, L);
 }
 
 
-void Binding_Core_Graphics::drawImage(PGE_Texture *texture, float xPos, float yPos, float opacity, lua_State *L)
+void Binding_Core_Graphics::drawImage(const PGE_Texture *texture, float xPos, float yPos, float opacity, lua_State *L)
 {
     if(!texture) return;
     LuaGlobal::getEngine(L)->getBaseScene()->addRenderFunction([=]()
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture(texture, xPos, yPos);
+        GlRenderer::renderTexture((PGE_Texture*)texture, xPos, yPos);
     });
 }
 
 
-void Binding_Core_Graphics::drawImage(PGE_Texture *texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, lua_State *L)
+void Binding_Core_Graphics::drawImage(const PGE_Texture *texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, lua_State *L)
 {
     drawImage(texture, xPos, yPos, sourceX, sourceY, width, height, 1.0f, L);
 }
 
 
-void Binding_Core_Graphics::drawImage(PGE_Texture *texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L)
+void Binding_Core_Graphics::drawImage(const PGE_Texture *texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L)
 {
     if(!texture) return;
     LuaGlobal::getEngine(L)->getBaseScene()->addRenderFunction([=]()
@@ -134,10 +149,25 @@ void Binding_Core_Graphics::drawImage(PGE_Texture *texture, float xPos, float yP
         float bottom = ((sY+h)/txH);
 
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture(texture, x, y, w, h, top, bottom, left, right);
+        GlRenderer::renderTexture((PGE_Texture*)texture, x, y, w, h, top, bottom, left, right);
     });
 }
 
+float Binding_Core_Graphics::alignToCenter(float x, float width)
+{
+    return (float)GlRenderer::alignToCenter((int)x, (int)width);
+}
+
+luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()
+{
+    using namespace luabind;
+    return
+        class_<PGE_Texture>("LuaImageResource")
+            //Properties
+            .def_readonly("w", &PGE_Texture::w)
+            .def_readonly("h", &PGE_Texture::h)
+            .def_readonly("texture", &PGE_Texture::texture);
+}
 
 luabind::scope Binding_Core_Graphics::bindToLua()
 {
@@ -145,9 +175,11 @@ luabind::scope Binding_Core_Graphics::bindToLua()
     return
         namespace_("Graphics")[
             def("loadImage", &loadImage),
-            def("drawImage", (void(*)(PGE_Texture*, float, float, lua_State*))&drawImage),
-            def("drawImage", (void(*)(PGE_Texture*, float, float, float, lua_State*))&drawImage),
-            def("drawImage", (void(*)(PGE_Texture*, float, float, float, float, float, float, lua_State*))&drawImage),
-            def("drawImage", (void(*)(PGE_Texture*, float, float, float, float, float, float, float, lua_State*))&drawImage)
+            //def("getPixelData", &getPixelData, pure_out_value(_2) + pure_out_value(_3)),
+            def("drawImage", (void(*)(const PGE_Texture*, float, float, lua_State*))&drawImage),
+            def("drawImage", (void(*)(const PGE_Texture*, float, float, float, lua_State*))&drawImage),
+            def("drawImage", (void(*)(const PGE_Texture*, float, float, float, float, float, float, lua_State*))&drawImage),
+            def("drawImage", (void(*)(const PGE_Texture*, float, float, float, float, float, float, float, lua_State*))&drawImage),
+            def("alignToHCenter", &alignToCenter)
         ];
 }

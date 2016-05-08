@@ -106,7 +106,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             obj_BG *bgD = &pConfigs->main_bg[i];
             UserBGs uBG;
 
-            QString CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".txt", true);
+            QString CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".ini", true);
+            if(CustomTxt.isEmpty())
+                CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".txt", true);
             if(!CustomTxt.isEmpty())
             {
                 uBGs[bgD->id]=*bgD;

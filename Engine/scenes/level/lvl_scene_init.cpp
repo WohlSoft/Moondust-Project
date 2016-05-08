@@ -382,11 +382,16 @@ bool LevelScene::init_items()
                         (float)y,
                         (float)width, (float)height
                     );
+        camera.playerID = (i+1);
+        camera.setRenderPos( 0.0f, (float)(height*i) );
         camera.setRenderObjectsCacheEnabled(i==0);
         camera.changeSection(t_sct, true);
         camera.setPos(x-camera.w()/2 + d.width()/2,
                       y-camera.h()/2 + d.height()/2);
         cameras.push_back(camera);
+
+        lua_LevelPlayerState luaPlState(this, (i+1));
+        player_states.push_back(luaPlState);
     }
 
     //Init data

@@ -16,3 +16,14 @@ LuaEvent BindingCore_Events_Engine::createLoopEvent(LuaEngine *engine, float tic
     event.addParameter(ticks);
     return event;
 }
+
+LuaEvent BindingCore_Events_Engine::createDrawLevelHUDEvent(LuaEngine *engine,
+                                                            PGE_LevelCamera *camera,
+                                                            lua_LevelPlayerState *playerState)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("drawHUD");
+    event.addParameter( camera );
+    event.addParameter( playerState );
+    return event;
+}

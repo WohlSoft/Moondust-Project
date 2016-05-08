@@ -354,8 +354,8 @@ public:
     static QString PathWorldLevels();
     static QString PathWorldPlayable();
 
-    static QString PathWorldMusic();
-    static QString PathWorldSound();
+    static QString PathMusic();
+    static QString PathSound();
 
     static QString clearMusTrack(QString path);
 

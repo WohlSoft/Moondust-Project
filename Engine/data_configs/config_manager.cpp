@@ -303,3 +303,4 @@ void ConfigManager::checkForImage(QString &imgPath, QString root)
             imgPath = "";
     }
 }
+

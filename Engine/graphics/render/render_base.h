@@ -71,13 +71,20 @@ public:
     virtual void deleteTexture(PGE_Texture &tx);
     /*!
      * \brief Captures screen surface into 32-bit pixel array
-     * \param x Capture at position x of left side
-     * \param y Capture at position y of top side
-     * \param w Width from left to right of surface to capture
-     * \param h Height from top to bottom of surface to capture
-     * \param pixels
+     * \param [__in] x Capture at position x of left side
+     * \param [__in] y Capture at position y of top side
+     * \param [__in] w Width from left to right of surface to capture
+     * \param [__in] h Height from top to bottom of surface to capture
+     * \param [__out] pixels
      */
     virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
+    /*!
+     * \brief [__in] Returns pixel data from texture into target array
+     * \param [__in] tx Pointer to texture
+     * \param [__in] bufferSize Size of pixel data array
+     * \param [__out] pixelData Output pixel data
+     */
+    virtual void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
     /*!
      * \brief Sets viewport rectangle
      * \param x
