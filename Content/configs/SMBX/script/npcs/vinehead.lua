@@ -50,7 +50,8 @@ function vinehead:__init(npc_obj)
     self.init_y = 0
     self.passed_height = 0
     self.firstTime=false
-    self.contacts = npc_obj:installContactDetector()
+    -- self.contacts = npc_obj:installContactDetector()
+    self.contacts = self.npc_obj:installInAreaDetector(-(npc_obj.width/2), -(npc_obj.height/2), npc_obj.width/2, npc_obj.height/2, {1})
 end
 
 function vinehead:onActivated()
@@ -72,8 +73,11 @@ function vinehead:onLoop(tickTime)
         if(self.contacts:detected())then
             local blocks= self.contacts:getBlocks()
             for K,Blk in pairs(blocks) do
-                if(Blk.isSolid and Blk.y>=self.npc_obj.y and (Blk.left+10)>=self.npc_obj.left and (Blk.right-10)<=self.npc_obj.right )then
+                if(Blk.isSolid and ((Blk.top+(Blk.height/2.0)) >= self.npc_obj.top )
+                               and ((Blk.left-(Blk.width/2.0))<=self.npc_obj.left) 
+                               and (Blk.right+(Blk.width/2.0))>=self.npc_obj.right )then
                     self.npc_obj:unregister()
+                    return
                 end
             end
         end

@@ -1,7 +1,11 @@
-post-0.2.5.1
+0.2.6
 - Improved testing of the renderers support to avoid accidental running of the unsupported renderer
 - Added software renderer support for video cards which are not suports OpenGL
 - Added abiltiy to manually choice a renderer (by --render-gl3, --render-gl2 or by --render-sw arguments)
+- Added graphical API to load external graphic files with lua scripts
+- Added Paths functions to get full path to media folders
+- Added event to draw HUD with binding of the camera metricks and player state
+- Added binding to playOnceAnimation for playable character API
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names

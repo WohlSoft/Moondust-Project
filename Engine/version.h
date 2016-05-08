@@ -29,15 +29,15 @@
 #endif
 
 //Version of this program
-#define _LATEST_STABLE "0.2.5.1-alpha"
+#define _LATEST_STABLE "0.2.6-alpha"
 
-#define _FILE_VERSION "0.2.5.1"
+#define _FILE_VERSION "0.2.6"
 #define _FILE_RELEASE "-alpha"
 
 #define _VF1 0
 #define _VF2 2
-#define _VF3 5
-#define _VF4 1
+#define _VF3 6
+#define _VF4 0
 
 #define _FILE_DESC "Game Engine"
 
