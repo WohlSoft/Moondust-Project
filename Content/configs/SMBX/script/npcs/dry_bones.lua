@@ -47,8 +47,6 @@ function dryBones:onLoop(tickTime)
             self.npc_obj:setSequenceRight(self.animateCollapse1R)
             self.cur_animation=ANIM_ASSEMBLING
         elseif((self.cur_animation==ANIM_ASSEMBLING) and (self.cur_collapsed_ticks>=self.def_collapsed_ticks))then
-            self.npc_obj:setSequenceLeft(self.animateWalkL)
-            self.npc_obj:setSequenceRight(self.animateWalkR)
             self.cur_animation=ANIM_WALKING
             self:assemble()
         end
@@ -67,6 +65,8 @@ function dryBones:assemble()
     self.npc_obj.collide_player = self.def_collide_player
     self.npc_obj.collide_npc = self.def_collide_npc
     self.npc_obj.collideWithPlayers = self.def_en_collide_plr
+    self.npc_obj:setSequenceLeft(self.animateWalkL)
+    self.npc_obj:setSequenceRight(self.animateWalkR)
 end
 
 
