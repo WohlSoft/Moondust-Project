@@ -72,6 +72,7 @@ function p_switch.pstart()
     if(not p_switch_enabled)then
         p_switch_enabled=true
         p_switch.toggle()
+        Level.TriggerEvent("P Switch - Start")
     end
 end
 
@@ -81,6 +82,7 @@ function p_switch.pend()
     if(p_switch_enabled)then
         p_switch_enabled=false
         p_switch.toggle()
+        Level.TriggerEvent("P Switch - End")
     end
 end
 

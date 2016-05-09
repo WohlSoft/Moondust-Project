@@ -183,16 +183,24 @@ void LevelScene::toggleSwitch(int switch_id)
     if(switch_blocks.contains(switch_id))
     {
         QList<LVL_Block*> &list = switch_blocks[switch_id];
-        for(int x=0;x<list.size();x++)
-        {
-            if((list[x]->setup->switch_Block)&&(list[x]->setup->switch_ID==switch_id))
+        for(int x=0;x<list.size();x++) {
+            if((list[x]->setup->switch_Block)&&(list[x]->setup->switch_ID==switch_id)) {
                 list[x]->transformTo(list[x]->setup->switch_transform, 2);
-            else
-            {
-                list.removeAt(x); x--; //Remove blocks which is not fits into specific Switch-ID
+            } else {
+                list.removeAt(x); x--; //Remove blocks which are not fits into specific Switch-ID
             }
         }
+        //Change state of the switch to allow lua script see this
+        switch_states[switch_id] = !switch_states[switch_id];
     }
+}
+
+bool LevelScene::lua_switchState(int switch_id)
+{
+    if( (switch_id > switch_states.size()) || (switch_id<0) )
+        return false;
+    else
+        return switch_states[switch_id];
 }
 
 

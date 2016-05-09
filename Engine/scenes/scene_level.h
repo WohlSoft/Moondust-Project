@@ -217,13 +217,33 @@ public:
     SDL_TimerID loader_timer_id;
     /**************LoadScreen**************/
 
+    /*!
+     * \brief Get pointer to file data structure used to initialize level
+     * \return pointer to the level file data structure
+     */
     LevelData *levelData();
 
+    //! Queue of blocks which are requires transformation
     QQueue<transformTask_block > block_transforms;
 
     /**********************Switch blocks*************************/
+    //! Table of registered switchable blocks per SwitchID
     QHash<int, QList<LVL_Block* > > switch_blocks;
+
+    /*!
+     * \brief Toggles switch by SwitchID
+     * \param switch_id ID of the switch
+     */
     void toggleSwitch(int switch_id);
+    /*!
+     * \brief Get state of the SwitchID
+     * \param switch_id SwitchID to check state
+     * \return true or false state of the SwitchID
+     */
+    bool lua_switchState(int switch_id);
+
+    //! States of the SwitchID's, Has no effect on switchable blocks, used only to tell Lua scripts which current state of the switches now is
+    QList<bool> switch_states;
     /**********************Switch blocks*************************/
     /*************************Character switchers*************************/
     CharacterSwitcherEngine character_switchers;

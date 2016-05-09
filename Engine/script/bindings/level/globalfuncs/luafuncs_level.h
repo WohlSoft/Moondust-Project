@@ -10,6 +10,8 @@ class Binding_Level_CommonFuncs
 {
 public:
     static void Lua_ToggleSwitch(lua_State *L, int switchID);
+    static bool Lua_getSwitchState(lua_State *L, int switchID);
+    static void Lua_triggerEvent(lua_State *L, std::string eventName);
     static luabind::scope bindToLua();
 };
 
