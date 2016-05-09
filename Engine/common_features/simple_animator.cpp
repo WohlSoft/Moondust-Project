@@ -31,30 +31,30 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
     speed=animator.speed;
     pos1=animator.pos1;
     pos2=animator.pos2;
-    manual_ticks=animator.manual_ticks;
-    onceMode=animator.onceMode;
-    onceMode_loops=animator.onceMode_loops;
-    animationFinished=animator.animationFinished;
+    manual_ticks = animator.manual_ticks;
+    onceMode = animator.onceMode;
+    onceMode_loops = animator.onceMode_loops;
+    animationFinished = animator.animationFinished;
 
-    frame_sequance_enabled=animator.frame_sequance_enabled;
-    frame_sequance=animator.frame_sequance;
-    frame_sequance_cur=animator.frame_sequance_cur;
+    frame_sequance_enabled = animator.frame_sequance_enabled;
+    frame_sequance = animator.frame_sequance;
+    frame_sequance_cur = animator.frame_sequance_cur;
 
-    CurrentFrame=animator.CurrentFrame;
+    CurrentFrame = animator.CurrentFrame;
 
-    animated=animator.animated;
+    animated = animator.animated;
 
-    bidirectional=animator.bidirectional;
-    reverce=animator.reverce;
+    bidirectional = animator.bidirectional;
+    reverce = animator.reverce;
 
-    isEnabled=animator.isEnabled;
-    timer_id=animator.timer_id;
+    isEnabled = animator.isEnabled;
+    timer_id = animator.timer_id;
 
-    framesQ=animator.framesQ;
+    framesQ = animator.framesQ;
 
     //Animation alhorithm
-    frameFirst=animator.frameFirst;
-    frameLast=animator.frameLast;
+    frameFirst = animator.frameFirst;
+    frameLast = animator.frameLast;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
@@ -94,10 +94,10 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
 
 void SimpleAnimator::setFrameSequance(QList<int> sequance)
 {
-    frame_sequance=sequance;
-    frame_sequance_enabled=true;
-    frame_sequance_cur=0;
-    animationFinished=false;
+    frame_sequance = sequance;
+    frame_sequance_enabled = true;
+    frame_sequance_cur = 0;
+    animationFinished = false;
     if(!frame_sequance.isEmpty())
     {
         CurrentFrame = frame_sequance[frame_sequance_cur];
@@ -267,9 +267,18 @@ makeFrame:
 
 void SimpleAnimator::setFrame(int y)
 {
-    if(y>=framesQ) y= frameFirst;
-    if(y<frameFirst) y = (frameLast<0)? framesQ-1 : frameLast;
-    CurrentFrame = y;
+    if(frame_sequance_enabled)
+    {
+        if( (y>=0) && (y<frame_sequance.size()) )
+        {
+            frame_sequance_cur = y;
+            CurrentFrame = frame_sequance[frame_sequance_cur];
+        }
+    } else {
+        if(y>=framesQ) y= frameFirst;
+        if(y<frameFirst) y = (frameLast<0)? framesQ-1 : frameLast;
+        CurrentFrame = y;
+    }
 
     pos1 = CurrentFrame/framesQ;
     pos2 = CurrentFrame/framesQ + 1.0/framesQ;

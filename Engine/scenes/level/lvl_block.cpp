@@ -208,6 +208,9 @@ void LVL_Block::transformTo_x(long id)
         if(!_scene->switch_blocks.contains(setup->switch_ID) )
             _scene->switch_blocks[setup->switch_ID].clear();
         _scene->switch_blocks[setup->switch_ID].push_back(this);
+        //Fill switch states until it will be fited to defined SwitchID
+        while( _scene->switch_states.size() <= setup->switch_ID )
+            _scene->switch_states.push_back(false);
     }
 
     //Register player switch block if needed
@@ -499,35 +502,50 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             SpawnEffectDef effect;
             effect.id = 11;
             effect.startX = (float)posCenterX();
-            effect.startY = (float)top()-16;
-            effect.gravity = 13.0f;
+            effect.startY = (float)top()-16.f;
+            effect.gravity = 20.0f;
             effect.start_delay = 0.0f;
             effect.max_vel_y = 25.f;
-            effect.velocityY = -6.5f;
-            effect.delay = 1000;
+            effect.velocityY = -7.5f;
+            effect.delay = 710;
             effect.animationLoops = 0;
             effect.frame_sequence.clear();
             effect.frame_sequence.append(0);
             effect.frame_sequence.append(1);
             effect.frame_sequence.append(2);
             effect.frame_sequence.append(3);
-            effect.framespeed = 64;
+            effect.framespeed = 32;
             _scene->launchStaticEffect(effect, true);
 
             effect.id = 11;
             effect.startX = (float)posCenterX();
-            effect.startY = (float)top()-16;
+            effect.startY = (float)top()-32.f;
             effect.gravity = 0.0f;
-            effect.start_delay = 1000.0f;
+            effect.start_delay = 710.0f;
             effect.max_vel_y = 25.f;
-            effect.velocityY = 0;
+            effect.velocityY = 0.f;
             effect.animationLoops = 1;
             effect.frame_sequence.clear();
             effect.frame_sequence.append(4);
             effect.frame_sequence.append(5);
             effect.frame_sequence.append(6);
-            effect.framespeed = 175;
+            effect.framespeed = 125;
             effect.delay = 0;
+            _scene->launchStaticEffect(effect, true);
+
+            //Points!
+            effect.id = 79;
+            effect.startX = (float)posCenterX() + float( (rand()%16) * ( rand()%2 ? 1 : -1) );
+            effect.startY = (float)top()-16.f + float( (rand()%16) * ( rand()%2 ? 1 : -1) );
+            effect.gravity = 1.8f;
+            effect.start_delay = 710.0f;
+            effect.max_vel_y = 7.f;
+            effect.velocityY = -1.8f;
+            effect.animationLoops = 0;
+            effect.frame_sequence.clear();
+            effect.frame_sequence.append(0);
+            effect.framespeed = 125;
+            effect.delay = 1000;
             _scene->launchStaticEffect(effect, true);
         }
 
