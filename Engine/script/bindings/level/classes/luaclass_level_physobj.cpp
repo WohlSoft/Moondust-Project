@@ -39,6 +39,8 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             .property("right", &PGE_Phys_Object::right, &PGE_Phys_Object::setRight)
             .property("bottom", &PGE_Phys_Object::bottom, &PGE_Phys_Object::setBottom)
             .def_readonly("type", &PGE_Phys_Object::type)
+            .def("applyAccel", &PGE_Phys_Object::applyAccel)
+            .def("setDecelX", &PGE_Phys_Object::setDecelX)
 
             //Physics
             .property("paused_physics", &PGE_Phys_Object::isPaused, &PGE_Phys_Object::setPaused)
