@@ -48,7 +48,7 @@ function horizontal_piranha:initProps()
     self.cur_hidingDownTicks = 0
 
     -- FOR AI_HIDING_IDLE
-    self.cur_hidingIdleTicks = 0
+    self.cur_hidingIdleTicks = smbx_utils.ticksToTime(70)
 
     self:updateWarp()
 end
@@ -59,19 +59,21 @@ function horizontal_piranha:__init(npc_obj)
     self.def_right = npc_obj.right
     self.def_left = npc_obj.left
     self.def_width = npc_obj.width
-    self.speed = 1
+    self.speed = 1.5
     
     -- FOR AI_SHOWING_UP
-    self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.width)
+    self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.width/self.speed)
 
     -- FOR AI_SHOWING_IDLE
     self.def_showingIdleTicks = smbx_utils.ticksToTime(50)
 
     -- FOR AI_HIDING_DOWN
-    self.def_hidingDownTicks = smbx_utils.ticksToTime(self.npc_obj.width)
+    self.def_hidingDownTicks = smbx_utils.ticksToTime(self.npc_obj.width/self.speed)
 
     -- FOR AI_HIDING_IDLE
-    self.def_hidingIdleTicks = smbx_utils.ticksToTime(42)
+    self.def_hidingIdleTicks = smbx_utils.ticksToTime(75)
+    -- If player stands over, reset time to -10 seconds
+    -- self.def_hidingIdleTicks_waitPlayer = smbx_utils.ticksToTime(65)
 
     npc_obj.gravity = 0
 
@@ -112,6 +114,7 @@ function horizontal_piranha:onLoop(tickTime)
     elseif(self.cur_mode == AI_HIDING_DOWN)then
         if(self.def_hidingDownTicks > self.cur_hidingDownTicks)then
             self.cur_hidingDownTicks = self.cur_hidingDownTicks + tickTime
+            self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
             if (self.npc_obj.direction == 1) then
                 self.npc_obj.right = self.npc_obj.right - smbx_utils.speedConv(self.speed, tickTime)
             elseif (self.npc_obj.direction == -1) then

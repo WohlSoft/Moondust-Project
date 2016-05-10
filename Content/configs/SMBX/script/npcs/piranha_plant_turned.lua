@@ -36,7 +36,7 @@ function piranha_plant_turned:initProps()
     self.cur_hidingDownTicks = 0
 
     -- FOR AI_HIDING_IDLE
-    self.cur_hidingIdleTicks = 0
+    self.cur_hidingIdleTicks = smbx_utils.ticksToTime(70) -- Initial wait time is 70 ticks!
 
     self:updateWarp()
 end
@@ -47,19 +47,21 @@ function piranha_plant_turned:__init(npc_obj)
     self.def_top = npc_obj.top
     self.def_height = npc_obj.height
     self.def_bottom = npc_obj.bottom
-    self.speed = 1
+    self.speed = 1.5
     
     -- FOR AI_SHOWING_UP
-    self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.height)
+    self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.height/self.speed)
 
     -- FOR AI_SHOWING_IDLE
     self.def_showingIdleTicks = smbx_utils.ticksToTime(50)
 
     -- FOR AI_HIDING_DOWN
-    self.def_hidingDownTicks = smbx_utils.ticksToTime(self.npc_obj.height)
+    self.def_hidingDownTicks = smbx_utils.ticksToTime(self.npc_obj.height/self.speed)
 
     -- FOR AI_HIDING_IDLE
-    self.def_hidingIdleTicks = smbx_utils.ticksToTime(42)
+    self.def_hidingIdleTicks = smbx_utils.ticksToTime(75)
+    -- If player stands over, reset time to -10 seconds
+    -- self.def_hidingIdleTicks_waitPlayer = smbx_utils.ticksToTime(65)
 
     npc_obj.gravity = 0
 
@@ -92,6 +94,7 @@ function piranha_plant_turned:onLoop(tickTime)
     elseif(self.cur_mode == AI_HIDING_DOWN)then
         if(self.def_hidingDownTicks > self.cur_hidingDownTicks)then
             self.cur_hidingDownTicks = self.cur_hidingDownTicks + tickTime
+            self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
             self.npc_obj.bottom = self.npc_obj.bottom - smbx_utils.speedConv(self.speed, tickTime)
             self:updateWarp()
         else
@@ -109,7 +112,7 @@ function piranha_plant_turned:onLoop(tickTime)
             --for _, player in pairs(players) do
             --    if(math.abs(player.center_x - self.npc_obj.center_x) <= 44)then
             --        goUp = false
-            --        self.cur_hidingIdleTicks = 0 -- NOTE: Unknown if it resets
+            --        self.cur_hidingIdleTicks = self.def_hidingIdleTicks_waitPlayer
             --    end
             --end
             -- if(goUp)then
