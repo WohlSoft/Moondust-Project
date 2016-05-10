@@ -23,6 +23,8 @@ for((i=191;i<=200;i+=1)); do printf "[background-$i]\nimage=\"background-$i.gif\
 
 for((i=329,r=71,c=0;i<=400;i+=1,c+=1)); do printf "[tile-$i]\nimage=tile-$i.gif\nrow=$r\ncol=$c\n\n"; if [ $c -eq 4 ]; then c=-1; ((r++)); fi; done;
 
+for((i=33,r=7,c=0;i<=100;i+=1,c+=1)); do printf "[path-$i]\nimage=\"path-$i.gif\"\nrow=$r\ncol=$c\n\n"; if [ $c -eq 4 ]; then c=-1; ((r++)); fi; done;
+
 for((i=329;i<=400;i+=1)); do cp dummy_tile.gif tile-$i.gif; done
 
 for((i=191;i<=200;i+=1)); do cp dummy_bgo.gif background-$i.gif; done
