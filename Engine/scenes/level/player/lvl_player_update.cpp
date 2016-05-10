@@ -397,19 +397,19 @@ void LVL_Player::update(float tickTime)
                 jumpTime=physics_cur.jump_time;
                 jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                _velocityY_add=0;//Remove Y speed-add when player jumping
+                _velocityY_add = 0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
-            if((floating_allow)&&(floating_timer>0))
+            if((floating_allow)&&(floating_timer > 0.0f))
             {
                 floating_isworks=true;
 
                 //if true - do floating with sin, if false - do with cos.
-                floating_start_type=(speedY()<0);
+                floating_start_type=(speedY() < 0.0);
 
-                setSpeedY(0);
-                setGravityScale(0);
+                setSpeedY(0.0);
+                setGravityScale(0.0);
             }
         }
         else
@@ -424,14 +424,14 @@ void LVL_Player::update(float tickTime)
             {
                 floating_timer -= tickTime;
                 if(floating_start_type)
-                    setSpeedY( state_cur.floating_amplitude*(-cos(floating_timer/80.0)) );
+                    setSpeedY( state_cur.floating_amplitude*(-cos(floating_timer/80.0f)) );
                 else
-                    setSpeedY( state_cur.floating_amplitude*(cos(floating_timer/80.0)) );
+                    setSpeedY( state_cur.floating_amplitude*(cos(floating_timer/80.0f)) );
                 if(floating_timer<=0)
                 {
                     floating_timer=0;
                     floating_isworks=false;
-                    setGravityScale(climbing?0:physics_cur.gravity_scale);
+                    setGravityScale( climbing ? 0.0 : physics_cur.gravity_scale );
                 }
             }
         }

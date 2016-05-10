@@ -29,10 +29,10 @@ void LVL_Player::refreshEnvironmentState()
 
         if(physics_cur.zero_speed_y_on_enter)
         {
-            if(speedY()>0)
-                setSpeedY(0.0);
+            if( speedY() > 0.54 )
+                setSpeedY( 0.54 );
             else
-                setSpeedY(speedY()*(physics_cur.slow_up_speed_y_coeff));
+                setSpeedY( speedY()*(physics_cur.slow_up_speed_y_coeff) );
         }
 
         if(physics_cur.slow_speed_x_on_enter)
