@@ -112,7 +112,7 @@ void LVL_Npc::kill(int damageReason)
     {
         case DAMAGE_STOMPED:
             if(setup->effect_1>0)
-                _scene->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+                _scene->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 0, 500, 0, 0, 0, _direction);
             break;
         case DAMAGE_LAVABURN:
             if(ConfigManager::marker_npc.eff_lava_burn>0)
@@ -124,8 +124,8 @@ void LVL_Npc::kill(int damageReason)
             break;
         case DAMAGE_PITFALL: break;
         default:
-            if(setup->effect_2>0)
-                _scene->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+            if( setup->effect_2 > 0 )
+                _scene->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 0, 5000, -3.0f*_direction, -6.0f, 18.0f, _direction);
             break;
     }
 
