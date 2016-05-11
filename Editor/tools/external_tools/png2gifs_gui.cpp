@@ -31,6 +31,7 @@ png2gifs_gui::png2gifs_gui(QWidget *parent) :
 {
     ui->setupUi(this);
     proc= new QProcess();
+    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
 }
 
 png2gifs_gui::~png2gifs_gui()
@@ -97,7 +98,6 @@ void png2gifs_gui::on_startTool_clicked()
     DevConsole::log("----------------------------------", "PNG2GIFs", true);
     proc->waitForFinished(1);
     proc->start(command, args);
-    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
 }
 

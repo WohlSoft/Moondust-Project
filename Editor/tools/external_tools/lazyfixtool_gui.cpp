@@ -30,6 +30,7 @@ LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
     ui(new Ui::LazyFixTool_gui)
 {
     proc = new QProcess;
+    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     ui->setupUi(this);
 }
 
@@ -96,7 +97,6 @@ void LazyFixTool_gui::on_startTool_clicked()
     DevConsole::log("----------------------------------", "LazyFix Tool", true);
     proc->waitForFinished(1);
     proc->start(command, args);
-    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
 }
 
