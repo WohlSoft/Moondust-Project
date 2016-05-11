@@ -24,8 +24,32 @@
     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="0">
-    <widget class="QListWidget" name="SectionList_src"/>
+   <item row="5" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Margin (How far out of section items should be copied, in pixels):</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QComboBox" name="FileList_src"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QListWidget" name="SectionList_dst">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supports more than 21 section.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supports more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Source</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_3">
@@ -40,30 +64,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QComboBox" name="FileList_src"/>
-   </item>
-   <item row="3" column="1">
-    <widget class="QListWidget" name="SectionList_dst"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Source</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="FileList_dst"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Destiation</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -73,7 +74,10 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="2" column="1">
+    <widget class="QComboBox" name="FileList_dst"/>
+   </item>
+   <item row="6" column="0">
     <widget class="QSpinBox" name="padding_src">
      <property name="maximum">
       <number>100000</number>
@@ -83,12 +87,15 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLabel" name="label_4">
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Margin (How far out of section items should be copied, in pixels):</string>
+      <string>Destiation</string>
      </property>
     </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QListWidget" name="SectionList_src"/>
    </item>
   </layout>
  </widget>

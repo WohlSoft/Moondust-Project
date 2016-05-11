@@ -116,6 +116,14 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
         ui->SectionList_dst->addItem(item);
     }
 
+    //Init new section
+    {
+        item = new QListWidgetItem( tr("Initialize new section")+QString(" %1").arg(x->LvlData.sections.size()+1) );
+        item->setData(3, QString::number( x->LvlData.sections.size() ) );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        ui->SectionList_dst->addItem(item);
+    }
+
 }
 
 
@@ -156,11 +164,17 @@ void LvlCloneSection::on_buttonBox_accepted()
     clone_target = ui->FileList_dst->currentData().value<LevelEdit *>();
     clone_target_id = ui->SectionList_dst->selectedItems().first()->data(3).toInt();
 
+    if( clone_target_id >= clone_target->LvlData.sections.size() )
+    {
+        tmps = FileFormats::CreateLvlSection();
+        tmps.id = clone_target_id;
+        clone_target->LvlData.sections.push_back(tmps);
+    }
+    else
     foreach(LevelSection x, clone_target->LvlData.sections)
     {
-        if(x.id==clone_target_id){ tmps = x; break;}
+        if(x.id==clone_target_id) { tmps = x; break; }
     }
-
 //        qDebug() << "target " << clone_target_id << tmps.size_bottom << tmps.size_left
 //                                                 << tmps.size_right << tmps.size_top;
 
