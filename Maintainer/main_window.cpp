@@ -22,7 +22,9 @@ void MaintainerMain::on_quitOut_clicked()
 
 void MaintainerMain::on_music_converter_batch_clicked()
 {
-    AudioCvt_Sox_gui mus(this);
+    AudioCvt_Sox_gui mus(NULL);
+    mus.setWindowFlags( Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+    mus.setWindowModality(Qt::NonModal);
     this->hide();
     mus.exec();
     this->show();

@@ -6,6 +6,7 @@
 #include <common_features/app_path.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <QDirIterator>
+#include <QtConcurrent>
 
 #include <QtDebug>
 
@@ -36,8 +37,13 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 #endif
 
     connect(&converter, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(nextStep(int,QProcess::ExitStatus)));
-    connect(&converter, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
-    connect(&converter, SIGNAL(readyReadStandardError()),this, SLOT(consoleMessageErr()) );
+    connect(&converter, SIGNAL(readyRead()), this, SLOT(consoleMessage()) );
+    converter.setTextModeEnabled(true);
+    converter.setProcessChannelMode(QProcess::MergedChannels);
+    converter.setReadChannelMode(QProcess::MergedChannels);
+
+    connect(this, SIGNAL(doNextStep(int, int)), this, SLOT(nextStep_x(int,int)));
+    connect(this, SIGNAL(gotMax(int)), ui->progress, SLOT(setMaximum(int)));
 
     inWork=false;
     isBackUp = false;
@@ -49,12 +55,12 @@ AudioCvt_Sox_gui::~AudioCvt_Sox_gui()
     delete ui;
 }
 
-bool AudioCvt_Sox_gui::formatSupports(QString file)
+bool AudioCvt_Sox_gui::isFileTypeSupported(QString file)
 {
     bool valid=false;
-    if(file.endsWith(".mp3", Qt::CaseInsensitive)) valid=true;
-    if(file.endsWith(".ogg", Qt::CaseInsensitive)) valid=true;
-    if(file.endsWith(".wav", Qt::CaseInsensitive)) valid=true;
+    if(file.endsWith(".mp3", Qt::CaseInsensitive))  valid=true;
+    if(file.endsWith(".ogg", Qt::CaseInsensitive))  valid=true;
+    if(file.endsWith(".wav", Qt::CaseInsensitive))  valid=true;
     if(file.endsWith(".flac", Qt::CaseInsensitive)) valid=true;
     return valid;
 }
@@ -107,6 +113,8 @@ void AudioCvt_Sox_gui::start()
 
     resetStat();
 
+    bool execFetchEpisodeData=false;
+
     if(ui->doconv_custom->isChecked())
     {
         job=CVT_CUSTOM;
@@ -117,27 +125,9 @@ void AudioCvt_Sox_gui::start()
     if(ui->doconv_episode->isChecked())
     {
         job=CVT_EPS;
-        if(QDir(ui->cvt_episode->text()).exists())
+        if(!ui->cvt_episode->text().isEmpty() && QDir(ui->cvt_episode->text()).exists())
         {
-            episodeBox.openEpisode(ui->cvt_episode->text());
-            QDir musicDir(ui->cvt_episode->text());
-            QStringList filters;
-            filters //MPEG 1 Layer III (LibMAD)
-                    << "*.mp3"
-                    //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
-                    << "*.ogg" << "*.flac";
-                    //Uncompressed audio data
-                    //<< "*.wav";
-            musicDir.setSorting(QDir::Name);
-            musicDir.setNameFilters(filters);
-            QDirIterator dirsList(ui->cvt_episode->text(), filters,
-                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                                  QDirIterator::Subdirectories);
-            while(dirsList.hasNext())
-            {
-                dirsList.next();
-                filesToConvert.enqueue(episodeBox.epPath+"/"+musicDir.relativeFilePath(dirsList.filePath()));
-            }
+            execFetchEpisodeData=true;
         }
     }
     else
@@ -152,7 +142,7 @@ void AudioCvt_Sox_gui::start()
         }
     }
 
-    if(filesToConvert.isEmpty())
+    if(filesToConvert.isEmpty() && !execFetchEpisodeData)
     {
         QMessageBox::warning(this, tr("Nothing to do"), tr("No files to convert"));
         return;
@@ -161,16 +151,27 @@ void AudioCvt_Sox_gui::start()
     ui->start->setText(tr("Stop"));
     setEnableControls(false);
 
-    ui->progress->setMaximum(filesToConvert.size());
+    ui->progress->setMaximum( filesToConvert.size()*100 );
     ui->progress->setValue(-1);
     lastOutput.clear();
     inWork=true;
     madeJob=0;
-    nextStep(0, QProcess::NormalExit);
+
+    ui->status->setText("Preparing...");
+
+    if(execFetchEpisodeData)
+    {
+        fetcher = QtConcurrent::run(this, &AudioCvt_Sox_gui::CollectEpisodeData);
+        ui->status->setText("Looking for a musics and level/world files...");
+    }
+    else
+        nextStep(0, QProcess::NormalExit);
 }
 
 void AudioCvt_Sox_gui::stop(bool do_abort)
 {
+    if(fetcher.isRunning())
+        fetcher.cancel();
     ui->start->setText(tr("Start"));
     ui->progress->setValue(0);
     ui->progress->setMaximum(10);
@@ -179,6 +180,7 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
     current_musFileOld.clear();
     filesToConvert.clear();
     inWork=false;
+    ui->status->setText("");
 
     //Restore backUP
     if(do_abort)
@@ -205,11 +207,68 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
     }
 }
 
+void AudioCvt_Sox_gui::CollectEpisodeData()
+{
+    episodeBox.openEpisode( ui->cvt_episode->text() );
+    QDir musicDir( ui->cvt_episode->text() );
+    QStringList filters;
+    filters //MPEG 1 Layer III (LibMAD)
+            << "*.mp3"
+            //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
+            << "*.ogg" << "*.flac";
+            //Uncompressed audio data
+            //<< "*.wav";
+    musicDir.setSorting( QDir::Name );
+    musicDir.setNameFilters( filters );
+    QDirIterator dirsList( ui->cvt_episode->text(), filters,
+                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                          QDirIterator::Subdirectories );
+
+    while( dirsList.hasNext() )
+    {
+        dirsList.next();
+        filesToConvert.enqueue( episodeBox.epPath + "/" + musicDir.relativeFilePath( dirsList.filePath() ) );
+    }
+    emit gotMax( filesToConvert.size()*100 );
+    emit doNextStep(0, (int)QProcess::NormalExit);
+}
+
+void AudioCvt_Sox_gui::ProcessRenameMusic()
+{
+    if(!ui->backup->isChecked())
+    {
+        QFile(current_musFileOld).remove();
+    }
+
+    if( job == CVT_EPS )
+    {
+        episodeBox.renameMusic(current_musFileOld, current_musFileNew);
+        stat_overwritten_levels = episodeBox.overwrittenLevels();
+        stat_overwritten_worlds = episodeBox.overwrittenWorlds();
+    }
+    else if(job==CVT_LVL)
+    {
+        episodeBoxLvl.renameMusic(current_musFileOld, current_musFileNew);
+        if(episodeBoxLvl.m_wasOverwritten)
+            stat_overwritten_levels = 1;
+    }
+
+    current_musFileOld.clear();
+    current_musFileNew.clear();
+
+    emit doNextStep(0, (int)QProcess::NormalExit);
+}
+
+void AudioCvt_Sox_gui::nextStep_x(int retStatus, int exitStatus)
+{
+    nextStep(retStatus, (QProcess::ExitStatus)exitStatus);
+}
+
 void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 {
     if(!inWork) return;
 
-    if(exitStatus==QProcess::CrashExit)
+    if( exitStatus==QProcess::CrashExit )
     {
         fails << current_musFileOld << " -> "<<current_musFileNew<< ": " << tr("SoX was crashed");
         stat_failed_files++;
@@ -217,7 +276,7 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
         //return;
     }
 
-    if(retStatus!=0)
+    if( retStatus != 0 )
     {
         //QMessageBox::warning(this, tr("SoX error"), tr("SoX returned non-zero code: %1\n%2").arg(retStatus)
                              //.arg(lastOutput));
@@ -228,34 +287,13 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
         //stop(true);
         //return;
     }
-    ui->progress->setValue(ui->progress->maximum()-filesToConvert.size());
+
+    ui->progress->setValue( ui->progress->maximum() - filesToConvert.size()*100 );
     if((!current_musFileOld.isEmpty()) && (QFile(current_musFileOld).exists()))
     {
-        if(!ui->backup->isChecked())
-        {
-            QFile(current_musFileOld).remove();
-        }
-        if(job==CVT_EPS)
-            episodeBox.renameMusic(current_musFileOld, current_musFileNew, &stat_overwritten_levels, &stat_overwritten_worlds);
-        else if (job==CVT_LVL)
-            episodeBoxLvl.renameMusic(current_musFileOld, current_musFileNew);
-        /*
-        if(ledit)
-        {
-            for(int x=0;x<ledit->LvlData.sections.size();x++)
-            {
-                QString mFile = ledit->LvlData.sections[x].music_file;
-                if(mFile.isEmpty()) continue;
-                mFile.replace("\\", "/");
-                if(current_musFileOld.endsWith(mFile, Qt::CaseInsensitive))
-                {
-                    QString newMusFile=current_musFileNew;
-                    newMusFile.remove(ledit->LvlData.path + "/");
-                    ledit->LvlData.sections[x].music_file = newMusFile;
-                    ledit->LvlData.modified=true;
-                }
-            }
-        }*/
+        ui->status->setText( QString("Apply updated name for %1...").arg(current_musFileNew) );
+        fetcher = QtConcurrent::run(this, &AudioCvt_Sox_gui::ProcessRenameMusic);
+        return;
     }
 
     QStringList args;
@@ -265,11 +303,12 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 retry_queue:
     if(filesToConvert.isEmpty())
     {
-        QMessageBox::information(this, tr("All works completed"), tr("All files successfully converted!\n"
-                                "Converted files: %1\n"
-                                "Overwritten levels: %2\n"
-                                "Overwritten worldss: %3\n"
-                                                                     "%4")
+        QMessageBox::information(this, tr("All works completed"),
+                                 tr("All files successfully converted!\n"
+                                    "Converted files: %1\n"
+                                    "Overwritten levels: %2\n"
+                                    "Overwritten worlds: %3\n"
+                                    "%4")
                                  .arg(stat_converted_files)
                                  .arg(stat_overwritten_levels)
                                  .arg(stat_overwritten_worlds)
@@ -352,6 +391,10 @@ retry_queue:
         }
     }
 
+    ui->status->setText(QString("Converting %1...").arg(current_musFileOld));
+
+    args << "-S";//Show progress
+
     args << current_musFileOld;
     if(ui->box_resample->isChecked())
     {
@@ -406,20 +449,45 @@ retry_queue:
     stat_converted_files++;
 }
 
+static QString leftBuffer;
 void AudioCvt_Sox_gui::consoleMessage()
 {
     QByteArray strdata = converter.readAllStandardOutput();
-    lastOutput.append(strdata);
-    lastOutput.append("\n");
-    //DevConsole::log(strdata, "SoX");
-}
+    int made = 0;
+    bool found=false;
+    qDebug() << "OUTPUT: " << strdata;
+    QStringList acceptedData = QString::fromUtf8(strdata).split('\r');
+    foreach( QString entry, acceptedData )
+    {
+        entry.remove('\n');
+        qDebug() << "ENTRY" <<entry;
+        if(!leftBuffer.isEmpty())
+        {
+            entry = leftBuffer+entry;
+            leftBuffer.clear();
+        }
+        if(entry.size()<9)
+        {
+            leftBuffer = entry;
+            continue;
+        }
+        if(entry.startsWith("In:"))
+        {
+            made = qRound(entry.mid(3, 6).trimmed().remove('%').toDouble());
+            found = true;
+            qDebug() << "PROGRESS: "<< made;
+            break;
+        }
+    }
 
-void AudioCvt_Sox_gui::consoleMessageErr()
-{
-    QByteArray strdata = converter.readAllStandardError();
-    lastOutput.append(strdata);
-    lastOutput.append("\n");
-    //DevConsole::log(strdata, "SoX");
+    if(found)
+    {
+        qDebug() << "APPLIED: " << ((madeJob-1) * 100 + made);
+        ui->progress->setValue( (madeJob-1) * 100 + made );
+    }
+//    lastOutput.append(strdata);
+//    lastOutput.append("\n");
+//    //DevConsole::log(strdata, "SoX");
 }
 
 void AudioCvt_Sox_gui::on_browse_clicked()
@@ -442,12 +510,11 @@ void AudioCvt_Sox_gui::on_browse_clicked()
 void AudioCvt_Sox_gui::on_add_clicked()
 {
     QString filter;
-    filter="Audio files (*.wav *.ogg *.flac *.mp3)";
+    filter = "Audio files (*.wav *.ogg *.flac *.mp3)";
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Add file to convert"),
                                                  (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
                                                filter);
     if(files.isEmpty()) return;
-
     ui->musics_list->addItems(files);
 }
 

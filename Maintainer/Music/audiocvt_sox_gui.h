@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QProcess>
 #include <files/episode_box.h>
+#include <QFuture>
 
 namespace Ui {
 class AudioCvt_Sox_gui;
@@ -21,9 +22,13 @@ public:
     void start();
     void stop(bool do_abort=false);
 
+signals:
+    void doNextStep(int retStatus, int exitStatus);
+    void gotMax(int max);
+
 private slots:
     void consoleMessage();
-    void consoleMessageErr();
+    void nextStep_x(int retStatus, int exitStatus);
     void nextStep(int retStatus, QProcess::ExitStatus exitStatus);
     void on_browse_clicked();
     void on_add_clicked();
@@ -37,7 +42,11 @@ protected:
     void closeEvent( QCloseEvent * e );
 
 private:
-    bool formatSupports(QString file);
+    void CollectEpisodeData();
+    void ProcessRenameMusic();
+    QFuture<void> fetcher;
+
+    bool isFileTypeSupported(QString file);
     bool inWork;
     int madeJob;
     QProcess converter;

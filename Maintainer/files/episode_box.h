@@ -4,6 +4,12 @@
 #include <QString>
 #include <PGE_File_Formats/file_formats.h>
 
+struct MusicField
+{
+    QString  absolutePath;
+    QString *field;
+};
+
 class EpisodeBox_level{
 public:
     enum fType{
@@ -15,12 +21,13 @@ public:
     fType ftype;
     LevelData d;
     QString fPath;
-
+    bool m_wasOverwritten;
+    QList<MusicField> music_entries;
     EpisodeBox_level();
     EpisodeBox_level(const EpisodeBox_level&e);
     ~EpisodeBox_level();
     bool open(QString filePath);
-    void renameMusic(QString oldMus, QString newMus);
+    bool renameMusic(QString oldMus, QString newMus);
     void save();
 };
 
@@ -28,11 +35,13 @@ class EpisodeBox_world{
 public:
     WorldData d;
     QString fPath;
-
+    bool m_wasOverwritten;
+    QList<MusicField> music_entries;
     EpisodeBox_world();
     EpisodeBox_world(const EpisodeBox_world&w);
     ~EpisodeBox_world();
     bool open(QString filePath);
+    bool renameMusic(QString oldMus, QString newMus);
     void save();
 };
 
@@ -41,7 +50,9 @@ public:
     EpisodeBox();
     ~EpisodeBox();
     void openEpisode(QString dirPath);
-    void renameMusic(QString oldMus, QString newMus, long *overwritten_levels=0, long *overwritten_worlds=0);
+    void renameMusic(QString oldMus, QString newMus);
+    long overwrittenLevels();
+    long overwrittenWorlds();
     QString epPath;
     QList<EpisodeBox_level> d;
     QList<EpisodeBox_world> dw;

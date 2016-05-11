@@ -2,19 +2,22 @@
 
 #include <QDir>
 #include <QStringList>
-
+#include <QDirIterator>
 #include <QtDebug>
 
 EpisodeBox_level::EpisodeBox_level()
 {
     ftype = F_NONE;
+    m_wasOverwritten = false;
 }
 
 EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
 {
-    d=e.d;
-    ftype=e.ftype;
-    fPath=e.fPath;
+    d             = e.d;
+    ftype         = e.ftype;
+    fPath         = e.fPath;
+    music_entries = e.music_entries;
+    m_wasOverwritten = e.m_wasOverwritten;
 }
 
 EpisodeBox_level::~EpisodeBox_level()
@@ -46,26 +49,67 @@ bool EpisodeBox_level::open(QString filePath)
         }
         qDebug()<< "Opened level, is valid = " << d.ReadFileValid << filePath;
     }
+
+    //Collect music entries!
+    if(d.ReadFileValid)
+    {
+        QDir fullPath(d.path);
+        //From sections
+        for(int i=0; i<d.sections.size(); i++)
+        {
+            QString &musFile = d.sections[i].music_file;
+            if(musFile.isEmpty()) continue;
+            musFile.replace('\\', '/');
+            musFile.replace("//", "/");
+            QString mFile = fullPath.absoluteFilePath(musFile);
+
+            MusicField mus;
+            mus.absolutePath = mFile;
+            mus.field = &musFile;
+            music_entries.push_back(mus);
+        }
+
+        //For custom musics per events
+        for(int i=0; i < d.events.size(); i++)
+        {
+            for(int j=0;j < d.events[i].sets.size(); j++)
+            {
+                QString &musFile = d.events[i].sets[j].music_file;
+                if(musFile.isEmpty()) continue;
+                musFile.replace('\\', '/');
+                musFile.replace("//", "/");
+                QString mFile = fullPath.absoluteFilePath(musFile);
+
+                MusicField mus;
+                mus.absolutePath = mFile;
+                mus.field = &musFile;
+                music_entries.push_back(mus);
+            }
+        }
+    }
+
     return d.ReadFileValid;
 }
 
-void EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
+bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
 {
     bool modified=false;
-    for(int i=0;i<d.sections.size(); i++)
+    QDir fullPath(d.path);
+    for(int i=0; i < music_entries.size(); i++)
+    {
+        MusicField &mus = music_entries[i];
+        if( mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0 )
         {
-            QString mFile = d.sections[i].music_file;
-            if(mFile.isEmpty()) continue;
-            mFile.replace("\\", "/");
-            if(oldMus.endsWith(mFile, Qt::CaseInsensitive))
-            {
-                QString newMusFile=newMus;
-                newMusFile.remove(d.path + "/");
-                d.sections[i].music_file = newMusFile;
-                modified=true;
-            }
+            *(mus.field) = fullPath.relativeFilePath( newMus );
+            modified=true;
         }
-    if(modified) save();
+    }
+    if(modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+    return modified;
 }
 
 
@@ -98,8 +142,10 @@ EpisodeBox_world::EpisodeBox_world()
 
 EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
 {
-    d=w.d;
-    fPath=w.fPath;
+    d       = w.d;
+    fPath   = w.fPath;
+    music_entries = w.music_entries;
+    m_wasOverwritten = w.m_wasOverwritten;
 }
 
 EpisodeBox_world::~EpisodeBox_world()
@@ -109,8 +155,49 @@ bool EpisodeBox_world::open(QString filePath)
 {
     fPath=filePath;
     FileFormats::OpenWorldFile(filePath, d);
-    qDebug()<< "Opened world, valud="<<d.ReadFileValid<< filePath;
+
+    qDebug()<< "Opened world, valud=" << d.ReadFileValid << filePath;
+    //Collect music entries!
+    if(d.ReadFileValid)
+    {
+        QDir fullPath(d.path);
+        //From music boxes
+        for(int i=0; i<d.music.size(); i++)
+        {
+            QString &musFile = d.music[i].music_file;
+            if(musFile.isEmpty()) continue;
+            musFile.replace('\\', '/');
+            musFile.replace("//", "/");
+            QString mFile = fullPath.absoluteFilePath(musFile);
+
+            MusicField mus;
+            mus.absolutePath = mFile;
+            mus.field = &musFile;
+            music_entries.push_back(mus);
+        }
+    }
     return d.ReadFileValid;
+}
+
+bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
+{
+    bool modified=false;
+    QDir fullPath(d.path);
+    for(int i=0; i < music_entries.size(); i++)
+    {
+        MusicField &mus = music_entries[i];
+        if( mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0 )
+        {
+            *(mus.field) = fullPath.relativeFilePath( newMus );
+            modified=true;
+        }
+    }
+    if(modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+    return modified;
 }
 
 void EpisodeBox_world::save()
@@ -128,73 +215,67 @@ void EpisodeBox::openEpisode(QString dirPath)
 {
     d.clear();
     dw.clear();
-    epPath=dirPath;
+    epPath = dirPath;
     QDir dr(dirPath);
     dr.setPath(dirPath);
     QStringList filters;
+
     //Files which are supports custom musics
-    filters<<"*.lvl";
-    filters<<"*.lvlx";
-    filters<<"*.wldx";
-    QStringList es=dr.entryList(filters, QDir::Files);
-    foreach(QString file, es)
+    filters << "*.lvl";
+    filters << "*.lvlx";
+    filters << "*.wldx";
+    dr.setSorting( QDir::NoSort );
+    dr.setNameFilters( filters );
+    QDirIterator dirsList( dirPath, filters,
+                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                          QDirIterator::Subdirectories );
+    while( dirsList.hasNext() )
     {
-        if(file.endsWith(".lvl", Qt::CaseInsensitive)||file.endsWith(".lvlx", Qt::CaseInsensitive))
+        dirsList.next();
+        QString file = dr.relativeFilePath( dirsList.filePath() );
+        if(file.endsWith(".lvl", Qt::CaseInsensitive) || file.endsWith(".lvlx", Qt::CaseInsensitive))
         {
             EpisodeBox_level l;
-            l.open(epPath+"/"+file);
-            d.push_back(l);
+            if( l.open( epPath + "/" + file ) ) //Push only valid files!!!
+                d.push_back(l);
         } else {
             EpisodeBox_world l;
-            l.open(epPath+"/"+file);
-            dw.push_back(l);
+            if( l.open(epPath+"/"+file) ) //Push only valid files!!!
+                dw.push_back(l);
         }
     }
 }
 
-void EpisodeBox::renameMusic(QString oldMus, QString newMus, long *overwritten_levels, long *overwritten_worlds)
+long EpisodeBox::overwrittenLevels()
+{
+    long count=0;
+    for(int i=0;i<d.size(); i++)
+    {
+        if(d[i].m_wasOverwritten)
+            count++;
+    }
+    return count;
+}
+
+long EpisodeBox::overwrittenWorlds()
+{
+    long count=0;
+    for(int i=0;i<dw.size(); i++)
+    {
+        if(dw[i].m_wasOverwritten)
+            count++;
+    }
+    return count;
+}
+
+void EpisodeBox::renameMusic(QString oldMus, QString newMus)
 {
     for(int i=0;i<d.size(); i++)
     {
-        bool modified=false;
-        for(int j=0;j<d[i].d.sections.size(); j++)
-        {
-            QString mFile = d[i].d.sections[j].music_file;
-            if(mFile.isEmpty()) continue;
-            mFile.replace("\\", "/");
-            if(oldMus.endsWith(mFile, Qt::CaseInsensitive))
-            {
-                QString newMusFile=newMus;
-                newMusFile.remove(d[i].d.path + "/");
-                d[i].d.sections[j].music_file = newMusFile;
-                modified=true;
-            }
-        }
-        if(modified)
-        {
-            if(overwritten_levels)
-                (*overwritten_levels)++;
-            d[i].save();
-        }
+        d[i].renameMusic(oldMus, newMus);
     }
     for(int i=0;i<dw.size(); i++)
     {
-        bool modified=false;
-        for(int j=0;j<dw[i].d.music.size(); j++)
-        {
-            if(dw[i].d.music[j].music_file.isEmpty()) continue;
-            dw[i].d.music[j].music_file.replace("\\", "/");
-            if(dw[i].d.music[j].music_file.compare(oldMus, Qt::CaseInsensitive)==0)
-            {
-                dw[i].d.music[j].music_file=newMus;
-                modified=true;
-            }
-        }
-        if(modified)
-        {
-            if(overwritten_worlds)
-                (*overwritten_worlds)++;
-            dw[i].save();
-        }
+        dw[i].renameMusic(oldMus, newMus);
     }
 }
