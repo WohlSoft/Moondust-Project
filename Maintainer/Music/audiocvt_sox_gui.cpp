@@ -22,6 +22,15 @@ void memclear(QListWidget *wid)
     }
 }
 
+static QString strTail(QString str, int len)
+{
+    if(len <= 0)
+        return "";
+    if(str.size() <= len)
+        return str;
+    return "..." + str.mid(str.size()-(len+1), -1);
+}
+
 
 AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     QDialog(parent),
@@ -291,7 +300,8 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
     ui->progress->setValue( ui->progress->maximum() - filesToConvert.size()*100 );
     if((!current_musFileOld.isEmpty()) && (QFile(current_musFileOld).exists()))
     {
-        ui->status->setText( QString("Apply updated name for %1...").arg(current_musFileNew) );
+        ui->status->setText( QString("Apply updated name for %1...")
+                             .arg( strTail(current_musFileNew, 50) ) );
         fetcher = QtConcurrent::run(this, &AudioCvt_Sox_gui::ProcessRenameMusic);
         return;
     }
@@ -391,7 +401,7 @@ retry_queue:
         }
     }
 
-    ui->status->setText(QString("Converting %1...").arg(current_musFileOld));
+    ui->status->setText( QString("Converting %1...").arg( strTail(current_musFileOld, 50) ) );
 
     args << "-S";//Show progress
 
