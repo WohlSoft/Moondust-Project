@@ -117,14 +117,14 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
         foreach(QGraphicsItem *x, src->scene->items(zone))
         {
-            if(x->data(0)=="Block")
+            if(x->data(ITEM_TYPE)=="Block")
                 x->setSelected(true);
             else
-            if(x->data(0)=="BGO")
+            if(x->data(ITEM_TYPE)=="BGO")
                 x->setSelected(true);
-            if(x->data(0)=="NPC")
+            if(x->data(ITEM_TYPE)=="NPC")
                 x->setSelected(true);
-            if(x->data(0)=="Water")
+            if(x->data(ITEM_TYPE)=="Water")
                 x->setSelected(true);
         }
 
@@ -156,7 +156,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             baseY = buffer.physez[0].y;
         }else{
             //nothing to clone
-            doCloneItems=false;
+            doCloneItems = false;
         }
 
         if(!progress.wasCanceled()) progress.setValue(4);
