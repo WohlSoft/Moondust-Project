@@ -2,6 +2,7 @@
 #include "ui_main_window.h"
 
 #include <Music/audiocvt_sox_gui.h>
+#include <EpisodeCvt/episode_converter.h>
 
 MaintainerMain::MaintainerMain(QWidget *parent) :
     QDialog(parent),
@@ -32,5 +33,10 @@ void MaintainerMain::on_music_converter_batch_clicked()
 
 void MaintainerMain::on_episode_converter_clicked()
 {
-
+    EpisodeConverter eps(NULL);
+    eps.setWindowFlags( Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+    eps.setWindowModality(Qt::NonModal);
+    this->hide();
+    eps.exec();
+    this->show();
 }

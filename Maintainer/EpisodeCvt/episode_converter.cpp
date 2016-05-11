@@ -12,3 +12,18 @@ EpisodeConverter::~EpisodeConverter()
 {
     delete ui;
 }
+
+void EpisodeConverter::on_closeBox_clicked()
+{
+    this->close();
+}
+
+void EpisodeConverter::on_pushButton_clicked()
+{
+
+}
+
+void EpisodeConverter::on_DoMadJob_clicked()
+{
+
+}
