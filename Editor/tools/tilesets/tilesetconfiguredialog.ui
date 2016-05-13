@@ -133,6 +133,9 @@
        <property name="text">
         <string>Save</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="0" colspan="4">
@@ -215,6 +218,20 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>listView</tabstop>
+  <tabstop>TilesetName</tabstop>
+  <tabstop>OpenTileset</tabstop>
+  <tabstop>SaveTileset</tabstop>
+  <tabstop>clearTileset</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>spin_width</tabstop>
+  <tabstop>spin_height</tabstop>
+  <tabstop>customOnly</tabstop>
+  <tabstop>specific</tabstop>
+  <tabstop>defaultOnly</tabstop>
+  <tabstop>delete_me</tabstop>
+ </tabstops>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>
