@@ -132,6 +132,11 @@ public:
 
     PGE_RectF posRect;
 
+    //! Recent center X position gotten from playable character
+    float focus_x;
+    //! Recent center Y position gotten from playable character
+    float focus_y;
+
     float render_x;
     float render_y;
 

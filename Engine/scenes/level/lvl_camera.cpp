@@ -39,8 +39,13 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
     posRect.setHeight(600);
     render_x=0.0f;
     render_y=0.0f;
+
     offset_x=0.0f;
     offset_y=0.0f;
+
+    focus_x = 0.0f;
+    focus_y = 0.0f;
+
     playerID = 0;
     section = 0;
     cur_section = NULL;
@@ -65,23 +70,26 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene)
 {
-    render_x=cam.render_x;
-    render_y=cam.render_y;
-    offset_x=cam.offset_x;
-    offset_y=cam.offset_y;
+    render_x = cam.render_x;
+    render_y = cam.render_y;
+
+    offset_x = cam.offset_x;
+    offset_y = cam.offset_y;
+
+    focus_x = cam.focus_x;
+    focus_y = cam.focus_y;
 
     playerID = cam.playerID;
 
     posRect = cam.posRect;
 
-    //objects_to_render = cam.objects_to_render;
-
     section = cam.section;
+
     cur_section = cam.cur_section;
 
     fader = cam.fader;
 
-    isAutoscroll=cam.isAutoscroll;
+    isAutoscroll = cam.isAutoscroll;
     _autoscrollVelocityX_max=cam._autoscrollVelocityX_max;
     _autoscrollVelocityY_max=cam._autoscrollVelocityY_max;
     _autoscrollVelocityX=cam._autoscrollVelocityX;
@@ -160,7 +168,8 @@ void PGE_LevelCamera::setRenderPos(float x, float y)
 
 void PGE_LevelCamera::setCenterPos(float x, float y)
 {
-    posRect.setPos(round(x-posRect.width()/2.0), round(y-posRect.height()/2.0));
+    focus_x = x; focus_y = y;
+    posRect.setPos(round((double)x-posRect.width()/2.0), round((double)y-posRect.height()/2.0));
     _applyLimits();
 }
 
@@ -489,10 +498,13 @@ void PGE_LevelCamera::drawBackground()
     }
 }
 
+
 void PGE_LevelCamera::drawForeground()
 {
     if(!fader.isNull())
+    {
         GlRenderer::renderRect(0, 0, posRect.width(), posRect.height(), 0.0f, 0.0f, 0.0f, fader.fadeRatio());
+    }
 }
 
 
