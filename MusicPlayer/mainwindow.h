@@ -91,6 +91,8 @@ private slots:
      */
     void on_modulation_clicked(bool checked);
 
+    void on_adlibMode_clicked(bool checked);
+
     /*!
      * \brief Track-ID editing finished event
      */
@@ -106,6 +108,7 @@ private slots:
      * \brief Changes color of "Recording WAV" label between black and red
      */
     void _blink_red();
+
 
 private:
     //! Controlls blinking of the wav-recording label

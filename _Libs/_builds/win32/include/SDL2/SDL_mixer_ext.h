@@ -685,6 +685,8 @@ extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getVibrato();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setVibrato(int vib);
 extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getScaleMod();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setScaleMod(int sc);
+extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getAdLibMode();
+extern DECLSPEC void SDLCALL MIX_ADLMIDI_setAdLibMode(int tr);
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
 
 extern DECLSPEC int SDLCALL MIX_SetMidiDevice(int device);

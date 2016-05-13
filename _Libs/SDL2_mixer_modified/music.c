@@ -2247,7 +2247,7 @@ void SDLCALLCC MIX_Timidity_addToPathList(const char *path)
 
 
 /* ADLMIDI Setup functions */
-int  MIX_ADLMIDI_getBankID()
+int SDLCALLCC MIX_ADLMIDI_getBankID()
 {
     #ifdef USE_ADL_MIDI
     return ADLMIDI_getBankID();
@@ -2283,7 +2283,7 @@ void SDLCALLCC MIX_ADLMIDI_setTremolo(int tr)
     #endif
 }
 
-int  MIX_ADLMIDI_getVibrato()
+int SDLCALLCC MIX_ADLMIDI_getVibrato()
 {
     #ifdef USE_ADL_MIDI
     return ADLMIDI_getVibrato();
@@ -2301,7 +2301,7 @@ void SDLCALLCC MIX_ADLMIDI_setVibrato(int vib)
     #endif
 }
 
-int  MIX_ADLMIDI_getScaleMod()
+int SDLCALLCC MIX_ADLMIDI_getScaleMod()
 {
     #ifdef USE_ADL_MIDI
     return ADLMIDI_getScaleMod();
@@ -2319,6 +2319,24 @@ void SDLCALLCC MIX_ADLMIDI_setScaleMod(int sc)
     #endif
 }
 
+int SDLCALLCC MIX_ADLMIDI_getAdLibMode()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getAdLibDrumsMode();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void SDLCALLCC MIX_ADLMIDI_setAdLibMode(int sc)
+{
+    need_reset_midi=0;
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setAdLibDrumsMode(sc);
+    #endif
+}
+
 void SDLCALLCC MIX_ADLMIDI_setSetDefaults()
 {
     need_reset_midi=1;
@@ -2326,6 +2344,8 @@ void SDLCALLCC MIX_ADLMIDI_setSetDefaults()
     ADLMIDI_setDefaults();
     #endif
 }
+
+
 
 
 int SDLCALLCC MIX_SetMidiDevice(int device)

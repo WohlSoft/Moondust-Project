@@ -395,6 +395,12 @@ void MainWindow::on_modulation_clicked(bool checked)
 }
 
 
+void MainWindow::on_adlibMode_clicked(bool checked)
+{
+    MIX_ADLMIDI_setAdLibMode((int)checked);
+}
+
+
 
 void MainWindow::on_trackID_editingFinished()
 {
