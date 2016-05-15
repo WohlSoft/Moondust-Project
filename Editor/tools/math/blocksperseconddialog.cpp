@@ -23,7 +23,7 @@
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond(1000.0/15.6),
+    m_framesPerSecond( 1000.0/15.285 ),
     ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
@@ -32,8 +32,8 @@ BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(unsigned int defBlockSize, QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond(1000.0/15.6),
-    ui(new Ui::BlocksPerSecondDialog)
+    m_framesPerSecond( 1000.0/15.285 ),
+    ui( new Ui::BlocksPerSecondDialog )
 {
     ui->setupUi(this);
     ui->spinBlockSize->setValue(defBlockSize);
