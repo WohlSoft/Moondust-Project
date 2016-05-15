@@ -31,7 +31,13 @@ public:
 
     int _npc_id;//Current NPC-ID
     LevelNPC data; //Local settings
+
+    //! Default GFX offset
     PGE_PointF offset;
+
+    //! Configurable GFX Offset from lua scripts
+    PGE_PointF lua_offset;
+
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
@@ -270,6 +276,10 @@ public:
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
     LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
+
+    inline void lua_setGfxOffsetX(double x) { lua_offset.setX(x); }
+    inline void lua_setGfxOffsetY(double y) { lua_offset.setX(y); }
+    inline void lua_setGfxOffset(double x, double y) { lua_offset.setPoint(x, y); }
 
     inline bool not_movable() { return data.nomove; }
     inline void setNot_movable(bool n) { data.nomove=n; }

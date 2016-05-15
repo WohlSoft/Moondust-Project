@@ -31,7 +31,7 @@
 #include <QtDebug>
 #include <QStack>
 
-const float PGE_LevelCamera::_smbxTickTime=1000.0f/65.f;
+const float PGE_LevelCamera::_smbxTickTime=15.285;//1000.0f/65.f;
 
 PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 {
@@ -66,6 +66,13 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
     _objects_to_render_stored=0;
     _objects_to_render_recent=0;
     _disable_cache_mode=false;
+
+    shake_enabled_x=false;
+    shake_enabled_y=false;
+    shake_force_decelerate_x=0.0;
+    shake_force_decelerate_y=0.0;
+    shake_force_x=0.0;
+    shake_force_y=0.0;
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene)
@@ -101,6 +108,13 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene
     _objects_to_render=(PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
     memcpy(_objects_to_render, cam._objects_to_render, _objects_to_render_max);
     _disable_cache_mode=cam._disable_cache_mode;
+
+    shake_enabled_x=cam.shake_enabled_x;
+    shake_enabled_y=cam.shake_enabled_y;
+    shake_force_decelerate_x=cam.shake_force_decelerate_x;
+    shake_force_decelerate_y=cam.shake_force_decelerate_y;
+    shake_force_x=cam.shake_force_x;
+    shake_force_y=cam.shake_force_y;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -257,6 +271,76 @@ void PGE_LevelCamera::update(float ticks)
         sortElements();
         _objects_to_render_recent=_objects_to_render_stored;
     }
+
+    /*****************************Screen shaking*******************************/
+    if(shake_enabled_x)
+    {
+        int force_x = (int)round(shake_force_x);
+        if(force_x != 0) {
+            offset_x = (float)( rand()%(force_x)*( rand()%2 ? -1 : 1 ) );
+        } else {
+            offset_x = 0.0f;
+        }
+
+        if( shake_force_x > 0.0 ) {
+            shake_force_x -= ticks * shake_force_decelerate_x;
+        }
+        if( shake_force_x <= 0.0 ) {
+            shake_force_x = 0.0; offset_x = 0.0f; shake_enabled_x=false;
+        }
+    }
+
+    if(shake_enabled_y)
+    {
+        int force_y = (int)round(shake_force_y);
+        if(force_y != 0) {
+            offset_y = (float)( rand()%(force_y)*( rand()%2 ? -1 : 1 ) );
+        } else {
+            offset_y = 0.0f;
+        }
+
+        if( shake_force_y > 0.0 ) {
+            shake_force_y -= ticks * shake_force_decelerate_y;
+        }
+        if( shake_force_y <= 0.0 ) {
+            shake_force_y = 0.0; offset_y = 0.0f; shake_enabled_y=false;
+        }
+    }
+    /*****************************Screen shaking**End**************************/
+}
+
+void PGE_LevelCamera::shakeScreen(double forceX, double forceY, double dec_step_x, double dec_step_y)
+{
+    shakeScreenX(forceX, dec_step_x);
+    shakeScreenY(forceY, dec_step_y);
+}
+
+void PGE_LevelCamera::shakeScreenX(double forceX, double dec_step_x)
+{
+    if(forceX <= 0.0)
+    {
+        offset_x = 0.0f;
+        shake_enabled_x=false;
+        shake_force_x = 0.0;
+    } else {
+        shake_enabled_x = true;
+        shake_force_x = forceX;
+        shake_force_decelerate_x = dec_step_x;
+    }
+}
+
+void PGE_LevelCamera::shakeScreenY(double forceY, double dec_step_y)
+{
+    if(forceY <= 0.0)
+    {
+        offset_y = 0.0f;
+        shake_enabled_y=false;
+        shake_force_x = 0.0;
+    } else {
+        shake_enabled_y=true;
+        shake_force_y = forceY;
+        shake_force_decelerate_y = dec_step_y;
+    }
 }
 
 void PGE_LevelCamera::sortElements()
@@ -313,11 +397,6 @@ void PGE_LevelCamera::resetLimits()
     if(cur_section)
         cur_section->resetLimits();
 }
-
-//PGE_RenderList &PGE_LevelCamera::renderObjects()
-//{
-//    return objects_to_render;
-//}
 
 PGE_Phys_Object **PGE_LevelCamera::renderObjects_arr()
 {
@@ -455,37 +534,65 @@ void PGE_LevelCamera::_applyLimits()
 {
     if(isAutoscroll)
     {
-        if(posRect.left() < limitBox.left())
-            posRect.setX(round(limitBox.left()));
+        if(posRect.width()>limitBox.width())
+        {
+            posRect.setX( limitBox.left() + (limitBox.width()/2.0) - (posRect.width()/2.0) );
+        }
+        else
+        {
+            if(posRect.left() < limitBox.left())
+                posRect.setX(round(limitBox.left()));
+            if(posRect.right() > limitBox.right())
+                posRect.setX(round(limitBox.right()-posRect.width()));
+        }
 
-        if(posRect.right() > limitBox.right())
-            posRect.setX(round(limitBox.right()-posRect.width()));
+        if(posRect.height()>limitBox.height())
+        {
+            posRect.setY( limitBox.top() + (limitBox.height()/2.0) - (posRect.height()/2.0) );
+        }
+        else
+        {
+            if(posRect.top() < limitBox.top())
+                posRect.setY(round(limitBox.top()));
 
-        if(posRect.top() < limitBox.top())
-            posRect.setY(round(limitBox.top()));
-
-        if(posRect.bottom()>limitBox.bottom())
-            posRect.setY(round(limitBox.bottom()-posRect.height()));
+            if(posRect.bottom()>limitBox.bottom())
+                posRect.setY(round(limitBox.bottom()-posRect.height()));
+        }
         return;
     }
 
     if(!cur_section) return;
-    if(posRect.left() < cur_section->limitBox.left())
-        posRect.setX(cur_section->limitBox.left());
+    PGE_RectF &limBox = cur_section->limitBox;
+    if(posRect.width() > limBox.width())
+    {
+        posRect.setX( limBox.left() + (limBox.width()/2.0) - (posRect.width()/2.0) );
+    }
+    else
+    {
+        if(posRect.left() < cur_section->limitBox.left())
+            posRect.setX(cur_section->limitBox.left());
 
-    if(posRect.right() > cur_section->limitBox.right())
-        posRect.setX(cur_section->limitBox.right()-posRect.width());
+        if(posRect.right() > cur_section->limitBox.right())
+            posRect.setX(cur_section->limitBox.right()-posRect.width());
+    }
 
-    if(posRect.top() < cur_section->limitBox.top())
-        posRect.setY(cur_section->limitBox.top());
+    if(posRect.height()>limBox.height())
+    {
+        posRect.setY( limBox.top() + (limBox.height()/2.0) - (posRect.height()/2.0) );
+    }
+    else
+    {
+        if(posRect.top() < limBox.top())
+            posRect.setY(limBox.top());
 
-    if(posRect.bottom()>cur_section->limitBox.bottom())
-        posRect.setY(cur_section->limitBox.bottom()-posRect.height());
+        if(posRect.bottom()>limBox.bottom())
+            posRect.setY(limBox.bottom()-posRect.height());
+    }
 
     if(cur_section->RightOnly())
     {
-        if(posRect.left() > cur_section->limitBox.left())
-            cur_section->limitBox.setLeft(posRect.left());
+        if(posRect.left() > limBox.left())
+            limBox.setLeft(posRect.left());
     }
 }
 
@@ -494,7 +601,7 @@ void PGE_LevelCamera::drawBackground()
 {
     if(cur_section)
     {
-        cur_section->renderBG(posRect.x(), posRect.y(), posRect.width(), posRect.height());
+        cur_section->renderBG(posRect.x()+(double)offset_x, posRect.y()+(double)offset_y, posRect.width(), posRect.height());
     }
 }
 
@@ -504,6 +611,32 @@ void PGE_LevelCamera::drawForeground()
     if(!fader.isNull())
     {
         GlRenderer::renderRect(0, 0, posRect.width(), posRect.height(), 0.0f, 0.0f, 0.0f, fader.fadeRatio());
+    }
+    if(cur_section)
+    {
+        PGE_RectF &limBox = cur_section->limitBox;
+        double left   = posRect.left()+(double)offset_x;
+        double top    = posRect.top() +(double)offset_y;
+        double right  = posRect.right()+(double)offset_x;
+        double bottom = posRect.bottom()+(double)offset_y;
+        if( left < limBox.left() )
+        {
+            GlRenderer::renderRect(0, 0, fabs(left-limBox.left()), posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
+        }
+        if( top < limBox.top() )
+        {
+            GlRenderer::renderRect(0, 0, posRect.width(), fabs(top-limBox.top()), 0.0f, 0.0f, 0.0f, 1.0f);
+        }
+        if( right > limBox.right() )
+        {
+            double width=fabs(limBox.right()-right);
+            GlRenderer::renderRect(posRect.width()-width, 0, width, posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
+        }
+        if( bottom > limBox.bottom() )
+        {
+            double height=fabs(limBox.bottom()-bottom);
+            GlRenderer::renderRect(0, posRect.height()-height, posRect.width(), height, 0.0f, 0.0f, 0.0f, 1.0f);
+        }
     }
 }
 

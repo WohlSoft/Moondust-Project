@@ -164,6 +164,22 @@ public:
     /**************LUA Binding*************/
     static luabind::scope bindToLua();
     /**************************************/
+    /************Screen shaking************/
+    /*!
+     * \brief Enables screen shaking
+     * \param force Max pixels delay at center position to shake
+     * \param dec_step Force deceleration step per millisecond
+     */
+    void shakeScreen(double forceX, double forceY, double dec_step_x, double dec_step_y);
+    void shakeScreenX(double forceX, double dec_step_x);
+    void shakeScreenY(double forceY, double dec_step_y);
+    bool shake_enabled_x;
+    bool shake_enabled_y;
+    double shake_force_decelerate_x;
+    double shake_force_decelerate_y;
+    double shake_force_x;
+    double shake_force_y;
+    /**************************************/
 
 private:
     void _applyLimits();

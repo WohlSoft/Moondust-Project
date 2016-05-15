@@ -37,13 +37,15 @@ void LVL_Npc::render(double camX, double camY)
         else
             x=animator.image(_direction);
     }
+    double offsetX = offset.x()+lua_offset.x();
+    double offsetY = offset.y()+lua_offset.y();
 
     PGE_RectF tPos; tPos.setLeft(0.0); tPos.setRight(1.0);
     tPos.setTop(x.first); tPos.setBottom(x.second);
 
     PGE_RectF npc;
-    npc.setRect(round(posX()-offset.x())-camX,
-                   round(posY()-offset.y())-camY,
+    npc.setRect(round(posX()-offsetX)-camX,
+                   round(posY()-offsetY)-camY,
                    frameSize.w(),
                    frameSize.h()
                    );
@@ -57,25 +59,25 @@ void LVL_Npc::render(double camX, double camY)
         {
             case WARP_LEFT://Left entrance, right Exit
                 {
-                    float wOfs = offset.x()/warpFrameW;//Relative X offset
+                    float wOfs = offsetX/warpFrameW;//Relative X offset
                     float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
                     tPos.setLeft( tPos.left()+wOfs+(warpSpriteOffset*wOfsF) );
-                    npc.setLeft( npc.left()+offset.x() );
+                    npc.setLeft( npc.left()+offsetX );
                     npc.setRight( npc.right()-(warpSpriteOffset * frameSize.w()) );
                 }
                 break;
             case WARP_TOP://Up entrance, down exit
                 {
-                    float hOfs = offset.y()/warpFrameH;//Relative Y offset
+                    float hOfs = offsetY/warpFrameH;//Relative Y offset
                     float hOfsF = frameSize.h()/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpSpriteOffset*hOfsF));
-                    npc.setTop( npc.top()+offset.y() );
+                    npc.setTop( npc.top()+offsetY );
                     npc.setBottom( npc.bottom()-(warpSpriteOffset*frameSize.h()) );
                 }
                 break;
             case WARP_RIGHT://right emtramce. left exit
                 {
-                    float wOfs =  offset.x()/warpFrameW;               //Relative X offset
+                    float wOfs =  offsetX/warpFrameW;               //Relative X offset
                     float fWw =   1.0;   //Relative width of frame
                     float wOfHB = frameSize.w()/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
@@ -83,19 +85,19 @@ void LVL_Npc::render(double camX, double camY)
                     {
                         tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
                         npc.setLeft( npc.left()+(warpSpriteOffset*frameSize.w()) );
-                        npc.setRight( npc.right()-(wWAbs-offset.x()-frameSize.w()) );
+                        npc.setRight( npc.right()-(wWAbs-offsetX-frameSize.w()) );
                     }
                     else
                     {
                         tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
-                        npc.setLeft( npc.left()+offset.x() );
-                        npc.setRight( npc.right()-(wWAbs-offset.x()-frameSize.w()*(1.0-warpSpriteOffset) ) );
+                        npc.setLeft( npc.left()+offsetX );
+                        npc.setRight( npc.right()-(wWAbs-offsetX-frameSize.w()*(1.0-warpSpriteOffset) ) );
                     }
                 }
                 break;
             case WARP_BOTTOM://down entrance, up exit
                 {
-                    float hOfs =  offset.y()/warpFrameH;               //Relative Y offset
+                    float hOfs =  offsetY/warpFrameH;               //Relative Y offset
                     float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
                     float hOfHB = frameSize.h()/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
@@ -103,13 +105,13 @@ void LVL_Npc::render(double camX, double camY)
                     {
                         tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
                         npc.setTop( npc.top()+(warpSpriteOffset*frameSize.h()) );
-                        npc.setBottom( npc.bottom()-(hHAbs-offset.y()-frameSize.h()) );
+                        npc.setBottom( npc.bottom()-(hHAbs-offsetY-frameSize.h()) );
                     }
                     else
                     {
                         tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
-                        npc.setTop( npc.top()+offset.y() );
-                        npc.setBottom( npc.bottom()-(hHAbs-offset.y()-frameSize.h()*(1.0-warpSpriteOffset) ) );
+                        npc.setTop( npc.top()+offsetY );
+                        npc.setBottom( npc.bottom()-(hHAbs-offsetY-frameSize.h()*(1.0-warpSpriteOffset) ) );
                     }
                 }
                 break;

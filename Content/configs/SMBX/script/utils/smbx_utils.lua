@@ -1,7 +1,8 @@
 local smbx_utils = {}
 
 local SMBXFrameSpeed = 65.0
-local SMBXTickTime = 1000.0 / SMBXFrameSpeed
+--1000.0 / SMBXFrameSpeed
+local SMBXTickTime = 15.285
 
 function smbx_utils.ticksToTime(ticks)
     return ticks * SMBXTickTime
