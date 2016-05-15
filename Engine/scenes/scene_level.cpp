@@ -571,6 +571,8 @@ void LevelScene::render()
 }
 
 bool slowTimeMode=false;
+bool OneStepMode = false;
+bool OneStepMode_doStep = false;
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
@@ -666,16 +668,28 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         }
         break;
 
-      case SDLK_F5:
+        case SDLK_F5:
         {
           PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
           isTimeStopped=!isTimeStopped;
         }
-      break;
+        break;
         case SDLK_F6:
           {
             PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
             slowTimeMode=!slowTimeMode;
+          }
+        break;
+        case SDLK_F7:
+          {
+            PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
+            OneStepMode = !OneStepMode;
+          }
+        case SDLK_F8:
+          if(OneStepMode)
+          {
+            PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
+            OneStepMode_doStep = true;
           }
         break;
       default:
@@ -733,7 +747,11 @@ int LevelScene::exec()
 
         times.start_physics=SDL_GetTicks();
         /**********************Update physics and game progess***********************/
-        update();
+        if(!OneStepMode || OneStepMode_doStep)
+        {
+            update();
+            OneStepMode_doStep = false;
+        }
         /****************************************************************************/
         times.stop_physics=SDL_GetTicks();
         if(PGE_Window::showDebugInfo) debug_phys_delay  = (times.stop_physics-times.start_physics);
