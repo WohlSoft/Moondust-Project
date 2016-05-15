@@ -88,7 +88,7 @@ EventCommand::~EventCommand()
 {
     qDeleteAll(m_childCmds);
 }
-EventCommand::EventType EventCommand::eventType() const
+EventCommand::EventType &EventCommand::eventType()
 {
     return m_eventType;
 }

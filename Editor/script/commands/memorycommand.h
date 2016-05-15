@@ -39,13 +39,13 @@ public:
 
     ~MemoryCommand();
 
-    int hexValue() const;
+    int &hexValue();
     void setHexValue(int hexValue);
 
-    FieldType fieldType() const;
+    FieldType &fieldType();
     void setFieldType(const FieldType &fieldType);
 
-    double getValue() const;
+    double &getValue();
     void setValue(double value);
 
 signals:

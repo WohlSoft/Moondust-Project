@@ -38,7 +38,7 @@ public:
 
     ~EventCommand();
 
-    EventType eventType() const;
+    EventType &eventType();
     void setEventType(const EventType &eventType);
 
     void addBasicCommand(BasicCommand* command);

@@ -44,7 +44,7 @@ bool MemoryCommand::supportCompiler(Script::CompilerType compiler)
 
 MemoryCommand::~MemoryCommand()
 {}
-int MemoryCommand::hexValue() const
+int &MemoryCommand::hexValue()
 {
     return m_hexValue;
 }
@@ -53,7 +53,7 @@ void MemoryCommand::setHexValue(int hexValue)
 {
     m_hexValue = hexValue;
 }
-MemoryCommand::FieldType MemoryCommand::fieldType() const
+MemoryCommand::FieldType &MemoryCommand::fieldType()
 {
     return m_fieldType;
 }
@@ -62,7 +62,7 @@ void MemoryCommand::setFieldType(const FieldType &fieldType)
 {
     m_fieldType = fieldType;
 }
-double MemoryCommand::getValue() const
+double &MemoryCommand::getValue()
 {
     return m_value;
 }

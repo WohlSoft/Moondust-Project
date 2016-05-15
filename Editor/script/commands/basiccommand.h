@@ -33,7 +33,7 @@ public:
 
     ~BasicCommand();
 
-    QString marker() const;
+    QString &marker();
     void setMarker(const QString &marker);
 
 protected:

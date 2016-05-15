@@ -37,7 +37,8 @@ bool BasicCommand::supportCompiler(Script::CompilerType /*compiler*/)
 
 BasicCommand::~BasicCommand()
 {}
-QString BasicCommand::marker() const
+
+QString &BasicCommand::marker()
 {
     return m_marker;
 }
