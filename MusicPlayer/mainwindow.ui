@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>525</height>
+    <width>485</width>
+    <height>461</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -20,9 +20,45 @@
    <iconset resource="_resources/musicplayer.qrc">
     <normaloff>:/cat_musplay/cat_musplay_48x48.png</normaloff>:/cat_musplay/cat_musplay_48x48.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+background-color: rgb(0, 0, 0);
+color: rgb(0, 255, 0);
+}
+QPushButton {
+	background-color: rgb(52, 52, 52);
+	border-color: rgb(0, 170, 0);
+    border-width: 2px;
+	color: rgb(0, 255, 255);
+	border-radius: 3px;
+    height: 25px;
+ }
+QCheckBox {
+	border-color: rgb(0, 170, 0);
+    border-width: 0px;
+    border-style: solid;
+	color: rgb(0, 255, 255);
+ }
+QComboBox, QSpinBox{
+	border-radius: 3px;
+    border-width: 2px;
+    border-style: solid;
+	border-color: rgb(0, 170, 0);
+	color: rgb(0, 255, 255);
+}
+QGroupBox
+{
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(0, 170, 0);
+	border-radius: 3px;
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="9" column="0" colspan="3">
+    <item row="9" column="0" colspan="2">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -35,6 +71,9 @@
         <widget class="QGroupBox" name="adlmidi_xtra">
          <property name="title">
           <string>ADLMIDI Extra Setup</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
          <layout class="QFormLayout" name="formLayout">
           <item row="1" column="0">
@@ -75,6 +114,9 @@
            <widget class="QComboBox" name="fmbank">
             <property name="currentIndex">
              <number>58</number>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
             </property>
             <item>
              <property name="text">
@@ -489,14 +531,130 @@
       </layout>
      </widget>
     </item>
-    <item row="8" column="0" colspan="3">
+    <item row="7" column="0" colspan="2">
+     <widget class="QFrame" name="frame_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>45</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="open">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Open</string>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+O</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="play">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Play</string>
+         </property>
+         <property name="shortcut">
+          <string>Space</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="stop">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Stop</string>
+         </property>
+         <property name="shortcut">
+          <string>.</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
      <widget class="QCheckBox" name="recordWav">
       <property name="text">
        <string>Record WAV</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="3">
+    <item row="2" column="0" colspan="2">
+     <widget class="QLabel" name="musArtist">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QLabel" name="musAlbum">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
@@ -509,62 +667,29 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QLabel" name="musAlbum">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1">
-     <widget class="QPushButton" name="play">
-      <property name="text">
-       <string>Play</string>
-      </property>
-      <property name="shortcut">
-       <string>Space</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="2">
-     <widget class="QPushButton" name="stop">
-      <property name="text">
-       <string>Stop</string>
-      </property>
-      <property name="shortcut">
-       <string>.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QPushButton" name="open">
-      <property name="text">
-       <string>Open</string>
-      </property>
-      <property name="shortcut">
-       <string>Ctrl+O</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="3">
-     <widget class="QLabel" name="musArtist">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="3">
+    <item row="1" column="0" colspan="2">
      <widget class="QLabel" name="musTitle">
       <property name="styleSheet">
-       <string notr="true">border-color: rgb(0, 0, 0); border-width: 1px</string>
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
       </property>
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="3">
+    <item row="4" column="0" colspan="2">
      <widget class="QLabel" name="musCopyright">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -575,9 +700,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>open</tabstop>
-  <tabstop>play</tabstop>
-  <tabstop>stop</tabstop>
   <tabstop>trackID</tabstop>
   <tabstop>mididevice</tabstop>
   <tabstop>fmbank</tabstop>
