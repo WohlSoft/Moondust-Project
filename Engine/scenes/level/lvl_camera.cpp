@@ -614,27 +614,27 @@ void PGE_LevelCamera::drawForeground()
     }
     if(cur_section)
     {
-        PGE_RectF &limBox = cur_section->limitBox;
+        PGE_RectF *limBox = isAutoscroll ? &limitBox: &(cur_section->limitBox);
         double left   = posRect.left()+(double)offset_x;
         double top    = posRect.top() +(double)offset_y;
         double right  = posRect.right()+(double)offset_x;
         double bottom = posRect.bottom()+(double)offset_y;
-        if( left < limBox.left() )
+        if( left < limBox->left() )
         {
-            GlRenderer::renderRect(0, 0, fabs(left-limBox.left()), posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(0, 0, fabs(left-limBox->left()), posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
         }
-        if( top < limBox.top() )
+        if( top < limBox->top() )
         {
-            GlRenderer::renderRect(0, 0, posRect.width(), fabs(top-limBox.top()), 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(0, 0, posRect.width(), fabs(top-limBox->top()), 0.0f, 0.0f, 0.0f, 1.0f);
         }
-        if( right > limBox.right() )
+        if( right > limBox->right() )
         {
-            double width=fabs(limBox.right()-right);
+            double width=fabs(limBox->right()-right);
             GlRenderer::renderRect(posRect.width()-width, 0, width, posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
         }
-        if( bottom > limBox.bottom() )
+        if( bottom > limBox->bottom() )
         {
-            double height=fabs(limBox.bottom()-bottom);
+            double height=fabs(limBox->bottom()-bottom);
             GlRenderer::renderRect(0, posRect.height()-height, posRect.width(), height, 0.0f, 0.0f, 0.0f, 1.0f);
         }
     }
