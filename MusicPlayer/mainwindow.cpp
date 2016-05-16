@@ -490,3 +490,19 @@ void MainWindow::_blink_red()
     else
         ui->recordWav->setStyleSheet("background-color : black; color : red;");
 }
+
+void MainWindow::on_resetDefaultADLMIDI_clicked()
+{
+    ui->fmbank->setCurrentIndex( 58 );
+    ui->tremolo->setChecked(true);
+    ui->vibrato->setChecked(true);
+    ui->adlibMode->setChecked(false);
+    ui->modulation->setChecked(false);
+
+    MIX_ADLMIDI_setTremolo((int)ui->tremolo->isChecked());
+    MIX_ADLMIDI_setVibrato((int)ui->vibrato->isChecked());
+    MIX_ADLMIDI_setAdLibMode((int)ui->adlibMode->isChecked());
+    MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
+
+    on_fmbank_currentIndexChanged( ui->fmbank->currentIndex() );
+}

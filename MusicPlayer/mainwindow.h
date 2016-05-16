@@ -110,6 +110,8 @@ private slots:
     void _blink_red();
 
 
+    void on_resetDefaultADLMIDI_clicked();
+
 private:
     //! Controlls blinking of the wav-recording label
     QTimer blinker;
