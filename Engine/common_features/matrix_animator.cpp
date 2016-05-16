@@ -97,7 +97,7 @@ void MatrixAnimator::setFrameSpeed(int speed)
     if(framespeed==speed) return;
     if(speed<=0)
     {
-        framespeed=-1;//Stop animation if <=0
+        framespeed = -1;//Stop animation if <=0
         return;
     }
     delay_wait = ((framespeed-speed)<1) ? delay_wait : delay_wait-(framespeed-speed);
@@ -140,13 +140,14 @@ PGE_SizeF MatrixAnimator::sizeOfFrame()
 
 void MatrixAnimator::tickAnimation(float frametime)
 {
-    if((!once) && (framespeed<1)) return; //Idling animation
+    if((!once) && (framespeed < 1)) return; //Idling animation
 
     delay_wait-=fabs(frametime);
         while(delay_wait<=0.0f)
         {
             nextFrame();
-            delay_wait+= once?framespeed_once : framespeed;
+            if((!once) && (framespeed < 1)) break;
+            delay_wait += once ? framespeed_once : framespeed;
         }
 }
 
