@@ -5,6 +5,9 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
+
+#include "version.h"
 
 #undef main
 #include <SDL2/SDL.h>
@@ -203,12 +206,52 @@ MainWindow::MainWindow(QWidget *parent) :
     this->window()->resize(100, 100);
     this->connect(&blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
     blink_state=false;
+
+    QApplication::setOrganizationName(_COMPANY);
+    QApplication::setOrganizationDomain(_PGE_URL);
+    QApplication::setApplicationName("PGE Music Player");
+    QSettings setup;
+    ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
+    switch(ui->mididevice->currentIndex())
+    {
+        case 0: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        ui->adlmidi_xtra->setVisible(true);
+        break;
+        case 1: MIX_SetMidiDevice(MIDI_Timidity);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
+        case 2: MIX_SetMidiDevice(MIDI_Native);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
+        default: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        ui->adlmidi_xtra->setVisible(true);
+        break;
+    }
+    ui->fmbank->setCurrentIndex(setup.value("ADLMIDI-Bank-ID", 58).toInt());
+    MIX_ADLMIDI_setBankID( ui->fmbank->currentIndex() );
+    ui->tremolo->setChecked(setup.value("ADLMIDI-Tremolo", true).toBool());
+    MIX_ADLMIDI_setTremolo((int)ui->tremolo->isChecked());
+    ui->vibrato->setChecked(setup.value("ADLMIDI-Vibrato", true).toBool());
+    MIX_ADLMIDI_setVibrato((int)ui->vibrato->isChecked());
+    ui->adlibMode->setChecked(setup.value("ADLMIDI-AdLib-Drums-Mode", false).toBool());
+    MIX_ADLMIDI_setAdLibMode((int)ui->adlibMode->isChecked());
+    ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
+    MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
 }
 
 MainWindow::~MainWindow()
 {
     on_stop_clicked();
     Mix_CloseAudio();
+
+    QSettings setup;
+    setup.setValue("MIDI-Device", ui->mididevice->currentIndex());
+    setup.setValue("ADLMIDI-Bank-ID", ui->fmbank->currentIndex());
+    setup.setValue("ADLMIDI-Tremolo", ui->tremolo->isChecked());
+    setup.setValue("ADLMIDI-Vibrato", ui->vibrato->isChecked());
+    setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
+    setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
+
     delete ui;
 }
 
