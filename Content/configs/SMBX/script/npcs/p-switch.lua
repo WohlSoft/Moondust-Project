@@ -5,6 +5,7 @@ function pswitch:__init(npc_obj)
 end
 
 function pswitch:onKill(killEvent)
+    Level.ShakeScreenY(15.0, 0.1)
     pSwitch.pstart()
 end
 
