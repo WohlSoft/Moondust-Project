@@ -62,10 +62,18 @@ function thwomp:onLoop(tickTime)
         if(self.plr_detector:detected()==true)then
             self.cur_mode=AI_FALLING
             self.npc_obj.speedX = 0
-            self.npc_obj.speedY = self.speed_fall
+            if(self.npc_obj.speedY<self.speed_fall)then
+                self.npc_obj.gravity = 2.0
+                self.npc_obj:applyAccel( 0.0, 5.0 )
+            else
+                self.npc_obj.gravity = 0.0
+                self.npc_obj.speedY = self.speed_fall
+            end
         end
     elseif(self.cur_mode == AI_FALLING)then
         if(self.npc_obj.onGround)then
+            self.npc_obj.gravity = 0.0
+            Level.ShakeScreenY(10.0, 0.05)
             Audio.playSound(self.def_thwompSoundID)
             self.npc_obj.speedY = 0
             self.cur_mode = AI_WAITING_ON_GROUND
