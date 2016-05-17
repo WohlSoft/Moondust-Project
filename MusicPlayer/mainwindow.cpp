@@ -211,6 +211,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Music Player");
     QSettings setup;
+    restoreGeometry(setup.value("Window-Geometry", NULL).toByteArray());
     ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
     switch(ui->mididevice->currentIndex())
     {
@@ -245,6 +246,7 @@ MainWindow::~MainWindow()
     Mix_CloseAudio();
 
     QSettings setup;
+    setup.setValue("Window-Geometry", saveGeometry());
     setup.setValue("MIDI-Device", ui->mididevice->currentIndex());
     setup.setValue("ADLMIDI-Bank-ID", ui->fmbank->currentIndex());
     setup.setValue("ADLMIDI-Tremolo", ui->tremolo->isChecked());
