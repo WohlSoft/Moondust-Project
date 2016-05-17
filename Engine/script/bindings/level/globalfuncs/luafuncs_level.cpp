@@ -56,10 +56,10 @@ luabind::scope Binding_Level_CommonFuncs::bindToLua()
         namespace_("Level")[
             def("toggleSwitch", &Binding_Level_CommonFuncs::Lua_ToggleSwitch),
             def("getSwitchState", &Binding_Level_CommonFuncs::Lua_getSwitchState),
-            def("TriggerEvent", &Binding_Level_CommonFuncs::Lua_triggerEvent),
+            def("triggerEvent", &Binding_Level_CommonFuncs::Lua_triggerEvent),
 
-            def("ShakeScreen", &Binding_Level_CommonFuncs::Lua_ShakeScreen),
-            def("ShakeScreenX", &Binding_Level_CommonFuncs::Lua_ShakeScreenX),
-            def("ShakeScreenY", &Binding_Level_CommonFuncs::Lua_ShakeScreenY)
+            def("shakeScreen", &Binding_Level_CommonFuncs::Lua_ShakeScreen),
+            def("shakeScreenX", &Binding_Level_CommonFuncs::Lua_ShakeScreenX),
+            def("shakeScreenY", &Binding_Level_CommonFuncs::Lua_ShakeScreenY)
         ];
 }

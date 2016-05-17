@@ -73,7 +73,7 @@ function thwomp:onLoop(tickTime)
     elseif(self.cur_mode == AI_FALLING)then
         if(self.npc_obj.onGround)then
             self.npc_obj.gravity = 0.0
-            Level.ShakeScreenY(10.0, 0.05)
+            Level.shakeScreenY(10.0, 0.05)
             Audio.playSound(self.def_thwompSoundID)
             self.npc_obj.speedY = 0
             self.cur_mode = AI_WAITING_ON_GROUND
