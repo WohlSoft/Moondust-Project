@@ -278,7 +278,7 @@ public:
     LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
 
     inline void lua_setGfxOffsetX(double x) { lua_offset.setX(x); }
-    inline void lua_setGfxOffsetY(double y) { lua_offset.setX(y); }
+    inline void lua_setGfxOffsetY(double y) { lua_offset.setY(y); }
     inline void lua_setGfxOffset(double x, double y) { lua_offset.setPoint(x, y); }
 
     inline bool not_movable() { return data.nomove; }
