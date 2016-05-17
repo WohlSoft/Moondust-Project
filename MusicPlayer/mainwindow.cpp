@@ -211,7 +211,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Music Player");
     QSettings setup;
-    restoreGeometry(setup.value("Window-Geometry", NULL).toByteArray());
+    restoreGeometry(setup.value("Window-Geometry").toByteArray());
     ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
     switch(ui->mididevice->currentIndex())
     {
