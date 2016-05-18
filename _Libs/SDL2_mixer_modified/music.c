@@ -510,20 +510,47 @@ int MIX_string_equals(const char *str1, const char *str2)
     return (!*str1 && !*str2);
 }
 
-static int detect_mp3(Uint8 *magic)
+static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
 {
-    if ( strncmp((char *)magic, "ID3", 3) == 0 ) {
-        return 1;
+    //if first 4 bytes are zeros
+    Uint8  magic2[5];
+    memcpy(magic2, magic, 5);
+    #if 0//WIP!!!
+    Uint32 null = 0;
+    //If first bytes are zero
+    if( memcmp(magic, &null, 4) == 0 )
+    {
+        //Find nearest non zero
+        char byte = 0;
+        Sint64 notNullPos = 0;
+        while( (SDL_RWread(src, &byte, 1, 1)==1) && (byte==0) ){}
+        //If file contains only null bytes
+        if( byte == 0 )
+            return 0;
+        //with offset -1 byte
+        notNullPos = SDL_RWtell(src)-1;
+        SDL_RWseek(src, notNullPos, RW_SEEK_SET);
+        if( SDL_RWread(src, magic2, 1, 4) != 4 )
+            return 0;
+        SDL_RWseek(src, start, RW_SEEK_SET);
     }
 
+    if( strncmp((char *)magic2, "ID3", 3) == 0 )
+    {
+        return 1;
+    }
+    #endif
+
     /* Detection code lifted from SMPEG */
-    if(((magic[0] & 0xff) != 0xff) || // No sync bits
-       ((magic[1] & 0xf0) != 0xf0) || //
-       ((magic[2] & 0xf0) == 0x00) || // Bitrate is 0
-       ((magic[2] & 0xf0) == 0xf0) || // Bitrate is 15
-       ((magic[2] & 0x0c) == 0x0c) || // Frequency is 3
-       ((magic[1] & 0x06) == 0x00)) { // Layer is 4
-        return(0);
+    if(
+       ((magic2[0] & 0xff) != 0xff)||((magic2[1] & 0xf0) != 0xf0) || // No sync bits
+       ((magic2[2] & 0xf0) == 0x00)|| // Bitrate is 0
+       ((magic2[2] & 0xf0) == 0xf0)|| // Bitrate is 15
+       ((magic2[2] & 0x0c) == 0x0c)|| // Frequency is 3
+       ((magic2[1] & 0x06) == 0x00)   // Layer is 4
+       )
+    {
+        return 0;
     }
     return 1;
 }
@@ -537,89 +564,101 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 {
     Uint8 magic[5];
     Uint8 moremagic[9];
+    Uint8 extramagic[25];
     Uint8 lessmagic[3];
 
     Sint64 start = SDL_RWtell(src);
-    if (SDL_RWread(src, magic, 1, 4) != 4 || SDL_RWread(src, moremagic, 1, 8) != 8 ) {
+    if( SDL_RWread(src, extramagic, 1, 24) != 24 ) {
         Mix_SetError("Couldn't read from RWops");
         return MUS_NONE;
     }
     SDL_RWseek(src, start, RW_SEEK_SET);
-    memcpy(lessmagic, magic, 2);
-    lessmagic[2]='\0';
-    magic[4]='\0';
-    moremagic[8] = '\0';
+    memcpy(lessmagic, extramagic,   2);
+    memcpy(magic,     extramagic,   4);
+    memcpy(moremagic, extramagic+4, 8);
+    lessmagic[2]  = '\0';
+    magic[4]      = '\0';
+    moremagic[8]  = '\0';
+    extramagic[24]= '\0';
 
     /* WAVE files have the magic four bytes "RIFF"
        AIFF files have the magic 12 bytes "FORM" XXXX "AIFF" */
-    if (((strcmp((char *)magic, "RIFF") == 0) && (strcmp((char *)(moremagic+4), "WAVE") == 0)) ||
-        (strcmp((char *)magic, "FORM") == 0)) {
+    if ( ((strncmp((char *)magic, "RIFF", 4) == 0)&&(strncmp((char *)(moremagic+4), "WAVE", 4) == 0))
+        ||(strncmp((char *)magic, "FORM", 4) == 0))
+    {
         return MUS_WAV;
     }
 
     /* Ogg Vorbis files have the magic four bytes "OggS" */
-    if (strcmp((char *)magic, "OggS") == 0) {
+    if (strncmp((char *)magic, "OggS", 4) == 0) {
         return MUS_OGG;
     }
 
     /* FLAC files have the magic four bytes "fLaC" */
-    if (strcmp((char *)magic, "fLaC") == 0) {
+    if (strncmp((char *)magic, "fLaC", 4) == 0) {
         return MUS_FLAC;
     }
 
     /* MIDI files have the magic four bytes "MThd" */
-    if (strcmp((char *)magic, "MThd") == 0) {
+    if (strncmp((char *)magic, "MThd", 4) == 0) {
         return MUS_MID;
     }
-
-    if (strcmp((char *)magic, "MUS\x1A") == 0) {
+    if (strncmp((char *)magic, "MUS\x1A", 4) == 0) {
         return MUS_MID;
     }
-
-    /* WAVE files have the magic four bytes "RIFF" */
-    if (    (strcmp((char *)magic, "RIFF") == 0)&&(strcmp((char *)(moremagic+4), "RMID") == 0)) {
+    /* MIDI files have the magic four bytes "RIFF" */
+    if( (strncmp((char *)magic, "RIFF", 4) == 0)&&(strncmp((char *)(moremagic+4), "RMID", 4) == 0))
+    {
         return MUS_MID;
     }
 
     /* GME Specific files */
-    if (strcmp((char *)magic, "ZXAY") == 0) {
+    if (strncmp((char *)magic, "ZXAY", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "GBS\x01") == 0) {
+    if (strncmp((char *)magic, "GBS\x01", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "GYMX") == 0) {
+    if (strncmp((char *)magic, "GYMX", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "HESM") == 0) {
+    if (strncmp((char *)magic, "HESM", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "KSCC") == 0) {
+    if (strncmp((char *)magic, "KSCC", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "KSSX") == 0) {
+    if (strncmp((char *)magic, "KSSX", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "NESM") == 0) {
+    if (strncmp((char *)magic, "NESM", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "NSFE") == 0) {
+    if (strncmp((char *)magic, "NSFE", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "SAP\x0D") == 0) {
+    if (strncmp((char *)magic, "SAP\x0D", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "SNES") == 0) {
+    if (strncmp((char *)magic, "SNES", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp((char *)magic, "Vgm ") == 0) {
+    if (strncmp((char *)magic, "Vgm ", 4) == 0) {
         return MUS_SPC;
     }
-    if (strcmp(lessmagic, "\x1f\x8b") == 0) {
+    if (strncmp(magic, "\x1f\x8b", 2) == 0) {
         return MUS_SPC;
     }
 
-    if (detect_mp3(magic)) {
+    //Detect some module files
+    if(strncmp(extramagic, "Extended Module", 15) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "IMPM", 4) == 0) {
+        return MUS_MOD;
+    }
+
+    if(detect_mp3(extramagic, src, start)) {
         return MUS_MP3;
     }
 
@@ -794,18 +833,19 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
      * since we simply call Mix_LoadMUSType_RW() later */
     if ( ext ) {
         ++ext; /* skip the dot in the extension */
-        if ( MIX_string_equals(ext, "WAV") ) {
+        //Detect by file extension that files which impossible or hard to detect by magic number
+        /*if ( MIX_string_equals(ext, "WAV") ) {
             type = MUS_WAV;
-        } else if ( MIX_string_equals(ext, "MID") ||
-                    MIX_string_equals(ext, "MIDI") ||
+        } else*/if( //MIX_string_equals(ext, "MID") ||
+                    //MIX_string_equals(ext, "MIDI") ||
                     #ifdef USE_ADL_MIDI
-                    MIX_string_equals(ext, "RMI") ||
-                    MIX_string_equals(ext, "MUS") ||
-                    MIX_string_equals(ext, "IMF") ||
+                    //MIX_string_equals(ext, "RMI") ||
+                    //MIX_string_equals(ext, "MUS") ||
+                    MIX_string_equals(ext, "IMF")//||
                     #endif
-                    MIX_string_equals(ext, "KAR") ) {
+                    /*MIX_string_equals(ext, "KAR")*/ ) {
             type = MUS_MID;
-        } else if ( MIX_string_equals(ext, "AY") ||
+        } /*else if ( MIX_string_equals(ext, "AY") ||
                     MIX_string_equals(ext, "GBS") ||
                     MIX_string_equals(ext, "GYM") ||
                     MIX_string_equals(ext, "PCE") ||
@@ -822,9 +862,9 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             type = MUS_OGG;
         } else if ( MIX_string_equals(ext, "FLAC") ) {
             type = MUS_FLAC;
-        } else  if ( MIX_string_equals(ext, "MPG") ||
+        }*/ else if( MIX_string_equals(ext, "MPG")  ||
                      MIX_string_equals(ext, "MPEG") ||
-                     MIX_string_equals(ext, "MP3") ||
+                     MIX_string_equals(ext, "MP3")  ||
                      MIX_string_equals(ext, "MAD") ) {
             type = MUS_MP3;
         }
