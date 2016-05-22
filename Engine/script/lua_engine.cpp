@@ -16,6 +16,8 @@
 #include "bindings/core/classes/luaclass_core_simpleevent.h"
 #include "bindings/core/classes/luaclass_core_graphics.h"
 
+#include "bindings/core/classes/luaclass_core_scene_effects.h"
+
 #include <QFile>
 #include <sstream>
 #include <QFileInfo>
@@ -321,7 +323,8 @@ void LuaEngine::bindCore()
         Binding_Core_GlobalFuncs_Settings::bindToLua(),
         Binding_Core_GlobalFuncs_Audio::bindToLua(),
         Binding_Core_GlobalFuncs_Paths::bindToLua(),
-        Binding_Core_Class_SimpleEvent::bindToLua()
+        Binding_Core_Class_SimpleEvent::bindToLua(),
+        Binding_Core_Scene_Effects::bindToLua()
     ];
     if(m_baseScene){
         luabind::module(L)[

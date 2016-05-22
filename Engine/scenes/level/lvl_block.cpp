@@ -62,7 +62,7 @@ void LVL_Block::init()
 {
     if(_isInited) return;
     _scene->layers.registerItem(data.layer, this);
-    transformTo_x(data.id);
+    transformTo_x(signed(data.id));
     _isInited=true;
 }
 
@@ -74,7 +74,7 @@ void LVL_Block::transformTo(long id, int type)
     {
         transformTask_block t;
         t.block = this;
-        t.id=id;
+        t.id=int(id);
         t.type=type;
 
         _scene->block_transforms.push_back(t);
@@ -82,9 +82,9 @@ void LVL_Block::transformTo(long id, int type)
     if(type==1)//Other NPC
     {
         LevelNPC def = FileFormats::CreateLvlNpc();
-        def.id=id;
-        def.x = round(posX());
-        def.y = round(posY());
+        def.id= unsigned(id);
+        def.x = long(round(posX()));
+        def.y = long(round(posY()));
         def.direct = 0;
         def.generator = false;
         def.layer = data.layer;
@@ -99,7 +99,7 @@ void LVL_Block::transformTo(long id, int type)
         if(npc)
         {
             npc->transformedFromBlock = this;
-            npc->transformedFromBlockID = data.id;
+            npc->transformedFromBlockID = int(data.id);
             npc->setCenterPos(posRect.center().x(), posRect.center().y());
         }
         destroy( false );
@@ -111,11 +111,11 @@ void LVL_Block::transformTo_x(long id)
     obj_block *newSetup=NULL;
     if(_isInited)
     {
-        if(data.id==(unsigned)labs(id)) return;
+        if(data.id == unsigned(labs(id))) return;
 
-        if(!ConfigManager::lvl_block_indexes.contains(id)) return;
+        if(!ConfigManager::lvl_block_indexes.contains(int(id))) return;
 
-        newSetup = &ConfigManager::lvl_block_indexes[id];
+        newSetup = &ConfigManager::lvl_block_indexes[int(id)];
 
         //Remove registration of switch block
         if(setup->switch_Block &&
@@ -124,18 +124,18 @@ void LVL_Block::transformTo_x(long id)
             if(_scene->switch_blocks.contains(setup->switch_ID))
                 _scene->switch_blocks[setup->switch_ID].removeAll(this);
         }
-        transformedFromBlockID = data.id;//Remember transform source
+        transformedFromBlockID = int(data.id);//Remember transform source
     } else
-        newSetup = &ConfigManager::lvl_block_indexes[data.id];
-    data.id = id;
+        newSetup = &ConfigManager::lvl_block_indexes[int(data.id)];
+    data.id = unsigned(id);
 
     setup = newSetup;
 
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
-                ((long double)data.y/1000000000.0L) + 1 -
-                ((long double)data.w *0.00000000000001L);
+                (static_cast<long double>(data.y)/1000000000.0L) + 1 -
+                (static_cast<long double>(data.w) *0.00000000000001L);
     }
     else
     {
@@ -153,11 +153,11 @@ void LVL_Block::transformTo_x(long id)
     bool do_init_player_switch=((setup->animator_ID==0)&&(setup->plSwitch_Button));
     bool do_init_player_filter=((setup->animator_ID==0)&&(setup->plFilter_Block));
 
-    long tID = ConfigManager::getBlockTexture(data.id);
+    long tID = ConfigManager::getBlockTexture(int(data.id));
     if( tID >= 0 )
     {
-        texId = ConfigManager::level_textures[tID].texture;
-        texture = ConfigManager::level_textures[tID];
+        texId = ConfigManager::level_textures[int(tID)].texture;
+        texture = ConfigManager::level_textures[int(tID)];
         animated = setup->animated;
         animator_ID = setup->animator_ID;
     }
@@ -165,7 +165,7 @@ void LVL_Block::transformTo_x(long id)
     if(!setup->sizable)
     {
         data.w = texture.w;
-        data.h = (texture.h/setup->frames);
+        data.h = (unsigned(texture.h)/setup->frames);
     }
 
     if(!_isInited)
@@ -200,7 +200,7 @@ void LVL_Block::transformTo_x(long id)
 
     isRectangle=(setup->phys_shape==0);
     if(setup->algorithm==3)
-         ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
+         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
     // Register switch block
     if(setup->switch_Block)
@@ -246,15 +246,15 @@ void LVL_Block::render(double camX, double camY)
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_Blocks[animator_ID].image();
+        x = ConfigManager::Animator_Blocks[int(animator_ID)].image();
 
     GlRenderer::BindTexture(&texture);
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     if(sizable)
     {
-        int w = _width;
-        int h = _height;
+        int w = int(round(_width));
+        int h = int(round(_height));
 
         int x,y, x2, y2, i, j;
         int hc, wc;
@@ -386,7 +386,7 @@ void LVL_Block::render(double camX, double camY)
     }
     else
     {
-        GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), x.first, x.second );
+        GlRenderer::renderTextureCur( float(blockG.left()), float(blockG.top()), float(blockG.width()), float(blockG.height()), float(x.first), float(x.second) );
     }
     GlRenderer::UnBindTexture();
 }
@@ -398,27 +398,27 @@ bool LVL_Block::isInited()
 
 long LVL_Block::lua_getID()
 {
-    return data.id;
+    return long(data.id);
 }
 
 int LVL_Block::lua_contentID_old()
 {
-    return data.npc_id+1000;
+    return int(data.npc_id+1000);
 }
 
 void LVL_Block::lua_setContentID_old(int npcid)
 {
-    data.npc_id=npcid-1000;
+    data.npc_id = npcid-1000;
 }
 
 int LVL_Block::lua_contentID()
 {
-    return data.npc_id;
+    return int(data.npc_id);
 }
 
 void LVL_Block::lua_setContentID(int npcid)
 {
-    data.npc_id=npcid;
+    data.npc_id = npcid;
 }
 
 bool LVL_Block::lua_invisible()
@@ -460,7 +460,7 @@ void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
     blockG.setRight(target.x()+block.x()+block.width());
     blockG.setBottom(target.y()+block.y()+block.height());
 
-    GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), tx.top(), tx.bottom(), tx.left(), tx.right() );
+    GlRenderer::renderTextureCur( float(blockG.left()), float(blockG.top()), float(blockG.width()), float(blockG.height()), float(tx.top()), float(tx.bottom()), float(tx.left()), float(tx.right()) );
 }
 
 
@@ -491,7 +491,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         if((!setup->bounce)&&(!setup->switch_Button))
         {
             if(data.npc_id==0)
-                transformTo(setup->transfororm_on_hit_into, 2);
+                transformTo(long(setup->transfororm_on_hit_into), 2);
         }
 
         if(!_scene->player_states.isEmpty())
@@ -501,8 +501,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         {
             SpawnEffectDef effect;
             effect.id = 11;
-            effect.startX = (float)posCenterX();
-            effect.startY = (float)top()-16.f;
+            effect.startX = float(posCenterX());
+            effect.startY = float(top())-16.f;
             effect.gravity = 20.0f;
             effect.start_delay = 0.0f;
             effect.max_vel_y = 25.f;
@@ -515,7 +515,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(2);
             effect.frame_sequence.append(3);
             effect.framespeed = 32;
-            _scene->launchStaticEffect(effect, true);
+            _scene->launchEffect(effect, true);
 
             effect.id = 11;
             effect.startX = (float)posCenterX();
@@ -531,7 +531,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(6);
             effect.framespeed = 125;
             effect.delay = 0;
-            _scene->launchStaticEffect(effect, true);
+            _scene->launchEffect(effect, true);
 
             //Points!
             effect.id = 79;
@@ -546,7 +546,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(0);
             effect.framespeed = 125;
             effect.delay = 1000;
-            _scene->launchStaticEffect(effect, true);
+            _scene->launchEffect(effect, true);
         }
 
     }
@@ -556,9 +556,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         triggerEvent=true;
         playHitSnd=true;
         //NPC!
-        if(ConfigManager::lvl_npc_indexes.contains(data.npc_id))
+        if(ConfigManager::lvl_npc_indexes.contains(int(data.npc_id)))
         {
-            obj_npc &npcSet=ConfigManager::lvl_npc_indexes[data.npc_id];
+            obj_npc &npcSet=ConfigManager::lvl_npc_indexes[int(data.npc_id)];
 
             if(npcSet.block_spawn_sound)
                 PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
@@ -566,12 +566,12 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             doFade=true;
             if((!setup->bounce)&&(!setup->switch_Button))
             {
-                transformTo(setup->transfororm_on_hit_into, 2);
+                transformTo(long(setup->transfororm_on_hit_into), 2);
             }
 
             LevelNPC npcDef = FileFormats::CreateLvlNpc();
-            npcDef.id=data.npc_id;
-              data.npc_id=0;
+            npcDef.id = unsigned(data.npc_id);
+              data.npc_id = 0;
             npcDef.direct = 0;
             npcDef.x=data.x;
             npcDef.y=data.y-(hitDirection==up?data.h:(-data.h*2));
@@ -608,8 +608,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(setup->hitable)
     {
         triggerEvent=true;
-        transformTo(setup->spawn_obj_id, setup->spawn_obj);
-        doFade=true;
+        transformTo(long(setup->spawn_obj_id), setup->spawn_obj);
+        doFade = true;
         playHitSnd=!destroyed;
     }
 
@@ -651,13 +651,13 @@ void LVL_Block::destroy(bool playEffect)
             PGE_Audio::playSound(setup->destroy_sound_id);
 
         Scene_Effect_Phys p;
-        p.decelerate_x=1.5;
-        p.max_vel_y=25;
-        #define ROFFSET ((float(rand()%10))*0.1)
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -3.0f+ROFFSET, -6.0f+ROFFSET, 18.0f, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -4.0f+ROFFSET, -7.0f+ROFFSET, 18.0f, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  3.0f+ROFFSET, -6.0f+ROFFSET, 18.0f, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  4.0f+ROFFSET, -7.0f+ROFFSET, 18.0f, 0, p);
+        p.decelerate_x = 1.5f;
+        p.max_vel_y    = 25.f;
+        #define ROFFSET ((float(rand()%10))*0.1f)
+        _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000, -3.0f + ROFFSET, -6.0f + ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000, -4.0f + ROFFSET, -7.0f + ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000,  3.0f + ROFFSET, -6.0f + ROFFSET, 18.0f, 0, p);
+        _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000,  4.0f + ROFFSET, -7.0f + ROFFSET, 18.0f, 0, p);
     }
     destroyed = true;
     QString oldLayer=data.layer;
@@ -687,7 +687,7 @@ long double LVL_Block::zIndex()
 /**************************Fader*******************************/
 void LVL_Block::setFade(int speed, float target, float step)
 {
-    fade_step = fabs(step);
+    fade_step = fabsf(step);
     targetOffset = target;
     fadeSpeed = speed;
     manual_ticks = speed;
@@ -695,7 +695,7 @@ void LVL_Block::setFade(int speed, float target, float step)
 
 bool LVL_Block::isFading()
 {
-    return (fadeOffset!=targetOffset);
+    return (fadeOffset != targetOffset);
 }
 
 bool LVL_Block::tickFader(int ticks)
@@ -707,7 +707,7 @@ bool LVL_Block::tickFader(int ticks)
             fadeStep();
             manual_ticks+=fadeSpeed;
         }
-    return (fadeOffset==targetOffset);
+    return (fadeOffset == targetOffset);
 }
 
 void LVL_Block::fadeStep()
@@ -730,7 +730,7 @@ void LVL_Block::fadeStep()
         case down:    offset_y = 16*fadeOffset; break;
         case left:    offset_x = -16*fadeOffset; break;
         case right:   offset_x = 16*fadeOffset; break;
-        default: break;
+        //default: break;
     }
 
 }

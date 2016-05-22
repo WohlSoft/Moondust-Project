@@ -5,12 +5,18 @@
 #include <QSettings>
 #include <QList>
 
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
+
 class SpawnEffectDef
 {
 public:
     SpawnEffectDef();
     SpawnEffectDef(const SpawnEffectDef &c);
     void fill(QString prefix, QSettings *setup);
+
+    void lua_setSequence(luabind::object frames);
+
     unsigned int start_delay;
 
     long id;

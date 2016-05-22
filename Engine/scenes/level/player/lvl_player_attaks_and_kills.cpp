@@ -250,7 +250,7 @@ void LVL_Player::kill(deathReason reason)
             effect.startY = posRect.center().y();
             effect.velocityX *= _direction;
             effect.direction *= _direction;
-            _scene->launchStaticEffect(effect, true);
+            _scene->launchEffect(effect, true);
         }
     }
     unregister();

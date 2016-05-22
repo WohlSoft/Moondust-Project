@@ -5,13 +5,15 @@
 #include <lua_inclues/lua.hpp>
 
 #include <script/lua_global.h>
+#include <data_configs/spawn_effect_def.h>
 
 class Binding_Core_GlobalFuncs_Effect
 {
 public:
-
     static void runStaticEffect(long effectID, float startX, float startY, lua_State *L);
     static void runStaticEffectCentered(long effectID, float startX, float startY, lua_State *L);
+
+    static void runEffect(SpawnEffectDef &effectDef, bool centered, lua_State *L);
 
     static luabind::scope bindToLua();
 };

@@ -135,7 +135,7 @@ public:
     /// \param gravity Y-gravitation will cause falling of effect picture
     /// \param phys Additional physical settings
     ///
-    void  launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void  launchEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
     ///
     /// \brief launchStaticEffectC
@@ -152,7 +152,7 @@ public:
     ///
     void launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
-    void launchStaticEffect(SpawnEffectDef effect_def, bool centered=false);
+    void launchEffect(SpawnEffectDef effect_def, bool centered=false);
 
     void processEffects(float ticks);
     /*  Effects engine   */

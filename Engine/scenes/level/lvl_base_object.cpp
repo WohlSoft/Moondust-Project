@@ -25,7 +25,7 @@
 
 #include "collision_checks.h"
 
-const float PGE_Phys_Object::_smbxTickTime = 15.285;
+const float PGE_Phys_Object::_smbxTickTime = 15.285f;
 //1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 //BUT, Experimentally was found that in real is approximately is 15.285
 
@@ -292,7 +292,7 @@ void PGE_Phys_Object::setSpeedY(double y)
 
 void PGE_Phys_Object::setDecelX(double x)
 {
-    phys_setup.decelerate_x=x;
+    phys_setup.decelerate_x = float(x);
 }
 
 void PGE_Phys_Object::applyAccel(double x, double y)
@@ -308,7 +308,7 @@ double PGE_Phys_Object::gravityScale()
 
 void PGE_Phys_Object::setGravityScale(double scl)
 {
-    phys_setup.gravityScale = scl;
+    phys_setup.gravityScale = float(scl);
 }
 
 float PGE_Phys_Object::gravityAccel()
@@ -318,7 +318,7 @@ float PGE_Phys_Object::gravityAccel()
 
 void PGE_Phys_Object::setGravityAccel(float acl)
 {
-    phys_setup.gravityAccel=fabs(acl);
+    phys_setup.gravityAccel = fabsf(acl);
 }
 
 
@@ -344,7 +344,7 @@ void PGE_Phys_Object::_syncPositionAndSize()
 
 void PGE_Phys_Object::_syncSection(bool sync_position)
 {
-    int sID = _scene->findNearestSection(posX(), posY());
+    int sID = _scene->findNearestSection(long(posX()), long(posY()));
     LVL_Section *sct = _scene->getSection(sID);
     if(sct)
     {
@@ -357,15 +357,15 @@ void PGE_Phys_Object::renderDebug(float _camX, float _camY)
 {
     switch(type)
     {
-    case LVLUnknown:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 1.0, 1.0, 1.0, false); break;
-    case LVLBlock:      GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 1.0, 0.0, 1.0, false); break;
-    case LVLBGO:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 0.0, 1.0, 1.0, false); break;
-    case LVLNPC:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 1.0, 1.0, false); break;
-    case LVLPlayer:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.5, 0.5, 1.0, false); break;
-    case LVLEffect:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.5, 0.5, 0.5, 1.0, false); break;
-    case LVLWarp:       GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 0.0, 0.5f, true); break;
-    case LVLSpecial:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0,1.0,0,1.0, true);
-    case LVLPhysEnv:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0f, 1.0f, 0.0f, 0.5f, true); break;
+        case LVLUnknown:    GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 1.0f, 1.0f, 1.0f, false); break;
+        case LVLBlock:      GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 0.0f, 1.0f, 0.0f, 1.0f, false); break;
+        case LVLBGO:        GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 0.0f, 0.0f, 1.0f, 1.0f, false); break;
+        case LVLNPC:        GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 0.0f, 1.0f, 1.0f, false); break;
+        case LVLPlayer:     GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 0.5f, 0.5f, 1.0f, false); break;
+        case LVLEffect:     GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 0.5f, 0.5f, 0.5f, 1.0f, false); break;
+        case LVLWarp:       GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 0.0f, 0.0f, 0.5f, true);  break;
+        case LVLSpecial:    GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 1.0f, 0.0f, 1.0f, true);  break;
+        case LVLPhysEnv:    GlRenderer::renderRect(float(posRect.x())-_camX, float(posRect.y())-_camY, float(posRect.width())-1.0f, float(posRect.height())-1.0f, 1.0f, 1.0f, 0.0f, 0.5f, true);  break;
     }
 }
 
@@ -398,14 +398,14 @@ void PGE_Phys_Object::iterateStep(float ticks)
     float G = phys_setup.gravityScale * _scene->globalGravity;
     float accelCof=ticks/1000.0f;
 
-    if(_accelX!=0)
+    if(_accelX != 0.0f)
     {
         _velocityX+= _accelX*accelCof;
         updateSpeedAdding=true;
         _accelX=0;
     }
     else
-    if(phys_setup.decelerate_x!=0)
+    if(phys_setup.decelerate_x != 0.0f)
     {
         float decX=phys_setup.decelerate_x*accelCof;
         if(_velocityX>0)
@@ -423,14 +423,14 @@ void PGE_Phys_Object::iterateStep(float ticks)
         updateSpeedAdding=true;
     }
 
-    if(_accelY!=0)
+    if(_accelY != 0.0f)
     {
         _velocityY+= _accelY*accelCof*G;
         updateSpeedAdding=true;
-        _accelY=0;
+        _accelY = 0.0f;
     }
 
-    if(phys_setup.decelerate_y!=0)
+    if(phys_setup.decelerate_y != 0.0f)
     {
         float decY=phys_setup.decelerate_y*accelCof;
         if(_velocityY>0)
@@ -454,10 +454,10 @@ void PGE_Phys_Object::iterateStep(float ticks)
         updateSpeedAdding=true;
     }
 
-    if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) { _velocityX-=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
-    if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) { _velocityX+=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
-    if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) {_velocityY=phys_setup.max_vel_y;updateSpeedAdding=true;}
-    if((phys_setup.min_vel_y!=0)&&(_velocityY<phys_setup.min_vel_y)) {_velocityY=phys_setup.min_vel_y;updateSpeedAdding=true;}
+    if((phys_setup.max_vel_x != 0.0f)&&(_velocityX>phys_setup.max_vel_x)) { _velocityX-=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
+    if((phys_setup.min_vel_x != 0.0f)&&(_velocityX<phys_setup.min_vel_x)) { _velocityX+=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
+    if((phys_setup.max_vel_y != 0.0f)&&(_velocityY>phys_setup.max_vel_y)) {_velocityY=phys_setup.max_vel_y;updateSpeedAdding=true;}
+    if((phys_setup.min_vel_y != 0.0f)&&(_velocityY<phys_setup.min_vel_y)) {_velocityY=phys_setup.min_vel_y;updateSpeedAdding=true;}
 
     if(updateSpeedAdding)
         updateSpeedAddingStack();
@@ -491,14 +491,14 @@ bool PGE_Phys_Object::isWall(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.isEmpty())
         return false;
-    float higher=blocks.first()->posRect.top();
-    float lower=blocks.first()->posRect.bottom();
+    double higher = blocks.first()->posRect.top();
+    double lower  = blocks.first()->posRect.bottom();
     for(int i=0; i<blocks.size(); i++)
     {
         if(blocks[i]->posRect.bottom()>lower)
-            lower=blocks[i]->posRect.bottom();
+            lower = blocks[i]->posRect.bottom();
         if(blocks[i]->posRect.top()<higher)
-            higher=blocks[i]->posRect.top();
+            higher = blocks[i]->posRect.top();
     }
     if(posRect.top() >= lower) return false;
     if(posRect.bottom() <= higher) return false;
@@ -512,8 +512,8 @@ bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks, bool *isCliff)
 
     if(blocks.isEmpty())
         return false;
-    float lefter=blocks.first()->posRect.left();
-    float righter=blocks.first()->posRect.right();
+    double lefter  = blocks.first()->posRect.left();
+    double righter = blocks.first()->posRect.right();
     for(int i=0; i<blocks.size(); i++)
     {
         if(blocks[i]->posRect.right()>righter)
@@ -527,10 +527,10 @@ bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks, bool *isCliff)
 
     if(isCliff)
     {
-        if((speedX()<0.0f) && ((double)lefter > posRect.center().x()))
+        if((speedX() < 0.0) && ( lefter > posRect.center().x()) )
             *isCliff=true;
         else
-        if((speedX()>0.0f) && ((double)righter<posRect.center().x()))
+        if((speedX() > 0.0) && (righter < posRect.center().x()) )
             *isCliff=true;
     }
     return true;

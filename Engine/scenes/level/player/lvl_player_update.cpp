@@ -341,7 +341,7 @@ void LVL_Player::update(float tickTime)
                 effect.delay = 0;
                 effect.animationLoops = 1;
                 effect.framespeed = 64;
-                _scene->launchStaticEffect(effect, true);
+                _scene->launchEffect(effect, true);
             }
 
         }

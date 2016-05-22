@@ -324,7 +324,8 @@ SOURCES += \
     script/bindings/core/classes/luaclass_core_graphics.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_paths.cpp \
     script/bindings/level/classes/luaclass_level_playerstate.cpp \
-    script/bindings/level/classes/luaclass_level_camera.cpp
+    script/bindings/level/classes/luaclass_level_camera.cpp \
+    script/bindings/core/classes/luaclass_core_scene_effects.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -488,7 +489,8 @@ HEADERS  += \
     script/bindings/level/globalfuncs/luafuncs_level_bgo.h \
     script/bindings/core/classes/luaclass_core_graphics.h \
     script/bindings/core/globalfuncs/luafuncs_core_paths.h \
-    script/bindings/level/classes/luaclass_level_playerstate.h
+    script/bindings/level/classes/luaclass_level_playerstate.h \
+    script/bindings/core/classes/luaclass_core_scene_effects.h
 
 FORMS    += \
     data_configs/select_config.ui

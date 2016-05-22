@@ -1,6 +1,8 @@
 #include "spawn_effect_def.h"
 #include <QStringList>
 
+#include <script/lua_engine.h>
+
 SpawnEffectDef::SpawnEffectDef()
 {
     id=0;
@@ -54,7 +56,7 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
     if(!setup) return;
 
     id = setup->value(prefix+"-effect-id", 0).toInt();
-    start_delay = setup->value(prefix+"-effect-start-delay", 0).toInt();
+    start_delay = setup->value(prefix+"-effect-start-delay", 0).toUInt();
     startX = setup->value(prefix+"-effect-start-x", 0.0f).toFloat();
     startY = setup->value(prefix+"-effect-start-y", 0.0f).toFloat();
     animationLoops = setup->value(prefix+"-effect-animation-loops", 1).toInt();
@@ -85,3 +87,14 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
     }
 }
 
+void SpawnEffectDef::lua_setSequence(luabind::adl::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(),
+                   "setSequence exptected int-array, got %s",
+                   lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    frame_sequence = luabind_utils::convArrayTo<int>(frames);
+}

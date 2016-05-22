@@ -22,7 +22,7 @@
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
 
-void Scene::launchStaticEffect(long     effectID,
+void Scene::launchEffect(long     effectID,
                                float    startX,
                                float    startY,
                                int      animationLoops,
@@ -49,7 +49,7 @@ void Scene::launchStaticEffect(long     effectID,
     effectDef.max_vel_y = phys.max_vel_y;
     effectDef.min_vel_x = phys.min_vel_x;
     effectDef.min_vel_y = phys.min_vel_y;
-    launchStaticEffect(effectDef, false);
+    launchEffect(effectDef, false);
 }
 
 void Scene::launchStaticEffectC(long    effectID,
@@ -79,14 +79,14 @@ void Scene::launchStaticEffectC(long    effectID,
     effectDef.max_vel_y = phys.max_vel_y;
     effectDef.min_vel_x = phys.min_vel_x;
     effectDef.min_vel_y = phys.min_vel_y;
-    launchStaticEffect(effectDef, true);
+    launchEffect(effectDef, true);
 }
 
-void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
+void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
 {
     Scene_Effect _effect;
-    if(ConfigManager::lvl_effects_indexes.contains(effect_def.id))
-        _effect.setup = &ConfigManager::lvl_effects_indexes[effect_def.id];
+    if(ConfigManager::lvl_effects_indexes.contains(int(effect_def.id)))
+        _effect.setup = &ConfigManager::lvl_effects_indexes[int(effect_def.id)];
     else
     {
         PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effect_def.id), PGE_MsgBox::msg_error);
@@ -97,7 +97,7 @@ void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
     long tID = ConfigManager::getEffectTexture(effect_def.id);
     if( tID >= 0 )
     {
-        _effect.texture = ConfigManager::level_textures[tID];
+        _effect.texture = ConfigManager::level_textures[int(tID)];
     }
     else
     {
@@ -122,25 +122,25 @@ void Scene::launchStaticEffect(SpawnEffectDef effect_def, bool centered)
     int frame1=0;
     int frameE=-1;
     int frms=0;
-    frms = _effect.setup->frames;
+    frms = int(_effect.setup->frames);
 
     switch(_effect.frameStyle)
     {
     case 1:
-        frms=_effect.setup->frames*2;
-        frame1= _effect.direction<0? 0 : _effect.setup->frames;
-        frameE= _effect.direction<0? _effect.setup->frames-1: -1;
+        frms  = int(_effect.setup->frames)*2;
+        frame1= _effect.direction<0? 0 : int(_effect.setup->frames);
+        frameE= _effect.direction<0? int(_effect.setup->frames)-1: -1;
         break;
     case 2:
-        frms=_effect.setup->frames*4;
-        frame1= _effect.direction<0 ? 0 :  (int)(frms-(_effect.setup->frames)*3);
-        frameE= _effect.direction<0 ?  (int)(frms-(_effect.setup->frames)*3)-1 : (frms/2)-1;
+        frms  = int(_effect.setup->frames)*4;
+        frame1= int(_effect.direction)<0 ? 0 : (frms-(int(_effect.setup->frames))*3);
+        frameE= int(_effect.direction)<0 ?  (frms-(int(_effect.setup->frames))*3)-1 : (frms/2)-1;
         break;
     case 3:
         break;
     default:
     case 0:
-        frms=_effect.setup->frames;
+        frms=int(_effect.setup->frames);
         frame1=0;
         frameE=-1;
         break;
@@ -195,7 +195,7 @@ void Scene::processEffects(float ticks)
 }
 
 
-const float Scene_Effect::timeStep= 15.6;
+const float Scene_Effect::timeStep= 15.6f;
 //1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 
 Scene_Effect::Scene_Effect()
@@ -249,12 +249,12 @@ void Scene_Effect::init()
 
 float Scene_Effect::posX()
 {
-    return posRect.x();
+    return float(posRect.x());
 }
 
 float Scene_Effect::posY()
 {
-    return posRect.y();
+    return float(posRect.y());
 }
 
 bool Scene_Effect::finished()
@@ -271,7 +271,7 @@ void Scene_Effect::update(float ticks)
             ticks = (-startup_delay);
         else
             return;
-        if(ticks==0)
+        if(ticks == 0.0f)
             return;
     }
 
@@ -294,9 +294,9 @@ void Scene_Effect::iterateStep(float ticks)
     posRect.setY( posRect.y() + m_velocityY * (ticks/timeStep) );
 
     float accelCof=ticks/1000.0f;
-    if(phys_setup.decelerate_x!=0)
+    if(phys_setup.decelerate_x != 0.0f)
     {
-        float decX=phys_setup.decelerate_x*accelCof;
+        float decX = phys_setup.decelerate_x*accelCof;
         if(m_velocityX>0)
         {
             if((m_velocityX-decX>0.0))
@@ -311,7 +311,7 @@ void Scene_Effect::iterateStep(float ticks)
         }
     }
 
-    if(phys_setup.decelerate_y!=0)
+    if(phys_setup.decelerate_y != 0.0f)
     {
         float decY=phys_setup.decelerate_y*accelCof;
         if(m_velocityY>0)
@@ -333,10 +333,10 @@ void Scene_Effect::iterateStep(float ticks)
         m_velocityY+= gravity*accelCof;
     }
 
-    if((phys_setup.max_vel_x!=0)&&(m_velocityX>phys_setup.max_vel_x)) m_velocityX=phys_setup.max_vel_x;
-    if((phys_setup.min_vel_x!=0)&&(m_velocityX<phys_setup.min_vel_x)) m_velocityX=phys_setup.min_vel_x;
-    if((phys_setup.max_vel_y!=0)&&(m_velocityY>phys_setup.max_vel_y)) m_velocityY=phys_setup.max_vel_y;
-    if((phys_setup.min_vel_y!=0)&&(m_velocityY<phys_setup.min_vel_y)) m_velocityY=phys_setup.min_vel_y;
+    if((phys_setup.max_vel_x != 0.0f)&&(m_velocityX>phys_setup.max_vel_x)) m_velocityX=phys_setup.max_vel_x;
+    if((phys_setup.min_vel_x != 0.0f)&&(m_velocityX<phys_setup.min_vel_x)) m_velocityX=phys_setup.min_vel_x;
+    if((phys_setup.max_vel_y != 0.0f)&&(m_velocityY>phys_setup.max_vel_y)) m_velocityY=phys_setup.max_vel_y;
+    if((phys_setup.min_vel_y != 0.0f)&&(m_velocityY<phys_setup.min_vel_y)) m_velocityY=phys_setup.min_vel_y;
 }
 
 void Scene_Effect::render(double camX, double camY)
@@ -346,10 +346,14 @@ void Scene_Effect::render(double camX, double camY)
 
     AniPos x(0,1);
     x = animator.image();
-    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, posRect.width(), posRect.height(), x.first, x.second);
+    GlRenderer::renderTexture(&texture,
+                              posX()-float(camX),
+                              posY()-float(camY),
+                              float(posRect.width()),
+                              float(posRect.height()),
+                              float(x.first),
+                              float(x.second));
 }
-
-
 
 Scene_Effect_Phys::Scene_Effect_Phys()
 {
