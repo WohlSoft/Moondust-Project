@@ -510,39 +510,61 @@ int MIX_string_equals(const char *str1, const char *str2)
     return (!*str1 && !*str2);
 }
 
+
 static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
 {
     //if first 4 bytes are zeros
-    Uint8  magic2[5];
-    memcpy(magic2, magic, 5);
-    #if 0//WIP!!!
     Uint32 null = 0;
-    //If first bytes are zero
-    if( memcmp(magic, &null, 4) == 0 )
-    {
-        //Find nearest non zero
-        char byte = 0;
-        Sint64 notNullPos = 0;
-        while( (SDL_RWread(src, &byte, 1, 1)==1) && (byte==0) ){}
-        //If file contains only null bytes
-        if( byte == 0 )
-            return 0;
-        //with offset -1 byte
-        notNullPos = SDL_RWtell(src)-1;
-        SDL_RWseek(src, notNullPos, RW_SEEK_SET);
-        if( SDL_RWread(src, magic2, 1, 4) != 4 )
-            return 0;
-        SDL_RWseek(src, start, RW_SEEK_SET);
-    }
+    Uint8  magic2[5];
+    unsigned char byte = 0;
+    //Sint64 end = 0;
+    Sint64 notNullPos = 0;
+
+    memcpy(magic2, magic, 5);
 
     if( strncmp((char *)magic2, "ID3", 3) == 0 )
     {
+        SDL_RWseek(src, start, RW_SEEK_SET);
         return 1;
     }
-    #endif
 
+    SDL_RWseek(src, start, RW_SEEK_SET);
+
+    //If first bytes are zero
+    if( memcmp(magic2, &null, 4) != 0 )
+        goto readHeader;
+
+    digMoreBytes:
+    {
+        //Find nearest non zero
+        //Look for FF byte
+        while( (SDL_RWread(src, &byte, 1, 1)==1) &&
+               (byte != 0xFF) &&
+               (SDL_RWtell(src) < (start+10240)) )
+        {}
+
+        //with offset -1 byte
+        notNullPos = SDL_RWtell(src)-1;
+        SDL_RWseek(src, notNullPos, RW_SEEK_SET);
+
+        //If file contains only null bytes
+        if( byte != 0xFF )
+        {
+            //printf("WRONG BYTE\n");
+            SDL_RWseek(src, start, RW_SEEK_SET);
+            return 0;
+        }
+        if( SDL_RWread(src, magic2, 1, 4) != 4 )
+        {
+            //printf("MAGIC WRONG\n");
+            SDL_RWseek(src, start, RW_SEEK_SET);
+            return 0;
+        }
+    }
+
+    readHeader:
     /* Detection code lifted from SMPEG */
-    if(
+    if( //01011010 11010111 10000011 10100000
        ((magic2[0] & 0xff) != 0xff)||((magic2[1] & 0xf0) != 0xf0) || // No sync bits
        ((magic2[2] & 0xf0) == 0x00)|| // Bitrate is 0
        ((magic2[2] & 0xf0) == 0xf0)|| // Bitrate is 15
@@ -550,10 +572,13 @@ static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
        ((magic2[1] & 0x06) == 0x00)   // Layer is 4
        )
     {
-        return 0;
+        //printf("WRONG BITS\n");
+        goto digMoreBytes;
     }
+    SDL_RWseek(src, start, RW_SEEK_SET);
     return 1;
 }
+
 
 /* MUS_MOD can't be auto-detected. If no other format was detected, MOD is
  * assumed and MUS_MOD will be returned, meaning that the format might not
@@ -650,14 +675,67 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_SPC;
     }
 
-    //Detect some module files
+    /* Detect some module files */
     if(strncmp(extramagic, "Extended Module", 15) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(extramagic, "ASYLUM Music Format V", 22) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "Extreme", 7) == 0) {
         return MUS_MOD;
     }
     if(strncmp(magic, "IMPM", 4) == 0) {
         return MUS_MOD;
     }
+    if(strncmp(magic, "DBM0", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "DDMF", 4) == 0) {
+        return MUS_MOD;
+    }
+    /* SMF files have the magic four bytes "RIFF" */
+    if( (strncmp((char *)magic, "RIFF", 4) == 0)&&
+        (strncmp((char *)(extramagic+8),  "DSMF", 4) == 0)&&
+        (strncmp((char *)(extramagic+12), "SONG", 4) == 0) )
+    {
+        return MUS_MOD;
+    }
+    if(strncmp(extramagic, "MAS_UTrack_V00", 14) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(extramagic, "GF1PATCH110", 11) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "FAR=", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "MTM", 3) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "MMD", 3) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "PSM\x20", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "PTMF", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "MT20", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "OKTA", 4) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "JN", 2) == 0) {
+        return MUS_MOD;
+    }
+    if(strncmp(magic, "if", 2) == 0) {
+        return MUS_MOD;
+    }
 
+    /* Detect MP3 format [needs scanning of bigger part of the file] */
     if(detect_mp3(extramagic, src, start)) {
         return MUS_MP3;
     }
@@ -676,14 +754,14 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 int split_path_and_params(const char *path, char*args)
 {
     int hasArgs=0;
-    int srclen=strlen(path);
+    int srclen=(signed)strlen(path);
     int i, j;
     for(i=0; i<srclen; i++)
         if(music_file[i]=='|') hasArgs=1;
     if(hasArgs==1)
     {
         //char trackNum[strlen(path)];
-        for(i=(signed)strlen(path)-1;i>=0;i-- )
+        for(i=(signed)strlen(path)-1; i>=0; i-- )
         {
             args[i]=music_file[i];
             if(music_file[i]=='|')
@@ -709,8 +787,8 @@ void parse_adlmidi_args(char *args)
 {
     char arg[100];
     char type='x';
-    int maxlen = strlen(args);
-    int i, j=0;
+    size_t maxlen = strlen(args);
+    size_t i, j=0;
     int value_opened=0;
     for(i=0; i<maxlen; i++)
     {
@@ -795,7 +873,7 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             music_filename = strrchr(music_file, '/');
         }
 
-        char *ext = "";
+        char *ext = NULL;
         if(strstr(music_filename, "."))
         {
             ext = strrchr(music_filename, '.');
@@ -833,7 +911,11 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
      * since we simply call Mix_LoadMUSType_RW() later */
     if ( ext ) {
         ++ext; /* skip the dot in the extension */
-        //Detect by file extension that files which impossible or hard to detect by magic number
+
+        //Detect by file type by extension of that files which are impossible
+        //or hard to detect by magic number (For example, some MOD files are may be detected as MP3 files
+        //because some of bytes are similar to MP3 Frame header which used to detect MP3 format itself)
+
         /*if ( MIX_string_equals(ext, "WAV") ) {
             type = MUS_WAV;
         } else*/if( //MIX_string_equals(ext, "MID") ||
@@ -845,7 +927,19 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
                     #endif
                     /*MIX_string_equals(ext, "KAR")*/ ) {
             type = MUS_MID;
-        } /*else if ( MIX_string_equals(ext, "AY") ||
+        } else if ( MIX_string_equals(ext, "669") ||
+                    MIX_string_equals(ext, "APUN") ||
+                    MIX_string_equals(ext, "GDM") ||
+                    MIX_string_equals(ext, "MOD") ||
+                    MIX_string_equals(ext, "MODULE") ||
+                    MIX_string_equals(ext, "OMPT") ||
+                    MIX_string_equals(ext, "S3M") ||
+                    MIX_string_equals(ext, "STM") ||
+                    MIX_string_equals(ext, "UNI") ) {
+            type = MUS_MOD;
+        }
+
+        /*else if ( MIX_string_equals(ext, "AY") ||
                     MIX_string_equals(ext, "GBS") ||
                     MIX_string_equals(ext, "GYM") ||
                     MIX_string_equals(ext, "PCE") ||
@@ -862,12 +956,12 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
             type = MUS_OGG;
         } else if ( MIX_string_equals(ext, "FLAC") ) {
             type = MUS_FLAC;
-        }*/ else if( MIX_string_equals(ext, "MPG")  ||
+        } else if( MIX_string_equals(ext, "MPG")  ||
                      MIX_string_equals(ext, "MPEG") ||
                      MIX_string_equals(ext, "MP3")  ||
                      MIX_string_equals(ext, "MAD") ) {
             type = MUS_MP3;
-        }
+        }*/
     }
     if ( type == MUS_NONE ) {
         type = detect_music_type(src);
