@@ -510,6 +510,48 @@ int MIX_string_equals(const char *str1, const char *str2)
     return (!*str1 && !*str2);
 }
 
+static int detect_imf(SDL_RWops* in, Sint64 start)
+{
+    Uint16 chunksize, buff, i=42;
+    Uint32 sum1 = 0,  sum2=0;
+    char word[2];
+
+    if(!in)
+        return 0;
+
+    if(SDL_RWread(in, word, 1, 2) != 2)
+    {
+        SDL_RWseek(in, start, SEEK_SET);
+        return 0;
+    }
+    chunksize = SDL_SwapLE16(*((Uint16*)word));
+    if ((chunksize == 0) || (chunksize & 3))
+    {
+
+        return 0;
+    }
+
+    while(i > 0)
+    {
+        if(SDL_RWread(in, word, 1, 2) != 2)
+        {
+            SDL_RWseek(in, start, SEEK_SET);
+            break;
+        }
+        buff = SDL_SwapLE16(*((Uint16*)word));
+        sum1 += buff;
+        if(SDL_RWread(in, word, 1, 2) != 2)
+        {
+            SDL_RWseek(in, start, SEEK_SET);
+            break;
+        }
+        buff = SDL_SwapLE16(*((Uint16*)word));
+        sum2 += buff;
+        i--;
+    }
+    SDL_RWseek(in, start, SEEK_SET);
+    return (sum1 > sum2);
+}
 
 static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
 {
@@ -564,7 +606,7 @@ static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
 
     readHeader:
     /* Detection code lifted from SMPEG */
-    if( //01011010 11010111 10000011 10100000
+    if(
        ((magic2[0] & 0xff) != 0xff)||((magic2[1] & 0xf0) != 0xf0) || // No sync bits
        ((magic2[2] & 0xf0) == 0x00)|| // Bitrate is 0
        ((magic2[2] & 0xf0) == 0xf0)|| // Bitrate is 15
@@ -738,6 +780,10 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     /* Detect MP3 format [needs scanning of bigger part of the file] */
     if(detect_mp3(extramagic, src, start)) {
         return MUS_MP3;
+    }
+    /* Detect id Software Music Format file */
+    if(detect_imf(src, start)) {
+        return MUS_MID;
     }
 
     /* Assume MOD format.
@@ -918,21 +964,20 @@ Mix_Music * SDLCALLCC Mix_LoadMUS(const char *file)
 
         /*if ( MIX_string_equals(ext, "WAV") ) {
             type = MUS_WAV;
-        } else*/if( //MIX_string_equals(ext, "MID") ||
+        } else if( //MIX_string_equals(ext, "MID") ||
                     //MIX_string_equals(ext, "MIDI") ||
                     #ifdef USE_ADL_MIDI
                     //MIX_string_equals(ext, "RMI") ||
                     //MIX_string_equals(ext, "MUS") ||
-                    MIX_string_equals(ext, "IMF")//||
+                    //MIX_string_equals(ext, "IMF")//||
                     #endif
-                    /*MIX_string_equals(ext, "KAR")*/ ) {
+                    MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
-        } else if ( MIX_string_equals(ext, "669") ||
+        } else */if ( MIX_string_equals(ext, "669") ||
                     MIX_string_equals(ext, "APUN") ||
                     MIX_string_equals(ext, "GDM") ||
                     MIX_string_equals(ext, "MOD") ||
                     MIX_string_equals(ext, "MODULE") ||
-                    MIX_string_equals(ext, "OMPT") ||
                     MIX_string_equals(ext, "S3M") ||
                     MIX_string_equals(ext, "STM") ||
                     MIX_string_equals(ext, "UNI") ) {
