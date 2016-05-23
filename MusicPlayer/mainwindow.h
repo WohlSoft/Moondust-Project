@@ -62,6 +62,12 @@ private slots:
     void on_play_clicked();
 
     /*!
+     * \brief Volume slider event
+     * \param value Volume level
+     */
+    void on_volume_valueChanged(int value);
+
+    /*!
      * \brief MIDI Device combo-box index change event
      * \param index New value of index after change
      */
@@ -109,8 +115,17 @@ private slots:
      */
     void _blink_red();
 
-
+    /*!
+     * \brief Resets ADLMIDI properties into initial state
+     */
     void on_resetDefaultADLMIDI_clicked();
+
+    /*!
+     * \brief Context menu
+     * \param pos Mouse cursor position
+     */
+    void contextMenu(const QPoint &pos);
+
 
 private:
     //! Controlls blinking of the wav-recording label

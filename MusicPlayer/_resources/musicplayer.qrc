@@ -7,5 +7,6 @@
         <file>cat_musplay/cat_musplay_32x32.png</file>
         <file>cat_musplay/cat_musplay_48x48.png</file>
         <file>cat_musplay/cat_musplay_256x256.png</file>
+        <file>flie_musplay.ico</file>
     </qresource>
 </RCC>

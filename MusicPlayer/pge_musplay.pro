@@ -81,15 +81,18 @@ SOURCES += main.cpp\
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
     main_sdl_android.c \
-    wave_writer.c
+    wave_writer.c \
+    AssocFiles/assoc_files.cpp
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     version.h \
-    wave_writer.h
+    wave_writer.h \
+    AssocFiles/assoc_files.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    AssocFiles/assoc_files.ui
 
 RESOURCES += \
     _resources/musicplayer.qrc

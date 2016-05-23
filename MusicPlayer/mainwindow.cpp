@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "AssocFiles/assoc_files.h"
 #include <math.h>
 
 #include <QtDebug>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QMenu>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "version.h"
 
@@ -23,6 +27,22 @@ namespace PGE_MusicPlayer
 {
     Mix_Music *play_mus = NULL;
     Mix_MusicType type  = MUS_NONE;
+
+    QString musicType()
+    {
+        return QString(
+        type == MUS_NONE?"No Music":
+        type == MUS_CMD?"CMD":
+        type == MUS_WAV?"PCM Wave":
+        type == MUS_MOD?"MidMod":
+        type == MUS_MODPLUG?"ModPlug":
+        type == MUS_MID?"MIDI/IMF":
+        type == MUS_OGG?"OGG":
+        type == MUS_MP3?"MP3 (SMPEG)":
+        type == MUS_MP3_MAD?"MP3 (LibMAD)":
+        type == MUS_FLAC?"FLAC":
+        type == MUS_SPC?"Game Music Emulator": "<Unknown>" );
+    }
 
     /*!
      * \brief Spawn warning message box with specific text
@@ -127,27 +147,15 @@ namespace PGE_MusicPlayer
      */
     bool MUS_openFile(QString musFile)
     {
+        type = MUS_NONE;
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
         play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
         if(!play_mus) {
             error(QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError()));
             return false;
         }
-
-                type=Mix_GetMusicType(play_mus);
-        qDebug() << QString("Music type: %1").arg(
-                type==MUS_NONE?"MUS_NONE":
-                type==MUS_CMD?"MUS_CMD":
-                type==MUS_WAV?"MUS_WAV":
-                /*type==MUS_MOD_MODPLUG?"MUS_MOD_MODPLUG":*/
-                type==MUS_MOD?"MUS_MOD":
-                type==MUS_MID?"MUS_MID":
-                type==MUS_OGG?"MUS_OGG":
-                type==MUS_MP3?"MUS_MP3":
-                type==MUS_MP3_MAD?"MUS_MP3_MAD":
-                type==MUS_FLAC?"MUS_FLAC":
-                type==MUS_SPC?"MUS_SPC":
-                "Unknown");
+        type = Mix_GetMusicType( play_mus );
+        qDebug() << QString("Music type: %1").arg( musicType() );
         return true;
     }
 
@@ -205,6 +213,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->updateGeometry();
     this->window()->resize(100, 100);
     this->connect(&blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
+    this->connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
     blink_state=false;
 
     QApplication::setOrganizationName(_COMPANY);
@@ -238,6 +247,7 @@ MainWindow::MainWindow(QWidget *parent) :
     MIX_ADLMIDI_setAdLibMode((int)ui->adlibMode->isChecked());
     ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
     MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
+    ui->volume->setValue(setup.value("Volume", 128).toInt());
 }
 
 MainWindow::~MainWindow()
@@ -253,6 +263,7 @@ MainWindow::~MainWindow()
     setup.setValue("ADLMIDI-Vibrato", ui->vibrato->isChecked());
     setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
+    setup.setValue("Volume", ui->volume->value());
 
     delete ui;
 }
@@ -343,7 +354,7 @@ void MainWindow::on_play_clicked()
     ui->play->setText(tr("Play"));
     if(PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text()))
     {
-        PGE_MusicPlayer::MUS_changeVolume(128);
+        PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
         PGE_MusicPlayer::MUS_playMusic();
         ui->play->setText(tr("Pause"));
     }
@@ -356,8 +367,10 @@ void MainWindow::on_play_clicked()
     ui->adlmidi_xtra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->frame->setVisible(false);
-    this->window()->resize(100,100);
+    this->window()->resize(100, 100);
     ui->frame->setVisible(true);
+    ui->smallInfo->setText(PGE_MusicPlayer::musicType());
+
     ui->gridLayout->update();
 
     switch(PGE_MusicPlayer::type)
@@ -439,13 +452,10 @@ void MainWindow::on_modulation_clicked(bool checked)
     MIX_ADLMIDI_setScaleMod((int)checked);
 }
 
-
 void MainWindow::on_adlibMode_clicked(bool checked)
 {
     MIX_ADLMIDI_setAdLibMode((int)checked);
 }
-
-
 
 void MainWindow::on_trackID_editingFinished()
 {
@@ -507,4 +517,54 @@ void MainWindow::on_resetDefaultADLMIDI_clicked()
     MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
 
     on_fmbank_currentIndexChanged( ui->fmbank->currentIndex() );
+}
+
+void MainWindow::on_volume_valueChanged(int value)
+{
+    PGE_MusicPlayer::MUS_changeVolume(value);
+}
+
+void MainWindow::contextMenu(const QPoint &pos)
+{
+    QMenu x;
+    QAction* open        = x.addAction("Open");
+    QAction* playpause   = x.addAction("Play/Pause");
+    QAction* stop        = x.addAction("Stop");
+                           x.addSeparator();
+    QAction* assoc_files = x.addAction("Associate files");
+                           x.addSeparator();
+    QMenu  * about       = x.addMenu("About");
+    QAction* version     = about->addAction("SDL Mixer X Music Player v." _FILE_VERSION );
+                           version->setEnabled(false);
+    QAction* license     = about->addAction("Licensed under GNU GPLv3 license");
+                           about->addSeparator();
+    QAction* source      = about->addAction("Get source code");
+
+    QAction *ret=x.exec(this->mapToGlobal(pos));
+    if(open == ret)
+    {
+        on_open_clicked();
+    }
+    else if(playpause == ret)
+    {
+        on_play_clicked();
+    }
+    else if(stop == ret)
+    {
+        on_stop_clicked();
+    }
+    else if(assoc_files == ret)
+    {
+        AssocFiles af(this);
+        af.setWindowModality(Qt::WindowModal);
+        af.exec();
+    }
+    else if(ret == license)
+    {
+        QDesktopServices::openUrl(QUrl("http://www.gnu.org/licenses/gpl"));
+    }
+    else if(ret == source)
+    {
+        QDesktopServices::openUrl(QUrl("https://github.com/Wohlhabend-Networks/PGE-Project"));
+    }
 }
