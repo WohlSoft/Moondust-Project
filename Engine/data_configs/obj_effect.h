@@ -55,8 +55,8 @@ struct Effects_GlobalSetup
     SpawnEffectDef m_default;
     //!Smoke effect on layer showing/hidding
     SpawnEffectDef m_smoke;
-    //!Water smash effect
-    SpawnEffectDef m_waterSmash;
+    //!Water splash effect
+    SpawnEffectDef m_waterSplash;
 
     /* Playable character */
     //!Playable characters transform

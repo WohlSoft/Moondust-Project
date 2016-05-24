@@ -27,10 +27,10 @@ Effects_GlobalSetup         ConfigManager::g_setup_effects;
 
 bool ConfigManager::loadLevelEffects()
 {
-    unsigned int i;
+    int i;
 
     obj_effect seffect;
-    unsigned long effects_total=0;
+    int effects_total=0;
     QString effects_ini = config_dir + "lvl_effects.ini";
 
     if(!QFile::exists(effects_ini))
@@ -52,7 +52,7 @@ bool ConfigManager::loadLevelEffects()
         //Default effects
         g_setup_effects.m_default.fill("default", &effectset);
         g_setup_effects.m_smoke.fill("smoke", &effectset);
-        g_setup_effects.m_waterSmash.fill("water-smash", &effectset);
+        g_setup_effects.m_waterSplash.fill("water-splash", &effectset);
         g_setup_effects.m_playerTransform.fill("player-transform", &effectset);
         g_setup_effects.m_groundSlide.fill("ground-slide", &effectset);
         g_setup_effects.m_stomp.fill("stomp", &effectset);
@@ -63,7 +63,7 @@ bool ConfigManager::loadLevelEffects()
 
     lvl_effects_indexes.allocateSlots(effects_total);
 
-    for(i=1; i<=effects_total; i++)
+    for(i=1; i <= effects_total; i++)
     {
 
         seffect.isInit = false;
@@ -96,15 +96,15 @@ bool ConfigManager::loadLevelEffects()
                 addError(QString("EFFECT-%1 Image filename isn't defined").arg(i));
                 goto skipEffect;
             }
-            seffect.frames = effectset.value("frames", "1").toInt();
+            seffect.frames = effectset.value("frames", "1").toUInt();
             seffect.framestyle = effectset.value("frame-style", "0").toInt();
             seffect.framespeed = effectset.value("frame-speed", "125").toInt();
 
             seffect.frame_h = 0;
-            seffect.id = i;
+            seffect.id = uint64_t(i);
 
             //Add to Index
-            lvl_effects_indexes.storeElement(seffect.id, seffect);
+            lvl_effects_indexes.storeElement(int(seffect.id), seffect);
 
         skipEffect:
         effectset.endGroup();
@@ -115,7 +115,7 @@ bool ConfigManager::loadLevelEffects()
         }
     }
 
-    if((unsigned int)lvl_effects_indexes.stored()<effects_total)
+    if( lvl_effects_indexes.stored() < effects_total)
     {
         addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()));
         PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()),
