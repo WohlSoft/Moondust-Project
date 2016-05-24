@@ -273,15 +273,7 @@ void dataconfigs::loadLevelNPC()
         snpc.frames = npcset.value("frames", "1").toInt();
 
         /****************Calculating of default frame height******************/
-        switch(snpc.framestyle)
-        {
-            case 0: defGFX_h = (int)round( snpc.image.height()/snpc.frames );   break;
-            case 1: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/2); break;
-            case 2: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
-            case 3: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
-            case 4: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/8); break;
-            default:defGFX_h = 0; break;
-        }
+        defGFX_h = snpc.image.height() / (snpc.frames*int(powl(2, snpc.framestyle)));
         /****************Calculating of default frame height**end*************/
 
         snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", "1").toBool();

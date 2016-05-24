@@ -55,6 +55,8 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
 {
     if(!setup) return;
 
+    lua_function = setup->value(prefix+"-effect-function", "").toString();
+
     id = setup->value(prefix+"-effect-id", 0).toInt();
     start_delay = setup->value(prefix+"-effect-start-delay", 0).toUInt();
     startX = setup->value(prefix+"-effect-start-x", 0.0f).toFloat();

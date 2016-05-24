@@ -80,25 +80,25 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
     frameStep = 1;
     frameHeight=1;
 
-    CurrentFrameL=0; //Real frame
-    CurrentFrameR=0; //Real frame
-    frameCurrentL=0; //Timer frame
-    frameCurrentR=0; //Timer frame
+    CurrentFrameL = 0; //Real frame
+    CurrentFrameR = 0; //Real frame
+    frameCurrentL = 0; //Timer frame
+    frameCurrentR = 0; //Timer frame
 
-    frameFirstL=0; //from first frame
-    frameLastL=-1; //to unlimited frameset
-    frameFirstR=0; //from first frame
-    frameLastR=-1; //to unlimited frameset
+    frameFirstL =  0; //from first frame
+    frameLastL  = -1; //to unlimited frameset
+    frameFirstR =  0; //from first frame
+    frameLastR  = -1; //to unlimited frameset
 
     animated = true;
 
     frameSpeed = setup.framespeed;
     frameStyle = setup.framestyle;
-    frameStep = 1;
+    frameStep  = 1;
 
     frameSequance = false;
 
-    aniBiDirect = setup.ani_bidir;
+    aniBiDirect  = setup.ani_bidir;
     customAniAlg = setup.custom_ani_alg;
 
     customAnimate = setup.custom_animate;

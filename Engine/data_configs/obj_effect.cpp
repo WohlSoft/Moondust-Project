@@ -19,11 +19,11 @@
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
 
-/*****Level BGO************/
+/*****Level Effects************/
 PGE_DataArray<obj_effect>   ConfigManager::lvl_effects_indexes;
-CustomDirManager ConfigManager::Dir_EFFECT;
-/*****Level BGO************/
-
+CustomDirManager            ConfigManager::Dir_EFFECT;
+Effects_GlobalSetup         ConfigManager::g_setup_effects;
+/*****Level Effects************/
 
 bool ConfigManager::loadLevelEffects()
 {
@@ -49,6 +49,16 @@ bool ConfigManager::loadLevelEffects()
 
     effectset.beginGroup("effects-main");
         effects_total = effectset.value("total", "0").toInt();
+        //Default effects
+        g_setup_effects.m_default.fill("default", &effectset);
+        g_setup_effects.m_smoke.fill("smoke", &effectset);
+        g_setup_effects.m_waterSmash.fill("water-smash", &effectset);
+        g_setup_effects.m_playerTransform.fill("player-transform", &effectset);
+        g_setup_effects.m_groundSlide.fill("ground-slide", &effectset);
+        g_setup_effects.m_stomp.fill("stomp", &effectset);
+        g_setup_effects.m_smash.fill("smash", &effectset);
+        g_setup_effects.m_blockDestroy.fill("block-destroy",  &effectset);
+        g_setup_effects.m_blockCoinHit.fill("block-coin-hit", &effectset);
     effectset.endGroup();
 
     lvl_effects_indexes.allocateSlots(effects_total);

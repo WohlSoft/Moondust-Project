@@ -242,7 +242,7 @@ public:
     static long getNpcTexture(long npcID);
     /*****************************/
     static PGE_DataArray<obj_npc>   lvl_npc_indexes;
-    static NPC_GlobalSetup           marker_npc;
+    static NPC_GlobalSetup          g_setup_npc;
     static CustomDirManager Dir_NPC;
     static CustomDirManager Dir_NPCScript;
     static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
@@ -304,11 +304,14 @@ public:
 
     /*================================World config Data===end=====================*/
 
+    /*================================Common config Data===========================*/
+
     /*****Level Effects************/
     static bool loadLevelEffects();
     static long getEffectTexture(long effectID);
     /*****************************/
     static PGE_DataArray<obj_effect>   lvl_effects_indexes;
+    static Effects_GlobalSetup         g_setup_effects;
     static CustomDirManager Dir_EFFECT;
     /*****Level Effects************/
 
@@ -325,6 +328,8 @@ public:
     static CustomDirManager Dir_PlayerLvl;
     static CustomDirManager Dir_PlayerScript;
     /********Playable characters*******/
+
+    /*================================Common config Data===end=====================*/
 
     /***********Texture banks*************/
     static QList<PGE_Texture > level_textures;

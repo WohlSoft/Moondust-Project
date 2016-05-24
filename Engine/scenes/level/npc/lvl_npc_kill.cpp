@@ -115,9 +115,9 @@ void LVL_Npc::kill(int damageReason)
                 _scene->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 0, 500, 0, 0, 0, _direction);
             break;
         case DAMAGE_LAVABURN:
-            if(ConfigManager::marker_npc.eff_lava_burn>0)
+            if(ConfigManager::g_setup_npc.eff_lava_burn>0)
             {
-                _scene->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
+                _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
                                                   posCenterX(),
                                                   posCenterY(), 1, 0, 0, 0, 0, _direction);
             }

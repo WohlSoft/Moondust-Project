@@ -15,6 +15,9 @@ public:
     SpawnEffectDef(const SpawnEffectDef &c);
     void fill(QString prefix, QSettings *setup);
 
+    //Call lua-function instead of spawning this effect
+    QString lua_function;
+
     void lua_setSequence(luabind::object frames);
 
     unsigned int start_delay;

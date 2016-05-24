@@ -237,7 +237,7 @@ void LVL_Player::kill(deathReason reason)
     setPaused(true);
     if(kill_reason==DEAD_burn)
     {
-        _scene->launchStaticEffectC(ConfigManager::marker_npc.eff_lava_burn,
+        _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
                                           posCenterX(),
                                           posCenterY(), 1, 0, 0, 0, 0, _direction);
     }

@@ -29,7 +29,7 @@
 
 /*****Level NPC************/
 PGE_DataArray<obj_npc>      ConfigManager::lvl_npc_indexes;
-NPC_GlobalSetup             ConfigManager::marker_npc;
+NPC_GlobalSetup             ConfigManager::g_setup_npc;
 CustomDirManager            ConfigManager::Dir_NPC;
 CustomDirManager            ConfigManager::Dir_NPCScript;
 QList<AdvNpcAnimator >      ConfigManager::Animator_NPC;
@@ -60,27 +60,27 @@ bool ConfigManager::loadLevelNPC()
 
     npcset.beginGroup("npc-main");
         npc_total =                 npcset.value("total", "0").toInt();
-        marker_npc.bubble =         npcset.value("bubble", "283").toInt();
-        marker_npc.egg =            npcset.value("egg", "96").toInt();
-        marker_npc.lakitu =         npcset.value("lakitu", "284").toInt();
-        marker_npc.buried =         npcset.value("buried", "91").toInt();
-        marker_npc.ice_cube =       npcset.value("icecube", "91").toInt();
-        marker_npc.iceball =        npcset.value("iceball", "265").toInt();
-        marker_npc.fireball =       npcset.value("fireball", "13").toInt();
-        marker_npc.hammer =         npcset.value("hammer", "171").toInt();
-        marker_npc.boomerang =      npcset.value("boomerang", "292").toInt();
-        marker_npc.coin_in_block =  npcset.value("coin-in-block", "10").toInt();
+        g_setup_npc.bubble =         npcset.value("bubble", "283").toInt();
+        g_setup_npc.egg =            npcset.value("egg", "96").toInt();
+        g_setup_npc.lakitu =         npcset.value("lakitu", "284").toInt();
+        g_setup_npc.buried =         npcset.value("buried", "91").toInt();
+        g_setup_npc.ice_cube =       npcset.value("icecube", "91").toInt();
+        g_setup_npc.iceball =        npcset.value("iceball", "265").toInt();
+        g_setup_npc.fireball =       npcset.value("fireball", "13").toInt();
+        g_setup_npc.hammer =         npcset.value("hammer", "171").toInt();
+        g_setup_npc.boomerang =      npcset.value("boomerang", "292").toInt();
+        g_setup_npc.coin_in_block =  npcset.value("coin-in-block", "10").toInt();
 
-        marker_npc.phs_gravity_accel= npcset.value("physics-gravity-acceleration", 16.25).toFloat();
-        marker_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
+        g_setup_npc.phs_gravity_accel= npcset.value("physics-gravity-acceleration", 16.25).toFloat();
+        g_setup_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
 
-        marker_npc.eff_lava_burn =  npcset.value("effect-lava-burn", "13").toInt();
+        g_setup_npc.eff_lava_burn =  npcset.value("effect-lava-burn", "13").toInt();
 
-        marker_npc.projectile_sound_id = npcset.value("projectile-sound-id", 0).toInt();
-        marker_npc.projectile_effect.fill("projectile", &npcset);
-        marker_npc.projectile_speed = npcset.value("projectile-speed", 10.0f).toFloat();
+        g_setup_npc.projectile_sound_id = npcset.value("projectile-sound-id", 0).toInt();
+        g_setup_npc.projectile_effect.fill("projectile", &npcset);
+        g_setup_npc.projectile_speed = npcset.value("projectile-speed", 10.0f).toFloat();
 
-        marker_npc.talking_sign_img = npcset.value("talking-sign-image", "").toString();
+        g_setup_npc.talking_sign_img = npcset.value("talking-sign-image", "").toString();
     npcset.endGroup();
 
     /*************Buffers*********************/
@@ -129,11 +129,14 @@ bool ConfigManager::loadLevelNPC()
         /***************Load image*end***************/
 
         snpc.algorithm_script = npcset.value("algorithm", PGESTRING("npc-%1.lua").arg(i) ).toString();
-        snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
-        snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
+
+        snpc.effect_function = npcset.value("effect-function", "").toString();
+
+        snpc.effect_1 =     npcset.value("default-effect", 10).toInt();
+        snpc.effect_2 =     npcset.value("shell-effect",   10).toInt();
 
         snpc.effect_1_def.fill("stomp", &npcset);
-        snpc.effect_2_def.fill("kick", &npcset);
+        snpc.effect_2_def.fill("kick",  &npcset);
 
         snpc.block_spawn_type=npcset.value("block-spawn-type", 0).toInt();
         snpc.block_spawn_speed=npcset.value("block-spawn-speed", 3.0f).toFloat();
@@ -164,7 +167,7 @@ bool ConfigManager::loadLevelNPC()
         snpc.container_crop_contents    = npcset.value("container-crop-contents", false).toBool();
         snpc.container_align_contents   = npcset.value("container-align-contents", "0").toInt();
 
-        snpc.no_npc_collions =      npcset.value("no-npc-collisions", "0").toBool();
+        snpc.no_npc_collions            = npcset.value("no-npc-collisions", "0").toBool();
 
         //Graphics
         snpc.gfx_offset_x = npcset.value("gfx-offset-x", "0").toInt();
@@ -175,15 +178,7 @@ bool ConfigManager::loadLevelNPC()
             NumberLimiter::apply(snpc.frames, 1u);
 
         /****************Calculating of default frame height******************/
-        switch(snpc.framestyle)
-        {
-            case 0: defGFX_h = (int)round(snpc.image_size.h() / snpc.frames); break;
-            case 1: defGFX_h = (int)round((snpc.image_size.h() / snpc.frames)/2 ); break;
-            case 2: defGFX_h = (int)round((snpc.image_size.h()/snpc.frames)/4); break;
-            case 3: defGFX_h = (int)round((snpc.image_size.h()/snpc.frames)/4); break;
-            case 4: defGFX_h = (int)round((snpc.image_size.h()/snpc.frames)/8); break;
-            default:defGFX_h = 0; break;
-        }
+            defGFX_h = int(round(snpc.image_size.h())) / (snpc.frames*int(powl(2, snpc.framestyle)));
         /****************Calculating of default frame height**end*************/
 
         snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", true).toBool();

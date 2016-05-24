@@ -49,9 +49,14 @@ struct obj_npc
     PGE_Size      image_size;
     /*   OpenGL    */
 
-    QString algorithm_script;   //    ; Filename of the lua algorithm
-    unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
-    unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC
+    //!Filename of the lua algorithm
+    QString algorithm_script;
+    //!Name of global level function to process NPC death effect
+    QString effect_function;
+    //!LEGACY: effect on stomp death reason
+    unsigned long effect_1;     //default-effect=2		;Spawn effect ID on jump-die
+    //!LEGACY: effect on other death reasons except lava burn
+    unsigned long effect_2;     //shell-effect=4        ;effect on kick by shell or other NPC
 
     SpawnEffectDef effect_1_def;
     SpawnEffectDef effect_2_def;
@@ -60,32 +65,51 @@ struct obj_npc
         spawn_warp=0,
         spawn_bump
     };
+    //!Type of NPC spawn from block
     unsigned int block_spawn_type;
+    //!NPC's initial Y Velocity after spawn from block
     float        block_spawn_speed;
-    bool         block_spawn_sound;//Play sound on spawn from block (if false - spawn without 'radish' sound)
+    //!Play sound on spawn from block (if false - spawn without 'radish' sound)
+    bool         block_spawn_sound;
 
 
     //    ; graphics
+    //! Offset X of sprite relative to center<->center position (dependent to direction, may be multipled to -1)
     int gfx_offset_x;   //    gfx-offst-x=0
+    //! Offset Y of sprite relative to bottom<->bottom position of NPC
     int gfx_offset_y;   //    gfx-offst-y=2
+    //! Height of frame (if not defined, will be calculated from count of the frames)
     int gfx_h;          //    gfx-height-y=32
+    //! Width of frame (if not defined, will be copied from actual sprite image width)
     int gfx_w;          //    gfx-width-y=32
+    //! Allow automatic mapping of the customized hitbox metrics to frame size
     bool custom_physics_to_gfx; //The GFX size defining by physics size in the custom configs
+    //! Size of alignment grid while placing mode
     int grid;           //    grid=32
+    //! Offset X relative aligned position
     int grid_offset_x;  //    grid-offset-x=0
+    //! Offset Y relative aligned position
     int grid_offset_y;  //    grid-offset-y=0
-
+    //! 0 - Align NPC X position relative it's center to center of the grid cell, 1 - to edge of grid cell
     int grid_attach_style; //0 - middle, 1 - left side
 
+    //! Style of frame sets
     int framestyle;     //    frame-style=0	; (0-2) This option in some alhoritmes can be ignored
+    //! Total count of frames (Total frames on the sprite formula is: Ntf = Fn/(2^Fs) )
     unsigned int frames;    //    frames=2
+    //! Delay between frames in milli-seconds
     unsigned int framespeed;//    frame-speed=128
+    //! Render NPC's frame on NPC-Foreground layer (if both foreground and background are false - render on regular NPC render layer)
     bool foreground;        //    foreground=0
+    //! Render NPC's frame on NPC-Background layer
     bool background;        //    background=0
+    //! Relative Z-Offset at current render layer
     double z_offset;
+    //! Bidirectional animation
     bool ani_bidir;         //    animation-bidirectional=0
+    //! Initial direction of animation sequence (0 - forward, 1 - backward)
     bool ani_direct;        //    animation-direction=0
-
+    //! Direction of animation sequence will be dependent from physical face direction
     bool ani_directed_direct; //Animation direction will be gotten from NPC's direction
 
     //    ; for editor
@@ -94,10 +118,10 @@ struct obj_npc
 
     int custom_ani_alg; //;custom-animation-alg=0		; Custom animation algorithm
                         //0 simple frame range, 1 - frame Jump; 2 - custom animation sequances
-    int custom_ani_fl; //    ;custom-animation-fl=0		; First frame for LEFT
-    int custom_ani_el; //    ;custom-animation-el=0		; end frame for LEFT / Jump step
-    int custom_ani_fr; //    ;custom-animation-fr=0		; first frame for RIGHT
-    int custom_ani_er; //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
+    int custom_ani_fl;  //    ;custom-animation-fl=0		; First frame for LEFT
+    int custom_ani_el;  //    ;custom-animation-el=0		; end frame for LEFT / Jump step
+    int custom_ani_fr;  //    ;custom-animation-fr=0		; first frame for RIGHT
+    int custom_ani_er;  //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
 
     QList<int> frames_left;     //Frame srquence for left
     QList<int> frames_right;    //Frame sequence for right

@@ -13,6 +13,7 @@ Engine
   without making of separated threads (which is not supported with single OpenGL context while texture loadings are in process)
 - Exclamation sign sprite over talkable NPC's
 - Fix a bug causes missing of custom lua-scripts declared in the custom npc.txt file
+- Replace all pixel per seconds NPC mover speeds with 1/64 second values
 
 Engine: Lua
 - Better Memory Management, either transfere ownership to C++ or use smart pointers.

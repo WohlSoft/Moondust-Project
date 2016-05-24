@@ -158,15 +158,15 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
             switch(sp_dir)
             {
                 case SPAWN_DOWN:
-                    npc->setSpeedX(0.0f); npc->setSpeedY(ConfigManager::marker_npc.projectile_speed); break;
+                    npc->setSpeedX(0.0f); npc->setSpeedY(ConfigManager::g_setup_npc.projectile_speed); break;
                 case SPAWN_UP:
-                    npc->setSpeedX(0.0f); npc->setSpeedY(-ConfigManager::marker_npc.projectile_speed);  break;
+                    npc->setSpeedX(0.0f); npc->setSpeedY(-ConfigManager::g_setup_npc.projectile_speed);  break;
                 case SPAWN_LEFT:
-                    npc->setSpeedX(-ConfigManager::marker_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
+                    npc->setSpeedX(-ConfigManager::g_setup_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
                 case SPAWN_RIGHT:
-                    npc->setSpeedX(ConfigManager::marker_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
+                    npc->setSpeedX(ConfigManager::g_setup_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
             }
-            PGE_Audio::playSound(ConfigManager::marker_npc.projectile_sound_id);
+            PGE_Audio::playSound(ConfigManager::g_setup_npc.projectile_sound_id);
             break;
         default:
             break;

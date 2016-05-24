@@ -20,6 +20,7 @@
 #define OBJ_EFFECT_H
 
 #include "../graphics/graphics.h"
+#include "spawn_effect_def.h"
 
 #include <QString>
 #include <QPixmap>
@@ -47,5 +48,31 @@ struct obj_effect
     int frame_h; //!< Captured frame height
 };
 
-#endif // OBJ_EFFECT_H
+struct Effects_GlobalSetup
+{
+    /* Common */
+    //!Default effect for unknown, damaged, or unconfigured effects
+    SpawnEffectDef m_default;
+    //!Smoke effect on layer showing/hidding
+    SpawnEffectDef m_smoke;
+    //!Water smash effect
+    SpawnEffectDef m_waterSmash;
 
+    /* Playable character */
+    //!Playable characters transform
+    SpawnEffectDef m_playerTransform;
+    //!Smoke effect on ground sliding
+    SpawnEffectDef m_groundSlide;
+    //!Enemy stomp effect
+    SpawnEffectDef m_stomp;
+    //!Enemy smash effect
+    SpawnEffectDef m_smash;
+
+    /* Blocks */
+    //!Block destroyed effect
+    SpawnEffectDef m_blockDestroy;
+    //!Coin kicked out from a block
+    SpawnEffectDef m_blockCoinHit;
+
+};
+#endif // OBJ_EFFECT_H
