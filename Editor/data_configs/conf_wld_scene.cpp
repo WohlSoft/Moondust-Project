@@ -113,7 +113,7 @@ void dataconfigs::loadWorldScene()
         if(!errStr.isEmpty())
         {
             addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
-            goto skipScene;
+            //goto skipScene;
         }
         /***************Load image*end***************/
 
@@ -135,7 +135,7 @@ void dataconfigs::loadWorldScene()
         sScene.id = i;
         main_wscene.storeElement(i, sScene);
 
-    skipScene:
+    //skipScene:
         sceneset.endGroup();
 
         if( sceneset.status() != QSettings::NoError )

@@ -36,8 +36,8 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     frameFirst = a.frameFirst;
     frameLast = a.frameLast;
     frame_sequance_enabled=a.frame_sequance_enabled;
-    frame_sequance=a.frame_sequance;
-    frame_sequance_cur=a.frame_sequance_cur;
+    frame_sequance = a.frame_sequance;
+    frame_sequance_cur = a.frame_sequance_cur;
     frame_rect = a.frame_rect;
     CurrentFrame = a.CurrentFrame;
     bidirectional = a.bidirectional;
@@ -154,17 +154,15 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
 //FIXME!! Implement support of frame-sequences in the frameNext!!!
 void SimpleAnimator::setFrameSequance(QList<int> sequance)
 {
+    if(sequance.isEmpty())
+        return;
     frame_sequance=sequance;
     frame_sequance_enabled=true;
-    frame_sequance_cur=0;
-    //animationFinished=false;
-    if(!frame_sequance.isEmpty())
-    {
-        CurrentFrame = frame_sequance[frame_sequance_cur];
-        //pos1 = CurrentFrame/framesQ;
-        //pos2 = CurrentFrame/framesQ + 1.0/framesQ;
-        //manual_ticks = speed;
-    }
+    frame_sequance_cur = 0;
+    CurrentFrame = frame_sequance[frame_sequance_cur];
+    frame_rect.setRect(0, frameHeight*CurrentFrame, frameWidth, frameHeight);
+    if( frame_sequance.size() <=1 )
+        animated=false;
 }
 
 
@@ -206,44 +204,103 @@ QPixmap &SimpleAnimator::wholeImage()
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    if(reverce)
-    { // Reverce animation
-        CurrentFrame--;
-        if(CurrentFrame<frameFirst)
+    if(frame_sequance_enabled)
+    {
+        if(reverce)
         {
-            if(bidirectional)
+            frame_sequance_cur--;
+            if(frame_sequance_cur < 0)
             {
-                reverce=!reverce; // change direction on first frame
-                CurrentFrame+=2;
-            }
-            else
-            {
-                 // Return to last frame;
-                if(frameLast<0)
-                    CurrentFrame=framesCount-1;
+                if(bidirectional)
+                {
+                    reverce = !reverce; // change direction on first frame
+                    frame_sequance_cur+=2;
+                    if(frame_sequance_cur >= frame_sequance.size())
+                        frame_sequance_cur = frame_sequance.size()-1;
+                }
                 else
-                    CurrentFrame=frameLast;
+                {
+                    frame_sequance_cur = frame_sequance.size()-1;
+                }
             }
         }
+        else
+        {
+            frame_sequance_cur++;
+            if(frame_sequance_cur < 0)
+                frame_sequance_cur = 0;
+            if(frame_sequance_cur >= frame_sequance.size())
+            {
+                if(bidirectional)
+                {
+                    reverce=!reverce; // change direction on last frame
+                    frame_sequance_cur -= 2;
+                    if(frame_sequance_cur < 0)
+                        frame_sequance_cur = 0;
+                }
+                else
+                {
+                    frame_sequance_cur = 0; // Return to first frame;
+                }
+            }
+        }
+        if( (!frame_sequance.isEmpty()) && (frame_sequance_cur<frame_sequance.size()) )
+            CurrentFrame = frame_sequance[frame_sequance_cur];
+        if(CurrentFrame<0 || CurrentFrame >= framesCount)
+            CurrentFrame = frameFirst;
     }
     else
-    { // Direct animation
-        CurrentFrame++;
-        if(((CurrentFrame>=framesCount)&&(frameLast<0))||
-           ((CurrentFrame>frameLast)&&(frameLast>=0)))
-        {
-            if(bidirectional)
+    {
+        if(reverce)
+        { // Reverce animation
+            CurrentFrame--;
+            if(CurrentFrame<frameFirst)
             {
-                reverce=!reverce; // change direction on last frame
-                CurrentFrame-=2;
+                if(bidirectional)
+                {
+                    reverce=!reverce; // change direction on first frame
+                    CurrentFrame+=2;
+
+                    if( ((CurrentFrame>=framesCount)&&(frameLast<0)) ||
+                        ((CurrentFrame>frameLast)&&(frameLast>=0)) )
+                    {
+                        // Return to last frame;
+                        if(frameLast<0)
+                            CurrentFrame=framesCount-1;
+                        else
+                            CurrentFrame=frameLast;
+                    }
+                }
+                else
+                {
+                    // Return to last frame;
+                    if(frameLast<0)
+                        CurrentFrame=framesCount-1;
+                    else
+                        CurrentFrame=frameLast;
+                }
             }
-            else
+        }
+        else
+        { // Direct animation
+            CurrentFrame++;
+            if(((CurrentFrame>=framesCount)&&(frameLast<0))||
+                    ((CurrentFrame>frameLast)&&(frameLast>=0)))
             {
-                CurrentFrame=frameFirst; // Return to first frame;
+                if(bidirectional)
+                {
+                    reverce=!reverce; // change direction on last frame
+                    CurrentFrame-=2;
+                    if( CurrentFrame < 0 )
+                        CurrentFrame = 0;
+                }
+                else
+                {
+                    CurrentFrame=frameFirst; // Return to first frame;
+                }
             }
         }
     }
-
     frame_rect.setRect(0, frameHeight*CurrentFrame, frameWidth, frameHeight);
 }
 
@@ -258,6 +315,16 @@ void SimpleAnimator::nextFrame()
 
 void SimpleAnimator::setFrame(int y)
 {
+    if(frame_sequance_enabled)
+    {
+        if(y<0) y = 0;
+        if(!frame_sequance.isEmpty())
+        {
+            if(y >= frame_sequance.size()) y = 0;
+            frame_sequance_cur = y;
+            y = frame_sequance[y];
+        }
+    }
     //if(y>=frames.size()) y= frameFirst;
     if(y>=framesCount) y = frameFirst;
     //if(y<frameFirst) y = (frameLast<0)? frames.size()-1 : frameLast;

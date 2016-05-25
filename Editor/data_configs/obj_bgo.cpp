@@ -126,7 +126,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
         {
             addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
             valid=false;
-            goto abort;
+            //goto abort;
         }
     }
     /***************Load image*end***************/

@@ -184,7 +184,7 @@ void SimpleAnimator::nextFrame()
         frame_sequance_cur++;
         if(frame_sequance_cur<0)
             frame_sequance_cur=0;
-        if(frame_sequance_cur>=frame_sequance.size())
+        if(frame_sequance_cur >= frame_sequance.size())
         {
             frame_sequance_cur=0;
             if(onceMode)

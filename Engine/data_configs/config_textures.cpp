@@ -58,8 +58,8 @@ long  ConfigManager::getBlockTexture(long blockID)
         //Also, load and init animator
         if(blkSetup->animated)
         {
-            int frameFirst;
-            int frameLast;
+            int frameFirst = 0;
+            int frameLast  = -1;
 
             switch(blkSetup->algorithm)
             {
@@ -69,18 +69,6 @@ long  ConfigManager::getBlockTexture(long blockID)
                     frameLast = 0;
                     break;
                 }
-                case 3: //Player's character block
-                {
-                    frameFirst = 0;
-                    frameLast = 1;
-                    break;
-                }
-                case 4: //Player's character switch
-                {
-                    frameFirst = 0;
-                    frameLast = 3;
-                    break;
-                }
                 default: //Default block
                 {
                     frameFirst = 0;
@@ -88,7 +76,6 @@ long  ConfigManager::getBlockTexture(long blockID)
                     break;
                 }
             }
-
 
             SimpleAnimator animator(
                             true,

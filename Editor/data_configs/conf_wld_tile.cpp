@@ -115,7 +115,7 @@ void dataconfigs::loadWorldTiles()
         if(!errStr.isEmpty())
         {
             addError(QString("TILE-%1 %2").arg(i).arg(errStr));
-            goto skipTile;
+            //goto skipTile;
         }
         /***************Load image*end***************/
 
@@ -140,7 +140,7 @@ void dataconfigs::loadWorldTiles()
         stile.id = i;
         main_wtiles.storeElement(i, stile);
 
-     skipTile:
+     //skipTile:
         tileset.endGroup();
 
         if( tileset.status() != QSettings::NoError )

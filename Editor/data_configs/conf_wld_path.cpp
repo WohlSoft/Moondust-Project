@@ -115,7 +115,7 @@ void dataconfigs::loadWorldPaths()
         if(!errStr.isEmpty())
         {
             addError(QString("PATH-%1 %2").arg(i).arg(errStr));
-            goto skipPath;
+            //goto skipPath;
         }
         /***************Load image*end***************/
 
@@ -136,7 +136,7 @@ void dataconfigs::loadWorldPaths()
         sPath.id = i;
         main_wpaths.storeElement(i, sPath);
 
-    skipPath:
+    //skipPath:
         pathset.endGroup();
 
         if( pathset.status() != QSettings::NoError )

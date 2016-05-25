@@ -146,7 +146,7 @@ void dataconfigs::loadWorldLevels()
         if(!errStr.isEmpty())
         {
             addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
-            goto skipLevel;
+            //goto skipLevel;
         }
         /***************Load image*end***************/
 
@@ -168,7 +168,7 @@ void dataconfigs::loadWorldLevels()
         slevel.id = i;
         main_wlevels.storeElement(i, slevel);
 
-    skipLevel:
+    //skipLevel:
         levelset.endGroup();
 
         if( levelset.status() != QSettings::NoError )

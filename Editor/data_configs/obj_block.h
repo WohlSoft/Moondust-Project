@@ -77,9 +77,8 @@ struct obj_block
     bool bounce;
     bool hitable;
     unsigned long transfororm_on_hit_into;
-    unsigned long algorithm;
 
-    unsigned int view;
+    unsigned int  view;
     bool animated;
     bool animation_rev; //Reverse animation
     bool animation_bid; //Bidirectional animation

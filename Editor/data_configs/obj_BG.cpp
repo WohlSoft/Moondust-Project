@@ -100,12 +100,12 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 {
                     addError(QString("%1 %2").arg(section).arg(errStr));
                     valid=false;
-                    goto abort;
+                    //goto abort;
                 }
             } else {
                 addError(QString("%1 Image filename isn't defined").arg(section));
                 valid=false;
-                goto abort;
+                //goto abort;
             }
         }
 

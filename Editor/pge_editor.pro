@@ -174,13 +174,8 @@ SOURCES += main.cpp\
     common_features/timecounter.cpp \
     common_features/util.cpp \
     common_features/resizer/item_resizer.cpp \
-    data_configs/conf_lvl_bgo.cpp \
-    data_configs/conf_lvl_bkgrd.cpp \
-    data_configs/conf_lvl_block.cpp \
-    data_configs/conf_lvl_npc.cpp \
     data_configs/conf_music.cpp \
     data_configs/conf_sound.cpp \
-    data_configs/conf_tilesets.cpp \
     data_configs/conf_wld_level.cpp \
     data_configs/conf_wld_path.cpp \
     data_configs/conf_wld_scene.cpp \
@@ -429,7 +424,13 @@ SOURCES += main.cpp\
     editing/_scenes/world/edit_modes/wld_mode_circle.cpp \
     main_window/dock/variables_box.cpp \
     main_window/script/script_editor.cpp \
-    common_features/animation_timer.cpp
+    common_features/animation_timer.cpp \
+    common_features/number_limiter.cpp \
+    data_configs/obj_block.cpp \
+    data_configs/obj_bgo.cpp \
+    data_configs/obj_BG.cpp \
+    data_configs/obj_npc.cpp \
+    data_configs/obj_tilesets.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -631,7 +632,8 @@ HEADERS  += defines.h \
     editing/_scenes/world/edit_modes/wld_mode_circle.h \
     main_window/dock/variables_box.h \
     main_window/script/script_editor.h \
-    common_features/animation_timer.h
+    common_features/animation_timer.h \
+    common_features/number_limiter.h
 
 FORMS    += \
     common_features/crashhandler.ui \

@@ -66,12 +66,11 @@ void obj_block::copyTo(obj_block &block)
     block.bounce=bounce;
     block.hitable=hitable;
     block.transfororm_on_hit_into=transfororm_on_hit_into;
-    block.algorithm=algorithm;
 
     block.view=view;
     block.animated=animated;
-    block.animation_rev=animation_rev; //Reverse animation
-    block.animation_bid=animation_bid; //Bidirectional animation
+    block.animation_rev = animation_rev; //Reverse animation
+    block.animation_bid = animation_bid; //Bidirectional animation
     block.frames=frames;
     block.framespeed=framespeed;
 
@@ -135,7 +134,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
         {
             valid=false;
             addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
-            goto abort;
+            //goto abort;
         }
         /***************Load image*end***************/
 
@@ -184,7 +183,6 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
         //sblock.bounce =                 setup->value("bounce", "0").toBool();
         //sblock.hitable =                setup->value("hitable", "0").toBool();
         //sblock.transfororm_on_hit_into= setup->value("transform-onhit-into", "2").toInt();
-        sblock.algorithm =              setup->value("algorithm", (merge_with? (int)merge_with->algorithm : 2)).toInt();
 
         tmpStr = setup->value("view", "0").toString();
         if(tmpStr!="0")
@@ -210,9 +208,28 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
                                                 /sblock.frames)
                                           : sblock.image.height());
 
-        tmpStr = setup->value("frame-sequence", "").toString();
-        if(tmpStr.isEmpty() && merge_with)
-            sblock.frame_sequence = merge_with->frame_sequence;
+        {//Retreiving frame sequence from playable character switch/filter blocks
+            tmpStr.clear();
+            bool playerSwitch = setup->value("player-switch-button", false).toBool();
+            bool playerFilter = setup->value("player-filter-block", false).toBool();
+            if(playerSwitch)
+            {
+                tmpStr = setup->value("player-switch-frames-false", "").toString();
+            }
+            else if(playerFilter)
+            {
+                tmpStr = setup->value("player-filter-frames-false", "").toString();
+            } else {
+                tmpStr = setup->value("frame-sequence", "").toString();
+            }
+        }
+
+        sblock.frame_sequence.clear();
+        if(tmpStr.isEmpty())
+        {
+            if(merge_with)
+                sblock.frame_sequence = merge_with->frame_sequence;
+        }
         else
             util::CSV2IntArr(tmpStr, sblock.frame_sequence);
 

@@ -221,46 +221,18 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             custom=true;
         }
 
-        int frameFirst;
-        int frameLast;
-
-        switch(t_block.algorithm)
-        {
-            case 1: // Invisible block
-            {
-                frameFirst = 5;
-                frameLast = 6;
-                break;
-            }
-            case 3: //Player's character block
-            {
-                frameFirst = 0;
-                frameLast = 1;
-                break;
-            }
-            case 4: //Player's character switch
-            {
-                frameFirst = 0;
-                frameLast = 3;
-                break;
-            }
-            default: //Default block
-            {
-                frameFirst = 0;
-                frameLast = -1;
-                break;
-            }
-        }
-
         SimpleAnimator * aniBlock = new SimpleAnimator(
                     ((t_block.cur_image->isNull())?
                             uBlockImg : *t_block.cur_image),
                               t_block.animated,
                               t_block.frames,
-                              t_block.framespeed, frameFirst,frameLast,
+                              t_block.framespeed, 0, -1,
                               t_block.animation_rev,
                               t_block.animation_bid
                               );
+
+        if(!t_block.frame_sequence.isEmpty())
+            aniBlock->setFrameSequance(t_block.frame_sequence);
 
         t_block.animator_id = animates_Blocks.size();
         animates_Blocks.push_back( aniBlock );

@@ -17,6 +17,8 @@
  */
 
 #include <common_features/graphics_funcs.h>
+#include <common_features/number_limiter.h>
+#include <common_features/util.h>
 #include <main_window/global_settings.h>
 
 #include "data_configs.h"
@@ -221,8 +223,8 @@ void dataconfigs::loadLevelNPC()
         emit progressValue(i);
         QString errStr;
 
-        npcset.beginGroup( QString("npc-"+QString::number(i)) );
-        snpc.name =         npcset.value("name", "").toString();
+        npcset.beginGroup( QString("npc-%1").arg(i) );
+        snpc.name =         npcset.value("name", QString("npc-%1").arg(i)).toString();
         if(snpc.name.isEmpty())
         {
             addError(QString("NPC-%1 Item name isn't defined").arg(i));
@@ -242,7 +244,7 @@ void dataconfigs::loadLevelNPC()
         if(!errStr.isEmpty())
         {
             addError(QString("NPC-%1 %2").arg(i).arg(errStr));
-            goto skipNPC;
+            //goto skipNPC;
         }
         /***************Load image*end***************/
 
@@ -251,10 +253,12 @@ void dataconfigs::loadLevelNPC()
         snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
 
         //Physics
-        snpc.height =               npcset.value("fixture-height", "0").toInt();//Leaved for compatibility
-        snpc.height =               npcset.value("physical-height", snpc.height).toInt();
-        snpc.width =                npcset.value("fixture-width", "0").toInt();//Leaved for compatibility
-        snpc.width =                npcset.value("physical-width", snpc.width).toInt();
+        snpc.height =               npcset.value("fixture-height", "0").toUInt();//Kept for compatibility
+        snpc.height =               npcset.value("physical-height", snpc.height).toUInt();
+        NumberLimiter::apply(snpc.height, 1u);
+        snpc.width =                npcset.value("fixture-width", "0").toUInt();//Kept for compatibility
+        snpc.width =                npcset.value("physical-width", snpc.width).toUInt();
+        NumberLimiter::apply(snpc.width, 1u);
         snpc.block_npc =            npcset.value("block-npc", "0").toBool();
         snpc.block_npc_top =        npcset.value("block-npc-top", "0").toBool();
         snpc.block_player =         npcset.value("block-player", "0").toBool();
@@ -270,7 +274,9 @@ void dataconfigs::loadLevelNPC()
         snpc.gfx_offset_x = npcset.value("gfx-offset-x", "0").toInt();
         snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
         snpc.framestyle = npcset.value("frame-style", "0").toInt();
-        snpc.frames = npcset.value("frames", "1").toInt();
+        NumberLimiter::apply(snpc.framestyle, 0, 4);
+        snpc.frames = npcset.value("frames", "1").toUInt();
+        NumberLimiter::apply(snpc.frames, 1u);
 
         /****************Calculating of default frame height******************/
         defGFX_h = snpc.image.height() / (snpc.frames*int(powl(2, snpc.framestyle)));
@@ -278,9 +284,11 @@ void dataconfigs::loadLevelNPC()
 
         snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", "1").toBool();
         snpc.gfx_h =                npcset.value("gfx-height", QString::number(defGFX_h) ).toInt();
+        NumberLimiter::apply(snpc.gfx_h, 1);
         snpc.gfx_w =                npcset.value("gfx-width", QString::number(snpc.image.width()) ).toInt();
-        snpc.framespeed =           npcset.value("frame-speed", "128").toInt();
-        snpc.display_frame =        npcset.value("display-frame", "0").toInt();
+        NumberLimiter::apply(snpc.gfx_w, 1);
+        snpc.framespeed =           npcset.value("frame-speed", "128").toUInt();
+        snpc.display_frame =        npcset.value("display-frame", "0").toUInt();
         snpc.foreground =           npcset.value("foreground", "0").toBool();
         snpc.background =           npcset.value("background", "0").toBool();
         snpc.ani_directed_direct =  npcset.value("animation-directed-direction", "0").toBool();
@@ -297,36 +305,23 @@ void dataconfigs::loadLevelNPC()
         /*************Build custom animation settings***************/
         snpc.frames_left.clear();
         snpc.frames_right.clear();
-        if(snpc.custom_ani_alg==2)
+        if( snpc.custom_ani_alg == 2 )
         {
-            QStringList tmp;
             QString common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
-
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, QString("Frames Sequance %1").arg(common) );
-            #endif
-
-            tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
-            foreach(QString x, tmp)
-                snpc.frames_left.push_back(x.toInt());
-
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_left.size()) );
-            #endif
-
-            tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
-            foreach(QString x, tmp)
-                snpc.frames_right.push_back(x.toInt());
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_right.size()) );
-            #endif
+            QString tmp;
+            tmp = npcset.value("ani-frames-left", common).toString().remove(' '); //left direction
+            util::CSV2IntArr(tmp, snpc.frames_left);
+            tmp = npcset.value("ani-frames-right", common).toString().remove(' '); //right direction
+            util::CSV2IntArr(tmp, snpc.frames_right);
         }
         /*************Build custom animation settings**end**********/
 
 
         /***************GRID And snap*********************************/
         snpc.grid = npcset.value("grid", default_grid).toInt();
+        NumberLimiter::apply(snpc.grid, 1);
         snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
+        NumberLimiter::apply(snpc.grid_attach_style, 0);
 
         /***************Calculate the grid offset********************/
         if(((int)snpc.width>=(int)snpc.grid))
@@ -334,7 +329,8 @@ void dataconfigs::loadLevelNPC()
         else
             snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
 
-        if(snpc.grid_attach_style==1) snpc.grid_offset_x += (snpc.grid/2);
+        if(snpc.grid_attach_style==1)
+            snpc.grid_offset_x += (snpc.grid/2);
 
         snpc.grid_offset_y = -snpc.height % snpc.grid;
         /***************Calculate the grid offset********************/
@@ -344,8 +340,6 @@ void dataconfigs::loadLevelNPC()
         snpc.grid_offset_y = npcset.value("grid-offset-y", snpc.grid_offset_y).toInt();
             /*************Manual redefinition of the grid offset if not set******************/
         /***************GRID And snap***end***************************/
-
-
 
 
         snpc.special_option =   npcset.value("have-special", "0").toBool();
