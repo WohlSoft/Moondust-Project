@@ -44,6 +44,25 @@ function thwomp:onActivated()
     self:initProps()
 end
 
+function thwomp:smokeEffect()
+    local effect = EffectDef();
+        effect.id = 10
+        effect.startX = self.npc_obj.center_x - self.npc_obj.width/4.0
+        effect.startY = self.npc_obj.bottom
+        effect.gravity = 0.0;
+        effect.startDelay = 0.0;
+        effect.maxVelX = 25.0;
+        effect.maxDelay = 0;
+        effect.loopsCount = 1;
+        effect.framespeed = 125;
+        effect.velocityX = -3.0;
+        effect.velocityY = 0.0;
+    Effect.runEffect(effect, true);
+        effect.startX = self.npc_obj.center_x + self.npc_obj.width/4.0
+        effect.velocityX = 3.0;
+    Effect.runEffect(effect, true);
+end
+
 function thwomp:onLoop(tickTime)
 
     if(self.is180==true)then
@@ -77,6 +96,7 @@ function thwomp:onLoop(tickTime)
             Audio.playSound(self.def_thwompSoundID)
             self.npc_obj.speedY = 0
             self.cur_mode = AI_WAITING_ON_GROUND
+            self:smokeEffect()
         end
     elseif(self.cur_mode == AI_WAITING_ON_GROUND)then
         if(self.def_wait_ticks > self.cur_wait_ticks)then
