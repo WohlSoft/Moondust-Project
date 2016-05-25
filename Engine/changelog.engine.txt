@@ -6,6 +6,7 @@
 - Added Paths functions to get full path to media folders
 - Added event to draw HUD with binding of the camera metricks and player state
 - Added binding to playOnceAnimation for playable character API
+- Added support of more advanced effects for lua API
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
