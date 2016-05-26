@@ -514,17 +514,17 @@ static int detect_imf(SDL_RWops* in, Sint64 start)
 {
     Uint16 chunksize, buff, i=42;
     Uint32 sum1 = 0,  sum2=0;
-    char word[2];
+    Uint16 word;
 
     if(!in)
         return 0;
 
-    if(SDL_RWread(in, word, 1, 2) != 2)
+    if(SDL_RWread(in, &word, 1, 2) != 2)
     {
         SDL_RWseek(in, start, SEEK_SET);
         return 0;
     }
-    chunksize = SDL_SwapLE16(*((Uint16*)word));
+    chunksize = SDL_SwapLE16(word);
     if ((chunksize == 0) || (chunksize & 3))
     {
 
@@ -533,19 +533,19 @@ static int detect_imf(SDL_RWops* in, Sint64 start)
 
     while(i > 0)
     {
-        if(SDL_RWread(in, word, 1, 2) != 2)
+        if(SDL_RWread(in, &word, 1, 2) != 2)
         {
             SDL_RWseek(in, start, SEEK_SET);
             break;
         }
-        buff = SDL_SwapLE16(*((Uint16*)word));
+        buff = SDL_SwapLE16(word);
         sum1 += buff;
-        if(SDL_RWread(in, word, 1, 2) != 2)
+        if(SDL_RWread(in, &word, 1, 2) != 2)
         {
             SDL_RWseek(in, start, SEEK_SET);
             break;
         }
-        buff = SDL_SwapLE16(*((Uint16*)word));
+        buff = SDL_SwapLE16(word);
         sum2 += buff;
         i--;
     }

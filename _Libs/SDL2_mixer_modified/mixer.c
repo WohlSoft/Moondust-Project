@@ -511,7 +511,7 @@ int SDLCALLCC Mix_OpenAudioDevice(int frequency, Uint16 format, int nchannels, i
 }
 
 /* Open the mixer with a certain desired audio format */
-int Mix_OpenAudio(int frequency, Uint16 format, int nchannels, int chunksize)
+int SDLCALLCC Mix_OpenAudio(int frequency, Uint16 format, int nchannels, int chunksize)
 {
     return Mix_OpenAudioDevice(frequency, format, nchannels, chunksize,
 			       NULL, SDL_AUDIO_ALLOW_ANY_CHANGE);
@@ -1550,12 +1550,12 @@ int SDLCALLCC Mix_UnregisterAllEffects(int channel)
     return(retval);
 }
 
-void SDLCALLCC Mix_LockAudio()
+void Mix_LockAudio()
 {
     SDL_LockAudioDevice(audio_device);
 }
 
-void SDLCALLCC Mix_UnlockAudio()
+void Mix_UnlockAudio()
 {
     SDL_UnlockAudioDevice(audio_device);
 }

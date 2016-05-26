@@ -449,6 +449,10 @@ Public Declare Sub MIX_ADLMIDI_setSetDefaults Lib "SDL2MixerVB.dll" ()
 ' Allows you to toggle MIDI Device (change applying only on reopening of MIDI file)
 Public Declare Function MIX_SetMidiDevice Lib "SDL2MixerVB.dll" (ByVal MIDIDevice As Mix_MIDI_Device) As Long
 
+'void MIX_SetLockMIDIArgs(int lock_midiargs);
+'Allows to lock/unlock ADLMIDI flags capturing from Mix_LoadMUS function
+Public Declare Function MIX_SetLockMIDIArgs Lib "SDL2MixerVB.dll" (ByVal lockMidiargs As Long)
+
 '/*****************SDL RWops AIP*****************/
 
 'SDL_RWops * SDL_RWFromFileVB6(const char *file, const char *mode)
