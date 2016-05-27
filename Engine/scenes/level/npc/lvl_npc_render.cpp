@@ -29,6 +29,7 @@ void LVL_Npc::render(double camX, double camY)
     if(isGenerator) return;
     if((!isActivated)&&(!warpSpawing)) return;
 
+    bool doDraw=true;
     AniPos x(0,1);
     if(animated)
     {
@@ -51,19 +52,38 @@ void LVL_Npc::render(double camX, double camY)
                    );
     if(isWarping)
     {
-        if(warpSpriteOffset>=1.0)
+        if(warpSpriteOffset >= 1.0)
             return;
+        PGE_RectF  bodyPos = posRect;
+                   bodyPos.setPos(round(bodyPos.x()-camX), round(bodyPos.y()-camY));
+        PGE_RectF &textPos = npc;
         //     Exit direction: [1] down  [3] up  [4] left  [2] right
         // Entrance direction: [3] down, [1] up, [2] left, [4] right
-        switch(warpDirectO)
+        switch( warpDirectO )
         {
             case WARP_LEFT://Left entrance, right Exit
                 {
-                    float wOfs = offsetX/warpFrameW;//Relative X offset
-                    float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
-                    tPos.setLeft( tPos.left()+wOfs+(warpSpriteOffset*wOfsF) );
-                    npc.setLeft( npc.left()+offsetX );
-                    npc.setRight( npc.right()-(warpSpriteOffset * frameSize.w()) );
+                    //Offset at right side, crop left side
+                    double cropLeft = 0.0;
+                    double offset = (warpResizedBody?double(setup->width) : bodyPos.width())*double(warpSpriteOffset);
+                    bodyPos.setRight( bodyPos.right()-offset );
+                    textPos.setPos(textPos.x()-offset, textPos.y());
+                    if(textPos.left() < bodyPos.left())
+                    {
+                        cropLeft = bodyPos.left()-textPos.left();
+                        textPos.setLeft(bodyPos.left());
+                    }
+                    double wOfs = cropLeft/double(warpFrameW);//Relative X offset
+                    //double wOfsF = double(frameSize.w())/double(warpFrameW); //Relative hitbox width
+                    tPos.setLeft( tPos.left()+wOfs );
+                    if( textPos.right() <= bodyPos.left() )
+                        doDraw = false;
+//                    float wOfs = offsetX/warpFrameW;//Relative X offset
+//                    float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
+//                    tPos.setLeft( tPos.left()+wOfs+(warpSpriteOffset*wOfsF) );
+//                    npc.setLeft( npc.left()+offsetX );
+//                    npc.setRight( npc.right()-(warpSpriteOffset * frameSize.w()) );
+
                 }
                 break;
             case WARP_TOP://Up entrance, down exit
@@ -120,15 +140,18 @@ void LVL_Npc::render(double camX, double camY)
         }
     }
 
-    GlRenderer::renderTexture(&texture,
-                              npc.x(),
-                              npc.y(),
-                              npc.width(),
-                              npc.height(),
-                              tPos.top(),
-                              tPos.bottom(),
-                              tPos.left(),
-                              tPos.right());
+    if(doDraw)
+    {
+        GlRenderer::renderTexture(&texture,
+                                  npc.x(),
+                                  npc.y(),
+                                  npc.width(),
+                                  npc.height(),
+                                  tPos.top(),
+                                  tPos.bottom(),
+                                  tPos.left(),
+                                  tPos.right());
+    }
 
     if(PGE_Window::showDebugInfo)
     {
