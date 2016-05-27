@@ -48,7 +48,7 @@ bool ConfigManager::loadLevelEffects()
     lvl_effects_indexes.clear();   //Clear old
 
     effectset.beginGroup("effects-main");
-        effects_total = effectset.value("total", "0").toInt();
+        effects_total = effectset.value("total", 0).toInt();
         //Default effects
         g_setup_effects.m_default.fill("default", &effectset);
         g_setup_effects.m_smoke.fill("smoke", &effectset);

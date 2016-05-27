@@ -110,26 +110,72 @@ void LVL_Npc::kill(int damageReason)
 
     switch(damageReason)
     {
+        case DAMAGE_NOREASON:
+            if(setup->effect_1 > 0)
+            {
+                _scene->launchStaticEffectC(setup->effect_1,
+                                            posCenterX(),
+                                            posCenterY(),
+                                            1, 0, 0, 0, 0,
+                                            _direction);
+            }
+        break;
         case DAMAGE_STOMPED:
-            if(setup->effect_1>0)
-                _scene->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 0, 500, 0, 0, 0, _direction);
-            break;
+            if(setup->effect_1 > 0)
+            {
+                _scene->launchStaticEffectC(setup->effect_1,
+                                            posCenterX(),
+                                            posCenterY(),
+                                            0, 500, 0, 0, 0,
+                                            _direction);
+            }
+        break;
+        case DAMAGE_TAKEN:
+            if(setup->effect_1 > 0)
+            {
+                _scene->launchStaticEffectC(setup->effect_1,
+                                            posCenterX(),
+                                            posCenterY(),
+                                            1, 0, 0, 0, 0,
+                                            _direction);
+            }
+        break;
         case DAMAGE_LAVABURN:
             if(ConfigManager::g_setup_npc.eff_lava_burn>0)
             {
                 _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
-                                                  posCenterX(),
-                                                  posCenterY(), 1, 0, 0, 0, 0, _direction);
+                                            posCenterX(),
+                                            posCenterY(),
+                                            1, 0, 0, 0, 0,
+                                            _direction);
             }
-            break;
-        case DAMAGE_PITFALL: break;
-        default:
+        break;
+        case DAMAGE_PITFALL:
+            //Don't spawn effects
+        break;
+        case DAMAGE_BY_KICK:
             if( setup->effect_2 > 0 )
-                _scene->launchStaticEffectC(setup->effect_2, posCenterX(), posCenterY(), 0, 5000, -3.0f*_direction, -6.0f, 18.0f, _direction);
-            break;
+            {
+                _scene->launchStaticEffectC(setup->effect_2,
+                                            posCenterX(),
+                                            posCenterY(),
+                                            0, 5000, -3.0f*_direction, -6.0f, 18.0f,
+                                            _direction);
+            }
+        break;
+        //case DAMAGE_BY_PLAYER_ATTACK:
+        default:
+            {
+                SpawnEffectDef eff = ConfigManager::g_setup_effects.m_smoke;
+                eff.startX = posCenterX();
+                eff.startY = posCenterY();
+                eff.direction = _direction;
+                _scene->launchEffect(eff, true);
+            }
+        break;
     }
 
-    if(damageReason!=DAMAGE_LAVABURN)
+    if(damageReason != DAMAGE_LAVABURN)
     {
         if(setup->death_sound_id==0)
             PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
