@@ -34,7 +34,7 @@ void LVL_Npc::render(double camX, double camY)
     if(animated)
     {
         if(is_shared_animation)
-            x=ConfigManager::Animator_NPC[animator_ID].image(_direction);
+            x=ConfigManager::Animator_NPC[int(animator_ID)].image(_direction);
         else
             x=animator.image(_direction);
     }
@@ -70,69 +70,67 @@ void LVL_Npc::render(double camX, double camY)
                     textPos.setPos(textPos.x()-offset, textPos.y());
                     if(textPos.left() < bodyPos.left())
                     {
-                        cropLeft = bodyPos.left()-textPos.left();
+                        cropLeft = fabs(bodyPos.left()-textPos.left());
                         textPos.setLeft(bodyPos.left());
                     }
                     double wOfs = cropLeft/double(warpFrameW);//Relative X offset
-                    //double wOfsF = double(frameSize.w())/double(warpFrameW); //Relative hitbox width
                     tPos.setLeft( tPos.left()+wOfs );
                     if( textPos.right() <= bodyPos.left() )
                         doDraw = false;
-//                    float wOfs = offsetX/warpFrameW;//Relative X offset
-//                    float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
-//                    tPos.setLeft( tPos.left()+wOfs+(warpSpriteOffset*wOfsF) );
-//                    npc.setLeft( npc.left()+offsetX );
-//                    npc.setRight( npc.right()-(warpSpriteOffset * frameSize.w()) );
-
                 }
                 break;
             case WARP_TOP://Up entrance, down exit
                 {
-                    float hOfs = offsetY/warpFrameH;//Relative Y offset
-                    float hOfsF = frameSize.h()/warpFrameH; //Relative hitbox Height
-                    tPos.setTop(tPos.top()+hOfs+(warpSpriteOffset*hOfsF));
-                    npc.setTop( npc.top()+offsetY );
-                    npc.setBottom( npc.bottom()-(warpSpriteOffset*frameSize.h()) );
+                    //Offset at bottom side, crop top side
+                    double cropTop = 0.0;
+                    double offset = (warpResizedBody?double(setup->height) : bodyPos.height())*double(warpSpriteOffset);
+                    bodyPos.setBottom( bodyPos.bottom()-offset );
+                    textPos.setPos(textPos.x(), textPos.y()-offset);
+                    if(textPos.top() < bodyPos.top())
+                    {
+                        cropTop = fabs(bodyPos.top()-textPos.top());
+                        textPos.setTop(bodyPos.top());
+                    }
+                    double wOfs = ( cropTop/double(warpFrameH) ) * (double(texture.frame_h)/double(texture.h));//Relative X offset
+                    tPos.setTop( tPos.top()+wOfs );
+                    if( textPos.bottom() <= bodyPos.top() )
+                        doDraw = false;
                 }
                 break;
             case WARP_RIGHT://right emtramce. left exit
                 {
-                    float wOfs =  offsetX/warpFrameW;               //Relative X offset
-                    float fWw =   1.0;   //Relative width of frame
-                    float wOfHB = frameSize.w()/warpFrameW;                 //Relative width of hitbox
-                    float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
-                    if(!warpResizedBody)
+                    //Offset at left side, crop right side
+                    double cropRight = 0.0;
+                    double offset = (warpResizedBody?double(setup->width) : bodyPos.width())*double(warpSpriteOffset);
+                    bodyPos.setLeft( bodyPos.left()+offset );
+                    textPos.setPos(textPos.x()+(warpResizedBody ? 0.0 : offset), textPos.y());
+                    if(textPos.right() > bodyPos.right())
                     {
-                        tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
-                        npc.setLeft( npc.left()+(warpSpriteOffset*frameSize.w()) );
-                        npc.setRight( npc.right()-(wWAbs-offsetX-frameSize.w()) );
+                        cropRight = fabs(textPos.right()-bodyPos.right());
+                        textPos.setRight(bodyPos.right());
                     }
-                    else
-                    {
-                        tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
-                        npc.setLeft( npc.left()+offsetX );
-                        npc.setRight( npc.right()-(wWAbs-offsetX-frameSize.w()*(1.0-warpSpriteOffset) ) );
-                    }
+                    double wOfs = cropRight/double(warpFrameW);//Relative X offset
+                    tPos.setRight( tPos.right()-wOfs );
+                    if( textPos.left() >= bodyPos.right() )
+                        doDraw = false;
                 }
                 break;
             case WARP_BOTTOM://down entrance, up exit
                 {
-                    float hOfs =  offsetY/warpFrameH;               //Relative Y offset
-                    float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
-                    float hOfHB = frameSize.h()/warpFrameH;                //Relative height of hitbox
-                    float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
-                    if(!warpResizedBody)
+                    //Offset at top side, crop bottop side
+                    double cropBottom = 0.0;
+                    double offset = (warpResizedBody?double(setup->height) : bodyPos.height())*double(warpSpriteOffset);
+                    bodyPos.setTop( bodyPos.top()+offset );
+                    textPos.setPos(textPos.x(), textPos.y()+(warpResizedBody ? 0.0 : offset));
+                    if(textPos.bottom() > bodyPos.bottom())
                     {
-                        tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
-                        npc.setTop( npc.top()+(warpSpriteOffset*frameSize.h()) );
-                        npc.setBottom( npc.bottom()-(hHAbs-offsetY-frameSize.h()) );
+                        cropBottom  = fabs(textPos.bottom()-bodyPos.bottom());
+                        textPos.setBottom(bodyPos.bottom());
                     }
-                    else
-                    {
-                        tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
-                        npc.setTop( npc.top()+offsetY );
-                        npc.setBottom( npc.bottom()-(hHAbs-offsetY-frameSize.h()*(1.0-warpSpriteOffset) ) );
-                    }
+                    double wOfs = ( cropBottom/double(warpFrameH) ) * (double(texture.frame_h)/double(texture.h));//Relative X offset
+                    tPos.setBottom( tPos.bottom()-wOfs );
+                    if( textPos.top() >= bodyPos.bottom() )
+                        doDraw = false;
                 }
                 break;
             default:
@@ -143,14 +141,14 @@ void LVL_Npc::render(double camX, double camY)
     if(doDraw)
     {
         GlRenderer::renderTexture(&texture,
-                                  npc.x(),
-                                  npc.y(),
-                                  npc.width(),
-                                  npc.height(),
-                                  tPos.top(),
-                                  tPos.bottom(),
-                                  tPos.left(),
-                                  tPos.right());
+                                  float(npc.x()),
+                                  float(npc.y()),
+                                  float(npc.width()),
+                                  float(npc.height()),
+                                  float(tPos.top()),
+                                  float(tPos.bottom()),
+                                  float(tPos.left()),
+                                  float(tPos.right()));
     }
 
     if(PGE_Window::showDebugInfo)
@@ -173,8 +171,8 @@ void LVL_Npc::render(double camX, double camY)
                                .arg(collided_right.size())
                                .arg(collided_bottom.size())
                                .arg(collision_speed_add.size())
-                               .arg(warpingInfo)
-                               , round(20+posX()-camX), -50+round(posY()-camY), 3);
+                               .arg(warpingInfo),
+                               int(round(20+posX()-camX)), -50+int(round(posY()-camY)), 3);
     }
 }
 

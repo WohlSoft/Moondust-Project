@@ -7,6 +7,7 @@
 - Added event to draw HUD with binding of the camera metricks and player state
 - Added binding to playOnceAnimation for playable character API
 - Added support of more advanced effects for lua API
+- Fixed sprite warping for NPCs, now there are correctly warping from warp generators with any sizes of sprites
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
