@@ -553,6 +553,7 @@ static int detect_imf(SDL_RWops* in, Sint64 start)
     return (sum1 > sum2);
 }
 
+#if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
 static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
 {
     //if first 4 bytes are zeros
@@ -620,6 +621,7 @@ static int detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start)
     SDL_RWseek(src, start, RW_SEEK_SET);
     return 1;
 }
+#endif
 
 
 /* MUS_MOD can't be auto-detected. If no other format was detected, MOD is
@@ -785,10 +787,12 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MOD;
     }
 
+    #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
     /* Detect MP3 format [needs scanning of bigger part of the file] */
     if(detect_mp3(extramagic, src, start)) {
         return MUS_MP3;
     }
+    #endif
     /* Detect id Software Music Format file */
     if(detect_imf(src, start)) {
         return MUS_MID;
