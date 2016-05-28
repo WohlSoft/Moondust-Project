@@ -34,10 +34,15 @@ function platform:initProps()
     self.oldSpeedX = 0
     self.oldSpeedY = 0
     self.check_time_left = CHECK_DELAY
+    self.watchForMaxHeight = true --Until path will be catched
+    self.maxHeight = self.npc_obj.y
+    self.RecentMaxHeight = self.npc_obj.y
 end
 
 function platform:__init(npc_obj)
     self.npc_obj = npc_obj
+    self.npc_obj.maxVelX = 0.0
+    self.npc_obj.maxVelY = 0.0
     self.contacts = npc_obj:installContactDetector()
     self:initProps()
 end
@@ -181,10 +186,11 @@ function platform:onLoop(tickTime)
             end
         end
 
-        if(self.check_time_left>=0)then
-            self.check_time_left=self.check_time_left-tickTime
+        if( self.check_time_left>=0 )then
+            self.check_time_left = self.check_time_left-tickTime
         else
-            self.check_time_left=CHECK_DELAY
+            -- self.check_time_left=CHECK_DELAY
+            local RecentDirection = self.direction
             if(self.contacts:detected())then
                 local bgos= self.contacts:getBGOs()
                 self.found=false
@@ -266,7 +272,7 @@ function platform:onLoop(tickTime)
                                 self.direction = DIR_UP_RIGHT
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_HORIZONTAL)then
+                        elseif(Blk.id==RAIL_HORIZONTAL and self.direction~=DIR_UP and self.direction~=DIR_DOWN)then
                             self.found=true
                             if(self.npc_obj.speedX>0)then
                                 self.direction=DIR_RIGHT
@@ -274,7 +280,7 @@ function platform:onLoop(tickTime)
                                 self.direction=DIR_LEFT
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_VERTICAL)then
+                        elseif(Blk.id==RAIL_VERTICAL and self.direction~=DIR_LEFT and self.direction~=DIR_RIGHT)then
                             self.found=true
                             if(self.npc_obj.speedY>0)then
                                 self.direction=DIR_DOWN
@@ -283,7 +289,7 @@ function platform:onLoop(tickTime)
                             end
                             self:lookForCorrection(Blk)
                         elseif(Blk.id==REVERSER_1 or Blk.id==REVERSER_2)then
-                            self.found=true
+                            -- self.found=true
                             if(self.direction==DIR_LEFT) then
                                 self.direction=DIR_RIGHT
                             elseif(self.direction==DIR_LEFT_UP) then
@@ -301,16 +307,42 @@ function platform:onLoop(tickTime)
                             elseif(self.direction==DIR_DOWN_LEFT) then
                                 self.direction=DIR_UP_RIGHT
                             end
-                            self.npc_obj.speedX=-self.npc_obj.speedX
-                            self.npc_obj.speedY=-self.npc_obj.speedY
+                            self.npc_obj.speedX = -self.npc_obj.speedX --math.abs(Blk.top-self.npc_obj.bottom)
+                            if(self.watchForMaxHeight)then
+                                if(self.RecentMaxHeight < self.maxHeight)then
+                                    self.npc_obj.speedY = -self.npc_obj.speedY+(math.abs(Blk.top-self.npc_obj.bottom)+math.abs(self.npc_obj.speedY))/65.42
+                                else
+                                    self.npc_obj.speedY = -self.npc_obj.speedY
+                                end
+                                self.RecentMaxHeight = self.npc_obj.y
+                            else
+                                self.npc_obj.speedY = -self.npc_obj.speedY +(math.abs(self.npc_obj.speedY))/(1000.0/15.285)
+                            end
+                            if(self.direction~=DIR_AUTO)then
+                                self.check_time_left = CHECK_DELAY
+                            else
+                                self.check_time_left = CHECK_DELAY/math.abs(self.npc_obj.speedY)
+                            end
                         end
                     end
                 end
                 if(self.found)then
                     self.npc_obj.gravity = 0.0
+                    self.watchForMaxHeight = false
                 else
                     self.npc_obj.gravity = 1.0
+                    self.direction=DIR_AUTO
                 end
+            end
+
+            if(self.watchForMaxHeight)then
+                if(self.npc_obj.y<self.RecentMaxHeight)then
+                    self.RecentMaxHeight = self.npc_obj.y
+                end
+            end
+
+            if(RecentDirection ~= self.direction)then
+                self.check_time_left=CHECK_DELAY
             end
         end
     else
