@@ -318,7 +318,7 @@ void LVL_Player::update(float tickTime)
                 if(climbing)
                     setSpeedX(physics_cur.velocity_climb_x);
                 else
-                    applyAccel(force, 0);
+                    applyAccel(force, 0.0);
             }
             //If right key is pressed
             if(keys.left && collided_left.isEmpty())
@@ -326,7 +326,7 @@ void LVL_Player::update(float tickTime)
                 if(climbing)
                     setSpeedX(-physics_cur.velocity_climb_x);
                 else
-                    applyAccel(-force, 0);
+                    applyAccel(-force, 0.0);
             }
 
             if( (keys.left || keys.right) && turning && _onGround )
@@ -580,7 +580,7 @@ void LVL_Player::update(float tickTime)
     if(_stucked)
     {
         posRect.setX(posRect.x()-_direction*4);
-        applyAccel(0, 0);
+        applyAccel(0.0, 0.0);
     }
 
     processWarpChecking();

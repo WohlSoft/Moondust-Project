@@ -71,11 +71,36 @@ public:
     virtual ~PGE_Phys_Object();
     void registerInTree();
     void unregisterFromTree();
-    virtual double posX(); //!< Position X
-    virtual double posY(); //!< Position Y
-    double posCenterX(); //!< Centered Position X
-    double posCenterY(); //!< Centered Position Y
+
+    /*!
+     * Position X at left-top corner
+     * \return Position X at left-top corner
+     */
+    virtual double posX();
+    /*!
+     * \brief Position Y at left-top corner
+     * \return Position Y at left-top corner
+     */
+    virtual double posY();
+    /*!
+     * \brief Position X at center
+     * \return Position X at center
+     */
+    double posCenterX();
+    /*!
+     * \brief Position Y at center
+     * \return Position Y at center
+     */
+    double posCenterY();
+    /*!
+     * \brief width of body
+     * \return width of body
+     */
     double width();
+    /*!
+     * \brief height of body
+     * \return height of body
+     */
     double height();
 
     double top();
@@ -118,10 +143,19 @@ public:
      */
     virtual void applyCorrectionToSA_stack(double, double) {}
 
-    double gravityScale();
-    void setGravityScale(double scl);
-    float gravityAccel();
-    void setGravityAccel(float acl);
+    inline double  gravityScale() { return phys_setup.gravityScale; }
+    inline void    setGravityScale(double scl) { phys_setup.gravityScale = float(scl); }
+    inline float   gravityAccel() { return phys_setup.gravityAccel; }
+    inline void    setGravityAccel(float acl) { phys_setup.gravityAccel = fabsf(acl); }
+
+    inline float   maxVelX() { return phys_setup.max_vel_x; }
+    inline void    setMaxVelX(float mv) { phys_setup.max_vel_x = mv; }
+    inline float   maxVelY() { return phys_setup.max_vel_y; }
+    inline void    setMaxVelY(float mv) { phys_setup.max_vel_y = mv; }
+    inline float   minVelX() { return phys_setup.min_vel_x; }
+    inline void    setMinVelX(float mv) { phys_setup.min_vel_x = mv; }
+    inline float   minVelY() { return phys_setup.min_vel_y; }
+    inline void    setMinVelY(float mv) { phys_setup.min_vel_y = mv; }
 
     void _syncPosition();
     void _syncPositionAndSize();
@@ -225,10 +259,10 @@ public:
 
     virtual void update();
     virtual void update(float ticks);
-    virtual void render(double x, double y);
+    virtual void render(double x, double y) { Q_UNUSED(x); Q_UNUSED(y); }
 
-    bool isPaused();
-    void setPaused(bool p);
+    inline bool isPaused() { return _paused; }
+    inline void setPaused(bool p) { _paused=p; }
 private:
     bool _paused;
 

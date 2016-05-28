@@ -301,25 +301,11 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     _accelY=y;
 }
 
-double PGE_Phys_Object::gravityScale()
-{
-    return phys_setup.gravityScale;
-}
 
-void PGE_Phys_Object::setGravityScale(double scl)
-{
-    phys_setup.gravityScale = float(scl);
-}
 
-float PGE_Phys_Object::gravityAccel()
-{
-    return phys_setup.gravityAccel;
-}
 
-void PGE_Phys_Object::setGravityAccel(float acl)
-{
-    phys_setup.gravityAccel = fabsf(acl);
-}
+
+
 
 
 void PGE_Phys_Object::_syncPosition()
@@ -425,7 +411,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
 
     if(_accelY != 0.0f)
     {
-        _velocityY+= _accelY*accelCof*G;
+        _velocityY+= _accelY*accelCof*( (G==0.0f)?1.0f:G );
         updateSpeedAdding=true;
         _accelY = 0.0f;
     }
@@ -620,29 +606,14 @@ LVL_Section *PGE_Phys_Object::sct()
     return _parentSection;
 }
 
-long double PGE_Phys_Object::zIndex()
-{
-    return z_index;
-}
+long double PGE_Phys_Object::zIndex() { return z_index; }
 
 void PGE_Phys_Object::update() { _syncPosition(); }
+void PGE_Phys_Object::update(float) { _syncPosition(); }
 
-void PGE_Phys_Object::update(float)
-{
-    _syncPosition();
-}
 
-void PGE_Phys_Object::render(double x, double y) {Q_UNUSED(x); Q_UNUSED(y);}
 
-bool PGE_Phys_Object::isPaused()
-{
-    return _paused;
-}
 
-void PGE_Phys_Object::setPaused(bool p)
-{
-    _paused=p;
-}
 
 
 bool operator<(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
@@ -651,7 +622,6 @@ bool operator<(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 
 bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 { return lhs.z_index<rhs.z_index; }
-
 
 PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
 {
@@ -665,9 +635,6 @@ PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
     gravityScale=1.0f;
     gravityAccel=26.0f;
 }
-
-
-
 
 void PGE_Phys_Object::show()
 {
