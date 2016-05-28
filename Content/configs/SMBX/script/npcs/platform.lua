@@ -196,7 +196,7 @@ function platform:onLoop(tickTime)
                 self.found=false
                 for K,Blk in pairs(bgos) do
                     if(self:isCollidesCenter(Blk)) then
-                        if(Blk.id==RAIL_DIAGONAL_1)then
+                        if(Blk.id==RAIL_DIAGONAL_1 and self.direction~=DIR_UP_RIGHT and self.direction~=DIR_DOWN_LEFT )then
                             self.found=true
                             -- X<0
                             if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
@@ -234,7 +234,7 @@ function platform:onLoop(tickTime)
                                 self.direction = DIR_RIGHT_DOWN
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_DIAGONAL_2)then
+                        elseif(Blk.id==RAIL_DIAGONAL_2 and self.direction~=DIR_LEFT_UP and self.direction~=DIR_RIGHT_DOWN)then
                             self.found=true
                             -- X<0
                             if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
