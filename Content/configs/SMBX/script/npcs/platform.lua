@@ -22,6 +22,7 @@ local RAIL_HORIZONTAL = 71
 local RAIL_VERTICAL = 72
 local REVERSER_1 = 70
 local REVERSER_2 = 100
+
 local CHECK_DELAY = 24
 
 function platform:initProps()
@@ -31,6 +32,7 @@ function platform:initProps()
     self.npc_obj.gravity = 1
     self.found = false
     self.needCorrection = false
+    self.lead = nil
     self.oldSpeedX = 0
     self.oldSpeedY = 0
     self.check_time_left = CHECK_DELAY
@@ -150,6 +152,95 @@ function platform:isCollidesCenter(blk)
     end
 end
 
+function platform:getRelativePositionH( blk )
+    if(self.npc_obj.center_x < blk.center_x)then
+        return 1.0
+    else
+        return -1.0
+    end    
+end
+
+function platform:getRelativePositionV( blk )
+    if(self.npc_obj.center_y < blk.center_y)then
+        return 1.0
+    else
+        return -1.0
+    end    
+end
+
+function platform:atEdge( blk, dir )
+    if(blk==nil)then
+        return true
+    end
+    if( self.check_time_left>=0 )then
+        return false
+    end
+    local radius = 4.0
+    if(dir == DIR_LEFT)then
+        if(self.npc_obj.center_x < blk.left+radius and self.npc_obj.center_x >= blk.left-radius)then
+            return true
+        end
+    elseif(dir == DIR_RIGHT)then
+        if(self.npc_obj.center_x > blk.right-radius and self.npc_obj.center_x <= blk.right+radius)then
+            return true
+        end
+    elseif(dir == DIR_UP)then
+        if(self.npc_obj.center_y < blk.top-radius and self.npc_obj.center_y <= blk.top-radius)then
+            return true
+        end
+    elseif(dir == DIR_DOWN)then
+        if(self.npc_obj.center_y > blk.bottom-radius and self.npc_obj.center_y >= blk.bottom+radius)then
+            return true
+        end
+    elseif(dir == DIR_LEFT_UP)then
+        if(self.npc_obj.center_x < blk.left+radius and self.npc_obj.center_x >= blk.left-radius 
+            and self.npc_obj.center_y < blk.top-radius and self.npc_obj.center_y <= blk.top-radius )then
+            return true
+        end
+    elseif(dir == DIR_UP_RIGHT)then
+        if(self.npc_obj.center_x > blk.right-radius and self.npc_obj.center_x <= blk.right+radius
+            and self.npc_obj.center_y < blk.top-radius and self.npc_obj.center_y <= blk.top-radius )then
+            return true
+        end
+    elseif(dir == DIR_RIGHT_DOWN)then
+        if(self.npc_obj.center_x > blk.right-radius and self.npc_obj.center_x <= blk.right+radius
+            and self.npc_obj.center_y > blk.bottom-radius and self.npc_obj.center_y >= blk.bottom+radius )then
+            return true
+        end
+    elseif(dir == DIR_DOWN_LEFT)then
+        if(self.npc_obj.center_x < blk.left+radius and self.npc_obj.center_x >= blk.left-radius
+            and self.npc_obj.center_y > blk.bottom-radius and self.npc_obj.center_y >= blk.bottom+radius )then
+            return true
+        end
+    end
+    return false
+end
+
+function platform:sameAsLead(blk)
+    if(self.lead == nil)then
+        return false;
+    elseif( self.lead.id == blk.id )then -- Ignore elements of same ID
+        return false;
+    elseif( self.lead.center_x == blk.center_x and self.lead.center_y == blk.center_y )then
+        return true;
+    end
+    return false;
+end
+
+function platform:isCrossesWith(blk, tbl, id)
+    if(self.lead ~= nil)then
+        if( self.lead.id == blk.id )then
+            return false;
+        end
+    end
+    for K,Elm in pairs(tbl) do
+        if( ( Elm.id == id) and (Elm.center_x == blk.center_x) ) then
+            return true;
+        end
+    end
+    return false;
+end
+
 function platform:onLoop(tickTime)
     if(self.state==ST_ON)then
         if(self.found)then
@@ -193,11 +284,44 @@ function platform:onLoop(tickTime)
             local RecentDirection = self.direction
             if(self.contacts:detected())then
                 local bgos= self.contacts:getBGOs()
+                local usefulBGOs = {}
+                local byTypes = {}
+                byTypes[RAIL_DIAGONAL_1] = 0
+                byTypes[RAIL_DIAGONAL_2] = 0
+                byTypes[RAIL_HORIZONTAL] = 0
+                byTypes[RAIL_VERTICAL] = 0
+                byTypes[REVERSER_1] = 0
+                byTypes[REVERSER_2] = 0
+                local isAtEdge = false
+
                 self.found=false
+                local countOfUSeful = 0
                 for K,Blk in pairs(bgos) do
-                    if(self:isCollidesCenter(Blk)) then
-                        if(Blk.id==RAIL_DIAGONAL_1 and self.direction~=DIR_UP_RIGHT and self.direction~=DIR_DOWN_LEFT )then
+                    if( self:isCollidesCenter(Blk)
+                        and ( Blk.id == RAIL_DIAGONAL_1 
+                        or Blk.id == RAIL_DIAGONAL_2
+                        or Blk.id == RAIL_HORIZONTAL
+                        or Blk.id == RAIL_VERTICAL
+                        or Blk.id == REVERSER_1
+                        or Blk.id == REVERSER_2 ) ) then
+                        countOfUSeful = countOfUSeful+1
+                        usefulBGOs[countOfUSeful] = Blk
+                        byTypes[Blk.id] = byTypes[Blk.id] + 1
+                    end
+                end
+                if(self.lead~=nil)then
+                    isAtEdge = (self:atEdge(self.lead, self.direction) and countOfUSeful <= 2)
+                    -- Renderer.printText("Count Of elements: "..tostring(self.lead.id), 10, 40)
+                end
+                -- Renderer.printText("Count Of elements: "..tostring(countOfUSeful).. " "..tostring(isAtEdge), 10, 10)
+
+                for K,Blk in pairs(usefulBGOs) do
+                    -- if(self:isCollidesCenter(Blk)) then
+                        countOfUSeful = countOfUSeful+1
+                        local isNSameAsLead = not self:sameAsLead(Blk);
+                        if(Blk.id==RAIL_DIAGONAL_1 and isNSameAsLead and self.direction~=DIR_UP_RIGHT and self.direction~=DIR_DOWN_LEFT )then
                             self.found=true
+                            self.lead = Blk
                             -- X<0
                             if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
                                 self.direction = DIR_LEFT_UP
@@ -234,8 +358,9 @@ function platform:onLoop(tickTime)
                                 self.direction = DIR_RIGHT_DOWN
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_DIAGONAL_2 and self.direction~=DIR_LEFT_UP and self.direction~=DIR_RIGHT_DOWN)then
+                        elseif(Blk.id==RAIL_DIAGONAL_2 and isNSameAsLead and self.direction~=DIR_LEFT_UP and self.direction~=DIR_RIGHT_DOWN)then
                             self.found=true
+                            self.lead = Blk
                             -- X<0
                             if( (self.npc_obj.speedX < 0) and (self.npc_obj.speedY == 0) )then
                                 self.direction = DIR_DOWN_LEFT
@@ -272,20 +397,40 @@ function platform:onLoop(tickTime)
                                 self.direction = DIR_UP_RIGHT
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_HORIZONTAL and self.direction~=DIR_UP and self.direction~=DIR_DOWN)then
+                        elseif(Blk.id==RAIL_HORIZONTAL and (not self:isCrossesWith(Blk, usefulBGOs, RAIL_VERTICAL) ) and
+                            ((self.direction~=DIR_UP and self.direction~=DIR_DOWN) or
+                             (isNSameAsLead and isAtEdge --or (self:atEdge(Blk, DIR_LEFT) or self:atEdge(Blk, DIR_RIGHT)
+                                and byTypes[RAIL_HORIZONTAL]<=1 and byTypes[RAIL_VERTICAL]<=1 ) ) )then
                             self.found=true
-                            if(self.npc_obj.speedX>0)then
+                            self.lead = Blk
+                            if( self.npc_obj.speedX > 0 ) then
                                 self.direction=DIR_RIGHT
-                            else
+                            elseif(self.npc_obj.speedX < 0)then
                                 self.direction=DIR_LEFT
+                            else
+                                if( self:getRelativePositionH( Blk ) == 1 )then
+                                    self.direction=DIR_RIGHT
+                                else
+                                    self.direction=DIR_LEFT
+                                end
                             end
                             self:lookForCorrection(Blk)
-                        elseif(Blk.id==RAIL_VERTICAL and self.direction~=DIR_LEFT and self.direction~=DIR_RIGHT)then
+                        elseif(Blk.id==RAIL_VERTICAL and (not self:isCrossesWith(Blk, usefulBGOs, RAIL_HORIZONTAL) ) and
+                            ((self.direction~=DIR_LEFT and self.direction~=DIR_RIGHT) or  
+                             (isNSameAsLead and isAtEdge --or (self:atEdge(Blk, DIR_UP) or self:atEdge(Blk, DIR_DOWN)
+                                 and byTypes[RAIL_HORIZONTAL]<=1 and byTypes[RAIL_VERTICAL]<=1 ) ) )then
                             self.found=true
+                            self.lead = Blk
                             if(self.npc_obj.speedY>0)then
                                 self.direction=DIR_DOWN
-                            else
+                            elseif(self.npc_obj.speedY<0)then
                                 self.direction=DIR_UP
+                            else
+                                if( self:getRelativePositionV( Blk ) == 1 )then
+                                    self.direction=DIR_DOWN
+                                else
+                                    self.direction=DIR_UP
+                                end
                             end
                             self:lookForCorrection(Blk)
                         elseif(Blk.id==REVERSER_1 or Blk.id==REVERSER_2)then
@@ -324,7 +469,7 @@ function platform:onLoop(tickTime)
                                 self.check_time_left = CHECK_DELAY/math.abs(self.npc_obj.speedY)
                             end
                         end
-                    end
+                    -- end
                 end
                 if(self.found)then
                     self.npc_obj.gravity = 0.0
@@ -332,6 +477,7 @@ function platform:onLoop(tickTime)
                 else
                     self.npc_obj.gravity = 1.0
                     self.direction=DIR_AUTO
+                    self.lead = nil
                 end
             end
 
