@@ -1,0 +1,50 @@
+==========================================================================================
+                       PGE Project Packed file format specification draft
+==========================================================================================
+
+This is a concept of the packed game/episode archive file format which allows making a
+solid files which are will be readed much faster than reading data from a tonn of regular
+files.
+
+This container needed for convenience and performance of the playing PGE games
+(especially on mobile devices) and is not designed for the direct editing.
+
+=============================================
+                    Header
+=============================================
+Length          Name            Description
+---------------------------------------------
+11              MAGIC           "PGEGamePack" Magic word
+4               VERSION         (32-bit BE unsigned integer) Version of the file type [Initial is 0]
+1               PACK TYPE       (char) 00000000 - Single Episode, 00000001 - Multi-Episode game with built-in config pack
+4               TITLE_LENGHT    (32-bit BE unsigned integer) Lenght of title string
+TITLE_LENGHT    TITLE           Title of the Game/Episode
+8               TOTAL_FILES     (64-bit BE unsigned integer) How much files are been packed
+8               OFFSET_LIST     (64-bit BE unsigned integer) Offset to the file-list structures array
+8               OFFSET_DATA     (64-bit BE unsigned integer) Offset to the raw-data space
+=============================================
+
+=============================================
+            List of the files array
+=============================================
+    Length          Name            Description
+---------------------------------------------
+Repeat TOTAL_FILES times 
+{
+    4               PATH_LENGHT     (32-bit BE unsigned integer) Lenght of the file path
+    PATH_LENGHT     PATH            Internal path
+                                    - Single-Episode package contains alone episode and requires config pack to play
+                                    - Multi-Episode package also contains pre-packed config pack data and may contain multiple episodes
+                                    (examples: meow.txt, worlds/myepisode/meow.txt config/main.ini)
+    1               COMPRESSION     (char) Compression type (0 - uncompressed, 1 - gzip)
+    8               OFFSET          (64-bit BE unsigned integer) Relative address in the raw-data space.
+                                    - Starts from 0 at frist byte of the data space. Target file offset equal to OFFSET_DATA+OFFSET.
+    8               SIZE            (64-bit BE unsigned integer) Size of the packed file
+}
+=============================================
+
+=============================================
+                Raw data space
+=============================================
+                    {...}
+=============================================
