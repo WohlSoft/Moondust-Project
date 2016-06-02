@@ -132,6 +132,10 @@ public:
     void setSpeedY(double y);
     void setDecelX(double x);
     void applyAccel(double x, double y);
+
+    //! Elements staying on top (or bumped from side)
+    QList<PGE_Phys_Object*> m_speedAddingTopElements;
+    virtual void iterateSpeedAddingStack(double offsetX, double offsetY);
     /*!
      * \brief Update Speed-adding stack if needed
      */

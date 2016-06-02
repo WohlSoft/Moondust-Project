@@ -301,12 +301,20 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     _accelY=y;
 }
 
-
-
-
-
-
-
+void PGE_Phys_Object::iterateSpeedAddingStack(double offsetX, double offsetY)
+{
+    for(int i=0; i<m_speedAddingTopElements.size(); i++)
+    {
+        PGE_RectF &posR = m_speedAddingTopElements[i]->posRect;
+        m_speedAddingTopElements[i]->setPos(posR.x()+offsetX, posR.y()+offsetY);
+        m_speedAddingTopElements[i]->iterateSpeedAddingStack(offsetX, offsetY);
+        if( !posRect.collideRect( posR ) || (posRect.top() < posR.bottom()+speedY()) )
+        {
+            m_speedAddingTopElements.removeAt(i); i--;
+            continue;
+        }
+    }
+}
 
 void PGE_Phys_Object::_syncPosition()
 {
@@ -362,19 +370,30 @@ void PGE_Phys_Object::iterateStep(float ticks)
 
     bool updateSpeedAdding=false;
 
-    posRect.setX(posRect.x()+(_velocityX+_velocityX_add) * (ticks/_smbxTickTime));
-    _velocityX_prev=_velocityX;
-
+    double iterateX = (_velocityX+_velocityX_add) * (ticks/_smbxTickTime);
+    double iterateY = (_velocityY+_velocityY_add) * (ticks/_smbxTickTime);
     if(collided_slope)
     {
-        _velocityY_prev = (_velocityY+_velocityY_add+(_velocityX*collided_slope_angle_ratio));
-        posRect.setY(posRect.y()+ _velocityY_prev * (ticks/_smbxTickTime));
+        iterateY = (_velocityY + _velocityY_add + (_velocityX*collided_slope_angle_ratio))* (ticks/_smbxTickTime);
+        //posRect.setY(posRect.y() + _velocityY_prev * (ticks/_smbxTickTime));
     }
-    else
-    {
-        posRect.setY(posRect.y()+(_velocityY+_velocityY_add) * (ticks/_smbxTickTime));
-        _velocityY_prev=_velocityY;
-    }
+
+    posRect.setX(posRect.x() + iterateX);
+    _velocityX_prev = _velocityX;
+    posRect.setY(posRect.y() + iterateY);
+    _velocityY_prev = _velocityY;
+
+    iterateSpeedAddingStack(iterateX, iterateY);
+//    if(collided_slope)
+//    {
+//        _velocityY_prev = (_velocityY+_velocityY_add+(_velocityX*collided_slope_angle_ratio));
+//        posRect.setY(posRect.y() + _velocityY_prev * (ticks/_smbxTickTime));
+//    }
+//    else
+//    {
+//        posRect.setY(posRect.y() + iterateY);
+//        _velocityY_prev = _velocityY;
+//    }
 
     colliding_xSpeed = Maths::max(fabs(_velocityX+_velocityX_add), fabs(_velocityX_prev+_velocityX_add))
             * Maths::sgn(speedX()+_velocityX_add)*(ticks/_smbxTickTime);

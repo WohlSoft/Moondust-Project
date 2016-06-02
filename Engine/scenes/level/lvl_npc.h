@@ -121,6 +121,7 @@ public:
     QVector<PGE_Phys_Object*>   collision_speed_add;
     void updateSpeedAddingStack();
     void applyCorrectionToSA_stack(double offsetX, double offsetY);
+    //void iterateSpeedAddingStack(double offsetX, double offsetY);
 
     bool    bumpDown;
     bool    bumpUp;
@@ -141,15 +142,23 @@ public:
     int  activationTimeout;
 
     /********************Detectors**********************/
-    QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
-    PlayerPosDetector               detector_player_pos; //! Player position detectors (should have alone copy!)
-    PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
-    QList<InAreaDetector >    detectors_inarea; //! Is player touches selected relative area;
-    InAreaDetector * lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::adl::object filters);//! Detects is player(s) are enters into specific area relative to NPC's center
-    QList<ContactDetector >        detectors_contact;       //!< Entire list of all detectors
-    ContactDetector * lua_installContactDetector();//! Detects contacted elements
+    //!< dummy detectors made directly from a base class, for a some tests
+    QList<BasicDetector >           detectors_dummy;
+    //! Player position detectors (should have alone copy!)
+    PlayerPosDetector               detector_player_pos;
+    //! Detects position and direction of nearest player
+    PlayerPosDetector * lua_installPlayerPosDetector();
+    //! Is player touches selected relative area;
+    QList<InAreaDetector >          detectors_inarea;
+    //! Detects is player(s) are enters into specific area relative to NPC's center
+    InAreaDetector *    lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::adl::object filters);
+    //! Entire list of all detectors
+    QList<ContactDetector >         detectors_contact;
+    //! Detects contacted elements
+    ContactDetector *   lua_installContactDetector();
 
-    QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
+    //! Entire list of all detectors
+    QVector<BasicDetector* >        detectors;
 
     /***************************************************/
 

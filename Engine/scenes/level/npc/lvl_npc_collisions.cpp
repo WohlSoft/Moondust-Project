@@ -123,8 +123,8 @@ void LVL_Npc::updateCollisions()
         {
             if(!is_scenery)
             {
-                _velocityX_add=_floorX_vel;
-                _velocityY_add=_floorY_vel;
+                //_velocityX_add=_floorX_vel;
+                //_velocityY_add=_floorY_vel;
             }
         }
 
@@ -720,7 +720,7 @@ void LVL_Npc::updateSpeedAddingStack()
         double _floorX_num=0.0;//num of velocities
         double _floorY_vel=0.0;//velocities sum
         double _floorY_num=0.0;//num of velocities
-        for(PlayerColliders::iterator it=collided_bottom.begin(); it!=collided_bottom.end() ; it++)
+        for(PlayerColliders::iterator it = collided_bottom.begin(); it != collided_bottom.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
             switch(collided->type)
@@ -729,10 +729,12 @@ void LVL_Npc::updateSpeedAddingStack()
                 {
                     LVL_Block *blk= static_cast<LVL_Block*>(collided);
                     if(!blk) continue;
-                    _floorY_vel+=blk->speedYsum();
-                    _floorY_num+=1.0;
-                    _floorX_vel+=blk->speedXsum();
-                    _floorX_num+=1.0;
+                    _floorY_vel += blk->speedYsum();
+                    _floorY_num += 1.0;
+                    _floorX_vel += blk->speedXsum();
+                    _floorX_num += 1.0;
+                    if(!blk->m_speedAddingTopElements.contains(this))
+                        blk->m_speedAddingTopElements.append(this);
                 }
                 case PGE_Phys_Object::LVLNPC:
                 {
@@ -742,21 +744,26 @@ void LVL_Npc::updateSpeedAddingStack()
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
                     _floorX_num+=1.0;
+                    //if(is_scenery)
+                    //{
+                    if(!npc->m_speedAddingTopElements.contains(this))
+                        npc->m_speedAddingTopElements.append(this);
+                    //}
                 }
                 break;
                 default:break;
             }
         }
-        if(_floorX_num!=0.0) _floorX_vel=_floorX_vel/_floorX_num;
-        if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
-        if(!foot_contacts_map.isEmpty())
-        {
-            if(!is_scenery)
-            {
-                _velocityX_add=_floorX_vel;
-                _velocityY_add=_floorY_vel;
-            }
-        }
+        if(_floorX_num != 0.0) _floorX_vel = _floorX_vel/_floorX_num;
+        if(_floorY_num != 0.0) _floorY_vel = _floorY_vel/_floorY_num;
+//        if(!foot_contacts_map.isEmpty())
+//        {
+//            if(!is_scenery)
+//            {
+//                //_velocityX_add=_floorX_vel;
+//                //_velocityY_add=_floorY_vel;
+//            }
+//        }
     }
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->updateSpeedAddingStack();
@@ -769,3 +776,18 @@ void LVL_Npc::applyCorrectionToSA_stack(double offsetX, double offsetY)
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->applyCorrectionToSA_stack(offsetX, offsetY);
 }
+
+//void LVL_Npc::iterateSpeedAddingStack(double offsetX, double offsetY)
+//{
+//    for(int i=0; i<m_speedAddingTopElements.size(); i++)
+//    {
+//        if( !m_speedAddingTopElements[i] || !this->posRect.collideRect( m_speedAddingTopElements[i]->posRect ) )
+//        {
+//            m_speedAddingTopElements.removeAt(i); i--;
+//            continue;
+//        }
+//        PGE_RectF &posR = m_speedAddingTopElements[i]->posRect;
+//        m_speedAddingTopElements[i]->setPos(posR.x()+offsetX, posR.y()+offsetY);
+//        m_speedAddingTopElements[i]->iterateSpeedAddingStack(offsetX, offsetY);
+//    }
+//}
