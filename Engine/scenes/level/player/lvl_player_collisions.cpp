@@ -903,9 +903,15 @@ void LVL_Player::updateSpeedAddingStack()
                     _floorY_num+=1.0;
                     _floorX_vel+=blk->speedXsum();
                     _floorX_num+=1.0;
-                    if(!blk->m_speedAddingTopElements.contains(this))
-                        blk->m_speedAddingTopElements.append(this);
-                } break;
+                    if((blk->speedXsum() != 0.0)||(blk->speedYsum() != 0.0))
+                    {
+                        if(!blk->m_speedAddingTopElements.contains(this))
+                            blk->m_speedAddingTopElements.append(this);
+                        if(!m_speedAddingBottomElements.contains(collided))
+                            m_speedAddingBottomElements.append(collided);
+                    }
+                }
+                break;
                 case PGE_Phys_Object::LVLNPC:
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
@@ -916,6 +922,8 @@ void LVL_Player::updateSpeedAddingStack()
                     _floorX_num+=1.0;
                     if(!npc->m_speedAddingTopElements.contains(this))
                         npc->m_speedAddingTopElements.append(this);
+                    if(!m_speedAddingBottomElements.contains(collided))
+                        m_speedAddingBottomElements.append(collided);
                 }
                 break;
                 default:break;

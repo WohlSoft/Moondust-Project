@@ -99,20 +99,20 @@ public:
     /*****************NPC's and blocks******************/
     bool onGround();
     bool  _onGround;
-    QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
-    QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
+    QHash<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
+    QHash<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
 
-    QHash<int, PGE_Phys_Object*> contacted_blocks;
-    QHash<int, PGE_Phys_Object*> contacted_bgos;
-    QHash<int, PGE_Phys_Object*> contacted_npc;
-    QHash<int, PGE_Phys_Object*> contacted_players;
+    QHash<intptr_t, PGE_Phys_Object*> contacted_blocks;
+    QHash<intptr_t, PGE_Phys_Object*> contacted_bgos;
+    QHash<intptr_t, PGE_Phys_Object*> contacted_npc;
+    QHash<intptr_t, PGE_Phys_Object*> contacted_players;
 
-    typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
-    QHash<int, PGE_Phys_Object*> collided_top;
-    QHash<int, PGE_Phys_Object*> collided_left;
-    QHash<int, PGE_Phys_Object*> collided_right;
-    QHash<int, PGE_Phys_Object*> collided_bottom;
-    QHash<int, PGE_Phys_Object*> collided_center;
+    typedef QHash<intptr_t, PGE_Phys_Object*> PlayerColliders;
+    QHash<intptr_t, PGE_Phys_Object*> collided_top;
+    QHash<intptr_t, PGE_Phys_Object*> collided_left;
+    QHash<intptr_t, PGE_Phys_Object*> collided_right;
+    QHash<intptr_t, PGE_Phys_Object*> collided_bottom;
+    QHash<intptr_t, PGE_Phys_Object*> collided_center;
     bool  disableBlockCollision;
     bool  disableNpcCollision;
     bool  enablePlayerCollision;
@@ -128,7 +128,7 @@ public:
     /***************************************************/
     /*******************Environmept*********************/
     //QHash<int, obj_player_physics > physics;
-    QHash<int, int > environments_map;
+    QHash<intptr_t, intptr_t> environments_map;
     //obj_player_physics physics_cur;
     int     environment;
     int     last_environment;

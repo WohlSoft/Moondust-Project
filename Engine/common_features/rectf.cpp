@@ -281,7 +281,7 @@ bool PGE_RectF::collideRect(PGE_RectF &rect)
     return true;
 }
 
-bool PGE_RectF::collideRectDeep(PGE_RectF &rect, float deep)
+bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double deep)
 {
     if(rect._r<(_x+deep)) return false;
     if(rect._b<(_y+deep)) return false;
@@ -290,7 +290,7 @@ bool PGE_RectF::collideRectDeep(PGE_RectF &rect, float deep)
     return true;
 }
 
-bool PGE_RectF::collideRectDeep(PGE_RectF &rect, float deepX, float deepY)
+bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double deepX, double deepY)
 {
     if(rect._r<(_x+deepX)) return false;
     if(rect._b<(_y+deepY)) return false;
@@ -301,10 +301,10 @@ bool PGE_RectF::collideRectDeep(PGE_RectF &rect, float deepX, float deepY)
 
 bool PGE_RectF::collideRect(PGE_Rect &rect)
 {
-    if(rect._r<(int)_x) return false;
-    if(rect._b<(int)_y) return false;
-    if(rect._x>(int)_r) return false;
-    if(rect._y>(int)_b) return false;
+    if(rect._r<int(_x)) return false;
+    if(rect._b<int(_y)) return false;
+    if(rect._x>int(_r)) return false;
+    if(rect._y>int(_b)) return false;
     return true;
 }
 

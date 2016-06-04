@@ -301,17 +301,77 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     _accelY=y;
 }
 
-void PGE_Phys_Object::iterateSpeedAddingStack(double offsetX, double offsetY)
+void PGE_Phys_Object::iterateSpeedAddingStack(double ticks)
 {
     for(int i=0; i<m_speedAddingTopElements.size(); i++)
     {
-        PGE_RectF &posR = m_speedAddingTopElements[i]->posRect;
-        m_speedAddingTopElements[i]->setPos(posR.x()+offsetX, posR.y()+offsetY);
-        m_speedAddingTopElements[i]->iterateSpeedAddingStack(offsetX, offsetY);
-        if( !posRect.collideRect( posR ) || (posRect.top() < posR.bottom()+speedY()) )
+        PGE_Phys_Object* &topEl = m_speedAddingTopElements[i];
+        PGE_RectF &posR = topEl->posRect;
+        QList<PGE_Phys_Object*> &be = topEl->m_speedAddingBottomElements;
+        int beI=0;
+        double middleX = 0.0;
+        double middleX_num = 0.0;
+        double middleY = 0.0;
+        //topEl->_velocityX_add = 0.0;
+        //topEl->_velocityY_add = 0.0;
+        for(int j=0; j<be.size(); j++)
         {
+            //Find middle value
+            middleX     += be[j]->speedXsum();
+            middleX_num += 1.0;
+            //Don't fall through floor!!!
+            if( j == 0 )
+                middleY = be[j]->speedYsum();
+            else if(middleY > be[j]->speedYsum())
+                middleY = be[j]->speedYsum();
+            if(be[j] == this)
+            {
+                beI = j;
+            }
+        }
+        if(middleX_num != 0.0)  middleX /= middleX_num;
+        topEl->_velocityX_add = middleX;
+        topEl->_velocityY_add = middleY;
+        if(middleX_num != 0.0)  middleX /= middleX_num;
+        double iterateX = (middleX) * (ticks/_smbxTickTime);
+        double iterateY = (middleY) * (ticks/_smbxTickTime);
+        topEl->setPos(posR.x()+iterateX, posR.y()+iterateY);
+        //topEl->iterateSpeedAddingStack(ticks);
+        if( !posRect.collideRectDeep( posR, -2.0 ) || (posRect.top() < posR.bottom()-2.0) )
+        {
+            topEl->_velocityX_add = 0.0;
+            topEl->_velocityY_add = 0.0;
+            be.removeAt(beI);
             m_speedAddingTopElements.removeAt(i); i--;
-            continue;
+            //continue;
+        }
+    }
+}
+
+void PGE_Phys_Object::removeSpeedAddingPointers()
+{
+    for(int i=0; i<m_speedAddingBottomElements.size(); i++)
+    {
+        QList<PGE_Phys_Object*>  &te = m_speedAddingBottomElements[i]->m_speedAddingTopElements;
+        for(int j=0; j<te.size(); j++)
+        {
+            if(te[j]==this)
+            {
+                te.removeAt(j);
+                j--;
+            }
+        }
+    }
+    for(int i=0; i<m_speedAddingTopElements.size(); i++)
+    {
+        QList<PGE_Phys_Object*>  &be = m_speedAddingTopElements[i]->m_speedAddingBottomElements;
+        for(int j=0; j<be.size(); j++)
+        {
+            if(be[j]==this)
+            {
+                be.removeAt(j);
+                j--;
+            }
         }
     }
 }
@@ -368,13 +428,11 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
-    bool updateSpeedAdding=false;
-
-    double iterateX = (_velocityX+_velocityX_add) * (ticks/_smbxTickTime);
-    double iterateY = (_velocityY+_velocityY_add) * (ticks/_smbxTickTime);
+    double iterateX = (_velocityX) * (ticks/_smbxTickTime);
+    double iterateY = (_velocityY) * (ticks/_smbxTickTime);
     if(collided_slope)
     {
-        iterateY = (_velocityY + _velocityY_add + (_velocityX*collided_slope_angle_ratio))* (ticks/_smbxTickTime);
+        iterateY = (_velocityY + (_velocityX*collided_slope_angle_ratio))* (ticks/_smbxTickTime);
         //posRect.setY(posRect.y() + _velocityY_prev * (ticks/_smbxTickTime));
     }
 
@@ -383,7 +441,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
     posRect.setY(posRect.y() + iterateY);
     _velocityY_prev = _velocityY;
 
-    iterateSpeedAddingStack(iterateX, iterateY);
+    iterateSpeedAddingStack(ticks);
 //    if(collided_slope)
 //    {
 //        _velocityY_prev = (_velocityY+_velocityY_add+(_velocityX*collided_slope_angle_ratio));
@@ -399,6 +457,11 @@ void PGE_Phys_Object::iterateStep(float ticks)
             * Maths::sgn(speedX()+_velocityX_add)*(ticks/_smbxTickTime);
     colliding_ySpeed = Maths::max(fabs(_velocityY+_velocityY_add), fabs(_velocityY_prev+_velocityY_add))
             * Maths::sgn(speedY()+_velocityY_add)*(ticks/_smbxTickTime);
+}
+
+void PGE_Phys_Object::iterateStepPostCollide(float ticks)
+{
+    bool updateSpeedAdding=true;
 
     float G = phys_setup.gravityScale * _scene->globalGravity;
     float accelCof=ticks/1000.0f;
@@ -428,7 +491,8 @@ void PGE_Phys_Object::iterateStep(float ticks)
         updateSpeedAdding=true;
     }
 
-    if(_accelY != 0.0f)
+    if( ((_accelY != 0.0f) && !onGround())||
+        ((_accelY <  0.0f) &&  onGround()) )
     {
         _velocityY+= _accelY*accelCof*( (G==0.0f)?1.0f:G );
         updateSpeedAdding=true;
@@ -453,16 +517,21 @@ void PGE_Phys_Object::iterateStep(float ticks)
         updateSpeedAdding=true;
     }
 
-    if(phys_setup.gravityAccel != 0.0f)
+    if( ((phys_setup.gravityAccel != 0.0f) && !onGround()) ||
+        ((phys_setup.gravityAccel < 0.0f)  &&  onGround()) )
     {
         _velocityY+= (G*phys_setup.gravityAccel)*accelCof;
         updateSpeedAdding=true;
     }
 
-    if((phys_setup.max_vel_x != 0.0f)&&(_velocityX>phys_setup.max_vel_x)) { _velocityX-=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
-    if((phys_setup.min_vel_x != 0.0f)&&(_velocityX<phys_setup.min_vel_x)) { _velocityX+=phys_setup.grd_dec_x*accelCof;updateSpeedAdding=true;}
-    if((phys_setup.max_vel_y != 0.0f)&&(_velocityY>phys_setup.max_vel_y)) {_velocityY=phys_setup.max_vel_y;updateSpeedAdding=true;}
-    if((phys_setup.min_vel_y != 0.0f)&&(_velocityY<phys_setup.min_vel_y)) {_velocityY=phys_setup.min_vel_y;updateSpeedAdding=true;}
+    if((phys_setup.max_vel_x != 0.0f)&&(_velocityX>phys_setup.max_vel_x))
+        { _velocityX-=phys_setup.grd_dec_x*accelCof; updateSpeedAdding=true;}
+    if((phys_setup.min_vel_x != 0.0f)&&(_velocityX<phys_setup.min_vel_x))
+        { _velocityX+=phys_setup.grd_dec_x*accelCof; updateSpeedAdding=true;}
+    if((phys_setup.max_vel_y != 0.0f)&&(_velocityY>phys_setup.max_vel_y))
+        {_velocityY=phys_setup.max_vel_y; updateSpeedAdding=true;}
+    if((phys_setup.min_vel_y != 0.0f)&&(_velocityY<phys_setup.min_vel_y))
+        {_velocityY=phys_setup.min_vel_y; updateSpeedAdding=true;}
 
     if(updateSpeedAdding)
         updateSpeedAddingStack();
