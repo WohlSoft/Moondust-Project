@@ -31,13 +31,12 @@ void MainWindow::dropEvent(QDropEvent *e)
     this->raise();
     this->setFocus(Qt::ActiveWindowFocusReason);
 
-    foreach (const QUrl &url, e->mimeData()->urls()) {
+    foreach (const QUrl &url, e->mimeData()->urls())
+    {
         const QString &fileName = url.toLocalFile();
-
         //qDebug() << "Dropped file:" << fileName;
         OpenFile(fileName);
     }
-
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

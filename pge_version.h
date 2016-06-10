@@ -33,7 +33,7 @@
 
 #define _COMPANY "Wohlhabend Networks"
 
-#define _PGE_URL "engine.wohlnet.ru"
+#define _PGE_URL "wohlsoft.ru"
 
 #define _PRODUCT_NAME "Platformer Game Engine"
 
