@@ -337,7 +337,9 @@ void PGE_Phys_Object::iterateSpeedAddingStack(double ticks)
         double iterateY = (middleY) * (ticks/_smbxTickTime);
         topEl->setPos(posR.x()+iterateX, posR.y()+iterateY);
         //topEl->iterateSpeedAddingStack(ticks);
-        if( !posRect.collideRectDeep( posR, -2.0 ) || (posRect.top() < posR.bottom()-2.0) )
+        if( !posRect.collideRectDeep( posR, -2.0 )
+        /* || (posRect.top()+speedYsum() < posR.bottom()-topEl->speedYsum() )*/
+           ||  (posRect.top() < posR.bottom()-topEl->colliding_ySpeed) )
         {
             topEl->_velocityX_add = 0.0;
             topEl->_velocityY_add = 0.0;
