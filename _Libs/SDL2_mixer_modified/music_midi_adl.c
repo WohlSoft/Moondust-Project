@@ -10,6 +10,79 @@
 
 #include <stdio.h>
 
+static const int tableOf_num4opChans[] =
+{
+    0,//0
+    0,//1
+    0,//2
+    0,//3
+    0,//4
+    0,//5
+    0,//6
+    0,//7
+    0,//8
+    0,//9
+    0,//10
+    0,//11
+    0,//12
+    0,//13
+    0,//14
+    0,//15
+    0,//16
+    0,//17
+    0,//18
+    0,//19
+    24,//20
+    0,//21
+    0,//22
+    0,//23
+    0,//24
+    0,//25
+    0,//26
+    0,//27
+    0,//28
+    0,//29
+    0,//30
+    24,//31
+    0,//32
+    0,//33
+    0,//34
+    0,//35
+    24,//36
+    0,//37
+    24,//38
+    24,//39
+    0,//40
+    0,//41
+    0,//42
+    0,//43
+    18,//44
+    18,//45
+    0,//46
+    18,//47
+    18,//48
+    0,//49
+    0,//50
+    0,//51
+    0,//52
+    24,//53
+    24,//54
+    0,//55
+    0,//56
+    0,//57
+    0,//58
+    24,//59
+    0,//60
+    0,//61
+    0,//62
+    0,//63
+    0,//64
+    0,//65
+    0,//66
+    0,//67
+    18//68
+};
+
 /* Reference for converting mikmod output to 4/6 channels */
 static int    current_output_channels;
 static Uint16 current_output_format;
@@ -82,7 +155,6 @@ void ADLMIDI_setDefaults()
     adlmidi_bank = 58;
 }
 
-
 /* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
@@ -113,6 +185,7 @@ void ADLMIDI_setvolume(struct MUSIC_MIDIADL *music, int volume)
         music->volume=(int)round(128.0f*sqrt(((float)volume)*(1.f/128.f) ));
     }
 }
+
 
 struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
 {
@@ -158,9 +231,11 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
             adl_close( adl_midiplayer );
             return NULL;
         }
-        adl_setNumCards( adl_midiplayer, 4 );
+
         adl_setScaleModulators( adl_midiplayer, adlmidi_scalemod );
         adl_setPercMode( adl_midiplayer, adlmidi_adlibdrums );
+        adl_setNumFourOpsChn( adl_midiplayer, tableOf_num4opChans[adlmidi_bank] );
+        adl_setNumCards( adl_midiplayer, 4 );
 
         int err = adl_openData( adl_midiplayer, bytes, spcsize );
         free(bytes);
