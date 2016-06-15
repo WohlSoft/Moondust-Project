@@ -151,8 +151,8 @@ void LVL_Player::updateCollisions()
         if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
         if(!foot_contacts_map.isEmpty())
         {
-            _velocityX_add=_floorX_vel;
-            _velocityY_add=_floorY_vel;
+            //_velocityX_add=_floorX_vel;
+            //_velocityY_add=_floorY_vel;
         }
 
         if(isFloor(floor_blocks))
@@ -903,7 +903,15 @@ void LVL_Player::updateSpeedAddingStack()
                     _floorY_num+=1.0;
                     _floorX_vel+=blk->speedXsum();
                     _floorX_num+=1.0;
-                } break;
+                    if((blk->speedXsum() != 0.0)||(blk->speedYsum() != 0.0))
+                    {
+                        if(!blk->m_speedAddingTopElements.contains(this))
+                            blk->m_speedAddingTopElements.append(this);
+                        if(!m_speedAddingBottomElements.contains(collided))
+                            m_speedAddingBottomElements.append(collided);
+                    }
+                }
+                break;
                 case PGE_Phys_Object::LVLNPC:
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
@@ -912,15 +920,19 @@ void LVL_Player::updateSpeedAddingStack()
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
                     _floorX_num+=1.0;
+                    if(!npc->m_speedAddingTopElements.contains(this))
+                        npc->m_speedAddingTopElements.append(this);
+                    if(!m_speedAddingBottomElements.contains(collided))
+                        m_speedAddingBottomElements.append(collided);
                 }
                 break;
                 default:break;
             }
         }
-        if(_floorX_num!=0.0) _floorX_vel=_floorX_vel/_floorX_num;
-        if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
-        _velocityX_add=_floorX_vel;
-        _velocityY_add=_floorY_vel;
+        if(_floorX_num != 0.0) _floorX_vel=_floorX_vel/_floorX_num;
+        if(_floorY_num != 0.0) _floorY_vel=_floorY_vel/_floorY_num;
+        //_velocityX_add=_floorX_vel;
+        //_velocityY_add=_floorY_vel;
     }
 
 }

@@ -152,11 +152,13 @@ void LevelScene::processPhysics(float ticks)
     {
         LVL_Player*plr=(*it);
         plr->updateCollisions();
+        plr->iterateStepPostCollide(ticks);
     }
     //Process collision check and resolving for activated NPC's
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->updateCollisions();
+        active_npcs[i]->iterateStepPostCollide(ticks);
     }
 }
 
@@ -189,7 +191,9 @@ LevelScene::~LevelScene()
         player1Controller->removeFromControl(tmp);
         if(tmp)
         {
-            tmp->unregister();
+            if(player1Controller) player1Controller->removeFromControl(tmp);
+            if(player2Controller) player2Controller->removeFromControl(tmp);
+            tmp->unregisterFromTree();
             if(!tmp->isLuaPlayer)
                 delete tmp;
         }
@@ -220,7 +224,7 @@ LevelScene::~LevelScene()
         tmp = npcs[i];
         if(tmp)
         {
-            tmp->unregister();
+            tmp->unregisterFromTree();
             if(!tmp->isLuaNPC)
                 delete tmp;
         }
@@ -279,13 +283,13 @@ void LevelScene::tickAnimations(float ticks)
         it->manualTick(ticks);
     for(QList<AdvNpcAnimator>::iterator it=ConfigManager::Animator_NPC.begin();
         it!=ConfigManager::Animator_NPC.end(); it++)
-        it->manualTick(ticks);
+        it->manualTick(int(ticks));
 }
 
 
 void LevelScene::update()
 {
-    if(luaEngine.shouldShutdown()){
+    if(luaEngine.shouldShutdown()) {
         fader.setFade(10, 1.0f, 1.0f);
         setExiting(0, LvlExit::EXIT_Error);
     }

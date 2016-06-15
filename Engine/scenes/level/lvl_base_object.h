@@ -132,6 +132,12 @@ public:
     void setSpeedY(double y);
     void setDecelX(double x);
     void applyAccel(double x, double y);
+
+    //! Elements staying on top (or bumped from side)
+    QList<PGE_Phys_Object*> m_speedAddingTopElements;
+    QList<PGE_Phys_Object*> m_speedAddingBottomElements;
+    virtual void iterateSpeedAddingStack(double ticks);
+    virtual void removeSpeedAddingPointers();
     /*!
      * \brief Update Speed-adding stack if needed
      */
@@ -163,10 +169,13 @@ public:
     void renderDebug(float _camX, float _camY);
 
     void iterateStep(float ticks);
+    void iterateStepPostCollide(float ticks);
     virtual void updateCollisions();
     virtual void detectCollisions(PGE_Phys_Object *collided);
     double colliding_xSpeed;
     double colliding_ySpeed;
+
+    virtual bool onGround() { return false; }
 
     bool   collided_slope;
     float  collided_slope_angle_ratio;

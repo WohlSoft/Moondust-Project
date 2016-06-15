@@ -719,7 +719,7 @@ PlayWorldMap:
 PlayLevel:
     {
         bool playAgain = true;
-        int entranceID = 0;
+        long entranceID = 0;
         LevelScene* lScene;
         while(playAgain)
         {
