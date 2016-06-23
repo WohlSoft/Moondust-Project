@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QClipboard>
+
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/util.h>
 #include <common_features/mainwinconnect.h>

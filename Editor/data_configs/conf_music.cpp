@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
+
 #include <main_window/global_settings.h>
 
 #include "data_configs.h"

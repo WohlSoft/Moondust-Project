@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMimeData>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 

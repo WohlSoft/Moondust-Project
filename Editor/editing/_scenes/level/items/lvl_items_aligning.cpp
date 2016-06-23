@@ -21,6 +21,7 @@
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <defines.h>
+#include <qmath.h>
 
 #include "../lvl_scene.h"
 #include "item_block.h"

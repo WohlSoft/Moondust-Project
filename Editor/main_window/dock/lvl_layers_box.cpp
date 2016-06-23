@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QComboBox>
+
 #include <editing/_scenes/level/items/item_bgo.h>
 #include <editing/_scenes/level/items/item_block.h>
 #include <editing/_scenes/level/items/item_npc.h>

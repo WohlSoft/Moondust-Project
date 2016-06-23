@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QClipboard>
+
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 

@@ -19,6 +19,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QMessageBox>
+#include <QCheckBox>
 #include <QProcess>
 
 #include <common_features/app_path.h>
@@ -42,6 +43,7 @@
 #include <QDirIterator>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
 #endif
 
 /*!

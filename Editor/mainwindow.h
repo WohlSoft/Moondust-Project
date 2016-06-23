@@ -20,10 +20,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets>
 #include <QMdiArea>
 #include <QPixmap>
 #include <QAbstractListModel>
+#include <QSignalMapper>
+#include <QProcess>
 #include <QList>
 #include <QPoint>
 #include <QString>
@@ -35,6 +36,7 @@
 #include <QLocale>
 #include <QSplashScreen>
 #ifdef Q_OS_WIN
+#include <windows.h>
 #include <QWinThumbnailToolBar>
 #endif
 

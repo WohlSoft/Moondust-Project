@@ -1,4 +1,5 @@
 /*
+ *
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -16,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtConcurrent>
+#include <QDesktopWidget>
+
 #include <editing/_dialogs/levelfilelist.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/mainwinconnect.h>
@@ -27,8 +31,6 @@
 
 #include "wld_settings_box.h"
 #include "ui_wld_settings_box.h"
-
-#include <QtConcurrent>
 
 #include <tuple>
 

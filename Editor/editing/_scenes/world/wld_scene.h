@@ -28,9 +28,6 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QMessageBox>
-#include <QApplication>
-#include <QtCore>
-#include <QDebug>
 
 #include <common_features/simple_animator.h>
 #include <common_features/graphicsworkspace.h>

@@ -20,6 +20,7 @@
 #define TILESET_H
 
 #include <QWidget>
+#include <QGraphicsScene>
 
 #include <data_configs/data_configs.h>
 

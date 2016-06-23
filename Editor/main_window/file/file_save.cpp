@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopWidget>
+#include <QMdiSubWindow>
+
 #include <PGE_File_Formats/file_formats.h>
 
 #include <ui_mainwindow.h>

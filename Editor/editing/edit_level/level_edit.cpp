@@ -16,11 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QProgressDialog>
+#include <QMimeData>
+#include <QMimeType>
+#include <QFileInfo>
+#include <QElapsedTimer>
 //#include <QGLWidget>
 #include <QDebug>
 

@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QInputDialog>
+#include <QClipboard>
+#include <QDesktopWidget>
+
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 #include <editing/_dialogs/itemselectdialog.h>

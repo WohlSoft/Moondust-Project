@@ -19,7 +19,6 @@
 #ifndef LEVELEDIT_H
 #define LEVELEDIT_H
 
-#include <QtWidgets>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 

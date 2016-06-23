@@ -22,6 +22,10 @@
 #include <QSysInfo>
 #endif
 
+#include <QMessageBox>
+#include <QFileInfo>
+#include <QDir>
+
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>

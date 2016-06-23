@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
+#include <QFileInfo>
+#include <QFileDialog>
+#include <QInputDialog>
+
 #include <common_features/app_path.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>

@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMimeData>
+#include <QFileInfo>
+
 #include "world_edit.h"
 #include <ui_world_edit.h>
 

@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QClipboard>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <PGE_File_Formats/file_formats.h>

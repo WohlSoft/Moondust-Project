@@ -17,6 +17,8 @@
  */
 
 #include <QFont>
+#include <QDesktopWidget>
+#include <QLineEdit>
 
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>

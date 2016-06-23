@@ -17,6 +17,7 @@
  */
 
 #include <QInputDialog>
+#include <QDesktopWidget>
 
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/levelfilelist.h>

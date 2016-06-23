@@ -17,6 +17,7 @@
  */
 
 #include <QSettings>
+#include <QDesktopWidget>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>

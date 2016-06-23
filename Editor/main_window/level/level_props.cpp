@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopWidget>
+
 #include <editing/edit_level/levelprops.h>
 
 #include <ui_mainwindow.h>

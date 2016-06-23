@@ -17,6 +17,7 @@
  */
 
 #include <QInputDialog>
+#include <QClipboard>
 
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/mainwinconnect.h>

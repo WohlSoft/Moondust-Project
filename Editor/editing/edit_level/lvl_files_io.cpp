@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QInputDialog>
+#include <QDesktopWidget>
 
 #include <common_features/app_path.h>
 #include <common_features/mainwinconnect.h>

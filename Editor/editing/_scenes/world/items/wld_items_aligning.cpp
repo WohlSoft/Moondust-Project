@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <qmath.h>
+
 #include <common_features/grid.h>
 #include <common_features/mainwinconnect.h>
 #include <editing/edit_world/world_edit.h>

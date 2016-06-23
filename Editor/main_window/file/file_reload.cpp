@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMdiSubWindow>
+#include <QLineEdit>
+
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include <script/gui/additionalsettings.h>
@@ -50,9 +53,9 @@ void MainWindow::on_actionReload_triggered()
 
         if(lvlEdit->isUntitled)
         {
-                    QMessageBox::warning(this, tr("File not saved"),
-                    tr("File doesn't saved on disk."), QMessageBox::Ok);
-                        return;
+            QMessageBox::warning(this, tr("File not saved"),
+            tr("File doesn't saved on disk."), QMessageBox::Ok);
+                return;
         }
 
         if (!QFileInfo(filePath).exists() ) {

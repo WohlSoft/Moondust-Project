@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtConcurrent>
+#include <QDesktopWidget>
+
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
 #include <common_features/spash_screen.h>
@@ -25,8 +28,6 @@
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
-
-#include <QtConcurrent>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),

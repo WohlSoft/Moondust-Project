@@ -21,9 +21,15 @@
 
 #include <QList>
 #include <QDialog>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QMdiSubWindow>
+#include <QRadioButton>
+#include <QSpinBox>
 
 #include <data_configs/data_configs.h>
-
 
 namespace Ui {
 class ItemSelectDialog;

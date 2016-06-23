@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopWidget>
+
 #include <editing/_dialogs/itemselectdialog.h>
 #include <audio/music_player.h>
 #include <main_window/dock/toolboxes.h>

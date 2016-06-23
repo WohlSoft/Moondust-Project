@@ -28,9 +28,6 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QMessageBox>
-#include <QApplication>
-#include <QtCore>
-#include <QDebug>
 #include <QList>
 
 #include <common_features/logger.h>

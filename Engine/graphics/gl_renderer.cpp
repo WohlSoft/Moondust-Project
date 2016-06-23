@@ -88,8 +88,8 @@ static bool isGlExtensionSupported( const char* ext, const unsigned char * exts 
 static bool detectOpenGL2()
 {
     QString errorPlace;
-    SDL_GLContext glcontext;
-    SDL_Window* dummy;
+    SDL_GLContext glcontext = NULL;
+    SDL_Window* dummy = NULL;
     GLubyte* sExtensions = NULL;
     GLuint test_texture = 0;
     unsigned char dummy_texture[] = {
@@ -326,8 +326,8 @@ sdl_error:
 static bool detectOpenGL3()
 {
     QString errorPlace;
-    SDL_GLContext glcontext;
-    SDL_Window* dummy;
+    SDL_GLContext glcontext = NULL;
+    SDL_Window* dummy = NULL;
     GLubyte* sExtensions = NULL;
     GLuint test_texture = 0;
     unsigned char dummy_texture[] = {

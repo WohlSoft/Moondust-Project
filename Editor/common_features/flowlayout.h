@@ -42,8 +42,10 @@
 #define FLOWLAYOUT_H
 
 #include <QLayout>
+#include <QWidget>
 #include <QRect>
 #include <QStyle>
+
 class FlowLayout : public QLayout
 {
 public:

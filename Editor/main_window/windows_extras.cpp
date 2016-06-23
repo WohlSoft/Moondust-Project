@@ -2,13 +2,15 @@
 #include <ui_mainwindow.h>
 
 #ifdef Q_OS_WIN
-#include <QtWinExtras>
+#include <QWinThumbnailToolBar>
+#include <QWinThumbnailToolButton>
+#include <QMdiSubWindow>
 #include <QSysInfo>
 #include <winbase.h>
 
 void MainWindow::initWindowsThumbnail()
 {
-    if(QSysInfo::WindowsVersion<QSysInfo::WV_VISTA) return;
+    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA ) return;
 
     pge_thumbbar = new QWinThumbnailToolBar(this);
     pge_thumbbar->setWindow(this->windowHandle());
@@ -38,7 +40,8 @@ void MainWindow::initWindowsThumbnail()
 
 void MainWindow::updateWindowsExtrasPixmap()
 {
-    if(QSysInfo::WindowsVersion<QSysInfo::WV_VISTA) return;
+    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA) return;
+
     QRect viewPort;
 
     if(!LastActiveSubWindow) {
@@ -91,7 +94,7 @@ void MainWindow::updateWindowsExtrasPixmap()
 
 void MainWindow::drawWindowsDefaults()
 {
-    if(QSysInfo::WindowsVersion<QSysInfo::WV_VISTA) return;
+    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA ) return;
 
     QPixmap defThumbPixmap(400,300);
     QPixmap defLivePreviewPixmap(size());

@@ -17,8 +17,10 @@
  */
 
 #include <QObject>
+#include <QGroupBox>
 #include <QMessageBox>
 #include <QScrollArea>
+#include <QDesktopWidget>
 
 #include <common_features/logger.h>
 #include <common_features/themes.h>

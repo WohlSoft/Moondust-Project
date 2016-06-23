@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QPushButton>
+
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/toolboxes.h>

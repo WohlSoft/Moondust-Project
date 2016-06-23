@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QLineEdit>
+#include <QMdiSubWindow>
+
 #include <common_features/graphicsworkspace.h>
 #include <common_features/themes.h>
 
@@ -172,6 +175,7 @@ NpcEdit *MainWindow::activeNpcEditWin()
         return qobject_cast<NpcEdit *>(activeSubWindow->widget());
     return 0;
 }
+
 NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
 {
     if (wnd)

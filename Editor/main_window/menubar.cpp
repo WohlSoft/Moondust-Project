@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMdiSubWindow>
+
 #include <common_features/graphicsworkspace.h>
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
@@ -36,7 +38,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         //    qApp->setActiveWindow(this);
         //this->update();
         //Don't update if this is - same subWindow
-        if(subWindow==NULL)
+        if( subWindow==NULL )
         {
             if( !ui->centralWidget->subWindowList().isEmpty() )
                 return;

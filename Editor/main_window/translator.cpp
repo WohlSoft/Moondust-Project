@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMdiSubWindow>
+
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
 #include <dev_console/devconsole.h>

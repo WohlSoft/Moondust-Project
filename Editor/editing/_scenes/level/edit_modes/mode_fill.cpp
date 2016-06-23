@@ -72,7 +72,7 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         s->IsMoved = true;
         return;
     }
-    if(! mouseEvent->buttons() & Qt::LeftButton)
+    if(! (mouseEvent->buttons()&Qt::LeftButton) )
         return;
 
     if(s->cursor)

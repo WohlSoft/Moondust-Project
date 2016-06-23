@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
-
 #include <common_features/mainwinconnect.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>

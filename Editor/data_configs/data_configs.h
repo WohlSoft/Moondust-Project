@@ -21,10 +21,10 @@
 
 #include <QVector>
 #include <QHash>
+#include <QWidget>
 #include <QObject>
 #include <QPixmap>
 #include <QBitmap>
-#include <QtWidgets>
 #include <QSettings>
 #include <QDebug>
 
