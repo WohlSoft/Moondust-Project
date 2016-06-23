@@ -22,6 +22,7 @@
 #include <QSysInfo>
 #endif
 
+#include <QApplication>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QDir>

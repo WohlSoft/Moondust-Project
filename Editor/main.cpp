@@ -24,6 +24,10 @@
 #include <QFileInfo>
 #include <QDir>
 
+#ifdef Q_OS_LINUX
+#include <QStyleFactory>
+#endif
+
 #include <iostream>
 #include "version.h"
 
@@ -73,8 +77,11 @@ int main(int argc, char *argv[])
 
     a->setStyle(new PGE_ProxyStyle);
     #ifdef Q_OS_LINUX
-    a->setStyle("GTK");
-    //a->setStyle("Windows");
+    {
+        QStringList availableStyles = QStyleFactory::keys();
+        if( availableStyles.contains("GTK", Qt::CaseInsensitive) )
+            a->setStyle("GTK");
+    }
     #endif
 
     QFont fnt = a->font();

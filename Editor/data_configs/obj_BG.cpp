@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <qmath.h>
+
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
 #include <common_features/graphics_funcs.h>

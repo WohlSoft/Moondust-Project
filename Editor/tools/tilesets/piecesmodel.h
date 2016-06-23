@@ -24,6 +24,7 @@
 #include <QPixmap>
 #include <QPoint>
 #include <QStringList>
+#include <QGraphicsScene>
 
 #include <data_configs/data_configs.h>
 

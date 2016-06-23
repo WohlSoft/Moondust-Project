@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
+
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>

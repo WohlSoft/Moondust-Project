@@ -20,6 +20,7 @@
 #define TILESETITEMBUTTON_H
 
 #include <QFrame>
+#include <QGraphicsScene>
 
 #include <data_configs/data_configs.h>
 

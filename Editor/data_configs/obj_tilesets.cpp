@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
+
 #include <tools/tilesets/tilesetgroupeditor.h>
 
 #include "data_configs.h"
