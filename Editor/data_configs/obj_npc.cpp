@@ -17,6 +17,7 @@
  */
 
 #include <QFile>
+#include <tgmath.h>
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
