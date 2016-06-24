@@ -6868,7 +6868,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1331"/>
         <source>Wrap Horizontally</source>
-        <translation>Wrap horizontaly</translation>
+        <translation>Wrap Horizontaly</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1345"/>
@@ -7178,7 +7178,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2719"/>
         <source>Wrap Vertically</source>
-        <translation>Wrap vertucally</translation>
+        <translation>Wrap Vertically</translation>
     </message>
     <message>
         <source>Settings</source>
