@@ -27,7 +27,7 @@
 #define _BUILD_VER "<empty>"
 #endif
 
-#define _FILE_VERSION "0.3.1.10"
+#define _FILE_VERSION "0.3.1.11"
 #define _FILE_RELEASE ""
 
 //Version of this program
@@ -36,7 +36,7 @@
 #define _VF1 0
 #define _VF2 3
 #define _VF3 1
-#define _VF4 10
+#define _VF4 11
 
 
 #define _FILE_DESC "Platformer Game Engine - Editor"

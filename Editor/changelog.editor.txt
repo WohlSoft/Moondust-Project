@@ -1,4 +1,4 @@
-Editor post-0.3.1.10
+Editor 0.3.1.11
 - Added Polish translation of the editor
 - Optimized performance and memory usage
 - Fixed some inabilities to show custom graphics in the item selection dialogs

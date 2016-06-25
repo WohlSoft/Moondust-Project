@@ -6,6 +6,7 @@ Editor
 - Speed-up render of editing scene with forcing of RTree usage with escaping usage of QGraphicsScene's update() function!
 - Add per lvl_block/lvl_bgo/lvl_npc/wld_tiles/etc. common grid value
 - Use lvl_characters.ini instead of main.ini to store characters information
+- Make spoilers / scroll-area in the warps box to support view on smaller screens
 
 Engine
 - Replace QDialog-based config pack selection box with the own-drawn scene in the SDL Window
