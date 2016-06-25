@@ -192,8 +192,10 @@ void CrashHandler::attemptCrashsave()
 
 
     QList<QMdiSubWindow*> listOfAllSubWindows = MainWinConnect::pMainWin->allEditWins();
-    foreach (QMdiSubWindow* subWin, listOfAllSubWindows) {
-        if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
+    foreach (QMdiSubWindow* subWin, listOfAllSubWindows)
+    {
+        if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1)
+        {
             LevelEdit* lvledit = MainWinConnect::pMainWin->activeLvlEditWin(subWin);
 
             QString fName = lvledit->currentFile();
@@ -211,7 +213,7 @@ void CrashHandler::attemptCrashsave()
             lvledit->LvlData.metaData.crash.fullPath = lvledit->curFile;
 
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
-        }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2){
+        } else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2) {
             NpcEdit* npcedit = MainWinConnect::pMainWin->activeNpcEditWin();
 
             QString fName = npcedit->currentFile();
@@ -222,13 +224,13 @@ void CrashHandler::attemptCrashsave()
             }
 
             npcedit->saveFile(crashSave.absoluteFilePath(fName), false);
-        }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){
+        } else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3) {
             WorldEdit* worldedit = MainWinConnect::pMainWin->activeWldEditWin();
 
             QString fName = worldedit->currentFile();
-            if(worldedit->isUntitled){
+            if(worldedit->isUntitled) {
                 fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".wldx");
-            }else{
+            } else {
                 fName = fName = fName.section("/", -1)+QString(".wldx");
             }
 
@@ -278,18 +280,18 @@ void CrashHandler::initCrashHandlers()
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
     #ifndef _WIN32 //Unsupported signals by Windows
-    signal(SIGHUP, &crashBySIGNAL);
+    signal(SIGHUP,  &crashBySIGNAL);
     signal(SIGQUIT, &crashBySIGNAL);
     signal(SIGKILL, &crashBySIGNAL);
     signal(SIGALRM, &crashBySIGNAL);
-    signal(SIGURG, &crashBySIGNAL);
+    signal(SIGURG,  &crashBySIGNAL);
     signal(SIGUSR1, &crashBySIGNAL);
     signal(SIGUSR2, &crashBySIGNAL);
     #endif
-    signal(SIGILL, &crashBySIGNAL);
-    signal(SIGFPE, &crashBySIGNAL);
+    signal(SIGILL,  &crashBySIGNAL);
+    signal(SIGFPE,  &crashBySIGNAL);
     signal(SIGSEGV, &crashBySIGNAL);
-    signal(SIGINT, &crashBySIGNAL);
+    signal(SIGINT,  &crashBySIGNAL);
     signal(SIGABRT, &crashBySIGNAL);
 #endif
 }

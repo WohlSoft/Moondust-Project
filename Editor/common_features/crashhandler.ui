@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>420</height>
+    <width>593</width>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</string>
+      <string>Ouch, PGE Editor has crashed :(&lt;br&gt;Detailed crash information data:</string>
      </property>
     </widget>
    </item>
