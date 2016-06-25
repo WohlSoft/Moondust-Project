@@ -10,12 +10,6 @@
     <height>500</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>297</width>
-    <height>500</height>
-   </size>
-  </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
   </property>
@@ -60,9 +54,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>283</width>
-         <height>1708</height>
+         <y>-826</y>
+         <width>290</width>
+         <height>1640</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1400,6 +1394,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </item>
            <item row="3" column="0" colspan="3">
             <widget class="QGroupBox" name="PROPS_NpcDir">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="title">
               <string>Direction</string>
              </property>

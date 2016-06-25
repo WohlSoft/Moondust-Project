@@ -87,17 +87,24 @@ QComboBox *LvlWarpBox::cbox_event_enter()
 
 void LvlWarpBox::setSMBX64Strict(bool en)
 {
-    // Disalbe all non-supported in SMBX 1.3 parameters
-    ui->WarpTwoWay->setDisabled(en);
-    ui->WarpNeedAStarsMsg->setDisabled(en);
-    ui->WarpHideStars->setDisabled(en);
-    ui->WarpBombNeed->setDisabled(en);
-    ui->WarpHideLevelEnterScreen->setDisabled(en);
-    ui->WarpAllowNPC_IL->setDisabled(en);
-    ui->WarpSpecialStateOnly->setDisabled(en);
-    ui->warpBoxEnterEvent->setDisabled(en);
+    bool shown = !en;
+    // Disalbe/Hide all non-supported in SMBX 1.3 parameters
+    ui->WarpTwoWay->setVisible(shown);
+    ui->WarpNeedAStarsMsg->setVisible(shown);
+    ui->WarpHideStars->setVisible(shown);
+    ui->WarpBombNeed->setVisible(shown);
+    ui->WarpHideLevelEnterScreen->setVisible(shown);
+
+    ui->WarpAllowNPC_IL->setVisible(shown);
+    ui->WarpSpecialStateOnly->setVisible(shown);
+
+    ui->warpBoxCannon->setVisible(shown);
     ui->WarpEnableCannon->setDisabled(en);
     ui->WarpCannonSpeed->setDisabled(en);
+
+    ui->warpBoxEnterEvent->setVisible(shown);
+    ui->WarpEnterEvent->setDisabled(en);
+    ui->WarpEnterEvent_label->setDisabled(en);
 }
 
 void LvlWarpBox::re_translate()

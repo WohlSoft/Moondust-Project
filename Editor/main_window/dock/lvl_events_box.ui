@@ -10,12 +10,6 @@
     <height>724</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>284</width>
-    <height>600</height>
-   </size>
-  </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
@@ -145,9 +139,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-526</y>
+         <y>0</y>
          <width>257</width>
-         <height>1951</height>
+         <height>1930</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -196,7 +190,7 @@
              <x>0</x>
              <y>0</y>
              <width>237</width>
-             <height>450</height>
+             <height>418</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -757,8 +751,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>243</width>
-             <height>533</height>
+             <width>249</width>
+             <height>525</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">

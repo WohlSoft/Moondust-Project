@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>517</height>
+    <width>287</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -37,9 +37,9 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="FindToolbox">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="FindToolboxBlock" native="true">
+      <widget class="QWidget" name="FindToolboxBlock">
        <attribute name="title">
         <string>Block</string>
        </attribute>
@@ -262,7 +262,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxBgo" native="true">
+      <widget class="QWidget" name="FindToolboxBgo">
        <attribute name="title">
         <string>BGO</string>
        </attribute>
@@ -406,11 +406,14 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="FindToolboxNpc" native="true">
+      <widget class="QWidget" name="FindToolboxNpc">
        <attribute name="title">
         <string>NPC</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_12">
+       <layout class="QGridLayout" name="gridLayout_12" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,100">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -562,6 +565,12 @@
         </item>
         <item row="7" column="4" rowspan="2" colspan="2">
          <widget class="QGroupBox" name="groupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="title">
            <string>Direction</string>
           </property>
@@ -626,6 +635,12 @@
         </item>
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label_33">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
            <string>Search?</string>
           </property>
@@ -656,13 +671,6 @@
          <widget class="Line" name="line_8">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_34">
-          <property name="text">
-           <string>Data</string>
           </property>
          </widget>
         </item>
@@ -777,18 +785,34 @@
           </item>
          </widget>
         </item>
-        <item row="19" column="0" rowspan="2" colspan="4">
+        <item row="19" column="0" rowspan="2" colspan="5">
          <spacer name="verticalSpacer_13">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>136</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="0" column="3" colspan="2">
+         <widget class="QLabel" name="label_34">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

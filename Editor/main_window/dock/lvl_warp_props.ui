@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>716</height>
+    <width>272</width>
+    <height>711</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>300</width>
-    <height>500</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="maximumSize">
    <size>
-    <width>300</width>
+    <width>400</width>
     <height>524287</height>
    </size>
   </property>
@@ -160,6 +160,12 @@ Every warp points pair requires a warp entry</string>
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QGroupBox" name="warpBoxDirect">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -671,13 +677,19 @@ Every warp points pair requires a warp entry</string>
       <property name="sizeHint" stdset="0">
        <size>
         <width>0</width>
-        <height>2</height>
+        <height>0</height>
        </size>
       </property>
      </spacer>
     </item>
     <item row="5" column="0">
      <widget class="QGroupBox" name="warpBoxWD">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -750,6 +762,12 @@ If this flag is enabled, possible to place exit point only.</string>
     </item>
     <item row="4" column="0" colspan="2">
      <widget class="QGroupBox" name="warpBoxWTW">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Warp to World map</string>
       </property>
@@ -817,6 +835,12 @@ when you exited from a level through this warp</string>
     </item>
     <item row="1" column="0" colspan="2">
      <widget class="QGroupBox" name="warpBoxMain">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Main</string>
       </property>
@@ -849,6 +873,12 @@ when you exited from a level through this warp</string>
          </property>
          <property name="sizeType">
           <enum>QSizePolicy::MinimumExpanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
         </spacer>
        </item>
@@ -1167,7 +1197,7 @@ and collected stars will not be shown.</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_9">
+           <widget class="QLabel" name="WarpEnterEvent_label">
             <property name="text">
              <string>On-Enter event:</string>
             </property>
@@ -1298,6 +1328,12 @@ Special state of playable character is defining by current configuration package
     </item>
     <item row="5" column="1">
      <widget class="QGroupBox" name="warpBoxWTL">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -1356,6 +1392,12 @@ If value is zero, start level at pre-declared player start points.</string>
         <spacer name="verticalSpacer_10">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
         </spacer>
        </item>
@@ -1422,6 +1464,12 @@ to another level through this warp.</string>
     </item>
     <item row="3" column="0" colspan="2">
      <widget class="QGroupBox" name="warpBoxCannon">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Cannon shoot exit</string>
       </property>
