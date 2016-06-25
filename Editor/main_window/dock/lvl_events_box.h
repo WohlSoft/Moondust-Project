@@ -21,12 +21,20 @@ class LvlEventsBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
+
     explicit LvlEventsBox(QWidget *parent = 0);
     ~LvlEventsBox();
+
+    /**
+     * @brief Automatically adds extra section setup entries if added more sections
+     * @param setsList Reference to list of section setup entries
+     * @param sectionID ID (from 0 to n-1) of current section
+     */
+    void checkSectionSet(QList<LevelEvent_Sets> &setsList, int sectionID);
 public:
     bool LvlEventBoxLock;
     QComboBox* cbox_layer_to_move();
-    QComboBox *cbox_event_trigger();
+    QComboBox* cbox_event_trigger();
     QComboBox* cbox_sct_mus();
     QComboBox* cbox_sct_bg();
     QPushButton *button_event_dupe();

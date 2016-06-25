@@ -87,6 +87,16 @@ LvlEventsBox::~LvlEventsBox()
     delete ui;
 }
 
+void LvlEventsBox::checkSectionSet(QList<LevelEvent_Sets>& setsList, int sectionID)
+{
+    while( setsList.size() <= sectionID )
+    {
+        LevelEvent_Sets sset;
+        sset.id = setsList.size();
+        setsList.push_back(sset);
+    }
+}
+
 QComboBox *LvlEventsBox::cbox_layer_to_move()
 {
     return ui->LVLEvent_LayerMov_List;
@@ -590,94 +600,95 @@ void LvlEventsBox::eventSectionSettingsSync()
 
         int sectionID = ui->LVLEvent_Sct_list->currentData().toInt();
 
-        if(sectionID<edit->LvlData.events[i].sets.size())
-        {
-            ui->LVLEvent_SctSize_left->setText("");
-            ui->LVLEvent_SctSize_top->setText("");
-            ui->LVLEvent_SctSize_bottom->setText("");
-            ui->LVLEvent_SctSize_right->setText("");
-            ui->LVLEvent_SctSize_left->setEnabled(false);
-            ui->LVLEvent_SctSize_top->setEnabled(false);
-            ui->LVLEvent_SctSize_bottom->setEnabled(false);
-            ui->LVLEvent_SctSize_right->setEnabled(false);
-            ui->LVLEvent_SctSize_Set->setEnabled(false);
+        checkSectionSet(edit->LvlData.events[i].sets, curSectionField);
 
-        switch(edit->LvlData.events[i].sets[sectionID].position_left)
-            {
-            case -1:
-                ui->LVLEvent_SctSize_none->setChecked(true);
-                break;
-            case -2:
-                ui->LVLEvent_SctSize_reset->setChecked(true);
-                break;
-            default:
-                ui->LVLEvent_SctSize_define->setChecked(true);
-                lockEventSectionDataList=true;
-                ui->LVLEvent_SctSize_left->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_left));
-                ui->LVLEvent_SctSize_top->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_top));
-                ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_bottom));
-                ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_right));
-                ui->LVLEvent_SctSize_left->setEnabled(true);
-                ui->LVLEvent_SctSize_top->setEnabled(true);
-                ui->LVLEvent_SctSize_bottom->setEnabled(true);
-                ui->LVLEvent_SctSize_right->setEnabled(true);
-                ui->LVLEvent_SctSize_Set->setEnabled(true);
-                break;
-            }
+        LevelEvent_Sets &SectionSet = edit->LvlData.events[i].sets[sectionID];
+
+        ui->LVLEvent_SctSize_left->setText("");
+        ui->LVLEvent_SctSize_top->setText("");
+        ui->LVLEvent_SctSize_bottom->setText("");
+        ui->LVLEvent_SctSize_right->setText("");
+        ui->LVLEvent_SctSize_left->setEnabled(false);
+        ui->LVLEvent_SctSize_top->setEnabled(false);
+        ui->LVLEvent_SctSize_bottom->setEnabled(false);
+        ui->LVLEvent_SctSize_right->setEnabled(false);
+        ui->LVLEvent_SctSize_Set->setEnabled(false);
+
+        switch(SectionSet.position_left)
+        {
+        case -1:
+            ui->LVLEvent_SctSize_none->setChecked(true);
+            break;
+        case -2:
+            ui->LVLEvent_SctSize_reset->setChecked(true);
+            break;
+        default:
+            ui->LVLEvent_SctSize_define->setChecked(true);
+            lockEventSectionDataList=true;
+            ui->LVLEvent_SctSize_left->setText(QString::number(SectionSet.position_left));
+            ui->LVLEvent_SctSize_top->setText(QString::number(SectionSet.position_top));
+            ui->LVLEvent_SctSize_bottom->setText(QString::number(SectionSet.position_bottom));
+            ui->LVLEvent_SctSize_right->setText(QString::number(SectionSet.position_right));
+            ui->LVLEvent_SctSize_left->setEnabled(true);
+            ui->LVLEvent_SctSize_top->setEnabled(true);
+            ui->LVLEvent_SctSize_bottom->setEnabled(true);
+            ui->LVLEvent_SctSize_right->setEnabled(true);
+            ui->LVLEvent_SctSize_Set->setEnabled(true);
+            break;
+        }
 
         ui->LVLEvent_SctMus_List->setEnabled(false);
-        long musicID = edit->LvlData.events[i].sets[sectionID].music_id;
+        long musicID = SectionSet.music_id;
         switch(musicID)
-            {
-            case -1:
-                ui->LVLEvent_SctMus_none->setChecked(true);
-                break;
-            case -2:
-                ui->LVLEvent_SctMus_reset->setChecked(true);
-                break;
-            default:
-                ui->LVLEvent_SctMus_define->setChecked(true);
-                ui->LVLEvent_SctMus_List->setEnabled(true);
+        {
+        case -1:
+            ui->LVLEvent_SctMus_none->setChecked(true);
+            break;
+        case -2:
+            ui->LVLEvent_SctMus_reset->setChecked(true);
+            break;
+        default:
+            ui->LVLEvent_SctMus_define->setChecked(true);
+            ui->LVLEvent_SctMus_List->setEnabled(true);
 
-                lockEventSectionDataList=true;
-                ui->LVLEvent_SctMus_List->setCurrentIndex(0);
-                for(int q=0; q<ui->LVLEvent_SctMus_List->count(); q++)
+            lockEventSectionDataList=true;
+            ui->LVLEvent_SctMus_List->setCurrentIndex(0);
+            for(int q=0; q<ui->LVLEvent_SctMus_List->count(); q++)
+            {
+                if(ui->LVLEvent_SctMus_List->itemData(q).toInt()==musicID)
                 {
-                    if(ui->LVLEvent_SctMus_List->itemData(q).toInt()==musicID)
-                    {
-                        ui->LVLEvent_SctMus_List->setCurrentIndex(q);
-                        break;
-                    }
+                    ui->LVLEvent_SctMus_List->setCurrentIndex(q);
+                    break;
                 }
-                break;
             }
+            break;
+        }
 
         ui->LVLEvent_SctBg_List->setEnabled(false);
-        long backgrndID = edit->LvlData.events[i].sets[sectionID].background_id;
+        long backgrndID = SectionSet.background_id;
         switch(backgrndID)
-            {
-            case -1:
-                ui->LVLEvent_SctBg_none->setChecked(true);
-                break;
-            case -2:
-                ui->LVLEvent_SctBg_reset->setChecked(true);
-                break;
-            default:
-                ui->LVLEvent_SctBg_define->setChecked(true);
-                ui->LVLEvent_SctBg_List->setEnabled(true);
+        {
+        case -1:
+            ui->LVLEvent_SctBg_none->setChecked(true);
+            break;
+        case -2:
+            ui->LVLEvent_SctBg_reset->setChecked(true);
+            break;
+        default:
+            ui->LVLEvent_SctBg_define->setChecked(true);
+            ui->LVLEvent_SctBg_List->setEnabled(true);
 
-                lockEventSectionDataList=true;
-                ui->LVLEvent_SctBg_List->setCurrentIndex(0);
-                for(int q=0; q<ui->LVLEvent_SctBg_List->count(); q++)
+            lockEventSectionDataList=true;
+            ui->LVLEvent_SctBg_List->setCurrentIndex(0);
+            for(int q=0; q<ui->LVLEvent_SctBg_List->count(); q++)
+            {
+                if(ui->LVLEvent_SctBg_List->itemData(q).toInt()==backgrndID)
                 {
-                    if(ui->LVLEvent_SctBg_List->itemData(q).toInt()==backgrndID)
-                    {
-                        ui->LVLEvent_SctBg_List->setCurrentIndex(q);
-                        break;
-                    }
+                    ui->LVLEvent_SctBg_List->setCurrentIndex(q);
+                    break;
                 }
-                break;
             }
+            break;
         }
     }
 
@@ -1498,17 +1509,21 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> sizeData;
         sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
+        sizeData.push_back((qlonglong)SectionSet.position_top);
+        sizeData.push_back((qlonglong)SectionSet.position_right);
+        sizeData.push_back((qlonglong)SectionSet.position_bottom);
+        sizeData.push_back((qlonglong)SectionSet.position_left);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)-1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setText("");
         ui->LVLEvent_SctSize_top->setText("");
@@ -1520,10 +1535,10 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
         ui->LVLEvent_SctSize_right->setEnabled(false);
         ui->LVLEvent_SctSize_Set->setEnabled(false);
 
-        edit->LvlData.events[i].sets[curSectionField].position_left = -1;
-        edit->LvlData.events[i].sets[curSectionField].position_right = 0;
-        edit->LvlData.events[i].sets[curSectionField].position_bottom = 0;
-        edit->LvlData.events[i].sets[curSectionField].position_top = 0;
+        SectionSet.position_left = -1;
+        SectionSet.position_right = 0;
+        SectionSet.position_bottom = 0;
+        SectionSet.position_top = 0;
         edit->LvlData.modified=true;
     }
     lockEventSectionDataList=false;
@@ -1545,17 +1560,21 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> sizeData;
         sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
+        sizeData.push_back((qlonglong)SectionSet.position_top);
+        sizeData.push_back((qlonglong)SectionSet.position_right);
+        sizeData.push_back((qlonglong)SectionSet.position_bottom);
+        sizeData.push_back((qlonglong)SectionSet.position_left);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)-2);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setText("");
         ui->LVLEvent_SctSize_top->setText("");
@@ -1567,10 +1586,10 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
         ui->LVLEvent_SctSize_right->setEnabled(false);
         ui->LVLEvent_SctSize_Set->setEnabled(false);
 
-        edit->LvlData.events[i].sets[curSectionField].position_left = -2;
-        edit->LvlData.events[i].sets[curSectionField].position_right = 0;
-        edit->LvlData.events[i].sets[curSectionField].position_bottom = 0;
-        edit->LvlData.events[i].sets[curSectionField].position_top = 0;
+        SectionSet.position_left = -2;
+        SectionSet.position_right = 0;
+        SectionSet.position_bottom = 0;
+        SectionSet.position_top = 0;
         edit->LvlData.modified=true;
     }
     lockEventSectionDataList=false;
@@ -1591,17 +1610,21 @@ void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> sizeData;
         sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
+        sizeData.push_back((qlonglong)SectionSet.position_top);
+        sizeData.push_back((qlonglong)SectionSet.position_right);
+        sizeData.push_back((qlonglong)SectionSet.position_bottom);
+        sizeData.push_back((qlonglong)SectionSet.position_left);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_top);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_right);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_bottom);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_left);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setEnabled(true);
         ui->LVLEvent_SctSize_top->setEnabled(true);
@@ -1614,10 +1637,10 @@ void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
         ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.sections[curSectionField].size_bottom) );
         ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.sections[curSectionField].size_right) );
 
-        edit->LvlData.events[i].sets[curSectionField].position_left = edit->LvlData.sections[curSectionField].size_left;
-        edit->LvlData.events[i].sets[curSectionField].position_right = edit->LvlData.sections[curSectionField].size_right;
-        edit->LvlData.events[i].sets[curSectionField].position_bottom = edit->LvlData.sections[curSectionField].size_bottom;
-        edit->LvlData.events[i].sets[curSectionField].position_top = edit->LvlData.sections[curSectionField].size_top;
+        SectionSet.position_left = edit->LvlData.sections[curSectionField].size_left;
+        SectionSet.position_right = edit->LvlData.sections[curSectionField].size_right;
+        SectionSet.position_bottom = edit->LvlData.sections[curSectionField].size_bottom;
+        SectionSet.position_top = edit->LvlData.sections[curSectionField].size_top;
         edit->LvlData.modified=true;
     }
     lockEventSectionDataList=false;
@@ -1638,19 +1661,23 @@ void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back(arg1.toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
 
-        edit->LvlData.events[i].sets[curSectionField].position_left = arg1.toInt();
+        QList<QVariant> sizeData;
+        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(arg1.toInt()));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+
+        SectionSet.position_left = arg1.toInt();
     }
     lockEventSectionDataList=false;
 }
@@ -1671,19 +1698,23 @@ void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        sizeData.push_back((qlonglong)arg1.toInt());
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
 
-        edit->LvlData.events[i].sets[curSectionField].position_top = arg1.toInt();
+        QList<QVariant> sizeData;
+        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        sizeData.push_back(qlonglong(arg1.toInt()));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+
+        SectionSet.position_top = arg1.toInt();
     }
     lockEventSectionDataList=false;
 
@@ -1705,19 +1736,23 @@ void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)arg1.toInt());
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
 
-        edit->LvlData.events[i].sets[curSectionField].position_bottom = arg1.toInt();
+        QList<QVariant> sizeData;
+        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(arg1.toInt()));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+
+        SectionSet.position_bottom = arg1.toInt();
     }
     lockEventSectionDataList=false;
 }
@@ -1737,19 +1772,23 @@ void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_right);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_top);
-        sizeData.push_back((qlonglong)arg1.toInt());
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].position_left);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
 
-        edit->LvlData.events[i].sets[curSectionField].position_right = arg1.toInt();
+        QList<QVariant> sizeData;
+        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(SectionSet.position_right));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        sizeData.push_back(qlonglong(SectionSet.position_top));
+        sizeData.push_back(qlonglong(arg1.toInt()));
+        sizeData.push_back(qlonglong(SectionSet.position_bottom));
+        sizeData.push_back(qlonglong(SectionSet.position_left));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+
+        SectionSet.position_right = arg1.toInt();
     }
     lockEventSectionDataList=false;
 
@@ -1777,13 +1816,17 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         edit->setFocus();
         if(edit->scene->pResizer==NULL)
         {
-            edit->goTo(edit->LvlData.events[i].sets[curSectionField].position_left,
-                                     edit->LvlData.events[i].sets[curSectionField].position_top,
-                                     false,
-                                     QPoint(-10,-10));
+            edit->goTo( SectionSet.position_left,
+                        SectionSet.position_top,
+                        false,
+                        QPoint(-10,-10));
             edit->scene->setEventSctSizeResizer(i, true);
         }
     }
@@ -1806,12 +1849,16 @@ void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> musData;
         musData.push_back((qlonglong)curSectionField);
-        musData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].music_id);
+        musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)-1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
-        edit->LvlData.events[i].sets[curSectionField].music_id = -1;
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        SectionSet.music_id = -1;
     }
     lockEventSectionDataList=false;
 
@@ -1834,12 +1881,16 @@ void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> musData;
-        musData.push_back((qlonglong)curSectionField);
-        musData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].music_id);
-        musData.push_back((qlonglong)-2);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
-        edit->LvlData.events[i].sets[curSectionField].music_id = -2;
+        musData.push_back(qlonglong(curSectionField));
+        musData.push_back(qlonglong(SectionSet.music_id));
+        musData.push_back(qlonglong(-2));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        SectionSet.music_id = -2;
     }
     lockEventSectionDataList=false;
 }
@@ -1861,12 +1912,16 @@ void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> musData;
         musData.push_back((qlonglong)curSectionField);
-        musData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].music_id);
+        musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->currentData().toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
-        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        SectionSet.music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
 }
@@ -1887,12 +1942,16 @@ void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> musData;
         musData.push_back((qlonglong)curSectionField);
-        musData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].music_id);
+        musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->itemData(index).toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
-        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        SectionSet.music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
     }
     lockEventSectionDataList=false;
 }
@@ -1914,12 +1973,16 @@ void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> bgData;
-        bgData.push_back((qlonglong)curSectionField);
-        bgData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].background_id);
-        bgData.push_back((qlonglong)-1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        edit->LvlData.events[i].sets[curSectionField].background_id = -1;
+        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(SectionSet.background_id));
+        bgData.push_back(qlonglong(-1));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        SectionSet.background_id = -1;
     }
     lockEventSectionDataList=false;
 
@@ -1942,12 +2005,16 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> bgData;
-        bgData.push_back((qlonglong)curSectionField);
-        bgData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].background_id);
-        bgData.push_back((qlonglong)-2);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        edit->LvlData.events[i].sets[curSectionField].background_id = -2;
+        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(SectionSet.background_id));
+        bgData.push_back(qlonglong(-2));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        SectionSet.background_id = -2;
     }
     lockEventSectionDataList=false;
 
@@ -1970,12 +2037,16 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> bgData;
-        bgData.push_back((qlonglong)curSectionField);
-        bgData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].background_id);
-        bgData.push_back((qlonglong)ui->LVLEvent_SctBg_List->currentData().toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
+        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(SectionSet.background_id));
+        bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->currentData().toInt()));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        SectionSet.background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
 
@@ -1999,12 +2070,16 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, curSectionField);
+        LevelEvent_Sets& SectionSet = event.sets[curSectionField];
+
         QList<QVariant> bgData;
-        bgData.push_back((qlonglong)curSectionField);
-        bgData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].background_id);
-        bgData.push_back((qlonglong)ui->LVLEvent_SctBg_List->itemData(index).toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
+        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(SectionSet.background_id));
+        bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->itemData(index).toInt()));
+        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        SectionSet.background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
     }
     lockEventSectionDataList=false;
 }
