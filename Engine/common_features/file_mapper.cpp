@@ -142,19 +142,19 @@ bool PGE_FileMapper::close_file()
         #elif _WIN32
         if (m_Address != NULL)
         {
-            try{ UnmapViewOfFile(m_Address); } catch(void */*e*/) {}
+            try{ UnmapViewOfFile(m_Address); } catch(void * /*e*/) {}
             m_Address=NULL;
         }
 
         if (m_Map != NULL)
         {
-            try{ CloseHandle(m_Map); } catch(void */*e*/) {}
+            try{ CloseHandle(m_Map); } catch(void * /*e*/) {}
             m_Map=NULL;
         }
 
         if (m_File != INVALID_HANDLE_VALUE)
         {
-            try{ CloseHandle(m_File);} catch(void*/*e*/) {}
+            try{ CloseHandle(m_File);} catch(void* /*e*/) {}
             m_File = NULL;
         }
         #endif
