@@ -17,14 +17,9 @@
 #define MAX_OUTPUT_CHANNELS 2
 #endif
 
-/* Reference for converting mikmod output to 4/6 channels */
-static int current_output_channels;
-static Uint16 current_output_format;
-
-static int gme_t_sample_rate = 44100;
-
-/* Initialize the Game Music Emulators player, with the given mixer settings
-   This function returns 0, or -1 if there was an error.
+/*
+ * Initialize the Game Music Emulators player, with the given mixer settings
+ * This function returns 0, or -1 if there was an error.
  */
 
 /* This is the format of the audio mixer data */
@@ -32,13 +27,7 @@ static SDL_AudioSpec mixer;
 
 int GME_init(SDL_AudioSpec *mixerfmt)
 {
-    gme_t_sample_rate = mixerfmt->freq;
-
-    current_output_channels = mixerfmt->channels;
-    current_output_format = mixerfmt->format;
-
     mixer = *mixerfmt;
-
     return 0;
 }
 
@@ -89,7 +78,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
 
         Music_Emu* game_emu;
 
-        char *err = (char*)gme_open_data( bytes, spcsize, &game_emu, gme_t_sample_rate );
+        char *err = (char*)gme_open_data( bytes, spcsize, &game_emu, mixer.freq );
         //spc_load_spc( snes_spc, bytes, spcsize );
         free(bytes);
         if(err!=0)
