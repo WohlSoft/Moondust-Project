@@ -6,13 +6,25 @@ CONFIG -= static
 
 QMAKE_CFLAGS += -std=c99
 
-QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter
+QMAKE_CFLAGS += \
+    -Wno-missing-field-initializers \
+    -Wno-unused-variable \
+    -Wno-unused-parameter \
+    -Wno-sign-compare \
+    -Wno-unused-function \
+    -Wno-implicit-function-declaration \
+    -Wno-pointer-sign
+
+QMAKE_CXXFLAGS += \
+    -Wno-missing-field-initializers \
+    -Wno-unused-variable \
+    -Wno-unused-parameter
+
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx:{
-QMAKE_CFLAGS += -Wno-unused-but-set-variable -Wno-deprecated-register
-QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-deprecated-register
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+QMAKE_CFLAGS    += -Wno-unused-but-set-variable -Wno-deprecated-register
+QMAKE_CXXFLAGS  += -Wno-unused-but-set-variable -Wno-deprecated-register
+QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
 include ($$PWD/../../_common/lib_destdir.pri)
@@ -31,7 +43,7 @@ win32:{
     enable-stdcalls:{ #Useful for VB6 usage
         TARGET = SDL2MixerVB
         QMAKE_LFLAGS += -Wl,--add-stdcall-alias
-        DEFINES +=FORCE_STDCALLS
+        DEFINES += FORCE_STDCALLS
     }
     RC_FILE = version.rc
 }
@@ -63,12 +75,36 @@ win32:{
     LIBS += -lwinmm -lm -lwinmm
 }
 
-DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC SPC_MORE_ACCURACY #NO_OLDNAMES
-DEFINES += MODPLUG_MUSIC MODPLUG_STATIC MODPLUG_BUILD=1 PIC _REENTRANT _USE_MATH_DEFINES SOXR_LIB
+DEFINES += \
+    main=SDL_main \
+    HAVE_SIGNAL_H \
+    HAVE_SETBUF \
+    WAV_MUSIC \
+    MID_MUSIC \
+    USE_TIMIDITY_MIDI \
+    USE_ADL_MIDI \
+    OGG_MUSIC \
+    FLAC_MUSIC \
+    MP3_MAD_MUSIC \
+    GME_MUSIC \
+    SPC_MORE_ACCURACY \#NO_OLDNAMES
+    MODPLUG_MUSIC \
+    MODPLUG_STATIC \
+    MODPLUG_BUILD=1 \
+    PIC \
+    _REENTRANT \
+    _USE_MATH_DEFINES
 
 android: {
-DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP MID_MUSIC USE_ADL_MIDI GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY #OGG_USE_TREMOR
+DEFINES += \
+    HAVE_STRCASECMP \
+    HAVE_STRNCASECMP \
+    MID_MUSIC \
+    USE_ADL_MIDI \
+    GME_MUSIC \
+    NO_OLDNAMES \
+    SPC_MORE_ACCURACY
+    #OGG_USE_TREMOR
 DEFINES -= FLAC_MUSIC #temopary with no FLAC, because I wasn't built it because compilation bug
 }
 
