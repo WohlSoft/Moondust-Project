@@ -110,7 +110,7 @@ bool util::contains(const QComboBox *b, const QString &s)
 /*!
  * \brief Clears string from invalid file path characters
  * \param s source file path string
- * \return String clear from ivalid characters in the file paths
+ * \return String clean from ivalid characters in the file paths
  */
 QString util::filePath(QString s)
 {
