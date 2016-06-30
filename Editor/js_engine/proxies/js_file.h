@@ -40,7 +40,7 @@ public:
     Q_INVOKABLE bool    isFileExists(QString filePath);
     Q_INVOKABLE bool    isDirExists(QString dirPath);
 
-    Q_INVOKABLE bool    copy(QString source, QString target);
+    Q_INVOKABLE bool    copy(QString source, QString target, bool override=false);
 };
 
 #endif // PGE_JS_FILE_H
