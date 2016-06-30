@@ -26,7 +26,7 @@ public:
     }
 
     template<typename RetVal, typename... Args>
-    RetVal call(QString functionName, bool* ok = nullptr, Args&&... args){
+    RetVal call(QString functionName, bool* ok, Args&&... args){
         static_assert(std::is_default_constructible<RetVal>::value, "RetVal must be constructable without any args!");
 
         QJSValue function = m_jsengine.evaluate(functionName);
@@ -40,7 +40,7 @@ public:
     }
 
     template<typename... Args>
-    void call(QString functionName, bool* ok = nullptr, Args&&... args){
+    void call(QString functionName, bool* ok, Args&&... args){
         QJSValue function = m_jsengine.evaluate(functionName);
         if(!checkForErrors(function, ok))
             return;
@@ -52,7 +52,7 @@ public:
 
     QJSValue getLastError();
 private:
-    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = nullptr);
+    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = NULL);
     void logError(const QJSValue &erroredValue);
 };
 

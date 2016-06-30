@@ -450,7 +450,7 @@ bool ConfigManager::checkForConfigureTool()
                 if( js.setFile( configureToolApp ) )
                 {
                     this->hide();
-                    if( !js.call<bool>("onConfigure") )
+                    if( !js.call<bool>("onConfigure", NULL) )
                     {
                         this->show();
                         return false;
