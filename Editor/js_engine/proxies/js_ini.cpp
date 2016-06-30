@@ -88,6 +88,7 @@ void PGE_JS_INIFile::close()
     {
         delete m_ini;
     }
+    m_ini = NULL;
 }
 
 void PGE_JS_INIFile::beginGroup(QString group)
