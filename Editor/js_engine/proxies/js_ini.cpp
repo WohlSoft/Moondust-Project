@@ -18,22 +18,27 @@
 
 #include "js_ini.h"
 #include <QSettings>
+#include <qqml.h>
+
+Q_DECLARE_METATYPE(PGE_JS_INIFile*)
 
 PGE_JS_INI::PGE_JS_INI(QObject *parent)
     : QObject(parent)
-{}
+{
+    qmlRegisterType<PGE_JS_INIFile>("ru.wohlsoft.pgeeditor", 1, 0, "PGE_JS_INIFile");
+}
 
 PGE_JS_INI::~PGE_JS_INI()
 {}
 
-PGE_JS_INIFile PGE_JS_INI::open(QString file)
+PGE_JS_INIFile *PGE_JS_INI::open(QString file)
 {
-    return PGE_JS_INIFile(file, this);
+    return new PGE_JS_INIFile(file, this);
 }
 
-PGE_JS_INIFile PGE_JS_INI::make()
+PGE_JS_INIFile *PGE_JS_INI::make()
 {
-    return PGE_JS_INIFile(this);
+    return new PGE_JS_INIFile(this);
 }
 
 
