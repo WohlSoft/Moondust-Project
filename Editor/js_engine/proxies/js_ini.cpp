@@ -17,6 +17,7 @@
  */
 
 #include "js_ini.h"
+#include "js_utils.h"
 #include <QSettings>
 #include <QJSEngine>
 
@@ -29,12 +30,12 @@ PGE_JS_INI::~PGE_JS_INI()
 
 QJSValue PGE_JS_INI::open(QString file)
 {
-    return qjsEngine(this)->newQObject(new PGE_JS_INIFile(file, this));
+    return genQObjectWrapper<PGE_JS_INIFile>(this, file, this);
 }
 
 QJSValue PGE_JS_INI::make()
 {
-    return qjsEngine(this)->newQObject(new PGE_JS_INIFile(this));
+    return genQObjectWrapper<PGE_JS_INIFile>(this, this);
 }
 
 
