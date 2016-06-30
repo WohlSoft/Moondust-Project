@@ -33,7 +33,6 @@ public:
     PGE_JS_INIFile(QString filePath, QObject *parent = NULL);
     PGE_JS_INIFile(const PGE_JS_INIFile& inif);
     PGE_JS_INIFile & operator=(const PGE_JS_INIFile& inif);
-
     virtual ~PGE_JS_INIFile();
 
     Q_INVOKABLE void open(QString filePath);

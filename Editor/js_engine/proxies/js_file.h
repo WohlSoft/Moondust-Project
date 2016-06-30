@@ -30,8 +30,7 @@ class PGE_JS_File : public QObject
 public:
     explicit PGE_JS_File(QObject* parent=NULL);
     explicit PGE_JS_File(const QString& scriptPath, QObject* parent=NULL);
-
-    ~PGE_JS_File();
+    virtual ~PGE_JS_File();
 
     void setScriptPath(QString scriptPath);
     Q_INVOKABLE QString scriptPath();

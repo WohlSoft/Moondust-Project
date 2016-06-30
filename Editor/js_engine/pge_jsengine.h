@@ -14,6 +14,7 @@ class PGE_JsEngine : public QObject
     QJSEngine m_jsengine;
 public:
     explicit PGE_JsEngine(QObject *parent = 0);
+    virtual ~PGE_JsEngine() {}
 
     bool setFile(QString filePath);
     void setCode(QString &code);
