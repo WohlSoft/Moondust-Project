@@ -61,32 +61,3 @@ void PGE_JsEngine::setCode(QString &code)
 }
 
 
-void PGE_JsEngine::callFunction(QString functionName, QJSValueList &args)
-{
-    QString error;
-    QJSValue function = m_jsengine.evaluate(functionName, error);
-    if(!function.isError())
-    {
-        QJSValue result = function.call(args);
-        if(result.isError())
-            logError( result );
-    } else {
-        logError( function );
-    }
-}
-
-bool PGE_JsEngine::callBoolFunction(QString functionName, QJSValueList &args)
-{
-    QString error;
-    QJSValue function = m_jsengine.evaluate(functionName, error);
-    if(!function.isError())
-    {
-        QJSValue result = function.call(args);
-        if(result.isError())
-            logError( result );
-        return result.toBool();
-    } else {
-        logError( function );
-        return false;
-    }
-}

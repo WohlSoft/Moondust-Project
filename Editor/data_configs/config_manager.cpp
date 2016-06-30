@@ -450,8 +450,7 @@ bool ConfigManager::checkForConfigureTool()
                 if( js.setFile( configureToolApp ) )
                 {
                     this->hide();
-                    QJSValueList args;
-                    if( !js.callBoolFunction("onConfigure", args) )
+                    if( !js.call<bool>("onConfigure") )
                     {
                         this->show();
                         return false;

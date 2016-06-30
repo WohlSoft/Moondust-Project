@@ -24,12 +24,39 @@ public:
         m_jsengine.globalObject().setProperty(regName, m_jsengine.newQObject(obj));
     }
 
-    void callFunction(QString functionName, QJSValueList &args);
-    bool callBoolFunction(QString functionName, QJSValueList &args);
+    template<typename RetVal, typename... Args>
+    RetVal call(QString functionName, Args&&... args){
+        static_assert(std::is_default_constructible<RetVal>::value, "RetVal must be constructable without any args!");
 
-signals:
+        QJSValue function = m_jsengine.evaluate(functionName);
+        if(!function.isError())
+        {
+            QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
+            if(result.isError()){
+                logError( result );
+                return RetVal();
+            }
+            return qjsvalue_cast<RetVal>(result);
+        } else {
+            logError( function );
+            return RetVal();
+        }
+    }
 
-public slots:
+    template<typename... Args>
+    void call(QString functionName, Args&&... args){
+        QJSValue function = m_jsengine.evaluate(functionName);
+        if(!function.isError())
+        {
+            QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
+            if(result.isError()){
+                logError( result );
+            }
+        } else {
+            logError( function );
+        }
+    }
+
 
 private:
     QJSEngine m_jsengine;
