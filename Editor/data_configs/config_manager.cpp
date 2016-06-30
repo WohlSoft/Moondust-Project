@@ -40,6 +40,7 @@
 #include <js_engine/pge_jsengine.h>
 #include <js_engine/proxies/js_common.h>
 #include <js_engine/proxies/js_file.h>
+#include <js_engine/proxies/js_ini.h>
 
 class ListDelegate : public QAbstractItemDelegate
 {
@@ -446,10 +447,15 @@ bool ConfigManager::checkForConfigureTool()
                     PGE_JS_Common commonProxy;
                     commonProxy.setParentWidget(this);
                 js.bindProxy(commonProxy);
+
                     PGE_JS_File   fileProxy;
                     fileProxy.setScriptPath(currentConfigPath);
                     fileProxy.setParentWidget(this);
                 js.bindProxy(fileProxy);
+
+                    PGE_JS_INI   iniProxy;
+                    iniProxy.setParentWidget(this);
+                js.bindProxy(iniProxy);
 
                 if( js.setFile( configureToolApp ) )
                 {
