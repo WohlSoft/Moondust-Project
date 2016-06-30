@@ -27,7 +27,7 @@ obj_bgo::obj_bgo()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 void obj_bgo::copyTo(obj_bgo &bgo)
@@ -36,7 +36,7 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.isValid         = isValid;
     bgo.animator_id     = animator_id;
     bgo.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         bgo.cur_image   = &image;
     bgo.frame_h         = frame_h;
     /* for internal usage */

@@ -57,8 +57,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     isMultiSelect=false;
 
-    LvlScene *scene_lvl = NULL;
-    WldScene *scene_wld = NULL;
+    LvlScene *scene_lvl = nullptr;
+    WldScene *scene_wld = nullptr;
     LevelEdit *edit_lvl = MainWinConnect::pMainWin->activeLvlEditWin();
     if(edit_lvl)
     {
@@ -368,7 +368,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
-    LvlScene *scene_lvl = NULL;
+    LvlScene *scene_lvl = nullptr;
     LevelEdit *edit_lvl = MainWinConnect::pMainWin->activeLvlEditWin();
     if(edit_lvl)
     {
@@ -743,7 +743,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     allWLabel_F    = MainWindow::tr("[all]");
     customWLabel_F = MainWindow::tr("[custom]");
 
-    WldScene *scene_wld = NULL;
+    WldScene *scene_wld = nullptr;
     WorldEdit *edit_wld = MainWinConnect::pMainWin->activeWldEditWin();
     if(edit_wld)
     {
@@ -819,11 +819,11 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         Items::getItemGFX(&tileItem, tmpI, false, QSize(32, 32));
         QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.row, tileItem.col);
 
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             Titem->setIcon( QIcon( tmpI ) );
-            Titem->setText( NULL );
+            Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(tileItem.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -837,7 +837,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     if(roff==1){
         QTableWidgetItem * Titem = ui->Sel_List_Tile->item(0, 0);
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             QImage I(32,32,QImage::Format_ARGB32);
@@ -848,7 +848,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             e.setFont(t);
             e.drawText(6,2,28,28,Qt::TextSingleLine,"E");
             Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
-            Titem->setText( NULL );
+            Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, 0 );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -868,7 +868,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         Items::getItemGFX(&sceneItem, tmpI, false, QSize(32, 32));
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
-        item->setText( NULL );
+        item->setText( nullptr );
         item->setData(3, QString::number(sceneItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
@@ -902,11 +902,11 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
         QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.row, pathItem.col);
 
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             Titem->setIcon( QIcon( tmpI ) );
-            Titem->setText( NULL );
+            Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(pathItem.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -921,7 +921,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     if(roff==1)
     {
         QTableWidgetItem * Titem = ui->Sel_List_Path->item(0, 0);
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             QImage I(32,32,QImage::Format_ARGB32);
@@ -932,7 +932,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             e.setFont(t);
             e.drawText(6,2,28,28,Qt::TextSingleLine,"E");
             Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
-            Titem->setText( NULL );
+            Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, 0 );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
@@ -957,7 +957,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
-        item->setText( NULL );
+        item->setText( nullptr );
         item->setData(3, QString::number(levelItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 

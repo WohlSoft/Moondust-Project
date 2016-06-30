@@ -48,29 +48,29 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     PGE_FileMapper fileMap;
     if( !fileMap.open_file(file.toUtf8().data()) )
     {
-        return NULL;
+        return nullptr;
     }
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)fileMap.data, (unsigned int)fileMap.size);
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
-    if(formato  == FIF_UNKNOWN) { return NULL; }
+    if(formato  == FIF_UNKNOWN) { return nullptr; }
     FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
     if(!img) {
-        return NULL;
+        return nullptr;
     }
     #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
-    if(formato  == FIF_UNKNOWN) { return NULL; }
+    if(formato  == FIF_UNKNOWN) { return nullptr; }
     FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
-    if(!img) { return NULL; }
+    if(!img) { return nullptr; }
     #endif
     if(convertTo32bit)
     {
         FIBITMAP* temp;
         temp = FreeImage_ConvertTo32Bits(img);
-        if(!temp) { return NULL; }
+        if(!temp) { return nullptr; }
         FreeImage_Unload(img);
         img = temp;
     }

@@ -31,7 +31,7 @@ tileset::tileset(dataconfigs* conf, int type, QWidget *parent, int baseSize, int
 {
     mode = GFX_Staff;
     scn = scene;
-    if(scene!=NULL)
+    if(scene != nullptr)
     {
         if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
         else

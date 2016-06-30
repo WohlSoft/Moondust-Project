@@ -30,7 +30,7 @@ obj_npc::obj_npc()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
     id = 0;
     gfx_offset_x = 0;
     gfx_offset_y = 0;
@@ -53,7 +53,7 @@ void obj_npc::copyTo(obj_npc &npc)
     npc.isValid         = isValid;
     npc.animator_id     = animator_id;
     npc.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         npc.cur_image   = &image;
     npc.display_frame   = display_frame;
     /* for internal usage */

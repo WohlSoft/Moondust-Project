@@ -60,13 +60,13 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
 
     if(mw->activeChildWindow()==1)
     {
-        if(mw->activeLvlEditWin()!=NULL)
+        if(mw->activeLvlEditWin() != nullptr)
             root = mw->activeLvlEditWin()->LvlData.path+"/";
     }
     else
     if(mw->activeChildWindow()==3)
     {
-        if(mw->activeWldEditWin()!=NULL)
+        if(mw->activeWldEditWin() != nullptr)
             root = mw->activeWldEditWin()->WldData.path+"/";
     }
 

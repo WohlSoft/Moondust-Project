@@ -29,7 +29,7 @@ PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, 
 {
     mode = GFX_Staff;
     scn = scene;
-    if(scn!=NULL)
+    if(scn != nullptr)
     {
         if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
         else

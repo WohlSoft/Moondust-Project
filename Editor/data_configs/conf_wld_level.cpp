@@ -27,7 +27,7 @@ obj_w_level::obj_w_level()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 void obj_w_level::copyTo(obj_w_level &level)
@@ -36,7 +36,7 @@ void obj_w_level::copyTo(obj_w_level &level)
     level.isValid         = isValid;
     level.animator_id     = animator_id;
     level.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         level.cur_image   = &image;
     level.frame_h         = frame_h;
     /* for internal usage */

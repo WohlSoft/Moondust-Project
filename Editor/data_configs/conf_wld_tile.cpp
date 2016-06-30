@@ -27,7 +27,7 @@ obj_w_tile::obj_w_tile()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 void obj_w_tile::copyTo(obj_w_tile &tile)
@@ -36,7 +36,7 @@ void obj_w_tile::copyTo(obj_w_tile &tile)
     tile.isValid         = isValid;
     tile.animator_id     = animator_id;
     tile.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         tile.cur_image   = &image;
     tile.frame_h         = frame_h;
     /* for internal usage */

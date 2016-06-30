@@ -29,7 +29,7 @@ obj_block::obj_block()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 
@@ -39,7 +39,7 @@ void obj_block::copyTo(obj_block &block)
     block.isValid         = isValid;
     block.animator_id     = animator_id;
     block.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         block.cur_image   = &image;
     block.frame_h         = frame_h;
     /* for internal usage */

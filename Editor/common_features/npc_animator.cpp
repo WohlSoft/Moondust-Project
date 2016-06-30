@@ -19,7 +19,7 @@
 #include "logger.h"
 #include "npc_animator.h"
 
-static  QPixmap *tempImage=NULL;
+static  QPixmap *tempImage=nullptr;
 static  int AdvNpcAnimator_count=0;
 
 inline void constructTempImage()
@@ -38,18 +38,18 @@ inline void destroyTempImage()
     if((AdvNpcAnimator_count<=0)&&(tempImage))
     {
         delete tempImage;
-        tempImage = NULL;
+        tempImage = nullptr;
     }
 }
 
 AdvNpcAnimator::AdvNpcAnimator():
-    timer(NULL)
+    timer(nullptr)
 {
     constructTempImage();
 }
 
 AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config):
-    timer(NULL)
+    timer(nullptr)
 {
     constructTempImage();
     buildAnimator(sprite, config);

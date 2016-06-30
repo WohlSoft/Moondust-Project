@@ -30,7 +30,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scene = NULL;
+    scene = nullptr;
     sceneCreated = false;
     FileType = 0;
     mapPoint = QPoint(-1,-1);
@@ -40,7 +40,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
-    updateTimer=NULL;
+    updateTimer = nullptr;
 
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -74,7 +74,7 @@ void WLD_SetPoint::updateScene()
 
 void WLD_SetPoint::setAutoUpdateTimer(int ms)
 {
-    if(updateTimer!=NULL)
+    if(updateTimer != nullptr)
         delete updateTimer;
     updateTimer = new QTimer;
     connect(
@@ -86,7 +86,7 @@ void WLD_SetPoint::setAutoUpdateTimer(int ms)
 
 void WLD_SetPoint::stopAutoUpdateTimer()
 {
-    if(updateTimer!=NULL)
+    if(updateTimer != nullptr)
     {
         updateTimer->stop();
         delete updateTimer;
@@ -403,25 +403,25 @@ void WLD_SetPoint::unloadData()
     {
         SimpleAnimator* tmp = scene->animates_Tiles.first();
         scene->animates_Tiles.pop_front();
-        if(tmp!=NULL) delete tmp;
+        if(tmp!=nullptr) delete tmp;
     }
     while(! scene->animates_Scenery.isEmpty() )
     {
         SimpleAnimator* tmp = scene->animates_Scenery.first();
         scene->animates_Scenery.pop_front();
-        if(tmp!=NULL) delete tmp;
+        if(tmp!=nullptr) delete tmp;
     }
     while(! scene->animates_Paths.isEmpty() )
     {
         SimpleAnimator* tmp = scene->animates_Paths.first();
         scene->animates_Paths.pop_front();
-        if(tmp!=NULL) delete tmp;
+        if(tmp!=nullptr) delete tmp;
     }
     while(! scene->animates_Levels.isEmpty() )
     {
         SimpleAnimator* tmp = scene->animates_Levels.first();
         scene->animates_Levels.pop_front();
-        if(tmp!=NULL) delete tmp;
+        if(tmp!=nullptr) delete tmp;
     }
 
     scene->uTiles.clear();
@@ -431,7 +431,7 @@ void WLD_SetPoint::unloadData()
 
     LogDebug("!<-Delete scene->!");
     delete scene;
-    scene = NULL;
+    scene = nullptr;
     sceneCreated=false;
     LogDebug("!<-Deleted->!");
 }

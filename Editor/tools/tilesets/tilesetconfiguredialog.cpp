@@ -42,7 +42,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
 
     scn = scene;
     mode = GFX_Staff;
-    if(scene != NULL)
+    if(scene != nullptr)
     {
         if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
         else

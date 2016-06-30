@@ -31,10 +31,10 @@ void PGE_MusPlayer::setVolume(int volume)
 
 #ifdef USE_QMEDIAPLAYER
 bool PGE_MusPlayer::isMediaPlayer=false;
-QMediaPlayer * PGE_MusPlayer::musicPlayer=NULL;
-QMediaPlaylist * PGE_MusPlayer::playList=NULL;
+QMediaPlayer * PGE_MusPlayer::musicPlayer = nullptr;
+QMediaPlaylist * PGE_MusPlayer::playList = nullptr;
 #elif USE_SDL_MIXER
-Mix_Music *PGE_MusPlayer::play_mus = NULL;
+Mix_Music *PGE_MusPlayer::play_mus = nullptr;
 #endif
 
 int PGE_MusPlayer::volume=100;
@@ -133,7 +133,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
     }
 
     #ifdef USE_QMEDIAPLAYER
-        if(musicPlayer!=NULL)
+        if(musicPlayer != nullptr)
         {
             musicPlayer->stop();
             delete musicPlayer;
@@ -148,11 +148,11 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
         musicPlayer->setPlaylist(playList);
         current = musFile;
     #elif USE_SDL_MIXER
-        if(play_mus!=NULL)
+        if(play_mus != nullptr)
         {
             Mix_HaltMusic();
             Mix_FreeMusic(play_mus);
-            play_mus=NULL;
+            play_mus = nullptr;
         }
         play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
         if(!play_mus)
@@ -182,7 +182,7 @@ void PGE_MusPlayer::MUS_freeStream()
     #ifdef USE_SDL_MIXER
     Mix_HaltMusic();
     Mix_FreeMusic(play_mus);
-    play_mus=NULL;
+    play_mus = nullptr;
     #endif
 }
 
@@ -191,9 +191,9 @@ void PGE_MusPlayer::MUS_freeStream()
 
 
 #ifdef USE_QMEDIAPLAYER
-QMediaPlayer * PGE_Sounds::mp3Play=NULL;
+QMediaPlayer * PGE_Sounds::mp3Play = nullptr;
 #elif USE_SDL_MIXER
-Mix_Chunk *PGE_Sounds::sound = NULL;
+Mix_Chunk *PGE_Sounds::sound = nullptr;
 #endif
 
 QString PGE_Sounds::current = "";
@@ -203,9 +203,9 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
     if(current!=sndFile)
     {
         #ifdef USE_QMEDIAPLAYER
-        if(mp3Play) { mp3Play->stop(); delete mp3Play; mp3Play=NULL; }
+        if(mp3Play) { mp3Play->stop(); delete mp3Play; mp3Play = nullptr; }
         #elif USE_SDL_MIXER
-        if(sound) { Mix_FreeChunk(sound); sound=NULL; }
+        if(sound) { Mix_FreeChunk(sound); sound = nullptr; }
         sound = Mix_LoadWAV(sndFile.toUtf8().data() );
         if(!sound)
             qDebug() << QString("Mix_LoadWAV: %1").arg(SDL_GetError());
@@ -240,7 +240,7 @@ void PGE_Sounds::freeBuffer()
     if(sound)
     {
         Mix_FreeChunk(sound);
-        sound=NULL;
+        sound = nullptr;
     }
     #endif
 }
