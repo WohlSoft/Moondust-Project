@@ -23,7 +23,9 @@ void PGE_JsEngine::logError(QJSValue &erroredValue)
 
 PGE_JsEngine::PGE_JsEngine(QObject *parent) : QObject(parent)
 {
+    #if ((QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR >= 6)||(QT_VERSION_MAJOR > 5))
     m_jsengine.installExtensions(QJSEngine::GarbageCollectionExtension);
+    #endif
 }
 
 bool PGE_JsEngine::setFile(QString filePath)
