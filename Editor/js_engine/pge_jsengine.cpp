@@ -7,7 +7,7 @@
 
 #include <common_features/logger.h>
 
-void PGE_JsEngine::logError(QJSValue &erroredValue)
+void PGE_JsEngine::logError(const QJSValue &erroredValue)
 {
     QString message =
                   "Error of the script " + m_scriptFile + ":"
@@ -59,5 +59,26 @@ void PGE_JsEngine::setCode(QString &code)
     if( result.isError() )
         logError(result);
 }
+
+QJSValue PGE_JsEngine::getLastError()
+{
+    return m_lastError;
+}
+
+bool PGE_JsEngine::checkForErrors(const QJSValue &possibleErrVal, bool *ok)
+{
+    if(possibleErrVal.isError()){
+        m_lastError = possibleErrVal;
+        logError(possibleErrVal);
+        if(ok)
+            *ok = false;
+        return false;
+    }
+    m_lastError = QJSValue();
+    if(ok)
+        *ok = true;
+    return true;
+}
+
 
 
