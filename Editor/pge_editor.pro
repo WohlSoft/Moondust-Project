@@ -430,7 +430,11 @@ SOURCES += main.cpp\
     data_configs/obj_bgo.cpp \
     data_configs/obj_BG.cpp \
     data_configs/obj_npc.cpp \
-    data_configs/obj_tilesets.cpp
+    data_configs/obj_tilesets.cpp \
+    js_engine/pge_jsengine.cpp \
+    js_engine/proxies/js_file.cpp \
+    js_engine/proxies/js_common.cpp \
+    js_engine/proxies/_js_proxy_base.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -633,7 +637,11 @@ HEADERS  += defines.h \
     main_window/dock/variables_box.h \
     main_window/script/script_editor.h \
     common_features/animation_timer.h \
-    common_features/number_limiter.h
+    common_features/number_limiter.h \
+    js_engine/pge_jsengine.h \
+    js_engine/proxies/js_file.h \
+    js_engine/proxies/js_common.h \
+    js_engine/proxies/_js_proxy_base.h
 
 FORMS    += \
     common_features/crashhandler.ui \

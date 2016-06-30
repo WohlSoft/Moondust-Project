@@ -37,6 +37,10 @@
 #include <QPainter>
 #include <QAbstractItemDelegate>
 
+#include <js_engine/pge_jsengine.h>
+#include <js_engine/proxies/js_common.h>
+#include <js_engine/proxies/js_file.h>
+
 class ListDelegate : public QAbstractItemDelegate
 {
 public:
@@ -422,7 +426,7 @@ bool ConfigManager::checkForConfigureTool()
     #elif defined(Q_OS_LINUX)
     #define CONFIGURE_TOOL "configure_linux"
     #endif
-    QString configureToolApp = currentConfigPath + CONFIGURE_TOOL;
+    QString configureToolApp = currentConfigPath + "configure.js" /*CONFIGURE_TOOL*/;
 
     //If configure tool has been detected
     if( QFile(configureToolApp).exists() )
@@ -437,11 +441,45 @@ bool ConfigManager::checkForConfigureTool()
                                                      QMessageBox::Yes|QMessageBox::No);
             if(reply==QMessageBox::Yes)
             {
+                PGE_JsEngine js;
+
+                    PGE_JS_Common commonProxy;
+                    commonProxy.setParentWidget(this);
+                js.bindProxy(commonProxy);
+                    PGE_JS_File   fileProxy;
+                    fileProxy.setScriptPath(currentConfigPath);
+                    fileProxy.setParentWidget(this);
+                js.bindProxy(fileProxy);
+
+                if( js.setFile( configureToolApp ) )
+                {
+                    this->hide();
+                    QJSValueList args;
+                    if( !js.callBoolFunction("onConfigure", args) )
+                    {
+                        this->show();
+                        return false;
+                    }
+
+                    if( !isConfigured() )
+                    {
+                        this->show();
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                /*
+
                 this->hide();
+
                 QProcess configureToolProc;
                 configureToolProc.setWorkingDirectory(currentConfigPath);
                 configureToolProc.setProgram( configureToolApp );
                 int reply = configureToolProc.execute( configureToolApp );
+
                 if(reply != 0)
                 {
                     this->show();
@@ -453,6 +491,7 @@ bool ConfigManager::checkForConfigureTool()
                     this->show();
                     return false;
                 }
+                */
             }
             else
             {
