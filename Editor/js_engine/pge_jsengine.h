@@ -53,7 +53,7 @@ public:
 
     QJSValue getLastError();
 private:
-    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = NULL);
+    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = nullptr);
     void logError(const QJSValue &erroredValue);
 };
 
