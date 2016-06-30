@@ -2,7 +2,7 @@
 #define PGE_JSENGINE_H
 
 #include <QJSEngine>
-#include "proxies/_js_proxy_base.h"
+#include <type_traits>
 
 class PGE_JsEngine : public QObject
 {
@@ -16,7 +16,14 @@ public:
 
     bool setFile(QString filePath);
     void setCode(QString &code);
-    void bindProxy(PGE_JS_ProxyBase& px);
+
+    template<typename T>
+    void bindProxy(T* obj, const QString& regName){
+        static_assert(std::is_base_of<QObject, T>::value, "obj must be base of QObject!");
+
+        m_jsengine.globalObject().setProperty(regName, m_jsengine.newQObject(obj));
+    }
+
     void callFunction(QString functionName, QJSValueList &args);
     bool callBoolFunction(QString functionName, QJSValueList &args);
 

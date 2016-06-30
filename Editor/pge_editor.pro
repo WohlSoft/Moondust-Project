@@ -433,8 +433,7 @@ SOURCES += main.cpp\
     data_configs/obj_tilesets.cpp \
     js_engine/pge_jsengine.cpp \
     js_engine/proxies/js_file.cpp \
-    js_engine/proxies/js_common.cpp \
-    js_engine/proxies/_js_proxy_base.cpp
+    js_engine/proxies/js_common.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -641,7 +640,7 @@ HEADERS  += defines.h \
     js_engine/pge_jsengine.h \
     js_engine/proxies/js_file.h \
     js_engine/proxies/js_common.h \
-    js_engine/proxies/_js_proxy_base.h
+    js_engine/proxies/js_utils.h
 
 FORMS    += \
     common_features/crashhandler.ui \

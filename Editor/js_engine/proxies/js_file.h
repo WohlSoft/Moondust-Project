@@ -19,17 +19,19 @@
 #ifndef PGE_JS_FILE_H
 #define PGE_JS_FILE_H
 
-#include "_js_proxy_base.h"
+#include <QString>
+#include <QObject>
 
-class PGE_JS_File : public PGE_JS_ProxyBase
+class PGE_JS_File : public QObject
 {
     Q_OBJECT
     //! Path to the script file
     QString m_scriptPath;
 public:
     explicit PGE_JS_File(QObject* parent=NULL);
-    virtual ~PGE_JS_File();
-    void bindObjects(QJSEngine* engine);
+    explicit PGE_JS_File(const QString& scriptPath, QObject* parent=NULL);
+
+    ~PGE_JS_File();
 
     void setScriptPath(QString scriptPath);
     Q_INVOKABLE QString scriptPath();

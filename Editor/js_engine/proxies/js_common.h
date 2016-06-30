@@ -20,15 +20,14 @@
 #define PGE_JS_COMMON_H
 
 #include "js_file.h"
-#include "_js_proxy_base.h"
+#include <QObject>
 
-class PGE_JS_Common : public PGE_JS_ProxyBase
+class PGE_JS_Common : public QObject
 {
     Q_OBJECT
 public:
     explicit PGE_JS_Common(QObject *parent=NULL);
-    virtual ~PGE_JS_Common();
-    void bindObjects(QJSEngine *engine);
+    ~PGE_JS_Common();
 
     Q_INVOKABLE int msgBoxInfo(QString title, QString message);
     Q_INVOKABLE int msgBoxWarning(QString title, QString message);

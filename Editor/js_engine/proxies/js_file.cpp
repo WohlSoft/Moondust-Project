@@ -17,6 +17,7 @@
  */
 
 #include "js_file.h"
+#include "js_utils.h"
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
@@ -24,22 +25,17 @@
 #include <mainwindow.h>
 
 PGE_JS_File::PGE_JS_File(QObject *parent)
-    : PGE_JS_ProxyBase(parent)
+    : QObject(parent)
 {}
+
+PGE_JS_File::PGE_JS_File(const QString &scriptPath, QObject *parent)
+    : QObject(parent),
+      m_scriptPath(scriptPath)
+{}
+
 
 PGE_JS_File::~PGE_JS_File() {}
 
-void PGE_JS_File::bindObjects(QJSEngine *engine)
-{
-    if(!engine) return;
-    PGE_JS_File* proxy = new PGE_JS_File(parent());
-
-    proxy->m_parentWidget   = m_parentWidget;
-    proxy->m_scriptPath     = m_scriptPath;
-
-    QJSValue objectValue = engine->newQObject(proxy);
-    engine->globalObject().setProperty("FileIO", objectValue);
-}
 
 void PGE_JS_File::setScriptPath(QString scriptPath)
 {
@@ -58,12 +54,12 @@ QString PGE_JS_File::appPath()
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)
 {
-    return QFileDialog::getOpenFileName(m_parentWidget, caption, dir, filter);
+    return QFileDialog::getOpenFileName(getWidgetParent(this), caption, dir, filter);
 }
 
 QString PGE_JS_File::getOpenDirPath(QString caption, QString dir)
 {
-    return QFileDialog::getExistingDirectory(m_parentWidget, caption, dir, QFileDialog::ShowDirsOnly);
+    return QFileDialog::getExistingDirectory(getWidgetParent(this), caption, dir, QFileDialog::ShowDirsOnly);
 }
 
 bool PGE_JS_File::isFileExists(QString filePath)

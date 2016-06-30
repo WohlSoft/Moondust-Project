@@ -17,38 +17,28 @@
  */
 
 #include "js_common.h"
+#include "js_utils.h"
 #include <QMessageBox>
 #include <QWidget>
 
 PGE_JS_Common::PGE_JS_Common(QObject *parent)
-    : PGE_JS_ProxyBase(parent)
+    : QObject(parent)
 {}
 
 PGE_JS_Common::~PGE_JS_Common() {}
 
-void PGE_JS_Common::bindObjects(QJSEngine *engine)
-{
-    if(!engine) return;
-    PGE_JS_Common* proxy = new PGE_JS_Common(parent());
-
-    proxy->m_parentWidget = m_parentWidget;
-
-    QJSValue objectValue = engine->newQObject(proxy);
-    engine->globalObject().setProperty("PGE", objectValue);
-}
-
 int PGE_JS_Common::msgBoxInfo(QString title, QString message)
 {
-    return int(QMessageBox::information(m_parentWidget, title, message));
+    return int(QMessageBox::information(getWidgetParent(this), title, message));
 }
 
 int PGE_JS_Common::msgBoxWarning(QString title, QString message)
 {
-    return int(QMessageBox::warning(m_parentWidget, title, message));
+    return int(QMessageBox::warning(getWidgetParent(this), title, message));
 }
 
 int PGE_JS_Common::msgBoxError(QString title, QString message)
 {
-    return int(QMessageBox::critical(m_parentWidget, title, message));
+    return int(QMessageBox::critical(getWidgetParent(this), title, message));
 }
 

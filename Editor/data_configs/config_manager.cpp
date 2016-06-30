@@ -442,14 +442,8 @@ bool ConfigManager::checkForConfigureTool()
             if(reply==QMessageBox::Yes)
             {
                 PGE_JsEngine js;
-
-                    PGE_JS_Common commonProxy;
-                    commonProxy.setParentWidget(this);
-                js.bindProxy(commonProxy);
-                    PGE_JS_File   fileProxy;
-                    fileProxy.setScriptPath(currentConfigPath);
-                    fileProxy.setParentWidget(this);
-                js.bindProxy(fileProxy);
+                js.bindProxy(new PGE_JS_Common(this), "PGE");
+                js.bindProxy(new PGE_JS_File(currentConfigPath, this), "FileIO");
 
                 if( js.setFile( configureToolApp ) )
                 {

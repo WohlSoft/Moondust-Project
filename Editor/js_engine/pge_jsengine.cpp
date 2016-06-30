@@ -58,10 +58,6 @@ void PGE_JsEngine::setCode(QString &code)
         logError(result);
 }
 
-void PGE_JsEngine::bindProxy(PGE_JS_ProxyBase &px)
-{
-    px.bindObjects(&m_jsengine);
-}
 
 void PGE_JsEngine::callFunction(QString functionName, QJSValueList &args)
 {
