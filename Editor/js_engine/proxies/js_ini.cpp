@@ -41,6 +41,8 @@ QJSValue PGE_JS_INI::make()
 
 
 
+
+
 PGE_JS_INIFile::PGE_JS_INIFile(QObject *parent) :
     QObject(parent), m_ini(NULL)
 {}
@@ -84,6 +86,7 @@ void PGE_JS_INIFile::close()
     {
         delete m_ini;
     }
+    m_ini = NULL;
 }
 
 void PGE_JS_INIFile::beginGroup(QString group)
