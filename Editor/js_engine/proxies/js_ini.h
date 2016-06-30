@@ -53,8 +53,8 @@ public:
     explicit PGE_JS_INI(QObject *parent = NULL);
     virtual ~PGE_JS_INI();
 
-    Q_INVOKABLE PGE_JS_INIFile open(QString file);
-    Q_INVOKABLE PGE_JS_INIFile make();
+    Q_INVOKABLE QJSValue open(QString file);
+    Q_INVOKABLE QJSValue make();
 };
 
 #endif // PGE_JS_INI_H
