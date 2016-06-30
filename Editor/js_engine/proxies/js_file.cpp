@@ -72,7 +72,7 @@ bool PGE_JS_File::isDirExists(QString dirPath)
     return QDir(dirPath).exists();
 }
 
-bool PGE_JS_File::copy(QString source, QString target)
+bool PGE_JS_File::copy(QString source, QString target, bool override)
 {
     if( QFile::exists(source) )
     {
@@ -81,6 +81,10 @@ bool PGE_JS_File::copy(QString source, QString target)
             target += "/"+QFile(source).fileName();
         }
     }
+    if(override)
+    {
+        if(QFile::exists(target))
+            QFile::remove(target);
+    }
     return QFile::copy(source, target);
 }
-
