@@ -10,9 +10,11 @@ class PGE_JsEngine : public QObject
 
     QString m_scriptContents;
     QString m_scriptFile;
-    void logError(QJSValue &erroredValue);
+    QJSValue m_lastError;
+    QJSEngine m_jsengine;
 public:
     explicit PGE_JsEngine(QObject *parent = 0);
+    virtual ~PGE_JsEngine() {}
 
     bool setFile(QString filePath);
     void setCode(QString &code);
@@ -24,16 +26,35 @@ public:
         m_jsengine.globalObject().setProperty(regName, m_jsengine.newQObject(obj));
     }
 
-    void callFunction(QString functionName, QJSValueList &args);
-    bool callBoolFunction(QString functionName, QJSValueList &args);
+    template<typename RetVal, typename... Args>
+    RetVal call(QString functionName, bool* ok, Args&&... args){
+        static_assert(std::is_default_constructible<RetVal>::value, "RetVal must be constructable without any args!");
 
-signals:
+        QJSValue function = m_jsengine.evaluate(functionName);
+        if(!checkForErrors(function, ok))
+            return RetVal();
 
-public slots:
+        QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
+        if(!checkForErrors(result, ok))
+                return RetVal();
+        return qjsvalue_cast<RetVal>(result);
+    }
 
+    template<typename... Args>
+    void call(QString functionName, bool* ok, Args&&... args){
+        QJSValue function = m_jsengine.evaluate(functionName);
+        if(!checkForErrors(function, ok))
+            return;
+
+        QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
+        if(!checkForErrors(result, ok))
+            return;
+    }
+
+    QJSValue getLastError();
 private:
-    QJSEngine m_jsengine;
-    QJSValue result;
+    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = nullptr);
+    void logError(const QJSValue &erroredValue);
 };
 
 #endif // PGE_JSENGINE_H

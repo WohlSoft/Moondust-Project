@@ -27,7 +27,7 @@ class PGE_JS_Common : public QObject
     Q_OBJECT
 public:
     explicit PGE_JS_Common(QObject *parent=NULL);
-    ~PGE_JS_Common();
+    virtual ~PGE_JS_Common();
 
     Q_INVOKABLE int msgBoxInfo(QString title, QString message);
     Q_INVOKABLE int msgBoxWarning(QString title, QString message);

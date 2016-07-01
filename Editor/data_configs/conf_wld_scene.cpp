@@ -27,7 +27,7 @@ obj_w_scenery::obj_w_scenery()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 void obj_w_scenery::copyTo(obj_w_scenery &scenery)
@@ -36,7 +36,7 @@ void obj_w_scenery::copyTo(obj_w_scenery &scenery)
     scenery.isValid         = isValid;
     scenery.animator_id     = animator_id;
     scenery.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         scenery.cur_image   = &image;
     scenery.frame_h         = frame_h;
     /* for internal usage */

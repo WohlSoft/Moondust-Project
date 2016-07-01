@@ -60,7 +60,7 @@ void LogWriterSignal::log(QString msg, QString chan)
 
 
 
-LogWriterSignal *LogWriter::consoleConnector=NULL;
+LogWriterSignal *LogWriter::consoleConnector=nullptr;
 
 void LogWriter::LoadLogSettings()
 {
@@ -155,7 +155,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
     }
 
     QByteArray lMessage = msg.toLocal8Bit();
-    QString txt = NULL;
+    QString txt;
     switch (type)
     {
         case QtDebugMsg:
@@ -238,7 +238,7 @@ void LogWriter::uninstallConsole()
 {
     if(consoleConnector)
         delete consoleConnector;
-    consoleConnector=NULL;
+    consoleConnector=nullptr;
 }
 
 void LoadLogSettings()

@@ -33,7 +33,6 @@ PGE_JS_File::PGE_JS_File(const QString &scriptPath, QObject *parent)
       m_scriptPath(scriptPath)
 {}
 
-
 PGE_JS_File::~PGE_JS_File() {}
 
 

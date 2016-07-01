@@ -59,7 +59,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     // Config manager
     ConfigManager *cmanager;
-    cmanager = new ConfigManager(NULL);
+    cmanager = new ConfigManager(nullptr);
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowStaysOnTopHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();

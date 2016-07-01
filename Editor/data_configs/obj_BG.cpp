@@ -29,8 +29,8 @@ obj_BG::obj_BG()
 {
     isValid = false;
     animator_id = 0;
-    cur_image = NULL;
-    cur_image_second = NULL;
+    cur_image = nullptr;
+    cur_image_second = nullptr;
 }
 
 void obj_BG::copyTo(obj_BG &bg)
@@ -39,9 +39,9 @@ void obj_BG::copyTo(obj_BG &bg)
     bg.isValid         = isValid;
     bg.animator_id     = animator_id;
     bg.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         bg.cur_image   = &image;
-    if(cur_image_second==NULL)
+    if(cur_image_second==nullptr)
         bg.cur_image_second   = &image;
     bg.frame_h         = frame_h;
     /* for internal usage */

@@ -71,7 +71,7 @@ void IntProcServer::displayError(QTcpSocket::SocketError socketError)
     }
 }
 
-IntProcServer *ipServer=NULL;
+IntProcServer *ipServer = nullptr;
 
 
 

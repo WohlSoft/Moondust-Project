@@ -419,6 +419,7 @@ bool ConfigManager::isConfigured()
 
 bool ConfigManager::checkForConfigureTool()
 {
+    /*
     #if defined(Q_OS_WIN) || defined(Q_OS_LINUX) || defined(Q_OS_OSX)
     #if defined(Q_OS_WIN)
     #define CONFIGURE_TOOL "configure.exe"
@@ -427,6 +428,7 @@ bool ConfigManager::checkForConfigureTool()
     #elif defined(Q_OS_LINUX)
     #define CONFIGURE_TOOL "configure_linux"
     #endif
+    */
     QString configureToolApp = currentConfigPath + "configure.js" /*CONFIGURE_TOOL*/;
 
     //If configure tool has been detected
@@ -450,8 +452,7 @@ bool ConfigManager::checkForConfigureTool()
                 if( js.setFile( configureToolApp ) )
                 {
                     this->hide();
-                    QJSValueList args;
-                    if( !js.callBoolFunction("onConfigure", args) )
+                    if( !js.call<bool>("onConfigure", nullptr) )
                     {
                         this->show();
                         return false;
@@ -468,7 +469,6 @@ bool ConfigManager::checkForConfigureTool()
                     return false;
                 }
                 /*
-
                 this->hide();
 
                 QProcess configureToolProc;
@@ -495,6 +495,6 @@ bool ConfigManager::checkForConfigureTool()
             }
         }
     }
-    #endif
+    //#endif
     return true;
 }

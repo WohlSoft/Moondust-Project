@@ -27,7 +27,7 @@ obj_w_path::obj_w_path()
 {
     isValid     = false;
     animator_id = 0;
-    cur_image   = NULL;
+    cur_image   = nullptr;
 }
 
 void obj_w_path::copyTo(obj_w_path &wpath)
@@ -36,7 +36,7 @@ void obj_w_path::copyTo(obj_w_path &wpath)
     wpath.isValid         = isValid;
     wpath.animator_id     = animator_id;
     wpath.cur_image       = cur_image;
-    if(cur_image==NULL)
+    if(cur_image==nullptr)
         wpath.cur_image   = &image;
     wpath.frame_h         = frame_h;
     /* for internal usage */

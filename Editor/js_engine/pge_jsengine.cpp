@@ -7,7 +7,7 @@
 
 #include <common_features/logger.h>
 
-void PGE_JsEngine::logError(QJSValue &erroredValue)
+void PGE_JsEngine::logError(const QJSValue &erroredValue)
 {
     QString message =
                   "Error of the script " + m_scriptFile + ":"
@@ -60,33 +60,25 @@ void PGE_JsEngine::setCode(QString &code)
         logError(result);
 }
 
-
-void PGE_JsEngine::callFunction(QString functionName, QJSValueList &args)
+QJSValue PGE_JsEngine::getLastError()
 {
-    QString error;
-    QJSValue function = m_jsengine.evaluate(functionName, error);
-    if(!function.isError())
-    {
-        QJSValue result = function.call(args);
-        if(result.isError())
-            logError( result );
-    } else {
-        logError( function );
-    }
+    return m_lastError;
 }
 
-bool PGE_JsEngine::callBoolFunction(QString functionName, QJSValueList &args)
+bool PGE_JsEngine::checkForErrors(const QJSValue &possibleErrVal, bool *ok)
 {
-    QString error;
-    QJSValue function = m_jsengine.evaluate(functionName, error);
-    if(!function.isError())
-    {
-        QJSValue result = function.call(args);
-        if(result.isError())
-            logError( result );
-        return result.toBool();
-    } else {
-        logError( function );
+    if(possibleErrVal.isError()){
+        m_lastError = possibleErrVal;
+        logError(possibleErrVal);
+        if(ok)
+            *ok = false;
         return false;
     }
+    m_lastError = QJSValue();
+    if(ok)
+        *ok = true;
+    return true;
 }
+
+
+

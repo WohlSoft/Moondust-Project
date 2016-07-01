@@ -111,7 +111,7 @@ QRubberBand *GraphicsWorkspace::rubberBand() const
     if(rubberBandX)
         return rubberBandX;
     else
-        return NULL;
+        return nullptr;
 }
 
 void GraphicsWorkspace::moveLeft()

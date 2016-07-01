@@ -67,7 +67,7 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
 
     this->setRect(0,0,_width,_height);
     this->setZValue(50000);
-    targetItem = NULL;
+    targetItem = nullptr;
 
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
@@ -117,13 +117,13 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
 
     CornerGrabber * corner = dynamic_cast<CornerGrabber *>(watched);
-    if ( corner == NULL)
+    if ( corner == nullptr)
     {
         return false; // not expected to get here
     }
 
     QGraphicsSceneMouseEvent * mevent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
-    if ( mevent == NULL)
+    if ( mevent == nullptr)
     {
         // this is not one of the mouse events we are interrested in
         return false;
@@ -355,7 +355,7 @@ void ItemResizer::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
         no_limit->setChecked(_no_limit);
 
         QAction* answer = contextMenu.exec( event->screenPos() );
-        if(answer==NULL)
+        if(answer==nullptr)
         {
             event->setAccepted(true);
             return;

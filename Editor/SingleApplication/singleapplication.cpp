@@ -27,7 +27,7 @@ SingleApplication::SingleApplication(QStringList &args) :
     _shouldContinue = false; // By default this is not the main process
 
     socket = new QUdpSocket();
-    server = NULL;
+    server = nullptr;
     QString isServerRuns;
 
     bool isRunning=false;

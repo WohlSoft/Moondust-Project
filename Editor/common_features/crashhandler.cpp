@@ -53,7 +53,7 @@ static bool GetStackWalk( std::string &outWalk )
     // skip the first stack frame returned because that's the GetStackWalk function
     // itself, which we don't care about.
     PVOID addrs[ 400 ] = { 0 };
-    USHORT frames = CaptureStackBackTrace( 1, 400, addrs, NULL );
+    USHORT frames = CaptureStackBackTrace( 1, 400, addrs, nullptr );
 
     for (USHORT i = 0; i < frames; i++) {
         // Allocate a buffer large enough to hold the symbol information on the stack and get

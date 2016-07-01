@@ -38,7 +38,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         //    qApp->setActiveWindow(this);
         //this->update();
         //Don't update if this is - same subWindow
-        if( subWindow==NULL )
+        if( subWindow==nullptr )
         {
             if( !ui->centralWidget->subWindowList().isEmpty() )
                 return;
@@ -52,7 +52,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     else
     {
         if(ui->centralWidget->subWindowList().isEmpty())
-            LastActiveSubWindow=NULL;
+            LastActiveSubWindow=nullptr;
         qApp->setActiveWindow(this);
     }
 
@@ -255,7 +255,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         if(lvlWin->sceneCreated)
         {
             dock_LvlSectionProps->switchResizeMode(
-                 (lvlWin->scene->pResizer!=NULL)&&(lvlWin->scene->pResizer->type==0)
+                 (lvlWin->scene->pResizer != nullptr)&&(lvlWin->scene->pResizer->type==0)
                         );
         }
 

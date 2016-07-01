@@ -31,14 +31,14 @@ public:
     /*!
      * \brief Constructor
      */
-    PGE_DataArray() : m_data(NULL), m_total_elements(0), m_size(0), m_stored(0) {}
+    PGE_DataArray() : m_data(nullptr), m_total_elements(0), m_size(0), m_stored(0) {}
 
     /*!
      * \brief Copy Constructor
      * \param other Other object of PGE_DataArray class
      */
     PGE_DataArray(const PGE_DataArray&other)
-        : m_data(NULL),
+        : m_data(nullptr),
           m_size(other.m_size),
           m_total_elements(other.m_total_elements),
           m_stored(other.m_stored)
@@ -85,7 +85,7 @@ public:
         {
             delete[] m_data;
         }
-        m_data = NULL;
+        m_data = nullptr;
         m_size=0;
         m_stored=0;
         m_total_elements=0;
@@ -94,7 +94,7 @@ public:
     bool allocateSlots(int number)
     {
         if(number==0) return false;
-        if(m_data==NULL)
+        if(m_data==nullptr)
         {
             m_data= new T[number+1];
             if(!m_data) return false;
