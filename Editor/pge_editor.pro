@@ -134,7 +134,8 @@ android: {
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
-    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
+    #QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh \"$$PWD\"
+    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" $$TARGET
 }
 
 LIBS += -lfreeimagelite
