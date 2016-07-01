@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -263,6 +263,7 @@
     <addaction name="actionLVLSearchBox"/>
     <addaction name="actionWLD_SearchBox"/>
     <addaction name="actionVariables"/>
+    <addaction name="actionScriptEditor"/>
     <addaction name="separator"/>
     <addaction name="actionBookmarkBox"/>
     <addaction name="actionTilesetBox"/>
@@ -2790,6 +2791,11 @@
    </property>
    <property name="text">
     <string>Go to right-bottom of the section</string>
+   </property>
+  </action>
+  <action name="actionScriptEditor">
+   <property name="text">
+    <string>Script Editor</string>
    </property>
   </action>
  </widget>

@@ -166,6 +166,7 @@ void MainWindow::setUiDefults()
     ui->PlacingToolbar->setVisible(false);
         ui->actionOverwriteMode->setVisible(false);
         ui->actionRectFill->setVisible(false);
+        ui->actionCircleFill->setVisible(false);
         ui->actionLine->setVisible(false);
         ui->actionFill->setVisible(false);
         ui->actionFloodSectionOnly->setVisible(false);
@@ -240,5 +241,12 @@ void MainWindow::setUiDefults()
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
     /*********************Zoom field*************************/
+
+    /***Hide all "under construction" elements in release builds***/
+    #ifndef DEBUG_BUILD
+    ui->actionVariables->setVisible(false);
+    ui->actionScriptEditor->setVisible(false);
+    #endif
+    /**************************************************************/
 
 }

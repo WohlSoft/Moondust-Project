@@ -335,6 +335,11 @@ public:
          * \param pos Position of the mouse cursor
          */
         void on_MainWindow_customContextMenuRequested(const QPoint &pos);
+
+        /*!
+         * \brief A script editor box
+         */
+        void on_actionScriptEditor_triggered();
 // ///////////////////////////////////////////////////////////
 
 

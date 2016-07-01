@@ -66,9 +66,9 @@ void MainWindow::on_actionShow_Development_Console_triggered()
     DevConsole::show();
 }
 
-LazyFixTool_gui * lazyfixGUI = nullptr;
-gifs2png_gui * gifToPngGUI = nullptr;
-png2gifs_gui * pngToGifGUI = nullptr;
+static LazyFixTool_gui * lazyfixGUI = nullptr;
+static gifs2png_gui * gifToPngGUI = nullptr;
+static png2gifs_gui * pngToGifGUI = nullptr;
 
 template<typename T>
 void defConstructObjAndExec(T*& dialogObj, QWidget* parent = 0){
