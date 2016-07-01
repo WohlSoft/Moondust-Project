@@ -56,7 +56,7 @@ namespace luabind {
 		}
 
 		template< typename... Args >
-		void expand_hack(Args... args)
+        void expand_hack(Args... /*args*/)
 		{}
 
 	}
