@@ -50,7 +50,7 @@ else
 	errorofbuild
 fi
 
-PATH=$PATH:$QT_PATH
+PATH=$QT_PATH:$PATH
 
 #=======================================================================
 # build translations of the editor

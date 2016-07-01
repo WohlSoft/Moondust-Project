@@ -38,7 +38,7 @@ compiler:
 
 env:
 # Default build. Release.
-  - PATH=/Users/StaticQt/5.5.1/bin:/Users/StaticQt/5.5.1/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+  - PATH=/Users/StaticQt/5.7.0/bin:/Users/StaticQt/5.7.0/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 before_script:
   - sudo systemsetup -settimezone Europe/Moscow;
@@ -47,7 +47,7 @@ before_script:
 
 before_install:
 # ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.5.1 on OS X 10.11.1
+# Downloading and unpacking of pre-built static Qt 5.7.0 on OS X 10.10.5
 # ------------------------------------------------------------------------------
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
@@ -56,10 +56,10 @@ before_install:
     git submodule update;
     sudo mkdir -p /Users/StaticQt/;
     sudo chown -R travis /Users/StaticQt/;
-    wget http://wohlsoft.ru/docs/Software/QtBuilts/qt-5.5.1-static-osx-10.11.1.tar.gz -O /Users/StaticQt/qt-5.5.1-static-osx-10.11.1.tar.gz;
+    wget http://wohlsoft.ru/docs/Software/QtBuilts/qt-5.7.0-static-osx-10.10.5.tar.gz -O /Users/StaticQt/qt-5.7.0-static-osx-10.10.5.tar.gz;
     Bak=~+;
     cd /Users/StaticQt/;
-    tar -xf qt-5.5.1-static-osx-10.11.1.tar.gz;
+    tar -xf qt-5.7.0-static-osx-10.10.5.tar.gz;
     cd $Bak;
 
 # ==============================================================================
@@ -73,7 +73,7 @@ before_install:
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-  - echo "QT_PATH=\"/Users/StaticQt/5.5.1/bin/\"" > _paths.sh;
+  - echo "QT_PATH=\"/Users/StaticQt/5.7.0/bin/\"" > _paths.sh;
     echo "QMake=\"qmake\"" > _paths.sh;
     echo "LRelease=\"lrelease\"" >> _paths.sh;
     echo "" >> _paths.sh;
