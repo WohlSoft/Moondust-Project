@@ -512,11 +512,10 @@ void DevConsole::doSendCheat(QStringList args)
 
 }
 
-void DevConsole::doOutputPaths(QStringList args)
+void DevConsole::doOutputPaths(QStringList /*args*/)
 {
     log(QString("App path: ") + AppPathManager::userAppDir());
     log(QString("Settings file: ") + AppPathManager::settingsFile());
-    log(QString("Log file: ") + LogWriter::DebugLogFile);
-
+    log(QString("Current log file: ") + LogWriter::DebugLogFile);
 }
 

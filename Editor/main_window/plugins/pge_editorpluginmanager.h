@@ -16,7 +16,7 @@ public:
 
     bool hasPlugins() const;
     unsigned int getPluginCount() const;
-    const PGE_EditorPluginItem& getPluginInfo(int index) const;
+    const PGE_EditorPluginItem& getPluginInfo(unsigned int index) const;
 
 private:
     QList<PGE_EditorPluginItem> m_loadedPlugins;

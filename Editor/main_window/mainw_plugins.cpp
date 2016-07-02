@@ -18,7 +18,7 @@ void MainWindow::initPlugins()
     m_pluginManager.loadPluginsInDir(QDir(configs.config_dir + "editor-plugins"));
 
     // Add plugins to menu
-    for(unsigned int i = 0; i < m_pluginManager.getPluginCount(); ++i){
+    for(unsigned int i = 0; i < m_pluginManager.getPluginCount(); ++i) {
         const PGE_EditorPluginItem& item = m_pluginManager.getPluginInfo(i);
         pluginsMenu->addAction(item.pluginName());
     }
@@ -28,7 +28,8 @@ void MainWindow::initPlugins()
 
     pluginsMenu->addSeparator();
     QAction* pluginManager = pluginsMenu->addAction("Plugin Manager");
-    connect(pluginManager, &QAction::triggered, [this](bool checked){
+    connect(pluginManager, &QAction::triggered, [this](bool checked) {
+        Q_UNUSED(checked);
         PGE_EditorPluginInfo infoWindow(&m_pluginManager, this);
         infoWindow.exec();
     });
