@@ -25,6 +25,7 @@
 #include <QDate>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QComboBox>
 
 #include <dev_console/devconsole.h>
 
@@ -35,7 +36,56 @@
 
 QString         LogWriter::DebugLogFile;
 PGE_LogLevel    LogWriter::logLevel;
-bool            LogWriter::enabled;
+
+static PGE_LogLevel qMsg2PgeLL(QtMsgType type)
+{
+    switch(type)
+    {
+    case QtDebugMsg:
+        return PGE_LogLevel::Debug;
+    case QtWarningMsg:
+        return PGE_LogLevel::Warning;
+    case QtCriticalMsg:
+        return PGE_LogLevel::Critical;
+    case QtFatalMsg:
+        return PGE_LogLevel::Fatal;
+    default:
+        return PGE_LogLevel::Warning;
+    }
+}
+
+static QString PgeLL2Str(PGE_LogLevel type)
+{
+    switch(type)
+    {
+    case PGE_LogLevel::Debug:
+        return "Debug";
+    case PGE_LogLevel::Warning:
+        return "Warning";
+    case PGE_LogLevel::Critical:
+        return "Critical";
+    case PGE_LogLevel::Fatal:
+        return "Fatal";
+    case PGE_LogLevel::System:
+        return "System";
+    case PGE_LogLevel::NoLog:
+        return "NoLog";
+    default:
+        return "Unknown";
+    }
+}
+
+
+void LogWriter::loadLogLevels(QComboBox *targetComboBox)
+{
+    targetComboBox->clear();
+    targetComboBox->addItem(QObject::tr("Disable logging"));
+    targetComboBox->addItem(QObject::tr("System messages"));
+    targetComboBox->addItem(QObject::tr("Fatal"));
+    targetComboBox->addItem(QObject::tr("Critical"));
+    targetComboBox->addItem(QObject::tr("Warning"));
+    targetComboBox->addItem(QObject::tr("Debug"));
+}
 
 LogWriterSignal::LogWriterSignal(QObject *parent) : QObject(parent)
 {}
@@ -78,39 +128,36 @@ void LogWriter::LoadLogSettings()
 
     QDir defLogDir(AppPathManager::userAppDir()+"/logs");
     if(!defLogDir.exists())
+    {
         if(!defLogDir.mkpath(AppPathManager::userAppDir()+"/logs"))
             defLogDir.setPath(AppPathManager::userAppDir());
+    }
 
     logSettings.beginGroup("logging");
         DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
-            DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
-        DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath()+"/"+logFileName;
-        logLevel=(PGE_LogLevel)logSettings.value("log-level", (int)PGE_LogLevel::Warning).toInt();
-        enabled = ((int)logLevel!=0);
+            DebugLogFile = defLogDir.absolutePath()+"/" + logFileName;
+        DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath() + "/" + logFileName;
+        logLevel = PGE_LogLevel(logSettings.value("log-level", int(PGE_LogLevel::Warning)).toInt());
     logSettings.endGroup();
-    qDebug()<< QString("LogLevel %1, log file %2").arg((int)logLevel).arg(DebugLogFile);
+
+    qDebug() << QString("LogLevel %1, log file %2")
+                .arg( PgeLL2Str(logLevel) )
+                .arg( DebugLogFile );
+
     qInstallMessageHandler(logMessageHandler);
+
 }
 
 void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
 {
-    if(!enabled) return; //if logging disabled
-
     QString txt;
 
-    switch(type)
-    {
-        case PGE_LogLevel::Debug:
-            if(logLevel==PGE_LogLevel::Fatal) return;
-        case PGE_LogLevel::Warning:
-            if(logLevel==PGE_LogLevel::Critical) return;
-        case PGE_LogLevel::Critical:
-            if(logLevel==PGE_LogLevel::Warning) return;
-        case PGE_LogLevel::Fatal:
-            break;
-        case PGE_LogLevel::NoLog: return;
-    }
+    if(type == PGE_LogLevel::NoLog)
+        return;
+
+    if(type > logLevel)
+        return;
 
     switch(type)
     {
@@ -125,34 +172,37 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
         break;
         case PGE_LogLevel::Fatal:
             txt = QString("Fatal: %1\n\nStack trace:\n%2").arg(msg).arg(CrashHandler::getStacktrace());
-            break;
-        case PGE_LogLevel::NoLog: return;
+        break;
+        case PGE_LogLevel::System:
+            txt = QString("System: %1").arg(msg);
+        break;
+        case PGE_LogLevel::NoLog:
+            return;
+        break;
+        default:
+            txt = QString("Info: %1").arg(msg);
+        break;
     }
 
-QFile outFile(DebugLogFile);
-outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-QTextStream ts(&outFile);
-ts << txt << endl;
-outFile.close();
+    QFile outFile(DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+    outFile.close();
 }
 
 void LogWriter::logMessageHandler(QtMsgType type,
                   const QMessageLogContext& context,
                              const QString& msg)
 {
-    switch (type)
-    {
-        case QtDebugMsg:
-            if(logLevel==PGE_LogLevel::Warning) return;
-        case QtWarningMsg:
-            if(logLevel==PGE_LogLevel::Critical) return;
-        case QtCriticalMsg:
-            if(logLevel==PGE_LogLevel::Fatal) return;
-        case QtFatalMsg:
-            break;
-        default:
-            break;
-    }
+
+    PGE_LogLevel ptype = qMsg2PgeLL(type);
+
+    if( ptype == PGE_LogLevel::NoLog )
+        return;
+
+    if( ptype > logLevel )
+        return;
 
     QByteArray lMessage = msg.toLocal8Bit();
     QString txt;
@@ -207,7 +257,8 @@ void LogWriter::logMessageHandler(QtMsgType type,
     if(!LogWriter::consoleConnector)
         return;
 
-    switch (type) {
+    switch (type)
+    {
     case QtDebugMsg:
         LogWriter::consoleConnector->log(msg, QString("Debug"));
         break;
@@ -255,10 +306,12 @@ void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
 
     if(noConsole)
         return;
+
     if(!LogWriter::consoleConnector)
         return;
 
-    switch (type) {
+    switch (type)
+    {
     case PGE_LogLevel::Debug:
         LogWriter::consoleConnector->log(msg, QString("Debug"));
         break;
@@ -271,8 +324,11 @@ void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
     case PGE_LogLevel::Fatal:
         LogWriter::consoleConnector->log(msg, QString("Fatal"));
         break;
-    default:
+    case PGE_LogLevel::System:
         LogWriter::consoleConnector->log(msg, QString("System"));
+        break;
+    default:
+        LogWriter::consoleConnector->log(msg, QString("Info"));
         break;
     }
 }

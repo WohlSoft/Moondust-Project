@@ -330,28 +330,8 @@ void MainWindow::saveSettings()
     settings.endGroup();
 
     settings.beginGroup("logging");
-        settings.setValue("log-path", LogWriter::DebugLogFile);
-
-        if(LogWriter::enabled)
-            settings.setValue("log-level", (int)LogWriter::logLevel);
-        else
-            settings.setValue("log-level", 0);
-//        if(LogWriter::enabled)
-//            switch(LogWriter::logLevel)
-//            {
-//            case QtDebugMsg:
-//                settings.setValue("log-level", (int)LogWriter::logLevel); break;
-//            case QtWarningMsg:
-//                settings.setValue("log-level", "3"); break;
-//            case QtCriticalMsg:
-//                settings.setValue("log-level", "2"); break;
-//            case QtFatalMsg:
-//                settings.setValue("log-level", "1"); break;
-//            default:
-//                settings.setValue("log-level", "4"); break;
-//            }
-//        else
-//            settings.setValue("log-level", "0");
+        settings.setValue("log-path",  LogWriter::DebugLogFile);
+        settings.setValue("log-level", int(LogWriter::logLevel));
     settings.endGroup();
 
     //Save settings of custom counters in the debugger
@@ -369,12 +349,11 @@ void MainWindow::on_actionApplication_settings_triggered()
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
-    appSettings->applySettings();
-
     if(appSettings->exec()==QDialog::Accepted)
     {
         ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
+        on_actionAnimation_triggered( GlobalSettings::LvlOpts.animationEnabled );
+
         ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
 
@@ -383,12 +362,13 @@ void MainWindow::on_actionApplication_settings_triggered()
         dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
-        applyTheme(GlobalSettings::currentTheme.isEmpty() ?
-                       ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )
-                     : GlobalSettings::currentTheme);
+        applyTheme( GlobalSettings::currentTheme.isEmpty() ?
+                    ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )
+                    : GlobalSettings::currentTheme );
 
         saveSettings();
     }
+
     delete appSettings;
 
 }

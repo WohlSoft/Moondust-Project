@@ -834,33 +834,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="logLevel">
-         <item>
-          <property name="text">
-           <string>Disable logging</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Fatal</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Crytical</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Warning</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Debug</string>
-          </property>
-         </item>
-        </widget>
+        <widget class="QComboBox" name="logLevel"/>
        </item>
        <item row="2" column="0" colspan="3">
         <spacer name="verticalSpacer">
