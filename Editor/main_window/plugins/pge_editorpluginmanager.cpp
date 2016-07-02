@@ -28,22 +28,22 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
     }
     for(QString subFolder : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
     {
-        WriteToLog(PGE_LogLevel::Debug, QString("Found ") + subFolder + " and attempt to load main.js!");
+        LogDebug(QString("Found package ") + subFolder + "! Looking for main.js...");
         QDir nextDir = dir;
         nextDir.cd(subFolder);
 
-        if(!nextDir.exists("main.js")){
-            WriteToLog(PGE_LogLevel::Debug, QString("Found ") + subFolder + " and attempt to load main.js!");
+        if(nextDir.exists("main.js")){
+            LogDebug(QString("Found ") + subFolder + " and attempt to load main.js!");
             bool ok = false;
             const QVariantMap result = m_engine.loadFileByExpcetedResult<QVariantMap>(nextDir.canonicalPath() + "/main.js", &ok);
             if(!ok)
             {
-                WriteToLog(PGE_LogLevel::Warning, "Error while loading main.js in " + subFolder + ", skipping...");
+                LogWarning("Error while loading main.js in " + subFolder + ", skipping...");
                 continue;
             }
 
-            if(result.find("plugin_name") == result.cend()){
-                WriteToLog(PGE_LogLevel::Warning, "Failed to find plugin_name from the result of main.js in " + subFolder + ", skipping...");
+            if(result.find("pluginName") == result.cend()){
+                LogWarning("Failed to find plugin_name from the result of main.js in " + subFolder + ", skipping...");
                 continue;
             }
 
@@ -53,6 +53,8 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
             m_loadedPlugins.push_back(PGE_EditorPluginItem(std::move(pluginName), std::move(authorName), version));
 
             WriteToLog(PGE_LogLevel::Debug, "Successfully loaded plugin\"" + pluginName + "\"!");
+        }else{
+            LogDebug("Found package, but not main.js!")
         }
     }
 }

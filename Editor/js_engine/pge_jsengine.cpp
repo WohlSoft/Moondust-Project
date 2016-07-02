@@ -10,10 +10,10 @@
 void PGE_JsEngine::logError(const QJSValue &erroredValue)
 {
     QString message =
-                  "Error of the script " + m_scriptFile + ":"
-                + "Uncaught exception at line"
+                  "Error of the script " + m_scriptFile + ": \n"
+                + "Uncaught exception at line "
                 + QString::number(erroredValue.property("lineNumber").toInt())
-                + ":" + erroredValue.toString();
+                + ":\n" + erroredValue.toString();
     LogWarning(message);
 
     #if DEBUG_BUILD
