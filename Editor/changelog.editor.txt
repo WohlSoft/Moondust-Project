@@ -9,6 +9,8 @@ Editor 0.3.1.11
 - Test are finally working
 - Fixed frame-sequence based animator for the blocks
 - Fixed junk element entries on damaged or absensing image file
+- Added support of the automatical running of the configure utilities in the config packs. Now configure utilities are working in JavaScript instead of executables!
+- Fixed log level managemen
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
