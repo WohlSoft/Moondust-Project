@@ -436,9 +436,9 @@ SOURCES += main.cpp\
     js_engine/proxies/js_file.cpp \
     js_engine/proxies/js_common.cpp \
     js_engine/proxies/js_ini.cpp \
-    main_window/mainw_scripting.cpp \
     main_window/plugins/pge_editorpluginmanager.cpp \
-    main_window/plugins/pge_editorpluginitem.cpp
+    main_window/plugins/pge_editorpluginitem.cpp \
+    main_window/mainw_plugins.cpp
 
 HEADERS  += defines.h \
     version.h \

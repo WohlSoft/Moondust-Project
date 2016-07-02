@@ -9,6 +9,16 @@ bool PGE_EditorPluginManager::hasPlugins() const
     return m_loadedPlugins.size() > 0;
 }
 
+unsigned int PGE_EditorPluginManager::getPluginCount() const
+{
+    return m_loadedPlugins.size();
+}
+
+const PGE_EditorPluginItem &PGE_EditorPluginManager::getPluginInfo(int index) const
+{
+    return m_loadedPlugins[index];
+}
+
 void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
 {
     if(!dir.exists())

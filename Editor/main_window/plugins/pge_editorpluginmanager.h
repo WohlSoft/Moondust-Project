@@ -12,9 +12,11 @@ class PGE_EditorPluginManager : public QObject
 public:
     explicit PGE_EditorPluginManager(QObject *parent = 0);
 
-    bool hasPlugins() const;
     void loadPluginsInDir(const QDir& dir);
 
+    bool hasPlugins() const;
+    unsigned int getPluginCount() const;
+    const PGE_EditorPluginItem& getPluginInfo(int index) const;
 
 private:
     QList<PGE_EditorPluginItem> m_loadedPlugins;

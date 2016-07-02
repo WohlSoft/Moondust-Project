@@ -14,8 +14,11 @@ void MainWindow::initPlugins()
     QString mainDir = AppPathManager::userAppDir();
     m_pluginManager.loadPluginsInDir(QDir(mainDir + "/editor-plugins"));
 
-
     // Add plugins to menu
+    for(unsigned int i = 0; i < m_pluginManager.getPluginCount(); ++i){
+        const PGE_EditorPluginItem& item = m_pluginManager.getPluginInfo(i);
+        pluginsMenu->addAction(item.pluginName());
+    }
 
     if(pluginsMenu->actions().size() == 0)
         pluginsMenu->addAction("<No Plugins installed>");
