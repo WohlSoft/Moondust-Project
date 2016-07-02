@@ -10,7 +10,9 @@ Editor 0.3.1.11
 - Fixed frame-sequence based animator for the blocks
 - Fixed junk element entries on damaged or absensing image file
 - Added support of the automatical running of the configure utilities in the config packs. Now configure utilities are working in JavaScript instead of executables!
-- Fixed log level managemen
+- Fixed log level management
+- Better validating of configuration package INI-files in the editor (to avlid future crashes because damaged config pack)
+- Experimental plugins system
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
