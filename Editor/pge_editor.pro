@@ -438,7 +438,8 @@ SOURCES += main.cpp\
     js_engine/proxies/js_ini.cpp \
     main_window/plugins/pge_editorpluginmanager.cpp \
     main_window/plugins/pge_editorpluginitem.cpp \
-    main_window/mainw_plugins.cpp
+    main_window/mainw_plugins.cpp \
+    main_window/plugins/pge_editorplugininfo.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -648,7 +649,8 @@ HEADERS  += defines.h \
     js_engine/proxies/js_utils.h \
     js_engine/proxies/js_ini.h \
     main_window/plugins/pge_editorpluginmanager.h \
-    main_window/plugins/pge_editorpluginitem.h
+    main_window/plugins/pge_editorpluginitem.h \
+    main_window/plugins/pge_editorplugininfo.h
 
 FORMS    += \
     common_features/crashhandler.ui \
@@ -699,7 +701,8 @@ FORMS    += \
     main_window/tip_of_day/tip_of_day.ui \
     main_window/testing/testing_settings.ui \
     main_window/dock/variables_box.ui \
-    main_window/script/script_editor.ui
+    main_window/script/script_editor.ui \
+    main_window/plugins/pge_editorplugininfo.ui
 
 
 

@@ -49,8 +49,9 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
 
             QString pluginName = result.value("pluginName").toString();
             QString authorName = result.value("authorName").toString();
+            QString description = result.value("description").toString();
             int version = result.value("version").toInt();
-            m_loadedPlugins.push_back(PGE_EditorPluginItem(std::move(pluginName), std::move(authorName), version));
+            m_loadedPlugins.push_back(PGE_EditorPluginItem(std::move(pluginName), std::move(authorName), std::move(description), version));
 
             WriteToLog(PGE_LogLevel::Debug, "Successfully loaded plugin\"" + pluginName + "\"!");
         }else{
