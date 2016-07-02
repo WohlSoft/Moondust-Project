@@ -24,23 +24,22 @@
 
 long dataconfigs::getMusLvlI(unsigned long itemID)
 {
-    if((itemID>0) && main_music_lvl.contains(itemID))
-        return itemID;
-
+    if((itemID>0) && main_music_lvl.contains(int(itemID)))
+        return long(itemID);
     return -1;
 }
 
 long dataconfigs::getMusWldI(unsigned long itemID)
 {
-    if((itemID>0) && main_music_wld.contains(itemID))
-        return itemID;
+    if((itemID>0) && main_music_wld.contains(int(itemID)))
+        return long(itemID);
     return -1;
 }
 
 long dataconfigs::getMusSpcI(unsigned long itemID)
 {
-    if((itemID>0) && main_music_spc.contains(itemID))
-        return itemID;
+    if((itemID>0) && main_music_spc.contains(int(itemID)))
+        return long(itemID);
     return -1;
 }
 
@@ -57,13 +56,9 @@ void dataconfigs::loadMusic()
     unsigned long music_wld_total=0;
     unsigned long music_spc_total=0;
 
-    QString music_ini = config_dir + "music.ini";
-
-    if(!QFile::exists(music_ini))
-    {
-        addError(QString("ERROR LOADING music.ini: file does not exist"), PGE_LogLevel::Critical);
+    QString music_ini = getFullIniPath("music.ini");
+    if(music_ini.isEmpty())
         return;
-    }
 
     QSettings musicset(music_ini, QSettings::IniFormat);
     musicset.setIniCodec("UTF-8");
@@ -72,27 +67,26 @@ void dataconfigs::loadMusic()
     main_music_wld.clear();   //Clear old
     main_music_spc.clear();   //Clear old
 
-    musicset.beginGroup("music-main");
-        music_lvl_total = musicset.value("total-level", "0").toInt();
-        music_wld_total = musicset.value("total-world", "0").toInt();
-        music_spc_total = musicset.value("total-special", "0").toInt();
+    if(!openSection(&musicset, "music-main")) return;
+        music_lvl_total = musicset.value("total-level", 0).toUInt();
+        music_wld_total = musicset.value("total-world", 0).toUInt();
+        music_spc_total = musicset.value("total-special", 0).toUInt();
 
-        music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
-        music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
-        total_data +=music_lvl_total;
-        total_data +=music_wld_total;
-        total_data +=music_spc_total;
-    musicset.endGroup();
+        music_custom_id     = musicset.value("level-custom-music-id", 24).toUInt();
+        music_w_custom_id   = musicset.value("world-custom-music-id", 17).toUInt();
+        total_data += music_lvl_total;
+        total_data += music_wld_total;
+        total_data += music_spc_total;
+    closeSection(&musicset);
 
     emit progressPartNumber(8);
-    emit progressMax(music_lvl_total+music_wld_total+music_spc_total);
+    emit progressMax(int(music_lvl_total + music_wld_total + music_spc_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Music..."));
 
-    ConfStatus::total_music_lvl = music_lvl_total;
-    ConfStatus::total_music_wld = music_wld_total;
-    ConfStatus::total_music_spc = music_spc_total;
-
+    ConfStatus::total_music_lvl = long(music_lvl_total);
+    ConfStatus::total_music_wld = long(music_wld_total);
+    ConfStatus::total_music_spc = long(music_spc_total);
 
     //////////////////////////////
 
@@ -109,29 +103,31 @@ void dataconfigs::loadMusic()
         addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), PGE_LogLevel::Critical);
     }
 
-    main_music_wld.allocateSlots(music_wld_total);
+    main_music_wld.allocateSlots(int(music_wld_total));
+
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
-        emit progressValue(i);
+        bool valid=true;
+        emit progressValue(int(i));
 
-        musicset.beginGroup( QString("world-music-"+QString::number(i)) );
+        if(!openSection(&musicset, QString("world-music-%1").arg(i)) )
+            break;
             smusic_wld.name = musicset.value("name", "").toString();
             if(smusic_wld.name.isEmpty())
             {
+                valid=false;
                 addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
-                goto skipWldMusic;
             }
             smusic_wld.file = musicset.value("file", "").toString();
             if(smusic_wld.file.isEmpty())
             {
+                valid=false;
                 addError(QString("WLD-Music-%1 Item file isn't defined").arg(i));
-                goto skipWldMusic;
             }
             smusic_wld.id = i;
-            main_music_wld.storeElement(i, smusic_wld);
-        skipWldMusic:
-        musicset.endGroup();
+            main_music_wld.storeElement(int(i), smusic_wld, valid);
+        closeSection(&musicset);
 
         if( musicset.status() != QSettings::NoError )
         {
@@ -140,30 +136,32 @@ void dataconfigs::loadMusic()
         }
     }
 
-    main_music_spc.allocateSlots(music_spc_total);
+    main_music_spc.allocateSlots(int(music_spc_total));
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
-        emit progressValue(i);
+        bool valid=true;
+        emit progressValue(int(i));
 
-        musicset.beginGroup( QString("special-music-"+QString::number(i)) );
+        if(!openSection(&musicset, QString("special-music-%1").arg(i)) )
+            break;
+
             smusic_spc.name = musicset.value("name", "").toString();
             if(smusic_spc.name.isEmpty())
             {
+                valid=false;
                 addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
-                goto skipSpcMusic;
             }
             smusic_spc.file = musicset.value("file", "").toString();
             if(smusic_spc.file.isEmpty())
             {
+                valid=false;
                 addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
-                goto skipSpcMusic;
             }
             smusic_spc.id = i;
-            main_music_spc.storeElement(i, smusic_spc);
+            main_music_spc.storeElement(int(i), smusic_spc, valid);
 
-        skipSpcMusic:
-        musicset.endGroup();
+        closeSection(&musicset);
 
         if( musicset.status() != QSettings::NoError )
         {
@@ -172,29 +170,30 @@ void dataconfigs::loadMusic()
         }
     }
 
-    main_music_lvl.allocateSlots(music_lvl_total);
+    main_music_lvl.allocateSlots(int(music_lvl_total));
+
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
-        emit progressValue(i);
+        bool valid=true;
+        emit progressValue(int(i));
 
-        musicset.beginGroup( QString("level-music-"+QString::number(i)) );
+        if(!openSection(&musicset, QString("level-music-%1").arg(i)) ) break;
             smusic_lvl.name = musicset.value("name", "").toString();
             if(smusic_lvl.name.isEmpty())
             {
                 addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
-                goto skipLvlMusic;
+                valid=false;
             }
             smusic_lvl.file = musicset.value("file", "").toString();
             if(smusic_lvl.file.isEmpty()&&(i != music_custom_id))
             {
                 addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
-                goto skipLvlMusic;
+                valid=false;
             }
             smusic_lvl.id = i;
-            main_music_lvl.storeElement(i, smusic_lvl);
-        skipLvlMusic:
-        musicset.endGroup();
+            main_music_lvl.storeElement(int(i), smusic_lvl, valid);
+        closeSection(&musicset);
 
         if( musicset.status() != QSettings::NoError )
         {

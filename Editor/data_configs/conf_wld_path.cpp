@@ -63,33 +63,28 @@ void dataconfigs::loadWorldPaths()
 
     obj_w_path sPath;
     unsigned long path_total=0;
-    QString scene_ini = config_dir + "wld_paths.ini";
 
-    if(!QFile::exists(scene_ini))
-    {
-        addError(QString("ERROR LOADING wld_paths.ini: file does not exist"), PGE_LogLevel::Critical);
-        return;
-    }
-
+    QString scene_ini = getFullIniPath("wld_paths.ini");
+    if(scene_ini.isEmpty()) return;
 
     QSettings pathset(scene_ini, QSettings::IniFormat);
     pathset.setIniCodec("UTF-8");
 
     main_wpaths.clear();   //Clear old
 
-    pathset.beginGroup("path-main");
-        path_total = pathset.value("total", "0").toInt();
+    if(!openSection(&pathset, "path-main")) return;
+        path_total = pathset.value("total", 0).toUInt();
         total_data +=path_total;
-    pathset.endGroup();
+    closeSection(&pathset);
 
     emit progressPartNumber(6);
-    emit progressMax(path_total);
+    emit progressMax(int(path_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Paths images..."));
 
-    ConfStatus::total_wpath= path_total;
+    ConfStatus::total_wpath= long(path_total);
 
-    main_wpaths.allocateSlots(path_total);
+    main_wpaths.allocateSlots(int(path_total));
 
     if(ConfStatus::total_wpath==0)
     {
@@ -99,10 +94,12 @@ void dataconfigs::loadWorldPaths()
 
     for(i=1; i<=path_total; i++)
     {
-        emit progressValue(i);
+        bool valid = true;
+        emit progressValue(int(i));
         QString errStr;
 
-        pathset.beginGroup( QString("path-"+QString::number(i)) );
+        if( !openSection(&pathset, QString("path-%1").arg(i)) )
+            break;
 
         sPath.group =       pathset.value("group", "_NoGroup").toString();
         sPath.category =    pathset.value("category", "_Other").toString();
@@ -116,30 +113,31 @@ void dataconfigs::loadWorldPaths()
 
         if(!errStr.isEmpty())
         {
+            valid = false;
             addError(QString("PATH-%1 %2").arg(i).arg(errStr));
             //goto skipPath;
         }
         /***************Load image*end***************/
 
-        sPath.grid =            pathset.value("grid", default_grid).toInt();
+        sPath.grid =            pathset.value("grid", default_grid).toUInt();
 
-        sPath.animated =       (pathset.value("animated", "0").toString()=="1");
-        sPath.frames =          pathset.value("frames", "1").toInt();
-        sPath.framespeed =      pathset.value("frame-speed", "175").toInt();
+        sPath.animated =        pathset.value("animated", 0).toBool();
+        sPath.frames =          pathset.value("frames", 1).toUInt();
+        sPath.framespeed =      pathset.value("frame-speed", 175).toUInt();
 
-        sPath.frame_h = (sPath.animated? qRound(qreal(sPath.image.height())/sPath.frames) : sPath.image.height());
+        sPath.frame_h = uint(sPath.animated? qRound(qreal(sPath.image.height())/sPath.frames) : sPath.image.height());
 
-        sPath.display_frame=    pathset.value("display-frame", "0").toInt();
-        sPath.row =             pathset.value("row", "0").toInt();
-        sPath.col =             pathset.value("col", "0").toInt();
+        sPath.display_frame =   pathset.value("display-frame", 0).toUInt();
+        sPath.row =             pathset.value("row", 0).toUInt();
+        sPath.col =             pathset.value("col", 0).toUInt();
 
 
         sPath.isValid = true;
         sPath.id = i;
-        main_wpaths.storeElement(i, sPath);
 
-    //skipPath:
-        pathset.endGroup();
+        main_wpaths.storeElement(int(i), sPath, valid);
+
+        closeSection(&pathset);
 
         if( pathset.status() != QSettings::NoError )
         {
@@ -147,9 +145,9 @@ void dataconfigs::loadWorldPaths()
         }
     }
 
-    if((unsigned int)main_wpaths.size()<path_total)
+    if( uint(main_wpaths.stored()) < path_total )
     {
-        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(path_total).arg(main_wpaths.size()));
+        addError(QString("Not all Paths loaded! Total: %1, Loaded: %2").arg(path_total).arg(main_wpaths.stored()));
     }
 }
 

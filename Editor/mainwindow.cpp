@@ -17,12 +17,10 @@
  */
 
 #include <QtConcurrent>
-#include <QDesktopWidget>
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
 #include <common_features/spash_screen.h>
-#include <data_configs/config_manager.h>
 #include <main_window/dock/toolboxes.h>
 #include <common_features/logger_sets.h>
 
@@ -46,152 +44,135 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LogDebug(QString("Setting Lang..."));
     setDefLang();
 
+    LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
 
 #ifdef Q_OS_MACX
     ui->menuBar->setEnabled(false);
 #endif
-
-    //Create empty config directory if not exists
-    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
-        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
+}
 
 
-    // Config manager
-    ConfigManager *cmanager;
-    cmanager = new ConfigManager(nullptr);
-    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowStaysOnTopHint);
-    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
-    QString configPath = cmanager->isPreLoaded();
-    currentConfigDir = configPath;
+bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAskConfigPack)
+{
+    askConfigAgain   = ReAskConfigPack;
+    currentConfigDir = configDir;
 
-    askConfigAgain = cmanager->askAgain;
+    configs.setConfigPath( configDir );
 
-    QString tPack = cmanager->themePack;
-    //If application runned first time or target configuration is not exist
-    if( (askConfigAgain) || ( configPath.isEmpty() ) )
+    try
     {
-        //Ask for configuration
-        if( cmanager->hasConfigPacks() && (cmanager->exec()==QDialog::Accepted) )
+        if(!configs.loadBasics())
+            throw("Fail to load basic configurations");
+
+        Themes::loadTheme( themePack );
+
+        /*********************Splash Screen**********************/
+        QPixmap splashimg(configs.splash_logo.isEmpty()?
+                          Themes::Image(Themes::splash) :
+                          configs.splash_logo);
+
+        EditorSpashScreen splash(splashimg);
+        splash.setCursor(Qt::ArrowCursor);
+        splash.setDisabled(true);
+        splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
+
+        for(int a=0; a<configs.animations.size();a++)
         {
-            configPath = cmanager->currentConfigPath;
+            //QPoint pt(416,242);
+            QPoint pt(int(configs.animations[a].x), int(configs.animations[a].y));
+            //QPixmap img = QPixmap("coin.png");
+            splash.addAnimation(pt,
+                                configs.animations[a].img,
+                                int(configs.animations[a].frames),
+                                int(configs.animations[a].speed));
         }
-        else
+
+        splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
+        splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
+        splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
+        splash.connect(&configs, SIGNAL(progressPartsTotal(int)), &splash, SLOT(progressPartsMax(int)));
+        splash.connect(&configs, SIGNAL(progressPartNumber(int)), &splash, SLOT(progressPartsVal(int)));
+
+        /*********************Loading of config pack**********************/
+        // Do the loading in a thread
+        QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+        /*********************Loading of config pack**********************/
+
+        /*********************Splash Screen**********************/
+        // And meanwhile load the settings in the main thread
+        loadSettings();
+
+        #ifndef Q_OS_ANDROID
+        splash.show();
+        #else
+        splash.showFullScreen();
+        #endif
+        splash.startAnimations();
+
+        // Now wait until the config load in finished.
+        while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64); }
+
+        /*********************Splash Screen end**********************/
+        splash.finish(this);
+        /*********************Splash Screen end**********************/
+        if(!isOk.result())
         {
-            delete cmanager;
-            LogCritical("<Configuration is not selected>");
-            continueLoad = false;
-            return;
+            throw("Error loading configuration package");
         }
-    }
-    //continueLoad = true;
-    askConfigAgain = cmanager->askAgain;
-    currentConfigDir = cmanager->currentConfigPath;
 
-    delete cmanager;
+        if(configs.check())
+        {
+            QMessageBox::warning(this, tr("Configuration error"),
+                tr("Configuration package is loaded with errors."), QMessageBox::Ok);
+            on_actionCurConfig_triggered();
+        }
 
-    configs.setConfigPath(configPath);
+        continueLoad = true;
 
-    configs.loadBasics();
-    Themes::loadTheme(tPack);
+        splash.progressTitle(tr("Loading theme..."));
 
-    /*********************Splash Screen**********************/
-    QPixmap splashimg(configs.splash_logo.isEmpty()?
-                      Themes::Image(Themes::splash) :
-                      configs.splash_logo);
+        applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-    EditorSpashScreen splash(splashimg);
-    splash.setCursor(Qt::ArrowCursor);
-    splash.setDisabled(true);
-    splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
-
-    for(int a=0; a<configs.animations.size();a++)
-    {
-        //QPoint pt(416,242);
-        QPoint pt(configs.animations[a].x, configs.animations[a].y);
-        //QPixmap img = QPixmap("coin.png");
-        splash.addAnimation(pt,
-                            configs.animations[a].img,
-                            configs.animations[a].frames,
-                            configs.animations[a].speed);
-    }
-
-    splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
-    splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
-    splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
-    splash.connect(&configs, SIGNAL(progressPartsTotal(int)), &splash, SLOT(progressPartsMax(int)));
-    splash.connect(&configs, SIGNAL(progressPartNumber(int)), &splash, SLOT(progressPartsVal(int)));
-
-    /*********************Loading of config pack**********************/
-    // Do the loading in a thread
-    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
-    /*********************Loading of config pack**********************/
-
-    /*********************Splash Screen**********************/
-    // And meanwhile load the settings in the main thread
-    loadSettings();
-
-    #ifndef Q_OS_ANDROID
-    splash.show();
-    #else
-    splash.showFullScreen();
+    #ifdef Q_OS_MACX
+        ui->menuBar->setEnabled(true);
     #endif
-    splash.startAnimations();
 
-    // Now wait until the config load in finished.
-    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64);}
+    #ifdef Q_OS_WIN
+        if(ConfStatus::SmbxTest_By_Default)
+        {
+            ui->action_doTest->setShortcut(QStringLiteral(""));
+            ui->action_doTest->setShortcutContext(Qt::WindowShortcut);
 
-    /*********************Splash Screen end**********************/
-    splash.finish(this);
-    /*********************Splash Screen end**********************/
-    if(!isOk.result())
+            ui->actionRunTestSMBX->setShortcut(QStringLiteral("F5"));
+            ui->actionRunTestSMBX->setShortcutContext(Qt::WindowShortcut);
+        }
+    #endif
+
+        splash.progressTitle(tr("Initializing dock widgets..."));
+
+        //Apply objects into tools
+        dock_LvlSectionProps->initDefaults();
+        //dock_LvlItemBox->setLvlItemBoxes();
+        //dock_WldItemBox->setWldItemBoxes();
+        dock_LvlEvents->reloadSoundsList();
+        dock_WldItemProps->WldLvlExitTypeListReset();
+        dock_TilesetBox->setTileSetBox(true);
+
+        splash.progressTitle(tr("Finishing loading..."));
+    }
+    catch(...)
     {
+        LogWriter::logLevel = PGE_LogLevel::Debug; //Force debug log
         QMessageBox::critical(this, tr("Configuration error"),
-                              tr("Configuration can't be loaded.\nSee in %1 for more information.").arg(LogWriter::DebugLogFile), QMessageBox::Ok);
+                              tr("Configuration can't be loaded.\nSee in %1 for more information.")
+                              .arg(LogWriter::DebugLogFile),
+                              QMessageBox::Ok);
         LogFatal("<Error, application closed>");
         continueLoad = false;
-        return;
+        return false;
     }
-
-    if(configs.check())
-    {
-        QMessageBox::warning(this, tr("Configuration error"),
-            tr("Configuration package is loaded with errors."), QMessageBox::Ok);
-        on_actionCurConfig_triggered();
-    }
-
-    continueLoad = true;
-
-    splash.progressTitle(tr("Loading theme..."));
-
-    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
-
-#ifdef Q_OS_MACX
-    ui->menuBar->setEnabled(true);
-#endif
-
-#ifdef Q_OS_WIN
-    if(ConfStatus::SmbxTest_By_Default)
-    {
-        ui->action_doTest->setShortcut(QStringLiteral(""));
-        ui->action_doTest->setShortcutContext(Qt::WindowShortcut);
-
-        ui->actionRunTestSMBX->setShortcut(QStringLiteral("F5"));
-        ui->actionRunTestSMBX->setShortcutContext(Qt::WindowShortcut);
-    }
-#endif
-
-    splash.progressTitle(tr("Initializing dock widgets..."));
-
-    //Apply objects into tools
-    dock_LvlSectionProps->initDefaults();
-    //dock_LvlItemBox->setLvlItemBoxes();
-    //dock_WldItemBox->setWldItemBoxes();
-    dock_LvlEvents->reloadSoundsList();
-    dock_WldItemProps->WldLvlExitTypeListReset();
-    dock_TilesetBox->setTileSetBox(true);
-
-    splash.progressTitle(tr("Finishing loading..."));
+    return true;
 }
 
 MainWindow::~MainWindow()
@@ -219,7 +200,6 @@ MainWindow::~MainWindow()
 #endif
     delete ui;
 }
-
 
 
 //////////////////SLOTS///////////////////////////

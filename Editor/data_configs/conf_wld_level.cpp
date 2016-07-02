@@ -60,16 +60,14 @@ long dataconfigs::getCharacterI(unsigned long itemID)
     long j;
     bool found=false;
 
-
     for(j=0; j < characters.size(); j++)
     {
-        if(characters[j].id==itemID)
+        if(characters[int(j)].id == itemID)
         {
             found=true;
             break;
         }
     }
-
 
     if(!found) j=-1;
     return j;
@@ -82,47 +80,33 @@ void dataconfigs::loadWorldLevels()
 
     obj_w_level slevel;
     unsigned long levels_total=0;
-    QString level_ini = config_dir + "wld_levels.ini";
 
-    if(!QFile::exists(level_ini))
-    {
-        addError(QString("ERROR LOADING wld_levels.ini: file does not exist"), PGE_LogLevel::Critical);
+    QString level_ini = getFullIniPath("wld_levels.ini");
+    if(level_ini.isEmpty())
         return;
-    }
-
 
     QSettings levelset(level_ini, QSettings::IniFormat);
     levelset.setIniCodec("UTF-8");
 
     main_wlevels.clear();   //Clear old
 
-    levelset.beginGroup("levels-main");
-        levels_total = levelset.value("total", "0").toInt();
-        marker_wlvl.path = levelset.value("path", "0").toInt();
-        marker_wlvl.bigpath = levelset.value("bigpath", "0").toInt();
+    if(!openSection(&levelset, "levels-main")) return;
+        levels_total        = levelset.value("total", 0).toUInt();
+        marker_wlvl.path    = levelset.value("path", 0).toUInt();
+        marker_wlvl.bigpath = levelset.value("bigpath", 0).toUInt();
         total_data +=levels_total;
-    levelset.endGroup();
+    closeSection(&levelset);
 
     emit progressPartNumber(7);
-    emit progressMax(levels_total);
+    emit progressMax(int(levels_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Level images..."));
 
-    ConfStatus::total_wlvl = levels_total;
+    ConfStatus::total_wlvl = long(levels_total);
 
-    main_wlevels.allocateSlots(levels_total);
+    main_wlevels.allocateSlots(int(levels_total));
 
-    //creation of empty indexes of arrayElements
-    //wLevelIndexes levelIndex;
-    //for(i=0;i<=levels_total; i++)
-    //{
-    //    levelIndex.i=i;
-    //    levelIndex.type=0;
-    //    levelIndex.ai=0;
-    //    index_wlvl.push_back(levelIndex);
-    //}
-
-    if(ConfStatus::total_wlvl==0)
+    if(ConfStatus::total_wlvl == 0)
     {
         addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
@@ -130,10 +114,12 @@ void dataconfigs::loadWorldLevels()
 
     for(i=0; i<=levels_total; i++)
     {
-        emit progressValue(i);
+        bool valid = true;
+        emit progressValue(int(i));
         QString errStr;
 
-        levelset.beginGroup( QString("level-"+QString::number(i)) );
+        if( !openSection(&levelset, QString("level-%1").arg(i)) )
+            break;
 
         slevel.group =      levelset.value("group", "_NoGroup").toString();
         slevel.category =   levelset.value("category", "_Other").toString();
@@ -147,31 +133,31 @@ void dataconfigs::loadWorldLevels()
 
         if(!errStr.isEmpty())
         {
+            valid=false;
             addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
             //goto skipLevel;
         }
         /***************Load image*end***************/
 
-        slevel.grid =       levelset.value("grid", default_grid).toInt();
+        slevel.grid =       levelset.value("grid", default_grid).toUInt();
 
-        slevel.animated =  (levelset.value("animated", "0").toString()=="1");
-        slevel.frames =     levelset.value("frames", "1").toInt();
-        slevel.framespeed = levelset.value("frame-speed", "175").toInt();
+        slevel.animated =   levelset.value("animated", 0).toBool();
+        slevel.frames   =   levelset.value("frames", 1).toUInt();
+        slevel.framespeed = levelset.value("frame-speed", 175).toUInt();
 
-        slevel.frame_h =   (slevel.animated?
-                                qRound(qreal(slevel.image.height())/
-                                             slevel.frames)
-                                    : slevel.image.height());
+        slevel.frame_h =   (slevel.animated ?
+                                    uint( qRound(qreal(slevel.image.height())/
+                                             slevel.frames) )
+                                  : uint( slevel.image.height()) );
 
-        slevel.display_frame = levelset.value("display-frame", "0").toInt();
+        slevel.display_frame = levelset.value("display-frame", 0).toUInt();
 
         slevel.isValid = true;
 
         slevel.id = i;
-        main_wlevels.storeElement(i, slevel);
+        main_wlevels.storeElement(int(i), slevel, valid);
 
-    //skipLevel:
-        levelset.endGroup();
+        closeSection(&levelset);
 
         if( levelset.status() != QSettings::NoError )
         {
@@ -179,7 +165,7 @@ void dataconfigs::loadWorldLevels()
         }
     }
 
-    if((unsigned int)main_wlevels.size()<levels_total)
+    if(uint(main_wlevels.stored()) < levels_total)
     {
         addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(main_wlevels.stored()));
     }

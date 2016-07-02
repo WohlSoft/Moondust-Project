@@ -63,31 +63,27 @@ void dataconfigs::loadWorldTiles()
 
     obj_w_tile stile;
     unsigned long tiles_total=0;
-    QString tile_ini = config_dir + "wld_tiles.ini";
 
-    if(!QFile::exists(tile_ini))
-    {
-        addError(QString("ERROR LOADING wld_tiles.ini: file does not exist"),  PGE_LogLevel::Critical);
+    QString tile_ini = getFullIniPath("wld_tiles.ini");
+    if(tile_ini.isEmpty())
         return;
-    }
-
 
     QSettings tileset(tile_ini, QSettings::IniFormat);
     tileset.setIniCodec("UTF-8");
 
     main_wtiles.clear();   //Clear old
 
-    tileset.beginGroup("tiles-main");
-        tiles_total = tileset.value("total", "0").toInt();
+    if(!openSection(&tileset, "tiles-main")) return;
+        tiles_total = tileset.value("total", 0).toUInt();
         total_data +=tiles_total;
-    tileset.endGroup();
+    closeSection(&tileset);
 
     emit progressPartNumber(4);
-    emit progressMax(tiles_total);
+    emit progressMax(int(tiles_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Tiles..."));
 
-    ConfStatus::total_wtile = tiles_total;
+    ConfStatus::total_wtile = signed(tiles_total);
 
     if(ConfStatus::total_wtile==0)
     {
@@ -95,19 +91,21 @@ void dataconfigs::loadWorldTiles()
         return;
     }
 
-    main_wtiles.allocateSlots(tiles_total);
+    main_wtiles.allocateSlots(int(tiles_total));
 
     for(i=1; i<=tiles_total; i++)
     {
-        emit progressValue(i);
+        bool valid=true;
+        emit progressValue(int(i));
         QString errStr;
 
-        tileset.beginGroup( QString("tile-"+QString::number(i)) );
+        if( !openSection(&tileset, QString("tile-%1").arg(i)) )
+            break;
 
-        stile.group = tileset.value("group", "_NoGroup").toString();
-        stile.category = tileset.value("category", "_Other").toString();
+        stile.group     = tileset.value("group", "_NoGroup").toString();
+        stile.category  = tileset.value("category", "_Other").toString();
 
-        stile.image_n = tileset.value("image", "").toString();
+        stile.image_n   = tileset.value("image", "").toString();
         /***************Load image*******************/
         GraphicsHelps::loadMaskedImage(tilePath,
            stile.image_n, stile.mask_n,
@@ -116,34 +114,34 @@ void dataconfigs::loadWorldTiles()
 
         if(!errStr.isEmpty())
         {
+            valid = false;
             addError(QString("TILE-%1 %2").arg(i).arg(errStr));
             //goto skipTile;
         }
         /***************Load image*end***************/
 
-        stile.grid =            tileset.value("grid", default_grid).toInt();
+        stile.grid =            tileset.value("grid", default_grid).toUInt();
 
-        stile.animated =       (tileset.value("animated", "0").toString()=="1");
-        stile.frames =          tileset.value("frames", "1").toInt();
-        stile.framespeed =      tileset.value("frame-speed", "175").toInt();
+        stile.animated =        tileset.value("animated", 0).toBool();
+        stile.frames =          tileset.value("frames", 1).toUInt();
+        stile.framespeed =      tileset.value("frame-speed", 175).toUInt();
 
-        stile.frame_h = (stile.animated?
+        stile.frame_h = uint(stile.animated?
                              qRound(
                                  qreal(stile.image.height())/
                                  stile.frames)
                             : stile.image.height());
 
-        stile.display_frame =   tileset.value("display-frame", "0").toInt();
-        stile.row =             tileset.value("row", "0").toInt();
-        stile.col =             tileset.value("col", "0").toInt();
+        stile.display_frame =   tileset.value("display-frame", 0).toUInt();
+        stile.row =             tileset.value("row", 0).toUInt();
+        stile.col =             tileset.value("col", 0).toUInt();
 
         stile.isValid = true;
 
         stile.id = i;
-        main_wtiles.storeElement(i, stile);
+        main_wtiles.storeElement(int(i), stile, valid);
 
-     //skipTile:
-        tileset.endGroup();
+        closeSection(&tileset);
 
         if( tileset.status() != QSettings::NoError )
         {
@@ -151,9 +149,10 @@ void dataconfigs::loadWorldTiles()
         }
     }
 
-    if((unsigned int)main_wtiles.stored()<tiles_total)
+    if(uint(main_wtiles.stored()) < tiles_total)
     {
         addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(main_wtiles.stored()));
     }
+
 }
 

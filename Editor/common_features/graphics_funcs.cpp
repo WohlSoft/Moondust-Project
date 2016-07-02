@@ -243,15 +243,15 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
         return;
     }
 
-    if(!QFile(rootDir+in_imgName).exists())
+    if( !QFile::exists(rootDir + in_imgName) )
     {
-        out_errStr="image file is not exist: "+rootDir+in_imgName;
+        out_errStr = "image file is not exist: "+rootDir+in_imgName;
         return;
     }
 
     out_maskName = in_imgName;
     int i = out_maskName.size()-1;
-    for( ;i>0; i--)
+    for( ; i>0; i--)
     {
         if(out_maskName[i]=='.')
         {
@@ -265,10 +265,17 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
     if(i==0)
     {
         out_maskName = "";
-        loadQImage(target, rootDir+in_imgName);
+        loadQImage(target, rootDir + in_imgName);
     } else {
-        loadQImage(target, rootDir+in_imgName, rootDir+out_maskName);
+        loadQImage(target, rootDir + in_imgName, rootDir+out_maskName);
     }
+
+    if(target.isNull())
+    {
+        out_errStr="Broken image file "+rootDir+in_imgName;
+        return;
+    }
+
     //GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
     out_Img = std::move(QPixmap::fromImage(target));
 
@@ -330,73 +337,80 @@ QImage GraphicsHelps::fromGIF(QString &file)
             return QImage();
         }
 
-        switch (RecordType)
+        switch( RecordType )
         {
-           case IMAGE_DESC_RECORD_TYPE:
+        case IMAGE_DESC_RECORD_TYPE:
+            {
+                errcode = DGifGetImageDesc(t);
+                GifWord Width = t->Image.Width;
+                GifWord Height = t->Image.Height;
+                ColorMapObject* colrMap = (t->Image.ColorMap
+                                          ? t->Image.ColorMap
+                                          : t->SColorMap);
+                QVector<QRgb> clTab;
+                int padding = ((Width % 4)!=0 ? 4 - (Width % 4) : 0);
+                for(int c=0; c<colrMap->ColorCount; c++)
                 {
-                    errcode=DGifGetImageDesc(t);
-                    GifWord Width = t->Image.Width;
-                    GifWord Height = t->Image.Height;
-                    ColorMapObject* colrMap = (t->Image.ColorMap
-                                             ? t->Image.ColorMap
-                                             : t->SColorMap);
-                    QVector<QRgb> clTab;
-                    int padding = ((Width % 4)!=0 ? 4 - (Width % 4) : 0);
-                    for(int c=0; c<colrMap->ColorCount; c++)
-                    {
-                        QRgb pix=0;
-                        // 00000000 R24-00000000 G16-00000000 B8-00000000
-                        pix=(((unsigned int)colrMap->Colors[c].Red)<<16)|pix;
-                        pix=(((unsigned int)colrMap->Colors[c].Green)<<8)|pix;
-                        pix=(((unsigned int)colrMap->Colors[c].Blue))|pix;
-                    }
-                    tarImg.setColorTable(clTab);
-
-                    if (t->Image.Left + t->Image.Width > t->SWidth ||
-                         t->Image.Top + t->Image.Height > t->SHeight) {
-                          qWarning()<<"Image %d is not confined to screen dimension, aborted.\n" << GifErrorString(errcode);
-                          DGifCloseFile(t, &errcode);
-                          return QImage();
-                    }
-
-                    std::shared_ptr<GifPixelType>ptr(new GifPixelType[Width+padding]);
-                    GifPixelType *gifPixelLine=  ptr.get();
-                    if (t->Image.Interlace) {
-                        /* Need to perform 4 passes on the images: */
-                        for (int i = 0; i < 4; i++)
-                            for (int j = 0, pixH=0; j < Height;
-                                       j++,pixH++) {
-                                if(DGifGetLine(t, gifPixelLine, Width) == GIF_ERROR)
-                                {
-                                  qWarning()<<"Gif Error 3"<< GifErrorString(errcode);
-                                  DGifCloseFile(t, &errcode);
-                                  return QImage();
-                                }
-                                for(int pixW=0; pixW<Width; pixW++)
-                                    tarImg.setPixel(pixW, pixH, qGray(gifPixelLine[pixW]));
-                            }
-                        }
-                        else {
-                            for (int i = 0, pixH=0; i < Height; i++,pixH++) {
-                              if (DGifGetLine(t, gifPixelLine,
-                                  Width) == GIF_ERROR) {
-                                  qWarning()<<"Gif Error 4"<< GifErrorString(errcode);
-                                  DGifCloseFile(t, &errcode);
-                                  return QImage();
-                              }
-                              for(int pixW=0; pixW<Width; pixW++)
-                                    tarImg.setPixel(pixW, pixH, qGray(gifPixelLine[pixW]));
-                            }
-                        }
+                    QRgb pix=0;
+                    // 00000000 R24-00000000 G16-00000000 B8-00000000
+                    pix=(uint(colrMap->Colors[c].Red)<<16)|pix;
+                    pix=(uint(colrMap->Colors[c].Green)<<8)|pix;
+                    pix=(uint(colrMap->Colors[c].Blue))|pix;
                 }
-                break;
-           case EXTENSION_RECORD_TYPE:
-               break;
-           case TERMINATE_RECORD_TYPE:
-               break;
-           default:            /* Should be traps by DGifGetRecordType. */
-               break;
-       }
+                tarImg.setColorTable(clTab);
+
+                if (t->Image.Left + t->Image.Width > t->SWidth ||
+                    t->Image.Top + t->Image.Height > t->SHeight)
+                {
+                    qWarning()<<"Image %d is not confined to screen dimension, aborted.\n" << GifErrorString(errcode);
+                    DGifCloseFile(t, &errcode);
+                    return QImage();
+                }
+
+                std::shared_ptr<GifPixelType>ptr(new GifPixelType[Width+padding]);
+                GifPixelType *gifPixelLine=  ptr.get();
+                if (t->Image.Interlace)
+                {
+                     /* Need to perform 4 passes on the images: */
+                     for (int i = 0; i < 4; i++)
+                         for (int j = 0, pixH=0; j < Height;
+                                    j++,pixH++)
+                         {
+                             if(DGifGetLine(t, gifPixelLine, Width) == GIF_ERROR)
+                             {
+                                 qWarning()<<"Gif Error 3"<< GifErrorString(errcode);
+                                 DGifCloseFile(t, &errcode);
+                                 return QImage();
+                             }
+                             for(int pixW=0; pixW<Width; pixW++)
+                                 tarImg.setPixel(pixW, pixH, uint(qGray(gifPixelLine[pixW])));
+                         }
+                }
+                else
+                {
+                     for (int i = 0, pixH=0; i < Height; i++,pixH++)
+                     {
+                         if (DGifGetLine(t, gifPixelLine,
+                             Width) == GIF_ERROR) {
+                             qWarning()<<"Gif Error 4"<< GifErrorString(errcode);
+                             DGifCloseFile(t, &errcode);
+                             return QImage();
+                         }
+                         for(int pixW=0; pixW<Width; pixW++)
+                             tarImg.setPixel(pixW, pixH, uint(qGray(gifPixelLine[pixW])));
+                     }
+                }
+            }
+            break;
+        case EXTENSION_RECORD_TYPE:
+            break;
+        case TERMINATE_RECORD_TYPE:
+            break;
+        /* Should be traps by DGifGetRecordType. */
+        case UNDEFINED_RECORD_TYPE:
+        case SCREEN_DESC_RECORD_TYPE:
+            break;
+        }
     }
     while (RecordType != TERMINATE_RECORD_TYPE);
 
@@ -424,8 +438,8 @@ QImage GraphicsHelps::loadQImage(QString file)
         if(img)
         {
             BYTE *bits = FreeImage_GetBits(img);
-            int width = FreeImage_GetWidth(img);
-            int height = FreeImage_GetHeight(img);
+            int width  = int(FreeImage_GetWidth(img));
+            int height = int(FreeImage_GetHeight(img));
             QImage target(width, height, QImage::Format_ARGB32);
 
             for(int y = height-1; y >=0; y--) {
@@ -445,7 +459,6 @@ QImage GraphicsHelps::loadQImage(QString file)
             return QImage();
         }
     }
-    return QImage();
 }
 
 void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
@@ -463,8 +476,8 @@ void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
         {
             mergeWithMask(img, maskPath);
             BYTE *bits = FreeImage_GetBits(img);
-            int width = FreeImage_GetWidth(img);
-            int height = FreeImage_GetHeight(img);
+            int width  = int(FreeImage_GetWidth(img));
+            int height = int(FreeImage_GetHeight(img));
             target = QImage(width, height, QImage::Format_ARGB32);
             for(int y = height-1; y >=0; y--) {
                 for(int x = 0; x < width; x++) {
@@ -566,7 +579,7 @@ bool GraphicsHelps::toGif(QImage& img, QString& path)
                 table.push_back(pix);
                 tarQImg.setColor(tarQImg.colorCount(), pix);
             }
-            tarQImg.setPixel(x,y,table.indexOf(pix));
+            tarQImg.setPixel(x,y, uint(table.indexOf(pix)));
         }
         if(table.size() >= 256){
             unfinished = true;
@@ -595,9 +608,9 @@ bool GraphicsHelps::toGif(QImage& img, QString& path)
 
     for(int i = 0; i < 255; i++){
         QRgb rgb = clTab[i];
-        colorArr[i].Red = qRed(rgb);
-        colorArr[i].Green = qGreen(rgb);
-        colorArr[i].Blue = qBlue(rgb);
+        colorArr[i].Red   = uchar(qRed(rgb));
+        colorArr[i].Green = uchar(qGreen(rgb));
+        colorArr[i].Blue  = uchar(qBlue(rgb));
     }
     cmo->Colors = colorArr;
 

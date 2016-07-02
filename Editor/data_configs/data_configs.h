@@ -94,9 +94,6 @@ struct obj_playable_character
 };
 
 
-
-
-
 class dataconfigs : public QObject
 {
     Q_OBJECT
@@ -164,7 +161,7 @@ public:
     void  loadTilesets();
 
     void setConfigPath(QString p);
-    void loadBasics();
+    bool loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
     bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile="", QSettings *setup=0);
@@ -222,7 +219,10 @@ private:
 
     void loadRotationTable();
 
-    void addError(QString bug, PGE_LogLevel level=PGE_LogLevel::Warning);
+    QString     getFullIniPath(QString iniFileName);
+    bool        openSection(QSettings *config, QString section);
+    inline void closeSection(QSettings* file) { file->endGroup(); }
+    void        addError(QString bug, PGE_LogLevel level=PGE_LogLevel::Warning);
 };
 
 

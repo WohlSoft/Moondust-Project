@@ -78,8 +78,8 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     QString tmpStr, errStr;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-    setup->beginGroup( section );
-
+    if(!openSection(setup, section))
+        return false;
 
     sbgo.name = setup->value("name", (merge_with? merge_with->name : section) ).toString();
     if(sbgo.name=="")
@@ -91,7 +91,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 
     sbgo.group =    setup->value("group", (merge_with? merge_with->group : "_NoGroup")).toString();
     sbgo.category = setup->value("category", (merge_with? merge_with->category : "_Other")).toString();
-    sbgo.grid =     setup->value("grid", (merge_with? merge_with->grid : default_grid)).toInt();
+    sbgo.grid =     setup->value("grid", (merge_with? merge_with->grid : default_grid)).toUInt();
 
     {
         tmpStr=setup->value("view", "background").toString();
@@ -135,20 +135,21 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 
     sbgo.climbing = (setup->value("climbing", (merge_with? merge_with->climbing : false)).toBool());
     sbgo.animated = (setup->value("animated", (merge_with? merge_with->animated : false)).toBool());
-    sbgo.frames =        setup->value("frames", (merge_with? merge_with->frames : 1)).toInt();
-    sbgo.framespeed =    setup->value("frame-speed", (merge_with? merge_with->framespeed : 125)).toInt();
+    sbgo.frames =        setup->value("frames", (merge_with? merge_with->frames : 1)).toUInt();
+    sbgo.framespeed =    setup->value("frame-speed", (merge_with? merge_with->framespeed : 125)).toUInt();
 
-    sbgo.frame_h =      (sbgo.animated?
+    sbgo.frame_h =   uint(sbgo.animated?
                              qRound(
                                  qreal(sbgo.image.height())/
                                  sbgo.frames)
                            : sbgo.image.height());
 
-    sbgo.display_frame = setup->value("display-frame", (merge_with? merge_with->display_frame : 0)).toInt();
-    sbgo.isValid = true;//Mark BGO as valid object
+    sbgo.display_frame = setup->value("display-frame", (merge_with? merge_with->display_frame : 0)).toUInt();
+    sbgo.isValid = true; //Mark BGO as valid object
 
     abort:
-        setup->endGroup();
+        closeSection(setup);
+
         if(internal) delete setup;
     return valid;
 }
@@ -160,33 +161,28 @@ void dataconfigs::loadLevelBGO()
 
     obj_bgo sbgo;
     unsigned long bgo_total=0;
-    QString bgo_ini = config_dir + "lvl_bgo.ini";
-
-    if(!QFile::exists(bgo_ini))
-    {
-        addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"),  PGE_LogLevel::Critical);
+    QString bgo_ini = getFullIniPath("lvl_bgo.ini");
+    if(bgo_ini.isEmpty())
         return;
-    }
 
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     bgoset.setIniCodec("UTF-8");
 
     main_bgo.clear();   //Clear old
-//    index_bgo.clear();
 
-    bgoset.beginGroup("background-main");
-        bgo_total = bgoset.value("total", "0").toInt();
+    if(!openSection( &bgoset, "background-main")) return;
+        bgo_total = bgoset.value("total", 0).toUInt();
         total_data +=bgo_total;
-    bgoset.endGroup();
+    closeSection(&bgoset);
 
     emit progressPartNumber(1);
-    emit progressMax(bgo_total);
+    emit progressMax(int(bgo_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading BGOs..."));
 
-    ConfStatus::total_bgo = bgo_total;
+    ConfStatus::total_bgo = long(bgo_total);
 
-    main_bgo.allocateSlots(bgo_total);
+    main_bgo.allocateSlots(int(bgo_total));
 
     if(ConfStatus::total_bgo==0)
     {
@@ -196,12 +192,10 @@ void dataconfigs::loadLevelBGO()
 
     for(i=1; i<=bgo_total; i++)
     {
-        emit progressValue(i);
-        if( loadLevelBGO(sbgo, QString("background-"+QString::number(i)), 0, "", &bgoset) )
-        {
-            sbgo.id = i;
-            main_bgo.storeElement(i, sbgo);
-        }
+        emit progressValue(int(i));
+        bool valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &bgoset);
+        sbgo.id = i;
+        main_bgo.storeElement(int(i), sbgo, valid);
 
         if( bgoset.status() != QSettings::NoError )
         {
@@ -209,7 +203,7 @@ void dataconfigs::loadLevelBGO()
         }
     }
 
-    if((unsigned int)main_bgo.stored()<bgo_total)
+    if(uint(main_bgo.stored()) < bgo_total)
     {
         addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.stored()));
     }

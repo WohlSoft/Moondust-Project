@@ -182,7 +182,6 @@ SOURCES += main.cpp\
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_tile.cpp \
     data_configs/config_manager.cpp \
-    data_configs/configs_main.cpp \
     data_configs/configstatus.cpp \
     data_configs/custom_data.cpp \
     dev_console/devconsole.cpp \
@@ -300,7 +299,6 @@ SOURCES += main.cpp\
     main_window/testing/testing.cpp \
     main_window/file/file_recent.cpp \
     editing/_dialogs/savingnotificationdialog.cpp \
-    main_window/tools/data_configs.cpp \
     main_window/edit/edit_placing_switch.cpp \
     main_window/_settings/defaults.cpp \
     main_window/_settings/settings_io.cpp \
@@ -435,7 +433,9 @@ SOURCES += main.cpp\
     js_engine/pge_jsengine.cpp \
     js_engine/proxies/js_file.cpp \
     js_engine/proxies/js_common.cpp \
-    js_engine/proxies/js_ini.cpp
+    js_engine/proxies/js_ini.cpp \
+    data_configs/data_configs.cpp \
+    main_window/tools/data_configs_mgr.cpp
 
 HEADERS  += defines.h \
     version.h \

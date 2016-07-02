@@ -24,8 +24,8 @@
 
 long dataconfigs::getSndI(unsigned long itemID)
 {
-    if((itemID>0) && main_sound.contains(itemID))
-        return itemID;
+    if((itemID>0) && main_sound.contains(int(itemID)))
+        return long(itemID);
     return 0;
 }
 
@@ -37,31 +37,26 @@ void dataconfigs::loadSound()
 
     unsigned long sound_total=0;
 
-    QString sound_ini = config_dir + "sounds.ini";
-
-    if(!QFile::exists(sound_ini))
-    {
-        addError(QString("ERROR LOADING sounds.ini: file does not exist"), PGE_LogLevel::Critical);
+    QString sound_ini = getFullIniPath("sounds.ini");
+    if(sound_ini.isEmpty())
         return;
-    }
 
     QSettings soundset(sound_ini, QSettings::IniFormat);
     soundset.setIniCodec("UTF-8");
 
     main_sound.clear();   //Clear old
 
-    soundset.beginGroup("sound-main");
-        sound_total = soundset.value("total", "0").toInt();
-
+    if(!openSection(&soundset, "sound-main")) return;
+        sound_total = soundset.value("total", 0).toUInt();
         total_data +=sound_total;
-    soundset.endGroup();
+    closeSection(&soundset);
 
     emit progressPartNumber(9);
-    emit progressMax(sound_total);
+    emit progressMax(int(sound_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Sound..."));
 
-    ConfStatus::total_sound = sound_total;
+    ConfStatus::total_sound = long(sound_total);
 
 
     if(ConfStatus::total_sound==0)
@@ -71,30 +66,33 @@ void dataconfigs::loadSound()
     }
     //////////////////////////////
 
-    main_sound.allocateSlots(sound_total);
-    //Sound
-    for(i=1; i<=sound_total; i++)
-    {
-        emit progressValue(i);
+    main_sound.allocateSlots(int(sound_total));
 
-        soundset.beginGroup( QString("sound-"+QString::number(i)) );
+    //Sound
+    for(i=1; i <= sound_total; i++)
+    {
+        bool valid=true;
+        emit progressValue(int(i));
+
+        if(!openSection(&soundset, QString("sound-%1").arg(i)) )
+            break;
+
             sound.name = soundset.value("name", "").toString();
             if(sound.name.isEmpty())
             {
+                valid = false;
                 addError(QString("Sound-%1 Item name isn't defined").arg(i));
-                goto skipSoundFile;
             }
             sound.file = soundset.value("file", "").toString();
             if(sound.file.isEmpty())
             {
+                valid = false;
                 addError(QString("Sound-%1 Item file isn't defined").arg(i));
-                goto skipSoundFile;
             }
             sound.hidden = soundset.value("hidden", "0").toBool();
             sound.id = i;
-            main_sound.storeElement(i, sound);
-        skipSoundFile:
-        soundset.endGroup();
+            main_sound.storeElement(int(i), sound, valid);
+        closeSection(&soundset);
 
         if( soundset.status() != QSettings::NoError )
         {

@@ -61,31 +61,27 @@ void dataconfigs::loadWorldScene()
 
     obj_w_scenery sScene;
     unsigned long scenery_total=0;
-    QString scene_ini = config_dir + "wld_scenery.ini";
 
-    if(!QFile::exists(scene_ini))
-    {
-        addError(QString("ERROR LOADING wld_scenery.ini: file does not exist"), PGE_LogLevel::Critical);
+    QString scene_ini = getFullIniPath("wld_scenery.ini");
+    if(scene_ini.isEmpty())
         return;
-    }
-
 
     QSettings sceneset(scene_ini, QSettings::IniFormat);
     sceneset.setIniCodec("UTF-8");
 
     main_wscene.clear();   //Clear old
 
-    sceneset.beginGroup("scenery-main");
-        scenery_total = sceneset.value("total", "0").toInt();
+    if(!openSection(&sceneset, "scenery-main")) return;
+        scenery_total = sceneset.value("total", 0).toUInt();
         total_data +=scenery_total;
-    sceneset.endGroup();
+    closeSection(&sceneset);
 
     emit progressPartNumber(5);
-    emit progressMax(scenery_total);
+    emit progressMax(int(scenery_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Sceneries..."));
 
-    ConfStatus::total_wscene= scenery_total;
+    ConfStatus::total_wscene= long(scenery_total);
 
     if(ConfStatus::total_wscene==0)
     {
@@ -93,14 +89,16 @@ void dataconfigs::loadWorldScene()
         return;
     }
 
-    main_wscene.allocateSlots(scenery_total);
+    main_wscene.allocateSlots(int(scenery_total));
 
-    for(i=1; i<=scenery_total; i++)
+    for(i=1; i <= scenery_total; i++)
     {
-        emit progressValue(i);
+        bool valid = true;
+        emit progressValue(int(i));
         QString errStr;
 
-        sceneset.beginGroup( QString("scenery-"+QString::number(i)) );
+        if( !openSection(&sceneset, QString("scenery-%1").arg(i)) )
+            break;
 
         sScene.group =         sceneset.value("group", "_NoGroup").toString();
         sScene.category =      sceneset.value("category", "_Other").toString();
@@ -114,31 +112,31 @@ void dataconfigs::loadWorldScene()
 
         if(!errStr.isEmpty())
         {
+            valid = false;
             addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
             //goto skipScene;
         }
         /***************Load image*end***************/
 
-        sScene.grid =          sceneset.value("grid", qRound(qreal(default_grid)/2)).toInt();
+        sScene.grid =           sceneset.value("grid", qRound(qreal(default_grid)/2)).toUInt();
 
-        sScene.animated =     (sceneset.value("animated", "0").toString()=="1");
-        sScene.frames =        sceneset.value("frames", "1").toInt();
-        sScene.framespeed =    sceneset.value("frame-speed", "175").toInt();
+        sScene.animated =       sceneset.value("animated", 0).toBool();
+        sScene.frames =         sceneset.value("frames", 1).toUInt();
+        sScene.framespeed =     sceneset.value("frame-speed", 175).toUInt();
 
-        sScene.frame_h =   (sScene.animated?
-                  qRound(qreal(sScene.image.height())/
+        sScene.frame_h =   uint(sScene.animated?
+                    qRound(qreal(sScene.image.height())/
                                sScene.frames)
                              : sScene.image.height());
 
-        sScene.display_frame = sceneset.value("display-frame", "0").toInt();
+        sScene.display_frame = sceneset.value("display-frame", 0).toUInt();
 
         sScene.isValid=true;
 
         sScene.id = i;
-        main_wscene.storeElement(i, sScene);
+        main_wscene.storeElement(int(i), sScene, valid);
 
-    //skipScene:
-        sceneset.endGroup();
+        closeSection(&sceneset);
 
         if( sceneset.status() != QSettings::NoError )
         {
@@ -146,8 +144,8 @@ void dataconfigs::loadWorldScene()
         }
     }
 
-    if((unsigned int)main_wscene.size()<scenery_total)
+    if(uint(main_wscene.stored()) < scenery_total)
     {
-        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(main_wscene.size()));
+        addError(QString("Not all Sceneries loaded! Total: %1, Loaded: %2").arg(scenery_total).arg(main_wscene.stored()));
     }
 }

@@ -91,6 +91,11 @@ public:
         m_total_elements=0;
     }
 
+    /**
+     * @brief Allocate array of required size. Everything which was previously will be deleted
+     * @param number Number of reuired element slots
+     * @return true if memory has been allocated. false if out of memory
+     */
     bool allocateSlots(int number)
     {
         if(number==0) return false;
@@ -105,12 +110,20 @@ public:
         return true;
     }
 
-    void storeElement(int ItemID, T &element)
+    /**
+     * @brief Store element with iterating of "Stored" counter
+     * @param ItemID ID of element
+     * @param element element itself
+     * @param increaseStored Increase "Stored" counter (Usually pass the "Is valid" flag)
+     */
+    void storeElement(int ItemID, T &element, bool increaseStored=true)
     {
-        if( (ItemID<0) || (ItemID>m_total_elements) )
+        if( (ItemID<0) || (ItemID > m_total_elements) )
             return;//Avoid out of range
         m_data[ItemID]=element;
-        m_stored++;
+
+        if(increaseStored)
+            m_stored++;
     }
 
     T& operator[](const int &ElementID)

@@ -110,7 +110,8 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
     QString tmpStr, errStr;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-    setup->beginGroup( section );
+    if(!openSection( setup, section ))
+        return false;
 
     sblock.name =       setup->value("name", (merge_with? merge_with->name : section) ).toString();
 
@@ -123,7 +124,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
 
         sblock.group =      setup->value("group", (merge_with? merge_with->group : "_NoGroup")).toString();
         sblock.category =   setup->value("category", (merge_with? merge_with->category : "_Other")).toString();
-        sblock.grid =       setup->value("grid", (merge_with ? merge_with->grid : default_grid)).toInt();
+        sblock.grid =       setup->value("grid", (merge_with ? merge_with->grid : default_grid)).toUInt();
 
         sblock.image_n =           setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
         /***************Load image*******************/
@@ -165,7 +166,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
                 if(tmpStrL[0]=="bgo")
                      sblock.spawn_obj = 3;
                 // 1 - NPC, 2 - block, 3 - BGO
-                sblock.spawn_obj_id = tmpStrL[1].toInt();
+                sblock.spawn_obj_id = tmpStrL[1].toUInt();
             }
             else // if syntax error in config
             {
@@ -201,14 +202,14 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
         sblock.animated =               setup->value("animated", (merge_with? merge_with->animated : false)).toBool();
         sblock.animation_rev =          setup->value("animation-reverse", (merge_with? merge_with->animation_rev : false)).toBool(); //Reverse animation
         sblock.animation_bid =          setup->value("animation-bidirectional", (merge_with? merge_with->animation_bid : false)).toBool(); //Bidirectional animation
-        sblock.frames =                 setup->value("frames", (merge_with? merge_with->frames : 1)).toInt();
+        sblock.frames =                 setup->value("frames", (merge_with? merge_with->frames : 1)).toUInt();
         sblock.framespeed =             setup->value("framespeed", (merge_with? merge_with->framespeed : 125)).toInt();
 
-        sblock.frame_h =               (sblock.animated?
-                                            qRound(
+        sblock.frame_h =               (sblock.animated ?
+                                            uint(qRound(
                                                 qreal(sblock.image.height())
-                                                /sblock.frames)
-                                          : sblock.image.height());
+                                                /sblock.frames))
+                                          : uint(sblock.image.height()) );
 
         {//Retreiving frame sequence from playable character switch/filter blocks
             tmpStr.clear();
@@ -235,25 +236,25 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
         else
             util::CSV2IntArr(tmpStr, sblock.frame_sequence);
 
-        sblock.display_frame =          setup->value("display-frame", "0").toInt();
+        sblock.display_frame =          setup->value("display-frame", 0).toUInt();
 
         long iTmp;
         iTmp =  setup->value("default-invisible", (merge_with? merge_with->default_invisible : -1)).toInt();
             sblock.default_invisible = (iTmp>=0);
-            sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+            sblock.default_invisible_value = (iTmp>=0) ? bool(iTmp) : false;
 
         iTmp = setup->value("default-slippery", (merge_with? merge_with->default_slippery : -1)).toInt();
             sblock.default_slippery = (iTmp>=0);
-            sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+            sblock.default_slippery_value  = (iTmp>=0) ? bool(iTmp) : false;
 
         iTmp = setup->value("default-npc-content", (merge_with? merge_with->default_content : -1)).toInt();
             sblock.default_content = (iTmp>=0);
-            sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
+            sblock.default_content_value   = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
 
         sblock.isValid = true;
 
     abort:
-        setup->endGroup();
+        closeSection(setup);
         if(internal) delete setup;
     return valid;
 }
@@ -266,14 +267,9 @@ void dataconfigs::loadLevelBlocks()
     obj_block sblock;
     unsigned long block_total=0;
 
-
-    QString block_ini = config_dir + "lvl_blocks.ini";
-
-    if(!QFile::exists(block_ini))
-    {
-        addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), PGE_LogLevel::Critical);
-          return;
-    }
+    QString block_ini = getFullIniPath("lvl_blocks.ini");
+    if(block_ini.isEmpty())
+        return;
 
     QSettings blockset(block_ini, QSettings::IniFormat);
     blockset.setIniCodec("UTF-8");
@@ -281,19 +277,19 @@ void dataconfigs::loadLevelBlocks()
     main_block.clear();   //Clear old
     //index_blocks.clear();
 
-    blockset.beginGroup("blocks-main");
-        block_total = blockset.value("total", "0").toInt();
+    if(!openSection(&blockset, "blocks-main")) return;
+        block_total = blockset.value("total", 0).toUInt();
         total_data +=block_total;
-    blockset.endGroup();
+    closeSection(&blockset);
 
     emit progressPartNumber(2);
-    emit progressMax(block_total);
+    emit progressMax(int(block_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Blocks..."));
 
-    ConfStatus::total_blocks = block_total;
+    ConfStatus::total_blocks = signed(block_total);
 
-    main_block.allocateSlots(block_total);
+    main_block.allocateSlots(int(block_total));
 
     if(ConfStatus::total_blocks==0)
     {
@@ -303,14 +299,12 @@ void dataconfigs::loadLevelBlocks()
 
     for(i=1; i<=block_total; i++)
     {
-        emit progressValue(i);
-        //QString errStr;
-        //blockset.beginGroup( QString("block-%1").arg(i) );
-        if( loadLevelBlock(sblock, QString("block-"+QString::number(i)), 0, "", &blockset) )
-        {
-            sblock.id = i;
-            main_block.storeElement(i, sblock);
-        }
+        emit progressValue(int(i));
+
+        bool valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &blockset);
+        sblock.id = i;
+        main_block.storeElement(int(i), sblock, valid);
+
         if( blockset.status()!=QSettings::NoError)
         {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), PGE_LogLevel::Critical);
@@ -318,9 +312,8 @@ void dataconfigs::loadLevelBlocks()
         }
     }
 
-    if((unsigned int)main_block.stored()<block_total)
+    if(unsigned(main_block.stored()) < block_total)
     {
         addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), PGE_LogLevel::Warning);
     }
-
 }

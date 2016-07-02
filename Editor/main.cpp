@@ -23,6 +23,7 @@
 #endif
 #include <QFileInfo>
 #include <QDir>
+#include <QDesktopWidget>
 
 #ifdef Q_OS_LINUX
 #include <QStyleFactory>
@@ -38,6 +39,8 @@
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
 #include <SingleApplication/singleapplication.h>
+
+#include <data_configs/config_manager.h>
 
 #include <networking/engine_intproc.h>
 #include <audio/sdl_music_player.h>
@@ -67,6 +70,8 @@ int main(int argc, char *argv[])
     QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
 #endif
 
+    int ret=0;
+    MainWindow *w = nullptr;
     SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
     {
@@ -143,18 +148,60 @@ int main(int argc, char *argv[])
 
     FreeImage_Initialise();
 
-    int ret=0;
+    QString currentConfigDir;
+    bool    askConfigAgain = false;
+    QString themePack;
+
+    //Create empty config directory if not exists
+    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
+        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
+
+    {
+        // Config manager
+        ConfigManager *cmanager;
+        cmanager = new ConfigManager(nullptr);
+        cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowStaysOnTopHint);
+        cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+
+        currentConfigDir  = cmanager->isPreLoaded();
+        askConfigAgain    = cmanager->askAgain;
+        themePack = cmanager->themePack;
+        //If application runned first time or target configuration is not exist
+        if( askConfigAgain || currentConfigDir.isEmpty() )
+        {
+            //Ask for configuration
+            if( cmanager->hasConfigPacks() && (cmanager->exec()==QDialog::Accepted) )
+            {
+                currentConfigDir = cmanager->currentConfigPath;
+            }
+            else
+            {
+                delete cmanager;
+                LogDebug("<Configuration is not selected, application closed>");
+                QApplication::quit();
+                QApplication::exit();
+                delete a;
+                delete as;
+                return 0;
+            }
+        }
+        //continueLoad = true;
+        askConfigAgain   = cmanager->askAgain;
+        currentConfigDir = cmanager->currentConfigPath;
+        delete cmanager;
+    }
+
+    w = new MainWindow;
     //Init Main Window class
-    MainWindow *w = new MainWindow;
-    if(!w->continueLoad)
+    if( !w->initEverything(currentConfigDir, themePack, askConfigAgain) )
     {
         delete w;
         goto QuitFromEditor;
     }
 
-    a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
-    a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
-    a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
+    a->connect( a, SIGNAL( lastWindowClosed() ), a, SLOT( quit() ) );
+    a->connect( w, SIGNAL( closeEditor() ), a, SLOT( quit() ) );
+    a->connect( w, SIGNAL( closeEditor() ), a, SLOT( closeAllWindows() ) );
 
     #ifndef Q_OS_ANDROID
     w->show();
@@ -182,7 +229,7 @@ int main(int argc, char *argv[])
     w->showTipOfDay();
 
     //Run main loop
-    ret=a->exec();
+    ret = a->exec();
 
 QuitFromEditor:
     FreeImage_DeInitialise();

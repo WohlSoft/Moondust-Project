@@ -88,6 +88,30 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
+QString dataconfigs::getFullIniPath(QString iniFileName)
+{
+    QString path_ini = config_dir + iniFileName;
+    if(!QFile::exists(path_ini))
+    {
+        addError(QString("ERROR LOADING %1: file does not exist").arg(iniFileName), PGE_LogLevel::Critical);
+        return "";
+    }
+    return path_ini;
+}
+
+bool dataconfigs::openSection(QSettings*config, QString section)
+{
+    if(!config->childGroups().contains(section))
+    {
+        addError(QString("ERROR LOADING %1: [%2] section is missed!")
+                 .arg( config->fileName() )
+                 .arg( section ), PGE_LogLevel::Critical);
+        return false;
+    }
+    config->beginGroup(section);
+    return true;
+}
+
 void dataconfigs::addError(QString bug, PGE_LogLevel level)
 {
     WriteToLog(level, QString("LoadConfig -> ")+bug);
@@ -99,9 +123,13 @@ void dataconfigs::setConfigPath(QString p)
     config_dir = p;
 }
 
-void dataconfigs::loadBasics()
+bool dataconfigs::loadBasics()
 {
-    QString gui_ini = config_dir + "main.ini";
+    errorsList.clear();
+    QString gui_ini = getFullIniPath("main.ini");
+    if(gui_ini.isEmpty())
+        return false;
+
     QSettings guiset(gui_ini, QSettings::IniFormat);
     guiset.setIniCodec("UTF-8");
 
@@ -131,7 +159,9 @@ void dataconfigs::loadBasics()
         Animations     =            guiset.value("animations", 0).toInt();
     guiset.endGroup();
 
-    guiset.beginGroup("main");
+    if( !openSection(&guiset, "main") )
+        return false;
+
         data_dir = (guiset.value("application-dir", "0").toBool() ?
                         ApplicationPath + "/" : config_dir + "data/" );
 
@@ -156,37 +186,38 @@ void dataconfigs::loadBasics()
             box.setIcon(QMessageBox::Warning);
             box.exec();
         }
-    guiset.endGroup();
+    closeSection(&guiset);
 
-    if(!splash_logo .isEmpty())
+    if(!splash_logo.isEmpty())
     {
         splash_logo = data_dir + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
-            LogWarning(QString("Wrong splash image: %1").arg(splash_logo));
+            LogWarning(QString("Wrong splash image: %1, using internal default").arg(splash_logo));
             splash_logo = "";//Themes::Image(Themes::splash);
         }
 
         obj_splash_ani tempAni;
 
         animations.clear();
-        for(;Animations>0;Animations--)
+        for(;Animations > 0; Animations--)
         {
             guiset.beginGroup(QString("splash-animation-%1").arg(Animations));
                 QString img =   guiset.value("image", "").toString();
                     if(img.isEmpty()) goto skip;
                     tempAni.img = QPixmap(data_dir + img);
                     if(tempAni.img.isNull()) goto skip;
-                tempAni.frames= guiset.value("frames", 1).toInt();
-                tempAni.speed = guiset.value("speed", 128).toInt();
-                tempAni.x =     guiset.value("x", 0).toInt();
-                tempAni.y =     guiset.value("y", 0).toInt();
+                tempAni.frames= guiset.value("frames", 1).toUInt();
+                tempAni.speed = guiset.value("speed", 128).toUInt();
+                tempAni.x =     guiset.value("x", 0).toUInt();
+                tempAni.y =     guiset.value("y", 0).toUInt();
 
                 animations.push_front(tempAni);
             skip:
             guiset.endGroup();
         }
     }
+    return true;
 }
 
 bool dataconfigs::loadconfigs()
@@ -197,26 +228,31 @@ bool dataconfigs::loadconfigs()
     default_grid=0;
     errorsList.clear();
 
-    LogDebugQD("=== Starting of global configuration loading ===");
+    LogDebug("=== Starting of global configuration loading ===");
 
     //dirs
-    if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
+    if( (!QDir(config_dir).exists()) || (QFileInfo(config_dir).isFile()) )
     {
-        LogCriticalQD(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
+        LogCritical( QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir) );
         return false;
     }
 
     emit progressPartsTotal(12);
     emit progressPartNumber(0);
 
-    QString main_ini = config_dir + "main.ini";
+    QString main_ini = getFullIniPath("main.ini");
+    if( main_ini.isEmpty() )
+        return false;
+
     QSettings mainset(main_ini, QSettings::IniFormat);
     mainset.setIniCodec("UTF-8");
 
     QString customAppPath = ApplicationPath;
 
-    LogDebugQD("Loading main.ini...");
-    mainset.beginGroup("main");
+    LogDebug("Loading main.ini...");
+    if(!openSection(&mainset, "main"))
+        return false;
+
         customAppPath = mainset.value("application-path", ApplicationPath).toString();
         customAppPath.replace('\\', '/');
         bool lookAppDir = mainset.value("application-dir", false).toBool();
@@ -239,22 +275,34 @@ bool dataconfigs::loadconfigs()
         ConfStatus::SmbxTest_By_Default = mainset.value("smbx-test-by-default", false).toBool();
         #endif
 
-        dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
+        dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music = data_dir +  mainset.value("music", "data/music").toString() + "/";
-        dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
+        dirs.music      = data_dir + mainset.value("music", "data/music").toString() + "/";
+        dirs.sounds     = data_dir + mainset.value("sound", "data/sound").toString() + "/";
 
-        dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld= data_dir +  mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = data_dir+mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.glevel     = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
         dirs.gcustom = data_dir+ mainset.value("custom-data", "data-custom").toString() + "/";
-    mainset.endGroup();
+    closeSection(&mainset);
+
+    //Check existing of most important graphics paths
+    if( !QDir( dirs.glevel ).exists() )
+    {
+        LogCritical(QString("Level graphics path not exists: %1").arg(dirs.glevel));
+        return false;
+    }
+    if( !QDir( dirs.gworld ).exists() )
+    {
+        LogCritical(QString("World map graphics path not exists: %1").arg(dirs.gworld));
+        return false;
+    }
 
     ConfStatus::configPath = config_dir;
 
     mainset.beginGroup("graphics");
-        default_grid = mainset.value("default-grid", 32).toInt();
+        default_grid = mainset.value("default-grid", 32).toUInt();
     mainset.endGroup();
 
     if( mainset.status() != QSettings::NoError )
@@ -273,14 +321,14 @@ bool dataconfigs::loadconfigs()
         for(int i=1; i<= characters_q; i++)
         {
             obj_playable_character pchar;
-            pchar.id = i;
+            pchar.id = ulong(i);
             pchar.name = mainset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
             characters.push_back(pchar);
         }
     mainset.endGroup();
 
 
-    LogDebugQD("Loading some of engine.ini...");
+    LogDebug("Loading some of engine.ini...");
     //Basic settings of engine
     QString engine_ini = config_dir + "engine.ini";
     if(QFile::exists(engine_ini)) //Load if exist, is not required
@@ -315,47 +363,47 @@ bool dataconfigs::loadconfigs()
 
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
-        LogDebugQD("Loading of lvl_bkgrd.ini...");
+        LogDebug("Loading of lvl_bkgrd.ini...");
     loadLevelBackgrounds();
-        LogDebugQD("Loading of lvl_bgo.ini...");
+        LogDebug("Loading of lvl_bgo.ini...");
     loadLevelBGO();
-        LogDebugQD("Loading of lvl_blocks.ini...");
+        LogDebug("Loading of lvl_blocks.ini...");
     loadLevelBlocks();
-        LogDebugQD("Loading of lvl_npc.ini...");
+        LogDebug("Loading of lvl_npc.ini...");
     loadLevelNPC();
     ///////////////////////////////////////Level items////////////////////////////////////////////
 
     ///////////////////////////////////////World map items////////////////////////////////////////
-        LogDebugQD("Loading of wld_tiles.ini...");
+        LogDebug("Loading of wld_tiles.ini...");
     loadWorldTiles();
-        LogDebugQD("Loading of wld_scenery.ini...");
+        LogDebug("Loading of wld_scenery.ini...");
     loadWorldScene();
-        LogDebugQD("Loading of wld_paths.ini...");
+        LogDebug("Loading of wld_paths.ini...");
     loadWorldPaths();
-        LogDebugQD("Loading of wld_levels.ini...");
+        LogDebug("Loading of wld_levels.ini...");
     loadWorldLevels();
     ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
     ///////////////////////////////////////Music////////////////////////////////////////////
-        LogDebugQD("Loading of music.ini...");
+        LogDebug("Loading of music.ini...");
     loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
     ///////////////////////////////////////Sound////////////////////////////////////////////
-        LogDebugQD("Loading of sounds.ini...");
+        LogDebug("Loading of sounds.ini...");
     loadSound();
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
 
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
-        LogDebugQD("Loading global tilesets INI files...");
+        LogDebug("Loading global tilesets INI files...");
     loadTilesets();
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
 
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
-        LogDebugQD("Loading rotation_table.ini...");
+        LogDebug("Loading rotation_table.ini...");
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
 
@@ -366,21 +414,21 @@ bool dataconfigs::loadconfigs()
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
 
-    LogDebugQD(QString("-------------------------"));
-    LogDebugQD(QString("Config status 1"));
-    LogDebugQD(QString("-------------------------"));
-    LogDebugQD(QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
-    LogDebugQD(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
-    LogDebugQD(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
-    LogDebugQD(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
-    LogDebugQD(QString("Loaded Tiles           %1/%2").arg(main_wtiles.stored()).arg(ConfStatus::total_wtile));
-    LogDebugQD(QString("Loaded Sceneries       %1/%2").arg(main_wscene.stored()).arg(ConfStatus::total_wscene));
-    LogDebugQD(QString("Loaded Path images     %1/%2").arg(main_wpaths.stored()).arg(ConfStatus::total_wpath));
-    LogDebugQD(QString("Loaded Level images    %1/%2").arg(main_wlevels.stored()).arg(ConfStatus::total_wlvl));
-    LogDebugQD(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
-    LogDebugQD(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
-    LogDebugQD(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
-    LogDebugQD(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
+    LogDebug(QString("-------------------------"));
+    LogDebug(QString("Config status 1"));
+    LogDebug(QString("-------------------------"));
+    LogDebug(QString("Loaded blocks          %1/%2").arg(main_block.stored()).arg(ConfStatus::total_blocks));
+    LogDebug(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
+    LogDebug(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
+    LogDebug(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
+    LogDebug(QString("Loaded Tiles           %1/%2").arg(main_wtiles.stored()).arg(ConfStatus::total_wtile));
+    LogDebug(QString("Loaded Sceneries       %1/%2").arg(main_wscene.stored()).arg(ConfStatus::total_wscene));
+    LogDebug(QString("Loaded Path images     %1/%2").arg(main_wpaths.stored()).arg(ConfStatus::total_wpath));
+    LogDebug(QString("Loaded Level images    %1/%2").arg(main_wlevels.stored()).arg(ConfStatus::total_wlvl));
+    LogDebug(QString("Loaded Level music     %1/%2").arg(main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
+    LogDebug(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
+    LogDebug(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
+    LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
 
     return true;
 }
@@ -389,8 +437,8 @@ bool dataconfigs::check()
 {
     return
             (
-    (main_bgo.stored()<=0)||
-    (main_bg.stored()<=0)||
+    (main_bgo.stored() <= 0)||
+    (main_bg.stored() <= 0)||
     (main_block.stored()<=0)||
     (main_npc.stored()<=0)||
     (main_wtiles.stored()<=0)||
@@ -400,8 +448,10 @@ bool dataconfigs::check()
     (main_music_lvl.stored()<=0)||
     (main_music_wld.stored()<=0)||
     (main_music_spc.stored()<=0)||
-    (main_sound.stored()<=0)
+    (main_sound.stored()<=0)||
+      !errorsList.isEmpty()
             );
 }
+
 
 

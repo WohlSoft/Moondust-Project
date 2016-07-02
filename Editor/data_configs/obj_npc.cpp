@@ -171,44 +171,39 @@ void dataconfigs::loadLevelNPC()
 
     obj_npc snpc;
     unsigned long npc_total=0;
-    QString npc_ini = config_dir + "lvl_npc.ini";
-
-    if(!QFile::exists(npc_ini))
-    {
-        addError(QString("ERROR LOADING lvl_npc.ini: file does not exist"), PGE_LogLevel::Critical);
-          return;
-    }
+    QString npc_ini = getFullIniPath("lvl_npc.ini");
+    if(npc_ini.isEmpty())
+        return;
 
     QSettings npcset(npc_ini, QSettings::IniFormat);
     npcset.setIniCodec("UTF-8");
 
     main_npc.clear();   //Clear old
 
-    npcset.beginGroup("npc-main");
-        npc_total =                 npcset.value("total", "0").toInt();
+    if(!openSection(&npcset, "npc-main")) return;
+        npc_total =                 npcset.value("total", 0).toUInt();
         total_data +=npc_total;
 
-        marker_npc.bubble =         npcset.value("bubble", "283").toInt();
-        marker_npc.egg =            npcset.value("egg", "96").toInt();
-        marker_npc.lakitu =         npcset.value("lakitu", "284").toInt();
-        marker_npc.buried =         npcset.value("buried", "91").toInt();
-        marker_npc.ice_cube =       npcset.value("icecube", "91").toInt();
-        marker_npc.iceball =        npcset.value("iceball", "265").toInt();
-        marker_npc.fireball =       npcset.value("fireball", "13").toInt();
-        marker_npc.hammer =         npcset.value("hammer", "171").toInt();
-        marker_npc.boomerang =      npcset.value("boomerang", "292").toInt();
-        marker_npc.coin_in_block =  npcset.value("coin-in-block", "10").toInt();
-
-    npcset.endGroup();
+        marker_npc.bubble =         npcset.value("bubble", 283).toUInt();
+        marker_npc.egg =            npcset.value("egg", 96).toUInt();
+        marker_npc.lakitu =         npcset.value("lakitu", 284).toUInt();
+        marker_npc.buried =         npcset.value("buried", 91).toUInt();
+        marker_npc.ice_cube =       npcset.value("icecube", 91).toUInt();
+        marker_npc.iceball =        npcset.value("iceball", 265).toUInt();
+        marker_npc.fireball =       npcset.value("fireball", 13).toUInt();
+        marker_npc.hammer =         npcset.value("hammer", 171).toUInt();
+        marker_npc.boomerang =      npcset.value("boomerang", 292).toUInt();
+        marker_npc.coin_in_block =  npcset.value("coin-in-block", 10).toUInt();
+    closeSection(&npcset);
 
     emit progressPartNumber(3);
-    emit progressMax(npc_total);
+    emit progressMax(int(npc_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading NPCs..."));
 
-    ConfStatus::total_npc = npc_total;
+    ConfStatus::total_npc = long(npc_total);
 
-    main_npc.allocateSlots(npc_total);
+    main_npc.allocateSlots(int(npc_total));
 
     /*************Buffers*********************/
     int defGFX_h = 0;
@@ -221,14 +216,17 @@ void dataconfigs::loadLevelNPC()
         return;
     }
 
-    for(i=1; i<= npc_total; i++)
+    for(i=1; i <= npc_total; i++)
     {
-        emit progressValue(i);
+        bool valid=true;
+        emit progressValue(int(i));
         QString errStr;
 
-        npcset.beginGroup( QString("npc-%1").arg(i) );
+        if( !openSection(&npcset, QString("npc-%1").arg(i)) )
+            break;
+
         snpc.name =         npcset.value("name", QString("npc-%1").arg(i)).toString();
-        if(snpc.name.isEmpty())
+        if( snpc.name.isEmpty() )
         {
             addError(QString("NPC-%1 Item name isn't defined").arg(i));
             goto skipNPC;
@@ -246,14 +244,15 @@ void dataconfigs::loadLevelNPC()
 
         if(!errStr.isEmpty())
         {
+            valid = false;
             addError(QString("NPC-%1 %2").arg(i).arg(errStr));
             //goto skipNPC;
         }
         /***************Load image*end***************/
 
         snpc.algorithm_script = npcset.value("algorithm", QString("npc-%1.lua").arg(i)).toString();
-        snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
-        snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
+        snpc.effect_1 =         npcset.value("default-effect", 10).toUInt();
+        snpc.effect_2 =         npcset.value("shell-effect", 10).toUInt();
 
         //Physics
         snpc.height =               npcset.value("fixture-height", "0").toUInt();//Kept for compatibility
@@ -282,7 +281,7 @@ void dataconfigs::loadLevelNPC()
         NumberLimiter::apply(snpc.frames, 1u);
 
         /****************Calculating of default frame height******************/
-        defGFX_h = snpc.image.height() / (snpc.frames*int(powl(2, snpc.framestyle)));
+        defGFX_h = snpc.image.height() / int(snpc.frames*uint(powl(2, snpc.framestyle)));
         /****************Calculating of default frame height**end*************/
 
         snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", "1").toBool();
@@ -327,21 +326,21 @@ void dataconfigs::loadLevelNPC()
         NumberLimiter::apply(snpc.grid_attach_style, 0);
 
         /***************Calculate the grid offset********************/
-        if(((int)snpc.width>=(int)snpc.grid))
-            snpc.grid_offset_x = -1 * qRound( qreal((int)snpc.width % snpc.grid)/2 );
+        if( snpc.width >= uint(snpc.grid) )
+            snpc.grid_offset_x = -1 * qRound( qreal(int(snpc.width) % snpc.grid)/2 );
         else
-            snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
+            snpc.grid_offset_x = qRound( qreal( snpc.grid - int(snpc.width)) / 2.0 );
 
         if(snpc.grid_attach_style==1)
             snpc.grid_offset_x += (snpc.grid/2);
 
-        snpc.grid_offset_y = -snpc.height % snpc.grid;
+        snpc.grid_offset_y = -int(snpc.height) % snpc.grid;
         /***************Calculate the grid offset********************/
 
-            /*************Manual redefinition of the grid offset if not set******************/
+        /*************Manual redefinition of the grid offset if not set******************/
         snpc.grid_offset_x = npcset.value("grid-offset-x", snpc.grid_offset_x).toInt();
         snpc.grid_offset_y = npcset.value("grid-offset-y", snpc.grid_offset_y).toInt();
-            /*************Manual redefinition of the grid offset if not set******************/
+        /*************Manual redefinition of the grid offset if not set******************/
         /***************GRID And snap***end***************************/
 
 
@@ -448,15 +447,15 @@ void dataconfigs::loadLevelNPC()
         long iTmp;
         iTmp =      npcset.value("default-friendly", "-1").toInt();
             snpc.default_friendly = (iTmp>=0);
-            snpc.default_friendly_value = (iTmp>=0)?(bool)iTmp:false;
+            snpc.default_friendly_value = (iTmp>=0)?bool(iTmp):false;
 
         iTmp =      npcset.value("default-no-movable", "-1").toInt();
             snpc.default_nomovable = (iTmp>=0);
-            snpc.default_nomovable_value = (iTmp>=0)?(bool)iTmp:false;
+            snpc.default_nomovable_value = (iTmp>=0)?bool(iTmp):false;
 
         iTmp =      npcset.value("default-is-boss", "-1").toInt();
             snpc.default_boss = (iTmp>=0);
-            snpc.default_boss_value = (iTmp>=0) ? (bool)iTmp : false;
+            snpc.default_boss_value = (iTmp>=0) ? bool(iTmp) : false;
 
         iTmp =      npcset.value("default-special-value", "-1").toInt();
             snpc.default_special = (iTmp>=0);
@@ -464,10 +463,11 @@ void dataconfigs::loadLevelNPC()
 
         snpc.isValid = true;
         snpc.id = i;
-        main_npc.storeElement(i, snpc);
+
+        main_npc.storeElement( int(i), snpc, valid);
 
     skipNPC:
-    npcset.endGroup();
+        closeSection(&npcset);
 
         if( npcset.status() != QSettings::NoError )
         {
@@ -476,7 +476,7 @@ void dataconfigs::loadLevelNPC()
         }
     }
 
-    if((unsigned int)main_npc.stored()<npc_total)
+    if( uint(main_npc.stored()) < npc_total )
     {
         addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.stored()), PGE_LogLevel::Warning);
     }

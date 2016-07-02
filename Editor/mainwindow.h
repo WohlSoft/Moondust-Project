@@ -78,6 +78,8 @@ public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
 
+    bool initEverything(QString configDir, QString themePack, bool ReAskConfigPack);
+
     dataconfigs configs;        // Global game configucrations
 
 /* //////////////////////Contents/////////////////////////////

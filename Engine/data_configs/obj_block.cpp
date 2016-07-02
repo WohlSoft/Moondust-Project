@@ -34,7 +34,7 @@ bool ConfigManager::loadLevelBlocks()
     unsigned int i;
 
     obj_block sblock;
-    unsigned long block_total=0;
+    unsigned int block_total=0;
 
 
     QString block_ini = config_dir + "lvl_blocks.ini";
@@ -52,7 +52,7 @@ bool ConfigManager::loadLevelBlocks()
     lvl_block_indexes.clear();//Clear old
 
     blockset.beginGroup("blocks-main");
-        block_total = blockset.value("total", "0").toInt();
+        block_total = blockset.value("total", 0).toUInt();
     blockset.endGroup();
 
 
@@ -65,7 +65,7 @@ bool ConfigManager::loadLevelBlocks()
         return false;
     }
 
-    lvl_block_indexes.allocateSlots(block_total);
+    lvl_block_indexes.allocateSlots(signed(block_total));
 
 
         for(i=1; i<=block_total; i++)
@@ -125,7 +125,7 @@ bool ConfigManager::loadLevelBlocks()
                         if(tmp[0]=="bgo")
                              sblock.spawn_obj = 3;
                         // 1 - NPC, 2 - block, 3 - BGO
-                        sblock.spawn_obj_id = tmp[1].toInt();
+                        sblock.spawn_obj_id = tmp[1].toUInt();
                     }
                     else // if syntax error in config
                     {
@@ -141,17 +141,17 @@ bool ConfigManager::loadLevelBlocks()
                     sblock.spawn_obj_id = 0;
                 }
 
-                sblock.effect= blockset.value("destroy-effect", "1").toInt();
+                sblock.effect = blockset.value("destroy-effect", 1).toUInt();
 
                 sblock.bounce = blockset.value("bounce", "0").toBool();
                 sblock.hitable = blockset.value("hitable", "0").toBool();
-                sblock.transfororm_on_hit_into = blockset.value("transform-onhit-into", "2").toInt();
-                sblock.algorithm= blockset.value("algorithm", "2").toInt();
-                sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
+                sblock.transfororm_on_hit_into = blockset.value("transform-onhit-into", 2).toUInt();
+                sblock.algorithm= blockset.value("algorithm", 2).toUInt();
+                sblock.view = uint(blockset.value("view", "background").toString()=="foreground");
                 sblock.animated = blockset.value("animated", "0").toBool();
                 sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
                 sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
-                sblock.frames = blockset.value("frames", "1").toInt();
+                sblock.frames = blockset.value("frames", 1).toUInt();
                     NumberLimiter::apply(sblock.frames, 1u);
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
                     NumberLimiter::apply(sblock.framespeed, 1);
@@ -166,7 +166,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.switch_ID        = blockset.value("switch-id", switchID++).toInt();;
                 sblock.switch_transform = blockset.value("switch-transform", "1").toInt();;
 
-                sblock.display_frame = blockset.value("display-frame", "0").toInt();
+                sblock.display_frame = blockset.value("display-frame", 0).toUInt();
 
                 sblock.plSwitch_Button = blockset.value("player-switch-button", false).toBool();
                 sblock.plSwitch_Button_id = blockset.value("player-switch-button-id", 0).toInt();
@@ -193,11 +193,11 @@ bool ConfigManager::loadLevelBlocks()
                 long iTmp;
                 iTmp = blockset.value("default-invisible", "-1").toInt();
                 sblock.default_invisible = (iTmp>=0);
-                sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+                sblock.default_invisible_value = (iTmp>=0)?bool(iTmp):false;
 
                 iTmp = blockset.value("default-slippery", "-1").toInt();
                 sblock.default_slippery = (iTmp>=0);
-                sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+                sblock.default_slippery_value = (iTmp>=0)?bool(iTmp):false;
 
                 iTmp = blockset.value("default-npc-content", "-1").toInt();
                 sblock.default_content = (iTmp>=0);
@@ -206,7 +206,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.id = i;
 
                 //Add to Index
-                lvl_block_indexes.storeElement(sblock.id, sblock);
+                lvl_block_indexes.storeElement(signed(sblock.id), sblock);
 
             skipBLOCK:
             blockset.endGroup();
@@ -220,7 +220,7 @@ bool ConfigManager::loadLevelBlocks()
           }
        }
 
-       if((unsigned int)lvl_block_indexes.stored()<block_total)
+       if(uint(lvl_block_indexes.stored()) < block_total)
        {
            addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.stored()), QtWarningMsg);
        }

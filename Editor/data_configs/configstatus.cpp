@@ -280,9 +280,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     {
         for(long e=0;e<configs->errorsList.size();e++)
         {
-            ui->ItemsErrors->insertRow(e);
-                itemError = new QTableWidgetItem(configs->errorsList[e]);
-                ui->ItemsErrors->setItem(e, 0, itemError);
+            ui->ItemsErrors->insertRow(int(e));
+                itemError = new QTableWidgetItem(configs->errorsList[int(e)]);
+                ui->ItemsErrors->setItem(int(e), 0, itemError);
         }
 
     }

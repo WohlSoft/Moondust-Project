@@ -54,7 +54,9 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
     QString errStr, tmpstr, imgFile;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-    setup->beginGroup( section );
+    if(!openSection(setup, section))
+        return false;
+
         sbg.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
         if(sbg.name.isEmpty())
         {
@@ -74,7 +76,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
             else sbg.type = 0;
 
 
-        sbg.repeat_h = qFabs(setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0f)).toFloat());
+        sbg.repeat_h = float(qFabs(setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0f)).toFloat()));
 
         tmpstr = setup->value("repeat-v", "-1").toString();
             if(tmpstr=="NR")
@@ -111,19 +113,20 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
             }
         }
 
-        sbg.attached =    (int)(setup->value("attached",
+        sbg.attached =     uint(setup->value("attached",
                                              (merge_with?(merge_with->attached==1?"top":"bottom"):"bottom") ).toString()=="top");
+
         sbg.editing_tiled =    setup->value("tiled-in-editor", merge_with?merge_with->editing_tiled:false ).toBool();
 
         sbg.magic =             setup->value("magic", (merge_with?merge_with->magic:false)).toBool();
-        sbg.magic_strips =      setup->value("magic-strips", (merge_with? merge_with->magic_strips:1)).toInt();
+        sbg.magic_strips =      setup->value("magic-strips", (merge_with? merge_with->magic_strips: 1 )).toUInt();
         sbg.magic_splits =      setup->value("magic-splits", (merge_with? merge_with->magic_splits:"0")).toString();
         sbg.magic_speeds =      setup->value("magic-speeds", (merge_with? merge_with->magic_speeds:"0")).toString();
 
         sbg.animated =          setup->value("animated", (merge_with?merge_with->animated:false)).toBool();//animated
-        sbg.frames =            setup->value("frames", (merge_with?merge_with->frames:1)).toInt();
-        sbg.framespeed =        setup->value("framespeed", (merge_with?merge_with->framespeed:128)).toInt();
-        sbg.display_frame =     setup->value("display-frame", (merge_with?merge_with->display_frame:0)).toInt();
+        sbg.frames =            setup->value("frames", (merge_with?merge_with->frames:1)).toUInt();
+        sbg.framespeed =        setup->value("framespeed", (merge_with?merge_with->framespeed : 128)).toUInt();
+        sbg.display_frame =     setup->value("display-frame", (merge_with?merge_with->display_frame : 0)).toUInt();
         //frames
 
         if(sbg.type==1)
@@ -142,7 +145,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 }
             }
 
-            sbg.second_repeat_h = qFabs(setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0f)).toFloat());
+            sbg.second_repeat_h = float(qFabs(setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0f)).toFloat()));
 
             tmpstr = setup->value("second-repeat-v", "-1").toString();
                 if(tmpstr=="NR")
@@ -171,13 +174,14 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 
         if(sbg.animated)
         {
-            sbg.image = sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
+            int fHeight = sbg.image.height() / int(sbg.frames);
+            sbg.image = sbg.image.copy(0, 0, sbg.image.width(), fHeight );
         }
 
         sbg.isValid = true;
 
     abort:
-        setup->endGroup();
+        closeSection(setup);
         if(internal) delete setup;
     return valid;
 }
@@ -189,31 +193,27 @@ void dataconfigs::loadLevelBackgrounds()
     obj_BG sbg;
     unsigned long bg_total=0;
 
-    QString bg_ini = config_dir + "lvl_bkgrd.ini";
-
-    if(!QFile::exists(bg_ini))
-    {
-        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), PGE_LogLevel::Critical);
-          return;
-    }
+    QString bg_ini = getFullIniPath("lvl_bkgrd.ini");
+    if( bg_ini.isEmpty() )
+        return;
 
     QSettings bgset(bg_ini, QSettings::IniFormat);
     bgset.setIniCodec("UTF-8");
 
     main_bg.clear();   //Clear old
 
-    bgset.beginGroup("background2-main");
-        bg_total = bgset.value("total", "0").toInt();
-        total_data +=bg_total;
-    bgset.endGroup();
+    if(!openSection(&bgset, "background2-main")) return;
+        bg_total = bgset.value("total", 0).toUInt();
+        total_data += bg_total;
+    closeSection(&bgset);
 
     emit progressPartNumber(0);
-    emit progressMax(bg_total);
+    emit progressMax(int(bg_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading Backgrounds..."));
 
-    ConfStatus::total_bg = bg_total;
-    main_bg.allocateSlots(ConfStatus::total_bg);
+    ConfStatus::total_bg = long(bg_total);
+    main_bg.allocateSlots(int(bg_total));
 
     if(ConfStatus::total_bg==0)
     {
@@ -223,13 +223,11 @@ void dataconfigs::loadLevelBackgrounds()
 
     for(i=1; i<=bg_total; i++)
     {
-        emit progressValue(i);
+        emit progressValue(int(i));
 
-        if( loadLevelBackground(sbg, QString("background2-"+QString::number(i)), 0, "", &bgset) )
-        {
-            sbg.id = i;
-            main_bg.storeElement(i, sbg);
-        }
+        bool valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &bgset);
+        sbg.id = i;
+        main_bg.storeElement(int(i), sbg, valid);
 
         if( bgset.status() != QSettings::NoError )
         {
