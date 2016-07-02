@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -395,6 +395,11 @@
     <addaction name="separator"/>
     <addaction name="actionChangeConfig"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>Plugins</string>
+    </property>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
@@ -405,6 +410,7 @@
    <addaction name="menuConfiguration"/>
    <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
+   <addaction name="menuPlugins"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -2686,7 +2692,7 @@
   </action>
   <action name="action_Start_Engine">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset>
      <normaloff>:/icon/cat_16.png</normaloff>:/icon/cat_16.png</iconset>
    </property>
    <property name="text">
@@ -2802,7 +2808,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="_resources/editor.qrc"/>
-  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

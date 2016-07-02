@@ -158,6 +158,9 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
         dock_LvlEvents->reloadSoundsList();
         dock_WldItemProps->WldLvlExitTypeListReset();
         dock_TilesetBox->setTileSetBox(true);
+        
+        splash.progressTitle(tr("Initalizing plugins..."));
+        initPlugins();
 
         splash.progressTitle(tr("Finishing loading..."));
     }
@@ -172,6 +175,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
         continueLoad = false;
         return false;
     }
+
     return true;
 }
 
