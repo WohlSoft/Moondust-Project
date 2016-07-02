@@ -42,12 +42,15 @@ signals:
     void logToConsole(QString msg, QString chan);//!<msg, channel
 };
 
+class QComboBox;
+
 class LogWriter
 {
 public:
     static QString      DebugLogFile;
     static PGE_LogLevel logLevel;
-    static bool         enabled;
+
+    static void loadLogLevels(QComboBox* targetComboBox);
 
     static void WriteToLog(PGE_LogLevel type, QString msg);
     static void LoadLogSettings();

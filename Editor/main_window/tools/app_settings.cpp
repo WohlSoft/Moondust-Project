@@ -79,6 +79,8 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
         QString title = theme.size()>=2 ? theme[1] : "";
         ui->Theme->addItem(title, data);
     }
+
+    loadSettings();
 }
 
 g_AppSettings::~g_AppSettings()
@@ -86,7 +88,7 @@ g_AppSettings::~g_AppSettings()
     delete ui;
 }
 
-void g_AppSettings::applySettings()
+void g_AppSettings::loadSettings()
 {
     ui->autoPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->Animations->setChecked(GlobalSettings::LvlOpts.animationEnabled);
@@ -102,27 +104,9 @@ void g_AppSettings::applySettings()
 
     ui->historyLimit->setValue(GlobalSettings::historyLimit);
 
-    if(LogWriter::enabled)
-        ui->logLevel->setCurrentIndex((int)LogWriter::logLevel);
-    else
-        ui->logLevel->setCurrentIndex(0);
-//        switch(LogWriter::logLevel)
-//        {
-//        case PGE_LogLevel::Debug:
-//            ui->logLevel->setCurrentIndex(4); break;
-//        case PGE_LogLevel::Warning:
-//            ui->logLevel->setCurrentIndex(3); break;
-//        case PGE_LogLevel::Critical:
-//            ui->logLevel->setCurrentIndex(2); break;
-//        case PGE_LogLevel::Fatal:
-//            ui->logLevel->setCurrentIndex(1); break;
-//        case PGE_LogLevel::NoLog:
-//            ui->logLevel->setCurrentIndex(0); break;
-//        default:
-//            break;
-//        }
-
-    ui->logFileName->setText(LogWriter::DebugLogFile);
+    LogWriter::loadLogLevels(ui->logLevel);
+    ui->logLevel->setCurrentIndex( int(LogWriter::logLevel) );
+    ui->logFileName->setText( LogWriter::DebugLogFile );
 
     if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)
         ui->MView_SubWindows->setChecked(true);
@@ -230,26 +214,8 @@ void g_AppSettings::on_buttonBox_accepted()
     Themes::loadTheme(ui->Theme->currentData().toString());
     GlobalSettings::currentTheme = ui->Theme->currentData().toString();
 
-    LogWriter::logLevel = (PGE_LogLevel)ui->logLevel->currentIndex();
-    bool logEnabled=(LogWriter::logLevel==PGE_LogLevel::NoLog);
-//    switch(ui->logLevel->currentIndex())
-//    {
-//    case 4:
-//        LogWriter::logLevel = QtDebugMsg; break;
-//    case 3:
-//        LogWriter::logLevel = QtWarningMsg; break;
-//    case 2:
-//        LogWriter::logLevel = QtCriticalMsg; break;
-//    case 1:
-//        LogWriter::logLevel = QtFatalMsg; break;
-//    case 0:
-//    default:
-//        logEnabled=false;
-//        LogWriter::logLevel = QtFatalMsg; break;
-//    }
+    LogWriter::logLevel     = PGE_LogLevel( ui->logLevel->currentIndex() );
     LogWriter::DebugLogFile = ui->logFileName->text();
-    LogWriter::enabled = logEnabled;
-
 
     /************************Item Defaults***************************/
     if(ui->defaults_npc_direction_right->isChecked())

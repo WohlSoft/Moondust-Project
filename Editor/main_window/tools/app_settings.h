@@ -34,7 +34,7 @@ public:
     explicit g_AppSettings(QWidget *parent = 0);
     ~g_AppSettings();
 
-    void applySettings();
+    void loadSettings();
     static bool associateFiles();
 
 private slots:
