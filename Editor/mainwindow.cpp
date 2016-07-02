@@ -191,6 +191,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
     dock_WldItemProps->WldLvlExitTypeListReset();
     dock_TilesetBox->setTileSetBox(true);
 
+    splash.progressTitle(tr("Initalizing plugins..."));
+    initPlugins();
+
     splash.progressTitle(tr("Finishing loading..."));
 }
 

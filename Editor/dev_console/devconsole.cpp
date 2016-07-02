@@ -269,6 +269,7 @@ void DevConsole::registerCommands()
     registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
     registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
+    registerCommand("paths", &DevConsole::doOutputPaths, tr("Shows various important paths!"));
 }
 
 void DevConsole::doCommand()
@@ -508,6 +509,14 @@ void DevConsole::doSendCheat(QStringList args)
         log(QString("-> command sent"), ui->tabWidget->tabText(0));
     else
         log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));
+
+}
+
+void DevConsole::doOutputPaths(QStringList args)
+{
+    log(QString("App path: ") + AppPathManager::userAppDir());
+    log(QString("Settings file: ") + AppPathManager::settingsFile());
+    log(QString("Log file: ") + LogWriter::DebugLogFile);
 
 }
 

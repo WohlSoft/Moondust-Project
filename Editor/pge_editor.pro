@@ -435,7 +435,10 @@ SOURCES += main.cpp\
     js_engine/pge_jsengine.cpp \
     js_engine/proxies/js_file.cpp \
     js_engine/proxies/js_common.cpp \
-    js_engine/proxies/js_ini.cpp
+    js_engine/proxies/js_ini.cpp \
+    main_window/mainw_scripting.cpp \
+    main_window/plugins/pge_editorpluginmanager.cpp \
+    main_window/plugins/pge_editorpluginitem.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -643,7 +646,9 @@ HEADERS  += defines.h \
     js_engine/proxies/js_file.h \
     js_engine/proxies/js_common.h \
     js_engine/proxies/js_utils.h \
-    js_engine/proxies/js_ini.h
+    js_engine/proxies/js_ini.h \
+    main_window/plugins/pge_editorpluginmanager.h \
+    main_window/plugins/pge_editorpluginitem.h
 
 FORMS    += \
     common_features/crashhandler.ui \

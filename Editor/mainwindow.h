@@ -58,6 +58,7 @@
 #include <main_window/dock/toolboxes_protos.h>
 #include <main_window/dock/_dock_vizman.h>
 
+#include <main_window/plugins/pge_editorpluginmanager.h>
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
@@ -124,6 +125,8 @@ public:
  * - Locks
  *
  * Testing
+ *
+ * Plugins
  *
  */
 
@@ -1014,6 +1017,15 @@ public:
         PROCESS_INFORMATION m_luna_pi;
         HANDLE m_luna_ipc_pipe;
         #endif
+
+// ////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////Scripting//////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////
+private:
+    PGE_EditorPluginManager m_pluginManager;
+
+    void initPlugins();
+    void initPluginsInDir(const QDir& dir);
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
