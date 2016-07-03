@@ -46,6 +46,12 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
 
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    //Setting sizes of some elements to look nicer
+    ui->gridLayout->setMargin(12);
+    ui->npcDefaultsGrp->setMinimumHeight(166);
+    ui->directionGrp->setMinimumHeight(52);
+    ui->defaults_npc_generator_delay->setMinimumHeight(24);
+    updateGeometry();
     #endif
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));

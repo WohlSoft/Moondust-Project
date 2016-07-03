@@ -232,9 +232,14 @@ void MainWindow::setUiDefults()
 
     /*********************Zoom field*************************/
     zoom = new QLineEdit(ui->LevelSectionsToolBar);
-    zoom->setValidator(new QIntValidator(0,2001, zoom));
+    zoom->setValidator(new QIntValidator(0, 2001, zoom));
     zoom->setText("100");
+    #ifdef Q_OS_OSX
+    zoom->setMinimumWidth(40);
+    zoom->setMaximumWidth(50);
+    #else
     zoom->setMaximumWidth(24);
+    #endif
     zoom->setEnabled(false);
 
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);

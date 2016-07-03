@@ -181,6 +181,9 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
 #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    ui->frame->setAutoFillBackground(false);
+    ui->frame->setFrameShape(QFrame::NoFrame);
+    ui->frame->setLineWidth(0);
 #endif
 #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));

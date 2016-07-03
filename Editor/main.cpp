@@ -112,7 +112,6 @@ static void pgeEditorQuit()
         FreeImage_DeInitialise();
     }
 
-    QApplication::closeAllWindows();
     if(MainWinConnect::pMainWin)
     {
         LogDebug("Deleting MainWindow...");
