@@ -203,7 +203,7 @@ Enter to: %2</source>
         <translation>Неверный ID состояния игрового персонажа</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="369"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="371"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <oldsource>Fatal error: Impossible to find start section.
@@ -479,15 +479,13 @@ Software renderer will be started.
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="676"/>
         <source>Unknown values are presented</source>
-        <translation>Представлены неизвестные значения</translation>
+        <translation type="vanished">Представлены неизвестные значения</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="677"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation>Ваш файл имеет неизвестные значения,
+        <translation type="vanished">Ваш файл имеет неизвестные значения,
 которые будут удалены когда вы сохраните файл</translation>
     </message>
 </context>
