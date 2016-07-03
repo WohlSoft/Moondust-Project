@@ -1,6 +1,6 @@
 #include "historyelementsettingssection.h"
 #include <editing/_scenes/level/lvl_scene.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <audio/music_player.h>
 

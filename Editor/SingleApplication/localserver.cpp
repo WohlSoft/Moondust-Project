@@ -20,7 +20,7 @@
 #include <QStringList>
 #include <QtDebug>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <networking/engine_intproc.h>
 
 #include "localserver.h"

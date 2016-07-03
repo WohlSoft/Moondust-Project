@@ -21,7 +21,7 @@
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/util.h>
 #include <common_features/logger.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include "item_scene.h"
 

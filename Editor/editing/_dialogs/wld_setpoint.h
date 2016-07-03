@@ -5,7 +5,7 @@
 
 #include <PGE_File_Formats/wld_filedata.h>
 #include <common_features/logger.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <editing/_scenes/world/wld_scene.h>
 
 namespace Ui {

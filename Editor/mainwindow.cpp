@@ -23,7 +23,7 @@
 #include <common_features/spash_screen.h>
 #include <main_window/dock/toolboxes.h>
 #include <common_features/logger_sets.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"

@@ -17,7 +17,7 @@
  */
 
 #include <common_features/grid.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"

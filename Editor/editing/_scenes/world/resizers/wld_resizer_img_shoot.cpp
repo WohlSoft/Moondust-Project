@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/grid.h>
 #include <editing/edit_world/world_edit.h>
 #include <PGE_File_Formats/file_formats.h>

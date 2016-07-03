@@ -1,6 +1,6 @@
 #include "historyelementsettingswarp.h"
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_warp_props.h>
 
 HistoryElementSettingsWarp::HistoryElementSettingsWarp(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData, QObject *parent) :

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>

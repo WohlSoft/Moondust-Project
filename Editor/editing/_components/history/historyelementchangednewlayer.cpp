@@ -1,7 +1,7 @@
 #include "historyelementchangednewlayer.h"
 
 #include "itemsearcher.h"
-#include "common_features/mainwinconnect.h"
+#include "common_features/main_window_ptr.h"
 
 
 #include <editing/_scenes/level/lvl_scene.h>

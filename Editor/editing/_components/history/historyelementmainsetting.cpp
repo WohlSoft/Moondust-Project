@@ -2,7 +2,7 @@
 
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/wld_settings_box.h>
 
 HistoryElementMainSetting::HistoryElementMainSetting(HistorySettings::WorldSettingSubType wldSubType, QObject *parent) :

@@ -279,6 +279,17 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             return;
         }
 
+        if( !FileData.unknownLines.isEmpty() )
+        {
+            QMessageBox::warning(this,
+                                 QObject::tr("Unknown values are presented"),
+                                 QObject::tr("Your file have an unknown values which will be removed\n"
+                                             " when you will save file") +
+                                 QString("\n====================================\n"
+                                         "%1").arg(FileData.unknownLines),
+                                 QMessageBox::Ok);
+        }
+
         NpcEdit *child = createNPCChild(&newSubWin);
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);

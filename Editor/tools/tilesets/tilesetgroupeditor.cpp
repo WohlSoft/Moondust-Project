@@ -19,7 +19,7 @@
 #include <QInputDialog>
 #include <QtDebug>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/util.h>
 #include <dev_console/devconsole.h>
 #include <defines.h>

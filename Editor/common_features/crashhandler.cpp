@@ -32,7 +32,7 @@
 #include "crashhandler.h"
 #include <ui_crashhandler.h>
 
-#include "common_features/mainwinconnect.h"
+#include "common_features/main_window_ptr.h"
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
 

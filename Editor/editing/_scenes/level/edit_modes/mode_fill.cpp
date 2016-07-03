@@ -19,7 +19,7 @@
 #include <QElapsedTimer>
 
 #include <common_features/themes.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
 #include "mode_fill.h"

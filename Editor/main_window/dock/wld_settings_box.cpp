@@ -22,7 +22,7 @@
 
 #include <editing/_dialogs/levelfilelist.h>
 #include <PGE_File_Formats/file_formats.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include <tools/async/asyncstarcounter.h>
 

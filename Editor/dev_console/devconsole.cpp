@@ -26,7 +26,7 @@
 #endif
 
 #include <common_features/app_path.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/logger_sets.h>
 
 #include <PGE_File_Formats/pge_x.h>

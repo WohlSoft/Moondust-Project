@@ -37,7 +37,7 @@
 #include <common_features/installer.h>
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <SingleApplication/singleapplication.h>
 
 #include <data_configs/config_manager.h>

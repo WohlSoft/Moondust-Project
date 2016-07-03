@@ -18,7 +18,7 @@
 
 #include "engine_intproc.h"
 #include <PGE_File_Formats/file_formats.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/app_path.h>
 #include <QSharedPointer>
 

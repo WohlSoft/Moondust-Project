@@ -167,7 +167,6 @@ SOURCES += main.cpp\
     common_features/item_rectangles.cpp \
     common_features/items.cpp \
     common_features/logger.cpp \
-    common_features/mainwinconnect.cpp \
     common_features/npc_animator.cpp \
     common_features/proxystyle.cpp \
     common_features/simple_animator.cpp \
@@ -439,7 +438,8 @@ SOURCES += main.cpp\
     main_window/plugins/pge_editorpluginmanager.cpp \
     main_window/plugins/pge_editorpluginitem.cpp \
     main_window/mainw_plugins.cpp \
-    main_window/plugins/pge_editorplugininfo.cpp
+    main_window/plugins/pge_editorplugininfo.cpp \
+    common_features/main_window_ptr.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -462,7 +462,6 @@ HEADERS  += defines.h \
     common_features/items.h \
     common_features/logger.h \
     common_features/logger_sets.h \
-    common_features/mainwinconnect.h \
     common_features/npc_animator.h \
     common_features/proxystyle.h \
     common_features/simple_animator.h \
@@ -650,7 +649,8 @@ HEADERS  += defines.h \
     js_engine/proxies/js_ini.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/plugins/pge_editorpluginitem.h \
-    main_window/plugins/pge_editorplugininfo.h
+    main_window/plugins/pge_editorplugininfo.h \
+    common_features/main_window_ptr.h
 
 FORMS    += \
     common_features/crashhandler.ui \

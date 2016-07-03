@@ -1,7 +1,7 @@
 #include "historyelementaddlayer.h"
 
 #include <editing/_scenes/level/lvl_scene.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_layers_box.h>
 
 HistoryElementAddLayer::HistoryElementAddLayer(int array_id, QString name, QObject *parent) :

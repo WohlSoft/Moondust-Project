@@ -9,7 +9,7 @@
 #include <editing/_scenes/level/items/item_playerpoint.h>
 
 #include <editing/_components/history/itemsearcher.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_layers_box.h>
 
 HistoryElementLayerChanged::HistoryElementLayerChanged(const LevelData &changedItems, const QString &newLayerName, QObject *parent) :

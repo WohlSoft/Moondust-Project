@@ -1,7 +1,7 @@
 #include "historyelementrenamelayer.h"
 #include <editing/_scenes/level/lvl_scene.h>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_layers_box.h>
 HistoryElementRenameLayer::HistoryElementRenameLayer(const int array_id, const QString oldName, const QString newName, QObject *parent) :

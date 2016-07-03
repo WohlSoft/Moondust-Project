@@ -7,7 +7,7 @@
 #include <editing/_scenes/level/items/item_water.h>
 
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_layers_box.h>
 #include "itemsearcher.h"

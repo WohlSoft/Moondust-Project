@@ -24,7 +24,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 

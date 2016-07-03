@@ -1,5 +1,5 @@
 #include "historyelementsettingsevent.h"
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_events_box.h>
 
 

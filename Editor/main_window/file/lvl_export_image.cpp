@@ -22,7 +22,7 @@
 #include <QProgressDialog>
 #include <QDesktopWidget>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <common_features/app_path.h>
 
 #include "lvl_export_image.h"

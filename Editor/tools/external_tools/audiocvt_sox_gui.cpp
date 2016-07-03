@@ -8,7 +8,7 @@
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 #include <dev_console/devconsole.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include <QtDebug>
 

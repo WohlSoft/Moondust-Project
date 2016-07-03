@@ -19,7 +19,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include "sdl_music_player.h"
 #include "music_player.h"

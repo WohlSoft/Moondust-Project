@@ -3,7 +3,7 @@
 #include <editing/_components/history/itemsearcher.h>
 #include <editing/_scenes/level/items/item_door.h>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_warp_props.h>
 
 HistoryElementPlaceDoor::HistoryElementPlaceDoor(const LevelDoor &door, bool isEntrance, QObject *parent) :

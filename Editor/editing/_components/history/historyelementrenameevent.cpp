@@ -1,7 +1,7 @@
 #include "historyelementrenameevent.h"
 #include <editing/_scenes/level/lvl_scene.h>
 
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <main_window/dock/lvl_events_box.h>
 
 HistoryElementRenameEvent::HistoryElementRenameEvent(const int array_id, const QString &oldName, const QString &newName, QObject *parent) :

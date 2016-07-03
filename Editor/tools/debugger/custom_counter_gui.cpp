@@ -19,7 +19,7 @@
 #include <QMenu>
 
 #include <common_features/util.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include <editing/_dialogs/itemselectdialog.h>
 
 #include "custom_counter_gui.h"

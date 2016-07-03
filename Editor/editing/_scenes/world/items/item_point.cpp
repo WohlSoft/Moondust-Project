@@ -17,7 +17,7 @@
  */
 
 #include <common_features/logger.h>
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 #include "item_point.h"
 
 void ItemPoint::construct()

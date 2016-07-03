@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mainwinconnect.h"
+#include "main_window_ptr.h"
 
 MainWindow*     MainWinConnect::pMainWin;
 dataconfigs*    MainWinConnect::configs;

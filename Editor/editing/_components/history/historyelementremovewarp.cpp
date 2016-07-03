@@ -19,7 +19,7 @@
 #include <QComboBox>
 
 #include "historyelementremovewarp.h"
-#include <common_features/mainwinconnect.h>
+#include <common_features/main_window_ptr.h>
 
 #include <main_window/dock/lvl_warp_props.h>
 
