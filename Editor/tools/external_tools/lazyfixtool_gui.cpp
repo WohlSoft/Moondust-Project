@@ -36,6 +36,7 @@ LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
 
 LazyFixTool_gui::~LazyFixTool_gui()
 {
+    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete proc;
     delete ui;
 }
@@ -106,7 +107,11 @@ void LazyFixTool_gui::on_startTool_clicked()
 void LazyFixTool_gui::consoleMessage()
 {
     QByteArray strdata = proc->readAllStandardOutput();
-    DevConsole::log(strdata, "LazyFix Tool");
+    QString out = QString::fromLocal8Bit(strdata);
+#ifdef Q_OS_WIN
+    out.remove('\r');
+#endif
+    DevConsole::log(out, "LazyFix Tool");
 }
 
 

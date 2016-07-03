@@ -37,6 +37,7 @@ gifs2png_gui::gifs2png_gui(QWidget *parent) :
 
 gifs2png_gui::~gifs2png_gui()
 {
+    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete proc;
     delete ui;
 }
@@ -110,7 +111,11 @@ void gifs2png_gui::on_startTool_clicked()
 void gifs2png_gui::consoleMessage()
 {
     QByteArray strdata = proc->readAllStandardOutput();
-    DevConsole::log(strdata, "GIFs2PNG");
+    QString out = QString::fromLocal8Bit(strdata);
+#ifdef Q_OS_WIN
+    out.remove('\r');
+#endif
+    DevConsole::log(out, "GIFs2PNG");
 }
 
 void gifs2png_gui::on_close_clicked()

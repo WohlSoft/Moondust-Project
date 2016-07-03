@@ -108,7 +108,11 @@ void png2gifs_gui::on_startTool_clicked()
 void png2gifs_gui::consoleMessage()
 {
     QByteArray strdata = proc->readAllStandardOutput();
-    DevConsole::log(strdata, "PNG2GIFs");
+    QString out = QString::fromLocal8Bit(strdata);
+#ifdef Q_OS_WIN
+    out.remove('\r');
+#endif
+    DevConsole::log(out, "PNG2GIFs");
 }
 
 void png2gifs_gui::on_close_clicked()
