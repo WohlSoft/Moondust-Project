@@ -21,7 +21,7 @@ OutFile "pge-online-downloader.exe"
 Caption "PGE Online Installer (wohlsoft.ru mirror)"
 
 ;Set the text at the bottom, AKA branding text
-BrandingText "tb1024's PGE Online Downloader v0.5.1. Platformer Game Engine is (C) Wohlstand."
+BrandingText "tb1024's PGE Online Downloader v0.5.2. Platformer Game Engine is (C) Wohlstand."
 
 ;Branding images
 !define MUI_WELCOMEFINISHPAGE_BITMAP "pge_editor_installer.bmp"
@@ -381,10 +381,6 @@ SubSection "Config Packs (Must select one)" SubSecCfg
 		DetailPrint "Extracting..."
 		ZipDLL::extractall "$OUTDIR\SMBXIntegrator.zip" "$OUTDIR"
 		DetailPrint "Extracting finished."
-		;Run the program
-		DetailPrint "Running the configurator. Please input requested data."
-		ExecWait "$OUTDIR\SMBXInt\configure.exe" $0
-		DetailPrint "Configurator returned $0"
 		;Delete the archive
 		Delete "$OUTDIR\SMBXIntegrator.zip"
         ;Register component
