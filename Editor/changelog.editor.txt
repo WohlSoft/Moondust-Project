@@ -13,6 +13,7 @@ Editor 0.3.1.11
 - Fixed log level management
 - Better validating of configuration package INI-files in the editor (to avlid future crashes because damaged config pack)
 - Experimental plugins system
+- Fixed menubar confusion while loaiding, and fixed confusin between settings and quit menu actions on Mac OS X
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
