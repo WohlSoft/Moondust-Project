@@ -134,10 +134,6 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-    #ifdef Q_OS_MACX
-        ui->menuBar->setEnabled(true);
-    #endif
-
     #ifdef Q_OS_WIN
         if(ConfStatus::SmbxTest_By_Default)
         {
@@ -175,6 +171,10 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
         continueLoad = false;
         return false;
     }
+
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(true);
+#endif
 
     return true;
 }

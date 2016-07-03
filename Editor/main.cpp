@@ -73,6 +73,7 @@ int main(int argc, char *argv[])
     int ret=0;
     MainWindow *w = nullptr;
     SingleApplication *as = new SingleApplication(args);
+
     if(!as->shouldContinue())
     {
         QTextStream(stdout) << "Editor already runned!\n";
@@ -148,6 +149,7 @@ int main(int argc, char *argv[])
 
     FreeImage_Initialise();
 
+    /******************************Config manager*********************************/
     QString currentConfigDir;
     bool    askConfigAgain = false;
     QString themePack;
@@ -157,16 +159,22 @@ int main(int argc, char *argv[])
         QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
 
     {
-        // Config manager
         ConfigManager *cmanager;
         cmanager = new ConfigManager(nullptr);
-        cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowStaysOnTopHint);
-        cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+        cmanager->setWindowFlags(Qt::Window|
+                                 Qt::WindowTitleHint|
+                                 Qt::WindowCloseButtonHint|
+                                 Qt::WindowStaysOnTopHint);
+        cmanager->setGeometry( QStyle::alignedRect(Qt::LeftToRight,
+                                                   Qt::AlignCenter,
+                                                   cmanager->size(),
+                                                   qApp->desktop()->availableGeometry()) );
 
-        currentConfigDir  = cmanager->isPreLoaded();
-        askConfigAgain    = cmanager->askAgain;
-        themePack = cmanager->themePack;
-        //If application runned first time or target configuration is not exist
+        currentConfigDir    = cmanager->isPreLoaded();
+        askConfigAgain      = cmanager->askAgain;
+        themePack           = cmanager->themePack;
+
+        //If application started first time or target configuration is not exist
         if( askConfigAgain || currentConfigDir.isEmpty() )
         {
             //Ask for configuration
@@ -190,8 +198,10 @@ int main(int argc, char *argv[])
         currentConfigDir = cmanager->currentConfigPath;
         delete cmanager;
     }
+    /******************************Config manager***END***************************/
 
     w = new MainWindow;
+
     //Init Main Window class
     if( !w->initEverything(currentConfigDir, themePack, askConfigAgain) )
     {
@@ -210,6 +220,7 @@ int main(int argc, char *argv[])
     #else
     w->showFullScreen();
     #endif
+
     QApplication::setActiveWindow(w);
 
     //Open files saved by Crashsave (if any)

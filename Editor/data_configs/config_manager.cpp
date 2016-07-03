@@ -23,7 +23,6 @@
 #include <QtWin>
 #include <QSysInfo>
 #endif
-#include <QProcess>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -165,11 +164,10 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     QListWidgetItem * item;
 
-
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
     if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
@@ -186,7 +184,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
 
     connect(ui->configList, SIGNAL(clicked(QModelIndex)), ui->configList, SLOT(update()));
 
@@ -205,12 +203,13 @@ ConfigManager::ConfigManager(QWidget *parent) :
     configPath=(ApplicationPath+"/configs/");//!< Stuff PGE config dir
     QDir configDir(configPath);
     configs=configDir.entryList(QDir::AllDirs);
+
     foreach(QString c, configs)
     {
         QString config_dir = configPath+c+"/";
         configPackPair path;
-        path.first = c;//Full path
-        path.second = config_dir;//name of config dir
+        path.first = c;//name of config dir
+        path.second = config_dir;//Full path
         config_paths<<path;
     }
 
@@ -218,13 +217,13 @@ ConfigManager::ConfigManager(QWidget *parent) :
     {
         configPath_user = AppPathManager::userAppDir()+"/configs/";//!< User additional folder
         QDir configUserDir(configPath_user);
-        configs=configUserDir.entryList(QDir::AllDirs);
+        configs = configUserDir.entryList(QDir::AllDirs);
         foreach(QString c, configs)
         {
-            QString config_dir = configPath_user+c+"/";
+            QString config_dir = configPath_user + c +"/";
             configPackPair path;
-            path.first = c;//Full path
-            path.second = config_dir;//name of config dir
+            path.first  = c;//Name of config dir
+            path.second = config_dir;//Full path
             config_paths<<path;
         }
     }
@@ -235,11 +234,11 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     foreach(configPackPair confD, config_paths)
     {
-        QString c=confD.first;
-        QString config_dir=confD.second;
+        QString c          = confD.first;
+        QString config_dir = confD.second;
         QString configName;
         QString configDesc;
-        bool smbx_compatible;
+        bool    smbx_compatible;
         QString data_dir;
         QString splash_logo;
 
@@ -257,13 +256,16 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         guiset.beginGroup("main");
             data_dir = (guiset.value("application-dir", "0").toBool() ?
-                            ApplicationPath + "/" : config_dir + "data/" );
+                                                    ApplicationPath + "/" :
+                                                    config_dir + "data/" );
+
             configName = guiset.value("config_name", QDir(config_dir).dirName()).toString();
             configDesc = guiset.value("config_desc", config_dir).toString();
             smbx_compatible =  guiset.value("smbx-compatible", false).toBool();
         guiset.endGroup();
 
         QPixmap splashImg;
+
         //Default splash image
         if(splash_logo.isEmpty())
             splash_logo = ":/images/splash_editor.png";
@@ -334,20 +336,25 @@ bool ConfigManager::hasConfigPacks()
 QString ConfigManager::isPreLoaded()
 {
     QString inifile = AppPathManager::settingsFile();
+
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-    QString configPath = settings.value("current-config", "").toString();
-    QString saved_theme = settings.value("current-theme", "").toString();;
-    askAgain = settings.value("ask-config-again", false).toBool();
+        QString configPath  = settings.value("current-config", "").toString();
+        QString saved_theme = settings.value("current-theme", "").toString();
+        askAgain            = settings.value("ask-config-again", false).toBool();
     settings.endGroup();
+
+    if(!configPath.endsWith('/'))
+        configPath.append('/');
 
     if(!saved_theme.isEmpty())
         themePack = saved_theme;
 
-    QList<QListWidgetItem*> AvailableConfigs=ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<QListWidgetItem*> AvailableConfigs=ui->configList->findItems(QString("*"), Qt::MatchWrap|Qt::MatchWildcard);
+
     //Automatically choice config pack if alone detected
-    if(AvailableConfigs.size()==1)
+    if(AvailableConfigs.size() == 1)
     {
         currentConfig = AvailableConfigs[0]->data(3).toString();
         currentConfigPath = AvailableConfigs[0]->data(Qt::UserRole+4).toString();
@@ -364,7 +371,7 @@ QString ConfigManager::isPreLoaded()
         }
 
         //If full config pack path is same
-        if(it->data(Qt::UserRole+4).toString()==configPath)
+        if(it->data(Qt::UserRole+4).toString() == configPath)
         {
             currentConfig = it->data(3).toString();
             currentConfigPath = it->data(Qt::UserRole+4).toString();
@@ -393,6 +400,7 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
     currentConfig = item->data(3).toString();
     currentConfigPath = item->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
+
     if( checkForConfigureTool() )
         this->accept();
 }
@@ -403,6 +411,7 @@ void ConfigManager::on_buttonBox_accepted()
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
     currentConfigPath = ui->configList->selectedItems().first()->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
+
     if( checkForConfigureTool() )
         this->accept();
 }
@@ -412,24 +421,14 @@ bool ConfigManager::isConfigured()
     bool isConfigured = false;
     QSettings settings( currentConfigPath+"main.ini", QSettings::IniFormat );
     settings.beginGroup("main");
-    isConfigured = settings.value("application-path-configured", false).toBool();
+        isConfigured = settings.value("application-path-configured", false).toBool();
     settings.endGroup();
     return isConfigured;
 }
 
 bool ConfigManager::checkForConfigureTool()
 {
-    /*
-    #if defined(Q_OS_WIN) || defined(Q_OS_LINUX) || defined(Q_OS_OSX)
-    #if defined(Q_OS_WIN)
-    #define CONFIGURE_TOOL "configure.exe"
-    #elif defined(Q_OS_OSX)
-    #define CONFIGURE_TOOL "configure_osx"
-    #elif defined(Q_OS_LINUX)
-    #define CONFIGURE_TOOL "configure_linux"
-    #endif
-    */
-    QString configureToolApp = currentConfigPath + "configure.js" /*CONFIGURE_TOOL*/;
+    QString configureToolApp = currentConfigPath + "configure.js";
 
     //If configure tool has been detected
     if( QFile(configureToolApp).exists() )
@@ -442,6 +441,7 @@ bool ConfigManager::checkForConfigureTool()
                                                 "Are you want to configure it with configuration tool?")
                                                 +QString("\n\n%1").arg( configureToolApp ),
                                                      QMessageBox::Yes|QMessageBox::No);
+
             if(reply==QMessageBox::Yes)
             {
                 PGE_JsEngine js;
@@ -451,16 +451,16 @@ bool ConfigManager::checkForConfigureTool()
 
                 if( js.setFile( configureToolApp ) )
                 {
-                    this->hide();
+                    setEnabled(false);
                     if( !js.call<bool>("onConfigure", nullptr) )
                     {
-                        this->show();
+                        setEnabled(true);
                         return false;
                     }
 
+                    setEnabled(true);
                     if( !isConfigured() )
                     {
-                        this->show();
                         return false;
                     }
                 }
@@ -468,26 +468,6 @@ bool ConfigManager::checkForConfigureTool()
                 {
                     return false;
                 }
-                /*
-                this->hide();
-
-                QProcess configureToolProc;
-                configureToolProc.setWorkingDirectory(currentConfigPath);
-                configureToolProc.setProgram( configureToolApp );
-                int reply = configureToolProc.execute( configureToolApp );
-
-                if(reply != 0)
-                {
-                    this->show();
-                    return false;
-                }
-                //If still not configured
-                if( !isConfigured() )
-                {
-                    this->show();
-                    return false;
-                }
-                */
             }
             else
             {
