@@ -41,6 +41,8 @@
 #include <js_engine/proxies/js_file.h>
 #include <js_engine/proxies/js_ini.h>
 
+#define CONFIGURE_TOOL_NAME "configure.js"
+
 class ListDelegate : public QAbstractItemDelegate
 {
 public:
@@ -356,8 +358,8 @@ QString ConfigManager::isPreLoaded()
     //Automatically choice config pack if alone detected
     if(AvailableConfigs.size() == 1)
     {
-        currentConfig = AvailableConfigs[0]->data(3).toString();
-        currentConfigPath = AvailableConfigs[0]->data(Qt::UserRole+4).toString();
+        currentConfig       = AvailableConfigs[0]->data(3).toString();
+        currentConfigPath   = AvailableConfigs[0]->data(Qt::UserRole+4).toString();
         AvailableConfigs[0]->setSelected(true);
         ui->configList->scrollToItem(AvailableConfigs[0]);
     }
@@ -384,7 +386,13 @@ QString ConfigManager::isPreLoaded()
 
     //Don't spawn dialog on load if alone config pack detected
     if(AvailableConfigs.size()==1)
-        askAgain=false;
+        askAgain = false;
+
+    if( (!currentConfigPath.isEmpty()) && (!askAgain) )
+    {
+        if( !checkForConfigureTool() )
+            return QString();
+    }
 
     return currentConfigPath;
 }
@@ -397,9 +405,9 @@ void ConfigManager::setAskAgain(bool _x)
 
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
-    currentConfig = item->data(3).toString();
-    currentConfigPath = item->data(Qt::UserRole+4).toString();
-    askAgain = ui->AskAgain->isChecked();
+    currentConfig       = item->data(3).toString();
+    currentConfigPath   = item->data(Qt::UserRole+4).toString();
+    askAgain            = ui->AskAgain->isChecked();
 
     if( checkForConfigureTool() )
         this->accept();
@@ -428,53 +436,68 @@ bool ConfigManager::isConfigured()
 
 bool ConfigManager::checkForConfigureTool()
 {
-    QString configureToolApp = currentConfigPath + "configure.js";
+    QString configureToolApp = currentConfigPath + CONFIGURE_TOOL_NAME;
 
     //If configure tool has been detected
-    if( QFile(configureToolApp).exists() )
+    if( QFile::exists(configureToolApp) && (!isConfigured()) )
     {
-        if( !isConfigured() )
+        QMessageBox::StandardButton reply =
+            QMessageBox::information(this,
+                                     tr("Configuration package is not configured!"),
+                                     tr("\"%1\" configuration package is not configured yet.\n"
+                                        "Are you want to configure it?")
+                                        .arg(currentConfig),
+                                             QMessageBox::Yes|QMessageBox::No);
+        if(reply==QMessageBox::Yes)
         {
-            QMessageBox::StandardButton reply =
-                            QMessageBox::information(this, tr("Configuration package is not configured!"),
-                                             tr("Found a configurable configuration package, but it is not configured.\n"
-                                                "Are you want to configure it with configuration tool?")
-                                                +QString("\n\n%1").arg( configureToolApp ),
-                                                     QMessageBox::Yes|QMessageBox::No);
+            return runConfigureTool();
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-            if(reply==QMessageBox::Yes)
+    return true;
+}
+
+
+bool ConfigManager::runConfigureTool()
+{
+    QString configureToolApp = currentConfigPath + CONFIGURE_TOOL_NAME;
+    if( QFile::exists(configureToolApp) )
+    {
+        PGE_JsEngine js;
+        js.bindProxy(new PGE_JS_Common(this), "PGE");
+        js.bindProxy(new PGE_JS_File(currentConfigPath, this), "FileIO");
+        js.bindProxy(new PGE_JS_INI(this), "INI");
+
+        if( js.setFile( configureToolApp ) )
+        {
+            setEnabled(false);
+            if( !js.call<bool>("onConfigure", nullptr) )
             {
-                PGE_JsEngine js;
-                js.bindProxy(new PGE_JS_Common(this), "PGE");
-                js.bindProxy(new PGE_JS_File(currentConfigPath, this), "FileIO");
-                js.bindProxy(new PGE_JS_INI(this), "INI");
-
-                if( js.setFile( configureToolApp ) )
-                {
-                    setEnabled(false);
-                    if( !js.call<bool>("onConfigure", nullptr) )
-                    {
-                        setEnabled(true);
-                        return false;
-                    }
-
-                    setEnabled(true);
-                    if( !isConfigured() )
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                setEnabled(true);
+                return false;
             }
-            else
+            setEnabled(true);
+            if( !isConfigured() )
             {
                 return false;
             }
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
-    //#endif
-    return true;
+    else
+    {
+        QMessageBox::information(this,
+                                 tr("Configuring is not needed"),
+                                 tr("This config pack is not contains a configuring tool."),
+                                 QMessageBox::Ok);
+        return false;
+    }
 }

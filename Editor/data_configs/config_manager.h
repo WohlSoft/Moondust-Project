@@ -53,6 +53,7 @@ public:
     bool askAgain;
 
     bool isConfigured();
+    bool runConfigureTool();
 private slots:
     void on_configList_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonBox_accepted();
