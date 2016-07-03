@@ -19,8 +19,9 @@ void MainWindow::initPlugins()
 
     // Add plugins to menu
     for(unsigned int i = 0; i < m_pluginManager.getPluginCount(); ++i) {
-        const PGE_EditorPluginItem& item = m_pluginManager.getPluginInfo(i);
-        pluginsMenu->addAction(item.pluginName());
+        const PGE_EditorPluginItem* item = m_pluginManager.getPluginInfo(i);
+        if(item->isValid())
+            pluginsMenu->addAction(item->pluginName());
     }
 
     if(pluginsMenu->actions().size() == 0)

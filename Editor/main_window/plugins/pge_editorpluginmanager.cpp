@@ -6,17 +6,17 @@ PGE_EditorPluginManager::PGE_EditorPluginManager(QObject *parent) : QObject(pare
 
 bool PGE_EditorPluginManager::hasPlugins() const
 {
-    return m_loadedPlugins.size() > 0;
+    return m_plugins.size() > 0;
 }
 
 unsigned int PGE_EditorPluginManager::getPluginCount() const
 {
-    return uint(m_loadedPlugins.size());
+    return uint(m_plugins.size());
 }
 
-const PGE_EditorPluginItem &PGE_EditorPluginManager::getPluginInfo(unsigned int index) const
+const PGE_EditorPluginItem *PGE_EditorPluginManager::getPluginInfo(unsigned int index) const
 {
-    return m_loadedPlugins[int(index)];
+    return m_plugins[int(index)];
 }
 
 void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
@@ -26,7 +26,7 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
         dir.mkdir(".");
         return;
     }
-    for(QString subFolder : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+    for(const QString& subFolder : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
     {
         LogDebug(QString("Found package ") + subFolder + "! Looking for main.js...");
         QDir nextDir = dir;
@@ -39,11 +39,15 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
             if(!ok)
             {
                 LogWarning("Error while loading main.js in " + subFolder + ", skipping...");
+                m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder, m_engine.getLastError()
+                                                             + tr("\nat line ") + QString::number(m_engine.getLastErrorLine())));
                 continue;
             }
 
             if(result.find("pluginName") == result.cend()){
-                LogWarning("Failed to find plugin_name from the result of main.js in " + subFolder + ", skipping...");
+                QString errMsg = "Failed to find plugin_name from the result of main.js in " + subFolder + ", skipping...";
+                LogWarning(errMsg);
+                m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder, std::move(errMsg)));
                 continue;
             }
 
@@ -51,7 +55,7 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
             QString authorName = result.value("authorName").toString();
             QString description = result.value("description").toString();
             int version = result.value("version").toInt();
-            m_loadedPlugins.push_back(PGE_EditorPluginItem(std::move(pluginName), std::move(authorName), std::move(description), version));
+            m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder, std::move(pluginName), std::move(authorName), std::move(description), version));
 
             WriteToLog(PGE_LogLevel::Debug, "Successfully loaded plugin\"" + pluginName + "\"!");
         } else {

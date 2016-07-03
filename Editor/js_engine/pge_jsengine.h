@@ -78,7 +78,8 @@ public:
             return;
     }
 
-    QJSValue getLastError();
+    int getLastErrorLine() const;
+    QString getLastError() const;
 private:
     bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = nullptr);
     void logError(const QJSValue &erroredValue);

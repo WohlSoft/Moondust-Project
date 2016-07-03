@@ -60,9 +60,14 @@ void PGE_JsEngine::setCode(QString &code)
         logError(result);
 }
 
-QJSValue PGE_JsEngine::getLastError()
+int PGE_JsEngine::getLastErrorLine() const
 {
-    return m_lastError;
+    return m_lastError.property("lineNumber").toInt();
+}
+
+QString PGE_JsEngine::getLastError() const
+{
+    return m_lastError.toString();
 }
 
 bool PGE_JsEngine::checkForErrors(const QJSValue &possibleErrVal, bool *ok)
