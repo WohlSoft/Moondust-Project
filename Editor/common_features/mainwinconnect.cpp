@@ -18,12 +18,5 @@
 
 #include "mainwinconnect.h"
 
-MainWindow * MainWinConnect::pMainWin;
-dataconfigs * MainWinConnect::configs;
-
-
-void MainWindow::setPointer()
-{
-    MainWinConnect::pMainWin = this;
-    MainWinConnect::configs = &configs;
-}
+MainWindow*     MainWinConnect::pMainWin;
+dataconfigs*    MainWinConnect::configs;

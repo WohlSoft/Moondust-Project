@@ -23,7 +23,6 @@
 #endif
 #include <QFileInfo>
 #include <QDir>
-#include <QDesktopWidget>
 
 #ifdef Q_OS_LINUX
 #include <QStyleFactory>
@@ -38,6 +37,7 @@
 #include <common_features/installer.h>
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
+#include <common_features/mainwinconnect.h>
 #include <SingleApplication/singleapplication.h>
 
 #include <data_configs/config_manager.h>
@@ -53,6 +53,85 @@
 #endif
 #include <FreeImageLite.h>
 
+static bool initied_sdl = false;
+static bool initied_fig = false;
+
+static QApplication*        app         = nullptr;
+static SingleApplication*   appSingle   = nullptr;
+static MainWindow*          mWindow     = nullptr;
+static QStringList          args;
+
+static void pgeInitSDL()
+{
+    #ifdef Q_OS_ANDROID
+    SDL_SetMainReady();
+    #endif
+    #ifdef USE_SDL_MIXER
+    LogDebug("Initializing SDL Audio...");
+    if( SDL_Init(SDL_INIT_AUDIO) < 0 )
+    {
+        LogWarning(QString("Error of loading SDL: %1").arg(SDL_GetError()));
+        return;
+    }
+    LogDebug("Initializing SDL Mixer X...");
+    if( Mix_Init(MIX_INIT_FLAC|MIX_INIT_MODPLUG|MIX_INIT_MP3|MIX_INIT_OGG) < 0 )
+    {
+        LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
+    }
+    #endif
+
+    initied_sdl = true;
+}
+
+static void pgeInitFreeImage()
+{
+    LogDebug("Initializing of FreeImage...");
+    FreeImage_Initialise();
+    initied_fig = true;
+}
+
+static void pgeEditorQuit()
+{
+    if(initied_sdl)
+    {
+        #ifdef USE_SDL_MIXER
+            LogDebug("Free music buffer...");
+        PGE_MusPlayer::MUS_freeStream();
+            LogDebug("Free sound buffer...");
+        PGE_Sounds::freeBuffer();
+            LogDebug("Closing audio...");
+        Mix_CloseAudio();
+            LogDebug("Closing SDL...");
+        SDL_Quit();
+        #endif
+    }
+
+    if(initied_fig)
+    {
+        LogDebug("Deinitializing FreeImage...");
+        FreeImage_DeInitialise();
+    }
+
+    QApplication::closeAllWindows();
+    if(MainWinConnect::pMainWin)
+    {
+        LogDebug("Deleting MainWindow...");
+        delete MainWinConnect::pMainWin;
+    }
+    QApplication::quit();
+    QApplication::exit();
+    if(app)
+    {
+        LogDebug("Deleting Qt-Application...");
+        delete app;
+    }
+    if(appSingle)
+    {
+        LogDebug("Deleting Single-Application...");
+        delete appSingle;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
@@ -61,8 +140,8 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
-    QApplication *a = new QApplication(argc, argv);
-    QStringList args=a->arguments();
+    app     = new QApplication(argc, argv);
+    args    = app->arguments();
 
 #ifdef Q_OS_MAC
     QDir dir(QApplication::applicationDirPath());
@@ -70,30 +149,28 @@ int main(int argc, char *argv[])
     QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
 #endif
 
-    int ret=0;
-    MainWindow *w = nullptr;
-    SingleApplication *as = new SingleApplication(args);
+    int ret = 0;
+    appSingle = new SingleApplication(args);
 
-    if(!as->shouldContinue())
+    if(!appSingle->shouldContinue())
     {
         QTextStream(stdout) << "Editor already runned!\n";
-        delete as;
+        pgeEditorQuit();
         return 0;
     }
 
-    a->setStyle(new PGE_ProxyStyle);
+    app->setStyle(new PGE_ProxyStyle);
     #ifdef Q_OS_LINUX
     {
         QStringList availableStyles = QStyleFactory::keys();
         if( availableStyles.contains("GTK", Qt::CaseInsensitive) )
-            a->setStyle("GTK");
+            app->setStyle("GTK");
     }
     #endif
 
-    QFont fnt = a->font();
-
-    fnt.setPointSize(PGEDefaultFontSize);
-    a->setFont(fnt);
+    QFont fnt = app->font();
+    fnt.setPointSize( PGEDefaultFontSize );
+    app->setFont(fnt);
 
     //Init system paths
     AppPathManager::initAppPath();
@@ -108,17 +185,11 @@ int main(int argc, char *argv[])
             Installer::moveFromAppToUser();
             Installer::associateFiles();
 
-            QApplication::quit();
-            QApplication::exit();
-            delete a;
-            delete as;
+            pgeEditorQuit();
             return 0;
         } else if(arg=="--version") {
             std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE "-" _BUILD_VER << std::endl;
-            QApplication::quit();
-            QApplication::exit();
-            delete a;
-            delete as;
+            pgeEditorQuit();
             return 0;
         }
     }
@@ -128,140 +199,88 @@ int main(int argc, char *argv[])
 
     //Init log writer
     LoadLogSettings();
-
     LogDebug("--> Application started <--");
 
-    #ifdef Q_OS_ANDROID
-    SDL_SetMainReady();
-    #endif
-    #ifdef USE_SDL_MIXER
-    //Init SDL Audio subsystem
-    if(SDL_Init(SDL_INIT_AUDIO)<0)
-    {
-        LogWarning(QString("Error of loading SDL: %1").arg(SDL_GetError()));
-    }
+    pgeInitSDL();
+    pgeInitFreeImage();
 
-    if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MODPLUG|MIX_INIT_MP3|MIX_INIT_OGG)<0)
-    {
-        LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
-    }
-    #endif
-
-    FreeImage_Initialise();
-
-    w = new MainWindow; //Construct MainWindow to initialize language settings
+    mWindow = new MainWindow; //Construct MainWindow to initialize language settings
 
     /******************************Config manager*********************************/
     QString currentConfigDir;
     bool    askConfigAgain = false;
     QString themePack;
 
-    //Create empty config directory if not exists
-    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
-        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
-
     {
-        ConfigManager *cmanager;
-        cmanager = new ConfigManager(nullptr);
-        cmanager->setWindowFlags(Qt::Window|
-                                 Qt::WindowTitleHint|
-                                 Qt::WindowCloseButtonHint|
-                                 Qt::WindowStaysOnTopHint);
-        cmanager->setGeometry( QStyle::alignedRect(Qt::LeftToRight,
-                                                   Qt::AlignCenter,
-                                                   cmanager->size(),
-                                                   qApp->desktop()->availableGeometry()) );
-
-        currentConfigDir    = cmanager->isPreLoaded();
-        askConfigAgain      = cmanager->askAgain;
-        themePack           = cmanager->themePack;
+        ConfigManager cmanager(nullptr);
+        currentConfigDir    = cmanager.loadConfigs();
+        askConfigAgain      = cmanager.m_doAskAgain;
+        themePack           = cmanager.m_themePackName;
 
         //If application started first time or target configuration is not exist
         if( askConfigAgain || currentConfigDir.isEmpty() )
         {
             //Ask for configuration
-            if( cmanager->hasConfigPacks() && (cmanager->exec()==QDialog::Accepted) )
+            if( cmanager.hasConfigPacks() && (cmanager.exec() == QDialog::Accepted) )
             {
-                currentConfigDir = cmanager->currentConfigPath;
+                currentConfigDir = cmanager.m_currentConfigPath;
             }
             else
             {
-                delete cmanager;
                 LogDebug("<Configuration is not selected, application closed>");
-                delete w;
-                QApplication::quit();
-                QApplication::exit();
-                delete a;
-                delete as;
+                pgeEditorQuit();
                 return 0;
             }
         }
         //continueLoad = true;
-        askConfigAgain   = cmanager->askAgain;
-        currentConfigDir = cmanager->currentConfigPath;
-        delete cmanager;
+        askConfigAgain   = cmanager.m_doAskAgain;
+        currentConfigDir = cmanager.m_currentConfigPath;
     }
     /******************************Config manager***END***************************/
 
     //Init Main Window class
-    if( !w->initEverything(currentConfigDir, themePack, askConfigAgain) )
+    if( !mWindow->initEverything(currentConfigDir, themePack, askConfigAgain) )
     {
-        delete w;
+        delete mWindow;
         goto QuitFromEditor;
     }
 
-    a->connect( a, SIGNAL( lastWindowClosed() ), a, SLOT( quit() ) );
-    a->connect( w, SIGNAL( closeEditor() ), a, SLOT( quit() ) );
-    a->connect( w, SIGNAL( closeEditor() ), a, SLOT( closeAllWindows() ) );
+    app->connect( app, SIGNAL( lastWindowClosed() ), app, SLOT( quit() ) );
+    app->connect( mWindow, SIGNAL( closeEditor() ), app, SLOT( quit() ) );
+    app->connect( mWindow, SIGNAL( closeEditor() ), app, SLOT( closeAllWindows() ) );
 
     #ifndef Q_OS_ANDROID
-    w->show();
-    w->setWindowState(w->windowState()|Qt::WindowActive);
-    w->raise();
+    mWindow->show();
+    mWindow->setWindowState(mWindow->windowState()|Qt::WindowActive);
+    mWindow->raise();
     #else
     w->showFullScreen();
     #endif
 
-    QApplication::setActiveWindow(w);
+    QApplication::setActiveWindow(mWindow);
 
     //Open files saved by Crashsave (if any)
     CrashHandler::checkCrashsaves();
 
     //Open files which opened by command line
-    w->openFilesByArgs(args);
+    mWindow->openFilesByArgs(args);
 
     //Set acception of external file openings
-    w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
+    mWindow->connect(appSingle, SIGNAL(openFile(QString)), mWindow, SLOT(OpenFile(QString)));
 
 #ifdef Q_OS_WIN
     w->initWindowsThumbnail();
 #endif
 
     //Show tip of a day
-    w->showTipOfDay();
+    mWindow->showTipOfDay();
 
     //Run main loop
-    ret = a->exec();
+    ret = app->exec();
 
 QuitFromEditor:
-    FreeImage_DeInitialise();
-
-    #ifdef USE_SDL_MIXER
-        LogDebug("Free music buffer...");
-    PGE_MusPlayer::MUS_freeStream();
-        LogDebug("Free sound buffer...");
-    PGE_Sounds::freeBuffer();
-        LogDebug("Closing audio...");
-    Mix_CloseAudio();
-        LogDebug("Closing SDL...");
-    SDL_Quit();
-    #endif
-
+    pgeEditorQuit();
     LogDebug("--> Application closed <--");
-    QApplication::quit();
-    QApplication::exit();
-    delete a;
-    delete as;
 
     return ret;
 }

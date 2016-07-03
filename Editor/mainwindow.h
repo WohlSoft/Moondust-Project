@@ -687,6 +687,7 @@ public:
     private slots:
         void on_actionLoad_configs_triggered(); //!< Reload config
         void on_actionCurConfig_triggered();    //!< Config status
+        void on_actionReConfigure_triggered();  //!< Run configure tool
         void on_actionChangeConfig_triggered(); //!< Change configuration
     private:
         QString currentConfigDir;
@@ -1045,8 +1046,6 @@ protected:
     void dropEvent(QDropEvent *e);
 
 private:
-    void setPointer();  //!< Set the self pointer into the MainWinConnect class
-
     Ui::MainWindow *ui;
 };
 

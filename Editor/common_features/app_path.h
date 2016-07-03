@@ -21,21 +21,49 @@
 
 #include <QString>
 
+//! Full path to application directory
 extern QString ApplicationPath;
+//! Full path to application directory (in OS X shows path to executable inside bundle)
 extern QString ApplicationPath_x;
 
+/**
+ * @brief Manager of the application paths and settings files
+ */
 class AppPathManager
 {
     public:
+        /**
+         * @brief Initialize path manager
+         */
         static void initAppPath();
+        /**
+         * @brief Returns application settings file
+         * @return path to settings INI file
+         */
         static QString settingsFile();
+        /**
+         * @brief Path to user profile application dir
+         * @return Path to user profile application dir
+         */
         static QString userAppDir();
+        /**
+         * @brief Process installation (make user directory, save properties to operating system registry)
+         */
         static void install();
+        /**
+         * @brief Is this application portable
+         * @return true if this application works in portable mode, false in intergated mode
+         */
         static bool isPortable();
+        /**
+         * @brief Is user profile directory available for writing
+         * @return true if user profile directory is available
+         */
         static bool userDirIsAvailable();
 
     private:
-        static QString _settingsPath;
+        //! Full path to settings INI file
+        static QString m_settingsPath;
 };
 
 #endif // APP_PATH_H

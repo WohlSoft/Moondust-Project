@@ -25,11 +25,10 @@
 #include "app_path.h"
 #include "../version.h"
 
-
 QString ApplicationPath;
 QString ApplicationPath_x;
 
-QString AppPathManager::_settingsPath;
+QString AppPathManager::m_settingsPath;
 
 #if __ANDROID__ || __APPLE__
 #define UserDirName "/PGE Project"
@@ -109,7 +108,7 @@ void AppPathManager::initAppPath()
                 system(QString("ln -s \"%1\" \"%2/Data directory\"").arg(path+UserDirName).arg(ApplicationPath).toLocal8Bit().data());
                 }
             #endif
-            _settingsPath = appDir.absolutePath();
+            m_settingsPath = appDir.absolutePath();
         }
         else
         {
@@ -123,17 +122,17 @@ void AppPathManager::initAppPath()
 
     return;
 defaultSettingsPath:
-    _settingsPath = ApplicationPath;
+    m_settingsPath = ApplicationPath;
 }
 
 QString AppPathManager::settingsFile()
 {
-    return _settingsPath+"/pge_editor.ini";
+    return m_settingsPath + "/pge_editor.ini";
 }
 
 QString AppPathManager::userAppDir()
 {
-    return _settingsPath;
+    return m_settingsPath;
 }
 
 void AppPathManager::install()
@@ -157,8 +156,8 @@ void AppPathManager::install()
 
 bool AppPathManager::isPortable()
 {
-    if(_settingsPath.isNull())
-        _settingsPath = ApplicationPath;
+    if(m_settingsPath.isNull())
+        m_settingsPath = ApplicationPath;
     if(!QFile(settingsFile()).exists()) return false;
     bool forcePortable=false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
@@ -171,6 +170,6 @@ bool AppPathManager::isPortable()
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return (_settingsPath != ApplicationPath);
+    return (m_settingsPath != ApplicationPath);
 }
 

@@ -23,6 +23,7 @@
 #include <common_features/spash_screen.h>
 #include <main_window/dock/toolboxes.h>
 #include <common_features/logger_sets.h>
+#include <common_features/mainwinconnect.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -31,6 +32,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    MainWinConnect::pMainWin = this;
+    MainWinConnect::configs  = &configs;
+
     continueLoad = false;
 
     this->setAttribute(Qt::WA_QuitOnClose, true);
@@ -216,6 +220,10 @@ MainWindow::~MainWindow()
     }
 #endif
     delete ui;
+
+    MainWinConnect::pMainWin = nullptr;
+    MainWinConnect::configs  = nullptr;
+
 }
 
 

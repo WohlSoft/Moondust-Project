@@ -131,39 +131,38 @@ void MainWindow::on_actionLoad_configs_triggered()
     }
 }
 
-
+void MainWindow::on_actionReConfigure_triggered()
+{
+    //Config manager
+    ConfigManager cmanager(this);
+    cmanager.m_currentConfigPath = currentConfigDir;
+    cmanager.runConfigureTool();
+}
 
 void MainWindow::on_actionCurConfig_triggered()
 {
-    ConfigStatus * cnfWindow = new ConfigStatus(configs, this);
-    cnfWindow->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    cnfWindow->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cnfWindow->size(), qApp->desktop()->availableGeometry()));
-    cnfWindow->exec();
-    delete cnfWindow;
-    //if(cnfWindow->exec()==QDialog::Accepted)
+    ConfigStatus cnfWindow(configs, this);
+
+    cnfWindow.exec();
 }
-
-
-
 
 void MainWindow::on_actionChangeConfig_triggered()
 {
     // Config manager
-    ConfigManager * cmanager;
-    cmanager = new ConfigManager(this);
-    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
-    QString configPath;
-    configPath = cmanager->isPreLoaded();
-    cmanager->setAskAgain(askConfigAgain);
-    if(cmanager->exec()==QDialog::Accepted)
+    ConfigManager cmanager(this);
+    QString configPath = cmanager.loadConfigs();
+    cmanager.setAskAgain(askConfigAgain);
+    if( cmanager.exec() == QDialog::Accepted )
     {
-        configPath = cmanager->currentConfig;
-        askConfigAgain = cmanager->askAgain;
-        currentConfigDir = (cmanager->askAgain)?"":configPath;
+        configPath          =  cmanager.m_currentConfig;
+        askConfigAgain      =  cmanager.m_doAskAgain;
+        currentConfigDir    = (cmanager.m_doAskAgain)? "" : configPath;
         saveSettings();
-        QMessageBox::information(this, tr("Configuration changed"), tr("The Configuration was switched!\nTo start work with new configuration, please restart application."), QMessageBox::Ok);
+        QMessageBox::information(this,
+                                 tr("Configuration changed"),
+                                 tr("The Configuration was switched!\n"
+                                    "To start work with new configuration, please restart application."),
+                                 QMessageBox::Ok);
     }
-    delete cmanager;
 }
 

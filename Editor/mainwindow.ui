@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -395,6 +395,7 @@
     </property>
     <addaction name="actionCurConfig"/>
     <addaction name="actionLoad_configs"/>
+    <addaction name="actionReConfigure"/>
     <addaction name="separator"/>
     <addaction name="actionChangeConfig"/>
    </widget>
@@ -662,7 +663,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -712,7 +713,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -724,7 +725,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2966,12 +2967,16 @@
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="actionReConfigure">
+   <property name="text">
+    <string>Run configure tool...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Engine/_resources/engine.qrc"/>
-  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
+  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

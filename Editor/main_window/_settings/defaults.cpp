@@ -38,9 +38,7 @@ static PGE_MusPlayer MusPlayer;
 
 void MainWindow::setDefaults()
 {
-    setPointer();
-
-    GlobalSettings::tools_sox_bin_path = ApplicationPath+GlobalSettings::tools_sox_bin_path;
+    GlobalSettings::tools_sox_bin_path = ApplicationPath + GlobalSettings::tools_sox_bin_path;
 
     GlobalSettings::LvlItemDefaults.npc_direction=-1;
     GlobalSettings::LvlItemDefaults.npc_generator_type=1;

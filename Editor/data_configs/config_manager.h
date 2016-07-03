@@ -34,6 +34,7 @@ class ConfigManager : public QDialog
 
 public:
     explicit ConfigManager(QWidget *parent = 0);
+
     ~ConfigManager();
     /*!
      * \brief Checks availability of configuration packages and spawns message box if config packs are not presented
@@ -41,25 +42,56 @@ public:
      */
     bool hasConfigPacks();
     //! Currently selected configuration package name
-    QString currentConfig;
+    QString m_currentConfig;
     //! Path to currently selected configuration package
-    QString currentConfigPath;
+    QString m_currentConfigPath;
     //! Default theme pack associate with this configuration package
-    QString themePack;
-    //! Returns preloaded configuration package
-    QString isPreLoaded();
-    //! Is necessary to ask for configuration package or load already preloaded config pack
-    void setAskAgain(bool _x);
-    bool askAgain;
+    QString m_themePackName;
 
+    //! Returns preloaded configuration package
+    QString loadConfigs();
+    /**
+     * @brief Is necessary to ask for configuration package or load already preloaded config pack
+     * @param _x state of "Ask again" flag
+     */
+    void setAskAgain(bool _x);
+
+    //! "Ask again" flag which defines necessary to show config selection dialog every launch of the editor
+    bool m_doAskAgain;
+
+    /**
+     * @brief Checks is current config pack configured (or non-configurable)
+     * @return true if config pack is non-configurable or already configured
+     */
     bool isConfigured();
+    /**
+     * @brief Starts configure tool if available
+     * @return true on success configuring, false if no config tool found, rejected or script was been errored
+     */
     bool runConfigureTool();
+
 private slots:
+
     void on_configList_itemDoubleClicked(QListWidgetItem *item);
+
     void on_buttonBox_accepted();
 
+    /**
+     * @brief Loads configuration packs list
+     */
+    void loadConfigPackList();
+    /**
+     * @brief Saves settings of selected configuration package
+     */
+    void saveCurrentSettings();
+
 private:
+    /**
+     * @brief Process auto-configuring
+     * @return true if non-configurable config pack or successfully configured
+     */
     bool checkForConfigureTool();
+
     Ui::ConfigManager *ui;
 };
 

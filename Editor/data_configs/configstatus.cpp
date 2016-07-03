@@ -19,6 +19,7 @@
 #include "configstatus.h"
 #include <ui_configstatus.h>
 
+#include <QDesktopWidget>
 #ifdef Q_OS_WIN
 #include <QtWin>
 #include <QSysInfo>
@@ -30,6 +31,14 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 {
     configs = &conf;
     ui->setupUi(this);
+
+    setWindowFlags( Qt::Window|
+                    Qt::WindowTitleHint|
+                    Qt::WindowCloseButtonHint);
+    setGeometry(QStyle::alignedRect(Qt::LeftToRight,
+                                    Qt::AlignCenter,
+                                    size(),
+                                    qApp->desktop()->availableGeometry()));
 
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));

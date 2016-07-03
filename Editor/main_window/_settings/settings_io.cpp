@@ -296,8 +296,6 @@ void MainWindow::saveSettings()
 
     settings.setValue("language", GlobalSettings::locale);
 
-    settings.setValue("current-config", currentConfigDir);
-    settings.setValue("ask-config-again", askConfigAgain);
     settings.setValue("current-theme", GlobalSettings::currentTheme);
     settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
