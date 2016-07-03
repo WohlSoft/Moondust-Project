@@ -100,13 +100,16 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
    </property>
-   <widget class="QMenu" name="menu">
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
@@ -400,7 +403,7 @@
      <string>Plugins</string>
     </property>
    </widget>
-   <addaction name="menu"/>
+   <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuLevel"/>
@@ -659,7 +662,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -670,6 +673,9 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+O</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -706,7 +712,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../Engine/_resources/engine.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -718,7 +724,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -729,6 +735,9 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+S</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -750,6 +759,9 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+S</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -800,6 +812,9 @@
    </property>
    <property name="shortcut">
     <string notr="true">F1</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionSection_1">
@@ -1337,6 +1352,9 @@
    <property name="text">
     <string>Wrap Horizontally</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
    </property>
@@ -1351,6 +1369,9 @@
    <property name="text">
     <string>Offscreen exit</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionLevNoBack">
    <property name="checkable">
@@ -1362,6 +1383,9 @@
    <property name="text">
     <string>No turn back</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionLevUnderW">
    <property name="checkable">
@@ -1372,6 +1396,9 @@
    </property>
    <property name="text">
     <string>Underwater</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionExport_to_image">
@@ -1395,6 +1422,9 @@
    <property name="text">
     <string>Properties...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionWLDDisableMap">
    <property name="checkable">
@@ -1415,6 +1445,9 @@
   <action name="actionWLDProperties">
    <property name="text">
     <string>Properties...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionLVLToolBox">
@@ -1512,6 +1545,9 @@
    <property name="visible">
     <bool>true</bool>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
@@ -1519,6 +1555,9 @@
   <action name="actionLoad_configs">
    <property name="text">
     <string>Reload configurations</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1552,6 +1591,9 @@
    </property>
    <property name="text">
     <string>Attach to grid</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionLockBlocks">
@@ -1683,6 +1725,9 @@
    </property>
    <property name="shortcut">
     <string notr="true">F8</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionHandScroll">
@@ -1981,6 +2026,9 @@
    <property name="shortcut">
     <string notr="true"/>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionCut">
    <property name="enabled">
@@ -2006,6 +2054,9 @@
    </property>
    <property name="text">
     <string notr="true">English</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionSelectOnly">
@@ -2074,6 +2125,9 @@
    <property name="text">
     <string>Current configuration status...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionNew">
    <property name="icon">
@@ -2082,6 +2136,9 @@
    </property>
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionLVLSearchBox">
@@ -2106,6 +2163,9 @@
    <property name="text">
     <string>Refresh menus</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSwitch_to_Fullscreen">
    <property name="checkable">
@@ -2122,20 +2182,32 @@
    <property name="text">
     <string>Tilesets Editor</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionLazyFixTool">
    <property name="text">
     <string>Fix Lazily-made graphics (LazyFixTool)...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionGIFs2PNG">
    <property name="text">
     <string>Convert GIF with mask to PNG (GIFs2PNG)...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionPNG2GIFs">
    <property name="text">
     <string>Convert PNG to GIF with mask (PNG2GIFs)...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionWorld_settings">
@@ -2148,6 +2220,9 @@
    </property>
    <property name="text">
     <string>World settings</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionLockTiles">
@@ -2312,10 +2387,16 @@
    <property name="text">
     <string>Show Development Console</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionTileset_groups_editor">
    <property name="text">
     <string>Tileset Groups Editor</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionZoomIn">
@@ -2382,6 +2463,9 @@
    <property name="text">
     <string>Change configuration...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSemi_transparent_paths">
    <property name="checkable">
@@ -2408,6 +2492,9 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WindowShortcut</enum>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="action_testSettings">
@@ -2440,6 +2527,9 @@
    <property name="text">
     <string>Clear unused data</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="action_Placing_ShowProperties">
    <property name="checkable">
@@ -2455,10 +2545,16 @@
    <property name="toolTip">
     <string>Show properties of item</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSprite_editor">
    <property name="text">
     <string>Sprite Editor</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionCDATA_Import">
@@ -2467,6 +2563,9 @@
    </property>
    <property name="toolTip">
     <string>Import</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionBookmarkBox">
@@ -2491,6 +2590,9 @@
    <property name="text">
     <string>Clone section to...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSCT_RotateLeft">
    <property name="enabled">
@@ -2507,6 +2609,9 @@
    <property name="text">
     <string>Rotate right</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSCT_FlipHorizontal">
    <property name="enabled">
@@ -2515,6 +2620,9 @@
    <property name="text">
     <string>Flip horizontal</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSCT_FlipVertical">
    <property name="enabled">
@@ -2522,6 +2630,9 @@
    </property>
    <property name="text">
     <string>Flip vertical</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionAlign_selected">
@@ -2571,6 +2682,9 @@
    <property name="toolTip">
     <string>This tool will fix all wrong masks of images which causing display bugs</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSCT_Delete">
    <property name="enabled">
@@ -2587,6 +2701,9 @@
    <property name="text">
     <string>Additional Settings</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionCompile_To">
    <property name="enabled">
@@ -2594,6 +2711,9 @@
    </property>
    <property name="text">
     <string>Compile To: </string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionAutocode_Lunadll_Original_Language">
@@ -2606,6 +2726,9 @@
    <property name="text">
     <string>Autocode [Lunadll Original Language]</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionLunaLua">
    <property name="checkable">
@@ -2616,6 +2739,9 @@
    </property>
    <property name="text">
     <string>LunaLua</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionFloodSectionOnly">
@@ -2633,20 +2759,32 @@
    <property name="text">
     <string>SMBX-like GUI</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="action_doSafeTest">
    <property name="text">
     <string>Run testing of saved file</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionChange_log">
    <property name="text">
     <string>Change log</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionCheckUpdates">
    <property name="text">
     <string>Check for updates...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionRunTestSMBX">
@@ -2660,15 +2798,24 @@
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionAudioCvt">
    <property name="text">
     <string>Convert Audio (SoX)...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionClear_NPC_garbadge">
    <property name="text">
     <string>Clear NPC garbadge...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionSectionMore">
@@ -2689,10 +2836,13 @@
    <property name="text">
     <string>Tip of the day...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="action_Start_Engine">
    <property name="icon">
-    <iconset>
+    <iconset resource="../Engine/_resources/engine.qrc">
      <normaloff>:/icon/cat_16.png</normaloff>:/icon/cat_16.png</iconset>
    </property>
    <property name="text">
@@ -2700,6 +2850,9 @@
    </property>
    <property name="toolTip">
     <string>Launch game engine application.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="action_openEpisodeFolder">
@@ -2724,6 +2877,9 @@
    </property>
    <property name="text">
     <string>Wrap Vertically</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionCircleFill">
@@ -2766,6 +2922,9 @@
    <property name="text">
     <string>Modern GUI</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionVariables">
    <property name="checkable">
@@ -2803,10 +2962,15 @@
    <property name="text">
     <string>Script Editor</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../Engine/_resources/engine.qrc"/>
+  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>

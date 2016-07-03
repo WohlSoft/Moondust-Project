@@ -48,7 +48,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setUiDefults(); //Apply default UI settings
 
 #ifdef Q_OS_MACX
-    ui->menuBar->setEnabled(false);
+    foreach(QAction* act, ui->menuBar->actions())
+        act->setVisible(false);
+    ui->Exit->setEnabled(false);
+    ui->actionAbout->setEnabled(false);
+    ui->actionApplication_settings->setEnabled(false);
 #endif
 }
 
@@ -59,6 +63,8 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
     currentConfigDir = configDir;
 
     configs.setConfigPath( configDir );
+
+
 
     try
     {
@@ -128,8 +134,6 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
             on_actionCurConfig_triggered();
         }
 
-        continueLoad = true;
-
         splash.progressTitle(tr("Loading theme..."));
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
@@ -159,6 +163,8 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
         initPlugins();
 
         splash.progressTitle(tr("Finishing loading..."));
+
+        continueLoad = true;
     }
     catch(...)
     {
@@ -173,7 +179,14 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
     }
 
 #ifdef Q_OS_MACX
-    ui->menuBar->setEnabled(true);
+    foreach(QAction* act, ui->menuBar->actions())
+        act->setVisible(true);
+    ui->Exit->setMenuRole(QAction::QuitRole);
+    ui->Exit->setVisible(true);
+    ui->Exit->setEnabled(true);
+    ui->actionAbout->setEnabled(true);
+    ui->actionApplication_settings->setEnabled(true);
+    ui->actionApplication_settings->setMenuRole(QAction::PreferencesRole);
 #endif
 
     return true;
