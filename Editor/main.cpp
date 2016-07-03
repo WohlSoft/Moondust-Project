@@ -149,6 +149,8 @@ int main(int argc, char *argv[])
 
     FreeImage_Initialise();
 
+    w = new MainWindow; //Construct MainWindow to initialize language settings
+
     /******************************Config manager*********************************/
     QString currentConfigDir;
     bool    askConfigAgain = false;
@@ -186,6 +188,7 @@ int main(int argc, char *argv[])
             {
                 delete cmanager;
                 LogDebug("<Configuration is not selected, application closed>");
+                delete w;
                 QApplication::quit();
                 QApplication::exit();
                 delete a;
@@ -199,8 +202,6 @@ int main(int argc, char *argv[])
         delete cmanager;
     }
     /******************************Config manager***END***************************/
-
-    w = new MainWindow;
 
     //Init Main Window class
     if( !w->initEverything(currentConfigDir, themePack, askConfigAgain) )
