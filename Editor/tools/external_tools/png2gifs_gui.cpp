@@ -36,6 +36,7 @@ png2gifs_gui::png2gifs_gui(QWidget *parent) :
 
 png2gifs_gui::~png2gifs_gui()
 {
+    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete proc;
     delete ui;
 }
@@ -70,6 +71,9 @@ void png2gifs_gui::on_startTool_clicked()
         QMessageBox::warning(this, tr("Source directory is not set"), tr("Please, set the source directory"), QMessageBox::Ok);
         return;
     }
+
+    if(proc->state()==QProcess::Running)
+        return;
 
     QString command;
 

@@ -72,6 +72,9 @@ void LazyFixTool_gui::on_startTool_clicked()
 
     QString command;
 
+    if(proc->state()==QProcess::Running)
+        return;
+
     #ifdef _WIN32
     command = ApplicationPath+"/LazyFixTool.exe";
     #else

@@ -80,6 +80,9 @@ void gifs2png_gui::on_startTool_clicked()
     command = ApplicationPath+"/GIFs2PNG";
     #endif
 
+    if(proc->state()==QProcess::Running)
+        return;
+
     if(!QFile(command).exists())
     {
         QMessageBox::warning(this, tr("Tool is not found"), tr("Can't run application: \n%1\nPlease, check the application directory.").arg(command), QMessageBox::Ok);
