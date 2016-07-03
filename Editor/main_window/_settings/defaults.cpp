@@ -34,7 +34,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-PGE_MusPlayer MusPlayer;
+static PGE_MusPlayer MusPlayer;
 
 void MainWindow::setDefaults()
 {
@@ -89,6 +89,7 @@ void MainWindow::setUiDefults()
 
     //MainWindow Geometry;
     QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+
     //Init default geometry of main window
     setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                        QSize(dg.width()-100,
