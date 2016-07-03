@@ -19,4 +19,3 @@
 #include "main_window_ptr.h"
 
 MainWindow*     MainWinConnect::pMainWin;
-dataconfigs*    MainWinConnect::configs;

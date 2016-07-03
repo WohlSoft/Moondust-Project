@@ -18,8 +18,9 @@
 
 #include <QMenu>
 
+#include <mainwindow.h>
 #include <common_features/util.h>
-#include <common_features/main_window_ptr.h>
+#include <common_features/logger.h>
 #include <editing/_dialogs/itemselectdialog.h>
 
 #include "custom_counter_gui.h"
@@ -27,11 +28,24 @@
 
 CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CustomCounterGUI)
+    ui(new Ui::CustomCounterGUI),
+    lockCombobox(false),
+    m_mainWindow(nullptr),
+    m_configs(nullptr)
 {
+    m_mainWindow = qobject_cast<MainWindow*>(parent);
+
+    if(!m_mainWindow)
+    {
+        LogFatal("CustomCounterGUI class must be constructed with MainWindow as parent!");
+        throw("CustomCounterGUI class must be constructed with MainWindow as parent!");
+    }
+
+    m_configs = &m_mainWindow->configs;
+
     ui->setupUi(this);
     lockCombobox=false;
-    if(MainWinConnect::pMainWin->activeChildWindow()==1)
+    if( m_mainWindow->activeChildWindow() == 1 )
     {
         ui->ItemType->addItem(tr("Block"), QVariant(int(ItemTypes::LVL_Block)));
         ui->ItemType->addItem(tr("BGO"), QVariant(int(ItemTypes::LVL_BGO)));
@@ -39,7 +53,7 @@ CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
         counterData.windowType=1;
     }
     else
-    if(MainWinConnect::pMainWin->activeChildWindow()==3)
+    if( m_mainWindow->activeChildWindow() == 3 )
     {
         ui->ItemType->addItem(tr("Terrain tile"), QVariant(int(ItemTypes::WLD_Tile)));
         ui->ItemType->addItem(tr("Scenery"), QVariant(int(ItemTypes::WLD_Scenery)));
@@ -139,7 +153,7 @@ QString CustomCounterGUI::makeItemName(long item)
     {
     case ItemTypes::LVL_Block:
         {
-            obj_block&t_block = MainWinConnect::configs->main_block[item];
+            obj_block&t_block = m_configs->main_block[item];
             if(!t_block.isValid)
                 return QString("Block-%1").arg(item);
             else
@@ -153,7 +167,7 @@ QString CustomCounterGUI::makeItemName(long item)
         break;
     case ItemTypes::LVL_BGO:
         {
-            obj_bgo& bgo = MainWinConnect::configs->main_bgo[item];
+            obj_bgo& bgo = m_configs->main_bgo[item];
             if(!bgo.isValid)
                 return QString("BGO-%1").arg(item);
             else
@@ -167,11 +181,11 @@ QString CustomCounterGUI::makeItemName(long item)
         break;
     case ItemTypes::LVL_NPC:
         {
-            if(!MainWinConnect::configs->main_npc.contains(item))
+            if(!m_configs->main_npc.contains(item))
                 return QString("NPC-%1").arg(item);
             else
             {
-                obj_npc& t_npc = MainWinConnect::configs->main_npc[item];
+                obj_npc& t_npc = m_configs->main_npc[item];
                 if(!t_npc.name.isEmpty())
                     return t_npc.name + QString(" (NPC-%1)").arg(item);
                 else
@@ -201,13 +215,13 @@ QString CustomCounterGUI::makeItemName(long item)
         break;
     case ItemTypes::WLD_MusicBox:
         {
-            int bI = MainWinConnect::configs->getMusWldI(item);
+            int bI = m_configs->getMusWldI(item);
             if(bI<0)
                 return QString("Music-%1").arg(item);
             else
             {
-                if(!MainWinConnect::configs->main_music_wld[bI].name.isEmpty())
-                    return MainWinConnect::configs->main_music_wld[bI].name + QString(" (Music-%1)").arg(item);
+                if(!m_configs->main_music_wld[bI].name.isEmpty())
+                    return m_configs->main_music_wld[bI].name + QString(" (Music-%1)").arg(item);
                 else
                     return QString("Music-%1").arg(item);
             }
@@ -253,56 +267,56 @@ void CustomCounterGUI::on_ItemList_customContextMenuRequested(const QPoint &pos)
         {
         case ItemTypes::LVL_Block:
             {
-                ItemSelectDialog* selBlock = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_BLOCK,0,itemID,0,0,0,0,0,0,0,this);
+                ItemSelectDialog* selBlock = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BLOCK,0,itemID,0,0,0,0,0,0,0,this);
                 if(selBlock->exec()==QDialog::Accepted){selected = selBlock->blockID; accepted=true;}
                 delete selBlock;
             }
             break;
         case ItemTypes::LVL_BGO:
             {
-                ItemSelectDialog* selBgo = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_BGO,0,0,itemID,0,0,0,0,0,0,this);
+                ItemSelectDialog* selBgo = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BGO,0,0,itemID,0,0,0,0,0,0,this);
                 if(selBgo->exec()==QDialog::Accepted){selected = selBgo->bgoID; accepted=true;}
                 delete selBgo;
             }
             break;
         case ItemTypes::LVL_NPC:
             {
-                ItemSelectDialog* selNpc = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_NPC,0,0,0,itemID,0,0,0,0,0,this);
+                ItemSelectDialog* selNpc = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_NPC,0,0,0,itemID,0,0,0,0,0,this);
                 if(selNpc->exec()==QDialog::Accepted){selected = selNpc->npcID; accepted=true;}
                 delete selNpc;
             }
             break;
         case ItemTypes::WLD_Tile:
             {
-                ItemSelectDialog* selTile = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_TILE,0,0,0,0,itemID,0,0,0,0,this);
+                ItemSelectDialog* selTile = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,itemID,0,0,0,0,this);
                 if(selTile->exec()==QDialog::Accepted){selected = selTile->tileID; accepted=true;}
                 delete selTile;
             }
             break;
         case ItemTypes::WLD_Scenery:
             {
-                ItemSelectDialog* selScene = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,itemID,0,0,0,this);
+                ItemSelectDialog* selScene = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,itemID,0,0,0,this);
                 if(selScene->exec()==QDialog::Accepted){selected = selScene->sceneryID; accepted=true;}
                 delete selScene;
             }
             break;
         case ItemTypes::WLD_Path:
             {
-                ItemSelectDialog* selPath = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,itemID,0,0,this);
+                ItemSelectDialog* selPath = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,itemID,0,0,this);
                 if(selPath->exec()==QDialog::Accepted){selected = selPath->pathID; accepted=true;}
                 delete selPath;
             }
             break;
         case ItemTypes::WLD_Level:
             {
-                ItemSelectDialog* selLevel = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,itemID,0,this);
+                ItemSelectDialog* selLevel = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,itemID,0,this);
                 if(selLevel->exec()==QDialog::Accepted){selected = selLevel->levelID; accepted=true;}
                 delete selLevel;
             }
             break;
         case ItemTypes::WLD_MusicBox:
             {
-                ItemSelectDialog* selMusicbox = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,itemID,this);
+                ItemSelectDialog* selMusicbox = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,itemID,this);
                 if(selMusicbox->exec()==QDialog::Accepted){selected = selMusicbox->musicID; accepted=true;}
                 delete selMusicbox;
             }
@@ -339,7 +353,7 @@ void CustomCounterGUI::on_AddItem_clicked()
     {
     case ItemTypes::LVL_Block:
         {
-        ItemSelectDialog* selBlock = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_BLOCK,0,0,0,0,0,0,0,0,0,this);
+        ItemSelectDialog* selBlock = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BLOCK,0,0,0,0,0,0,0,0,0,this);
         selBlock->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
         selBlock->setMultiSelect(true);
         if(selBlock->exec()==QDialog::Accepted){
@@ -351,7 +365,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::LVL_BGO:
         {
-        ItemSelectDialog* selBgo = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_BGO,0,0,0,0,0,0,0,0,0,this);
+        ItemSelectDialog* selBgo = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BGO,0,0,0,0,0,0,0,0,0,this);
         selBgo->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
         selBgo->setMultiSelect(true);
         if(selBgo->exec()==QDialog::Accepted){
@@ -363,7 +377,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::LVL_NPC:
         {
-        ItemSelectDialog* selNpc = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this);
+        ItemSelectDialog* selNpc = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this);
         selNpc->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
         selNpc->setMultiSelect(true);
         if(selNpc->exec()==QDialog::Accepted){
@@ -375,7 +389,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Tile:
         {
-            ItemSelectDialog* selTile = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0,this);
+            ItemSelectDialog* selTile = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0,this);
             selTile->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
             selTile->setMultiSelect(true);
             if(selTile->exec()==QDialog::Accepted)
@@ -388,7 +402,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Scenery:
         {
-            ItemSelectDialog* selScene = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,0,0,0,0,this);
+            ItemSelectDialog* selScene = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,0,0,0,0,this);
             selScene->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
             selScene->setMultiSelect(true);
             if(selScene->exec()==QDialog::Accepted) {
@@ -399,7 +413,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Path:
         {
-            ItemSelectDialog* selPath = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0,this);
+            ItemSelectDialog* selPath = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0,this);
             selPath->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
             selPath->setMultiSelect(true);
             if(selPath->exec()==QDialog::Accepted){
@@ -410,7 +424,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Level:
         {
-            ItemSelectDialog* selLevel = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0,this);
+            ItemSelectDialog* selLevel = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0,this);
             selLevel->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
             selLevel->setMultiSelect(true);
             if(selLevel->exec()==QDialog::Accepted){
@@ -421,7 +435,7 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_MusicBox:
         {
-            ItemSelectDialog* selMusicbox = new ItemSelectDialog(MainWinConnect::configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,this);
+            ItemSelectDialog* selMusicbox = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,this);
             selMusicbox->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
             selMusicbox->setMultiSelect(true);
             if(selMusicbox->exec()==QDialog::Accepted){

@@ -45,9 +45,9 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
 void MainWindow::on_actionTileset_groups_editor_triggered()
 {
     TilesetGroupEditor * groupDialog;
-    if(activeChildWindow()==1)
+    if( activeChildWindow() == 1 )
         groupDialog = new TilesetGroupEditor(activeLvlEditWin()->scene, this);
-    else if(activeChildWindow()==3)
+    else if(activeChildWindow() == 3)
         groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
     else
         groupDialog = new TilesetGroupEditor(NULL, this);

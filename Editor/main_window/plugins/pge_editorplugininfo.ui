@@ -6,16 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>328</height>
+    <width>459</width>
+    <height>309</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Dialog</string>
+  <property name="minimumSize">
+   <size>
+    <width>459</width>
+    <height>309</height>
+   </size>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <property name="windowTitle">
+   <string>Plugin Manager</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" columnstretch="10,90">
    <item row="0" column="0" rowspan="2">
-    <widget class="QListWidget" name="pluginList"/>
+    <widget class="QListWidget" name="pluginList">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="1" column="1">
     <spacer name="horizontalSpacer">
@@ -27,20 +40,14 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
     </spacer>
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="textInfo">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
      <property name="text">
       <string/>
      </property>

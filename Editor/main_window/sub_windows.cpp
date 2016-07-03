@@ -141,33 +141,17 @@ int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
     if(wnd==NULL)
         return 0;
 
-    if(QString(wnd->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+    if(QString(wnd->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
         return 1;
     else
-    if(QString(wnd->widget()->metaObject()->className())==NPC_EDIT_CLASS)
+    if(QString(wnd->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
         return 2;
     else
-    if(QString(wnd->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+    if(QString(wnd->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
         return 3;
     else
     return 0;
 }
-
-/*
- * QMdiArea::activeSubWindow doesn't return a valid window when the main window is minized.
- * This class should help to record the latest actie window anyway.
- */
-
-//void MainWindow::recordSwitchedWindow(QMdiSubWindow *window)
-//{
-//    LastActiveSubWindow = window;
-//}
-
-//void MainWindow::recordRemovedWindow(QObject *possibleDeletedWindow)
-//{
-//    if((QObject*)possibleDeletedWindow == LastActiveSubWindow)
-//        LastActiveSubWindow = 0;
-//}
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {
@@ -183,13 +167,13 @@ NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
     return 0;
 }
 
-
 LevelEdit *MainWindow::activeLvlEditWin()
 {
     if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<LevelEdit *>(activeSubWindow->widget());
     return 0;
 }
+
 LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
@@ -197,21 +181,19 @@ LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
     return 0;
 }
 
-
 WorldEdit *MainWindow::activeWldEditWin()
 {
     if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<WorldEdit *>(activeSubWindow->widget());
     return 0;
 }
+
 WorldEdit *MainWindow::activeWldEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
         return qobject_cast<WorldEdit *>(wnd->widget());
     return 0;
 }
-
-
 
 QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
 {
@@ -224,21 +206,21 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
     {
         if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
-        ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
-        if (ChildWindow0->currentFile() == canonicalFilePath)
-            return window;
+            ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
+            if (ChildWindow0->currentFile() == canonicalFilePath)
+                return window;
         }
         else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         {
-        ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
-        if (ChildWindow2->currentFile() == canonicalFilePath)
-            return window;
+            ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
+            if (ChildWindow2->currentFile() == canonicalFilePath)
+                return window;
         }
         else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
         {
-        ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
-        if (ChildWindow3->currentFile() == canonicalFilePath)
-            return window;
+            ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
+            if (ChildWindow3->currentFile() == canonicalFilePath)
+                return window;
         }
     }
     return 0;
@@ -271,22 +253,18 @@ QList<QMdiSubWindow *> MainWindow::allEditWins()
     return ui->centralWidget->subWindowList();
 }
 
-
-
 void MainWindow::SWCascade()
 {
-    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+    if(GlobalSettings::MainWindowView != QMdiArea::SubWindowView)
         setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->cascadeSubWindows();
 
     foreach(QMdiSubWindow * w, ui->centralWidget->subWindowList())
     {
-        if(
-                (QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)||
-                (QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-           ) w->setGeometry(w->x(), w->y(), 860, 680);
+        if( (QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)||
+            (QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS) )
+            w->setGeometry(w->x(), w->y(), 860, 680);
     }
-
 }
 
 void MainWindow::SWTile()

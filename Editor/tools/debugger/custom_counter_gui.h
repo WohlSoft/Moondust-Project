@@ -27,6 +27,9 @@ namespace Ui {
 class CustomCounterGUI;
 }
 
+class MainWindow;
+class dataconfigs;
+
 class CustomCounterGUI : public QDialog
 {
     Q_OBJECT
@@ -54,7 +57,9 @@ private slots:
 
 private:
     Ui::CustomCounterGUI *ui;
-    bool lockCombobox;
+    bool            lockCombobox;
+    MainWindow*     m_mainWindow;
+    dataconfigs*    m_configs;
 };
 
 #endif // CUSTOM_COUNTER_GUI_H

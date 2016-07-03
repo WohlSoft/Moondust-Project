@@ -33,8 +33,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui(new Ui::MainWindow)
 {
     MainWinConnect::pMainWin = this;
-    MainWinConnect::configs  = &configs;
-
     continueLoad = false;
 
     this->setAttribute(Qt::WA_QuitOnClose, true);
@@ -222,7 +220,6 @@ MainWindow::~MainWindow()
     delete ui;
 
     MainWinConnect::pMainWin = nullptr;
-    MainWinConnect::configs  = nullptr;
 
 }
 

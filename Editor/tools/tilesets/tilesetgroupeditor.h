@@ -12,6 +12,7 @@ namespace Ui {
 class TilesetGroupEditor;
 }
 
+class dataconfigs;
 class TilesetGroupEditor : public QDialog
 {
     Q_OBJECT
@@ -42,6 +43,7 @@ private:
     void redrawAll();
     QGraphicsScene * scn;
     QList<QPair<QString,SimpleTileset> > tilesets;
+    dataconfigs* m_configs;
 };
 
 #endif // TILESETGROUPEDITOR_H

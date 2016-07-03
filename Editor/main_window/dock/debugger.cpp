@@ -220,7 +220,7 @@ void DebuggerBox::Debugger_saveCustomCounters()
 
 void DebuggerBox::on_DEBUG_AddCustomCounter_clicked()
 {
-    CustomCounterGUI customCounterGui;
+    CustomCounterGUI customCounterGui(mw());
     customCounterGui.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
 
@@ -436,7 +436,7 @@ void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const Q
     else
     if(selected==edit)
     {
-        CustomCounterGUI customCounterGui;
+        CustomCounterGUI customCounterGui(mw());
         customCounterGui.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
         customCounterGui.setCounterData(customCounters[itemID]);

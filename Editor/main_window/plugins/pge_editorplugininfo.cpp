@@ -8,7 +8,7 @@ PGE_EditorPluginInfo::PGE_EditorPluginInfo(PGE_EditorPluginManager *pluginManage
 {
     ui->setupUi(this);
 
-    for(unsigned int i = 0; i < pluginManager->getPluginCount(); ++i){
+    for(unsigned int i = 0; i < pluginManager->getPluginCount(); ++i) {
         const PGE_EditorPluginItem* nextItem = pluginManager->getPluginInfo(i);
         QString nextDisplayName = (nextItem->isValid() ? nextItem->pluginName() : QString("Package: ") + nextItem->packageName());
         QListWidgetItem* nextDisplayItem = new QListWidgetItem(nextDisplayName);
@@ -27,19 +27,19 @@ PGE_EditorPluginInfo::PGE_EditorPluginInfo(PGE_EditorPluginManager *pluginManage
 
 
     connect(ui->pluginList, &QListWidget::currentItemChanged,
-            [this](QListWidgetItem* current, QListWidgetItem*){
+            [this](QListWidgetItem* current, QListWidgetItem*) {
         const PGE_EditorPluginItem* pluginDetails = m_pluginManager->getPluginInfo(current->data(UserRolePluginIndex).toInt());
         if(pluginDetails->isValid())
         {
             ui->textInfo->setText(tr("Name: ") + pluginDetails->pluginName() + "\n"
-                                  + tr("Author: ") + pluginDetails->authorName() + "\n"
-                                  + tr("Version: ") + QString::number(pluginDetails->pluginVersionNum()) + "\n"
-                                  + tr("Description: ") + pluginDetails->description());
+                                 +tr("Author: ") + pluginDetails->authorName() + "\n"
+                                 +tr("Version: ") + QString::number(pluginDetails->pluginVersionNum()) + "\n"
+                                 +tr("Description: ") + pluginDetails->description());
         }
         else
         {
             ui->textInfo->setText(tr("Package ") + pluginDetails->packageName() + tr(" failed to load!\n")
-                                  + tr("Error description: \n") + pluginDetails->errorMessage());
+                                 +tr("Error description: \n") + pluginDetails->errorMessage());
         }
     });
 }

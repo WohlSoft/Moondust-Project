@@ -36,6 +36,13 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
 {
     scn = scene;
     ui->setupUi(this);
+    MainWindow* mainWindow = qobject_cast<MainWindow*>(parent);
+    if( !mainWindow )
+    {
+        LogFatal("TilesetGroupEditor class must be constructed with MainWindow as parent!");
+        throw("TilesetGroupEditor class must be constructed with MainWindow as parent!");
+    }
+    m_configs = &mainWindow->configs;
 
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
@@ -54,14 +61,11 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
     //ui->tilesetList->viewport()->setAcceptDrops(true);
     //ui->tilesetList->setDropIndicatorShown(true);
     lastFileName="";
-
     //qDebug() << "connecting";
-
-//    connect(ui->tilesetList->model(),
-//            SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
-//            this,
-//            SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
-
+    //connect(ui->tilesetList->model(),
+    //        SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
+    //        this,
+    //        SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
 }
 
 
@@ -76,7 +80,7 @@ SimpleTilesetGroup TilesetGroupEditor::toSimpleTilesetGroup()
     SimpleTilesetGroup s;
     s.groupName = ui->tilesetGroupName->text();
     s.groupCat = ui->category->text();
-    for(int i = 0; i < tilesets.size(); ++i){
+    for(int i = 0; i < tilesets.size(); ++i) {
         s.tilesets << tilesets[i].first;
     }
     return s;
@@ -96,8 +100,8 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
     simpleTilesetGroupINI.setValue("tilesets-count", tilesetGroup.tilesets.size());
     simpleTilesetGroupINI.endGroup();
     simpleTilesetGroupINI.beginGroup("tilesets");
-    for(int i = 1; i < tilesetGroup.tilesets.size()+1; ++i){
-        simpleTilesetGroupINI.setValue(QString("tileset-%1").arg(i),tilesetGroup.tilesets[i-1]);
+    for(int i = 1; i < tilesetGroup.tilesets.size()+1; ++i) {
+        simpleTilesetGroupINI.setValue(QString("tileset-%1").arg(i), tilesetGroup.tilesets[i-1]);
     }
     simpleTilesetGroupINI.endGroup();
 
@@ -117,7 +121,8 @@ bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTiles
     int tc = simpleTilesetINI.value("tilesets-count",0).toInt()+1;
     simpleTilesetINI.endGroup();
     simpleTilesetINI.beginGroup("tilesets");
-    for(int i = 1; i < tc; ++i){
+    for(int i = 1; i < tc; ++i)
+    {
         if(!simpleTilesetINI.contains(QString("tileset-%1").arg(i)))
             return false;
         tilesetGroup.tilesets << simpleTilesetINI.value(QString("tileset-%1").arg(i)).toString();
@@ -134,14 +139,15 @@ void TilesetGroupEditor::on_Close_clicked()
 
 void TilesetGroupEditor::on_addTileset_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), MainWinConnect::configs->config_dir+"tilesets/", QString("PGE Tileset (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), m_configs->config_dir+"tilesets/", QString("PGE Tileset (*.ini)"));
     if(f.isEmpty())
         return;
 
-    if(!f.startsWith(MainWinConnect::configs->config_dir+"tilesets/")){
+    if(!f.startsWith(m_configs->config_dir+"tilesets/"))
+    {
         QFile file(f);
-        QFile tar(f = (MainWinConnect::configs->config_dir+"tilesets/" + f.section("/",-1,-1)));
-        if(tar.exists()){
+        QFile tar(f = (m_configs->config_dir+"tilesets/" + f.section("/",-1,-1)));
+        if(tar.exists()) {
             QMessageBox msgBox;
             msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
@@ -155,14 +161,17 @@ void TilesetGroupEditor::on_addTileset_clicked()
     }
 
     SimpleTileset t;
-    if(tileset::OpenSimpleTileset(f,t)){
+    if(tileset::OpenSimpleTileset(f,t))
+    {
         QPair<QString, SimpleTileset> i;
         i.first = f.section("/",-1,-1);
         i.second = t;
         tilesets << i;
         redrawAll();
-    }else{
-        QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
+    } else {
+        QMessageBox::warning(this,
+                             tr("Failed to load tileset!"),
+                             tr("Failed to load tileset!\nData may be corrupted!"));
     }
 
 }
@@ -177,14 +186,17 @@ void TilesetGroupEditor::on_RemoveTileset_clicked()
 
 void TilesetGroupEditor::on_Open_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::configs->config_dir+"group_tilesets/", QString("PGE Tileset Group (*.tsgrp.ini)"));
+    QString f = QFileDialog::getOpenFileName(this,
+                                             tr("Select Tileset Group"),
+                                             m_configs->config_dir+"group_tilesets/",
+                                             QString("PGE Tileset Group (*.tsgrp.ini)"));
     if(f.isEmpty())
         return;
 
-    if(!f.startsWith(MainWinConnect::configs->config_dir+"group_tilesets/")){
+    if(!f.startsWith(m_configs->config_dir + "group_tilesets/")) {
         QFile file(f);
-        QFile tar(f = (MainWinConnect::configs->config_dir+"group_tilesets/" + f.section("/",-1,-1)));
-        if(tar.exists()){
+        QFile tar(f = (m_configs->config_dir + "group_tilesets/" + f.section("/",-1,-1)));
+        if(tar.exists()) {
             QMessageBox msgBox;
             msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
@@ -198,27 +210,30 @@ void TilesetGroupEditor::on_Open_clicked()
     }
 
     SimpleTilesetGroup t;
-    if(OpenSimpleTilesetGroup(f,t)){
+    if(OpenSimpleTilesetGroup(f,t))
+    {
         tilesets.clear();
         ui->tilesetGroupName->setText(t.groupName);
         ui->category->setText(t.groupCat);
         foreach (QString tarName, t.tilesets) {
-            QString rootTilesetDir = MainWinConnect::configs->config_dir+"tilesets/";
+            QString rootTilesetDir = m_configs->config_dir + "tilesets/";
             SimpleTileset st;
-            if(tileset::OpenSimpleTileset(rootTilesetDir+tarName,st)){
+            if(tileset::OpenSimpleTileset(rootTilesetDir+tarName,st)) {
                 tilesets << qMakePair<QString, SimpleTileset>(tarName,st);
             }
         }
         redrawAll();
-    }else{
-        QMessageBox::warning(this, tr("Failed to load tileset group!"), tr("Failed to load tileset group!\nData may be corrupted!"));
+    } else {
+        QMessageBox::warning(this,
+                             tr("Failed to load tileset group!"),
+                             tr("Failed to load tileset group!\nData may be corrupted!"));
     }
 
 }
 
 void TilesetGroupEditor::on_Save_clicked()
 {
-    QDir(MainWinConnect::configs->config_dir).mkpath("group_tilesets/");
+    QDir(m_configs->config_dir).mkpath("group_tilesets/");
 
     bool ok;
     QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
@@ -230,7 +245,7 @@ void TilesetGroupEditor::on_Save_clicked()
     if(!fileName.endsWith(".tsgrp.ini"))
         fileName += ".tsgrp.ini";
 
-    SaveSimpleTilesetGroup(MainWinConnect::configs->config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
+    SaveSimpleTilesetGroup(m_configs->config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
 }
 
 void TilesetGroupEditor::redrawAll()
@@ -253,7 +268,7 @@ void TilesetGroupEditor::redrawAll()
         SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             SimpleTilesetItem* item = &items->items[j];
-            TilesetItemButton* ib = new TilesetItemButton(MainWinConnect::configs, scn);
+            TilesetItemButton* ib = new TilesetItemButton(m_configs, scn);
             ib->applySize(32,32);
             ib->applyItem(items->type,item->id);
             l->addWidget(ib,item->row, item->col);
