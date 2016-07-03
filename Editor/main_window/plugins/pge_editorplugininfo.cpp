@@ -38,8 +38,11 @@ PGE_EditorPluginInfo::PGE_EditorPluginInfo(PGE_EditorPluginManager *pluginManage
         }
         else
         {
-            ui->textInfo->setText(tr("Package ") + pluginDetails->packageName() + tr(" failed to load!\n")
-                                 +tr("Error description: \n") + pluginDetails->errorMessage());
+            ui->textInfo->setText(tr("Failed to load \"%1\" package!\n"
+                                     "Error description:\n"
+                                     "%2")
+                                        .arg(pluginDetails->packageName())
+                                        .arg(pluginDetails->errorMessage()) );
         }
     });
 }

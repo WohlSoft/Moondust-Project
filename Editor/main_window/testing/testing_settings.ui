@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>304</width>
+    <width>309</width>
     <height>412</height>
    </rect>
   </property>
@@ -34,27 +34,27 @@
        <widget class="QComboBox" name="p2_character">
         <item>
          <property name="text">
-          <string>ch1</string>
+          <string notr="true">ch1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch2</string>
+          <string notr="true">ch2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch3</string>
+          <string notr="true">ch3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch4</string>
+          <string notr="true">ch4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch5</string>
+          <string notr="true">ch5</string>
          </property>
         </item>
        </widget>
@@ -77,37 +77,37 @@
        <widget class="QComboBox" name="p2_state">
         <item>
          <property name="text">
-          <string>st1</string>
+          <string notr="true">st1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st2</string>
+          <string notr="true">st2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st3</string>
+          <string notr="true">st3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st4</string>
+          <string notr="true">st4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st5</string>
+          <string notr="true">st5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st6</string>
+          <string notr="true">st6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st7</string>
+          <string notr="true">st7</string>
          </property>
         </item>
        </widget>
@@ -270,27 +270,27 @@
        <widget class="QComboBox" name="p1_character">
         <item>
          <property name="text">
-          <string>ch1</string>
+          <string notr="true">ch1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch2</string>
+          <string notr="true">ch2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch3</string>
+          <string notr="true">ch3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch4</string>
+          <string notr="true">ch4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ch5</string>
+          <string notr="true">ch5</string>
          </property>
         </item>
        </widget>
@@ -306,37 +306,37 @@
        <widget class="QComboBox" name="p1_state">
         <item>
          <property name="text">
-          <string>st1</string>
+          <string notr="true">st1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st2</string>
+          <string notr="true">st2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st3</string>
+          <string notr="true">st3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st4</string>
+          <string notr="true">st4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st5</string>
+          <string notr="true">st5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st6</string>
+          <string notr="true">st6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>st7</string>
+          <string notr="true">st7</string>
          </property>
         </item>
        </widget>
@@ -373,7 +373,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../Engine/_resources/engine.qrc"/>
+  <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>

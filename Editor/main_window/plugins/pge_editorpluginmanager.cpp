@@ -39,12 +39,14 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
             if(!ok)
             {
                 LogWarning("Error while loading main.js in " + subFolder + ", skipping...");
-                m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder, m_engine.getLastError()
-                                                             + tr("\nat line ") + QString::number(m_engine.getLastErrorLine())));
+                m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder,
+                                                             m_engine.getLastError()
+                                                             + "\n" + tr("At line")+
+                                                             " " + QString::number(m_engine.getLastErrorLine())) );
                 continue;
             }
 
-            if(result.find("pluginName") == result.cend()){
+            if(result.find("pluginName") == result.cend()) {
                 QString errMsg = "Failed to find plugin_name from the result of main.js in " + subFolder + ", skipping...";
                 LogWarning(errMsg);
                 m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder, std::move(errMsg)));
