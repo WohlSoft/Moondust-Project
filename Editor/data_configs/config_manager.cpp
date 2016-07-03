@@ -545,7 +545,7 @@ bool ConfigManager::runConfigureTool()
     {
         QMessageBox::information(parentW,
                                  tr("Configuring is not needed"),
-                                 tr("This config pack is not contains a configuring tool."),
+                                 tr("This config pack has no configuring tool."),
                                  QMessageBox::Ok);
         return false;
     }
