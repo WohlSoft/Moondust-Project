@@ -219,6 +219,11 @@ private:
 
     void loadRotationTable();
 
+    //! Recently loaded INI-file
+    QString     m_recentIniFile;
+    //! Cache of available INI sections in the current file
+    QStringList m_sectionsCache;
+
     QString     getFullIniPath(QString iniFileName);
     bool        openSection(QSettings *config, QString section);
     inline void closeSection(QSettings* file) { file->endGroup(); }

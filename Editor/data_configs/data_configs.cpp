@@ -101,7 +101,15 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
 
 bool dataconfigs::openSection(QSettings*config, QString section)
 {
-    if(!config->childGroups().contains(section))
+    //Cache name of recent INI-file and it's sections
+    if(m_recentIniFile != config->fileName())
+    {
+        m_recentIniFile = config->fileName();
+        m_sectionsCache = config->childGroups();
+    }
+
+    //Check for availability of the INI section
+    if(!m_sectionsCache.contains(section))
     {
         addError(QString("ERROR LOADING %1: [%2] section is missed!")
                  .arg( config->fileName() )
@@ -126,6 +134,7 @@ void dataconfigs::setConfigPath(QString p)
 bool dataconfigs::loadBasics()
 {
     errorsList.clear();
+
     QString gui_ini = getFullIniPath("main.ini");
     if(gui_ini.isEmpty())
         return false;
@@ -217,6 +226,10 @@ bool dataconfigs::loadBasics()
             guiset.endGroup();
         }
     }
+
+    m_recentIniFile.clear();
+    m_sectionsCache.clear();
+
     return true;
 }
 
@@ -227,6 +240,9 @@ bool dataconfigs::loadconfigs()
     total_data=0;
     default_grid=0;
     errorsList.clear();
+
+    m_recentIniFile.clear();
+    m_sectionsCache.clear();
 
     LogDebug("=== Starting of global configuration loading ===");
 
@@ -429,6 +445,9 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
     LogDebug(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
     LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
+
+    m_recentIniFile.clear();
+    m_sectionsCache.clear();
 
     return true;
 }
