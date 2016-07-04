@@ -430,13 +430,6 @@ QString WorldEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
-void WorldEdit::makeCrashState()
-{
-    this->isUntitled = true;
-    this->WldData.untitled = true;
-    this->WldData.modified = true;
-}
-
 void WorldEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)

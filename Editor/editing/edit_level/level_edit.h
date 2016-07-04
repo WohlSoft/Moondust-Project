@@ -55,7 +55,6 @@ public:
     bool saveSMBX38aLVL(QString fileName, bool silent=false); //!< Saves SMBX38A Level file format
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
-    void makeCrashState();
 
     void setCurrentSection(int scId);
     void ResetPosition();

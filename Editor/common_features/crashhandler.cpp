@@ -35,6 +35,7 @@
 #include "common_features/main_window_ptr.h"
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
+#include <common_features/logger_sets.h>
 
 #ifdef _WIN32
 //
@@ -159,8 +160,12 @@ void CrashHandler::crashBySIGNAL(int signalid)
 
 void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
 {
+    //Force debug log enabling
+    LogWriter::logLevel = PGE_LogLevel::Debug;
+
     //Write crash message into the log file first
     crashMsg += QString("\n\n") + getStacktrace();
+
     //Also save crash report into log file
     LogFatalNC(crashMsg);
 
@@ -185,6 +190,22 @@ void CrashHandler::attemptCrashsave()
 {
     QDir crashSave;
     crashSave.setCurrent(AppPathManager::userAppDir());
+
+    /*
+     * For case if crash happened while ... attempt to load crashed files!
+     * This avoids looping crashes because backup files are causing crash too!
+     */
+    if( crashSave.exists("__crashsave") )
+    {
+        LogFatalNC("We are detected that crass has been occouped on attempt to load or initialize backup files. Backup directory has been renamed into \"__crashsave_danger\".");
+        LogFatalNC("Please attach all files in that directory and, if possible, additional contents (custom images, sounds, musics, configs and scripts) while reporting this crash.");
+        QDir    dupeDir(AppPathManager::userAppDir() + "/__crashsave_danger");
+             if(dupeDir.exists())
+                dupeDir.removeRecursively();
+        crashSave.rename("__crashsave", "__crashsave_danger");
+        return;
+    }
+
     crashSave.mkdir("__crashsave");
     crashSave.cd("__crashsave");
 
@@ -200,6 +221,8 @@ void CrashHandler::attemptCrashsave()
         if(mw->activeChildWindow(subWin) == 1)
         {
             LevelEdit* lvledit = mw->activeLvlEditWin(subWin);
+            if(!lvledit)
+                continue;
 
             QString fName = lvledit->currentFile();
             if(lvledit->isUntitled){
@@ -223,7 +246,9 @@ void CrashHandler::attemptCrashsave()
 
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
         } else if(mw->activeChildWindow(subWin) == 2) {
-            NpcEdit* npcedit = mw->activeNpcEditWin();
+            NpcEdit* npcedit = mw->activeNpcEditWin(subWin);
+            if(!npcedit)
+                continue;
 
             QString fName = npcedit->currentFile();
             if(npcedit->isUntitled){
@@ -234,7 +259,9 @@ void CrashHandler::attemptCrashsave()
 
             npcedit->saveFile(crashSave.absoluteFilePath(fName), false);
         } else if(mw->activeChildWindow(subWin) == 3) {
-            WorldEdit* worldedit = mw->activeWldEditWin();
+            WorldEdit* worldedit = mw->activeWldEditWin(subWin);
+            if(!worldedit)
+                continue;
 
             QString fName = worldedit->currentFile();
             if(worldedit->isUntitled) {
@@ -263,29 +290,40 @@ void CrashHandler::attemptCrashsave()
 
 void CrashHandler::checkCrashsaves()
 {
+    MainWindow*mw = MainWinConnect::pMainWin;
     QDir crashSave;
     crashSave.setCurrent(AppPathManager::userAppDir());
-    if(crashSave.exists("__crashsave")){
+    if(crashSave.exists("__crashsave"))
+    {
         crashSave.cd("__crashsave");
         QStringList allCrashFiles = crashSave.entryList(QDir::Files | QDir::NoDotAndDotDot);
-        foreach(QString file, allCrashFiles){
+        foreach(QString file, allCrashFiles)
+        {
             QString fPath = crashSave.absoluteFilePath(file);
-            MainWinConnect::pMainWin->OpenFile(fPath, false);
+            mw->OpenFile(fPath, false);
         }
-        QList<QMdiSubWindow*> listOfAllSubWindows = MainWinConnect::pMainWin->allEditWins();
+
+        QList<QMdiSubWindow*> listOfAllSubWindows = mw->allEditWins();
         foreach (QMdiSubWindow* subWin, listOfAllSubWindows) {
-            if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
+            /*if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
                 MainWinConnect::pMainWin->activeLvlEditWin()->makeCrashState();
-            }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2){
-                MainWinConnect::pMainWin->activeNpcEditWin()->makeCrashState();
-            }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){
-                MainWinConnect::pMainWin->activeWldEditWin()->makeCrashState();
+            }else */
+            if(mw->activeChildWindow(subWin) == 2) {
+                mw->activeNpcEditWin()->makeCrashState();
             }
+            /*else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){
+                MainWinConnect::pMainWin->activeWldEditWin()->makeCrashState();
+            }*/
         }
 
-
+        //Clean up all files from crash-save folder after restoring
         crashSave.removeRecursively();
-        QMessageBox::information(MainWinConnect::pMainWin, tr("Crashsave"), tr("Since the last crash, the editor recorved some files.\nPlease save them first before doing anything else."), QMessageBox::Ok, QMessageBox::Ok);
+
+        QMessageBox::information(mw,
+                                 tr("Crashsave"),
+                                 tr("Since the last crash, the editor recorved some files.\n"
+                                    "Please save them first before doing anything else."),
+                                 QMessageBox::Ok);
     }
 }
 
