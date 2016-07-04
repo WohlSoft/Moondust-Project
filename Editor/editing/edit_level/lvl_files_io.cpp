@@ -427,21 +427,22 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
         return false;
     }
     StartLvlData = LvlData; //Save current history for made reset
-    setCurrentFile(curFName);
 
-    //Restore internal information after crash
+    //Restore internal information after restoring backups saved after crash
     if(LvlData.metaData.crash.used)
     {
-        modifystate=LvlData.metaData.crash.modifyed;
-        untitledstate=LvlData.metaData.crash.untitled;
-        isUntitled = LvlData.metaData.crash.untitled;
-        LvlData.filename = LvlData.metaData.crash.filename;
-        LvlData.path = LvlData.metaData.crash.path;
-        curFName = LvlData.metaData.crash.fullPath;
-        setCurrentFile(LvlData.metaData.crash.fullPath);
+        modifystate                 = LvlData.metaData.crash.modifyed;
+        untitledstate               = LvlData.metaData.crash.untitled;
+        LvlData.RecentFormat        = LvlData.metaData.crash.fmtID;
+        LvlData.RecentFormatVersion = LvlData.metaData.crash.fmtVer;
+        isUntitled                  = LvlData.metaData.crash.untitled;
+        LvlData.filename            = LvlData.metaData.crash.filename;
+        LvlData.path                = LvlData.metaData.crash.path;
+        curFName                    = LvlData.metaData.crash.fullPath;
         LvlData.metaData.crash.reset();
     }
 
+    setCurrentFile(curFName);
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
     //Check if data configs exists
@@ -476,7 +477,6 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          progress.setMinimumDuration(500);
-         //progress.setCancelButton(0);
 
     if(! DrawObjects(progress) )
     {
@@ -527,16 +527,16 @@ bool LevelEdit::maybeSave()
         sav->addUserItem(tr("Level title: "),lvlNameBox);
         sav->setAdjustSize(400,130);
         lvlNameBox->setText(LvlData.LevelName);
-        if(sav->exec() == QDialog::Accepted){
+        if(sav->exec() == QDialog::Accepted) {
             LvlData.LevelName = lvlNameBox->text();
             lvlNameBox->deleteLater();
             sav->deleteLater();
-            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
+            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE) {
                 return save(false);
-            }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+            } else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE) {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }

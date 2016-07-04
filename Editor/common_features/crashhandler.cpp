@@ -190,13 +190,16 @@ void CrashHandler::attemptCrashsave()
 
     int untitledCounter = 0;
 
+    MainWindow* mw = MainWinConnect::pMainWin;
 
-    QList<QMdiSubWindow*> listOfAllSubWindows = MainWinConnect::pMainWin->allEditWins();
+    if(!mw) return;
+
+    QList<QMdiSubWindow*> listOfAllSubWindows = mw->allEditWins();
     foreach (QMdiSubWindow* subWin, listOfAllSubWindows)
     {
-        if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1)
+        if(mw->activeChildWindow(subWin) == 1)
         {
-            LevelEdit* lvledit = MainWinConnect::pMainWin->activeLvlEditWin(subWin);
+            LevelEdit* lvledit = mw->activeLvlEditWin(subWin);
 
             QString fName = lvledit->currentFile();
             if(lvledit->isUntitled){
@@ -205,16 +208,22 @@ void CrashHandler::attemptCrashsave()
                 fName = fName.section("/", -1)+QString(".lvlx");
             }
 
-            lvledit->LvlData.metaData.crash.used=true;
-            lvledit->LvlData.metaData.crash.untitled = lvledit->LvlData.untitled;
-            lvledit->LvlData.metaData.crash.modifyed = lvledit->LvlData.modified;
-            lvledit->LvlData.metaData.crash.filename = lvledit->LvlData.filename;
-            lvledit->LvlData.metaData.crash.path     = lvledit->LvlData.path;
-            lvledit->LvlData.metaData.crash.fullPath = lvledit->curFile;
+            LevelData& lvl = lvledit->LvlData;
+
+            lvl.metaData.crash.used=true;
+            lvl.metaData.crash.untitled = lvl.untitled;
+            lvl.metaData.crash.modifyed = lvl.modified;
+            lvl.metaData.crash.fmtID    = lvl.RecentFormat;
+            lvl.metaData.crash.fmtVer   = lvl.RecentFormatVersion;
+            lvl.metaData.crash.filename = lvl.filename;
+            lvl.metaData.crash.path     = lvl.path;
+            lvl.metaData.crash.fullPath = lvledit->curFile;
+            //Forcely save data into PGE-X format
+            lvl.RecentFormat = LevelData::PGEX;
 
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
-        } else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2) {
-            NpcEdit* npcedit = MainWinConnect::pMainWin->activeNpcEditWin();
+        } else if(mw->activeChildWindow(subWin) == 2) {
+            NpcEdit* npcedit = mw->activeNpcEditWin();
 
             QString fName = npcedit->currentFile();
             if(npcedit->isUntitled){
@@ -224,8 +233,8 @@ void CrashHandler::attemptCrashsave()
             }
 
             npcedit->saveFile(crashSave.absoluteFilePath(fName), false);
-        } else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3) {
-            WorldEdit* worldedit = MainWinConnect::pMainWin->activeWldEditWin();
+        } else if(mw->activeChildWindow(subWin) == 3) {
+            WorldEdit* worldedit = mw->activeWldEditWin();
 
             QString fName = worldedit->currentFile();
             if(worldedit->isUntitled) {
@@ -234,12 +243,18 @@ void CrashHandler::attemptCrashsave()
                 fName = fName = fName.section("/", -1)+QString(".wldx");
             }
 
-            worldedit->WldData.metaData.crash.used=true;
-            worldedit->WldData.metaData.crash.untitled = worldedit->WldData.untitled;
-            worldedit->WldData.metaData.crash.modifyed = worldedit->WldData.modified;
-            worldedit->WldData.metaData.crash.filename = worldedit->WldData.filename;
-            worldedit->WldData.metaData.crash.path = worldedit->WldData.path;
-            worldedit->WldData.metaData.crash.fullPath = worldedit->curFile;
+            WorldData& wld = worldedit->WldData;
+
+            wld.metaData.crash.used=true;
+            wld.metaData.crash.untitled = wld.untitled;
+            wld.metaData.crash.modifyed = wld.modified;
+            wld.metaData.crash.fmtID    = wld.RecentFormat;
+            wld.metaData.crash.fmtVer   = wld.RecentFormatVersion;
+            wld.metaData.crash.filename = wld.filename;
+            wld.metaData.crash.path     = wld.path;
+            wld.metaData.crash.fullPath = worldedit->curFile;
+            //Forcely save data into PGE-X format
+            wld.RecentFormat = WorldData::PGEX;
 
             worldedit->saveFile(crashSave.absoluteFilePath(fName), false);
         }

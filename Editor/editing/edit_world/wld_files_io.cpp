@@ -316,18 +316,21 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
                              .arg(file.errorString()));
         return false;
     }
-    //Restore internal information after crash
+
+    //Restore internal information after restoring backups saved after crash
     if(WldData.metaData.crash.used)
     {
-        modifystate=WldData.metaData.crash.modifyed;
-        untitledstate=WldData.metaData.crash.untitled;
-        isUntitled = WldData.metaData.crash.untitled;
-        WldData.filename = WldData.metaData.crash.filename;
-        WldData.path = WldData.metaData.crash.path;
-        curFName = WldData.metaData.crash.fullPath;
-        setCurrentFile(WldData.metaData.crash.fullPath);
+        modifystate                 = WldData.metaData.crash.modifyed;
+        untitledstate               = WldData.metaData.crash.untitled;
+        isUntitled                  = WldData.metaData.crash.untitled;
+        WldData.RecentFormat        = WldData.metaData.crash.fmtID;
+        WldData.RecentFormatVersion = WldData.metaData.crash.fmtVer;
+        WldData.filename            = WldData.metaData.crash.filename;
+        WldData.path                = WldData.metaData.crash.path;
+        curFName                    = WldData.metaData.crash.fullPath;
         WldData.metaData.crash.reset();
     }
+
     setCurrentFile(curFName);
     StartWldData = WldData; //Save current history for made reset
 
