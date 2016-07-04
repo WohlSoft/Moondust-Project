@@ -21,6 +21,7 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QAtomicInteger>
 
 #include <data_configs/data_configs.h>
 #include <PGE_File_Formats/lvl_filedata.h>
@@ -86,7 +87,7 @@ public:
 
     LvlScene * scene;
 
-    std::atomic_bool sceneCreated;
+    QAtomicInteger<bool> sceneCreated;
     bool isUntitled;
 
     QString curFile;

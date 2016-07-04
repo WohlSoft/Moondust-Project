@@ -36,10 +36,9 @@
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
 {
-    if(_is_reloading) return;
-    _is_reloading=true;
-    BoolReseter rst(&_is_reloading);
-    Q_UNUSED(rst);
+    if(m_isFileReloading) return;
+    m_isFileReloading=true;
+    BoolReseter rst(&m_isFileReloading); Q_UNUSED(rst);
 
     QString filePath;
     QRect wnGeom;

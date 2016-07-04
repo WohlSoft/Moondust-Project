@@ -35,6 +35,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QSplashScreen>
+#include <QAtomicInteger>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <QWinThumbnailToolBar>
@@ -79,9 +80,16 @@ public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
 
-    bool initEverything(QString configDir, QString themePack, bool ReAskConfigPack);
+    /**
+     * @brief Process initialization on application startup
+     * @param configDir Path to configuration package directory
+     * @param themePack Path to theme pack to load
+     * @return true if everything has been successfully initialized, false if fatal error has occouped
+     */
+    bool initEverything(QString configDir, QString themePack);
 
-    dataconfigs configs;        // Global game configucrations
+    //! Global game configucrations
+    dataconfigs configs;
 
 /* //////////////////////Contents/////////////////////////////
  * COMMON
@@ -160,8 +168,8 @@ public:
          */
         void applyTheme(QString themeDir="");
 
-        //! Startup-only flag, used for case is need to continue loading process or exit from editor application
-        bool continueLoad;
+        //! Is everything has been successfuly initialized
+        bool m_isAppInited;
 
         ///
         /// \brief loadSettings load settings from configuration file
@@ -250,7 +258,7 @@ public:
     private:
 
         //! Is file reloading process
-        std::atomic_bool _is_reloading;
+        QAtomicInteger<bool> m_isFileReloading;
     public slots:
 
         ///

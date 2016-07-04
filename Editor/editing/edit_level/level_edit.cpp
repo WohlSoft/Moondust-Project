@@ -42,14 +42,14 @@ LevelEdit::LevelEdit(QWidget *parent) :
     ui(new Ui::LevelEdit)
 {
     sceneCreated = false;
-    scene = NULL;
+    scene = nullptr;
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
-    updateTimer=NULL;
+    updateTimer = nullptr;
 
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);

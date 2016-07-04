@@ -22,6 +22,7 @@
 #include <QWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QAtomicInteger>
 
 #include <data_configs/data_configs.h>
 #include <main_window/global_settings.h>
@@ -87,7 +88,7 @@ public:
 
     WldScene * scene;
 
-    std::atomic_bool sceneCreated;
+    QAtomicInteger<bool> sceneCreated;
     bool isUntitled;
 
     QString curFile;

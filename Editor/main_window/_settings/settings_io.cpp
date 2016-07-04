@@ -152,7 +152,7 @@ void MainWindow::loadSettings()
 
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
-        if(!continueLoad)
+        if(!m_isAppInited)
         { //Hide all unitialized dock widgets
            QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
            foreach(QDockWidget* dw, dockWidgets)
@@ -340,7 +340,7 @@ void MainWindow::saveSettings()
 //Application settings
 void MainWindow::on_actionApplication_settings_triggered()
 {
-    if(!continueLoad) return;
+    if(!m_isAppInited) return;
 
     g_AppSettings * appSettings = new g_AppSettings(this);
     util::DialogToCenter(appSettings, true);

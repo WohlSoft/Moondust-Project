@@ -151,11 +151,10 @@ void MainWindow::on_actionChangeConfig_triggered()
     // Config manager
     ConfigManager cmanager(this);
     QString configPath = cmanager.loadConfigs();
-    cmanager.setAskAgain(askConfigAgain);
+
     if( cmanager.exec() == QDialog::Accepted )
     {
         configPath          =  cmanager.m_currentConfig;
-        askConfigAgain      =  cmanager.m_doAskAgain;
         currentConfigDir    = (cmanager.m_doAskAgain)? "" : configPath;
         saveSettings();
         QMessageBox::information(this,

@@ -191,7 +191,7 @@ void LocalServer::onCMD(QString data)
 
         int cmdID = commands.indexOf(data);
 
-        if((cmdID==3) || (MainWinConnect::pMainWin->continueLoad))
+        if((cmdID==3) || (MainWinConnect::pMainWin->m_isAppInited))
         switch(cmdID)
         {
             case 0:

@@ -207,17 +207,15 @@ int main(int argc, char *argv[])
 
     /******************************Config manager*********************************/
     QString currentConfigDir;
-    bool    askConfigAgain = false;
     QString themePack;
 
     {
         ConfigManager cmanager(nullptr);
         currentConfigDir    = cmanager.loadConfigs();
-        askConfigAgain      = cmanager.m_doAskAgain;
         themePack           = cmanager.m_themePackName;
 
         //If application started first time or target configuration is not exist
-        if( askConfigAgain || currentConfigDir.isEmpty() )
+        if( cmanager.m_doAskAgain || currentConfigDir.isEmpty() )
         {
             //Ask for configuration
             if( cmanager.hasConfigPacks() && (cmanager.exec() == QDialog::Accepted) )
@@ -231,14 +229,12 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
-        //continueLoad = true;
-        askConfigAgain   = cmanager.m_doAskAgain;
         currentConfigDir = cmanager.m_currentConfigPath;
     }
     /******************************Config manager***END***************************/
 
     //Init Main Window class
-    if( !mWindow->initEverything(currentConfigDir, themePack, askConfigAgain) )
+    if( !mWindow->initEverything(currentConfigDir, themePack) )
     {
         delete mWindow;
         goto QuitFromEditor;

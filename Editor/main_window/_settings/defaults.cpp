@@ -52,9 +52,7 @@ void MainWindow::setDefaults()
     GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons    = false;
     GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger    = false;
 
-    askConfigAgain=false;
-
-    _is_reloading=false;
+    m_isFileReloading=false;
 
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;

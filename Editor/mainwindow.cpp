@@ -33,7 +33,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui(new Ui::MainWindow)
 {
     MainWinConnect::pMainWin = this;
-    continueLoad = false;
+    m_isAppInited = false;
 
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -59,9 +59,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
 }
 
 
-bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAskConfigPack)
+bool MainWindow::initEverything(QString configDir, QString themePack)
 {
-    askConfigAgain   = ReAskConfigPack;
     currentConfigDir = configDir;
 
     configs.setConfigPath( configDir );
@@ -166,7 +165,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
 
         splash.progressTitle(tr("Finishing loading..."));
 
-        continueLoad = true;
+        m_isAppInited = true;
     }
     catch(...)
     {
@@ -176,7 +175,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack, bool ReAsk
                               .arg(LogWriter::DebugLogFile),
                               QMessageBox::Ok);
         LogFatal("<Error, application closed>");
-        continueLoad = false;
+        m_isAppInited = false;
         return false;
     }
 

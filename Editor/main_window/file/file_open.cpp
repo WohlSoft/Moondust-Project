@@ -154,20 +154,22 @@ void MainWindow::on_OpenFile_triggered()
 
 void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 {
-    if(_is_reloading) return;
-    _is_reloading=true;
-    BoolReseter rst(&_is_reloading);
-    Q_UNUSED(rst);
+    if(m_isFileReloading) return;
+    m_isFileReloading = true;
+    BoolReseter rst(&m_isFileReloading); Q_UNUSED(rst);
 
-    if(!continueLoad) return;
+    if(!m_isAppInited) return;
     qApp->setActiveWindow(this);
 
     //Check if data configs are valid
     if( configs.check() )
     {
         LogCritical(QString("Error! *.INI configs not loaded"));
-        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
-                             tr("Cannot open file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+        QMessageBox::warning(this,
+                             tr("Configuration is loaded with errors"),
+                             tr("Cannot open file:\n"
+                                "Configuration package loaded with errors.")
+                                        .arg(ConfStatus::configPath));
         //Show configuration status window
         on_actionCurConfig_triggered();
         return;
@@ -263,11 +265,6 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             newSubWin->close();
             LogDebug(">>Windows closed");
         }
-
-        //QMessageBox::information(this, tr("Dummy"),
-        //tr("Sorry, the World Maps support is not inplemented in this version."),
-        //QMessageBox::Ok);
-
     }
     else
     if(in_1.suffix().toLower() == "txt")
@@ -294,7 +291,6 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
-            //updateMenus(true);
         } else {
             child->close();
             newSubWin->close();
@@ -346,7 +342,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             case 0:
                 break;
             case 1:
-                statistics += QString("Mounted transport: Shoe - ");
+                statistics += QString("Mounted vehicle: Shoe - ");
                 switch(FileData.characterStates[i].mountID)
                 {
                 case 1:
@@ -360,35 +356,38 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 }
                 break;
             case 3:
-                statistics += QString("Mounted transport: Yoshi");break;
+                statistics += QString("Mounted vehicle: Yoshi");break;
             default:
-                statistics += QString("Mounted transport: <unknown>");break;
+                statistics += QString("Mounted vehicle: <unknown>");break;
             }
 
             if( (FileData.characterStates[i].itemID>0) && configs.main_npc.contains(FileData.characterStates[i].itemID) )
             {
-                statistics += QString("%2Has item: %1").arg(configs.main_npc[FileData.characterStates[i].itemID].name)
-                                .arg(FileData.characterStates[i].mountType>0?",    ":"");
+                statistics += QString("%2Has item: %1")
+                                .arg(configs.main_npc[FileData.characterStates[i].itemID].name)
+                                .arg(FileData.characterStates[i].mountType > 0 ? ",    ":"");
             }
 
-        if(i<FileData.characterStates.size()-1)
-            statistics += "\n----------------------------\n";
+            if(i<FileData.characterStates.size()-1)
+                statistics += "\n----------------------------\n";
         }
         statistics += "\n=========================\n";
 
-        if( !FileData.ReadFileValid ) return;
+        if( !FileData.ReadFileValid )
+            return;
 
-        QMessageBox::information(this, tr("Game save statistics"),
-         statistics,
-         QMessageBox::Ok);
-
+        QMessageBox::information(this,
+                                 tr("Game save statistics"),
+                                 statistics,
+                                 QMessageBox::Ok);
     }
     else
     {
-    QMessageBox::warning(this, tr("Bad file"),
-     tr("This file have unknown extension"),
-     QMessageBox::Ok);
-    return;
+        QMessageBox::warning(this,
+                             tr("Bad file"),
+                             tr("This file have unknown extension"),
+                             QMessageBox::Ok);
+        return;
     }
 
     // Add to recent fileList
