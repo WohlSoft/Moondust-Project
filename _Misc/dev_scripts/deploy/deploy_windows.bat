@@ -28,6 +28,7 @@ cd %SOURCEDIR%\bin-w32
 set DeployDir=%SOURCEDIR%\bin-w32\_win32_deploy
 set PgePrjSD=PGE_Project
 set TarGzArName=pge-project-dev-win32.zip
+set DeployFlags=--release --no-opengl-sw --no-system-d3d-compiler
 
 if exist "%DeployDir%\*" del /Q /F /S "%DeployDir%\*"
 if not exist "%DeployDir%\*" md "%DeployDir%"
@@ -36,14 +37,15 @@ if not exist "%DeployDir%\%PgePrjSD%\*" md "%DeployDir%\%PgePrjSD%"
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
 copy "%QtDir%\libstdc++-6.dll" ".\libstdc++-6.dll"
 copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
-%QtDir%\windeployqt pge_editor.exe
-%QtDir%\windeployqt pge_engine.exe
-%QtDir%\windeployqt pge_calibrator.exe
-%QtDir%\windeployqt GIFs2PNG.exe
-%QtDir%\windeployqt PNG2GIFs.exe
-%QtDir%\windeployqt LazyFixTool.exe
-%QtDir%\windeployqt pge_manager.exe
-%QtDir%\windeployqt pge_maintainer.exe
+
+%QtDir%\windeployqt --force --no-quick-import %DeployFlags% pge_editor.exe
+%QtDir%\windeployqt %DeployFlags% pge_engine.exe
+%QtDir%\windeployqt %DeployFlags% pge_calibrator.exe
+%QtDir%\windeployqt %DeployFlags% GIFs2PNG.exe
+%QtDir%\windeployqt %DeployFlags% PNG2GIFs.exe
+%QtDir%\windeployqt %DeployFlags% LazyFixTool.exe
+%QtDir%\windeployqt %DeployFlags% pge_manager.exe
+%QtDir%\windeployqt %DeployFlags% pge_maintainer.exe
 
 rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
 if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
@@ -52,13 +54,14 @@ if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\tr
 rem Remove possible temporary files of UPX
 if exist %SOURCEDIR%\bin-w32\*.upx del /Q "%SOURCEDIR%\bin-w32\*.upx"
 
-%COMPRESS_DLL% D3Dcompiler_*.dll
+rem %COMPRESS_DLL% D3Dcompiler_*.dll
 %COMPRESS_DLL% libEGL.dll
 %COMPRESS_DLL% libGLESV2.dll
-%COMPRESS_DLL% opengl32sw.dll
+rem %COMPRESS_DLL% opengl32sw.dll
 %COMPRESS_DLL% Qt5Concurrent.dll
 %COMPRESS_DLL% Qt5Core.dll
 %COMPRESS_DLL% Qt5Gui.dll
+%COMPRESS_DLL% Qt5Qml.dll
 %COMPRESS_DLL% Qt5Network.dll
 %COMPRESS_DLL% Qt5Svg.dll
 %COMPRESS_DLL% Qt5Widgets.dll
