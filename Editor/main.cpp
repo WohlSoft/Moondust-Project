@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
     mWindow->setWindowState(mWindow->windowState()|Qt::WindowActive);
     mWindow->raise();
     #else
-    w->showFullScreen();
+    mWindow->showFullScreen();
     #endif
 
     QApplication::setActiveWindow(mWindow);
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
     mWindow->connect(appSingle, SIGNAL(openFile(QString)), mWindow, SLOT(OpenFile(QString)));
 
 #ifdef Q_OS_WIN
-    w->initWindowsThumbnail();
+    mWindow->initWindowsThumbnail();
 #endif
 
     //Show tip of a day
