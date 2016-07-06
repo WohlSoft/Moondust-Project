@@ -541,12 +541,16 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite)
         QString LVLRawData;
         //To don't affect level data state, need to remember recently used file format and version identifier
         {
-            int recentFormatBackup = ed->LvlData.RecentFormat;
+            int recentFormatBackup  = ed->LvlData.RecentFormat;
             int recentFormatVBackup = ed->LvlData.RecentFormatVersion;
 
             //Generate actual SMBX64 Level file data
-            //TODO: Maybe we should undo that earlier optimization, and copy LvlData after all?
-            //      We do need to call smbx64LevelPrepare after all...
+            //TODO:  Maybe we should undo that earlier optimization, and copy LvlData after all?
+            //       We do need to call smbx64LevelPrepare after all...
+            //Reply: that is required because unordered blocks and BGOs are will produce very vired result:
+            //       - unordered blocks in array are will cause NPCs fall through blocks like no blocks
+            //       - unordered BGOs in array are will result clash
+            //       And yea, only doing optimization on LunaLUA-side is right solution to don't do prepare data work here
             FileFormats::smbx64LevelPrepare(ed->LvlData);
             FileFormats::WriteSMBX64LvlFileRaw(ed->LvlData, LVLRawData, 64);
             ed->LvlData.RecentFormat = recentFormatBackup;
@@ -608,7 +612,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 return;
             }
 
-            DWORD lpExitCode=0;
+            DWORD lpExitCode = 0;
             if(GetExitCodeProcess(m_luna_pi.hProcess, &lpExitCode))
             {
                 if(lpExitCode==STILL_ACTIVE)
@@ -627,6 +631,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                             //Stop music playback in the PGE Editor!
                             setMusicButton(false);
                             on_actionPlayMusic_triggered(false);
+                            ui->mainToolBar->setFocus();//Small workarround to drop focus from editor window
                         }
                     }
                     else if(QMessageBox::warning(this, tr("SMBX Test is already runned"),
