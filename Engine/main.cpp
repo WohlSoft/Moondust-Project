@@ -396,7 +396,17 @@ int main(int argc, char *argv[])
 
     // Initalizing SDL
     LogDebug("Initialization of SDL...");
-    if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+    int sdlInitFlags = 0;
+
+    sdlInitFlags |= SDL_INIT_TIMER;
+    sdlInitFlags |= SDL_INIT_AUDIO;
+    sdlInitFlags |= SDL_INIT_VIDEO;
+    sdlInitFlags |= SDL_INIT_EVENTS;
+    sdlInitFlags |= SDL_INIT_JOYSTICK;
+    //sdlInitFlags |= SDL_INIT_HAPTIC;
+    sdlInitFlags |= SDL_INIT_GAMECONTROLLER;
+
+    if ( SDL_Init(sdlInitFlags) < 0 )
     {
                                 //% "Unable to init SDL!"
         PGE_Window::printSDLError(qtTrId("SDL_INIT_ERROR"));
