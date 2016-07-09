@@ -67,13 +67,13 @@ static void pgeInitSDL()
     SDL_SetMainReady();
     #endif
     #ifdef USE_SDL_MIXER
-    LogDebug("Initializing SDL Audio...");
+    LogDebugNC("Initializing SDL Audio...");
     if( SDL_Init(SDL_INIT_AUDIO) < 0 )
     {
         LogWarning(QString("Error of loading SDL: %1").arg(SDL_GetError()));
         return;
     }
-    LogDebug("Initializing SDL Mixer X...");
+    LogDebugNC("Initializing SDL Mixer X...");
     if( Mix_Init(MIX_INIT_FLAC|MIX_INIT_MODPLUG|MIX_INIT_MP3|MIX_INIT_OGG) < 0 )
     {
         LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
@@ -85,7 +85,7 @@ static void pgeInitSDL()
 
 static void pgeInitFreeImage()
 {
-    LogDebug("Initializing of FreeImage...");
+    LogDebugNC("Initializing of FreeImage...");
     FreeImage_Initialise();
     initied_fig = true;
 }
@@ -95,38 +95,38 @@ static void pgeEditorQuit()
     if(initied_sdl)
     {
         #ifdef USE_SDL_MIXER
-            LogDebug("Free music buffer...");
+            LogDebugNC("Free music buffer...");
         PGE_MusPlayer::MUS_freeStream();
-            LogDebug("Free sound buffer...");
+            LogDebugNC("Free sound buffer...");
         PGE_Sounds::freeBuffer();
-            LogDebug("Closing audio...");
+            LogDebugNC("Closing audio...");
         Mix_CloseAudio();
-            LogDebug("Closing SDL...");
+            LogDebugNC("Closing SDL...");
         SDL_Quit();
         #endif
     }
 
     if(initied_fig)
     {
-        LogDebug("Deinitializing FreeImage...");
+        LogDebugNC("Deinitializing FreeImage...");
         FreeImage_DeInitialise();
     }
 
     if(MainWinConnect::pMainWin)
     {
-        LogDebug("Deleting MainWindow...");
+        LogDebugNC("Deleting MainWindow...");
         delete MainWinConnect::pMainWin;
     }
     QApplication::quit();
     QApplication::exit();
     if(app)
     {
-        LogDebug("Deleting Qt-Application...");
+        LogDebugNC("Deleting Qt-Application...");
         delete app;
     }
     if(appSingle)
     {
-        LogDebug("Deleting Single-Application...");
+        LogDebugNC("Deleting Single-Application...");
         delete appSingle;
     }
 }
