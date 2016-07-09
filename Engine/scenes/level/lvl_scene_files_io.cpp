@@ -17,6 +17,7 @@
  */
 
 #include "../scene_level.h"
+#include <common_features/logger.h>
 
 #include <QFile>
 #include <QDir>
@@ -49,6 +50,8 @@ bool LevelScene::loadFileIP()
 
     data.ReadFileValid = false;
 
+    LogDebug("ICP: Requesting editor for a file....");
+
     if(!IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE"))
     {
         errorMsg += "Editor is not started!\n";
@@ -61,17 +64,20 @@ bool LevelScene::loadFileIP()
     bool timeOut=false;
     int attempts=0;
 
+    LogDebug("ICP: Waiting reply....");
+
     while(!IntProc::editor->levelIsLoad())
     {
         loaderStep();
         //Abort loading process and exit from game if window was closed
         if(!isLevelContinues) return false;
-        #ifndef __APPLE__
-        qApp->processEvents();
-        #endif
+        //#ifndef __APPLE__
+        //qApp->processEvents();
+        //#endif
 
         if(time.elapsed()>1500)
         {
+            LogDebug(QString("ICP: Waiting #%1....").arg(attempts));
             time.restart();
             attempts+=1;
         }
@@ -90,7 +96,9 @@ bool LevelScene::loadFileIP()
     if(!timeOut && !data.ReadFileValid)
         errorMsg += "Bad file format\n";
 
-    IntProc::state="Done. Starting game...";
+    LogDebug("ICP: Done, starting a game....");
+
+    IntProc::setState("Done. Starting game...");
 
     return data.ReadFileValid;
 }

@@ -19,6 +19,8 @@
 #ifndef INTPROC_H
 #define INTPROC_H
 
+#include <mutex>
+#include <deque>
 #include <QObject>
 #include "editor_pipe.h"
 
@@ -30,21 +32,33 @@ public:
     static void init();
     static void quit();
     static bool isWorking();
-    static QString state;
+
+    static QString      getState();
+    static void         setState(QString instate);
+    static QString      state;
+    static std::mutex   state_lock;
+
     enum ExternalCommands
     {
         MsgBox=0,
         Cheat=1,
         PlaceItem=2
     };
+
     static ExternalCommands command;
 
-    static    bool cmd_accepted;
-    static bool hasCommand();
-    static ExternalCommands  commandType();
-    static QString getCMD();
-    static QString cmd;
+    static void             storeCommand(QString in, ExternalCommands type);
+    static void             cmdLock();
+    static void             cmdUnLock();
+    static bool             hasCommand();
+    static ExternalCommands commandType();
+    static QString          getCMD();
 
+private:
+    static std::deque<QString>  cmd_queue;
+    static std::mutex           cmd_mutex;
+
+public:
     static EditorPipe * editor;
     static bool enabled;
     static bool isEnabled();

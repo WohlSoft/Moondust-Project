@@ -25,8 +25,13 @@
 
 void LevelScene::process_InterprocessCommands()
 {
+    if(!IntProc::enabled)
+        return;
+
+    IntProc::cmdLock();
+
     //Recive external commands!
-    if(IntProc::enabled && IntProc::hasCommand())
+    if(IntProc::hasCommand())
     {
         switch(IntProc::commandType())
         {
@@ -36,7 +41,8 @@ void LevelScene::process_InterprocessCommands()
                                   PGE_MsgBox::msg_info, PGE_Point(-1, -1),
                                    ConfigManager::setup_message_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
-                msgBox.exec(); break;
+                msgBox.exec();
+                break;
             }
             case IntProc::Cheat:
                 break;
@@ -52,7 +58,7 @@ void LevelScene::process_InterprocessCommands()
                 if(!got.ReadFileValid)
                 {
                     LogDebug(FileFormats::errorString);
-                    return;
+                    break;
                 }
 
                 //Don't show placing item sprite before mouse will be on screen
@@ -115,7 +121,9 @@ void LevelScene::process_InterprocessCommands()
                                 ConfigManager::Animator_NPC.push_back(animator);
                                 ConfigManager::Animator_NPC.last().start();
                                 np.animator_ID = ConfigManager::Animator_NPC.size()-1;
-                            } else placingMode_animated=false;
+                            } else {
+                                placingMode_animated=false;
+                            }
                         }
                         placingMode_animatorID = np.animator_ID;
                         placingMode_drawSize.setX(np.gfx_w);
@@ -134,6 +142,7 @@ void LevelScene::process_InterprocessCommands()
             }
         }
     }
+    IntProc::cmdUnLock();
 }
 
 void LevelScene::drawPlacingItem()

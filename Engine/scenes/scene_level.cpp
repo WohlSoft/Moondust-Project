@@ -434,10 +434,10 @@ void LevelScene::update()
 
 void LevelScene::processEvents()
 {
-    #ifndef __APPLE__
-    if(g_AppSettings.interprocessing)
-        qApp->processEvents();
-    #endif
+//    #ifndef __APPLE__
+//    if(g_AppSettings.interprocessing)
+//        qApp->processEvents();
+//    #endif
     //SDL_PumpEvents();
     Scene::processEvents();
     player1Controller->update();

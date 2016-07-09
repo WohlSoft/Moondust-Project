@@ -238,10 +238,10 @@ void PGE_MsgBox::processLoader(float ticks)
 
 void PGE_MsgBox::processBox(float)
 {
-    #ifndef __APPLE__
-    if(g_AppSettings.interprocessing)
-        qApp->processEvents();
-    #endif
+//    #ifndef __APPLE__
+//    if(g_AppSettings.interprocessing)
+//        qApp->processEvents();
+//    #endif
     updateControllers();
 
     if(_exit_key_lock && !keys.jump && !keys.run && !keys.alt_run)

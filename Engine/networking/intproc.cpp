@@ -19,14 +19,16 @@
 #include "intproc.h"
 #include <QtDebug>
 
-EditorPipe * IntProc::editor=NULL;
-bool IntProc::enabled=false;
-QString IntProc::state="";
+EditorPipe *    IntProc::editor  = NULL;
+bool            IntProc::enabled = false;
 
-bool IntProc::cmd_accepted=false;
-IntProc::ExternalCommands IntProc::command=IntProc::MsgBox;
+QString         IntProc::state   = "";
+std::mutex      IntProc::state_lock;
 
-QString IntProc::cmd="";
+IntProc::ExternalCommands   IntProc::command = IntProc::MsgBox;
+
+std::deque<QString> IntProc::cmd_queue;
+std::mutex          IntProc::cmd_mutex;
 
 IntProc::IntProc(QObject *parent) :
     QObject(parent)
@@ -38,7 +40,8 @@ void IntProc::init()
 {
     qDebug()<<"IntProc constructing...";
     editor = new EditorPipe();
-    editor->isWorking=true;
+    editor->isWorking = true;
+
     qDebug()<<"IntProc started!";
     enabled=true;
 }
@@ -61,9 +64,42 @@ bool IntProc::isWorking()
     return (editor!=NULL);
 }
 
+QString IntProc::getState()
+{
+    state_lock.lock();
+    QString tmp = state;
+    state_lock.unlock();
+    return tmp;
+}
+
+void IntProc::setState(QString instate)
+{
+    state_lock.lock();
+    state = instate;
+    state_lock.unlock();
+}
+
+void IntProc::storeCommand(QString in, IntProc::ExternalCommands type)
+{
+    cmd_mutex.lock();
+    cmd_queue.push_back(in.replace("\\n", "\n"));
+    command = type;
+    cmd_mutex.unlock();
+}
+
+void IntProc::cmdLock()
+{
+    cmd_mutex.lock();
+}
+
+void IntProc::cmdUnLock()
+{
+    cmd_mutex.unlock();
+}
+
 bool IntProc::hasCommand()
 {
-    return cmd_accepted;
+    return !cmd_queue.empty();
 }
 
 IntProc::ExternalCommands IntProc::commandType()
@@ -73,9 +109,8 @@ IntProc::ExternalCommands IntProc::commandType()
 
 QString IntProc::getCMD()
 {
-    cmd_accepted=false;
-    QString tmp=cmd;
-    cmd.clear();
+    QString tmp = cmd_queue.front();
+    cmd_queue.pop_front();
     return tmp;
 }
 

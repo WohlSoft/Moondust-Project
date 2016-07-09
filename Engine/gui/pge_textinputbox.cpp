@@ -247,10 +247,10 @@ void PGE_TextInputBox::processLoader(float ticks)
 
 void PGE_TextInputBox::processBox(float tickTime)
 {
-    #ifndef __APPLE__
-    if(g_AppSettings.interprocessing)
-        qApp->processEvents();
-    #endif
+//    #ifndef __APPLE__
+//    if(g_AppSettings.interprocessing)
+//        qApp->processEvents();
+//    #endif
     updateControllers();
 
     blink_timeout-=tickTime;

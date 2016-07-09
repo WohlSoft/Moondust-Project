@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QVector>
+#include <mutex>
 #include <PGE_File_Formats/file_formats.h>
 
 class EditorPipe_std : public QThread
@@ -39,7 +40,8 @@ public:
     bool sendToEditor(QString command);
 
 private:
-    bool levelAccepted;
+    bool        m_levelAccepted;
+    std::mutex  m_levelAccepted_lock;
 
 signals:
     void sendMessage(QString msg);

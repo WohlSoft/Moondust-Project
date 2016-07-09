@@ -55,7 +55,7 @@ void LevelScene::drawLoader()
 
     if(IntProc::isEnabled())
         FontManager::printText(QString("%1")
-                               .arg(IntProc::state), 10,10);
+                               .arg(IntProc::getState()), 10,10);
 }
 
 
