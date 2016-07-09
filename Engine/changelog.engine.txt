@@ -1,13 +1,14 @@
 0.2.6
 - Improved testing of the renderers support to avoid accidental running of the unsupported renderer
-- Added software renderer support for video cards which are not suports OpenGL
-- Added abiltiy to manually choice a renderer (by --render-gl3, --render-gl2 or by --render-sw arguments)
+- Added software renderer support for video cards which are not supports OpenGL
+- Added ability to manually choice a renderer (by --render-gl3, --render-gl2 or by --render-sw arguments)
 - Added graphical API to load external graphic files with lua scripts
 - Added Paths functions to get full path to media folders
-- Added event to draw HUD with binding of the camera metricks and player state
+- Added event to draw HUD with binding of the camera metrics and player state
 - Added binding to playOnceAnimation for playable character API
 - Added support of more advanced effects for lua API
 - Fixed sprite warping for NPCs, now there are correctly warping from warp generators with any sizes of sprites
+- Fixed inter-processing on Mac OS X, and no more requires manual event processing to accept IPC messages
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
@@ -16,12 +17,12 @@
 - Added support of enter event for warps
 - Added support of two-way directed warps
 - Added support of cannon exit warps
-- Better and stable interprocessing with editor based on stdin/stdout!1
+- Better and stable inter-processing with editor based on stdin/stdout!1
 - Added a support of character filter blocks and character switch blocks!
 - Better speed-adding physics
 - Layer motion engine has been implemented!
 - Bit better slopes support
-- Player Lua API has been implemented! It provides a programmign of playable character events
+- Player Lua API has been implemented! It provides a programming of playable character events
 - Improved onHarm/onKill events on NPC-AI
 - Added new NPC-AI events, functions and variables
 - Added a support of collision toggling from lua
@@ -87,12 +88,12 @@ borders per section, toggling section background, toggling section music,
 other event actions are not implemented yet].
 Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer
 [talk is not implemented yet!]
-- Fixed random crash caused by lua activation event when camera catched a corpse of NPC
+- Fixed random crash caused by lua activation event when camera caught a corpse of NPC
 - Fixed slow performance caused by bad time delay function
 - Player finally can ride on NPC's heads [anyway, is not finished yet]
 - Basic Detectors API for NPC-AI which giving able to catch objects came to specific area
 - Fixed bug with super-fast game loop
-- Stompable NPC's are can be stomped!
+- Stomp-able NPC's are can be stomped!
 - Work with a speed-summing part of physical engine gives ability to stay and ride on the moving objects
 - Fixed imperfection with auto-closing of message box while "run" or "jump" key are holding
 - Episode/Level lists are no more freezing engine!
