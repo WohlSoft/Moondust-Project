@@ -122,7 +122,9 @@ else
 	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
 	errorofbuid
 fi
-	
+
+PATH=$QT_PATH:$PATH
+
 #=======================================================================
 
 if $flag_nolibs ; then
@@ -162,8 +164,7 @@ echo "Total time of build"
 show_time $(($TIME_PASSED+$TIME_PASSED_LIBS))
 printf "\n\n=========DEPENDENCIES HAS BEEN BUILT!!===========\n\n"
 cd $bak
-if $flag_pause_on_end ; then 
+if $flag_pause_on_end ; then
     read -n 1;
 fi
 exit 0
-
