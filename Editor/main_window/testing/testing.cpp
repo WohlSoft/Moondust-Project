@@ -46,6 +46,14 @@
 #include <QJsonArray>
 #endif
 
+#ifdef _WIN32
+#define PGE_ENGINE_EXE "/pge_engine.exe"
+#elif __APPLE__
+#define PGE_ENGINE_EXE "/PGE Engine.app/Contents/MacOS/PGE Engine"
+#else
+#define PGE_ENGINE_EXE "/pge_engine";
+#endif
+
 /*!
  * \brief Shows a notification about PGE Engine alpha-testing
  * \param parent Pointer to parent main window
@@ -122,14 +130,7 @@ void MainWindow::on_action_doTest_triggered()
 
     pge_engine_alphatestingNotify(this);
 
-    QString command;
-    #ifdef _WIN32
-    command = ApplicationPath+"/pge_engine.exe";
-    #elif __APPLE__
-    command = ApplicationPath+"/pge_engine.app/Contents/MacOS/pge_engine";
-    #else
-    command = ApplicationPath+"/pge_engine";
-    #endif
+    QString command = ApplicationPath + PGE_ENGINE_EXE;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
@@ -209,15 +210,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 {
     pge_engine_alphatestingNotify(this);
 
-    QString command;
-
-    #ifdef _WIN32
-    command = ApplicationPath+"/pge_engine.exe";
-    #elif __APPLE__
-    command = ApplicationPath+"/pge_engine.app/Contents/MacOS/pge_engine";
-    #else
-    command = ApplicationPath+"/pge_engine";
-    #endif
+    QString command = ApplicationPath + PGE_ENGINE_EXE;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
@@ -303,18 +296,10 @@ void MainWindow::on_action_doSafeTest_triggered()
  */
 void MainWindow::on_action_Start_Engine_triggered()
 {
-    QString command;
+    QString command = ApplicationPath + PGE_ENGINE_EXE;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
-
-    #ifdef _WIN32
-    command = ApplicationPath+"/pge_engine.exe";
-    #elif __APPLE__
-    command = ApplicationPath+"/pge_engine.app/Contents/MacOS/pge_engine";
-    #else
-    command = ApplicationPath+"/pge_engine";
-    #endif
 
     if(!QFileInfo(command).exists())
     {

@@ -94,7 +94,8 @@ android:{
 }
 
 
-TARGET = pge_editor
+!macx:  TARGET = pge_editor
+macx:   TARGET = "PGE Editor"
 TEMPLATE = app
 
 CONFIG += c++11
@@ -117,7 +118,19 @@ LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
+macx {
+    ICON = $$PWD/_resources/cat_builder.icns
+    QMAKE_INFO_PLIST = $$PWD/_resources/pge_editor.plist
+    APP_FILEICON_FILES.files = \
+            $$PWD/_resources/file_lvl.icns \
+            $$PWD/_resources/file_lvlx.icns \
+            $$PWD/_resources/file_wld.icns \
+            $$PWD/_resources/file_wldx.icns
+    APP_FILEICON_FILES.path  = Contents/Resources
+    QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
+}
 win32: {
+    RC_FILE = _resources/pge_editor.rc
     contains(DEFINES, USE_SDL_MIXER):{
         LIBS += -lSDL2 -lSDL2_mixer_ext
         LIBS += -lSDL2main
@@ -135,7 +148,7 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     #QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh \"$$PWD\"
-    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" $$TARGET
+    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 }
 
 LIBS += -lfreeimagelite
@@ -703,14 +716,6 @@ FORMS    += \
     main_window/dock/variables_box.ui \
     main_window/script/script_editor.ui \
     main_window/plugins/pge_editorplugininfo.ui
-
-
-
-RC_FILE = _resources/pge_editor.rc
-
-macx {
-    ICON = _resources/cat_builder.icns
-}
 
 RESOURCES += \
     _resources/editor.qrc

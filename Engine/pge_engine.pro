@@ -34,7 +34,8 @@ include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/dest_dir.pri)
 include($$PWD/../_common/build_props.pri)
 
-TARGET = pge_engine
+!macx: TARGET = pge_engine
+macx:  TARGET = "PGE Engine"
 TEMPLATE = app
 CONFIG += c++11
 CONFIG += thread
@@ -77,13 +78,24 @@ android: {
                           $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 win32: {
+    RC_FILE = _resources/engine.rc
     LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lversion -lopengl32 -lfreeimagelite
 }
 macx: {
+    ICON = _resources/cat.icns
+    QMAKE_INFO_PLIST = $$PWD/_resources/pge_engine.plist
+    APP_FILEICON_FILES.files = \
+            $$PWD/../Editor/_resources/file_lvl.icns \
+            $$PWD/../Editor/_resources/file_lvlx.icns \
+            $$PWD/../Editor/_resources/file_wld.icns \
+            $$PWD/../Editor/_resources/file_wldx.icns
+    APP_FILEICON_FILES.path  = Contents/Resources
+    QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
+
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     #INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_image.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -lfreeimagelite
-    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" $$TARGET
+    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
@@ -101,13 +113,6 @@ contains(DEFINES, USE_LUA_JIT): {
 unix:{
 contains(CONFIG, debug)||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
-
-macx {
-    ICON = _resources/cat.icns
-}
-
-RC_FILE = _resources/engine.rc
-
 android:{
     LANGUAGES_TARGET=/assets/languages
 } else {

@@ -66,13 +66,14 @@ $CurDir/upx-osx-intel64 -9 pge_manager.app/Contents/MacOS/pge_manager
 $CurDir/upx-osx-intel64 -9 pge_maintainer.app/Contents/MacOS/pge_maintainer
 $CurDir/upx-osx-intel64 -9 pge_musplay.app/Contents/MacOS/pge_musplay
 
-cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
-cp GIFs2PNG "$DeployDir/$PgePrjSD"
-cp PNG2GIFs "$DeployDir/$PgePrjSD"
-cp LazyFixTool "$DeployDir/$PgePrjSD"
-cp -a pge_calibrator.app "$DeployDir/$PgePrjSD/Character Calibrator.app"
-cp -a pge_engine.app "$DeployDir/$PgePrjSD/pge_engine.app"
-cp -a pge_musplay.app "$DeployDir/$PgePrjSD/pge_musplay.app"
+#cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
+cp -a "PGE Editor.app"      "$DeployDir/$PgePrjSD/PGE Editor.app"
+cp -a "PGE Engine.app"      "$DeployDir/$PgePrjSD/PGE Engine.app"
+cp -a "pge_calibrator.app"  "$DeployDir/$PgePrjSD/Character Calibrator.app"
+cp -a "pge_musplay.app"     "$DeployDir/$PgePrjSD/pge_musplay.app"
+cp GIFs2PNG                 "$DeployDir/$PgePrjSD"
+cp PNG2GIFs                 "$DeployDir/$PgePrjSD"
+cp LazyFixTool              "$DeployDir/$PgePrjSD"
 
 if [ -d "$DeployDir/$PgePrjSD/_Libs" ]; then
     rm -Rf "$DeployDir/$PgePrjSD/_Libs"
@@ -113,7 +114,7 @@ fi
 
 if [ -f "$DeployDir/$TarGzArName" ]; then
         mv "$DeployDir/$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
-else 
+else
     if [ -f "$DeployDir/rw.$TarGzArName" ]; then
             mv "$DeployDir/rw.$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
     else
@@ -127,4 +128,3 @@ echo "All done!"
 echo ""
 cd $InitDir
 if [[ $1 != "nopause" ]]; then read -n 1; fi
-

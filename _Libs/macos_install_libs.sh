@@ -34,49 +34,49 @@ SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 SCRIPT=$(abspath "$0")
 SCRIPTPATH=$(dirname $SCRIPT)
 
-SCRP=$(abspath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+SCRP=$(abspath "$SCRIPTPATH/../_Libs/_builds/macos/lib/")
 bak2=$PWD
 
-SCRP_Libs=$(abspath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
+SCRP_Libs=$(abspath "$SCRIPTPATH/../_Libs/_builds/macos/lib/")
 #cd $SCRIPTPATH/_sources
 #SCRP_SrcD=$(abspath $PWD"/../_builds/macos/lib/")
 #cd $bak2
 
 curd="$SCRDIR/../"
-CONFIGURATION_BUILD_DIR=$SCRDIR'/../bin'
+CONFIGURATION_BUILD_DIR="$SCRDIR/../bin"
 
 if [[ "$curd" == "" ]]; then
    exit 1
 fi
 
 echo "copy libraries..."
-if [ ! -d $curd"/bin/_Libs" ]; then
-    mkdir -p $curd"/bin/_Libs"
-    if [ -d $curd"/bin/_Libs/SDL2.framework" ]; then
-        rm -Rf $curd"/bin/_Libs/SDL2.framework"
+if [ ! -d "$curd/bin/_Libs" ]; then
+    mkdir -p "$curd/bin/_Libs"
+    if [ -d "$curd/bin/_Libs/SDL2.framework" ]; then
+        rm -Rf "$curd/bin/_Libs/SDL2.framework"
     fi
     #if [ -d $curd"/bin/_Libs/SDL2_image.framework" ]; then
     #    rm -Rf $curd"/bin/_Libs/SDL2_image.framework"
     #fi
-    cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" $curd"/bin/_Libs"
+    cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" "$curd/bin/_Libs"
     #cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
-    cp -a $SCRDIR/_builds/macos/lib/*.dylib $curd"/bin/_Libs"
+    cp -a "$SCRDIR/_builds/macos/lib/*.dylib" "$curd/bin/_Libs"
 fi
 
 EXECUTABLE_PATH="$TARGET_APP.app/Contents/MacOS/$TARGET_APP"
 
 function relocateLibraryInCurrentApp() {
-  install_name_tool -change $1$2 "@executable_path/../../../_Libs/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
+  install_name_tool -change "$1$2" "@executable_path/../../../_Libs/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
 }
 
 function relocateLibraryInCurrentLib() {
   #echo $1$2
-  install_name_tool -change $1$2 "@loader_path/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
+  install_name_tool -change "$1$2" "@loader_path/$2" "$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH"
 }
 
 fetchPathsForApp()
 {
-FILES=$SCRIPTPATH"/../_Libs/_builds/macos/lib/*.dylib"
+FILES="$SCRIPTPATH/../_Libs/_builds/macos/lib/*.dylib"
 for f in $FILES
 do
 filename="${f##*/}"
@@ -158,4 +158,3 @@ fetchPathsForLib #fetch for our dylib
 cd $bak
 #if [[ $1 != "no-pause" ]]; then read -n 1; fi
 exit 0
-
