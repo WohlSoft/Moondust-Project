@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='../bin/libvorbisfile-3.dll'
+dlname=''
 
 # Names of this library.
-library_names='libvorbisfile.dll.a'
+library_names=''
 
 # The name of the static archive.
 old_library='libvorbisfile.a'
@@ -17,15 +17,15 @@ old_library='libvorbisfile.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' /d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib/libvorbis.la -L/d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib /d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib/libogg.la'
+dependency_libs=' /c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib/libvorbis.la -L/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib /c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib/libogg.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
 # Version information for libvorbisfile.
-current=6
-age=3
-revision=6
+current=0
+age=0
+revision=0
 
 # Is this an already installed library?
 installed=yes
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib'
+libdir='/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib'

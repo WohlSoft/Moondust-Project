@@ -17,14 +17,14 @@ old_library='libFLAC.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/c/_Repos/PGE-Project/_Libs/_builds/win32/lib /d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib/libogg.la'
+dependency_libs=' -L/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib /c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib/libogg.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
 # Version information for libFLAC.
-current=11
-age=3
+current=0
+age=0
 revision=0
 
 # Is this an already installed library?
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/c/_Repos/PGE-Project/_Libs/_builds/win32/lib'
+libdir='/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib'

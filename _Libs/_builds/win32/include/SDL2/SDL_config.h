@@ -51,11 +51,11 @@
 #define HAVE_GCC_ATOMICS 1
 /* #undef HAVE_GCC_SYNC_LOCK_TEST_AND_SET */
 
-#define HAVE_DDRAW_H 1
-#define HAVE_DINPUT_H 1
-#define HAVE_DSOUND_H 1
-#define HAVE_DXGI_H 1
-#define HAVE_XINPUT_H 1
+/* #undef HAVE_DDRAW_H */
+/* #undef HAVE_DINPUT_H */
+/* #undef HAVE_DSOUND_H */
+/* #undef HAVE_DXGI_H */
+/* #undef HAVE_XINPUT_H */
 
 /* Comment this if you want to build without any C library requirements */
 #define HAVE_LIBC 1
@@ -158,7 +158,7 @@
 #define HAVE_SQRTF 1
 #define HAVE_TAN 1
 #define HAVE_TANF 1
-#define HAVE_FSEEKO 1
+/* #undef HAVE_FSEEKO */
 #define HAVE_FSEEKO64 1
 /* #undef HAVE_SIGACTION */
 /* #undef HAVE_SA_SIGACTION */
@@ -190,7 +190,7 @@
 /* #undef SDL_EVENTS_DISABLED */
 /* #undef SDL_FILE_DISABLED */
 /* #undef SDL_JOYSTICK_DISABLED */
-/* #undef SDL_HAPTIC_DISABLED */
+#define SDL_HAPTIC_DISABLED 1
 /* #undef SDL_LOADSO_DISABLED */
 /* #undef SDL_RENDER_DISABLED */
 /* #undef SDL_THREADS_DISABLED */
@@ -213,7 +213,7 @@
 #define SDL_AUDIO_DRIVER_DUMMY 1
 /* #undef SDL_AUDIO_DRIVER_ANDROID */
 /* #undef SDL_AUDIO_DRIVER_XAUDIO2 */
-#define SDL_AUDIO_DRIVER_DSOUND 1
+/* #undef SDL_AUDIO_DRIVER_DSOUND */
 /* #undef SDL_AUDIO_DRIVER_ESD */
 /* #undef SDL_AUDIO_DRIVER_ESD_DYNAMIC */
 /* #undef SDL_AUDIO_DRIVER_NACL */
@@ -236,21 +236,21 @@
 /* #undef SDL_INPUT_LINUXKD */
 /* #undef SDL_INPUT_TSLIB */
 /* #undef SDL_JOYSTICK_HAIKU */
-#define SDL_JOYSTICK_DINPUT 1
-#define SDL_JOYSTICK_XINPUT 1
+/* #undef SDL_JOYSTICK_DINPUT */
+/* #undef SDL_JOYSTICK_XINPUT */
 /* #undef SDL_JOYSTICK_DUMMY */
 /* #undef SDL_JOYSTICK_IOKIT */
 /* #undef SDL_JOYSTICK_LINUX */
 /* #undef SDL_JOYSTICK_ANDROID */
-/* #undef SDL_JOYSTICK_WINMM */
+#define SDL_JOYSTICK_WINMM 1
 /* #undef SDL_JOYSTICK_USBHID */
 /* #undef SDL_JOYSTICK_USBHID_MACHINE_JOYSTICK_H */
 /* #undef SDL_JOYSTICK_EMSCRIPTEN */
 /* #undef SDL_HAPTIC_DUMMY */
 /* #undef SDL_HAPTIC_LINUX */
 /* #undef SDL_HAPTIC_IOKIT */
-#define SDL_HAPTIC_DINPUT 1
-#define SDL_HAPTIC_XINPUT 1
+/* #undef SDL_HAPTIC_DINPUT */
+/* #undef SDL_HAPTIC_XINPUT */
 
 /* Enable various shared object loading systems */
 /* #undef SDL_LOADSO_HAIKU */

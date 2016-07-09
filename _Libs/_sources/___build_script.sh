@@ -95,7 +95,7 @@ BuildSrc()
 
 BuildSDL()
 {
-        LatestSDL='SDL-6ad89111cb4f'
+        LatestSDL='SDL-a6ad6813b17b'
         UnArch $LatestSDL
 
         ###########SDL2###########
@@ -135,7 +135,7 @@ BuildSDL()
             cd ..
         fi
 
-        #apply fix of SDL2 bug
+        #apply fix of SDL2 bug (no more needed!)
         #cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 }
 

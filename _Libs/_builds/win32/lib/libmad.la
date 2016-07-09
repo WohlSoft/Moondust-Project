@@ -17,12 +17,12 @@ old_library='libmad.a'
 dependency_libs=''
 
 # Version information for libmad.
-current=2
-age=2
-revision=1
+current=0
+age=0
+revision=0
 
 # Is this an already installed library?
-installed=no
+installed=yes
 
 # Should we warn about portability when linking against -modules?
 shouldnotlink=no
@@ -32,4 +32,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/usr/local/lib'
+libdir='/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib'

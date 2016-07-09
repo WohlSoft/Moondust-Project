@@ -1,4 +1,4 @@
-prefix=/c/_Repos/PGE-Project/_Libs/_builds/win32
+prefix=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
