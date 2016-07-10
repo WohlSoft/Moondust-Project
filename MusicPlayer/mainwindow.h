@@ -129,8 +129,10 @@ private slots:
 
 private:
     //! Controlls blinking of the wav-recording label
-    QTimer blinker;
-    bool   blink_state;
+    QTimer m_blinker;
+    bool   m_blink_state;
+
+    int    m_prevTrackID;
 
     //! UI form class pointer
     Ui::MainWindow *ui;

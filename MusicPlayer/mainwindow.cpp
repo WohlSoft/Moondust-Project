@@ -212,9 +212,11 @@ MainWindow::MainWindow(QWidget *parent) :
                 Qt::WindowMinimizeButtonHint);
     this->updateGeometry();
     this->window()->resize(100, 100);
-    this->connect(&blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
+    this->connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
     this->connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
-    blink_state=false;
+    m_blink_state=false;
+
+    m_prevTrackID = ui->trackID->value();
 
     QApplication::setOrganizationName(_COMPANY);
     QApplication::setOrganizationDomain(_PGE_URL);
@@ -328,7 +330,7 @@ void MainWindow::on_stop_clicked()
         ui->open->setEnabled(true);
         ui->play->setEnabled(true);
         ui->frame->setEnabled(true);
-        blinker.stop();
+        m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
 }
@@ -352,6 +354,7 @@ void MainWindow::on_play_clicked()
     }
 
     ui->play->setText(tr("Play"));
+    m_prevTrackID = ui->trackID->value();
     if(PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text()))
     {
         PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
@@ -461,7 +464,7 @@ void MainWindow::on_trackID_editingFinished()
 {
     if(Mix_PlayingMusic())
     {
-        if(PGE_MusicPlayer::type==MUS_SPC)
+        if( (PGE_MusicPlayer::type == MUS_SPC) && (m_prevTrackID != ui->trackID->value()) )
         {
             Mix_HaltMusic();
             on_play_clicked();
@@ -482,22 +485,22 @@ void MainWindow::on_recordWav_clicked(bool checked)
         ui->open->setEnabled(false);
         ui->play->setEnabled(false);
         ui->frame->setEnabled(false);
-        blinker.start(500);
+        m_blinker.start(500);
     } else {
         on_stop_clicked();
         PGE_MusicPlayer::stopWavRecording();
         ui->open->setEnabled(true);
         ui->play->setEnabled(true);
         ui->frame->setEnabled(true);
-        blinker.stop();
+        m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
 }
 
 void MainWindow::_blink_red()
 {
-    blink_state=!blink_state;
-    if(blink_state)
+    m_blink_state=!m_blink_state;
+    if(m_blink_state)
         ui->recordWav->setStyleSheet("background-color : red; color : black;");
     else
         ui->recordWav->setStyleSheet("background-color : black; color : red;");
@@ -540,7 +543,7 @@ void MainWindow::contextMenu(const QPoint &pos)
                            about->addSeparator();
     QAction* source      = about->addAction("Get source code");
 
-    QAction *ret=x.exec(this->mapToGlobal(pos));
+    QAction *ret = x.exec(this->mapToGlobal(pos));
     if(open == ret)
     {
         on_open_clicked();
