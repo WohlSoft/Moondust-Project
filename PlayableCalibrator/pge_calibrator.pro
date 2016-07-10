@@ -32,13 +32,15 @@ android:{
 }
 include($$PWD/../_common/build_props.pri)
 
-TARGET = pge_calibrator
+!macx: TARGET = pge_calibrator
+macx:  TARGET = "Character Calibrator"
 TEMPLATE = app
 CONFIG   += static
 CONFIG   += c++11
 
 macx {
     ICON = _resourses/calibrator.icns
+    QMAKE_INFO_PLIST = $$PWD/_resourses/calibrator.plist
 }
 
 RC_FILE = _resourses/caltool.rc

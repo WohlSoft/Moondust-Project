@@ -23,7 +23,9 @@ TEMPLATE = app
 
 include($$PWD/../_common/dest_dir.pri)
 include($$PWD/../_common/lib_destdir.pri)
-TARGET = pge_musplay
+
+!macx: TARGET = pge_musplay
+macx:  TARGET = "PGE Music Player"
 
 include($$PWD/../_common/build_props.pri)
 
@@ -31,6 +33,8 @@ CONFIG += c++11
 CONFIG += thread
 
 win32:{
+    RC_FILE = _resources/musicplayer.rc
+
     LIBS += -L$$PWD/../_Libs/_builds/win32/lib
     LIBS += -lSDL2main -lversion -lSDL2_mixer_ext
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
@@ -60,6 +64,13 @@ android:{
 }
 
 macx:{
+    ICON = $$PWD/_resources/cat_musplay.icns
+    QMAKE_INFO_PLIST = $$PWD/_resources/musplay.plist
+    APP_FILEICON_FILES.files = \
+            $$PWD/_resources/file_musplay.icns
+    APP_FILEICON_FILES.path  = Contents/Resources
+    QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
+
     LIBS += -L$$PWD/../_Libs/_builds/macos/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
@@ -67,12 +78,6 @@ macx:{
     QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" $$TARGET
 } else {
     LIBS += -lSDL2 -lSDL2_mixer_ext
-}
-
-RC_FILE = _resources/musicplayer.rc
-
-macx {
-    ICON = _resources/cat_musplay.icns
 }
 
 
