@@ -34,9 +34,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-void MainWindow::openFilesByArgs(QStringList args)
+void MainWindow::openFilesByArgs(QStringList args, int startAt)
 {
-    for(int i=1; i<args.size(); i++)
+    for(int i=startAt; i<args.size(); i++)
     {
         if(QFile::exists(args[i])) OpenFile(args[i]);
     }
@@ -205,14 +205,14 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             return;
         }
         LogDebug("File was read!");
-        FileData.filename = util::getBaseFilename(in_1.fileName());
-        FileData.path = in_1.absoluteDir().absolutePath();
-        FileData.playmusic = GlobalSettings::autoPlayMusic;
+        FileData.filename   = util::getBaseFilename(in_1.fileName());
+        FileData.path       = in_1.absoluteDir().absolutePath();
+        FileData.playmusic  = GlobalSettings::autoPlayMusic;
         file.close();
 
         LogDebug("Creating of sub-window");
         LevelEdit *child = createLvlChild(&newSubWin);
-        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) )
+        if ( child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts) )
         {
             child->show();
             updateMenus(newSubWin, true);
@@ -244,11 +244,10 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             return;
         }
-
         file.close();
 
         WorldEdit *child = createWldChild(&newSubWin);
-        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
+        if ( child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts) ) {
             child->show();
             updateMenus(newSubWin, true);
             child->updateGeometry();

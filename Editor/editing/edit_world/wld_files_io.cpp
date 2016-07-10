@@ -363,6 +363,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          progress.setMinimumDuration(0);
+         progress.setAutoClose(false);
 
     if(! DrawObjects(progress) )
     {

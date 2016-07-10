@@ -757,7 +757,6 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
         _q_unsetViewportCursor();
     }
 #endif
-
 }
 
 #ifdef QT_SHARED // avoid conflict with symbol in static lib

@@ -43,5 +43,4 @@ public:
     static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 };
 
-
 #endif // LOGGER_SETS_H

@@ -87,14 +87,16 @@ SOURCES += main.cpp\
     SingleApplication/singleapplication.cpp \
     main_sdl_android.c \
     wave_writer.c \
-    AssocFiles/assoc_files.cpp
+    AssocFiles/assoc_files.cpp \
+    SingleApplication/pge_application.cpp
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     version.h \
     wave_writer.h \
-    AssocFiles/assoc_files.h
+    AssocFiles/assoc_files.h \
+    SingleApplication/pge_application.h
 
 FORMS    += mainwindow.ui \
     AssocFiles/assoc_files.ui

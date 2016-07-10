@@ -6,6 +6,7 @@
 #include <SDL2/SDL_mixer_ext.h>
 
 #include "SingleApplication/singleapplication.h"
+#include "SingleApplication/pge_application.h"
 
 #include <QtDebug>
 #include <QMessageBox>
@@ -23,7 +24,7 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
-    QApplication a(argc, argv);
+    PGE_Application a(argc, argv);
     QStringList args=a.arguments();
     SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
@@ -56,10 +57,21 @@ int main(int argc, char *argv[])
 
     //Set acception of external file openings
     w.connect(as, SIGNAL(openFile(QString)), &w, SLOT(openMusicByArg(QString)));
+#ifdef __APPLE__
+    w.connect(&a, SIGNAL(openFileRequested(QString)), &w, SLOT(openMusicByArg(QString)));
+    a.setConnected();
+#endif
 
     w.show();
     if(a.arguments().size()>1)
         w.openMusicByArg(a.arguments()[1]);
+    #ifdef __APPLE__
+    {
+        QStringList argx = a.getOpenFileChain();
+        if(!argx.isEmpty())
+            w.openMusicByArg(argx[0]);
+    }
+    #endif
 
     int result = a.exec();
     delete as;

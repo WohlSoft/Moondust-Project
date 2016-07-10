@@ -476,7 +476,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-         progress.setMinimumDuration(500);
+         progress.setMinimumDuration(0);
+         progress.setAutoClose(false);
 
     if(! DrawObjects(progress) )
     {

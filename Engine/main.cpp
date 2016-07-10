@@ -29,6 +29,7 @@
 #include "common_features/translator.h"
 #include "common_features/crash_handler.h"
 #include "common_features/number_limiter.h"
+#include "common_features/pge_application.h"
 
 #include <settings/global_settings.h>
 
@@ -154,7 +155,7 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
-    QApplication a(argc, argv);
+    PGE_Application a(argc, argv);
 
     #ifdef Q_OS_LINUX
     a.setStyle("GTK");
@@ -193,15 +194,18 @@ int main(int argc, char *argv[])
     //Init log writer
     LoadLogSettings();
 
-    QString configPath="";
-    QString fileToOpen = "";
-    EpisodeState _game_state;
-    PlayEpisodeResult episode;
-    episode.character = 0;
-    episode.savefile = "save1.savx";
-    episode.worldfile = "";
-    g_AppSettings.debugMode=false; //enable debug mode
-    g_AppSettings.interprocessing=false; //enable interprocessing
+    LogDebug("<Application started>");
+
+    QString             configPath  ="";
+    QString             fileToOpen  = "";
+    EpisodeState        _game_state;
+    PlayEpisodeResult   episode;
+
+    episode.character               = 0;
+    episode.savefile                = "save1.savx";
+    episode.worldfile               = "";
+    g_AppSettings.debugMode         = false; //enable debug mode
+    g_AppSettings.interprocessing   = false; //enable interprocessing
 
     QStringList all_Args = a.arguments();
     for(int pi=1; pi < all_Args.size(); pi++)
@@ -334,9 +338,10 @@ int main(int argc, char *argv[])
         else
         {
             param = FileFormats::removeQuotes( param );
-            if( QFileInfo(param).exists() )
+            if( QFile::exists(param) )
             {
                 fileToOpen = param;
+                LogDebug("Got file path: [" + param + "]");
             }
             else
             {
@@ -345,6 +350,26 @@ int main(int argc, char *argv[])
         }
     }
 
+    #ifdef __APPLE__
+    if(fileToOpen.isEmpty())
+    {
+        a.processEvents(QEventLoop::QEventLoop::AllEvents);
+        LogDebug("Attempt to take Finder args...");
+        QStringList openArgs = a.getOpenFileChain();
+        foreach(QString file, openArgs)
+        {
+            if( QFile::exists(file) )
+            {
+                fileToOpen = file;
+                LogDebug("Got file path: [" + file + "]");
+            }
+            else
+            {
+                LogWarning("Invalid file path, sent by Mac OS X Finder event: [" + file + "]");
+            }
+        }
+    }
+    #endif
 
     ////Check & ask for configuration pack
 
@@ -457,7 +482,7 @@ int main(int argc, char *argv[])
     SDL_ShowWindow(PGE_Window::window);
     SDL_PumpEvents();
 
-    if(!fileToOpen.isEmpty())
+    if( !fileToOpen.isEmpty() )
     {
         _game_state.reset();
 

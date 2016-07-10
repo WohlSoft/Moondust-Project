@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mutex>
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
@@ -27,9 +28,26 @@
 #include "app_path.h"
 #include "logger_sets.h"
 
-QString     LogWriter::DebugLogFile;
-PGE_LogLevel   LogWriter::logLevel;
-bool        LogWriter::enabled;
+static std::mutex g_lockLocker;
+
+class MutexLocker
+{
+    std::mutex* m_mutex;
+public:
+    MutexLocker(std::mutex *mutex)
+    {
+        m_mutex = mutex;
+        m_mutex->lock();
+    }
+    ~MutexLocker()
+    {
+        m_mutex->unlock();
+    }
+};
+
+QString         LogWriter::DebugLogFile;
+PGE_LogLevel    LogWriter::logLevel;
+bool            LogWriter::enabled;
 
 bool LogWriter::_file_is_opened = false;
 std::shared_ptr<QFile>          LogWriter::_out_file;
@@ -78,6 +96,7 @@ void LogWriter::LoadLogSettings()
 
 void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
 {
+    MutexLocker mutex(&g_lockLocker); Q_UNUSED(mutex);
     if(!enabled) return; //if logging disabled
     if(!_file_is_opened)
     {
@@ -137,6 +156,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
                   const QMessageLogContext& context,
                              const QString& msg)
 {
+    MutexLocker mutex(&g_lockLocker); Q_UNUSED(mutex);
     if(!_file_is_opened)
     {
         switch (type)
@@ -230,6 +250,7 @@ void WriteToLog(PGE_LogLevel type, QString msg)
 
 void CloseLog()
 {
+    MutexLocker mutex(&g_lockLocker); Q_UNUSED(mutex);
     LogWriter::_out_file.get()->close();
     LogWriter::_out_stream.reset();
     LogWriter::_out_file.reset();

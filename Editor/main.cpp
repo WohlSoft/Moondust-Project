@@ -57,10 +57,10 @@
 static bool initied_sdl = false;
 static bool initied_fig = false;
 
-static PGE_EditorApplication*   app         = nullptr;
-static SingleApplication*       appSingle   = nullptr;
-static MainWindow*              mWindow     = nullptr;
-static QStringList              args;
+static PGE_Application*     app         = nullptr;
+static SingleApplication*   appSingle   = nullptr;
+static MainWindow*          mWindow     = nullptr;
+static QStringList          args;
 
 static void pgeInitSDL()
 {
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
-    app     = new PGE_EditorApplication(argc, argv);
+    app     = new PGE_Application(argc, argv);
     args    = app->arguments();
 
 #ifdef Q_OS_MAC
@@ -160,13 +160,13 @@ int main(int argc, char *argv[])
     }
 
     app->setStyle(new PGE_ProxyStyle);
-    #ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX
     {
         QStringList availableStyles = QStyleFactory::keys();
         if( availableStyles.contains("GTK", Qt::CaseInsensitive) )
             app->setStyle("GTK");
     }
-    #endif
+#endif
 
     QFont fnt = app->font();
     fnt.setPointSize( PGEDefaultFontSize );
@@ -241,17 +241,17 @@ int main(int argc, char *argv[])
         goto QuitFromEditor;
     }
 
-    app->connect( app, SIGNAL( lastWindowClosed() ), app, SLOT( quit() ) );
+    app->connect( app,  SIGNAL( lastWindowClosed() ), app, SLOT( quit() ) );
     app->connect( mWindow, SIGNAL( closeEditor() ), app, SLOT( quit() ) );
     app->connect( mWindow, SIGNAL( closeEditor() ), app, SLOT( closeAllWindows() ) );
 
-    #ifndef Q_OS_ANDROID
+#ifndef Q_OS_ANDROID
     mWindow->show();
     mWindow->setWindowState(mWindow->windowState()|Qt::WindowActive);
     mWindow->raise();
-    #else
+#else
     mWindow->showFullScreen();
-    #endif
+#endif
 
     QApplication::setActiveWindow(mWindow);
 
@@ -260,12 +260,16 @@ int main(int argc, char *argv[])
 
     //Open files which opened by command line
     mWindow->openFilesByArgs(args);
-    mWindow->openFilesByArgs(app->getOpenFileChain());
+#ifdef __APPLE__
+    mWindow->openFilesByArgs(app->getOpenFileChain(), 0);
+#endif
 
     //Set acception of external file openings
     mWindow->connect(appSingle, SIGNAL(openFile(QString)), mWindow, SLOT(OpenFile(QString)));
+#ifdef __APPLE__
     mWindow->connect(app, SIGNAL(openFileRequested(QString)), mWindow, SLOT(OpenFile(QString)));
     app->setConnected();
+#endif
 
 #ifdef Q_OS_WIN
     mWindow->initWindowsThumbnail();

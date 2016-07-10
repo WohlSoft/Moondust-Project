@@ -19,8 +19,8 @@
 #ifdef __APPLE__
 
 #include <QFileOpenEvent>
-#include "editor_application.h"
-#include <common_features/logger.h>
+#include <QDebug>
+#include "pge_application.h"
 
 PGE_Application::PGE_Application(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -46,17 +46,17 @@ bool PGE_Application::event(QEvent *event)
             if(m_connected)
             {
                 QString file = openEvent->file();
-                LogDebugQD("Opened file "+file + " (signal)");
+                qDebug()<< ("Opened file "+file + " (signal)");
                 emit openFileRequested( file );
             }
             else
             {
                 QString file = openEvent->file();
-                LogDebugQD("Opened file "+file + " (queue)");
+                qDebug()<< ("Opened file "+file + " (queue)");
                 m_openFileRequests.enqueue(file);
             }
         } else {
-            LogWarningQD("Failed to process openEvent: pointer is null!");
+            qWarning()<< ("Failed to process openEvent: pointer is null!");
         }
     }
     return QApplication::event(event);

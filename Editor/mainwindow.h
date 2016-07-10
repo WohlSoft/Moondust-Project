@@ -153,7 +153,7 @@ public:
         /// \brief openFilesByArgs Open files which gived to editor from command line
         /// \param args - list of file paths
         ///
-        void openFilesByArgs(QStringList args);
+        void openFilesByArgs(QStringList args, int startAt=1);
 
         /*!
          * \brief Show a status bar message text
