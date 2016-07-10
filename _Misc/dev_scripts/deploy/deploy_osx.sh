@@ -56,15 +56,15 @@ if [ ! -d "$DeployDir/$PgePrjSD" ]; then
         mkdir -p "$DeployDir/$PgePrjSD"
 fi
 
-$CurDir/upx-osx-intel64 -9 pge_editor.app/Contents/MacOS/pge_editor
+$CurDir/upx-osx-intel64 -9 "PGE Editor.app/Contents/MacOS/PGE Editor"
+$CurDir/upx-osx-intel64 -9 "PGE Engine.app/Contents/MacOS/PGE Engine"
+$CurDir/upx-osx-intel64 -9 "Character Calibrator.app/Contents/MacOS/Character Calibrator"
+$CurDir/upx-osx-intel64 -9 "PGE Music Player.app/Contents/MacOS/PGE Music Player"
+$CurDir/upx-osx-intel64 -9 "pge_manager.app/Contents/MacOS/pge_manager"
+$CurDir/upx-osx-intel64 -9 "pge_maintainer.app/Contents/MacOS/pge_maintainer"
 $CurDir/upx-osx-intel64 -9 PNG2GIFs
 $CurDir/upx-osx-intel64 -9 GIFs2PNG
 $CurDir/upx-osx-intel64 -9 LazyFixTool
-$CurDir/upx-osx-intel64 -9 pge_calibrator.app/Contents/MacOS/pge_calibrator
-$CurDir/upx-osx-intel64 -9 pge_engine.app/Contents/MacOS/pge_engine
-$CurDir/upx-osx-intel64 -9 pge_manager.app/Contents/MacOS/pge_manager
-$CurDir/upx-osx-intel64 -9 pge_maintainer.app/Contents/MacOS/pge_maintainer
-$CurDir/upx-osx-intel64 -9 pge_musplay.app/Contents/MacOS/pge_musplay
 
 #cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
 cp -a "PGE Editor.app"              "$DeployDir/$PgePrjSD/PGE Editor.app"
