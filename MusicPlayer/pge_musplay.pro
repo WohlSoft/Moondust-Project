@@ -75,7 +75,7 @@ macx:{
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
-    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" $$TARGET
+    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 } else {
     LIBS += -lSDL2 -lSDL2_mixer_ext
 }

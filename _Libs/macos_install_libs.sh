@@ -67,7 +67,8 @@ if [ ! -d "$curd/bin/_Libs" ]; then
     #fi
     cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" "$curd/bin/_Libs"
     #cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
-    cp -a "$SCRDIR/_builds/macos/lib/*.dylib" "$curd/bin/_Libs"
+    echo "cp -a \"$SCRDIR/_builds/macos/lib/\"*.dylib \"$curd/bin/_Libs\""
+    cp -a "$SCRDIR/_builds/macos/lib/"*.dylib "$curd/bin/_Libs"
     printf "\n\nlist of copied dylibs:\n"
     ls -l "$curd/bin/_Libs"
 fi
@@ -85,7 +86,7 @@ function relocateLibraryInCurrentLib() {
 
 fetchPathsForApp()
 {
-FILES="$SCRIPTPATH/../_Libs/_builds/macos/lib/*.dylib"
+FILES="$SCRIPTPATH/../_Libs/_builds/macos/lib/"*.dylib
 for f in $FILES
 do
 filename="${f##*/}"
