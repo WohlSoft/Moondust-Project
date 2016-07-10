@@ -24,7 +24,7 @@
 				<string>lvlx</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>file_lvl.icns</string>
+			<string>file_lvlx.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>PGE Level File</string>
 			<key>CFBundleTypeRole</key>
@@ -38,7 +38,7 @@
 				<string>wld</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>file_lvl.icns</string>
+			<string>file_wld.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>SMBX64/38A World map file</string>
 			<key>CFBundleTypeRole</key>
@@ -52,7 +52,7 @@
 				<string>wldx</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>file_lvl.icns</string>
+			<string>file_wldx.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>PGE World map file</string>
 			<key>CFBundleTypeRole</key>
