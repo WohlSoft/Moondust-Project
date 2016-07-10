@@ -78,7 +78,7 @@ cp LazyFixTool                      "$DeployDir/$PgePrjSD"
 if [ -d "$DeployDir/$PgePrjSD/_Libs" ]; then
     rm -Rf "$DeployDir/$PgePrjSD/_Libs"
 fi
-cp -a _Libs "$DeployDir/$PgePrjSD"
+cp -ra _Libs "$DeployDir/$PgePrjSD"
 
 cp -r ./languages "$DeployDir/$PgePrjSD"
 cp -r ./themes "$DeployDir/$PgePrjSD"

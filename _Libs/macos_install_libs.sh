@@ -5,6 +5,8 @@ if [[ "$1" == "" ]]; then
  exit 1
 fi
 
+printf "\n========$1=========\n\n"
+
 TARGET_APP=$1
 
 bak=~+
@@ -29,10 +31,13 @@ SOURCE="$(abspath "$SOURCE")"
 [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+printf "\nLibrary Installer script for OS X, located here: $SCRDIR\n"
 #=======================================================================
 
 SCRIPT=$(abspath "$0")
 SCRIPTPATH=$(dirname $SCRIPT)
+
+printf "\nScript path dirname: $SCRIPTPATH\n"
 
 SCRP=$(abspath "$SCRIPTPATH/../_Libs/_builds/macos/lib/")
 bak2=$PWD
@@ -41,6 +46,8 @@ SCRP_Libs=$(abspath "$SCRIPTPATH/../_Libs/_builds/macos/lib/")
 #cd $SCRIPTPATH/_sources
 #SCRP_SrcD=$(abspath $PWD"/../_builds/macos/lib/")
 #cd $bak2
+
+echo "Dependent libraries path: $SCRP_Libs"
 
 curd="$SCRDIR/../"
 CONFIGURATION_BUILD_DIR="$SCRDIR/../bin"
@@ -61,6 +68,8 @@ if [ ! -d "$curd/bin/_Libs" ]; then
     cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" "$curd/bin/_Libs"
     #cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2_image.framework" $curd"/bin/_Libs"
     cp -a "$SCRDIR/_builds/macos/lib/*.dylib" "$curd/bin/_Libs"
+    printf "\n\nlist of copied dylibs:\n"
+    ls -l "$curd/bin/_Libs"
 fi
 
 EXECUTABLE_PATH="$TARGET_APP.app/Contents/MacOS/$TARGET_APP"
@@ -156,5 +165,6 @@ fetchPathsForLib #fetch for our dylib
 #fetchPathsForLib #fetch for our dylib
 
 cd $bak
+printf "\n=========Done=========\n\n"
 #if [[ $1 != "no-pause" ]]; then read -n 1; fi
 exit 0
