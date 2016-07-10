@@ -215,6 +215,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) )
         {
             child->show();
+            updateMenus(newSubWin, true);
             child->updateGeometry();
             child->ResetPosition();
             dock_LvlItemBox->setLvlItemBoxes(false, false);
@@ -249,6 +250,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         WorldEdit *child = createWldChild(&newSubWin);
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
+            updateMenus(newSubWin, true);
             child->updateGeometry();
             child->ResetPosition();
             dock_WldItemBox->setWldItemBoxes(false, false);
@@ -291,6 +293,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
+            updateMenus(newSubWin, true);
         } else {
             child->close();
             newSubWin->close();

@@ -452,7 +452,8 @@ SOURCES += main.cpp\
     main_window/plugins/pge_editorpluginitem.cpp \
     main_window/mainw_plugins.cpp \
     main_window/plugins/pge_editorplugininfo.cpp \
-    common_features/main_window_ptr.cpp
+    common_features/main_window_ptr.cpp \
+    SingleApplication/editor_application.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -663,7 +664,8 @@ HEADERS  += defines.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorplugininfo.h \
-    common_features/main_window_ptr.h
+    common_features/main_window_ptr.h \
+    SingleApplication/editor_application.h
 
 FORMS    += \
     common_features/crashhandler.ui \

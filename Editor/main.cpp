@@ -39,6 +39,7 @@
 #include <common_features/crashhandler.h>
 #include <common_features/main_window_ptr.h>
 #include <SingleApplication/singleapplication.h>
+#include <SingleApplication/editor_application.h>
 
 #include <data_configs/config_manager.h>
 
@@ -56,10 +57,10 @@
 static bool initied_sdl = false;
 static bool initied_fig = false;
 
-static QApplication*        app         = nullptr;
-static SingleApplication*   appSingle   = nullptr;
-static MainWindow*          mWindow     = nullptr;
-static QStringList          args;
+static PGE_EditorApplication*   app         = nullptr;
+static SingleApplication*       appSingle   = nullptr;
+static MainWindow*              mWindow     = nullptr;
+static QStringList              args;
 
 static void pgeInitSDL()
 {
@@ -139,7 +140,7 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
-    app     = new QApplication(argc, argv);
+    app     = new PGE_EditorApplication(argc, argv);
     args    = app->arguments();
 
 #ifdef Q_OS_MAC
@@ -259,9 +260,12 @@ int main(int argc, char *argv[])
 
     //Open files which opened by command line
     mWindow->openFilesByArgs(args);
+    mWindow->openFilesByArgs(app->getOpenFileChain());
 
     //Set acception of external file openings
     mWindow->connect(appSingle, SIGNAL(openFile(QString)), mWindow, SLOT(OpenFile(QString)));
+    mWindow->connect(app, SIGNAL(openFileRequested(QString)), mWindow, SLOT(OpenFile(QString)));
+    app->setConnected();
 
 #ifdef Q_OS_WIN
     mWindow->initWindowsThumbnail();
