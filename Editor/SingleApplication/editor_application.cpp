@@ -16,26 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef __APPLE__
 #include <QFileOpenEvent>
-#include "editor_application.h"
 #include <common_features/logger.h>
+#include "editor_application.h"
 
-PGE_Application::PGE_Application(int &argc, char **argv)
+PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
     : QApplication(argc, argv)
 {
+    #ifdef Q_OS_MACX
     m_connected = false;
+    #endif
 }
 
-PGE_Application::~PGE_Application()
+PGE_OSXApplication::~PGE_OSXApplication()
 {}
 
-void PGE_Application::setConnected()
+#ifdef Q_OS_MACX
+void PGE_OSXApplication::setConnected()
 {
     m_connected = true;
 }
 
-bool PGE_Application::event(QEvent *event)
+bool PGE_OSXApplication::event(QEvent *event)
 {
     if(event->type() == QEvent::FileOpen)
     {
@@ -61,7 +63,7 @@ bool PGE_Application::event(QEvent *event)
     return QApplication::event(event);
 }
 
-QStringList PGE_Application::getOpenFileChain()
+QStringList PGE_OSXApplication::getOpenFileChain()
 {
     QStringList chain;
     while(!m_openFileRequests.isEmpty())
@@ -71,4 +73,4 @@ QStringList PGE_Application::getOpenFileChain()
     }
     return chain;
 }
-#endif
+#endif //Q_OS_MACX

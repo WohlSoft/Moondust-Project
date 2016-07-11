@@ -34,25 +34,45 @@ class PGE_OSXApplication : public QApplication
 {
     Q_OBJECT
 #ifdef Q_OS_MACX
+    //! Queue used before slot will be connected to collect file paths received via QFileOpenEvent
     QQueue<QString> m_openFileRequests;
+    //! Mark means to don't collect file paths and send them via signals
     bool            m_connected;
 #endif
 public:
     PGE_OSXApplication(int &argc, char **argv);
     virtual ~PGE_OSXApplication();
 #ifdef Q_OS_MACX
+    /**
+     * @brief Disable collecting of the file paths via queue and send any new-received paths via signal
+     */
     void    setConnected();
+    /**
+     * @brief Input event
+     * @param event Event descriptor
+     * @return is event successfully processed
+     */
     bool    event(QEvent *event);
+    /**
+     * @brief Get all collected file paths and clear internal queue
+     * @return String list of all collected file paths
+     */
     QStringList getOpenFileChain();
 signals:
+    /**
+     * @brief Signal emiting on receiving a file path via QFileOpenEvent
+     * @param filePath full path to open
+     */
     void openFileRequested(QString filePath);
 #endif
 };
 
 #ifdef Q_OS_MACX
-#define PGE_Application PGE_OSXApplication
+//! Allows processing file open and some other events on OS X. On non-Mac operating systems works as stub.
+typedef PGE_OSXApplication PGE_Application;
 #else
-#define PGE_Application QApplication
+//! Allows processing file open and some other events on OS X. On non-Mac operating systems works as stub.
+typedef QApplication PGE_Application;
 #endif //Q_OS_MACX
 
 #endif // PGE_EDITORAPPLICATION_H

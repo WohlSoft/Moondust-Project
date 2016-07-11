@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <QFileOpenEvent>
 #include <QDebug>
 #include "pge_application.h"
@@ -74,4 +73,4 @@ QStringList PGE_OSXApplication::getOpenFileChain()
     }
     return chain;
 }
-#endif  //Q_OS_MACX
+#endif //Q_OS_MACX
