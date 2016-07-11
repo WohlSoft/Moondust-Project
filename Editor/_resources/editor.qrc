@@ -211,4 +211,7 @@
     <qresource prefix="/tips">
         <file>tips/tips_en.html</file>
     </qresource>
+    <qresource prefix="/plugin">
+        <file>plugin/main_boot.js</file>
+    </qresource>
 </RCC>

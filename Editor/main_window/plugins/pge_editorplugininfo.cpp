@@ -38,7 +38,7 @@ PGE_EditorPluginInfo::PGE_EditorPluginInfo(PGE_EditorPluginManager *pluginManage
         }
         else
         {
-            ui->textInfo->setText(tr("Failed to load \"%1\" package!\n"
+            ui->textInfo->setText(tr("Failed to load \"%1\" package!\n\n"
                                      "Error description:\n"
                                      "%2")
                                         .arg(pluginDetails->packageName())

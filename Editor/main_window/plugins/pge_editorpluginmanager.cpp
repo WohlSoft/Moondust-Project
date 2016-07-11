@@ -41,7 +41,7 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
                 LogWarning("Error while loading main.js in " + subFolder + ", skipping...");
                 m_plugins.push_back(new PGE_EditorPluginItem(this, subFolder,
                                                              m_engine.getLastError()
-                                                             + "\n" + tr("At line")+
+                                                             + tr(" at line")+
                                                              " " + QString::number(m_engine.getLastErrorLine())) );
                 continue;
             }

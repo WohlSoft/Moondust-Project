@@ -28,8 +28,8 @@ class PGE_JS_File : public QObject
     //! Path to the script file
     QString m_scriptPath;
 public:
-    explicit PGE_JS_File(QObject* parent=NULL);
-    explicit PGE_JS_File(const QString& scriptPath, QObject* parent=NULL);
+    explicit PGE_JS_File(QObject* parent = NULL);
+    explicit PGE_JS_File(const QString& scriptPath, QObject* parent = NULL);
     virtual ~PGE_JS_File();
 
     void setScriptPath(QString scriptPath);
@@ -41,7 +41,7 @@ public:
     Q_INVOKABLE bool    isFileExists(QString filePath);
     Q_INVOKABLE bool    isDirExists(QString dirPath);
 
-    Q_INVOKABLE bool    copy(QString source, QString target, bool override=false);
+    Q_INVOKABLE bool    copy(QString source, QString target, bool override = false);
 };
 
 #endif // PGE_JS_FILE_H

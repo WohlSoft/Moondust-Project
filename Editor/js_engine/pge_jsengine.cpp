@@ -17,15 +17,33 @@ void PGE_JsEngine::logError(const QJSValue &erroredValue)
     LogWarning(message);
 
     #if DEBUG_BUILD
-    QMessageBox::critical(MainWinConnect::pMainWin, "JS Error", message);
+    // QMessageBox::critical(MainWinConnect::pMainWin, "JS Error", message);
     #endif
 }
 
-PGE_JsEngine::PGE_JsEngine(QObject *parent) : QObject(parent)
+PGE_JsEngine::PGE_JsEngine(QObject *parent) :
+    QObject(parent),
+    m_jsengine(this)
 {
     #if ((QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR >= 6)||(QT_VERSION_MAJOR > 5))
     m_jsengine.installExtensions(QJSEngine::GarbageCollectionExtension);
     #endif
+
+    QFile bootFile(":/plugin/plugin/main_boot.js");
+    bool openResult = bootFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    assert(openResult); // This file must open!
+
+    QTextStream bootFileStream(&bootFile);
+    bootFileStream.setCodec("UTF-8");
+
+    int numOfNewlines = 0;
+    QString bootFileContents;
+    while(!bootFileStream.atEnd()){
+        numOfNewlines++;
+        bootFileContents += bootFileStream.readLine() + "\n";
+    }
+
+    m_bootContents = qMakePair(std::move(numOfNewlines), std::move(bootFileContents));
 }
 
 bool PGE_JsEngine::setFile(QString filePath)
@@ -50,15 +68,6 @@ bool PGE_JsEngine::setFile(QString filePath)
     return true;
 }
 
-void PGE_JsEngine::setCode(QString &code)
-{
-    m_scriptFile = "";
-    m_scriptContents = code;
-
-    QJSValue result = m_jsengine.evaluate(m_scriptContents, m_scriptFile);
-    if( result.isError() )
-        logError(result);
-}
 
 int PGE_JsEngine::getLastErrorLine() const
 {

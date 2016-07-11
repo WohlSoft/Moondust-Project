@@ -53,12 +53,12 @@ QString PGE_JS_File::appPath()
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)
 {
-    return QFileDialog::getOpenFileName(getWidgetParent(this), caption, dir, filter);
+    return QFileDialog::getOpenFileName(getWidgetParentOrNullptr(this), caption, dir, filter);
 }
 
 QString PGE_JS_File::getOpenDirPath(QString caption, QString dir)
 {
-    return QFileDialog::getExistingDirectory(getWidgetParent(this), caption, dir, QFileDialog::ShowDirsOnly);
+    return QFileDialog::getExistingDirectory(getWidgetParentOrNullptr(this), caption, dir, QFileDialog::ShowDirsOnly);
 }
 
 bool PGE_JS_File::isFileExists(QString filePath)

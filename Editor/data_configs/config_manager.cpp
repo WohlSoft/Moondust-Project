@@ -493,7 +493,7 @@ bool ConfigManager::checkForConfigureTool()
             QMessageBox::information(this,
                                      tr("Configuration package is not configured!"),
                                      tr("\"%1\" configuration package is not configured yet.\n"
-                                        "Are you want to configure it?")
+                                        "Do you want to configure it?")
                                         .arg(m_currentConfig),
                                              QMessageBox::Yes|QMessageBox::No);
         if(reply==QMessageBox::Yes)
@@ -524,7 +524,10 @@ bool ConfigManager::runConfigureTool()
         js.bindProxy(new PGE_JS_File(m_currentConfigPath, parentW), "FileIO");
         js.bindProxy(new PGE_JS_INI(parentW), "INI");
 
-        if( js.setFile( configureToolApp ) )
+        bool successfulLoaded = false;
+        js.loadFileByExpcetedResult<void>(configureToolApp, &successfulLoaded);
+
+        if( successfulLoaded )
         {
             setEnabled(false);
             if( !js.call<bool>("onConfigure", nullptr) )

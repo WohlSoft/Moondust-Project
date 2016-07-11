@@ -7,7 +7,7 @@
 #include <cassert>
 #include <utility>
 
-inline QWidget* getWidgetParent(QObject* obj){
+inline QWidget* getWidgetParentOrNullptr(QObject* obj){
     QObject* parent = obj->parent();
     if(parent)
         return qobject_cast<QWidget*>(parent);
@@ -20,5 +20,7 @@ inline QJSValue genQObjectWrapper(QObject* factoryObject, Args&&... args){
     assert(engine);
     return engine->newQObject(new T(std::forward<Args>(args)...));
 }
+
+
 
 #endif // JS_UTILS_H

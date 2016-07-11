@@ -29,16 +29,16 @@ PGE_JS_Common::~PGE_JS_Common() {}
 
 int PGE_JS_Common::msgBoxInfo(QString title, QString message)
 {
-    return int(QMessageBox::information(getWidgetParent(this), title, message));
+    return int(QMessageBox::information(getWidgetParentOrNullptr(this), title, message));
 }
 
 int PGE_JS_Common::msgBoxWarning(QString title, QString message)
 {
-    return int(QMessageBox::warning(getWidgetParent(this), title, message));
+    return int(QMessageBox::warning(getWidgetParentOrNullptr(this), title, message));
 }
 
 int PGE_JS_Common::msgBoxError(QString title, QString message)
 {
-    return int(QMessageBox::critical(getWidgetParent(this), title, message));
+    return int(QMessageBox::critical(getWidgetParentOrNullptr(this), title, message));
 }
 
