@@ -31,10 +31,10 @@ PGE_EditorPluginInfo::PGE_EditorPluginInfo(PGE_EditorPluginManager *pluginManage
         const PGE_EditorPluginItem* pluginDetails = m_pluginManager->getPluginInfo(current->data(UserRolePluginIndex).toInt());
         if(pluginDetails->isValid())
         {
-            ui->textInfo->setText(tr("Name: ") + pluginDetails->pluginName() + "\n"
-                                 +tr("Author: ") + pluginDetails->authorName() + "\n"
-                                 +tr("Version: ") + QString::number(pluginDetails->pluginVersionNum()) + "\n"
-                                 +tr("Description: ") + pluginDetails->description());
+            ui->textInfo->setText(tr("Name:")       + " " + pluginDetails->pluginName() + "\n"
+                                 +tr("Author:")     + " " + pluginDetails->authorName() + "\n"
+                                 +tr("Version:")    + " " + QString::number(pluginDetails->pluginVersionNum()) + "\n"
+                                 +tr("Description:")+ " " + pluginDetails->description());
         }
         else
         {

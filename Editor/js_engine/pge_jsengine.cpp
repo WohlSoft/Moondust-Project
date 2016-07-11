@@ -15,10 +15,6 @@ void PGE_JsEngine::logError(const QJSValue &erroredValue)
                 + QString::number(erroredValue.property("lineNumber").toInt())
                 + ":\n" + erroredValue.toString();
     LogWarning(message);
-
-    #if DEBUG_BUILD
-    // QMessageBox::critical(MainWinConnect::pMainWin, "JS Error", message);
-    #endif
 }
 
 PGE_JsEngine::PGE_JsEngine(QObject *parent) :

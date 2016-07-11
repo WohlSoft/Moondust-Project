@@ -544,6 +544,14 @@ bool ConfigManager::runConfigureTool()
         }
         else
         {
+            QMessageBox::critical(parentW,
+                                  tr("Error of the configuring script"),
+                                  tr("Configuring tool has error: %1 at line %2.\n"
+                                     "File path: %3")
+                                        .arg(js.getLastError())
+                                        .arg(js.getLastErrorLine())
+                                        .arg(configureToolApp),
+                                      QMessageBox::Ok);
             return false;
         }
     }
