@@ -17,7 +17,6 @@
  */
 
 #ifdef __APPLE__
-
 #include <QFileOpenEvent>
 #include "editor_application.h"
 #include <common_features/logger.h>

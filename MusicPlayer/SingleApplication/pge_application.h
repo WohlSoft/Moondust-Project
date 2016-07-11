@@ -19,29 +19,38 @@
 #ifndef PGE_EDITORAPPLICATION_H
 #define PGE_EDITORAPPLICATION_H
 
-#ifdef __APPLE__
 #include <QApplication>
 #include <QQueue>
 #include <QStringList>
 
+/*
+Note: Class wasn't disabled completely to avoid "Note: No relevant classes found. No output generated." warning.
+*/
+
 /**
  * @brief Inhereted application which provides open file event, usually needed for OS X
  */
-class PGE_Application : public QApplication
+class PGE_OSXApplication : public QApplication
 {
     Q_OBJECT
-
+#ifdef Q_OS_MACX
     QQueue<QString> m_openFileRequests;
     bool            m_connected;
+#endif
 public:
-    PGE_Application(int &argc, char **argv);
-    virtual ~PGE_Application();
+    PGE_OSXApplication(int &argc, char **argv);
+    virtual ~PGE_OSXApplication();
+#ifdef Q_OS_MACX
     void    setConnected();
     bool    event(QEvent *event);
     QStringList getOpenFileChain();
 signals:
     void openFileRequested(QString filePath);
+#endif
 };
+
+#ifdef Q_OS_MACX
+#define PGE_Application PGE_OSXApplication
 #else
 #define PGE_Application QApplication
 #endif //Q_OS_MACX
