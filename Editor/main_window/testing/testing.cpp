@@ -481,7 +481,11 @@ static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
     ResumeThread(luna.m_pi.hThread);
 
     // Close handles
+    CloseHandle(luna.m_ipc_pipe_out_i);
+    CloseHandle(luna.m_ipc_pipe_in_o);
     CloseHandle(luna.m_pi.hThread);
+    luna.m_ipc_pipe_out_i = 0;
+    luna.m_ipc_pipe_in_o  = 0;
     //CloseHandle(pi.hProcess); //Don't close it because needed to catch already-running SMBX Engine
 
     return LUNALOADER_OK;
