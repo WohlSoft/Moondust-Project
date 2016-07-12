@@ -147,9 +147,9 @@ void CrashHandler::crashBySIGNAL(int signalid)
         case SIGURG:
         case SIGUSR1:
         case SIGUSR2: return;
-        case SIGILL:   sigtype = QObject::tr("Terminal was closed [SIGHUP]"); break;
         #endif
-        case SIGFPE:  sigtype = QObject::tr("Wrong CPU Instruction [SIGFPE]"); break;
+        case SIGILL:  sigtype = QObject::tr("Wrong CPU Instruction [SIGILL]"); break;
+        case SIGFPE:  sigtype = QObject::tr("Floating-point exception [SIGFPE]"); break;
         case SIGABRT: sigtype = QObject::tr("Aborted! [SIGABRT]"); break;
         case SIGSEGV: sigtype = QObject::tr("Signal Segmentation Violation [SIGSEGV]"); break;
         case SIGINT:  sigtype = QObject::tr("Interrupted! [SIGINT]"); break;
@@ -329,9 +329,9 @@ void CrashHandler::checkCrashsaves()
 
 void CrashHandler::initCrashHandlers()
 {
+    std::set_terminate(&crashByUnhandledException);
 #ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
-    std::set_terminate(&crashByUnhandledException);
     #ifndef _WIN32 //Unsupported signals by Windows
     signal(SIGHUP,  &crashBySIGNAL);
     signal(SIGQUIT, &crashBySIGNAL);

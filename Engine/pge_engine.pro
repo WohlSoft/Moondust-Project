@@ -118,16 +118,18 @@ android:{
 } else {
     LANGUAGES_TARGET=$$DESTDIR/languages
 }
-mkpath($$LANGUAGES_TARGET)
-#tr_update.commands = lupdate $$PWD/pge_engine.pro
-tr_release.commands = lrelease -idbased $$PWD/pge_engine.pro
-#tr_release.depends = tr_update
-translates.commands = $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\"
-translates.depends = tr_release
-#QMAKE_EXTRA_TARGETS += tr_update
-QMAKE_EXTRA_TARGETS += tr_release translates
-#POST_TARGETDEPS += tr_update
-POST_TARGETDEPS += tr_release translates
+release: {
+    mkpath($$LANGUAGES_TARGET)
+    #tr_update.commands = lupdate $$PWD/pge_engine.pro
+    tr_release.commands = lrelease -idbased $$PWD/pge_engine.pro
+    #tr_release.depends = tr_update
+    translates.commands = $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\"
+    translates.depends = tr_release
+    #QMAKE_EXTRA_TARGETS += tr_update
+    QMAKE_EXTRA_TARGETS += tr_release translates
+    #POST_TARGETDEPS += tr_update
+    POST_TARGETDEPS += tr_release translates
+}
 
 TRANSLATIONS += languages/engine_en.ts \
                 languages/engine_ru.ts \

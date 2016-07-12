@@ -25,11 +25,16 @@
 #include <common_features/logger_sets.h>
 #include <common_features/main_window_ptr.h>
 
+#ifdef Q_OS_WIN
+#include <main_window/testing/luna_tester.h>
+#endif
+
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
+    m_messageBoxer(this),
     ui(new Ui::MainWindow)
 {
     MainWinConnect::pMainWin = this;
@@ -48,6 +53,14 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
+
+#ifdef Q_OS_WIN
+    m_luna = new LunaTester;
+    m_luna->m_pi           = {0, 0, 0, 0};
+    m_luna->m_ipc_pipe_out     = 0;
+    m_luna->m_ipc_pipe_in  = 0;
+    m_luna->m_helperThread = 0;
+#endif
 
 #ifdef Q_OS_MACX
     foreach(QAction* act, ui->menuBar->actions())
@@ -82,7 +95,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         EditorSpashScreen splash(splashimg);
         splash.setCursor(Qt::ArrowCursor);
         splash.setDisabled(true);
-        splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
+        splash.setWindowFlags( splash.windowFlags() | Qt::WindowStaysOnTopHint );
 
         for(int a=0; a<configs.animations.size();a++)
         {
@@ -200,21 +213,29 @@ MainWindow::~MainWindow()
         delete pge_thumbbar;
 
     DWORD lpExitCode=0;
-    if(GetExitCodeProcess(m_luna_pi.hProcess, &lpExitCode))
+    if(GetExitCodeProcess(m_luna->m_pi.hProcess, &lpExitCode))
     {
         if(lpExitCode==STILL_ACTIVE)
         {
-            WaitForSingleObject(m_luna_pi.hProcess, 100);
-            TerminateProcess(m_luna_pi.hProcess, lpExitCode);
-            CloseHandle(m_luna_pi.hProcess);
+            WaitForSingleObject(m_luna->m_pi.hProcess, 100);
+            TerminateProcess(m_luna->m_pi.hProcess, lpExitCode);
+            CloseHandle(m_luna->m_pi.hProcess);
         }
     }
 
-    if(m_luna_ipc_pipe)
+    //m_luna->m_helper;
+
+    if(m_luna->m_ipc_pipe_out)
     {
-        CloseHandle(m_luna_ipc_pipe);
-        m_luna_ipc_pipe = 0;
+        CloseHandle(m_luna->m_ipc_pipe_out);
+        m_luna->m_ipc_pipe_out = 0;
     }
+    if(m_luna->m_ipc_pipe_in)
+    {
+        CloseHandle(m_luna->m_ipc_pipe_in);
+        m_luna->m_ipc_pipe_in = 0;
+    }
+    delete m_luna;
 #endif
     delete ui;
 

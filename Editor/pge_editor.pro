@@ -45,16 +45,18 @@ include($$PWD/../_common/build_props.pri)
 #translates.files += $$PWD/languages/*.qm
 #translates.files += $$PWD/languages/*.png
 #tr_update.commands = lupdate $$PWD/pge_engine.pro
-mkpath($$LANGUAGES_TARGET)
-tr_release.commands = lrelease $$PWD/pge_editor.pro
-#tr_release.depends = tr_update
-translates.commands += $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\" $$escape_expand(\n\t)\
-                       $(COPY) $$shell_path($$PWD/languages/*.png) \"$$shell_path($$LANGUAGES_TARGET)\"
-translates.depends = tr_release
-#QMAKE_EXTRA_TARGETS += tr_update
-QMAKE_EXTRA_TARGETS += tr_release translates
-#POST_TARGETDEPS += tr_update
-POST_TARGETDEPS += tr_release translates
+release: {
+    mkpath($$LANGUAGES_TARGET)
+    tr_release.commands = lrelease $$PWD/pge_editor.pro
+    #tr_release.depends = tr_update
+    translates.commands += $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\" $$escape_expand(\n\t)\
+                           $(COPY) $$shell_path($$PWD/languages/*.png) \"$$shell_path($$LANGUAGES_TARGET)\"
+    translates.depends = tr_release
+    #QMAKE_EXTRA_TARGETS += tr_update
+    QMAKE_EXTRA_TARGETS += tr_release translates
+    #POST_TARGETDEPS += tr_update
+    POST_TARGETDEPS += tr_release translates
+}
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
@@ -453,7 +455,8 @@ SOURCES += main.cpp\
     main_window/mainw_plugins.cpp \
     main_window/plugins/pge_editorplugininfo.cpp \
     common_features/main_window_ptr.cpp \
-    SingleApplication/editor_application.cpp
+    SingleApplication/editor_application.cpp \
+    common_features/safe_msg_box.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -665,7 +668,9 @@ HEADERS  += defines.h \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorplugininfo.h \
     common_features/main_window_ptr.h \
-    SingleApplication/editor_application.h
+    SingleApplication/editor_application.h \
+    main_window/testing/luna_tester.h \
+    common_features/safe_msg_box.h
 
 FORMS    += \
     common_features/crashhandler.ui \

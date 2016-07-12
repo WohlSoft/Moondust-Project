@@ -102,6 +102,9 @@ signals:
 protected:
     void closeEvent(QCloseEvent *event);
 
+public slots:
+    void doSave();
+
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
     virtual void leaveEvent(QEvent * leaveEvent);

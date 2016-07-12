@@ -614,6 +614,11 @@ clearScene:
     }
 }
 
+void LevelEdit::doSave()
+{
+    save();
+}
+
 void LevelEdit::setCurrentFile(const QString &fileName)
 {
     QFileInfo info(fileName);

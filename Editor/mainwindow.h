@@ -39,6 +39,7 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <QWinThumbnailToolBar>
+struct LunaTester;
 #endif
 
 #include <PGE_File_Formats/lvl_filedata.h>
@@ -52,6 +53,7 @@
 #include <data_configs/data_configs.h>
 
 #include <common_features/logger.h>
+#include <common_features/safe_msg_box.h>
 
 #include <tools/tilesets/tileset.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
@@ -187,6 +189,11 @@ public:
         /// \return True, if the current window is either a level window or a world window.
         ///
         bool getCurrentSceneCoordinates(qreal &x, qreal &y);
+
+    public:
+        //! Thread-safe message box factory
+        SafeMsgBox m_messageBoxer;
+
     signals:
         /*!
          * \brief Set SMBX64 strict mode (unsupported properties are will be greyed/disabled)
@@ -1024,9 +1031,8 @@ public:
         //! Mutex which helps to avoid multiple launches of engine
         QMutex   engine_mutex;
         #ifdef _WIN32
-        //! LunaLoader process information
-        PROCESS_INFORMATION m_luna_pi;
-        HANDLE m_luna_ipc_pipe;
+        void   _RunSmbxTestHelper();
+        LunaTester * m_luna;
         #endif
 
 // ////////////////////////////////////////////////////////////////////////////////
