@@ -21,7 +21,6 @@
 
 #include <QObject>
 
-class QMutex;
 /**
  * @brief Provides thread-save way to show message boxes
  */
@@ -34,10 +33,10 @@ public:
 signals:
 
 public slots:
-    void info(QString title,        QString text,   int buttons, QMutex* locker = nullptr, int *reply=nullptr);
-    void question(QString title,     QString text,  int buttons, QMutex* locker = nullptr, int *reply=nullptr);
-    void warning(QString title,     QString text,   int buttons, QMutex* locker = nullptr, int *reply=nullptr);
-    void critical(QString title,    QString text,   int buttons, QMutex* locker = nullptr, int *reply=nullptr);
+    void info(QString title,        QString text,   int buttons, int *reply=nullptr);
+    void question(QString title,     QString text,  int buttons, int *reply=nullptr);
+    void warning(QString title,     QString text,   int buttons, int *reply=nullptr);
+    void critical(QString title,    QString text,   int buttons, int *reply=nullptr);
 };
 
 /**
@@ -54,10 +53,10 @@ public:
     int critical(QString title,    QString text,   int buttons);
 
 signals:
-    void info(QString title,        QString text,   int buttons, QMutex* locker, int *reply);
-    void question(QString title,    QString text,   int buttons, QMutex* locker, int *reply);
-    void warning(QString title,     QString text,   int buttons, QMutex* locker, int *reply);
-    void critical(QString title,    QString text,   int buttons, QMutex* locker, int *reply);
+    void info(QString title,        QString text,   int buttons, int *reply);
+    void question(QString title,    QString text,   int buttons, int *reply);
+    void warning(QString title,     QString text,   int buttons, int *reply);
+    void critical(QString title,    QString text,   int buttons, int *reply);
 };
 
 #endif // SAFEMSGBOX_H
