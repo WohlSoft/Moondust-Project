@@ -993,6 +993,7 @@ void MainWindow::_RunSmbxTestHelper()
             /**********************************************
              **********Do LunaLUA testing launch!**********
              **********************************************/
+                //params << "--patch";
                 params << "--waitForIPC";
 
                 LevelEdit* ed = activeLvlEditWin();
