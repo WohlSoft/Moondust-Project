@@ -27,7 +27,8 @@
 QString ApplicationPath;
 QString ApplicationPath_x;
 
-QString AppPathManager::_settingsPath;
+QString AppPathManager::m_settingsPath;
+QString AppPathManager::m_userPath;
 
 #if __ANDROID__ || __APPLE__
 #define UserDirName "/PGE Project"
@@ -95,7 +96,8 @@ void AppPathManager::initAppPath()
                 }
             #endif
 
-            _settingsPath = appDir.absolutePath();
+            m_userPath = appDir.absolutePath();
+            _initSettingsPath();
         }
         else
         {
@@ -109,17 +111,18 @@ void AppPathManager::initAppPath()
 
     return;
 defaultSettingsPath:
-    _settingsPath = ApplicationPath;
+    m_userPath = ApplicationPath;
+    _initSettingsPath();
 }
 
 QString AppPathManager::settingsFile()
 {
-    return _settingsPath+"/pge_engine.ini";
+    return m_settingsPath+"/pge_engine.ini";
 }
 
 QString AppPathManager::userAppDir()
 {
-    return _settingsPath;
+    return m_userPath;
 }
 
 void AppPathManager::install()
@@ -143,21 +146,38 @@ void AppPathManager::install()
 
 bool AppPathManager::isPortable()
 {
-    if(_settingsPath.isNull())
-        _settingsPath = ApplicationPath;
+    if(m_settingsPath.isNull())
+        m_settingsPath = ApplicationPath;
+    if(m_userPath.isNull())
+        m_userPath = ApplicationPath;
     if(!QFile(settingsFile()).exists()) return false;
     bool forcePortable=false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+
     checkForPort.beginGroup("Main");
         forcePortable= checkForPort.value("force-portable", false).toBool();
     checkForPort.endGroup();
+
+    if(forcePortable)
+        _initSettingsPath();
 
     return forcePortable;
 }
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return (_settingsPath != ApplicationPath);
+    return (m_userPath != ApplicationPath);
+}
+
+
+void AppPathManager::_initSettingsPath()
+{
+    m_settingsPath = m_userPath + "/settings";
+    if(QFileInfo(m_settingsPath).isFile())
+        QFile::remove(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder
+    QDir st(m_settingsPath);
+    if(!st.exists())
+        st.mkpath(m_settingsPath);
 }
 
 

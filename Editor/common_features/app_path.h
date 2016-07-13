@@ -62,8 +62,13 @@ class AppPathManager
         static bool userDirIsAvailable();
 
     private:
+        /**
+         * @brief Makes settings path if not exists
+         */
+        static void _initSettingsPath();
         //! Full path to settings INI file
         static QString m_settingsPath;
+        static QString m_userPath;
 };
 
 #endif // APP_PATH_H

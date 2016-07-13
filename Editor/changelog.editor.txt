@@ -14,6 +14,8 @@ Editor 0.3.1.11
 - Better validating of configuration package INI-files in the editor (to avoid future crashes because damaged config pack)
 - Experimental plugins system
 - Fixed menubar confusion while loading, and fixed confusion between settings and quit menu actions on Mac OS X
+- Fixed stability of LunaTester to don't freeze/crash PGE Editor if crashes/failures on side of SMBX Engine
+- Settings are will be saved into separated "settings" directory to have convenient way to update portable PGE package
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
