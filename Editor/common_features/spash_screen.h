@@ -33,6 +33,9 @@ public slots:
 
     void progressPartsMax(int val);
     void progressPartsVal(int val);
+protected:
+    virtual void keyPressEvent(QKeyEvent *);
+    virtual void closeEvent(QCloseEvent *e);
 
 private:
     void construct();

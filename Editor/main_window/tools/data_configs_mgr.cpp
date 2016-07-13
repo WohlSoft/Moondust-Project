@@ -31,6 +31,34 @@
 #include <main_window/dock/wld_item_toolbox.h>
 #include <main_window/dock/tileset_item_box.h>
 
+/**
+ * @brief A child over QProgressDialog which forbids dialog closing on Esc key
+ */
+class PGEProgressDialog : public QProgressDialog
+{
+public:
+    explicit PGEProgressDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags())
+     : QProgressDialog(parent, flags) {}
+
+    PGEProgressDialog(const QString &labelText, const QString &cancelButtonText,
+                    int minimum, int maximum, QWidget *parent = Q_NULLPTR,
+                    Qt::WindowFlags flags = Qt::WindowFlags()):
+        QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, flags)
+    {}
+    virtual ~PGEProgressDialog() {}
+
+    virtual void keyPressEvent(QKeyEvent *e)
+    {
+        if(e->key()!= Qt::Key_Escape)
+            QProgressDialog::keyPressEvent(e);
+    }
+    virtual void closeEvent(QCloseEvent *e)
+    {
+        //No way to close this dialog box!
+        e->ignore();
+    }
+};
+
 void MainWindow::on_actionLoad_configs_triggered()
 {   
     if(ui->centralWidget->subWindowList().size()>0)
@@ -51,11 +79,13 @@ void MainWindow::on_actionLoad_configs_triggered()
 //            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
 //    }
 
-    QProgressDialog progress("Please wait...", tr("Abort"), 0,100, this);
+    PGEProgressDialog progress("Please wait...", tr("Abort"),
+                              0, 100,//Value, Maximum
+                              this,//Parent
+                              Qt::Window|Qt::WindowTitleHint|Qt::CustomizeWindowHint);
     progress.setWindowTitle(tr("Reloading configurations"));
     //progress.setWindowModality(Qt::WindowModal);
     progress.setModal(true);
-    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
     progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
     progress.setCancelButton(0);
@@ -68,9 +98,12 @@ void MainWindow::on_actionLoad_configs_triggered()
     //Reload configs
     qApp->processEvents();
 
-    progress.connect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
-    progress.connect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
-    progress.connect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
+    progress.connect(&configs, SIGNAL(progressPartsTotal(int)),
+                     &progress, SLOT(setMaximum(int)), Qt::BlockingQueuedConnection);
+    progress.connect(&configs, SIGNAL(progressTitle(QString)),
+                     &progress, SLOT(setLabelText(QString)), Qt::BlockingQueuedConnection);
+    progress.connect(&configs, SIGNAL(progressPartNumber(int)),
+                     &progress, SLOT(setValue(int)), Qt::BlockingQueuedConnection);
 
     LogDebug("Lock tile item box...");
     dock_TilesetBox->lockTilesetBox=true;
@@ -78,7 +111,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
-    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64); }
+    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(1); }
 
     LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
     dock_TilesetBox->lockTilesetBox=false;
@@ -94,15 +127,13 @@ void MainWindow::on_actionLoad_configs_triggered()
     //setLevelSectionData();
     LogDebug("Closing progress dialog...");
 
-    if(!progress.wasCanceled())
-        progress.close();
+    progress.hide();
 
     LogDebug("Disconnecting slots...");
 
     progress.disconnect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
     progress.disconnect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
     progress.disconnect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
-
 
 //    //Restore all animations states back
 //    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
@@ -118,7 +149,6 @@ void MainWindow::on_actionLoad_configs_triggered()
 //                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
 //        }
 //    }
-
     LogDebug("Checking result...");
 
     if(isOk.result())

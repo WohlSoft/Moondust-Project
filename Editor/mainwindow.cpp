@@ -108,11 +108,16 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
                                 int(configs.animations[a].speed));
         }
 
-        splash.connect(&configs, SIGNAL(progressMax(int)), &splash, SLOT(progressMax(int)));
-        splash.connect(&configs, SIGNAL(progressTitle(QString)), &splash, SLOT(progressTitle(QString)));
-        splash.connect(&configs, SIGNAL(progressValue(int)), &splash, SLOT(progressValue(int)));
-        splash.connect(&configs, SIGNAL(progressPartsTotal(int)), &splash, SLOT(progressPartsMax(int)));
-        splash.connect(&configs, SIGNAL(progressPartNumber(int)), &splash, SLOT(progressPartsVal(int)));
+        splash.connect(&configs, SIGNAL(progressMax(int)),
+                       &splash, SLOT(progressMax(int)), Qt::QueuedConnection);
+        splash.connect(&configs, SIGNAL(progressTitle(QString)),
+                       &splash, SLOT(progressTitle(QString)), Qt::QueuedConnection);
+        splash.connect(&configs, SIGNAL(progressValue(int)),
+                       &splash, SLOT(progressValue(int)), Qt::QueuedConnection);
+        splash.connect(&configs, SIGNAL(progressPartsTotal(int)),
+                       &splash, SLOT(progressPartsMax(int)), Qt::QueuedConnection);
+        splash.connect(&configs, SIGNAL(progressPartNumber(int)),
+                       &splash, SLOT(progressPartsVal(int)), Qt::QueuedConnection);
 
         /*********************Loading of config pack**********************/
         // Do the loading in a thread
@@ -131,7 +136,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         splash.startAnimations();
 
         // Now wait until the config load in finished.
-        while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64); }
+        while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(10); }
 
         /*********************Splash Screen end**********************/
         splash.finish(this);

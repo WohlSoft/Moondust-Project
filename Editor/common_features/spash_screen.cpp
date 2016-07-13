@@ -1,6 +1,7 @@
 #include "spash_screen.h"
 #include <QApplication>
 #include <QImage>
+#include <QCloseEvent>
 #ifdef Q_OS_ANDROID
 #include <QPixmap>
 #include <QDesktopWidget>
@@ -130,6 +131,17 @@ void EditorSpashScreen::progressPartsMax(int val)
 void EditorSpashScreen::progressPartsVal(int val)
 {
     _parts_val=val;
+}
+
+void EditorSpashScreen::keyPressEvent(QKeyEvent *)
+{
+    //Just ignore everything
+}
+
+void EditorSpashScreen::closeEvent(QCloseEvent *e)
+{
+    //No way to close this dialog box!
+    e->ignore();
 }
 
 void EditorSpashScreen::construct()
