@@ -20,15 +20,49 @@
 
 #include "singleapplication.h"
 
+void sendIPCMessage(const char* shmem, const char* semaphore, const QString &data)
+{
+    QSystemSemaphore    t_sema(semaphore, 1);
+    QSharedMemory       t_shmem(shmem);
+    if(t_shmem.attach())
+    {
+        QByteArray bytes;
+        bytes = data.toUtf8();
+        QTextStream(stdout) << "Attempt to send data...\n";
+        int attempts = 4;
+        while(attempts > 0)
+        {
+            t_sema.acquire();
+            typedef char* pchar;
+            typedef int*  pint;
+            char* inData = pchar(t_shmem.data());
+            QTextStream(stdout) << int(inData[0]) << "\n";
+            if(inData[0] == 0)
+            {
+                inData[0] = 1;
+                int* size = pint(inData+1);
+                *size = bytes.size();
+                memcpy(inData+1+sizeof(int),
+                       bytes.data(),
+                       qMin(bytes.size(), int(4095-sizeof(int))));
+                QTextStream(stdout) << "DATA SENT!\n";
+                break;
+            }
+            t_sema.release();
+            attempts--;
+            QThread::msleep(50);
+        }
+    }
+}
+
 SingleApplication::SingleApplication(QStringList &args) :
     m_sema("PGE_EditorSemaphore_35y321c9m853n5y9312mc5ly891235y", 1),
     m_shmem("PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y")
 {
     _shouldContinue = false; // By default this is not the main process
 
-    socket = new QUdpSocket();
     server = nullptr;
-    QString isServerRuns;
+    //QString isServerRuns;
 
     bool isRunning=false;
     m_sema.acquire();//Avoid races
@@ -45,41 +79,12 @@ SingleApplication::SingleApplication(QStringList &args) :
     //Force run second copy of application
     if(args.contains("--force-run", Qt::CaseInsensitive))
     {
-        isServerRuns.clear();
         isRunning=false;
         args.removeAll("--force-run");
     }
 
-    if(isRunning)
-    {
-        QUdpSocket acceptor;
-        acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
-
-        // Attempt to connect to the LocalServer
-        socket->connectToHost(QHostAddress::LocalHost, 58487);
-        if(socket->waitForConnected(100))
-        {
-            socket->write(QString("CMD:Is editor running?").toUtf8());
-            socket->flush();
-            if(acceptor.waitForReadyRead(100))
-            {
-                //QByteArray dataGram;//Yes, I'm runs!
-                QByteArray datagram;
-                datagram.resize(acceptor.pendingDatagramSize());
-                QHostAddress sender;
-                quint16 senderPort;
-                acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-                if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
-                {
-                    isServerRuns="Yes!";
-                }
-            }
-        }
-    }
-
     if(args.contains("--force-run", Qt::CaseInsensitive))
     {
-        isServerRuns.clear();
         args.removeAll("--force-run");
     }
     _arguments = args;
@@ -87,16 +92,12 @@ SingleApplication::SingleApplication(QStringList &args) :
     if(isRunning)
     {
         QString str = QString("CMD:showUp");
-        QByteArray bytes;
         for(int i=1; i<_arguments.size(); i++)
         {
             str.append(QString("\n%1").arg(_arguments[i]));
         }
-        bytes = str.toUtf8();
-        socket->write(bytes);
-        socket->flush();
-        QThread::msleep(100);
-        socket->close();
+
+        sendIPCMessage(PGE_EDITOR_SHARED_MEMORY, PGE_EDITOR_SEMAPHORE, str);
     }
     else
     {
@@ -107,7 +108,7 @@ SingleApplication::SingleApplication(QStringList &args) :
         QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
         QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
         QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
-        QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
+        QObject::connect(this,   SIGNAL(stopServer()), server, SLOT(stopServer()));
     }
     m_sema.release();//Free semaphore
 }

@@ -21,32 +21,22 @@
 
 #include <QThread>
 #include <QVector>
-#include <QTcpServer>
-#include <QUdpSocket>
-#include <QTcpSocket>
-#include <QLocalSocket>
+#include <QSystemSemaphore>
+#include <QSharedMemory>
+#include <QAtomicInteger>
 
-class IntProcServer  : public QUdpSocket
-{
-    Q_OBJECT
-public:
-    explicit IntProcServer();
-    ~IntProcServer();
-public slots:
-    void stateChanged(QAbstractSocket::SocketState stat);
-signals:
-    void messageIn(QString msg);
-
-protected slots:
-    void doReadData();
-    void displayError(QAbstractSocket::SocketError socketError);
-};
-
-
+#define PGE_EDITOR_SEMAPHORE     "PGE_EDITOR_SEMAF_wejQEThQetjqetJQEtjQeTJQTYJ"
+#define PGE_EDITOR_SHARED_MEMORY "PGE_EDITOR_SHMEM_wejQEThQetjqetJQEtjQeTJQTYJ"
 
 class LocalServer : public QThread
 {
   Q_OBJECT
+  //! Semaphore, avoids races
+  QSystemSemaphore  m_sema;
+  //! Shared memory, stable way to avoid concurrent running multiple copies of same application
+  QSharedMemory     m_shmem;
+  //! Trigger
+  QAtomicInteger<bool> m_isWorking;
 public:
   LocalServer();
   ~LocalServer();

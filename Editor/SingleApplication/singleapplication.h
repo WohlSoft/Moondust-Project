@@ -2,7 +2,6 @@
 #define APPLICATION_H
 
 #include <QObject>
-#include <QUdpSocket>
 #include <QStringList>
 #include <QSystemSemaphore>
 #include <QSharedMemory>
@@ -46,9 +45,6 @@ private:
     QSystemSemaphore m_sema;
     //! Shared memory, stable way to avoid concurrent running multiple copies of same application
     QSharedMemory m_shmem;
-
-    //! Client socket pointer
-    QUdpSocket* socket;
     //! Pointer to currently working local server copy
     LocalServer* server;
     //! Recently accepted arguments

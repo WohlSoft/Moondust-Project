@@ -25,69 +25,27 @@
 
 #include "localserver.h"
 
-
-IntProcServer::IntProcServer()
-{
-    connect(this, SIGNAL(readyRead()), this, SLOT(doReadData()));
-}
-
-IntProcServer::~IntProcServer()
-{}
-
-void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
-{
-    switch(stat)
-    {
-        case QAbstractSocket::UnconnectedState: qDebug()<<"The socket is not connected.";break;
-        case QAbstractSocket::HostLookupState: qDebug()<<"The socket is performing a host name lookup.";break;
-        case QAbstractSocket::ConnectingState: qDebug()<<"The socket has started establishing a connection.";break;
-        case QAbstractSocket::ConnectedState: qDebug()<<"A connection is established.";break;
-        case QAbstractSocket::BoundState: qDebug()<<"The socket is bound to an address and port.";break;
-        case QAbstractSocket::ClosingState: qDebug()<<"The socket is about to close (data may still be waiting to be written).";break;
-        case QAbstractSocket::ListeningState: qDebug()<<"[For internal]";break;
-    }
-}
-
-void IntProcServer::doReadData()
-{
-    while (hasPendingDatagrams())
-    {
-        QByteArray datagram;
-        datagram.resize(pendingDatagramSize());
-        QHostAddress sender;
-        quint16 senderPort;
-        readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-        emit messageIn(QString::fromUtf8(datagram));
-    }
-}
-
-void IntProcServer::displayError(QTcpSocket::SocketError socketError)
-{
-    switch (socketError)
-    {
-        default:
-            qDebug() << QString("EDITOR SingleAPP: The following error occurred: %1.")
-                                     .arg(errorString());
-    }
-}
-
-IntProcServer *ipServer = nullptr;
-
-
-
-
 /**
  * @brief LocalServer::LocalServer
  *  Constructor
  */
-LocalServer::LocalServer()
+LocalServer::LocalServer() :
+    m_sema(PGE_EDITOR_SEMAPHORE, 1),
+    m_shmem(PGE_EDITOR_SHARED_MEMORY),
+    m_isWorking(false)
 {
-    ipServer = new IntProcServer();
-    connect(ipServer, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
-    connect(this, SIGNAL(privateDataReceived(QString)), this, SLOT(slotOnData(QString)));
-    if(!ipServer->bind(QHostAddress::LocalHost, 58487,  QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress))
+//    ipServer = new IntProcServer();
+//    connect(ipServer, SIGNAL(messageIn(QString)),
+//            this, SLOT(slotOnData(QString)));
+//    connect(this, SIGNAL(privateDataReceived(QString)),
+//            this, SLOT(slotOnData(QString)));
+
+    if(!m_shmem.create(4096, QSharedMemory::ReadWrite))
     {
-        qWarning() << ipServer->errorString();
+        qWarning() << m_shmem.errorString();
+    } else {
+        //! Zero data in the memory
+        memset(m_shmem.data(), 0, 4096);
     }
 }
 
@@ -98,8 +56,8 @@ LocalServer::LocalServer()
  */
 LocalServer::~LocalServer()
 {
-    ipServer->close();
-    delete ipServer;
+    m_sema.release();//Free semaphore
+    m_isWorking = false;
 }
 
 
@@ -117,6 +75,7 @@ LocalServer::~LocalServer()
  */
 void LocalServer::run()
 {
+    m_isWorking = true;
     exec();
 }
 
@@ -126,9 +85,26 @@ void LocalServer::run()
  */
 void LocalServer::exec()
 {
-    while(ipServer->isOpen())
+    while(m_isWorking)
     {
-        msleep(100);
+        m_sema.acquire();//Avoid races
+        typedef char* pchar;
+        typedef int*  pint;
+        char* inData = pchar(m_shmem.data());
+        if(inData[0] == 1) // If any data detected
+        {
+            char out[4095-sizeof(int)];
+            int  size = *pint(inData+1);
+            size = qMin(size, int(4095-sizeof(int)));
+            memcpy(out, inData+1+sizeof(int), size);
+            memset(m_shmem.data(), 0, 4096);
+            QMetaObject::invokeMethod(this,
+                                      "slotOnData",
+                                      Qt::QueuedConnection,
+                                      Q_ARG(QString, QString::fromUtf8(out, size)));
+        }
+        m_sema.release();//Free semaphore
+        msleep(25);
     }
 }
 
@@ -140,10 +116,8 @@ void LocalServer::exec()
  */
 void LocalServer::stopServer()
 {
-    if(ipServer) ipServer->close();
+    m_isWorking = false;
 }
-
-
 
 /**
  * @brief LocalServer::slotOnData
@@ -180,18 +154,29 @@ void LocalServer::onCMD(QString data)
     if(data.startsWith("CMD:"))
     {
         data.remove("CMD:");
+        QString cmd      = data;
+        QString argsPart = "";
 
-        qDebug()<<"Accepted data: "+data;
+        if(data.contains(':'))
+        {
+            int splitAt = data.indexOf(':');
+            cmd      = data.mid(0, splitAt);
+            argsPart = data.mid(splitAt+1, -1);
+        }
+
+        qDebug() << "Accepted data: " + data;
+        qDebug() << "Command " + cmd;
+        qDebug() << "Args " + argsPart;
 
         QStringList commands;
         commands << "showUp";
         commands << "CONNECT_TO_ENGINE";
         commands << "ENGINE_CLOSED";
-        commands << "Is editor running?";
+        commands << "testSetup";
 
-        int cmdID = commands.indexOf(data);
+        int cmdID = commands.indexOf(cmd);
 
-        if((cmdID==3) || (MainWinConnect::pMainWin->m_isAppInited))
+        if( (cmdID==3) || (MainWinConnect::pMainWin->m_isAppInited))
         switch(cmdID)
         {
             case 0:
@@ -222,12 +207,28 @@ void LocalServer::onCMD(QString data)
             }
             case 3:
             {
-                QUdpSocket answer;
-                answer.connectToHost(QHostAddress::LocalHost, 58488);
-                answer.waitForConnected(100);
-                answer.write(QString("Yes, I'm runs!").toUtf8());
-                answer.waitForBytesWritten(100);
-                answer.flush();
+                QStringList args = argsPart.split(',');
+                SETTINGS_TestSettings& t = GlobalSettings::testing;
+                if(args.size()>=5)
+                {
+                    bool ok;
+                    int playerID = args[0].toInt(&ok);
+                    if(ok)
+                    {
+                        if(playerID==0)
+                        {
+                            if(ok) t.p1_char = args[1].toInt(&ok);
+                            if(ok) t.p1_state= args[2].toInt(&ok);
+                            if(ok) t.p1_vehicleID= args[3].toInt(&ok);
+                            if(ok) t.p1_vehicleType= args[4].toInt(&ok);
+                        } else if(playerID==1) {
+                            if(ok) t.p2_char = args[1].toInt(&ok);
+                            if(ok) t.p2_state= args[2].toInt(&ok);
+                            if(ok) t.p2_vehicleID= args[3].toInt(&ok);
+                            if(ok) t.p2_vehicleType= args[4].toInt(&ok);
+                        }
+                    }
+                }
                 break;
             }
             default:

@@ -7,8 +7,6 @@
 #include <QElapsedTimer>
 #include <QApplication>
 
-#include <QUdpSocket>
-
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
 
