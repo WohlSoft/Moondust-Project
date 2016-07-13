@@ -690,7 +690,7 @@ void MainWindow::_RunSmbxTestHelper()
              **********Do LunaLUA testing launch!**********
              **********************************************/
                 //params << "--patch";
-                params << "--waitForIPC";
+                params << "--hideOnCloseIPC";
 
                 LevelEdit* ed = activeLvlEditWin();
                 if(!ed)
