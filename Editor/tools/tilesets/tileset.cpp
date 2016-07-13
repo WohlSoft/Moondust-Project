@@ -314,7 +314,7 @@ void tileset::SaveSimpleTileset(const QString &path, const SimpleTileset &tilese
 
 bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
 {
-    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    QSettings simpleTilesetINI(path, QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
     QStringList groups = simpleTilesetINI.childGroups();
     int tilesetindex;

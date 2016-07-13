@@ -72,13 +72,15 @@ void MainWindow::on_actionLoad_configs_triggered()
     progress.connect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
     progress.connect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
 
+    LogDebug("Lock tile item box...");
     dock_TilesetBox->lockTilesetBox=true;
     dock_TilesetBox->clearTilesetGroups();
 
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
-    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(1); }
+    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64); }
 
+    LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
     dock_TilesetBox->lockTilesetBox=false;
 
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
@@ -90,9 +92,12 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     //Set tools from loaded configs
     //setLevelSectionData();
+    LogDebug("Closing progress dialog...");
 
     if(!progress.wasCanceled())
         progress.close();
+
+    LogDebug("Disconnecting slots...");
 
     progress.disconnect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
     progress.disconnect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
@@ -114,6 +119,8 @@ void MainWindow::on_actionLoad_configs_triggered()
 //        }
 //    }
 
+    LogDebug("Checking result...");
+
     if(isOk.result())
     {
         QMessageBox::information(this, tr("Reloading configuration"),
@@ -129,6 +136,7 @@ void MainWindow::on_actionLoad_configs_triggered()
             on_actionCurConfig_triggered();
         }
     }
+    LogDebug("Completed!");
 }
 
 void MainWindow::on_actionReConfigure_triggered()

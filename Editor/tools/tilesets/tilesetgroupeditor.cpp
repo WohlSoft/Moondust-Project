@@ -110,7 +110,7 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
 
 bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTilesetGroup &tilesetGroup)
 {
-    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    QSettings simpleTilesetINI(path, QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
     simpleTilesetINI.beginGroup("tileset-group");
     if(!simpleTilesetINI.contains("tilesets-count"))

@@ -448,6 +448,7 @@ bool dataconfigs::loadconfigs()
 
     m_recentIniFile.clear();
     m_sectionsCache.clear();
+    LogDebug(QString("-------------------------"));
 
     return true;
 }
