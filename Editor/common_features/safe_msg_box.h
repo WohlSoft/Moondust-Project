@@ -37,6 +37,11 @@ public slots:
     void question(QString title,     QString text,  int buttons, int *reply=nullptr);
     void warning(QString title,     QString text,   int buttons, int *reply=nullptr);
     void critical(QString title,    QString text,   int buttons, int *reply=nullptr);
+    void richBox(QString title,
+                 QString text,
+                 int buttons,
+                 int msgType,
+                 int *reply=nullptr);
 };
 
 /**
@@ -51,12 +56,14 @@ public:
     int question(QString title,    QString text,   int buttons);
     int warning(QString title,     QString text,   int buttons);
     int critical(QString title,    QString text,   int buttons);
+    int richBox(QString title,     QString text,   int buttons, int msgType);
 
 signals:
     void info(QString title,        QString text,   int buttons, int *reply);
     void question(QString title,    QString text,   int buttons, int *reply);
     void warning(QString title,     QString text,   int buttons, int *reply);
     void critical(QString title,    QString text,   int buttons, int *reply);
+    void richBox(QString title, QString text, int buttons, int msgType, int *reply);
 };
 
 #endif // SAFEMSGBOX_H
