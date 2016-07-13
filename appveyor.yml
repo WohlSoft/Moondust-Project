@@ -21,7 +21,7 @@
 #                             created 2015-11-25
 #--------------------------------------------------------------------------------
 
-version: 0.3.3.4.{build}
+version: 0.3.3.5.{build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}
@@ -42,23 +42,23 @@ os: unstable
 clone_folder: C:\_Repos\PGE-Project
 clone_depth:  3  # clone entire repository history if not defined
 # Uncommend those two lines to enable RDP (which can be used to debug stuff and test built stuff)
-init:
- - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# init:
+# - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
   - git submodule init
   - git submodule update
-  - echo set QtDir=C:\Qt\5.5\mingw492_32\bin>> _paths.bat
-  - echo set MinGW=C:\Qt\Tools\mingw492_32\bin>> _paths.bat
+  - echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat
+  - echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
-  
+
 build_script:
   - build_deps.bat nopause
   - build.bat nopause noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
   - cd _Misc\dev_scripts\deploy\
   - deploy_windows_dynamic.bat nopause
   - cd ..\..\..\
-  
+
 artifacts:
   - path: bin-w32\_packed\pge-project-dev-win32.zip
   - path: bin-w32\_packed\install-pge-common-dev-win32.zip
