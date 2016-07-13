@@ -179,8 +179,12 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.numOfPlayers = settings.value("num-players", 1).toInt();
         GlobalSettings::testing.p1_char= settings.value("p1-char", 1).toInt();
         GlobalSettings::testing.p1_state= settings.value("p1-state", 1).toInt();
+        GlobalSettings::testing.p1_vehicleID    = settings.value("p1-vehicle-id", 0).toInt();
+        GlobalSettings::testing.p1_vehicleType  = settings.value("p1-vehicle-type", 0).toInt();
         GlobalSettings::testing.p2_char= settings.value("p2-char", 1).toInt();
         GlobalSettings::testing.p2_state= settings.value("p2-state", 1).toInt();
+        GlobalSettings::testing.p2_vehicleID    = settings.value("p2-vehicle-id", 0).toInt();
+        GlobalSettings::testing.p2_vehicleType  = settings.value("p2-vehicle-type", 0).toInt();
     settings.endGroup();
 
     settings.beginGroup("Recent");
@@ -317,8 +321,12 @@ void MainWindow::saveSettings()
         settings.setValue("num-players", GlobalSettings::testing.numOfPlayers);
         settings.setValue("p1-char", GlobalSettings::testing.p1_char);
         settings.setValue("p1-state", GlobalSettings::testing.p1_state);
+        settings.setValue("p1-vehicle-id", GlobalSettings::testing.p1_vehicleID);
+        settings.setValue("p1-vehicle-type", GlobalSettings::testing.p1_vehicleType);
         settings.setValue("p2-char", GlobalSettings::testing.p2_char);
         settings.setValue("p2-state", GlobalSettings::testing.p2_state);
+        settings.setValue("p2-vehicle-id", GlobalSettings::testing.p2_vehicleID);
+        settings.setValue("p2-vehicle-type", GlobalSettings::testing.p2_vehicleType);
     settings.endGroup();
 
     settings.beginGroup("Recent");

@@ -58,8 +58,12 @@ struct SETTINGS_TestSettings {
     int  numOfPlayers;
     int  p1_char;
     int  p1_state;
+    int  p1_vehicleID;
+    int  p1_vehicleType;
     int  p2_char;
     int  p2_state;
+    int  p2_vehicleID;
+    int  p2_vehicleType;
 };
 
 class GlobalSettings

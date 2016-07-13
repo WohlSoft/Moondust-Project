@@ -295,10 +295,15 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
         QJsonArray JSONPlayers;
         QJsonObject JSONPlayer1, JSONPlayer2;
             SETTINGS_TestSettings  t = GlobalSettings::testing;
-            JSONPlayer1["character"] = t.p1_char;
-            JSONPlayer1["powerup"]   = t.p1_state;
-            JSONPlayer2["character"] = t.p2_char;
-            JSONPlayer2["powerup"]   = t.p2_state;
+            JSONPlayer1["character"]  = t.p1_char;
+            JSONPlayer1["powerup"]    = t.p1_state;
+            JSONPlayer1["mountType"]  = t.p1_vehicleID;
+            JSONPlayer1["mountColor"] = t.p1_vehicleType;
+            JSONPlayer2["character"]  = t.p2_char;
+            JSONPlayer2["powerup"]    = t.p2_state;
+            JSONPlayer2["mountType"]  = t.p2_vehicleID;
+            JSONPlayer2["mountColor"] = t.p2_vehicleType;
+            //mountType
 
             JSONPlayers.push_back(JSONPlayer1);
         if(t.numOfPlayers>1)
