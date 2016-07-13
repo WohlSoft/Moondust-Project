@@ -124,18 +124,18 @@ and retry your recent action to take more detail info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="402"/>
+        <location filename="../main.cpp" line="437"/>
         <source>Unable to init SDL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="618"/>
-        <location filename="../main.cpp" line="760"/>
+        <location filename="../main.cpp" line="653"/>
+        <location filename="../main.cpp" line="795"/>
         <source>No opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="631"/>
+        <location filename="../main.cpp" line="666"/>
         <source>ERROR:
 Fail to start world map
 
@@ -143,24 +143,24 @@ Fail to start world map
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="649"/>
+        <location filename="../main.cpp" line="684"/>
         <source>World map was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="666"/>
+        <location filename="../main.cpp" line="701"/>
         <source>Start level
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="668"/>
+        <location filename="../main.cpp" line="703"/>
         <source>Type an exit code (signed integer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="826"/>
+        <location filename="../main.cpp" line="861"/>
         <source>Warp exit
 
 Exit to:
@@ -170,7 +170,7 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="871"/>
+        <location filename="../main.cpp" line="906"/>
         <source>Level was closed with error.
 %1</source>
         <translation type="unfinished"></translation>

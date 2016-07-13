@@ -244,7 +244,7 @@ static std::string ReadMsgString(HANDLE hInputRead)
         while (byteCursor < byteCount)
         {
             DWORD bytesRead;
-            ReadFile(hInputRead, &data[byteCursor], 1, &bytesRead, NULL); //read(mInFD, &data[byteCursor], byteCount - byteCursor);
+            ReadFile(hInputRead, &data[byteCursor], 1, &bytesRead, NULL);
             if (bytesRead == 0)
             {
                 return "";
@@ -254,7 +254,7 @@ static std::string ReadMsgString(HANDLE hInputRead)
         // Get following comma
         {
             DWORD bytesRead;
-            ReadFile(hInputRead, &c, 1, &bytesRead, NULL);//= read(mInFD, &c, 1);
+            ReadFile(hInputRead, &c, 1, &bytesRead, NULL);
             if (bytesRead != 1) {
                 return "";
             }
