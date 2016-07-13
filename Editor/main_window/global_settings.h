@@ -65,26 +65,36 @@ struct SETTINGS_TestSettings {
 class GlobalSettings
 {
 public:
-
-    static LevelEditingSettings LvlOpts;
+    static LevelEditingSettings  LvlOpts;
     static SETTINGS_ItemDefaults LvlItemDefaults;
 
-    static SETTINGS_TestSettings testing; //Testing settings
+    //! Testing settings
+    static SETTINGS_TestSettings testing;
 
-    static QString locale; //Current language
-    static long animatorItemsLimit; //If level map have too many items, animation will be stopped
+    //! Current language
+    static QString locale;
+    //! Max limit of animated elements (on exciding, animation will be paused)
+    static long animatorItemsLimit;//If level map have too many items, animation will be stopped
 
     //Paths
+    //! Recent file-save path for Levels and World maps
     static QString savePath;
+    //! Recent file-save path for NPC.txt files
     static QString savePath_npctxt;
+    //! Recent open path
     static QString openPath;
 
     //External tools
+    //! Path to SoX utility
     static QString tools_sox_bin_path;
 
     //Music player
+    //! Play music automatically on file open
     static bool autoPlayMusic;
-    static int musicVolume;
+    //! Music volume
+    static int  musicVolume;
+    //! Recent state of the music playing button
+    static bool recentMusicPlayingState;
 
     //Toolboxes visibly states
     static bool LevelItemBoxVis;
@@ -104,24 +114,27 @@ public:
     static bool VariablesBoxVis;
 
     // Editor flags
+    //! Enalbe middle-mouse group duplicating feature
     static bool MidMouse_allowDuplicate;
+    //! Enalbe middle-mouse quick-grabbing-for-place feature
     static bool MidMouse_allowSwitchToPlace;
+    //! Enalbe middle-mouse switch to drag mode feature
     static bool MidMouse_allowSwitchToDrag;
 
     //Placing mode flahs
     static bool Placing_dontShowPropertiesBox;
 
-    //Max Limit if history elements
-    static int historyLimit;
+    //!Max Limit if history elements
+    static int  historyLimit;
 
-    //Last active file type state
-    static int lastWinType;
+    //!Last active file type state
+    static int  lastWinType;
 
-    static QMdiArea::ViewMode MainWindowView;
-    static QTabWidget::TabPosition LVLToolboxPos;
-    static QTabWidget::TabPosition WLDToolboxPos;
-    static QTabWidget::TabPosition TSTToolboxPos;
-    static QString currentTheme;
+    static QMdiArea::ViewMode       MainWindowView;
+    static QTabWidget::TabPosition  LVLToolboxPos;
+    static QTabWidget::TabPosition  WLDToolboxPos;
+    static QTabWidget::TabPosition  TSTToolboxPos;
+    static QString                  currentTheme;
 
     static bool ShowTipOfDay;
 };

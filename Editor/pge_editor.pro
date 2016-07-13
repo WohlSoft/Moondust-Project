@@ -456,7 +456,8 @@ SOURCES += main.cpp\
     main_window/plugins/pge_editorplugininfo.cpp \
     common_features/main_window_ptr.cpp \
     SingleApplication/editor_application.cpp \
-    common_features/safe_msg_box.cpp
+    common_features/safe_msg_box.cpp \
+    main_window/testing/luna_tester.cpp
 
 HEADERS  += defines.h \
     version.h \
