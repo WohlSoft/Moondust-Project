@@ -270,7 +270,7 @@ static std::string ReadMsgString(HANDLE hInputRead)
 static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE hInputRead)
 {
     //{"jsonrpc": "2.0", "method": "testLevel", "params":
-    //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}]},
+    //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}], "godMode": false, "showFPS": false },
     //"id": 3}
 
     //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
@@ -317,6 +317,10 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
             JSONPlayers.push_back(JSONPlayer2);
 
         JSONparams["players"] = JSONPlayers;
+
+        // Extra flags
+        JSONparams["godMode"] = t.xtra_god;
+        JSONparams["showFPS"] = t.xtra_debug;
 
         QString LVLRawData;
         //To don't affect level data state, need to remember recently used file format and version identifier
