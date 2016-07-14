@@ -827,13 +827,14 @@ void MainWindow::_RunSmbxTestHelper()
                 /****************Write file path into shared memory**************************/
 
                 //Connect to Shared memory and send data
-                TCHAR szName[]=TEXT("LunaDLL_LevelFileName_834727238");
-                HANDLE hMapFile;
-                wchar_t *pBuf;
-                hMapFile = OpenFileMapping(
-                                   FILE_MAP_ALL_ACCESS,   // read/write access
-                                   FALSE,                 // do not inherit the name
-                                   szName);               // name of mapping object
+                typedef wchar_t* wchar_p;
+                wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
+                HANDLE  hMapFile;
+                wchar_p pBuf;
+                hMapFile = OpenFileMappingW(
+                                    FILE_MAP_ALL_ACCESS,   // read/write access
+                                    FALSE,                 // do not inherit the name
+                                    szName);               // name of mapping object
 
                 if(hMapFile == NULL)
                 {
@@ -846,15 +847,15 @@ void MainWindow::_RunSmbxTestHelper()
                         break;
                     default:
                         DWORD   dwLastError = GetLastError();
-                        TCHAR   lpBuffer[256] = L"?";
+                        wchar_t lpBuffer[256] = L"?";
                         if(dwLastError != 0)    // Don't want to see a "operation done successfully" error ;-)
-                            FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM,                 // It´s a system error
-                                             NULL,                                      // No string to be formatted needed
-                                             dwLastError,                               // Hey Windows: Please explain this error!
-                                             MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),  // Do it in the standard language
-                                             lpBuffer,              // Put the message here
-                                             255,                     // Number of bytes to store the message
-                                             NULL);
+                            FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM,                 // It´s a system error
+                                           NULL,                                       // No string to be formatted needed
+                                           dwLastError,                                // Hey Windows: Please explain this error!
+                                           MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),   // Do it in the standard language
+                                           lpBuffer,                // Put the message here
+                                           255,                     // Number of bytes to store the message
+                                           NULL);
                         msg.warning(tr("Error"),
                         tr("Fail to send file patth into LunaDLL: (%1)").arg(QString::fromWCharArray(lpBuffer)),
                         QMessageBox::Ok);
@@ -862,16 +863,16 @@ void MainWindow::_RunSmbxTestHelper()
                     return;
                 }
 
-                pBuf = (wchar_t*)MapViewOfFile(hMapFile,   // handle to map object
-                                               FILE_MAP_ALL_ACCESS, // read/write permission
-                                               0,
-                                               0,
-                                               15360 );
+                pBuf = wchar_p(MapViewOfFile(hMapFile,   // handle to map object
+                                             FILE_MAP_ALL_ACCESS, // read/write permission
+                                             0,
+                                             0,
+                                             15360));
 
                 if(pBuf == NULL)
                 {
                     msg.warning(tr("Error"),
-                    tr("Could not map view of file (%1).").arg(GetLastError()),
+                    tr("Could not map view of LunaLUA shared memory (%1).").arg(GetLastError()),
                     QMessageBox::Ok);
                     CloseHandle(hMapFile);
                     return;

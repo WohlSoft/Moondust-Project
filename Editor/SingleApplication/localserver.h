@@ -24,6 +24,7 @@
 #include <QSystemSemaphore>
 #include <QSharedMemory>
 #include <QAtomicInteger>
+#include "semaphore_winapi.h"
 
 #define PGE_EDITOR_SEMAPHORE     "PGE_EDITOR_SEMAF_wejQEThQetjqetJQEtjQeTJQTYJ"
 #define PGE_EDITOR_SHARED_MEMORY "PGE_EDITOR_SHMEM_wejQEThQetjqetJQEtjQeTJQTYJ"
@@ -32,7 +33,7 @@ class LocalServer : public QThread
 {
   Q_OBJECT
   //! Semaphore, avoids races
-  QSystemSemaphore  m_sema;
+  PGE_Semaphore     m_sema;
   //! Shared memory, stable way to avoid concurrent running multiple copies of same application
   QSharedMemory     m_shmem;
   //! Trigger

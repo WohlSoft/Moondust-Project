@@ -19,11 +19,18 @@
 #include <QtDebug>
 
 #include "singleapplication.h"
+#include "semaphore_winapi.h"
 
 void sendIPCMessage(const char* shmem, const char* semaphore, const QString &data)
 {
-    QSystemSemaphore    t_sema(semaphore, 1);
+    PGE_Semaphore       t_sema(semaphore, 1);
     QSharedMemory       t_shmem(shmem);
+
+    #ifdef Q_OS_WIN
+    //Just keep compatibility with WinAPI
+    t_shmem.setNativeKey(PGE_EDITOR_SHARED_MEMORY);
+    #endif
+
     if(t_shmem.attach())
     {
         QByteArray bytes;
@@ -52,6 +59,8 @@ void sendIPCMessage(const char* shmem, const char* semaphore, const QString &dat
             attempts--;
             QThread::msleep(50);
         }
+        t_shmem.detach();
+        t_sema.release();
     }
 }
 

@@ -34,11 +34,10 @@ LocalServer::LocalServer() :
     m_shmem(PGE_EDITOR_SHARED_MEMORY),
     m_isWorking(false)
 {
-//    ipServer = new IntProcServer();
-//    connect(ipServer, SIGNAL(messageIn(QString)),
-//            this, SLOT(slotOnData(QString)));
-//    connect(this, SIGNAL(privateDataReceived(QString)),
-//            this, SLOT(slotOnData(QString)));
+    #ifdef Q_OS_WIN
+    //Just keep compatibility with WinAPI
+    m_shmem.setNativeKey(PGE_EDITOR_SHARED_MEMORY);
+    #endif
 
     if(!m_shmem.create(4096, QSharedMemory::ReadWrite))
     {
