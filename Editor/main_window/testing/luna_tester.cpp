@@ -288,7 +288,14 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
         QJsonObject JSONparams;
 
         if( !ed->isUntitled )
-            JSONparams["filename"] = ed->curFile;
+        {
+            QString lvlFile = ed->curFile;
+            if(lvlFile.endsWith(".lvlx", Qt::CaseInsensitive))
+            {
+                lvlFile.remove(lvlFile.size()-1, 1);
+            }
+            JSONparams["filename"] = lvlFile;
+        }
         else
             JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
 
