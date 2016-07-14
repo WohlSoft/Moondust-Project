@@ -16,12 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtDebug>
+#include <common_features/logger.h>
 
 #include "singleapplication.h"
 #include "semaphore_winapi.h"
 
-void sendIPCMessage(const char* shmem, const char* semaphore, const QString &data)
+/**
+ * @brief Sends IPC message to shared memory with semaphore protection
+ * @param shmem Identificator of target shared memory object
+ * @param semaphore Identificator of target semaphore object
+ * @param data Data to setnd
+ */
+static void sendIPCMessage(const char* shmem, const char* semaphore, const QString &data)
 {
     PGE_Semaphore       t_sema(semaphore, 1);
     QSharedMemory       t_shmem(shmem);
@@ -66,16 +72,13 @@ void sendIPCMessage(const char* shmem, const char* semaphore, const QString &dat
 
 SingleApplication::SingleApplication(QStringList &args) :
     m_sema("PGE_EditorSemaphore_35y321c9m853n5y9312mc5ly891235y", 1),
-    m_shmem("PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y")
+    m_shmem("PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y"),
+    server(nullptr),
+    m_shouldContinue(false) //By default this is not the main process
 {
-    _shouldContinue = false; // By default this is not the main process
-
-    server = nullptr;
-    //QString isServerRuns;
-
-    bool isRunning=false;
-    m_sema.acquire();//Avoid races
-    if(m_shmem.attach()) //Detect shared memory copy
+    bool isRunning = false;
+    m_sema.acquire();   //Avoid races
+    if(m_shmem.attach())//Detect shared memory copy
     {
         isRunning = true;
     }
@@ -96,72 +99,63 @@ SingleApplication::SingleApplication(QStringList &args) :
     {
         args.removeAll("--force-run");
     }
-    _arguments = args;
+    m_arguments = args;
 
     if(isRunning)
     {
         QString str = QString("CMD:showUp");
-        for(int i=1; i<_arguments.size(); i++)
+        for(int i=1; i<m_arguments.size(); i++)
         {
-            str.append(QString("\n%1").arg(_arguments[i]));
+            str.append(QString("\n%1").arg(m_arguments[i]));
         }
-
         sendIPCMessage(PGE_EDITOR_SHARED_MEMORY, PGE_EDITOR_SEMAPHORE, str);
     }
     else
     {
         // The attempt was insuccessful, so we continue the program
-        _shouldContinue = true;
+        m_shouldContinue = true;
         server = new LocalServer();
         server->start();
-        QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
-        QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
-        QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
-        QObject::connect(this,   SIGNAL(stopServer()), server, SLOT(stopServer()));
+        QObject::connect(server,SIGNAL(showUp()),
+                         this,  SLOT(slotShowUp()));
+        QObject::connect(server,SIGNAL(dataReceived(QString)),
+                         this,  SLOT(slotOpenFile(QString)));
+        QObject::connect(server,SIGNAL(acceptedCommand(QString)),
+                         this,  SLOT(slotAcceptedCommand(QString)));
+        QObject::connect(this,  SIGNAL(stopServer()),
+                         server,SLOT(stopServer()));
     }
     m_sema.release();//Free semaphore
 }
 
-/**
- * @brief SingleApplication::~SingleApplication
- *  Destructor
- */
 SingleApplication::~SingleApplication()
 {
-    if(_shouldContinue)
+    if(m_shouldContinue)
     {
         emit stopServer();
         if((server) && (!server->wait(5000)))
         {
-            qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
+            LogDebugQD("TERMINATOR RETURNS BACK single application! 8-)");
             server->terminate();
-            qDebug() << "Wait for nothing";
+            LogDebugQD("Wait for nothing");
             server->wait();
-            qDebug() << "Terminated!";
+            LogDebugQD("Terminated!");
         }
     }
     if(server) delete server;
 }
 
-/**
- * @brief SingleApplication::shouldContinue
- *  Weather the program should be terminated
- * @return bool
- */
+
 bool SingleApplication::shouldContinue()
 {
-    return _shouldContinue;
+    return m_shouldContinue;
 }
 
 QStringList SingleApplication::arguments()
 {
-    return _arguments;
+    return m_arguments;
 }
 
-/**
- * @brief SingleApplication::slotShowUp
- *  Executed when the showUp command is sent to LocalServer
- */
 void SingleApplication::slotShowUp()
 {
     emit showUp();

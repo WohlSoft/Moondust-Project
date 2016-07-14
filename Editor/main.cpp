@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
 
 QuitFromEditor:
     pgeEditorQuit();
-    LogDebug("--> Application closed <--");
+    LogDebugNC("--> Application closed <--");
 
     return ret;
 }

@@ -20,7 +20,6 @@
 #define LOCALSERVER_H
 
 #include <QThread>
-#include <QVector>
 #include <QSystemSemaphore>
 #include <QSharedMemory>
 #include <QAtomicInteger>
@@ -31,36 +30,54 @@
 
 class LocalServer : public QThread
 {
-  Q_OBJECT
-  //! Semaphore, avoids races
-  PGE_Semaphore     m_sema;
-  //! Shared memory, stable way to avoid concurrent running multiple copies of same application
-  QSharedMemory     m_shmem;
-  //! Trigger
-  QAtomicInteger<bool> m_isWorking;
+    friend class SingleApplication;
+    Q_OBJECT
+    //! Semaphore, avoids races
+    PGE_Semaphore     m_sema;
+    //! Shared memory, stable way to avoid concurrent running multiple copies of same application
+    QSharedMemory     m_shmem;
+    //! Server working state
+    QAtomicInteger<bool> m_isWorking;
 public:
-  LocalServer();
-  ~LocalServer();
-  void shut();
+    LocalServer();
+    ~LocalServer();
 
 protected:
-  void run();
-  void exec();
+    /**
+     * @brief run
+     *  Initiate the thread.
+     */
+    void run();
+    /**
+     * @brief exec
+     *  Keeps the thread alive. Waits for incomming connections
+     */
+    void exec();
 
 signals:
-  void dataReceived(QString data);
-  void privateDataReceived(QString data);
-  void showUp();
-  void openFile(QString path);
-  void acceptedCommand(QString cmd);
+    void dataReceived(QString data);
+    void showUp();
+    void acceptedCommand(QString cmd);
 
 private slots:
-  void stopServer();
-  void slotOnData(QString data);
+    /**
+     * @brief Stops work of the server
+     */
+    void stopServer();
+    /**
+     * @brief LocalServer::slotOnData
+     *  Executed when data is received
+     * @param data
+     */
+    void slotOnData(QString data);
 
 private:
-  void onCMD(QString data);
-
+    /**
+     * @brief Command parser
+     *  Receives raw data and parses possible internal commands inside
+     * @param data received raw data string
+     */
+    void onCMD(QString data);
 };
 
 #endif // LOCALSERVER_H

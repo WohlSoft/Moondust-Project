@@ -16,19 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFile>
 #include <QStringList>
-#include <QtDebug>
 
 #include <common_features/main_window_ptr.h>
+#include <common_features/logger.h>
 #include <networking/engine_intproc.h>
 
 #include "localserver.h"
 
-/**
- * @brief LocalServer::LocalServer
- *  Constructor
- */
 LocalServer::LocalServer() :
     m_sema(PGE_EDITOR_SEMAPHORE, 1),
     m_shmem(PGE_EDITOR_SHARED_MEMORY),
@@ -48,11 +43,6 @@ LocalServer::LocalServer() :
     }
 }
 
-
-/**
- * @brief LocalServer::~LocalServer
- *  Destructor
- */
 LocalServer::~LocalServer()
 {
     m_sema.release();//Free semaphore
@@ -68,20 +58,13 @@ LocalServer::~LocalServer()
  * -----------------------
  */
 
-/**
- * @brief run
- *  Initiate the thread.
- */
 void LocalServer::run()
 {
     m_isWorking = true;
     exec();
+    m_isWorking = false;
 }
 
-/**
- * @brief LocalServer::exec
- *  Keeps the thread alive. Waits for incomming connections
- */
 void LocalServer::exec()
 {
     while(m_isWorking)
@@ -118,11 +101,7 @@ void LocalServer::stopServer()
     m_isWorking = false;
 }
 
-/**
- * @brief LocalServer::slotOnData
- *  Executed when data is received
- * @param data
- */
+
 void LocalServer::slotOnData(QString data)
 {
     qDebug() << data;
@@ -163,9 +142,10 @@ void LocalServer::onCMD(QString data)
             argsPart = data.mid(splitAt+1, -1);
         }
 
-        qDebug() << "Accepted data: " + data;
-        qDebug() << "Command " + cmd;
-        qDebug() << "Args " + argsPart;
+        LogDebugQD("Accepted data: " + data);
+        LogDebugQD("Command " + cmd);
+        if(!argsPart.isEmpty())
+            LogDebugQD("Args " + argsPart);
 
         QStringList commands;
         commands << "showUp";
@@ -208,7 +188,7 @@ void LocalServer::onCMD(QString data)
             {
                 QStringList args = argsPart.split(',');
                 SETTINGS_TestSettings& t = GlobalSettings::testing;
-                if(args.size()>=5)
+                if( args.size() >= 5 )
                 {
                     bool ok;
                     int playerID = args[0].toInt(&ok);
@@ -216,15 +196,15 @@ void LocalServer::onCMD(QString data)
                     {
                         if(playerID==0)
                         {
-                            if(ok) t.p1_char = args[1].toInt(&ok);
-                            if(ok) t.p1_state= args[2].toInt(&ok);
-                            if(ok) t.p1_vehicleID= args[3].toInt(&ok);
-                            if(ok) t.p1_vehicleType= args[4].toInt(&ok);
+                            if(ok) t.p1_char        = args[1].toInt(&ok);
+                            if(ok) t.p1_state       = args[2].toInt(&ok);
+                            if(ok) t.p1_vehicleID   = args[3].toInt(&ok);
+                            if(ok) t.p1_vehicleType = args[4].toInt(&ok);
                         } else if(playerID==1) {
-                            if(ok) t.p2_char = args[1].toInt(&ok);
-                            if(ok) t.p2_state= args[2].toInt(&ok);
-                            if(ok) t.p2_vehicleID= args[3].toInt(&ok);
-                            if(ok) t.p2_vehicleType= args[4].toInt(&ok);
+                            if(ok) t.p2_char        = args[1].toInt(&ok);
+                            if(ok) t.p2_state       = args[2].toInt(&ok);
+                            if(ok) t.p2_vehicleID   = args[3].toInt(&ok);
+                            if(ok) t.p2_vehicleType = args[4].toInt(&ok);
                         }
                     }
                 }

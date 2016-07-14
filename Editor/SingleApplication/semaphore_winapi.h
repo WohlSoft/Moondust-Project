@@ -60,7 +60,7 @@ public:
 
     bool acquire()
     {
-        DWORD r = WaitForSingleObject(m_semaphore, 0L);
+        DWORD r = WaitForSingleObject(m_semaphore, 3000L);
         return r == WAIT_OBJECT_0;
     }
 
