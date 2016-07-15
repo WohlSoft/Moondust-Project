@@ -320,7 +320,7 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
 
         // Extra flags
         JSONparams["godMode"] = t.xtra_god;
-        JSONparams["showFPS"] = t.xtra_debug;
+        JSONparams["showFPS"] = t.xtra_showFPS;
 
         QString LVLRawData;
         //To don't affect level data state, need to remember recently used file format and version identifier

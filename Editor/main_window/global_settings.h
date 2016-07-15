@@ -53,6 +53,7 @@ struct SETTINGS_TestSettings {
     bool xtra_flyup;
     bool xtra_chuck;
     bool xtra_debug;
+    bool xtra_showFPS;
     bool xtra_physdebug;
     bool xtra_worldfreedom;
     int  numOfPlayers;

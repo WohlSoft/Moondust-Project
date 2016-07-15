@@ -175,6 +175,7 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.xtra_chuck = settings.value("ex-chuck", false).toBool();
         GlobalSettings::testing.xtra_worldfreedom = settings.value("ex-wfree", false).toBool();
         GlobalSettings::testing.xtra_debug = settings.value("ex-debug", false).toBool();
+        GlobalSettings::testing.xtra_showFPS = settings.value("ex-show-fps", false).toBool();
         GlobalSettings::testing.xtra_physdebug = settings.value("ex-physdebug", false).toBool();
         GlobalSettings::testing.numOfPlayers = settings.value("num-players", 1).toInt();
         GlobalSettings::testing.p1_char= settings.value("p1-char", 1).toInt();
@@ -317,6 +318,7 @@ void MainWindow::saveSettings()
         settings.setValue("ex-chuck", GlobalSettings::testing.xtra_chuck);
         settings.setValue("ex-wfree", GlobalSettings::testing.xtra_worldfreedom);
         settings.setValue("ex-debug", GlobalSettings::testing.xtra_debug);
+        settings.setValue("ex-show-fps", GlobalSettings::testing.xtra_showFPS);
         settings.setValue("ex-physdebug", GlobalSettings::testing.xtra_physdebug);
         settings.setValue("num-players", GlobalSettings::testing.numOfPlayers);
         settings.setValue("p1-char", GlobalSettings::testing.p1_char);
