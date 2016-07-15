@@ -41,6 +41,8 @@ LocalServer::LocalServer() :
         //! Zero data in the memory
         memset(m_shmem.data(), 0, 4096);
     }
+    //Initialize commands map
+    initCommands();
 }
 
 LocalServer::~LocalServer()
@@ -120,6 +122,13 @@ void LocalServer::slotOnData(QString data)
 }
 
 
+void LocalServer::initCommands()
+{
+    m_commands[int(IPCCMD::ShowUP)]             = "showUp";
+    m_commands[int(IPCCMD::ConnectToEngine)]    = "CONNECT_TO_ENGINE";
+    m_commands[int(IPCCMD::EngineClosed)]       = "ENGINE_CLOSED";
+    m_commands[int(IPCCMD::TestSetup)]          = "testSetup";
+}
 
 /**
  * -------
@@ -147,18 +156,12 @@ void LocalServer::onCMD(QString data)
         if(!argsPart.isEmpty())
             LogDebugQD("Args " + argsPart);
 
-        QStringList commands;
-        commands << "showUp";
-        commands << "CONNECT_TO_ENGINE";
-        commands << "ENGINE_CLOSED";
-        commands << "testSetup";
+        IPCCMD cmdID = IPCCMD(m_commands.key(cmd, int(IPCCMD::Unknown)));
 
-        int cmdID = commands.indexOf(cmd);
-
-        if( (cmdID==3) || (MainWinConnect::pMainWin->m_isAppInited))
+        if( (cmdID==IPCCMD::EngineClosed) || (MainWinConnect::pMainWin->m_isAppInited) )
         switch(cmdID)
         {
-            case 0:
+            case IPCCMD::ShowUP:
             {
                 emit showUp();
                 MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
@@ -173,18 +176,18 @@ void LocalServer::onCMD(QString data)
                 qApp->setActiveWindow(MainWinConnect::pMainWin);
                 break;
             }
-            case 1:
+            case IPCCMD::ConnectToEngine:
             {
                 IntEngine::sendLevelBuffer();
                 MainWinConnect::pMainWin->showMinimized();
                 break;
             }
-            case 2:
+            case IPCCMD::EngineClosed:
             {
                 IntEngine::quit();
                 break;
             }
-            case 3:
+            case IPCCMD::TestSetup:
             {
                 QStringList args = argsPart.split(',');
                 SETTINGS_TestSettings& t = GlobalSettings::testing;

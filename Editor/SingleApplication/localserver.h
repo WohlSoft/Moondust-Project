@@ -20,6 +20,7 @@
 #define LOCALSERVER_H
 
 #include <QThread>
+#include <QHash>
 #include <QSystemSemaphore>
 #include <QSharedMemory>
 #include <QAtomicInteger>
@@ -38,6 +39,21 @@ class LocalServer : public QThread
     QSharedMemory     m_shmem;
     //! Server working state
     QAtomicInteger<bool> m_isWorking;
+
+    enum class IPCCMD {
+        Unknown,
+        ShowUP,
+        ConnectToEngine,
+        EngineClosed,
+        TestSetup
+    };
+
+    //! Available IPC commands
+    QHash<int, QString> m_commands;
+    /**
+     * @brief Initialize map of available commands
+     */
+    void initCommands();
 public:
     LocalServer();
     ~LocalServer();
