@@ -45,28 +45,28 @@ static void sendIPCMessage(const char* shmem, const char* semaphore, const QStri
         int attempts = 4;
         while(attempts > 0)
         {
-            t_sema.acquire();
-            typedef char* pchar;
-            typedef int*  pint;
-            char* inData = pchar(t_shmem.data());
-            QTextStream(stdout) << int(inData[0]) << "\n";
-            if(inData[0] == 0)
             {
-                inData[0] = 1;
-                int* size = pint(inData+1);
-                *size = bytes.size();
-                memcpy(inData+1+sizeof(int),
-                       bytes.data(),
-                       qMin(bytes.size(), int(4095-sizeof(int))));
-                QTextStream(stdout) << "DATA SENT!\n";
-                break;
+                PGE_SemaphoreLocker semaLock(&t_sema); Q_UNUSED(semaLock);
+                typedef char* pchar;
+                typedef int*  pint;
+                char* inData = pchar(t_shmem.data());
+                QTextStream(stdout) << int(inData[0]) << "\n";
+                if(inData[0] == 0)
+                {
+                    inData[0] = 1;
+                    int* size = pint(inData+1);
+                    *size = bytes.size();
+                    memcpy(inData+1+sizeof(int),
+                           bytes.data(),
+                           qMin(bytes.size(), int(4095-sizeof(int))));
+                    QTextStream(stdout) << "DATA SENT!\n";
+                    break;
+                }
             }
-            t_sema.release();
             attempts--;
             QThread::msleep(50);
         }
         t_shmem.detach();
-        t_sema.release();
     }
 }
 

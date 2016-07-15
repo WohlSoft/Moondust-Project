@@ -406,6 +406,7 @@ static bool switchToSmbxWindow(SafeMsgBoxInterface &msg, HANDLE hInputWrite, HAN
               &writtenBytes, NULL)==TRUE)
     {
         std::string inMessage = ReadMsgString(hInputRead);
+        LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
         QByteArray jsonData(inMessage.c_str(), inMessage.size());
         QJsonParseError err;
         QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);

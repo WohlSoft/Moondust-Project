@@ -75,9 +75,31 @@ public:
         CloseHandle(m_semaphore);
     }
 };
+
 typedef WinSemaphore        PGE_Semaphore;
 #else
 typedef QSystemSemaphore    PGE_Semaphore;
 #endif
+
+class PGE_SemaphoreLocker
+{
+    PGE_Semaphore* m_sema;
+public:
+    PGE_SemaphoreLocker(PGE_Semaphore* sema):
+        m_sema(sema)
+    {
+        if(m_sema)
+        {
+            if(!m_sema->acquire())
+                m_sema = nullptr;
+        }
+
+    }
+    ~PGE_SemaphoreLocker()
+    {
+        if(m_sema)
+            m_sema->release();
+    }
+};
 
 #endif // SEMAPHORE_WINAPI_H

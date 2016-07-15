@@ -71,23 +71,24 @@ void LocalServer::exec()
 {
     while(m_isWorking)
     {
-        m_sema.acquire();//Avoid races
-        typedef char* pchar;
-        typedef int*  pint;
-        char* inData = pchar(m_shmem.data());
-        if(inData[0] == 1) // If any data detected
         {
-            char out[4095-sizeof(int)];
-            int  size = *pint(inData+1);
-            size = qMin(size, int(4095-sizeof(int)));
-            memcpy(out, inData+1+sizeof(int), size);
-            memset(m_shmem.data(), 0, 4096);
-            QMetaObject::invokeMethod(this,
-                                      "slotOnData",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(QString, QString::fromUtf8(out, size)));
+            PGE_SemaphoreLocker semaLock(&m_sema); Q_UNUSED(semaLock);
+            typedef char* pchar;
+            typedef int*  pint;
+            char* inData = pchar(m_shmem.data());
+            if(inData[0] == 1) // If any data detected
+            {
+                char out[4095-sizeof(int)];
+                int  size = *pint(inData+1);
+                size = qMin(size, int(4095-sizeof(int)));
+                memcpy(out, inData+1+sizeof(int), size);
+                memset(m_shmem.data(), 0, 4096);
+                QMetaObject::invokeMethod(this,
+                                          "slotOnData",
+                                          Qt::QueuedConnection,
+                                          Q_ARG(QString, QString::fromUtf8(out, size)));
+            }
         }
-        m_sema.release();//Free semaphore
         msleep(25);
     }
 }
