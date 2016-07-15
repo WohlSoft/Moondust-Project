@@ -6516,7 +6516,7 @@ Czy chcesz przerwać testowanie?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="770"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="786"/>
         <location filename="../main_window/testing/testing.cpp" line="254"/>
         <location filename="../main_window/testing/testing.cpp" line="267"/>
         <source>Save file first</source>
@@ -6540,31 +6540,31 @@ Please, check the application directory.</source>
 Proszę, sprawdź folder aplikacji.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="450"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="466"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
         <translation>Folder SMBX nie jest poprawnie skonfigurowany</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="451"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="467"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
         <translation>%1 nie znaleziony!
 Aby testować w SMBX musisz mieć poprawną paczkę konfiguracyjną!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="483"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="499"/>
         <source>SMBX Test is already runned</source>
         <translation>SMBX już działa</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="484"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="500"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>SMBX testyje inny poziom.
 Przerwać proces testowania?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="506"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="522"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -6587,23 +6587,23 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
 %3</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="740"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="757"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="756"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="773"/>
         <source>LunaTester error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="741"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="757"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="750"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="766"/>
         <source>process execution is failed.</source>
         <translation>Realizacja procesu nieudana.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="505"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="521"/>
         <source>Vanilla SMBX detected!</source>
         <translation>Wykryto Vanilla SMBX!</translation>
     </message>
@@ -6625,7 +6625,7 @@ PGE Engine is the in-development part of the PGE Project which implements a game
 PGE Engine jest w fazie deweloperskiej. Narazie, jest eksperymentem i nie ma wielu funkcji. Część z nich może nie być wprowadzona lub działać nieporawnie. Jeśli tworzysz poziomy do SMBX i chcesz uruchomić test ze wszystkimi funkcjami, przetestuj poziom w SMBX. Używaj testowania w PGE, kiedy tworzysz poziomy albo epizody dla PGE.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="752"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="768"/>
         <source>patching has failed.</source>
         <translation>Patchowanie się nie udało.</translation>
     </message>
@@ -6634,77 +6634,81 @@ PGE Engine jest w fazie deweloperskiej. Narazie, jest eksperymentem i nie ma wie
         <translation type="vanished">Nie udało się urchomić LunaLUA-SMBX!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="758"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="774"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation>Nie można uruchomić SMBX, ponieważ %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="771"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="787"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>Aby uruchomić SMBX plik musi być zapisany na dysku!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="778"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="794"/>
         <source>Incompatible file format</source>
         <translation>Format nie jest kompatybilny</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="779"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="795"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation>Aby móc testować poziom w SMBX, plik musi być zapisany w formacie SMBX64!
 Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="790"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="838"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="853"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="868"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="877"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="916"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="806"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="855"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="870"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="885"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="894"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="933"/>
         <location filename="../main_window/testing/testing.cpp" line="334"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="791"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="807"/>
         <source>Fail to create temp file %1</source>
         <translation>Nie udało się stworzyć tymczasowego pliku %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="812"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="828"/>
         <source>SMBX Level test</source>
         <translation>Test poziomu w SMBX</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="813"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="829"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation>Czy chesz zapisać plik przed testowaniem?
 </translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="839"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="856"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation>SMBX z LunaDLL nie jest uruchomiony!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="854"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="871"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation>Wysłanie ścieżi do LunaDLL nie udało się: (%1)</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="869"/>
-        <source>Could not map view of file (%1).</source>
-        <translation>Nie można wyświetlić pliku (%1).</translation>
+        <location filename="../main_window/testing/luna_tester.cpp" line="886"/>
+        <source>Could not map view of LunaLUA shared memory (%1).</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="878"/>
+        <source>Could not map view of file (%1).</source>
+        <translation type="vanished">Nie można wyświetlić pliku (%1).</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/luna_tester.cpp" line="895"/>
         <source>Too long path: </source>
         <translation>Za długa ścieżka: </translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="917"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="934"/>
         <source>Failed to find SMBX Window</source>
         <translation>Nie udało się znaleźć okna SMBX</translation>
     </message>
@@ -6833,14 +6837,14 @@ Zamienić?</translation>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="51"/>
         <location filename="../main_window/script/script_compile.cpp" line="74"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="673"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="689"/>
         <source>File save error</source>
         <translation>Błąd podczas zapisu</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="52"/>
         <location filename="../main_window/script/script_compile.cpp" line="75"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="674"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="690"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Nie można zapisać pliku %1:
@@ -8345,15 +8349,15 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <translation type="vanished">ch5</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="65"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="265"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="95"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="354"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation>Charakter</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="72"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="301"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="88"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="390"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation>Charakter</translation>
@@ -8387,79 +8391,98 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <translation type="vanished">st7</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="141"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="223"/>
         <source>Extra settings</source>
         <translation>Dodatkowe ustawienia</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="147"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="269"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
         <translation>Informacje debugowania</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="154"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="259"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation>Pozwala zniszczyć wsyztkie obiekty bez wyjątku.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="157"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="262"/>
         <source>Chuck Norris</source>
         <translation>Chuck Norris</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="164"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="249"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation>Pozwala chodzić wszędzie na mapie.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="167"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="252"/>
         <source>World freedom</source>
         <translation>Wolność</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="174"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="239"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
         <translation>Gracz nie będzie dostawał obrażeń.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="177"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="242"/>
         <source>God mode</source>
         <translation>Tryb Boga</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="184"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="229"/>
         <source>Allows you to fly up to the space!</source>
         <translation>Pozwala lecieć aż do kosmosu!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="187"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="155"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="517"/>
+        <source>PLSET_VehicleID</source>
+        <comment>translate as &quot;Vehicle&quot;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="162"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="524"/>
+        <source>PLSET_VehicleType</source>
+        <comment>translate as &quot;Vehicle type&quot;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="232"/>
         <source>Unlimited flying</source>
         <translation>Nielimitowany lot</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="207"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="276"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
         <translation>Debug fizyki</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="217"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="296"/>
+        <source>Show frame speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="306"/>
         <source>Number of players</source>
         <translation>Ilość graczy</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="223"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="312"/>
         <source>1 player</source>
         <translation>1 gracz</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="230"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="319"/>
         <source>2 player</source>
         <translation>2 graczy</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="259"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="348"/>
         <source>1 Player settings</source>
         <translation>Ustawienia 1 gracza</translation>
     </message>
