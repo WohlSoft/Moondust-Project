@@ -9,7 +9,6 @@
         <file>images/rubber.png</file>
         <file>images/level.png</file>
         <file>images/world.png</file>
-        <file>mushroom.ico</file>
         <file>images/section.png</file>
         <file>images/warp_exit.png</file>
         <file>images/warp_entrance.png</file>
@@ -51,7 +50,6 @@
         <file>images/edit_undo.png</file>
         <file alias="npc/proj.png">images/generator_proj.png</file>
         <file alias="npc/warp.png">images/generator_warp.png</file>
-        <file alias="images/mac/mushroom.icns">mushroom.icns</file>
         <file>images/events.png</file>
         <file>images/conf_bad.png</file>
         <file>images/conf_good.png</file>
@@ -117,6 +115,7 @@
         <file>images/circle_fill.png</file>
         <file>images/goto_right_bottom.png</file>
         <file>images/goto_top_right.png</file>
+        <file>lunalua.ico</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

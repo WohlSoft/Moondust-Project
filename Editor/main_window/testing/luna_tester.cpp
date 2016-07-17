@@ -43,11 +43,24 @@
 #include <QtConcurrentRun>
 #include "luna_tester.h"
 
+#include <PGE_File_Formats/file_formats.h>
+#include <data_functions/smbx64_validation_messages.h>
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
-#include <PGE_File_Formats/file_formats.h>
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
+
+
+class QThreadPointNuller
+{
+    QThread**pointer;
+public:
+    QThreadPointNuller(QThread ** ptr) : pointer(ptr) {}
+    ~QThreadPointNuller() {*pointer = nullptr;}
+};
+
+static bool SMBXEditorIsStarted();
+static std::string ReadMsgString(HANDLE hInputRead);
 
 LunaTester::LunaTester() :
     QObject(nullptr),
@@ -87,21 +100,32 @@ LunaTester::~LunaTester()
 void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_before, QAction *defaultTestAction)
 {
     m_mw = mw;
-    QMenu* lunaMenu = mainmenu->addMenu("LunaTester");
+    QMenu* lunaMenu = mainmenu->addMenu(QIcon(":/lunalua.ico"), "LunaTester");
     mainmenu->insertMenu(insert_before, lunaMenu);
-    lunaMenu->setIcon(QIcon(":/mushroom.ico"));
 
-    QAction* RunSmbxTest = lunaMenu->addAction(tr("Run testing"));
-    RunSmbxTest->setToolTip(tr("Starts testing in the legacy engine.\nTo have this feature work, latest LunaLUA must be installed."));
-    mw->connect(RunSmbxTest, SIGNAL(triggered(bool)), this, SLOT(startLunaTester()));
+
+    QAction* RunLunaTest = lunaMenu->addAction(tr("Run testing"));
+    RunLunaTest->setToolTip(tr("Starts testing in the legacy engine.\n"
+                               "To have this feature work, latest LunaLUA must be installed.\n"
+                               "Otherwise it will be very limited."));
+    mw->connect(RunLunaTest,    &QAction::triggered,
+                this,           &LunaTester::startLunaTester,
+                Qt::QueuedConnection);
+
 
     QAction* ResetCheckPoints = lunaMenu->addAction(tr("Reset checkpoints"));
     ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
-    mw->connect(ResetCheckPoints, SIGNAL(triggered(bool)), this, SLOT(resetCheckPoints()));
+    mw->connect(ResetCheckPoints,   &QAction::triggered,
+                this,               &LunaTester::resetCheckPoints,
+                Qt::QueuedConnection);
 
-    QAction* KillFrozenThread = lunaMenu->addAction(tr("Kill frozen runner"));
-    KillFrozenThread->setToolTip(tr("Kills frozen thread to allow you to run a test again."));
-    mw->connect(KillFrozenThread, SIGNAL(triggered(bool)), this, SLOT(killFrozenThread()));
+
+    QAction* KillFrozenThread = lunaMenu->addAction(tr("Termitate frozen loader"));
+    KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
+    mw->connect(KillFrozenThread,   &QAction::triggered,
+                this,               &LunaTester::killFrozenThread,
+                Qt::QueuedConnection);
+
 
     QAction* sep = lunaMenu->addSeparator();
     mainmenu->insertAction(insert_before, sep);
@@ -111,9 +135,19 @@ void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_b
         defaultTestAction->setShortcut(QStringLiteral(""));
         defaultTestAction->setShortcutContext(Qt::WindowShortcut);
 
-        RunSmbxTest->setShortcut(QStringLiteral("F5"));
-        RunSmbxTest->setShortcutContext(Qt::WindowShortcut);
+        RunLunaTest->setShortcut(QStringLiteral("F5"));
+        RunLunaTest->setShortcutContext(Qt::WindowShortcut);
     }
+}
+
+/*****************************************Menu slots*************************************************/
+
+inline void busyThreadBox(MainWindow *mw)
+{
+    QMessageBox::warning(mw,
+                         "LunaTester",
+                         LunaTester::tr("LunaLUA test loader thread is busy, try again or try termiate frozen loader!"),
+                         QMessageBox::Ok);
 }
 
 /*!
@@ -123,9 +157,7 @@ void LunaTester::startLunaTester()
 {
     if(m_helper.isRunning())
     {
-        QMessageBox::warning(m_mw,
-                             "LunaTester",
-                             tr("SMBX test runner thread is busy, try again or try kill frozen thread!"), QMessageBox::Ok);
+        busyThreadBox(m_mw);
     } else {
         if( m_mw->activeChildWindow() == 1 )
         {
@@ -133,8 +165,7 @@ void LunaTester::startLunaTester()
             if(lvl)
             {
                 m_helper = QtConcurrent::run(this,
-                                             &LunaTester::_RunSmbxTestHelper,
-                                             m_mw,
+                                             &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,
                                              lvl->curFile,
                                              lvl->isUntitled);
@@ -147,13 +178,9 @@ void LunaTester::resetCheckPoints()
 {
     if(m_helper.isRunning())
     {
-        QMessageBox::warning(m_mw,
-                             tr("LunaTester error"),
-                             tr("SMBX test runner thread is busy, try again or try kill frozen thread!"), QMessageBox::Ok);
+        busyThreadBox(m_mw);
     } else {
-        QMessageBox::information(m_mw,
-                                tr(":P"),
-                                tr("Sorry, not implemented yet!"), QMessageBox::Ok);
+        m_helper = QtConcurrent::run(this, &LunaTester::lunaChkResetThread);
     }
 }
 
@@ -163,7 +190,8 @@ void LunaTester::killFrozenThread()
     {
         QMessageBox::StandardButton reply = QMessageBox::warning(m_mw,
                                             "LunaTester",
-                                            tr("Are you really want to stop runner thread?"), QMessageBox::Yes|QMessageBox::No);
+                                            tr("Are you really want to termitate loader thread?"),
+                                            QMessageBox::Yes|QMessageBox::No);
         if(reply==QMessageBox::Yes)
         {
             DWORD lpExitCode=0;
@@ -180,162 +208,14 @@ void LunaTester::killFrozenThread()
     } else {
         QMessageBox::information(m_mw,
                                 "LunaTester",
-                                tr("Runner thread is not running."), QMessageBox::Ok);
+                                tr("Loader thread is not running."), QMessageBox::Ok);
     }
 }
 
-enum LunaLoaderResult {
-    LUNALOADER_OK = 0,
-    LUNALOADER_CREATEPROCESS_FAIL,
-    LUNALOADER_PATCH_FAIL
-};
 
-static void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD target) {
-    DWORD* dwordAddr = (DWORD*)&patch[patchOffset+1];
-    *dwordAddr = (DWORD)target - (DWORD)(patchAddr + patchOffset + 5);
-}
 
-static LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX,
-                                      const wchar_t *cmdLineArgs,
-                                      const wchar_t *workingDir,
-                                      LunaTester &luna)
-{
-    STARTUPINFO si;
-    memset(&si, 0, sizeof(si));
-    memset(&luna.m_pi, 0, sizeof(luna.m_pi));
+/*****************************************Private functions*************************************************/
 
-    {
-        SECURITY_ATTRIBUTES sa;
-        // Set up the security attributes struct.
-        sa.nLength= sizeof(SECURITY_ATTRIBUTES);
-        sa.lpSecurityDescriptor = NULL;
-        sa.bInheritHandle = TRUE;
-
-        if( ! CreatePipe( &luna.m_ipc_pipe_out_i, &luna.m_ipc_pipe_out, &sa, 0))
-        {
-            luna.m_ipc_pipe_out=0;
-            luna.m_ipc_pipe_out_i=0;
-        }
-        if( ! CreatePipe( &luna.m_ipc_pipe_in,  &luna.m_ipc_pipe_in_o, &sa, 0))
-        {
-            luna.m_ipc_pipe_in=0;
-            luna.m_ipc_pipe_in_o=0;
-        }
-        si.dwFlags = STARTF_USESTDHANDLES;
-        si.hStdInput   = luna.m_ipc_pipe_out_i;
-        si.hStdOutput  = luna.m_ipc_pipe_in_o;
-        si.cb = sizeof(si);
-        // Don't let child process take the write handle here
-        SetHandleInformation(luna.m_ipc_pipe_out, HANDLE_FLAG_INHERIT, 0);
-        // Don't let child process take the read handle here
-        SetHandleInformation(luna.m_ipc_pipe_in, HANDLE_FLAG_INHERIT, 0);
-    }
-
-    // Prepare command line
-    size_t pos = 0;
-    std::wstring quotedPathToSMBX(pathToSMBX);
-    while ((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos) {
-        quotedPathToSMBX.replace(pos, 1, L"\\\"");
-        pos += 2;
-    }
-    std::wstring strCmdLine = (
-        std::wstring(L"\"") + quotedPathToSMBX + std::wstring(L"\" ") +
-        std::wstring(cmdLineArgs)
-        );
-    uint32_t cmdLineMemoryLen = sizeof(wchar_t) * (strCmdLine.length() + 1); // Include null terminator
-    wchar_t* cmdLine = (wchar_t*)malloc(cmdLineMemoryLen);
-    std::memcpy(cmdLine, strCmdLine.c_str(), cmdLineMemoryLen);
-
-    // Create process
-    if (!CreateProcessW(pathToSMBX, // Launch smbx.exe
-        cmdLine,          // Command line
-        NULL,             // Process handle not inheritable
-        NULL,             // Thread handle not inheritable
-        TRUE,             // Set handle inheritance to FALSE
-        CREATE_SUSPENDED, // Create in suspended state
-        NULL,             // Use parent's environment block
-        workingDir,       // Use parent's starting directory
-        &si,              // Pointer to STARTUPINFO structure
-        &luna.m_pi)              // Pointer to PROCESS_INFORMATION structure
-        )
-    {
-        free(cmdLine); cmdLine = NULL;
-        return LUNALOADER_CREATEPROCESS_FAIL;
-    }
-    free(cmdLine); cmdLine = NULL;
-
-    // Patch 1 (jump to Patch 2)
-    uintptr_t LoaderPatchAddr1 = 0x40BDD8;
-    unsigned char LoaderPatch1[] =
-    {
-        0xE9, 0x00, 0x00, 0x00, 0x00  // 0x40BDD8 JMP <Patch2>
-    };
-
-    // Patch 2 (loads LunaDll.dll)
-    unsigned char LoaderPatch2[] =
-    {
-        0x68, 0x64, 0x6C, 0x6C, 0x00, // 00 PUSH "dll\0"
-        0x68, 0x44, 0x6C, 0x6C, 0x2E, // 05 PUSH "Dll."
-        0x68, 0x4C, 0x75, 0x6E, 0x61, // 0A PUSH "Luna"
-        0x54,                         // 0F PUSH ESP
-        0xE8, 0x00, 0x00, 0x00, 0x00, // 10 CALL LoadLibraryA
-        0x83, 0xC4, 0x0C,             // 15 ADD ESP, 0C
-        0x68, 0x6C, 0xC1, 0x40, 0x00, // 18 PUSH 40C16C (this inst used to be at 0x40BDD8)
-        0xE9, 0x00, 0x00, 0x00, 0x00, // 1D JMP 40BDDD
-        0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90
-    };
-
-    // Allocate space for Patch 2
-    DWORD LoaderPatchAddr2 = (DWORD)VirtualAllocEx(
-        luna.m_pi.hProcess,           // Target process
-        NULL,                  // Don't request any particular address
-        sizeof(LoaderPatch2),  // Length of Patch 2
-        MEM_COMMIT,            // Type of memory allocation
-        PAGE_READWRITE         // Memory protection type
-        );
-    if (LoaderPatchAddr2 == (DWORD)NULL) {
-        return LUNALOADER_PATCH_FAIL;
-    }
-
-    // Set Patch1 Addresses
-    setJmpAddr(LoaderPatch1, LoaderPatchAddr1, 0x00, LoaderPatchAddr2);
-
-    // Set Patch2 Addresses
-    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x10, (DWORD)&LoadLibraryA);
-    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x1D, LoaderPatchAddr1 + 5);
-
-    // Patch the entry point...
-    if (WriteProcessMemory(luna.m_pi.hProcess, (void*)LoaderPatchAddr1, LoaderPatch1, sizeof(LoaderPatch1), NULL) == 0 ||
-        WriteProcessMemory(luna.m_pi.hProcess, (void*)LoaderPatchAddr2, LoaderPatch2, sizeof(LoaderPatch2), NULL) == 0)
-    {
-        return LUNALOADER_PATCH_FAIL;
-    }
-
-    // Change Patch2 memory protection type
-    DWORD TmpDword = 0;
-    if (VirtualProtectEx(
-        luna.m_pi.hProcess,
-        (void*)LoaderPatchAddr2,
-        sizeof(LoaderPatch2),
-        PAGE_EXECUTE,
-        &TmpDword
-    ) == 0) {
-        return LUNALOADER_PATCH_FAIL;
-    }
-
-    // Resume the main program thread
-    ResumeThread(luna.m_pi.hThread);
-
-    // Close handles
-    CloseHandle(luna.m_ipc_pipe_out_i);
-    CloseHandle(luna.m_ipc_pipe_in_o);
-    CloseHandle(luna.m_pi.hThread);
-    luna.m_ipc_pipe_out_i = 0;
-    luna.m_ipc_pipe_in_o  = 0;
-    //CloseHandle(pi.hProcess); //Don't close it because needed to catch already-running SMBX Engine
-
-    return LUNALOADER_OK;
-}
 
 static bool SMBXEditorIsStarted()
 {
@@ -406,7 +286,156 @@ static std::string ReadMsgString(HANDLE hInputRead)
     }
 }
 
-static bool SendLevelDataToLunaLuaSMBX(LevelData& lvl, QString levelPath, bool isUntitled, HANDLE hInputWrite, HANDLE hInputRead)
+
+static inline void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD target)
+{
+    DWORD* dwordAddr = (DWORD*)&patch[patchOffset+1];
+    *dwordAddr = (DWORD)target - (DWORD)(patchAddr + patchOffset + 5);
+}
+
+LunaTester::LunaLoaderResult LunaTester::LunaLoaderRun(
+        const wchar_t *pathToLegacyEngine,
+        const wchar_t *cmdLineArgs,
+        const wchar_t *workingDir)
+{
+    STARTUPINFO si;
+    memset(&si, 0, sizeof(si));
+    memset(&m_pi, 0, sizeof(m_pi));
+
+    {
+        SECURITY_ATTRIBUTES sa;
+        // Set up the security attributes struct.
+        sa.nLength= sizeof(SECURITY_ATTRIBUTES);
+        sa.lpSecurityDescriptor = NULL;
+        sa.bInheritHandle = TRUE;
+
+        if( ! CreatePipe( &m_ipc_pipe_out_i, &m_ipc_pipe_out, &sa, 0))
+        {
+            m_ipc_pipe_out=0;
+            m_ipc_pipe_out_i=0;
+        }
+        if( ! CreatePipe( &m_ipc_pipe_in,  &m_ipc_pipe_in_o, &sa, 0))
+        {
+            m_ipc_pipe_in=0;
+            m_ipc_pipe_in_o=0;
+        }
+        si.dwFlags = STARTF_USESTDHANDLES;
+        si.hStdInput   = m_ipc_pipe_out_i;
+        si.hStdOutput  = m_ipc_pipe_in_o;
+        si.cb = sizeof(si);
+        // Don't let child process take the write handle here
+        SetHandleInformation(m_ipc_pipe_out, HANDLE_FLAG_INHERIT, 0);
+        // Don't let child process take the read handle here
+        SetHandleInformation(m_ipc_pipe_in, HANDLE_FLAG_INHERIT, 0);
+    }
+
+    // Prepare command line
+    size_t pos = 0;
+    std::wstring quotedPathToSMBX(pathToLegacyEngine);
+    while ((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos) {
+        quotedPathToSMBX.replace(pos, 1, L"\\\"");
+        pos += 2;
+    }
+    std::wstring strCmdLine = (
+        std::wstring(L"\"") + quotedPathToSMBX + std::wstring(L"\" ") +
+        std::wstring(cmdLineArgs)
+        );
+    uint32_t cmdLineMemoryLen = sizeof(wchar_t) * (strCmdLine.length() + 1); // Include null terminator
+    wchar_t* cmdLine = (wchar_t*)malloc(cmdLineMemoryLen);
+    std::memcpy(cmdLine, strCmdLine.c_str(), cmdLineMemoryLen);
+
+    // Create process
+    if (!CreateProcessW(pathToLegacyEngine, // Launch legacy engine executable
+        cmdLine,          // Command line
+        NULL,             // Process handle not inheritable
+        NULL,             // Thread handle not inheritable
+        TRUE,             // Set handle inheritance to FALSE
+        CREATE_SUSPENDED, // Create in suspended state
+        NULL,             // Use parent's environment block
+        workingDir,       // Use parent's starting directory
+        &si,              // Pointer to STARTUPINFO structure
+        &m_pi)              // Pointer to PROCESS_INFORMATION structure
+        )
+    {
+        free(cmdLine); cmdLine = NULL;
+        return LUNALOADER_CREATEPROCESS_FAIL;
+    }
+    free(cmdLine); cmdLine = NULL;
+
+    // Patch 1 (jump to Patch 2)
+    uintptr_t LoaderPatchAddr1 = 0x40BDD8;
+    unsigned char LoaderPatch1[] =
+    {
+        0xE9, 0x00, 0x00, 0x00, 0x00  // 0x40BDD8 JMP <Patch2>
+    };
+
+    // Patch 2 (loads LunaDll.dll)
+    unsigned char LoaderPatch2[] =
+    {
+        0x68, 0x64, 0x6C, 0x6C, 0x00, // 00 PUSH "dll\0"
+        0x68, 0x44, 0x6C, 0x6C, 0x2E, // 05 PUSH "Dll."
+        0x68, 0x4C, 0x75, 0x6E, 0x61, // 0A PUSH "Luna"
+        0x54,                         // 0F PUSH ESP
+        0xE8, 0x00, 0x00, 0x00, 0x00, // 10 CALL LoadLibraryA
+        0x83, 0xC4, 0x0C,             // 15 ADD ESP, 0C
+        0x68, 0x6C, 0xC1, 0x40, 0x00, // 18 PUSH 40C16C (this inst used to be at 0x40BDD8)
+        0xE9, 0x00, 0x00, 0x00, 0x00, // 1D JMP 40BDDD
+        0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90
+    };
+
+    // Allocate space for Patch 2
+    DWORD LoaderPatchAddr2 = (DWORD)VirtualAllocEx(
+        m_pi.hProcess,         // Target process
+        NULL,                  // Don't request any particular address
+        sizeof(LoaderPatch2),  // Length of Patch 2
+        MEM_COMMIT,            // Type of memory allocation
+        PAGE_READWRITE         // Memory protection type
+        );
+    if (LoaderPatchAddr2 == (DWORD)NULL) {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Set Patch1 Addresses
+    setJmpAddr(LoaderPatch1, LoaderPatchAddr1, 0x00, LoaderPatchAddr2);
+
+    // Set Patch2 Addresses
+    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x10, (DWORD)&LoadLibraryA);
+    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x1D, LoaderPatchAddr1 + 5);
+
+    // Patch the entry point...
+    if (WriteProcessMemory(m_pi.hProcess, (void*)LoaderPatchAddr1, LoaderPatch1, sizeof(LoaderPatch1), NULL) == 0 ||
+        WriteProcessMemory(m_pi.hProcess, (void*)LoaderPatchAddr2, LoaderPatch2, sizeof(LoaderPatch2), NULL) == 0)
+    {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Change Patch2 memory protection type
+    DWORD TmpDword = 0;
+    if (VirtualProtectEx(
+        m_pi.hProcess,
+        (void*)LoaderPatchAddr2,
+        sizeof(LoaderPatch2),
+        PAGE_EXECUTE,
+        &TmpDword
+    ) == 0) {
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Resume the main program thread
+    ResumeThread(m_pi.hThread);
+
+    // Close handles
+    CloseHandle(m_ipc_pipe_out_i);
+    CloseHandle(m_ipc_pipe_in_o);
+    CloseHandle(m_pi.hThread);
+    m_ipc_pipe_out_i = 0;
+    m_ipc_pipe_in_o  = 0;
+
+    return LUNALOADER_OK;
+}
+
+
+bool LunaTester::sendLevelData(LevelData& lvl, QString levelPath, bool isUntitled)
 {
     //{"jsonrpc": "2.0", "method": "testLevel", "params":
     //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}], "godMode": false, "showFPS": false },
@@ -414,7 +443,7 @@ static bool SendLevelDataToLunaLuaSMBX(LevelData& lvl, QString levelPath, bool i
 
     //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
 
-    if( (hInputWrite == 0) )
+    if( (m_ipc_pipe_out == 0) )
     {
         return false;
     }
@@ -483,22 +512,99 @@ static bool SendLevelDataToLunaLuaSMBX(LevelData& lvl, QString levelPath, bool i
     DWORD writtenBytes=0;
 
     //Send data to SMBX
-    if(WriteFile(hInputWrite,
+    if(WriteFile(m_ipc_pipe_out,
               (LPCVOID)dataToSend.c_str(),
               (DWORD)dataToSend.size(),
               &writtenBytes, NULL)==TRUE)
     {
         //Read result from level testing run
-        std::string resultMsg = ReadMsgString(hInputRead);
+        std::string resultMsg = ReadMsgString(m_ipc_pipe_in);
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
         return true;
     }
     return false;
 }
 
-static bool switchToSmbxWindow(SafeMsgBoxInterface &msg, HANDLE hInputWrite, HANDLE hInputRead)
+void LunaTester::lunaChkResetThread()
 {
-    if( (hInputWrite == 0) || (hInputRead == 0) )
+    QMutexLocker mlocker(&this->m_engine_mutex);
+    Q_UNUSED(mlocker);
+    QThreadPointNuller tlocker(&this->m_helperThread);
+    Q_UNUSED(tlocker);
+    SafeMsgBoxInterface msg(&m_mw->m_messageBoxer);
+    this->m_helperThread = QThread::currentThread();
+    DWORD lpExitCode = 0;
+    if(GetExitCodeProcess(this->m_pi.hProcess, &lpExitCode))
+    {
+        if(lpExitCode==STILL_ACTIVE)
+        {
+            if( (m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0) )
+            {
+                goto failed;
+            }
+            QJsonDocument jsonOut;
+            QJsonObject jsonObj;
+            jsonObj["jsonrpc"]  = "2.0";
+            jsonObj["method"]   = "resetCheckPoints";
+            QJsonObject JSONparams;
+            JSONparams["xxx"] = 0;
+            jsonObj["params"] = JSONparams;
+            jsonObj["id"] = 3;
+            jsonOut.setObject(jsonObj);
+            QByteArray outputJSON = jsonOut.toJson();
+
+            //Converting JSON data into net string
+            std::string dataToSend = outputJSON.toStdString();
+            int len = dataToSend.size();
+            std::stringstream outString;
+            outString << std::to_string(len) << ":" << dataToSend << ',';
+            dataToSend = outString.str();
+
+            DWORD writtenBytes=0;
+            //Send data to SMBX
+            if(WriteFile(m_ipc_pipe_out,
+                      (LPCVOID)dataToSend.c_str(),
+                      (DWORD)dataToSend.size(),
+                      &writtenBytes, NULL)==TRUE)
+            {
+                std::string inMessage = ReadMsgString(m_ipc_pipe_in);
+                LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
+                QByteArray jsonData(inMessage.c_str(), inMessage.size());
+                QJsonParseError err;
+                QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);
+                if(err.error == QJsonParseError::NoError)
+                {
+                    QJsonObject obj = jsonOut.object();
+                    if(obj["error"].isNull())
+                    {
+                        msg.info("LunaTester",
+                                tr("Checkpoints successfully reseted!"),
+                                QMessageBox::Ok);
+                    } else {
+                        msg.warning("LunaTester",
+                                    QString::fromStdString(inMessage),
+                                    QMessageBox::Ok);
+                    }
+                } else {
+                    msg.warning(tr("LunaTester error!"),
+                                err.errorString() +
+                                "\n\nData:\n"+
+                                QString::fromStdString(inMessage),
+                                QMessageBox::Warning);
+                }
+            }
+        }
+    } else {
+        goto failed;
+    }
+    return;
+failed:
+    msg.warning("LunaTester", tr("LunaLUA tester is not started!"), QMessageBox::Ok);
+}
+
+bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
+{
+    if( (m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0) )
     {
         return false;
     }
@@ -523,12 +629,12 @@ static bool switchToSmbxWindow(SafeMsgBoxInterface &msg, HANDLE hInputWrite, HAN
 
     DWORD writtenBytes=0;
     //Send data to SMBX
-    if(WriteFile(hInputWrite,
+    if(WriteFile(m_ipc_pipe_out,
               (LPCVOID)dataToSend.c_str(),
               (DWORD)dataToSend.size(),
               &writtenBytes, NULL)==TRUE)
     {
-        std::string inMessage = ReadMsgString(hInputRead);
+        std::string inMessage = ReadMsgString(m_ipc_pipe_in);
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
         QByteArray jsonData(inMessage.c_str(), inMessage.size());
         QJsonParseError err;
@@ -559,32 +665,34 @@ static bool switchToSmbxWindow(SafeMsgBoxInterface &msg, HANDLE hInputWrite, HAN
     return false;
 }
 
-class QThreadPointNuller
-{
-    QThread**pointer;
-public:
-    QThreadPointNuller(QThread ** ptr) : pointer(ptr) {}
-    ~QThreadPointNuller() {*pointer = nullptr;}
-};
-
-void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QString levelPath, bool isUntitled)
+void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled)
 {
     QMutexLocker mlocker(&this->m_engine_mutex);
     Q_UNUSED(mlocker);
     QThreadPointNuller tlocker(&this->m_helperThread);
     Q_UNUSED(tlocker);
 
-    SafeMsgBoxInterface msg(&mw->m_messageBoxer);
+    SafeMsgBoxInterface msg(&m_mw->m_messageBoxer);
 
     this->m_helperThread = QThread::currentThread();
 
-    //TODO:  Maybe we should undo that earlier optimization, and copy LvlData after all?
-    //       We do need to call smbx64LevelPrepare after all...
-    //Reply: that is required because unordered blocks and BGOs are will produce very vired result:
-    //       - unordered blocks in array are will cause NPCs fall through blocks like no blocks
-    //       - unordered BGOs in array are will result clash
-    //       And yea, only doing optimization on LunaLUA-side is right solution to don't do prepare data work here
+    // Prepare level file for SMBX-64 format
     FileFormats::smbx64LevelPrepare(in_levelData);
+
+    int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
+    if(smbx64limits != FileFormats::SMBX64_FINE)
+    {
+        int reply = msg.warning(tr("SMBX64 limits are excited!"),
+                                tr("Violation of SMBX64 standard has beeen found!\n"
+                                "%1\n"
+                                ", legacy engine may crash!\n"
+                                "Suggested to remove all excess elements.\n"
+                                "Are you want continue process?")
+                                .arg(smbx64ErrMsgs(in_levelData, smbx64limits)),
+                                QMessageBox::Yes|QMessageBox::No);
+        if(reply != QMessageBox::Yes)
+            return;
+    }
 
     // Is SMBX Editor already running. If running,
     // do old method - send path to already running editor
@@ -605,17 +713,16 @@ void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QStri
         {
             if(lpExitCode==STILL_ACTIVE)
             {
-                if( this->m_ipc_pipe_out != 0 )
+                if( m_ipc_pipe_out != 0 )
                 {
-                    if ( SendLevelDataToLunaLuaSMBX(in_levelData, levelPath, isUntitled,
-                                                    this->m_ipc_pipe_out, this->m_ipc_pipe_in) )
+                    if( sendLevelData(in_levelData, levelPath, isUntitled) )
                     {
                         //Stop music playback in the PGE Editor!
-                        QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                        QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
                         // not sure how efficient it is
-                        QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                        QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
                         //Attempt to switch SMBX Window
-                        switchToSmbxWindow(msg, this->m_ipc_pipe_out, this->m_ipc_pipe_in);
+                        switchToSmbxWindow(msg);
                     }
                 }
                 else if( msg.warning(LunaTester::tr("SMBX Test is already runned"),
@@ -815,9 +922,9 @@ void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QStri
 
             QProcess::startDetached(command, params, smbxPath);
             //Stop music playback in the PGE Editor!
-            QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
             // not sure how efficient it is
-            QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
             return;
 
         } else {
@@ -851,17 +958,16 @@ void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QStri
 
             LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
                                                  argString.toStdWString().c_str(),
-                                                 smbxPath.toStdWString().c_str(),
-                                                 *this );
+                                                 smbxPath.toStdWString().c_str());
 
             if(res == LUNALOADER_OK)
             {
-                if(SendLevelDataToLunaLuaSMBX(in_levelData, levelPath, isUntitled, this->m_ipc_pipe_out, this->m_ipc_pipe_in))
+                if(sendLevelData(in_levelData, levelPath, isUntitled))
                 {
                     //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
                     //Stop music playback in the PGE Editor!
-                    QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                    QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                    QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                    QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
                 } else {
                     msg.warning(LunaTester::tr("LunaTester error"),
                                 LunaTester::tr("Failed to send level into LunaLUA-SMBX!"),
@@ -935,14 +1041,14 @@ void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QStri
             if(in_levelData.modified)
             {
                 int ret = msg.question(
-                        LunaTester::tr("SMBX Level test"),
+                        LunaTester::tr("LunaLUA Level test"),
                         LunaTester::tr("Do you wanna to save file before start testing?\n"),
                         QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
                 if(ret==QMessageBox::Cancel)
                     return;
                 else
                 if(ret==QMessageBox::Yes)
-                        QMetaObject::invokeMethod(mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
+                        QMetaObject::invokeMethod(m_mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
             }
 
             /****************Write file path into shared memory**************************/
@@ -1023,20 +1129,20 @@ void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QStri
 
             //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
             //Stop music playback in the PGE Editor!
-            QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-            QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
 
             //Minimize PGE Editor
             if(qApp->desktop()->screenCount()==1) // Minimize editor window if alone screen was found
             {
-                QMetaObject::invokeMethod(mw, "showMinimized", Qt::QueuedConnection);
+                QMetaObject::invokeMethod(m_mw, "showMinimized", Qt::QueuedConnection);
             }
 
             //Send command and restore window
             SetForegroundWindow(smbxWind);
             ShowWindow(smbxWind, SW_MAXIMIZE);
             SetFocus(smbxWind);
-            SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)mw->winId(), (LPARAM)cds);
+            SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)m_mw->winId(), (LPARAM)cds);
         }
         else
         {

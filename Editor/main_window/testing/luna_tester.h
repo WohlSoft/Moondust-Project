@@ -24,6 +24,7 @@
 #include <QMutex>
 #include <windows.h>
 #include <PGE_File_Formats/lvl_filedata.h>
+#include <common_features/safe_msg_box.h>
 class QMenu;
 class QAction;
 class MainWindow;
@@ -31,13 +32,26 @@ class MainWindow;
 #include <QObject>
 #endif
 
+/**
+ * @brief Provides IPC layer with LunaLUA to manipulate legacy engine.
+ */
 class LunaTester : public QObject
 {
     Q_OBJECT
 public:
 #ifdef Q_OS_WIN
+    /**
+     * @brief LunaLoader result code
+     */
+    enum LunaLoaderResult {
+        LUNALOADER_OK = 0,
+        LUNALOADER_CREATEPROCESS_FAIL,
+        LUNALOADER_PATCH_FAIL
+    };
+
     LunaTester();
     ~LunaTester();
+    //! Pointer to main window
     MainWindow* m_mw;
     /**
      * @brief Initialize menu of the LunaTester
@@ -50,9 +64,11 @@ public:
     PROCESS_INFORMATION m_pi;
     //! LunaLUA IPC Out pipe
     HANDLE              m_ipc_pipe_out;
+    //! LunaLUA IPC Out pipe backend
     HANDLE              m_ipc_pipe_out_i;
     //! LunaLUA IPC In pipe
     HANDLE              m_ipc_pipe_in;
+    //! LunaLUA IPC In pipe backend
     HANDLE              m_ipc_pipe_in_o;
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
@@ -61,11 +77,58 @@ public:
     //! Don't run same function multiple times
     QMutex              m_engine_mutex;
 public slots:
+    /********Menu items*******/
+    /**
+     * @brief Start testing of currently opened level
+     */
     void startLunaTester();
+    /**
+     * @brief Reset all check point states
+     */
     void resetCheckPoints();
+    /**
+     * @brief Kill frozen runner thread
+     */
     void killFrozenThread();
 private:
-    void _RunSmbxTestHelper(MainWindow *mw, LevelData in_levelData, QString levelPath, bool isUntitled);
+    /********Internal private functions*******/
+    /**
+     * @brief Starts testing of the level. Must be started in another thread via QtConcurrent
+     * @param mw Pointer to main window
+     * @param in_levelData Input level data
+     * @param levelPath Full path to the level file
+     * @param isUntitled Is untitled level (just created but not saved)
+     */
+    void lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled);
+    /**
+     * @brief Process checkpoints resetting
+     */
+    void lunaChkResetThread();
+    /**
+     * @brief Switch to active LunaLUA testing window
+     * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
+     * @return true if window successfully switched, false on failure
+     */
+    bool switchToSmbxWindow(SafeMsgBoxInterface &msg);
+    /**
+     * @brief Sends level data to LunaLUA
+     * @param lvl Level data to send
+     * @param levelPath Full file path to level file (is non-untitled)
+     * @param isUntitled Is untitled level (just created but not saved)
+     * @return true if data successfully sent, false on error
+     */
+    bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
+
+    /**
+     * @brief Starts legacy engine with attaching LunaLUA library
+     * @param pathToLegacyEngine full path to legacy engine executive
+     * @param cmdLineArgs full list of arguments to start legacy engine
+     * @param workingDir working directory (must be equal to legacy engine executable!)
+     * @return Result code
+     */
+    LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
+                                   const wchar_t *cmdLineArgs,
+                                   const wchar_t *workingDir);
 #endif
 };
 #endif // LUNA_TESTER_H
