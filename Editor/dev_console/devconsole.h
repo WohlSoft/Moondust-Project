@@ -66,7 +66,6 @@ private:
     void doThrowUnhandledException(QStringList);
     void doSegmentationViolation(QStringList);
     void doPgeXTest(QStringList args);
-    void doSMBXTest(QStringList args);
     void doSendCheat(QStringList args);
     void doOutputPaths(QStringList args);
 };

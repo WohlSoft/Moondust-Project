@@ -37,6 +37,10 @@
 #include <QMetaObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QIcon>
+#include <QMenu>
+#include <QAction>
+#include <QtConcurrentRun>
 #include "luna_tester.h"
 
 #include <common_features/app_path.h>
@@ -44,6 +48,141 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
+
+LunaTester::LunaTester() :
+    QObject(nullptr),
+    m_mw(nullptr),
+    m_pi{0, 0, 0, 0},
+    m_ipc_pipe_out(0),
+    m_ipc_pipe_out_i(0),
+    m_ipc_pipe_in(0),
+    m_ipc_pipe_in_o(0),
+    m_helperThread(0)
+{}
+
+LunaTester::~LunaTester()
+{
+    DWORD lpExitCode=0;
+    if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode))
+    {
+        if(lpExitCode==STILL_ACTIVE)
+        {
+            WaitForSingleObject(m_pi.hProcess, 100);
+            TerminateProcess(m_pi.hProcess, lpExitCode);
+            CloseHandle(m_pi.hProcess);
+        }
+    }
+    if(m_ipc_pipe_out)
+    {
+        CloseHandle(m_ipc_pipe_out);
+        m_ipc_pipe_out = 0;
+    }
+    if(m_ipc_pipe_in)
+    {
+        CloseHandle(m_ipc_pipe_in);
+        m_ipc_pipe_in = 0;
+    }
+}
+
+void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_before, QAction *defaultTestAction)
+{
+    m_mw = mw;
+    QMenu* lunaMenu = mainmenu->addMenu("LunaTester");
+    mainmenu->insertMenu(insert_before, lunaMenu);
+    lunaMenu->setIcon(QIcon(":/mushroom.ico"));
+
+    QAction* RunSmbxTest = lunaMenu->addAction(tr("Run testing"));
+    RunSmbxTest->setToolTip(tr("Starts testing in the legacy engine.\nTo have this feature work, latest LunaLUA must be installed."));
+    mw->connect(RunSmbxTest, SIGNAL(triggered(bool)), this, SLOT(startLunaTester()));
+
+    QAction* ResetCheckPoints = lunaMenu->addAction(tr("Reset checkpoints"));
+    ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+    mw->connect(ResetCheckPoints, SIGNAL(triggered(bool)), this, SLOT(resetCheckPoints()));
+
+    QAction* KillFrozenThread = lunaMenu->addAction(tr("Kill frozen runner"));
+    KillFrozenThread->setToolTip(tr("Kills frozen thread to allow you to run a test again."));
+    mw->connect(KillFrozenThread, SIGNAL(triggered(bool)), this, SLOT(killFrozenThread()));
+
+    QAction* sep = lunaMenu->addSeparator();
+    mainmenu->insertAction(insert_before, sep);
+
+    if(ConfStatus::SmbxTest_By_Default)
+    {
+        defaultTestAction->setShortcut(QStringLiteral(""));
+        defaultTestAction->setShortcutContext(Qt::WindowShortcut);
+
+        RunSmbxTest->setShortcut(QStringLiteral("F5"));
+        RunSmbxTest->setShortcutContext(Qt::WindowShortcut);
+    }
+}
+
+/*!
+ * \brief Starts testing in the hacked with LunaLUA-SMBX Engine if possible (Only for Windows builds)
+ */
+void LunaTester::startLunaTester()
+{
+    if(m_helper.isRunning())
+    {
+        QMessageBox::warning(m_mw,
+                             "LunaTester",
+                             tr("SMBX test runner thread is busy, try again or try kill frozen thread!"), QMessageBox::Ok);
+    } else {
+        if( m_mw->activeChildWindow() == 1 )
+        {
+            LevelEdit * lvl = m_mw->activeLvlEditWin();
+            if(lvl)
+            {
+                m_helper = QtConcurrent::run(this,
+                                             &LunaTester::_RunSmbxTestHelper,
+                                             m_mw,
+                                             lvl->LvlData,
+                                             lvl->curFile,
+                                             lvl->isUntitled);
+            }
+        }
+    }
+}
+
+void LunaTester::resetCheckPoints()
+{
+    if(m_helper.isRunning())
+    {
+        QMessageBox::warning(m_mw,
+                             tr("LunaTester error"),
+                             tr("SMBX test runner thread is busy, try again or try kill frozen thread!"), QMessageBox::Ok);
+    } else {
+        QMessageBox::information(m_mw,
+                                tr(":P"),
+                                tr("Sorry, not implemented yet!"), QMessageBox::Ok);
+    }
+}
+
+void LunaTester::killFrozenThread()
+{
+    if(m_helper.isRunning())
+    {
+        QMessageBox::StandardButton reply = QMessageBox::warning(m_mw,
+                                            "LunaTester",
+                                            tr("Are you really want to stop runner thread?"), QMessageBox::Yes|QMessageBox::No);
+        if(reply==QMessageBox::Yes)
+        {
+            DWORD lpExitCode=0;
+            if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode))
+            {
+                if(lpExitCode==STILL_ACTIVE)
+                {
+                    WaitForSingleObject(m_pi.hProcess, 0);
+                    TerminateProcess(m_pi.hProcess, lpExitCode);
+                    CloseHandle(m_pi.hProcess);
+                }
+            }
+        }
+    } else {
+        QMessageBox::information(m_mw,
+                                "LunaTester",
+                                tr("Runner thread is not running."), QMessageBox::Ok);
+    }
+}
 
 enum LunaLoaderResult {
     LUNALOADER_OK = 0,
@@ -267,7 +406,7 @@ static std::string ReadMsgString(HANDLE hInputRead)
     }
 }
 
-static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE hInputRead)
+static bool SendLevelDataToLunaLuaSMBX(LevelData& lvl, QString levelPath, bool isUntitled, HANDLE hInputWrite, HANDLE hInputRead)
 {
     //{"jsonrpc": "2.0", "method": "testLevel", "params":
     //   {"filename": "myEpisode/test.lvl", "leveldata": "<RAW SMBX64 LEVEL DATA>", "players": [{"character": 1}], "godMode": false, "showFPS": false },
@@ -275,7 +414,7 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
 
     //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
 
-    if( (hInputWrite == 0) || (ed == NULL) )
+    if( (hInputWrite == 0) )
     {
         return false;
     }
@@ -287,14 +426,13 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
 
         QJsonObject JSONparams;
 
-        if( !ed->isUntitled )
+        if( !isUntitled )
         {
-            QString lvlFile = ed->curFile;
-            if(lvlFile.endsWith(".lvlx", Qt::CaseInsensitive))
+            if(levelPath.endsWith(".lvlx", Qt::CaseInsensitive))
             {
-                lvlFile.remove(lvlFile.size()-1, 1);
+                levelPath.remove(levelPath.size()-1, 1);
             }
-            JSONparams["filename"] = lvlFile;
+            JSONparams["filename"] = levelPath;
         }
         else
             JSONparams["filename"] = ApplicationPath+"/worlds/untitled.lvl";
@@ -323,23 +461,8 @@ static bool SendLevelDataToLunaLuaSMBX(LevelEdit* ed, HANDLE hInputWrite, HANDLE
         JSONparams["showFPS"] = t.xtra_showFPS;
 
         QString LVLRawData;
-        //To don't affect level data state, need to remember recently used file format and version identifier
-        {
-            int recentFormatBackup  = ed->LvlData.RecentFormat;
-            int recentFormatVBackup = ed->LvlData.RecentFormatVersion;
-
-            //Generate actual SMBX64 Level file data
-            //TODO:  Maybe we should undo that earlier optimization, and copy LvlData after all?
-            //       We do need to call smbx64LevelPrepare after all...
-            //Reply: that is required because unordered blocks and BGOs are will produce very vired result:
-            //       - unordered blocks in array are will cause NPCs fall through blocks like no blocks
-            //       - unordered BGOs in array are will result clash
-            //       And yea, only doing optimization on LunaLUA-side is right solution to don't do prepare data work here
-            FileFormats::smbx64LevelPrepare(ed->LvlData);
-            FileFormats::WriteSMBX64LvlFileRaw(ed->LvlData, LVLRawData, 64);
-            ed->LvlData.RecentFormat = recentFormatBackup;
-            ed->LvlData.RecentFormatVersion = recentFormatVBackup;
-        }
+        //Generate actual SMBX64 Level file data
+        FileFormats::WriteSMBX64LvlFileRaw(lvl, LVLRawData, 64);
         //Set CRLF
         LVLRawData.replace("\n", "\r\n");
         //Store data into JSON
@@ -444,499 +567,486 @@ public:
     ~QThreadPointNuller() {*pointer = nullptr;}
 };
 
-void MainWindow::_RunSmbxTestHelper()
+void LunaTester::_RunSmbxTestHelper(MainWindow*mw, LevelData in_levelData, QString levelPath, bool isUntitled)
 {
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&this->m_engine_mutex);
     Q_UNUSED(mlocker);
-    QThreadPointNuller tlocker(&m_luna->m_helperThread);
+    QThreadPointNuller tlocker(&this->m_helperThread);
     Q_UNUSED(tlocker);
 
-    SafeMsgBoxInterface msg(&m_messageBoxer);
+    SafeMsgBoxInterface msg(&mw->m_messageBoxer);
 
-    m_luna->m_helperThread = QThread::currentThread();
+    this->m_helperThread = QThread::currentThread();
 
-    if( activeChildWindow() == 1 )
+    //TODO:  Maybe we should undo that earlier optimization, and copy LvlData after all?
+    //       We do need to call smbx64LevelPrepare after all...
+    //Reply: that is required because unordered blocks and BGOs are will produce very vired result:
+    //       - unordered blocks in array are will cause NPCs fall through blocks like no blocks
+    //       - unordered BGOs in array are will result clash
+    //       And yea, only doing optimization on LunaLUA-side is right solution to don't do prepare data work here
+    FileFormats::smbx64LevelPrepare(in_levelData);
+
+    // Is SMBX Editor already running. If running,
+    // do old method - send path to already running editor
+    if( !SMBXEditorIsStarted() )
     {
-        // Is SMBX Editor already running. If running,
-        // do old method - send path to already running editor
-        if( !SMBXEditorIsStarted() )
+        QString smbxPath = ConfStatus::configDataPath;
+        if(!QFile(smbxPath+ConfStatus::SmbxEXE_Name).exists())
         {
-            QString smbxPath = ConfStatus::configDataPath;
-            if(!QFile(smbxPath+ConfStatus::SmbxEXE_Name).exists())
-            {
-                msg.warning(tr("SMBX Directory wasn't configured right"),
-                            tr("%1 not found!\nTo run testing via SMBX you should have right SMBX Integration configuration package!")
-                                     .arg(smbxPath+ConfStatus::SmbxEXE_Name),
-                QMessageBox::Ok);
-                return;
-            }
-
-            DWORD lpExitCode = 0;
-            if(GetExitCodeProcess(m_luna->m_pi.hProcess, &lpExitCode))
-            {
-                if(lpExitCode==STILL_ACTIVE)
-                {
-                    if( m_luna->m_ipc_pipe_out != 0 )
-                    {
-                        LevelEdit* ed = activeLvlEditWin();
-                        if(!ed)
-                        {
-                            msg.critical("Internal error",
-                                         "Can't start level testing, because activeLvlEditWin() returned NULL",
-                                         QMessageBox::Ok);
-                            return;
-                        }
-
-                        if ( SendLevelDataToLunaLuaSMBX(ed, m_luna->m_ipc_pipe_out, m_luna->m_ipc_pipe_in) )
-                        {
-                            //Stop music playback in the PGE Editor!
-                            QMetaObject::invokeMethod(this, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                            // not sure how efficient it is
-                            QMetaObject::invokeMethod(this, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                            //Attempt to switch SMBX Window
-                            switchToSmbxWindow(msg, m_luna->m_ipc_pipe_out, m_luna->m_ipc_pipe_in);
-                        }
-                    }
-                    else if( msg.warning(tr("SMBX Test is already runned"),
-                             tr("SMBX Engine is already testing another level.\n"
-                                "Do you want to abort current testing process?"),
-                             QMessageBox::Abort|QMessageBox::Cancel) == QMessageBox::Abort)
-                    {
-                        WaitForSingleObject(m_luna->m_pi.hProcess, 100);
-                        TerminateProcess(m_luna->m_pi.hProcess, lpExitCode);
-                        CloseHandle(m_luna->m_pi.hProcess);
-                    }
-                    return;
-                }
-            }
-
-            QString command = smbxPath+ConfStatus::SmbxEXE_Name;
-            QStringList params;
-
-            if( !QFile(smbxPath+"LunaDll.dll").exists() )
-            {
-                /**********************************************
-                 *****Do Vanilla test with dummy episode!******
-                 **********************************************/
-                {
-                    int msgRet = msg.richBox(tr("Vanilla SMBX detected!"),
-                                tr("%2 not found!\nYou have a Vanilla SMBX!<br>\n"
-                       "That means, impossible to launch level testing automatically. "
-                       "To launch a level testing, will be generated a dummy episode which you can "
-                       "start and select manually.<br>\n<br>\n"
-                       "Name of episode to generate: %1<br>\n<br>\n"
-                       "Are you still want to launch a test?<br>\n<br>\n"
-                       "If you want to have a full featured level testing, you need to get a LunaLUA here:<br>\n"
-                       "%3")
-                             .arg("\"_temp_episode_pge\"")
-                             .arg(smbxPath+"LunaDll.dll")
-                             .arg("<a href=\"http://wohlsoft.ru/LunaLua/\">http://wohlsoft.ru/LunaLua/</a>"),
-                                QMessageBox::Yes|QMessageBox::No, QMessageBox::Warning);
-
-                    if(msgRet != QMessageBox::Yes )
-                        return;
-                }
-
-                QString tempPath = smbxPath+"/worlds/";
-                QString tempName = "tmp.PgeWorld.DeleteMe";
-                QString newEpisode = tempPath+tempName+"/";
-
-                LevelEdit* ed = activeLvlEditWin();
-
-                QDir dummyWorld(newEpisode);
-                if(dummyWorld.exists(newEpisode))
-                {
-                    QString testFolder=newEpisode+"templevel/";
-                    RemoveDirectoryW(testFolder.toStdWString().c_str());//Remove symblic link if possible
-
-                    //Clean-up old stuff
-                    dummyWorld.removeRecursively();
-                }
-                dummyWorld.mkpath(newEpisode);
-
-                ed->saveSMBX64LVL(newEpisode+"/templevel.lvl", true);
-                if(!ed->isUntitled)
-                {
-                    QString episodePath = ed->LvlData.path;
-                    QString customPath  = ed->LvlData.path+"/"+ed->LvlData.filename;
-
-                    //Copy available custom stuff into temp directory
-                    QDir episodeDir(episodePath);
-                    QDir customDir(customPath);
-
-                    QStringList fileters;
-                    fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.bmp";
-                    QStringList fileters_cdir;
-                    fileters_cdir << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.mp3"
-                                  //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
-                                  << "*.ogg" << "*.flac"
-                                  //Uncompressed audio data
-                                  << "*.wav" << "*.voc" << "*.aiff"
-                                  //MIDI
-                                  << "*.mid"
-                                  //MikMod (Modules)
-                                  << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
-                                  << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
-                                  << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
-                                  //GAME EMU
-                                  << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz"
-                                  //Rockythechao's extensions
-                                  << "*.anim";
-                    episodeDir.setNameFilters(fileters);
-                    customDir.setNameFilters(fileters_cdir);
-
-                    //***********************Attempt to make symbolic link*******************************/
-                    bool needToCopyEverything=true;
-                    typedef BOOL *(WINAPI *FUNK_OF_SYMLINKS) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
-                    HMODULE hKernel32 = NULL;
-                    FUNK_OF_SYMLINKS fCreateSymbolicLink = NULL;
-                    hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
-                    if(hKernel32)
-                    {
-                        fCreateSymbolicLink = (FUNK_OF_SYMLINKS)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
-                        if(fCreateSymbolicLink) //Try to make a symblic link
-                        {
-                            QString newPath=newEpisode+"templevel/";
-                            if(fCreateSymbolicLink((TCHAR*)newPath.toStdWString().c_str(),
-                                                   (TCHAR*)customPath.toStdWString().c_str(), 0x1))
-                                needToCopyEverything = false;
-                        }
-                    }
-                    //************Copy images and scripts from episode folder**********************/
-                    QStringList files = episodeDir.entryList(QDir::Files);
-                    foreach(QString filex, files)
-                    {
-                        QFile::copy(episodePath+"/"+filex, newEpisode+filex);
-                    }
-
-                    //********************Copy images and scripts from custom folder*****************/
-                    //***************for case where impossible to make a symbolic link***************/
-                    if(needToCopyEverything)
-                    {
-                        customDir.setSorting(QDir::NoSort);
-                        QDirIterator dirsList(customPath, fileters_cdir,
-                                              QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                                              QDirIterator::Subdirectories);
-                        while(dirsList.hasNext())
-                        {
-                            dirsList.next();
-                            QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
-                            QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
-                            QString relNewPath = newEpisode+"templevel/"+relativeDir;
-                            QDir newRelDir(relNewPath);
-                            if(!newRelDir.exists())
-                                newRelDir.mkpath(relNewPath);
-                            QFile::copy(customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
-                        }
-                    }
-                    /*********************************************************************************/
-
-                    //Copy custom musics if possible
-                    foreach(LevelSection sec, ed->LvlData.sections)
-                    {
-                        if(sec.music_file.isEmpty())
-                            continue;
-
-                        QString musFile=sec.music_file;
-                        for(int i=0;i<musFile.size();i++)
-                        {
-                            if(musFile[i]=='|')
-                            {
-                                musFile.remove(i, musFile.size()-i);
-                            }
-                        }
-                        QString MusicFileName=episodePath+"/"+musFile;
-                        QString MusicNewPath=newEpisode+musFile;
-
-                        QFile mus(MusicFileName);
-                        if(!mus.exists(MusicFileName))
-                            continue;
-
-                        QFileInfo inf(MusicNewPath);
-                        if(!needToCopyEverything)
-                        {
-                            if(inf.absoluteDir().absolutePath().contains((newEpisode+"templevel/"), Qt::CaseInsensitive))
-                                continue; //Don't copy musics to the same directory!
-                        }
-                        if(!inf.absoluteDir().exists())
-                        {
-                            inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
-                        }
-                        if(!needToCopyEverything)
-                        {
-                           if(fCreateSymbolicLink((TCHAR*)MusicNewPath.toStdWString().c_str(),
-                                                  (TCHAR*)MusicFileName.toStdWString().c_str(), 0x0)==0)
-                           {
-                               mus.copy(MusicNewPath);//Copy file if impossible to make symbolic link to it
-                           }
-                        } else {
-                            mus.copy(MusicNewPath);
-                        }
-                    }
-                    if(hKernel32)
-                    {
-                        FreeLibrary(hKernel32);
-                    }
-                }
-
-                WorldData worldmap;
-                FileFormats::CreateWorldData(worldmap);
-                worldmap.EpisodeTitle = "_temp_episode_pge";
-                worldmap.IntroLevel_file = "templevel.lvl";
-                worldmap.restartlevel = true;
-
-                if(!FileFormats::WriteSMBX64WldFileF(newEpisode+"/tempworld.wld", worldmap, 64))
-                {
-                    msg.warning(tr("File save error"),
-                                tr("Cannot save file %1:\n%2.")
-                                 .arg(newEpisode+"/tempworld.wld")
-                                 .arg(FileFormats::errorString),
-                                QMessageBox::Ok);
-                    return;
-                }
-
-                QProcess::startDetached(command, params, smbxPath);
-                //Stop music playback in the PGE Editor!
-                QMetaObject::invokeMethod(this, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                // not sure how efficient it is
-                QMetaObject::invokeMethod(this, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                return;
-
-            } else {
-            /**********************************************
-             **********Do LunaLUA testing launch!**********
-             **********************************************/
-                //params << "--patch";
-                params << "--hideOnCloseIPC";
-
-                LevelEdit* ed = activeLvlEditWin();
-                if(!ed)
-                {
-                    msg.critical("Internal error",
-                                 "Can't start level testing, because activeLvlEditWin() returned NULL",
-                                 QMessageBox::Ok);
-                    return;
-                }
-
-                QString argString;
-                for (int i=0; i<params.length(); i++)
-                {
-                    if (i > 0)
-                    {
-                        argString += " ";
-                    }
-                    argString += params[i];
-                }
-
-                // Make sure any old pipe handle is closed
-                if(m_luna->m_ipc_pipe_out)
-                {
-                    CloseHandle(m_luna->m_ipc_pipe_out);
-                    m_luna->m_ipc_pipe_out = 0;
-                }
-                if(m_luna->m_ipc_pipe_in)
-                {
-                    CloseHandle(m_luna->m_ipc_pipe_in);
-                    m_luna->m_ipc_pipe_in = 0;
-                }
-
-                LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
-                                                     argString.toStdWString().c_str(),
-                                                     smbxPath.toStdWString().c_str(),
-                                                     *m_luna );
-
-                if(res == LUNALOADER_OK)
-                {
-                    if(SendLevelDataToLunaLuaSMBX(ed, m_luna->m_ipc_pipe_out, m_luna->m_ipc_pipe_in))
-                    {
-                        GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-                        //Stop music playback in the PGE Editor!
-                        QMetaObject::invokeMethod(this, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                        QMetaObject::invokeMethod(this, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                    } else {
-                        msg.warning(tr("LunaTester error"),
-                        tr("Failed to send level into LunaLUA-SMBX!"),
-                        QMessageBox::Ok);
-                    }
-                } else {
-                    QString luna_error="Unknown error";
-
-                    switch(res)
-                    {
-                    case LUNALOADER_CREATEPROCESS_FAIL:
-                        luna_error=tr("process execution is failed.");
-                    case LUNALOADER_PATCH_FAIL:
-                        luna_error=tr("patching has failed.");
-                    default:
-                        break;
-                    }
-
-                    msg.warning(tr("LunaTester error"),
-                    tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
-                    QMessageBox::Ok);
-                }
-            }//Do LunaLUA direct testing launch
+            msg.warning(LunaTester::tr("SMBX Directory wasn't configured right"),
+                        LunaTester::tr("%1 not found!\nTo run testing via SMBX you should have right SMBX Integration configuration package!")
+                                 .arg(smbxPath+ConfStatus::SmbxEXE_Name),
+            QMessageBox::Ok);
+            return;
         }
-        else //Attempt to attach into running SMBX Editor
+
+        DWORD lpExitCode = 0;
+        if(GetExitCodeProcess(this->m_pi.hProcess, &lpExitCode))
         {
-        /**********************************************
-         ******Do LunaLUA in-editor test launch!*******
-         **********************************************/
-            if(activeLvlEditWin()->isUntitled)
+            if(lpExitCode==STILL_ACTIVE)
             {
-                msg.warning(tr("Save file first"),
-                tr("To run testing via SMBX file must be saved into disk first!"),
+                if( this->m_ipc_pipe_out != 0 )
+                {
+                    if ( SendLevelDataToLunaLuaSMBX(in_levelData, levelPath, isUntitled,
+                                                    this->m_ipc_pipe_out, this->m_ipc_pipe_in) )
+                    {
+                        //Stop music playback in the PGE Editor!
+                        QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                        // not sure how efficient it is
+                        QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                        //Attempt to switch SMBX Window
+                        switchToSmbxWindow(msg, this->m_ipc_pipe_out, this->m_ipc_pipe_in);
+                    }
+                }
+                else if( msg.warning(LunaTester::tr("SMBX Test is already runned"),
+                         LunaTester::tr("SMBX Engine is already testing another level.\n"
+                                        "Do you want to abort current testing process?"),
+                         QMessageBox::Abort|QMessageBox::Cancel) == QMessageBox::Abort)
+                {
+                    WaitForSingleObject(this->m_pi.hProcess, 100);
+                    TerminateProcess(this->m_pi.hProcess, lpExitCode);
+                    CloseHandle(this->m_pi.hProcess);
+                }
+                return;
+            }
+        }
+
+        QString command = smbxPath+ConfStatus::SmbxEXE_Name;
+        QStringList params;
+
+        if( !QFile(smbxPath+"LunaDll.dll").exists() )
+        {
+            /**********************************************
+             *****Do Vanilla test with dummy episode!******
+             **********************************************/
+            {
+                int msgRet = msg.richBox(LunaTester::tr("Vanilla SMBX detected!"),
+                            LunaTester::tr("%2 not found!\nYou have a Vanilla SMBX!<br>\n"
+                   "That means, impossible to launch level testing automatically. "
+                   "To launch a level testing, will be generated a dummy episode which you can "
+                   "start and select manually.<br>\n<br>\n"
+                   "Name of episode to generate: %1<br>\n<br>\n"
+                   "Are you still want to launch a test?<br>\n<br>\n"
+                   "If you want to have a full featured level testing, you need to get a LunaLUA here:<br>\n"
+                   "%3")
+                         .arg("\"_temp_episode_pge\"")
+                         .arg(smbxPath+"LunaDll.dll")
+                         .arg("<a href=\"http://wohlsoft.ru/LunaLua/\">http://wohlsoft.ru/LunaLua/</a>"),
+                            QMessageBox::Yes|QMessageBox::No, QMessageBox::Warning);
+
+                if(msgRet != QMessageBox::Yes )
+                    return;
+            }
+
+            QString tempPath        = smbxPath+"/worlds/";
+            QString tempName        = "tmp.PgeWorld.DeleteMe";
+            QString dst_Episode     = tempPath+tempName+"/";
+            QString src_episodePath = in_levelData.path;
+            QString src_customPath  = in_levelData.path+"/"+in_levelData.filename;
+
+            QDir dummyWorld(dst_Episode);
+            if(dummyWorld.exists(dst_Episode))
+            {
+                QString testFolder = dst_Episode+"templevel/";
+                RemoveDirectoryW(testFolder.toStdWString().c_str());//Remove symblic link if possible
+                //Clean-up old stuff
+                dummyWorld.removeRecursively();
+            }
+            dummyWorld.mkpath(dst_Episode);
+
+            FileFormats::WriteSMBX64LvlFileF(dst_Episode+"/templevel.lvl", in_levelData, 64);
+            if(!isUntitled)
+            {
+
+                //Copy available custom stuff into temp directory
+                QDir episodeDir(src_episodePath);
+                QDir customDir(src_customPath);
+
+                QStringList fileters;
+                fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.bmp";
+                QStringList fileters_cdir;
+                fileters_cdir << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.mp3"
+                              //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
+                              << "*.ogg" << "*.flac"
+                              //Uncompressed audio data
+                              << "*.wav" << "*.voc" << "*.aiff"
+                              //MIDI
+                              << "*.mid"
+                              //MikMod (Modules)
+                              << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
+                              << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
+                              << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
+                              //GAME EMU
+                              << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz"
+                              //Rockythechao's extensions
+                              << "*.anim";
+                episodeDir.setNameFilters(fileters);
+                customDir.setNameFilters(fileters_cdir);
+
+                //***********************Attempt to make symbolic link*******************************/
+                bool needToCopyEverything=true;
+                typedef BOOL *(WINAPI *FUNK_OF_SYMLINKS) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
+                HMODULE hKernel32 = NULL;
+                FUNK_OF_SYMLINKS fCreateSymbolicLink = NULL;
+                hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
+                if(hKernel32)
+                {
+                    fCreateSymbolicLink = (FUNK_OF_SYMLINKS)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
+                    if(fCreateSymbolicLink) //Try to make a symblic link
+                    {
+                        QString newPath=dst_Episode+"templevel/";
+                        if(fCreateSymbolicLink((TCHAR*)newPath.toStdWString().c_str(),
+                                               (TCHAR*)src_customPath.toStdWString().c_str(), 0x1))
+                            needToCopyEverything = false;
+                    }
+                }
+                //************Copy images and scripts from episode folder**********************/
+                QStringList files = episodeDir.entryList(QDir::Files);
+                foreach(QString filex, files)
+                {
+                    QFile::copy(src_episodePath+"/"+filex, dst_Episode+filex);
+                }
+
+                //********************Copy images and scripts from custom folder*****************/
+                //***************for case where impossible to make a symbolic link***************/
+                if(needToCopyEverything)
+                {
+                    customDir.setSorting(QDir::NoSort);
+                    QDirIterator dirsList(src_customPath, fileters_cdir,
+                                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                                          QDirIterator::Subdirectories);
+                    while(dirsList.hasNext())
+                    {
+                        dirsList.next();
+                        QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
+                        QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
+                        QString relNewPath = dst_Episode+"templevel/"+relativeDir;
+                        QDir newRelDir(relNewPath);
+                        if(!newRelDir.exists())
+                            newRelDir.mkpath(relNewPath);
+                        QFile::copy(src_customPath+"/"+relativeDir+"/"+filex, relNewPath+"/"+filex);
+                    }
+                }
+                /*********************************************************************************/
+
+                //Copy custom musics if possible
+                foreach(LevelSection sec, in_levelData.sections)
+                {
+                    if(sec.music_file.isEmpty())
+                        continue;
+
+                    QString musFile=sec.music_file;
+                    for(int i=0;i<musFile.size();i++)
+                    {
+                        if(musFile[i]=='|')
+                        {
+                            musFile.remove(i, musFile.size()-i);
+                        }
+                    }
+                    QString MusicFileName=src_episodePath+"/"+musFile;
+                    QString MusicNewPath=dst_Episode+musFile;
+
+                    QFile mus(MusicFileName);
+                    if(!mus.exists(MusicFileName))
+                        continue;
+
+                    QFileInfo inf(MusicNewPath);
+                    if(!needToCopyEverything)
+                    {
+                        if(inf.absoluteDir().absolutePath().contains((dst_Episode+"templevel/"), Qt::CaseInsensitive))
+                            continue; //Don't copy musics to the same directory!
+                    }
+                    if(!inf.absoluteDir().exists())
+                    {
+                        inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
+                    }
+                    if(!needToCopyEverything)
+                    {
+                       if(fCreateSymbolicLink((TCHAR*)MusicNewPath.toStdWString().c_str(),
+                                              (TCHAR*)MusicFileName.toStdWString().c_str(), 0x0)==0)
+                       {
+                           mus.copy(MusicNewPath);//Copy file if impossible to make symbolic link to it
+                       }
+                    } else {
+                        mus.copy(MusicNewPath);
+                    }
+                }
+                if(hKernel32)
+                {
+                    FreeLibrary(hKernel32);
+                }
+            }
+
+            WorldData worldmap;
+            FileFormats::CreateWorldData(worldmap);
+            worldmap.EpisodeTitle = "_temp_episode_pge";
+            worldmap.IntroLevel_file = "templevel.lvl";
+            worldmap.restartlevel = true;
+
+            if(!FileFormats::WriteSMBX64WldFileF(dst_Episode+"/tempworld.wld", worldmap, 64))
+            {
+                msg.warning(LunaTester::tr("File save error"),
+                            LunaTester::tr("Cannot save file %1:\n%2.")
+                             .arg(dst_Episode+"/tempworld.wld")
+                             .arg(FileFormats::errorString),
+                            QMessageBox::Ok);
+                return;
+            }
+
+            QProcess::startDetached(command, params, smbxPath);
+            //Stop music playback in the PGE Editor!
+            QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+            // not sure how efficient it is
+            QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+            return;
+
+        } else {
+        /**********************************************
+         **********Do LunaLUA testing launch!**********
+         **********************************************/
+            //params << "--patch";
+            params << "--hideOnCloseIPC";
+
+            QString argString;
+            for (int i=0; i<params.length(); i++)
+            {
+                if (i > 0)
+                {
+                    argString += " ";
+                }
+                argString += params[i];
+            }
+
+            // Make sure any old pipe handle is closed
+            if(this->m_ipc_pipe_out)
+            {
+                CloseHandle(this->m_ipc_pipe_out);
+                this->m_ipc_pipe_out = 0;
+            }
+            if(this->m_ipc_pipe_in)
+            {
+                CloseHandle(this->m_ipc_pipe_in);
+                this->m_ipc_pipe_in = 0;
+            }
+
+            LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
+                                                 argString.toStdWString().c_str(),
+                                                 smbxPath.toStdWString().c_str(),
+                                                 *this );
+
+            if(res == LUNALOADER_OK)
+            {
+                if(SendLevelDataToLunaLuaSMBX(in_levelData, levelPath, isUntitled, this->m_ipc_pipe_out, this->m_ipc_pipe_in))
+                {
+                    //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
+                    //Stop music playback in the PGE Editor!
+                    QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                    QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                } else {
+                    msg.warning(LunaTester::tr("LunaTester error"),
+                                LunaTester::tr("Failed to send level into LunaLUA-SMBX!"),
+                    QMessageBox::Ok);
+                }
+            } else {
+                QString luna_error="Unknown error";
+
+                switch(res)
+                {
+                case LUNALOADER_CREATEPROCESS_FAIL:
+                    luna_error=LunaTester::tr("process execution is failed.");
+                case LUNALOADER_PATCH_FAIL:
+                    luna_error=LunaTester::tr("patching has failed.");
+                default:
+                    break;
+                }
+
+                msg.warning(LunaTester::tr("LunaTester error"),
+                LunaTester::tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
+                QMessageBox::Ok);
+            }
+        }//Do LunaLUA direct testing launch
+    }
+    else //Attempt to attach into running SMBX Editor
+    {
+    /**********************************************
+     ******Do LunaLUA in-editor test launch!*******
+     **********************************************/
+        if(isUntitled)
+        {
+            msg.warning(LunaTester::tr("Save file first"),
+                        LunaTester::tr("To run testing via SMBX file must be saved into disk first!"),
+                        QMessageBox::Ok);
+            return;
+        }
+        QString fullPathToLevel = levelPath;
+        if(!in_levelData.smbx64strict)
+        {
+            int ret = msg.warning( LunaTester::tr("Incompatible file format"),
+                                   LunaTester::tr("To take able to test level in the SMBX, file should be saved into SMBX64 format!\n"
+                                                  "Will be created a temporary file. Do you want to continue?"),
+                                        QMessageBox::Yes|QMessageBox::Abort);
+
+            if( ret == QMessageBox::Abort )
+                return;
+
+            //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder
+            QString newPath = in_levelData.path + "/" + in_levelData.filename+"..lvl";
+            if(!FileFormats::WriteSMBX64LvlFileF(newPath, in_levelData, 64))
+            {
+                msg.warning(LunaTester::tr("Error"),
+                            LunaTester::tr("Fail to create temp file %1").arg(newPath),
                 QMessageBox::Ok);
                 return;
             }
-            QString fullPathToLevel= activeLvlEditWin()->curFile;
-            if(!activeLvlEditWin()->LvlData.smbx64strict)
+            fullPathToLevel = newPath;
+        }
+
+
+        COPYDATASTRUCT* cds = new COPYDATASTRUCT;
+        cds->cbData = 1;
+        cds->dwData = (ULONG_PTR)0xDEADC0DE;
+        cds->lpData = NULL;
+
+        HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
+        if(smbxWind)
+        {
+            fullPathToLevel.replace('/', '\\');
+
+            if(in_levelData.modified)
             {
-                int ret = msg.warning(tr("Incompatible file format"),
-                            tr("To take able to test level in the SMBX, file should be saved into SMBX64 format!\n"
-                               "Will be created a temporary file. Do you want to continue?"),
-                                QMessageBox::Yes|QMessageBox::Abort);
-
-                if( ret == QMessageBox::Abort )
+                int ret = msg.question(
+                        LunaTester::tr("SMBX Level test"),
+                        LunaTester::tr("Do you wanna to save file before start testing?\n"),
+                        QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+                if(ret==QMessageBox::Cancel)
                     return;
-
-                //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder
-                QString newPath = activeLvlEditWin()->LvlData.path+"/"+activeLvlEditWin()->LvlData.filename+"..lvl";
-                if(!activeLvlEditWin()->saveSMBX64LVL(newPath, true))
-                {
-                    msg.warning(tr("Error"),
-                    tr("Fail to create temp file %1").arg(newPath),
-                    QMessageBox::Ok);
-                    return;
-                }
-                fullPathToLevel = newPath;
+                else
+                if(ret==QMessageBox::Yes)
+                        QMetaObject::invokeMethod(mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
             }
 
+            /****************Write file path into shared memory**************************/
 
-            COPYDATASTRUCT* cds = new COPYDATASTRUCT;
-            cds->cbData = 1;
-            cds->dwData = (ULONG_PTR)0xDEADC0DE;
-            cds->lpData = NULL;
+            //Connect to Shared memory and send data
+            typedef wchar_t* wchar_p;
+            wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
+            HANDLE  hMapFile;
+            wchar_p pBuf;
+            hMapFile = OpenFileMappingW(
+                                FILE_MAP_ALL_ACCESS,   // read/write access
+                                FALSE,                 // do not inherit the name
+                                szName);               // name of mapping object
 
-            HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
-            if(smbxWind)
+            if(hMapFile == NULL)
             {
-                fullPathToLevel.replace('/', '\\');
-
-                if(activeLvlEditWin()->LvlData.modified)
+                switch(GetLastError())
                 {
-                    int ret = msg.question(
-                            tr("SMBX Level test"),
-                            tr("Do you wanna to save file before start testing?\n"),
-                            QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
-                    if(ret==QMessageBox::Cancel)
-                        return;
-                    else
-                    if(ret==QMessageBox::Yes)
-                        QMetaObject::invokeMethod(activeLvlEditWin(), "doSave", Qt::QueuedConnection);
-                }
-
-                /****************Write file path into shared memory**************************/
-
-                //Connect to Shared memory and send data
-                typedef wchar_t* wchar_p;
-                wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
-                HANDLE  hMapFile;
-                wchar_p pBuf;
-                hMapFile = OpenFileMappingW(
-                                    FILE_MAP_ALL_ACCESS,   // read/write access
-                                    FALSE,                 // do not inherit the name
-                                    szName);               // name of mapping object
-
-                if(hMapFile == NULL)
-                {
-                    switch(GetLastError())
-                    {
-                    case ERROR_FILE_NOT_FOUND:
-                        msg.warning(tr("Error"),
-                        tr("SMBX with LunaDLL is not running!"),
-                        QMessageBox::Ok);
-                        break;
-                    default:
-                        DWORD   dwLastError = GetLastError();
-                        wchar_t lpBuffer[256] = L"?";
-                        if(dwLastError != 0)    // Don't want to see a "operation done successfully" error ;-)
-                            FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM,                 // It´s a system error
-                                           NULL,                                       // No string to be formatted needed
-                                           dwLastError,                                // Hey Windows: Please explain this error!
-                                           MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),   // Do it in the standard language
-                                           lpBuffer,                // Put the message here
-                                           255,                     // Number of bytes to store the message
-                                           NULL);
-                        msg.warning(tr("Error"),
-                        tr("Fail to send file patth into LunaDLL: (%1)").arg(QString::fromWCharArray(lpBuffer)),
-                        QMessageBox::Ok);
-                    }
-                    return;
-                }
-
-                pBuf = wchar_p(MapViewOfFile(hMapFile,   // handle to map object
-                                             FILE_MAP_ALL_ACCESS, // read/write permission
-                                             0,
-                                             0,
-                                             15360));
-
-                if(pBuf == NULL)
-                {
-                    msg.warning(tr("Error"),
-                    tr("Could not map view of LunaLUA shared memory (%1).").arg(GetLastError()),
+                case ERROR_FILE_NOT_FOUND:
+                    msg.warning(LunaTester::tr("Error"),
+                                LunaTester::tr("SMBX with LunaDLL is not running!"),
                     QMessageBox::Ok);
-                    CloseHandle(hMapFile);
-                    return;
-                }
-
-                if(fullPathToLevel.size()*sizeof(wchar_t) > 15360)
-                {
-                    msg.warning(tr("Error"),
-                    tr("Too long path: ").arg(fullPathToLevel),
+                    break;
+                default:
+                    DWORD   dwLastError = GetLastError();
+                    wchar_t lpBuffer[256] = L"?";
+                    if(dwLastError != 0)    // Don't want to see a "operation done successfully" error ;-)
+                        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM,                 // It´s a system error
+                                       NULL,                                       // No string to be formatted needed
+                                       dwLastError,                                // Hey Windows: Please explain this error!
+                                       MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),   // Do it in the standard language
+                                       lpBuffer,                // Put the message here
+                                       255,                     // Number of bytes to store the message
+                                       NULL);
+                    msg.warning(LunaTester::tr("Error"),
+                    LunaTester::tr("Fail to send file patth into LunaDLL: (%1)").arg(QString::fromWCharArray(lpBuffer)),
                     QMessageBox::Ok);
-                    UnmapViewOfFile(pBuf);
-                    CloseHandle(hMapFile);
-                    return;
                 }
+                return;
+            }
 
-                LogDebugQD("Attempt to start testing of " + fullPathToLevel + "via SMBX");
+            pBuf = wchar_p(MapViewOfFile(hMapFile,   // handle to map object
+                                         FILE_MAP_ALL_ACCESS, // read/write permission
+                                         0,
+                                         0,
+                                         15360));
 
-                std::wstring str = fullPathToLevel.toStdWString();
-                ZeroMemory((PVOID)pBuf, 15360);
-                CopyMemory((PVOID)pBuf, str.c_str(), str.size()*sizeof(wchar_t));
+            if(pBuf == NULL)
+            {
+                msg.warning(LunaTester::tr("Error"),
+                            LunaTester::tr("Could not map view of LunaLUA shared memory (%1).").arg(GetLastError()),
+                QMessageBox::Ok);
+                CloseHandle(hMapFile);
+                return;
+            }
 
+            if(fullPathToLevel.size()*sizeof(wchar_t) > 15360)
+            {
+                msg.warning(LunaTester::tr("Error"),
+                            LunaTester::tr("Too long path: ").arg(fullPathToLevel),
+                QMessageBox::Ok);
                 UnmapViewOfFile(pBuf);
                 CloseHandle(hMapFile);
-                /****************Write file path into shared memory****end*******************/
-
-                LogDebugQD("Sent Message (Hopefully it worked)");
-
-                GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-                //Stop music playback in the PGE Editor!
-                QMetaObject::invokeMethod(this, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                QMetaObject::invokeMethod(this, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-
-                //Minimize PGE Editor
-                if(qApp->desktop()->screenCount()==1) // Minimize editor window if alone screen was found
-                {
-                    QMetaObject::invokeMethod(this, "showMinimized", Qt::QueuedConnection);
-                }
-
-                //Send command and restore window
-                SetForegroundWindow(smbxWind);
-                ShowWindow(smbxWind, SW_MAXIMIZE);
-                SetFocus(smbxWind);
-                SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)this->winId(), (LPARAM)cds);
+                return;
             }
-            else
+
+            LogDebugQD("Attempt to start testing of " + fullPathToLevel + "via SMBX");
+
+            std::wstring str = fullPathToLevel.toStdWString();
+            ZeroMemory((PVOID)pBuf, 15360);
+            CopyMemory((PVOID)pBuf, str.c_str(), str.size()*sizeof(wchar_t));
+
+            UnmapViewOfFile(pBuf);
+            CloseHandle(hMapFile);
+            /****************Write file path into shared memory****end*******************/
+
+            LogDebugQD("Sent Message (Hopefully it worked)");
+
+            //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
+            //Stop music playback in the PGE Editor!
+            QMetaObject::invokeMethod(mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+
+            //Minimize PGE Editor
+            if(qApp->desktop()->screenCount()==1) // Minimize editor window if alone screen was found
             {
-                msg.warning(tr("Error"),
-                            tr("Failed to find SMBX Window"),
-                            QMessageBox::Ok);
+                QMetaObject::invokeMethod(mw, "showMinimized", Qt::QueuedConnection);
             }
+
+            //Send command and restore window
+            SetForegroundWindow(smbxWind);
+            ShowWindow(smbxWind, SW_MAXIMIZE);
+            SetFocus(smbxWind);
+            SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)mw->winId(), (LPARAM)cds);
         }
-    }//Is this a level edit window?
+        else
+        {
+            msg.warning(LunaTester::tr("Error"),
+                        LunaTester::tr("Failed to find SMBX Window"),
+                        QMessageBox::Ok);
+        }
+    }
 }
 
-#endif // LUNA_TESTER_H
+#endif //_WIN32
+
+

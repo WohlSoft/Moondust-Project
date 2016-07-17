@@ -179,10 +179,7 @@ void MainWindow::setUiDefults()
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
     ui->menuTest->setEnabled(false);
-    #ifndef Q_OS_WIN
-    //Hide a Microsoft Windows specific menuitem
-    ui->actionRunTestSMBX->setVisible(false);
-    #endif
+
     ui->LevelObjectToolbar->setVisible(false);
     ui->WorldObjectToolbar->setVisible(false);
 

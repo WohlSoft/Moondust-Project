@@ -51,16 +51,12 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LogDebug(QString("Setting Lang..."));
     setDefLang();
 
-    LogDebug(QString("Setting UI Defaults..."));
-    setUiDefults(); //Apply default UI settings
-
 #ifdef Q_OS_WIN
     m_luna = new LunaTester;
-    m_luna->m_pi           = {0, 0, 0, 0};
-    m_luna->m_ipc_pipe_out     = 0;
-    m_luna->m_ipc_pipe_in  = 0;
-    m_luna->m_helperThread = 0;
 #endif
+
+    LogDebug(QString("Setting UI Defaults..."));
+    setUiDefults(); //Apply default UI settings
 
 #ifdef Q_OS_MACX
     foreach(QAction* act, ui->menuBar->actions())
@@ -157,16 +153,9 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-    #ifdef Q_OS_WIN
-        if(ConfStatus::SmbxTest_By_Default)
-        {
-            ui->action_doTest->setShortcut(QStringLiteral(""));
-            ui->action_doTest->setShortcutContext(Qt::WindowShortcut);
-
-            ui->actionRunTestSMBX->setShortcut(QStringLiteral("F5"));
-            ui->actionRunTestSMBX->setShortcutContext(Qt::WindowShortcut);
-        }
-    #endif
+        #ifdef Q_OS_WIN
+        m_luna->initLunaMenu(this, ui->menuTest, ui->action_Start_Engine, ui->action_doTest);
+        #endif
 
         splash.progressTitle(tr("Initializing dock widgets..."));
 
@@ -216,31 +205,8 @@ MainWindow::~MainWindow()
 #ifdef Q_OS_WIN
     if(pge_thumbbar)
         delete pge_thumbbar;
-
-    DWORD lpExitCode=0;
-    if(GetExitCodeProcess(m_luna->m_pi.hProcess, &lpExitCode))
-    {
-        if(lpExitCode==STILL_ACTIVE)
-        {
-            WaitForSingleObject(m_luna->m_pi.hProcess, 100);
-            TerminateProcess(m_luna->m_pi.hProcess, lpExitCode);
-            CloseHandle(m_luna->m_pi.hProcess);
-        }
-    }
-
-    //m_luna->m_helper;
-
-    if(m_luna->m_ipc_pipe_out)
-    {
-        CloseHandle(m_luna->m_ipc_pipe_out);
-        m_luna->m_ipc_pipe_out = 0;
-    }
-    if(m_luna->m_ipc_pipe_in)
-    {
-        CloseHandle(m_luna->m_ipc_pipe_in);
-        m_luna->m_ipc_pipe_in = 0;
-    }
-    delete m_luna;
+    if(m_luna)
+        delete m_luna;
 #endif
     delete ui;
 

@@ -37,7 +37,6 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #ifdef Q_OS_WIN
-#include <QtConcurrentRun>
 #include "luna_tester.h"
 #endif
 
@@ -320,24 +319,6 @@ void MainWindow::on_action_testSettings_triggered()
     TestingSettings testingSetup(this);
     util::DialogToCenter(&testingSetup, true);
     testingSetup.exec();
-}
-
-
-/*!
- * \brief Starts testing in the hacked with LunaLUA SMBX Engine if possible (Only for Windows builds)
- */
-void MainWindow::on_actionRunTestSMBX_triggered()
-{
-#ifdef Q_OS_WIN
-    if(m_luna->m_helper.isRunning())
-    {
-        QMessageBox::warning(this, tr("Error"), tr("SMBX test runner thread is busy, try again or restart PGE Editor!"), QMessageBox::Ok);
-    } else {
-        m_luna->m_helper = QtConcurrent::run(this, &MainWindow::_RunSmbxTestHelper);
-    }
-#else
-    DevConsole::log("This feature requires Microsoft(R) Windows OS!");
-#endif
 }
 
 

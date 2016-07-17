@@ -21,11 +21,31 @@
 
 #ifdef _WIN32
 #include <QFuture>
+#include <QMutex>
 #include <windows.h>
+#include <PGE_File_Formats/lvl_filedata.h>
+class QMenu;
+class QAction;
+class MainWindow;
+#else
+#include <QObject>
+#endif
 
-class LunaTester
+class LunaTester : public QObject
 {
+    Q_OBJECT
 public:
+#ifdef Q_OS_WIN
+    LunaTester();
+    ~LunaTester();
+    MainWindow* m_mw;
+    /**
+     * @brief Initialize menu of the LunaTester
+     * @param mw pointer to the Main Window
+     * @param mainmenu Menu where insert LunaTester
+     * @param insert_before Action where is need to insert LunaTester menu
+     */
+    void initLunaMenu(MainWindow *mw, QMenu* mainmenu, QAction* insert_before, QAction *defaultTestAction);
     //! LunaLoader process information
     PROCESS_INFORMATION m_pi;
     //! LunaLUA IPC Out pipe
@@ -38,8 +58,14 @@ public:
     QFuture<void>       m_helper;
     //! Ranner thread
     QThread*            m_helperThread;
-};
-
+    //! Don't run same function multiple times
+    QMutex              m_engine_mutex;
+public slots:
+    void startLunaTester();
+    void resetCheckPoints();
+    void killFrozenThread();
+private:
+    void _RunSmbxTestHelper(MainWindow *mw, LevelData in_levelData, QString levelPath, bool isUntitled);
 #endif
-
+};
 #endif // LUNA_TESTER_H

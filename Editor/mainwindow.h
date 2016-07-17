@@ -1019,19 +1019,12 @@ public:
          */
         void on_action_testSettings_triggered();
 
-    public slots:
-        /*!
-         * \brief Starts testing in the hacked with LunaLUA SMBX Engine if possible (Only for Windows builds)
-         */
-        void on_actionRunTestSMBX_triggered();
-
     private:
         //! Engine application handler
         QProcess engine_proc;
         //! Mutex which helps to avoid multiple launches of engine
         QMutex   engine_mutex;
         #ifdef _WIN32
-        void   _RunSmbxTestHelper();
         LunaTester * m_luna;
         #endif
 

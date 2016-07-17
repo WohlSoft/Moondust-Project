@@ -266,7 +266,6 @@ void DevConsole::registerCommands()
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
-    registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
     registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
     registerCommand("paths", &DevConsole::doOutputPaths, tr("Shows various important paths!"));
@@ -483,12 +482,6 @@ void DevConsole::doPgeXTest(QStringList args)
 
     }
 
-}
-
-void DevConsole::doSMBXTest(QStringList args)
-{
-    Q_UNUSED(args);
-    MainWinConnect::pMainWin->on_actionRunTestSMBX_triggered();
 }
 
 void DevConsole::doSendCheat(QStringList args)
