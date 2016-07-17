@@ -30,6 +30,7 @@
 
 #include "../collision_checks.h"
 
+#define DISABLE_OLD_SPEEDADD
 //#define COLLIDE_DEBUG
 
 static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*nearest)
@@ -122,10 +123,10 @@ void LVL_Player::updateCollisions()
                     if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(blk);
-                    _floorY_vel+=blk->speedYsum();
-                    _floorY_num+=1.0;
-                    _floorX_vel+=blk->speedXsum();
-                    _floorX_num+=1.0;
+                    _floorY_vel += blk->speedYsum();
+                    _floorY_num += 1.0;
+                    _floorX_vel += blk->speedXsum();
+                    _floorX_num += 1.0;
                 } break;
                 case PGE_Phys_Object::LVLNPC:
                 {
@@ -138,21 +139,23 @@ void LVL_Player::updateCollisions()
                         npcs_to_stomp.push_back(npc);
                     else
                         npc->collision_speed_add.push_back(this);
-                    _floorY_vel+=npc->speedYsum();
-                    _floorY_num+=1.0;
-                    _floorX_vel+=npc->speedXsum();
-                    _floorX_num+=1.0;
+                    _floorY_vel += npc->speedYsum();
+                    _floorY_num += 1.0;
+                    _floorX_vel += npc->speedXsum();
+                    _floorX_num += 1.0;
                 }
                 break;
                 default:break;
             }
         }
-        if(_floorX_num!=0.0) _floorX_vel=_floorX_vel/_floorX_num;
-        if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
+        if(_floorX_num != 0.0) _floorX_vel = _floorX_vel/_floorX_num;
+        if(_floorY_num != 0.0) _floorY_vel = _floorY_vel/_floorY_num;
         if(!foot_contacts_map.isEmpty())
         {
-            //_velocityX_add=_floorX_vel;
-            //_velocityY_add=_floorY_vel;
+            #ifndef DISABLE_OLD_SPEEDADD
+            _velocityX_add=_floorX_vel;
+            _velocityY_add=_floorY_vel;
+            #endif
         }
 
         if(isFloor(floor_blocks))
@@ -304,21 +307,26 @@ void LVL_Player::updateCollisions()
     double correctY=0.0;
     if(resolveLeft || resolveRight)
     {
-        //posRect.setX(_wallX);
-        correctX=_wallX-posRect.x();
+        correctX = _wallX - posRect.x();
         needCorrect=true;
         setSpeedX(0.0);
-        //_velocityX_add=0;
+        #ifndef DISABLE_OLD_SPEEDADD
+        _velocityX_add=0;
+        #endif
     }
     if(resolveBottom || resolveTop)
     {
         //posRect.setY(_floorY);
         correctY=_floorY-posRect.y();
         needCorrect=true;
-        float bumpSpeed=speedY();
-        //setSpeedY(_floorY_vel);
+        float bumpSpeed = speedY();
+        #ifndef DISABLE_OLD_SPEEDADD
+        setSpeedY(_floorY_vel);
+        #endif
         setSpeedY(0);
-        //_velocityY_add=0;
+        #ifndef DISABLE_OLD_SPEEDADD
+        _velocityY_add=0;
+        #endif
         if(!blocks_to_hit.isEmpty())
         {
             PGE_Phys_Object* nearestObj=nearestBlock(blocks_to_hit);

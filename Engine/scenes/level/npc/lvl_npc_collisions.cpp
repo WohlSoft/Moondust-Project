@@ -27,6 +27,8 @@
 
 #include "../collision_checks.h"
 
+#define DISABLE_OLD_SPEEDADD
+
 void LVL_Npc::updateCollisions()
 {
     foot_contacts_map.clear();
@@ -64,10 +66,10 @@ void LVL_Npc::updateCollisions()
     bool resolveLeft=false;
     bool resolveRight=false;
 
-    double backupX=posRect.x();
-    double backupY=posRect.y();
-    double _wallX=posRect.x();
-    double _floorY=posRect.y();
+    double backupX  = posRect.x();
+    double backupY  = posRect.y();
+    double _wallX   = posRect.x();
+    double _floorY  = posRect.y();
 
     double _floorX_vel=0.0;//velocities sum
     double _floorX_num=0.0;//num of velocities
@@ -106,8 +108,10 @@ void LVL_Npc::updateCollisions()
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(npc);
-//                    if((npc->collide_npc==COLLISION_TOP)||(npc->collide_npc==COLLISION_ANY))
-//                        npc->collision_speed_add.push_back(this);
+                    #ifndef DISABLE_OLD_SPEEDADD
+                    if((npc->collide_npc==COLLISION_TOP)||(npc->collide_npc==COLLISION_ANY))
+                        npc->collision_speed_add.push_back(this);
+                    #endif
                     _floorY_vel+=npc->speedYsum();
                     _floorY_num+=1.0;
                     _floorX_vel+=npc->speedXsum();
@@ -123,8 +127,10 @@ void LVL_Npc::updateCollisions()
         {
             if(!is_scenery)
             {
-                //_velocityX_add=_floorX_vel;
-                //_velocityY_add=_floorY_vel;
+                #ifndef DISABLE_OLD_SPEEDADD
+                _velocityX_add = _floorX_vel;
+                _velocityY_add = _floorY_vel;
+                #endif
             }
         }
 
@@ -264,38 +270,38 @@ void LVL_Npc::updateCollisions()
         bool _iswall=false;
         bool _isfloor=false;
         posRect.setX(_wallX);
-        _isfloor=isFloor(floor_blocks, &cliffDetected);
+        _isfloor = isFloor(floor_blocks, &cliffDetected);
         posRect.setPos(backupX, _floorY);
-        _iswall=isWall(wall_blocks);
+        _iswall = isWall(wall_blocks);
         posRect.setX(backupX);
         if(!_iswall && _isfloor)
         {
-            resolveLeft=false;
-            resolveRight=false;
+            resolveLeft = false;
+            resolveRight = false;
         }
         if(!_isfloor && _iswall)
         {
-            resolveTop=false;
-            resolveBottom=false;
+            resolveTop = false;
+            resolveBottom = false;
         }
     }
 
-    bool needCorrect=false;
-    double correctX=0.0;
-    double correctY=0.0;
+    bool needCorrect = false;
+    double correctX = 0.0;
+    double correctY = 0.0;
     if(resolveLeft || resolveRight)
     {
         //posRect.setX(_wallX);
-        correctX=_wallX-posRect.x();
-        needCorrect=true;
+        correctX = _wallX - posRect.x();
+        needCorrect = true;
         setSpeedX(0);
         _velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         //posRect.setY(_floorY);
-        correctY=_floorY-posRect.y();
-        needCorrect=true;
+        correctY = _floorY - posRect.y();
+        needCorrect = true;
         //float bumpSpeed=speedY();
         //if(resolveTop)
             setSpeedY(0.0);
@@ -330,13 +336,15 @@ void LVL_Npc::updateCollisions()
     }
 
     collision_speed_add.clear();
-//    for(int i=0;i<add_speed_to.size();i++)
-//    {
-//        if(add_speed_to[i]->_velocityX_add!=0.0f)
-//            add_speed_to[i]->setSpeedY(speedYsum());
-//        else
-//            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedXsum(), speedYsum());
-//    }
+    #ifndef DISABLE_OLD_SPEEDADD
+    for(int i=0;i<collision_speed_add.size();i++)
+    {
+        if(collision_speed_add[i]->_velocityX_add!=0.0f)
+            collision_speed_add[i]->setSpeedY(speedYsum());
+        else
+            collision_speed_add[i]->setSpeed(collision_speed_add[i]->speedX()+speedXsum(), speedYsum());
+    }
+    #endif
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve end======";
@@ -559,7 +567,7 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
 //                            (r1.bottom() <= rc.top())
 //                            )
                     {
-                        collided_bottom[intptr_t(collided)]=collided;//bottom of player
+                        collided_bottom[intptr_t(collided)] = collided;//bottom of player
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Top of block";
                         #endif
@@ -764,14 +772,16 @@ void LVL_Npc::updateSpeedAddingStack()
         }
         if(_floorX_num != 0.0) _floorX_vel = _floorX_vel/_floorX_num;
         if(_floorY_num != 0.0) _floorY_vel = _floorY_vel/_floorY_num;
-//        if(!foot_contacts_map.isEmpty())
-//        {
-//            if(!is_scenery)
-//            {
-//                //_velocityX_add=_floorX_vel;
-//                //_velocityY_add=_floorY_vel;
-//            }
-//        }
+        #ifndef DISABLE_OLD_SPEEDADD
+        if(!foot_contacts_map.isEmpty())
+        {
+            if(!is_scenery)
+            {
+                _velocityX_add = _floorX_vel;
+                _velocityY_add = _floorY_vel;
+            }
+        }
+        #endif
     }
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->updateSpeedAddingStack();
