@@ -375,8 +375,8 @@ private:
         PAUSE_2_Exit
     };
     int         _pauseMenuID;
-    bool        isPauseMenu;
-    PGE_MenuBox _pauseMenu;
+    bool        m_isPauseMenu;
+    PGE_MenuBox m_pauseMenu;
     bool        _pauseMenu_opened;
     void initPauseMenu1();
     void initPauseMenu2();

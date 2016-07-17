@@ -359,44 +359,49 @@ int PGE_Window::processEvents(SDL_Event &event)
 {
     switch(event.type)
     {
-        case SDL_WINDOWEVENT:
-            if(event.window.event==SDL_WINDOWEVENT_RESIZED)
+    case SDL_WINDOWEVENT:
+        {
+            if(event.window.event == SDL_WINDOWEVENT_RESIZED)
                 GlRenderer::resetViewport();
             return 1;
-        break;
+        }
     case SDL_KEYDOWN:
-          switch(event.key.keysym.sym)
-          {
-              case SDLK_f:
-                 if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
-                 {
-                    g_AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
-                    return 2;
-                 }
-              break;
-              #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
-                               //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
-                               //        and then you can press NumPad + to instantly close game)
-              case SDLK_KP_PLUS:
-                  SDL_DestroyWindow(window);
-                  SDL_CloseAudio();
-                  exit(EXIT_FAILURE);
-                  return 2;
-              break;
-              #endif
-              case SDLK_F2:
-                  PGE_Window::showPhysicsDebug = !PGE_Window::showPhysicsDebug;
-                  return 2;
-              break;
-              case SDLK_F3:
-                  PGE_Window::showDebugInfo = !PGE_Window::showDebugInfo;
-                  return 2;
-              break;
-              case SDLK_F12:
-                  GlRenderer::makeShot();
-                  return 2;
-              break;
-          }
+        switch(event.key.keysym.sym)
+        {
+            case SDLK_f:
+            if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+            {
+                g_AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
+                return 2;
+            }
+            break;
+            #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
+                             //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
+                             //        and then you can press NumPad + to instantly close game)
+            case SDLK_KP_PLUS:
+            {
+                SDL_DestroyWindow(window);
+                SDL_CloseAudio();
+                exit(EXIT_FAILURE);
+                return 2;
+            }
+            #endif
+            case SDLK_F2:
+            {
+                PGE_Window::showPhysicsDebug = !PGE_Window::showPhysicsDebug;
+                return 2;
+            }
+            case SDLK_F3:
+            {
+                PGE_Window::showDebugInfo = !PGE_Window::showDebugInfo;
+                return 2;
+            }
+            case SDLK_F12:
+            {
+                GlRenderer::makeShot();
+                return 2;
+            }
+        }
         break;
     }
     return 0;

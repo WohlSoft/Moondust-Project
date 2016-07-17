@@ -38,7 +38,7 @@ std::atomic_bool                 TitleScene::filefind_finished(false);
 
 TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
-    doExit=false;
+    m_doExit=false;
     mousePos.setX(-300);
     mousePos.setY(-300);
     _cursorIsLoaded=false;
@@ -188,7 +188,7 @@ bool TitleScene::init()
 
 void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
 {
-    if(doExit) return;
+    if(m_doExit) return;
     if(menu.isKeyGrabbing())
     {
         if(scancode!=SDL_SCANCODE_ESCAPE)
@@ -203,7 +203,7 @@ void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
 
 void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(doExit) return;
+    if(m_doExit) return;
     if(menu.isKeyGrabbing()) return;
 
     if(controller->keys.up) {
@@ -249,13 +249,13 @@ void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 void TitleScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
 {
     mousePos = GlRenderer::MapToScr(mmevent.x, mmevent.y);
-    if(!menu.isKeyGrabbing() && !doExit)
+    if(!menu.isKeyGrabbing() && !m_doExit)
         menu.setMouseHoverPos(mousePos.x(), mousePos.y());
 }
 
 void TitleScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
-    if(doExit) return;
+    if(m_doExit) return;
 
     if(menu.isKeyGrabbing())
         menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
@@ -276,7 +276,7 @@ void TitleScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 
 void TitleScene::onMouseWheel(SDL_MouseWheelEvent &wheelevent)
 {
-    if(!menu.isKeyGrabbing() && !doExit)
+    if(!menu.isKeyGrabbing() && !m_doExit)
     {
         if(wheelevent.y>0)
             menu.scrollUp();
@@ -322,11 +322,11 @@ void TitleScene::update()
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
-    if(doExit)
+    if(m_doExit)
     {
-        if(fader.isNull()) fader.setFade(10, 1.0f, 0.02f);
-        if(fader.isFull())
-            running=false;
+        if(m_fader.isNull()) m_fader.setFade(10, 1.0f, 0.02f);
+        if(m_fader.isFull())
+            m_isRunning=false;
     }
 }
 
@@ -361,10 +361,10 @@ void TitleScene::render()
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype)
-                               .arg(fader.fadeRatio())
-                               .arg(fader.isNull())
-                               .arg(fader.isFull())
-                               .arg(fader.ticksLeft())
+                               .arg(m_fader.fadeRatio())
+                               .arg(m_fader.isNull())
+                               .arg(m_fader.isFull())
+                               .arg(m_fader.ticksLeft())
                                .arg(uTickf)
                                ,10, 10);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
@@ -438,7 +438,7 @@ int TitleScene::exec()
     //Hide mouse cursor
     PGE_Window::setCursorVisibly(false);
 
-    while(running)
+    while(m_isRunning)
     {
         //Refresh frameskip flag
         frameSkip = g_AppSettings.frameSkip;

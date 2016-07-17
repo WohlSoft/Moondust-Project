@@ -32,12 +32,13 @@ static inline QString md5hash(QString word)
     return QString::fromStdString(md5(word.toStdString()));
 }
 
-bool PGE_Debugger::cheat_allowed=true;
-bool PGE_Debugger::cheat_pagangod=false;
-bool PGE_Debugger::cheat_chucknorris=false;
-bool PGE_Debugger::cheat_superman=false;
+bool PGE_Debugger::cheat_debugkeys = false;
+bool PGE_Debugger::cheat_allowed = true;
+bool PGE_Debugger::cheat_pagangod = false;
+bool PGE_Debugger::cheat_chucknorris = false;
+bool PGE_Debugger::cheat_superman = false;
 
-bool PGE_Debugger::cheat_worldfreedom=false;
+bool PGE_Debugger::cheat_worldfreedom = false;
 
 static inline void showMsg(Scene *parent, const char*msg)
 {
@@ -100,18 +101,22 @@ void PGE_Debugger::executeCommand(Scene *parent)
             ///////////////////////////////////////////////
             ////////////Level specific commands////////////
             ///////////////////////////////////////////////
-            if(input=="donthurtme") {
-                cheat_pagangod=!cheat_pagangod;
-                en=cheat_pagangod;
-                cheatfound=true;
+            if(input=="takesecretkeychain") {
+                cheat_debugkeys = !cheat_debugkeys;
+                en = cheat_debugkeys;
+                cheatfound = true;
+            } else if(input=="donthurtme") {
+                cheat_pagangod = !cheat_pagangod;
+                en = cheat_pagangod;
+                cheatfound = true;
             } else if(input=="chucknorris") {
-                cheat_chucknorris=!cheat_chucknorris;
+                cheat_chucknorris = !cheat_chucknorris;
                 en=cheat_chucknorris;
                 cheatfound=true;
             } else if(input=="iamsuperman") {
-                cheat_superman=!cheat_superman;
-                en=cheat_superman;
-                cheatfound=true;
+                cheat_superman = !cheat_superman;
+                en = cheat_superman;
+                cheatfound = true;
             } else if(input.startsWith("iwishexitas")) {
                 QStringList args=input.split(' ');
                 if(args.size()==2)
@@ -146,7 +151,6 @@ void PGE_Debugger::executeCommand(Scene *parent)
         else
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
     }
-
 }
 
 void PGE_Debugger::resetEverything()

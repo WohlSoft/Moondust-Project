@@ -32,7 +32,8 @@ public:
      * \param parent Pointer to scene where typed command will be executed
      */
     static void executeCommand(Scene* parent);
-
+    //! Allow debug hot keys
+    static bool cheat_debugkeys;
     //! Allows cheating features such a god mode, chuck-norris, superman, etc.
     static bool cheat_allowed;
 

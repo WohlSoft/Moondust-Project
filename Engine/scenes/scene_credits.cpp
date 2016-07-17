@@ -122,13 +122,13 @@ void CreditsScene::setWaitTime(int time)
 
 void CreditsScene::exitFromScene()
 {
-    doExit=true;
-    fader.setFade(10, 1.0f, 0.01f);
+    m_doExit=true;
+    m_fader.setFade(10, 1.0f, 0.01f);
 }
 
 void CreditsScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(doExit) return;
+    if(m_doExit) return;
 
     switch(sdl_key)
     {
@@ -147,11 +147,11 @@ LuaEngine *CreditsScene::getLuaEngine()
 
 void CreditsScene::update()
 {
-    if(doExit)
+    if(m_doExit)
     {
-        if(fader.isFull())
+        if(m_fader.isFull())
         {
-            running=false;
+            m_isRunning=false;
             return;
         }
     }
@@ -172,7 +172,7 @@ void CreditsScene::update()
 
     /*****************************Update LUA stuff*******************************/
 
-    if(!doExit)
+    if(!m_doExit)
     {
         if(_waitTimer>0)
             _waitTimer-=uTickf;
@@ -205,14 +205,14 @@ void CreditsScene::render()
 
 int CreditsScene::exec()
 {
-    doExit=false;
+    m_doExit=false;
     LoopTiming times;
     times.start_common = SDL_GetTicks();
     bool frameSkip = g_AppSettings.frameSkip;
 
     GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black background color
 
-    while(running)
+    while(m_isRunning)
     {
         times.start_common = SDL_GetTicks();
 

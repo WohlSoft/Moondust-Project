@@ -116,7 +116,7 @@ public:
     /**************Fader**************/
     bool isOpacityFadding();
     void setFade(int speed, float target, float step);
-    PGE_Fader fader;
+    PGE_Fader m_fader;
     /**************Fader**************/
 
     /*  Effects engine   */
@@ -160,9 +160,9 @@ public:
     QString errorString();
 
 protected:
-    bool        running;
-    bool        _doShutDown;
-    bool        doExit;
+    bool        m_isRunning;
+    bool        m_doShutDown;
+    bool        m_doExit;
     int         uTick;
     float       uTickf;
 

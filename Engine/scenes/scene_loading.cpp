@@ -109,13 +109,13 @@ void LoadingScene::setWaitTime(int time)
 
 void LoadingScene::exitFromScene()
 {
-    doExit=true;
-    fader.setFade(10, 1.0f, 0.01f);
+    m_doExit=true;
+    m_fader.setFade(10, 1.0f, 0.01f);
 }
 
 void LoadingScene::onKeyboardPressedSDL(SDL_Keycode code, Uint16)
 {
-    if(doExit) return;
+    if(m_doExit) return;
     if((code==SDLK_LCTRL)||(code==SDLK_RCTRL)) return;
     if(code==SDLK_f) return;
     if(code==SDLK_NUMLOCKCLEAR) return;
@@ -127,18 +127,18 @@ void LoadingScene::onKeyboardPressedSDL(SDL_Keycode code, Uint16)
 
 void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
 {
-    if(doExit) return;
+    if(m_doExit) return;
     qDebug()<<"LoadingScene: Mouse pressed";
     exitFromScene();
 }
 
 void LoadingScene::update()
 {
-    if(doExit)
+    if(m_doExit)
     {
-        if(fader.isFull())
+        if(m_fader.isFull())
         {
-            running=false;
+            m_isRunning=false;
             return;
         }
     }
@@ -147,7 +147,7 @@ void LoadingScene::update()
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
-    if(!doExit)
+    if(!m_doExit)
     {
         if(_waitTimer>0)
             _waitTimer -= uTickf;
@@ -179,13 +179,13 @@ void LoadingScene::render()
 
 int LoadingScene::exec()
 {
-    doExit=false;
+    m_doExit=false;
     LoopTiming times;
     times.start_common = SDL_GetTicks();
     bool frameSkip = g_AppSettings.frameSkip;
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
-    while(running)
+    while(m_isRunning)
     {
         times.start_common = SDL_GetTicks();
 

@@ -25,16 +25,16 @@ void LevelScene::initPauseMenu1()
 {
     _pauseMenu_opened=false;
     _pauseMenuID=1;
-    _pauseMenu.setParentScene(this);
+    m_pauseMenu.setParentScene(this);
 
 
-    _pauseMenu.construct(
+    m_pauseMenu.construct(
                 //% "Pause"
                 qtTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
-    _pauseMenu.clearMenu();
+    m_pauseMenu.clearMenu();
 
     QStringList items;
     //% "Continue"
@@ -45,10 +45,10 @@ void LevelScene::initPauseMenu1()
     items << qtTrId("LVL_MENU_PAUSE_EXITSAVE");
     //% "Exit without saving"
     items << qtTrId("LVL_MENU_PAUSE_EXITNOSAVE");
-    _pauseMenu.addMenuItems(items);
-    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
-    _pauseMenu.setMaxMenuItems(4);
-    isPauseMenu=false;
+    m_pauseMenu.addMenuItems(items);
+    m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    m_pauseMenu.setMaxMenuItems(4);
+    m_isPauseMenu=false;
     isTimeStopped=false;
 }
 
@@ -56,14 +56,14 @@ void LevelScene::initPauseMenu2()
 {
     _pauseMenu_opened=false;
     _pauseMenuID=2;
-    _pauseMenu.setParentScene(this);
-    _pauseMenu.construct(
+    m_pauseMenu.setParentScene(this);
+    m_pauseMenu.construct(
                 //% "Pause"
                 qtTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
-    _pauseMenu.clearMenu();
+    m_pauseMenu.clearMenu();
 
     QStringList items;
     //% "Continue"
@@ -71,10 +71,10 @@ void LevelScene::initPauseMenu2()
     //% "Quit"
     items << qtTrId("LVL_MENU_PAUSE_EXIT");
 
-    _pauseMenu.addMenuItems(items);
-    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
-    _pauseMenu.setMaxMenuItems(4);
-    isPauseMenu=false;
+    m_pauseMenu.addMenuItems(items);
+    m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    m_pauseMenu.setMaxMenuItems(4);
+    m_isPauseMenu=false;
     isTimeStopped=false;
 }
 
@@ -82,18 +82,18 @@ void LevelScene::processPauseMenu()
 {
     if(!_pauseMenu_opened)
     {
-        _pauseMenu.restart();
+        m_pauseMenu.restart();
         _pauseMenu_opened=true;
         PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
     }
     else
     {
-        _pauseMenu.update(uTickf);
-        if(!_pauseMenu.isRunning())
+        m_pauseMenu.update(uTickf);
+        if(!m_pauseMenu.isRunning())
         {
             if(_pauseMenuID==1)
             {
-                switch(_pauseMenu.answer())
+                switch(m_pauseMenu.answer())
                 {
                 case PAUSE_Continue:
                     //do nothing!!
@@ -114,7 +114,7 @@ void LevelScene::processPauseMenu()
                 default: break;
                 }
             } else {
-                switch(_pauseMenu.answer())
+                switch(m_pauseMenu.answer())
                 {
                 case PAUSE_2_Continue:
                     //do nothing!!
@@ -127,7 +127,7 @@ void LevelScene::processPauseMenu()
                 }
             }
             _pauseMenu_opened=false;
-            isPauseMenu=false;
+            m_isPauseMenu=false;
         }
     }
 }

@@ -102,7 +102,7 @@ LevelScene::LevelScene()
     /*********Loader*************/
 
     /*********Fader*************/
-    fader.setFull();
+    m_fader.setFull();
     /*********Fader*************/
 
     /*********Controller********/
@@ -290,7 +290,7 @@ void LevelScene::tickAnimations(float ticks)
 void LevelScene::update()
 {
     if(luaEngine.shouldShutdown()) {
-        fader.setFade(10, 1.0f, 1.0f);
+        m_fader.setFade(10, 1.0f, 1.0f);
         setExiting(0, LvlExit::EXIT_Error);
     }
     Scene::update();
@@ -302,29 +302,29 @@ void LevelScene::update()
         exitLevelDelay -= uTickf;
         if(exitLevelDelay<=0.f)
         {
-            doExit=true;
-            if(fader.isNull())
+            m_doExit=true;
+            if(m_fader.isNull())
             {
                 if(PGE_MusPlayer::MUS_IsPlaying())
                     PGE_MusPlayer::MUS_stopMusicFadeOut(500);
-                fader.setFade(10, 1.0f, 0.01f);
+                m_fader.setFade(10, 1.0f, 0.01f);
             }
         }
     }
 
-    if(doExit)
+    if(m_doExit)
     {
         if(exitLevelCode==LvlExit::EXIT_Closed)
         {
-            fader.setFull();
-            running=false;
+            m_fader.setFull();
+            m_isRunning=false;
         }
         else
         {
-            if(fader.isFull())
-                running=false;
+            if(m_fader.isFull())
+                m_isRunning=false;
         }
-    } else if(isPauseMenu) {
+    } else if(m_isPauseMenu) {
         processPauseMenu();
     } else {//Update physics is not pause menu
 
@@ -565,140 +565,150 @@ void LevelScene::render()
             FontManager::printText(QString("%1")
                         .arg(PGE_MusPlayer::MUS_Title()), 10, 10, 0);
     }
-    renderBlack:
+renderBlack:
     Scene::render();
     if(placingMode) drawPlacingItem();
 
     if(IsLoaderWorks) drawLoader();
 
-    if(isPauseMenu) _pauseMenu.render();
+    if(m_isPauseMenu) m_pauseMenu.render();
 }
 
-bool slowTimeMode=false;
+bool slowTimeMode = false;
 bool OneStepMode = false;
 bool OneStepMode_doStep = false;
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(doExit || isExit()) return;
+    if(m_doExit || isExit()) return;
 
-    if(isPauseMenu) _pauseMenu.processKeyEvent(sdl_key);
+    if(m_isPauseMenu)
+        m_pauseMenu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
     { // Check which
-      case SDLK_ESCAPE:
-      case SDLK_RETURN:     // Toggle pause mode
-          {
-              if(doExit || isPauseMenu) break;
-              isPauseMenu = true;
-          }
-      break;
-      case SDLK_BACKQUOTE:
-      {
-          PGE_Debugger::executeCommand(this);
-          break;
-      }
-      case SDLK_1:
-      {
-        if(!players.isEmpty())
-        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 0, 0, 0);
-      }
-      break;
-      case SDLK_2:
-      {
-         if(!players.isEmpty())
-          launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -6, 12);
-      }
-      break;
-      case SDLK_3:
-      {
-         if(!players.isEmpty())
-         {
-            Scene_Effect_Phys p;
-            p.decelerate_x=0.02;
-            p.max_vel_y=12;
-            launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, 0, p);
-            launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, 0, p);
-            launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, 0, p);
-            launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, 0, p);
-         }
-      }
-      break;
-      case SDLK_4:
-      {
-         if(!players.isEmpty())
-         {
-            Scene_Effect_Phys p;
-            p.max_vel_y=12;
-            launchEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -3, 12, 0, p);
-         }
-      }
-      break;
-      case SDLK_5:
-      {
-         if(!players.isEmpty())
-         {
-            launchEffect(10, players.first()->posX(), players.first()->posY(), 1, 0, 0, 0, 0);
-         }
-      }
-      break;
-
-        case SDLK_7:
+    case SDLK_ESCAPE:
+    case SDLK_RETURN:   // Toggle pause mode
         {
-            if(players.size()>=1)
-                players[0]->setCharacterSafe(players[0]->characterID-1, players[0]->stateID);
+            if(m_doExit || m_isPauseMenu) break;
+                m_isPauseMenu = true;
+            break;
         }
-        break;
-        case SDLK_8:
+        case SDLK_BACKQUOTE:
         {
-            if(players.size()>=1)
-                players[0]->setCharacterSafe(players[0]->characterID+1, players[0]->stateID);
+            PGE_Debugger::executeCommand(this);
+            break;
         }
-        break;
-        case SDLK_9:
+    default:
+        //Keys allowed only in debug mode!
+        if(PGE_Debugger::cheat_debugkeys)
         {
-           if(players.size()>=2)
-            players[1]->setCharacterSafe(2, 1);
-           if(players.size()>=1)
-               players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID-1);
-        }
-        break;
-        case SDLK_0:
-        {
-           if(players.size()>=2)
-            players[1]->setCharacterSafe(2, 2);
-           else if(players.size()>=1)
-            players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID+1);
-        }
-        break;
-
-        case SDLK_F5:
-        {
-          PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
-          isTimeStopped=!isTimeStopped;
-        }
-        break;
-        case SDLK_F6:
-          {
-            PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
-            slowTimeMode=!slowTimeMode;
-          }
-        break;
-        case SDLK_F7:
-          {
-            PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
-            OneStepMode = !OneStepMode;
-          }
-        case SDLK_F8:
-          if(OneStepMode)
-          {
-            PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
-            OneStepMode_doStep = true;
-          }
-        break;
-      default:
-        break;
-    }
+            switch(sdl_key)
+            {
+                case SDLK_1:
+                {
+                    if(!players.isEmpty())
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 0, 0, 0);
+                }
+                break;
+                case SDLK_2:
+                {
+                    if(!players.isEmpty())
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -6, 12);
+                break;
+                }
+                case SDLK_3:
+                {
+                    if(!players.isEmpty())
+                    {
+                        Scene_Effect_Phys p;
+                        p.decelerate_x=0.02;
+                        p.max_vel_y=12;
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, 0, p);
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, 0, p);
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, 0, p);
+                        launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, 0, p);
+                    }
+                    break;
+                }
+                case SDLK_4:
+                {
+                    if(!players.isEmpty())
+                    {
+                        Scene_Effect_Phys p;
+                        p.max_vel_y=12;
+                        launchEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -3, 12, 0, p);
+                        break;
+                    }
+                }
+                case SDLK_5:
+                {
+                    if(!players.isEmpty())
+                    {
+                        launchEffect(10, players.first()->posX(), players.first()->posY(), 1, 0, 0, 0, 0);
+                        break;
+                    }
+                }
+                case SDLK_7:
+                {
+                    if(players.size()>=1)
+                        players[0]->setCharacterSafe(players[0]->characterID-1, players[0]->stateID);
+                    break;
+                }
+                case SDLK_8:
+                {
+                    if(players.size()>=1)
+                        players[0]->setCharacterSafe(players[0]->characterID+1, players[0]->stateID);
+                    break;
+                }
+                case SDLK_9:
+                {
+                    if(players.size()>=2)
+                        players[1]->setCharacterSafe(2, 1);
+                    if(players.size()>=1)
+                        players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID-1);
+                    break;
+                }
+                case SDLK_0:
+                {
+                    if(players.size()>=2)
+                        players[1]->setCharacterSafe(2, 2);
+                    else if(players.size()>=1)
+                        players[0]->setCharacterSafe(players[0]->characterID, players[0]->stateID+1);
+                    break;
+                }
+                case SDLK_F5:
+                {
+                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
+                    isTimeStopped = !isTimeStopped;
+                    break;
+                }
+                case SDLK_F6:
+                {
+                    PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
+                    slowTimeMode = !slowTimeMode;
+                    break;
+                }
+                case SDLK_F7:
+                {
+                    PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
+                    OneStepMode = !OneStepMode;
+                    break;
+                }
+                case SDLK_F8:
+                {
+                    if(OneStepMode)
+                    {
+                        PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
+                        OneStepMode_doStep = true;
+                    }
+                    break;
+                }
+            default:
+                break;
+            }//switch(sdl_key)
+        }//if(PGE_Debugger::cheat_debugkeys)
+    }//switch(sdl_key)
 }
 
 LuaEngine *LevelScene::getLuaEngine()
@@ -709,8 +719,8 @@ LuaEngine *LevelScene::getLuaEngine()
 int LevelScene::exec()
 {
     isLevelContinues=true;
-    doExit=false;
-    running=true;
+    m_doExit=false;
+    m_isRunning=true;
 
     LoopTiming times;
     times.start_common = SDL_GetTicks();
@@ -730,13 +740,13 @@ int LevelScene::exec()
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     player1Controller->resetControls();
     player2Controller->resetControls();
-    if(running) update();
+    if(m_isRunning) update();
 
     debug_TimeCounted=0;
     debug_TimeReal.restart();
     /*****************************************************/
 
-    while(running)
+    while(m_isRunning)
     {
         times.start_common = SDL_GetTicks();
 

@@ -136,7 +136,7 @@ void LevelScene::loaderStep()
             case SDL_QUIT:
                 //Give able to quit from game even loading process is not finished
                 isLevelContinues=false;
-                doExit=true;
+                m_doExit=true;
             break;
         }
     }

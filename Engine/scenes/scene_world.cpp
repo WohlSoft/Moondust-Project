@@ -76,7 +76,7 @@ WorldScene::WorldScene()
     /***********Number of Players*****************/
 
     /*********Fader*************/
-    fader.setFull();
+    m_fader.setFull();
     /*********Fader*************/
 
     move_speed = 125/PGE_Window::TicksPerSecond;
@@ -247,7 +247,7 @@ void WorldScene::setGameState(EpisodeState *_state)
                     gameState->isHubLevel = data.HubStyledWorld;
 
                     //Jump to the intro/hub level
-                    doExit=true;
+                    m_doExit=true;
                     exitWorldCode=WldExit::EXIT_beginLevel;
                     return;
                 }
@@ -272,7 +272,7 @@ bool WorldScene::init()
     luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
     luaEngine.setCoreFile(":/script/maincore_world.lua");
     luaEngine.setUserFile(ConfigManager::setup_WorldMap.luaFile);
-    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace) {
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;
         qWarning() << "Stacktrace: \n" << stacktrace;
@@ -291,7 +291,7 @@ bool WorldScene::init()
     wld_levels.clear();
     wld_musicboxes.clear();
 
-    if(doExit) return true;
+    if(m_doExit) return true;
 
     if(!loadConfigs())
         return false;
@@ -626,21 +626,21 @@ void WorldScene::update()
     Scene::update();
     updateLua();
 
-    if(doExit)
+    if(m_doExit)
     {
         if(exitWorldCode==WldExit::EXIT_close)
         {
-            fader.setFull();
+            m_fader.setFull();
             worldIsContinues=false;
-            running=false;
+            m_isRunning=false;
         }
         else
         {
-            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
-            if(fader.isFull())
+            if(m_fader.isNull()) m_fader.setFade(10, 1.0f, 0.01f);
+            if(m_fader.isFull())
             {
                 worldIsContinues=false;
-                running=false;
+                m_isRunning=false;
             }
         }
     } else if(isPauseMenu) {
@@ -751,7 +751,7 @@ void WorldScene::update()
 
     if(controls_1.jump || controls_1.alt_jump)
     {
-        if((!doExit)&&(!lock_controls) && (!isPauseMenu) && (gameState))
+        if((!m_doExit)&&(!lock_controls) && (!isPauseMenu) && (gameState))
         {
             if(!gameState->LevelFile.isEmpty())
             {
@@ -776,7 +776,7 @@ void WorldScene::update()
 
                 EventQueueEntry<WorldScene >event3;
                 event3.makeCaller([this]()->void{
-                                      this->fader.setFade(10, 0.0f, 0.05);
+                                      this->m_fader.setFade(10, 0.0f, 0.05);
                                       this->lock_controls=false;
                                       //Open new paths if possible
                                       this->pathOpener.startAt(PGE_PointF(this->posX, this->posY));
@@ -786,7 +786,7 @@ void WorldScene::update()
 
                 this->lock_controls=true;
                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                fader.setFade(10, 1.0f, 0.05);
+                m_fader.setFade(10, 1.0f, 0.05);
             }
         }
     }
@@ -1203,7 +1203,7 @@ void WorldScene::render()
                                .arg(debug_phys_delay, 3, 10, QChar('0'))
                                .arg(debug_total_delay, 3, 10, QChar('0')), 10,120);
 
-        if(doExit)
+        if(m_doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitWorldDelay)
                                    .arg(uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
@@ -1216,7 +1216,7 @@ void WorldScene::render()
 
 void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(doExit) return;
+    if(m_doExit) return;
 
     if(isPauseMenu) _pauseMenu.processKeyEvent(sdl_key);
 
@@ -1225,7 +1225,7 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         case SDLK_ESCAPE: // ESC
         case SDLK_RETURN:// Enter
             {
-                if( isPauseMenu || doExit || lock_controls) break;
+                if( isPauseMenu || m_doExit || lock_controls) break;
                 isPauseMenu = true;
             }
         break;
@@ -1268,14 +1268,14 @@ int WorldScene::exec()
 
   Uint32 start_common=0;
 
-    running = !doExit;
+    m_isRunning = !m_doExit;
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     controls_1 = Controller::noKeys();
-    if(running) update();
+    if(m_isRunning) update();
     /*****************************************************/
 
-    while(running)
+    while(m_isRunning)
     {
         start_common = SDL_GetTicks();
 
@@ -1344,7 +1344,7 @@ void WorldScene::setExiting(int delay, int reason)
 {
     exitWorldDelay = delay;
     exitWorldCode = reason;
-    doExit = true;
+    m_doExit = true;
 }
 
 bool WorldScene::loadFile(QString filePath)
@@ -1406,7 +1406,6 @@ void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int
         gameState->game_state.musicFile = customMusicFile;
     }
 }
-
 
 void WorldScene::mapwalker_refreshDirection()
 {

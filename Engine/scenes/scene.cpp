@@ -26,11 +26,11 @@
 
 void Scene::construct()
 {
-    fader.setFull();
-    fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
-    running=true;
-    doExit=false;
-    _doShutDown=false;
+    m_fader.setFull();
+    m_fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
+    m_isRunning=true;
+    m_doExit=false;
+    m_doShutDown=false;
     dif = 0;
     updateTickValue();    
 }
@@ -97,13 +97,12 @@ void Scene::processEvents()
         switch(event.type)
         {
             case SDL_QUIT:
-                {
-                    doExit          = true;
-                    running         = false;
-                    _doShutDown = true;
-                    break;
-                }// End work of program
-            break;
+            {
+                m_doExit    = true;
+                m_isRunning = false;
+                m_doShutDown= true;
+                break;
+            }// End work of program
             case SDL_KEYDOWN: // If pressed key
                 onKeyboardPressedSDL(event.key.keysym.sym, event.key.keysym.mod);
                 onKeyboardPressed(event.key.keysym.scancode);
@@ -135,7 +134,7 @@ LuaEngine *Scene::getLuaEngine()
 
 void Scene::update()
 {
-    fader.tickFader(uTickf);
+    m_fader.tickFader(uTickf);
 }
 
 void Scene::updateLua()
@@ -160,9 +159,9 @@ void Scene::render()
         (fn[i])();
     }
 
-    if(!fader.isNull())
+    if(!m_fader.isNull())
     {
-        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
+        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, m_fader.fadeRatio());
     }
 }
 
@@ -203,23 +202,23 @@ bool Scene::isVizibleOnScreen(double x, double y, double w, double h)
 
 bool Scene::isExiting()
 {
-    return doExit;
+    return m_doExit;
 }
 
 bool Scene::doShutDown()
 {
-    return _doShutDown;
+    return m_doShutDown;
 }
 
 /**************************Fader*******************************/
 bool Scene::isOpacityFadding()
 {
-    return fader.isFading();
+    return m_fader.isFading();
 }
 
 void Scene::setFade(int speed, float target, float step)
 {
-    fader.setFade(speed, target, step);
+    m_fader.setFade(speed, target, step);
 }
 /**************************Fader**end**************************/
 

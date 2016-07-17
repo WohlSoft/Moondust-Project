@@ -534,7 +534,7 @@ LoadingScreen:
         ttl->setWaitTime(15000);
 
         ttl->init();
-        ttl->fader.setFade(10, 0.0f, 0.01f);
+        ttl->m_fader.setFade(10, 0.0f, 0.01f);
         int ret = ttl->exec();
         if(ttl->doShutDown()) ret=-1;
         delete ttl;
@@ -549,7 +549,7 @@ CreditsScreen:
         ttl->setWaitTime(30000);
 
         ttl->init();
-        ttl->fader.setFade(10, 0.0f, 0.01f);
+        ttl->m_fader.setFade(10, 0.0f, 0.01f);
         int ret = ttl->exec();
         if(ttl->doShutDown()) ret=-1;
         delete ttl;
@@ -584,7 +584,7 @@ MainMenu:
         _game_state.reset();
         TitleScene * iScene = new TitleScene();
         iScene->init();
-        iScene->fader.setFade(10, 0.0f, 0.02f);
+        iScene->m_fader.setFade(10, 0.0f, 0.02f);
         int answer = iScene->exec();
         PlayLevelResult   res_level   = iScene->result_level;
         PlayEpisodeResult res_episode = iScene->result_episode;
@@ -672,7 +672,7 @@ PlayWorldMap:
             sceneResult = wScene->init();
 
         if(sceneResult)
-            wScene->fader.setFade(10, 0.0f, 0.02f);
+            wScene->m_fader.setFade(10, 0.0f, 0.02f);
 
         if(sceneResult)
             ExitCode = wScene->exec();
@@ -817,7 +817,7 @@ PlayLevel:
 
                 if(sceneResult)
                 {
-                    lScene->fader.setFade(10, 0.0f, 0.02f);
+                    lScene->m_fader.setFade(10, 0.0f, 0.02f);
                     ExitCode = lScene->exec();
                     _game_state._recent_ExitCode_level=ExitCode;
                 }

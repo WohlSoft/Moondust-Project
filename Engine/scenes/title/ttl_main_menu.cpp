@@ -36,7 +36,7 @@
 
 void TitleScene::processMenu()
 {
-    if(doExit) return;
+    if(m_doExit) return;
 
     //Waiter in process
     switch(_currentMenu)
@@ -101,18 +101,18 @@ void TitleScene::processMenu()
                 if(value=="Exit")
                 {
                     ret = ANSWER_EXIT;
-                    fader.setNull();
-                    doExit=true;
+                    m_fader.setNull();
+                    m_doExit=true;
                 }
                 else
                 {
                     PGE_MsgBox msgBox(this, QString("Sorry, is not implemented yet..."),
                                       PGE_MsgBox::msg_warn);
-                    fader.setRatio(0.5);
+                    m_fader.setRatio(0.5);
                     PGE_Window::setCursorVisibly(true);
                     msgBox.exec();
                     PGE_Window::setCursorVisibly(false);
-                    fader.setNull();
+                    m_fader.setNull();
                     menu.resetState();
                 }
             break;
@@ -132,8 +132,8 @@ void TitleScene::processMenu()
                             ret = ANSWER_PLAYEPISODE_2P;
                         else
                             ret = ANSWER_PLAYEPISODE;
-                        fader.setFade(10, 1.0f, 0.06f);
-                        doExit=true;
+                        m_fader.setFade(10, 1.0f, 0.06f);
+                        m_doExit=true;
                         menu.resetState();
                     }
                 }
@@ -148,8 +148,8 @@ void TitleScene::processMenu()
                 {
                     result_level.levelfile = value;
                     ret = ANSWER_PLAYLEVEL;
-                    fader.setFade(10, 1.0f, 0.06f);
-                    doExit=true;
+                    m_fader.setFade(10, 1.0f, 0.06f);
+                    m_doExit=true;
                     menu.resetState();
                 }
             break;
@@ -215,19 +215,19 @@ void TitleScene::processMenu()
                 if(value=="credits")
                 {
                     ret = ANSWER_CREDITS;
-                    doExit=true;
+                    m_doExit=true;
                 }
                 else
                 if(value=="loading")
                 {
                     ret = ANSWER_LOADING;
-                    doExit=true;
+                    m_doExit=true;
                 }
                 else
                 if(value=="gameover")
                 {
                     ret = ANSWER_GAMEOVER;
-                    doExit=true;
+                    m_doExit=true;
                 }
             break;
             case menu_testboxes:
