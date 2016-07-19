@@ -21,9 +21,7 @@
 #include <editing/edit_level/level_edit.h>
 
 #include "lvl_scene.h"
-#include "items/item_block.h"
-#include "items/item_bgo.h"
-#include "items/item_npc.h"
+#include "lvl_history_manager.h"
 
 #include "edit_modes/mode_hand.h"
 #include "edit_modes/mode_select.h"
@@ -35,82 +33,134 @@
 #include "edit_modes/mode_resize.h"
 #include "edit_modes/mode_fill.h"
 
-LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
+LvlScene::LvlScene(MainWindow* mw,
+                   GraphicsWorkspace * parentView,
+                   dataconfigs &configs,
+                   LevelData &FileData,
+                   QObject *parent) :
+    QGraphicsScene(parent),
+    m_mw(mw),
+    m_configs(&configs), // Pointer to Main Configs
+    m_data(&FileData), //Add pointer to level data
+    m_viewPort(parentView),
+    m_subWindow(nullptr),
+
+    //set dummy images if target not exist or wrong
+    m_dummyBlockImg(Themes::Image(Themes::dummy_block)),
+    m_dummyNpcImg(Themes::Image(Themes::dummy_npc)),
+    m_dummyBgoImg(Themes::Image(Themes::dummy_bgo)),
+
+    m_lastBlockArrayID(0),
+    m_lastBgoArrayID(0),
+    m_lastNpcArrayID(0),
+
+    m_IncrementingNpcSpecialSpin(0),
+
+    //Locks
+    m_lockBgo(false),
+    m_lockBlock(false),
+    m_lockNpc(false),
+    m_lockDoor(false),
+    m_lockPhysenv(false),
+
+    m_emptyCollisionCheck(false),
+
+    //Editing mode
+    m_editMode(MODE_Selecting),
+    m_editModeObj(nullptr),
+
+    m_placingItemType(0),
+
+    m_cursorItemImg(nullptr),
+
+    m_labelBox(nullptr),
+
+    //Mouse Events
+    m_mouseIsMovedAfterKey(false),  //Is Mouse moved after pressing key
+
+    m_eraserIsEnabled(false),
+    m_pastingMode(false),
+    m_busyMode(false),
+    m_disableMoveItems(false),
+    m_contextMenuIsOpened(false),
+
+    m_mouseLeftPressed(false), //Left mouse key is pressed
+    m_mouseMidPressed(false),  //Middle mouse key is pressed
+    m_mouseRightPressed(false),//Right mouse key is pressed
+
+    m_mouseIsMoved(false), //Mouse was moved with right mouseKey
+
+    m_skipChildMousePressEvent(false),
+    m_skipChildMouseMoveEvent(false),
+    m_skipChildMousReleaseEvent(false),
+
+    m_resizeBox(nullptr),
+    m_captureFullSection(false),
+
+    m_history(new LvlHistoryManager(this, this) )
+
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
-
-    //Pointerss
-    pConfigs = &configs; // Pointer to Main Configs
-    LvlData = &FileData; //Ad pointer to level data
-    _viewPort = parentView;
-    _edit=NULL;
-
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), "LevelEdit")==0)
         {
-            _edit = qobject_cast<LevelEdit*>(parent);
+            m_subWindow = qobject_cast<LevelEdit*>(parent);
         }
     }
 
     //set Default Z Indexes
-    Z_backImage = -1000; //Background
+    Z_backImage     = -1000; //Background
     //Background-2
-    Z_BGOBack2 = -160; // backround BGO
-    Z_blockSizable = -150; // sizable blocks
+    Z_BGOBack2      = -160; // backround BGO
+    Z_blockSizable  = -150; // sizable blocks
     //Background-1
-    Z_BGOBack1 = -100; // backround BGO
-    Z_npcBack = -10; // background NPC
-    Z_Block = 1; // standart block
-    Z_npcStd = 30; // standart NPC
-    Z_Player = 35; //player Point
+    Z_BGOBack1      = -100; // backround BGO
+    Z_npcBack       = -10; // background NPC
+    Z_Block         = 1; // standart block
+    Z_npcStd        = 30; // standart NPC
+    Z_Player        = 35; //player Point
     //Foreground-1
-    Z_BGOFore1 = 50; // foreground BGO
-    Z_npcFore = 100; // foreground NPC
-    Z_BlockFore = 150; //foreground BLOCK
+    Z_BGOFore1      = 50; // foreground BGO
+    Z_npcFore       = 100; // foreground NPC
+    Z_BlockFore     = 150; //foreground BLOCK
     //Foreground-2
-    Z_BGOFore2 = 160; // foreground BGO
+    Z_BGOFore2      = 160; // foreground BGO
 
     //System foreground
-    Z_sys_PhysEnv = 500;
-    Z_sys_door = 700;
+    Z_sys_PhysEnv   = 500;
+    Z_sys_door      = 700;
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
 
-    //set dummy images if target not exist or wrong
-    uBlockImg = Themes::Image(Themes::dummy_block);
-    uNpcImg =   Themes::Image(Themes::dummy_npc);
-    uBgoImg =   Themes::Image(Themes::dummy_bgo);
-
-
     //Build animators for dummies
     SimpleAnimator * tmpAnimator;
-        tmpAnimator = new SimpleAnimator(uBlockImg, 0);
-    animates_Blocks.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(uBgoImg, 0);
-    animates_BGO.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummyBlockImg, 0);
+    m_animatorsBlocks.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummyBgoImg, 0);
+    m_animatorsBGO.push_back( tmpAnimator );
 
         obj_npc dummyNpc;
         dummyNpc.frames = 1;
         dummyNpc.framestyle = 0;
         dummyNpc.framespeed = 64;
-        dummyNpc.width = uNpcImg.width();
-        dummyNpc.height = uNpcImg.height();
-        dummyNpc.gfx_w = uNpcImg.width();
-        dummyNpc.gfx_h = uNpcImg.height();
+        dummyNpc.width = m_dummyNpcImg.width();
+        dummyNpc.height = m_dummyNpcImg.height();
+        dummyNpc.gfx_w = m_dummyNpcImg.width();
+        dummyNpc.gfx_h = m_dummyNpcImg.height();
         dummyNpc.ani_bidir = false;
         dummyNpc.ani_direct = false;
         dummyNpc.ani_directed_direct = false;
         dummyNpc.custom_animate = false;
         dummyNpc.custom_physics_to_gfx = true;
-        AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(uNpcImg, dummyNpc);
-    animates_NPC.push_back( tmpNpcAnimator );
+        AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(m_dummyNpcImg, dummyNpc);
+    m_animatorsNPC.push_back( tmpNpcAnimator );
 
     //Init default rotation tables
     local_rotation_table_blocks.clear();
     local_rotation_table_bgo.clear();
     local_rotation_table_npc.clear();
-    foreach(obj_rotation_table x, pConfigs->main_rotation_table)
+    foreach(obj_rotation_table x, m_configs->main_rotation_table)
     {
         if(x.type==ItemTypes::LVL_Block)
             local_rotation_table_blocks[x.id]=x;
@@ -122,106 +172,59 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
             local_rotation_table_npc[x.id]=x;
     }
 
-    IncrementingNpcSpecialSpin = 0;
-
-    last_block_arrayID = 0;
-    last_bgo_arrayID = 0;
-    last_npc_arrayID = 0;
-
-
-    //Locks
-    lock_bgo=false;
-    lock_block=false;
-    lock_npc=false;
-    lock_door=false;
-    lock_water=false;
-
-
-    //Editing mode
-    EditingMode = MODE_Selecting;
-    EraserEnabled = false;
-    PasteFromBuffer = false;
-    disableMoveItems = false;
-    DrawMode=false;
-    placingItem=0;
-
-
-    //Mouse Events
-    IsMoved = false;  //Is Mouse moved after pressing key
-    mouseMoved=false; //Mouse was moved with right mouseKey
-    haveSelected = false;
-    contextMenuOpened = false;
-    mouseLeft=false; //Left mouse key is pressed
-    mouseMid=false;  //Middle mouse key is pressed
-    mouseRight=false;//Right mouse key is pressed
-    MousePressEventOnly=false;
-    MouseMoveEventOnly=false;
-    MouseReleaseEventOnly=false;
-
-    emptyCollisionCheck = false;
-
-    pResizer = NULL;
-    isFullSection = false;
-
-    cursor = NULL;
-    messageBox = NULL;
     resetCursor();
-
-    //HistoryIndex
-    historyIndex=0;
-    historyChanged = false;
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
     //Build edit mode classes
     LVL_ModeHand * modeHand = new LVL_ModeHand(this);
-    EditModes.push_back(modeHand);
+    m_editModes.push_back(modeHand);
 
     LVL_ModeSelect * modeSelect = new LVL_ModeSelect(this);
-    EditModes.push_back(modeSelect);
+    m_editModes.push_back(modeSelect);
 
     LVL_ModeResize * modeResize = new LVL_ModeResize(this);
-    EditModes.push_back(modeResize);
+    m_editModes.push_back(modeResize);
 
     LVL_ModeErase * modeErase = new LVL_ModeErase(this);
-    EditModes.push_back(modeErase);
+    m_editModes.push_back(modeErase);
 
     LVL_ModePlace * modePlace = new LVL_ModePlace(this);
-    EditModes.push_back(modePlace);
+    m_editModes.push_back(modePlace);
 
     LVL_ModeSquare * modeSquare = new LVL_ModeSquare(this);
-    EditModes.push_back(modeSquare);
+    m_editModes.push_back(modeSquare);
 
     LVL_ModeCircle * modeCircle = new LVL_ModeCircle(this);
-    EditModes.push_back(modeCircle);
+    m_editModes.push_back(modeCircle);
 
     LVL_ModeLine * modeLine = new LVL_ModeLine(this);
-    EditModes.push_back(modeLine);
+    m_editModes.push_back(modeLine);
 
     LVL_ModeFill * modeFill = new LVL_ModeFill(this);
-    EditModes.push_back(modeFill);
+    m_editModes.push_back(modeFill);
 
-    CurrentMode = modeSelect;
-    CurrentMode->set();
+    m_editModeObj = modeSelect;
+    m_editModeObj->set();
 }
 
 
 LvlScene::~LvlScene()
 {
-    if(messageBox) delete messageBox;
-    custom_BGOs.clear();
-    custom_Blocks.clear();
-    uBGs.clear();
-    uBGOs.clear();
-    uBlocks.clear();
-    uNPCs.clear();
+    if(m_labelBox) delete m_labelBox;
+    m_customBGOs.clear();
+    m_customBlocks.clear();
+    m_localConfigBackgrounds.clear();
+    m_localConfigBGOs.clear();
+    m_localConfigBlocks.clear();
+    m_localConfigNPCs.clear();
 
-    custom_images.clear();
+    m_localImages.clear();
 
-    while(!EditModes.isEmpty())
+    while(!m_editModes.isEmpty())
     {
-        EditMode *tmp = EditModes.first();
-        EditModes.pop_front();
+        EditMode *tmp = m_editModes.first();
+        m_editModes.pop_front();
         delete tmp;
     }
 }
@@ -229,9 +232,9 @@ LvlScene::~LvlScene()
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    if(!opts.grid_show) return;
+    if(!m_opts.grid_show) return;
 
-    int gridSize=pConfigs->default_grid;
+    int gridSize=m_configs->default_grid;
     qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
     qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 

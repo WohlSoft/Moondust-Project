@@ -18,19 +18,14 @@
 
 #include <QDesktopWidget>
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <editing/edit_level/level_edit.h>
 #include <main_window/dock/lvl_layers_box.h>
 #include <main_window/dock/lvl_events_box.h>
 
-#include "lvl_scene.h"
-#include "items/item_block.h"
-#include "items/item_bgo.h"
-#include "items/item_npc.h"
-#include "items/item_water.h"
-#include "items/item_door.h"
+#include "lvl_history_manager.h"
 #include "newlayerbox.h"
 
 void LvlScene::SwitchEditingMode(int EdtMode)
@@ -45,10 +40,10 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     //bool disableMoveItems;
 
     //bool contextMenuOpened;
-    EraserEnabled=false;
-    PasteFromBuffer=false;
-    DrawMode=false;
-    disableMoveItems=false;
+    m_eraserIsEnabled=false;
+    m_pastingMode=false;
+    m_busyMode=false;
+    m_disableMoveItems=false;
 
     switch(EdtMode)
     {
@@ -75,10 +70,10 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         switchMode("Select");
         clearSelection();
-        disableMoveItems=true;
-        _viewPort->setInteractive(true);
-        _viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
-        _viewPort->setDragMode(QGraphicsView::NoDrag);
+        m_disableMoveItems=true;
+        m_viewPort->setInteractive(true);
+        m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
+        m_viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
     case MODE_Erasing:
@@ -87,7 +82,7 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
     case MODE_SelectingOnly:
         switchMode("Select");
-        disableMoveItems=true;
+        m_disableMoveItems=true;
         break;
 
     case MODE_HandScroll:
@@ -104,19 +99,19 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         switchMode("Select");
         break;
     }
-    EditingMode = EdtMode;
+    m_editMode = EdtMode;
 
 }
 
 void LvlScene::switchMode(QString title)
 {
     qDebug() << "Switching mode " << title;
-    for(int i=0; i<EditModes.size(); i++)
+    for(int i=0; i<m_editModes.size(); i++)
     {
-        if(EditModes[i]->name()==title)
+        if(m_editModes[i]->name()==title)
         {
-            CurrentMode = EditModes[i];
-            CurrentMode->set();
+            m_editModeObj = m_editModes[i];
+            m_editModeObj->set();
             qDebug() << "mode " << title << "switched!";
             break;
         }
@@ -127,8 +122,8 @@ void LvlScene::switchMode(QString title)
 void LvlScene::hideWarpsAndDoors(bool visible)
 {
     QMap<QString, LevelLayer> localLayers;
-    for(int i = 0; i < LvlData->layers.size(); ++i){
-        localLayers[LvlData->layers[i].name] = LvlData->layers[i];
+    for(int i = 0; i < m_data->layers.size(); ++i){
+        localLayers[m_data->layers[i].name] = m_data->layers[i];
     }
 
     foreach (QGraphicsItem* i, items()) {
@@ -143,7 +138,7 @@ void LvlScene::hideWarpsAndDoors(bool visible)
 
 void LvlScene::setTiledBackground(bool forceTiled)
 {
-    ChangeSectionBG(LvlData->sections[LvlData->CurSection].background, -1, forceTiled);
+    ChangeSectionBG(m_data->sections[m_data->CurSection].background, -1, forceTiled);
 }
 
 void LvlScene::applyLayersVisible()
@@ -155,7 +150,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="Block")
         {
             tmp = (*it);
-            foreach(LevelLayer layer, LvlData->layers)
+            foreach(LevelLayer layer, m_data->layers)
             {
                 if( dynamic_cast<ItemBlock *>(tmp)->m_data.layer == layer.name)
                 {
@@ -167,7 +162,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="BGO")
         {
             tmp = (*it);
-            foreach(LevelLayer layer, LvlData->layers)
+            foreach(LevelLayer layer, m_data->layers)
             {
                 if( dynamic_cast<ItemBGO *>(tmp)->m_data.layer == layer.name)
                 {
@@ -179,7 +174,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="NPC")
         {
             tmp = (*it);
-            foreach(LevelLayer layer, LvlData->layers)
+            foreach(LevelLayer layer, m_data->layers)
             {
                 if( dynamic_cast<ItemNPC *>(tmp)->m_data.layer == layer.name)
                 {
@@ -191,7 +186,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="Water")
         {
             tmp = (*it);
-            foreach(LevelLayer layer, LvlData->layers)
+            foreach(LevelLayer layer, m_data->layers)
             {
                 if( dynamic_cast<ItemPhysEnv *>(tmp)->m_data.layer == layer.name)
                 {
@@ -203,7 +198,7 @@ void LvlScene::applyLayersVisible()
         if(((*it)->data(ITEM_TYPE)=="Door_enter")||((*it)->data(ITEM_TYPE)=="Door_exit"))
         {
             tmp = (*it);
-            foreach(LevelLayer layer, LvlData->layers)
+            foreach(LevelLayer layer, m_data->layers)
             {
                 if( dynamic_cast<ItemDoor *>(tmp)->m_data.layer == layer.name)
                 {
@@ -222,19 +217,19 @@ void LvlScene::setLocked(int type, bool lock)
     switch(type)
     {
     case 1://Block
-        lock_block = lock;
+        m_lockBlock = lock;
         break;
     case 2://BGO
-        lock_bgo = lock;
+        m_lockBgo = lock;
         break;
     case 3://NPC
-        lock_npc = lock;
+        m_lockNpc = lock;
         break;
     case 4://Water
-        lock_water = lock;
+        m_lockPhysenv = lock;
         break;
     case 5://Doors
-        lock_door = lock;
+        m_lockDoor = lock;
         break;
     default: break;
     }
@@ -292,7 +287,7 @@ void LvlScene::setLocked(int type, bool lock)
 void LvlScene::setLayerToSelected()
 {
     QString lName;
-    ToNewLayerBox * layerBox = new ToNewLayerBox(LvlData, _viewPort);
+    ToNewLayerBox * layerBox = new ToNewLayerBox(m_data, m_viewPort);
     layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
     if(layerBox->exec()==QDialog::Accepted)
@@ -303,15 +298,15 @@ void LvlScene::setLayerToSelected()
         LevelLayer nLayer;
         nLayer.name = lName;
         nLayer.hidden = layerBox->lHidden;
-        LvlData->layers_array_id++;
-        nLayer.array_id = LvlData->layers_array_id;
-        LvlData->layers.push_back(nLayer);
+        m_data->layers_array_id++;
+        nLayer.array_id = m_data->layers_array_id;
+        m_data->layers.push_back(nLayer);
         //scene->SyncLayerList=true; //Refresh layer list
-        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
-        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
-        MainWinConnect::pMainWin->LayerListsSync();
-        MainWinConnect::pMainWin->dock_LvlEvents->setEventData();
+        m_mw->dock_LvlLayers->setLayerToolsLocked(true);
+        m_mw->dock_LvlLayers->setLayersBox();
+        m_mw->dock_LvlLayers->setLayerToolsLocked(false);
+        m_mw->LayerListsSync();
+        m_mw->dock_LvlEvents->setEventData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;
@@ -321,7 +316,7 @@ void LvlScene::setLayerToSelected()
 void LvlScene::setLayerToSelected(QString lName, bool isNew)
 {
     LevelData modData;
-    foreach(LevelLayer lr, LvlData->layers)
+    foreach(LevelLayer lr, m_data->layers)
     { //Find layer's settings
         if(lr.name==lName)
         {
@@ -382,7 +377,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
             }
             if(isNew)
             {
-                addChangedNewLayerHistory(modData, lr);
+                m_history->addChangedNewLayer(modData, lr);
             }
             break;
         }
@@ -390,6 +385,6 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
 
     if(!isNew)
     {
-        addChangedLayerHistory(modData, lName);
+        m_history->addChangedLayer(modData, lName);
     }
 }

@@ -16,20 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/main_window_ptr.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>
 
-#include "lvl_scene.h"
-#include "items/item_block.h"
-#include "items/item_bgo.h"
-#include "items/item_npc.h"
-#include "items/item_water.h"
-#include "items/item_door.h"
-#include "items/item_playerpoint.h"
+#include "lvl_history_manager.h"
 
 #include <editing/_components/history/historyelementmodification.h>
 #include <editing/_components/history/historyelementmainsetting.h>
@@ -54,437 +48,464 @@
 #include <editing/_components/history/historyelementreplaceplayerpoint.h>
 #include <editing/_components/history/historyelementresizewater.h>
 
-void LvlScene::addRemoveHistory(LevelData removedItems)
+LvlHistoryManager::LvlHistoryManager(LvlScene *scene, QObject *parent) :
+    QObject(parent),
+    m_scene(scene),
+    historyChanged(false),
+    historyIndex(0)
+{
+    connect(this,           &LvlHistoryManager::refreshHistoryButtons,
+            m_scene->m_mw,  &MainWindow::refreshHistoryButtons);
+    connect(this, &LvlHistoryManager::showStatusMessage,
+            m_scene->m_mw,  &MainWindow::showStatusMsg);
+}
+
+void LvlHistoryManager::addRemove(LevelData removedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(removedItems, LevelData());
     modf->setCustomHistoryName(tr("Remove"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addPlaceHistory(LevelData placedItems)
+void LvlHistoryManager::addPlace(LevelData placedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(LevelData(), placedItems);
     modf->setCustomHistoryName(tr("Place"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems)
+void LvlHistoryManager::addOverwrite(LevelData removedItems, LevelData placedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
     modf->setCustomHistoryName(tr("Place & Overwrite"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addPlaceDoorHistory(LevelDoor door, bool isEntrance)
+void LvlHistoryManager::addPlace(LevelDoor door, bool isEntrance)
 {
     updateHistoryBuffer();
 
     HistoryElementPlaceDoor* modf = new HistoryElementPlaceDoor(door, isEntrance);
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems)
+void LvlHistoryManager::addMove(LevelData sourceMovedItems, LevelData targetMovedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
     modf->setCustomHistoryName(tr("Move"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData)
+void LvlHistoryManager::addChangeSettings(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
+void LvlHistoryManager::addResizeSection(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                        long newLeft, long newTop, long newRight, long newBottom)
 {
     updateHistoryBuffer();
     HistoryElementResizeSection *modf = new HistoryElementResizeSection(sectionID,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
                                                                         QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerName)
+void LvlHistoryManager::addChangedLayer(LevelData changedItems, QString newLayerName)
 {
     updateHistoryBuffer();
 
     HistoryElementLayerChanged *modf = new HistoryElementLayerChanged(changedItems, newLayerName);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
+void LvlHistoryManager::addResizeBlock(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
 {
     updateHistoryBuffer();
 
     HistoryElementResizeBlock *modf = new HistoryElementResizeBlock(bl,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
                                                                         QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
+void LvlHistoryManager::addResizePhysEnv(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
 {
     updateHistoryBuffer();
 
     HistoryElementResizeWater *modf = new HistoryElementResizeWater(wt,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
                                                                         QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
+void LvlHistoryManager::addAddWarp(int array_id, int listindex, int doorindex)
 {
     updateHistoryBuffer();
 
     HistoryElementAddWarp* modf = new HistoryElementAddWarp(array_id, listindex, doorindex);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveWarpHistory(LevelDoor removedDoor)
+void LvlHistoryManager::addRemoveWarp(LevelDoor removedDoor)
 {
     updateHistoryBuffer();
 
     HistoryElementRemoveWarp* modf = new HistoryElementRemoveWarp(removedDoor);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangeWarpSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
+void LvlHistoryManager::addChangeWarpSettings(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementSettingsWarp* modf = new HistoryElementSettingsWarp(array_id, subtype, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addAddEventHistory(LevelSMBX64Event ev)
+void LvlHistoryManager::addAddEvent(LevelSMBX64Event ev)
 {
     updateHistoryBuffer();
 
     HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(ev, false);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveEventHistory(LevelSMBX64Event ev)
+void LvlHistoryManager::addRemoveEvent(LevelSMBX64Event ev)
 {
     updateHistoryBuffer();
 
     HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(ev, true);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addDuplicateEventHistory(LevelSMBX64Event newDuplicate)
+void LvlHistoryManager::addDuplicateEvent(LevelSMBX64Event newDuplicate)
 {
     updateHistoryBuffer();
 
     HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(newDuplicate, false);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangeEventSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
+void LvlHistoryManager::addChangeEventSettings(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementSettingsEvent* modf = new HistoryElementSettingsEvent(array_id, subtype, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayer newLayer)
+void LvlHistoryManager::addChangedNewLayer(LevelData changedItems, LevelLayer newLayer)
 {
     updateHistoryBuffer();
 
     HistoryElementChangedNewLayer* modf = new HistoryElementChangedNewLayer(changedItems, newLayer);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addAddLayerHistory(int array_id, QString name)
+void LvlHistoryManager::addAddLayer(int array_id, QString name)
 {
     updateHistoryBuffer();
 
     HistoryElementAddLayer* modf = new HistoryElementAddLayer(array_id, name);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveLayerHistory(LevelData modData)
+void LvlHistoryManager::addRemoveLayer(LevelData modData)
 {
     updateHistoryBuffer();
 
     HistoryElementRemoveLayer* modf = new HistoryElementRemoveLayer(modData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRenameEventHistory(int array_id, QString oldName, QString newName)
+void LvlHistoryManager::addRenameEvent(int array_id, QString oldName, QString newName)
 {
     updateHistoryBuffer();
 
     HistoryElementRenameEvent* modf = new HistoryElementRenameEvent(array_id, oldName, newName);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newName)
+void LvlHistoryManager::addRenameLayer(int array_id, QString oldName, QString newName)
 {
     updateHistoryBuffer();
 
     HistoryElementRenameLayer* modf = new HistoryElementRenameLayer(array_id, oldName, newName);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveLayerAndSaveItemsHistory(LevelData modData)
+void LvlHistoryManager::addRemoveLayerAndSaveItems(LevelData modData)
 {
     updateHistoryBuffer();
 
     HistoryElementRemoveLayerAndSave* modf = new HistoryElementRemoveLayerAndSave(modData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
+void LvlHistoryManager::addMergeLayer(LevelData mergedData, QString newLayerName)
 {
     updateHistoryBuffer();
 
     HistoryElementMergeLayer* modf = new HistoryElementMergeLayer(mergedData, newLayerName);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangeSectionSettingsHistory(int sectionID, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
+void LvlHistoryManager::addChangeSectionSettings(int sectionID, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementSettingsSection* modf = new HistoryElementSettingsSection(sectionID, subtype, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubType subtype, QVariant extraData)
+void LvlHistoryManager::addChangeLevelSettings(HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos)
+void LvlHistoryManager::addPlacePlayerPoint(PlayerPoint plr, QVariant oldPos)
 {
     updateHistoryBuffer();
 
     HistoryElementReplacePlayerPoint* modf = new HistoryElementReplacePlayerPoint(plr, oldPos);
-    modf->setScene(this);
+    modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addRotateHistory(LevelData rotatedItems, LevelData unrotatedItems)
+void LvlHistoryManager::addRotate(LevelData rotatedItems, LevelData unrotatedItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unrotatedItems, rotatedItems);
     modf->setCustomHistoryName(tr("Rotate"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addFlipHistory(LevelData flippedItems, LevelData unflippedItems)
+void LvlHistoryManager::addFlip(LevelData flippedItems, LevelData unflippedItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unflippedItems, flippedItems);
     modf->setCustomHistoryName(tr("Flip"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void LvlScene::addTransformHistory(LevelData transformedItems, LevelData sourceItems)
+void LvlHistoryManager::addTransform(LevelData transformedItems, LevelData sourceItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
     modf->setCustomHistoryName(tr("Transform"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
+
 
 void LvlScene::historyBack()
 {
-    if(EditingMode==MODE_Resizing) //Don't switch history while resizing in process
+    if(m_editMode == MODE_Resizing) //Don't switch history while resizing in process
     {
         resetResizers();
         return;
     }
-
-    historyIndex--;
-    QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
-
-    lastOperation->undo();
-    LvlData->modified = true;
-
-    Debugger_updateItemList();
-    MainWinConnect::pMainWin->refreshHistoryButtons();
-    MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(lastOperation->getHistoryName()));
-
+    m_history->historyBack();
 }
 
 void LvlScene::historyForward()
 {
-    if(EditingMode==MODE_Resizing) //Don't switch history action while resizing in process
+    if(m_editMode==MODE_Resizing) //Don't switch history action while resizing in process
     {
         resetResizers();
         return;
     }
+    m_history->historyForward();
+}
 
+
+void LvlHistoryManager::historyBack()
+{
+    historyIndex--;
+    QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
+
+    lastOperation->undo();
+    m_scene->m_data->modified = true;
+
+    m_scene->Debugger_updateItemList();
+    emit refreshHistoryButtons();
+    emit showStatusMessage(tr("Undone: %1").arg(lastOperation->getHistoryName()));
+}
+
+
+void LvlHistoryManager::historyForward()
+{
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
     lastOperation->redo();
     historyIndex++;
 
-    LvlData->modified = true;
-    Debugger_updateItemList();
-    MainWinConnect::pMainWin->refreshHistoryButtons();
-    MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(lastOperation->getHistoryName()));
+    m_scene->m_data->modified = true;
+    m_scene->Debugger_updateItemList();
+    emit refreshHistoryButtons();
+    emit showStatusMessage(tr("Redone: %1").arg(lastOperation->getHistoryName()));
 }
 
 int LvlScene::getHistroyIndex()
 {
+    return m_history->getHistroyIndex();
+}
+
+int LvlHistoryManager::getHistroyIndex()
+{
     return historyIndex;
 }
 
-void LvlScene::updateHistoryBuffer()
+void LvlHistoryManager::updateHistoryBuffer()
 {
     if(canRedo())
     {
@@ -495,7 +516,7 @@ void LvlScene::updateHistoryBuffer()
         }
     }
 
-    while(operationList.size() >= GlobalSettings::historyLimit){
+    while(operationList.size() >= GlobalSettings::historyLimit) {
         operationList.pop_front();
         historyIndex--;
     }
@@ -503,10 +524,22 @@ void LvlScene::updateHistoryBuffer()
 
 bool LvlScene::canUndo()
 {
-    return historyIndex > 0;
+    return m_history->canUndo();
 }
 
 bool LvlScene::canRedo()
 {
+    return m_history->canRedo();
+}
+
+
+bool LvlHistoryManager::canUndo()
+{
+    return historyIndex > 0;
+}
+
+bool LvlHistoryManager::canRedo()
+{
     return historyIndex < operationList.size();
 }
+

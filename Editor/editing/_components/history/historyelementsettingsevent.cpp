@@ -33,10 +33,10 @@ void HistoryElementSettingsEvent::undo()
     LevelSMBX64Event * eventp;
     bool found = false;
 
-    for(int i = 0; i < lvlScene->LvlData->events.size(); i++){
-        if(lvlScene->LvlData->events[i].array_id == (unsigned int)array_id){
+    for(int i = 0; i < lvlScene->m_data->events.size(); i++){
+        if(lvlScene->m_data->events[i].array_id == (unsigned int)array_id){
             found = true;
-            eventp = &lvlScene->LvlData->events[i];
+            eventp = &lvlScene->m_data->events[i];
             break;
         }
     }
@@ -221,10 +221,10 @@ void HistoryElementSettingsEvent::redo()
     LevelSMBX64Event * eventp;
     bool found = false;
 
-    for(int i = 0; i < lvlScene->LvlData->events.size(); i++){
-        if(lvlScene->LvlData->events[i].array_id == (unsigned int)array_id){
+    for(int i = 0; i < lvlScene->m_data->events.size(); i++){
+        if(lvlScene->m_data->events[i].array_id == (unsigned int)array_id){
             found = true;
-            eventp = &lvlScene->LvlData->events[i];
+            eventp = &lvlScene->m_data->events[i];
             break;
         }
     }

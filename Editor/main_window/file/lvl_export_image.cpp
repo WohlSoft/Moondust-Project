@@ -77,12 +77,12 @@ void LevelEdit::ExportingReady() //slot
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", AppPathManager::userAppDir()).toString();
+        m_recentExportPath = settings.value("export-path", AppPathManager::userAppDir()).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 
 
-        if(scene->isFullSection)
+        if(scene->m_captureFullSection)
         {
             x=LvlData.sections[LvlData.CurSection].size_left;
             y=LvlData.sections[LvlData.CurSection].size_top;
@@ -119,10 +119,10 @@ void LevelEdit::ExportingReady() //slot
                 return;
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-            latest_export_path + "/" +
+            m_recentExportPath + "/" +
             QString("%1_Section_%2%3.png").arg( QFileInfo(curFile).baseName() )
                                                         .arg(LvlData.CurSection+1)
-                                                        .arg(scene->isFullSection?"":("_"+QString::number(qrand()))),
+                                                        .arg(scene->m_captureFullSection?"":("_"+QString::number(qrand()))),
                                                         tr("PNG Image (*.png)"));
         if (fileName.isEmpty())
             return;
@@ -153,7 +153,7 @@ void LevelEdit::ExportingReady() //slot
         qApp->processEvents();
         scene->clearSelection(); // Clear selection on export
 
-        latest_export_path = exported.absoluteDir().path();
+        m_recentExportPath = exported.absoluteDir().path();
         proportion = imgSize[2];
 
         th=imgSize[0];
@@ -183,7 +183,7 @@ void LevelEdit::ExportingReady() //slot
         if(!progress.wasCanceled()) progress.setValue(90);
 
         qApp->processEvents();
-        if(scene->opts.animationEnabled) scene->startAnimation(); // Restart animation
+        if(scene->m_opts.animationEnabled) scene->startAnimation(); // Restart animation
         if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
         if(forceTiled) scene->setTiledBackground(false);
 
@@ -192,7 +192,7 @@ void LevelEdit::ExportingReady() //slot
             progress.close();
 
         settings.beginGroup("Main");
-            settings.setValue("export-path", latest_export_path);
+            settings.setValue("export-path", m_recentExportPath);
             settings.setValue("export-proportions", proportion);
         settings.endGroup();
 }

@@ -155,7 +155,7 @@ void WLD_SetPoint::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 
 
 
-bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, LevelEditingSettings options)
+bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options)
 {
     QFile file(fileName);
     WldData = FileData;

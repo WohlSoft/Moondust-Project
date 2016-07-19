@@ -18,11 +18,7 @@
 
 #include <QComboBox>
 
-#include <editing/_scenes/level/items/item_bgo.h>
-#include <editing/_scenes/level/items/item_block.h>
-#include <editing/_scenes/level/items/item_npc.h>
-#include <editing/_scenes/level/items/item_water.h>
-#include <editing/_scenes/level/items/item_door.h>
+#include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
@@ -352,7 +348,7 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
             break;
         }
     }
-    edit->scene->addRemoveLayerHistory(delData);
+    edit->scene->m_history->addRemoveLayer(delData);
 
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
@@ -613,7 +609,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
             for(int i = 0; i < edit->LvlData.layers.size(); i++){
                 if(edit->LvlData.layers[i].name == layerName){
                     modData.layers.push_back(edit->LvlData.layers[i]);
-                    edit->scene->addRemoveLayerAndSaveItemsHistory(modData);
+                    edit->scene->m_history->addRemoveLayerAndSaveItems(modData);
                     break;
                 }
             }
@@ -624,7 +620,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         for(int i = 0; i < edit->LvlData.layers.size(); i++){
             if(edit->LvlData.layers[i].name == layerName){
                 modData.layers.push_back(edit->LvlData.layers[i]);
-                edit->scene->addMergeLayer(modData, newLayerName);
+                edit->scene->m_history->addMergeLayer(modData, newLayerName);
                 break;
             }
         }
@@ -673,7 +669,7 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
     NewLayer.hidden = (item->checkState()==Qt::Unchecked );
     edit->LvlData.layers_array_id++;
     NewLayer.array_id = edit->LvlData.layers_array_id;
-    edit->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
+    edit->scene->m_history->addAddLayer(NewLayer.array_id, NewLayer.name);
 
     item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
     ui->LvlLayerList->addItem( item );
@@ -756,7 +752,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
             }
             else
             {
-                edit->scene->addRenameLayerHistory(edit->LvlData.layers[i].array_id, oldLayerName, newLayerName);
+                edit->scene->m_history->addRenameLayer(edit->LvlData.layers[i].array_id, oldLayerName, newLayerName);
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
                 //Apply layer's name/visibly to all items
@@ -810,7 +806,7 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     int itemType=0;
     bool allow = ( (WinType==1) && mw()->activeLvlEditWin()->sceneCreated );
 
-    if(allow) itemType = mw()->activeLvlEditWin()->scene->placingItem;
+    if(allow) itemType = mw()->activeLvlEditWin()->scene->m_placingItemType;
 
     if( (allow) && (itemType==LvlScene::PLC_Block ||
                     itemType==LvlScene::PLC_BGO ||

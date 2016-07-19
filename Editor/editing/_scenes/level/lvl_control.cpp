@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/debugger.h>
@@ -37,13 +37,13 @@
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 void LvlScene::keyPressEvent ( QKeyEvent * keyEvent )
 {
-    if(CurrentMode) CurrentMode->keyPress(keyEvent);
+    if(m_editModeObj) m_editModeObj->keyPress(keyEvent);
     QGraphicsScene::keyPressEvent(keyEvent);
 }
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
-    if(CurrentMode) CurrentMode->keyRelease(keyEvent);
+    if(m_editModeObj) m_editModeObj->keyRelease(keyEvent);
     QGraphicsScene::keyReleaseEvent(keyEvent);
 }
 
@@ -58,10 +58,10 @@ void LvlScene::selectionChanged()
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(MousePressEventOnly)
+    if(m_skipChildMousePressEvent)
     {
         QGraphicsScene::mousePressEvent(mouseEvent);
-        MousePressEventOnly = false;
+        m_skipChildMousePressEvent = false;
         return;
     }
 
@@ -70,8 +70,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                .arg(contextMenuOpened).arg(DrawMode));
     #endif
 
-    contextMenuOpened=false;
-    IsMoved = false;
+    m_contextMenuIsOpened=false;
+    m_mouseIsMovedAfterKey = false;
 
     //Discard multi mouse key
     int mSum = 0;
@@ -81,51 +81,51 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mSum > 1 )
     {
         mouseEvent->accept();
-        LogDebug(QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
+        LogDebug(QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(m_editMode).arg(QString::number(mSum, 2)));
         return;
     }
 
-    mouseMoved=false;
+    m_mouseIsMoved=false;
     if( mouseEvent->buttons() & Qt::LeftButton )
     {
-        mouseLeft=true;
-        LogDebug(QString("Left mouse button pressed [edit mode: %1]").arg(EditingMode));
+        m_mouseLeftPressed=true;
+        LogDebug(QString("Left mouse button pressed [edit mode: %1]").arg(m_editMode));
     }
     else
-        mouseLeft=false;
+        m_mouseLeftPressed=false;
 
     if( mouseEvent->buttons() & Qt::MiddleButton )
     {
-        mouseMid=true;
-        LogDebug(QString("Middle mouse button pressed [edit mode: %1]").arg(EditingMode));
-    } else mouseMid=false;
+        m_mouseMidPressed=true;
+        LogDebug(QString("Middle mouse button pressed [edit mode: %1]").arg(m_editMode));
+    } else m_mouseMidPressed=false;
 
     if( mouseEvent->buttons() & Qt::RightButton )
     {
-        mouseRight=true;
-        LogDebug(QString("Right mouse button pressed [edit mode: %1]").arg(EditingMode));
-    } else mouseRight=false;
+        m_mouseRightPressed=true;
+        LogDebug(QString("Right mouse button pressed [edit mode: %1]").arg(m_editMode));
+    } else m_mouseRightPressed=false;
 
-    LogDebug(QString("Current editing mode %1").arg(EditingMode));
+    LogDebug(QString("Current editing mode %1").arg(m_editMode));
 
-    if(CurrentMode) CurrentMode->mousePress(mouseEvent);
+    if(m_editModeObj) m_editModeObj->mousePress(mouseEvent);
 
-    if(CurrentMode->noEvent()) return;
+    if(m_editModeObj->noEvent()) return;
 
-    if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+    if((m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
 
     //Close properties box
-    if( (EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly) )
-        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
+    if( (m_editMode==MODE_Selecting) || (m_editMode==MODE_SelectingOnly) )
+        m_mw->dock_LvlItemProps->CloseBox();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
     //#ifdef _DEBUG_
     LogDebug(QString("mousePress -> done %1").arg(mouseEvent->isAccepted()));
     //#endif
-    haveSelected=(!selectedItems().isEmpty());
+    //haveSelected=(!selectedItems().isEmpty());
 }
 
 void LvlScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -136,33 +136,33 @@ void LvlScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(MouseMoveEventOnly)
+    if(m_skipChildMouseMoveEvent)
     {
         QGraphicsScene::mouseMoveEvent(mouseEvent);
-        MouseMoveEventOnly = false;
+        m_skipChildMouseMoveEvent = false;
         return;
     }
 
-    MainWinConnect::pMainWin->dock_DebuggerBox->setMousePos(mouseEvent->scenePos().toPoint());
+    m_mw->dock_DebuggerBox->setMousePos(mouseEvent->scenePos().toPoint());
 
     #ifdef _DEBUG_
     LogDebug(QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
     #endif
     //if(contextMenuOpened) return;
-    contextMenuOpened=false;
-    IsMoved = true;
+    m_contextMenuIsOpened=false;
+    m_mouseIsMovedAfterKey = true;
 
-    if(CurrentMode) CurrentMode->mouseMove(mouseEvent);
+    if(m_editModeObj) m_editModeObj->mouseMove(mouseEvent);
 
-    if(CurrentMode->noEvent()) return;
+    if(m_editModeObj->noEvent()) return;
 
-    haveSelected=(!selectedItems().isEmpty());
+    bool haveSelected=(!selectedItems().isEmpty());
     if(haveSelected)
     {
         if(!( mouseEvent->buttons() & Qt::LeftButton )) return;
-        if(!mouseMoved)
+        if(!m_mouseIsMoved)
         {
-            mouseMoved=true;
+            m_mouseIsMoved=true;
         }
     }
 
@@ -173,10 +173,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(MouseReleaseEventOnly)
+    if(m_skipChildMousReleaseEvent)
     {
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
-        MouseReleaseEventOnly = false;
+        m_skipChildMousReleaseEvent = false;
         return;
     }
 
@@ -186,44 +186,44 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     if( mouseEvent->button() == Qt::LeftButton )
     {
-        mouseLeft=false;
+        m_mouseLeftPressed=false;
         isLeftMouse=true;
-        LogDebug(QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Left mouse button released [edit mode: %1]").arg(m_editMode));
     }
     if( mouseEvent->button() == Qt::MiddleButton )
     {
-        mouseMid=false;
+        m_mouseMidPressed=false;
         isMiddleMouse=true;
-        LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(m_editMode));
     }
     if( mouseEvent->button() == Qt::RightButton )
     {
-        mouseRight=false;
+        m_mouseRightPressed=false;
         isRightMouse=true;
-        LogDebug(QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
+        LogDebug(QString("Right mouse button released [edit mode: %1]").arg(m_editMode));
     }
 
-    contextMenuOpened=false;
+    m_contextMenuIsOpened=false;
     if(!isLeftMouse)
     {
-        if(PasteFromBuffer && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
-                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly))
+        if(m_pastingMode && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
+                (m_editMode==MODE_Selecting||m_editMode==MODE_SelectingOnly))
         {
             clearSelection();
-            paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+            paste( m_dataBuffer, mouseEvent->scenePos().toPoint() );
             Debugger_updateItemList();
-            PasteFromBuffer = false;
+            m_pastingMode = false;
         }
 
         if(GlobalSettings::MidMouse_allowSwitchToDrag && isMiddleMouse &&
-                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly) && selectedItems().isEmpty())
+                (m_editMode==MODE_Selecting||m_editMode==MODE_SelectingOnly) && selectedItems().isEmpty())
         {
-            MainWinConnect::pMainWin->on_actionHandScroll_triggered();
+            m_mw->on_actionHandScroll_triggered();
         }
 
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
 
-        if(isRightMouse && !IsMoved && (!mouseEvent->isAccepted()))
+        if(isRightMouse && !m_mouseIsMovedAfterKey && (!mouseEvent->isAccepted()))
         {
             QMenu lmenu;
             //QMenu* jumptoSide = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SIDE", "Jump to side"));
@@ -235,19 +235,19 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(answer==props)
                 {
-                    MainWinConnect::pMainWin->dock_LvlSectionProps->show();
-                    MainWinConnect::pMainWin->dock_LvlSectionProps->raise();
+                    m_mw->dock_LvlSectionProps->show();
+                    m_mw->dock_LvlSectionProps->raise();
                 } else if(answer==lvlprops) {
-                    MainWinConnect::pMainWin->on_actionLevelProp_triggered();
+                    m_mw->on_actionLevelProp_triggered();
                 }
             }
         }
         return;
     }
 
-    if(CurrentMode) CurrentMode->mouseRelease(mouseEvent);
+    if(m_editModeObj) m_editModeObj->mouseRelease(mouseEvent);
 
-    if(!CurrentMode->noEvent())
+    if(!m_editModeObj->noEvent())
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
@@ -266,14 +266,14 @@ void LvlScene::Debugger_updateItemList()
                "Warp entries:\t\t%5\n"
                "Physical env. zones:\t%6\n");
 
-    itemList = itemList.arg(LvlData->players.size())
-            .arg(LvlData->blocks.size())
-            .arg(LvlData->bgo.size())
-            .arg(LvlData->npc.size())
-            .arg(LvlData->doors.size())
-            .arg(LvlData->physez.size());
+    itemList = itemList.arg(m_data->players.size())
+            .arg(m_data->blocks.size())
+            .arg(m_data->bgo.size())
+            .arg(m_data->npc.size())
+            .arg(m_data->doors.size())
+            .arg(m_data->physez.size());
 
-    MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
+    m_mw->dock_DebuggerBox->setItemStat(itemList);
 }
 
 
@@ -286,27 +286,24 @@ void LvlScene::openProps()
     {
         if(items.first()->data(ITEM_TYPE).toString()=="Block")
         {
-            MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenBlock(dynamic_cast<ItemBlock *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->OpenBlock(dynamic_cast<ItemBlock *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="BGO")
         {
-            MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenBGO(dynamic_cast<ItemBGO *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->OpenBGO(dynamic_cast<ItemBGO *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="NPC")
         {
-            MainWinConnect::pMainWin->dock_LvlItemProps->
-                    OpenNPC(dynamic_cast<ItemNPC *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->OpenNPC(dynamic_cast<ItemNPC *>(items.first())->m_data);
         }
         else
-        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
+        m_mw->dock_LvlItemProps->CloseBox();
     }
     else
     {
-        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
+        m_mw->dock_LvlItemProps->CloseBox();
     }
 
     QGraphicsScene::selectionChanged();
@@ -317,10 +314,10 @@ void LvlScene::openProps()
 QPoint LvlScene::getViewportPos()
 {
     QPoint vpPos(0,0);
-    if(_viewPort)
+    if(m_viewPort)
     {
-        vpPos.setX(this->_viewPort->horizontalScrollBar()->value());
-        vpPos.setY(this->_viewPort->verticalScrollBar()->value());
+        vpPos.setX(this->m_viewPort->horizontalScrollBar()->value());
+        vpPos.setY(this->m_viewPort->verticalScrollBar()->value());
     }
     return vpPos;
 }
@@ -328,12 +325,12 @@ QPoint LvlScene::getViewportPos()
 QRect LvlScene::getViewportRect()
 {
     QRect vpRect(0,0,0,0);
-    if(_viewPort)
+    if(m_viewPort)
     {
-        vpRect.setLeft(this->_viewPort->horizontalScrollBar()->value());
-        vpRect.setTop(this->_viewPort->verticalScrollBar()->value());
-        vpRect.setWidth(_viewPort->viewport()->width());
-        vpRect.setHeight(_viewPort->viewport()->height());
+        vpRect.setLeft(this->m_viewPort->horizontalScrollBar()->value());
+        vpRect.setTop(this->m_viewPort->verticalScrollBar()->value());
+        vpRect.setWidth(m_viewPort->viewport()->width());
+        vpRect.setHeight(m_viewPort->viewport()->height());
     }
     return vpRect;
 }

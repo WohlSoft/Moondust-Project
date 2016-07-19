@@ -672,7 +672,8 @@ HEADERS  += defines.h \
     SingleApplication/editor_application.h \
     main_window/testing/luna_tester.h \
     common_features/safe_msg_box.h \
-    SingleApplication/semaphore_winapi.h
+    SingleApplication/semaphore_winapi.h \
+    editing/_scenes/level/lvl_history_manager.h
 
 FORMS    += \
     common_features/crashhandler.ui \

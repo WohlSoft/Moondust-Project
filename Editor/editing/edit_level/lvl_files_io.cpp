@@ -36,7 +36,7 @@
 #include "level_edit.h"
 #include <ui_leveledit.h>
 
-bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
+bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
 
@@ -58,8 +58,8 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return false;
     }
 
-    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
-    scene->opts = options;
+    scene = new LvlScene(m_mw, ui->graphicsView, configs, LvlData, this);
+    scene->m_opts = options;
 
     scene->InitSection(0);
     scene->setPlayerPoints();
@@ -269,7 +269,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     for(int q=0; q< LvlData.npc.size(); q++)
     {
         if(LvlData.npc[q].id<=0) continue;
-        LvlData.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[LvlData.npc[q].id].is_star;
+        LvlData.npc[q].is_star = m_mw->configs.main_npc[LvlData.npc[q].id].is_star;
         if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
             LvlData.npc[q].is_star=false;
     }
@@ -312,12 +312,12 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     LvlData.untitled = false;
     if(addToRecent)
     {
-        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-        MainWinConnect::pMainWin->SyncRecentFiles();
+        m_mw->AddToRecentFiles(fileName);
+        m_mw->SyncRecentFiles();
     }
 
     //Refresh Strict SMBX64 flag
-    emit MainWinConnect::pMainWin->setSMBX64Strict(LvlData.smbx64strict);
+    emit m_mw->setSMBX64Strict(LvlData.smbx64strict);
 
     return true;
 }
@@ -409,7 +409,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
 
 
 
-bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, LevelEditingSettings options)
+bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, EditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -456,9 +456,9 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
+    scene = new LvlScene(m_mw, ui->graphicsView, configs, LvlData, this);
 
-    scene->opts = options;
+    scene->m_opts = options;
 
     int DataSize=0;
 
@@ -470,7 +470,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     DataSize += LvlData.water.size();
     DataSize += LvlData.doors.size();*/
 
-    QProgressDialog progress(tr("Loading level data"), tr("Abort"), 0, DataSize, MainWinConnect::pMainWin);
+    QProgressDialog progress(tr("Loading level data"), tr("Abort"), 0, DataSize, m_mw);
          progress.setWindowTitle(tr("Loading level data"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
@@ -562,7 +562,7 @@ void LevelEdit::closeEvent(QCloseEvent *event)
     }
     else
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        m_mw->on_actionSelect_triggered();
     }
 
     if( maybeSave() )
@@ -577,34 +577,34 @@ clearScene:
     if(scene)
     {
         stopAutoUpdateTimer();
-        scene->setMessageBoxItem(false);
+        scene->setLabelBoxItem(false);
         scene->clear();
         LogDebug("!<-Cleared->!");
 
         LogDebug("!<-Delete animators->!");
-        while(! scene->animates_BGO.isEmpty() )
+        while(! scene->m_animatorsBGO.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_BGO.first();
-            scene->animates_BGO.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsBGO.first();
+            scene->m_animatorsBGO.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        while(! scene->animates_Blocks.isEmpty() )
+        while(! scene->m_animatorsBlocks.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_Blocks.first();
-            scene->animates_Blocks.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsBlocks.first();
+            scene->m_animatorsBlocks.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        while(! scene->animates_NPC.isEmpty() )
+        while(! scene->m_animatorsNPC.isEmpty() )
         {
-            AdvNpcAnimator* tmp = scene->animates_NPC.first();
-            scene->animates_NPC.pop_front();
+            AdvNpcAnimator* tmp = scene->m_animatorsNPC.first();
+            scene->m_animatorsNPC.pop_front();
             if(tmp!=NULL) delete tmp;
         }
 
-        scene->uBGOs.clear();
-        scene->uBGs.clear();
-        scene->uBlocks.clear();
-        scene->uNPCs.clear();
+        scene->m_localConfigBGOs.clear();
+        scene->m_localConfigBackgrounds.clear();
+        scene->m_localConfigBlocks.clear();
+        scene->m_localConfigNPCs.clear();
 
         LogDebug("!<-Delete scene->!");
         sceneCreated = false;

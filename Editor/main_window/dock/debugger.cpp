@@ -267,9 +267,9 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
                                 //check as regular NPC
                                 if(e->LvlData.npc[j].id==(unsigned)q) {countItems++; break;}
                                 //check as NPC-Container
-                                if( (e->LvlData.npc[j].id>0)&& e->scene->uNPCs.contains(e->LvlData.npc[j].id) )
+                                if( (e->LvlData.npc[j].id>0)&& e->scene->m_localConfigNPCs.contains(e->LvlData.npc[j].id) )
                                 {
-                                    obj_npc &t_npc = e->scene->uNPCs[ e->LvlData.npc[j].id ];
+                                    obj_npc &t_npc = e->scene->m_localConfigNPCs[ e->LvlData.npc[j].id ];
                                     if(t_npc.container) {
                                         if(e->LvlData.npc[j].contents==q) {countItems++; break;}
                                     }

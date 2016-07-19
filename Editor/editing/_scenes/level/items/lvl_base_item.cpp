@@ -111,7 +111,7 @@ void LvlBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         QGraphicsItem::mousePressEvent(mouseEvent); return;
     }
 
-    if(m_scene->DrawMode)
+    if(m_scene->m_busyMode)
     {
         unsetCursor();
         ungrabMouse();
@@ -167,9 +167,9 @@ void LvlBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
 
     /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!m_scene->contextMenuOpened))
+    if((callContext)&&(!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked())&&(!m_scene->DrawMode)&&(!m_locked))
+        if((!itemTypeIsLocked())&&(!m_scene->m_busyMode)&&(!m_locked))
         {
             contextMenu(mouseEvent);
         }

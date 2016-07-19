@@ -28,7 +28,7 @@ public:
 
     long currentMusic;
 
-    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, LevelEditingSettings options);
+    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options);
 
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }

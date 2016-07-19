@@ -27,7 +27,7 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->opts.grid_snap = checked;
+       activeLvlEditWin()->scene->m_opts.grid_snap = checked;
     }
     else
     if (activeChildWindow()==3)
@@ -42,7 +42,7 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
     GlobalSettings::LvlOpts.grid_show = checked;
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->opts.grid_show = checked;
+       activeLvlEditWin()->scene->m_opts.grid_show = checked;
        activeLvlEditWin()->scene->update();
     }
     else
@@ -65,7 +65,7 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
             s->startAnimation();
         else
             s->stopAnimation();
-        s->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        s->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
     }
     else
     if (activeChildWindow()==3)
@@ -86,7 +86,7 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
     GlobalSettings::LvlOpts.collisionsEnabled = checked;
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
+        activeLvlEditWin()->scene->m_opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
     else
     if (activeChildWindow()==3)

@@ -19,6 +19,7 @@
 #include <QDesktopWidget>
 
 #include <editing/edit_level/levelprops.h>
+#include <editing/_scenes/level/lvl_history_manager.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -40,7 +41,7 @@ void MainWindow::on_actionLevelProp_triggered()
             QList<QVariant> lvlsetData;
             lvlsetData.push_back(e->LvlData.LevelName);
             lvlsetData.push_back(LevProps.LevelTitle);
-            e->scene->addChangeLevelSettingsHistory(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
+            e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
             e->LvlData.LevelName = LevProps.LevelTitle;
             e->LvlData.modified = true;
             e->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? e->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );

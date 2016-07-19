@@ -37,7 +37,7 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
+bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
 
@@ -300,7 +300,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 }
 
 
-bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, LevelEditingSettings options)
+bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options)
 {
     QFile file(fileName);
     WldData = FileData;

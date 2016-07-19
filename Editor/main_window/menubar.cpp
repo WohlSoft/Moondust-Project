@@ -255,7 +255,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         if(lvlWin->sceneCreated)
         {
             dock_LvlSectionProps->switchResizeMode(
-                 (lvlWin->scene->pResizer != nullptr)&&(lvlWin->scene->pResizer->type==0)
+                 (lvlWin->scene->m_resizeBox != nullptr)&&(lvlWin->scene->m_resizeBox->type==0)
                         );
         }
 
@@ -278,17 +278,17 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         if(lvlWin->sceneCreated)
         {
             LvlScene * scn = lvlWin->scene;
-            ui->actionLockBlocks->setChecked(scn->lock_block);
-            ui->actionLockBGO->setChecked(scn->lock_bgo);
-            ui->actionLockNPC->setChecked(scn->lock_npc);
-            ui->actionLockWaters->setChecked(scn->lock_water);
-            ui->actionLockDoors->setChecked(scn->lock_door);
+            ui->actionLockBlocks->setChecked(scn->m_lockBlock);
+            ui->actionLockBGO->setChecked(scn->m_lockBgo);
+            ui->actionLockNPC->setChecked(scn->m_lockNpc);
+            ui->actionLockWaters->setChecked(scn->m_lockPhysenv);
+            ui->actionLockDoors->setChecked(scn->m_lockDoor);
 
             LogDebug("-> Get scene flags: grid");
-            ui->actionGridEn->setChecked(scn->opts.grid_snap);
-            ui->actionShowGrid->setChecked(scn->opts.grid_show);
+            ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
+            ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
 
-            GlobalSettings::LvlOpts = scn->opts;
+            GlobalSettings::LvlOpts = scn->m_opts;
 
             ui->actionUndo->setEnabled(scn->canUndo());
             ui->actionRedo->setEnabled(scn->canRedo());

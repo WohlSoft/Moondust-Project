@@ -35,7 +35,6 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
     int TotalSteps = 6;
 
         if(!progress.wasCanceled())
-
             progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -102,7 +101,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
 
     scene->drawSpace();
 
-    if(scene->opts.animationEnabled)
+    if(scene->m_opts.animationEnabled)
         scene->startAnimation();
 
     scene->applyLayersVisible();

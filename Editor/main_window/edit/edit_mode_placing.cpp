@@ -45,7 +45,7 @@ void MainWindow::on_actionRectFill_triggered(bool checked)
             ui->actionFill->setChecked(false);
             ui->actionCircleFill->setChecked(false);
 
-            switch(edit->scene->placingItem)
+            switch(edit->scene->m_placingItemType)
             {
                 case LvlScene::PLC_Block:
                    edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
@@ -127,7 +127,7 @@ void MainWindow::on_actionCircleFill_triggered(bool checked)
         ui->actionLine->setChecked(false);
         ui->actionFill->setChecked(false);
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
             case LvlScene::PLC_Block:
                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
@@ -211,7 +211,7 @@ void MainWindow::on_actionLine_triggered(bool checked)
         ui->actionFill->setChecked(false);
 
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
             case LvlScene::PLC_Block:
                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
@@ -301,7 +301,7 @@ void MainWindow::on_actionFill_triggered(bool checked)
         ui->actionCircleFill->setChecked(false);
         ui->actionLine->setChecked(false);
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
             case LvlScene::PLC_Block:
                 edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );

@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/grid.h>
-#include <common_features/main_window_ptr.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 
@@ -33,13 +33,13 @@
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
-    obj_block &mergedSet = uBlocks[block.id];
+    obj_block &mergedSet = m_localConfigBlocks[block.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_block[1];
-        mergedSet.image = uBlockImg;
+        mergedSet = m_configs->main_block[1];
+        mergedSet.image = m_dummyBlockImg;
     }
 
     QPoint newPos = QPoint(block.x, block.y);
@@ -51,27 +51,21 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     }
 
     ItemBlock *BlockImage = new ItemBlock(this);
+    block.userdata = BlockImage;
     BlockImage->setBlockData(block, &mergedSet, &animator);
 
-    if(PasteFromBuffer) BlockImage->setSelected(true);
+    if(m_pastingMode) BlockImage->setSelected(true);
 }
-
-
-
-
-
-
-
 
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
-    obj_bgo &mergedSet = uBGOs[bgo.id];
+    obj_bgo &mergedSet = m_localConfigBGOs[bgo.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_bgo[1];
-        mergedSet.image = uBgoImg;
+        mergedSet = m_configs->main_bgo[1];
+        mergedSet.image = m_dummyBgoImg;
     }
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
@@ -84,27 +78,21 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     }
 
     ItemBGO *BGOItem = new ItemBGO(this);
+    bgo.userdata = BGOItem;
     BGOItem->setBGOData(bgo, &mergedSet, &animator);
 
-    if(PasteFromBuffer) BGOItem->setSelected(true);
+    if(m_pastingMode) BGOItem->setSelected(true);
 }
-
-
-
-
-
-
-
 
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
-    obj_npc &mergedSet = uNPCs[npc.id];
+    obj_npc &mergedSet = m_localConfigNPCs[npc.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_npc[1];
-        mergedSet.image = uNpcImg;
+        mergedSet = m_configs->main_npc[1];
+        mergedSet.image = m_dummyNpcImg;
     }
 
     QPoint newPos = QPoint(npc.x, npc.y);
@@ -118,16 +106,11 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     }
 
     ItemNPC *NPCItem = new ItemNPC(this);
+    npc.userdata = NPCItem;
     NPCItem->setNpcData(npc, &mergedSet, &animator);
 
-    if(PasteFromBuffer) NPCItem->setSelected(true);
+    if(m_pastingMode) NPCItem->setSelected(true);
 }
-
-
-
-
-
-
 
 void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
 {
@@ -140,35 +123,28 @@ void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
     }
 
     ItemPhysEnv *PhysEnvItem = new ItemPhysEnv(this);
+    water.userdata = PhysEnvItem;
     PhysEnvItem->setPhysEnvData(water);
 
-    if(PasteFromBuffer) PhysEnvItem->setSelected(true);
+    if(m_pastingMode) PhysEnvItem->setSelected(true);
 }
-
-
-
-
-
-
-
-
 
 
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
     ItemPlayerPoint * player = NULL;
-    bool found=false;
+    bool found = false;
     if(!init)
     {
         foreach(QGraphicsItem * plrt, this->items())
         {
             if(
-                 (plrt->data(ITEM_TYPE).toString()=="playerPoint")&&
+                (plrt->data(ITEM_TYPE).toString() == "playerPoint") &&
                 ((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt()==plr.id)
                )
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
-                found=true;
+                found = true;
                 break;
             }
         }
@@ -192,14 +168,6 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 }
 
 
-
-
-
-
-
-
-
-
 void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 {
     if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
@@ -214,18 +182,8 @@ void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 }
 
 
-
-
-
-
-
-
-
-
 void LvlScene::placeDoorEnter(LevelDoor &door, bool toGrid, bool init)
 {
-    ItemDoor * doorItemEntrance;
-
     QPoint newPosI = QPoint(door.ix, door.iy);
     if(toGrid)
     {
@@ -234,23 +192,15 @@ void LvlScene::placeDoorEnter(LevelDoor &door, bool toGrid, bool init)
         door.iy = newPosI.y();
     }
 
-    doorItemEntrance = new ItemDoor(this);
+    ItemDoor* doorItemEntrance = new ItemDoor(this);
+    door.userdata_enter = doorItemEntrance;
     doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, init);
 }
 
 
 
-
-
-
-
-
-
-
 void LvlScene::placeDoorExit(LevelDoor &door, bool toGrid, bool init)
 {
-
-    ItemDoor * doorItemExit;
     QPoint newPosO = QPoint(door.ox, door.oy);
     if(toGrid)
     {
@@ -258,11 +208,10 @@ void LvlScene::placeDoorExit(LevelDoor &door, bool toGrid, bool init)
         door.ox = newPosO.x();
         door.oy = newPosO.y();
     }
-
-    doorItemExit = new ItemDoor(this);
+    ItemDoor * doorItemExit = new ItemDoor(this);
+    door.userdata_exit = doorItemExit;
     doorItemExit->setDoorData(door, ItemDoor::D_Exit, init);
 }
-
 
 
 

@@ -104,7 +104,7 @@ public:
 
     // ///////////////////Miscellaneous////////////////////////
     public:
-        LevelEditingSettings opts;
+        EditingSettings opts;
 
         QPoint getViewportPos(); //!< Returns current position of viewport
         QRect getViewportRect(); //!< Returns current rectangle of viewport

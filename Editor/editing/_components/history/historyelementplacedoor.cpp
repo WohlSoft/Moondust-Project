@@ -53,7 +53,7 @@ void HistoryElementPlaceDoor::redo()
     bool found = false;
     LevelDoor door;
 
-    foreach(LevelDoor findDoor, lvlScene->LvlData->doors){
+    foreach(LevelDoor findDoor, lvlScene->m_data->doors){
         if(m_door.array_id == findDoor.array_id){
             door = findDoor;
             found = true;

@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
 #include "../lvl_scene.h"
@@ -38,14 +38,14 @@ void LVL_ModeResize::set()
     s->clearSelection();
     s->resetCursor();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=true;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=true;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
 }
 
 void LVL_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -54,7 +54,7 @@ void LVL_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    s->MousePressEventOnly = true;
+    s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 }
@@ -66,7 +66,7 @@ void LVL_ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
     s->clearSelection();
 
-    s->MouseMoveEventOnly = true;
+    s->m_skipChildMouseMoveEvent = true;
     s->mouseMoveEvent(mouseEvent);
     dontCallEvent = true;
 }

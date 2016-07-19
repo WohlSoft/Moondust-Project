@@ -22,7 +22,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <PGE_File_Formats/lvl_filedata.h>
-#include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_scenes/level/lvl_history_manager.h>
 
 void MainWindow::on_actionClear_NPC_garbadge_triggered()
 {
@@ -98,7 +98,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
         if(!help)
         {
             if(!removedItems.npc.isEmpty())
-                sc->addRemoveHistory(removedItems);
+                sc->m_history->addRemove(removedItems);
             QMessageBox::information(this, tr("NPC garbage clean-up"), tr("NPC garbabe has been removed!\nThis operation can be undone with Ctrl+Z or Edit/Undo action."), QMessageBox::Ok);
         }
         else

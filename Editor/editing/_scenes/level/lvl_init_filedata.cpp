@@ -28,9 +28,9 @@ void LvlScene::makeSectionBG(QProgressDialog &progress)
     LogDebug(QString("Applay Backgrounds"));
 
     //Load Backgrounds
-    for(i=0; i<LvlData->sections.size(); i++)
+    for(i=0; i<m_data->sections.size(); i++)
     {
-        setSectionBG(LvlData->sections[i]);
+        setSectionBG(m_data->sections[i]);
 
         total++;
 
@@ -48,10 +48,10 @@ void LvlScene::setBlocks(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<LvlData->blocks.size(); i++)
+    for(i=0; i<m_data->blocks.size(); i++)
     {
         //Add block to scene
-        placeBlock(LvlData->blocks[i]);
+        placeBlock(m_data->blocks[i]);
 
         if(progress.wasCanceled())
             //progress.setValue(progress.value()+1);
@@ -68,10 +68,10 @@ void LvlScene::setBGO(QProgressDialog &progress)
     //sortBGOArray(FileData.bgo); //Sort BGOs
 
     //Applay images to objects
-    for(i=0; i<LvlData->bgo.size(); i++)
+    for(i=0; i<m_data->bgo.size(); i++)
     {
         //add BGO to scene
-        placeBGO(LvlData->bgo[i]);
+        placeBGO(m_data->bgo[i]);
 
         if(progress.wasCanceled())
             //progress.setValue(progress.value()+1);
@@ -87,10 +87,10 @@ void LvlScene::setNPC(QProgressDialog &progress)
     int i=0;
     //QGraphicsItem *	box;
 
-    for(i=0; i<LvlData->npc.size(); i++)
+    for(i=0; i<m_data->npc.size(); i++)
     {
         //add NPC to scene
-        placeNPC(LvlData->npc[i]);
+        placeNPC(m_data->npc[i]);
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             return;
@@ -103,10 +103,10 @@ void LvlScene::setWaters(QProgressDialog &progress)
 {
     int i=0;
 
-    for(i=0; i<LvlData->physez.size(); i++)
+    for(i=0; i<m_data->physez.size(); i++)
     {
         //add Water to scene
-        placeEnvironmentZone(LvlData->physez[i]);
+        placeEnvironmentZone(m_data->physez[i]);
 
         if(progress.wasCanceled())
             //progress.setValue(progress.value()+1);
@@ -122,10 +122,10 @@ void LvlScene::setDoors(QProgressDialog &progress)
 {
     int i=0;
 
-    for(i=0; i<LvlData->doors.size(); i++)
+    for(i=0; i<m_data->doors.size(); i++)
     {
         //add Doors points to scene
-        placeDoor(LvlData->doors[i]);
+        placeDoor(m_data->doors[i]);
 
         if(progress.wasCanceled())
             //progress.setValue(progress.value()+1);
@@ -138,9 +138,9 @@ void LvlScene::setPlayerPoints()
 {
     int i=0;
 
-    for(i=0; i<LvlData->players.size(); i++)
+    for(i=0; i<m_data->players.size(); i++)
     {
-       placePlayerPoint(LvlData->players[i], true);
+       placePlayerPoint(m_data->players[i], true);
     }
 }
 

@@ -22,9 +22,9 @@
 #include <QProgressDialog>
 #include <QDebug>
 
+#include <mainwindow.h>
 #include <common_features/logger.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/lvl_filedata.h>
@@ -130,7 +130,7 @@ void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
         {
             if(scene->isInSection(x,y,i,padding))
             {
-                MainWinConnect::pMainWin->SetCurrentLevelSection(i);
+                m_mw->SetCurrentLevelSection(i);
                 break;
             }
         }
@@ -227,7 +227,7 @@ void LevelEdit::setCurrentSection(int scId)
 
     update();
 
-    if(sIsNew) MainWinConnect::pMainWin->on_actionGotoLeftBottom_triggered();
+    if(sIsNew) m_mw->on_actionGotoLeftBottom_triggered();
 }
 
 

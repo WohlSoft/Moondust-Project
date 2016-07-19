@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 
 #include "mode_hand.h"
 #include "../lvl_scene.h"
@@ -39,14 +39,14 @@ void LVL_ModeHand::set()
     s->resetCursor();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setCursor(Qt::ArrowCursor);
-    s->_viewPort->setInteractive(false);
-    s->_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
+    s->m_viewPort->setCursor(Qt::ArrowCursor);
+    s->m_viewPort->setInteractive(false);
+    s->m_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 void LVL_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

@@ -63,7 +63,7 @@ void PiecesModel::addPiece(const int &index)
 
     if(m_type==LEVELPIECE_BLOCK)
     {
-        obj_block& block = scene_lvl ? scene_lvl->uBlocks[index] : m_conf->main_block[index];
+        obj_block& block = scene_lvl ? scene_lvl->m_localConfigBlocks[index] : m_conf->main_block[index];
         pixmapNames.insert(pixmaps.size(), block.name);
         QPixmap img;
         Items::getItemGFX(&block, img, false, QSize(32,32));
@@ -73,7 +73,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==LEVELPIECE_BGO)
     {
-        obj_bgo& bgo = scene_lvl ? scene_lvl->uBGOs[index] : m_conf->main_bgo[index];
+        obj_bgo& bgo = scene_lvl ? scene_lvl->m_localConfigBGOs[index] : m_conf->main_bgo[index];
         pixmapNames.insert(pixmaps.size(), bgo.name);
         QPixmap img;
         Items::getItemGFX(&bgo, img, false, QSize(32,32));
@@ -83,7 +83,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==LEVELPIECE_NPC)
     {
-        obj_npc& npc = scene_lvl ? scene_lvl->uNPCs[index] : m_conf->main_npc[index];
+        obj_npc& npc = scene_lvl ? scene_lvl->m_localConfigNPCs[index] : m_conf->main_npc[index];
         pixmapNames.insert(pixmaps.size(), npc.name);
         QPixmap img;
         Items::getItemGFX(&npc, img, false, QSize(32,32));

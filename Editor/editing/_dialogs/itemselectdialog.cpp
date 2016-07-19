@@ -172,7 +172,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(blockTab)
     {
-        PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->uBlocks : &conf->main_block;
+        PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->m_localConfigBlocks : &conf->main_block;
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_block &blockItem = (*array)[i];
@@ -188,7 +188,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(bgoTab)
     {
-        PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->uBGOs : &conf->main_bgo;
+        PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->m_localConfigBGOs : &conf->main_bgo;
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_bgo &bgoD = (*array)[i];
@@ -204,7 +204,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(npcTab)
     {
-        PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->uNPCs : &conf->main_npc;
+        PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->m_localConfigNPCs : &conf->main_npc;
         for(int i=1; i< array->size(); i++) //Add user images
         {
             obj_npc &npcItem = (*array)[i];
@@ -410,9 +410,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     {
         if(scene_lvl)
         {
-            for(int i=0; i < scene_lvl->custom_Blocks.size(); i++)
+            for(int i=0; i < scene_lvl->m_customBlocks.size(); i++)
             {
-                obj_block &block=*(scene_lvl->custom_Blocks[i]);
+                obj_block &block=*(scene_lvl->m_customBlocks[i]);
                 Items::getItemGFX(&block, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( block.name );
                 item->setIcon( QIcon( tmpI ) );
@@ -425,7 +425,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     }
     else
     {
-        PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->uBlocks : &conf->main_block;
+        PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->m_localConfigBlocks : &conf->main_block;
         for(int i=1; i<array->size(); i++)
         {
             obj_block &blockItem = (*array)[i];
@@ -518,9 +518,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     {
         if(scene_lvl)
         {
-            for(int i=0; i<scene_lvl->custom_BGOs.size(); i++)
+            for(int i=0; i<scene_lvl->m_customBGOs.size(); i++)
             {
-                obj_bgo &bgo = *(scene_lvl->custom_BGOs[i]);
+                obj_bgo &bgo = *(scene_lvl->m_customBGOs[i]);
                 Items::getItemGFX(&bgo, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( bgo.name );
                 item->setIcon( QIcon( tmpI ) );
@@ -533,7 +533,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     }
     else
     {
-        PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->uBGOs : &conf->main_bgo;
+        PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->m_localConfigBGOs : &conf->main_bgo;
         for(int i=1; i<array->size(); i++) //Add user images
         {
             obj_bgo &bgoItem = (*array)[i];
@@ -628,9 +628,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     {
         if(edit_lvl)
         {
-            for(int i=0; i<scene_lvl->custom_NPCs.size();i++)
+            for(int i=0; i<scene_lvl->m_customNPCs.size();i++)
             {
-                obj_npc& npc = *(scene_lvl->custom_NPCs[i]);
+                obj_npc& npc = *(scene_lvl->m_customNPCs[i]);
                 Items::getItemGFX(&npc, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( npc.name );
                 item->setIcon( QIcon( tmpI ) );
@@ -643,7 +643,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     }
     else
     {
-        PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->uNPCs : &conf->main_npc;
+        PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->m_localConfigNPCs : &conf->main_npc;
         for(int i=1; i<array->size(); i++) //Add user images
         {
             obj_npc &npcItem = (*array)[i];

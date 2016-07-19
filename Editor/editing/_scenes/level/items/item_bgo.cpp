@@ -19,16 +19,12 @@
 #include <QInputDialog>
 #include <QClipboard>
 
+#include <mainwindow.h>
 #include <editing/_dialogs/itemselectdialog.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
 
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
-#include "item_water.h"
-#include "item_door.h"
+#include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
 
 ItemBGO::ItemBGO(QGraphicsItem *parent) : LvlBaseItem(parent)
@@ -43,7 +39,7 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    setLocked(m_scene->lock_bgo);
+    setLocked(m_scene->m_lockBgo);
 }
 
 void ItemBGO::construct()
@@ -62,7 +58,7 @@ ItemBGO::~ItemBGO()
 
 void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened=true;
+    m_scene->m_contextMenuIsOpened=true;
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
@@ -80,7 +76,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator()->deleteLater();
 
-    foreach(LevelLayer layer, m_scene->LvlData->layers)
+    foreach(LevelLayer layer, m_scene->m_data->layers)
     {
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -95,7 +91,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     ItemMenu.addSeparator();
     /*************Layers*end***************/
 
-    bool isLvlx = !m_scene->LvlData->smbx64strict;
+    bool isLvlx = !m_scene->m_data->smbx64strict;
 
     QAction *ZOffset =          ItemMenu.addAction(tr("Change Z-Offset..."));
         ZOffset->setEnabled(isLvlx);
@@ -151,12 +147,12 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==cutBGO)
     {
-        MainWinConnect::pMainWin->on_actionCut_triggered();
+        m_scene->m_mw->on_actionCut_triggered();
     }
     else
     if(selected==copyBGO)
     {
-        MainWinConnect::pMainWin->on_actionCopy_triggered();
+        m_scene->m_mw->on_actionCopy_triggered();
     }
     else
     if(selected==remove)
@@ -175,7 +171,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->m_data.z_offset);
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
+        m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
     }
     else
     if(selected==ZMode_bg1)
@@ -189,7 +185,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->m_data.z_offset);
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
+        m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
     }
     else
     if(selected==ZMode_def)
@@ -203,7 +199,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->m_data.z_offset);
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
+        m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
     }
     else
     if(selected==ZMode_fg1)
@@ -217,7 +213,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->m_data.z_offset);
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
+        m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
     }
     else
     if(selected==ZMode_fg2)
@@ -231,13 +227,13 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->m_data.z_offset);
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
+        m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
     }
     else
     if(selected==ZOffset)
     {
         bool ok;
-        qreal newzOffset = QInputDialog::getDouble(m_scene->_edit, tr("Z-Offset"),
+        qreal newzOffset = QInputDialog::getDouble(m_scene->m_subWindow, tr("Z-Offset"),
                                                    tr("Please enter the Z-value offset:"),
                                                    m_data.z_offset,
                                                    -500, 500,7, &ok);
@@ -252,7 +248,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                     ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->m_data.z_mode, newzOffset);
                 }
             }
-            m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(newzOffset));
+            m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(newzOffset));
         }
     }
     else
@@ -262,7 +258,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_BGO,0,0,0,0,0,0,0,0,0, MainWinConnect::pMainWin);
+        ItemSelectDialog * blockList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_BGO,0,0,0,0,0,0,0,0,0, m_scene->m_mw);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
@@ -284,11 +280,11 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             else if(selected==transform_all_s)
             {
                 bool ok=false;
-                long mg = QInputDialog::getInt(m_scene->_edit, tr("Margin of section"),
+                long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
                                tr("Please select, how far items out of section should be removed too (in pixels)"),
                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
-                LevelSection &s=m_scene->LvlData->sections[m_scene->LvlData->CurSection];
+                LevelSection &s=m_scene->m_data->sections[m_scene->m_data->CurSection];
                 QRectF section;
                 section.setLeft(s.size_left-mg);
                 section.setTop(s.size_top-mg);
@@ -316,13 +312,13 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         delete blockList;
 
         if(!newData.bgo.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransform(newData, oldData);
     }
     else
     if(selected==copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXY)
@@ -332,7 +328,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.x)
                                .arg(m_data.y)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXYWH)
@@ -344,7 +340,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_imageSize.width())
                                .arg(m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosLTRB)
@@ -356,7 +352,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.x+m_imageSize.width())
                                .arg(m_data.y+m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==props)
@@ -388,7 +384,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 ///////////////////MainArray functions/////////////////////////////
 void ItemBGO::setLayer(QString layer)
 {
-    foreach(LevelLayer lr, m_scene->LvlData->layers)
+    foreach(LevelLayer lr, m_scene->m_data->layers)
     {
         if(lr.name==layer)
         {
@@ -405,9 +401,9 @@ void ItemBGO::arrayApply()
     bool found=false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    if(m_data.index < (unsigned int)m_scene->LvlData->bgo.size())
+    if(m_data.index < (unsigned int)m_scene->m_data->bgo.size())
     { //Check index
-        if(m_data.array_id == m_scene->LvlData->bgo[m_data.index].array_id)
+        if(m_data.array_id == m_scene->m_data->bgo[m_data.index].array_id)
         {
             found=true;
         }
@@ -416,15 +412,15 @@ void ItemBGO::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->LvlData->bgo[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->bgo[m_data.index] = m_data; //apply current bgoData
     }
     else
-    for(int i=0; i<m_scene->LvlData->bgo.size(); i++)
+    for(int i=0; i<m_scene->m_data->bgo.size(); i++)
     { //after find it into array
-        if(m_scene->LvlData->bgo[i].array_id == m_data.array_id)
+        if(m_scene->m_data->bgo[i].array_id == m_data.array_id)
         {
             m_data.index = i;
-            m_scene->LvlData->bgo[i] = m_data;
+            m_scene->m_data->bgo[i] = m_data;
             break;
         }
     }
@@ -437,9 +433,9 @@ void ItemBGO::arrayApply()
 void ItemBGO::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->LvlData->bgo.size())
+    if(m_data.index < (unsigned int)m_scene->m_data->bgo.size())
     { //Check index
-        if(m_data.array_id == m_scene->LvlData->bgo[m_data.index].array_id)
+        if(m_data.array_id == m_scene->m_data->bgo[m_data.index].array_id)
         {
             found=true;
         }
@@ -447,14 +443,14 @@ void ItemBGO::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->LvlData->bgo.removeAt(m_data.index);
+        m_scene->m_data->bgo.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<m_scene->LvlData->bgo.size(); i++)
+    for(int i=0; i<m_scene->m_data->bgo.size(); i++)
     {
-        if(m_scene->LvlData->bgo[i].array_id == m_data.array_id)
+        if(m_scene->m_data->bgo[i].array_id == m_data.array_id)
         {
-            m_scene->LvlData->bgo.removeAt(i); break;
+            m_scene->m_data->bgo.removeAt(i); break;
         }
     }
 }
@@ -473,7 +469,7 @@ bool ItemBGO::itemTypeIsLocked()
 {
     if(!m_scene)
         return false;
-    return m_scene->lock_bgo;
+    return m_scene->m_lockBgo;
 }
 
 void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
@@ -547,17 +543,17 @@ void ItemBGO::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    if(!m_scene->uBGOs.contains(target_id))
+    if(!m_scene->m_localConfigBGOs.contains(target_id))
         return;//Don't transform, target item is not found
 
-    obj_bgo &mergedSet = m_scene->uBGOs[target_id];
+    obj_bgo &mergedSet = m_scene->m_localConfigBGOs[target_id];
     long animator = mergedSet.animator_id;
 
     m_data.id = target_id;
     setBGOData(m_data, &mergedSet, &animator);
     arrayApply();
 
-    if(!m_scene->opts.animationEnabled)
+    if(!m_scene->m_opts.animationEnabled)
         m_scene->update();
 }
 
@@ -573,10 +569,10 @@ void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
-    if(m_scene->animates_BGO.size()>m_animatorID)
+    if(m_scene->m_animatorsBGO.size()>m_animatorID)
         painter->drawPixmap(m_imageSize,
-                            m_scene->animates_BGO[m_animatorID]->wholeImage(),
-                            m_scene->animates_BGO[m_animatorID]->frameRect() );
+                            m_scene->m_animatorsBGO[m_animatorID]->wholeImage(),
+                            m_scene->m_animatorsBGO[m_animatorID]->frameRect() );
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -593,9 +589,9 @@ void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
 
 void ItemBGO::setAnimator(long aniID)
 {
-    if(aniID<m_scene->animates_BGO.size())
+    if(aniID<m_scene->m_animatorsBGO.size())
     {
-        QRect frameRect = m_scene->animates_BGO[aniID]->frameRect();
+        QRect frameRect = m_scene->m_animatorsBGO[aniID]->frameRect();
         m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
     }
 

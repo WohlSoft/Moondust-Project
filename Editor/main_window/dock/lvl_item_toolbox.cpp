@@ -135,9 +135,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom Block items from loaded level
     if( (ui->BlockCatList->currentText()==customLabel) && (setCat) && (setGrp) )
     {
-        for(int i=0; i<edit->scene->custom_Blocks.size(); i++)
+        for(int i=0; i<edit->scene->m_customBlocks.size(); i++)
         {
-            obj_block &block = *scene->custom_Blocks[i];
+            obj_block &block = *scene->m_customBlocks[i];
             Items::getItemGFX(&block, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( block.name );
             item->setIcon( QIcon( tmpI ) );
@@ -149,9 +149,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set Block item box from global configs
-    for(int i=1; i < scene->uBlocks.size(); i++)
+    for(int i=1; i < scene->m_localConfigBlocks.size(); i++)
     {
-        obj_block &blockItem =  scene->uBlocks[i];
+        obj_block &blockItem =  scene->m_localConfigBlocks[i];
 
         //Add Group
         needToAdd = true;
@@ -240,9 +240,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        for(int i=0; i < scene->custom_BGOs.size(); i++)
+        for(int i=0; i < scene->m_customBGOs.size(); i++)
         {
-            obj_bgo &bgo = *scene->custom_BGOs[i];
+            obj_bgo &bgo = *scene->m_customBGOs[i];
             Items::getItemGFX(&bgo, tmpI, false, QSize(48,48));
 
             item = new QListWidgetItem( bgo.name );
@@ -254,9 +254,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set BGO item box from global array
-    for(int i=1; i<scene->uBGOs.size(); i++)
+    for(int i=1; i<scene->m_localConfigBGOs.size(); i++)
     {
-        obj_bgo &bgoItem = scene->uBGOs[i];
+        obj_bgo &bgoItem = scene->m_localConfigBGOs[i];
 
         //Add Group
         needToAdd = true;
@@ -346,9 +346,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom NPC items from loaded level
     if( (ui->NPCCatList->currentText()==customLabel) && (setCat) && (setGrp) )
     {
-        for(int i=0; i< scene->custom_NPCs.size(); i++)
+        for(int i=0; i< scene->m_customNPCs.size(); i++)
         {
-            obj_npc &npc = *edit->scene->custom_NPCs[i];
+            obj_npc &npc = *edit->scene->m_customNPCs[i];
 
             Items::getItemGFX(&npc, tmpI, false, QSize(48,48));
 
@@ -362,9 +362,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set NPC item box from global config
-    for(int i=1; i < scene->uNPCs.size(); i++)
+    for(int i=1; i < scene->m_localConfigNPCs.size(); i++)
     {
-        obj_npc &npcItem = scene->uNPCs[i];
+        obj_npc &npcItem = scene->m_localConfigNPCs[i];
 
         //Add Group
         needToAdd = true;

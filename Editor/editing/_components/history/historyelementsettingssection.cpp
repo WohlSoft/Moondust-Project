@@ -34,23 +34,23 @@ void HistoryElementSettingsSection::undo()
     QVariant extraData = m_extraData;
 
     if(m_subtype == HistorySettings::SETTING_SECWRAPH){
-        lvlScene->LvlData->sections[sectionID].wrap_h = !extraData.toBool();
+        lvlScene->m_data->sections[sectionID].wrap_h = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECWRAPV){
-        lvlScene->LvlData->sections[sectionID].wrap_v = !extraData.toBool();
+        lvlScene->m_data->sections[sectionID].wrap_v = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECOFFSCREENEXIT){
-        lvlScene->LvlData->sections[sectionID].OffScreenEn = !extraData.toBool();
+        lvlScene->m_data->sections[sectionID].OffScreenEn = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECNOBACK){
-        lvlScene->LvlData->sections[sectionID].lock_left_scroll = !extraData.toBool();
+        lvlScene->m_data->sections[sectionID].lock_left_scroll = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECUNDERWATER){
-        lvlScene->LvlData->sections[sectionID].underwater = !extraData.toBool();
+        lvlScene->m_data->sections[sectionID].underwater = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECBACKGROUNDIMG){
@@ -58,11 +58,11 @@ void HistoryElementSettingsSection::undo()
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECMUSIC){
-        lvlScene->LvlData->sections[sectionID].music_id = extraData.toList()[0].toInt();
+        lvlScene->m_data->sections[sectionID].music_id = extraData.toList()[0].toInt();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECCUSTOMMUSIC){
-        lvlScene->LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
+        lvlScene->m_data->sections[sectionID].music_file = extraData.toList()[0].toString();
     }
 
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
@@ -83,23 +83,23 @@ void HistoryElementSettingsSection::redo()
     QVariant extraData = m_extraData;
 
     if(m_subtype == HistorySettings::SETTING_SECWRAPH){
-        lvlScene->LvlData->sections[sectionID].wrap_h = extraData.toBool();
+        lvlScene->m_data->sections[sectionID].wrap_h = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECWRAPV){
-        lvlScene->LvlData->sections[sectionID].wrap_v = extraData.toBool();
+        lvlScene->m_data->sections[sectionID].wrap_v = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECOFFSCREENEXIT){
-        lvlScene->LvlData->sections[sectionID].OffScreenEn = extraData.toBool();
+        lvlScene->m_data->sections[sectionID].OffScreenEn = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECNOBACK){
-        lvlScene->LvlData->sections[sectionID].lock_left_scroll = extraData.toBool();
+        lvlScene->m_data->sections[sectionID].lock_left_scroll = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECUNDERWATER){
-        lvlScene->LvlData->sections[sectionID].underwater = extraData.toBool();
+        lvlScene->m_data->sections[sectionID].underwater = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECBACKGROUNDIMG){
@@ -107,11 +107,11 @@ void HistoryElementSettingsSection::redo()
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECMUSIC){
-        lvlScene->LvlData->sections[sectionID].music_id = extraData.toList()[1].toInt();
+        lvlScene->m_data->sections[sectionID].music_id = extraData.toList()[1].toInt();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECCUSTOMMUSIC){
-        lvlScene->LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
+        lvlScene->m_data->sections[sectionID].music_file = extraData.toList()[1].toString();
     }
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
     LvlMusPlay::updateMusic();

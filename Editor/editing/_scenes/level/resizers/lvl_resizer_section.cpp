@@ -16,75 +16,73 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include "../lvl_scene.h"
-#include "../items/item_block.h"
-#include "../items/item_water.h"
+#include "../lvl_history_manager.h"
 #include "../lvl_item_placing.h"
 
 
 
 void LvlScene::setSectionResizer(bool enabled, bool accept)
 {
-    if((enabled)&&(pResizer==NULL))
+    if( (enabled) && (m_resizeBox==nullptr) )
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
+        m_mw->on_actionSelect_triggered(); //Reset mode
 
-        int x = LvlData->sections[LvlData->CurSection].size_left;
-        int y = LvlData->sections[LvlData->CurSection].size_top;
-        int w = LvlData->sections[LvlData->CurSection].size_right;
-        int h = LvlData->sections[LvlData->CurSection].size_bottom;
+        int x = m_data->sections[m_data->CurSection].size_left;
+        int y = m_data->sections[m_data->CurSection].size_top;
+        int w = m_data->sections[m_data->CurSection].size_right;
+        int h = m_data->sections[m_data->CurSection].size_bottom;
 
-        pResizer = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::green, 32 );
-        this->addItem(pResizer);
-        pResizer->setPos(x, y);
-        pResizer->type=0;
-        pResizer->_minSize = QSizeF(800, 600);
+        m_resizeBox = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::green, 32 );
+        this->addItem(m_resizeBox);
+        m_resizeBox->setPos(x, y);
+        m_resizeBox->type=0;
+        m_resizeBox->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         SwitchEditingMode(MODE_Resizing);
-        MainWinConnect::pMainWin->resizeToolbarVisible(true);
+        m_mw->resizeToolbarVisible(true);
     }
     else
     {
-        if(pResizer!=NULL)
+        if( m_resizeBox != nullptr )
         {
             if(accept)
             {
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                long l = pResizer->pos().x();
-                long t = pResizer->pos().y();
-                long r = l+pResizer->_width;
-                long b = t+pResizer->_height;
-                long oldL = LvlData->sections[LvlData->CurSection].size_left;
-                long oldR = LvlData->sections[LvlData->CurSection].size_right;
-                long oldT = LvlData->sections[LvlData->CurSection].size_top;
-                long oldB = LvlData->sections[LvlData->CurSection].size_bottom;
-                LvlData->sections[LvlData->CurSection].size_left = l;
-                LvlData->sections[LvlData->CurSection].size_right = r;
-                LvlData->sections[LvlData->CurSection].size_top = t;
-                LvlData->sections[LvlData->CurSection].size_bottom = b;
+                long l = m_resizeBox->pos().x();
+                long t = m_resizeBox->pos().y();
+                long r = l+m_resizeBox->_width;
+                long b = t+m_resizeBox->_height;
+                long oldL = m_data->sections[m_data->CurSection].size_left;
+                long oldR = m_data->sections[m_data->CurSection].size_right;
+                long oldT = m_data->sections[m_data->CurSection].size_top;
+                long oldB = m_data->sections[m_data->CurSection].size_bottom;
+                m_data->sections[m_data->CurSection].size_left = l;
+                m_data->sections[m_data->CurSection].size_right = r;
+                m_data->sections[m_data->CurSection].size_top = t;
+                m_data->sections[m_data->CurSection].size_bottom = b;
 
-                addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
+                m_history->addResizeSection(m_data->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
 
-                ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+                ChangeSectionBG(m_data->sections[m_data->CurSection].background);
                 drawSpace();
-                LvlData->modified = true;
+                m_data->modified = true;
             }
-            delete pResizer;
-            pResizer = NULL;
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            MainWinConnect::pMainWin->resizeToolbarVisible(false);
+            delete m_resizeBox;
+            m_resizeBox = NULL;
+            m_mw->on_actionSelect_triggered();
+            m_mw->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
-        DrawMode=false;
+        m_busyMode=false;
     }
 }
 

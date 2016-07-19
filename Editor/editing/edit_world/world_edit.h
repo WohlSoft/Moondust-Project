@@ -50,8 +50,8 @@ public:
     long    currentMusic;
     QString currentCustomMusic;
 
-    bool newFile(dataconfigs &configs, LevelEditingSettings options);
-    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, LevelEditingSettings options);
+    bool newFile(dataconfigs &configs, EditingSettings options);
+    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options);
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);

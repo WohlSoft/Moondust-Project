@@ -28,9 +28,9 @@ void HistoryElementRenameLayer::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    for(int i = 0; i < lvlScene->LvlData->layers.size(); i++){
-        if(lvlScene->LvlData->layers[i].array_id == (unsigned int)m_array_id){
-            lvlScene->LvlData->layers[i].name = m_oldName;
+    for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
+        if(lvlScene->m_data->layers[i].array_id == (unsigned int)m_array_id){
+            lvlScene->m_data->layers[i].name = m_oldName;
         }
     }
 
@@ -52,9 +52,9 @@ void HistoryElementRenameLayer::redo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    for(int i = 0; i < lvlScene->LvlData->layers.size(); i++){
-        if(lvlScene->LvlData->layers[i].array_id == (unsigned int)m_array_id){
-            lvlScene->LvlData->layers[i].name = m_newName;
+    for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
+        if(lvlScene->m_data->layers[i].array_id == (unsigned int)m_array_id){
+            lvlScene->m_data->layers[i].name = m_newName;
         }
     }
 

@@ -252,7 +252,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
           if(it->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") continue; // Don't collide with sizable block
 
           if(item->data(ITEM_TYPE).toString()=="BGO")
-            if((EditingMode!=MODE_Fill) && (item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt())) continue;
+            if((m_editMode!=MODE_Fill) && (item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt())) continue;
 
           leftA = item->scenePos().x();
           rightA = item->scenePos().x()+item->data(ITEM_WIDTH).toReal();
@@ -319,27 +319,27 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             //skip locked items
             if((it->data(ITEM_TYPE).toString()=="Block"))
             {
-                if((lock_block)|| dynamic_cast<ItemBlock*>(it)->m_locked) continue;
+                if((m_lockBlock)|| dynamic_cast<ItemBlock*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="BGO"))
             {
-                if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->m_locked) continue;
+                if((m_lockBgo)|| dynamic_cast<ItemBGO*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="NPC"))
             {
-                if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->m_locked) continue;
+                if((m_lockNpc)|| dynamic_cast<ItemNPC*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="Water"))
             {
-                if((lock_water)|| dynamic_cast<ItemPhysEnv*>(it)->m_locked) continue;
+                if((m_lockPhysenv)|| dynamic_cast<ItemPhysEnv*>(it)->m_locked) continue;
             }
             else
             if((it->data(ITEM_TYPE).toString()=="Door_enter")||(it->data(ITEM_TYPE).toString()=="Door_exit"))
             {
-                if((lock_door)|| dynamic_cast<ItemDoor*>(it)->m_locked) continue;
+                if((m_lockDoor)|| dynamic_cast<ItemDoor*>(it)->m_locked) continue;
             }
 
             if( (

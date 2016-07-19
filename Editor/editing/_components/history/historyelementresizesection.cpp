@@ -26,13 +26,13 @@ void HistoryElementResizeSection::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->LvlData->sections[m_sectionID].size_left = m_oldSize.left();
-    lvlScene->LvlData->sections[m_sectionID].size_right = m_oldSize.right();
-    lvlScene->LvlData->sections[m_sectionID].size_top = m_oldSize.top();
-    lvlScene->LvlData->sections[m_sectionID].size_bottom = m_oldSize.bottom();
+    lvlScene->m_data->sections[m_sectionID].size_left = m_oldSize.left();
+    lvlScene->m_data->sections[m_sectionID].size_right = m_oldSize.right();
+    lvlScene->m_data->sections[m_sectionID].size_top = m_oldSize.top();
+    lvlScene->m_data->sections[m_sectionID].size_bottom = m_oldSize.bottom();
 
-    lvlScene->ChangeSectionBG(lvlScene->LvlData->sections[m_sectionID].background, m_sectionID);
-    if(m_sectionID == lvlScene->LvlData->CurSection){
+    lvlScene->ChangeSectionBG(lvlScene->m_data->sections[m_sectionID].background, m_sectionID);
+    if(m_sectionID == lvlScene->m_data->CurSection){
         lvlScene->drawSpace();
     }
 }
@@ -46,13 +46,13 @@ void HistoryElementResizeSection::redo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->LvlData->sections[m_sectionID].size_left = m_newSize.left();
-    lvlScene->LvlData->sections[m_sectionID].size_right = m_newSize.right();
-    lvlScene->LvlData->sections[m_sectionID].size_top = m_newSize.top();
-    lvlScene->LvlData->sections[m_sectionID].size_bottom = m_newSize.bottom();
+    lvlScene->m_data->sections[m_sectionID].size_left = m_newSize.left();
+    lvlScene->m_data->sections[m_sectionID].size_right = m_newSize.right();
+    lvlScene->m_data->sections[m_sectionID].size_top = m_newSize.top();
+    lvlScene->m_data->sections[m_sectionID].size_bottom = m_newSize.bottom();
 
-    lvlScene->ChangeSectionBG(lvlScene->LvlData->sections[m_sectionID].background, m_sectionID);
-    if(m_sectionID == lvlScene->LvlData->CurSection){
+    lvlScene->ChangeSectionBG(lvlScene->m_data->sections[m_sectionID].background, m_sectionID);
+    if(m_sectionID == lvlScene->m_data->CurSection){
         lvlScene->drawSpace();
     }
 }

@@ -39,14 +39,14 @@ class LevelEdit : public QWidget
     friend class LvlScene;
     friend class MainWindow;
 public:
-    explicit LevelEdit(QWidget *parent = 0);
+    explicit LevelEdit(MainWindow* mw, QWidget *parent = 0);
     ~LevelEdit();
 
     LevelData LvlData;
     //QGraphicsScene LvlScene;
 
-    bool newFile(dataconfigs &configs, LevelEditingSettings options);
-    bool loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, LevelEditingSettings options);
+    bool newFile(dataconfigs &configs, EditingSettings options);
+    bool loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, EditingSettings options);
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true, bool *out_WarningIsAborted = 0);
@@ -127,9 +127,9 @@ private:
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString latest_export_path;
-    unsigned int FileType;
-
+    QString m_recentExportPath;
+    unsigned int m_fileType;
+    MainWindow* m_mw;
 };
 
 #endif // LEVELEDIT_H

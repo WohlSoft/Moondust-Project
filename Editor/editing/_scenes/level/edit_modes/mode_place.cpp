@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
-#include "../lvl_scene.h"
+#include "../lvl_history_manager.h"
 #include "../lvl_item_placing.h"
 
 #include "mode_place.h"
@@ -40,16 +40,16 @@ void LVL_ModePlace::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void LVL_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -60,35 +60,35 @@ void LVL_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->buttons() & Qt::RightButton )
     {
         item_rectangles::clearArray();
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->m_mw->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    s->last_block_arrayID=s->LvlData->blocks_array_id;
-    s->last_bgo_arrayID=s->LvlData->bgo_array_id;
-    s->last_npc_arrayID=s->LvlData->npc_array_id;
+    s->m_lastBlockArrayID=s->m_data->blocks_array_id;
+    s->m_lastBgoArrayID=s->m_data->bgo_array_id;
+    s->m_lastNpcArrayID=s->m_data->npc_array_id;
 
     if(LvlPlacingItems::npcSpecialAutoIncrement)
-        s->IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
+        s->m_IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-        s->cursor->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+        s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                            QPoint(LvlPlacingItems::c_offset_x,
                                                   LvlPlacingItems::c_offset_y),
                                            LvlPlacingItems::gridSz,
                                            LvlPlacingItems::gridOffset)));
     }
 
-    if(s->placingItem != LvlScene::PLC_PlayerPoint)
+    if(s->m_placingItemType != LvlScene::PLC_PlayerPoint)
     {
         s->placeItemUnderCursor();
         s->Debugger_updateItemList();
     }
 
-    s->MousePressEventOnly = true;
+    s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 }
@@ -102,29 +102,29 @@ void LVL_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
     if((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")||
          (mouseEvent->modifiers() & Qt::ControlModifier) )
-        s->setMessageBoxItem(true, mouseEvent->scenePos(),
+        s->setLabelBoxItem(true, mouseEvent->scenePos(),
          ((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")?
             LvlPlacingItems::layer + ", ":"") +
-                                   (s->cursor?
+                                   (s->m_cursorItemImg?
                                         (
-                                   QString::number( s->cursor->scenePos().toPoint().x() ) + "x" +
-                                   QString::number( s->cursor->scenePos().toPoint().y() )
+                                   QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
+                                   QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
                                         )
                                             :"")
                                    );
     else
-        s->setMessageBoxItem(false);
+        s->setLabelBoxItem(false);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-               s->cursor->setPos( QPointF(s->applyGrid( QPointF(mouseEvent->scenePos()-
+               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( QPointF(mouseEvent->scenePos()-
                                                    QPointF(LvlPlacingItems::c_offset_x,
                                                           LvlPlacingItems::c_offset_y)).toPoint(),
                                                  LvlPlacingItems::gridSz,
                                                  LvlPlacingItems::gridOffset)));
-               s->cursor->show();
+               s->m_cursorItemImg->show();
     }
-    if(( mouseEvent->buttons() & Qt::LeftButton ) && (s->placingItem != LvlScene::PLC_PlayerPoint))
+    if(( mouseEvent->buttons() & Qt::LeftButton ) && (s->m_placingItemType != LvlScene::PLC_PlayerPoint))
     {
         s->placeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -137,15 +137,15 @@ void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(s->placingItem == LvlScene::PLC_Door)
+    if(s->m_placingItemType == LvlScene::PLC_Door)
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->m_mw->on_actionSelect_triggered();
         dontCallEvent = true;
         return;
     }
     else
     {
-        if(s->placingItem == LvlScene::PLC_PlayerPoint)
+        if(s->m_placingItemType == LvlScene::PLC_PlayerPoint)
         {
             s->placeItemUnderCursor();
             s->Debugger_updateItemList();
@@ -155,7 +155,7 @@ void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             !s->overwritedItems.bgo.isEmpty()||
             !s->overwritedItems.npc.isEmpty() )
         {
-            s->addOverwriteHistory(s->overwritedItems, s->placingItems);
+            s->m_history->addOverwrite(s->overwritedItems, s->placingItems);
             s->overwritedItems.blocks.clear();
             s->overwritedItems.bgo.clear();
             s->overwritedItems.npc.clear();
@@ -168,7 +168,7 @@ void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 !s->placingItems.bgo.isEmpty()||
                 !s->placingItems.npc.isEmpty())
         {
-            s->addPlaceHistory(s->placingItems);
+            s->m_history->addPlace(s->placingItems);
             s->placingItems.blocks.clear();
             s->placingItems.bgo.clear();
             s->placingItems.npc.clear();
@@ -187,8 +187,11 @@ void LVL_ModePlace::keyRelease(QKeyEvent *keyEvent)
     switch(keyEvent->key())
     {
         case (Qt::Key_Escape):
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
+        {
+            LvlScene *s = dynamic_cast<LvlScene *>(scene);
+            if(s) s->m_mw->on_actionSelect_triggered();
             break;
+        }
         default:
             break;
     }

@@ -96,15 +96,15 @@ void MainWindow::on_actionReload_triggered()
             sectionPoss[sct.id] = QPair<long, long >(sct.PositionX, sct.PositionY);
         }
 
-        long posX = lvlEdit->scene->_viewPort->horizontalScrollBar()->value();
-        long posY = lvlEdit->scene->_viewPort->verticalScrollBar()->value();
+        long posX = lvlEdit->scene->m_viewPort->horizontalScrollBar()->value();
+        long posY = lvlEdit->scene->m_viewPort->verticalScrollBar()->value();
 
         lvlEdit->close();//Close old widget without closing of sub-window
 
         //Get geometry of current subwindow
         wnGeom = LastActiveSubWindow->geometry();
         //delete window->widget();
-        LevelEdit *chLvlWin = new LevelEdit(LastActiveSubWindow);
+        LevelEdit *chLvlWin = new LevelEdit(this, LastActiveSubWindow);
         connect(chLvlWin, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
         LastActiveSubWindow->setWidget(chLvlWin);
         GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(chLvlWin->getGraphicsView());
@@ -139,8 +139,8 @@ void MainWindow::on_actionReload_triggered()
 
             SetCurrentLevelSection(lastSection);
 
-            child->scene->_viewPort->horizontalScrollBar()->setValue(posX);
-            child->scene->_viewPort->verticalScrollBar()->setValue(posY);
+            child->scene->m_viewPort->horizontalScrollBar()->setValue(posX);
+            child->scene->m_viewPort->verticalScrollBar()->setValue(posY);
 
             if(GlobalSettings::autoPlayMusic)
                 ui->actionPlayMusic->setChecked(true);

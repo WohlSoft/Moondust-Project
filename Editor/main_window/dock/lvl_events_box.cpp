@@ -17,11 +17,7 @@
  */
 
 #include <common_features/util.h>
-#include <editing/_scenes/level/items/item_bgo.h>
-#include <editing/_scenes/level/items/item_block.h>
-#include <editing/_scenes/level/items/item_npc.h>
-#include <editing/_scenes/level/items/item_door.h>
-#include <editing/_scenes/level/items/item_water.h>
+#include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/itemmsgbox.h>
 #include <audio/sdl_music_player.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -906,9 +902,9 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
         item->setData(Qt::UserRole, QString::number(NewEvent.array_id));
 
         if(!cloneEvent)
-            edit->scene->addAddEventHistory(NewEvent);
+            edit->scene->m_history->addAddEvent(NewEvent);
         else
-            edit->scene->addDuplicateEventHistory(NewEvent);
+            edit->scene->m_history->addDuplicateEvent(NewEvent);
         edit->LvlData.events.push_back(NewEvent);
         edit->LvlData.modified=true;
         cloneEvent=false;//Reset state
@@ -948,7 +944,7 @@ void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, 
                 return;
             }
 
-            edit->scene->addRenameEventHistory(edit->LvlData.events[i].array_id, oldEventName, newEventName);
+            edit->scene->m_history->addRenameEvent(edit->LvlData.events[i].array_id, oldEventName, newEventName);
 
             if(oldEventName!=newEventName)
             {
@@ -1085,7 +1081,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
             if( edit->LvlData.events[i].array_id==
                     (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(Qt::UserRole).toInt() )
             {
-                edit->scene->addRemoveEventHistory(edit->LvlData.events[i]);
+                edit->scene->m_history->addRemoveEvent(edit->LvlData.events[i]);
                 ModifyEvent(edit->LvlData.events[i].name, "");
                 edit->LvlData.events.removeAt(i);
                 delete ui->LVLEvents_List->selectedItems()[0];
@@ -1128,7 +1124,7 @@ void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSTART, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSTART, QVariant(checked));
         edit->LvlData.events[i].autostart = (int)checked;
         edit->LvlData.modified=true;
     }
@@ -1154,7 +1150,7 @@ void LvlEventsBox::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SMOKE, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SMOKE, QVariant(checked));
         edit->LvlData.events[i].nosmoke = checked;
         edit->LvlData.modified=true;
     }
@@ -1180,7 +1176,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
-            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LHIDEADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
+            edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LHIDEADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_hide.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -1209,7 +1205,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideDel_clicked()
             {
             if(edit->LvlData.events[i].layers_hide[j]==ui->LVLEvent_Layer_HideList->currentItem()->text())
                 {
-                    edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LHIDEDEL, QVariant(edit->LvlData.events[i].layers_hide[j]));
+                    edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LHIDEDEL, QVariant(edit->LvlData.events[i].layers_hide[j]));
                     edit->LvlData.events[i].layers_hide.removeAt(j);
                     edit->LvlData.modified=true;
                     break;
@@ -1236,7 +1232,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
-            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LSHOWADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
+            edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LSHOWADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_show.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -1264,7 +1260,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowDel_clicked()
             {
             if(edit->LvlData.events[i].layers_show[j]==ui->LVLEvent_Layer_ShowList->currentItem()->text())
                 {
-                edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LSHOWDEL, QVariant(edit->LvlData.events[i].layers_show[j]));
+                edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LSHOWDEL, QVariant(edit->LvlData.events[i].layers_show[j]));
                 edit->LvlData.events[i].layers_show.removeAt(j);
                 edit->LvlData.modified=true;
                 break;
@@ -1292,7 +1288,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
-            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LTOGADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
+            edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LTOGADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_toggle.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -1320,7 +1316,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogDel_clicked()
             {
             if(edit->LvlData.events[i].layers_toggle[j]==ui->LVLEvent_Layer_ToggleList->currentItem()->text())
                 {
-                    edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LTOGDEL, QVariant(edit->LvlData.events[i].layers_toggle[j]));
+                    edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_LTOGDEL, QVariant(edit->LvlData.events[i].layers_toggle[j]));
                     edit->LvlData.events[i].layers_toggle.removeAt(j);
                     edit->LvlData.modified=true;
                     break;
@@ -1355,7 +1351,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
         QList<QVariant> movLayerData;
         movLayerData.push_back(edit->LvlData.events[i].movelayer);
         movLayerData.push_back(((index<=0)?"":ui->LVLEvent_LayerMov_List->currentText()));
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_MOVELAYER, QVariant(movLayerData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_MOVELAYER, QVariant(movLayerData));
         edit->LvlData.events[i].movelayer = ((index<=0)?"":ui->LVLEvent_LayerMov_List->currentText());
         edit->LvlData.modified=true;
     }
@@ -1378,7 +1374,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
         QList<QVariant> speedData;
         speedData.push_back(edit->LvlData.events[i].layer_speed_x);
         speedData.push_back(arg1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SPEEDLAYERX, QVariant(speedData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SPEEDLAYERX, QVariant(speedData));
         edit->LvlData.events[i].layer_speed_x = arg1;
         edit->LvlData.modified=true;
     }
@@ -1402,7 +1398,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
         QList<QVariant> speedData;
         speedData.push_back(edit->LvlData.events[i].layer_speed_y);
         speedData.push_back(arg1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SPEEDLAYERY, QVariant(speedData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SPEEDLAYERY, QVariant(speedData));
         edit->LvlData.events[i].layer_speed_y = arg1;
         edit->LvlData.modified=true;
     }
@@ -1431,7 +1427,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
         QList<QVariant> secData;
         secData.push_back((qlonglong)edit->LvlData.events[i].scroll_section);
         secData.push_back(arg1-1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRSEC, QVariant(secData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRSEC, QVariant(secData));
         edit->LvlData.events[i].scroll_section = arg1-1;
         edit->LvlData.modified=true;
     }
@@ -1454,7 +1450,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
         QList<QVariant> scrollXData;
         scrollXData.push_back(edit->LvlData.events[i].move_camera_x);
         scrollXData.push_back(arg1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRX, QVariant(scrollXData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRX, QVariant(scrollXData));
         edit->LvlData.events[i].move_camera_x = arg1;
         edit->LvlData.modified=true;
     }
@@ -1478,7 +1474,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
         QList<QVariant> scrollYData;
         scrollYData.push_back(edit->LvlData.events[i].move_camera_y);
         scrollYData.push_back(arg1);
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRY, QVariant(scrollYData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_AUTOSCRY, QVariant(scrollYData));
         edit->LvlData.events[i].move_camera_y = arg1;
         edit->LvlData.modified=true;
     }
@@ -1523,7 +1519,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)-1);
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setText("");
         ui->LVLEvent_SctSize_top->setText("");
@@ -1574,7 +1570,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)0);
         sizeData.push_back((qlonglong)-2);
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setText("");
         ui->LVLEvent_SctSize_top->setText("");
@@ -1624,7 +1620,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_right);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_bottom);
         sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_left);
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         ui->LVLEvent_SctSize_left->setEnabled(true);
         ui->LVLEvent_SctSize_top->setEnabled(true);
@@ -1675,7 +1671,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
         sizeData.push_back(qlonglong(arg1.toInt()));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         SectionSet.position_left = arg1.toInt();
     }
@@ -1712,7 +1708,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
         sizeData.push_back(qlonglong(SectionSet.position_left));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         SectionSet.position_top = arg1.toInt();
     }
@@ -1750,7 +1746,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(arg1.toInt()));
         sizeData.push_back(qlonglong(SectionSet.position_left));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         SectionSet.position_bottom = arg1.toInt();
     }
@@ -1786,7 +1782,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
         sizeData.push_back(qlonglong(arg1.toInt()));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
         sizeData.push_back(qlonglong(SectionSet.position_left));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
         SectionSet.position_right = arg1.toInt();
     }
@@ -1821,7 +1817,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
         LevelEvent_Sets& SectionSet = event.sets[curSectionField];
 
         edit->setFocus();
-        if(edit->scene->pResizer==NULL)
+        if(edit->scene->m_resizeBox==NULL)
         {
             edit->goTo( SectionSet.position_left,
                         SectionSet.position_top,
@@ -1857,7 +1853,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
         musData.push_back((qlonglong)curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)-1);
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = -1;
     }
     lockEventSectionDataList=false;
@@ -1889,7 +1885,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
         musData.push_back(qlonglong(curSectionField));
         musData.push_back(qlonglong(SectionSet.music_id));
         musData.push_back(qlonglong(-2));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = -2;
     }
     lockEventSectionDataList=false;
@@ -1920,7 +1916,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
         musData.push_back((qlonglong)curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->currentData().toInt());
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
@@ -1950,7 +1946,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
         musData.push_back((qlonglong)curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->itemData(index).toInt());
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
     }
     lockEventSectionDataList=false;
@@ -1981,7 +1977,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
         bgData.push_back(qlonglong(curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(-1));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = -1;
     }
     lockEventSectionDataList=false;
@@ -2013,7 +2009,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
         bgData.push_back(qlonglong(curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(-2));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = -2;
     }
     lockEventSectionDataList=false;
@@ -2045,7 +2041,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         bgData.push_back(qlonglong(curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->currentData().toInt()));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
@@ -2078,7 +2074,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
         bgData.push_back(qlonglong(curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->itemData(index).toInt()));
-        edit->scene->addChangeEventSettingsHistory(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->scene->m_history->addChangeSectionSettings(event.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
     }
     lockEventSectionDataList=false;
@@ -2110,7 +2106,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
             QList<QVariant> msgData;
             msgData.push_back(edit->LvlData.events[i].msg);
             msgData.push_back(msgBox->currentText);
-            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_MSG, QVariant(msgData));
+            edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_MSG, QVariant(msgData));
 
             edit->LvlData.events[i].msg = msgBox->currentText;
             QString evnmsg = (edit->LvlData.events[i].msg.isEmpty() ? tr("[none]") : edit->LvlData.events[i].msg);
@@ -2144,7 +2140,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
         QList<QVariant> soundData;
         soundData.push_back((qlonglong)edit->LvlData.events[i].sound_id);
         soundData.push_back((qlonglong)ui->LVLEvent_Cmn_PlaySnd->currentData().toInt());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SOUND, QVariant(soundData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SOUND, QVariant(soundData));
 
         edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->currentData().toInt();
         edit->LvlData.modified=true;
@@ -2193,7 +2189,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
         QList<QVariant> endData;
         endData.push_back((qlonglong)edit->LvlData.events[i].end_game);
         endData.push_back((qlonglong)ui->LVLEvent_Cmn_EndGame->currentIndex());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_ENDGAME, QVariant(endData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_ENDGAME, QVariant(endData));
 
         edit->LvlData.events[i].end_game = ui->LVLEvent_Cmn_EndGame->currentIndex();
         edit->LvlData.modified=true;
@@ -2218,7 +2214,7 @@ void LvlEventsBox::on_LVLEvent_Key_Up_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KUP, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KUP, QVariant(checked));
         edit->LvlData.events[i].ctrl_up = checked;
         edit->LvlData.modified=true;
     }
@@ -2239,7 +2235,7 @@ void LvlEventsBox::on_LVLEvent_Key_Down_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KDOWN, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KDOWN, QVariant(checked));
         edit->LvlData.events[i].ctrl_down = checked;
         edit->LvlData.modified=true;
     }
@@ -2259,7 +2255,7 @@ void LvlEventsBox::on_LVLEvent_Key_Left_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KLEFT, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KLEFT, QVariant(checked));
         edit->LvlData.events[i].ctrl_left = checked;
         edit->LvlData.modified=true;
     }
@@ -2279,7 +2275,7 @@ void LvlEventsBox::on_LVLEvent_Key_Right_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KRIGHT, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KRIGHT, QVariant(checked));
         edit->LvlData.events[i].ctrl_right = checked;
         edit->LvlData.modified=true;
     }
@@ -2299,7 +2295,7 @@ void LvlEventsBox::on_LVLEvent_Key_Run_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KRUN, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KRUN, QVariant(checked));
         edit->LvlData.events[i].ctrl_run = checked;
         edit->LvlData.modified=true;
     }
@@ -2319,7 +2315,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltRun_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KALTRUN, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KALTRUN, QVariant(checked));
         edit->LvlData.events[i].ctrl_altrun = checked;
         edit->LvlData.modified=true;
     }
@@ -2339,7 +2335,7 @@ void LvlEventsBox::on_LVLEvent_Key_Jump_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KJUMP, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KJUMP, QVariant(checked));
         edit->LvlData.events[i].ctrl_jump = checked;
         edit->LvlData.modified=true;
     }
@@ -2359,7 +2355,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltJump_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KALTJUMP, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KALTJUMP, QVariant(checked));
         edit->LvlData.events[i].ctrl_altjump = checked;
         edit->LvlData.modified=true;
     }
@@ -2379,7 +2375,7 @@ void LvlEventsBox::on_LVLEvent_Key_Drop_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KDROP, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KDROP, QVariant(checked));
         edit->LvlData.events[i].ctrl_drop = checked;
         edit->LvlData.modified=true;
     }
@@ -2399,7 +2395,7 @@ void LvlEventsBox::on_LVLEvent_Key_Start_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KSTART, QVariant(checked));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_KSTART, QVariant(checked));
         edit->LvlData.events[i].ctrl_start = checked;
         edit->LvlData.modified=true;
     }
@@ -2426,7 +2422,7 @@ void LvlEventsBox::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
         QList<QVariant> triggerData;
         triggerData.push_back(edit->LvlData.events[i].trigger);
         triggerData.push_back(ui->LVLEvent_TriggerEvent->currentText());
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_TRIACTIVATE, QVariant(triggerData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_TRIACTIVATE, QVariant(triggerData));
 
         if(index==0)
             edit->LvlData.events[i].trigger="";
@@ -2454,7 +2450,7 @@ void LvlEventsBox::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
         QList<QVariant> triggerData;
         triggerData.push_back((qlonglong)edit->LvlData.events[i].trigger_timer);
         triggerData.push_back((qlonglong)qRound(arg1*10));
-        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_TRIDELAY, QVariant(triggerData));
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_TRIDELAY, QVariant(triggerData));
 
         edit->LvlData.events[i].trigger_timer = qRound(arg1*10);
         edit->LvlData.modified=true;

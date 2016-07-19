@@ -18,7 +18,7 @@
 
 #include "global_settings.h"
 
-LevelEditingSettings::LevelEditingSettings()
+EditingSettings::EditingSettings()
 {
     animationEnabled=true;
     collisionsEnabled=true;
@@ -35,7 +35,7 @@ QString GlobalSettings::savePath_npctxt=".";
 
 QString GlobalSettings::tools_sox_bin_path="/tools/sox/";
 
-LevelEditingSettings  GlobalSettings::LvlOpts;
+EditingSettings  GlobalSettings::LvlOpts;
 SETTINGS_ItemDefaults GlobalSettings::LvlItemDefaults;
 SETTINGS_TestSettings GlobalSettings::testing; //Testing settings
 

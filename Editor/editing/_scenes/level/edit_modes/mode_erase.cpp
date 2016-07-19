@@ -16,19 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
 #include "mode_erase.h"
 
-#include "../lvl_scene.h"
-#include "../items/item_bgo.h"
-#include "../items/item_block.h"
-#include "../items/item_npc.h"
-#include "../items/item_water.h"
-#include "../items/item_playerpoint.h"
-#include "../items/item_door.h"
+#include "../lvl_history_manager.h"
 
 LVL_ModeErase::LVL_ModeErase(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Erase", parentScene, parent)
@@ -48,14 +42,14 @@ void LVL_ModeErase::set()
     s->resetCursor();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=false;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=false;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
+    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -65,18 +59,18 @@ void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     if( mouseEvent->buttons() & Qt::RightButton )
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->m_mw->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if(s->cursor){
-       s->cursor->show();
-       s->cursor->setPos(mouseEvent->scenePos());
+    if(s->m_cursorItemImg){
+       s->m_cursorItemImg->show();
+       s->m_cursorItemImg->setPos(mouseEvent->scenePos());
     }
 
-    s->MousePressEventOnly = true;
+    s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 
@@ -85,7 +79,7 @@ void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
-        s->EraserEnabled=true;
+        s->m_eraserIsEnabled=true;
     }
 }
 
@@ -94,8 +88,8 @@ void LVL_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(s->cursor) s->cursor->setPos(mouseEvent->scenePos());
-    if (s->EraserEnabled)// Remove All items, placed under Cursor
+    if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
+    if (s->m_eraserIsEnabled)// Remove All items, placed under Cursor
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -112,7 +106,7 @@ void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         !s->overwritedItems.bgo.isEmpty()||
         !s->overwritedItems.npc.isEmpty() )
     {
-        s->addRemoveHistory(s->overwritedItems);
+        s->m_history->addRemove(s->overwritedItems);
         s->overwritedItems.blocks.clear();
         s->overwritedItems.bgo.clear();
         s->overwritedItems.npc.clear();
@@ -120,14 +114,14 @@ void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 
     // check for grid snap
-    if ((!selectedList.isEmpty())&&(s->mouseMoved))
+    if ((!selectedList.isEmpty())&&(s->m_mouseIsMoved))
     {
         s->removeLvlItems(selectedList);
         selectedList = s->selectedItems();
         s->Debugger_updateItemList();
     }
 
-    s->EraserEnabled = false;
+    s->m_eraserIsEnabled = false;
 }
 
 void LVL_ModeErase::keyPress(QKeyEvent *keyEvent)
@@ -141,8 +135,11 @@ void LVL_ModeErase::keyRelease(QKeyEvent *keyEvent)
     switch(keyEvent->key())
     {
         case (Qt::Key_Escape):
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
+        {
+            LvlScene *s = dynamic_cast<LvlScene *>(scene);
+            if(s) s->m_mw->on_actionSelect_triggered();
             break;
+        }
         default:
             break;
     }

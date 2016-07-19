@@ -342,7 +342,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
         }
 
-        for(QHash<int, obj_BG>::iterator bgIT=s->uBGs.begin(); bgIT!=s->uBGs.end(); bgIT++)
+        for(QHash<int, obj_BG>::iterator bgIT=s->m_localConfigBackgrounds.begin(); bgIT!=s->m_localConfigBackgrounds.end(); bgIT++)
         {
             obj_BG &x=*bgIT;
             foreach(LevelSection y, box->LvlData.sections)
@@ -368,7 +368,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
         }
 
-        foreach(obj_block* x, s->custom_Blocks)
+        foreach(obj_block* x, s->m_customBlocks)
         {
             foreach(LevelBlock y, box->LvlData.blocks)
             {
@@ -423,7 +423,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
         }
 
-        foreach(obj_bgo* x, s->custom_BGOs)
+        foreach(obj_bgo* x, s->m_customBGOs)
         {
             foreach(LevelBGO y, box->LvlData.bgo)
             {
@@ -455,7 +455,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
 
 
-        foreach(obj_npc *x, s->custom_NPCs)
+        foreach(obj_npc *x, s->m_customNPCs)
         {
             QList<unsigned long > usedIDs;
 

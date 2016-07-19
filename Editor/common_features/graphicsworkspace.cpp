@@ -374,7 +374,7 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
         bool setSelect=false;
         if(s)
         {
-            setSelect=(s->EditingMode==LvlScene::MODE_HandScroll);
+            setSelect=(s->m_editMode==LvlScene::MODE_HandScroll);
         } else if(w)
         {
             setSelect=((!w->isSelectionDialog)&&(w->EditingMode==WldScene::MODE_HandScroll));

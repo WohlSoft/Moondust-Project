@@ -46,7 +46,7 @@ void HistoryElementRemoveWarp::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->LvlData->doors.insert(m_removedDoor.index, m_removedDoor);
+    lvlScene->m_data->doors.insert(m_removedDoor.index, m_removedDoor);
 
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
     warplist->insertItem(m_removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
@@ -84,11 +84,11 @@ void HistoryElementRemoveWarp::redo()
 
     lvlScene->doorPointsSync( m_removedDoor.array_id, true);
 
-    for(int i=0;i<lvlScene->LvlData->doors.size();i++)
+    for(int i=0;i<lvlScene->m_data->doors.size();i++)
     {
-        if(lvlScene->LvlData->doors[i].array_id==m_removedDoor.array_id)
+        if(lvlScene->m_data->doors[i].array_id==m_removedDoor.array_id)
         {
-            lvlScene->LvlData->doors.removeAt(i);
+            lvlScene->m_data->doors.removeAt(i);
             break;
         }
     }

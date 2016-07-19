@@ -18,14 +18,10 @@
 
 #include <QClipboard>
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <common_features/logger.h>
 
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
-#include "item_water.h"
-#include "item_door.h"
+#include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
 
 ItemPhysEnv::ItemPhysEnv(QGraphicsItem *parent)
@@ -41,9 +37,9 @@ ItemPhysEnv::ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    m_gridSize = m_scene->pConfigs->default_grid/2;
+    m_gridSize = m_scene->m_configs->default_grid/2;
     setZValue(m_scene->Z_sys_PhysEnv);
-    setLocked(m_scene->lock_water);
+    setLocked(m_scene->m_lockPhysenv);
 }
 
 void ItemPhysEnv::construct()
@@ -79,7 +75,7 @@ ItemPhysEnv::~ItemPhysEnv()
 
 void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened = true; //bug protector
+    m_scene->m_contextMenuIsOpened = true; //bug protector
 
     //Remove selection from non-bgo items
     if(!this->isSelected())
@@ -98,7 +94,7 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator();
 
-    foreach(LevelLayer layer, m_scene->LvlData->layers)
+    foreach(LevelLayer layer, m_scene->m_data->layers)
     {
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -126,17 +122,17 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Water"),        m_data.env_type==LevelPhysEnv::ENV_WATER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Quicksand"),    m_data.env_type==LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Custom liquid"), m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Gravitational Field"), m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Mouse click Event"), m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Collision script"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Mouse click Script"), m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Collision Event"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->LvlData->smbx64strict, tr("Air chamber"), m_data.env_type==LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Custom liquid"), m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Gravitational Field"), m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Mouse click Event"), m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Collision script"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Mouse click Script"), m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Collision Event"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Air chamber"), m_data.env_type==LevelPhysEnv::ENV_AIR);
 
     ItemMenu.addSeparator();
 
@@ -164,12 +160,12 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==cutWater)
     {
-        MainWinConnect::pMainWin->on_actionCut_triggered();
+        m_scene->m_mw->on_actionCut_triggered();
     }
     else
     if(selected==copyWater)
     {
-        MainWinConnect::pMainWin->on_actionCopy_triggered();
+        m_scene->m_mw->on_actionCopy_triggered();
     }
     else
     if(selected==copyPosXYWH)
@@ -181,7 +177,7 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.w)
                                .arg(m_data.h)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosLTRB)
@@ -193,7 +189,7 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.x+m_data.w)
                                .arg(m_data.y+m_data.h)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==resize)
@@ -240,7 +236,7 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                             ((ItemPhysEnv *)SelItem)->setType(i);
                         }
                     }
-                    m_scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+                    m_scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
                     found = true;
                     break;
                 }
@@ -252,7 +248,7 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 ///////////////////MainArray functions/////////////////////////////
 void ItemPhysEnv::setLayer(QString layer)
 {
-    foreach(LevelLayer lr, m_scene->LvlData->layers)
+    foreach(LevelLayer lr, m_scene->m_data->layers)
     {
         if(lr.name==layer)
         {
@@ -273,9 +269,9 @@ void ItemPhysEnv::arrayApply()
     this->setData(ITEM_WIDTH, (int)m_data.w);
     this->setData(ITEM_HEIGHT, (int)m_data.h);
 
-    if(m_data.index < (unsigned int)m_scene->LvlData->physez.size())
+    if(m_data.index < (unsigned int)m_scene->m_data->physez.size())
     { //Check index
-        if(m_data.array_id == m_scene->LvlData->physez[m_data.index].array_id)
+        if(m_data.array_id == m_scene->m_data->physez[m_data.index].array_id)
         {
             found=true;
         }
@@ -284,15 +280,15 @@ void ItemPhysEnv::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->LvlData->physez[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->physez[m_data.index] = m_data; //apply current bgoData
     }
     else
-    for(int i=0; i<m_scene->LvlData->physez.size(); i++)
+    for(int i=0; i<m_scene->m_data->physez.size(); i++)
     { //after find it into array
-        if(m_scene->LvlData->physez[i].array_id == m_data.array_id)
+        if(m_scene->m_data->physez[i].array_id == m_data.array_id)
         {
             m_data.index = i;
-            m_scene->LvlData->physez[i] = m_data;
+            m_scene->m_data->physez[i] = m_data;
             break;
         }
     }
@@ -305,9 +301,9 @@ void ItemPhysEnv::arrayApply()
 void ItemPhysEnv::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->LvlData->physez.size())
+    if(m_data.index < (unsigned int)m_scene->m_data->physez.size())
     { //Check index
-        if(m_data.array_id == m_scene->LvlData->physez[m_data.index].array_id)
+        if(m_data.array_id == m_scene->m_data->physez[m_data.index].array_id)
         {
             found=true;
         }
@@ -315,14 +311,14 @@ void ItemPhysEnv::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->LvlData->physez.removeAt(m_data.index);
+        m_scene->m_data->physez.removeAt(m_data.index);
     }
     else
-    for(int i=0; i<m_scene->LvlData->physez.size(); i++)
+    for(int i=0; i<m_scene->m_data->physez.size(); i++)
     {
-        if(m_scene->LvlData->physez[i].array_id == m_data.array_id)
+        if(m_scene->m_data->physez[i].array_id == m_data.array_id)
         {
-            m_scene->LvlData->physez.removeAt(i); break;
+            m_scene->m_data->physez.removeAt(i); break;
         }
     }
 }
@@ -390,7 +386,7 @@ bool ItemPhysEnv::itemTypeIsLocked()
 {
     if(!m_scene)
         return false;
-    return m_scene->lock_water;
+    return m_scene->m_lockPhysenv;
 }
 
 void ItemPhysEnv::setType(int tp)

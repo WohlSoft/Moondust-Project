@@ -135,7 +135,7 @@ void MainWindow::on_actionPaste_triggered()
     if (activeChildWindow()==1)
     {
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
-       activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
+       activeLvlEditWin()->scene->m_dataBuffer = LvlBuffer;
     }
     else
     if (activeChildWindow()==3)

@@ -118,19 +118,19 @@ void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGra
     {
     case ItemTypes::LVL_Block:
         {
-            PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->uBlocks : &config.main_block;
+            PGE_DataArray<obj_block>* array = scene_lvl ? &scene_lvl->m_localConfigBlocks : &config.main_block;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;
     case ItemTypes::LVL_BGO:
         {
-            PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->uBGOs : &config.main_bgo;
+            PGE_DataArray<obj_bgo>* array = scene_lvl ? &scene_lvl->m_localConfigBGOs : &config.main_bgo;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;
     case ItemTypes::LVL_NPC:
         {
-            PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->uNPCs : &config.main_npc;
+            PGE_DataArray<obj_npc>* array = scene_lvl ? &scene_lvl->m_localConfigNPCs : &config.main_npc;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;

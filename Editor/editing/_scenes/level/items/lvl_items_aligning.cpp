@@ -16,24 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/grid.h>
-#include <common_features/main_window_ptr.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <defines.h>
 #include <qmath.h>
 
-#include "../lvl_scene.h"
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
-#include "item_water.h"
-#include "item_door.h"
-#include "item_playerpoint.h"
+#include "../lvl_history_manager.h"
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
-    if((opts.grid_snap)&&(gridSize>0))
+    if((m_opts.grid_snap)&&(gridSize>0))
         return Grid::applyGrid(source, gridSize, gridOffset);
     else
         return source;
@@ -84,18 +78,18 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
         if( ObjType == "Water")
         {
             sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "Door_enter")
         {
             sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ix, dynamic_cast<ItemDoor *>(it)->m_data.iy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "Door_exit"){
             sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ox, dynamic_cast<ItemDoor *>(it)->m_data.oy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "playerPoint" )
@@ -184,18 +178,18 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
         if( ObjType == "Water")
         {
             sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "Door_enter")
         {
             sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ix, dynamic_cast<ItemDoor *>(it)->m_data.iy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "Door_exit"){
             sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ox, dynamic_cast<ItemDoor *>(it)->m_data.oy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+            gridSize = qRound(qreal(m_configs->default_grid)/2);
         }
         else
         if( ObjType == "playerPoint" )
@@ -234,10 +228,10 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
 
     if(flipSection)
     {
-        int s_top=LvlData->sections[LvlData->CurSection].size_top;
-        int s_left=LvlData->sections[LvlData->CurSection].size_left;
-        int s_right=LvlData->sections[LvlData->CurSection].size_right;
-        int s_bottom=LvlData->sections[LvlData->CurSection].size_bottom;
+        int s_top=m_data->sections[m_data->CurSection].size_top;
+        int s_left=m_data->sections[m_data->CurSection].size_left;
+        int s_right=m_data->sections[m_data->CurSection].size_right;
+        int s_bottom=m_data->sections[m_data->CurSection].size_bottom;
 
         QPoint tmp(s_left,s_top);
         tmp = Grid::applyGrid(tmp, 32);
@@ -310,7 +304,7 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
     }
 
     if(recordHistory){
-        addFlipHistory(flippedData, unflippedData);
+        m_history->addFlip(flippedData, unflippedData);
     }
 }
 
@@ -338,10 +332,10 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     if(rotateSection)
     {
-        int s_top=LvlData->sections[LvlData->CurSection].size_top;
-        int s_left=LvlData->sections[LvlData->CurSection].size_left;
-        int s_right=LvlData->sections[LvlData->CurSection].size_right;
-        int s_bottom=LvlData->sections[LvlData->CurSection].size_bottom;
+        int s_top=m_data->sections[m_data->CurSection].size_top;
+        int s_left=m_data->sections[m_data->CurSection].size_left;
+        int s_right=m_data->sections[m_data->CurSection].size_right;
+        int s_bottom=m_data->sections[m_data->CurSection].size_bottom;
 
         QPoint tmp(s_left,s_top);
         tmp = Grid::applyGrid(tmp, 32);
@@ -437,10 +431,10 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     if(rotateSection)
     {
-        int s_top=LvlData->sections[LvlData->CurSection].size_top;
-        int s_left=LvlData->sections[LvlData->CurSection].size_left;
-        int s_right=LvlData->sections[LvlData->CurSection].size_right;
-        int s_bottom=LvlData->sections[LvlData->CurSection].size_bottom;
+        int s_top=m_data->sections[m_data->CurSection].size_top;
+        int s_left=m_data->sections[m_data->CurSection].size_left;
+        int s_right=m_data->sections[m_data->CurSection].size_right;
+        int s_bottom=m_data->sections[m_data->CurSection].size_bottom;
 
         QPoint tmp(s_left,s_top);
         tmp = Grid::applyGrid(tmp, 32);
@@ -451,17 +445,17 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         s_bottom = ns_bottom;
         s_right = ns_right;
 
-        LvlData->sections[LvlData->CurSection].size_top=s_top;
-        LvlData->sections[LvlData->CurSection].size_left=s_left;
-        LvlData->sections[LvlData->CurSection].size_right=s_right;
-        LvlData->sections[LvlData->CurSection].size_bottom=s_bottom;
+        m_data->sections[m_data->CurSection].size_top=s_top;
+        m_data->sections[m_data->CurSection].size_left=s_left;
+        m_data->sections[m_data->CurSection].size_right=s_right;
+        m_data->sections[m_data->CurSection].size_bottom=s_bottom;
 
-        ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+        ChangeSectionBG(m_data->sections[m_data->CurSection].background);
         drawSpace();
     }
 
     if(recordHistory){
-        addRotateHistory(rotatedData, unrotatedData);
+        m_history->addRotate(rotatedData, unrotatedData);
     }
 }
 

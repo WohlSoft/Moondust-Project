@@ -76,11 +76,13 @@ QList<QPair<int, QVariant > > LvlPlacingItems::flags;
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     LogDebug(QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
+
+    QPixmap tImg;
 
     LvlPlacingItems::sizableBlock=false;
 
@@ -88,22 +90,22 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
     case 0: //blocks
         {
-            obj_block &blockC = uBlocks[itemID];
+            obj_block &blockC = m_localConfigBlocks[itemID];
             Items::getItemGFX(&blockC, tImg, false);
             if(tImg.isNull())
             {
-                tImg = uBlockImg;
+                tImg = m_dummyBlockImg;
             }
             if(!blockC.isValid)
             {
-                blockC = pConfigs->main_block[1];
-                blockC.image = uBlockImg;
+                blockC = m_configs->main_block[1];
+                blockC.image = m_dummyBlockImg;
             }
 
             LvlPlacingItems::gridSz=blockC.grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
-            if( (itemID != LvlPlacingItems::blockSet.id) || (placingItem!=PLC_Block) )
+            if( (itemID != LvlPlacingItems::blockSet.id) || (m_placingItemType!=PLC_Block) )
                 LvlPlacingItems::blockSet.layer = "Default";
             LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
             LvlPlacingItems::blockSet.id = itemID;
@@ -111,7 +113,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::blockSet.w = tImg.width();
             LvlPlacingItems::blockSet.h = tImg.height();
 
-            placingItem=PLC_Block;
+            m_placingItemType=PLC_Block;
 
             //Place sizable blocks in the square fill mode
             if(blockC.sizable)
@@ -182,16 +184,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
 
             //Single item placing
-            cursor = addPixmap(tImg);
+            m_cursorItemImg = addPixmap(tImg);
 
             //set data flags
             foreach(dataFlag flag, LvlPlacingItems::flags)
-                cursor->setData(flag.first, flag.second);
+                m_cursorItemImg->setData(flag.first, flag.second);
 
-            cursor->setZValue(7000);
-            cursor->setOpacity( 0.8 );
-            cursor->setVisible(false);
-            cursor->setEnabled(true);
+            m_cursorItemImg->setZValue(7000);
+            m_cursorItemImg->setOpacity( 0.8 );
+            m_cursorItemImg->setVisible(false);
+            m_cursorItemImg->setEnabled(true);
 
             //flood fill uses 'item' cursor
                 //if(LvlPlacingItems::floodFillingMode)
@@ -206,16 +208,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
     case 1: //bgos
     {
-        obj_bgo& bgoC = uBGOs[itemID];
+        obj_bgo& bgoC = m_localConfigBGOs[itemID];
         Items::getItemGFX(&bgoC, tImg, false);
         if(tImg.isNull())
         {
-            tImg=uBgoImg;
+            tImg=m_dummyBgoImg;
         }
         if(!bgoC.isValid)
         {
-            bgoC = pConfigs->main_bgo[1];
-            bgoC.image = uBgoImg;
+            bgoC = m_configs->main_bgo[1];
+            bgoC.image = m_dummyBgoImg;
         }
 
 
@@ -223,7 +225,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(bgoC.offsetX,
                                              bgoC.offsetY);
 
-        if( (itemID != LvlPlacingItems::bgoSet.id) || (placingItem!=PLC_BGO) )
+        if( (itemID != LvlPlacingItems::bgoSet.id) || (m_placingItemType!=PLC_BGO) )
             LvlPlacingItems::bgoSet.layer = "Default";
         LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
         LvlPlacingItems::bgoSet.id = itemID;
@@ -234,7 +236,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::itemW = w;
         LvlPlacingItems::itemH = h;
 
-        placingItem=PLC_BGO;
+        m_placingItemType=PLC_BGO;
 
         LvlPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
@@ -282,16 +284,16 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
 
         //Single item placing
-        cursor = addPixmap( tImg );
+        m_cursorItemImg = addPixmap( tImg );
 
         //set data flags
         foreach(dataFlag flag, LvlPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
         //flood fill uses 'item' cursor
         if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_FloodFill)
@@ -304,21 +306,21 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     }
     case 2: //npcs
     {
-        obj_npc &mergedSet = uNPCs[itemID];
+        obj_npc &mergedSet = m_localConfigNPCs[itemID];
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
         if(!mergedSet.isValid)
         {
-            mergedSet = pConfigs->main_npc[1];
-            mergedSet.image = uNpcImg;
+            mergedSet = m_configs->main_npc[1];
+            mergedSet.image = m_dummyNpcImg;
         }
 
-        if( (itemID != LvlPlacingItems::npcSet.id) || (placingItem!=PLC_NPC) )
+        if( (itemID != LvlPlacingItems::npcSet.id) || (m_placingItemType!=PLC_NPC) )
             LvlPlacingItems::npcSet.layer = "Default";
         LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
         LvlPlacingItems::npcSet.id = itemID;
 
         if(LvlPlacingItems::npcSet.generator)
-            LvlPlacingItems::gridSz=(pConfigs->default_grid/2);
+            LvlPlacingItems::gridSz=(m_configs->default_grid/2);
         else
             LvlPlacingItems::gridSz=mergedSet.grid;
 
@@ -349,7 +351,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
 
-        placingItem = PLC_NPC;
+        m_placingItemType = PLC_NPC;
 
             flag.first=ITEM_TYPE;
             flag.second="NPC";
@@ -385,27 +387,27 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg);
+        m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag flag, LvlPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        ((QGraphicsPixmapItem *)cursor)->setOffset(
+        ((QGraphicsPixmapItem *)m_cursorItemImg)->setOffset(
                     ( LvlPlacingItems::npcGfxOffsetX1 +
                     ( LvlPlacingItems::npcGfxOffsetX2 *
                       ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
                     LvlPlacingItems::npcGfxOffsetY );
 
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
         break;
     }
     case 3: //water
-        placingItem=PLC_Water;
+        m_placingItemType=PLC_Water;
         LvlPlacingItems::waterType = itemID;
         LvlPlacingItems::gridSz = 16;
         LvlPlacingItems::gridOffset = QPoint(0,0);
@@ -415,7 +417,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         setRectDrawer(); return;
         break;
     case 4: //doorPoint
-        placingItem=PLC_Door;
+        m_placingItemType=PLC_Door;
         LvlPlacingItems::doorType = dType;
         LvlPlacingItems::doorArrayId = itemID;
 
@@ -427,20 +429,20 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         LvlPlacingItems::layer = "";
 
-        cursor = addRect(0,0, 32, 32);
+        m_cursorItemImg = addRect(0,0, 32, 32);
 
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(QColor(qRgb(0xff,0x00,0x7f))));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(QColor(qRgb(0xff,0x00,0x7f)), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(QColor(qRgb(0xff,0x00,0x7f))));
+        ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(QColor(qRgb(0xff,0x00,0x7f)), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
         break;
     case 5: //PlayerPoint
         {
-        placingItem=PLC_PlayerPoint;
+        m_placingItemType=PLC_PlayerPoint;
         LvlPlacingItems::playerID = itemID;
 
         LvlPlacingItems::gridSz=2;
@@ -464,13 +466,13 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         PlayerPoint x = FileFormats::CreateLvlPlayerPoint(itemID+1);
 
-        cursor = addPixmap(playerPixmap);
-        dynamic_cast<QGraphicsPixmapItem *>(cursor)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
-        cursor->setEnabled(true);
+        m_cursorItemImg = addPixmap(playerPixmap);
+        dynamic_cast<QGraphicsPixmapItem *>(m_cursorItemImg)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(true);
+        m_cursorItemImg->setEnabled(true);
 
         break;
         }
@@ -478,22 +480,22 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     }
 
     SwitchEditingMode(MODE_PlacingNew);
-    DrawMode=true;
-    contextMenuOpened=false;
+    m_busyMode=true;
+    m_contextMenuIsOpened=false;
 }
 
 
 
 void LvlScene::setRectDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
     QBrush brush;
 
-    switch(placingItem)
+    switch(m_placingItemType)
     {
     case PLC_Water:
         if(LvlPlacingItems::waterType==1)
@@ -523,7 +525,7 @@ void LvlScene::setRectDrawer()
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
-    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    if((m_placingItemType != PLC_Water) && (!LvlPlacingItems::sizableBlock))
     {
         QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
         oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
@@ -534,34 +536,34 @@ void LvlScene::setRectDrawer()
         brush.setTexture(oneCell);
     }
 
-    cursor = addRect(0,0,1,1, pen, brush);
+    m_cursorItemImg = addRect(0,0,1,1, pen, brush);
 
     //set data flags
     foreach(dataFlag flag, LvlPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(ITEM_TYPE, "Square");
+    m_cursorItemImg->setData(ITEM_TYPE, "Square");
 
-    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_DrawRect);
-    DrawMode=true;
+    m_busyMode=true;
 }
 
 void LvlScene::setCircleDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
     QBrush brush;
 
-    switch(placingItem)
+    switch(m_placingItemType)
     {
     case PLC_Block:
     case PLC_BGO:
@@ -579,7 +581,7 @@ void LvlScene::setCircleDrawer()
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
-    if((placingItem != PLC_Water) && (!LvlPlacingItems::sizableBlock))
+    if((m_placingItemType != PLC_Water) && (!LvlPlacingItems::sizableBlock))
     {
         QPixmap oneCell(LvlPlacingItems::itemW, LvlPlacingItems::itemH);
         oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
@@ -590,34 +592,34 @@ void LvlScene::setCircleDrawer()
         brush.setTexture(oneCell);
     }
 
-    cursor = addEllipse(0,0,1,1, pen, brush);
+    m_cursorItemImg = addEllipse(0,0,1,1, pen, brush);
 
     //set data flags
     foreach(dataFlag flag, LvlPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(ITEM_TYPE, "Circle");
+    m_cursorItemImg->setData(ITEM_TYPE, "Circle");
 
-    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_DrawCircle);
-    DrawMode=true;
+    m_busyMode=true;
 }
 
 
 void LvlScene::setLineDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
 
-    switch(placingItem)
+    switch(m_placingItemType)
     {
     case PLC_Block:
     case PLC_BGO:
@@ -635,19 +637,19 @@ void LvlScene::setLineDrawer()
     LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
     LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
-    cursor = addLine(0,0,1,1, pen);
+    m_cursorItemImg = addLine(0,0,1,1, pen);
 
     //set data flags
     foreach(dataFlag flag, LvlPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(ITEM_TYPE, "LineDrawer");
+    m_cursorItemImg->setData(ITEM_TYPE, "LineDrawer");
 
-    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_Line);
 }
@@ -660,11 +662,11 @@ void LvlScene::setFloodFiller()
 
 void LvlScene::updateCursoredNpcDirection()
 {
-    if(!cursor) return;
-    if(cursor->data(ITEM_TYPE).toString()!="NPC") return;
+    if(!m_cursorItemImg) return;
+    if(m_cursorItemImg->data(ITEM_TYPE).toString()!="NPC") return;
 
-    ((QGraphicsPixmapItem *)cursor)->setPixmap(getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct));
-    ((QGraphicsPixmapItem *)cursor)->setOffset(
+    ((QGraphicsPixmapItem *)m_cursorItemImg)->setPixmap(getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct));
+    ((QGraphicsPixmapItem *)m_cursorItemImg)->setOffset(
                 ( LvlPlacingItems::npcGfxOffsetX1 +
                 ( LvlPlacingItems::npcGfxOffsetX2 *
                   ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
@@ -674,33 +676,33 @@ void LvlScene::updateCursoredNpcDirection()
 
 void LvlScene::resetCursor()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
-    DrawMode=false;
+    m_busyMode=false;
     QPixmap cur(QSize(5,5));
     cur.fill(Qt::transparent);
-    cursor = addPixmap(QPixmap(cur));
-    ((QGraphicsPixmapItem*)cursor)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-    cursor->setZValue(1000);
-    cursor->hide();
+    m_cursorItemImg = addPixmap(QPixmap(cur));
+    ((QGraphicsPixmapItem*)m_cursorItemImg)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+    m_cursorItemImg->setZValue(1000);
+    m_cursorItemImg->hide();
 }
 
-void LvlScene::setMessageBoxItem(bool show, QPointF pos, QString text)
+void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
 {
-    if(messageBox)
+    if(m_labelBox)
     {
         if(!show)
         {
-            delete messageBox;
-            messageBox = NULL;
+            delete m_labelBox;
+            m_labelBox = NULL;
             return;
         }
 
-        if(text!=messageBox->text())
-            messageBox->setText(text);
-        messageBox->setPos(pos);
+        if(text!=m_labelBox->text())
+            m_labelBox->setText(text);
+        m_labelBox->setPos(pos);
     }
     else
     {
@@ -711,14 +713,14 @@ void LvlScene::setMessageBoxItem(bool show, QPointF pos, QString text)
         font.setFamily("Times");
         font.setWeight(99);
         font.setPointSize(25);
-        messageBox = new QGraphicsSimpleTextItem(text);
-        messageBox->setPen(QPen(QBrush(Qt::black), 2));
-        messageBox->setBrush(QBrush(Qt::white));
-        messageBox->setBoundingRegionGranularity(1);
-        messageBox->setZValue(10000);
-        messageBox->setFont(font);
-        this->addItem(messageBox);
-        messageBox->setPos(pos);
+        m_labelBox = new QGraphicsSimpleTextItem(text);
+        m_labelBox->setPen(QPen(QBrush(Qt::black), 2));
+        m_labelBox->setBrush(QBrush(Qt::white));
+        m_labelBox->setBoundingRegionGranularity(1);
+        m_labelBox->setZValue(10000);
+        m_labelBox->setFont(font);
+        this->addItem(m_labelBox);
+        m_labelBox->setPos(pos);
     }
 
 }

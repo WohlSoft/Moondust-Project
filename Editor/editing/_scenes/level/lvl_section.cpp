@@ -33,15 +33,15 @@ void LvlScene::InitSection(int sect)
     int i=0;
     bool collided=true;
 
-    if( (sect >= LvlData->sections.size()) && (sect<0) )
+    if( (sect >= m_data->sections.size()) && (sect<0) )
     {
         //Expand sections
-        int needToAdd = (LvlData->sections.size()-1) - sect;
+        int needToAdd = (m_data->sections.size()-1) - sect;
         while(needToAdd > 0)
         {
             LevelSection dummySct = FileFormats::CreateLvlSection();
-            dummySct.id = LvlData->sections.size();
-            LvlData->sections.push_back(dummySct);
+            dummySct.id = m_data->sections.size();
+            m_data->sections.push_back(dummySct);
             needToAdd--;
         }
     }
@@ -49,10 +49,10 @@ void LvlScene::InitSection(int sect)
     long x,y,h,w;
 
     if(
-        (LvlData->sections[sect].size_left==0) &&
-        (LvlData->sections[sect].size_top==0) &&
-        (LvlData->sections[sect].size_bottom==0) &&
-        (LvlData->sections[sect].size_right==0)
+        (m_data->sections[sect].size_left==0) &&
+        (m_data->sections[sect].size_top==0) &&
+        (m_data->sections[sect].size_bottom==0) &&
+        (m_data->sections[sect].size_right==0)
       )
     {
        //set section size/position values
@@ -81,14 +81,14 @@ void LvlScene::InitSection(int sect)
            found=false;
 
            //check crossing with other sections
-           for(i=0;i<LvlData->sections.size(); i++)
+           for(i=0;i<m_data->sections.size(); i++)
            {
                if(i == sect) continue;
 
-               leftB = LvlData->sections[i].size_left;
-               rightB = LvlData->sections[i].size_right;
-               topB = LvlData->sections[i].size_top;
-               bottomB = LvlData->sections[i].size_bottom;
+               leftB = m_data->sections[i].size_left;
+               rightB = m_data->sections[i].size_right;
+               topB = m_data->sections[i].size_top;
+               bottomB = m_data->sections[i].size_bottom;
 
                if( bottomA <= topB )
                { continue; }
@@ -121,23 +121,23 @@ void LvlScene::InitSection(int sect)
        }
 
        //Apply section's data values
-       LvlData->sections[sect].size_left = x;
-       LvlData->sections[sect].size_top = y;
-       LvlData->sections[sect].size_right = w;
-       LvlData->sections[sect].size_bottom = h;
+       m_data->sections[sect].size_left = x;
+       m_data->sections[sect].size_top = y;
+       m_data->sections[sect].size_right = w;
+       m_data->sections[sect].size_bottom = h;
 
        //set position to initialized section
-       LvlData->sections[sect].PositionY = y-10;
-       LvlData->sections[sect].PositionX = x-10;
+       m_data->sections[sect].PositionY = y-10;
+       m_data->sections[sect].PositionX = x-10;
 
-       LvlData->sections[sect].bgcolor = 16291944;
+       m_data->sections[sect].bgcolor = 16291944;
 
        #ifdef _DEBUG_
        WriteToLog(QtDebugMsg, QString("InitSection -> Data was applyed X%1 Y%2 W%3 H%4")
                   .arg(x).arg(y).arg(w).arg(h));
        #endif
     }
-    setSectionBG( LvlData->sections[sect] );
+    setSectionBG( m_data->sections[sect] );
 }
 
 
@@ -147,13 +147,13 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
 {
     int sctID=0;
     if(SectionID<0)
-        sctID = LvlData->CurSection;
+        sctID = m_data->CurSection;
     else
         sctID = SectionID;
 
     foreach (QGraphicsItem * findBG, items() )
     {
-        if(findBG->data(ITEM_TYPE).toString()== QString("BackGround%1").arg(LvlData->sections[sctID].id) )
+        if(findBG->data(ITEM_TYPE).toString()== QString("BackGround%1").arg(m_data->sections[sctID].id) )
         {
             #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, QString("Remove items "+findBG->data(ITEM_TYPE).toString()+" by id="+QString::number(sctID)+" by SctID="+QString::number(LvlData->sections[sctID].id)) );
@@ -163,15 +163,15 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
         }
     }
 
-    if(pConfigs->main_bg.contains(BG_Id))
-        LvlData->sections[sctID].background = BG_Id;
+    if(m_configs->main_bg.contains(BG_Id))
+        m_data->sections[sctID].background = BG_Id;
     else
-        LvlData->sections[sctID].background = 0;
+        m_data->sections[sctID].background = 0;
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
     #endif
-    setSectionBG(LvlData->sections[sctID], forceTiled);
+    setSectionBG(m_data->sections[sctID], forceTiled);
 }
 
 
@@ -214,18 +214,18 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         if(section.background != 0 )
         {
             //Find user image
-            if(uBGs.contains(section.background))
+            if(m_localConfigBackgrounds.contains(section.background))
             {
                 noimage=false;
-                obj_BG &bgx = uBGs[section.background];
+                obj_BG &bgx = m_localConfigBackgrounds[section.background];
                 bgConfig=&bgx;
                 img =&bgx.image;
                 img2=&bgx.second_image;
             } else //If not exist, will be used default
-            if(pConfigs->main_bg.contains(section.background))
+            if(m_configs->main_bg.contains(section.background))
             {
                 noimage=false;
-                obj_BG &bgx = pConfigs->main_bg[section.background];
+                obj_BG &bgx = m_configs->main_bg[section.background];
                 bgConfig=&bgx;
                 img =&bgx.image;
                 img2=&bgx.second_image;
@@ -279,10 +279,10 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 
 bool LvlScene::isInSection(long x, long y, int sectionIndex, int padding)
 {
-    return (x >= LvlData->sections[sectionIndex].size_left-padding) &&
-        (x <= LvlData->sections[sectionIndex].size_right+padding) &&
-        (y >= LvlData->sections[sectionIndex].size_top-padding) &&
-             (y <= LvlData->sections[sectionIndex].size_bottom+padding);
+    return (x >= m_data->sections[sectionIndex].size_left-padding) &&
+        (x <= m_data->sections[sectionIndex].size_right+padding) &&
+        (y >= m_data->sections[sectionIndex].size_top-padding) &&
+             (y <= m_data->sections[sectionIndex].size_bottom+padding);
 }
 
 
@@ -543,37 +543,37 @@ void LvlScene::drawSpace()
     j=0;
     do
     {
-        l = LvlData->sections[j].size_left;
-        r = LvlData->sections[j].size_right;
-        t = LvlData->sections[j].size_top;
-        b = LvlData->sections[j].size_bottom;
+        l = m_data->sections[j].size_left;
+        r = m_data->sections[j].size_right;
+        t = m_data->sections[j].size_top;
+        b = m_data->sections[j].size_bottom;
         j++;
     }
     while(
-          ((LvlData->sections[j-1].size_left==0) &&
-          (LvlData->sections[j-1].size_right==0) &&
-          (LvlData->sections[j-1].size_top==0) &&
-          (LvlData->sections[j-1].size_bottom==0)) && (j<LvlData->sections.size())
+          ((m_data->sections[j-1].size_left==0) &&
+          (m_data->sections[j-1].size_right==0) &&
+          (m_data->sections[j-1].size_top==0) &&
+          (m_data->sections[j-1].size_bottom==0)) && (j<m_data->sections.size())
     );
 
-    for(i=0;i<LvlData->sections.size(); i++)
+    for(i=0;i<m_data->sections.size(); i++)
     {
 
         if(
-                (LvlData->sections[i].size_left==0) &&
-                (LvlData->sections[i].size_right==0) &&
-                (LvlData->sections[i].size_top==0) &&
-                (LvlData->sections[i].size_bottom==0))
+                (m_data->sections[i].size_left==0) &&
+                (m_data->sections[i].size_right==0) &&
+                (m_data->sections[i].size_top==0) &&
+                (m_data->sections[i].size_bottom==0))
             continue;
 
-        if(LvlData->sections[i].size_left < l)
-            l = LvlData->sections[i].size_left;
-        if(LvlData->sections[i].size_right > r)
-            r = LvlData->sections[i].size_right;
-        if(LvlData->sections[i].size_top < t)
-            t = LvlData->sections[i].size_top;
-        if(LvlData->sections[i].size_bottom > b)
-            b = LvlData->sections[i].size_bottom;
+        if(m_data->sections[i].size_left < l)
+            l = m_data->sections[i].size_left;
+        if(m_data->sections[i].size_right > r)
+            r = m_data->sections[i].size_right;
+        if(m_data->sections[i].size_top < t)
+            t = m_data->sections[i].size_top;
+        if(m_data->sections[i].size_bottom > b)
+            b = m_data->sections[i].size_bottom;
     }
 
     #ifdef _DEBUG_
@@ -590,10 +590,10 @@ void LvlScene::drawSpace()
     bigSpace = QPolygon(drawing);
 
 
-    l = LvlData->sections[LvlData->CurSection].size_left;
-    r = LvlData->sections[LvlData->CurSection].size_right;
-    t = LvlData->sections[LvlData->CurSection].size_top;
-    b = LvlData->sections[LvlData->CurSection].size_bottom;
+    l = m_data->sections[m_data->CurSection].size_left;
+    r = m_data->sections[m_data->CurSection].size_right;
+    t = m_data->sections[m_data->CurSection].size_top;
+    b = m_data->sections[m_data->CurSection].size_bottom;
 
 
     #ifdef _DEBUG_

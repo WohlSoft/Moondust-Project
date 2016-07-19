@@ -47,14 +47,17 @@
 #include <common_features/RTree.h>
 
 class LevelEdit;
+class LvlHistoryManager;
+class MainWindow;
 
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
     friend class EditMode;
     friend class LevelEdit;
+    friend class LvlHistoryManager;
 public:
-    LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
+    LvlScene(MainWindow* mw, GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
 
 /* //////////////////////Contents/////////////////////////////
@@ -93,48 +96,78 @@ public:
 
     // ///////////////////Common////////////////////////
     public:
-        dataconfigs       * pConfigs;       //!< Pointer to global configuration in the main window
-        LevelData         * LvlData;         //!< Pointer to level data storage in the sub-window class
-        GraphicsWorkspace *_viewPort; //!< Pointer to parent graphics view
-        LevelEdit         *_edit;       //!< Pointer to parent edit sub-window;
+        //! Main window pointer
+        MainWindow        * m_mw;
+        //! Pointer to global configuration in the main window
+        dataconfigs       * m_configs;
+        //! Pointer to level data storage in the sub-window class
+        LevelData         * m_data;
+        //! Pointer to parent graphics view
+        GraphicsWorkspace * m_viewPort;
+        //! Pointer to parent edit sub-window;
+        LevelEdit         * m_subWindow;
 
-        LevelData LvlBuffer;    //!< Data buffer
+        //! Data buffer
+        LevelData m_dataBuffer;
 
     public:
-        //default objects Z value
-        int Z_backImage;
+        /*********** Default objects Z value **************/
+        //! Z-Layer of background images
+        qreal Z_backImage;
 
-        int Z_BGOBack2; // backround BGO
-        int Z_blockSizable; // sizeble block
-        int Z_BGOBack1; // backround BGO
-        int Z_npcBack; // background NPC (vines)
-        int Z_Block; // standart block
-        int Z_npcStd; // standart NPC
-        int Z_Player; //playerPointZ
-        int Z_BGOFore1; // foreground BGO
-        int Z_npcFore; // foreground NPC
-        int Z_BlockFore; // Foreground blocks (lava blocks)
-        int Z_BGOFore2; // foreground BGO
+        //! Z-Layer of Background-2 BGO layer
+        qreal Z_BGOBack2;
+        //! Z-Layer of sizable blocks
+        qreal Z_blockSizable;
+        //! Z-Layer of Background-1 BGO layer
+        qreal Z_BGOBack1;
+        //! Z-Layer of Background NPCs
+        qreal Z_npcBack;
+        //! Z-Layer of regular blocks
+        qreal Z_Block;
+        //! Z-Layer of regular NPCs
+        qreal Z_npcStd;
+        //! Z-Layer of playable characters
+        qreal Z_Player;
+        //! Z-Layer of Foreground-1 BGO layer
+        qreal Z_BGOFore1;
+        //! Z-Layer of Foreground NPCs
+        qreal Z_npcFore;
+        //! Z-Layer of Foreground blocks
+        qreal Z_BlockFore;
+        //! Z-Layer of Foreground-2 BGO layer
+        qreal Z_BGOFore2;
 
-
-        int Z_sys_door;
-        int Z_sys_PhysEnv;
-        int Z_sys_interspace1; // interSection space layer
-        int Z_sys_sctBorder;
+        //! Z-Layer of warp points
+        qreal Z_sys_door;
+        //! Z-Layer of physical environment zones
+        qreal Z_sys_PhysEnv;
+        //! Z-Layer of the intersection space filter
+        qreal Z_sys_interspace1;
+        //! Z-Layer of the section border rectangle
+        qreal Z_sys_sctBorder;
 
     // ///////////////////Miscellaneous////////////////////////
     public:
-        LevelEditingSettings opts;
+        EditingSettings m_opts;
 
-        QPoint getViewportPos(); //!< Returns current position of viewport
-        QRect  getViewportRect(); //!< Returns current rectangle of viewport
+        //! Returns current position of viewport
+        QPoint getViewportPos();
+        //! Returns current rectangle of viewport
+        QRect  getViewportRect();
 
         //Clipboard
         LevelData copy(bool cut = false);
         void paste(LevelData BufferIn, QPoint pos);
 
-        void openProps();               //!< Open properties box of selected items
-        void Debugger_updateItemList(); //!< Refresh debugger box
+        /**
+         * @brief Open properties box of selected items
+         */
+        void openProps();
+        /**
+         * @brief Refresh debugger box
+         */
+        void Debugger_updateItemList();
 
     protected:
         void drawForeground(QPainter *painter, const QRectF &rect);
@@ -142,31 +175,46 @@ public:
     // ///////////////////GFX Manager////////////////////////
     public:
         //! Common container of pre-loaded images
-        QList<QPixmap> custom_images;
+        QList<QPixmap> m_localImages;
 
-        //Custom data containers
-        QHash<int, obj_BG > uBGs;
+        //! Container of local backgrounds configs
+        QHash<int, obj_BG > m_localConfigBackgrounds;
 
-        PGE_DataArray<obj_bgo > uBGOs;
-        QList<obj_bgo* > custom_BGOs;
+        //! Container of local background objects configs
+        PGE_DataArray<obj_bgo > m_localConfigBGOs;
+        //! List of customized background objects
+        QList<obj_bgo* > m_customBGOs;
 
-        PGE_DataArray<obj_block > uBlocks;
-        QList<obj_block* > custom_Blocks;
+        //! Container of local blocks configs
+        PGE_DataArray<obj_block > m_localConfigBlocks;
+        //! List of customized Blocks
+        QList<obj_block* > m_customBlocks;
 
-        PGE_DataArray<obj_npc > uNPCs;
-        QList<obj_npc* > custom_NPCs;
+        //! Container of local NPCs configs
+        PGE_DataArray<obj_npc > m_localConfigNPCs;
+        //! List of customized NPCs
+        QList<obj_npc* > m_customNPCs;
 
-        //Animators
-        QList<SimpleAnimator * > animates_BGO;
-        QList<SimpleAnimator * > animates_Blocks;
-        QList<AdvNpcAnimator * > animates_NPC;
+        //! Container of local background objects animators
+        QList<SimpleAnimator * > m_animatorsBGO;
+        //! Container of local blocks animators
+        QList<SimpleAnimator * > m_animatorsBlocks;
+        //! Container of local NPCs animators
+        QList<AdvNpcAnimator * > m_animatorsNPC;
 
         //! Main animation processor
-        AnimationTimer      animator;
-
+        AnimationTimer      m_animationTimer;
+        /**
+         * @brief Build animators without using of custom graphics
+         */
         void buildAnimators();
-
+        /**
+         * @brief Start animation timer
+         */
         void startAnimation();
+        /**
+         * @brief Stop animation processing
+         */
         void stopAnimation();
 
         // ///////////////////Init Level/////////////////////////
@@ -187,12 +235,9 @@ public:
         ///
         /// Dummy images for items which got errors: out of range for ID value, wrong image file, etc.
         ///
-        QPixmap uBlockImg;
-        QBitmap npcmask;
-        QPixmap uNpcImg;
-        QPixmap uBgoImg;
-
-        QPixmap tImg;   //!<Tempotary buffer
+        QPixmap m_dummyBlockImg;
+        QPixmap m_dummyNpcImg;
+        QPixmap m_dummyBgoImg;
 
 
 // ////////////////////////////////////////////////////////////////////////////////
@@ -201,9 +246,9 @@ public:
 
     // ///////////////////Init Items/////////////////////////
     public:
-        qlonglong last_block_arrayID;
-        qlonglong last_bgo_arrayID;
-        qlonglong last_npc_arrayID;
+        qlonglong m_lastBlockArrayID;
+        qlonglong m_lastBgoArrayID;
+        qlonglong m_lastNpcArrayID;
 
         //Defining indexes for data values of items
         #define ITEM_TYPE                    0 //String
@@ -220,7 +265,7 @@ public:
         #define ITEM_LAST_POS                26 //QPointF
         #define ITEM_LAST_SIZE               27 //QSizeF
 
-        long IncrementingNpcSpecialSpin;
+        long m_IncrementingNpcSpecialSpin;
 
         void placeBlock(LevelBlock &block, bool toGrid=false);
         void placeBGO(LevelBGO &bgo, bool toGrid=false);
@@ -235,11 +280,11 @@ public:
 
     // ///////////////////Item Locks////////////////////////////
     public:
-        bool lock_bgo;
-        bool lock_block;
-        bool lock_npc;
-        bool lock_door;
-        bool lock_water;
+        bool m_lockBgo;
+        bool m_lockBlock;
+        bool m_lockNpc;
+        bool m_lockDoor;
+        bool m_lockPhysenv;
         void setLocked(int type, bool lock);
 
 
@@ -288,7 +333,7 @@ public:
     // ///////////////////Collisions///////////////////////////
     public:
         QList<QGraphicsItem *> collisionCheckBuffer;
-        bool emptyCollisionCheck;
+        bool m_emptyCollisionCheck;
         void prepareCollisionBuffer();
 
         typedef QList<QGraphicsItem *> PGE_ItemList;
@@ -314,11 +359,11 @@ public:
 
     // ///////////////////Edit modes///////////////////////////
     public:
-        int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+        int m_editMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
                          // 3 - drawing water/sand zone, 4 - placing from Buffer
 
-        QList<EditMode *> EditModes;
-        EditMode * CurrentMode;
+        QList<EditMode *> m_editModes;
+        EditMode * m_editModeObj;
         enum EditModeID
         {
             MODE_Selecting=0,
@@ -350,7 +395,7 @@ public:
             PLC_PlayerPoint,
             PLC_Section
         };
-        int placingItem;
+        int m_placingItemType;
 
         LevelData placingItems;
         LevelData overwritedItems;
@@ -359,7 +404,7 @@ public:
         /// \brief cursor
         /// Abstact item which using to check collision before place item. Using in the placing and erasing modes
         ///
-        QGraphicsItem * cursor;
+        QGraphicsItem * m_cursorItemImg;
         void resetCursor();
 
         void setItemPlacer(int itemType, unsigned long itemID=1, int dType=0);
@@ -370,35 +415,34 @@ public:
         void setLineDrawer();
         void setFloodFiller();
 
-        QGraphicsSimpleTextItem * messageBox;
-        void setMessageBoxItem(bool show=false, QPointF pos=QPointF(), QString text="");
+        QGraphicsSimpleTextItem * m_labelBox;
+        void setLabelBoxItem(bool show=false, QPointF pos=QPointF(), QString text="");
 
     // ///////////////////Mouse Events///////////////////////////
     public:
-        bool IsMoved;
-        bool haveSelected;
+        bool m_mouseIsMovedAfterKey;
 
-        bool EraserEnabled;
-        bool PasteFromBuffer;
+        bool m_eraserIsEnabled;
+        bool m_pastingMode;
 
-        bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-        bool disableMoveItems;
-        bool contextMenuOpened;
+        bool m_busyMode; //Placing/drawing on map, disable selecting and dragging items
+        bool m_disableMoveItems;
+        bool m_contextMenuIsOpened;
 
-        bool mouseLeft; //Left mouse key is pressed
-        bool mouseMid;  //Middle mouse key is pressed
-        bool mouseRight;//Right mouse key is pressed
+        bool m_mouseLeftPressed; //Left mouse key is pressed
+        bool m_mouseMidPressed;  //Middle mouse key is pressed
+        bool m_mouseRightPressed;//Right mouse key is pressed
 
-        bool mouseMoved; //Mouse was moved with right mouseKey
+        bool m_mouseIsMoved; //Mouse was moved with right mouseKey
 
         //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
         void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
         void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MousePressEventOnly;
+        bool m_skipChildMousePressEvent;
         void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MouseMoveEventOnly;
+        bool m_skipChildMouseMoveEvent;
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MouseReleaseEventOnly;
+        bool m_skipChildMousReleaseEvent;
         void keyPressEvent ( QKeyEvent * keyEvent );
         void keyReleaseEvent ( QKeyEvent * keyEvent );
 
@@ -434,11 +478,11 @@ public:
 
     // ///////////////////Resizers///////////////////////////
     public:
-        ItemResizer * pResizer; //reisizer pointer
+        ItemResizer * m_resizeBox; //reisizer pointer
 
         /* Image exporting */
         QRectF captutedSize;  //!<Rectangle of scene
-        bool isFullSection;   //!<Selected fragment or whole section
+        bool m_captureFullSection;   //!<Selected fragment or whole section
         void setScreenshotSelector();                       //!<Capture full section size
         void setScreenshotSelector(bool enabled, bool accept = false); //!<Capture fragment
         void hideWarpsAndDoors(bool visible);
@@ -464,61 +508,16 @@ public:
 
     // //////////////////History Manager/////////////////////////
     public:
-        bool historyChanged;
-
-        //add historys
-        /*
-         * NOTE: when use History with Doors, LevelDoors MUST be posted individual.
-         * If Door Entrance: LevelDoors.isSetIn = true and LevelDoors.isSetOut = false
-         * If Door Exit: LevelDoors.isSetOut = true and LevelDoors.isSetIn = false
-         *
-         */
-        void addRemoveHistory(LevelData removedItems);
-        void addPlaceHistory(LevelData placedItems);
-        void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
-        void addPlaceDoorHistory(LevelDoor door, bool isEntrance);
-        void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
-        void addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
-        void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                                     long newLeft, long newTop, long newRight, long newBottom);
-        void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
-        void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                                   long newLeft, long newTop, long newRight, long newBottom);
-        void addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                                   long newLeft, long newTop, long newRight, long newBottom);
-        void addAddWarpHistory(int array_id, int listindex, int doorindex);
-        void addRemoveWarpHistory(LevelDoor removedDoor);
-        void addChangeWarpSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addAddEventHistory(LevelSMBX64Event ev);
-        void addRemoveEventHistory(LevelSMBX64Event ev);
-        void addDuplicateEventHistory(LevelSMBX64Event newDuplicate);
-        void addChangeEventSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addChangedNewLayerHistory(LevelData changedItems, LevelLayer newLayer);
-        void addAddLayerHistory(int array_id, QString name);
-        void addRemoveLayerHistory(LevelData modData);
-        void addRenameEventHistory(int array_id, QString oldName, QString newName);
-        void addRenameLayerHistory(int array_id, QString oldName, QString newName);
-        void addRemoveLayerAndSaveItemsHistory(LevelData modData);
-        void addMergeLayer(LevelData mergedData, QString newLayerName);
-        void addChangeSectionSettingsHistory(int sectionID, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
-        void addRotateHistory(LevelData rotatedItems, LevelData unrotatedItems);
-        void addFlipHistory(LevelData flippedItems, LevelData unflippedItems);
-        void addTransformHistory(LevelData transformedItems, LevelData sourceItems);
         //history modifiers
         void historyBack();
         void historyForward();
         void updateHistoryBuffer();
         //history information
-        int getHistroyIndex();
+        int  getHistroyIndex();
         bool canUndo();
         bool canRedo();
 
-    private:
-        int historyIndex;
-        QList<QSharedPointer<IHistoryElement> > operationList;
-
+        LvlHistoryManager* m_history;
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
 

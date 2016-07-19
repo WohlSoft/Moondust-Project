@@ -18,19 +18,13 @@
 
 #include <QElapsedTimer>
 
+#include <mainwindow.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
 #include "mode_fill.h"
 #include "../lvl_item_placing.h"
-#include "../lvl_scene.h"
-#include "../items/item_bgo.h"
-#include "../items/item_block.h"
-#include "../items/item_npc.h"
-#include "../items/item_water.h"
-#include "../items/item_playerpoint.h"
-#include "../items/item_door.h"
+#include "../lvl_history_manager.h"
 
 LVL_ModeFill::LVL_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)
@@ -49,16 +43,16 @@ void LVL_ModeFill::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -67,15 +61,15 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
     if( mouseEvent->buttons() & Qt::RightButton )
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->m_mw->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
     if(! (mouseEvent->buttons()&Qt::LeftButton) )
         return;
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
         attemptFlood(s);
         s->Debugger_updateItemList();
@@ -92,27 +86,27 @@ void LVL_ModeFill::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
     if((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")||
          (mouseEvent->modifiers() & Qt::ControlModifier) )
-        s->setMessageBoxItem(true, mouseEvent->scenePos(),
+        s->setLabelBoxItem(true, mouseEvent->scenePos(),
          ((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")?
             LvlPlacingItems::layer + ", ":"") +
-                                   (s->cursor?
+                                   (s->m_cursorItemImg?
                                         (
-                                   QString::number( s->cursor->scenePos().toPoint().x() ) + "x" +
-                                   QString::number( s->cursor->scenePos().toPoint().y() )
+                                   QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
+                                   QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
                                         )
                                             :"")
                                    );
     else
-        s->setMessageBoxItem(false);
+        s->setLabelBoxItem(false);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-               s->cursor->setPos( QPointF(s->applyGrid( QPointF(mouseEvent->scenePos()-
+               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( QPointF(mouseEvent->scenePos()-
                                                    QPointF(LvlPlacingItems::c_offset_x,
                                                           LvlPlacingItems::c_offset_y)).toPoint(),
                                                  LvlPlacingItems::gridSz,
                                                  LvlPlacingItems::gridOffset)));
-               s->cursor->show();
+               s->m_cursorItemImg->show();
     }
 }
 
@@ -132,8 +126,11 @@ void LVL_ModeFill::keyRelease(QKeyEvent *keyEvent)
     switch(keyEvent->key())
     {
         case (Qt::Key_Escape):
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
+        {
+            LvlScene *s = dynamic_cast<LvlScene *>(scene);
+            if(s) s->m_mw->on_actionSelect_triggered();
             break;
+        }
         default:
             break;
     }
@@ -153,15 +150,15 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
 
     QPointF backUpPos;
 
-    backUpPos = scene->cursor->scenePos();
+    backUpPos = scene->m_cursorItemImg->scenePos();
 
-    switch(scene->placingItem)
+    switch(scene->m_placingItemType)
     {
     case LvlScene::PLC_Block:
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -170,12 +167,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         if(LvlPlacingItems::noOutSectionFlood){
-                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::blockSet.w, LvlPlacingItems::blockSet.h, scene->LvlData->CurSection)){
+                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::blockSet.w, LvlPlacingItems::blockSet.h, scene->m_data->CurSection)){
                                 blackList << coor;
                                 continue;
                             }
@@ -183,10 +180,10 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                         //place block if collision test
                         LvlPlacingItems::blockSet.x = coor.first;
                         LvlPlacingItems::blockSet.y = coor.second;
-                        scene->LvlData->blocks_array_id++;
+                        scene->m_data->blocks_array_id++;
 
-                        LvlPlacingItems::blockSet.array_id = scene->LvlData->blocks_array_id;
-                        scene->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                        LvlPlacingItems::blockSet.array_id = scene->m_data->blocks_array_id;
+                        scene->m_data->blocks.push_back(LvlPlacingItems::blockSet);
 
                         scene->placeBlock(LvlPlacingItems::blockSet, true);
                         historyBuffer.blocks.push_back(LvlPlacingItems::blockSet);
@@ -212,7 +209,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -221,12 +218,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         if(LvlPlacingItems::noOutSectionFlood){
-                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::itemW, LvlPlacingItems::itemH, scene->LvlData->CurSection)){
+                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::itemW, LvlPlacingItems::itemH, scene->m_data->CurSection)){
                                 blackList << coor;
                                 continue;
                             }
@@ -235,10 +232,10 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                         //place BGO if collision test
                         LvlPlacingItems::bgoSet.x = coor.first;
                         LvlPlacingItems::bgoSet.y = coor.second;
-                        scene->LvlData->bgo_array_id++;
+                        scene->m_data->bgo_array_id++;
 
-                        LvlPlacingItems::bgoSet.array_id = scene->LvlData->bgo_array_id;
-                        scene->LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
+                        LvlPlacingItems::bgoSet.array_id = scene->m_data->bgo_array_id;
+                        scene->m_data->bgo.push_back(LvlPlacingItems::bgoSet);
 
                         scene->placeBGO(LvlPlacingItems::bgoSet);
                         historyBuffer.bgo.push_back(LvlPlacingItems::bgoSet);
@@ -264,13 +261,13 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
         break;
     }
 
-    scene->cursor->setPos(backUpPos);
+    scene->m_cursorItemImg->setPos(backUpPos);
 
     if(
        historyBuffer.blocks.size()>0||
        historyBuffer.bgo.size()>0
             )
 
-        scene->addPlaceHistory(historyBuffer);
+        scene->m_history->addPlace(historyBuffer);
 
 }

@@ -129,8 +129,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_Blocks.size(); ++i) {
-                    m_model->addPiece(lvl_scene->custom_Blocks[i]->id);
+                for(int i = 0; i < lvl_scene->m_customBlocks.size(); ++i) {
+                    m_model->addPiece(lvl_scene->m_customBlocks[i]->id);
                 }
             }
         }
@@ -139,8 +139,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_Blocks.size(); ++i) {
-                    customElements[lvl_scene->custom_Blocks[i]->id] = i;
+                for(int i = 0; i < lvl_scene->m_customBlocks.size(); ++i) {
+                    customElements[lvl_scene->m_customBlocks[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_block.size(); ++i) {
@@ -161,8 +161,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_BGOs.size(); ++i) {
-                    m_model->addPiece( lvl_scene->custom_BGOs[i]->id );
+                for(int i = 0; i < lvl_scene->m_customBGOs.size(); ++i) {
+                    m_model->addPiece( lvl_scene->m_customBGOs[i]->id );
                 }
             }
         }
@@ -171,8 +171,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_BGOs.size(); ++i) {
-                    customElements[lvl_scene->custom_BGOs[i]->id] = i;
+                for(int i = 0; i < lvl_scene->m_customBGOs.size(); ++i) {
+                    customElements[lvl_scene->m_customBGOs[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_bgo.size(); ++i) {
@@ -194,8 +194,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_NPCs.size(); ++i) {
-                    m_model->addPiece( lvl_scene->custom_NPCs[i]->id );
+                for(int i = 0; i < lvl_scene->m_customNPCs.size(); ++i) {
+                    m_model->addPiece( lvl_scene->m_customNPCs[i]->id );
                 }
             }
         }
@@ -204,8 +204,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( lvl_scene && (mode==GFX_Level) )
             {
-                for(int i = 0; i < lvl_scene->custom_NPCs.size(); ++i) {
-                    customElements[lvl_scene->custom_NPCs[i]->id] = i;
+                for(int i = 0; i < lvl_scene->m_customNPCs.size(); ++i) {
+                    customElements[lvl_scene->m_customNPCs[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_npc.size(); ++i) {
@@ -374,8 +374,8 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     switch(mode)
     {
         case GFX_Level:
-            savePath = dynamic_cast<LvlScene *>(scn)->LvlData->path+
-                    (ui->specific->isChecked()? "/"+dynamic_cast<LvlScene *>(scn)->LvlData->filename :"")+"/";
+            savePath = dynamic_cast<LvlScene *>(scn)->m_data->path+
+                    (ui->specific->isChecked()? "/"+dynamic_cast<LvlScene *>(scn)->m_data->filename :"")+"/";
             break;
         case GFX_World:
             savePath = dynamic_cast<WldScene *>(scn)->WldData->path+
@@ -401,7 +401,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     switch(mode)
     {
         case GFX_Level:
-            openPath = dynamic_cast<LvlScene *>(scn)->LvlData->path+"/";
+            openPath = dynamic_cast<LvlScene *>(scn)->m_data->path+"/";
             break;
         case GFX_World:
             openPath = dynamic_cast<WldScene *>(scn)->WldData->path+"/";
@@ -458,8 +458,8 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
     switch(mode)
     {
         case GFX_Level:
-            lastFullPath = dynamic_cast<LvlScene *>(scn)->LvlData->path+
-                    (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->LvlData->filename :"")+"/";
+            lastFullPath = dynamic_cast<LvlScene *>(scn)->m_data->path+
+                    (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->m_data->filename :"")+"/";
             break;
         case GFX_World:
             lastFullPath = dynamic_cast<WldScene *>(scn)->WldData->path+

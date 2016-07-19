@@ -18,16 +18,12 @@
 
 #include <QClipboard>
 
+#include <mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/dock/lvl_warp_props.h>
 
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
-#include "item_water.h"
-#include "item_door.h"
+#include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
 
 
@@ -44,7 +40,7 @@ ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    setLocked(m_scene->lock_door);
+    setLocked(m_scene->m_lockDoor);
 }
 
 void ItemDoor::construct()
@@ -68,7 +64,7 @@ ItemDoor::~ItemDoor()
 
 void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened = true; //bug protector
+    m_scene->m_contextMenuIsOpened = true; //bug protector
 
     //Remove selection from non-bgo items
     if(!this->isSelected())
@@ -81,7 +77,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QMenu ItemMenu;
 
     QAction *openLvl = ItemMenu.addAction(tr("Open target level: %1").arg(m_data.lname).replace("&", "&&&"));
-    openLvl->setVisible( (!m_data.lname.isEmpty()) && (QFile(m_scene->LvlData->path + "/" + m_data.lname).exists()) );
+    openLvl->setVisible( (!m_data.lname.isEmpty()) && (QFile(m_scene->m_data->path + "/" + m_data.lname).exists()) );
     openLvl->deleteLater();
 
     /*************Layers*******************/
@@ -91,7 +87,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     QAction * newLayer =    LayerName->addAction(tr("Add to new layer..."));
         LayerName->addSeparator()->deleteLater();;
-    foreach(LevelLayer layer, m_scene->LvlData->layers)
+    foreach(LevelLayer layer, m_scene->m_data->layers)
     {
         //Skip system layers
         if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -160,7 +156,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==openLvl)
     {
-        MainWinConnect::pMainWin->OpenFile(m_scene->LvlData->path + "/" + m_data.lname);
+        m_scene->m_mw->OpenFile(m_scene->m_data->path + "/" + m_data.lname);
     }
     else
     if(selected==jumpTo)
@@ -169,13 +165,13 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         if(this->data(ITEM_TYPE).toString()=="Door_enter")
         {
             if(m_data.isSetOut)
-            MainWinConnect::pMainWin->activeLvlEditWin()->goTo(m_data.ox, m_data.oy, true, QPoint(0, 0), true);
+            m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ox, m_data.oy, true, QPoint(0, 0), true);
         }
         else
         if(this->data(ITEM_TYPE).toString()=="Door_exit")
         {
             if(m_data.isSetIn)
-            MainWinConnect::pMainWin->activeLvlEditWin()->goTo(m_data.ix, m_data.iy, true, QPoint(0, 0), true);
+            m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ix, m_data.iy, true, QPoint(0, 0), true);
         }
     }
     else
@@ -201,8 +197,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NOVEHICLE, QVariant(NoTransport->isChecked()));
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NOVEHICLE, QVariant(NoTransport->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else
     if(selected==AllowNPC)
@@ -227,8 +223,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else
     if(selected==Locked)
@@ -253,8 +249,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else
     if(selected==BombNeed)
@@ -279,8 +275,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(BombNeed->isChecked()));
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(BombNeed->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else
     if(selected==SpecialStReq)
@@ -305,8 +301,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(SpecialStReq->isChecked()));
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(SpecialStReq->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else
     if(selected==copyPosXY)
@@ -316,7 +312,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(direction==D_Entrance ? m_data.ix : m_data.ox)
                                .arg(direction==D_Entrance ? m_data.iy : m_data.oy)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXYWH)
@@ -328,7 +324,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_itemSize.width())
                                .arg(m_itemSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosLTRB)
@@ -340,7 +336,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg((direction==D_Entrance ? m_data.ix : m_data.ox)+m_itemSize.width())
                                .arg((direction==D_Entrance ? m_data.iy : m_data.oy)+m_itemSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==remove)
@@ -350,7 +346,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     else
     if(selected==props)
     {
-        MainWinConnect::pMainWin->dock_LvlWarpProps->SwitchToDoor(m_data.array_id);
+        m_scene->m_mw->dock_LvlWarpProps->SwitchToDoor(m_data.array_id);
     }
     else
     if(selected==newLayer)
@@ -368,7 +364,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 //FOUND!!!
                 m_scene->setLayerToSelected(lItem->data().toString());
                 m_scene->applyLayersVisible();
-                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+                m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
                 break;
             }//Find selected layer's item
         }
@@ -379,7 +375,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 ///////////////////MainArray functions/////////////////////////////
 void ItemDoor::setLayer(QString layer)
 {
-    foreach(LevelLayer lr, m_scene->LvlData->layers)
+    foreach(LevelLayer lr, m_scene->m_data->layers)
     {
         if(lr.name==layer)
         {
@@ -422,9 +418,9 @@ void ItemDoor::arrayApply()
      *
      */
 
-    if(m_data.index < (unsigned int)m_scene->LvlData->doors.size())
+    if(m_data.index < (unsigned int)m_scene->m_data->doors.size())
     { //Check index
-        if(m_data.array_id == m_scene->LvlData->doors[m_data.index].array_id)
+        if(m_data.array_id == m_scene->m_data->doors[m_data.index].array_id)
         {
             found=true;
         }
@@ -433,15 +429,15 @@ void ItemDoor::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->LvlData->doors[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->doors[m_data.index] = m_data; //apply current bgoData
     }
     else
-    for(int i=0; i<m_scene->LvlData->doors.size(); i++)
+    for(int i=0; i<m_scene->m_data->doors.size(); i++)
     { //after find it into array
-        if(m_scene->LvlData->doors[i].array_id == m_data.array_id)
+        if(m_scene->m_data->doors[i].array_id == m_data.array_id)
         {
             m_data.index = i;
-            m_scene->LvlData->doors[i] = m_data;
+            m_scene->m_data->doors[i] = m_data;
             break;
         }
     }
@@ -520,7 +516,7 @@ bool ItemDoor::itemTypeIsLocked()
 {
     if(!m_scene)
         return false;
-    return m_scene->lock_door;
+    return m_scene->m_lockDoor;
 }
 
 void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
@@ -563,8 +559,8 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     }
     m_grp->addToGroup(m_doorLabel);
 
-    this->setFlag(QGraphicsItem::ItemIsSelectable, (!m_scene->lock_door));
-    this->setFlag(QGraphicsItem::ItemIsMovable, (!m_scene->lock_door));
+    this->setFlag(QGraphicsItem::ItemIsSelectable, (!m_scene->m_lockDoor));
+    this->setFlag(QGraphicsItem::ItemIsMovable, (!m_scene->m_lockDoor));
 
     m_doorLabel->setZValue(m_scene->Z_sys_door+0.0000002);
 

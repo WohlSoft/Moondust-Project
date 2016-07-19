@@ -59,7 +59,7 @@ NpcEdit *MainWindow::createNPCChild(QMdiSubWindow **npcWindow_out)
 LevelEdit *MainWindow::createLvlChild(QMdiSubWindow **levelWindow_out)
 {
     QMdiSubWindow *levelWindow = new QMdiSubWindow(ui->centralWidget);
-    LevelEdit *child = new LevelEdit(levelWindow);
+    LevelEdit *child = new LevelEdit(this, levelWindow);
     child->connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
 
     levelWindow->setWidget(child);

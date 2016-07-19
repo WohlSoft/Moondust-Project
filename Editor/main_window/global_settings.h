@@ -22,9 +22,9 @@
 #include <QString>
 #include <QMdiArea>
 
-struct LevelEditingSettings
+struct EditingSettings
 {
-    LevelEditingSettings();
+    EditingSettings();
     //Common
     bool animationEnabled;
     bool collisionsEnabled;
@@ -70,7 +70,7 @@ struct SETTINGS_TestSettings {
 class GlobalSettings
 {
 public:
-    static LevelEditingSettings  LvlOpts;
+    static EditingSettings  LvlOpts;
     static SETTINGS_ItemDefaults LvlItemDefaults;
 
     //! Testing settings

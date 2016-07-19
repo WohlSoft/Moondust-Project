@@ -33,7 +33,7 @@ void HistoryElementRemoveLayer::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->LvlData->layers.push_back(m_modData.layers[0]);
+    lvlScene->m_data->layers.push_back(m_modData.layers[0]);
     lvlScene->placeAll(m_modData);
 
 
@@ -81,9 +81,9 @@ void HistoryElementRemoveLayer::redo()
     searcher->find(m_modData, m_scene->items());
     delete searcher;
 
-    for(int i = 0; i < lvlScene->LvlData->layers.size(); i++){
-        if(lvlScene->LvlData->layers[i].array_id == m_modData.layers[0].array_id){
-            lvlScene->LvlData->layers.removeAt(i);
+    for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
+        if(lvlScene->m_data->layers[i].array_id == m_modData.layers[0].array_id){
+            lvlScene->m_data->layers.removeAt(i);
         }
     }
 

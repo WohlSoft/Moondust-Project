@@ -67,9 +67,9 @@ ItemPlayerPoint::~ItemPlayerPoint()
 
 void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!m_scene->DrawMode)
+    if(!m_scene->m_busyMode)
     {
-        m_scene->contextMenuOpened = true; //bug protector
+        m_scene->m_contextMenuIsOpened = true; //bug protector
     }
 
     //Remove selection from non-block items
@@ -82,7 +82,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     this->setSelected(true);
     QMenu ItemMenu;
 
-    bool isLvlx = !m_scene->LvlData->smbx64strict;
+    bool isLvlx = !m_scene->m_data->smbx64strict;
 
     QMenu * chDir =     ItemMenu.addMenu(
                         tr("Set %1").arg(tr("Direction")) );
@@ -162,9 +162,9 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     {
         bool found=false;
         int q=0;
-        for(q=0; q < m_scene->LvlData->players.size();q++)
+        for(q=0; q < m_scene->m_data->players.size();q++)
         {
-             if(m_scene->LvlData->players[q].id == m_data.id)
+             if(m_scene->m_data->players[q].id == m_data.id)
              {
                  found=true;
                  break;
@@ -173,11 +173,11 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
         if(!found)
         {
-            q = m_scene->LvlData->players.size();
-            m_scene->LvlData->players.push_back(m_data);
+            q = m_scene->m_data->players.size();
+            m_scene->m_data->players.push_back(m_data);
         }
         else
-            m_scene->LvlData->players[q]=m_data;
+            m_scene->m_data->players[q]=m_data;
     }
 
     this->setPos(m_data.x, m_data.y);
@@ -214,11 +214,11 @@ void ItemPlayerPoint::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    for(int i=0; i<m_scene->LvlData->players.size();i++)
+    for(int i=0; i<m_scene->m_data->players.size();i++)
     {
-        if(m_data.id==m_scene->LvlData->players[i].id)
+        if(m_data.id==m_scene->m_data->players[i].id)
         {
-            m_scene->LvlData->players[i] = m_data;
+            m_scene->m_data->players[i] = m_data;
             break;
         }
     }
@@ -230,11 +230,11 @@ void ItemPlayerPoint::arrayApply()
 
 void ItemPlayerPoint::removeFromArray()
 {
-    for(int i=0; i<m_scene->LvlData->players.size();i++)
+    for(int i=0; i<m_scene->m_data->players.size();i++)
     {
-        if(m_data.id==m_scene->LvlData->players[i].id)
+        if(m_data.id==m_scene->m_data->players[i].id)
         {
-            m_scene->LvlData->players.removeAt(i);
+            m_scene->m_data->players.removeAt(i);
             break;
         }
     }

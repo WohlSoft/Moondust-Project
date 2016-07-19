@@ -35,7 +35,7 @@ void HistoryElementRemoveLayerAndSave::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->LvlData->layers.push_back(m_modData.layers[0]);
+    lvlScene->m_data->layers.push_back(m_modData.layers[0]);
     ItemSearcher levelSearcher(static_cast<ItemTypes::itemTypesMultiSelectable>(
                                    ItemTypes::LVL_S_Block |
                                    ItemTypes::LVL_S_BGO |
@@ -81,9 +81,9 @@ void HistoryElementRemoveLayerAndSave::redo()
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
     levelSearcher.find(m_modData, m_scene->items());
 
-    for(int i = 0; i < lvlScene->LvlData->layers.size(); i++){
-        if(lvlScene->LvlData->layers[i].array_id == m_modData.layers[0].array_id){
-            lvlScene->LvlData->layers.removeAt(i);
+    for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
+        if(lvlScene->m_data->layers[i].array_id == m_modData.layers[0].array_id){
+            lvlScene->m_data->layers.removeAt(i);
         }
     }
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
@@ -104,7 +104,7 @@ void HistoryElementRemoveLayerAndSave::historyUndoChangeLayerBlocks(const LevelB
     ItemBlock* targetItem = (ItemBlock*)item;
     QString oldLayer = sourceBlock.layer;
     targetItem->m_data.layer = oldLayer;
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == oldLayer)
         {
@@ -126,7 +126,7 @@ void HistoryElementRemoveLayerAndSave::historyUndoChangeLayerBGO(const LevelBGO 
     ItemBGO* targetItem = (ItemBGO*)item;
     QString oldLayer = sourceBGO.layer;
     targetItem->m_data.layer = oldLayer;
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == oldLayer)
         {
@@ -148,7 +148,7 @@ void HistoryElementRemoveLayerAndSave::historyUndoChangeLayerNPC(const LevelNPC 
     ItemNPC* targetItem = (ItemNPC*)item;
     QString oldLayer = sourceNPC.layer;
     targetItem->m_data.layer = oldLayer;
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == oldLayer)
         {
@@ -170,7 +170,7 @@ void HistoryElementRemoveLayerAndSave::historyUndoChangeLayerWater(const LevelPh
     ItemPhysEnv* targetItem = (ItemPhysEnv*)item;
     QString oldLayer = sourcePhysEnv.layer;
     targetItem->m_data.layer = oldLayer;
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == oldLayer)
         {
@@ -192,7 +192,7 @@ void HistoryElementRemoveLayerAndSave::historyUndoChangeLayerDoor(const LevelDoo
     ItemDoor* targetItem = (ItemDoor*)item;
     QString oldLayer = sourceDoor.layer;
     targetItem->m_data.layer = oldLayer;
-    foreach (LevelLayer lr, lvlScene->LvlData->layers) {
+    foreach (LevelLayer lr, lvlScene->m_data->layers) {
         if(lr.name == oldLayer)
         {
             targetItem->setVisible(!lr.hidden);
@@ -212,7 +212,7 @@ void HistoryElementRemoveLayerAndSave::historyRedoChangeLayerBlocks(const LevelB
 
     ItemBlock* targetItem = (ItemBlock*)item;
     targetItem->m_data.layer = QString("Default");
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == QString("Default"))
         {
@@ -233,7 +233,7 @@ void HistoryElementRemoveLayerAndSave::historyRedoChangeLayerBGO(const LevelBGO 
 
     ItemBGO* targetItem = (ItemBGO*)item;
     targetItem->m_data.layer = QString("Default");
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == QString("Default"))
         {
@@ -254,7 +254,7 @@ void HistoryElementRemoveLayerAndSave::historyRedoChangeLayerNPC(const LevelNPC 
 
     ItemNPC* targetItem = (ItemNPC*)item;
     targetItem->m_data.layer = QString("Default");
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == QString("Default"))
         {
@@ -275,7 +275,7 @@ void HistoryElementRemoveLayerAndSave::historyRedoChangeLayerWater(const LevelPh
 
     ItemPhysEnv* targetItem = (ItemPhysEnv*)item;
     targetItem->m_data.layer = QString("Default");
-    foreach(LevelLayer lr, lvlScene->LvlData->layers)
+    foreach(LevelLayer lr, lvlScene->m_data->layers)
     {
         if(lr.name == QString("Default"))
         {
@@ -296,7 +296,7 @@ void HistoryElementRemoveLayerAndSave::historyRedoChangeLayerDoor(const LevelDoo
 
     ItemDoor* targetItem = (ItemDoor*)item;
     targetItem->m_data.layer = QString("Default");
-    foreach (LevelLayer lr, lvlScene->LvlData->layers) {
+    foreach (LevelLayer lr, lvlScene->m_data->layers) {
         if(lr.name == QString("Default"))
         {
             targetItem->setVisible(!lr.hidden);

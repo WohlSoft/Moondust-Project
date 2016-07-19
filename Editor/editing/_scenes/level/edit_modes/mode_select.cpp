@@ -16,21 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mainwindow.h>
 #include <common_features/themes.h>
-#include <common_features/main_window_ptr.h>
 #include <common_features/item_rectangles.h>
 
 #include <main_window/dock/lvl_warp_props.h>
 
 #include "mode_select.h"
-#include "../lvl_scene.h"
-#include "../items/item_bgo.h"
-#include "../items/item_block.h"
-#include "../items/item_npc.h"
-#include "../items/item_water.h"
-#include "../items/item_playerpoint.h"
-#include "../items/item_door.h"
-
+#include "../lvl_history_manager.h"
 #include "../lvl_item_placing.h"
 
 LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
@@ -54,14 +47,14 @@ void LVL_ModeSelect::set()
     s->resetCursor();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=false;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=false;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
-    s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
+    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 
@@ -70,22 +63,22 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(s->EditingMode == LvlScene::MODE_PasteFromClip)
+    if(s->m_editMode == LvlScene::MODE_PasteFromClip)
     {
         if( mouseEvent->buttons() & Qt::RightButton )
         {
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            s->m_mw->on_actionSelect_triggered();
             dontCallEvent = true;
-            s->IsMoved = true;
+            s->m_mouseIsMovedAfterKey = true;
             return;
         }
-        s->PasteFromBuffer = true;
+        s->m_pastingMode = true;
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if((s->disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+    if((s->m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
         && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { dontCallEvent = true; return; }
 
@@ -102,19 +95,19 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     ItemBlock* blk= qgraphicsitem_cast<ItemBlock*>(it);
                     if(blk) LvlPlacingItems::blockSet=blk->m_data;
-                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true); return;
+                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true); return;
                 }
                 else if(itp=="BGO")
                 {
                     ItemBGO* blk= qgraphicsitem_cast<ItemBGO*>(it);
                     if(blk) LvlPlacingItems::bgoSet=blk->m_data;
-                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true); return;
+                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true); return;
                 }
                 else if(itp=="NPC")
                 {
                     ItemNPC* blk= qgraphicsitem_cast<ItemNPC*>(it);
                     if(blk) LvlPlacingItems::npcSet=blk->m_data;
-                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true); return;
+                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true); return;
                 }
             }
         }
@@ -122,8 +115,8 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(!s->selectedItems().isEmpty())
             {
-                s->LvlBuffer=s->copy();
-                s->PasteFromBuffer=true;
+                s->m_dataBuffer=s->copy();
+                s->m_pastingMode=true;
             }
         }
     }
@@ -136,7 +129,7 @@ void LVL_ModeSelect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
     if(!( mouseEvent->buttons() & Qt::LeftButton )) return;
-    if(s->cursor) s->cursor->setPos(mouseEvent->scenePos());
+    if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
 }
 
 void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
@@ -150,9 +143,9 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    s->cursor->hide();
+    s->m_cursorItemImg->hide();
 
-    s->haveSelected = false;
+    //s->haveSelected = false;
 
     QString ObjType;
     bool collisionPassed = false;
@@ -161,19 +154,19 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     LevelData historyBuffer;
     LevelData historySourceBuffer;
 
-    if(s->PasteFromBuffer)
+    if(s->m_pastingMode)
     {
-        s->paste( s->LvlBuffer, mouseEvent->scenePos().toPoint() );
-        s->PasteFromBuffer = false;
-        s->IsMoved=false;
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->paste( s->m_dataBuffer, mouseEvent->scenePos().toPoint() );
+        s->m_pastingMode = false;
+        s->m_mouseIsMovedAfterKey=false;
+        s->m_mw->on_actionSelect_triggered();
         s->Debugger_updateItemList();
     }
 
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 
     // check for grid snap
-    if ((!selectedList.isEmpty())&&(s->mouseMoved))
+    if ((!selectedList.isEmpty())&&(s->m_mouseIsMoved))
     {
         //Set Grid Size/Offset, sourcePosition
         setItemSourceData(selectedList.first(), selectedList.first()->data(ITEM_TYPE).toString());
@@ -183,7 +176,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                  ((long)selectedList.first()->scenePos().y())
                  ) ) )
         {
-            s->mouseMoved=false;
+            s->m_mouseIsMoved=false;
             return; //break fetch when items is not moved
         }
 
@@ -191,9 +184,9 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
         // Check collisions
         //Only if collision ckecking enabled
-        if(!s->PasteFromBuffer)
+        if(!s->m_pastingMode)
         {
-            if(s->opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
+            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
             {
                 collisionPassed = false;
                 s->returnItemBackGroup(selectedList);
@@ -202,12 +195,12 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 collisionPassed = true;
                 //applyArrayForItemGroup(selectedList);
-                s->LvlData->modified=true;
+                s->m_data->modified=true;
             }
         }
 
 
-        if((collisionPassed) || (!s->opts.collisionsEnabled))
+        if((collisionPassed) || (!s->m_opts.collisionsEnabled))
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin();
              it != selectedList.end(); it++)
         { ////////////////////////SECOND FETCH///////////////////////
@@ -220,7 +213,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
            //Check position
            if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
            {
-               s->mouseMoved=false;
+               s->m_mouseIsMoved=false;
                break; //break fetch when items is not moved
            }
 
@@ -233,7 +226,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemBlock *>(*it)->blockData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBlock *>(*it)->arrayApply();
                 historyBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->m_data);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if( ObjType == "BGO")
@@ -244,7 +237,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemBGO *>(*it)->bgoData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBGO *>(*it)->arrayApply();
                 historyBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->m_data);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if( ObjType == "NPC")
@@ -255,7 +248,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemNPC *>(*it)->npcData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemNPC *>(*it)->arrayApply();
                 historyBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->m_data);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if( ObjType == "Water")
@@ -266,7 +259,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemWater *>(*it)->waterData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemPhysEnv *>(*it)->arrayApply();
                 historyBuffer.physez.push_back(dynamic_cast<ItemPhysEnv *>(*it)->m_data);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if( ObjType == "Door_enter")
@@ -292,7 +285,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 newDoorData.isSetOut = false;
                 historyBuffer.doors.push_back(newDoorData);
                 //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if( ObjType == "Door_exit")
@@ -317,7 +310,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 newDoorData.isSetOut = true;
                 historyBuffer.doors.push_back(newDoorData);
                 //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                s->LvlData->modified = true;
+                s->m_data->modified = true;
             }
             else
             if(ObjType == "playerPoint" )
@@ -330,16 +323,16 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             }
         }////////////////////////SECOND FETCH///////////////////////
 
-        if(s->mouseMoved)
+        if(s->m_mouseIsMoved)
         {
             /***********If some door items are moved, refresh list!*****************/
             if(!historySourceBuffer.doors.isEmpty())
-                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+                s->m_mw->dock_LvlWarpProps->setDoorData(-2);
             /***********************************************************************/
-            s->addMoveHistory(historySourceBuffer, historyBuffer);
+            s->m_history->addMove(historySourceBuffer, historyBuffer);
         }
 
-        s->mouseMoved = false;
+        s->m_mouseIsMoved = false;
     }
 }
 
@@ -359,7 +352,7 @@ void LVL_ModeSelect::keyRelease(QKeyEvent *keyEvent)
             s->removeSelectedLvlItems();
             break;
         case (Qt::Key_Escape):
-            if(!s->mouseMoved)
+            if(!s->m_mouseIsMoved)
                 s->clearSelection();
             break;
         default:
@@ -374,7 +367,7 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    gridSize = s->pConfigs->default_grid;
+    gridSize = s->m_configs->default_grid;
     offsetX = 0;
     offsetY = 0;
 
@@ -404,18 +397,18 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if( ObjType == "Water")
     {
         sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
-        gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
     }
     else
     if( ObjType == "Door_enter")
     {
         sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ix, dynamic_cast<ItemDoor *>(it)->m_data.iy);
-        gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
     }
     else
     if( ObjType == "Door_exit"){
         sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ox, dynamic_cast<ItemDoor *>(it)->m_data.oy);
-        gridSize = qRound(qreal(s->pConfigs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
     }
     else
     if( ObjType == "playerPoint" )

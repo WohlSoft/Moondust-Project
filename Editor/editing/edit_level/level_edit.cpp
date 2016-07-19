@@ -37,19 +37,20 @@
 #include "level_edit.h"
 #include <ui_leveledit.h>
 
-LevelEdit::LevelEdit(QWidget *parent) :
+LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LevelEdit)
+    scene(nullptr),
+    sceneCreated(false),
+    isUntitled(true),
+    updateTimer(nullptr),
+    ui(new Ui::LevelEdit),
+    m_fileType(FileFormats::LVL_PGEX),
+    m_mw(mw)
 {
-    sceneCreated = false;
-    scene = nullptr;
-    FileType = 0;
-    setAttribute(Qt::WA_DeleteOnClose);
-    isUntitled = true;
-    latest_export_path = AppPathManager::userAppDir();
-    setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
-    updateTimer = nullptr;
+    setAttribute(Qt::WA_DeleteOnClose);
+    m_recentExportPath = AppPathManager::userAppDir();
+    setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
 
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -120,7 +121,7 @@ void LevelEdit::updateScene()
 
     QElapsedTimer t; t.start();
 
-    if(scene->opts.animationEnabled)
+    if(scene->m_opts.animationEnabled)
     {
         QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
         scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );

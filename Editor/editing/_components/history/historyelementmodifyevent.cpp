@@ -69,15 +69,15 @@ void HistoryElementModifyEvent::doEventRemove()
     LevelSMBX64Event rmEvents = m_event;
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
-    for (int i = 0; i < lvlScene->LvlData->events.size(); i++) {
-        if(lvlScene->LvlData->events[i].array_id == (unsigned int)rmEvents.array_id){
+    for (int i = 0; i < lvlScene->m_data->events.size(); i++) {
+        if(lvlScene->m_data->events[i].array_id == (unsigned int)rmEvents.array_id){
             for(int j = 0; j < MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->count(); j++){
                 if(MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
                     delete MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j);
                 }
             }
-            MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(lvlScene->LvlData->events[i].name, "");
-            lvlScene->LvlData->events.removeAt(i);
+            MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(lvlScene->m_data->events[i].name, "");
+            lvlScene->m_data->events.removeAt(i);
         }
     }
 
@@ -108,10 +108,10 @@ void HistoryElementModifyEvent::doEventPlace()
     LevelSMBX64Event NewEvent = rmEvents;
 
 
-    lvlScene->LvlData->events.push_back(NewEvent);
+    lvlScene->m_data->events.push_back(NewEvent);
     evList->addItem(item);
 
-    lvlScene->LvlData->modified = true;
+    lvlScene->m_data->modified = true;
 
     MainWinConnect::pMainWin->EventListsSync();
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);

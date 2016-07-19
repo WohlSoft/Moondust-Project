@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
@@ -29,9 +29,9 @@
 
 void LvlScene::applyResizers()
 {
-    if(pResizer!=NULL )
+    if(m_resizeBox!=NULL )
     {
-        switch(pResizer->type)
+        switch(m_resizeBox->type)
         {
         case 4:
             setScreenshotSelector(false, true);
@@ -55,9 +55,9 @@ void LvlScene::applyResizers()
 
 void LvlScene::resetResizers()
 {
-    if(pResizer!=NULL )
+    if(m_resizeBox!=NULL )
     {
-        switch(pResizer->type)
+        switch(m_resizeBox->type)
         {
         case 4:
             setScreenshotSelector(false, false);

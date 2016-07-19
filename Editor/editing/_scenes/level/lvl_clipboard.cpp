@@ -19,11 +19,7 @@
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include "lvl_scene.h"
-#include "items/item_block.h"
-#include "items/item_bgo.h"
-#include "items/item_npc.h"
-#include "items/item_water.h"
+#include "lvl_history_manager.h"
 
 //Copy selected items into clipboard
 LevelData LvlScene::copy(bool cut)
@@ -87,8 +83,8 @@ LevelData LvlScene::copy(bool cut)
 
         if(cut)
         {
-            LvlData->modified = true;
-            addRemoveHistory(copyData);
+            m_data->modified = true;
+            m_history->addRemove(copyData);
             Debugger_updateItemList();
         }
     }
@@ -156,12 +152,12 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LevelBlock dumpBlock = block;
         dumpBlock.x = (long)pos.x() + block.x - baseX;
         dumpBlock.y = (long)pos.y() + block.y - baseY;
-        LvlData->blocks_array_id++;
-        dumpBlock.array_id = LvlData->blocks_array_id;
+        m_data->blocks_array_id++;
+        dumpBlock.array_id = m_data->blocks_array_id;
 
         placeBlock(dumpBlock);
 
-        LvlData->blocks.push_back(dumpBlock);
+        m_data->blocks.push_back(dumpBlock);
         newData.blocks.push_back(dumpBlock);
     }
     foreach (LevelBGO bgo, BufferIn.bgo){
@@ -169,12 +165,12 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LevelBGO dumpBGO = bgo;
         dumpBGO.x = (long)pos.x() + bgo.x - baseX;
         dumpBGO.y = (long)pos.y() + bgo.y - baseY;
-        LvlData->bgo_array_id++;
-        dumpBGO.array_id = LvlData->bgo_array_id;
+        m_data->bgo_array_id++;
+        dumpBGO.array_id = m_data->bgo_array_id;
 
         placeBGO(dumpBGO);
 
-        LvlData->bgo.push_back(dumpBGO);
+        m_data->bgo.push_back(dumpBGO);
 
         //WriteToLog(QtDebugMsg, QString("History-> added items pos %1 %2").arg(dumpBGO.x).arg(dumpBGO.y));
         newData.bgo.push_back(dumpBGO);
@@ -184,10 +180,10 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LevelNPC dumpNPC = npc;
         dumpNPC.x = (long)pos.x() + npc.x - baseX;
         dumpNPC.y = (long)pos.y() + npc.y - baseY;
-        LvlData->npc_array_id++;
-        dumpNPC.array_id = LvlData->npc_array_id;
+        m_data->npc_array_id++;
+        dumpNPC.array_id = m_data->npc_array_id;
         placeNPC(dumpNPC);
-        LvlData->npc.push_back(dumpNPC);
+        m_data->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
     }
     foreach (LevelPhysEnv water, BufferIn.physez){
@@ -195,17 +191,17 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LevelPhysEnv dumpWater = water;
         dumpWater.x = (long)pos.x() + water.x - baseX;
         dumpWater.y = (long)pos.y() + water.y - baseY;
-        LvlData->npc_array_id++;
-        dumpWater.array_id = LvlData->npc_array_id;
+        m_data->npc_array_id++;
+        dumpWater.array_id = m_data->npc_array_id;
         placeEnvironmentZone(dumpWater);
-        LvlData->physez.push_back(dumpWater);
+        m_data->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
     }
 
     applyGroupGrid(selectedItems(), true);
 
-    LvlData->modified = true;
-    addPlaceHistory(newData);
+    m_data->modified = true;
+    m_history->addPlace(newData);
 
     //refresh Animation control
     //if(opts.animationEnabled) stopAnimation();

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
@@ -29,31 +29,31 @@
 
 void LvlScene::setScreenshotSelector()
 {
-    isFullSection=true;
+    m_captureFullSection=true;
     emit screenshotSizeCaptured();
 }
 
 void LvlScene::setScreenshotSelector(bool enabled, bool accept)
 {
     bool do_signal=false;
-    if((enabled)&&(pResizer==NULL))
+    if( (enabled) && (m_resizeBox==nullptr) )
     {
-        MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
+        m_mw->on_actionSelect_triggered(); //Reset mode
 
-        pResizer = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 2 );
-        this->addItem(pResizer);
-        pResizer->setPos(captutedSize.x(), captutedSize.y());
-        pResizer->type=4;
-        pResizer->_minSize = QSizeF(320, 200);
+        m_resizeBox = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 2 );
+        this->addItem(m_resizeBox);
+        m_resizeBox->setPos(captutedSize.x(), captutedSize.y());
+        m_resizeBox->type=4;
+        m_resizeBox->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
+        //m_mw->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
         SwitchEditingMode(MODE_Resizing);
-        MainWinConnect::pMainWin->resizeToolbarVisible(true);
+        m_mw->resizeToolbarVisible(true);
     }
     else
     {
-        if(pResizer!=NULL)
+        if( m_resizeBox != nullptr )
         {
             if(accept)
             {
@@ -61,21 +61,21 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
 
-                captutedSize = QRectF( pResizer->pos().x(),
-                                       pResizer->pos().y(),
-                                       pResizer->_width,
-                                       pResizer->_height);
+                captutedSize = QRectF( m_resizeBox->pos().x(),
+                                       m_resizeBox->pos().y(),
+                                       m_resizeBox->_width,
+                                       m_resizeBox->_height);
                 do_signal=true;
             }
-            delete pResizer;
-            pResizer = NULL;
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            MainWinConnect::pMainWin->resizeToolbarVisible(false);
+            delete m_resizeBox;
+            m_resizeBox = nullptr;
+            m_mw->on_actionSelect_triggered();
+            m_mw->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
-        DrawMode=false;
+        m_busyMode=false;
     }
-    isFullSection=false;
+    m_captureFullSection=false;
 
     if(do_signal) emit screenshotSizeCaptured();
 }
