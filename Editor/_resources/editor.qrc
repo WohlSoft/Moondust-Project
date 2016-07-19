@@ -116,6 +116,15 @@
         <file>images/goto_right_bottom.png</file>
         <file>images/goto_top_right.png</file>
         <file>lunalua.ico</file>
+        <file>constributors/Bossedit8.png</file>
+        <file>constributors/DarkoniusMavakar.png</file>
+        <file>constributors/h2643.png</file>
+        <file>constributors/HorikawaOtane.png</file>
+        <file>constributors/Kevsoft.png</file>
+        <file>constributors/Marina.png</file>
+        <file>constributors/SquishyRex.png</file>
+        <file>constributors/Valtteri.png</file>
+        <file>constributors/Wohlstand.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
