@@ -249,9 +249,9 @@ void ItemMusic::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->WldData->music.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->music.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->music[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->music[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -260,14 +260,14 @@ void ItemMusic::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->music[m_data.index] = m_data; //apply current musicData
+        m_scene->WldData->music[m_data.meta.index] = m_data; //apply current musicData
     }
     else
     for(int i=0; i<m_scene->WldData->music.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->music[i].array_id == m_data.array_id)
+        if(m_scene->WldData->music[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->WldData->music[i] = m_data;
             break;
         }
@@ -279,9 +279,9 @@ void ItemMusic::arrayApply()
 void ItemMusic::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->WldData->music.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->music.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->music[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->music[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -289,12 +289,12 @@ void ItemMusic::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->music.removeAt(m_data.index);
+        m_scene->WldData->music.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->WldData->music.size(); i++)
     {
-        if(m_scene->WldData->music[i].array_id == m_data.array_id)
+        if(m_scene->WldData->music[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->WldData->music.removeAt(i); break;
         }
@@ -316,12 +316,12 @@ bool ItemMusic::itemTypeIsLocked()
     return m_scene->lock_musbox;
 }
 
-void ItemMusic::setMusicData(WorldMusic inD)
+void ItemMusic::setMusicData(WorldMusicBox inD)
 {
     m_data = inD;
     setPos(m_data.x, m_data.y);
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);

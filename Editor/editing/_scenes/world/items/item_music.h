@@ -32,7 +32,7 @@ public:
     ItemMusic(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemMusic();
 
-    void setMusicData(WorldMusic inD);
+    void setMusicData(WorldMusicBox inD);
     void transformTo(int musicID, QString musicFile);
 
     QRectF boundingRect() const;
@@ -44,7 +44,7 @@ public:
     void returnBack();
     QPoint sourcePos();
 
-    WorldMusic  m_data;
+    WorldMusicBox  m_data;
     QString     m_musicTitle;
 
     bool itemTypeIsLocked();

@@ -77,7 +77,7 @@ LevelScene::LevelScene()
     layers._scene=this;
     events._scene=this;
 
-    data.ReadFileValid = false;
+    data.meta.ReadFileValid = false;
 
     zCounter = 0.0L;
 

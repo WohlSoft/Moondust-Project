@@ -33,7 +33,7 @@ public:
     ItemTile(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemTile();
 
-    void setTileData(WorldTiles inD, obj_w_tile *mergedSet=0, long *animator_id=0);
+    void setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet=0, long *animator_id=0);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -51,7 +51,7 @@ public:
     void returnBack();
     QPoint sourcePos();
 
-    WorldTiles m_data;
+    WorldTerrainTile m_data;
     obj_w_tile m_localProps;
 
     bool itemTypeIsLocked();

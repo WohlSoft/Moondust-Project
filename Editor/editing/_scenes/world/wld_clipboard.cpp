@@ -101,7 +101,7 @@ WorldData WldScene::copy(bool cut)
 
         if(cut)
         {
-            WldData->modified = true;
+            WldData->meta.modified = true;
             addRemoveHistory(copyData);
             Debugger_updateItemList();
         }
@@ -135,7 +135,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         return;
     }
 
-    foreach (WorldTiles tile, BufferIn.tiles) {
+    foreach (WorldTerrainTile tile, BufferIn.tiles) {
         if(tile.x<baseX){
             baseX = tile.x;
         }
@@ -151,7 +151,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
             baseY = scene.y;
         }
     }
-    foreach (WorldPaths path, BufferIn.paths){
+    foreach (WorldPathTile path, BufferIn.paths){
         if(path.x<baseX){
             baseX = path.x;
         }
@@ -159,7 +159,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
             baseY = path.y;
         }
     }
-    foreach (WorldLevels level, BufferIn.levels){
+    foreach (WorldLevelTile level, BufferIn.levels){
         if(level.x<baseX){
             baseX = level.x;
         }
@@ -167,7 +167,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
             baseY = level.y;
         }
     }
-    foreach (WorldMusic music, BufferIn.music){
+    foreach (WorldMusicBox music, BufferIn.music){
         if(music.x<baseX){
             baseX = music.x;
         }
@@ -177,13 +177,13 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
     }
 
 
-    foreach (WorldTiles tile, BufferIn.tiles){
+    foreach (WorldTerrainTile tile, BufferIn.tiles){
         //Gen Copy of Tile
-        WorldTiles dumpTile = tile;
+        WorldTerrainTile dumpTile = tile;
         dumpTile.x = (long)pos.x() + tile.x - baseX;
         dumpTile.y = (long)pos.y() + tile.y - baseY;
         WldData->tile_array_id++;
-        dumpTile.array_id = WldData->tile_array_id;
+        dumpTile.meta.array_id = WldData->tile_array_id;
 
         placeTile(dumpTile);
 
@@ -197,7 +197,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         dumpScene.x = (long)pos.x() + scene.x - baseX;
         dumpScene.y = (long)pos.y() + scene.y - baseY;
         WldData->scene_array_id++;
-        dumpScene.array_id = WldData->scene_array_id;
+        dumpScene.meta.array_id = WldData->scene_array_id;
 
         placeScenery(dumpScene);
 
@@ -205,13 +205,13 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.scenery.push_back(dumpScene);
     }
 
-    foreach (WorldPaths path, BufferIn.paths){
+    foreach (WorldPathTile path, BufferIn.paths){
         //Gen Copy of Path
-        WorldPaths dumpPath = path;
+        WorldPathTile dumpPath = path;
         dumpPath.x = (long)pos.x() + path.x - baseX;
         dumpPath.y = (long)pos.y() + path.y - baseY;
         WldData->path_array_id++;
-        dumpPath.array_id = WldData->path_array_id;
+        dumpPath.meta.array_id = WldData->path_array_id;
 
         placePath(dumpPath);
 
@@ -219,13 +219,13 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.paths.push_back(dumpPath);
     }
 
-    foreach (WorldLevels level, BufferIn.levels){
+    foreach (WorldLevelTile level, BufferIn.levels){
         //Gen Copy of Level
-        WorldLevels dumpLevel = level;
+        WorldLevelTile dumpLevel = level;
         dumpLevel.x = (long)pos.x() + level.x - baseX;
         dumpLevel.y = (long)pos.y() + level.y - baseY;
         WldData->level_array_id++;
-        dumpLevel.array_id = WldData->level_array_id;
+        dumpLevel.meta.array_id = WldData->level_array_id;
 
         placeLevel(dumpLevel);
 
@@ -233,13 +233,13 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.levels.push_back(dumpLevel);
     }
 
-    foreach (WorldMusic music, BufferIn.music){
+    foreach (WorldMusicBox music, BufferIn.music){
         //Gen Copy of Level
-        WorldMusic dumpMusic = music;
+        WorldMusicBox dumpMusic = music;
         dumpMusic.x = (long)pos.x() + music.x - baseX;
         dumpMusic.y = (long)pos.y() + music.y - baseY;
         WldData->musicbox_array_id++;
-        dumpMusic.array_id = WldData->musicbox_array_id;
+        dumpMusic.meta.array_id = WldData->musicbox_array_id;
 
         placeMusicbox(dumpMusic);
 
@@ -249,7 +249,7 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
 
     applyGroupGrid(selectedItems(), true);
 
-    WldData->modified = true;
+    WldData->meta.modified = true;
     addPlaceHistory(newData);
 
 }

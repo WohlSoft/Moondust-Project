@@ -474,7 +474,7 @@ void LvlHistoryManager::historyBack()
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
     lastOperation->undo();
-    m_scene->m_data->modified = true;
+    m_scene->m_data->meta.modified = true;
 
     m_scene->Debugger_updateItemList();
     emit refreshHistoryButtons();
@@ -489,7 +489,7 @@ void LvlHistoryManager::historyForward()
     lastOperation->redo();
     historyIndex++;
 
-    m_scene->m_data->modified = true;
+    m_scene->m_data->meta.modified = true;
     m_scene->Debugger_updateItemList();
     emit refreshHistoryButtons();
     emit showStatusMessage(tr("Redone: %1").arg(lastOperation->getHistoryName()));

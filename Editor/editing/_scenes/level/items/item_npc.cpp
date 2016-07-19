@@ -118,15 +118,15 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     ItemMenu.addSeparator();
     /*************Layers*end***************/
 
-    QString NPCpath1 = m_scene->m_data->path+QString("/npc-%1.txt").arg( m_data.id );
-    QString NPCpath2 = m_scene->m_data->path+"/"+m_scene->m_data->filename+QString("/npc-%1.txt").arg( m_data.id );
+    QString NPCpath1 = m_scene->m_data->meta.path+QString("/npc-%1.txt").arg( m_data.id );
+    QString NPCpath2 = m_scene->m_data->meta.path+"/"+m_scene->m_data->meta.filename+QString("/npc-%1.txt").arg( m_data.id );
 
     QAction *newNpc;
-        if( (!m_scene->m_data->untitled)&&((QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1))) )
+        if( (!m_scene->m_data->meta.untitled)&&((QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1))) )
             newNpc =            ItemMenu.addAction(tr("Edit NPC-Configuration"));
         else
             newNpc =            ItemMenu.addAction(tr("New NPC-Configuration"));
-        newNpc->setEnabled(!m_scene->m_data->untitled);
+        newNpc->setEnabled(!m_scene->m_data->meta.untitled);
                                 ItemMenu.addSeparator();
 
     /*************Direction*******************/
@@ -341,12 +341,12 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         LogDebug(QString("NPC.txt path 1: %1").arg(NPCpath1));
         LogDebug(QString("NPC.txt path 2: %1").arg(NPCpath2));
-        if( (!m_scene->m_data->untitled) && (QFileInfo( NPCpath2 ).exists()) )
+        if( (!m_scene->m_data->meta.untitled) && (QFileInfo( NPCpath2 ).exists()) )
         {
             m_scene->m_mw->OpenFile( NPCpath2 );
         }
         else
-        if( (!m_scene->m_data->untitled) && (QFileInfo( NPCpath1 ).exists()) )
+        if( (!m_scene->m_data->meta.untitled) && (QFileInfo( NPCpath1 ).exists()) )
         {
             m_scene->m_mw->OpenFile( NPCpath1 );
         }
@@ -714,9 +714,9 @@ void ItemNPC::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->m_data->npc.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->npc.size())
     {   //Check index
-        if(m_data.array_id == m_scene->m_data->npc[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->npc[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -725,14 +725,14 @@ void ItemNPC::arrayApply()
     //Apply current data in main array
     if(found)
     {   //directlry
-        m_scene->m_data->npc[m_data.index] = m_data; //apply current npcData
+        m_scene->m_data->npc[m_data.meta.index] = m_data; //apply current npcData
     }
     else
     for(int i=0; i<m_scene->m_data->npc.size(); i++)
     { //after find it into array
-        if(m_scene->m_data->npc[i].array_id == m_data.array_id)
+        if(m_scene->m_data->npc[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->m_data->npc[i] = m_data;
             break;
         }
@@ -750,19 +750,19 @@ void ItemNPC::removeFromArray()
         return;
 
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->m_data->npc.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->npc.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->npc[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->npc[m_data.meta.index].meta.array_id)
             found=true;
     }
     if(found)
     { //directlry
-        m_scene->m_data->npc.removeAt(m_data.index);
+        m_scene->m_data->npc.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->m_data->npc.size(); i++)
     {
-        if(m_scene->m_data->npc[i].array_id == m_data.array_id)
+        if(m_scene->m_data->npc[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->m_data->npc.removeAt(i); break;
         }
@@ -851,7 +851,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
                  m_data.generator_type, true);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)m_localProps.collision_with_blocks) );
     setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)m_localProps.no_npc_collions) );

@@ -168,7 +168,7 @@ void LVL_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
         s->Debugger_updateItemList();
 
-        s->m_data->modified = true;
+        s->m_data->meta.modified = true;
         s->m_cursorItemImg->hide();
     }
 }

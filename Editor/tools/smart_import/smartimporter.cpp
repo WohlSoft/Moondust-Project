@@ -56,7 +56,7 @@ bool SmartImporter::attemptFastImport()
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the level, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
         }
-        CustomDirManager uLVL(targetLevelWindow->LvlData.path, targetLevelWindow->LvlData.filename);
+        CustomDirManager uLVL(targetLevelWindow->LvlData.meta.path, targetLevelWindow->LvlData.meta.filename);
         QDir sourceDir(importPath);
         if(!sourceDir.exists())
             return false;
@@ -106,7 +106,7 @@ bool SmartImporter::attemptFastImport()
             return false;
         }
 
-        CustomDirManager uWLD(targetWorldWindow->WldData.path, targetWorldWindow->WldData.filename);
+        CustomDirManager uWLD(targetWorldWindow->WldData.meta.path, targetWorldWindow->WldData.meta.filename);
         QDir sourceDir(importPath);
         if(!sourceDir.exists())
             return false;

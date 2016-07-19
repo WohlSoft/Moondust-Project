@@ -46,15 +46,15 @@ void HistoryElementRemoveWarp::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    lvlScene->m_data->doors.insert(m_removedDoor.index, m_removedDoor);
+    lvlScene->m_data->doors.insert(m_removedDoor.meta.index, m_removedDoor);
 
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-    warplist->insertItem(m_removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
-                         .arg(m_removedDoor.array_id).arg(m_removedDoor.ix).arg(m_removedDoor.iy).arg(m_removedDoor.ox).arg(m_removedDoor.oy),
-                         m_removedDoor.array_id);
-    if(warplist->count() > (int)m_removedDoor.index)
+    warplist->insertItem(m_removedDoor.meta.index, QString("%1: x%2y%3 <=> x%4y%5")
+                         .arg(m_removedDoor.meta.array_id).arg(m_removedDoor.ix).arg(m_removedDoor.iy).arg(m_removedDoor.ox).arg(m_removedDoor.oy),
+                         m_removedDoor.meta.array_id);
+    if(warplist->count() > (int)m_removedDoor.meta.index)
     {
-        warplist->setCurrentIndex( m_removedDoor.index );
+        warplist->setCurrentIndex( m_removedDoor.meta.index );
     }
     else
     {
@@ -82,11 +82,11 @@ void HistoryElementRemoveWarp::redo()
         return;
 
 
-    lvlScene->doorPointsSync( m_removedDoor.array_id, true);
+    lvlScene->doorPointsSync( m_removedDoor.meta.array_id, true);
 
     for(int i=0;i<lvlScene->m_data->doors.size();i++)
     {
-        if(lvlScene->m_data->doors[i].array_id==m_removedDoor.array_id)
+        if(lvlScene->m_data->doors[i].meta.array_id==m_removedDoor.meta.array_id)
         {
             lvlScene->m_data->doors.removeAt(i);
             break;
@@ -95,7 +95,7 @@ void HistoryElementRemoveWarp::redo()
 
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
     for(int i = 0; i < warplist->count(); i++){
-        if((unsigned int)warplist->itemData(i).toInt() == m_removedDoor.array_id){
+        if((unsigned int)warplist->itemData(i).toInt() == m_removedDoor.meta.array_id){
             warplist->removeItem(i);
             break;
         }

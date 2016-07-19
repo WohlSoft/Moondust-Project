@@ -43,7 +43,7 @@ void MainWindow::on_actionLevelProp_triggered()
             lvlsetData.push_back(LevProps.LevelTitle);
             e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
             e->LvlData.LevelName = LevProps.LevelTitle;
-            e->LvlData.modified = true;
+            e->LvlData.meta.modified = true;
             e->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? e->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
             updateWindowMenu();
         }

@@ -126,7 +126,7 @@ void LvlLayersBox::setLayersBox()
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
 
             item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
-            item->setData(Qt::UserRole, QString::number( layer.array_id ) );
+            item->setData(Qt::UserRole, QString::number( layer.meta.array_id ) );
             ui->LvlLayerList->addItem( item );
         }
     }
@@ -368,7 +368,7 @@ void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
     {
         for(int i=0;i< edit->LvlData.layers.size(); i++)
         {
-            if( edit->LvlData.layers[i].array_id==(unsigned int)layerItem->data(Qt::UserRole).toInt() )
+            if( edit->LvlData.layers[i].meta.array_id==(unsigned int)layerItem->data(Qt::UserRole).toInt() )
             {
                 edit->LvlData.layers.removeAt(i);
                 delete layerItem;
@@ -668,14 +668,14 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
     NewLayer.name = item->text();
     NewLayer.hidden = (item->checkState()==Qt::Unchecked );
     edit->LvlData.layers_array_id++;
-    NewLayer.array_id = edit->LvlData.layers_array_id;
-    edit->scene->m_history->addAddLayer(NewLayer.array_id, NewLayer.name);
+    NewLayer.meta.array_id = edit->LvlData.layers_array_id;
+    edit->scene->m_history->addAddLayer(NewLayer.meta.array_id, NewLayer.name);
 
-    item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
+    item->setData(Qt::UserRole, QString::number(NewLayer.meta.array_id));
     ui->LvlLayerList->addItem( item );
 
     edit->LvlData.layers.push_back(NewLayer);
-    edit->LvlData.modified=true;
+    edit->LvlData.meta.modified=true;
 
     if(setEdited)
     {
@@ -697,7 +697,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
 
     for(int i=0; i < edit->LvlData.layers.size(); i++)
     {
-        if( edit->LvlData.layers[i].array_id==(unsigned int)item->data(Qt::UserRole).toInt() )
+        if( edit->LvlData.layers[i].meta.array_id==(unsigned int)item->data(Qt::UserRole).toInt() )
         {
             int l=0;
             bool merge=false;
@@ -752,7 +752,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
             }
             else
             {
-                edit->scene->m_history->addRenameLayer(edit->LvlData.layers[i].array_id, oldLayerName, newLayerName);
+                edit->scene->m_history->addRenameLayer(edit->LvlData.layers[i].meta.array_id, oldLayerName, newLayerName);
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
                 //Apply layer's name/visibly to all items
@@ -851,7 +851,7 @@ void LvlLayersBox::on_LvlLayerList_itemChanged(QListWidgetItem *item)
         bool layerVisible = (item->checkState()==Qt::Checked);
         ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
 
-        edit->LvlData.modified=true;
+        edit->LvlData.meta.modified=true;
     }
 }
 

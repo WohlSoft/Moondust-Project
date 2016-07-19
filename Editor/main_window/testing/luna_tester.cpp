@@ -768,8 +768,8 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QString tempPath        = smbxPath+"/worlds/";
             QString tempName        = "tmp.PgeWorld.DeleteMe";
             QString dst_Episode     = tempPath+tempName+"/";
-            QString src_episodePath = in_levelData.path;
-            QString src_customPath  = in_levelData.path+"/"+in_levelData.filename;
+            QString src_episodePath = in_levelData.meta.path;
+            QString src_customPath  = in_levelData.meta.path+"/"+in_levelData.meta.filename;
 
             QDir dummyWorld(dst_Episode);
             if(dummyWorld.exists(dst_Episode))
@@ -1005,7 +1005,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             return;
         }
         QString fullPathToLevel = levelPath;
-        if(!in_levelData.smbx64strict)
+        if(!in_levelData.meta.smbx64strict)
         {
             int ret = msg.warning( LunaTester::tr("Incompatible file format"),
                                    LunaTester::tr("To take able to test level in the SMBX, file should be saved into SMBX64 format!\n"
@@ -1016,7 +1016,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 return;
 
             //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder
-            QString newPath = in_levelData.path + "/" + in_levelData.filename+"..lvl";
+            QString newPath = in_levelData.meta.path + "/" + in_levelData.meta.filename+"..lvl";
             if(!FileFormats::WriteSMBX64LvlFileF(newPath, in_levelData, 64))
             {
                 msg.warning(LunaTester::tr("Error"),
@@ -1038,7 +1038,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
         {
             fullPathToLevel.replace('/', '\\');
 
-            if(in_levelData.modified)
+            if(in_levelData.meta.modified)
             {
                 int ret = msg.question(
                         LunaTester::tr("LunaLUA Level test"),

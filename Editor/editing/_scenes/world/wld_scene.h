@@ -202,11 +202,11 @@ public:
         #define ITEM_LAST_POS                26 //QPointF
         #define ITEM_LAST_SIZE               27 //QSizeF
 
-        void placeTile(WorldTiles &tile, bool toGrid=false);
+        void placeTile(WorldTerrainTile &tile, bool toGrid=false);
         void placeScenery(WorldScenery &scenery, bool toGrid=false);
-        void placePath(WorldPaths &pathItem, bool toGrid=false);
-        void placeLevel(WorldLevels &level, bool toGrid=false);
-        void placeMusicbox(WorldMusic &musicbox, bool toGrid=false);
+        void placePath(WorldPathTile &pathItem, bool toGrid=false);
+        void placeLevel(WorldLevelTile &level, bool toGrid=false);
+        void placeMusicbox(WorldMusicBox &musicbox, bool toGrid=false);
 
     // ///////////////////Point selector/////////////////////////
     public:

@@ -38,12 +38,12 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
     if(m_findFilter & ItemTypes::LVL_S_Door){
         foreach (LevelDoor door, dataToFind.doors) {
             if(door.isSetIn&&!door.isSetOut){
-                sortedEntranceDoors[door.array_id] = door;
+                sortedEntranceDoors[door.meta.array_id] = door;
             }
         }
         foreach (LevelDoor door, dataToFind.doors) {
             if(!door.isSetIn&&door.isSetOut){
-                sortedExitDoors[door.array_id] = door;
+                sortedExitDoors[door.meta.array_id] = door;
             }
         }
     }
@@ -51,28 +51,28 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
     if(m_findFilter & ItemTypes::LVL_S_Block){
         foreach (LevelBlock block, dataToFind.blocks)
         {
-            sortedBlock[block.array_id] = block;
+            sortedBlock[block.meta.array_id] = block;
         }
     }
     QMap<int, LevelBGO> sortedBGO;
     if(m_findFilter & ItemTypes::LVL_S_BGO){
         foreach (LevelBGO bgo, dataToFind.bgo)
         {
-            sortedBGO[bgo.array_id] = bgo;
+            sortedBGO[bgo.meta.array_id] = bgo;
         }
     }
     QMap<int, LevelNPC> sortedNPC;
     if(m_findFilter & ItemTypes::LVL_S_NPC){
         foreach (LevelNPC npc, dataToFind.npc)
         {
-            sortedNPC[npc.array_id] = npc;
+            sortedNPC[npc.meta.array_id] = npc;
         }
     }
     QMap<int, LevelPhysEnv> sortedWater;
     if(m_findFilter & ItemTypes::LVL_S_PhysEnv)
     {
         foreach (LevelPhysEnv water, dataToFind.physez) {
-            sortedWater[water.array_id] = water;
+            sortedWater[water.meta.array_id] = water;
         }
     }
     QMap<int, PlayerPoint> sortedPlayers;
@@ -149,7 +149,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedBlock.size()!=0)
             {
                 QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -158,7 +158,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBlock.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundBlock(*beginItem, item);
@@ -178,7 +178,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedBGO.size()!=0)
             {
                 QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -187,7 +187,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBGO.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
 
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
@@ -208,7 +208,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedNPC.size()!=0)
             {
                 QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -218,7 +218,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedNPC.begin();
 
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
 
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
@@ -235,7 +235,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedWater.size()!=0)
             {
                 QMap<int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -245,7 +245,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedWater.begin();
 
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
 
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
@@ -262,7 +262,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedEntranceDoors.size()!=0)
             {
                 QMap<int, LevelDoor>::iterator beginItem = sortedEntranceDoors.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -272,7 +272,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedEntranceDoors.begin();
 
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
 
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
@@ -285,7 +285,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
             if(sortedExitDoors.size()!=0)
             {
                 QMap<int, LevelDoor>::iterator beginItem = sortedExitDoors.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -295,7 +295,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedExitDoors.begin();
 
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
 
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
@@ -331,38 +331,38 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
 
 void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *> &allItems)
 {
-    QMap<int, WorldTiles> sortedTiles;
+    QMap<int, WorldTerrainTile> sortedTiles;
     if(m_findFilter & ItemTypes::WLD_S_Tile){
-        foreach (WorldTiles tile, dataToFind.tiles)
+        foreach (WorldTerrainTile tile, dataToFind.tiles)
         {
-            sortedTiles[tile.array_id] = tile;
+            sortedTiles[tile.meta.array_id] = tile;
         }
     }
     QMap<int, WorldScenery> sortedScenery;
     if(m_findFilter & ItemTypes::WLD_S_Scenery){
         foreach (WorldScenery scenery, dataToFind.scenery)
         {
-            sortedScenery[scenery.array_id] = scenery;
+            sortedScenery[scenery.meta.array_id] = scenery;
         }
     }
-    QMap<int, WorldPaths> sortedPath;
+    QMap<int, WorldPathTile> sortedPath;
     if(m_findFilter & ItemTypes::WLD_S_Path){
-        foreach (WorldPaths path, dataToFind.paths)
+        foreach (WorldPathTile path, dataToFind.paths)
         {
-            sortedPath[path.array_id] = path;
+            sortedPath[path.meta.array_id] = path;
         }
     }
-    QMap<int, WorldLevels> sortedLevel;
+    QMap<int, WorldLevelTile> sortedLevel;
     if(m_findFilter & ItemTypes::WLD_S_Level)
     {
-        foreach (WorldLevels level, dataToFind.levels) {
-            sortedLevel[level.array_id] = level;
+        foreach (WorldLevelTile level, dataToFind.levels) {
+            sortedLevel[level.meta.array_id] = level;
         }
     }
-    QMap<int, WorldMusic> sortedMusic;
+    QMap<int, WorldMusicBox> sortedMusic;
     if(m_findFilter & ItemTypes::WLD_S_MusicBox){
-        foreach (WorldMusic music, dataToFind.music) {
-            sortedMusic[music.array_id] = music;
+        foreach (WorldMusicBox music, dataToFind.music) {
+            sortedMusic[music.meta.array_id] = music;
         }
     }
 
@@ -416,8 +416,8 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
             if(sortedTiles.size()!=0)
             {
-                QMap<int, WorldTiles>::iterator beginItem = sortedTiles.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                QMap<int, WorldTerrainTile>::iterator beginItem = sortedTiles.begin();
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -426,7 +426,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedTiles.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundTile(*beginItem, item);
@@ -444,8 +444,8 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
             if(sortedPath.size()!=0)
             {
-                QMap<int, WorldPaths>::iterator beginItem = sortedPath.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                QMap<int, WorldPathTile>::iterator beginItem = sortedPath.begin();
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -454,7 +454,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedPath.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundPath(*beginItem, item);
@@ -474,7 +474,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
             if(sortedScenery.size()!=0)
             {
                 QMap<int, WorldScenery>::iterator beginItem = sortedScenery.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -483,7 +483,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedScenery.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundScenery(*beginItem, item);
@@ -502,8 +502,8 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
             if(sortedLevel.size()!=0)
             {
-                QMap<int, WorldLevels>::iterator beginItem = sortedLevel.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                QMap<int, WorldLevelTile>::iterator beginItem = sortedLevel.begin();
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -512,7 +512,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedLevel.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundLevel(*beginItem, item);
@@ -531,8 +531,8 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
             if(sortedMusic.size()!=0)
             {
-                QMap<int, WorldMusic>::iterator beginItem = sortedMusic.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
+                QMap<int, WorldMusicBox>::iterator beginItem = sortedMusic.begin();
+                unsigned int currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
@@ -541,7 +541,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedMusic.begin();
-                currentArrayId = (*beginItem).array_id;
+                currentArrayId = (*beginItem).meta.array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     emit foundMusicbox(*beginItem, item);

@@ -273,7 +273,7 @@ void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECWRAPH, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].wrap_h = checked;
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -285,7 +285,7 @@ void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECWRAPV, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].wrap_v = checked;
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -297,7 +297,7 @@ void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn = checked;
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -309,7 +309,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll = checked;
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -321,7 +321,7 @@ void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECUNDERWATER, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].underwater = checked;
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -389,7 +389,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
         backData.push_back(ui->LVLPropsBackImage->currentData().toInt());
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECBACKGROUNDIMG, QVariant(backData));
         edit->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
-        edit->LvlData.modified = true;
+        edit->LvlData.meta.modified = true;
     }
     ui->LVLPropsBackImage->setEnabled(true);
 }
@@ -433,7 +433,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
         musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECMUSIC, QVariant(musicData));
         edit->LvlData.sections[edit->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
-        if(ui->LVLPropsMusicNumber->hasFocus()) edit->LvlData.modified = true;
+        if(ui->LVLPropsMusicNumber->hasFocus()) edit->LvlData.meta.modified = true;
     }
     loadMusic();
 }
@@ -457,7 +457,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
                 musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
                 edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECMUSIC, QVariant(musicData));
                 edit->LvlData.sections[edit->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
-                edit->LvlData.modified = true;
+                edit->LvlData.meta.modified = true;
             }
         }
     }
@@ -471,7 +471,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
 
-    dirPath = edit->LvlData.path;
+    dirPath = edit->LvlData.meta.path;
 
     if(edit->isUntitled)
     {

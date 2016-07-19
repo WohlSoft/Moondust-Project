@@ -91,7 +91,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     ItemMenu.addSeparator();
     /*************Layers*end***************/
 
-    bool isLvlx = !m_scene->m_data->smbx64strict;
+    bool isLvlx = !m_scene->m_data->meta.smbx64strict;
 
     QAction *ZOffset =          ItemMenu.addAction(tr("Change Z-Offset..."));
         ZOffset->setEnabled(isLvlx);
@@ -401,9 +401,9 @@ void ItemBGO::arrayApply()
     bool found=false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    if(m_data.index < (unsigned int)m_scene->m_data->bgo.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->bgo.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->bgo[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->bgo[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -412,14 +412,14 @@ void ItemBGO::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->m_data->bgo[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->bgo[m_data.meta.index] = m_data; //apply current bgoData
     }
     else
     for(int i=0; i<m_scene->m_data->bgo.size(); i++)
     { //after find it into array
-        if(m_scene->m_data->bgo[i].array_id == m_data.array_id)
+        if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->m_data->bgo[i] = m_data;
             break;
         }
@@ -433,9 +433,9 @@ void ItemBGO::arrayApply()
 void ItemBGO::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->m_data->bgo.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->bgo.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->bgo[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->bgo[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -443,12 +443,12 @@ void ItemBGO::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->m_data->bgo.removeAt(m_data.index);
+        m_scene->m_data->bgo.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->m_data->bgo.size(); i++)
     {
-        if(m_scene->m_data->bgo[i].array_id == m_data.array_id)
+        if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->m_data->bgo.removeAt(i); break;
         }
@@ -495,7 +495,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
     setPos(m_data.x, m_data.y);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);

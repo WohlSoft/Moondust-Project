@@ -338,7 +338,7 @@ void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
             WorldEdit * edit = mw()->activeWldEditWin();
             if(!edit) return;
 
-            dirPath = edit->WldData.path;
+            dirPath = edit->WldData.meta.path;
 
             if(edit->isUntitled)
             {

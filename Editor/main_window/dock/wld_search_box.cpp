@@ -44,19 +44,19 @@ WldSearchBox::WldSearchBox(QWidget *parent) :
     currentSearches = 0;
 
     curSearchTile.id = 0;
-    curSearchTile.index = 0;
+    curSearchTile.meta.index = 0;
 
     curSearchScenery.id = 0;
-    curSearchScenery.index = 0;
+    curSearchScenery.meta.index = 0;
 
     curSearchPath.id = 0;
-    curSearchPath.index = 0;
+    curSearchPath.meta.index = 0;
 
     curSearchLevel.id = 0;
-    curSearchLevel.index = 0;
+    curSearchLevel.meta.index = 0;
 
     curSearchMusic.id = 0;
-    curSearchMusic.index = 0;
+    curSearchMusic.meta.index = 0;
 
     QRect mwg = mw()->geometry();
     int GOffset=240;
@@ -167,7 +167,7 @@ void WldSearchBox::on_Find_Button_ResetLevel_clicked()
         currentSearches ^= SEARCH_LEVEL;
         ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
         ui->FindStartLevel->setText(tr("Search Level"));
-        curSearchLevel.index = 0;
+        curSearchLevel.meta.index = 0;
     }
 }
 
@@ -181,7 +181,7 @@ void WldSearchBox::on_Find_Button_ResetMusic_clicked()
         currentSearches ^= SEARCH_MUSICBOX;
         ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
         ui->FindStartMusic->setText(tr("Search Music"));
-        curSearchMusic.index = 0;
+        curSearchMusic.meta.index = 0;
     }
 }
 
@@ -195,7 +195,7 @@ void WldSearchBox::on_Find_Button_ResetPath_clicked()
         currentSearches ^= SEARCH_PATH;
         ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
         ui->FindStartPath->setText(tr("Search Path"));
-        curSearchPath.index = 0;
+        curSearchPath.meta.index = 0;
     }
 }
 
@@ -209,7 +209,7 @@ void WldSearchBox::on_Find_Button_ResetScenery_clicked()
         currentSearches ^= SEARCH_SCENERY;
         ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
         ui->FindStartScenery->setText(tr("Search Scenery"));
-        curSearchScenery.index = 0;
+        curSearchScenery.meta.index = 0;
     }
 }
 
@@ -223,7 +223,7 @@ void WldSearchBox::on_Find_Button_ResetTile_clicked()
         currentSearches ^= SEARCH_TILE;
         ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
         ui->FindStartTile->setText(tr("Search Tile"));
-        curSearchTile.index = 0;
+        curSearchTile.meta.index = 0;
     }
 }
 
@@ -442,8 +442,8 @@ void WldSearchBox::on_FindStartMusic_clicked()
 bool WldSearchBox::doSearchTile(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchTile.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchTile.index+1; i < gr.size(); ++i){
+    if(curSearchTile.meta.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchTile.meta.index+1; i < gr.size(); ++i){
             if(gr[i]->data(ITEM_TYPE).toString()=="TILE"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeTile->isChecked()&&curSearchTile.id!=0&&toBeFound){
@@ -456,22 +456,22 @@ bool WldSearchBox::doSearchTile(WorldEdit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemTile*)gr[i])->m_data.x, ((ItemTile*)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    curSearchTile.index = i;
+                    curSearchTile.meta.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchTile.index = 0;
+    curSearchTile.meta.index = 0;
     return true;
 }
 
 bool WldSearchBox::doSearchScenery(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchScenery.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchScenery.index+1; i < gr.size(); ++i){
+    if(curSearchScenery.meta.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchScenery.meta.index+1; i < gr.size(); ++i){
             if(gr[i]->data(ITEM_TYPE).toString()=="SCENERY"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeScenery->isChecked()&&curSearchScenery.id!=0&&toBeFound){
@@ -484,22 +484,22 @@ bool WldSearchBox::doSearchScenery(WorldEdit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemScene*)gr[i])->m_data.x, ((ItemScene*)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    curSearchScenery.index = i;
+                    curSearchScenery.meta.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchScenery.index = 0;
+    curSearchScenery.meta.index = 0;
     return true;
 }
 
 bool WldSearchBox::doSearchPath(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchPath.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchPath.index+1; i < gr.size(); ++i){
+    if(curSearchPath.meta.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchPath.meta.index+1; i < gr.size(); ++i){
             if(gr[i]->data(ITEM_TYPE).toString()=="PATH"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypePath->isChecked()&&curSearchPath.id!=0&&toBeFound){
@@ -512,22 +512,22 @@ bool WldSearchBox::doSearchPath(WorldEdit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemPath*)gr[i])->m_data.x, ((ItemPath*)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    curSearchPath.index = i;
+                    curSearchPath.meta.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchPath.index = 0;
+    curSearchPath.meta.index = 0;
     return true;
 }
 
 bool WldSearchBox::doSearchLevel(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchLevel.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchLevel.index+1; i < gr.size(); ++i){
+    if(curSearchLevel.meta.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchLevel.meta.index+1; i < gr.size(); ++i){
             if(gr[i]->data(ITEM_TYPE).toString()=="LEVEL"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeLevel->isChecked()&&curSearchLevel.id!=0&&toBeFound){
@@ -558,22 +558,22 @@ bool WldSearchBox::doSearchLevel(WorldEdit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemLevel*)gr[i])->m_data.x, ((ItemLevel*)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    curSearchLevel.index = i;
+                    curSearchLevel.meta.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchLevel.index = 0;
+    curSearchLevel.meta.index = 0;
     return true;
 }
 
 bool WldSearchBox::doSearchMusic(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchMusic.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchMusic.index+1; i < gr.size(); ++i){
+    if(curSearchMusic.meta.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchMusic.meta.index+1; i < gr.size(); ++i){
             if(gr[i]->data(ITEM_TYPE).toString()=="MUSICBOX")
             {
                 bool toBeFound = true;
@@ -587,14 +587,14 @@ bool WldSearchBox::doSearchMusic(WorldEdit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemMusic*)gr[i])->m_data.x, ((ItemMusic*)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    curSearchMusic.index = i;
+                    curSearchMusic.meta.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchMusic.index = 0;
+    curSearchMusic.meta.index = 0;
     return true;
 }
 
@@ -670,7 +670,7 @@ void WldSearchBox::selectLevelForSearch()
     {
         WorldEdit * edit = mw()->activeWldEditWin();
         if(!edit) return;
-        dirPath = edit->WldData.path;
+        dirPath = edit->WldData.meta.path;
     }
     else
         return;

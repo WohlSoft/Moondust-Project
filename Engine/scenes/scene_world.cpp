@@ -200,7 +200,7 @@ void WorldScene::setGameState(EpisodeState *_state)
     else
     {
         gameState->episodeIsStarted=true;
-        gameState->WorldPath = data.path;
+        gameState->WorldPath = data.meta.path;
 
         //Detect gamestart and set position on them
         for(long i=0; i<data.levels.size(); i++)
@@ -233,10 +233,10 @@ void WorldScene::setGameState(EpisodeState *_state)
                 {
                     LogDebug("File valid, do exit!");
                     gameState->LevelFile = introLevelFile;
-                    gameState->LevelPath = checking.path;
+                    gameState->LevelPath = checking.meta.path;
                     if(data.HubStyledWorld)
                     {
-                        gameState->LevelFile_hub = checking.path;
+                        gameState->LevelFile_hub = checking.meta.path;
                         gameState->LevelTargetWarp = gameState->game_state.last_hub_warp ;
                     }
                     else
@@ -267,9 +267,9 @@ bool WorldScene::init()
     //Global script path
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     //Episode path
-    luaEngine.appendLuaScriptPath(data.path);
+    luaEngine.appendLuaScriptPath(data.meta.path);
     //Level custom path
-    luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
+    luaEngine.appendLuaScriptPath(data.meta.path + "/" + data.meta.filename);
     luaEngine.setCoreFile(":/script/maincore_world.lua");
     luaEngine.setUserFile(ConfigManager::setup_WorldMap.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace) {
@@ -420,17 +420,17 @@ bool WorldScene::init()
 bool WorldScene::loadConfigs()
 {
     bool success=true;
-    QString musIni=data.path+"/music.ini";
-    QString sndIni=data.path+"/sounds.ini";
+    QString musIni=data.meta.path+"/music.ini";
+    QString sndIni=data.meta.path+"/sounds.ini";
     if(ConfigManager::music_lastIniFile!=musIni)
     {
         ConfigManager::loadDefaultMusics();
-        ConfigManager::loadMusic(data.path+"/", musIni, true);
+        ConfigManager::loadMusic(data.meta.path+"/", musIni, true);
     }
     if(ConfigManager::sound_lastIniFile!=sndIni)
     {
         ConfigManager::loadDefaultSounds();
-        ConfigManager::loadSound(data.path+"/", sndIni, true);
+        ConfigManager::loadSound(data.meta.path+"/", sndIni, true);
         if(ConfigManager::soundIniChanged())
             ConfigManager::buildSoundIndex();
     }
@@ -446,12 +446,12 @@ bool WorldScene::loadConfigs()
         if(!success) { _errorString="Fail on level entrances config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
 
     //Set paths
-    ConfigManager::Dir_Tiles.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldTiles() );
-    ConfigManager::Dir_Scenery.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldScenery() );
-    ConfigManager::Dir_WldPaths.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPaths() );
-    ConfigManager::Dir_WldLevel.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldLevels() );
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
-    ConfigManager::Dir_PlayerWld.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPlayable() );
+    ConfigManager::Dir_Tiles.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldTiles() );
+    ConfigManager::Dir_Scenery.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldScenery() );
+    ConfigManager::Dir_WldPaths.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPaths() );
+    ConfigManager::Dir_WldLevel.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldLevels() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayable() );
+    ConfigManager::Dir_PlayerWld.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPlayable() );
 
     //Validate all playable characters until use game state!
     if(gameState)
@@ -904,7 +904,7 @@ void WorldScene::updateCenter()
                 levelTitle = y->data.title;
                 if(!y->data.lvlfile.isEmpty())
                 {
-                    QString lvlPath=data.path+"/"+y->data.lvlfile;
+                    QString lvlPath=data.meta.path+"/"+y->data.lvlfile;
                     LevelData head;
                     if( FileFormats::OpenLevelFileHeader(lvlPath, head) )
                     {
@@ -957,7 +957,7 @@ void WorldScene::initElementsVisibility()
             {
                 wld_sceneries[i].vizible=true;
                 QPair<int, bool > viz;
-                viz.first=wld_sceneries[i].data.array_id;
+                viz.first=wld_sceneries[i].data.meta.array_id;
                 viz.second=true;
                 gameState->game_state.visibleScenery.push_back(viz);
             }
@@ -973,7 +973,7 @@ void WorldScene::initElementsVisibility()
             {
                 wld_paths[i].vizible=false;
                 QPair<int, bool > viz;
-                viz.first=wld_paths[i].data.array_id;
+                viz.first=wld_paths[i].data.meta.array_id;
                 viz.second=false;
                 gameState->game_state.visiblePaths.push_back(viz);
             }
@@ -989,7 +989,7 @@ void WorldScene::initElementsVisibility()
             {
                 wld_levels[i].vizible = (wld_levels[i].data.alwaysVisible || wld_levels[i].data.gamestart);
                 QPair<int, bool > viz;
-                viz.first=wld_levels[i].data.array_id;
+                viz.first=wld_levels[i].data.meta.array_id;
                 viz.second=wld_levels[i].vizible;
                 gameState->game_state.visibleLevels.push_back(viz);
             }
@@ -1005,13 +1005,13 @@ void WorldScene::saveElementsVisibility()
         {
             if(i<gameState->game_state.visibleScenery.size())
             {
-                gameState->game_state.visibleScenery[i].first=wld_sceneries[i].data.array_id;
+                gameState->game_state.visibleScenery[i].first=wld_sceneries[i].data.meta.array_id;
                 gameState->game_state.visibleScenery[i].second=wld_sceneries[i].vizible;
             }
             else
             {
                 QPair<int, bool > viz;
-                viz.first=wld_sceneries[i].data.array_id;
+                viz.first=wld_sceneries[i].data.meta.array_id;
                 viz.second=wld_sceneries[i].vizible;
                 gameState->game_state.visibleScenery.push_back(viz);
             }
@@ -1021,13 +1021,13 @@ void WorldScene::saveElementsVisibility()
         {
             if(i<gameState->game_state.visiblePaths.size())
             {
-                gameState->game_state.visiblePaths[i].first=wld_paths[i].data.array_id;
+                gameState->game_state.visiblePaths[i].first=wld_paths[i].data.meta.array_id;
                 gameState->game_state.visiblePaths[i].second=wld_paths[i].vizible;
             }
             else
             {
                 QPair<int, bool > viz;
-                viz.first=wld_paths[i].data.array_id;
+                viz.first=wld_paths[i].data.meta.array_id;
                 viz.second=wld_paths[i].vizible;
                 gameState->game_state.visiblePaths.push_back(viz);
             }
@@ -1037,13 +1037,13 @@ void WorldScene::saveElementsVisibility()
         {
             if(i<gameState->game_state.visibleLevels.size())
             {
-                gameState->game_state.visibleLevels[i].first=wld_levels[i].data.array_id;
+                gameState->game_state.visibleLevels[i].first=wld_levels[i].data.meta.array_id;
                 gameState->game_state.visibleLevels[i].second=wld_levels[i].vizible;
             }
             else
             {
                 QPair<int, bool > viz;
-                viz.first=wld_levels[i].data.array_id;
+                viz.first=wld_levels[i].data.meta.array_id;
                 viz.second=wld_levels[i].vizible;
                 gameState->game_state.visibleLevels.push_back(viz);
             }
@@ -1349,7 +1349,7 @@ void WorldScene::setExiting(int delay, int reason)
 
 bool WorldScene::loadFile(QString filePath)
 {
-    data.ReadFileValid = false;
+    data.meta.ReadFileValid = false;
     if(!QFileInfo(filePath).exists())
     {
         errorMsg += "File not exist\n\n";
@@ -1359,7 +1359,7 @@ bool WorldScene::loadFile(QString filePath)
 
     if( !FileFormats::OpenWorldFile(filePath, data) )
         errorMsg += "Bad file format\n";
-    return data.ReadFileValid;
+    return data.meta.ReadFileValid;
 }
 
 QString WorldScene::getLastError()
@@ -1392,7 +1392,7 @@ void WorldScene::stopMusic(bool fade, int fadeLen)
 
 void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int fadeLen)
 {
-    QString musPath = ConfigManager::getWldMusic(musicID, data.path+"/"+customMusicFile);
+    QString musPath = ConfigManager::getWldMusic(musicID, data.meta.path+"/"+customMusicFile);
     if(musPath.isEmpty()) return;
 
     PGE_MusPlayer::MUS_openFile(musPath);

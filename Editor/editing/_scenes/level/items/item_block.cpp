@@ -288,7 +288,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
                         LevelSMBX64Event msgEvent = FileFormats::CreateLvlEvent();
                         msgEvent.name = eventName;
                         msgEvent.msg = msgText;
-                        msgEvent.array_id = ++m_scene->m_data->events_array_id;
+                        msgEvent.meta.array_id = ++m_scene->m_data->events_array_id;
                     m_scene->m_data->events.push_back(msgEvent);
                         LevelData historyOldData;
                         historyOldData.blocks.push_back(m_data);
@@ -508,23 +508,23 @@ void ItemBlock::arrayApply()
     m_data.y = qRound(this->scenePos().y());
     if(this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
         this->setZValue( m_scene->Z_blockSizable + ((double)m_data.y / (double) 100000000000) + 1 - ((double)m_data.w * (double)0.0000000000000001) );
-    if(m_data.index < (unsigned int)m_scene->m_data->blocks.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->blocks[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->blocks[m_data.meta.index].meta.array_id)
             found=true;
     }
 
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->m_data->blocks[m_data.index] = m_data; //apply current blockdata
+        m_scene->m_data->blocks[m_data.meta.index] = m_data; //apply current blockdata
     }
     else
     for(int i=0; i<m_scene->m_data->blocks.size(); i++)
     { //after find it into array
-        if(m_scene->m_data->blocks[i].array_id == m_data.array_id)
+        if(m_scene->m_data->blocks[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->m_data->blocks[i] = m_data;
             break;
         }
@@ -537,19 +537,19 @@ void ItemBlock::arrayApply()
 void ItemBlock::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->m_data->blocks.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->blocks[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->blocks[m_data.meta.index].meta.array_id)
             found=true;
     }
     if(found)
     { //directlry
-        m_scene->m_data->blocks.removeAt(m_data.index);
+        m_scene->m_data->blocks.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->m_data->blocks.size(); i++)
     {
-        if(m_scene->m_data->blocks[i].array_id == m_data.array_id)
+        if(m_scene->m_data->blocks[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->m_data->blocks.removeAt(i); break;
         }
@@ -640,7 +640,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
     m_imageSize = QRectF(0,0,m_data.w, m_data.h);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
     setData(ITEM_WIDTH, QString::number(m_data.w) ); //width
     setData(ITEM_HEIGHT, QString::number(m_data.h) ); //height
 

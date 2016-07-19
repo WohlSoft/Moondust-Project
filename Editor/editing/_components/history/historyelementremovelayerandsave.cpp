@@ -82,7 +82,7 @@ void HistoryElementRemoveLayerAndSave::redo()
     levelSearcher.find(m_modData, m_scene->items());
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
-        if(lvlScene->m_data->layers[i].array_id == m_modData.layers[0].array_id){
+        if(lvlScene->m_data->layers[i].meta.array_id == m_modData.layers[0].meta.array_id){
             lvlScene->m_data->layers.removeAt(i);
         }
     }

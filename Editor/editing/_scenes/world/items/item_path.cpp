@@ -224,9 +224,9 @@ void ItemPath::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->WldData->paths.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->paths.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->paths[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->paths[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -235,14 +235,14 @@ void ItemPath::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->paths[m_data.index] = m_data; //apply current pathData
+        m_scene->WldData->paths[m_data.meta.index] = m_data; //apply current pathData
     }
     else
     for(int i=0; i<m_scene->WldData->paths.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->paths[i].array_id == m_data.array_id)
+        if(m_scene->WldData->paths[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->WldData->paths[i] = m_data;
             break;
         }
@@ -254,9 +254,9 @@ void ItemPath::arrayApply()
 void ItemPath::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->WldData->paths.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->paths.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->paths[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->paths[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -264,12 +264,12 @@ void ItemPath::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->paths.removeAt(m_data.index);
+        m_scene->WldData->paths.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->WldData->paths.size(); i++)
     {
-        if(m_scene->WldData->paths[i].array_id == m_data.array_id)
+        if(m_scene->WldData->paths[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->WldData->paths.removeAt(i); break;
         }
@@ -291,13 +291,13 @@ bool ItemPath::itemTypeIsLocked()
     return m_scene->lock_path;
 }
 
-void ItemPath::setPathData(WorldPaths inD, obj_w_path *mergedSet, long *animator_id)
+void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *animator_id)
 {
     m_data = inD;
     setPos(m_data.x, m_data.y);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     if(mergedSet)
     {

@@ -171,7 +171,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                         WldPlacingItems::TileSet.y = scene->cursor->scenePos().y();
 
                         scene->WldData->tile_array_id++;
-                        WldPlacingItems::TileSet.array_id = scene->WldData->tile_array_id;
+                        WldPlacingItems::TileSet.meta.array_id = scene->WldData->tile_array_id;
 
                         scene->WldData->tiles.push_back(WldPlacingItems::TileSet);
                         scene->placeTile(WldPlacingItems::TileSet, true);
@@ -217,7 +217,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                         WldPlacingItems::SceneSet.y = scene->cursor->scenePos().y();
 
                         scene->WldData->scene_array_id++;
-                        WldPlacingItems::SceneSet.array_id = scene->WldData->scene_array_id;
+                        WldPlacingItems::SceneSet.meta.array_id = scene->WldData->scene_array_id;
 
                         scene->WldData->scenery.push_back(WldPlacingItems::SceneSet);
                         scene->placeScenery(WldPlacingItems::SceneSet, true);
@@ -263,7 +263,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                         WldPlacingItems::PathSet.y = scene->cursor->scenePos().y();
 
                         scene->WldData->path_array_id++;
-                        WldPlacingItems::PathSet.array_id = scene->WldData->path_array_id;
+                        WldPlacingItems::PathSet.meta.array_id = scene->WldData->path_array_id;
 
                         scene->WldData->paths.push_back(WldPlacingItems::PathSet);
                         scene->placePath(WldPlacingItems::PathSet, true);
@@ -309,7 +309,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                         WldPlacingItems::LevelSet.y = scene->cursor->scenePos().y();
 
                         scene->WldData->level_array_id++;
-                        WldPlacingItems::LevelSet.array_id = scene->WldData->level_array_id;
+                        WldPlacingItems::LevelSet.meta.array_id = scene->WldData->level_array_id;
 
                         scene->WldData->levels.push_back(WldPlacingItems::LevelSet);
                         scene->placeLevel(WldPlacingItems::LevelSet, true);

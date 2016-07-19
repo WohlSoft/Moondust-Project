@@ -29,7 +29,7 @@ void HistoryElementRenameEvent::undo()
         return;
 
     for(int i = 0; i < lvlScene->m_data->events.size(); i++){
-        if(lvlScene->m_data->events[i].array_id == (unsigned int)m_array_id){
+        if(lvlScene->m_data->events[i].meta.array_id == (unsigned int)m_array_id){
             lvlScene->m_data->events[i].name = m_oldName;
         }
     }
@@ -51,7 +51,7 @@ void HistoryElementRenameEvent::redo()
 
 
     for(int i = 0; i < lvlScene->m_data->events.size(); i++){
-        if(lvlScene->m_data->events[i].array_id == (unsigned int)m_array_id){
+        if(lvlScene->m_data->events[i].meta.array_id == (unsigned int)m_array_id){
             lvlScene->m_data->events[i].name = m_newName;
         }
     }

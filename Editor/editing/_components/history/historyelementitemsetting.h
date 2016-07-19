@@ -28,32 +28,32 @@ signals:
 
 public slots:
     //for world
-    void historyUndoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingBigPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingBigPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingAlwaysVisibleLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingAlwaysVisibleLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingGameStartPointLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingGameStartPointLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingLevelfileLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingLevelfileLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingLeveltitleLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingLeveltitleLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingDoorIDLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingDoorIDLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingPathByTopLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingPathByTopLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingPathByRightLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingPathByRightLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingPathByBottomLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingPathByBottomLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingPathByLeftLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingPathByLeftLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingGotoXLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingGotoXLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyUndoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void historyRedoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingBigPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingBigPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingAlwaysVisibleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingAlwaysVisibleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingGameStartPointLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingGameStartPointLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingLevelfileLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingLevelfileLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingLeveltitleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingLeveltitleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingDoorIDLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingDoorIDLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingPathByTopLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingPathByTopLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingPathByRightLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingPathByRightLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingPathByBottomLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingPathByBottomLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingPathByLeftLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingPathByLeftLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingGotoXLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingGotoXLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyUndoSettingGotoYLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void historyRedoSettingGotoYLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
 
 
     void historyUndoSettingsInvisibleBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);

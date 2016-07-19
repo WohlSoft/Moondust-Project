@@ -407,7 +407,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             {
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this, warp]()->void{
-                          _scene->lastWarpID=warp.array_id;
+                          _scene->lastWarpID=warp.meta.array_id;
                           exitFromLevel(warp.lname, warp.warpto,
                                         warp.world_x, warp.world_y);
                                   }, 200);
@@ -460,7 +460,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             {
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this, warp]()->void{
-                          _scene->lastWarpID=warp.array_id;
+                          _scene->lastWarpID=warp.meta.array_id;
                           exitFromLevel(warp.lname, warp.warpto,
                                         warp.world_x, warp.world_y);
                                   }, 200);
@@ -523,7 +523,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
     if(!levelFile.isEmpty())
     {
         _scene->warpToLevelFile =
-                _scene->levelData()->path+"/"+levelFile;
+                _scene->levelData()->meta.path+"/"+levelFile;
         _scene->warpToArrayID = targetWarp;
     }
     else

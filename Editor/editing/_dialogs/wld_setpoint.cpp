@@ -160,8 +160,8 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     QFile file(fileName);
     WldData = FileData;
     setCurrentFile(fileName);
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.meta.modified = false;
+    WldData.meta.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -237,7 +237,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
 
     if(! DrawObjects(progress) )
     {
-        WldData.modified = false;
+        WldData.meta.modified = false;
         this->close();
         return false;
     }
@@ -251,8 +251,8 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
 
     setAutoUpdateTimer(31);
 
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.meta.modified = false;
+    WldData.meta.untitled = false;
 
     progress.deleteLater();
 
@@ -348,7 +348,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
 
 void WLD_SetPoint::documentWasModified()
 {
-    WldData.modified = true;
+    WldData.meta.modified = true;
 }
 
 
@@ -446,9 +446,9 @@ void WLD_SetPoint::setCurrentFile(const QString &fileName)
     QFileInfo info(fileName);
     curFile = info.canonicalFilePath();
     isUntitled = false;
-    WldData.path = info.absoluteDir().absolutePath();
-    WldData.filename = util::getBaseFilename(info.fileName());
-    WldData.untitled = false;
+    WldData.meta.path = info.absoluteDir().absolutePath();
+    WldData.meta.filename = util::getBaseFilename(info.fileName());
+    WldData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
     //setWindowTitle(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle );

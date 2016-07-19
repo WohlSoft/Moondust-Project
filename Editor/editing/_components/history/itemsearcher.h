@@ -29,11 +29,11 @@ signals:
     void foundPlayerPoint(const PlayerPoint &sourcePayerPoint, QGraphicsItem* item);
 
     //Overworld
-    void foundTile(const WorldTiles &sourceTile, QGraphicsItem* item);
+    void foundTile(const WorldTerrainTile &sourceTile, QGraphicsItem* item);
     void foundScenery(const WorldScenery &sourceScenery, QGraphicsItem* item);
-    void foundPath(const WorldPaths &sourcePath, QGraphicsItem* item);
-    void foundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void foundMusicbox(const WorldMusic &sourceMusic, QGraphicsItem* item);
+    void foundPath(const WorldPathTile &sourcePath, QGraphicsItem* item);
+    void foundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void foundMusicbox(const WorldMusicBox &sourceMusic, QGraphicsItem* item);
 
 public slots:
 

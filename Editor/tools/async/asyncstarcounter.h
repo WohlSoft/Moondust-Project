@@ -30,7 +30,7 @@ class AsyncStarCounter : public QObject
 {
     Q_OBJECT
 public:
-    explicit AsyncStarCounter(const QString& dir, const QVector<WorldLevels>& levels, const QString& introLevel, dataconfigs* configs, QObject *parent = 0);
+    explicit AsyncStarCounter(const QString& dir, const QVector<WorldLevelTile>& levels, const QString& introLevel, dataconfigs* configs, QObject *parent = 0);
 
     void startAndShowProgress();
 
@@ -51,7 +51,7 @@ private:
 
     //Input
     QString m_dir;
-    QVector<WorldLevels> m_levels;
+    QVector<WorldLevelTile> m_levels;
     QString m_intro;
     dataconfigs* m_configs;
 

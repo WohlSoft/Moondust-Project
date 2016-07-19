@@ -55,7 +55,7 @@ void LevelScene::process_InterprocessCommands()
                 PGE_FileFormats_misc::RawTextInput raw_file(&raw);
                 FileFormats::ReadExtendedLvlFile(raw_file, got);
 
-                if(!got.ReadFileValid)
+                if(!got.meta.ReadFileValid)
                 {
                     LogDebug(FileFormats::errorString);
                     break;

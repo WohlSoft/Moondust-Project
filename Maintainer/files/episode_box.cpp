@@ -47,13 +47,13 @@ bool EpisodeBox_level::open(QString filePath)
             ftype = F_LVLX;
             FileFormats::ReadExtendedLvlFileF(filePath, d);
         }
-        qDebug()<< "Opened level, is valid = " << d.ReadFileValid << filePath;
+        qDebug()<< "Opened level, is valid = " << d.meta.ReadFileValid << filePath;
     }
 
     //Collect music entries!
-    if(d.ReadFileValid)
+    if(d.meta.ReadFileValid)
     {
-        QDir fullPath(d.path);
+        QDir fullPath(d.meta.path);
         //From sections
         for(int i=0; i<d.sections.size(); i++)
         {
@@ -88,13 +88,13 @@ bool EpisodeBox_level::open(QString filePath)
         }
     }
 
-    return d.ReadFileValid;
+    return d.meta.ReadFileValid;
 }
 
 bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
 {
     bool modified=false;
-    QDir fullPath(d.path);
+    QDir fullPath(d.meta.path);
     for(int i=0; i < music_entries.size(); i++)
     {
         MusicField &mus = music_entries[i];
@@ -115,7 +115,7 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
 
 void EpisodeBox_level::save()
 {
-    if(!d.ReadFileValid) return;
+    if(!d.meta.ReadFileValid) return;
 
     qDebug() << "reSaving Level: " << fPath << ", ftype="<<ftype;
 
@@ -156,11 +156,11 @@ bool EpisodeBox_world::open(QString filePath)
     fPath=filePath;
     FileFormats::OpenWorldFile(filePath, d);
 
-    qDebug()<< "Opened world, valud=" << d.ReadFileValid << filePath;
+    qDebug()<< "Opened world, valud=" << d.meta.ReadFileValid << filePath;
     //Collect music entries!
-    if(d.ReadFileValid)
+    if(d.meta.ReadFileValid)
     {
-        QDir fullPath(d.path);
+        QDir fullPath(d.meta.path);
         //From music boxes
         for(int i=0; i<d.music.size(); i++)
         {
@@ -176,13 +176,13 @@ bool EpisodeBox_world::open(QString filePath)
             music_entries.push_back(mus);
         }
     }
-    return d.ReadFileValid;
+    return d.meta.ReadFileValid;
 }
 
 bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
 {
     bool modified=false;
-    QDir fullPath(d.path);
+    QDir fullPath(d.meta.path);
     for(int i=0; i < music_entries.size(); i++)
     {
         MusicField &mus = music_entries[i];
@@ -202,7 +202,7 @@ bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
 
 void EpisodeBox_world::save()
 {
-    if(!d.ReadFileValid) return;
+    if(!d.meta.ReadFileValid) return;
     FileFormats::WriteExtendedWldFileF(fPath, d);
 }
 

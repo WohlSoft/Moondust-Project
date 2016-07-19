@@ -40,7 +40,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     //QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
     //QString uWLDD = WldData->path + "/" + WldData->filename;
     //QString uWLDs = WldData->path + "/";
-    CustomDirManager uWLD(WldData->path, WldData->filename);
+    CustomDirManager uWLD(WldData->meta.path, WldData->meta.filename);
 
     //Load custom rotation rules
     QString rTableFile = uWLD.getCustomFile("rotation_table.ini", true);

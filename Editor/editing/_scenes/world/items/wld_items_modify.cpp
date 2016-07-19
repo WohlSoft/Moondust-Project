@@ -246,7 +246,7 @@ void WldScene::placeItemUnderCursor()
             WldPlacingItems::TileSet.y = cursor->scenePos().y();
 
             WldData->tile_array_id++;
-            WldPlacingItems::TileSet.array_id = WldData->tile_array_id;
+            WldPlacingItems::TileSet.meta.array_id = WldData->tile_array_id;
 
             WldData->tiles.push_back(WldPlacingItems::TileSet);
             placeTile(WldPlacingItems::TileSet, true);
@@ -260,7 +260,7 @@ void WldScene::placeItemUnderCursor()
             WldPlacingItems::SceneSet.y = cursor->scenePos().y();
 
             WldData->scene_array_id++;
-            WldPlacingItems::SceneSet.array_id = WldData->scene_array_id;
+            WldPlacingItems::SceneSet.meta.array_id = WldData->scene_array_id;
 
             WldData->scenery.push_back(WldPlacingItems::SceneSet);
             placeScenery(WldPlacingItems::SceneSet, true);
@@ -274,7 +274,7 @@ void WldScene::placeItemUnderCursor()
             WldPlacingItems::PathSet.y = cursor->scenePos().y();
 
             WldData->path_array_id++;
-            WldPlacingItems::PathSet.array_id = WldData->path_array_id;
+            WldPlacingItems::PathSet.meta.array_id = WldData->path_array_id;
 
             WldData->paths.push_back(WldPlacingItems::PathSet);
             placePath(WldPlacingItems::PathSet, true);
@@ -288,7 +288,7 @@ void WldScene::placeItemUnderCursor()
             WldPlacingItems::LevelSet.y = cursor->scenePos().y();
 
             WldData->level_array_id++;
-            WldPlacingItems::LevelSet.array_id = WldData->level_array_id;
+            WldPlacingItems::LevelSet.meta.array_id = WldData->level_array_id;
 
             WldData->levels.push_back(WldPlacingItems::LevelSet);
             placeLevel(WldPlacingItems::LevelSet, true);
@@ -302,7 +302,7 @@ void WldScene::placeItemUnderCursor()
             WldPlacingItems::MusicSet.y = cursor->scenePos().y();
 
             WldData->musicbox_array_id++;
-            WldPlacingItems::MusicSet.array_id = WldData->musicbox_array_id;
+            WldPlacingItems::MusicSet.meta.array_id = WldData->musicbox_array_id;
 
             WldData->music.push_back(WldPlacingItems::MusicSet);
             placeMusicbox(WldPlacingItems::MusicSet, true);
@@ -313,7 +313,7 @@ void WldScene::placeItemUnderCursor()
     }
     if(wasPlaced)
     {
-        WldData->modified = true;
+        WldData->meta.modified = true;
     }
 }
 
@@ -425,13 +425,13 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
 }
 
 void WldScene::placeAll(const WorldData &data){
-    foreach (WorldTiles tile, data.tiles)
+    foreach (WorldTerrainTile tile, data.tiles)
     {
         //place them back
         WldData->tiles.push_back(tile);
         placeTile(tile);
     }
-    foreach (WorldPaths path, data.paths)
+    foreach (WorldPathTile path, data.paths)
     {
         //place them back
         WldData->paths.push_back(path);
@@ -443,13 +443,13 @@ void WldScene::placeAll(const WorldData &data){
         WldData->scenery.push_back(scenery);
         placeScenery(scenery);
     }
-    foreach (WorldLevels level, data.levels)
+    foreach (WorldLevelTile level, data.levels)
     {
         //place them back
         WldData->levels.push_back(level);
         placeLevel(level);
     }
-    foreach (WorldMusic music, data.music)
+    foreach (WorldMusicBox music, data.music)
     {
         WldData->music.push_back(music);
         placeMusicbox(music);

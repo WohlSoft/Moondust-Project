@@ -105,11 +105,11 @@ void HistoryElementModification::processReplacement(const WorldData &toRemoveDat
                                  ItemTypes::WLD_S_MusicBox));
 
         //connect to our remover functions
-        connect(&wldSearcher, SIGNAL(foundTile(WorldTiles,QGraphicsItem*)), this, SLOT(processTile(WorldTiles,QGraphicsItem*)));
+        connect(&wldSearcher, SIGNAL(foundTile(WorldTerrainTile,QGraphicsItem*)), this, SLOT(processTile(WorldTerrainTile,QGraphicsItem*)));
         connect(&wldSearcher, SIGNAL(foundScenery(WorldScenery,QGraphicsItem*)), this, SLOT(processScenery(WorldScenery,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundPath(WorldPaths,QGraphicsItem*)), this, SLOT(processPath(WorldPaths,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(processLevel(WorldLevels,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundMusicbox(WorldMusic,QGraphicsItem*)), this, SLOT(processMusicbox(WorldMusic,QGraphicsItem*)));
+        connect(&wldSearcher, SIGNAL(foundPath(WorldPathTile,QGraphicsItem*)), this, SLOT(processPath(WorldPathTile,QGraphicsItem*)));
+        connect(&wldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(processLevel(WorldLevelTile,QGraphicsItem*)));
+        connect(&wldSearcher, SIGNAL(foundMusicbox(WorldMusicBox,QGraphicsItem*)), this, SLOT(processMusicbox(WorldMusicBox,QGraphicsItem*)));
 
         wldSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
 
@@ -230,7 +230,7 @@ void HistoryElementModification::processPlayerPoint(const PlayerPoint &sourcePay
     }
 }
 
-void HistoryElementModification::processTile(const WorldTiles &sourceTile, QGraphicsItem *item)
+void HistoryElementModification::processTile(const WorldTerrainTile &sourceTile, QGraphicsItem *item)
 {
     Q_UNUSED(sourceTile)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
@@ -252,7 +252,7 @@ void HistoryElementModification::processScenery(const WorldScenery &sourceScener
     }
 }
 
-void HistoryElementModification::processPath(const WorldPaths &sourcePath, QGraphicsItem *item)
+void HistoryElementModification::processPath(const WorldPathTile &sourcePath, QGraphicsItem *item)
 {
     Q_UNUSED(sourcePath)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
@@ -263,7 +263,7 @@ void HistoryElementModification::processPath(const WorldPaths &sourcePath, QGrap
     }
 }
 
-void HistoryElementModification::processLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementModification::processLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     Q_UNUSED(sourceLevel)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
@@ -274,7 +274,7 @@ void HistoryElementModification::processLevel(const WorldLevels &sourceLevel, QG
     }
 }
 
-void HistoryElementModification::processMusicbox(const WorldMusic &sourceMusic, QGraphicsItem *item)
+void HistoryElementModification::processMusicbox(const WorldMusicBox &sourceMusic, QGraphicsItem *item)
 {
     Q_UNUSED(sourceMusic)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);

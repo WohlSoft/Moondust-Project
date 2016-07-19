@@ -51,7 +51,7 @@ void HistoryElementAddWarp::undo()
 
     for(int i = 0; i < lvlScene->m_data->doors.size(); i++)
     {
-        if(lvlScene->m_data->doors[i].array_id==(unsigned int)m_array_id)
+        if(lvlScene->m_data->doors[i].meta.array_id==(unsigned int)m_array_id)
         {
             lvlScene->m_data->doors.removeAt(i);
             break;
@@ -115,14 +115,14 @@ void HistoryElementAddWarp::redo()
         return;
 
     LevelDoor newDoor = FileFormats::CreateLvlWarp();
-    newDoor.array_id = m_array_id;
-    newDoor.index = m_doorindex;
+    newDoor.meta.array_id = m_array_id;
+    newDoor.meta.index = m_doorindex;
 
     lvlScene->m_data->doors.insert(m_doorindex, newDoor);
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
     warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
-                      .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
-                      newDoor.array_id);
+                      .arg(newDoor.meta.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
+                      newDoor.meta.array_id);
     if(warplist->count() < m_listindex)
     {
         warplist->setCurrentIndex( m_listindex );

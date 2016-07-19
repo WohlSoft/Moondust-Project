@@ -62,7 +62,7 @@ EditorPipe::EditorPipe() : QObject(NULL)
     do_parseLevelData=false;
 
     accepted_lvl_raw="";
-    accepted_lvl.ReadFileValid = false;
+    accepted_lvl.meta.ReadFileValid = false;
     isWorking = false;
     m_levelAccepted=false;
 }
@@ -127,13 +127,13 @@ void EditorPipe::icomingData(QString in)
         qDebug() << "do Parse LVLX: >>"<< in;
         do_parseLevelData=true;
         FileFormats::ReadExtendedLvlFileRaw(accepted_lvl_raw, accepted_lvl_path, accepted_lvl);
-        IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.ReadFileValid));
-        qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
-        if(!accepted_lvl.ReadFileValid)
+        IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
+        qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
+        if(!accepted_lvl.meta.ReadFileValid)
         {
-            qDebug()<<"Error reason: "  << accepted_lvl.ERROR_info;
-            qDebug()<<"line number: "   << accepted_lvl.ERROR_linenum;
-            qDebug()<<"line contents: " << accepted_lvl.ERROR_linedata;
+            qDebug()<<"Error reason: "  << accepted_lvl.meta.ERROR_info;
+            qDebug()<<"line number: "   << accepted_lvl.meta.ERROR_linenum;
+            qDebug()<<"line contents: " << accepted_lvl.meta.ERROR_linedata;
             #ifdef DEBUG_BUILD
             qDebug()<<"Invalid File data BEGIN >>>>>>>>>>>\n" << accepted_lvl_raw << "\n<<<<<<<<<<<<INVALID File data END";
             #endif
@@ -154,15 +154,15 @@ void EditorPipe::icomingData(QString in)
             QTextStream x(&temp);
             QString raw=x.readAll();
             FileFormats::ReadExtendedLvlFileRaw(raw, accepted_lvl_path, accepted_lvl);
-            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.ReadFileValid));
-            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
+            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
+            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
         }
         else
         {
-            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.ReadFileValid));
-            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
+            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
+            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
             qDebug()<<"ERROR: Can't open temp file";
-            accepted_lvl.ReadFileValid = false;
+            accepted_lvl.meta.ReadFileValid = false;
         }
         temp.remove();
         m_levelAccepted_lock.lock();

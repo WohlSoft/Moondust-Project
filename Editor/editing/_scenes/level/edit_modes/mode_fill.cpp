@@ -182,7 +182,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                         LvlPlacingItems::blockSet.y = coor.second;
                         scene->m_data->blocks_array_id++;
 
-                        LvlPlacingItems::blockSet.array_id = scene->m_data->blocks_array_id;
+                        LvlPlacingItems::blockSet.meta.array_id = scene->m_data->blocks_array_id;
                         scene->m_data->blocks.push_back(LvlPlacingItems::blockSet);
 
                         scene->placeBlock(LvlPlacingItems::blockSet, true);
@@ -234,7 +234,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
                         LvlPlacingItems::bgoSet.y = coor.second;
                         scene->m_data->bgo_array_id++;
 
-                        LvlPlacingItems::bgoSet.array_id = scene->m_data->bgo_array_id;
+                        LvlPlacingItems::bgoSet.meta.array_id = scene->m_data->bgo_array_id;
                         scene->m_data->bgo.push_back(LvlPlacingItems::bgoSet);
 
                         scene->placeBGO(LvlPlacingItems::bgoSet);

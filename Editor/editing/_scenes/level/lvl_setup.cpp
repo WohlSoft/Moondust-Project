@@ -299,7 +299,7 @@ void LvlScene::setLayerToSelected()
         nLayer.name = lName;
         nLayer.hidden = layerBox->lHidden;
         m_data->layers_array_id++;
-        nLayer.array_id = m_data->layers_array_id;
+        nLayer.meta.array_id = m_data->layers_array_id;
         m_data->layers.push_back(nLayer);
         //scene->SyncLayerList=true; //Refresh layer list
         m_mw->dock_LvlLayers->setLayerToolsLocked(true);

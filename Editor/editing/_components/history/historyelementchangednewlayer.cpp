@@ -56,7 +56,7 @@ void HistoryElementChangedNewLayer::undo()
     delete searcher;
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
-        if(lvlScene->m_data->layers[i].array_id == m_newLayer.array_id){
+        if(lvlScene->m_data->layers[i].meta.array_id == m_newLayer.meta.array_id){
             lvlScene->m_data->layers.removeAt(i);
         }
     }

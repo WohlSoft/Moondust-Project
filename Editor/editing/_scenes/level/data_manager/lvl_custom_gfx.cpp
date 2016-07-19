@@ -45,7 +45,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     bool loaded1, loaded2;
 
-    CustomDirManager uLVL(m_data->path, m_data->filename);
+    CustomDirManager uLVL(m_data->meta.path, m_data->meta.filename);
 
     //Load custom rotation rules
     QString rTableFile = uLVL.getCustomFile("rotation_table.ini");

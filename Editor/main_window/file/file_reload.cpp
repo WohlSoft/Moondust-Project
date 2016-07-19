@@ -63,7 +63,7 @@ void MainWindow::on_actionReload_triggered()
                 return;
         }
 
-        if(lvlEdit->LvlData.modified)
+        if(lvlEdit->LvlData.meta.modified)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
             tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
@@ -77,12 +77,12 @@ void MainWindow::on_actionReload_triggered()
         //Open level file
         if( !FileFormats::OpenLevelFile( filePath, FileData) )
         {
-            formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            formatErrorMsgBox(filePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;
         }
         FileData.playmusic = GlobalSettings::autoPlayMusic;
-        lvlEdit->LvlData.modified = false;
+        lvlEdit->LvlData.meta.modified = false;
 
         //Remember last section ID and positions!
         int lastSection=0;
@@ -149,7 +149,7 @@ void MainWindow::on_actionReload_triggered()
         {
             LogDebug(">>File loading aborted");
             LogDebug(">>Window showed");
-            child->LvlData.modified = false;
+            child->LvlData.meta.modified = false;
                 LogDebug(">>Option set");
             LastActiveSubWindow->close();
                 LogDebug(">>Windows closed");
@@ -230,7 +230,7 @@ void MainWindow::on_actionReload_triggered()
                 return;
         }
 
-        if(wldEdit->WldData.modified)
+        if(wldEdit->WldData.meta.modified)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
             tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
@@ -243,16 +243,16 @@ void MainWindow::on_actionReload_triggered()
 
         if( !FileFormats::OpenWorldFile( filePath, FileData ) )
         {
-            formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            formatErrorMsgBox(filePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;
         }
 
         QFileInfo finfo(filePath);
-        FileData.filename = util::getBaseFilename(finfo.fileName());
-        FileData.path = finfo.absoluteDir().absolutePath();
+        FileData.meta.filename = util::getBaseFilename(finfo.fileName());
+        FileData.meta.path = finfo.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
-        wldEdit->WldData.modified = false;
+        wldEdit->WldData.meta.modified = false;
 
         wnGeom = LastActiveSubWindow->geometry();
         QMdiSubWindow *worldWindow = LastActiveSubWindow;
@@ -289,7 +289,7 @@ void MainWindow::on_actionReload_triggered()
             LogDebug(">>File loading aborted");
             //child->show();
             LogDebug(">>Window showed");
-            child->WldData.modified = false;
+            child->WldData.meta.modified = false;
             LogDebug(">>Option set");
             LastActiveSubWindow->close();
             LogDebug(">>Windows closed");

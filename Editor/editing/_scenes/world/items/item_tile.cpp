@@ -222,9 +222,9 @@ void ItemTile::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->WldData->tiles.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->tiles.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->tiles[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->tiles[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -233,14 +233,14 @@ void ItemTile::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->tiles[m_data.index] = m_data; //apply current tileData
+        m_scene->WldData->tiles[m_data.meta.index] = m_data; //apply current tileData
     }
     else
     for(int i=0; i<m_scene->WldData->tiles.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->tiles[i].array_id == m_data.array_id)
+        if(m_scene->WldData->tiles[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->WldData->tiles[i] = m_data;
             break;
         }
@@ -252,9 +252,9 @@ void ItemTile::arrayApply()
 void ItemTile::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->WldData->tiles.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->tiles.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->tiles[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->tiles[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -262,12 +262,12 @@ void ItemTile::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->tiles.removeAt(m_data.index);
+        m_scene->WldData->tiles.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->WldData->tiles.size(); i++)
     {
-        if(m_scene->WldData->tiles[i].array_id == m_data.array_id)
+        if(m_scene->WldData->tiles[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->WldData->tiles.removeAt(i); break;
         }
@@ -290,7 +290,7 @@ bool ItemTile::itemTypeIsLocked()
 }
 
 
-void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator_id)
+void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *animator_id)
 {
     m_data = inD;
     setPos(m_data.x, m_data.y);
@@ -304,7 +304,7 @@ void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator
         setAnimator(*animator_id);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);

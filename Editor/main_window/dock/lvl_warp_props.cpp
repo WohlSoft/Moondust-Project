@@ -126,7 +126,7 @@ void LvlWarpBox::init()
         ui->WarpList->clear();
         foreach(LevelDoor door, mw()->activeLvlEditWin()->LvlData.doors)
         {
-            ui->WarpList->addItem(doorTitle(door), door.array_id);
+            ui->WarpList->addItem(doorTitle(door), door.meta.array_id);
         }
         if(ui->WarpList->count()<=0)
             setDoorData(-1);
@@ -139,7 +139,7 @@ void LvlWarpBox::init()
 QString LvlWarpBox::doorTitle(LevelDoor &door)
 {
     return QString("%1: x%2y%3 <=> x%4y%5")
-            .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
+            .arg(door.meta.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
 }
 
 
@@ -178,7 +178,7 @@ void LvlWarpBox::setDoorData(long index)
         {
             foreach(LevelDoor door, le->LvlData.doors)
             {
-                if(door.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
+                if(door.meta.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
                 {
                     ui->WarpList->setItemText(cIndex, doorTitle(door));
                     ui->WarpRemove->setEnabled(true);
@@ -243,7 +243,7 @@ void LvlWarpBox::setDoorData(long index)
                     }
 
                     ui->WarpEnableCannon->setChecked(door.cannon_exit);
-                    ui->WarpCannonSpeed->setEnabled(door.cannon_exit && !le->LvlData.smbx64strict);
+                    ui->WarpCannonSpeed->setEnabled(door.cannon_exit && !le->LvlData.meta.smbx64strict);
                     ui->WarpCannonSpeed->setValue(door.cannon_exit_speed);
 
                     ui->WarpToMapX->setText((door.world_x!=-1)?QString::number(door.world_x):"");
@@ -297,14 +297,14 @@ void LvlWarpBox::on_WarpAdd_clicked()
     {
         LevelEdit* edit = mw()->activeLvlEditWin();
         LevelDoor newDoor = FileFormats::CreateLvlWarp();
-        newDoor.array_id = edit->LvlData.doors_array_id++;
-        newDoor.index = edit->LvlData.doors.size();
+        newDoor.meta.array_id = edit->LvlData.doors_array_id++;
+        newDoor.meta.index = edit->LvlData.doors.size();
         newDoor.type = GlobalSettings::LvlItemDefaults.warp_type;//Apply initial warp type value
         edit->LvlData.doors.push_back(newDoor);
 
-        edit->scene->m_history->addAddWarp(newDoor.array_id, ui->WarpList->count(), newDoor.index);
+        edit->scene->m_history->addAddWarp(newDoor.meta.array_id, ui->WarpList->count(), newDoor.meta.index);
 
-        ui->WarpList->addItem(doorTitle(newDoor), newDoor.array_id);
+        ui->WarpList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
         ui->WarpList->setCurrentIndex( ui->WarpList->count()-1 );
         ui->WarpRemove->setEnabled(true);
     }
@@ -319,7 +319,7 @@ void LvlWarpBox::on_WarpRemove_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id == (unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->scene->m_history->addRemoveWarp(edit->LvlData.doors[i]);
                 break;
@@ -329,7 +329,7 @@ void LvlWarpBox::on_WarpRemove_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors.removeAt(i);
                 break;
@@ -355,10 +355,10 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
         int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetIn;
-                array_id = edit->LvlData.doors[i].array_id;
+                array_id = edit->LvlData.doors[i].meta.array_id;
                 break;
             }
         }
@@ -410,10 +410,10 @@ void LvlWarpBox::on_WarpSetExit_clicked()
         int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetOut;
-                array_id = edit->LvlData.doors[i].array_id;
+                array_id = edit->LvlData.doors[i].meta.array_id;
                 break;
             }
         }
@@ -464,7 +464,7 @@ void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
         QList<QVariant> dirData;
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].layer);
                 dirData.push_back(arg1);
@@ -489,7 +489,7 @@ void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
         QList<QVariant> dirData;
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].event_enter);
                 dirData.push_back(arg1);
@@ -514,7 +514,7 @@ void LvlWarpBox::on_WarpTwoWay_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].two_way = checked; break;
             }
@@ -532,7 +532,7 @@ void LvlWarpBox::on_WarpNoVehicles_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].novehicles = checked; break;
             }
@@ -550,7 +550,7 @@ void LvlWarpBox::on_WarpAllowNPC_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].allownpc = checked; break;
             }
@@ -570,7 +570,7 @@ void LvlWarpBox::on_WarpLock_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].locked = checked; break;
             }
@@ -589,7 +589,7 @@ void LvlWarpBox::on_WarpBombNeed_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].need_a_bomb = checked; break;
             }
@@ -608,7 +608,7 @@ void LvlWarpBox::on_WarpSpecialStateOnly_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].special_state_required = checked; break;
             }
@@ -633,7 +633,7 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 warpTypeData.push_back(edit->LvlData.doors[i].type);
                 warpTypeData.push_back(index);
@@ -660,7 +660,7 @@ void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 starData.push_back(edit->LvlData.doors[i].stars);
                 starData.push_back(arg1);
@@ -684,7 +684,7 @@ void LvlWarpBox::on_WarpNeedAStarsMsg_editingFinished()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 QString msg=ui->WarpNeedAStarsMsg->text();
                 starData.push_back(edit->LvlData.doors[i].stars_msg);
@@ -706,7 +706,7 @@ void LvlWarpBox::on_WarpHideStars_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].star_num_hide = checked; break;
             }
@@ -730,7 +730,7 @@ void LvlWarpBox::on_Entr_Down_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].idirect);
                 dirData.push_back(3);
@@ -754,7 +754,7 @@ void LvlWarpBox::on_Entr_Right_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].idirect);
                 dirData.push_back(4);
@@ -777,7 +777,7 @@ void LvlWarpBox::on_Entr_Up_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].idirect);
                 dirData.push_back(1);
@@ -800,7 +800,7 @@ void LvlWarpBox::on_Entr_Left_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].idirect);
                 dirData.push_back(2);
@@ -825,7 +825,7 @@ void LvlWarpBox::on_Exit_Up_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].odirect);
                 dirData.push_back(3);
@@ -848,7 +848,7 @@ void LvlWarpBox::on_Exit_Left_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].odirect);
                 dirData.push_back(4);
@@ -871,7 +871,7 @@ void LvlWarpBox::on_Exit_Down_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].odirect);
                 dirData.push_back(1);
@@ -894,7 +894,7 @@ void LvlWarpBox::on_Exit_Right_clicked()
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].odirect);
                 dirData.push_back(2);
@@ -915,7 +915,7 @@ void LvlWarpBox::on_WarpEnableCannon_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].cannon_exit = checked; break;
             }
@@ -937,7 +937,7 @@ void LvlWarpBox::on_WarpCannonSpeed_valueChanged(double arg1)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 starData.push_back(edit->LvlData.doors[i].cannon_exit_speed);
                 starData.push_back((float)arg1);
@@ -966,14 +966,14 @@ void LvlWarpBox::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 if(arg1.isEmpty())
                     edit->LvlData.doors[i].world_x = -1;
                 else
                     edit->LvlData.doors[i].world_x = arg1.toInt();
 
-                edit->LvlData.modified = true;
+                edit->LvlData.meta.modified = true;
                 break;
             }
         }
@@ -997,14 +997,14 @@ void LvlWarpBox::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 if(arg1.isEmpty())
                     edit->LvlData.doors[i].world_y = -1;
                 else
                     edit->LvlData.doors[i].world_y = arg1.toInt();
 
-                edit->LvlData.modified = true;
+                edit->LvlData.meta.modified = true;
                 break;
             }
         }
@@ -1023,7 +1023,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
     {
         QString woldMaps_path;
         QString woldMaps_file;
-        woldMaps_path = mw()->activeLvlEditWin()->LvlData.path;
+        woldMaps_path = mw()->activeLvlEditWin()->LvlData.meta.path;
 
         QStringList filters;
         QStringList files;
@@ -1067,7 +1067,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
         WorldData FileData;
         if( !FileFormats::OpenWorldFile( wldPath, FileData ) )
         {
-            mw()->formatErrorMsgBox(wldPath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            mw()->formatErrorMsgBox(wldPath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             return;
         }
 
@@ -1132,7 +1132,7 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
         int i=0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 exists=true;
                 extraData.push_back(checked);
@@ -1193,7 +1193,7 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
         bool exists=false;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 exists=true;
                 extraData.push_back(checked);
@@ -1246,7 +1246,7 @@ void LvlWarpBox::on_WarpBrowseLevels_clicked()
     QString dirPath;
     if(mw()->activeChildWindow()==1)
     {
-        dirPath = mw()->activeLvlEditWin()->LvlData.path;
+        dirPath = mw()->activeLvlEditWin()->LvlData.meta.path;
     }
     else return;
 
@@ -1269,7 +1269,7 @@ void LvlWarpBox::on_WarpHideLevelEnterScreen_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].hide_entering_scene = checked; break;
             }
@@ -1288,7 +1288,7 @@ void LvlWarpBox::on_WarpAllowNPC_IL_clicked(bool checked)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].allownpc_interlevel = checked; break;
             }
@@ -1313,7 +1313,7 @@ void LvlWarpBox::on_WarpLevelFile_editingFinished()//_textChanged(const QString 
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].lname = ui->WarpLevelFile->text(); break;
             }
@@ -1333,7 +1333,7 @@ void LvlWarpBox::on_WarpToExitNu_valueChanged(int arg1)
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 warpToData.push_back((int)edit->LvlData.doors[i].warpto);
                 warpToData.push_back(arg1);

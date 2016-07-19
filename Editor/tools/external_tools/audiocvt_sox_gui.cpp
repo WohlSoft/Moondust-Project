@@ -37,14 +37,14 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
         ledit = MainWinConnect::pMainWin->activeLvlEditWin();
         if(ledit)
         {
-            curSectionMusic = ledit->LvlData.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
+            curSectionMusic = ledit->LvlData.meta.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
             curSectionMusic.replace("\\", "/");
             if(!formatSupports(curSectionMusic))
                 curSectionMusic.clear();
 
             for(int s=0;s<ledit->LvlData.sections.size(); s++)
             {
-                QString file = ledit->LvlData.path + "/" + ledit->LvlData.sections[s].music_file;
+                QString file = ledit->LvlData.meta.path + "/" + ledit->LvlData.sections[s].music_file;
                 file.replace("\\", "/");
                 if(curLevelMusic.contains(file))//Don't add duplicate
                     continue;
@@ -225,9 +225,9 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
                 if(current_musFileOld.endsWith(mFile, Qt::CaseInsensitive))
                 {
                     QString newMusFile=current_musFileNew;
-                    newMusFile.remove(ledit->LvlData.path + "/");
+                    newMusFile.remove(ledit->LvlData.meta.path + "/");
                     ledit->LvlData.sections[x].music_file = newMusFile;
-                    ledit->LvlData.modified=true;
+                    ledit->LvlData.meta.modified=true;
                 }
             }
         }
@@ -243,7 +243,7 @@ retry_queue:
         if(ledit)
         {
             if(curSectionMusic == LvlMusPlay::currentMusicPath)
-                LvlMusPlay::currentMusicPath = ledit->LvlData.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
+                LvlMusPlay::currentMusicPath = ledit->LvlData.meta.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
         }
 
         PGE_MusPlayer::MUS_openFile( LvlMusPlay::currentMusicPath );

@@ -71,7 +71,7 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
                 ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.h = h;
 
                 ((ItemPhysEnv *)m_resizeBox->targetItem)->setRectSize( QRect(x,y,w,h) );
-                m_data->modified = true;
+                m_data->meta.modified = true;
 
                 m_history->addResizePhysEnv(((ItemPhysEnv *)m_resizeBox->targetItem)->m_data, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 

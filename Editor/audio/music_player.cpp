@@ -61,13 +61,13 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
     if(mw->activeChildWindow()==1)
     {
         if(mw->activeLvlEditWin() != nullptr)
-            root = mw->activeLvlEditWin()->LvlData.path+"/";
+            root = mw->activeLvlEditWin()->LvlData.meta.path+"/";
     }
     else
     if(mw->activeChildWindow()==3)
     {
         if(mw->activeWldEditWin() != nullptr)
-            root = mw->activeWldEditWin()->WldData.path+"/";
+            root = mw->activeWldEditWin()->WldData.meta.path+"/";
     }
 
     //Force correction of Windows paths into UNIX style

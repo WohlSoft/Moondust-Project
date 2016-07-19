@@ -51,7 +51,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     }
 
     ItemBlock *BlockImage = new ItemBlock(this);
-    block.userdata = BlockImage;
+    block.meta.userdata = BlockImage;
     BlockImage->setBlockData(block, &mergedSet, &animator);
 
     if(m_pastingMode) BlockImage->setSelected(true);
@@ -78,7 +78,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     }
 
     ItemBGO *BGOItem = new ItemBGO(this);
-    bgo.userdata = BGOItem;
+    bgo.meta.userdata = BGOItem;
     BGOItem->setBGOData(bgo, &mergedSet, &animator);
 
     if(m_pastingMode) BGOItem->setSelected(true);
@@ -106,7 +106,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     }
 
     ItemNPC *NPCItem = new ItemNPC(this);
-    npc.userdata = NPCItem;
+    npc.meta.userdata = NPCItem;
     NPCItem->setNpcData(npc, &mergedSet, &animator);
 
     if(m_pastingMode) NPCItem->setSelected(true);
@@ -123,7 +123,7 @@ void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
     }
 
     ItemPhysEnv *PhysEnvItem = new ItemPhysEnv(this);
-    water.userdata = PhysEnvItem;
+    water.meta.userdata = PhysEnvItem;
     PhysEnvItem->setPhysEnvData(water);
 
     if(m_pastingMode) PhysEnvItem->setSelected(true);

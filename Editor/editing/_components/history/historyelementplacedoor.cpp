@@ -54,7 +54,7 @@ void HistoryElementPlaceDoor::redo()
     LevelDoor door;
 
     foreach(LevelDoor findDoor, lvlScene->m_data->doors){
-        if(m_door.array_id == findDoor.array_id){
+        if(m_door.meta.array_id == findDoor.meta.array_id){
             door = findDoor;
             found = true;
             break;

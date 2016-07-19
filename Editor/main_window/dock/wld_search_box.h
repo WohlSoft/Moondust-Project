@@ -56,11 +56,11 @@ private slots:
     void on_Find_Button_ResetTile_clicked();
 
 private:
-    WorldTiles curSearchTile;
+    WorldTerrainTile curSearchTile;
     WorldScenery curSearchScenery;
-    WorldPaths curSearchPath;
-    WorldLevels curSearchLevel;
-    WorldMusic curSearchMusic;
+    WorldPathTile curSearchPath;
+    WorldLevelTile curSearchLevel;
+    WorldMusicBox curSearchMusic;
 
     bool doSearchTile(WorldEdit *edit);
     bool doSearchScenery(WorldEdit *edit);

@@ -148,8 +148,8 @@ void MainWindow::on_actionFixWrongMasks_triggered()
                 tr("File doesn't use custom graphics.\n"));
             return;
         }
-        path = e->LvlData.path + "/";
-        path_custom = e->LvlData.path+"/"+e->LvlData.filename+"/";
+        path = e->LvlData.meta.path + "/";
+        path_custom = e->LvlData.meta.path+"/"+e->LvlData.meta.filename+"/";
 
         OPath = path;
         OPath_custom = path_custom;
@@ -165,8 +165,8 @@ void MainWindow::on_actionFixWrongMasks_triggered()
                 tr("File doesn't use custom graphics.\n"));
             return;
         }
-        path = e->WldData.path + "/";
-        path_custom = e->WldData.path+"/"+e->WldData.filename+"/";
+        path = e->WldData.meta.path + "/";
+        path_custom = e->WldData.meta.path+"/"+e->WldData.meta.filename+"/";
 
         OPath = path;
         OPath_custom = path_custom;

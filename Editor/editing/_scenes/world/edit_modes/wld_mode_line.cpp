@@ -147,7 +147,7 @@ void WLD_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     {
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();
-        s->WldData->modified = true;
+        s->WldData->meta.modified = true;
         s->cursor->hide();
     }
 }

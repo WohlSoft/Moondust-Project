@@ -82,7 +82,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     this->setSelected(true);
     QMenu ItemMenu;
 
-    bool isLvlx = !m_scene->m_data->smbx64strict;
+    bool isLvlx = !m_scene->m_data->meta.smbx64strict;
 
     QMenu * chDir =     ItemMenu.addMenu(
                         tr("Set %1").arg(tr("Direction")) );

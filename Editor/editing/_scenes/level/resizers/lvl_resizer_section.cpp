@@ -74,7 +74,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
 
                 ChangeSectionBG(m_data->sections[m_data->CurSection].background);
                 drawSpace();
-                m_data->modified = true;
+                m_data->meta.modified = true;
             }
             delete m_resizeBox;
             m_resizeBox = NULL;

@@ -284,7 +284,7 @@ void MainWindow::on_actionSCT_Delete_triggered()
 
             edit->scene->ChangeSectionBG(0, edit->LvlData.CurSection);
             edit->scene->drawSpace();
-            edit->LvlData.modified=true;
+            edit->LvlData.meta.modified=true;
 
             int deletedSection = edit->LvlData.CurSection;
 

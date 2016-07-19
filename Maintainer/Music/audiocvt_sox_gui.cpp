@@ -147,7 +147,7 @@ void AudioCvt_Sox_gui::start()
         for(int i=0; i<episodeBoxLvl.d.sections.size(); i++)
         {
             if(!episodeBoxLvl.d.sections[i].music_file.isEmpty())
-                filesToConvert.enqueue(episodeBoxLvl.d.path+"/"+episodeBoxLvl.d.sections[i].music_file);
+                filesToConvert.enqueue(episodeBoxLvl.d.meta.path+"/"+episodeBoxLvl.d.sections[i].music_file);
         }
     }
 

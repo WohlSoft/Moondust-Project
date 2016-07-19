@@ -234,15 +234,15 @@ void CrashHandler::attemptCrashsave()
             LevelData& lvl = lvledit->LvlData;
 
             lvl.metaData.crash.used=true;
-            lvl.metaData.crash.untitled = lvl.untitled;
-            lvl.metaData.crash.modifyed = lvl.modified;
-            lvl.metaData.crash.fmtID    = lvl.RecentFormat;
-            lvl.metaData.crash.fmtVer   = lvl.RecentFormatVersion;
-            lvl.metaData.crash.filename = lvl.filename;
-            lvl.metaData.crash.path     = lvl.path;
+            lvl.metaData.crash.untitled = lvl.meta.untitled;
+            lvl.metaData.crash.modifyed = lvl.meta.modified;
+            lvl.metaData.crash.fmtID    = lvl.meta.RecentFormat;
+            lvl.metaData.crash.fmtVer   = lvl.meta.RecentFormatVersion;
+            lvl.metaData.crash.filename = lvl.meta.filename;
+            lvl.metaData.crash.path     = lvl.meta.path;
             lvl.metaData.crash.fullPath = lvledit->curFile;
             //Forcely save data into PGE-X format
-            lvl.RecentFormat = LevelData::PGEX;
+            lvl.meta.RecentFormat = LevelData::PGEX;
 
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
         } else if(mw->activeChildWindow(subWin) == 2) {
@@ -273,15 +273,15 @@ void CrashHandler::attemptCrashsave()
             WorldData& wld = worldedit->WldData;
 
             wld.metaData.crash.used=true;
-            wld.metaData.crash.untitled = wld.untitled;
-            wld.metaData.crash.modifyed = wld.modified;
-            wld.metaData.crash.fmtID    = wld.RecentFormat;
-            wld.metaData.crash.fmtVer   = wld.RecentFormatVersion;
-            wld.metaData.crash.filename = wld.filename;
-            wld.metaData.crash.path     = wld.path;
+            wld.metaData.crash.untitled = wld.meta.untitled;
+            wld.metaData.crash.modifyed = wld.meta.modified;
+            wld.metaData.crash.fmtID    = wld.meta.RecentFormat;
+            wld.metaData.crash.fmtVer   = wld.meta.RecentFormatVersion;
+            wld.metaData.crash.filename = wld.meta.filename;
+            wld.metaData.crash.path     = wld.meta.path;
             wld.metaData.crash.fullPath = worldedit->curFile;
             //Forcely save data into PGE-X format
-            wld.RecentFormat = WorldData::PGEX;
+            wld.meta.RecentFormat = WorldData::PGEX;
 
             worldedit->saveFile(crashSave.absoluteFilePath(fName), false);
         }

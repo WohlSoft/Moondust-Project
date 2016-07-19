@@ -193,7 +193,7 @@ void WorldSettingsBox::on_WLD_Title_editingFinished()
         var << edit->WldData.EpisodeTitle << ui->WLD_Title->text();
         edit->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_WORLDTITLE, var);
         edit->WldData.EpisodeTitle = ui->WLD_Title->text();
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
         edit->setWindowTitle(ui->WLD_Title->text() =="" ? edit->userFriendlyCurrentFile() : ui->WLD_Title->text() );
     }
 }
@@ -209,7 +209,7 @@ void WorldSettingsBox::on_WLD_NoWorldMap_clicked(bool checked)
 
         mw()->ui->actionWLDDisableMap->setChecked(checked);
         edit->WldData.HubStyledWorld = checked;
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -224,7 +224,7 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
 
         dock_WldSettingsBox->ui->WLD_NoWorldMap->setChecked(checked);
         edit->WldData.HubStyledWorld = checked;
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -241,7 +241,7 @@ void WorldSettingsBox::on_WLD_RestartLevel_clicked(bool checked)
 
         mw()->ui->actionWLDFailRestart->setChecked(checked);
         edit->WldData.restartlevel = checked;
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
@@ -255,7 +255,7 @@ void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
 
         dock_WldSettingsBox->ui->WLD_RestartLevel->setChecked(checked);
         edit->WldData.restartlevel = checked;
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -287,7 +287,7 @@ void WorldSettingsBox::on_WLD_AutostartLvl_editingFinished()
         var << edit->WldData.IntroLevel_file << ui->WLD_AutostartLvl->text();
         edit->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_INTROLEVEL, var);
         edit->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -299,7 +299,7 @@ void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
     QString dirPath;
     if(mw()->activeChildWindow()==3)
     {
-        dirPath = mw()->activeWldEditWin()->WldData.path;
+        dirPath = mw()->activeWldEditWin()->WldData.meta.path;
     }
     else
         return;
@@ -327,7 +327,7 @@ void WorldSettingsBox::on_WLD_Stars_valueChanged(int arg1)
         var << edit->WldData.stars << arg1;
         edit->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_TOTALSTARS, var);
         edit->WldData.stars = arg1;
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -342,7 +342,7 @@ void WorldSettingsBox::on_WLD_Credirs_textChanged()
         if(!edit) return;
 
         edit->WldData.authors = ui->WLD_Credirs->toPlainText();
-        edit->WldData.modified = true;
+        edit->WldData.meta.modified = true;
     }
 }
 
@@ -380,7 +380,7 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
         {
             if(!getLevelHead.doors[i].lname.isEmpty())
             {
-                QString FilePath_W = getLevelHead.path+"/"+getLevelHead.doors[i].lname;
+                QString FilePath_W = getLevelHead.meta.path+"/"+getLevelHead.doors[i].lname;
 
                 if(!FilePath_W.endsWith(".lvl", Qt::CaseInsensitive)&&
                    !FilePath_W.endsWith(".lvlx", Qt::CaseInsensitive))
@@ -403,7 +403,7 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
     return starCount;
 }
 
-int WorldSettingsBox::doStarCount(QString dir, QList<WorldLevels> levels, QString introLevel)
+int WorldSettingsBox::doStarCount(QString dir, QList<WorldLevelTile> levels, QString introLevel)
 {
     //Count stars of all used levels on this world map
     QString dirPath=dir;
@@ -483,7 +483,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         ui->WLD_DoCountStars->setEnabled(false);
         ui->WLD_DoCountStars->setText(tr("Counting..."));
 
-        dirPath = edit->WldData.path;
+        dirPath = edit->WldData.meta.path;
 
         /*********************Stop animations to increase performance***********************/
         edit->scene->stopAnimation();

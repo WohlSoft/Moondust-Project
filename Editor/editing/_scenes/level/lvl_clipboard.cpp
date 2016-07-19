@@ -83,7 +83,7 @@ LevelData LvlScene::copy(bool cut)
 
         if(cut)
         {
-            m_data->modified = true;
+            m_data->meta.modified = true;
             m_history->addRemove(copyData);
             Debugger_updateItemList();
         }
@@ -153,7 +153,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpBlock.x = (long)pos.x() + block.x - baseX;
         dumpBlock.y = (long)pos.y() + block.y - baseY;
         m_data->blocks_array_id++;
-        dumpBlock.array_id = m_data->blocks_array_id;
+        dumpBlock.meta.array_id = m_data->blocks_array_id;
 
         placeBlock(dumpBlock);
 
@@ -166,7 +166,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpBGO.x = (long)pos.x() + bgo.x - baseX;
         dumpBGO.y = (long)pos.y() + bgo.y - baseY;
         m_data->bgo_array_id++;
-        dumpBGO.array_id = m_data->bgo_array_id;
+        dumpBGO.meta.array_id = m_data->bgo_array_id;
 
         placeBGO(dumpBGO);
 
@@ -181,7 +181,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpNPC.x = (long)pos.x() + npc.x - baseX;
         dumpNPC.y = (long)pos.y() + npc.y - baseY;
         m_data->npc_array_id++;
-        dumpNPC.array_id = m_data->npc_array_id;
+        dumpNPC.meta.array_id = m_data->npc_array_id;
         placeNPC(dumpNPC);
         m_data->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
@@ -192,7 +192,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpWater.x = (long)pos.x() + water.x - baseX;
         dumpWater.y = (long)pos.y() + water.y - baseY;
         m_data->npc_array_id++;
-        dumpWater.array_id = m_data->npc_array_id;
+        dumpWater.meta.array_id = m_data->npc_array_id;
         placeEnvironmentZone(dumpWater);
         m_data->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
@@ -200,7 +200,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
 
     applyGroupGrid(selectedItems(), true);
 
-    m_data->modified = true;
+    m_data->meta.modified = true;
     m_history->addPlace(newData);
 
     //refresh Animation control

@@ -73,7 +73,7 @@ void WLD_ItemProps::on_WLD_ItemProps_visibilityChanged(bool visible)
 
 
 
-void WLD_ItemProps::WldItemProps(int Type, WorldLevels level, bool newItem)
+void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem)
 {
     wld_tools_lock=true;
 
@@ -84,9 +84,9 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevels level, bool newItem)
             if(newItem)
                 wlvlPtr = -1;
             else
-                wlvlPtr = level.array_id;
+                wlvlPtr = level.meta.array_id;
 
-            ui->WLD_PROPS_lvlID->setText(tr("Level ID: %1, Array ID: %2").arg(level.id).arg(level.array_id));
+            ui->WLD_PROPS_lvlID->setText(tr("Level ID: %1, Array ID: %2").arg(level.id).arg(level.meta.array_id));
             ui->WLD_PROPS_lvlPos->setText( tr("Position: [%1, %2]").arg(level.x).arg(level.y) );
             ui->WLD_PROPS_LVLTitle->setText(level.title);
             ui->WLD_PROPS_LVLFile->setText(level.lvlfile);
@@ -424,7 +424,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
     QString dirPath;
     if(mw()->activeChildWindow()==3)
     {
-        dirPath = mw()->activeWldEditWin()->WldData.path;
+        dirPath = mw()->activeWldEditWin()->WldData.meta.path;
     }
     else
         return;

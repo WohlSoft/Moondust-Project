@@ -77,7 +77,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QMenu ItemMenu;
 
     QAction *openLvl = ItemMenu.addAction(tr("Open target level: %1").arg(m_data.lname).replace("&", "&&&"));
-    openLvl->setVisible( (!m_data.lname.isEmpty()) && (QFile(m_scene->m_data->path + "/" + m_data.lname).exists()) );
+    openLvl->setVisible( (!m_data.lname.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lname).exists()) );
     openLvl->deleteLater();
 
     /*************Layers*******************/
@@ -156,7 +156,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==openLvl)
     {
-        m_scene->m_mw->OpenFile(m_scene->m_data->path + "/" + m_data.lname);
+        m_scene->m_mw->OpenFile(m_scene->m_data->meta.path + "/" + m_data.lname);
     }
     else
     if(selected==jumpTo)
@@ -346,7 +346,7 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     else
     if(selected==props)
     {
-        m_scene->m_mw->dock_LvlWarpProps->SwitchToDoor(m_data.array_id);
+        m_scene->m_mw->dock_LvlWarpProps->SwitchToDoor(m_data.meta.array_id);
     }
     else
     if(selected==newLayer)
@@ -418,9 +418,9 @@ void ItemDoor::arrayApply()
      *
      */
 
-    if(m_data.index < (unsigned int)m_scene->m_data->doors.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->doors.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->doors[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->doors[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -429,14 +429,14 @@ void ItemDoor::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->m_data->doors[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current bgoData
     }
     else
     for(int i=0; i<m_scene->m_data->doors.size(); i++)
     { //after find it into array
-        if(m_scene->m_data->doors[i].array_id == m_data.array_id)
+        if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->m_data->doors[i] = m_data;
             break;
         }
@@ -449,7 +449,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, m_scene->items())
             {
-                if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.meta.array_id))
                 {
                     ((ItemDoor *)door)->m_data = m_data;
                     break;
@@ -463,7 +463,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, m_scene->items())
             {
-                if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.meta.array_id))
                 {
                     ((ItemDoor *)door)->m_data = m_data;
                     break;
@@ -535,7 +535,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     ox = m_data.ox;
     oy = m_data.oy;
 
-    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(m_data.array_id));
+    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(m_data.meta.array_id));
 
     if(direction==D_Entrance)
     {
@@ -565,7 +565,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     m_doorLabel->setZValue(m_scene->Z_sys_door+0.0000002);
 
     this->setData(ITEM_ID, QString::number(0) );
-    this->setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    this->setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     this->setZValue(m_scene->Z_sys_door);
 

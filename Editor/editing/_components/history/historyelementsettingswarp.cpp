@@ -37,7 +37,7 @@ void HistoryElementSettingsWarp::undo()
     bool found = false;
 
     for(int i = 0; i < lvlScene->m_data->doors.size(); i++){
-        if(lvlScene->m_data->doors[i].array_id == (unsigned int)array_id){
+        if(lvlScene->m_data->doors[i].meta.array_id == (unsigned int)array_id){
             found = true;
             doorp = &lvlScene->m_data->doors[i];
             break;
@@ -165,7 +165,7 @@ void HistoryElementSettingsWarp::redo()
     bool found = false;
 
     for(int i = 0; i < lvlScene->m_data->doors.size(); i++){
-        if(lvlScene->m_data->doors[i].array_id == (unsigned int)array_id){
+        if(lvlScene->m_data->doors[i].meta.array_id == (unsigned int)array_id){
             found = true;
             doorp = &lvlScene->m_data->doors[i];
             break;

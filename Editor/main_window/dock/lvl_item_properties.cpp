@@ -249,9 +249,9 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         if(newItem)
             blockPtr = -1;
         else
-            blockPtr = block.array_id;
+            blockPtr = block.meta.array_id;
 
-        ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.array_id));
+        ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.meta.array_id));
 
         bool isLvlWin = ((mw()->activeChildWindow()==1)&&(mw()->activeLvlEditWin()));
 
@@ -358,7 +358,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         if(newItem)
             bgoPtr = -1;
         else
-            bgoPtr = bgo.array_id;
+            bgoPtr = bgo.meta.array_id;
 
 
         if((bgoPtr<0)&&(!dont_reset_props))
@@ -368,7 +368,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             LvlPlacingItems::layer = bgo.layer;
         }
 
-        ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
+        ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.meta.array_id));
 
         //ui->PROPS_BGOSquareFill->setVisible( newItem );
         //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
@@ -421,9 +421,9 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         if(newItem)
             npcPtr = -1;
         else
-            npcPtr = npc.array_id;
+            npcPtr = npc.meta.array_id;
 
-        ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.array_id));
+        ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
 
         obj_npc& t_npc = mw()->configs.main_npc[npc.id];
 

@@ -5,7 +5,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
-struct WorldLevels;
+struct WorldLevelTile;
 
 namespace Ui {
 class WLD_ItemProps;
@@ -21,7 +21,7 @@ private:
     ~WLD_ItemProps();
 
 public:
-    void WldItemProps(int Type, WorldLevels level, bool newItem=false);
+    void WldItemProps(int Type, WorldLevelTile level, bool newItem=false);
     void WldItemProps_hide();
     long wlvlPtr;   //!< ArrayID of editing item
 

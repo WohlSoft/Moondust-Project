@@ -30,16 +30,16 @@ void MainWindow::on_actionCompile_To_triggered()
 
         LevelData *lvlData = &activeLvlEditWin()->LvlData;
 
-        QDir pathOfFile = QDir(lvlData->path);
-        if(!pathOfFile.exists(lvlData->filename)){
-            pathOfFile.mkdir(lvlData->filename);
+        QDir pathOfFile = QDir(lvlData->meta.path);
+        if(!pathOfFile.exists(lvlData->meta.filename)){
+            pathOfFile.mkdir(lvlData->meta.filename);
         }
 
         if(lvlData->metaData.script->usingCompilerType() == Script::COMPILER_LUNALUA){
 
 
 
-            QFile lunaLuaFile(lvlData->path+"/"+lvlData->filename+"/"+"lunadll.lua");
+            QFile lunaLuaFile(lvlData->meta.path+"/"+lvlData->meta.filename+"/"+"lunadll.lua");
             if(lunaLuaFile.exists()){
                 if(QMessageBox::warning(this, tr("Already exsist"), tr("Lunadll.lua already exsist!\nOverwrite?"), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No){
                     return;
@@ -60,9 +60,9 @@ void MainWindow::on_actionCompile_To_triggered()
                 out << lvlData->metaData.script->compileCode();
             }
             lunaLuaFile.close();
-            QMessageBox::information(this, tr("Successfully compiled!"), tr("Sucessfully compiled to %1/lunadll.lua").arg(lvlData->filename));
+            QMessageBox::information(this, tr("Successfully compiled!"), tr("Sucessfully compiled to %1/lunadll.lua").arg(lvlData->meta.filename));
         }else if(lvlData->metaData.script->usingCompilerType() == Script::COMPILER_AUTOCODE){
-            QFile lunaAutocodeFile(lvlData->path+"/"+lvlData->filename+"/"+"lunadll.txt");
+            QFile lunaAutocodeFile(lvlData->meta.path+"/"+lvlData->meta.filename+"/"+"lunadll.txt");
             if(lunaAutocodeFile.exists()){
                 if(QMessageBox::warning(this, tr("Already exsist"), tr("lunadll.txt already exsist!\nOverwrite?"), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No){
                     return;
@@ -83,7 +83,7 @@ void MainWindow::on_actionCompile_To_triggered()
                 out << lvlData->metaData.script->compileCode();
             }
             lunaAutocodeFile.close();
-            QMessageBox::information(this, tr("Successfully compiled!"), tr("Sucessfully compiled to %1/lunadll.txt").arg(lvlData->filename));
+            QMessageBox::information(this, tr("Successfully compiled!"), tr("Sucessfully compiled to %1/lunadll.txt").arg(lvlData->meta.filename));
         }
     }
 }

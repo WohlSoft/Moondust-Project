@@ -33,7 +33,7 @@ public:
     ItemLevel(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemLevel();
 
-    void setLevelData(WorldLevels inD, obj_w_level *mergedSet=0,
+    void setLevelData(WorldLevelTile inD, obj_w_level *mergedSet=0,
                       long *animator_id=0, long *path_id=0, long *bPath_id=0
                       );
 
@@ -58,7 +58,7 @@ public:
 
     void alwaysVisible(bool v);
 
-    WorldLevels m_data;
+    WorldLevelTile m_data;
     obj_w_level m_localProps;
 
     bool itemTypeIsLocked();

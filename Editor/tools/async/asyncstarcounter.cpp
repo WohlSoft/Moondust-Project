@@ -24,7 +24,7 @@
 #include "asyncstarcounter.h"
 
 
-AsyncStarCounter::AsyncStarCounter(const QString &dir, const QVector<WorldLevels> &levels, const QString &introLevel, dataconfigs* configs, QObject *parent) :
+AsyncStarCounter::AsyncStarCounter(const QString &dir, const QVector<WorldLevelTile> &levels, const QString &introLevel, dataconfigs* configs, QObject *parent) :
     QObject(parent),
     m_dir(dir),
     m_levels(levels),
@@ -153,7 +153,7 @@ int AsyncStarCounter::checkNextLevel(QString FilePath)
         {
             if(!getLevelHead.doors[i].lname.isEmpty())
             {
-                QString FilePath_W = getLevelHead.path+"/"+getLevelHead.doors[i].lname;
+                QString FilePath_W = getLevelHead.meta.path+"/"+getLevelHead.doors[i].lname;
 
                 if(!FilePath_W.endsWith(".lvl", Qt::CaseInsensitive)&&
                    !FilePath_W.endsWith(".lvlx", Qt::CaseInsensitive))

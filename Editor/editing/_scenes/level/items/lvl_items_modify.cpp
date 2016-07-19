@@ -93,7 +93,7 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
     //find doorItem in array
     for(i=0; i<m_data->doors.size(); i++)
     {
-        if(m_data->doors[i].array_id==(unsigned int)arrayID)
+        if(m_data->doors[i].meta.array_id==(unsigned int)arrayID)
         {
             doorExist=true;
             break;
@@ -239,7 +239,7 @@ void LvlScene::placeAll(const LevelData &data)
         LevelDoor originalDoor;
         bool found = false;
         foreach(LevelDoor findDoor, m_data->doors){
-            if(door.array_id == findDoor.array_id){
+            if(door.meta.array_id == findDoor.meta.array_id){
                 originalDoor = findDoor;
                 found = true;
                 break;
@@ -392,7 +392,7 @@ void LvlScene::placeItemUnderCursor()
             LvlPlacingItems::blockSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->blocks_array_id++;
-            LvlPlacingItems::blockSet.array_id = m_data->blocks_array_id;
+            LvlPlacingItems::blockSet.meta.array_id = m_data->blocks_array_id;
 
             m_data->blocks.push_back(LvlPlacingItems::blockSet);
             placeBlock(LvlPlacingItems::blockSet, true);
@@ -406,7 +406,7 @@ void LvlScene::placeItemUnderCursor()
             LvlPlacingItems::bgoSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->bgo_array_id++;
-            LvlPlacingItems::bgoSet.array_id = m_data->bgo_array_id;
+            LvlPlacingItems::bgoSet.meta.array_id = m_data->bgo_array_id;
 
             m_data->bgo.push_back(LvlPlacingItems::bgoSet);
             placeBGO(LvlPlacingItems::bgoSet, true);
@@ -426,7 +426,7 @@ void LvlScene::placeItemUnderCursor()
             }
 
             m_data->npc_array_id++;
-            LvlPlacingItems::npcSet.array_id = m_data->npc_array_id;
+            LvlPlacingItems::npcSet.meta.array_id = m_data->npc_array_id;
 
             m_data->npc.push_back(LvlPlacingItems::npcSet);
 
@@ -483,7 +483,7 @@ void LvlScene::placeItemUnderCursor()
         {
             foreach(LevelDoor door, m_data->doors)
             {
-                if(door.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
+                if(door.meta.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
                 {
                     if(LvlPlacingItems::doorType==LvlPlacingItems::DOOR_Entrance)
                     {
@@ -526,7 +526,7 @@ void LvlScene::placeItemUnderCursor()
     }
     if(wasPlaced)
     {
-        m_data->modified = true;
+        m_data->meta.modified = true;
     }
 }
 

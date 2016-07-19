@@ -81,31 +81,31 @@ void HistoryElementItemSetting::processWorldUndo()
 
     ItemSearcher worldSearcher(ItemTypes::WLD_S_Level);
     if(m_modWorldSetting == HistorySettings::SETTING_PATHBACKGROUND){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingPathBackgroundLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingPathBackgroundLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_BIGPATHBACKGROUND){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingBigPathBackgroundLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingBigPathBackgroundLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_ALWAYSVISIBLE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingAlwaysVisibleLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingAlwaysVisibleLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GAMESTARTPOINT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingGameStartPointLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingGameStartPointLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_DOORID){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingDoorIDLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingDoorIDLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYTOP){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByTopLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByTopLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYRIGHT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByRightLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByRightLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYBOTTOM){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByBottomLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByBottomLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYLEFT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByLeftLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingPathByLeftLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GOTOX){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingGotoXLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingGotoXLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GOTOY){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingGotoYLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingGotoYLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELFILE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingLevelfileLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingLevelfileLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELTITLE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyUndoSettingLeveltitleLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingLeveltitleLevel(WorldLevelTile,QGraphicsItem*)));
     }
     worldSearcher.find(m_modWorldData, m_scene->items());
 
@@ -307,31 +307,31 @@ void HistoryElementItemSetting::processWorldRedo()
 
     ItemSearcher worldSearcher(ItemTypes::WLD_S_Level);
     if(m_modWorldSetting == HistorySettings::SETTING_PATHBACKGROUND){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingPathBackgroundLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingPathBackgroundLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_BIGPATHBACKGROUND){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingBigPathBackgroundLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingBigPathBackgroundLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_ALWAYSVISIBLE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingAlwaysVisibleLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingAlwaysVisibleLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GAMESTARTPOINT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingGameStartPointLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingGameStartPointLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_DOORID){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingDoorIDLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingDoorIDLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYTOP){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByTopLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByTopLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYRIGHT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByRightLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByRightLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYBOTTOM){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByBottomLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByBottomLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_PATHBYLEFT){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByLeftLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingPathByLeftLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GOTOX){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingGotoXLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingGotoXLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_GOTOY){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingGotoYLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingGotoYLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELFILE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingLevelfileLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingLevelfileLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELTITLE){
-        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevels,QGraphicsItem*)), this, SLOT(historyRedoSettingLeveltitleLevel(WorldLevels,QGraphicsItem*)));
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingLeveltitleLevel(WorldLevelTile,QGraphicsItem*)));
     }
     worldSearcher.find(m_modWorldData, m_scene->items());
 
@@ -522,151 +522,151 @@ void HistoryElementItemSetting::processLevelRedo()
     levelSearcher.find(m_modLevelData, m_scene->items());
 }
 
-void HistoryElementItemSetting::historyUndoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->setShowSmallPathBG(sourceLevel.pathbg);
 }
 
-void HistoryElementItemSetting::historyRedoSettingPathBackgroundLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingPathBackgroundLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->setShowSmallPathBG(m_modData.toBool());
 }
 
-void HistoryElementItemSetting::historyUndoSettingBigPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingBigPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->setShowBigPathBG(sourceLevel.bigpathbg);
 }
 
-void HistoryElementItemSetting::historyRedoSettingBigPathBackgroundLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingBigPathBackgroundLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->setShowBigPathBG(m_modData.toBool());
 }
 
-void HistoryElementItemSetting::historyUndoSettingAlwaysVisibleLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingAlwaysVisibleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->alwaysVisible(sourceLevel.alwaysVisible);
 }
 
-void HistoryElementItemSetting::historyRedoSettingAlwaysVisibleLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingAlwaysVisibleLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->alwaysVisible(m_modData.toBool());
 }
 
-void HistoryElementItemSetting::historyUndoSettingGameStartPointLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingGameStartPointLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gamestart = sourceLevel.gamestart;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingGameStartPointLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingGameStartPointLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gamestart = m_modData.toBool();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingLevelfileLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingLevelfileLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.lvlfile = sourceLevel.lvlfile;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingLevelfileLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingLevelfileLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.lvlfile = m_modData.toString();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingLeveltitleLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingLeveltitleLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.title = sourceLevel.title;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingLeveltitleLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingLeveltitleLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.title = m_modData.toString();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingDoorIDLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingDoorIDLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.entertowarp = sourceLevel.entertowarp;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingDoorIDLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingDoorIDLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.entertowarp = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingPathByTopLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingPathByTopLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.top_exit = sourceLevel.top_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingPathByTopLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingPathByTopLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.top_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingPathByRightLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingPathByRightLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.right_exit = sourceLevel.right_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingPathByRightLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingPathByRightLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.right_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingPathByBottomLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingPathByBottomLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.bottom_exit = sourceLevel.bottom_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingPathByBottomLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingPathByBottomLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.bottom_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingPathByLeftLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingPathByLeftLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.left_exit = sourceLevel.left_exit;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingPathByLeftLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingPathByLeftLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.left_exit = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingGotoXLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingGotoXLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gotox = sourceLevel.gotox;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingGotoXLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingGotoXLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gotox = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyUndoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem *item)
+void HistoryElementItemSetting::historyUndoSettingGotoYLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gotoy = sourceLevel.gotoy;
     ((ItemLevel*)item)->arrayApply();
 }
 
-void HistoryElementItemSetting::historyRedoSettingGotoYLevel(const WorldLevels &/*sourceLevel*/, QGraphicsItem *item)
+void HistoryElementItemSetting::historyRedoSettingGotoYLevel(const WorldLevelTile &/*sourceLevel*/, QGraphicsItem *item)
 {
     ((ItemLevel*)item)->m_data.gotoy = m_modData.toInt();
     ((ItemLevel*)item)->arrayApply();

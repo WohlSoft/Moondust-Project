@@ -195,7 +195,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 collisionPassed = true;
                 //applyArrayForItemGroup(selectedList);
-                s->m_data->modified=true;
+                s->m_data->meta.modified=true;
             }
         }
 
@@ -226,7 +226,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemBlock *>(*it)->blockData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBlock *>(*it)->arrayApply();
                 historyBuffer.blocks.push_back(dynamic_cast<ItemBlock *>(*it)->m_data);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if( ObjType == "BGO")
@@ -237,7 +237,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemBGO *>(*it)->bgoData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemBGO *>(*it)->arrayApply();
                 historyBuffer.bgo.push_back(dynamic_cast<ItemBGO *>(*it)->m_data);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if( ObjType == "NPC")
@@ -248,7 +248,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemNPC *>(*it)->npcData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemNPC *>(*it)->arrayApply();
                 historyBuffer.npc.push_back(dynamic_cast<ItemNPC *>(*it)->m_data);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if( ObjType == "Water")
@@ -259,7 +259,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //dynamic_cast<ItemWater *>(*it)->waterData.y = (long)(*it)->scenePos().y();
                 dynamic_cast<ItemPhysEnv *>(*it)->arrayApply();
                 historyBuffer.physez.push_back(dynamic_cast<ItemPhysEnv *>(*it)->m_data);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if( ObjType == "Door_enter")
@@ -285,7 +285,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 newDoorData.isSetOut = false;
                 historyBuffer.doors.push_back(newDoorData);
                 //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if( ObjType == "Door_exit")
@@ -310,7 +310,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 newDoorData.isSetOut = true;
                 historyBuffer.doors.push_back(newDoorData);
                 //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                s->m_data->modified = true;
+                s->m_data->meta.modified = true;
             }
             else
             if(ObjType == "playerPoint" )

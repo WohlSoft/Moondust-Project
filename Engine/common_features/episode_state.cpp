@@ -44,7 +44,7 @@ bool EpisodeState::load()
     GamesaveData FileData;
     if( FileFormats::ReadExtendedSaveFileF(file, FileData) )
     {
-        if(FileData.ReadFileValid)
+        if(FileData.meta.ReadFileValid)
         {
             game_state = FileData;
             episodeIsStarted=true;

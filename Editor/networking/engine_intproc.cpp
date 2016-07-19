@@ -137,10 +137,10 @@ void IntEngine::sendLevelBuffer()
         FileFormats::WriteExtendedLvlFileRaw(testBuffer, output);
 
         QString sendLvlx;
-        if(!testBuffer.path.isEmpty())
+        if(!testBuffer.meta.path.isEmpty())
             sendLvlx = QString("SEND_LVLX: %1/%2\n")
-                    .arg(testBuffer.path)
-                    .arg(testBuffer.filename+".lvlx");
+                    .arg(testBuffer.meta.path)
+                    .arg(testBuffer.meta.filename+".lvlx");
         else
             sendLvlx = QString("SEND_LVLX: %1/%2\n")
                     .arg(ApplicationPath)

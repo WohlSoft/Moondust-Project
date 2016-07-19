@@ -38,9 +38,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         }
 
         LvlScene * s = box->scene;
-        QString levelDirectory(box->LvlData.path);
+        QString levelDirectory(box->LvlData.meta.path);
 
-        QString levelCustomDirectory(box->LvlData.path+"/"+box->LvlData.filename);
+        QString levelCustomDirectory(box->LvlData.meta.path+"/"+box->LvlData.meta.filename);
         QDir levelCustomDirectory_dir(levelCustomDirectory);
 
         filesForRemove.append( levelCustomDirectory_dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot) );

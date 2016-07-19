@@ -236,9 +236,9 @@ void ItemScene::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->WldData->scenery.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->scenery.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->scenery[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->scenery[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -247,14 +247,14 @@ void ItemScene::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->scenery[m_data.index] = m_data; //apply current sceneData
+        m_scene->WldData->scenery[m_data.meta.index] = m_data; //apply current sceneData
     }
     else
     for(int i=0; i<m_scene->WldData->scenery.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->scenery[i].array_id == m_data.array_id)
+        if(m_scene->WldData->scenery[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->WldData->scenery[i] = m_data;
             break;
         }
@@ -266,9 +266,9 @@ void ItemScene::arrayApply()
 void ItemScene::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->WldData->scenery.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->scenery.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->scenery[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->scenery[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -276,12 +276,12 @@ void ItemScene::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->scenery.removeAt(m_data.index);
+        m_scene->WldData->scenery.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->WldData->scenery.size(); i++)
     {
-        if(m_scene->WldData->scenery[i].array_id == m_data.array_id)
+        if(m_scene->WldData->scenery[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->WldData->scenery.removeAt(i); break;
         }
@@ -307,7 +307,7 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
 {
     m_data = inD;
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     setPos(m_data.x, m_data.y);
     if(mergedSet)

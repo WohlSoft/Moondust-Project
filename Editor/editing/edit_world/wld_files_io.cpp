@@ -45,8 +45,8 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
     FileFormats::CreateWorldData(WldData);
-    WldData.modified = true;
-    WldData.untitled = true;
+    WldData.meta.modified = true;
+    WldData.meta.untitled = true;
     StartWldData = WldData;
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
@@ -264,7 +264,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                                  .arg(FileFormats::errorString));
             return false;
         }
-        WldData.smbx64strict = true; //Enable SMBX64 standard strict mode
+        WldData.meta.smbx64strict = true; //Enable SMBX64 standard strict mode
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
@@ -272,7 +272,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     // ////////////////// Write Extended WLD file (WLDX)/////////////////////
     else if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
     {
-        WldData.smbx64strict = false; //Disable strict mode
+        WldData.meta.smbx64strict = false; //Disable strict mode
         if( !FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX) )
         {
             QMessageBox::warning(this, tr("File save error"),
@@ -289,8 +289,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.meta.modified = false;
+    WldData.meta.untitled = false;
 
     if(addToRecent){
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
@@ -307,8 +307,8 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     bool modifystate=false;
     bool untitledstate=false;
     QString curFName=fileName;
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.meta.modified = false;
+    WldData.meta.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -323,10 +323,10 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
         modifystate                 = WldData.metaData.crash.modifyed;
         untitledstate               = WldData.metaData.crash.untitled;
         isUntitled                  = WldData.metaData.crash.untitled;
-        WldData.RecentFormat        = WldData.metaData.crash.fmtID;
-        WldData.RecentFormatVersion = WldData.metaData.crash.fmtVer;
-        WldData.filename            = WldData.metaData.crash.filename;
-        WldData.path                = WldData.metaData.crash.path;
+        WldData.meta.RecentFormat        = WldData.metaData.crash.fmtID;
+        WldData.meta.RecentFormatVersion = WldData.metaData.crash.fmtVer;
+        WldData.meta.filename            = WldData.metaData.crash.filename;
+        WldData.meta.path                = WldData.metaData.crash.path;
         curFName                    = WldData.metaData.crash.fullPath;
         WldData.metaData.crash.reset();
     }
@@ -367,7 +367,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     if(! DrawObjects(progress) )
     {
-        WldData.modified = false;
+        WldData.meta.modified = false;
         this->close();
         return false;
     }
@@ -381,8 +381,8 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    WldData.modified = modifystate;
-    WldData.untitled = untitledstate;
+    WldData.meta.modified = modifystate;
+    WldData.meta.untitled = untitledstate;
 
     progress.deleteLater();
 
@@ -392,12 +392,12 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
 void WorldEdit::documentWasModified()
 {
-    WldData.modified = true;
+    WldData.meta.modified = true;
 }
 
 bool WorldEdit::maybeSave()
 {
-    if (WldData.modified) {
+    if (WldData.meta.modified) {
         SavingNotificationDialog* sav = new SavingNotificationDialog(true,SavingNotificationDialog::D_WARN, this);
         util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
@@ -491,9 +491,9 @@ void WorldEdit::setCurrentFile(const QString &fileName)
     QFileInfo info(fileName);
     curFile = info.canonicalFilePath();
     isUntitled = false;
-    WldData.path = info.absoluteDir().absolutePath();
-    WldData.filename = util::getBaseFilename(info.fileName());
-    WldData.untitled = false;
+    WldData.meta.path = info.absoluteDir().absolutePath();
+    WldData.meta.filename = util::getBaseFilename(info.fileName());
+    WldData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(QString(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle).replace("&", "&&&") );

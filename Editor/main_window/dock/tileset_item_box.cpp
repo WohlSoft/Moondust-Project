@@ -544,16 +544,16 @@ QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets()
     bool doIt=false;
     if(mw()->activeChildWindow()==1)
     {
-        path = mw()->activeLvlEditWin()->LvlData.path+"/";
-        cfolder = mw()->activeLvlEditWin()->LvlData.filename+"/";
-        doIt = !mw()->activeLvlEditWin()->LvlData.untitled;
+        path = mw()->activeLvlEditWin()->LvlData.meta.path+"/";
+        cfolder = mw()->activeLvlEditWin()->LvlData.meta.filename+"/";
+        doIt = !mw()->activeLvlEditWin()->LvlData.meta.untitled;
     }
     else
     if(mw()->activeChildWindow()==3)
     {
-        path = mw()->activeWldEditWin()->WldData.path+"/";
-        cfolder = mw()->activeWldEditWin()->WldData.filename+"/";
-        doIt = !mw()->activeWldEditWin()->WldData.untitled;
+        path = mw()->activeWldEditWin()->WldData.meta.path+"/";
+        cfolder = mw()->activeWldEditWin()->WldData.meta.filename+"/";
+        doIt = !mw()->activeWldEditWin()->WldData.meta.untitled;
     }
 
     if(doIt)

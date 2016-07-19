@@ -32,7 +32,7 @@
 
 
 
-void WldScene::placeTile(WorldTiles &tile, bool toGrid)
+void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
 {
     obj_w_tile &mergedSet = uTiles[tile.id];
     long animator = mergedSet.animator_id;
@@ -96,7 +96,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 
 
 
-void WldScene::placePath(WorldPaths &path, bool toGrid)
+void WldScene::placePath(WorldPathTile &path, bool toGrid)
 {
     obj_w_path &mergedSet = uPaths[path.id];
     long animator = mergedSet.animator_id;
@@ -130,7 +130,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 
 
 
-void WldScene::placeLevel(WorldLevels &level, bool toGrid)
+void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
 {
     long animator=0, pathAnimator=0, bPathAnimator=0;
     obj_w_level &mergedSet = uLevels[level.id];
@@ -166,7 +166,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 
 
 
-void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
+void WldScene::placeMusicbox(WorldMusicBox &musicbox, bool toGrid)
 {
     int j = pConfigs->getMusWldI(musicbox.id);
 

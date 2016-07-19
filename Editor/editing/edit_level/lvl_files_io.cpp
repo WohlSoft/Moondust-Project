@@ -45,7 +45,7 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     FileFormats::CreateLevelData(LvlData);
     LvlData.metaData.script.reset(new ScriptHolder());
-    LvlData.untitled = true;
+    LvlData.meta.untitled = true;
     StartLvlData = LvlData;
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
@@ -139,13 +139,13 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     }
     else
     {
-        switch(LvlData.RecentFormat)
+        switch(LvlData.meta.RecentFormat)
         {
         case LevelData::PGEX:
             selectedFilter = filePGEX;
             break;
         case LevelData::SMBX64:
-            if( LvlData.RecentFormatVersion >= 64 )
+            if( LvlData.meta.RecentFormatVersion >= 64 )
                 selectedFilter = fileSMBX64;
             else
                 selectedFilter = fileSMBXany;
@@ -178,7 +178,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
         if(selectedFilter==fileSMBXany)
         {
-            int file_format=LvlData.RecentFormatVersion;
+            int file_format=LvlData.meta.RecentFormatVersion;
 
             bool ok=true;
             file_format = QInputDialog::getInt(this, tr("SMBX file version"),
@@ -195,25 +195,25 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
                                              "58 - SMBX 1.2.2\n"
                                              "59 - SMBX 1.2.2 (with some patch)\n"
                                              "64 - SMBX 1.3\n"),
-                                        LvlData.RecentFormatVersion, 0, 64, 1, &ok);
+                                        LvlData.meta.RecentFormatVersion, 0, 64, 1, &ok);
             if( !ok )
                 return false;
-            LvlData.RecentFormatVersion = file_format;
+            LvlData.meta.RecentFormatVersion = file_format;
         } else {
-            LvlData.RecentFormatVersion = 64;
+            LvlData.meta.RecentFormatVersion = 64;
         }
 
         if(selectedFilter==filePGEX)
-            LvlData.RecentFormat=LevelData::PGEX;
+            LvlData.meta.RecentFormat=LevelData::PGEX;
         else if((selectedFilter==fileSMBX64) || (selectedFilter==fileSMBXany))
-            LvlData.RecentFormat=LevelData::SMBX64;
+            LvlData.meta.RecentFormat=LevelData::SMBX64;
         else if((selectedFilter==fileSMBX38A))
         {
             QMessageBox::information(this, "====THIS FILE FORMAT IS EXPERIMENTAL====",
                                      "Saving into SMBX-38A Level file format is experimental!\n"
                                      "Some values are may be lost or distorted. Please also save same file into another file format until reload or close it!");
 
-            LvlData.RecentFormat=LevelData::SMBX38A;
+            LvlData.meta.RecentFormat=LevelData::SMBX38A;
         }
 
         if( (selectedFilter==fileSMBXany) || (selectedFilter==fileSMBX64) || (selectedFilter==fileSMBX38A) )
@@ -275,41 +275,41 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     }
 
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
-    if(LvlData.RecentFormat==LevelData::PGEX)
+    if(LvlData.meta.RecentFormat==LevelData::PGEX)
     {
         if(!savePGEXLVL(fileName, false))
             return false;
-        LvlData.smbx64strict = false; //Disable strict mode
+        LvlData.meta.smbx64strict = false; //Disable strict mode
     }
     // //////////////////////////////////////////////////////////////////////
     // ////////////////////// Write SMBX64 LVL //////////////////////////////
-    else if(LvlData.RecentFormat==LevelData::SMBX64)
+    else if(LvlData.meta.RecentFormat==LevelData::SMBX64)
     {
         if(!saveSMBX64LVL(fileName, false, out_WarningIsAborted))
             return false;
-        LvlData.smbx64strict = true; //Enable SMBX64 standard strict mode
+        LvlData.meta.smbx64strict = true; //Enable SMBX64 standard strict mode
     }
     // //////////////////////////////////////////////////////////////////////
     // ////////////////////// Write SMBX-38A LVL //////////////////////////////
-    else if(LvlData.RecentFormat==LevelData::SMBX38A)
+    else if(LvlData.meta.RecentFormat==LevelData::SMBX38A)
     {
         if(!saveSMBX38aLVL(fileName, false))
             return false;
-        LvlData.smbx64strict = false; //Disable strict mode
+        LvlData.meta.smbx64strict = false; //Disable strict mode
     }
     // //////////////////////////////////////////////////////////////////////
 
     QFileInfo finfo(fileName);
     GlobalSettings::savePath = finfo.path();
-    LvlData.path = finfo.path();
-    LvlData.filename = util::getBaseFilename(finfo.fileName());
+    LvlData.meta.path = finfo.path();
+    LvlData.meta.filename = util::getBaseFilename(finfo.fileName());
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 
 
-    LvlData.modified = false;
-    LvlData.untitled = false;
+    LvlData.meta.modified = false;
+    LvlData.meta.untitled = false;
     if(addToRecent)
     {
         m_mw->AddToRecentFiles(fileName);
@@ -317,7 +317,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     }
 
     //Refresh Strict SMBX64 flag
-    emit m_mw->setSMBX64Strict(LvlData.smbx64strict);
+    emit m_mw->setSMBX64Strict(LvlData.meta.smbx64strict);
 
     return true;
 }
@@ -393,7 +393,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
         }
     }
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX64, LvlData.RecentFormatVersion))
+    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
     {
         QApplication::restoreOverrideCursor();
         if(!silent)
@@ -416,8 +416,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     LvlData.metaData.script.reset(new ScriptHolder());
     bool modifystate = false;
     bool untitledstate = false;
-    LvlData.modified = false;
-    LvlData.untitled = false;
+    LvlData.meta.modified = false;
+    LvlData.meta.untitled = false;
     QString curFName=fileName;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
@@ -433,11 +433,11 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     {
         modifystate                 = LvlData.metaData.crash.modifyed;
         untitledstate               = LvlData.metaData.crash.untitled;
-        LvlData.RecentFormat        = LvlData.metaData.crash.fmtID;
-        LvlData.RecentFormatVersion = LvlData.metaData.crash.fmtVer;
+        LvlData.meta.RecentFormat        = LvlData.metaData.crash.fmtID;
+        LvlData.meta.RecentFormatVersion = LvlData.metaData.crash.fmtVer;
         isUntitled                  = LvlData.metaData.crash.untitled;
-        LvlData.filename            = LvlData.metaData.crash.filename;
-        LvlData.path                = LvlData.metaData.crash.path;
+        LvlData.meta.filename            = LvlData.metaData.crash.filename;
+        LvlData.meta.path                = LvlData.metaData.crash.path;
         curFName                    = LvlData.metaData.crash.fullPath;
         LvlData.metaData.crash.reset();
     }
@@ -481,7 +481,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
 
     if(! DrawObjects(progress) )
     {
-        LvlData.modified = false;
+        LvlData.meta.modified = false;
         this->close();
         return false;
     }
@@ -501,8 +501,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     }
 
     setCurrentFile(curFName);
-    LvlData.modified = modifystate;
-    LvlData.untitled = untitledstate;
+    LvlData.meta.modified = modifystate;
+    LvlData.meta.untitled = untitledstate;
 
     progress.deleteLater();
 
@@ -517,7 +517,7 @@ void LevelEdit::documentWasModified()
 
 bool LevelEdit::maybeSave()
 {
-    if (LvlData.modified)
+    if (LvlData.meta.modified)
     {
         SavingNotificationDialog* sav = new SavingNotificationDialog(true, SavingNotificationDialog::D_WARN, this);
         util::DialogToCenter(sav, true);
@@ -624,9 +624,9 @@ void LevelEdit::setCurrentFile(const QString &fileName)
     QFileInfo info(fileName);
     curFile = info.canonicalFilePath();
     isUntitled = false;
-    LvlData.path = info.absoluteDir().absolutePath();
-    LvlData.filename = util::getBaseFilename(info.fileName());
-    LvlData.untitled = false;
+    LvlData.meta.path = info.absoluteDir().absolutePath();
+    LvlData.meta.filename = util::getBaseFilename(info.fileName());
+    LvlData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(QString(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName).replace("&", "&&&"));

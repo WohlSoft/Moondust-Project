@@ -78,7 +78,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
                 if(!npc) continue;
                 for(int j=0; j<_found_garbage.size();j++)
                 {
-                    if(npc->m_data.array_id==_found_garbage[j].array_id)
+                    if(npc->m_data.meta.array_id==_found_garbage[j].meta.array_id)
                     {
                         if(help) //Select & jump
                         {

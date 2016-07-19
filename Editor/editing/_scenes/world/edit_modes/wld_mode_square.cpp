@@ -149,7 +149,7 @@ void WLD_ModeRect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->emptyCollisionCheck = false;
         s->collisionCheckBuffer.clear();
 
-        s->WldData->modified = true;
+        s->WldData->meta.modified = true;
         s->cursor->hide();
     }
 }

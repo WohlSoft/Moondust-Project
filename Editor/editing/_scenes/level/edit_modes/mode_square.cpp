@@ -161,7 +161,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 //here define placing water item.
                 s->m_data->physenv_array_id++;
 
-                LvlPlacingItems::waterSet.array_id = s->m_data->physenv_array_id;
+                LvlPlacingItems::waterSet.meta.array_id = s->m_data->physenv_array_id;
                 s->m_data->physez.push_back(LvlPlacingItems::waterSet);
 
                 s->placeEnvironmentZone(LvlPlacingItems::waterSet, true);
@@ -183,7 +183,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                     //here define placing water item.
                     s->m_data->blocks_array_id++;
 
-                    LvlPlacingItems::blockSet.array_id = s->m_data->blocks_array_id;
+                    LvlPlacingItems::blockSet.meta.array_id = s->m_data->blocks_array_id;
                     s->m_data->blocks.push_back(LvlPlacingItems::blockSet);
 
                     s->placeBlock(LvlPlacingItems::blockSet, true);
@@ -218,7 +218,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
              break;
             }
         }
-        s->m_data->modified = true;
+        s->m_data->meta.modified = true;
 
         s->m_cursorItemImg->hide();
     }

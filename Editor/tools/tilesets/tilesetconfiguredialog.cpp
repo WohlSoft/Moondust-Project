@@ -374,12 +374,12 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     switch(mode)
     {
         case GFX_Level:
-            savePath = dynamic_cast<LvlScene *>(scn)->m_data->path+
-                    (ui->specific->isChecked()? "/"+dynamic_cast<LvlScene *>(scn)->m_data->filename :"")+"/";
+            savePath = dynamic_cast<LvlScene *>(scn)->m_data->meta.path+
+                    (ui->specific->isChecked()? "/"+dynamic_cast<LvlScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         case GFX_World:
-            savePath = dynamic_cast<WldScene *>(scn)->WldData->path+
-                    (ui->specific->isChecked()? "/"+dynamic_cast<WldScene *>(scn)->WldData->filename :"")+"/";
+            savePath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+
+                    (ui->specific->isChecked()? "/"+dynamic_cast<WldScene *>(scn)->WldData->meta.filename :"")+"/";
             break;
         default:
             savePath = m_conf->config_dir + "tilesets/";
@@ -401,10 +401,10 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     switch(mode)
     {
         case GFX_Level:
-            openPath = dynamic_cast<LvlScene *>(scn)->m_data->path+"/";
+            openPath = dynamic_cast<LvlScene *>(scn)->m_data->meta.path+"/";
             break;
         case GFX_World:
-            openPath = dynamic_cast<WldScene *>(scn)->WldData->path+"/";
+            openPath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+"/";
             break;
         default:
             openPath = m_conf->config_dir + "tilesets/";
@@ -458,12 +458,12 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
     switch(mode)
     {
         case GFX_Level:
-            lastFullPath = dynamic_cast<LvlScene *>(scn)->m_data->path+
-                    (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->m_data->filename :"")+"/";
+            lastFullPath = dynamic_cast<LvlScene *>(scn)->m_data->meta.path+
+                    (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         case GFX_World:
-            lastFullPath = dynamic_cast<WldScene *>(scn)->WldData->path+
-                    (isCustom? "/"+dynamic_cast<WldScene *>(scn)->WldData->filename :"")+"/";
+            lastFullPath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+
+                    (isCustom? "/"+dynamic_cast<WldScene *>(scn)->WldData->meta.filename :"")+"/";
             break;
         default:
             lastFullPath = m_conf->config_dir + "tilesets/";

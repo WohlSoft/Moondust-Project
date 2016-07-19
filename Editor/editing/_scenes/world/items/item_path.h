@@ -33,7 +33,7 @@ public:
     ItemPath(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemPath();
 
-    void setPathData(WorldPaths inD, obj_w_path *mergedSet=0, long *animator_id=0);
+    void setPathData(WorldPathTile inD, obj_w_path *mergedSet=0, long *animator_id=0);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -51,7 +51,7 @@ public:
     void returnBack();
     QPoint sourcePos();
 
-    WorldPaths m_data;
+    WorldPathTile m_data;
     obj_w_path m_localProps;
 
     bool itemTypeIsLocked();

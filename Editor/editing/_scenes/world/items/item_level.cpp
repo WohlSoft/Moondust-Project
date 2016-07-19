@@ -68,7 +68,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         LvlTitle->setVisible(!m_data.title.isEmpty());
 
     QAction *openLvl =          ItemMenu.addAction(tr("Open target file: %1").arg(m_data.lvlfile));
-        openLvl->setVisible( (!m_data.lvlfile.isEmpty()) && (QFile(m_scene->WldData->path + "/" + m_data.lvlfile).exists()) );
+        openLvl->setVisible( (!m_data.lvlfile.isEmpty()) && (QFile(m_scene->WldData->meta.path + "/" + m_data.lvlfile).exists()) );
                                 ItemMenu.addSeparator();
 
     QAction *setPathBG =        ItemMenu.addAction(tr("Path background"));
@@ -109,7 +109,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==openLvl)
     {
-        MainWinConnect::pMainWin->OpenFile(m_scene->WldData->path + "/" + m_data.lvlfile);
+        MainWinConnect::pMainWin->OpenFile(m_scene->WldData->meta.path + "/" + m_data.lvlfile);
         m_scene->contextMenuOpened = false;
     }
     else
@@ -313,9 +313,9 @@ void ItemLevel::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.index < (unsigned int)m_scene->WldData->levels.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->levels.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->levels[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->levels[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -324,14 +324,14 @@ void ItemLevel::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->levels[m_data.index] = m_data; //apply current levelData
+        m_scene->WldData->levels[m_data.meta.index] = m_data; //apply current levelData
     }
     else
     for(int i=0; i<m_scene->WldData->levels.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->levels[i].array_id == m_data.array_id)
+        if(m_scene->WldData->levels[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->WldData->levels[i] = m_data;
             break;
         }
@@ -344,9 +344,9 @@ void ItemLevel::arrayApply()
 void ItemLevel::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->WldData->levels.size())
+    if(m_data.meta.index < (unsigned int)m_scene->WldData->levels.size())
     { //Check index
-        if(m_data.array_id == m_scene->WldData->levels[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->WldData->levels[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -354,12 +354,12 @@ void ItemLevel::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->levels.removeAt(m_data.index);
+        m_scene->WldData->levels.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->WldData->levels.size(); i++)
     {
-        if(m_scene->WldData->levels[i].array_id == m_data.array_id)
+        if(m_scene->WldData->levels[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->WldData->levels.removeAt(i); break;
         }
@@ -413,7 +413,7 @@ void ItemLevel::setShowBigPathBG(bool p)
     m_scene->update();
 }
 
-void ItemLevel::setLevelData(WorldLevels inD, obj_w_level *mergedSet,
+void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
                              long *animator_id, long *path_id, long *bPath_id)
 {
     m_data = inD;
@@ -421,7 +421,7 @@ void ItemLevel::setLevelData(WorldLevels inD, obj_w_level *mergedSet,
     setPos(m_data.x, m_data.y);
 
     setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
     if(mergedSet)
     {

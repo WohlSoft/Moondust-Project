@@ -122,17 +122,17 @@ void ItemPhysEnv::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Water"),        m_data.env_type==LevelPhysEnv::ENV_WATER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Quicksand"),    m_data.env_type==LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Custom liquid"), m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Gravitational Field"), m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Mouse click Event"), m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Collision script"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Mouse click Script"), m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Collision Event"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->smbx64strict, tr("Air chamber"), m_data.env_type==LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Custom liquid"), m_data.env_type==LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Gravitational Field"), m_data.env_type==LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type==LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Event"), m_data.env_type==LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision script"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Script"), m_data.env_type==LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision Event"), m_data.env_type==LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Air chamber"), m_data.env_type==LevelPhysEnv::ENV_AIR);
 
     ItemMenu.addSeparator();
 
@@ -269,9 +269,9 @@ void ItemPhysEnv::arrayApply()
     this->setData(ITEM_WIDTH, (int)m_data.w);
     this->setData(ITEM_HEIGHT, (int)m_data.h);
 
-    if(m_data.index < (unsigned int)m_scene->m_data->physez.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->physez[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->physez[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -280,14 +280,14 @@ void ItemPhysEnv::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->m_data->physez[m_data.index] = m_data; //apply current bgoData
+        m_scene->m_data->physez[m_data.meta.index] = m_data; //apply current bgoData
     }
     else
     for(int i=0; i<m_scene->m_data->physez.size(); i++)
     { //after find it into array
-        if(m_scene->m_data->physez[i].array_id == m_data.array_id)
+        if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
         {
-            m_data.index = i;
+            m_data.meta.index = i;
             m_scene->m_data->physez[i] = m_data;
             break;
         }
@@ -301,9 +301,9 @@ void ItemPhysEnv::arrayApply()
 void ItemPhysEnv::removeFromArray()
 {
     bool found=false;
-    if(m_data.index < (unsigned int)m_scene->m_data->physez.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
     { //Check index
-        if(m_data.array_id == m_scene->m_data->physez[m_data.index].array_id)
+        if(m_data.meta.array_id == m_scene->m_data->physez[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -311,12 +311,12 @@ void ItemPhysEnv::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->m_data->physez.removeAt(m_data.index);
+        m_scene->m_data->physez.removeAt(m_data.meta.index);
     }
     else
     for(int i=0; i<m_scene->m_data->physez.size(); i++)
     {
-        if(m_scene->m_data->physez[i].array_id == m_data.array_id)
+        if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
         {
             m_scene->m_data->physez.removeAt(i); break;
         }
@@ -425,7 +425,7 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
     m_waterSize = QSize(m_data.w, m_data.h);
     setPos(m_data.x, m_data.y);
     setData(ITEM_ID, QString::number(0) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.array_id) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
     updateColor();
     drawWater();
     m_scene->unregisterElement(this);

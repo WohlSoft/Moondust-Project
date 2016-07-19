@@ -192,7 +192,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 collisionPassed = true;
                 //applyArrayForItemGroup(selectedList);
-                s->WldData->modified=true;
+                s->WldData->meta.modified=true;
             }
         }
 
@@ -222,7 +222,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemTile *)(*it))->arrayApply();
                historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
-               s->WldData->modified = true;
+               s->WldData->meta.modified = true;
            }
            else
            if( ObjType == "SCENERY")
@@ -233,7 +233,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemScene *)(*it))->arrayApply();
                historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
-               s->WldData->modified = true;
+               s->WldData->meta.modified = true;
            }
            else
            if( ObjType == "PATH")
@@ -244,7 +244,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemPath *)(*it))->arrayApply();
                historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
-               s->WldData->modified = true;
+               s->WldData->meta.modified = true;
            }
            else
            if( ObjType == "LEVEL")
@@ -255,7 +255,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemLevel *)(*it))->arrayApply();
                historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
-               s->WldData->modified = true;
+               s->WldData->meta.modified = true;
            }
            else
            if( ObjType == "MUSICBOX")
@@ -266,7 +266,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemMusic *)(*it))->arrayApply();
                historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
-               s->WldData->modified = true;
+               s->WldData->meta.modified = true;
            }
 
         }////////////////////////SECOND FETCH///////////////////////

@@ -79,7 +79,7 @@ bool LevelScene::setEntrance(int entr)
     {
         for(int i=0; i<data.doors.size(); i++)
         {
-            if(data.doors[i].array_id==(unsigned int)entr)
+            if(data.doors[i].meta.array_id==(unsigned int)entr)
             {
                 isWarpEntrance = true;
                 startWarp = data.doors[i];
@@ -194,31 +194,31 @@ bool LevelScene::loadConfigs()
 {
     bool success=true;
 
-    QString musIni=data.path+"/music.ini";
-    QString sndIni=data.path+"/sounds.ini";
+    QString musIni=data.meta.path+"/music.ini";
+    QString sndIni=data.meta.path+"/sounds.ini";
     if(ConfigManager::music_lastIniFile!=musIni)
     {
         ConfigManager::loadDefaultMusics();
-        ConfigManager::loadMusic(data.path+"/", musIni, true);
+        ConfigManager::loadMusic(data.meta.path+"/", musIni, true);
     }
 
     if(ConfigManager::sound_lastIniFile!=sndIni)
     {
         ConfigManager::loadDefaultSounds();
-        ConfigManager::loadSound(data.path+"/", sndIni, true);
+        ConfigManager::loadSound(data.meta.path+"/", sndIni, true);
         if(ConfigManager::soundIniChanged())
             ConfigManager::buildSoundIndex();
     }
 
     //Set paths
-    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
-    ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
-    ConfigManager::Dir_NPC.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPC() );
-    ConfigManager::Dir_NPCScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPCScript() );
-    ConfigManager::Dir_PlayerScript.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayerScript() );
-    ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
-    ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+    ConfigManager::Dir_Blocks.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBlock() );
+    ConfigManager::Dir_BGO.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBGO() );
+    ConfigManager::Dir_NPC.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelNPC() );
+    ConfigManager::Dir_NPCScript.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelNPCScript() );
+    ConfigManager::Dir_PlayerScript.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayerScript() );
+    ConfigManager::Dir_BG.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBG() );
+    ConfigManager::Dir_EFFECT.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelEffect() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayable() );
 
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
@@ -270,10 +270,10 @@ bool LevelScene::init_items()
     //Global script path
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     //Episode path
-    luaEngine.appendLuaScriptPath(data.path);
+    luaEngine.appendLuaScriptPath(data.meta.path);
     //Level custom path
-    luaEngine.appendLuaScriptPath(data.path + "/" + data.filename);
-    luaEngine.setFileSearchPath(data.path + "/" + data.filename);
+    luaEngine.appendLuaScriptPath(data.meta.path + "/" + data.meta.filename);
+    luaEngine.setFileSearchPath(data.meta.path + "/" + data.meta.filename);
 
     luaEngine.setCoreFile(":/script/maincore_level.lua");
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
@@ -319,7 +319,7 @@ bool LevelScene::init_items()
         LVL_Section sct;
         sections.push_back(sct);
         sections.last().setData(data.sections[i]);
-        sections.last().setMusicRoot(data.path);
+        sections.last().setMusicRoot(data.meta.path);
     }
 
     //qDebug()<<"Create cameras";

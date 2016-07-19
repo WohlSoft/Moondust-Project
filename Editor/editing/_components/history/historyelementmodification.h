@@ -50,11 +50,11 @@ private slots:
     void processPlayerPoint(const PlayerPoint &sourcePayerPoint, QGraphicsItem* item);
 
     //Overworld
-    void processTile(const WorldTiles &sourceTile, QGraphicsItem* item);
+    void processTile(const WorldTerrainTile &sourceTile, QGraphicsItem* item);
     void processScenery(const WorldScenery &sourceScenery, QGraphicsItem* item);
-    void processPath(const WorldPaths &sourcePath, QGraphicsItem* item);
-    void processLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
-    void processMusicbox(const WorldMusic &sourceMusic, QGraphicsItem* item);
+    void processPath(const WorldPathTile &sourcePath, QGraphicsItem* item);
+    void processLevel(const WorldLevelTile &sourceLevel, QGraphicsItem* item);
+    void processMusicbox(const WorldMusicBox &sourceMusic, QGraphicsItem* item);
 
 
 private:

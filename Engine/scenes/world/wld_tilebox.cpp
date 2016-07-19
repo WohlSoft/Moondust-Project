@@ -81,12 +81,12 @@ bool WorldNode::collideWith(WorldNode *it)
 
 
 
-WldTileItem::WldTileItem(WorldTiles _data): WorldNode()
+WldTileItem::WldTileItem(WorldTerrainTile _data): WorldNode()
 {
     data = _data;
     x=data.x;
     y=data.y;
-    Z=0.0+(double(data.array_id)*0.0000001);
+    Z=0.0+(double(data.meta.array_id)*0.0000001);
     type=tile;
 }
 
@@ -142,7 +142,7 @@ WldSceneryItem::WldSceneryItem(WorldScenery _data): WorldNode()
     y=data.y;
     w = 16;
     h = 16;
-    Z=10.0+(double(data.array_id)*0.0000001);
+    Z=10.0+(double(data.meta.array_id)*0.0000001);
     vizible=true;
     type=scenery;
 }
@@ -191,12 +191,12 @@ void WldSceneryItem::render(float rx, float ry)
 
 
 
-WldPathItem::WldPathItem(WorldPaths _data): WorldNode()
+WldPathItem::WldPathItem(WorldPathTile _data): WorldNode()
 {
     data = _data;
     x=data.x;
     y=data.y;
-    Z=20.0+(double(data.array_id)*0.0000001);
+    Z=20.0+(double(data.meta.array_id)*0.0000001);
     vizible=true;
     type=path;
 }
@@ -248,12 +248,12 @@ void WldPathItem::render(float rx, float ry)
 
 
 
-WldLevelItem::WldLevelItem(WorldLevels _data): WorldNode()
+WldLevelItem::WldLevelItem(WorldLevelTile _data): WorldNode()
 {
     data = _data;
     x=data.x;
     y=data.y;
-    Z=30.0+(double(data.array_id)*0.0000001);
+    Z=30.0+(double(data.meta.array_id)*0.0000001);
     vizible=true;
     type=level;
     offset_x=0;
@@ -331,7 +331,7 @@ void WldLevelItem::render(float rx, float ry)
 
 
 
-WldMusicBoxItem::WldMusicBoxItem(WorldMusic _data): WorldNode()
+WldMusicBoxItem::WldMusicBoxItem(WorldMusicBox _data): WorldNode()
 {
     data = _data;
     x=data.x;

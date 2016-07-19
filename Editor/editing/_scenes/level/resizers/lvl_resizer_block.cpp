@@ -71,7 +71,7 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 ((ItemBlock *)m_resizeBox->targetItem)->m_data.h = h;
 
                 ((ItemBlock *)m_resizeBox->targetItem)->setBlockSize( QRect(x,y,w,h) );
-                m_data->modified = true;
+                m_data->meta.modified = true;
 
                 m_history->addResizeBlock(((ItemBlock *)m_resizeBox->targetItem)->m_data, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 

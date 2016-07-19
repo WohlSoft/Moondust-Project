@@ -220,7 +220,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
     if(WinType==1)
     {
-        emit setSMBX64Strict(lvlWin->LvlData.smbx64strict);
+        emit setSMBX64Strict(lvlWin->LvlData.meta.smbx64strict);
         if(lvlWin->LvlData.metaData.script)
         {
             Script::CompilerType ct = lvlWin->LvlData.metaData.script->usingCompilerType();
@@ -301,7 +301,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     else
     if(WinType==3)
     {
-        emit setSMBX64Strict(wldWin->WldData.smbx64strict);
+        emit setSMBX64Strict(wldWin->WldData.meta.smbx64strict);
 
         dock_WldSettingsBox->setCurrentWorldSettings();
         dock_BookmarksBox->updateBookmarkBoxByData();

@@ -93,7 +93,7 @@ void MainWindow::on_actionNewLevel_triggered()
         on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
     } else {
         if( activeLvlEditWin(SubWindow) )
-            activeLvlEditWin(SubWindow)->LvlData.modified = false;
+            activeLvlEditWin(SubWindow)->LvlData.meta.modified = false;
         SubWindow->close();
     }
 }
@@ -123,7 +123,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
         on_actionSelect_triggered();
     } else {
         if( activeWldEditWin(SubWindow) )
-            activeWldEditWin(SubWindow)->WldData.modified = false;
+            activeWldEditWin(SubWindow)->WldData.meta.modified = false;
         SubWindow->close();
     }
 }

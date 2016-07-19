@@ -79,7 +79,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 sizeData.push_back((qlonglong)r);
                 sizeData.push_back((qlonglong)b);
                 sizeData.push_back((qlonglong)l);
-                m_history->addChangeEventSettings(m_data->events[eventID].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+                m_history->addChangeEventSettings(m_data->events[eventID].meta.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
                 m_data->events[eventID].sets[m_data->CurSection].position_left = l;
                 m_data->events[eventID].sets[m_data->CurSection].position_right = r;
@@ -90,7 +90,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();
-                m_data->modified = true;
+                m_data->meta.modified = true;
                 m_mw->dock_LvlEvents->eventSectionSettingsSync();
             }
             delete m_resizeBox;

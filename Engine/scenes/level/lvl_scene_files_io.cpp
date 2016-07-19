@@ -29,7 +29,7 @@
 
 bool LevelScene::loadFile(QString filePath)
 {
-    data.ReadFileValid = false;
+    data.meta.ReadFileValid = false;
     if(!QFileInfo(filePath).exists())
     {
         errorMsg += "File not exist\n\n";
@@ -40,7 +40,7 @@ bool LevelScene::loadFile(QString filePath)
     if( !FileFormats::OpenLevelFile(filePath, data) )
         errorMsg += "Bad file format\n";
 
-    return data.ReadFileValid;
+    return data.meta.ReadFileValid;
 }
 
 
@@ -48,7 +48,7 @@ bool LevelScene::loadFileIP()
 {
     if(!IntProc::isEnabled()) return false;
 
-    data.ReadFileValid = false;
+    data.meta.ReadFileValid = false;
 
     LogDebug("ICP: Requesting editor for a file....");
 
@@ -93,13 +93,13 @@ bool LevelScene::loadFileIP()
 
     data = IntProc::editor->accepted_lvl;
 
-    if(!timeOut && !data.ReadFileValid)
+    if(!timeOut && !data.meta.ReadFileValid)
         errorMsg += "Bad file format\n";
 
     LogDebug("ICP: Done, starting a game....");
 
     IntProc::setState("Done. Starting game...");
 
-    return data.ReadFileValid;
+    return data.meta.ReadFileValid;
 }
 

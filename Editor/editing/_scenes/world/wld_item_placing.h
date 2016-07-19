@@ -26,11 +26,11 @@
 class WldPlacingItems
 {
 public:
-    static WorldTiles TileSet;
+    static WorldTerrainTile TileSet;
     static WorldScenery SceneSet;
-    static WorldPaths PathSet;
-    static WorldLevels LevelSet;
-    static WorldMusic MusicSet;
+    static WorldPathTile PathSet;
+    static WorldLevelTile LevelSet;
+    static WorldMusicBox MusicSet;
 
     enum PlaceMode
     {

@@ -70,9 +70,9 @@ void HistoryElementModifyEvent::doEventRemove()
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     for (int i = 0; i < lvlScene->m_data->events.size(); i++) {
-        if(lvlScene->m_data->events[i].array_id == (unsigned int)rmEvents.array_id){
+        if(lvlScene->m_data->events[i].meta.array_id == (unsigned int)rmEvents.meta.array_id){
             for(int j = 0; j < MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->count(); j++){
-                if(MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
+                if(MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.meta.array_id){
                     delete MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j);
                 }
             }
@@ -103,7 +103,7 @@ void HistoryElementModifyEvent::doEventPlace()
     item->setFlags(Qt::ItemIsEditable);
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-    item->setData(Qt::UserRole, QString::number(rmEvents.array_id) );
+    item->setData(Qt::UserRole, QString::number(rmEvents.meta.array_id) );
     QListWidget* evList = MainWinConnect::pMainWin->dock_LvlEvents->getEventList();
     LevelSMBX64Event NewEvent = rmEvents;
 
@@ -111,7 +111,7 @@ void HistoryElementModifyEvent::doEventPlace()
     lvlScene->m_data->events.push_back(NewEvent);
     evList->addItem(item);
 
-    lvlScene->m_data->modified = true;
+    lvlScene->m_data->meta.modified = true;
 
     MainWinConnect::pMainWin->EventListsSync();
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);

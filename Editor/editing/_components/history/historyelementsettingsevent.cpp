@@ -34,7 +34,7 @@ void HistoryElementSettingsEvent::undo()
     bool found = false;
 
     for(int i = 0; i < lvlScene->m_data->events.size(); i++){
-        if(lvlScene->m_data->events[i].array_id == (unsigned int)array_id){
+        if(lvlScene->m_data->events[i].meta.array_id == (unsigned int)array_id){
             found = true;
             eventp = &lvlScene->m_data->events[i];
             break;
@@ -222,7 +222,7 @@ void HistoryElementSettingsEvent::redo()
     bool found = false;
 
     for(int i = 0; i < lvlScene->m_data->events.size(); i++){
-        if(lvlScene->m_data->events[i].array_id == (unsigned int)array_id){
+        if(lvlScene->m_data->events[i].meta.array_id == (unsigned int)array_id){
             found = true;
             eventp = &lvlScene->m_data->events[i];
             break;

@@ -28,7 +28,7 @@ void HistoryElementAddLayer::undo()
         return;
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++){
-        if(lvlScene->m_data->layers[i].array_id == (unsigned int)m_array_id){
+        if(lvlScene->m_data->layers[i].meta.array_id == (unsigned int)m_array_id){
             lvlScene->m_data->layers.removeAt(i);
         }
     }
@@ -48,7 +48,7 @@ void HistoryElementAddLayer::redo()
         return;
 
     LevelLayer l;
-    l.array_id = m_array_id;
+    l.meta.array_id = m_array_id;
     l.name = m_name;
     l.hidden = false;
     lvlScene->m_data->layers.push_back(l);

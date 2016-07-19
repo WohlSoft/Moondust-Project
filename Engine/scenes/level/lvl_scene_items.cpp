@@ -46,7 +46,7 @@ LVL_Block * LevelScene::spawnBlock(LevelBlock blockData)
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return NULL;
     LVL_Block * block;
-    blockData.array_id= ++data.blocks_array_id;
+    blockData.meta.array_id= ++data.blocks_array_id;
     block = new LVL_Block(this);
     if(!block) throw("Out of memory [new LVL_Block spawn]");
     block->data = blockData;
@@ -93,7 +93,7 @@ LVL_Bgo* LevelScene::spawnBGO(LevelBGO bgoData)
     if(bgoData.id<=0) return NULL;
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return NULL;
-    bgoData.array_id= ++data.blocks_array_id;
+    bgoData.meta.array_id= ++data.blocks_array_id;
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo(this);
     if(!bgo) throw("Out of memory [new LVL_Bgo] spawn");
@@ -133,7 +133,7 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     if(!npc)
         return NULL;
 
-    npcData.array_id= ++data.npc_array_id;
+    npcData.meta.array_id= ++data.npc_array_id;
     npc->setScenePointer(this);
     npc->setup = curNpcData;
     npc->reSpawnable=reSpawnable;

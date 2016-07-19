@@ -51,7 +51,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
         LevelEdit *e = activeLvlEditWin();
         if(e)
         {
-            path=e->LvlData.path;
+            path=e->LvlData.meta.path;
             isUntitled=e->isUntitled;
         }
     } else if(activeChildWindow()==2) {
@@ -65,7 +65,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
         WorldEdit *e = activeWldEditWin();
         if(e)
         {
-            path=e->WldData.path;
+            path=e->WldData.meta.path;
             isUntitled=e->isUntitled;
         }
     }
@@ -91,7 +91,7 @@ void MainWindow::on_action_openCustomFolder_triggered()
         LevelEdit *e = activeLvlEditWin();
         if(e)
         {
-            path=e->LvlData.path+"/"+e->LvlData.filename;
+            path=e->LvlData.meta.path+"/"+e->LvlData.meta.filename;
             isUntitled=e->isUntitled;
         }
     } else if(activeChildWindow()==2) {
@@ -100,7 +100,7 @@ void MainWindow::on_action_openCustomFolder_triggered()
         WorldEdit *e = activeWldEditWin();
         if(e)
         {
-            path=e->WldData.path+"/"+e->WldData.filename;
+            path=e->WldData.meta.path+"/"+e->WldData.meta.filename;
             isUntitled=e->isUntitled;
         }
     }
@@ -201,12 +201,12 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         LogDebug("> parsing level file format");
         if( !FileFormats::OpenLevelFile(FilePath, FileData) )
         {
-            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            formatErrorMsgBox(FilePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             return;
         }
         LogDebug("File was read!");
-        FileData.filename   = util::getBaseFilename(in_1.fileName());
-        FileData.path       = in_1.absoluteDir().absolutePath();
+        FileData.meta.filename   = util::getBaseFilename(in_1.fileName());
+        FileData.meta.path       = in_1.absoluteDir().absolutePath();
         FileData.playmusic  = GlobalSettings::autoPlayMusic;
         file.close();
 
@@ -230,7 +230,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         } else {
             LogDebug(">>File loading aborted");
             //child->show();
-            child->LvlData.modified = false;
+            child->LvlData.meta.modified = false;
             newSubWin->close();
             LogDebug(">>Windows closed");
         }
@@ -241,7 +241,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         WorldData FileData;
         if( !FileFormats::OpenWorldFile( FilePath, FileData ) )
         {
-            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            formatErrorMsgBox(FilePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             return;
         }
         file.close();
@@ -306,11 +306,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         QString statistics;
         if(!FileFormats::ReadSMBX64SavFileF( FilePath, FileData))
         {
-            formatErrorMsgBox( FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata );
+            formatErrorMsgBox( FilePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata );
             return;
         }
 
-        statistics+= QString("SMBX Game Save file version %1\n\n").arg(FileData.version);
+        statistics+= QString("SMBX Game Save file version %1\n\n").arg(FileData.meta.RecentFormatVersion);
         if(FileData.gameCompleted)
             statistics+= "      ====This game was completed====\n\n";
         statistics+= QString("Lives: %1,   Coins:%2,   ").arg(FileData.lives).arg(FileData.coins);
@@ -375,7 +375,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         }
         statistics += "\n=========================\n";
 
-        if( !FileData.ReadFileValid )
+        if( !FileData.meta.ReadFileValid )
             return;
 
         QMessageBox::information(this,

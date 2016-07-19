@@ -64,13 +64,13 @@ public:
 class WldTileItem: public WorldNode
 {
 public:
-    WldTileItem(WorldTiles _data);
+    WldTileItem(WorldTerrainTile _data);
     WldTileItem(const WldTileItem &x);
     ~WldTileItem();
     bool init();
     void render(float rx, float ry);
     obj_w_tile setup;
-    WorldTiles data;
+    WorldTerrainTile data;
 };
 
 class WldSceneryItem: public WorldNode
@@ -88,19 +88,19 @@ public:
 class WldPathItem: public WorldNode
 {
 public:
-    WldPathItem(WorldPaths _data);
+    WldPathItem(WorldPathTile _data);
     WldPathItem(const WldPathItem &x);
     ~WldPathItem();
     bool init();
     void render(float rx, float ry);
     obj_w_path setup;
-    WorldPaths data;
+    WorldPathTile data;
 };
 
 class WldLevelItem: public WorldNode
 {
 public:
-    WldLevelItem(WorldLevels _data);
+    WldLevelItem(WorldLevelTile _data);
     WldLevelItem(const WldLevelItem &x);
     ~WldLevelItem();
     bool init();
@@ -115,16 +115,16 @@ public:
     PGE_Texture _path_big_tex;
     float       _path_big_offset_x;
     float       _path_big_offset_y;
-    WorldLevels data;
+    WorldLevelTile data;
 };
 
 class WldMusicBoxItem: public WorldNode
 {
 public:
-    WldMusicBoxItem(WorldMusic _data);
+    WldMusicBoxItem(WorldMusicBox _data);
     WldMusicBoxItem(const WldMusicBoxItem &x);
     ~WldMusicBoxItem();
-    WorldMusic data;
+    WorldMusicBox data;
 };
 
 
