@@ -66,12 +66,12 @@ void HistoryElementPlaceDoor::redo()
 
     bool isEntrance = m_door.isSetIn;
 
-    if(isEntrance){
+    if(isEntrance) {
         door.ix = m_door.ix;
         door.iy = m_door.iy;
         door.isSetIn = true;
         lvlScene->placeDoorEnter(door, false, false);
-    }else{
+    } else {
         door.ox = m_door.ox;
         door.oy = m_door.oy;
         door.isSetOut = true;
