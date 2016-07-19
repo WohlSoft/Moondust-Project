@@ -312,19 +312,18 @@ void LvlWarpBox::on_WarpAdd_clicked()
 void LvlWarpBox::on_WarpRemove_clicked()
 {
     int WinType = mw()->activeChildWindow();
-    if (WinType==1)
+    if(WinType == 1)
     {
         LevelEdit* edit = mw()->activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
-            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].array_id == (unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->scene->addRemoveWarpHistory(edit->LvlData.doors[i]);
                 break;
             }
         }
-
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt(), true);
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
@@ -338,8 +337,8 @@ void LvlWarpBox::on_WarpRemove_clicked()
 
         ui->WarpList->removeItem( ui->WarpList->currentIndex() );
 
-        //if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
-        if(ui->WarpList->count()<=0) setWarpRemoveButtonEnabled(false);
+        if(ui->WarpList->count() <= 0)
+            setWarpRemoveButtonEnabled(false);
     }
 
 }
