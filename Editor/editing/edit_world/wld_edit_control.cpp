@@ -33,10 +33,10 @@
 void WorldEdit::mouseReleaseEvent( QMouseEvent * event )
 {
 
-    if(scene->PasteFromBuffer)
+    if(scene->m_pastingMode)
     {
        changeCursor(WorldEdit::MODE_Selecting);
-       scene->PasteFromBuffer=false;
+       scene->m_pastingMode=false;
     }
     QWidget::mouseReleaseEvent( event );
 }

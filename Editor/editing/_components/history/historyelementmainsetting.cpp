@@ -78,19 +78,19 @@ void HistoryElementMainSetting::processWorldUndo()
         return;
 
     if(m_modWorldSetting == HistorySettings::SETTING_HUB){
-        wldScene->WldData->HubStyledWorld = !m_modData.toBool();
+        wldScene->m_data->HubStyledWorld = !m_modData.toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_RESTARTAFTERFAIL){
-        wldScene->WldData->restartlevel = !m_modData.toBool();
+        wldScene->m_data->restartlevel = !m_modData.toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_TOTALSTARS){
-        wldScene->WldData->stars = m_modData.toList()[0].toInt();
+        wldScene->m_data->stars = m_modData.toList()[0].toInt();
     }else if(m_modWorldSetting == HistorySettings::SETTING_INTROLEVEL){
-        wldScene->WldData->IntroLevel_file = m_modData.toList()[0].toString();
+        wldScene->m_data->IntroLevel_file = m_modData.toList()[0].toString();
     }else if(m_modWorldSetting == HistorySettings::SETTING_CHARACTER){
         int ind = MainWinConnect::pMainWin->configs.getCharacterI(m_modData.toList()[0].toInt());
         if(ind!=-1)
-            wldScene->WldData->nocharacter[ind] = !m_modData.toList()[1].toBool();
+            wldScene->m_data->nocharacter[ind] = !m_modData.toList()[1].toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_WORLDTITLE){
-        wldScene->WldData->EpisodeTitle = m_modData.toList()[0].toString();
+        wldScene->m_data->EpisodeTitle = m_modData.toList()[0].toString();
         if(MainWinConnect::pMainWin->activeChildWindow()==3)
             MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
                         m_modData.toList()[0].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[0].toString());
@@ -127,19 +127,19 @@ void HistoryElementMainSetting::processWorldRedo()
         return;
 
     if(m_modWorldSetting == HistorySettings::SETTING_HUB){
-        wldScene->WldData->HubStyledWorld = m_modData.toBool();
+        wldScene->m_data->HubStyledWorld = m_modData.toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_RESTARTAFTERFAIL){
-        wldScene->WldData->restartlevel = m_modData.toBool();
+        wldScene->m_data->restartlevel = m_modData.toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_TOTALSTARS){
-        wldScene->WldData->stars = m_modData.toList()[1].toInt();
+        wldScene->m_data->stars = m_modData.toList()[1].toInt();
     }else if(m_modWorldSetting == HistorySettings::SETTING_INTROLEVEL){
-        wldScene->WldData->IntroLevel_file = m_modData.toList()[1].toString();
+        wldScene->m_data->IntroLevel_file = m_modData.toList()[1].toString();
     }else if(m_modWorldSetting == HistorySettings::SETTING_CHARACTER){
         int ind = MainWinConnect::pMainWin->configs.getCharacterI(m_modData.toList()[0].toInt());
         if(ind!=-1)
-            wldScene->WldData->nocharacter[ind] = m_modData.toList()[1].toBool();
+            wldScene->m_data->nocharacter[ind] = m_modData.toList()[1].toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_WORLDTITLE){
-        wldScene->WldData->EpisodeTitle = m_modData.toList()[1].toString();
+        wldScene->m_data->EpisodeTitle = m_modData.toList()[1].toString();
         if(MainWinConnect::pMainWin->activeChildWindow()==3)
             MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
                         m_modData.toList()[1].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[1].toString());

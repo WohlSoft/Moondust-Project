@@ -47,16 +47,16 @@ void WLD_ModeLine::set()
     s->resetResizers();
     s->unserPointSelector();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -69,19 +69,19 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    LogDebug(QString("Line mode %1").arg(s->EditingMode));
+    LogDebug(QString("Line mode %1").arg(s->m_editMode));
 
-    s->last_tile_arrayID=s->WldData->tile_array_id;
-    s->last_scene_arrayID=s->WldData->scene_array_id;
-    s->last_path_arrayID=s->WldData->path_array_id;
-    s->last_level_arrayID=s->WldData->level_array_id;
-    s->last_musicbox_arrayID=s->WldData->musicbox_array_id;
+    s->m_lastTerrainArrayID=s->m_data->tile_array_id;
+    s->m_lastSceneryArrayID=s->m_data->scene_array_id;
+    s->m_lastPathArrayID=s->m_data->path_array_id;
+    s->m_lastLevelArrayID=s->m_data->level_array_id;
+    s->m_lastMusicBoxArrayID=s->m_data->musicbox_array_id;
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
         drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                           QPoint(WldPlacingItems::c_offset_x,
@@ -89,14 +89,14 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                           WldPlacingItems::gridSz,
                                           WldPlacingItems::gridOffset));
         //cursor->setPos( drawStartPos );
-        s->cursor->setVisible(true);
+        s->m_cursorItemImg->setVisible(true);
 
         QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint()-
                                QPoint(WldPlacingItems::c_offset_x,
                                       WldPlacingItems::c_offset_y),
                                WldPlacingItems::gridSz,
                                WldPlacingItems::gridOffset);
-        ((QGraphicsLineItem *)s->cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
+        ((QGraphicsLineItem *)s->m_cursorItemImg)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
     }
 }
 
@@ -105,9 +105,9 @@ void WLD_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-        if(s->cursor->isVisible())
+        if(s->m_cursorItemImg->isVisible())
         {
         QPoint hs = s->applyGrid( mouseEvent->scenePos().toPoint()-
                                QPoint(WldPlacingItems::c_offset_x,
@@ -126,7 +126,7 @@ void WLD_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
         sz.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
 
-        ((QGraphicsLineItem *)s->cursor)->setLine(sz);
+        ((QGraphicsLineItem *)s->m_cursorItemImg)->setLine(sz);
 
         item_rectangles::drawLine(s, sz,
                QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
@@ -143,12 +143,12 @@ void WLD_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();
-        s->WldData->meta.modified = true;
-        s->cursor->hide();
+        s->m_data->meta.modified = true;
+        s->m_cursorItemImg->hide();
     }
 }
 

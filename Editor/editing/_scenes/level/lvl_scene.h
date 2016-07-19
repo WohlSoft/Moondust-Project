@@ -397,8 +397,8 @@ public:
         };
         int m_placingItemType;
 
-        LevelData placingItems;
-        LevelData overwritedItems;
+        LevelData m_placingItems;
+        LevelData m_overwritedItems;
 
         ///
         /// \brief cursor

@@ -163,7 +163,7 @@ void WldScene::historyBack()
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
     lastOperation->undo();
-    WldData->meta.modified = true;
+    m_data->meta.modified = true;
 
     Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -177,7 +177,7 @@ void WldScene::historyForward()
     lastOperation->redo();
     historyIndex++;
 
-    WldData->meta.modified = true;
+    m_data->meta.modified = true;
     Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(lastOperation->getHistoryName()));

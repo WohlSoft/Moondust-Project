@@ -46,7 +46,7 @@ void Items::getItemGFX(const obj_npc *inObj, QPixmap &outImg, bool whole, QSize 
     }
     else
     {
-        outImg = Themes::Image(Themes::dummy_tile);
+        outImg = Themes::Image(Themes::dummy_terrain);
     }
 }
 
@@ -90,7 +90,7 @@ void Items::getItemGFX(const obj_bgo *inObj, QPixmap &outImg, bool whole, QSize 
 
 void Items::getItemGFX(const obj_w_tile *inObj, QPixmap &outImg, bool whole, QSize targetSize)
 {
-    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_tile);
+    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_terrain);
 }
 
 void Items::getItemGFX(const obj_w_scenery *inObj, QPixmap &outImg, bool whole, QSize targetSize)

@@ -43,6 +43,7 @@
 #include <editing/_components/history/ihistoryelement.h>
 
 class WorldEdit;
+class MainWindow;
 
 class WldScene : public QGraphicsScene
 {
@@ -50,7 +51,7 @@ class WldScene : public QGraphicsScene
     friend class EditMode;
     friend class WorldEdit;
 public:
-    WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
+    WldScene(MainWindow* mw, GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
     ~WldScene();
 
 /* //////////////////////Contents/////////////////////////////
@@ -87,10 +88,16 @@ public:
 
     // ///////////////////Common////////////////////////
     public:
-        dataconfigs       * pConfigs;   //!< Pointer to global configuration in the main window
-        WorldData         * WldData;    //!< Pointer to level data storage in the sub-window class
-        GraphicsWorkspace *_viewPort;   //!< Pointer to parent graphics view
-        WorldEdit         *_edit;       //!< Pointer to parent edit sub-window;
+        //! Main window pointer
+        MainWindow        * m_mw;
+        //! Pointer to global configuration in the main window
+        dataconfigs       * m_configs;
+        //! Pointer to level data storage in the sub-window class
+        WorldData         * m_data;
+        //! Pointer to parent graphics view
+        GraphicsWorkspace * m_viewPort;
+        //! Pointer to parent edit sub-window;
+        WorldEdit         * m_subWindow;
 
         WorldData WldBuffer;    //!< Data buffer
 
@@ -136,13 +143,13 @@ public:
         QList<obj_w_level* > custom_Levels;
 
         //!Terrain tiles animators
-        QList<SimpleAnimator* > animates_Tiles;
+        QList<SimpleAnimator* > m_animatorsTerrain;
         //!Scenery animators
-        QList<SimpleAnimator* > animates_Scenery;
+        QList<SimpleAnimator* > m_animatorsScenery;
         //!Paths animators
-        QList<SimpleAnimator* > animates_Paths;
+        QList<SimpleAnimator* > m_animatorsPaths;
         //!Levels animators
-        QList<SimpleAnimator* > animates_Levels;
+        QList<SimpleAnimator* > m_animatorsLevels;
 
         //! Main animation processor
         AnimationTimer      animator;
@@ -166,10 +173,10 @@ public:
         ///
         /// Dummy images for items which got errors: out of range for ID value, wrong image file, etc.
         ///
-        QPixmap uTileImg;
-        QPixmap uSceneImg;
-        QPixmap uPathImg;
-        QPixmap uLevelImg;
+        QPixmap m_dummyTerrainImg;
+        QPixmap m_dummySceneryImg;
+        QPixmap m_dummyPathImg;
+        QPixmap m_dummyLevelImg;
 
         QPixmap tImg;   //!Tempotary buffer
 
@@ -182,11 +189,11 @@ public:
     public:
 
         //the last Array ID's, which used before hold mouse key
-        qlonglong last_tile_arrayID;
-        qlonglong last_scene_arrayID;
-        qlonglong last_path_arrayID;
-        qlonglong last_level_arrayID;
-        qlonglong last_musicbox_arrayID;
+        qlonglong m_lastTerrainArrayID;
+        qlonglong m_lastSceneryArrayID;
+        qlonglong m_lastPathArrayID;
+        qlonglong m_lastLevelArrayID;
+        qlonglong m_lastMusicBoxArrayID;
 
         //Defining indexes for data values of items
         #define ITEM_TYPE                    0 //String
@@ -210,6 +217,9 @@ public:
 
     // ///////////////////Point selector/////////////////////////
     public:
+        /******************************************************************/
+        /* TODO: Make a separated structure/class to inject this into it  */
+        /******************************************************************/
         SimpleAnimator pointAnimation;
         QPixmap pointImg;
         bool isSelectionDialog; // If scene created in the point selection dialog
@@ -221,7 +231,7 @@ public:
                                    //will work in the x0-y0, but this point are usable)
                                    //If value true, initial position will be 0x0, else already placed point
 
-        QPixmap musicBoxImg;
+        QPixmap m_musicBoxImg;
         void setPoint(QPoint p);   //Set Point item
         void unserPointSelector(); //remove point item from world map
 
@@ -233,11 +243,11 @@ public:
 
     // ///////////////////Item Locks////////////////////////////
     public:
-        bool lock_tile;
-        bool lock_scene;
-        bool lock_path;
-        bool lock_level;
-        bool lock_musbox;
+        bool m_lockTerrain;
+        bool m_lockScenery;
+        bool m_lockPath;
+        bool m_lockLevel;
+        bool m_lockMusicBox;
         void setLocked(int type, bool lock);
 
     // ///////////////////Item Modifying/////////////////////////
@@ -284,7 +294,7 @@ public:
     // ///////////////////Collisions///////////////////////////
     public:
         QList<QGraphicsItem *> collisionCheckBuffer;
-        bool emptyCollisionCheck;
+        bool m_emptyCollisionCheck;
         void prepareCollisionBuffer();
 
         typedef QList<QGraphicsItem *> PGE_ItemList;
@@ -310,10 +320,10 @@ public:
 
     // ///////////////////Edit modes///////////////////////////
     public:
-        int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+        int m_editMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
                          // 3 - drawing water/sand zone, 4 - placing from Buffer
-        QList<EditMode *> EditModes;
-        EditMode * CurrentMode;
+        QList<EditMode *> m_editModes;
+        EditMode * m_editModeObj;
         enum EditModeID
         {
             MODE_Selecting=0,
@@ -336,22 +346,22 @@ public:
     public:
         enum placingItemType
         {
-            PLC_Tile=0,
+            PLC_Terrain=0,
             PLC_Scene,
             PLC_Path,
             PLC_Level,
             PLC_Musicbox
         };
-        int placingItem;
+        int m_placingItemType;
 
-        WorldData placingItems;
-        WorldData overwritedItems;
+        WorldData m_placingItems;
+        WorldData m_overwritedItems;
 
         ///
         /// \brief cursor
         /// Abstact item which using to check collision before place item. Using in the placing and erasing modes
         ///
-        QGraphicsItem * cursor;
+        QGraphicsItem * m_cursorItemImg;
         void resetCursor();
 
         void setItemPlacer(int itemType, unsigned long itemID=1);
@@ -362,34 +372,33 @@ public:
         void setLineDrawer();
         void setFloodFiller();
 
-        QGraphicsSimpleTextItem * messageBox;
+        QGraphicsSimpleTextItem * m_labelBox;
         void setMessageBoxItem(bool show=false, QPointF pos=QPointF(), QString text="");
 
     // ///////////////////Mouse Events///////////////////////////
     public:
-        bool IsMoved;
-        bool haveSelected;
+        bool m_mouseIsMovedAfterKey;
 
-        bool EraserEnabled;
-        bool PasteFromBuffer;
+        bool m_eraserIsEnabled;
+        bool m_pastingMode;
 
-        bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-        bool disableMoveItems;
-        bool contextMenuOpened;
+        bool m_busyMode; //Placing/drawing on map, disable selecting and dragging items
+        bool m_disableMoveItems;
+        bool m_contextMenuIsOpened;
 
-        bool mouseLeft; //Left mouse key is pressed
-        bool mouseMid;  //Middle mouse key is pressed
-        bool mouseRight;//Right mouse key is pressed
+        bool m_mouseLeftPressed; //Left mouse key is pressed
+        bool m_mouseMidPressed;  //Middle mouse key is pressed
+        bool m_mouseRightPressed;//Right mouse key is pressed
 
-        bool mouseMoved; //Mouse was moved with right mouseKey
+        bool m_mouseIsMoved; //Mouse was moved with right mouseKey
 
         void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
         void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MousePressEventOnly;
+        bool m_skipChildMousePressEvent;
         void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MouseMoveEventOnly;
+        bool m_skipChildMouseMoveEvent;
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-        bool MouseReleaseEventOnly;
+        bool m_skipChildMousReleaseEvent;
         void keyPressEvent ( QKeyEvent * keyEvent );
         void keyReleaseEvent ( QKeyEvent * keyEvent );
 
@@ -399,7 +408,7 @@ public:
 
     // ///////////////////Resizers///////////////////////////
     public:
-        ItemResizer * pResizer; //reisizer pointer
+        ItemResizer * m_resizeBox; //reisizer pointer
 
         QRectF captutedSize;
         void setScreenshotSelector(bool enabled, bool accept = false);

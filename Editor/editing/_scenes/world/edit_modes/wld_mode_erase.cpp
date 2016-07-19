@@ -47,14 +47,14 @@ void WLD_ModeErase::set()
     s->resetResizers();
     s->unserPointSelector();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=false;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=false;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
+    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -66,16 +66,16 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if(s->cursor){
-       s->cursor->show();
-       s->cursor->setPos(mouseEvent->scenePos());
+    if(s->m_cursorItemImg){
+       s->m_cursorItemImg->show();
+       s->m_cursorItemImg->setPos(mouseEvent->scenePos());
     }
 
-    s->MousePressEventOnly = true;
+    s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 
@@ -84,7 +84,7 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
-        s->EraserEnabled=true;
+        s->m_eraserIsEnabled=true;
     }
 }
 
@@ -93,8 +93,8 @@ void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor) s->cursor->setPos(mouseEvent->scenePos());
-    if (s->EraserEnabled)// Remove All items, placed under Cursor
+    if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
+    if (s->m_eraserIsEnabled)// Remove All items, placed under Cursor
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -107,31 +107,31 @@ void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(!s->overwritedItems.tiles.isEmpty()||
-        !s->overwritedItems.scenery.isEmpty()||
-        !s->overwritedItems.paths.isEmpty()||
-        !s->overwritedItems.levels.isEmpty()||
-        !s->overwritedItems.music.isEmpty() )
+    if(!s->m_overwritedItems.tiles.isEmpty()||
+        !s->m_overwritedItems.scenery.isEmpty()||
+        !s->m_overwritedItems.paths.isEmpty()||
+        !s->m_overwritedItems.levels.isEmpty()||
+        !s->m_overwritedItems.music.isEmpty() )
     {
-        s->addRemoveHistory(s->overwritedItems);
-        s->overwritedItems.tiles.clear();
-        s->overwritedItems.scenery.clear();
-        s->overwritedItems.paths.clear();
-        s->overwritedItems.levels.clear();
-        s->overwritedItems.music.clear();
+        s->addRemoveHistory(s->m_overwritedItems);
+        s->m_overwritedItems.tiles.clear();
+        s->m_overwritedItems.scenery.clear();
+        s->m_overwritedItems.paths.clear();
+        s->m_overwritedItems.levels.clear();
+        s->m_overwritedItems.music.clear();
     }
 
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 
     // check for grid snap
-    if ((!selectedList.isEmpty())&&(s->mouseMoved))
+    if ((!selectedList.isEmpty())&&(s->m_mouseIsMoved))
     {
         s->removeWldItems(selectedList);
         selectedList = s->selectedItems();
         s->Debugger_updateItemList();
     }
 
-    s->EraserEnabled = false;
+    s->m_eraserIsEnabled = false;
 }
 
 void WLD_ModeErase::keyPress(QKeyEvent *keyEvent)

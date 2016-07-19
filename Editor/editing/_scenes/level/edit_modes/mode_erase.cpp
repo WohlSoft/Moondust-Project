@@ -102,14 +102,14 @@ void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(!s->overwritedItems.blocks.isEmpty()||
-        !s->overwritedItems.bgo.isEmpty()||
-        !s->overwritedItems.npc.isEmpty() )
+    if(!s->m_overwritedItems.blocks.isEmpty()||
+        !s->m_overwritedItems.bgo.isEmpty()||
+        !s->m_overwritedItems.npc.isEmpty() )
     {
-        s->m_history->addRemove(s->overwritedItems);
-        s->overwritedItems.blocks.clear();
-        s->overwritedItems.bgo.clear();
-        s->overwritedItems.npc.clear();
+        s->m_history->addRemove(s->m_overwritedItems);
+        s->m_overwritedItems.blocks.clear();
+        s->m_overwritedItems.bgo.clear();
+        s->m_overwritedItems.npc.clear();
     }
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 

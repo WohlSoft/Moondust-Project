@@ -59,7 +59,7 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
         return false;
     }
 
-    scene = new WldScene(ui->graphicsView, configs, WldData, this);
+    scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
     scene->opts = options;
 
     //scene->InitSection(0);
@@ -347,7 +347,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(ui->graphicsView, configs, WldData, this);
+    scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
 
     scene->opts = options;
 
@@ -449,28 +449,28 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         LogDebug("!<-Cleared->!");
 
         LogDebug("!<-Delete animators->!");
-        while(! scene->animates_Tiles.isEmpty() )
+        while(! scene->m_animatorsTerrain.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_Tiles.first();
-            scene->animates_Tiles.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsTerrain.first();
+            scene->m_animatorsTerrain.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        while(! scene->animates_Scenery.isEmpty() )
+        while(! scene->m_animatorsScenery.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_Scenery.first();
-            scene->animates_Scenery.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsScenery.first();
+            scene->m_animatorsScenery.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        while(! scene->animates_Paths.isEmpty() )
+        while(! scene->m_animatorsPaths.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_Paths.first();
-            scene->animates_Paths.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsPaths.first();
+            scene->m_animatorsPaths.pop_front();
             if(tmp!=NULL) delete tmp;
         }
-        while(! scene->animates_Levels.isEmpty() )
+        while(! scene->m_animatorsLevels.isEmpty() )
         {
-            SimpleAnimator* tmp = scene->animates_Levels.first();
-            scene->animates_Levels.pop_front();
+            SimpleAnimator* tmp = scene->m_animatorsLevels.first();
+            scene->m_animatorsLevels.pop_front();
             if(tmp!=NULL) delete tmp;
         }
 

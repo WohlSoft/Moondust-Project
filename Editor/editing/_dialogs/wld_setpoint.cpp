@@ -30,7 +30,9 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scene = nullptr;
+    m_mw = qobject_cast<MainWindow*>(parent);
+
+    m_scene = nullptr;
     sceneCreated = false;
     FileType = 0;
     mapPoint = QPoint(-1,-1);
@@ -56,18 +58,18 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 
 WLD_SetPoint::~WLD_SetPoint()
 {
-    if(scene)
-        delete scene;
+    if(m_scene)
+        delete m_scene;
     delete ui;
 }
 
 
 void WLD_SetPoint::updateScene()
 {
-    if(scene->opts.animationEnabled)
+    if(m_scene->opts.animationEnabled)
     {
         QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-        scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
+        m_scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
     }
 }
 
@@ -200,27 +202,27 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(ui->graphicsView, configs, WldData, this);
+    m_scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
 
-    scene->opts = options;
-    scene->isSelectionDialog = true;
+    m_scene->opts = options;
+    m_scene->isSelectionDialog = true;
 
-    ui->animation->setChecked(scene->opts.animationEnabled);
+    ui->animation->setChecked(m_scene->opts.animationEnabled);
 
     //Preparing point selection mode
-    scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+    m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
     if(mapPointIsNull)
     {
-        scene->selectedPointNotUsed = true;
+        m_scene->selectedPointNotUsed = true;
     }
     else
     {
-        scene->selectedPointNotUsed = false;
-        scene->selectedPoint = mapPoint;
+        m_scene->selectedPointNotUsed = false;
+        m_scene->selectedPoint = mapPoint;
     }
-    scene->setItemPlacer(5);
+    m_scene->setItemPlacer(5);
 
-    connect(scene, SIGNAL(pointSelected(QPoint)), this, SLOT(pointSelected(QPoint)));
+    connect(m_scene, SIGNAL(pointSelected(QPoint)), this, SLOT(pointSelected(QPoint)));
 
     int DataSize=0;
 
@@ -280,7 +282,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
     qApp->processEvents();
-    scene->loadUserData(progress);
+    m_scene->loadUserData(progress);
 
         if(progress.wasCanceled()) return false;
 
@@ -289,7 +291,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
 
     progress.setValue(progress.value()+1);
     qApp->processEvents();
-    scene->setTiles(progress);
+    m_scene->setTiles(progress);
 
         if(progress.wasCanceled()) return false;
 
@@ -298,7 +300,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
 
     progress.setValue(progress.value()+1);
     qApp->processEvents();
-    scene->setSceneries(progress);
+    m_scene->setSceneries(progress);
 
         if(progress.wasCanceled()) return false;
 
@@ -307,7 +309,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
 
     progress.setValue(progress.value()+1);
     qApp->processEvents();
-    scene->setPaths(progress);
+    m_scene->setPaths(progress);
 
         if(progress.wasCanceled()) return false;
 
@@ -317,7 +319,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
     progress.setValue(progress.value()+1);
     progress.setValue(progress.value()+1);
     qApp->processEvents();
-    scene->setLevels(progress);
+    m_scene->setLevels(progress);
 
         if(progress.wasCanceled()) return false;
 
@@ -327,16 +329,16 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
     progress.setValue(progress.value()+1);
     qApp->processEvents();
 
-    scene->setMusicBoxes(progress);
+    m_scene->setMusicBoxes(progress);
 
         if(progress.wasCanceled()) return false;
 
-    if(scene->opts.animationEnabled)
-        scene->startAnimation(); //Apply block animation
+    if(m_scene->opts.animationEnabled)
+        m_scene->startAnimation(); //Apply block animation
 
     if(!sceneCreated)
     {
-        ui->graphicsView->setScene(scene);
+        ui->graphicsView->setScene(m_scene);
         sceneCreated = true;
     }
     if(!progress.wasCanceled())
@@ -393,45 +395,45 @@ void WLD_SetPoint::unloadData()
     //MainWinConnect::pMainWin->setMusicButton(false);
     //MainWinConnect::pMainWin->setMusic(false);
 
-    scene->setMessageBoxItem(false);
+    m_scene->setMessageBoxItem(false);
 
-    scene->clear();
+    m_scene->clear();
     LogDebug("!<-Cleared->!");
 
     LogDebug("!<-Delete animators->!");
-    while(! scene->animates_Tiles.isEmpty() )
+    while(! m_scene->m_animatorsTerrain.isEmpty() )
     {
-        SimpleAnimator* tmp = scene->animates_Tiles.first();
-        scene->animates_Tiles.pop_front();
+        SimpleAnimator* tmp = m_scene->m_animatorsTerrain.first();
+        m_scene->m_animatorsTerrain.pop_front();
         if(tmp!=nullptr) delete tmp;
     }
-    while(! scene->animates_Scenery.isEmpty() )
+    while(! m_scene->m_animatorsScenery.isEmpty() )
     {
-        SimpleAnimator* tmp = scene->animates_Scenery.first();
-        scene->animates_Scenery.pop_front();
+        SimpleAnimator* tmp = m_scene->m_animatorsScenery.first();
+        m_scene->m_animatorsScenery.pop_front();
         if(tmp!=nullptr) delete tmp;
     }
-    while(! scene->animates_Paths.isEmpty() )
+    while(! m_scene->m_animatorsPaths.isEmpty() )
     {
-        SimpleAnimator* tmp = scene->animates_Paths.first();
-        scene->animates_Paths.pop_front();
+        SimpleAnimator* tmp = m_scene->m_animatorsPaths.first();
+        m_scene->m_animatorsPaths.pop_front();
         if(tmp!=nullptr) delete tmp;
     }
-    while(! scene->animates_Levels.isEmpty() )
+    while(! m_scene->m_animatorsLevels.isEmpty() )
     {
-        SimpleAnimator* tmp = scene->animates_Levels.first();
-        scene->animates_Levels.pop_front();
+        SimpleAnimator* tmp = m_scene->m_animatorsLevels.first();
+        m_scene->m_animatorsLevels.pop_front();
         if(tmp!=nullptr) delete tmp;
     }
 
-    scene->uTiles.clear();
-    scene->uScenes.clear();
-    scene->uPaths.clear();
-    scene->uLevels.clear();
+    m_scene->uTiles.clear();
+    m_scene->uScenes.clear();
+    m_scene->uPaths.clear();
+    m_scene->uLevels.clear();
 
     LogDebug("!<-Delete scene->!");
-    delete scene;
-    scene = nullptr;
+    delete m_scene;
+    m_scene = nullptr;
     sceneCreated=false;
     LogDebug("!<-Deleted->!");
 }
@@ -488,12 +490,12 @@ void WLD_SetPoint::on_ResetPosition_clicked()
 
 void WLD_SetPoint::on_animation_clicked(bool checked)
 {
-    scene->opts.animationEnabled = checked;
+    m_scene->opts.animationEnabled = checked;
 
     if(checked)
-        scene->startAnimation();
+        m_scene->startAnimation();
     else
-        scene->stopAnimation();
+        m_scene->stopAnimation();
 
 }
 

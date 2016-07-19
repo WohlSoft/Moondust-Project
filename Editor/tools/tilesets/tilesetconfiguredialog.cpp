@@ -378,8 +378,8 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
                     (ui->specific->isChecked()? "/"+dynamic_cast<LvlScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         case GFX_World:
-            savePath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+
-                    (ui->specific->isChecked()? "/"+dynamic_cast<WldScene *>(scn)->WldData->meta.filename :"")+"/";
+            savePath = dynamic_cast<WldScene *>(scn)->m_data->meta.path+
+                    (ui->specific->isChecked()? "/"+dynamic_cast<WldScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         default:
             savePath = m_conf->config_dir + "tilesets/";
@@ -404,7 +404,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
             openPath = dynamic_cast<LvlScene *>(scn)->m_data->meta.path+"/";
             break;
         case GFX_World:
-            openPath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+"/";
+            openPath = dynamic_cast<WldScene *>(scn)->m_data->meta.path+"/";
             break;
         default:
             openPath = m_conf->config_dir + "tilesets/";
@@ -462,8 +462,8 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
                     (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         case GFX_World:
-            lastFullPath = dynamic_cast<WldScene *>(scn)->WldData->meta.path+
-                    (isCustom? "/"+dynamic_cast<WldScene *>(scn)->WldData->meta.filename :"")+"/";
+            lastFullPath = dynamic_cast<WldScene *>(scn)->m_data->meta.path+
+                    (isCustom? "/"+dynamic_cast<WldScene *>(scn)->m_data->meta.filename :"")+"/";
             break;
         default:
             lastFullPath = m_conf->config_dir + "tilesets/";

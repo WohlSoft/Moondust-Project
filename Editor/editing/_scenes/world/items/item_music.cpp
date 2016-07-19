@@ -40,7 +40,7 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     m_scene->addItem(this);
     this->setZValue(m_scene->musicZ);
-    m_gridSize = m_scene->pConfigs->default_grid;
+    m_gridSize = m_scene->m_configs->default_grid;
     m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
     setData(ITEM_WIDTH,  QString::number( m_gridSize ) ); //width
     setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height
@@ -63,7 +63,7 @@ ItemMusic::~ItemMusic()
 
 void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened = true;
+    m_scene->m_contextMenuIsOpened = true;
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
@@ -119,7 +119,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
     if(selected==play)
     {
-        m_scene->_edit->currentMusic = m_data.id;
+        m_scene->m_subWindow->currentMusic = m_data.id;
         LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, m_data.id, m_data.music_file);
         LvlMusPlay::updatePlayerState(true);
         MainWinConnect::pMainWin->setMusicButton(true);
@@ -182,7 +182,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         int transformTO;
         QString transformTO_file;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0, m_scene->_edit);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
         util::DialogToCenter(itemList, true);
 
@@ -249,9 +249,9 @@ void ItemMusic::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->music.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->music.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->music[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->music[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -260,15 +260,15 @@ void ItemMusic::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->music[m_data.meta.index] = m_data; //apply current musicData
+        m_scene->m_data->music[m_data.meta.index] = m_data; //apply current musicData
     }
     else
-    for(int i=0; i<m_scene->WldData->music.size(); i++)
+    for(int i=0; i<m_scene->m_data->music.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->music[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->music[i].meta.array_id == m_data.meta.array_id)
         {
             m_data.meta.index = i;
-            m_scene->WldData->music[i] = m_data;
+            m_scene->m_data->music[i] = m_data;
             break;
         }
     }
@@ -279,9 +279,9 @@ void ItemMusic::arrayApply()
 void ItemMusic::removeFromArray()
 {
     bool found=false;
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->music.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->music.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->music[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->music[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -289,14 +289,14 @@ void ItemMusic::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->music.removeAt(m_data.meta.index);
+        m_scene->m_data->music.removeAt(m_data.meta.index);
     }
     else
-    for(int i=0; i<m_scene->WldData->music.size(); i++)
+    for(int i=0; i<m_scene->m_data->music.size(); i++)
     {
-        if(m_scene->WldData->music[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->music[i].meta.array_id == m_data.meta.array_id)
         {
-            m_scene->WldData->music.removeAt(i); break;
+            m_scene->m_data->music.removeAt(i); break;
         }
     }
 }
@@ -313,7 +313,7 @@ QPoint ItemMusic::sourcePos()
 
 bool ItemMusic::itemTypeIsLocked()
 {
-    return m_scene->lock_musbox;
+    return m_scene->m_lockMusicBox;
 }
 
 void ItemMusic::setMusicData(WorldMusicBox inD)
@@ -347,9 +347,9 @@ void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     }
     else
     {
-       painter->drawPixmap(m_scene->musicBoxImg.rect(),
-                           m_scene->musicBoxImg,
-                           m_scene->musicBoxImg.rect());
+       painter->drawPixmap(m_scene->m_musicBoxImg.rect(),
+                           m_scene->m_musicBoxImg,
+                           m_scene->m_musicBoxImg.rect());
     }
 
     if(this->isSelected())
@@ -363,13 +363,13 @@ void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
 void ItemMusic::transformTo(int musicID, QString musicFile)
 {
-    int j = m_scene->pConfigs->getMusWldI(musicID);
+    int j = m_scene->m_configs->getMusWldI(musicID);
     if(j>=0)
     {
         m_musicTitle =
-                (m_scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
+                (m_scene->m_configs->music_w_custom_id==(unsigned)musicID) ?
                     musicFile:
-                    m_scene->pConfigs->main_music_wld[j].name;
+                    m_scene->m_configs->main_music_wld[j].name;
 
         m_data.id         = musicID;
         m_data.music_file = musicFile;

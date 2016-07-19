@@ -27,23 +27,23 @@
 void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {
     bool do_signal=false;
-    if((enabled)&&(pResizer==NULL))
+    if((enabled)&&(m_resizeBox==NULL))
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
 
-        pResizer = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
-        this->addItem(pResizer);
-        pResizer->setPos(captutedSize.x(), captutedSize.y());
-        pResizer->type=0;
-        pResizer->_minSize = QSizeF(320, 200);
+        m_resizeBox = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
+        this->addItem(m_resizeBox);
+        m_resizeBox->setPos(captutedSize.x(), captutedSize.y());
+        m_resizeBox->type=0;
+        m_resizeBox->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        _edit->changeCursor(WorldEdit::MODE_Resizing);
+        m_subWindow->changeCursor(WorldEdit::MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
-        if(pResizer!=NULL)
+        if(m_resizeBox!=NULL)
         {
             if(accept)
             {
@@ -51,19 +51,19 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
 
-                captutedSize = QRectF( pResizer->pos().x(),
-                                       pResizer->pos().y(),
-                                       pResizer->_width,
-                                       pResizer->_height);
+                captutedSize = QRectF( m_resizeBox->pos().x(),
+                                       m_resizeBox->pos().y(),
+                                       m_resizeBox->_width,
+                                       m_resizeBox->_height);
                 do_signal=true;
             }
-            delete pResizer;
-            pResizer = NULL;
+            delete m_resizeBox;
+            m_resizeBox = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
-        DrawMode=false;
+        m_busyMode=false;
     }
 
     if(do_signal) emit screenshotSizeCaptured();

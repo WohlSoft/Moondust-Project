@@ -1071,7 +1071,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
             return;
         }
 
-        WLD_SetPoint * pointDialog = new WLD_SetPoint;
+        WLD_SetPoint * pointDialog = new WLD_SetPoint(mw());
 
         pointDialog->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         pointDialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pointDialog->size(), qApp->desktop()->availableGeometry()));
@@ -1091,7 +1091,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                                   false,
                                     QPoint(-qRound(qreal(pointDialog->gViewPort()->width())/2), -qRound(qreal(pointDialog->gViewPort()->height())/2))
                                   );
-                pointDialog->scene->setPoint( pointDialog->mapPoint );
+                pointDialog->m_scene->setPoint( pointDialog->mapPoint );
             }
 
             if( pointDialog->exec()==QDialog::Accepted )

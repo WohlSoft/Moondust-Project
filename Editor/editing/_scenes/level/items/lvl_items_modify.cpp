@@ -309,26 +309,26 @@ void LvlScene::placeItemsByRectArray()
     m_cursorItemImg = backup;
     m_cursorItemImg->hide();
 
-    if(!overwritedItems.blocks.isEmpty()||
-        !overwritedItems.bgo.isEmpty()||
-        !overwritedItems.npc.isEmpty() )
+    if(!m_overwritedItems.blocks.isEmpty()||
+        !m_overwritedItems.bgo.isEmpty()||
+        !m_overwritedItems.npc.isEmpty() )
     {
-        m_history->addOverwrite(overwritedItems, placingItems);
-        overwritedItems.blocks.clear();
-        overwritedItems.bgo.clear();
-        overwritedItems.npc.clear();
-        placingItems.blocks.clear();
-        placingItems.bgo.clear();
-        placingItems.npc.clear();
+        m_history->addOverwrite(m_overwritedItems, m_placingItems);
+        m_overwritedItems.blocks.clear();
+        m_overwritedItems.bgo.clear();
+        m_overwritedItems.npc.clear();
+        m_placingItems.blocks.clear();
+        m_placingItems.bgo.clear();
+        m_placingItems.npc.clear();
     }
     else
-    if(!placingItems.blocks.isEmpty()||
-            !placingItems.bgo.isEmpty()||
-            !placingItems.npc.isEmpty()){
-        m_history->addPlace(placingItems);
-        placingItems.blocks.clear();
-        placingItems.bgo.clear();
-        placingItems.npc.clear();
+    if(!m_placingItems.blocks.isEmpty()||
+            !m_placingItems.bgo.isEmpty()||
+            !m_placingItems.npc.isEmpty()){
+        m_history->addPlace(m_placingItems);
+        m_placingItems.blocks.clear();
+        m_placingItems.bgo.clear();
+        m_placingItems.npc.clear();
     }
 
 }
@@ -352,7 +352,7 @@ void LvlScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString() == "Block")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastBlockArrayID) break;
-                overwritedItems.blocks.push_back( dynamic_cast<ItemBlock *>(xxx)->m_data );
+                m_overwritedItems.blocks.push_back( dynamic_cast<ItemBlock *>(xxx)->m_data );
                 dynamic_cast<ItemBlock *>(xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -360,7 +360,7 @@ void LvlScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString() == "BGO")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastBgoArrayID) break;
-                overwritedItems.bgo.push_back( dynamic_cast<ItemBGO *>(xxx)->m_data );
+                m_overwritedItems.bgo.push_back( dynamic_cast<ItemBGO *>(xxx)->m_data );
                 dynamic_cast<ItemBGO *>(xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -368,7 +368,7 @@ void LvlScene::placeItemUnderCursor()
             if(xxx->data(ITEM_TYPE).toString() == "NPC")
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastNpcArrayID) break;
-                overwritedItems.npc.push_back( dynamic_cast<ItemNPC *>(xxx)->m_data );
+                m_overwritedItems.npc.push_back( dynamic_cast<ItemNPC *>(xxx)->m_data );
                 dynamic_cast<ItemNPC *>(xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
@@ -396,7 +396,7 @@ void LvlScene::placeItemUnderCursor()
 
             m_data->blocks.push_back(LvlPlacingItems::blockSet);
             placeBlock(LvlPlacingItems::blockSet, true);
-            placingItems.blocks.push_back(LvlPlacingItems::blockSet);
+            m_placingItems.blocks.push_back(LvlPlacingItems::blockSet);
             wasPlaced=true;
         }
         else
@@ -410,7 +410,7 @@ void LvlScene::placeItemUnderCursor()
 
             m_data->bgo.push_back(LvlPlacingItems::bgoSet);
             placeBGO(LvlPlacingItems::bgoSet, true);
-            placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
+            m_placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
             wasPlaced=true;
         }
         else
@@ -432,7 +432,7 @@ void LvlScene::placeItemUnderCursor()
 
             placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
 
-            placingItems.npc.push_back(LvlPlacingItems::npcSet);
+            m_placingItems.npc.push_back(LvlPlacingItems::npcSet);
             wasPlaced=true;
         }
         else
@@ -679,12 +679,12 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
     {
         if(globalHistory)
         {
-            overwritedItems.blocks << historyBuffer.blocks;
-            overwritedItems.bgo << historyBuffer.bgo;
-            overwritedItems.npc << historyBuffer.npc;
-            overwritedItems.physez << historyBuffer.physez;
-            overwritedItems.doors << historyBuffer.doors;
-            overwritedItems.players << historyBuffer.players;
+            m_overwritedItems.blocks << historyBuffer.blocks;
+            m_overwritedItems.bgo << historyBuffer.bgo;
+            m_overwritedItems.npc << historyBuffer.npc;
+            m_overwritedItems.physez << historyBuffer.physez;
+            m_overwritedItems.doors << historyBuffer.doors;
+            m_overwritedItems.players << historyBuffer.players;
         }
         else
             m_history->addRemove(historyBuffer);

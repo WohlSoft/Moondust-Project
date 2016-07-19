@@ -74,9 +74,9 @@ void MainWindow::on_actionRectFill_triggered(bool checked)
             ui->actionLine->setChecked(false);
             ui->actionFill->setChecked(false);
 
-            switch(edit->scene->placingItem)
+            switch(edit->scene->m_placingItemType)
             {
-                case WldScene::PLC_Tile:
+                case WldScene::PLC_Terrain:
                    edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
                    LogDebug(QString("Tile Square draw -> %1").arg(checked));
 
@@ -157,9 +157,9 @@ void MainWindow::on_actionCircleFill_triggered(bool checked)
         ui->actionLine->setChecked(false);
         ui->actionFill->setChecked(false);
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
-            case WldScene::PLC_Tile:
+            case WldScene::PLC_Terrain:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
                LogDebug(QString("Tile Circle draw -> %1").arg(checked));
 
@@ -246,9 +246,9 @@ void MainWindow::on_actionLine_triggered(bool checked)
         ui->actionCircleFill->setChecked(false);
         ui->actionFill->setChecked(false);
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
-            case WldScene::PLC_Tile:
+            case WldScene::PLC_Terrain:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
                LogDebug(QString("Tile Line draw -> %1").arg(checked));
 
@@ -325,9 +325,9 @@ void MainWindow::on_actionFill_triggered(bool checked)
         ui->actionCircleFill->setChecked(false);
         ui->actionLine->setChecked(false);
 
-        switch(edit->scene->placingItem)
+        switch(edit->scene->m_placingItemType)
         {
-            case WldScene::PLC_Tile:
+            case WldScene::PLC_Terrain:
                edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
                LogDebug(QString("Tile Line draw -> %1").arg(checked));
 

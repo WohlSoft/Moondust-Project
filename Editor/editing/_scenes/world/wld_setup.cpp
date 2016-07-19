@@ -29,10 +29,10 @@
 
 void WldScene::SwitchEditingMode(int EdtMode)
 {
-    EraserEnabled=false; //All just selected items will be removed
-    PasteFromBuffer=false;
-    DrawMode=false; //Placing/drawing on map, disable selecting and dragging items
-    disableMoveItems=false; // You can do anything with items, but can't move them
+    m_eraserIsEnabled=false; //All just selected items will be removed
+    m_pastingMode=false;
+    m_busyMode=false; //Placing/drawing on map, disable selecting and dragging items
+    m_disableMoveItems=false; // You can do anything with items, but can't move them
 
     switch(EdtMode)
     {
@@ -63,10 +63,10 @@ void WldScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         switchMode("Select");
         clearSelection();
-        disableMoveItems=true;
-        _viewPort->setInteractive(true);
-        _viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
-        _viewPort->setDragMode(QGraphicsView::NoDrag);
+        m_disableMoveItems=true;
+        m_viewPort->setInteractive(true);
+        m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
+        m_viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
     case MODE_Erasing:
@@ -75,7 +75,7 @@ void WldScene::SwitchEditingMode(int EdtMode)
 
     case MODE_SelectingOnly:
         switchMode("Select");
-        disableMoveItems=true;
+        m_disableMoveItems=true;
         break;
 
     case MODE_HandScroll:
@@ -92,18 +92,18 @@ void WldScene::SwitchEditingMode(int EdtMode)
         break;
 
     }
-    EditingMode = EdtMode;
+    m_editMode = EdtMode;
 
 }
 
 void WldScene::switchMode(QString title)
 {
-    for(int i=0; i<EditModes.size(); i++)
+    for(int i=0; i<m_editModes.size(); i++)
     {
-        if(EditModes[i]->name()==title)
+        if(m_editModes[i]->name()==title)
         {
-            CurrentMode = EditModes[i];
-            CurrentMode->set();
+            m_editModeObj = m_editModes[i];
+            m_editModeObj->set();
             break;
         }
     }
@@ -228,19 +228,19 @@ void WldScene::setLocked(int type, bool lock)
     switch(type)
     {
     case 1://Tile
-        lock_tile = lock;
+        m_lockTerrain = lock;
         break;
     case 2://Scenery
-        lock_scene = lock;
+        m_lockScenery = lock;
         break;
     case 3://Paths
-        lock_path = lock;
+        m_lockPath = lock;
         break;
     case 4://Levels
-        lock_level = lock;
+        m_lockLevel = lock;
         break;
     case 5://MusicBoxes
-        lock_musbox = lock;
+        m_lockMusicBox = lock;
         break;
     default: break;
     }

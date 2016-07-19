@@ -47,16 +47,16 @@ void WLD_ModeRect::set()
     s->resetResizers();
     s->unserPointSelector();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -69,24 +69,24 @@ void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    s->last_tile_arrayID=s->WldData->tile_array_id;
-    s->last_scene_arrayID=s->WldData->scene_array_id;
-    s->last_path_arrayID=s->WldData->path_array_id;
-    s->last_level_arrayID=s->WldData->level_array_id;
-    s->last_musicbox_arrayID=s->WldData->musicbox_array_id;
+    s->m_lastTerrainArrayID=s->m_data->tile_array_id;
+    s->m_lastSceneryArrayID=s->m_data->scene_array_id;
+    s->m_lastPathArrayID=s->m_data->path_array_id;
+    s->m_lastLevelArrayID=s->m_data->level_array_id;
+    s->m_lastMusicBoxArrayID=s->m_data->musicbox_array_id;
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->cursor);
+        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
         drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint(),
                                           WldPlacingItems::gridSz,
                                           WldPlacingItems::gridOffset));
-        s->cursor->setPos( drawStartPos );
-        s->cursor->setVisible(true);
+        s->m_cursorItemImg->setPos( drawStartPos );
+        s->m_cursorItemImg->setVisible(true);
 
         QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
                                WldPlacingItems::gridSz,
@@ -102,9 +102,9 @@ void WLD_ModeRect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor && s->cursor->isVisible())
+    if(s->m_cursorItemImg && s->m_cursorItemImg->isVisible())
     {
-        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->cursor);
+        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
         QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
                                WldPlacingItems::gridSz,
                                WldPlacingItems::gridOffset);
@@ -126,14 +126,14 @@ void WLD_ModeRect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->cursor);
+        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
 
         // /////////// Don't draw with zero width or height //////////////
         if( (cur->rect().width()==0) || (cur->rect().height()==0))
         {
-            s->cursor->hide();
+            s->m_cursorItemImg->hide();
             return;
         }
 
@@ -146,11 +146,11 @@ void WLD_ModeRect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();
 
-        s->emptyCollisionCheck = false;
+        s->m_emptyCollisionCheck = false;
         s->collisionCheckBuffer.clear();
 
-        s->WldData->meta.modified = true;
-        s->cursor->hide();
+        s->m_data->meta.modified = true;
+        s->m_cursorItemImg->hide();
     }
 }
 

@@ -205,7 +205,7 @@ void Themes::init()
     images_map[dummy_npc] = QPixmap(":/dummies/dummies/unknown_npc.png");
     images_map[dummy_path] = QPixmap(":/dummies/dummies/unknown_path.png");
     images_map[dummy_scenery] = QPixmap(":/dummies/dummies/unknown_scene.png");
-    images_map[dummy_tile] = QPixmap(":/dummies/dummies/unknown_tile.png");
+    images_map[dummy_terrain] = QPixmap(":/dummies/dummies/unknown_tile.png");
     images_map[dummy_wlevel] = QPixmap(":/dummies/dummies/unknown_wlvl.png");
 
     currentThemeDir = "";
@@ -477,7 +477,7 @@ void Themes::loadTheme(QString themeDir)
         loadImage(guiset,"level-npc", dummy_npc );
         loadImage(guiset,"world-path", dummy_path );
         loadImage(guiset,"world-scenery", dummy_scenery );
-        loadImage(guiset,"world-tile", dummy_tile );
+        loadImage(guiset,"world-tile", dummy_terrain );
         loadImage(guiset,"world-level", dummy_wlevel );
         loadImage(guiset,"world-musicbox", dummy_musicbox );
     guiset.endGroup();

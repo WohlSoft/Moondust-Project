@@ -215,7 +215,7 @@ public:
         dummy_npc,
         dummy_path,
         dummy_scenery,
-        dummy_tile,
+        dummy_terrain,
         dummy_wlevel
     };
 

@@ -28,9 +28,9 @@
 
 void WldScene::applyResizers()
 {
-    if(pResizer!=NULL )
+    if(m_resizeBox!=NULL )
     {
-        switch(pResizer->type)
+        switch(m_resizeBox->type)
         {
         case 0:
             setScreenshotSelector(false, true);
@@ -44,9 +44,9 @@ void WldScene::applyResizers()
 
 void WldScene::resetResizers()
 {
-    if(pResizer!=NULL )
+    if(m_resizeBox!=NULL )
     {
-        switch(pResizer->type)
+        switch(m_resizeBox->type)
         {
         case 0:
             setScreenshotSelector(false, false);

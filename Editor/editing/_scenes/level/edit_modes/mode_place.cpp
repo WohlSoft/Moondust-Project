@@ -151,27 +151,27 @@ void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             s->Debugger_updateItemList();
         }
 
-        if(!s->overwritedItems.blocks.isEmpty()||
-            !s->overwritedItems.bgo.isEmpty()||
-            !s->overwritedItems.npc.isEmpty() )
+        if(!s->m_overwritedItems.blocks.isEmpty()||
+            !s->m_overwritedItems.bgo.isEmpty()||
+            !s->m_overwritedItems.npc.isEmpty() )
         {
-            s->m_history->addOverwrite(s->overwritedItems, s->placingItems);
-            s->overwritedItems.blocks.clear();
-            s->overwritedItems.bgo.clear();
-            s->overwritedItems.npc.clear();
-            s->placingItems.blocks.clear();
-            s->placingItems.bgo.clear();
-            s->placingItems.npc.clear();
+            s->m_history->addOverwrite(s->m_overwritedItems, s->m_placingItems);
+            s->m_overwritedItems.blocks.clear();
+            s->m_overwritedItems.bgo.clear();
+            s->m_overwritedItems.npc.clear();
+            s->m_placingItems.blocks.clear();
+            s->m_placingItems.bgo.clear();
+            s->m_placingItems.npc.clear();
         }
         else
-        if(!s->placingItems.blocks.isEmpty()||
-                !s->placingItems.bgo.isEmpty()||
-                !s->placingItems.npc.isEmpty())
+        if(!s->m_placingItems.blocks.isEmpty()||
+                !s->m_placingItems.bgo.isEmpty()||
+                !s->m_placingItems.npc.isEmpty())
         {
-            s->m_history->addPlace(s->placingItems);
-            s->placingItems.blocks.clear();
-            s->placingItems.bgo.clear();
-            s->placingItems.npc.clear();
+            s->m_history->addPlace(s->m_placingItems);
+            s->m_placingItems.blocks.clear();
+            s->m_placingItems.bgo.clear();
+            s->m_placingItems.npc.clear();
         }
     }
 }

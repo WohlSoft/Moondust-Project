@@ -40,7 +40,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     //QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
     //QString uWLDD = WldData->path + "/" + WldData->filename;
     //QString uWLDs = WldData->path + "/";
-    CustomDirManager uWLD(WldData->meta.path, WldData->meta.filename);
+    CustomDirManager uWLD(m_data->meta.path, m_data->meta.filename);
 
     //Load custom rotation rules
     QString rTableFile = uWLD.getCustomFile("rotation_table.ini", true);
@@ -96,18 +96,18 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Tiles %1")
-                    .arg(QString::number(pConfigs->main_wtiles.stored()) ) );
+                    .arg(QString::number(m_configs->main_wtiles.stored()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
 
-    uTiles.allocateSlots(pConfigs->main_wtiles.total());
-    uWLD.setDefaultDir(pConfigs->getTilePath());
+    uTiles.allocateSlots(m_configs->main_wtiles.total());
+    uWLD.setDefaultDir(m_configs->getTilePath());
     //Load Tiles
-    for(i=1; i<pConfigs->main_wtiles.size(); i++) //Add user images
+    for(i=1; i<m_configs->main_wtiles.size(); i++) //Add user images
     {
-        obj_w_tile &tileD = pConfigs->main_wtiles[i];
+        obj_w_tile &tileD = m_configs->main_wtiles[i];
         obj_w_tile  t_tile;
         tileD.copyTo(t_tile);
         bool custom=false;
@@ -144,15 +144,15 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
         SimpleAnimator * aniTile = new SimpleAnimator(
                             ((t_tile.cur_image->isNull())?
-                            uTileImg : *t_tile.cur_image
+                            m_dummyTerrainImg : *t_tile.cur_image
                                ),
                               t_tile.animated,
                               t_tile.frames,
                               t_tile.framespeed
                               );
-        animates_Tiles.push_back( aniTile );
+        m_animatorsTerrain.push_back( aniTile );
         animator.registerAnimation( aniTile );
-        t_tile.animator_id = animates_Tiles.size()-1;
+        t_tile.animator_id = m_animatorsTerrain.size()-1;
         uTiles.storeElement(i, t_tile);
         if(custom)
         {
@@ -170,17 +170,17 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Sceneries %1")
-                    .arg(QString::number(pConfigs->main_wscene.size()) ) );
+                    .arg(QString::number(m_configs->main_wscene.size()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uScenes.allocateSlots(pConfigs->main_wscene.total());
-    uWLD.setDefaultDir(pConfigs->getScenePath());
+    uScenes.allocateSlots(m_configs->main_wscene.total());
+    uWLD.setDefaultDir(m_configs->getScenePath());
     //Load Sceneries
-    for(i=1; i<pConfigs->main_wscene.size(); i++) //Add user images
+    for(i=1; i<m_configs->main_wscene.size(); i++) //Add user images
     {
-        obj_w_scenery &sceneryD = pConfigs->main_wscene[i];
+        obj_w_scenery &sceneryD = m_configs->main_wscene[i];
         obj_w_scenery  t_scenery;
         sceneryD.copyTo(t_scenery);
         bool custom=false;
@@ -217,15 +217,15 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
         SimpleAnimator * aniTile = new SimpleAnimator(
                             ((t_scenery.cur_image->isNull())?
-                            uSceneImg : *t_scenery.cur_image
+                            m_dummySceneryImg : *t_scenery.cur_image
                                ),
                               t_scenery.animated,
                               t_scenery.frames,
                               t_scenery.framespeed
                               );
-        animates_Scenery.push_back( aniTile );
+        m_animatorsScenery.push_back( aniTile );
         animator.registerAnimation( aniTile );
-        t_scenery.animator_id = animates_Scenery.size()-1;
+        t_scenery.animator_id = m_animatorsScenery.size()-1;
         uScenes.storeElement(i, t_scenery);
         if(custom)
         {
@@ -242,17 +242,17 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Paths %1")
-                    .arg(QString::number(pConfigs->main_wpaths.size()) ) );
+                    .arg(QString::number(m_configs->main_wpaths.size()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uPaths.allocateSlots(pConfigs->main_wpaths.total());
-    uWLD.setDefaultDir(pConfigs->getPathPath());
+    uPaths.allocateSlots(m_configs->main_wpaths.total());
+    uWLD.setDefaultDir(m_configs->getPathPath());
     //Load Path tiles
-    for(i=1; i<pConfigs->main_wpaths.size(); i++) //Add user images
+    for(i=1; i<m_configs->main_wpaths.size(); i++) //Add user images
     {
-        obj_w_path &pathD = pConfigs->main_wpaths[i];
+        obj_w_path &pathD = m_configs->main_wpaths[i];
         obj_w_path t_path;
         pathD.copyTo(t_path);
         bool custom=false;
@@ -289,15 +289,15 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
         SimpleAnimator * aniTile = new SimpleAnimator(
                             ((t_path.cur_image->isNull())?
-                            uPathImg : *t_path.cur_image
+                            m_dummyPathImg : *t_path.cur_image
                                ),
                               t_path.animated,
                               t_path.frames,
                               t_path.framespeed
                               );
-        animates_Paths.push_back( aniTile );
+        m_animatorsPaths.push_back( aniTile );
         animator.registerAnimation( aniTile );
-        t_path.animator_id = animates_Paths.size()-1;
+        t_path.animator_id = m_animatorsPaths.size()-1;
         uPaths.storeElement(i, t_path);
         if(custom)
         {
@@ -314,18 +314,18 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         progress.setLabelText(
                     tr("Search User Levels %1")
-                    .arg(QString::number(pConfigs->main_wlevels.size()) ) );
+                    .arg(QString::number(m_configs->main_wlevels.size()) ) );
 
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uLevels.allocateSlots(pConfigs->main_wlevels.total());
-    uWLD.setDefaultDir(pConfigs->getWlvlPath());
+    uLevels.allocateSlots(m_configs->main_wlevels.total());
+    uWLD.setDefaultDir(m_configs->getWlvlPath());
 
     //Load Level tiles
-    for(i=0; i<pConfigs->main_wlevels.size(); i++)//Add user images
+    for(i=0; i<m_configs->main_wlevels.size(); i++)//Add user images
     {
-        obj_w_level &levelD = pConfigs->main_wlevels[i];
+        obj_w_level &levelD = m_configs->main_wlevels[i];
         obj_w_level t_level;
         levelD.copyTo(t_level);
         bool custom=false;
@@ -362,15 +362,15 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
         SimpleAnimator * aniTile = new SimpleAnimator(
                             ((t_level.cur_image->isNull())?
-                            uLevelImg : *t_level.cur_image
+                            m_dummyLevelImg : *t_level.cur_image
                                ),
                               t_level.animated,
                               t_level.frames,
                               t_level.framespeed
                               );
-        animates_Levels.push_back( aniTile );
+        m_animatorsLevels.push_back( aniTile );
         animator.registerAnimation( aniTile );
-        t_level.animator_id = animates_Levels.size()-1;
+        t_level.animator_id = m_animatorsLevels.size()-1;
         uLevels.storeElement(i, t_level);
         if(custom)
         {

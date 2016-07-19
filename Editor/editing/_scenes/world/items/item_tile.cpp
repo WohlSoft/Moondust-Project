@@ -53,7 +53,7 @@ ItemTile::~ItemTile()
 
 void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened = true; //bug protector
+    m_scene->m_contextMenuIsOpened = true; //bug protector
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
@@ -138,7 +138,7 @@ void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0, m_scene->_edit);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
         util::DialogToCenter(itemList, true);
 
@@ -222,9 +222,9 @@ void ItemTile::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->tiles.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->tiles.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->tiles[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->tiles[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -233,15 +233,15 @@ void ItemTile::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->tiles[m_data.meta.index] = m_data; //apply current tileData
+        m_scene->m_data->tiles[m_data.meta.index] = m_data; //apply current tileData
     }
     else
-    for(int i=0; i<m_scene->WldData->tiles.size(); i++)
+    for(int i=0; i<m_scene->m_data->tiles.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->tiles[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->tiles[i].meta.array_id == m_data.meta.array_id)
         {
             m_data.meta.index = i;
-            m_scene->WldData->tiles[i] = m_data;
+            m_scene->m_data->tiles[i] = m_data;
             break;
         }
     }
@@ -252,9 +252,9 @@ void ItemTile::arrayApply()
 void ItemTile::removeFromArray()
 {
     bool found=false;
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->tiles.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->tiles.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->tiles[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->tiles[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -262,14 +262,14 @@ void ItemTile::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->tiles.removeAt(m_data.meta.index);
+        m_scene->m_data->tiles.removeAt(m_data.meta.index);
     }
     else
-    for(int i=0; i<m_scene->WldData->tiles.size(); i++)
+    for(int i=0; i<m_scene->m_data->tiles.size(); i++)
     {
-        if(m_scene->WldData->tiles[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->tiles[i].meta.array_id == m_data.meta.array_id)
         {
-            m_scene->WldData->tiles.removeAt(i); break;
+            m_scene->m_data->tiles.removeAt(i); break;
         }
     }
 }
@@ -286,7 +286,7 @@ QPoint ItemTile::sourcePos()
 
 bool ItemTile::itemTypeIsLocked()
 {
-    return m_scene->lock_tile;
+    return m_scene->m_lockTerrain;
 }
 
 
@@ -323,10 +323,10 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
-    if(m_scene->animates_Tiles.size()>m_animatorID)
+    if(m_scene->m_animatorsTerrain.size()>m_animatorID)
         painter->drawPixmap(m_imageSize,
-                            m_scene->animates_Tiles[m_animatorID]->wholeImage(),
-                            m_scene->animates_Tiles[m_animatorID]->frameRect());
+                            m_scene->m_animatorsTerrain[m_animatorID]->wholeImage(),
+                            m_scene->m_animatorsTerrain[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -343,9 +343,9 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
 
 void ItemTile::setAnimator(long aniID)
 {
-    if(aniID<m_scene->animates_Tiles.size())
+    if(aniID<m_scene->m_animatorsTerrain.size())
     {
-        QRect frameRect = m_scene->animates_Tiles[aniID]->frameRect();
+        QRect frameRect = m_scene->m_animatorsTerrain[aniID]->frameRect();
         m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
     }
 

@@ -12,6 +12,8 @@ namespace Ui {
 class WLD_SetPoint;
 }
 
+class MainWindow;
+
 class WLD_SetPoint : public QDialog
 {
     Q_OBJECT
@@ -36,8 +38,9 @@ public:
     void ResetPosition();
     void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
 
+    MainWindow* m_mw;
 
-    WldScene * scene;
+    WldScene * m_scene;
 
     bool sceneCreated;
     bool isUntitled;

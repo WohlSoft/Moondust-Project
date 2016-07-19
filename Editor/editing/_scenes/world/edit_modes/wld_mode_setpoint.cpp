@@ -40,16 +40,16 @@ void WLD_ModeSetPoint::set()
 
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -61,19 +61,19 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if(s->cursor){
-        s->cursor->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+    if(s->m_cursorItemImg){
+        s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                            QPoint(WldPlacingItems::c_offset_x,
                                                   WldPlacingItems::c_offset_y),
                                            WldPlacingItems::gridSz,
                                            WldPlacingItems::gridOffset)));
     }
 
-    s->setPoint(s->cursor->scenePos().toPoint());
+    s->setPoint(s->m_cursorItemImg->scenePos().toPoint());
     emit s->pointSelected(s->selectedPoint);
 
     dontCallEvent=true;
@@ -84,21 +84,21 @@ void WLD_ModeSetPoint::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
 
-               s->cursor->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                                    QPoint(WldPlacingItems::c_offset_x,
                                                           WldPlacingItems::c_offset_y),
                                                  WldPlacingItems::gridSz,
                                                  WldPlacingItems::gridOffset)));
-               s->cursor->show();
+               s->m_cursorItemImg->show();
 
                s->setMessageBoxItem(true, mouseEvent->scenePos(),
-                                      (s->cursor?
+                                      (s->m_cursorItemImg?
                                            (
-                                      QString::number( s->cursor->scenePos().toPoint().x() ) + "x" +
-                                      QString::number( s->cursor->scenePos().toPoint().y() )
+                                      QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
+                                      QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
                                            )
                                                :""));
 

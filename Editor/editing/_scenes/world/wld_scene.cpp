@@ -38,97 +38,101 @@
 #include "edit_modes/wld_mode_resize.h"
 #include "edit_modes/wld_mode_setpoint.h"
 
-WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent) : QGraphicsScene(parent)
+WldScene::WldScene(MainWindow *mw,
+                   GraphicsWorkspace * parentView,
+                   dataconfigs &configs,
+                   WorldData &FileData,
+                   QObject *parent) :
+    QGraphicsScene(parent),
+    m_mw(mw),
+    m_configs(&configs), // Pointer to Main Configs
+    m_data(&FileData), //Add pointer to level data
+    m_viewPort(parentView),
+    m_subWindow(nullptr)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
-
-    //Pointerss
-    pConfigs = &configs; // Pointer to Main Configs
-    WldData = &FileData; //Ad pointer to level data
-    _viewPort = parentView;
-    _edit = NULL;
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), "WorldEdit")==0)
         {
-            _edit = qobject_cast<WorldEdit*>(parent);
+            m_subWindow = qobject_cast<WorldEdit*>(parent);
         }
     }
 
     //Editing mode
-    EditingMode = 0;
-    EraserEnabled = false;
-    PasteFromBuffer = false;
-    disableMoveItems = false;
-    DrawMode = false;
+    m_editMode = 0;
+    m_eraserIsEnabled = false;
+    m_pastingMode = false;
+    m_disableMoveItems = false;
+    m_busyMode = false;
 
-    mouseLeft = false; //Left mouse key is pressed
-    mouseMid = false;  //Middle mouse key is pressed
-    mouseRight = false;//Right mouse key is pressed
+    m_mouseLeftPressed = false; //Left mouse key is pressed
+    m_mouseMidPressed = false;  //Middle mouse key is pressed
+    m_mouseRightPressed = false;//Right mouse key is pressed
 
-    mouseMoved  = false; //Mouse was moved with right mouseKey
+    m_mouseIsMoved  = false; //Mouse was moved with right mouseKey
 
-    MousePressEventOnly   = false;
-    MouseMoveEventOnly    = false;
-    MouseReleaseEventOnly = false;
+    m_skipChildMousePressEvent  = false;
+    m_skipChildMouseMoveEvent   = false;
+    m_skipChildMousReleaseEvent = false;
 
-    last_tile_arrayID     = 0;
-    last_scene_arrayID    = 0;
-    last_path_arrayID     = 0;
-    last_level_arrayID    = 0;
-    last_musicbox_arrayID = 0;
+    m_lastTerrainArrayID    = 0;
+    m_lastSceneryArrayID    = 0;
+    m_lastPathArrayID       = 0;
+    m_lastLevelArrayID      = 0;
+    m_lastMusicBoxArrayID   = 0;
 
     isSelectionDialog = false;
 
     //Editing process flags
-    IsMoved = false;
-    haveSelected = false;
+    m_mouseIsMovedAfterKey = false;
+    //haveSelected = false;
 
-    emptyCollisionCheck = false;
+    m_emptyCollisionCheck = false;
 
-    placingItem = 0;
+    m_placingItemType = 0;
 
-    pResizer = NULL;
+    m_resizeBox = NULL;
 
-    contextMenuOpened = false;
+    m_contextMenuIsOpened = false;
 
     selectedPoint = QPoint(0, 0);
     selectedPointNotUsed = true;
-    pointTarget = NULL;
+    pointTarget = nullptr;
     pointImg = QPixmap(":/images/set_point.png");
 
     pointAnimation.setSettings(pointImg, true, 4, 64);
     animator.registerAnimation(&pointAnimation);
 
-    cursor = NULL;
+    m_cursorItemImg = NULL;
     resetCursor();
-    messageBox = NULL;
+    m_labelBox = NULL;
 
     //set dummy images if target not exist or wrong
-    uTileImg    = Themes::Image(Themes::dummy_tile);
-    uSceneImg   = Themes::Image(Themes::dummy_scenery);
-    uPathImg    = Themes::Image(Themes::dummy_path);
-    uLevelImg   = Themes::Image(Themes::dummy_wlevel);
+    m_dummyTerrainImg   = Themes::Image(Themes::dummy_terrain);
+    m_dummySceneryImg   = Themes::Image(Themes::dummy_scenery);
+    m_dummyPathImg      = Themes::Image(Themes::dummy_path);
+    m_dummyLevelImg     = Themes::Image(Themes::dummy_wlevel);
 
-    musicBoxImg = Themes::Image(Themes::dummy_musicbox);
+    m_musicBoxImg = Themes::Image(Themes::dummy_musicbox);
 
     //Build animators for dummies
     SimpleAnimator * tmpAnimator;
-        tmpAnimator = new SimpleAnimator(uTileImg, 0);
-    animates_Tiles.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(uSceneImg, 0);
-    animates_Scenery.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(uPathImg, 0);
-    animates_Paths.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(uLevelImg, 0);
-    animates_Levels.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummyTerrainImg, 0);
+    m_animatorsTerrain.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummySceneryImg, 0);
+    m_animatorsScenery.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummyPathImg, 0);
+    m_animatorsPaths.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(m_dummyLevelImg, 0);
+    m_animatorsLevels.push_back( tmpAnimator );
 
     //Init default rotation tables
     local_rotation_table_tiles.clear();
     local_rotation_table_sceneries.clear();
     local_rotation_table_paths.clear();
     local_rotation_table_levels.clear();
-    foreach(obj_rotation_table x, pConfigs->main_rotation_table)
+    foreach(obj_rotation_table x, m_configs->main_rotation_table)
     {
         if(x.type==ItemTypes::WLD_Tile)
             local_rotation_table_tiles[x.id]=x;
@@ -155,11 +159,11 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     historyIndex=0;
 
     //Locks
-    lock_tile=false;
-    lock_scene=false;
-    lock_path=false;
-    lock_level=false;
-    lock_musbox=false;
+    m_lockTerrain=false;
+    m_lockScenery=false;
+    m_lockPath=false;
+    m_lockLevel=false;
+    m_lockMusicBox=false;
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
@@ -171,46 +175,46 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
 
     //Build edit mode classes
     WLD_ModeHand * modeHand = new WLD_ModeHand(this);
-    EditModes.push_back(modeHand);
+    m_editModes.push_back(modeHand);
 
     WLD_ModeSelect * modeSelect = new WLD_ModeSelect(this);
-    EditModes.push_back(modeSelect);
+    m_editModes.push_back(modeSelect);
 
     WLD_ModeResize * modeResize = new WLD_ModeResize(this);
-    EditModes.push_back(modeResize);
+    m_editModes.push_back(modeResize);
 
     WLD_ModeErase * modeErase = new WLD_ModeErase(this);
-    EditModes.push_back(modeErase);
+    m_editModes.push_back(modeErase);
 
     WLD_ModePlace * modePlace = new WLD_ModePlace(this);
-    EditModes.push_back(modePlace);
+    m_editModes.push_back(modePlace);
 
     WLD_ModeRect * modeSquare = new WLD_ModeRect(this);
-    EditModes.push_back(modeSquare);
+    m_editModes.push_back(modeSquare);
 
     WLD_ModeCircle * modeCircle = new WLD_ModeCircle(this);
-    EditModes.push_back(modeCircle);
+    m_editModes.push_back(modeCircle);
 
     WLD_ModeLine * modeLine = new WLD_ModeLine(this);
-    EditModes.push_back(modeLine);
+    m_editModes.push_back(modeLine);
 
     WLD_ModeSetPoint * modeSetPoint = new WLD_ModeSetPoint(this);
-    EditModes.push_back(modeSetPoint);
+    m_editModes.push_back(modeSetPoint);
 
     WLD_ModeFill * modeFill = new WLD_ModeFill(this);
-    EditModes.push_back(modeFill);
+    m_editModes.push_back(modeFill);
 
-    CurrentMode = modeSelect;
-    CurrentMode->set();
+    m_editModeObj = modeSelect;
+    m_editModeObj->set();
 }
 
 WldScene::~WldScene()
 {
-    if(messageBox) delete messageBox;
-    while(!EditModes.isEmpty())
+    if(m_labelBox) delete m_labelBox;
+    while(!m_editModes.isEmpty())
     {
-        EditMode *tmp = EditModes.first();
-        EditModes.pop_front();
+        EditMode *tmp = m_editModes.first();
+        m_editModes.pop_front();
         delete tmp;
     }
 }
@@ -220,7 +224,7 @@ void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
     QGraphicsScene::drawForeground(painter, rect);
     if(!opts.grid_show) return;
 
-    int gridSize=pConfigs->default_grid;
+    int gridSize=m_configs->default_grid;
     qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
     qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 

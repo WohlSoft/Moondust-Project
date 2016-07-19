@@ -32,7 +32,7 @@ void WldScene::setPoint(QPoint p)
      if(!pointTarget)
      {
          pointTarget = new ItemPoint(this, NULL);
-         ((ItemPoint*)pointTarget)->setGridSize(pConfigs->default_grid);
+         ((ItemPoint*)pointTarget)->setGridSize(m_configs->default_grid);
          addItem(pointTarget);
          pointTarget->setData(0, "POINT");
          pointTarget->setZValue(6000);

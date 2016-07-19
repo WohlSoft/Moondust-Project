@@ -60,9 +60,9 @@ QList<QPair<int, QVariant > > WldPlacingItems::flags;
 
 void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     LogDebug(QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
 
@@ -74,15 +74,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&tileConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=uTileImg;
+            tImg=m_dummyTerrainImg;
         }
         if(!tileConf.isValid)
         {
-            tileConf = pConfigs->main_wtiles[1];
-            tileConf.image = uTileImg;
+            tileConf = m_configs->main_wtiles[1];
+            tileConf.image = m_dummyTerrainImg;
         }
 
-        WldPlacingItems::gridSz=pConfigs->default_grid;
+        WldPlacingItems::gridSz=m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::TileSet.id = itemID;
@@ -135,18 +135,18 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg);
+        m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
-        placingItem=PLC_Tile;
+        m_placingItemType=PLC_Terrain;
         WldPlacingItems::TileSet.id = itemID;
 
         //flood fill uses 'item' cursor
@@ -165,15 +165,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&sceneConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=uSceneImg;
+            tImg=m_dummySceneryImg;
         }
         if(!sceneConf.isValid)
         {
-            sceneConf = pConfigs->main_wscene[1];
-            sceneConf.image = uSceneImg;
+            sceneConf = m_configs->main_wscene[1];
+            sceneConf.image = m_dummySceneryImg;
         }
 
-        WldPlacingItems::gridSz=qRound(qreal(pConfigs->default_grid)/2);
+        WldPlacingItems::gridSz=qRound(qreal(m_configs->default_grid)/2);
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::SceneSet.id = itemID;
@@ -225,19 +225,19 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setCircleDrawer(); return;
         }
 
-        cursor = addPixmap(tImg);
+        m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
-        placingItem=PLC_Scene;
+        m_placingItemType=PLC_Scene;
         WldPlacingItems::SceneSet.id = itemID;
 
         //flood fill uses 'item' cursor
@@ -256,15 +256,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&pathConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=uPathImg;
+            tImg=m_dummyPathImg;
         }
         if(!pathConf.isValid)
         {
-            pathConf = pConfigs->main_wpaths[1];
-            pathConf.image = uPathImg;
+            pathConf = m_configs->main_wpaths[1];
+            pathConf.image = m_dummyPathImg;
         }
 
-        WldPlacingItems::gridSz=pConfigs->default_grid;
+        WldPlacingItems::gridSz=m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::PathSet.id = itemID;
@@ -315,19 +315,19 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg);
+        m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
-        placingItem=PLC_Path;
+        m_placingItemType=PLC_Path;
         WldPlacingItems::PathSet.id = itemID;
 
         //flood fill uses 'item' cursor
@@ -347,15 +347,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&wlevelConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg = uLevelImg;
+            tImg = m_dummyLevelImg;
         }
         if(!wlevelConf.isValid)
         {
-            wlevelConf = pConfigs->main_wlevels[0];
-            wlevelConf.image = uLevelImg;
+            wlevelConf = m_configs->main_wlevels[0];
+            wlevelConf.image = m_dummyLevelImg;
         }
 
-        WldPlacingItems::gridSz=pConfigs->default_grid;
+        WldPlacingItems::gridSz=m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::LevelSet.id = itemID;
@@ -407,24 +407,24 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg);
+        m_cursorItemImg = addPixmap(tImg);
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
         int imgOffsetY = (int)qRound( -qreal(tImg.height()) + WldPlacingItems::gridSz);
 
-        ((QGraphicsPixmapItem*)cursor)->setOffset(imgOffsetX, imgOffsetY );
+        ((QGraphicsPixmapItem*)m_cursorItemImg)->setOffset(imgOffsetX, imgOffsetY );
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
-            cursor->setData(flag.first, flag.second);
+            m_cursorItemImg->setData(flag.first, flag.second);
 
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
-        placingItem=PLC_Level;
+        m_placingItemType=PLC_Level;
         WldPlacingItems::LevelSet.id = itemID;
 
         //flood fill uses 'item' cursor
@@ -437,53 +437,53 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
 
     case 4: //MusicBox
-        placingItem=PLC_Musicbox;
+        m_placingItemType=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=pConfigs->default_grid;
+        WldPlacingItems::gridSz=m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
-        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_x = m_configs->default_grid/2;
+        WldPlacingItems::c_offset_y = m_configs->default_grid/2;
 
-        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
-        cursor->setData(ITEM_TYPE, "MUSICBOX");
-        cursor->setData(ITEM_ID, QString::number(itemID));
-        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
-        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg = addRect(0,0, m_configs->default_grid, m_configs->default_grid);
+        m_cursorItemImg->setData(ITEM_TYPE, "MUSICBOX");
+        m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
+        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->default_grid));
+        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->default_grid));
+        ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
+        ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
         SwitchEditingMode(MODE_PlacingNew);
 
         break;
     case 5: //Get point from a world map
-        placingItem=MODE_SetPoint;
+        m_placingItemType=MODE_SetPoint;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=pConfigs->default_grid;
+        WldPlacingItems::gridSz=m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
-        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_x = m_configs->default_grid/2;
+        WldPlacingItems::c_offset_y = m_configs->default_grid/2;
 
-        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
-        cursor->setData(ITEM_TYPE, "WorldMapPoint");
-        cursor->setData(ITEM_ID, QString::number(itemID));
-        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
-        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
-        cursor->setZValue(7000);
-        cursor->setOpacity( 0.8 );
-        cursor->setVisible(false);
-        cursor->setEnabled(true);
+        m_cursorItemImg = addRect(0,0, m_configs->default_grid, m_configs->default_grid);
+        m_cursorItemImg->setData(ITEM_TYPE, "WorldMapPoint");
+        m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
+        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->default_grid));
+        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->default_grid));
+        ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
+        ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setZValue(7000);
+        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setVisible(false);
+        m_cursorItemImg->setEnabled(true);
 
         SwitchEditingMode(MODE_SetPoint);
 
@@ -494,16 +494,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         default: break;
     }
     if(itemType!=5) SwitchEditingMode(MODE_PlacingNew);
-    contextMenuOpened=false;
+    m_contextMenuIsOpened=false;
 }
 
 
 
 void WldScene::setRectDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
     QBrush brush;
@@ -528,27 +528,27 @@ void WldScene::setRectDrawer()
     p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
     brush.setTexture(oneCell);
 
-    cursor = addRect(0,0,1,1, pen, brush);
+    m_cursorItemImg = addRect(0,0,1,1, pen, brush);
 
     //set data flags
     foreach(dataFlag_w flag, WldPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(0, "Square");
-    cursor->setData(25, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(0, "Square");
+    m_cursorItemImg->setData(25, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_DrawRect);
 }
 
 void WldScene::setCircleDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
     QBrush brush;
@@ -573,27 +573,27 @@ void WldScene::setCircleDrawer()
     p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
     brush.setTexture(oneCell);
 
-    cursor = addEllipse(0,0,1,1, pen, brush);
+    m_cursorItemImg = addEllipse(0,0,1,1, pen, brush);
 
     //set data flags
     foreach(dataFlag_w flag, WldPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(0, "Circle");
-    cursor->setData(25, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(0, "Circle");
+    m_cursorItemImg->setData(25, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_DrawCircle);
 }
 
 void WldScene::setLineDrawer()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
     QPen pen;
 
@@ -607,18 +607,18 @@ void WldScene::setLineDrawer()
     WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
     WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
 
-    cursor = addLine(0,0,1,1, pen);
+    m_cursorItemImg = addLine(0,0,1,1, pen);
 
     //set data flags
     foreach(dataFlag_w flag, WldPlacingItems::flags)
-        cursor->setData(flag.first, flag.second);
+        m_cursorItemImg->setData(flag.first, flag.second);
 
-    cursor->setData(0, "Line");
-    cursor->setData(25, "CURSOR");
-    cursor->setZValue(7000);
-    cursor->setOpacity( 0.5 );
-    cursor->setVisible(false);
-    cursor->setEnabled(true);
+    m_cursorItemImg->setData(0, "Line");
+    m_cursorItemImg->setData(25, "CURSOR");
+    m_cursorItemImg->setZValue(7000);
+    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setVisible(false);
+    m_cursorItemImg->setEnabled(true);
 
     SwitchEditingMode(MODE_Line);
 
@@ -631,32 +631,32 @@ void WldScene::setFloodFiller()
 
 void WldScene::resetCursor()
 {
-    if(cursor)
-        {delete cursor;
-        cursor=NULL;}
+    if(m_cursorItemImg)
+        {delete m_cursorItemImg;
+        m_cursorItemImg=NULL;}
 
-    DrawMode=false;
+    m_busyMode=false;
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);
-    cursor = addPixmap(QPixmap(cur));
-    cursor->setZValue(1000);
-    cursor->hide();
+    m_cursorItemImg = addPixmap(QPixmap(cur));
+    m_cursorItemImg->setZValue(1000);
+    m_cursorItemImg->hide();
 }
 
 void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
 {
-    if(messageBox)
+    if(m_labelBox)
     {
         if(!show)
         {
-            delete messageBox;
-            messageBox = NULL;
+            delete m_labelBox;
+            m_labelBox = NULL;
             return;
         }
 
-        if(text!=messageBox->text())
-            messageBox->setText(text);
-        messageBox->setPos(pos);
+        if(text!=m_labelBox->text())
+            m_labelBox->setText(text);
+        m_labelBox->setPos(pos);
     }
     else
     {
@@ -667,14 +667,14 @@ void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
         font.setFamily("Times");
         font.setWeight(99);
         font.setPointSize(25);
-        messageBox = new QGraphicsSimpleTextItem(text);
-        messageBox->setPen(QPen(QBrush(Qt::black), 2));
-        messageBox->setBrush(QBrush(Qt::white));
-        messageBox->setBoundingRegionGranularity(1);
-        messageBox->setZValue(10000);
-        messageBox->setFont(font);
-        this->addItem(messageBox);
-        messageBox->setPos(pos);
+        m_labelBox = new QGraphicsSimpleTextItem(text);
+        m_labelBox->setPen(QPen(QBrush(Qt::black), 2));
+        m_labelBox->setBrush(QBrush(Qt::white));
+        m_labelBox->setBoundingRegionGranularity(1);
+        m_labelBox->setZValue(10000);
+        m_labelBox->setFont(font);
+        this->addItem(m_labelBox);
+        m_labelBox->setPos(pos);
     }
 
 }

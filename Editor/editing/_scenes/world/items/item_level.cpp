@@ -68,7 +68,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         LvlTitle->setVisible(!m_data.title.isEmpty());
 
     QAction *openLvl =          ItemMenu.addAction(tr("Open target file: %1").arg(m_data.lvlfile));
-        openLvl->setVisible( (!m_data.lvlfile.isEmpty()) && (QFile(m_scene->WldData->meta.path + "/" + m_data.lvlfile).exists()) );
+        openLvl->setVisible( (!m_data.lvlfile.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile).exists()) );
                                 ItemMenu.addSeparator();
 
     QAction *setPathBG =        ItemMenu.addAction(tr("Path background"));
@@ -101,7 +101,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                 ItemMenu.addSeparator();
     QAction *props =            ItemMenu.addAction(tr("Properties..."));
 
-    m_scene->contextMenuOpened =  true; //bug protector
+    m_scene->m_contextMenuIsOpened =  true; //bug protector
 
     QAction *selected =         ItemMenu.exec(mouseEvent->screenPos());
     if(!selected) return;
@@ -109,13 +109,13 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     if(selected==openLvl)
     {
-        MainWinConnect::pMainWin->OpenFile(m_scene->WldData->meta.path + "/" + m_data.lvlfile);
-        m_scene->contextMenuOpened = false;
+        MainWinConnect::pMainWin->OpenFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile);
+        m_scene->m_contextMenuIsOpened = false;
     }
     else
     if(selected==setPathBG)
     {
-        m_scene->contextMenuOpened = false;
+        m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
@@ -130,7 +130,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     else
     if(selected==setBigPathBG)
     {
-        m_scene->contextMenuOpened = false;
+        m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
@@ -145,7 +145,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     else
     if(selected==setAlVis)
     {
-        m_scene->contextMenuOpened = false;
+        m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
@@ -162,14 +162,14 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         //scene->doCut = true ;
         MainWinConnect::pMainWin->on_actionCut_triggered();
-        m_scene->contextMenuOpened = false;
+        m_scene->m_contextMenuIsOpened = false;
     }
     else
     if(selected==copyTile)
     {
         //scene->doCopy = true ;
         MainWinConnect::pMainWin->on_actionCopy_triggered();
-        m_scene->contextMenuOpened = false;
+        m_scene->m_contextMenuIsOpened = false;
     }
     else
     if((selected==transform)||(selected==transform_all))
@@ -178,7 +178,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0, m_scene->_edit);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
         util::DialogToCenter(itemList, true);
 
@@ -270,7 +270,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
 bool ItemLevel::itemTypeIsLocked()
 {
-    return m_scene->lock_level;
+    return m_scene->m_lockLevel;
 }
 
 
@@ -313,9 +313,9 @@ void ItemLevel::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->levels.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->levels[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -324,15 +324,15 @@ void ItemLevel::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->levels[m_data.meta.index] = m_data; //apply current levelData
+        m_scene->m_data->levels[m_data.meta.index] = m_data; //apply current levelData
     }
     else
-    for(int i=0; i<m_scene->WldData->levels.size(); i++)
+    for(int i=0; i<m_scene->m_data->levels.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->levels[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
         {
             m_data.meta.index = i;
-            m_scene->WldData->levels[i] = m_data;
+            m_scene->m_data->levels[i] = m_data;
             break;
         }
     }
@@ -344,9 +344,9 @@ void ItemLevel::arrayApply()
 void ItemLevel::removeFromArray()
 {
     bool found=false;
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->levels.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->levels[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -354,14 +354,14 @@ void ItemLevel::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->levels.removeAt(m_data.meta.index);
+        m_scene->m_data->levels.removeAt(m_data.meta.index);
     }
     else
-    for(int i=0; i<m_scene->WldData->levels.size(); i++)
+    for(int i=0; i<m_scene->m_data->levels.size(); i++)
     {
-        if(m_scene->WldData->levels[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
         {
-            m_scene->WldData->levels.removeAt(i); break;
+            m_scene->m_data->levels.removeAt(i); break;
         }
     }
 }
@@ -452,10 +452,10 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
     if(m_data.bigpathbg)
     {
-        if(m_scene->animates_Levels.size()>m_bPathID)
+        if(m_scene->m_animatorsLevels.size()>m_bPathID)
             painter->drawPixmap(m_imageSizeBP,
-                                m_scene->animates_Levels[m_bPathID]->wholeImage(),
-                                m_scene->animates_Levels[m_bPathID]->frameRect());
+                                m_scene->m_animatorsLevels[m_bPathID]->wholeImage(),
+                                m_scene->m_animatorsLevels[m_bPathID]->frameRect());
         else
             painter->drawRect(QRect(0,0,32,32));
     }
@@ -463,18 +463,18 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
     if(m_data.pathbg)
     {
-        if(m_scene->animates_Levels.size()>m_pathID)
+        if(m_scene->m_animatorsLevels.size()>m_pathID)
             painter->drawPixmap(m_imageSizeP,
-                                m_scene->animates_Levels[m_pathID]->wholeImage(),
-                                m_scene->animates_Levels[m_pathID]->frameRect());
+                                m_scene->m_animatorsLevels[m_pathID]->wholeImage(),
+                                m_scene->m_animatorsLevels[m_pathID]->frameRect());
         else
             painter->drawRect(QRect(0,0,32,32));
     }
 
-    if(m_scene->animates_Levels.size()>m_animatorID)
+    if(m_scene->m_animatorsLevels.size()>m_animatorID)
         painter->drawPixmap(m_imageSize,
-                            m_scene->animates_Levels[m_animatorID]->wholeImage(),
-                            m_scene->animates_Levels[m_animatorID]->frameRect());
+                            m_scene->m_animatorsLevels[m_animatorID]->wholeImage(),
+                            m_scene->m_animatorsLevels[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -492,25 +492,25 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
 void ItemLevel::setAnimator(long aniID, long path, long bPath)
 {
-    if(aniID < m_scene->animates_Levels.size())
+    if(aniID < m_scene->m_animatorsLevels.size())
     {
-        QRect frameRect = m_scene->animates_Levels[aniID]->frameRect();
+        QRect frameRect = m_scene->m_animatorsLevels[aniID]->frameRect();
         m_imgOffsetX = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
         m_imgOffsetY = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
         m_imageSize = QRectF(m_imgOffsetX,m_imgOffsetY, frameRect.width(), frameRect.height() );
     }
 
-    if(path < m_scene->animates_Levels.size())
+    if(path < m_scene->m_animatorsLevels.size())
     {
-        QRect frameRect = m_scene->animates_Levels[path]->frameRect();
+        QRect frameRect = m_scene->m_animatorsLevels[path]->frameRect();
         m_imgOffsetXp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
         m_imgOffsetYp = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
         m_imageSizeP = QRectF(m_imgOffsetXp,m_imgOffsetYp, frameRect.width(), frameRect.height() );
     }
 
-    if(bPath < m_scene->animates_Levels.size())
+    if(bPath < m_scene->m_animatorsLevels.size())
     {
-        QRect frameRect = m_scene->animates_Levels[bPath]->frameRect();
+        QRect frameRect = m_scene->m_animatorsLevels[bPath]->frameRect();
         m_imgOffsetXbp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
         m_imgOffsetYbp = (int)qRound( -qreal(frameRect.height()) + qreal(m_gridSize)*1.25);
         m_imageSizeBP = QRectF(m_imgOffsetXbp,m_imgOffsetYbp, frameRect.width(), frameRect.height() );

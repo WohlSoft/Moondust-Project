@@ -39,14 +39,14 @@ void WLD_ModeResize::set()
     s->resetCursor();
     s->unserPointSelector();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=true;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=true;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
 }
 
 void WLD_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -55,7 +55,7 @@ void WLD_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    s->MousePressEventOnly = true;
+    s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 }
@@ -67,7 +67,7 @@ void WLD_ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     WldScene *s = dynamic_cast<WldScene *>(scene);
     s->clearSelection();
 
-    s->MouseMoveEventOnly = true;
+    s->m_skipChildMouseMoveEvent = true;
     s->mouseMoveEvent(mouseEvent);
     dontCallEvent = true;
 }

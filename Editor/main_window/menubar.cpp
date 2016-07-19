@@ -312,11 +312,11 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         {
             WldScene *scn = wldWin->scene;
             LogDebug("-> Get scene flags: locks");
-            ui->actionLockTiles->setChecked(scn->lock_tile);
-            ui->actionLockScenes->setChecked(scn->lock_scene);
-            ui->actionLockPaths->setChecked(scn->lock_path);
-            ui->actionLockLevels->setChecked(scn->lock_level);
-            ui->actionLockMusicBoxes->setChecked(scn->lock_musbox);
+            ui->actionLockTiles->setChecked(scn->m_lockTerrain);
+            ui->actionLockScenes->setChecked(scn->m_lockScenery);
+            ui->actionLockPaths->setChecked(scn->m_lockPath);
+            ui->actionLockLevels->setChecked(scn->m_lockLevel);
+            ui->actionLockMusicBoxes->setChecked(scn->m_lockMusicBox);
 
             LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->opts.grid_snap);

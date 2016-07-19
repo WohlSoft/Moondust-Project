@@ -25,10 +25,11 @@
 #include <common_features/app_path.h>
 #include <tools/smart_import/smartimporter.h>
 
-WorldEdit::WorldEdit(QWidget *parent) :
+WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::WorldEdit)
 {
+    m_mw = mw;
     sceneCreated = false;
     FileType = 0;
     currentMusic = 0;

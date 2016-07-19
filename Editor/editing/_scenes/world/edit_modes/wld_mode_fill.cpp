@@ -45,16 +45,16 @@ void WLD_ModeFill::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=true;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=true;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
-    s->_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->_viewPort->viewport()->setMouseTracking(true);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
+    s->m_viewPort->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -65,13 +65,13 @@ void WLD_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
     if(! (mouseEvent->buttons() & Qt::LeftButton) )
         return;
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
         attemptFlood(s);
         s->Debugger_updateItemList();
@@ -88,23 +88,23 @@ void WLD_ModeFill::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(mouseEvent->modifiers() & Qt::ControlModifier )
         s->setMessageBoxItem(true, mouseEvent->scenePos(),
-                               (s->cursor?
+                               (s->m_cursorItemImg?
                                     (
-                               QString::number( s->cursor->scenePos().toPoint().x() ) + "x" +
-                               QString::number( s->cursor->scenePos().toPoint().y() )
+                               QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
+                               QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
                                     )
                                         :""));
     else
         s->setMessageBoxItem(false);
 
-    if(s->cursor)
+    if(s->m_cursorItemImg)
     {
-               s->cursor->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                                    QPoint(WldPlacingItems::c_offset_x,
                                                           WldPlacingItems::c_offset_y),
                                                  WldPlacingItems::gridSz,
                                                  WldPlacingItems::gridOffset)));
-               s->cursor->show();
+               s->m_cursorItemImg->show();
     }
 }
 
@@ -145,15 +145,15 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
 
     QPointF backUpPos;
 
-    backUpPos = scene->cursor->scenePos();
+    backUpPos = scene->m_cursorItemImg->scenePos();
 
-    switch(scene->placingItem)
+    switch(scene->m_placingItemType)
     {
-    case WldScene::PLC_Tile:
+    case WldScene::PLC_Terrain:
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -162,18 +162,18 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place tile if collision test
-                        WldPlacingItems::TileSet.x = scene->cursor->scenePos().x();
-                        WldPlacingItems::TileSet.y = scene->cursor->scenePos().y();
+                        WldPlacingItems::TileSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::TileSet.y = scene->m_cursorItemImg->scenePos().y();
 
-                        scene->WldData->tile_array_id++;
-                        WldPlacingItems::TileSet.meta.array_id = scene->WldData->tile_array_id;
+                        scene->m_data->tile_array_id++;
+                        WldPlacingItems::TileSet.meta.array_id = scene->m_data->tile_array_id;
 
-                        scene->WldData->tiles.push_back(WldPlacingItems::TileSet);
+                        scene->m_data->tiles.push_back(WldPlacingItems::TileSet);
                         scene->placeTile(WldPlacingItems::TileSet, true);
                         historyBuffer.tiles.push_back(WldPlacingItems::TileSet);
 
@@ -199,7 +199,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -208,18 +208,18 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place scenery if collision test
-                        WldPlacingItems::SceneSet.x = scene->cursor->scenePos().x();
-                        WldPlacingItems::SceneSet.y = scene->cursor->scenePos().y();
+                        WldPlacingItems::SceneSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::SceneSet.y = scene->m_cursorItemImg->scenePos().y();
 
-                        scene->WldData->scene_array_id++;
-                        WldPlacingItems::SceneSet.meta.array_id = scene->WldData->scene_array_id;
+                        scene->m_data->scene_array_id++;
+                        WldPlacingItems::SceneSet.meta.array_id = scene->m_data->scene_array_id;
 
-                        scene->WldData->scenery.push_back(WldPlacingItems::SceneSet);
+                        scene->m_data->scenery.push_back(WldPlacingItems::SceneSet);
                         scene->placeScenery(WldPlacingItems::SceneSet, true);
                         historyBuffer.scenery.push_back(WldPlacingItems::SceneSet);
 
@@ -245,7 +245,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -254,18 +254,18 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place path if collision test
-                        WldPlacingItems::PathSet.x = scene->cursor->scenePos().x();
-                        WldPlacingItems::PathSet.y = scene->cursor->scenePos().y();
+                        WldPlacingItems::PathSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::PathSet.y = scene->m_cursorItemImg->scenePos().y();
 
-                        scene->WldData->path_array_id++;
-                        WldPlacingItems::PathSet.meta.array_id = scene->WldData->path_array_id;
+                        scene->m_data->path_array_id++;
+                        WldPlacingItems::PathSet.meta.array_id = scene->m_data->path_array_id;
 
-                        scene->WldData->paths.push_back(WldPlacingItems::PathSet);
+                        scene->m_data->paths.push_back(WldPlacingItems::PathSet);
                         scene->placePath(WldPlacingItems::PathSet, true);
                         historyBuffer.paths.push_back(WldPlacingItems::PathSet);
 
@@ -291,7 +291,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         {
             QList<CoorPair> blackList; //items which don't pass the test anymore
             QList<CoorPair> nextList; //items to be checked next
-            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(),scene->m_cursorItemImg->y());
             while(true)
             {
                 QList<CoorPair> newList; //items to be checked next in the next loop
@@ -300,18 +300,18 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(blackList.contains(coor)) //don't check block in blacklist
                         continue;
 
-                    scene->cursor->setPos(coor.first, coor.second);
+                    scene->m_cursorItemImg->setPos(coor.first, coor.second);
 
-                    if(!scene->itemCollidesWith(scene->cursor))
+                    if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place Level if collision test
-                        WldPlacingItems::LevelSet.x = scene->cursor->scenePos().x();
-                        WldPlacingItems::LevelSet.y = scene->cursor->scenePos().y();
+                        WldPlacingItems::LevelSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::LevelSet.y = scene->m_cursorItemImg->scenePos().y();
 
-                        scene->WldData->level_array_id++;
-                        WldPlacingItems::LevelSet.meta.array_id = scene->WldData->level_array_id;
+                        scene->m_data->level_array_id++;
+                        WldPlacingItems::LevelSet.meta.array_id = scene->m_data->level_array_id;
 
-                        scene->WldData->levels.push_back(WldPlacingItems::LevelSet);
+                        scene->m_data->levels.push_back(WldPlacingItems::LevelSet);
                         scene->placeLevel(WldPlacingItems::LevelSet, true);
                         historyBuffer.levels.push_back(WldPlacingItems::LevelSet);
 
@@ -337,7 +337,7 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         break;
     }
 
-    scene->cursor->setPos(backUpPos);
+    scene->m_cursorItemImg->setPos(backUpPos);
 
     if(
        historyBuffer.tiles.size()>0||

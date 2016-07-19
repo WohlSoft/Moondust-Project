@@ -35,14 +35,18 @@ namespace Ui {
 class WorldEdit;
 }
 
+class MainWindow;
+
 class WorldEdit : public QWidget
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
-    explicit WorldEdit(QWidget *parent = 0);
+    explicit WorldEdit(MainWindow* mw, QWidget *parent = 0);
     ~WorldEdit();
+
+    MainWindow* m_mw;
 
     WorldData WldData;
     //QGraphicsScene LvlScene;

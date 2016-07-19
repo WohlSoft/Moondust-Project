@@ -50,14 +50,14 @@ void WLD_ModeSelect::set()
     s->resetResizers();
     s->unserPointSelector();
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=false;
-    s->disableMoveItems=false;
+    s->m_eraserIsEnabled=false;
+    s->m_pastingMode=false;
+    s->m_busyMode=false;
+    s->m_disableMoveItems=false;
 
-    s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
-    s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    s->m_viewPort->setInteractive(true);
+    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
+    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 
@@ -66,22 +66,22 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->EditingMode == WldScene::MODE_PasteFromClip)
+    if(s->m_editMode == WldScene::MODE_PasteFromClip)
     {
         if( mouseEvent->buttons() & Qt::RightButton )
         {
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             dontCallEvent = true;
-            s->IsMoved = true;
+            s->m_mouseIsMovedAfterKey = true;
             return;
         }
-        s->PasteFromBuffer = true;
+        s->m_pastingMode = true;
         dontCallEvent = true;
-        s->IsMoved = true;
+        s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if((s->disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+    if((s->m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
         && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
 
@@ -111,7 +111,7 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             if(!s->selectedItems().isEmpty())
             {
                 s->WldBuffer = s->copy();
-                s->PasteFromBuffer=true;
+                s->m_pastingMode=true;
             }
         }
     }
@@ -124,7 +124,7 @@ void WLD_ModeSelect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(!( mouseEvent->buttons() & Qt::LeftButton )) return;
-    if(s->cursor) s->cursor->setPos(mouseEvent->scenePos());
+    if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
 }
 
 void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
@@ -138,9 +138,9 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    s->cursor->hide();
+    s->m_cursorItemImg->hide();
 
-    s->haveSelected = false;
+    //s->haveSelected = false;
 
     QString ObjType;
     bool collisionPassed = false;
@@ -149,19 +149,19 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     WorldData historyBuffer;// bool deleted=false;
     WorldData historySourceBuffer;
 
-    if(s->PasteFromBuffer)
+    if(s->m_pastingMode)
     {
         s->paste( s->WldBuffer, mouseEvent->scenePos().toPoint() );
         s->Debugger_updateItemList();
-        s->PasteFromBuffer = false;
-        s->mouseMoved=false;
+        s->m_pastingMode = false;
+        s->m_mouseIsMoved=false;
         MainWinConnect::pMainWin->on_actionSelect_triggered();
     }
 
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 
     // check for grid snap
-    if ((!selectedList.isEmpty())&&(s->mouseMoved))
+    if ((!selectedList.isEmpty())&&(s->m_mouseIsMoved))
     {
 
         //Set Grid Size/Offset, sourcePosition
@@ -172,7 +172,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                  ((long)selectedList.first()->scenePos().y())
                  ) ) )
         {
-            s->mouseMoved=false;
+            s->m_mouseIsMoved=false;
             return; //break fetch when items is not moved
         }
 
@@ -181,7 +181,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
         // Check collisions
         //Only if collision ckecking enabled
-        if(!s->PasteFromBuffer)
+        if(!s->m_pastingMode)
         {
             if(s->opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
             {
@@ -192,7 +192,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 collisionPassed = true;
                 //applyArrayForItemGroup(selectedList);
-                s->WldData->meta.modified=true;
+                s->m_data->meta.modified=true;
             }
         }
 
@@ -210,7 +210,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
            //Check position
            if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
            {
-               s->mouseMoved=false;
+               s->m_mouseIsMoved=false;
                break; //break fetch when items is not moved
            }
 
@@ -222,7 +222,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemTile *)(*it))->arrayApply();
                historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
-               s->WldData->meta.modified = true;
+               s->m_data->meta.modified = true;
            }
            else
            if( ObjType == "SCENERY")
@@ -233,7 +233,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemScene *)(*it))->arrayApply();
                historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
-               s->WldData->meta.modified = true;
+               s->m_data->meta.modified = true;
            }
            else
            if( ObjType == "PATH")
@@ -244,7 +244,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemPath *)(*it))->arrayApply();
                historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
-               s->WldData->meta.modified = true;
+               s->m_data->meta.modified = true;
            }
            else
            if( ObjType == "LEVEL")
@@ -255,7 +255,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemLevel *)(*it))->arrayApply();
                historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
-               s->WldData->meta.modified = true;
+               s->m_data->meta.modified = true;
            }
            else
            if( ObjType == "MUSICBOX")
@@ -266,15 +266,15 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                ((ItemMusic *)(*it))->arrayApply();
                historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
-               s->WldData->meta.modified = true;
+               s->m_data->meta.modified = true;
            }
 
         }////////////////////////SECOND FETCH///////////////////////
 
-        if(s->mouseMoved)
+        if(s->m_mouseIsMoved)
             s->addMoveHistory(historySourceBuffer, historyBuffer);
 
-        s->mouseMoved = false;
+        s->m_mouseIsMoved = false;
     }
 }
 
@@ -294,7 +294,7 @@ void WLD_ModeSelect::keyRelease(QKeyEvent *keyEvent)
             s->removeSelectedWldItems();
             break;
         case (Qt::Key_Escape):
-            if(!s->mouseMoved)
+            if(!s->m_mouseIsMoved)
                 s->clearSelection();
             break;
         default:
@@ -309,7 +309,7 @@ void WLD_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    gridSize = s->pConfigs->default_grid;
+    gridSize = s->m_configs->default_grid;
     offsetX = 0;
     offsetY = 0;
 

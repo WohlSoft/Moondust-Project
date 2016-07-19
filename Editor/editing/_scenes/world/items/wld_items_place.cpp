@@ -39,8 +39,8 @@ void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_wtiles[1];
-        mergedSet.image = uTileImg;
+        mergedSet = m_configs->main_wtiles[1];
+        mergedSet.image = m_dummyTerrainImg;
     }
 
     QPoint newPos = QPoint(tile.x, tile.y);
@@ -54,10 +54,10 @@ void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
     ItemTile *TileItem = new ItemTile(this);
     TileItem->setTileData(tile, &mergedSet, &animator);
 
-    TileItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_tile));
-    TileItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_tile));
+    TileItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockTerrain));
+    TileItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockTerrain));
 
-    if(PasteFromBuffer) TileItem->setSelected(true);
+    if(m_pastingMode) TileItem->setSelected(true);
 }
 
 
@@ -71,8 +71,8 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_wscene[1];
-        mergedSet.image = uSceneImg;
+        mergedSet = m_configs->main_wscene[1];
+        mergedSet.image = m_dummySceneryImg;
     }
 
     QPoint newPos = QPoint(scenery.x, scenery.y);
@@ -86,10 +86,10 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
     ItemScene *SceneItem = new ItemScene(this);
     SceneItem->setSceneData(scenery, &mergedSet, &animator);
 
-    SceneItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_scene));
-    SceneItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_scene));
+    SceneItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockScenery));
+    SceneItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockScenery));
 
-    if(PasteFromBuffer) SceneItem->setSelected(true);
+    if(m_pastingMode) SceneItem->setSelected(true);
 }
 
 
@@ -103,8 +103,8 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_wpaths[1];
-        mergedSet.image = uPathImg;
+        mergedSet = m_configs->main_wpaths[1];
+        mergedSet.image = m_dummyPathImg;
     }
 
     QPoint newPos = QPoint(path.x, path.y);
@@ -120,10 +120,10 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
 
     PathItem->setOpacity(opts.semiTransparentPaths ? 0.5 : 1);
 
-    PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_path));
-    PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_path));
+    PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockPath));
+    PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockPath));
 
-    if(PasteFromBuffer) PathItem->setSelected(true);
+    if(m_pastingMode) PathItem->setSelected(true);
 }
 
 
@@ -138,11 +138,11 @@ void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
     if(!mergedSet.isValid)
     {
         animator = 0;
-        mergedSet = pConfigs->main_wlevels[0];
-        mergedSet.image = uLevelImg;
+        mergedSet = m_configs->main_wlevels[0];
+        mergedSet.image = m_dummyLevelImg;
     }
-    pathAnimator =  uLevels[pConfigs->marker_wlvl.path].animator_id;
-    bPathAnimator = uLevels[pConfigs->marker_wlvl.bigpath].animator_id;
+    pathAnimator =  uLevels[m_configs->marker_wlvl.path].animator_id;
+    bPathAnimator = uLevels[m_configs->marker_wlvl.bigpath].animator_id;
 
     QPoint newPos = QPoint(level.x, level.y);
     if(toGrid)
@@ -156,10 +156,10 @@ void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
 
     LevelItem->setLevelData(level, &mergedSet, &animator, &pathAnimator, &bPathAnimator);
 
-    LevelItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_level));
-    LevelItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_level));
+    LevelItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockLevel));
+    LevelItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockLevel));
 
-    if(PasteFromBuffer) LevelItem->setSelected(true);
+    if(m_pastingMode) LevelItem->setSelected(true);
 }
 
 
@@ -168,7 +168,7 @@ void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
 
 void WldScene::placeMusicbox(WorldMusicBox &musicbox, bool toGrid)
 {
-    int j = pConfigs->getMusWldI(musicbox.id);
+    int j = m_configs->getMusWldI(musicbox.id);
 
     ItemMusic *MusicBoxItem = new ItemMusic(this);
 
@@ -184,15 +184,15 @@ void WldScene::placeMusicbox(WorldMusicBox &musicbox, bool toGrid)
     if(j>=0)
     {
         MusicBoxItem->m_musicTitle =
-                (pConfigs->music_w_custom_id==musicbox.id) ?
+                (m_configs->music_w_custom_id==musicbox.id) ?
                     musicbox.music_file:
-                    pConfigs->main_music_wld[j].name;
+                    m_configs->main_music_wld[j].name;
     }
 
-    MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_musbox));
-    MusicBoxItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_musbox));
+    MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockMusicBox));
+    MusicBoxItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockMusicBox));
 
-    if(PasteFromBuffer) MusicBoxItem->setSelected(true);
+    if(m_pastingMode) MusicBoxItem->setSelected(true);
 }
 
 

@@ -256,18 +256,18 @@ void MainWindow::on_actionReload_triggered()
 
         wnGeom = LastActiveSubWindow->geometry();
         QMdiSubWindow *worldWindow = LastActiveSubWindow;
-        long posX = wldEdit->scene->_viewPort->horizontalScrollBar()->value();
-        long posY = wldEdit->scene->_viewPort->verticalScrollBar()->value();
+        long posX = wldEdit->scene->m_viewPort->horizontalScrollBar()->value();
+        long posY = wldEdit->scene->m_viewPort->verticalScrollBar()->value();
 
         wldEdit->close();
 
-        WorldEdit *child = new WorldEdit(worldWindow);
-        connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+        WorldEdit *child = new WorldEdit(this, worldWindow);
+        connect(child, &WorldEdit::forceReload, this, &MainWindow::on_actionReload_triggered);
         worldWindow->setWidget(child);
         GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
 
         connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
-        if ( (bool)(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) )
+        if ( bool(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) )
         {
             child->show();
             LastActiveSubWindow->setGeometry(wnGeom);
@@ -281,8 +281,8 @@ void MainWindow::on_actionReload_triggered()
                 dock_WldSettingsBox->raise();
             }
 
-            child->scene->_viewPort->horizontalScrollBar()->setValue(posX);
-            child->scene->_viewPort->verticalScrollBar()->setValue(posY);
+            child->scene->m_viewPort->horizontalScrollBar()->setValue(posX);
+            child->scene->m_viewPort->verticalScrollBar()->setValue(posY);
 
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {

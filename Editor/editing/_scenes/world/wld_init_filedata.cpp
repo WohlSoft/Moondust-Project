@@ -26,10 +26,10 @@ void WldScene::setTiles(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<WldData->tiles.size(); i++)
+    for(i=0; i<m_data->tiles.size(); i++)
     {
         //Add tile to scene
-        placeTile(WldData->tiles[i]);
+        placeTile(m_data->tiles[i]);
 
         if(progress.wasCanceled())
             return;
@@ -42,10 +42,10 @@ void WldScene::setSceneries(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<WldData->scenery.size(); i++)
+    for(i=0; i<m_data->scenery.size(); i++)
     {
         //Add scenery to scene
-        placeScenery(WldData->scenery[i]);
+        placeScenery(m_data->scenery[i]);
 
         if(progress.wasCanceled())
             return;
@@ -59,10 +59,10 @@ void WldScene::setPaths(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<WldData->paths.size(); i++)
+    for(i=0; i<m_data->paths.size(); i++)
     {
         //Add path to scene
-        placePath(WldData->paths[i]);
+        placePath(m_data->paths[i]);
 
         if(progress.wasCanceled())
             return;
@@ -75,10 +75,10 @@ void WldScene::setLevels(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<WldData->levels.size(); i++)
+    for(i=0; i<m_data->levels.size(); i++)
     {
         //Add level to scene
-        placeLevel(WldData->levels[i]);
+        placeLevel(m_data->levels[i]);
 
         if(progress.wasCanceled())
             return;
@@ -93,10 +93,10 @@ void WldScene::setMusicBoxes(QProgressDialog &progress)
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<WldData->music.size(); i++)
+    for(i=0; i<m_data->music.size(); i++)
     {
         //Add music to scene
-        placeMusicbox(WldData->music[i]);
+        placeMusicbox(m_data->music[i]);
 
         if(progress.wasCanceled())
             return;

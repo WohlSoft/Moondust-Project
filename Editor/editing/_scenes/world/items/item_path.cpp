@@ -53,7 +53,7 @@ ItemPath::~ItemPath()
 
 void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    m_scene->contextMenuOpened = true; //bug protector
+    m_scene->m_contextMenuIsOpened = true; //bug protector
     //Remove selection from non-bgo items
     if(!this->isSelected())
     {
@@ -138,7 +138,7 @@ void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->pConfigs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0, m_scene->_edit);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
         util::DialogToCenter(itemList, true);
 
@@ -224,9 +224,9 @@ void ItemPath::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->paths.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->paths[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->paths[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -235,15 +235,15 @@ void ItemPath::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        m_scene->WldData->paths[m_data.meta.index] = m_data; //apply current pathData
+        m_scene->m_data->paths[m_data.meta.index] = m_data; //apply current pathData
     }
     else
-    for(int i=0; i<m_scene->WldData->paths.size(); i++)
+    for(int i=0; i<m_scene->m_data->paths.size(); i++)
     { //after find it into array
-        if(m_scene->WldData->paths[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->paths[i].meta.array_id == m_data.meta.array_id)
         {
             m_data.meta.index = i;
-            m_scene->WldData->paths[i] = m_data;
+            m_scene->m_data->paths[i] = m_data;
             break;
         }
     }
@@ -254,9 +254,9 @@ void ItemPath::arrayApply()
 void ItemPath::removeFromArray()
 {
     bool found=false;
-    if(m_data.meta.index < (unsigned int)m_scene->WldData->paths.size())
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     { //Check index
-        if(m_data.meta.array_id == m_scene->WldData->paths[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->paths[m_data.meta.index].meta.array_id)
         {
             found=true;
         }
@@ -264,14 +264,14 @@ void ItemPath::removeFromArray()
 
     if(found)
     { //directlry
-        m_scene->WldData->paths.removeAt(m_data.meta.index);
+        m_scene->m_data->paths.removeAt(m_data.meta.index);
     }
     else
-    for(int i=0; i<m_scene->WldData->paths.size(); i++)
+    for(int i=0; i<m_scene->m_data->paths.size(); i++)
     {
-        if(m_scene->WldData->paths[i].meta.array_id == m_data.meta.array_id)
+        if(m_scene->m_data->paths[i].meta.array_id == m_data.meta.array_id)
         {
-            m_scene->WldData->paths.removeAt(i); break;
+            m_scene->m_data->paths.removeAt(i); break;
         }
     }
 }
@@ -288,7 +288,7 @@ QPoint ItemPath::sourcePos()
 
 bool ItemPath::itemTypeIsLocked()
 {
-    return m_scene->lock_path;
+    return m_scene->m_lockPath;
 }
 
 void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *animator_id)
@@ -324,10 +324,10 @@ void ItemPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
-    if(m_scene->animates_Paths.size()>m_animatorID)
+    if(m_scene->m_animatorsPaths.size()>m_animatorID)
         painter->drawPixmap(m_imageSize,
-                            m_scene->animates_Paths[m_animatorID]->wholeImage(),
-                            m_scene->animates_Paths[m_animatorID]->frameRect());
+                            m_scene->m_animatorsPaths[m_animatorID]->wholeImage(),
+                            m_scene->m_animatorsPaths[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -344,9 +344,9 @@ void ItemPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
 
 void ItemPath::setAnimator(long aniID)
 {
-    if(aniID<m_scene->animates_Paths.size())
+    if(aniID<m_scene->m_animatorsPaths.size())
     {
-        QRect frameRect = m_scene->animates_Paths[aniID]->frameRect();
+        QRect frameRect = m_scene->m_animatorsPaths[aniID]->frameRect();
         m_imageSize = QRectF(0,0, frameRect.width(), frameRect.height() );
     }
 
