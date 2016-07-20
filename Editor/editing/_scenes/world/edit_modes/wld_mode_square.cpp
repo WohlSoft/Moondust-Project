@@ -45,7 +45,7 @@ void WLD_ModeRect::set()
 
     s->clearSelection();
     s->resetResizers();
-    s->unserPointSelector();
+    s->m_pointSelector.unserPointSelector();
 
     s->m_eraserIsEnabled=false;
     s->m_pastingMode=false;

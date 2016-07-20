@@ -25,10 +25,7 @@
 #include "wld_mode_fill.h"
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
-#include "../items/item_tile.h"
-#include "../items/item_scene.h"
-#include "../items/item_path.h"
-#include "../items/item_level.h"
+#include "../wld_history_manager.h"
 
 WLD_ModeFill::WLD_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)
@@ -345,5 +342,5 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
        historyBuffer.paths.size()>0||
        historyBuffer.levels.size()>0
             )
-        scene->addPlaceHistory(historyBuffer);
+        scene->m_history->addPlaceHistory(historyBuffer);
 }

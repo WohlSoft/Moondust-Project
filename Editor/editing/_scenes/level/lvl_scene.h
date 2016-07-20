@@ -152,12 +152,22 @@ public:
         EditingSettings m_opts;
 
         //! Returns current position of viewport
-        QPoint getViewportPos();
+        QPoint  getViewportPos();
         //! Returns current rectangle of viewport
-        QRect  getViewportRect();
+        QRect   getViewportRect();
 
-        //Clipboard
+        /**********Clipboard*************/
+        /**
+         * @brief Copy selected elements inti clipboard
+         * @param cut Delete elements from map after copying
+         * @return copied data buffer
+         */
         LevelData copy(bool cut = false);
+        /**
+         * @brief Paste elements in the clipboard
+         * @param BufferIn Input clipboard contents
+         * @param pos Position of left-top corner where paste
+         */
         void paste(LevelData BufferIn, QPoint pos);
 
         /**
@@ -174,7 +184,7 @@ public:
 
     // ///////////////////GFX Manager////////////////////////
     public:
-        //! Common container of pre-loaded images
+        //! Pre-loaded custom images bank
         QList<QPixmap> m_localImages;
 
         //! Container of local backgrounds configs
@@ -500,8 +510,6 @@ public:
         void applyResizers();   //!< Apply current state of resizer
         void resetResizers();   //!< Discard resizing action
 
-
-
 // ////////////////////////////////////////////////////////////////////////////////
 // //////////////////////////////HISTORY///////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
@@ -509,14 +517,31 @@ public:
     // //////////////////History Manager/////////////////////////
     public:
         //history modifiers
+        /**
+         * @brief Undo recent action
+         */
         void historyBack();
+        /**
+         * @brief Redo recently undone action
+         */
         void historyForward();
-        void updateHistoryBuffer();
         //history information
+        /**
+         * @brief Current history index
+         * @return how many history entries stored or which state on history is declared
+         */
         int  getHistroyIndex();
+        /**
+         * @brief Is possible to undo?
+         * @return true if undo is possible
+         */
         bool canUndo();
+        /**
+         * @brief Is possible to redo?
+         * @return true if redo is possible
+         */
         bool canRedo();
-
+        //! History manager
         LvlHistoryManager* m_history;
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////

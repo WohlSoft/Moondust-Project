@@ -23,12 +23,7 @@
 #include <editing/_scenes/world/wld_item_placing.h>
 
 #include "../wld_scene.h"
-#include "item_tile.h"
-#include "item_scene.h"
-#include "item_path.h"
-#include "item_level.h"
-#include "item_music.h"
-#include "item_point.h"
+#include "../wld_history_manager.h"
 
 void WldScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
 {
@@ -141,7 +136,7 @@ void WldScene::placeItemsByRectArray()
         !m_overwritedItems.levels.isEmpty()||
         !m_overwritedItems.music.isEmpty() )
     {
-        addOverwriteHistory(m_overwritedItems, m_placingItems);
+        m_history->addOverwriteHistory(m_overwritedItems, m_placingItems);
         m_overwritedItems.tiles.clear();
         m_overwritedItems.scenery.clear();
         m_overwritedItems.paths.clear();
@@ -159,7 +154,7 @@ void WldScene::placeItemsByRectArray()
             !m_placingItems.scenery.isEmpty()||
             !m_placingItems.levels.isEmpty()||
             !m_placingItems.music.isEmpty()){
-        addPlaceHistory(m_placingItems);
+        m_history->addPlaceHistory(m_placingItems);
         m_placingItems.tiles.clear();
         m_placingItems.paths.clear();
         m_placingItems.scenery.clear();
@@ -420,7 +415,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
             m_overwritedItems.music << historyBuffer.music;
         }
         else
-            addRemoveHistory(historyBuffer);
+            m_history->addRemoveHistory(historyBuffer);
     }
 }
 

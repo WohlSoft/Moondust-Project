@@ -25,6 +25,7 @@
 #include <audio/music_player.h>
 
 #include "item_music.h"
+#include "../wld_history_manager.h"
 
 ItemMusic::ItemMusic(QGraphicsItem *parent)
     : WldBaseItem(parent)
@@ -39,7 +40,7 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    this->setZValue(m_scene->musicZ);
+    this->setZValue(m_scene->Z_MusicBoxes);
     m_gridSize = m_scene->m_configs->default_grid;
     m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
     setData(ITEM_WIDTH,  QString::number( m_gridSize ) ); //width
@@ -218,7 +219,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         }
         delete itemList;
         if(!newData.music.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)

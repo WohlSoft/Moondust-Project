@@ -34,7 +34,7 @@
 
 void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
 {
-    obj_w_tile &mergedSet = uTiles[tile.id];
+    obj_w_tile &mergedSet = m_localConfigTerrain[tile.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
@@ -66,7 +66,7 @@ void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
 
 void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 {
-    obj_w_scenery &mergedSet = uScenes[scenery.id];
+    obj_w_scenery &mergedSet = m_localConfigScenery[scenery.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
@@ -98,7 +98,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 
 void WldScene::placePath(WorldPathTile &path, bool toGrid)
 {
-    obj_w_path &mergedSet = uPaths[path.id];
+    obj_w_path &mergedSet = m_localConfigPaths[path.id];
     long animator = mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
@@ -133,7 +133,7 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
 void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
 {
     long animator=0, pathAnimator=0, bPathAnimator=0;
-    obj_w_level &mergedSet = uLevels[level.id];
+    obj_w_level &mergedSet = m_localConfigLevels[level.id];
     animator =      mergedSet.animator_id;
     if(!mergedSet.isValid)
     {
@@ -141,8 +141,8 @@ void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
         mergedSet = m_configs->main_wlevels[0];
         mergedSet.image = m_dummyLevelImg;
     }
-    pathAnimator =  uLevels[m_configs->marker_wlvl.path].animator_id;
-    bPathAnimator = uLevels[m_configs->marker_wlvl.bigpath].animator_id;
+    pathAnimator =  m_localConfigLevels[m_configs->marker_wlvl.path].animator_id;
+    bPathAnimator = m_localConfigLevels[m_configs->marker_wlvl.bigpath].animator_id;
 
     QPoint newPos = QPoint(level.x, level.y);
     if(toGrid)

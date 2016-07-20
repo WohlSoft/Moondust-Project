@@ -17,6 +17,7 @@
  */
 
 #include <editing/_scenes/world/wld_item_placing.h>
+#include <editing/_scenes/world/wld_history_manager.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/world/items/item_level.h>
 #include <editing/_dialogs/levelfilelist.h>
@@ -236,7 +237,7 @@ void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
                 ((ItemLevel*)item)->setShowSmallPathBG(checked);
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(checked));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(checked));
     }
 }
 
@@ -263,7 +264,7 @@ void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
                 ((ItemLevel*)item)->setShowBigPathBG(checked);
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(checked));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(checked));
     }
 
 }
@@ -291,7 +292,7 @@ void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
                 ((ItemLevel*)item)->alwaysVisible(checked);
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(checked));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(checked));
     }
 
 }
@@ -320,7 +321,7 @@ void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GAMESTARTPOINT, QVariant(checked));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_GAMESTARTPOINT, QVariant(checked));
     }
 
 }
@@ -352,7 +353,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
     }
 
 }
@@ -384,7 +385,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELTITLE, QVariant(ui->WLD_PROPS_LVLTitle->text()));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELTITLE, QVariant(ui->WLD_PROPS_LVLTitle->text()));
     }
 }
 
@@ -412,7 +413,7 @@ void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DOORID, QVariant(arg1));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_DOORID, QVariant(arg1));
     }
 
 }
@@ -489,7 +490,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYTOP, QVariant(index-1));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYTOP, QVariant(index-1));
     }
 }
 
@@ -517,7 +518,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYLEFT, QVariant(index-1));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYLEFT, QVariant(index-1));
     }
 
 }
@@ -546,7 +547,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYRIGHT, QVariant(index-1));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYRIGHT, QVariant(index-1));
     }
 
 }
@@ -575,7 +576,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYBOTTOM, QVariant(index-1));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYBOTTOM, QVariant(index-1));
     }
 
 
@@ -609,7 +610,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
     }
 
 }
@@ -642,7 +643,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
+        edit->scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
     }
 }
 
@@ -705,12 +706,12 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
                 mw()->ui->actionLine->setEnabled(false);
                 if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
                 {
-                    edit->scene->selectedPointNotUsed = true;
+                    edit->scene->m_pointSelector.m_pointNotPlaced = true;
                 }
                 else
                 {
-                    edit->scene->selectedPointNotUsed = false;
-                    edit->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
+                    edit->scene->m_pointSelector.m_pointNotPlaced = false;
+                    edit->scene->m_pointSelector.m_pointCoord=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
                 }
 
                 edit->scene->setItemPlacer(5);

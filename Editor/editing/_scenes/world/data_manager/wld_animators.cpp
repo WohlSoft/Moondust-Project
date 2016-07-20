@@ -28,8 +28,8 @@ void WldScene::buildAnimators()
     int i;
 
     LogDebug("WorldAnimators -> Build tiles animator");
-    uTiles.clear();
-    uTiles.allocateSlots(m_configs->main_wtiles.total());
+    m_localConfigTerrain.clear();
+    m_localConfigTerrain.allocateSlots(m_configs->main_wtiles.total());
     for(i=1; i<m_configs->main_wtiles.size(); i++)
     {
         obj_w_tile & objTile = m_configs->main_wtiles[i];
@@ -45,14 +45,14 @@ void WldScene::buildAnimators()
                            );
 
         m_animatorsTerrain.push_back( aniTile );
-        animator.registerAnimation( aniTile );
+        m_animationTimer.registerAnimation( aniTile );
         t_tile.animator_id = m_animatorsTerrain.size()-1;
-        uTiles.storeElement(i, t_tile);
+        m_localConfigTerrain.storeElement(i, t_tile);
     }
 
     LogDebug("WorldAnimators -> Build sceneries animator");
-    uScenes.clear();
-    uScenes.allocateSlots(m_configs->main_wscene.total());
+    m_localConfigScenery.clear();
+    m_localConfigScenery.allocateSlots(m_configs->main_wscene.total());
     for(i=1; i<m_configs->main_wscene.size(); i++)
     {
         obj_w_scenery & objScenery = m_configs->main_wscene[i];
@@ -68,14 +68,14 @@ void WldScene::buildAnimators()
                               );
 
         m_animatorsScenery.push_back( aniScene );
-        animator.registerAnimation( aniScene );
+        m_animationTimer.registerAnimation( aniScene );
         t_scene.animator_id = m_animatorsScenery.size()-1;
-        uScenes.storeElement(i, t_scene);
+        m_localConfigScenery.storeElement(i, t_scene);
     }
 
     LogDebug("WorldAnimators -> Build paths animator");
-    uPaths.clear();
-    uPaths.allocateSlots(m_configs->main_wpaths.total());
+    m_localConfigPaths.clear();
+    m_localConfigPaths.allocateSlots(m_configs->main_wpaths.total());
     for(i=1; i<m_configs->main_wpaths.size(); i++)
     {
         obj_w_path & objPath = m_configs->main_wpaths[i];
@@ -91,14 +91,14 @@ void WldScene::buildAnimators()
                               );
 
         m_animatorsPaths.push_back( aniScene );
-        animator.registerAnimation( aniScene );
+        m_animationTimer.registerAnimation( aniScene );
         t_path.animator_id = m_animatorsPaths.size()-1;
-        uPaths.storeElement(i, t_path);
+        m_localConfigPaths.storeElement(i, t_path);
     }
 
     LogDebug("WorldAnimators -> Build levels animator");
-    uLevels.clear();
-    uLevels.allocateSlots(m_configs->main_wlevels.total());
+    m_localConfigLevels.clear();
+    m_localConfigLevels.allocateSlots(m_configs->main_wlevels.total());
     for(i=0; i<m_configs->main_wlevels.size(); i++)
     {
         obj_w_level& objLevel = m_configs->main_wlevels[i];
@@ -114,9 +114,9 @@ void WldScene::buildAnimators()
                               );
 
         m_animatorsLevels.push_back( aniScene );
-        animator.registerAnimation( aniScene );
+        m_animationTimer.registerAnimation( aniScene );
         t_level.animator_id = m_animatorsLevels.size()-1;
-        uLevels.storeElement(i, t_level);
+        m_localConfigLevels.storeElement(i, t_level);
     }
 
     LogDebug("WorldAnimators -> done");
@@ -135,13 +135,13 @@ void WldScene::startAnimation()
         LogWarning(QString("Can't start animation: too many items on map: %1").arg(q));
         return;
     }
-    animator.start(32);
+    m_animationTimer.start(32);
 }
 
 
 
 void WldScene::stopAnimation()
 {
-    animator.stop();
+    m_animationTimer.stop();
     update();
 }

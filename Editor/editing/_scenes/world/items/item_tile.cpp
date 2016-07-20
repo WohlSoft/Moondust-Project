@@ -24,6 +24,7 @@
 #include <common_features/logger.h>
 
 #include "item_tile.h"
+#include "../wld_history_manager.h"
 
 ItemTile::ItemTile(QGraphicsItem *parent)
     : WldBaseItem(parent)
@@ -38,7 +39,7 @@ ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
     construct();
     if(!parentScene) return;
     m_scene->addItem(this);
-    setZValue(m_scene->tileZ);
+    setZValue(m_scene->Z_Terrain);
 }
 
 void ItemTile::construct()
@@ -173,7 +174,7 @@ void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         }
         delete itemList;
         if(!newData.tiles.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
@@ -202,10 +203,10 @@ void ItemTile::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    if(!m_scene->uTiles.contains(target_id))
+    if(!m_scene->m_localConfigTerrain.contains(target_id))
         return;
 
-    obj_w_tile &mergedSet = m_scene->uTiles[target_id];
+    obj_w_tile &mergedSet = m_scene->m_localConfigTerrain[target_id];
     long animator=mergedSet.animator_id;
 
     m_data.id = target_id;

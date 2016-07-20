@@ -24,6 +24,7 @@
 #include <common_features/main_window_ptr.h>
 
 #include "item_scene.h"
+#include "../wld_history_manager.h"
 
 ItemScene::ItemScene(QGraphicsItem *parent)
     : WldBaseItem(parent)
@@ -38,7 +39,7 @@ ItemScene::ItemScene(WldScene *parentScene, QGraphicsItem *parent)
     construct();
     if(!parentScene) return;
     m_scene->addItem(this);
-    setZValue(m_scene->sceneZ);
+    setZValue(m_scene->Z_Scenery);
 }
 
 
@@ -186,7 +187,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         }
         delete itemList;
         if(!newData.scenery.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
@@ -215,10 +216,10 @@ void ItemScene::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    if(!m_scene->uScenes.contains(target_id))
+    if(!m_scene->m_localConfigScenery.contains(target_id))
         return;
 
-    obj_w_scenery &mergedSet = m_scene->uScenes[target_id];
+    obj_w_scenery &mergedSet = m_scene->m_localConfigScenery[target_id];
     long animator=mergedSet.animator_id;
 
     m_data.id = target_id;

@@ -21,11 +21,7 @@
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"
-#include "items/item_tile.h"
-#include "items/item_scene.h"
-#include "items/item_path.h"
-#include "items/item_level.h"
-#include "items/item_music.h"
+#include "wld_history_manager.h"
 
 #include "edit_modes/wld_mode_hand.h"
 #include "edit_modes/wld_mode_select.h"
@@ -48,7 +44,65 @@ WldScene::WldScene(MainWindow *mw,
     m_configs(&configs), // Pointer to Main Configs
     m_data(&FileData), //Add pointer to level data
     m_viewPort(parentView),
-    m_subWindow(nullptr)
+    m_subWindow(nullptr),
+
+    //set dummy images if target not exist or wrong
+    m_dummyTerrainImg(Themes::Image(Themes::dummy_terrain)),
+    m_dummySceneryImg(Themes::Image(Themes::dummy_scenery)),
+    m_dummyPathImg(Themes::Image(Themes::dummy_path)),
+    m_dummyLevelImg(Themes::Image(Themes::dummy_wlevel)),
+    m_musicBoxImg(Themes::Image(Themes::dummy_musicbox)),
+
+    m_lastTerrainArrayID(0),
+    m_lastSceneryArrayID(0),
+    m_lastPathArrayID(0),
+    m_lastLevelArrayID(0),
+    m_lastMusicBoxArrayID(0),
+
+    m_isSelectionDialog(false),
+    m_pointSelector(this, this),
+
+    //Locks
+    m_lockTerrain(false),
+    m_lockScenery(false),
+    m_lockPath(false),
+    m_lockLevel(false),
+    m_lockMusicBox(false),
+
+    m_emptyCollisionCheck(false),
+
+    //Editing mode
+    m_editMode(0),
+    m_editModeObj(nullptr),
+
+    m_placingItemType(0),
+
+    m_cursorItemImg(nullptr),
+
+    m_labelBox(nullptr),
+
+    m_mouseIsMovedAfterKey(false),
+
+    m_eraserIsEnabled(false),
+    m_pastingMode(false),
+
+    m_busyMode(false),
+    m_disableMoveItems(false),
+    m_contextMenuIsOpened(false),
+
+    m_mouseLeftPressed(false),
+    m_mouseMidPressed(false),
+    m_mouseRightPressed(false),
+
+    m_mouseIsMoved(false),
+
+    m_skipChildMousePressEvent(false),
+    m_skipChildMouseMoveEvent(false),
+    m_skipChildMousReleaseEvent(false),
+
+    m_resizeBox(nullptr),
+
+    m_history(new WldHistoryManager(this, this) )
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
@@ -59,62 +113,14 @@ WldScene::WldScene(MainWindow *mw,
         }
     }
 
-    //Editing mode
-    m_editMode = 0;
-    m_eraserIsEnabled = false;
-    m_pastingMode = false;
-    m_disableMoveItems = false;
-    m_busyMode = false;
-
-    m_mouseLeftPressed = false; //Left mouse key is pressed
-    m_mouseMidPressed = false;  //Middle mouse key is pressed
-    m_mouseRightPressed = false;//Right mouse key is pressed
-
-    m_mouseIsMoved  = false; //Mouse was moved with right mouseKey
-
-    m_skipChildMousePressEvent  = false;
-    m_skipChildMouseMoveEvent   = false;
-    m_skipChildMousReleaseEvent = false;
-
-    m_lastTerrainArrayID    = 0;
-    m_lastSceneryArrayID    = 0;
-    m_lastPathArrayID       = 0;
-    m_lastLevelArrayID      = 0;
-    m_lastMusicBoxArrayID   = 0;
-
-    isSelectionDialog = false;
-
-    //Editing process flags
-    m_mouseIsMovedAfterKey = false;
-    //haveSelected = false;
-
-    m_emptyCollisionCheck = false;
-
-    m_placingItemType = 0;
-
-    m_resizeBox = NULL;
-
-    m_contextMenuIsOpened = false;
-
-    selectedPoint = QPoint(0, 0);
-    selectedPointNotUsed = true;
-    pointTarget = nullptr;
-    pointImg = QPixmap(":/images/set_point.png");
-
-    pointAnimation.setSettings(pointImg, true, 4, 64);
-    animator.registerAnimation(&pointAnimation);
-
-    m_cursorItemImg = NULL;
     resetCursor();
-    m_labelBox = NULL;
 
-    //set dummy images if target not exist or wrong
-    m_dummyTerrainImg   = Themes::Image(Themes::dummy_terrain);
-    m_dummySceneryImg   = Themes::Image(Themes::dummy_scenery);
-    m_dummyPathImg      = Themes::Image(Themes::dummy_path);
-    m_dummyLevelImg     = Themes::Image(Themes::dummy_wlevel);
-
-    m_musicBoxImg = Themes::Image(Themes::dummy_musicbox);
+    //set Default Z Indexes
+    Z_Terrain       = 0.0; // tiles
+    Z_Scenery       = 5.0; // scenery
+    Z_Paths         = 10.0; // paths
+    Z_Levels        = 15.0; // levels
+    Z_MusicBoxes    = 20.0; // musicboxes
 
     //Build animators for dummies
     SimpleAnimator * tmpAnimator;
@@ -146,24 +152,6 @@ WldScene::WldScene(MainWindow *mw,
         if(x.type==ItemTypes::WLD_Level)
             local_rotation_table_levels[x.id]=x;
     }
-
-
-    //set Default Z Indexes
-    tileZ=0; // tiles
-    sceneZ=5; // scenery
-    pathZ=10; // paths
-    levelZ=15; // levels
-    musicZ=20; // musicboxes
-
-    //HistoryIndex
-    historyIndex=0;
-
-    //Locks
-    m_lockTerrain=false;
-    m_lockScenery=false;
-    m_lockPath=false;
-    m_lockLevel=false;
-    m_lockMusicBox=false;
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 

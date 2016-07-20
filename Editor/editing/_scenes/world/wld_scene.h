@@ -42,14 +42,19 @@
 
 #include <editing/_components/history/ihistoryelement.h>
 
+#include "wld_point_selector.h"
+
 class WorldEdit;
 class MainWindow;
+class WldHistoryManager;
+class WldPointSelector;
 
 class WldScene : public QGraphicsScene
 {
     Q_OBJECT
     friend class EditMode;
     friend class WorldEdit;
+    friend class WldHistoryManager;
 public:
     WldScene(MainWindow* mw, GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
     ~WldScene();
@@ -99,48 +104,81 @@ public:
         //! Pointer to parent edit sub-window;
         WorldEdit         * m_subWindow;
 
-        WorldData WldBuffer;    //!< Data buffer
+        //! Data buffer
+        WorldData WldBuffer;
 
     public:
         //default objects Z value
-        int tileZ; // tiles
-        int sceneZ; // scenery
-        int pathZ; // paths
-        int levelZ; // levels
-        int musicZ; // musicboxes
+        //! Z-Layer of terrain tiles
+        qreal Z_Terrain;
+        //! Z-Layer of sceneries
+        qreal Z_Scenery;
+        //! Z-Layer of path tiles
+        qreal Z_Paths;
+        //! Z-Layer of level entrance points
+        qreal Z_Levels;
+        //! Z-Layer of visible music boxes frontents
+        qreal Z_MusicBoxes;
 
     // ///////////////////Miscellaneous////////////////////////
     public:
         EditingSettings opts;
 
-        QPoint getViewportPos(); //!< Returns current position of viewport
-        QRect getViewportRect(); //!< Returns current rectangle of viewport
+        //! Returns current position of viewport
+        QPoint  getViewportPos();
+        //! Returns current rectangle of viewport
+        QRect   getViewportRect();
 
-        //Clipboard
+        /**********Clipboard*************/
+        /**
+         * @brief Copy selected elements inti clipboard
+         * @param cut Delete elements from map after copying
+         * @return copied data buffer
+         */
         WorldData copy(bool cut = false);
+        /**
+         * @brief Paste elements in the clipboard
+         * @param BufferIn Input clipboard contents
+         * @param pos Position of left-top corner where paste
+         */
         void paste(WorldData BufferIn, QPoint pos);
 
-        void openProps();                //!< Open properties box of selected items
-        void Debugger_updateItemList();  //!< Refresh debugger box
+        /**
+         * @brief Open properties box of selected items
+         */
+        void openProps();
+        /**
+         * @brief Refresh debugger box
+         */
+        void Debugger_updateItemList();
+
     protected:
         void drawForeground(QPainter *painter, const QRectF &rect);
 
     // ///////////////////GFX Manager////////////////////////
     public:
-        //! Common container of pre-loaded custom images
-        QList<QPixmap> custom_images;
+        //! Pre-loaded custom images bank
+        QList<QPixmap> m_localImages;
 
-        PGE_DataArray<obj_w_tile > uTiles;
-        QList<obj_w_tile* > custom_Tiles;
+        //! Container of local terrain tiles configs
+        PGE_DataArray<obj_w_tile > m_localConfigTerrain;
+        //! List of customized terrain tiles
+        QList<obj_w_tile* > m_customTerrain;
 
-        PGE_DataArray<obj_w_scenery > uScenes;
-        QList<obj_w_scenery* > custom_Scenes;
+        //! Container of local sceneries configs
+        PGE_DataArray<obj_w_scenery > m_localConfigScenery;
+        //! List of customized sceneries
+        QList<obj_w_scenery* > m_customSceneries;
 
-        PGE_DataArray<obj_w_path > uPaths;
-        QList<obj_w_path* > custom_Paths;
+        //! Container of local path tiles
+        PGE_DataArray<obj_w_path > m_localConfigPaths;
+        //! List of customized path tiles
+        QList<obj_w_path* > m_customPaths;
 
-        PGE_DataArray<obj_w_level > uLevels;
-        QList<obj_w_level* > custom_Levels;
+        //! Container of local level entrance points
+        PGE_DataArray<obj_w_level > m_localConfigLevels;
+        //! List of customized level entrance points
+        QList<obj_w_level* > m_customLevels;
 
         //!Terrain tiles animators
         QList<SimpleAnimator* > m_animatorsTerrain;
@@ -152,7 +190,7 @@ public:
         QList<SimpleAnimator* > m_animatorsLevels;
 
         //! Main animation processor
-        AnimationTimer      animator;
+        AnimationTimer      m_animationTimer;
 
         void buildAnimators();
 
@@ -177,9 +215,8 @@ public:
         QPixmap m_dummySceneryImg;
         QPixmap m_dummyPathImg;
         QPixmap m_dummyLevelImg;
-
-        QPixmap tImg;   //!Tempotary buffer
-
+    public:
+        QPixmap m_musicBoxImg;
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////ITEMS//////////////////////////////////////////
@@ -220,26 +257,10 @@ public:
         /******************************************************************/
         /* TODO: Make a separated structure/class to inject this into it  */
         /******************************************************************/
-        SimpleAnimator pointAnimation;
-        QPixmap pointImg;
-        bool isSelectionDialog; // If scene created in the point selection dialog
-                                // disable all cols via activeWldEditWin()-> and disable rightclick
-                                // for change mode into "select"
-
-        QPoint selectedPoint; // SELECTING Point on the map
-        bool selectedPointNotUsed; //point is not selected (used because QPoint::isNull()
-                                   //will work in the x0-y0, but this point are usable)
-                                   //If value true, initial position will be 0x0, else already placed point
-
-        QPixmap m_musicBoxImg;
-        void setPoint(QPoint p);   //Set Point item
-        void unserPointSelector(); //remove point item from world map
-
-        QGraphicsItem * pointTarget;
-
-    signals:
-        void pointSelected(QPoint point);
-
+        //! Is scene created in the point selection dialog
+        bool m_isSelectionDialog; // disable all cols via activeWldEditWin()-> and disable rightclick
+                                  // for change mode into "select"
+        WldPointSelector m_pointSelector;
 
     // ///////////////////Item Locks////////////////////////////
     public:
@@ -430,27 +451,33 @@ public:
 
     // //////////////////History Manager/////////////////////////
     public:
-        void addRemoveHistory(WorldData removedItems);
-        void addPlaceHistory(WorldData placedItems);
-        void addOverwriteHistory(WorldData removedItems, WorldData placedItems);
-        void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
-        void addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData);
-        void addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData);
-        void addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems);
-        void addFlipHistory(WorldData flippedItems, WorldData unflippedItems);
-        void addTransformHistory(WorldData transformedItems, WorldData sourceItems);
-
         //history modifiers
+        /**
+         * @brief Undo recent action
+         */
         void historyBack();
+        /**
+         * @brief Redo recently undone action
+         */
         void historyForward();
-        void updateHistoryBuffer();
         //history information
-        int getHistroyIndex();
+        /**
+         * @brief Current history index
+         * @return how many history entries stored or which state on history is declared
+         */
+        int  getHistroyIndex();
+        /**
+         * @brief Is possible to undo?
+         * @return true if undo is possible
+         */
         bool canUndo();
+        /**
+         * @brief Is possible to redo?
+         * @return true if redo is possible
+         */
         bool canRedo();
-    private:
-        int historyIndex;
-        QList<QSharedPointer<IHistoryElement> > operationList;
+        //! History manager
+        WldHistoryManager* m_history;
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////

@@ -16,174 +16,187 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/main_window_ptr.h>
+#include <mainwindow.h>
+#include <common_features/logger.h>
+#include <PGE_File_Formats/file_formats.h>
 
-#include "items/item_level.h"
-#include "items/item_music.h"
-#include "items/item_path.h"
-#include "items/item_scene.h"
-#include "items/item_tile.h"
+#include <defines.h>
+
+#include "wld_scene.h"
+#include "wld_history_manager.h"
 
 #include <editing/_components/history/historyelementmodification.h>
 #include <editing/_components/history/historyelementmainsetting.h>
 #include <editing/_components/history/historyelementitemsetting.h>
 
-#include <defines.h>
 
-void WldScene::addRemoveHistory(WorldData removedItems)
+WldHistoryManager::WldHistoryManager(WldScene *scene, QObject *parent):
+    QObject(parent),
+    m_scene(scene),
+    historyChanged(false),
+    historyIndex(0)
+{
+    connect(this,           &WldHistoryManager::refreshHistoryButtons,
+            m_scene->m_mw,  &MainWindow::refreshHistoryButtons);
+    connect(this, &WldHistoryManager::showStatusMessage,
+            m_scene->m_mw,  &MainWindow::showStatusMsg);
+}
+
+
+void WldHistoryManager::addRemoveHistory(WorldData removedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(removedItems, WorldData());
     modf->setCustomHistoryName(tr("Remove"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addPlaceHistory(WorldData placedItems)
+void WldHistoryManager::addPlaceHistory(WorldData placedItems)
 {
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(WorldData(), placedItems);
     modf->setCustomHistoryName(tr("Place"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addOverwriteHistory(WorldData removedItems, WorldData placedItems)
+void WldHistoryManager::addOverwriteHistory(WorldData removedItems, WorldData placedItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
     modf->setCustomHistoryName(tr("Place & Overwrite"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
+void WldHistoryManager::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
 {
     updateHistoryBuffer();
 
     //set first base
     HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
     modf->setCustomHistoryName(tr("Move"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData)
+void WldHistoryManager::addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData)
+void WldHistoryManager::addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems)
+void WldHistoryManager::addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unrotatedItems, rotatedItems);
     modf->setCustomHistoryName(tr("Rotate"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addFlipHistory(WorldData flippedItems, WorldData unflippedItems)
+void WldHistoryManager::addFlipHistory(WorldData flippedItems, WorldData unflippedItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unflippedItems, flippedItems);
     modf->setCustomHistoryName(tr("Flip"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::addTransformHistory(WorldData transformedItems, WorldData sourceItems)
+void WldHistoryManager::addTransformHistory(WorldData transformedItems, WorldData sourceItems)
 {
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
     modf->setCustomHistoryName(tr("Transform"));
-    modf->setScene(this);
+    modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
 
-    MainWinConnect::pMainWin->refreshHistoryButtons();
+    emit refreshHistoryButtons();
 }
 
-void WldScene::historyBack()
+void WldHistoryManager::historyBack()
 {
     historyIndex--;
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
     lastOperation->undo();
-    m_data->meta.modified = true;
+    m_scene->m_data->meta.modified = true;
 
-    Debugger_updateItemList();
-    MainWinConnect::pMainWin->refreshHistoryButtons();
-    MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(lastOperation->getHistoryName()));
+    m_scene->Debugger_updateItemList();
+    emit refreshHistoryButtons();
+    emit showStatusMessage(tr("Undone: %1").arg(lastOperation->getHistoryName()));
 }
 
-void WldScene::historyForward()
+void WldHistoryManager::historyForward()
 {
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
     lastOperation->redo();
     historyIndex++;
 
-    m_data->meta.modified = true;
-    Debugger_updateItemList();
-    MainWinConnect::pMainWin->refreshHistoryButtons();
-    MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(lastOperation->getHistoryName()));
+    m_scene->m_data->meta.modified = true;
+    m_scene->Debugger_updateItemList();
+    emit refreshHistoryButtons();
+    emit showStatusMessage(tr("Redone: %1").arg(lastOperation->getHistoryName()));
 }
 
-void WldScene::updateHistoryBuffer()
+void WldHistoryManager::updateHistoryBuffer()
 {
     if(canRedo())
     {
@@ -198,20 +211,57 @@ void WldScene::updateHistoryBuffer()
         operationList.pop_front();
         historyIndex--;
     }
+}
 
+
+void WldScene::historyBack()
+{
+    if(m_editMode == MODE_Resizing) //Don't switch history while resizing in process
+    {
+        resetResizers();
+        return;
+    }
+    m_history->historyBack();
+}
+
+void WldScene::historyForward()
+{
+    if(m_editMode == MODE_Resizing) //Don't switch history action while resizing in process
+    {
+        resetResizers();
+        return;
+    }
+    m_history->historyForward();
 }
 
 int WldScene::getHistroyIndex()
 {
-    return historyIndex;
+    return m_history->getHistroyIndex();
 }
 
 bool WldScene::canUndo()
 {
-    return historyIndex > 0;
+    return m_history->canUndo();
 }
 
 bool WldScene::canRedo()
+{
+    return m_history->canRedo();
+}
+
+
+
+int WldHistoryManager::getHistroyIndex()
+{
+    return historyIndex;
+}
+
+bool WldHistoryManager::canUndo()
+{
+    return historyIndex > 0;
+}
+
+bool WldHistoryManager::canRedo()
 {
     return historyIndex < operationList.size();
 }

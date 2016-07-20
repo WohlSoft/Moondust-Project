@@ -136,25 +136,25 @@ void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGra
         break;
     case ItemTypes::WLD_Tile:
         {
-            PGE_DataArray<obj_w_tile>* array = scene_wld ? &scene_wld->uTiles : &config.main_wtiles;
+            PGE_DataArray<obj_w_tile>* array = scene_wld ? &scene_wld->m_localConfigTerrain : &config.main_wtiles;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;
     case ItemTypes::WLD_Scenery:
         {
-            PGE_DataArray<obj_w_scenery>* array = scene_wld ? &scene_wld->uScenes : &config.main_wscene;
+            PGE_DataArray<obj_w_scenery>* array = scene_wld ? &scene_wld->m_localConfigScenery : &config.main_wscene;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;
     case ItemTypes::WLD_Path:
         {
-            PGE_DataArray<obj_w_path>* array = scene_wld ? &scene_wld->uPaths : &config.main_wpaths;
+            PGE_DataArray<obj_w_path>* array = scene_wld ? &scene_wld->m_localConfigPaths : &config.main_wpaths;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;
     case ItemTypes::WLD_Level:
         {
-            PGE_DataArray<obj_w_level>* array = scene_wld ? &scene_wld->uLevels : &config.main_wlevels;
+            PGE_DataArray<obj_w_level>* array = scene_wld ? &scene_wld->m_localConfigLevels : &config.main_wlevels;
             getItemGFX(&(*array)[ItemID], outImg, whole, targetSize);
         }
         break;

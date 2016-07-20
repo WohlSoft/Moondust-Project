@@ -23,6 +23,7 @@
 #include "wld_mode_place.h"
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
+#include "../wld_history_manager.h"
 
 WLD_ModePlace::WLD_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)
@@ -38,7 +39,7 @@ void WLD_ModePlace::set()
 
     s->clearSelection();
     s->resetResizers();
-    s->unserPointSelector();
+    s->m_pointSelector.unserPointSelector();
 
     s->m_eraserIsEnabled=false;
     s->m_pastingMode=false;
@@ -134,7 +135,7 @@ void WLD_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         !s->m_overwritedItems.levels.isEmpty()||
         !s->m_overwritedItems.music.isEmpty() )
     {
-        s->addOverwriteHistory(s->m_overwritedItems, s->m_placingItems);
+        s->m_history->addOverwriteHistory(s->m_overwritedItems, s->m_placingItems);
         s->m_overwritedItems.tiles.clear();
         s->m_overwritedItems.scenery.clear();
         s->m_overwritedItems.paths.clear();
@@ -152,7 +153,7 @@ void WLD_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             !s->m_placingItems.scenery.isEmpty()||
             !s->m_placingItems.levels.isEmpty()||
             !s->m_placingItems.music.isEmpty()){
-        s->addPlaceHistory(s->m_placingItems);
+        s->m_history->addPlaceHistory(s->m_placingItems);
         s->m_placingItems.tiles.clear();
         s->m_placingItems.paths.clear();
         s->m_placingItems.scenery.clear();

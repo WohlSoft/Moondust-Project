@@ -24,6 +24,7 @@
 #include <common_features/main_window_ptr.h>
 
 #include "item_path.h"
+#include "../wld_history_manager.h"
 
 ItemPath::ItemPath(QGraphicsItem *parent)
     : WldBaseItem(parent)
@@ -38,7 +39,7 @@ ItemPath::ItemPath(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    setZValue(m_scene->pathZ);
+    setZValue(m_scene->Z_Paths);
 }
 
 void ItemPath::construct()
@@ -173,7 +174,7 @@ void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         }
         delete itemList;
         if(!newData.paths.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
@@ -202,10 +203,10 @@ void ItemPath::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    if(!m_scene->uPaths.contains(target_id))
+    if(!m_scene->m_localConfigPaths.contains(target_id))
         return;
 
-    obj_w_path &mergedSet = m_scene->uPaths[target_id];
+    obj_w_path &mergedSet = m_scene->m_localConfigPaths[target_id];
     long animator=mergedSet.animator_id;
 
     m_data.id = target_id;

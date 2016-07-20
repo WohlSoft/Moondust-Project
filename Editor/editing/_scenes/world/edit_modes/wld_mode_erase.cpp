@@ -22,6 +22,7 @@
 
 #include "wld_mode_erase.h"
 #include "../wld_scene.h"
+#include "../wld_history_manager.h"
 #include "../items/item_tile.h"
 #include "../items/item_scene.h"
 #include "../items/item_path.h"
@@ -45,7 +46,7 @@ void WLD_ModeErase::set()
     s->clearSelection();
     s->resetCursor();
     s->resetResizers();
-    s->unserPointSelector();
+    s->m_pointSelector.unserPointSelector();
 
     s->m_eraserIsEnabled=false;
     s->m_pastingMode=false;
@@ -113,7 +114,7 @@ void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         !s->m_overwritedItems.levels.isEmpty()||
         !s->m_overwritedItems.music.isEmpty() )
     {
-        s->addRemoveHistory(s->m_overwritedItems);
+        s->m_history->addRemoveHistory(s->m_overwritedItems);
         s->m_overwritedItems.tiles.clear();
         s->m_overwritedItems.scenery.clear();
         s->m_overwritedItems.paths.clear();

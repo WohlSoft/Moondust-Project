@@ -24,6 +24,7 @@
 #include <common_features/main_window_ptr.h>
 
 #include "item_level.h"
+#include "../wld_history_manager.h"
 
 ItemLevel::ItemLevel(QGraphicsItem *parent)
     : WldBaseItem(parent)
@@ -38,7 +39,7 @@ ItemLevel::ItemLevel(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    setZValue(m_scene->levelZ);
+    setZValue(m_scene->Z_Levels);
 }
 
 void ItemLevel::construct()
@@ -125,7 +126,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemLevel *)SelItem)->setShowSmallPathBG( setPathBG->isChecked() );
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
+        m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
     }
     else
     if(selected==setBigPathBG)
@@ -140,7 +141,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemLevel *)SelItem)->setShowBigPathBG( setBigPathBG->isChecked() );
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
+        m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
     }
     else
     if(selected==setAlVis)
@@ -155,7 +156,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                 ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
             }
         }
-        m_scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
+        m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
     }
     else
     if(selected==cutTile)
@@ -213,7 +214,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         }
         delete itemList;
         if(!newData.levels.isEmpty())
-            m_scene->addTransformHistory(newData, oldData);
+            m_scene->m_history->addTransformHistory(newData, oldData);
     }
     else
     if(selected==copyItemID)
@@ -293,10 +294,10 @@ void ItemLevel::transformTo(long target_id)
 {
     if(target_id < 0) return;
 
-    if(!m_scene->uLevels.contains(target_id))
+    if(!m_scene->m_localConfigLevels.contains(target_id))
         return;
 
-    obj_w_level &mergedSet = m_scene->uLevels[target_id];
+    obj_w_level &mergedSet = m_scene->m_localConfigLevels[target_id];
     long animator = mergedSet.animator_id;
 
     m_data.id = target_id;

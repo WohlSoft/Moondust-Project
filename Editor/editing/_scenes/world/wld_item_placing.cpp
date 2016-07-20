@@ -64,13 +64,14 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         {delete m_cursorItemImg;
         m_cursorItemImg=NULL;}
 
+    QPixmap tImg;
     LogDebug(QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
 
     switch(itemType)
     {
     case 0: //Tiles
     {
-        obj_w_tile &tileConf = uTiles[itemID];
+        obj_w_tile &tileConf = m_localConfigTerrain[itemID];
         Items::getItemGFX(&tileConf, tImg, false);
         if(tImg.isNull())
         {
@@ -161,7 +162,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 1: //Sceneries
     {
-        obj_w_scenery &sceneConf = uScenes[itemID];
+        obj_w_scenery &sceneConf = m_localConfigScenery[itemID];
         Items::getItemGFX(&sceneConf, tImg, false);
         if(tImg.isNull())
         {
@@ -252,7 +253,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 2: //Path
     {
-        obj_w_path &pathConf = uPaths[itemID];
+        obj_w_path &pathConf = m_localConfigPaths[itemID];
         Items::getItemGFX(&pathConf, tImg, false);
         if(tImg.isNull())
         {
@@ -343,7 +344,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
     case 3: //Level
     {
-        obj_w_level &wlevelConf = uLevels[itemID];
+        obj_w_level &wlevelConf = m_localConfigLevels[itemID];
         Items::getItemGFX(&wlevelConf, tImg, false);
         if(tImg.isNull())
         {
@@ -488,7 +489,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         SwitchEditingMode(MODE_SetPoint);
 
         // restore last point
-        if(!selectedPointNotUsed) setPoint(selectedPoint);
+        if(!m_pointSelector.m_pointNotPlaced)
+            m_pointSelector.setPoint(m_pointSelector.m_pointCoord);
 
         break;
         default: break;

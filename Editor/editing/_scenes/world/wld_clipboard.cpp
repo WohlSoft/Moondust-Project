@@ -20,11 +20,7 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "wld_scene.h"
-#include "items/item_tile.h"
-#include "items/item_scene.h"
-#include "items/item_path.h"
-#include "items/item_level.h"
-#include "items/item_music.h"
+#include "wld_history_manager.h"
 
 //Copy selected items into clipboard
 WorldData WldScene::copy(bool cut)
@@ -102,7 +98,7 @@ WorldData WldScene::copy(bool cut)
         if(cut)
         {
             m_data->meta.modified = true;
-            addRemoveHistory(copyData);
+            m_history->addRemoveHistory(copyData);
             Debugger_updateItemList();
         }
     }
@@ -250,6 +246,6 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
     applyGroupGrid(selectedItems(), true);
 
     m_data->meta.modified = true;
-    addPlaceHistory(newData);
+    m_history->addPlaceHistory(newData);
 
 }

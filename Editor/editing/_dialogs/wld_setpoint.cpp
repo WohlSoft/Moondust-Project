@@ -205,7 +205,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     m_scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
 
     m_scene->opts = options;
-    m_scene->isSelectionDialog = true;
+    m_scene->m_isSelectionDialog = true;
 
     ui->animation->setChecked(m_scene->opts.animationEnabled);
 
@@ -213,16 +213,16 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
     if(mapPointIsNull)
     {
-        m_scene->selectedPointNotUsed = true;
+        m_scene->m_pointSelector.m_pointNotPlaced = true;
     }
     else
     {
-        m_scene->selectedPointNotUsed = false;
-        m_scene->selectedPoint = mapPoint;
+        m_scene->m_pointSelector.m_pointNotPlaced = false;
+        m_scene->m_pointSelector.m_pointCoord = mapPoint;
     }
     m_scene->setItemPlacer(5);
 
-    connect(m_scene, SIGNAL(pointSelected(QPoint)), this, SLOT(pointSelected(QPoint)));
+    connect(&m_scene->m_pointSelector, &WldPointSelector::pointSelected, this, &WLD_SetPoint::pointSelected);
 
     int DataSize=0;
 
@@ -426,10 +426,10 @@ void WLD_SetPoint::unloadData()
         if(tmp!=nullptr) delete tmp;
     }
 
-    m_scene->uTiles.clear();
-    m_scene->uScenes.clear();
-    m_scene->uPaths.clear();
-    m_scene->uLevels.clear();
+    m_scene->m_localConfigTerrain.clear();
+    m_scene->m_localConfigScenery.clear();
+    m_scene->m_localConfigPaths.clear();
+    m_scene->m_localConfigLevels.clear();
 
     LogDebug("!<-Delete scene->!");
     delete m_scene;

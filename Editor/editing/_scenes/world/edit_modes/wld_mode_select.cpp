@@ -22,11 +22,7 @@
 
 #include "wld_mode_select.h"
 #include "../wld_scene.h"
-#include "../items/item_tile.h"
-#include "../items/item_scene.h"
-#include "../items/item_path.h"
-#include "../items/item_level.h"
-#include "../items/item_music.h"
+#include "../wld_history_manager.h"
 
 WLD_ModeSelect::WLD_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)
@@ -48,7 +44,7 @@ void WLD_ModeSelect::set()
 
     s->resetCursor();
     s->resetResizers();
-    s->unserPointSelector();
+    s->m_pointSelector.unserPointSelector();
 
     s->m_eraserIsEnabled=false;
     s->m_pastingMode=false;
@@ -272,7 +268,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         }////////////////////////SECOND FETCH///////////////////////
 
         if(s->m_mouseIsMoved)
-            s->addMoveHistory(historySourceBuffer, historyBuffer);
+            s->m_history->addMoveHistory(historySourceBuffer, historyBuffer);
 
         s->m_mouseIsMoved = false;
     }

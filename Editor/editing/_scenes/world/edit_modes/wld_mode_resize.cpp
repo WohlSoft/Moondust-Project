@@ -37,7 +37,7 @@ void WLD_ModeResize::set()
 
     s->clearSelection();
     s->resetCursor();
-    s->unserPointSelector();
+    s->m_pointSelector.unserPointSelector();
 
     s->m_eraserIsEnabled=false;
     s->m_pastingMode=false;

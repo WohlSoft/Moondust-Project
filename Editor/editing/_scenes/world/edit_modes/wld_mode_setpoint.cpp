@@ -57,7 +57,7 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if( (!s->isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton)!=0) )
+    if( (!s->m_isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton)!=0) )
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
@@ -73,8 +73,8 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                            WldPlacingItems::gridOffset)));
     }
 
-    s->setPoint(s->m_cursorItemImg->scenePos().toPoint());
-    emit s->pointSelected(s->selectedPoint);
+    s->m_pointSelector.setPoint(s->m_cursorItemImg->scenePos().toPoint());
+    emit s->m_pointSelector.pointSelected(s->m_pointSelector.m_pointCoord);
 
     dontCallEvent=true;
 }
@@ -111,10 +111,10 @@ void WLD_ModeSetPoint::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(!s->isSelectionDialog)
+    if(!s->m_isSelectionDialog)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
-        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->selectedPoint);
+        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->m_pointSelector.m_pointCoord);
         s->openProps();
         //s->MouseReleaseEventOnly = true;
         //s->mouseReleaseEvent(mouseEvent);
@@ -136,7 +136,7 @@ void WLD_ModeSetPoint::keyRelease(QKeyEvent *keyEvent)
     switch(keyEvent->key())
     {
         case (Qt::Key_Escape):
-            if(s->isSelectionDialog) break; //Disable this key in the point selection dialog
+            if(s->m_isSelectionDialog) break; //Disable this key in the point selection dialog
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             break;
         default:

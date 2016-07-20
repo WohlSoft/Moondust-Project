@@ -93,7 +93,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_TILE)
     {
-        obj_w_tile& tile = scene_wld ? scene_wld->uTiles[index] : m_conf->main_wtiles[index];
+        obj_w_tile& tile = scene_wld ? scene_wld->m_localConfigTerrain[index] : m_conf->main_wtiles[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         QPixmap img;
         Items::getItemGFX(&tile, img, false, QSize(32,32));
@@ -103,7 +103,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
-        obj_w_scenery& scenery = scene_wld ? scene_wld->uScenes[index] : m_conf->main_wscene[index];
+        obj_w_scenery& scenery = scene_wld ? scene_wld->m_localConfigScenery[index] : m_conf->main_wscene[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         QPixmap img;
         Items::getItemGFX(&scenery, img, false, QSize(32,32));
@@ -113,7 +113,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_PATH)
     {
-        obj_w_path& wpath = scene_wld ? scene_wld->uPaths[index] : m_conf->main_wpaths[index];
+        obj_w_path& wpath = scene_wld ? scene_wld->m_localConfigPaths[index] : m_conf->main_wpaths[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         QPixmap img;
         Items::getItemGFX(&wpath, img, false, QSize(32,32));
@@ -123,7 +123,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
-        obj_w_level& wlevel = scene_wld ? scene_wld->uLevels[index] : m_conf->main_wlevels[index];
+        obj_w_level& wlevel = scene_wld ? scene_wld->m_localConfigLevels[index] : m_conf->main_wlevels[index];
         pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
         QPixmap img;
         Items::getItemGFX(&wlevel, img, false, QSize(32,32));

@@ -1091,7 +1091,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                                   false,
                                     QPoint(-qRound(qreal(pointDialog->gViewPort()->width())/2), -qRound(qreal(pointDialog->gViewPort()->height())/2))
                                   );
-                pointDialog->m_scene->setPoint( pointDialog->mapPoint );
+                pointDialog->m_scene->m_pointSelector.setPoint( pointDialog->mapPoint );
             }
 
             if( pointDialog->exec()==QDialog::Accepted )

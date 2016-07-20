@@ -32,10 +32,10 @@ void WldScene::loadUserData(QProgressDialog &progress)
     QImage tempImg;
     bool WrongImagesDetected=false;
 
-    uTiles.clear();
-    uScenes.clear();
-    uPaths.clear();
-    uLevels.clear();
+    m_localConfigTerrain.clear();
+    m_localConfigScenery.clear();
+    m_localConfigPaths.clear();
+    m_localConfigLevels.clear();
 
     //QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
     //QString uWLDD = WldData->path + "/" + WldData->filename;
@@ -102,7 +102,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     }
     qApp->processEvents();
 
-    uTiles.allocateSlots(m_configs->main_wtiles.total());
+    m_localConfigTerrain.allocateSlots(m_configs->main_wtiles.total());
     uWLD.setDefaultDir(m_configs->getTilePath());
     //Load Tiles
     for(i=1; i<m_configs->main_wtiles.size(); i++) //Add user images
@@ -136,8 +136,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 WrongImagesDetected=true;
             else
             {
-                custom_images.push_back(QPixmap::fromImage(tempImg));
-                t_tile.cur_image = &custom_images.last();
+                m_localImages.push_back(QPixmap::fromImage(tempImg));
+                t_tile.cur_image = &m_localImages.last();
             }
             custom=true;
         }
@@ -151,12 +151,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_tile.framespeed
                               );
         m_animatorsTerrain.push_back( aniTile );
-        animator.registerAnimation( aniTile );
+        m_animationTimer.registerAnimation( aniTile );
         t_tile.animator_id = m_animatorsTerrain.size()-1;
-        uTiles.storeElement(i, t_tile);
+        m_localConfigTerrain.storeElement(i, t_tile);
         if(custom)
         {
-            custom_Tiles.push_back(&uTiles[i]);//Register Terrain tile as customized
+            m_customTerrain.push_back(&m_localConfigTerrain[i]);//Register Terrain tile as customized
         }
 
         if(progress.wasCanceled())
@@ -175,7 +175,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uScenes.allocateSlots(m_configs->main_wscene.total());
+    m_localConfigScenery.allocateSlots(m_configs->main_wscene.total());
     uWLD.setDefaultDir(m_configs->getScenePath());
     //Load Sceneries
     for(i=1; i<m_configs->main_wscene.size(); i++) //Add user images
@@ -209,8 +209,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 WrongImagesDetected=true;
             else
             {
-                custom_images.push_back(QPixmap::fromImage(tempImg));
-                t_scenery.cur_image = &custom_images.last();
+                m_localImages.push_back(QPixmap::fromImage(tempImg));
+                t_scenery.cur_image = &m_localImages.last();
             }
             custom=true;
         }
@@ -224,12 +224,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_scenery.framespeed
                               );
         m_animatorsScenery.push_back( aniTile );
-        animator.registerAnimation( aniTile );
+        m_animationTimer.registerAnimation( aniTile );
         t_scenery.animator_id = m_animatorsScenery.size()-1;
-        uScenes.storeElement(i, t_scenery);
+        m_localConfigScenery.storeElement(i, t_scenery);
         if(custom)
         {
-            custom_Scenes.push_back(&uScenes[i]);//Register Terrain tile as customized
+            m_customSceneries.push_back(&m_localConfigScenery[i]);//Register Terrain tile as customized
         }
 
         if(progress.wasCanceled())
@@ -247,7 +247,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uPaths.allocateSlots(m_configs->main_wpaths.total());
+    m_localConfigPaths.allocateSlots(m_configs->main_wpaths.total());
     uWLD.setDefaultDir(m_configs->getPathPath());
     //Load Path tiles
     for(i=1; i<m_configs->main_wpaths.size(); i++) //Add user images
@@ -281,8 +281,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 WrongImagesDetected=true;
             else
             {
-                custom_images.push_back(QPixmap::fromImage(tempImg));
-                t_path.cur_image = &custom_images.last();
+                m_localImages.push_back(QPixmap::fromImage(tempImg));
+                t_path.cur_image = &m_localImages.last();
             }
             custom=true;
         }
@@ -296,12 +296,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_path.framespeed
                               );
         m_animatorsPaths.push_back( aniTile );
-        animator.registerAnimation( aniTile );
+        m_animationTimer.registerAnimation( aniTile );
         t_path.animator_id = m_animatorsPaths.size()-1;
-        uPaths.storeElement(i, t_path);
+        m_localConfigPaths.storeElement(i, t_path);
         if(custom)
         {
-            custom_Paths.push_back(&uPaths[i]);//Register Terrain tile as customized
+            m_customPaths.push_back(&m_localConfigPaths[i]);//Register Terrain tile as customized
         }
 
         if(progress.wasCanceled())
@@ -319,7 +319,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
         progress.setValue(progress.value()+1);
     }
     qApp->processEvents();
-    uLevels.allocateSlots(m_configs->main_wlevels.total());
+    m_localConfigLevels.allocateSlots(m_configs->main_wlevels.total());
     uWLD.setDefaultDir(m_configs->getWlvlPath());
 
     //Load Level tiles
@@ -354,8 +354,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 WrongImagesDetected=true;
             else
             {
-                custom_images.push_back(QPixmap::fromImage(tempImg));
-                t_level.cur_image = &custom_images.last();
+                m_localImages.push_back(QPixmap::fromImage(tempImg));
+                t_level.cur_image = &m_localImages.last();
             }
             custom=true;
         }
@@ -369,12 +369,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_level.framespeed
                               );
         m_animatorsLevels.push_back( aniTile );
-        animator.registerAnimation( aniTile );
+        m_animationTimer.registerAnimation( aniTile );
         t_level.animator_id = m_animatorsLevels.size()-1;
-        uLevels.storeElement(i, t_level);
+        m_localConfigLevels.storeElement(i, t_level);
         if(custom)
         {
-            custom_Levels.push_back(&uLevels[i]);//Register Terrain tile as customized
+            m_customLevels.push_back(&m_localConfigLevels[i]);//Register Terrain tile as customized
         }
 
         if(progress.wasCanceled())

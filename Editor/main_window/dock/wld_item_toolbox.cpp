@@ -141,9 +141,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebugQD("WorldTools -> Table size");
     //get Table size
-    for(int i=1; i < scene->uTiles.size(); i++)
+    for(int i=1; i < scene->m_localConfigTerrain.size(); i++)
     {
-        obj_w_tile &tileItem = scene->uTiles[i];
+        obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
         if( tableRows < (tileItem.row+1) ) tableRows = tileItem.row + 1;
         if( tableCols < (tileItem.col+1) ) tableCols = tileItem.col + 1;
     }
@@ -154,9 +154,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebugQD("WorldTools -> Table of tiles");
-    for(int i=1; i < scene->uTiles.size(); i++)
+    for(int i=1; i < scene->m_localConfigTerrain.size(); i++)
     {
-        obj_w_tile &tileItem = scene->uTiles[i];
+        obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
         Items::getItemGFX(&tileItem, tmpI, false, QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
@@ -178,9 +178,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebugQD("WorldTools -> List of sceneries");
-    for(int i=1; i<scene->uScenes.size(); i++)
+    for(int i=1; i<scene->m_localConfigScenery.size(); i++)
     {
-            obj_w_scenery &sceneItem = scene->uScenes[i];
+            obj_w_scenery &sceneItem = scene->m_localConfigScenery[i];
             Items::getItemGFX(&sceneItem, tmpI, false, QSize(32,32));
 
             item = new QListWidgetItem();
@@ -197,9 +197,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
     LogDebugQD("WorldTools -> Table of paths size");
     //get Table size
-    for(int i=1; i < scene->uPaths.size(); i++ )
+    for(int i=1; i < scene->m_localConfigPaths.size(); i++ )
     {
-        obj_w_path &pathItem = scene->uPaths[i];
+        obj_w_path &pathItem = scene->m_localConfigPaths[i];
         if( tableRows < (pathItem.row+1) ) tableRows=pathItem.row + 1;
         if( tableCols < (pathItem.col+1) ) tableCols=pathItem.col + 1;
     }
@@ -210,9 +210,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     LogDebugQD("WorldTools -> Table of paths");
-    for(int i=1; i < scene->uPaths.size(); i++ )
+    for(int i=1; i < scene->m_localConfigPaths.size(); i++ )
     {
-        obj_w_path &pathItem = scene->uPaths[i];
+        obj_w_path &pathItem = scene->m_localConfigPaths[i];
         Items::getItemGFX(&pathItem, tmpI, false, QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
@@ -234,9 +234,9 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     LogDebugQD("WorldTools -> List of levels");
-    for(int i=0; i < scene->uLevels.size(); i++)
+    for(int i=0; i < scene->m_localConfigLevels.size(); i++)
     {
-        obj_w_level& levelItem = scene->uLevels[i];
+        obj_w_level& levelItem = scene->m_localConfigLevels[i];
 
         if((mw()->configs.marker_wlvl.path==levelItem.id)||
            (mw()->configs.marker_wlvl.bigpath==levelItem.id))

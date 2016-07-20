@@ -221,7 +221,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(sceneryTab)
     {
-        PGE_DataArray<obj_w_scenery>* array = scene_wld ? &scene_wld->uScenes : &conf->main_wscene;
+        PGE_DataArray<obj_w_scenery>* array = scene_wld ? &scene_wld->m_localConfigScenery : &conf->main_wscene;
         for(int i=1; i<array->size(); i++)
         {
             obj_w_scenery &sceneryItem = (*array)[i];
@@ -238,7 +238,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(levelTab)
     {
-        PGE_DataArray<obj_w_level>* array = scene_wld ? &scene_wld->uLevels : &conf->main_wlevels;
+        PGE_DataArray<obj_w_level>* array = scene_wld ? &scene_wld->m_localConfigLevels : &conf->main_wlevels;
         for(int i=0; i<array->size(); i++)
         {
             obj_w_level &levelItem = (*array)[i];
@@ -794,10 +794,10 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 
     int roff = (removalFlags & TAB_TILE ? 0 : 1);
 
-    PGE_DataArray<obj_w_tile>*      array_tiles = scene_wld ? &scene_wld->uTiles : &conf->main_wtiles;
-    PGE_DataArray<obj_w_scenery>*   array_scenes = scene_wld ? &scene_wld->uScenes : &conf->main_wscene;
-    PGE_DataArray<obj_w_path>*      array_paths = scene_wld ? &scene_wld->uPaths : &conf->main_wpaths;
-    PGE_DataArray<obj_w_level>*     array_levels = scene_wld ? &scene_wld->uLevels : &conf->main_wlevels;
+    PGE_DataArray<obj_w_tile>*      array_tiles = scene_wld ? &scene_wld->m_localConfigTerrain : &conf->main_wtiles;
+    PGE_DataArray<obj_w_scenery>*   array_scenes = scene_wld ? &scene_wld->m_localConfigScenery : &conf->main_wscene;
+    PGE_DataArray<obj_w_path>*      array_paths = scene_wld ? &scene_wld->m_localConfigPaths : &conf->main_wpaths;
+    PGE_DataArray<obj_w_level>*     array_levels = scene_wld ? &scene_wld->m_localConfigLevels : &conf->main_wlevels;
 
     //get Table size
     for(int i=1; i<array_tiles->size(); i++)

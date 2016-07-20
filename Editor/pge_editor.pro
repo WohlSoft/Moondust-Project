@@ -226,7 +226,6 @@ SOURCES += main.cpp\
     editing/_scenes/world/wld_control.cpp \
     editing/_scenes/world/wld_init_filedata.cpp \
     editing/_scenes/world/wld_item_placing.cpp \
-    editing/_scenes/world/wld_items.cpp \
     editing/_scenes/world/wld_scene.cpp \
     editing/_scenes/world/wld_setup.cpp \
     editing/_scenes/world/edit_modes/wld_mode_erase.cpp \
@@ -457,7 +456,8 @@ SOURCES += main.cpp\
     common_features/main_window_ptr.cpp \
     SingleApplication/editor_application.cpp \
     common_features/safe_msg_box.cpp \
-    main_window/testing/luna_tester.cpp
+    main_window/testing/luna_tester.cpp \
+    editing/_scenes/world/wld_point_selector.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -673,7 +673,9 @@ HEADERS  += defines.h \
     main_window/testing/luna_tester.h \
     common_features/safe_msg_box.h \
     SingleApplication/semaphore_winapi.h \
-    editing/_scenes/level/lvl_history_manager.h
+    editing/_scenes/level/lvl_history_manager.h \
+    editing/_scenes/world/wld_history_manager.h \
+    editing/_scenes/world/wld_point_selector.h
 
 FORMS    += \
     common_features/crashhandler.ui \

@@ -227,8 +227,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Tiles.size(); ++i) {
-                    m_model->addPiece( wld_scene->custom_Tiles[i]->id );
+                for(int i = 0; i < wld_scene->m_customTerrain.size(); ++i) {
+                    m_model->addPiece( wld_scene->m_customTerrain[i]->id );
                 }
             }
         }
@@ -237,8 +237,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Tiles.size(); ++i) {
-                    customElements[wld_scene->custom_Tiles[i]->id] = i;
+                for(int i = 0; i < wld_scene->m_customTerrain.size(); ++i) {
+                    customElements[wld_scene->m_customTerrain[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wtiles.size(); ++i) {
@@ -259,8 +259,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Scenes.size(); ++i) {
-                    m_model->addPiece( wld_scene->custom_Scenes[i]->id );
+                for(int i = 0; i < wld_scene->m_customSceneries.size(); ++i) {
+                    m_model->addPiece( wld_scene->m_customSceneries[i]->id );
                 }
             }
         }
@@ -269,8 +269,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Scenes.size(); ++i) {
-                    customElements[wld_scene->custom_Scenes[i]->id] = i;
+                for(int i = 0; i < wld_scene->m_customSceneries.size(); ++i) {
+                    customElements[wld_scene->m_customSceneries[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wscene.size(); ++i) {
@@ -289,8 +289,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Paths.size(); ++i) {
-                    m_model->addPiece( wld_scene->custom_Paths[i]->id );
+                for(int i = 0; i < wld_scene->m_customPaths.size(); ++i) {
+                    m_model->addPiece( wld_scene->m_customPaths[i]->id );
                 }
             }
         }
@@ -299,8 +299,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Paths.size(); ++i) {
-                    customElements[wld_scene->custom_Paths[i]->id] = i;
+                for(int i = 0; i < wld_scene->m_customPaths.size(); ++i) {
+                    customElements[wld_scene->m_customPaths[i]->id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wpaths.size(); ++i) {
@@ -319,8 +319,8 @@ void TilesetConfigureDialog::setUpItems(int type)
         {
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Levels.size(); ++i) {
-                    m_model->addPiece( wld_scene->custom_Levels[i]->id );
+                for(int i = 0; i < wld_scene->m_customLevels.size(); ++i) {
+                    m_model->addPiece( wld_scene->m_customLevels[i]->id );
                 }
             }
         }
@@ -329,8 +329,8 @@ void TilesetConfigureDialog::setUpItems(int type)
             QHash<int, int> customElements;
             if( wld_scene && (mode==GFX_World) )
             {
-                for(int i = 0; i < wld_scene->custom_Levels.size(); ++i) {
-                    customElements[wld_scene->custom_Levels[i]->id] = i;
+                for(int i = 0; i < wld_scene->m_customLevels.size(); ++i) {
+                    customElements[wld_scene->m_customLevels[i]->id] = i;
                 }
             }
             for(int i = 0; i < m_conf->main_wlevels.size(); ++i) {
