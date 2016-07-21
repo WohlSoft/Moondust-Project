@@ -125,6 +125,7 @@
         <file>constributors/SquishyRex.png</file>
         <file>constributors/Valtteri.png</file>
         <file>constributors/Wohlstand.png</file>
+        <file>constributors/Enjl.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
