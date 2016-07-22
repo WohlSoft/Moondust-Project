@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MW_H
 #define MW_H
 

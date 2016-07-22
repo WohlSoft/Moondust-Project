@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef WLD_ITEM_TOOLBOX_H
 #define WLD_ITEM_TOOLBOX_H
 

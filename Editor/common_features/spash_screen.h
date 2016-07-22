@@ -1,3 +1,4 @@
+#pragma once
 #ifndef EDITORSPASHSCREEN_H
 #define EDITORSPASHSCREEN_H
 

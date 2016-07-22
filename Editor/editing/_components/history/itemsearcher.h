@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ITEMSEARCHER_H
 #define ITEMSEARCHER_H
 

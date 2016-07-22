@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DIRCOPIER_H
 #define DIRCOPIER_H
 

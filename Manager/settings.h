@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MANAGERSETTINGS_H
 #define MANAGERSETTINGS_H
 

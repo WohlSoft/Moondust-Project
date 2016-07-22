@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef LVL_ITEM_PROPERTIES_H
 #define LVL_ITEM_PROPERTIES_H
 

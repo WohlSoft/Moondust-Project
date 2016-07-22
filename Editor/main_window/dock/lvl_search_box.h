@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LVL_SEARCH_BOX_H
 #define LVL_SEARCH_BOX_H
 

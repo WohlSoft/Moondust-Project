@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef NUMBER_LIMITER_H
 #define NUMBER_LIMITER_H
 

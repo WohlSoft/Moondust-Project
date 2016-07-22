@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PGE_EDITORPLUGININFO_H
 #define PGE_EDITORPLUGININFO_H
 

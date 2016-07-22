@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef BOOLRESETER_H
 #define BOOLRESETER_H
 #include <QAtomicInteger>

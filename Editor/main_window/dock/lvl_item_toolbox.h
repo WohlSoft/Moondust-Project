@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LVL_ITEM_TOOLBOX_H
 #define LVL_ITEM_TOOLBOX_H
 

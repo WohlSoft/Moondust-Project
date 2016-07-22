@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PGE_EDITORPLUGINMANAGER_H
 #define PGE_EDITORPLUGINMANAGER_H
 

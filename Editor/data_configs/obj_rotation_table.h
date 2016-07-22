@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef OBJ_ROTATION_TABLE_H
 #define OBJ_ROTATION_TABLE
 

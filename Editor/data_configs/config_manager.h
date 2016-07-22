@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef CONFIG_MANAGER_H
 #define CONFIG_MANAGER_H
 

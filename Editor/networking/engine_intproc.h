@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef ENGINE_INTPROCINTPROC_H
 #define ENGINE_INTPROCINTPROC_H
 

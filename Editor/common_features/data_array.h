@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef PGE_DATAARRAY_H
 #define PGE_DATAARRAY_H
 

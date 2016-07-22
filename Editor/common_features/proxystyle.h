@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PROXYSTYLE_H
 #define PROXYSTYLE_H
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LEVELFILELIST_H
 #define LEVELFILELIST_H
 

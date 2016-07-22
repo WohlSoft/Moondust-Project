@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PNG2GIFS_GUI_H
 #define PNG2GIFS_GUI_H
 

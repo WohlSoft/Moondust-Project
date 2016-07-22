@@ -23,6 +23,7 @@
  *
  */
 
+#pragma once
 #ifndef SCRIPTHOLDER_H
 #define SCRIPTHOLDER_H
 

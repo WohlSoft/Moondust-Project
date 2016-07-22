@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GRAPHICSWORKSPACE_H
 #define GRAPHICSWORKSPACE_H
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HISTORYELEMENTNEWLAYER_H
 #define HISTORYELEMENTNEWLAYER_H
 

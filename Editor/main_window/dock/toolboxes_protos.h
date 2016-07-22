@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TOOLBOXES_PROTOS_H
 #define TOOLBOXES_PROTOS_H
 

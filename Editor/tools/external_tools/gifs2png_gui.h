@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef GIFS2PNG_GUI_H
 #define GIFS2PNG_GUI_H
 

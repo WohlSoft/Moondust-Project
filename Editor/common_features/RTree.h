@@ -1,3 +1,4 @@
+#pragma once
 #ifndef RTREE_H
 #define RTREE_H
 

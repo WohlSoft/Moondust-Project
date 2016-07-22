@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BOOKMARKS_BOX_H
 #define BOOKMARKS_BOX_H
 

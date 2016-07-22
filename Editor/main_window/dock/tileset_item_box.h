@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef TILESET_ITEM_BOX_H
 #define TILESET_ITEM_BOX_H
 

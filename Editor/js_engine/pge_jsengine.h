@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PGE_JSENGINE_H
 #define PGE_JSENGINE_H
 

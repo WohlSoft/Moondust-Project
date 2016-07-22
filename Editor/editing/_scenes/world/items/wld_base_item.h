@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef WLD_BASE_ITEM_H
 #define WLD_BASE_ITEM_H
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef IHISTORYELEMENT_H
 #define IHISTORYELEMENT_H
 

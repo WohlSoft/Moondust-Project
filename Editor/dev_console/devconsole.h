@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DEVCONSOLE_H
 #define DEVCONSOLE_H
 

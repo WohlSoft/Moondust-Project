@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WLD_SETPOINT_H
 #define WLD_SETPOINT_H
 

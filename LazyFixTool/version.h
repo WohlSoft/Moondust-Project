@@ -20,6 +20,7 @@
 
 #include "../pge_version.h" //Global Project version file
 
+#pragma once
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 

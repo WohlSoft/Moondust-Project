@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BLOCKSPERSECONDDIALOG_H
 #define BLOCKSPERSECONDDIALOG_H
 

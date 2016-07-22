@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ASSOC_FILES_H
 #define ASSOC_FILES_H
 

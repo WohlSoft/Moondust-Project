@@ -1,3 +1,4 @@
+#pragma once
 #ifndef JS_UTILS_H
 #define JS_UTILS_H
 

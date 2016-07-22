@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef WLD_HISTORY_MANAGER_H
 #define WLD_HISTORY_MANAGER_H
 

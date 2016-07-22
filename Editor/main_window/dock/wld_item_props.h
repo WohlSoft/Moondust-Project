@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WLD_ITEM_PROPS_H
 #define WLD_ITEM_PROPS_H
 

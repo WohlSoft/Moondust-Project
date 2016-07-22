@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PGE_EDITOR_DEFINES_H
 #define PGE_EDITOR_DEFINES_H
 

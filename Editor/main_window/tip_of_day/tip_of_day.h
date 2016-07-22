@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TIP_OF_DAY_H
 #define TIP_OF_DAY_H
 

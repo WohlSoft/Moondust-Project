@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CONFPACKREPOS_H
 #define CONFPACKREPOS_H
 

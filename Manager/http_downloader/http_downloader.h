@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HTTPDOWNLOADER_H
 #define HTTPDOWNLOADER_H
 

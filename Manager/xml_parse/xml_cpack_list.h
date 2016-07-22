@@ -1,3 +1,4 @@
+#pragma once
 #ifndef XBELHANDLER_H
 #define XBELHANDLER_H
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PGE_EDITORPLUGINITEM_H
 #define PGE_EDITORPLUGINITEM_H
 

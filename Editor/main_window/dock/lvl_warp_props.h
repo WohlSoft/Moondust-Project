@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LVL_WARP_PROPS_H
 #define LVL_WARP_PROPS_H
 

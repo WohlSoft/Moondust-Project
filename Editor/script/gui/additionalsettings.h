@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ADDITIONALSETTINGS_H
 #define ADDITIONALSETTINGS_H
 

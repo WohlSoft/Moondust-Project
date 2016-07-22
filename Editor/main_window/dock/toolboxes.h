@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DOCK_BOXES_H
 #define DOCK_BOXES_H
 

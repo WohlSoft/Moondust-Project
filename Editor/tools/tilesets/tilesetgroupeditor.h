@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TILESETGROUPEDITOR_H
 #define TILESETGROUPEDITOR_H
 

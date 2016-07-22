@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef WLD_MODE_SELECT_H
 #define WLD_MODE_SELECT_H
 

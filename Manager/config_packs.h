@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CONFIG_PACKS_H
 #define CONFIG_PACKS_H
 

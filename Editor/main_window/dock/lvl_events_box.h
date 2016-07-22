@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LVL_EVENTS_BOX_H
 #define LVL_EVENTS_BOX_H
 

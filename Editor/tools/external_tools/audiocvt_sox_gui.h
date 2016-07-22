@@ -1,3 +1,4 @@
+#pragma once
 #ifndef AUDIOCVT_SOX_GUI_H
 #define AUDIOCVT_SOX_GUI_H
 

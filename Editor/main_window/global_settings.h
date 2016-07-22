@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef GLOBAL_SETTINGS_H
 #define GLOBAL_SETTINGS_H
 

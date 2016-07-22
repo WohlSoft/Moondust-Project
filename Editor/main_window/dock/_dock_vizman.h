@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DOCKVIZIBILITYMANAGER_H
 #define DOCKVIZIBILITYMANAGER_H
 

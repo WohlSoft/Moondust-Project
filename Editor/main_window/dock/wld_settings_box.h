@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WLD_SETTINGS_BOX_H
 #define WLD_SETTINGS_BOX_H
 

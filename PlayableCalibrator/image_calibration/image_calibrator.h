@@ -1,3 +1,4 @@
+#pragma once
 #ifndef IMAGE_CALIBRATOR_H
 #define IMAGE_CALIBRATOR_H
 

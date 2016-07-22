@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WLD_SEARCH_BOX_H
 #define WLD_SEARCH_BOX_H
 

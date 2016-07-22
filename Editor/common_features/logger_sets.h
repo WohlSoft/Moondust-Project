@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef LOGGER_SETS_H
 #define LOGGER_SETS_H
 

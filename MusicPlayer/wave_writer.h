@@ -1,5 +1,6 @@
 /* WAVE sound file writer for recording 16-bit output during program development */
 
+#pragma once
 #ifndef WAVE_WRITER_H
 #define WAVE_WRITER_H
 

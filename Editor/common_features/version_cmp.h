@@ -1,3 +1,4 @@
+#pragma once
 #ifndef VERSIONCMP_H
 #define VERSIONCMP_H
 

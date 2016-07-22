@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ITEM_RECTANGLES_H
 #define ITEM_RECTANGLES_H
 

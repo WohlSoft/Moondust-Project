@@ -1,3 +1,4 @@
+#pragma once
 #ifndef VARIABLES_BOX_H
 #define VARIABLES_BOX_H
 

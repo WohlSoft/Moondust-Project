@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TESTING_SETTINGS_H
 #define TESTING_SETTINGS_H
 

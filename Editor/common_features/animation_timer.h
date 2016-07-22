@@ -1,6 +1,7 @@
 #ifndef ANIMATIONTIMER_H
 #define ANIMATIONTIMER_H
 
+#pragma once
 #include <QVector>
 #include <QTimer>
 

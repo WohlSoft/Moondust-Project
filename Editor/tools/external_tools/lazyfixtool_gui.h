@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef LAZYFIXTOOL_GUI_H
 #define LAZYFIXTOOL_GUI_H
 

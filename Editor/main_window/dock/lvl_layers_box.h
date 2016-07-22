@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LVL_LAYERS_BOX_H
 #define LVL_LAYERS_BOX_H
 

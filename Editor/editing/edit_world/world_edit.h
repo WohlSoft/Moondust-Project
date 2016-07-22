@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef WORLD_EDIT_H
 #define WORLD_EDIT_H
 
