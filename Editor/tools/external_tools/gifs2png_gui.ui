@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>359</height>
+    <height>372</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -175,7 +175,7 @@
    <item row="9" column="0" colspan="5">
     <widget class="QCheckBox" name="RemoveSource">
      <property name="text">
-      <string>Remove source images after successful conversion</string>
+      <string>Remove the original images after a successful conversion</string>
      </property>
     </widget>
    </item>

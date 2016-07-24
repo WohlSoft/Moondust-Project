@@ -35,7 +35,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
     int TotalSteps = 6;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+            progress.setLabelText(tr("1/%1 Loading user data...").arg(TotalSteps));
 
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->loadUserData(progress);
@@ -43,7 +43,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
+            progress.setLabelText(tr("1/%1 Loading Backgrounds...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -52,7 +52,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
+            progress.setLabelText(tr("2/%1 Loading BGOs...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -61,7 +61,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
+            progress.setLabelText(tr("3/%1 Loading Blocks...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -70,7 +70,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
+            progress.setLabelText(tr("4/%1 Loading NPCs...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     progress.setValue(progress.value()+1);
@@ -80,7 +80,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("5/%1 Applying Water...").arg(TotalSteps));
+            progress.setLabelText(tr("5/%1 Loading PhysEZ...", "PhysEZ - Physical Environment Zone.").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -89,7 +89,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
+            progress.setLabelText(tr("6/%1 Loading Doors...").arg(TotalSteps));
 
 
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);

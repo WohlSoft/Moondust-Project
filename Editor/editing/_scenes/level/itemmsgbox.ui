@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>444</width>
-    <height>266</height>
+    <height>271</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,8 +27,8 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Please, enter NPC's talkative message
-Message limits: max line lenth is 27 characters</string>
+      <string>Enter the NPC's dialog message:
+(Max length per line is 27 characters)</string>
      </property>
     </widget>
    </item>

@@ -321,8 +321,8 @@ void CrashHandler::checkCrashsaves()
 
         QMessageBox::information(mw,
                                  tr("Crashsave"),
-                                 tr("Since the last crash, the editor recorved some files.\n"
-                                    "Please save them first before doing anything else."),
+                                 tr("Since the last crash, the editor recovered some files.\n"
+                                    "Please save them before doing anything else."),
                                  QMessageBox::Ok);
     }
 }

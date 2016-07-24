@@ -36,8 +36,8 @@
    <item row="5" column="0" colspan="5">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Output dir, where will be saved fixed images
-(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</string>
+      <string>Output directory, where the fixed images will be saved.
+(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
