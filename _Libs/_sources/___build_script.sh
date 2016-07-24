@@ -9,6 +9,8 @@
 #Install Builds into /usr/ directory globally
 #InstallTo = /usr/
 
+source "./build_packagesList.sh"
+
 OurOS="linux_defaut"
 if [[ "$OSTYPE" == "darwin"* ]]; then
 OurOS="macos"
@@ -95,7 +97,7 @@ BuildSrc()
 
 BuildSDL()
 {
-        LatestSDL='SDL-a6ad6813b17b'
+        #LatestSDL='SDL-afd286e26823'
         UnArch $LatestSDL
 
         ###########SDL2###########
