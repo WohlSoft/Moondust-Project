@@ -103,7 +103,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     FrameBox_gray.setBrush(Qt::transparent);
     FrameBox_gray.setZValue(-10);
 
-    CollisionBox_green.setRect(0,0,frameWidth,frameHeight);
+    CollisionBox_green.setRect(0,0,frameWidth-1, frameHeight-1);
     CollisionBox_green.setPen(QPen(Qt::green));
     CollisionBox_green.setZValue(3);
 
@@ -431,7 +431,7 @@ void CalibrationMain::updateScene()
 
     CollisionBox_green.setPos(relX+x,
                               relY+y);
-    CollisionBox_green.setRect(0,0,w,h);
+    CollisionBox_green.setRect(0,0, w-1, h-1);
 
     relX = CollisionBox_green.scenePos().x();
     relY = CollisionBox_green.scenePos().y();
