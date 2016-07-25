@@ -429,9 +429,9 @@ void CalibrationMain::updateScene()
     relX = FrameBox_gray.scenePos().x();
     relY = FrameBox_gray.scenePos().y();
 
-    CollisionBox_green.setPos(relX+x,
-                              relY+y);
-    CollisionBox_green.setRect(0,0, w-1, h-1);
+    CollisionBox_green.setPos(relX + x,
+                              relY + y);
+    CollisionBox_green.setRect(0.0, 0.0, w, h);
 
     relX = CollisionBox_green.scenePos().x();
     relY = CollisionBox_green.scenePos().y();
