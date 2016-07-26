@@ -91,7 +91,9 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         EditorSpashScreen splash(splashimg);
         splash.setCursor(Qt::ArrowCursor);
         splash.setDisabled(true);
+        #ifndef DEBUG_BUILD
         splash.setWindowFlags( splash.windowFlags() | Qt::WindowStaysOnTopHint );
+        #endif
 
         for(int a=0; a<configs.animations.size();a++)
         {
