@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #
 # Platformer Game Engine by Wohlstand, a free platform for game making
-# Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+# Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ TRANSLATIONS += languages/editor_en.ts \
 #!android:{
 #DEFINES += USE_SDL_MIXER
 #}
-DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES PGE_FILES_QT USE_SDL_MIXER
+DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES USE_SDL_MIXER
 
 android:{
     themes.path = /assets/themes
@@ -111,8 +111,8 @@ QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-include(../_common/strip_garbage.pri)
-include ($$PWD/../_common/lib_destdir.pri)
+include($$PWD/../_common/strip_garbage.pri)
+include($$PWD/../_common/lib_destdir.pri)
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
@@ -162,6 +162,8 @@ else
 {
     QT -= multimedia
 }
+
+include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -401,29 +403,8 @@ SOURCES += main.cpp\
     main_window/dock/_dock_vizman.cpp \
     main_window/dock/wld_settings_box.cpp \
     main_window/dock/lvl_events_box.cpp \
-    ../_common/PGE_File_Formats/file_formats.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvl.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvl_38a.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvlx.cpp \
-    ../_common/PGE_File_Formats/file_rw_meta.cpp \
-    ../_common/PGE_File_Formats/file_rw_npc_txt.cpp \
-    ../_common/PGE_File_Formats/file_rw_sav.cpp \
-    ../_common/PGE_File_Formats/file_rw_wld.cpp \
-    ../_common/PGE_File_Formats/file_rw_wldx.cpp \
-    ../_common/PGE_File_Formats/file_rw_smbx64_cnf.cpp \
-    ../_common/PGE_File_Formats/file_rwopen.cpp \
-    ../_common/PGE_File_Formats/file_strlist.cpp \
-    ../_common/PGE_File_Formats/lvl_filedata.cpp \
-    ../_common/PGE_File_Formats/npc_filedata.cpp \
-    ../_common/PGE_File_Formats/pge_x.cpp \
-    ../_common/PGE_File_Formats/save_filedata.cpp \
-    ../_common/PGE_File_Formats/smbx64.cpp \
-    ../_common/PGE_File_Formats/smbx64_cnf_filedata.cpp \
-    ../_common/PGE_File_Formats/wld_filedata.cpp \
-    ../_common/PGE_File_Formats/pge_file_lib_globs.cpp \
     common_features/dir_copy.cpp \
     tools/async/asyncstarcounter.cpp \
-    ../_common/PGE_File_Formats/file_rw_savx.cpp \
     main_window/tools/main_clean_npc_gargage.cpp \
     common_features/bool_reseter.cpp \
     common_features/version_cmp.cpp \
@@ -626,23 +607,6 @@ HEADERS  += defines.h \
     main_window/dock/_dock_vizman.h \
     main_window/dock/wld_settings_box.h \
     main_window/dock/lvl_events_box.h \
-    ../_common/PGE_File_Formats/file_formats.h \
-    ../_common/PGE_File_Formats/file_strlist.h \
-    ../_common/PGE_File_Formats/lvl_filedata.h \
-    ../_common/PGE_File_Formats/meta_filedata.h \
-    ../_common/PGE_File_Formats/npc_filedata.h \
-    ../_common/PGE_File_Formats/pge_x.h \
-    ../_common/PGE_File_Formats/pge_x_macro.h \
-    ../_common/PGE_File_Formats/save_filedata.h \
-    ../_common/PGE_File_Formats/smbx64.h \
-    ../_common/PGE_File_Formats/smbx64_macro.h \
-    ../_common/PGE_File_Formats/wld_filedata.h \
-    ../_common/PGE_File_Formats/pge_file_lib_globs.h \
-    ../_common/PGE_File_Formats/pge_file_lib_sys.h \
-    ../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
-    ../_common/PGE_File_Formats/CSVReader.h \
-    ../_common/PGE_File_Formats/CSVReaderPGE.h \
-    ../_common/PGE_File_Formats/CSVUtils.h \
     common_features/dir_copy.h \
     tools/async/asyncstarcounter.h \
     common_features/bool_reseter.h \

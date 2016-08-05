@@ -49,7 +49,7 @@ INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
 #LIBS += -L$$PWD/../_Libs/_builds/commonlibs
-DEFINES += PGE_ENGINE USE_LUA_JIT PGE_FILES_QT
+DEFINES += PGE_ENGINE USE_LUA_JIT
 
 
 include ($$PWD/../_common/lib_destdir.pri)
@@ -139,6 +139,8 @@ TRANSLATIONS += languages/engine_en.ts \
                 languages/engine_pl.ts \
                 languages/engine_pt.ts
 
+include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
+
 SOURCES += \
     main.cpp \
     graphics/graphics.cpp \
@@ -183,26 +185,6 @@ SOURCES += \
     gui/pge_menu.cpp \
     scenes/scene_loading.cpp \
     scenes/scene_title.cpp \
-    ../_common/PGE_File_Formats/file_formats.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvl.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvl_38a.cpp \
-    ../_common/PGE_File_Formats/file_rw_lvlx.cpp \
-    ../_common/PGE_File_Formats/file_rw_meta.cpp \
-    ../_common/PGE_File_Formats/file_rw_npc_txt.cpp \
-    ../_common/PGE_File_Formats/file_rw_sav.cpp \
-    ../_common/PGE_File_Formats/file_rw_wld.cpp \
-    ../_common/PGE_File_Formats/file_rw_wldx.cpp \
-    ../_common/PGE_File_Formats/file_rw_smbx64_cnf.cpp \
-    ../_common/PGE_File_Formats/file_rwopen.cpp \
-    ../_common/PGE_File_Formats/file_strlist.cpp \
-    ../_common/PGE_File_Formats/lvl_filedata.cpp \
-    ../_common/PGE_File_Formats/npc_filedata.cpp \
-    ../_common/PGE_File_Formats/pge_x.cpp \
-    ../_common/PGE_File_Formats/save_filedata.cpp \
-    ../_common/PGE_File_Formats/smbx64.cpp \
-    ../_common/PGE_File_Formats/smbx64_cnf_filedata.cpp \
-    ../_common/PGE_File_Formats/wld_filedata.cpp \
-    ../_common/PGE_File_Formats/pge_file_lib_globs.cpp \
     scenes/level/lvl_physenv.cpp \
     scenes/level/lvl_player_def.cpp \
     data_configs/obj_player.cpp \
@@ -251,7 +233,6 @@ SOURCES += \
     script/bindings/core/events/luaevents_core_engine.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_logger.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_renderer.cpp \
-    ../_common/PGE_File_Formats/file_rw_savx.cpp \
     common_features/pge_texture.cpp \
     data_configs/obj_npc.cpp \
     script/lua_titlescreen_engine.cpp \
@@ -374,23 +355,6 @@ HEADERS  += \
     gui/pge_menu.h \
     scenes/scene_loading.h \
     scenes/scene_title.h \
-    ../_common/PGE_File_Formats/file_formats.h \
-    ../_common/PGE_File_Formats/file_strlist.h \
-    ../_common/PGE_File_Formats/lvl_filedata.h \
-    ../_common/PGE_File_Formats/meta_filedata.h \
-    ../_common/PGE_File_Formats/npc_filedata.h \
-    ../_common/PGE_File_Formats/pge_x.h \
-    ../_common/PGE_File_Formats/pge_x_macro.h \
-    ../_common/PGE_File_Formats/save_filedata.h \
-    ../_common/PGE_File_Formats/smbx64.h \
-    ../_common/PGE_File_Formats/smbx64_macro.h \
-    ../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
-    ../_common/PGE_File_Formats/wld_filedata.h \
-    ../_common/PGE_File_Formats/pge_file_lib_globs.h \
-    ../_common/PGE_File_Formats/pge_file_lib_sys.h \
-    ../_common/PGE_File_Formats/CSVReader.h \
-    ../_common/PGE_File_Formats/CSVReaderPGE.h \
-    ../_common/PGE_File_Formats/CSVUtils.h \
     scenes/level/lvl_physenv.h \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
