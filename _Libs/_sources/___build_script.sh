@@ -183,13 +183,15 @@ BuildFLAC()
 {
         UnArch 'flac-1.3.1'
 
+        unset COLUMNS
+        unset LINES
         ###########FLAC###########
         echo "==========FLAC========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
-        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --enable-static=yes --enable-shared=no --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --disable-cpplibs --enable-static=yes --enable-shared=no --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 #BuildMikMOD()
