@@ -679,34 +679,36 @@ Pobierz paczki tutaj:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="494"/>
         <source>Configuration package is not configured!</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczka konfiguracji nie jest skonfigurowana!</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="495"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczka konfiguracyjna %1 nie jes jeszcze skonfigurowana.
+Czy chcesz ją skonfigurować?</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="548"/>
         <source>Error of the configuring script</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd paczki konfiguracji</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="549"/>
         <source>Configuring tool has error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Narzędzie konfiguracyjne zawiera błąd %1 w linii %2.
+Ścieżka do pliku: %3</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="561"/>
         <source>Configuring is not needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguracja nie jest wymagana</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="562"/>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta paczka konfiguracyjna nie wymaga narzędzia konfiguracyjnego.</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1150,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="271"/>
         <source>Shows various important paths!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokazuje różne ważne ścieżki!</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="265"/>
@@ -1471,7 +1473,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="120"/>
         <source>Transform all %1 into</source>
-        <translation>Zmień wszystki %1 na</translation>
+        <translation>Zmień wszystkie %1 na</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="124"/>
@@ -1978,7 +1980,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
         <source>Transform all %1 into</source>
-        <translation>Zmień wszystki %1 na</translation>
+        <translation>Zmień wszystkie %1 na</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="109"/>
@@ -2195,7 +2197,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="78"/>
         <source>Transform all %1 into</source>
-        <translation>Zmień wszystki %1 na</translation>
+        <translation>Zmień wszystkie %1 na</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
@@ -2984,7 +2986,7 @@ kod wersji musi być mniejszy lub równy podanemu kodowi)</translation>
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>Czy chcez zapisać plik i tak?
+        <translation>Czy chcesz zapisać plik i tak?
 Wykroczenie poza limit SMBX64 może zcrashować SMBX z błędem &quot;Subscript out of range&quot;.
 
 Zainstalowana LunaLUA rozszerza te limity.</translation>
@@ -3043,33 +3045,33 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="46"/>
         <source>1/%1 Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Ładowane teł...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="55"/>
         <source>2/%1 Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation>2/%1 Ładowanie obiektów tła...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="64"/>
         <source>3/%1 Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation>3/%1 Ładowanie bloków...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="73"/>
         <source>4/%1 Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation>4/%1 Ładowanie NPC...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="83"/>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation type="unfinished"></translation>
+        <translation>5/%1 Ładowanie PhysEZ...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="92"/>
         <source>6/%1 Loading Doors...</source>
-        <translation type="unfinished"></translation>
+        <translation>6/%1 Ładowanie drzwi...</translation>
     </message>
 </context>
 <context>
@@ -3289,75 +3291,78 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="107"/>
         <source>Run testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchom testowanie</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="116"/>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Zresetuj checkpointy</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="117"/>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zresetuj wszystkie checkpointy do pierwotnego stanu.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="972"/>
         <location filename="../main_window/testing/luna_tester.cpp" line="989"/>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd LunaTester</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="108"/>
         <source>Starts testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise it will be very limited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchamia testowanie w SMBX.
+Aby to działało, najnowsza wersja LunaLua musi być zainstalowana.
+W innym wypadku testowanie będzie bardzo ograniczone.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="123"/>
         <source>Termitate frozen loader</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakończ zamrożony loader</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="124"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakańcza zamrożony proces, aby zezwolić na kolejne testowanie.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="149"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua test loader jest zajęty, spróbuj później lub zakończ jego proces!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="193"/>
         <source>Are you really want to termitate loader thread?</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy na pewno chcesz zakończyć proces loadera?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="211"/>
         <source>Loader thread is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>Loader nie jest aktualnie uruchomiony.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="581"/>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Checkpointy pomyślnie zresetowane!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="589"/>
         <source>LunaTester error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd LunaTester!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="602"/>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLUA tester nie jest uruchomiony!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="685"/>
         <source>SMBX64 limits are excited!</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Albo limity SMBX64 są podekscytowane xDDDDDDDDDDDDDDDDDDDDDDDDD</translatorcomment>
+        <translation>Przekroczone zostały limity SMBX64!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="686"/>
@@ -3366,36 +3371,39 @@ Otherwise it will be very limited.</source>
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Przekroczenie standardów SMBX64 zostało wykryte!
+%1
+, silnik może zcrashować.
+Czy chcesz  kontynuować?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="704"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="unfinished">Folder SMBX nie jest poprawnie skonfigurowany</translation>
+        <translation>Folder SMBX nie jest poprawnie skonfigurowany</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="705"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="unfinished">%1 nie znaleziony!
+        <translation>%1 nie znaleziony!
 Aby testować w SMBX musisz mieć poprawną paczkę konfiguracyjną!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="728"/>
         <source>SMBX Test is already runned</source>
-        <translation type="unfinished">SMBX już działa</translation>
+        <translation>SMBX już działa</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="729"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="unfinished">SMBX testyje inny poziom.
+        <translation>SMBX testuje inny poziom.
 Przerwać proces testowania?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="750"/>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished">Wykryto Vanilla SMBX!</translation>
+        <translation>Wykryto Vanilla SMBX!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="751"/>
@@ -3409,7 +3417,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation type="unfinished">%2 nie znaleziony!
+        <translation>%2 nie znaleziony!
 Masz Vanilla SMBX!&lt;br&gt;
 To oznacza, że nie możesz testować poziomu automatycnie. DO testu zostanie stworzony epizod, który możesz uruchomić manualnie.&lt;br&gt;
 &lt;br&gt;
@@ -3423,55 +3431,55 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="915"/>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd zapisywania pliku</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="916"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished">Nie można zapisać pliku %1:
+        <translation>Nie można zapisać pliku %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="973"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się wysłać pliku do LunaLUA-SMBX!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="982"/>
         <source>process execution is failed.</source>
-        <translation type="unfinished">Realizacja procesu nieudana.</translation>
+        <translation>Realizacja procesu nieudana.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="984"/>
         <source>patching has failed.</source>
-        <translation type="unfinished">Patchowanie się nie udało.</translation>
+        <translation>Patchowanie się nie udało.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="990"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished">Nie można uruchomić SMBX, ponieważ %1</translation>
+        <translation>Nie można uruchomić SMBX, ponieważ %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1002"/>
         <source>Save file first</source>
-        <translation type="unfinished">Najpierw zapisz plik</translation>
+        <translation>Najpierw zapisz plik</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1003"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation type="unfinished">Aby uruchomić SMBX plik musi być zapisany na dysku!</translation>
+        <translation>Aby uruchomić SMBX plik musi być zapisany na dysku!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1010"/>
         <source>Incompatible file format</source>
-        <translation type="unfinished">Format nie jest kompatybilny</translation>
+        <translation>Format nie jest kompatybilny</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1011"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
-        <translation type="unfinished">Aby móc testować poziom w SMBX, plik musi być zapisany w formacie SMBX64!
+        <translation>Aby móc testować poziom w SMBX, plik musi być zapisany w formacie SMBX64!
 Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
     </message>
     <message>
@@ -3482,17 +3490,17 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
         <location filename="../main_window/testing/luna_tester.cpp" line="1110"/>
         <location filename="../main_window/testing/luna_tester.cpp" line="1149"/>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1023"/>
         <source>Fail to create temp file %1</source>
-        <translation type="unfinished">Nie udało się stworzyć tymczasowego pliku %1</translation>
+        <translation>Nie udało się stworzyć tymczasowego pliku %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1044"/>
         <source>LunaLUA Level test</source>
-        <translation type="unfinished"></translation>
+        <translation>Test poziomu w LunaLUA</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3502,33 +3510,33 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
         <location filename="../main_window/testing/luna_tester.cpp" line="1045"/>
         <source>Do you wanna to save file before start testing?
 </source>
-        <translation type="unfinished">Czy chesz zapisać plik przed testowaniem?
+        <translation>Czy chesz zapisać plik przed testowaniem?
 </translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1072"/>
         <source>SMBX with LunaDLL is not running!</source>
-        <translation type="unfinished">SMBX z LunaDLL nie jest uruchomiony!</translation>
+        <translation>SMBX z LunaDLL nie jest uruchomiony!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1087"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
-        <translation type="unfinished">Wysłanie ścieżi do LunaDLL nie udało się: (%1)</translation>
+        <translation>Wysłanie ścieżi do LunaDLL nie udało się: (%1)</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1102"/>
         <source>Could not map view of LunaLUA shared memory (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się wyświetlić pamięci LunaLUA (%1).</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1111"/>
         <source>Too long path: </source>
-        <translation type="unfinished">Za długa ścieżka: </translation>
+        <translation>Za długa ścieżka: </translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1150"/>
         <source>Failed to find SMBX Window</source>
-        <translation type="unfinished">Nie udało się znaleźć okna SMBX</translation>
+        <translation>Nie udało się znaleźć okna SMBX</translation>
     </message>
 </context>
 <context>
@@ -3551,7 +3559,7 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="43"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt;nie wspierają więcej niż 21 sekcji.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; format nie wspiera więcej niż 6 sekcji.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="93"/>
@@ -3582,7 +3590,7 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="121"/>
         <source>Initialize new section</source>
-        <translation type="unfinished"></translation>
+        <translation>Zainicjuj nową sekcję</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="136"/>
@@ -3979,7 +3987,7 @@ Limity: 28 znaków w jedej linii</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="26"/>
         <source>Item Properties</source>
-        <translation>Właściowości obeiektu</translation>
+        <translation>Właściowości obiektu</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="87"/>
@@ -4243,7 +4251,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="376"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="507"/>
         <source>Position: [%1, %2]</source>
-        <translation>Pozyycja: [%1, %2]</translation>
+        <translation>Pozycja: [%1, %2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="314"/>
@@ -5539,7 +5547,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="394"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Wtyczki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="663"/>
@@ -6187,12 +6195,12 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2951"/>
         <source>Script Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytor skryptów</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2959"/>
         <source>Run configure tool...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchom narzędzie konfiguracyjne...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2311"/>
@@ -6881,7 +6889,7 @@ Aby testować w SMBX musisz mieć poprawną paczkę konfiguracyjną!</translatio
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="vanished">SMBX testyje inny poziom.
+        <translation type="vanished">SMBX testuje inny poziom.
 Przerwać proces testowania?</translation>
     </message>
     <message>
@@ -7181,7 +7189,7 @@ Więcej informacji: %1.</translation>
     <message>
         <location filename="../mainwindow.cpp" line="170"/>
         <source>Initalizing plugins...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicjowanie wtyczek...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="173"/>
@@ -7569,27 +7577,27 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.ui" line="20"/>
         <source>Plugin Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Menedżer wtyczek</translation>
     </message>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.cpp" line="34"/>
         <source>Name:</source>
-        <translation type="unfinished">Nazwa:</translation>
+        <translation>Nazwa:</translation>
     </message>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.cpp" line="35"/>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor:</translation>
     </message>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.cpp" line="36"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wersja:</translation>
     </message>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.cpp" line="37"/>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opis:</translation>
     </message>
     <message>
         <location filename="../main_window/plugins/pge_editorplugininfo.cpp" line="41"/>
@@ -7597,7 +7605,10 @@ Czy chcesz zapisać zmiany?</translation>
 
 Error description:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się załadować paczki &quot;%1&quot;!
+
+Opis błędu:
+%2</translation>
     </message>
 </context>
 <context>
@@ -7609,7 +7620,7 @@ Error description:
     <message>
         <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="43"/>
         <source>%1 at line %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 w linii %2</translation>
     </message>
 </context>
 <context>
@@ -8188,12 +8199,12 @@ Forum: engine.wohlnet.ru/forum</translation>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="151"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zła instrukcja CPU [SIGILL]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="152"/>
         <source>Floating-point exception [SIGFPE]</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyjątek zmiennoprzecinkowy [SIGFPE]</translation>
     </message>
     <message>
         <source>Wrong CPU Instruction [SIGFPE]</source>
@@ -8483,7 +8494,7 @@ Maksymalny numer bloków muzyki to %2.</translation>
     <message>
         <location filename="../common_features/logger.cpp" line="83"/>
         <source>System messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiadomości systemowe</translation>
     </message>
     <message>
         <location filename="../common_features/logger.cpp" line="84"/>
@@ -8575,7 +8586,7 @@ Maksymalny numer bloków muzyki to %2.</translation>
     <message>
         <location filename="../main_window/script/script_editor.cpp" line="197"/>
         <source>Empty script has been added!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusty skrypt został dodany!</translation>
     </message>
 </context>
 <context>
@@ -8722,14 +8733,14 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <location filename="../main_window/testing/testing_settings.ui" line="517"/>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pojazd</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="162"/>
         <location filename="../main_window/testing/testing_settings.ui" line="524"/>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Typ pojazdu</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="232"/>
@@ -8745,7 +8756,7 @@ Maksymalny numer bloków muzyki to %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="296"/>
         <source>Show frame speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="306"/>
@@ -10209,7 +10220,7 @@ Bloki muzyczne:		%5
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>Czy chcez zapisać plik i tak?
+        <translation>Czy chcesz zapisać plik i tak?
 Wykroczenie poza limit SMBX64 może zcrashować SMBX z błędem &quot;Subscript out of range&quot;.
 
 Zainstalowana LunaLUA rozszerza te limity.</translation>
