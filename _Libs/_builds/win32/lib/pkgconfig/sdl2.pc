@@ -11,5 +11,5 @@ Version: 2.0.4
 Requires:
 Conflicts:
 Libs: -L${libdir}  -lmingw32 -lSDL2main -lSDL2  -mwindows
-Libs.private: -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
+Libs.private: -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion /lib/w32api/libuuid.a -static-libgcc
 Cflags: -I${includedir}/SDL2  -Dmain=SDL_main
