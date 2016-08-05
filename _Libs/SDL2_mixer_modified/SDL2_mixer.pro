@@ -114,7 +114,7 @@ LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread
+            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
         } else {
             LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
         }
