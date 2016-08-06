@@ -883,8 +883,8 @@ public:
         }
 
         if(AntiFreezeCounter <= 0)
-            CurrentPosition.wait += 100.0;/* Add extra 100 ticks when over 10000 events
-                                             with zero delay are been detected */
+            CurrentPosition.wait += 1.0;/* Add extra 1 second when over 10000 events
+                                           with zero delay are been detected */
 
         for(unsigned c = 0; c < opl.NumChannels; ++c)
             ch[c].AddAge(s * 1000);
