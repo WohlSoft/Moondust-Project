@@ -49,7 +49,7 @@ if [[ $QT_VERSION == "undefined/gcc_64" ]]; then
 fi
 
 #Automatically detect manually installed Qt
-for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7
+for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2
 do
 	if [ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]; then
 		QT_VERSION=$var/$GCC_ARCH

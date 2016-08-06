@@ -1,15 +1,49 @@
 @echo off
-IF EXIST _paths.bat goto edit
+rem IF EXIST _paths.bat goto edit
+
+set QT_VERSION=undefined\mingw53_32
+set MINGW_VERSION=undefined
+set GIT_PATH=undefined
+
+:detectQt
+FOR %%d IN (5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2) DO IF EXIST C:\Qt\%%d FOR %%e IN (mingw480_32 mingw491_32 mingw492_32 mingw53_32) DO IF EXIST C:\Qt\%%d\%%e set QT_VERSION=%%d\%%e
+
+:detectMinGW
+FOR %%e IN (mingw480_32 mingw491_32 mingw492_32 mingw530_32) DO IF EXIST C:\Qt\Tools\%%e set MINGW_VERSION=%%e
+
+:detectGit
+IF EXIST "C:\Program Files\Git\cmd" set GIT_PATH=C:\Program Files\Git\cmd
+IF EXIST "C:\Program Files (x86)\Git\cmd" set GIT_PATH=C:\Program Files (x86)\Git\cmd
+
 echo @echo off > _paths.bat
 echo rem =============================================================================================== >> _paths.bat
 echo rem ============================PLEASE SET THE QT AND MINGW PATHS================================== >> _paths.bat
 echo rem =============================================================================================== >> _paths.bat
-echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat
-echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
-echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
+echo set QtDir=C:\Qt\%QT_VERSION%\bin>> _paths.bat
+echo set MinGW=C:\Qt\Tools\%MINGW_VERSION%\bin>> _paths.bat
+echo set GitDir=%GIT_PATH%>> _paths.bat
 echo rem ===============================================================================================>> _paths.bat
 echo rem ===============================================================================================>> _paths.bat
 echo rem ===============================================================================================>> _paths.bat
+
+rem If Qt or MinGW are not been detected
+IF "%QT_VERSION%"=="undefined\mingw53_32" goto edit
+IF "%MINGW_VERSION%"=="undefined" goto edit
+IF "%GIT_PATH%"=="undefined" goto edit
+
+echo ===============Detected Qt version %QT_VERSION%====================
+C:\Qt\%QT_VERSION%\bin\qmake -v
+echo.
+echo ============Detected MinGW version %MINGW_VERSION%=================
+C:\Qt\Tools\%MINGW_VERSION%\bin\gcc --version
+
+echo =======================Detected GIT================================
+"%GIT_PATH%\git.exe" --version
+echo ===================================================================
+
+pause
+goto quit
 :edit
 start notepad _paths.bat
+:quit
 
