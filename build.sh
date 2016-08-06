@@ -63,7 +63,7 @@ PATH=$QT_PATH:$PATH
 #cd ..
 #=======================================================================
 # build all components
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
     $QMake CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m) $QMAKE_EXTRA_ARGS
 else
     $QMake CONFIG+=release CONFIG-=debug $QMAKE_EXTRA_ARGS

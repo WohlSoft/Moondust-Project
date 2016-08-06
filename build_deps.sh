@@ -32,7 +32,7 @@ osx_realpath() {
 OurOS="linux_defaut"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   OurOS="macos"
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
   OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
   OurOS="freebsd"

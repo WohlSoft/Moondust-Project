@@ -14,7 +14,7 @@ source "./build_packagesList.sh"
 OurOS="linux_defaut"
 if [[ "$OSTYPE" == "darwin"* ]]; then
 OurOS="macos"
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
 OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
 OurOS="freebsd"
@@ -106,7 +106,7 @@ BuildSDL()
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
         if [[ "$OurOS" != "macos" ]]; then
             #on any other OS'es build via autotools
-            BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
+            BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib'
         else
             #on Mac OS X build via X-Code
             cd $LatestSDL
@@ -149,7 +149,7 @@ BuildOGG()
         echo "=========OGG==========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
-        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 
         #if [[ "$OurOS" == "macos" ]]; then
             #install libOGG
@@ -176,13 +176,16 @@ BuildVORBIS()
         echo "============VORBIS=========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
-        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --with-ogg='$InstallTo' --disable-oggtest --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildFLAC()
 {
         UnArch 'flac-1.3.1'
 
+        #Debug output of environment (because sometimes flac failing to build because "missing of automake-1.14")
+        #... however, second attempt to run build is successful
+        set > env_flac.txt
         unset COLUMNS
         unset LINES
         ###########FLAC###########
@@ -191,7 +194,7 @@ BuildFLAC()
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
         $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
-        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --disable-cpplibs --enable-static=yes --enable-shared=no --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --disable-cpplibs --enable-static=yes --enable-shared=no --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 #BuildMikMOD()
@@ -211,7 +214,7 @@ BuildMODPLUG()
         echo "==========MODPLUG=========="
         $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
         $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
-        BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+        BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildMAD()
@@ -239,7 +242,7 @@ BuildMAD()
         if [[ "$OurOS" == "macos" ]]; then
             BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
         else
-            BuildSrc 'libmad-0.15.1b' '--enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+            BuildSrc 'libmad-0.15.1b' '--enable-shared=no --enable-static=yes --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
         fi
 }
 

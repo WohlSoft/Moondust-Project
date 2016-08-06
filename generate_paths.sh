@@ -8,7 +8,7 @@ fi
 
 QMAKE_PATH=qmake
 LRELEASE_PATH=lrelease
-QT_VERSION=5.6.0_static
+QT_VERSION=5.7/gcc_64
 QT_PATH=~/Qt/$QT_VERSION/bin/
 
 OPEN_GEDIT=true
@@ -19,6 +19,7 @@ do
                 OPEN_GEDIT=false
             ;;
         semaphore) #Change paths ti Semaphore-CI compatible
+                QT_VERSION=5.6.0_static
                 QT_PATH=/home/runner/Qt/$QT_VERSION/bin/
                 QMAKE_PATH=/home/runner/Qt/$QT_VERSION/bin/qmake
                 LRELEASE_PATH=/home/runner/Qt/$QT_VERSION/bin/lrelease
@@ -31,17 +32,15 @@ echo "#=================PLEASE SET UP THE ABLSOLUTE PATHS TO QMAKE AND TO LRELEA
 echo "#===============================================================================================" >> _paths.sh
 echo "QT_PATH=\"$QT_PATH\"; #" >> _paths.sh
 echo "QMake=\"$QMAKE_PATH\"; #" >> _paths.sh
-echo "#QMake=\"qmake-qt5\"; # for CentOS" >> _paths.sh
 echo "" >> _paths.sh
 echo "LRelease=\"$LRELEASE_PATH\"; #" >> _paths.sh
-echo "#LRelease=\"lrelease-qt5\"; # for CentOS" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "" >> _paths.sh
 
 if $OPEN_GEDIT ; then
-   if [[ "$OSTYPE" == "linux-gnu" ]]; then
+   if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
       gedit _paths.sh
    else
       nano _paths.sh
