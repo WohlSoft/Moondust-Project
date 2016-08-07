@@ -602,35 +602,39 @@ MainMenu:
             case TitleScene::ANSWER_GAMEOVER:
                 goto GameOverScreen;
             case TitleScene::ANSWER_PLAYLEVEL:
-                end_level_jump=RETURN_TO_MAIN_MENU;
-                _game_state.isEpisode=false;
-                _game_state.numOfPlayers=1;
-                _game_state.LevelFile = res_level.levelfile;
-                _game_state._episodePath.clear();
-                _game_state.saveFileName.clear();
-                goto PlayLevel;
+                {
+                    end_level_jump=RETURN_TO_MAIN_MENU;
+                    _game_state.isEpisode=false;
+                    _game_state.numOfPlayers=1;
+                    _game_state.LevelFile = res_level.levelfile;
+                    _game_state._episodePath.clear();
+                    _game_state.saveFileName.clear();
+                    goto PlayLevel;
+                }
             case TitleScene::ANSWER_PLAYEPISODE:
             case TitleScene::ANSWER_PLAYEPISODE_2P:
-                end_level_jump=RETURN_TO_WORLDMAP;
-                _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
-                PlayerState plr;
-                plr._chsetup = FileFormats::CreateSavCharacterState();
-                plr.characterID=1;
-                plr.stateID=1;
-                plr._chsetup.id=1;
-                plr._chsetup.state=1;
-                _game_state.setPlayerState(1, plr);
-                plr.characterID=2;
-                plr.stateID=1;
-                plr._chsetup.id=2;
-                plr._chsetup.state=1;
-                _game_state.setPlayerState(2, plr);
-                _game_state.isEpisode=true;
-                episode = res_episode;
-                _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";
-                _game_state.saveFileName = episode.savefile;
-                _game_state.load();
-                goto PlayWorldMap;
+                {
+                    end_level_jump=RETURN_TO_WORLDMAP;
+                    _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
+                    PlayerState plr;
+                    plr._chsetup = FileFormats::CreateSavCharacterState();
+                    plr.characterID=1;
+                    plr.stateID=1;
+                    plr._chsetup.id=1;
+                    plr._chsetup.state=1;
+                    _game_state.setPlayerState(1, plr);
+                    plr.characterID=2;
+                    plr.stateID=1;
+                    plr._chsetup.id=2;
+                    plr._chsetup.state=1;
+                    _game_state.setPlayerState(2, plr);
+                    _game_state.isEpisode=true;
+                    episode = res_episode;
+                    _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";
+                    _game_state.saveFileName = episode.savefile;
+                    _game_state.load();
+                    goto PlayWorldMap;
+                }
             default:
                 goto PlayWorldMap;
         }

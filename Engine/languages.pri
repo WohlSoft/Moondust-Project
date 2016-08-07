@@ -9,7 +9,6 @@ mkpath($$LANGUAGES_TARGET)
 unix:  system(find $$shell_path($$PWD/languages) -name *.ts | xargs $$shell_path($$LRELEASE_EXECUTABLE))
 win32: system(for /r $$shell_path($$PWD/languages) %B in (*.ts) do $$shell_path($$LRELEASE_EXECUTABLE) %B)
 system($$QMAKE_COPY $$shell_path($$PWD/languages/*.qm)  \"$$shell_path($$LANGUAGES_TARGET)\")
-system($$QMAKE_COPY $$shell_path($$PWD/languages/*.png) \"$$shell_path($$LANGUAGES_TARGET)\")
 
 TRANSLATIONS += \
     $$PWD/languages/engine_en.ts \

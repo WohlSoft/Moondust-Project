@@ -39,6 +39,7 @@ public:
 
 struct PlayerState
 {
+    PlayerState() : characterID(1), stateID(1) {}
     int characterID;
     int stateID;
     saveCharState _chsetup;
