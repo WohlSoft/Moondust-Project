@@ -7164,41 +7164,41 @@ Zamienić?</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="164"/>
-        <location filename="../mainwindow.cpp" line="147"/>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="182"/>
         <source>Configuration error</source>
         <translation>Błąd konfiguracji</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="183"/>
         <source>Configuration can&apos;t be loaded.
 See in %1 for more information.</source>
         <translation>Konfiguracja nie może zostać załadowana.
 Więcej informacji: %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="154"/>
         <source>Loading theme...</source>
         <translation>Ładowanie motywu...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="162"/>
         <source>Initializing dock widgets...</source>
         <translation>Inicjacja widgetów...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="170"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>Initalizing plugins...</source>
         <translation>Inicjowanie wtyczek...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source>Finishing loading...</source>
         <translation>Finalizacja ładowania...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="165"/>
-        <location filename="../mainwindow.cpp" line="148"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>Konfiguracja załadowana z błędami.</translation>
     </message>
@@ -8317,24 +8317,24 @@ Powód: %1
         <translation>Ładowanie planszy...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="229"/>
+        <location filename="../mainwindow.cpp" line="231"/>
         <source>Bad File</source>
         <translation>Zły plik</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="230"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Bad file format
 File: %1</source>
         <translation>Zły format
 Plik: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Line Number: %1</source>
         <translation>Numer linii: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="233"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Line Data: %1</source>
         <translation>Informacje linii: %1</translation>
     </message>

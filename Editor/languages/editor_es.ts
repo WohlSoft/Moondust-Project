@@ -9280,41 +9280,41 @@ Overwrite?</source>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="164"/>
-        <location filename="../mainwindow.cpp" line="147"/>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="182"/>
         <source>Configuration error</source>
         <translation>Error de configuración</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="183"/>
         <source>Configuration can&apos;t be loaded.
 See in %1 for more information.</source>
         <translation>La configuración no se puede cargar.
 Vea en %1 para más información.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="154"/>
         <source>Loading theme...</source>
         <translation>Cargando tema...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="162"/>
         <source>Initializing dock widgets...</source>
         <translation>Instalando dock widgets...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="170"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>Initalizing plugins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source>Finishing loading...</source>
         <translation>Finalizando carga...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="165"/>
-        <location filename="../mainwindow.cpp" line="148"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>El paquete de configuración se cargó con errores.</translation>
     </message>
@@ -10642,18 +10642,18 @@ Razón: Violación de segmentación de señal [SIGSERV]
         <translation>Cargando azulejos...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="229"/>
+        <location filename="../mainwindow.cpp" line="231"/>
         <source>Bad File</source>
         <translation>Archivo Corrupto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="230"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Bad file format
 File: %1</source>
         <translation type="unfinished">Formato de archivo corrupto: %1 {1?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Line Number: %1</source>
         <translation type="unfinished">Número de línea: %1
  {1?}</translation>
@@ -10671,7 +10671,7 @@ File: %1
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="233"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Line Data: %1</source>
         <translation>Dato de línea: %1</translation>
     </message>
