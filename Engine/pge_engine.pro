@@ -30,9 +30,9 @@ macx:  QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 include($$PWD/../_common/strip_garbage.pri)
-
 include($$PWD/../_common/dest_dir.pri)
 include($$PWD/../_common/build_props.pri)
+include($$PWD/languages.pri)
 
 !macx: TARGET = pge_engine
 macx:  TARGET = "PGE Engine"
@@ -108,29 +108,6 @@ contains(DEFINES, USE_LUA_JIT): {
 unix:{
     CONFIG(debug, debug|release):||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
-
-android:{
-    LANGUAGES_TARGET=/assets/languages
-} else {
-    LANGUAGES_TARGET=$$DESTDIR/languages
-}
-
-CONFIG(release, debug|release): {
-    mkpath($$LANGUAGES_TARGET)
-    tr_release.commands = $$LRELEASE_EXECUTABLE -idbased $$PWD/pge_engine.pro
-    translates.commands = $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\"
-    translates.depends = tr_release
-    QMAKE_EXTRA_TARGETS += tr_release translates
-    POST_TARGETDEPS     += tr_release translates
-}
-
-TRANSLATIONS += languages/engine_en.ts \
-                languages/engine_ru.ts \
-                languages/engine_de.ts \
-                languages/engine_es.ts \
-                languages/engine_it.ts \
-                languages/engine_pl.ts \
-                languages/engine_pt.ts
 
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 

@@ -32,46 +32,10 @@ QT -= winextras
 }
 
 include($$PWD/../_common/dest_dir.pri)
-
-android:{
-    LANGUAGES_TARGET=/assets/languages
-} else {
-    LANGUAGES_TARGET=$$DESTDIR/languages
-}
-
 include($$PWD/../_common/build_props.pri)
+include($$PWD/languages.pri)
 
-CONFIG(release, debug|release): {
-    mkpath($$LANGUAGES_TARGET)
-    tr_release.commands = $$LRELEASE_EXECUTABLE $$PWD/pge_editor.pro
-    translates.commands += $(COPY) $$shell_path($$PWD/languages/*.qm)  \"$$shell_path($$LANGUAGES_TARGET)\" $$escape_expand(\n\t)\
-                           $(COPY) $$shell_path($$PWD/languages/*.png) \"$$shell_path($$LANGUAGES_TARGET)\"
-    translates.depends  = tr_release
-    QMAKE_EXTRA_TARGETS += tr_release translates
-    POST_TARGETDEPS     += tr_release translates
-}
-
-TRANSLATIONS += languages/editor_en.ts \
-    languages/editor_ru.ts \
-    languages/editor_uk.ts \
-    languages/editor_de.ts \
-    languages/editor_pl.ts \
-    languages/editor_es.ts \
-    languages/editor_nl.ts \
-    languages/editor_it.ts \
-    languages/editor_fr.ts \
-    languages/editor_pt.ts \
-    languages/editor_ja.ts \
-    languages/editor_zh.ts \
-    languages/editor_bg.ts \
-    languages/editor_id.ts
-
-
-#DEFINES += USE_QMEDIAPLAYER
-#!android:{
-#DEFINES += USE_SDL_MIXER
-#}
-DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES USE_SDL_MIXER
+DEFINES += PGE_EDITOR USE_SDL_MIXER
 
 android:{
     themes.path = /assets/themes

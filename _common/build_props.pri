@@ -1,10 +1,12 @@
+# Protect from building on incompatible Qt version
 lessThan(QT_MAJOR_VERSION, 6):{
-lessThan(QT_MAJOR_VERSION, 5): error("You are using an old version of Qt. To build project need a Qt 5.2 and greater!")
-lessThan(QT_MINOR_VERSION, 2): error("You are using an old version of Qt. To build project need a Qt 5.2 and greater!")
+    lessThan(QT_MAJOR_VERSION, 5): error("You are using an old version of Qt. To build project need a Qt 5.4 and greater!")
+    lessThan(QT_MINOR_VERSION, 4): error("You are using an old version of Qt. To build project need a Qt 5.4 and greater!")
 } else {
-    warning("Building under Qt 6 and greater may be incompatible with current project Please use Qt 5.4 before project will be ported to Qt6 or greater!")
+    warning("Building under Qt 6 and greater may be incompatible with current project Please use Qt 5.7 before project will be ported to Qt6 or greater!")
 }
 
+# Resolve path to lrelease tool
 unix:exists($$[QT_INSTALL_BINS]/lrelease) {
 LRELEASE_EXECUTABLE = $$[QT_INSTALL_BINS]/lrelease
 }
@@ -17,6 +19,7 @@ win32:exists($$[QT_INSTALL_BINS]/lrelease.exe) {
 LRELEASE_EXECUTABLE = $$[QT_INSTALL_BINS]/lrelease.exe
 }
 
+# Resolve architecture type
 android:{
     ARCH=android_arm
 } else : unix: {
