@@ -12,6 +12,8 @@ CONFIG += C++11
 
 DEFINES += LIBOOLUA
 
+TRANSLATIONS = ""
+
 QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 macx:QMAKE_CXXFLAGS += -Wno-header-guard -stdlib=libstdc++
 

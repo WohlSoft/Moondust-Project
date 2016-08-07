@@ -42,6 +42,8 @@ RC_FILE = FreeImage.rc
 
 INCLUDEPATH += $$PWD/Source
 
+TRANSLATIONS = ""
+
 win32:{
     LIBS += -L$$PWD/../_builds/win32/lib #-lws2_32
     INCLUDEPATH += $$PWD/../_builds/win32/include
