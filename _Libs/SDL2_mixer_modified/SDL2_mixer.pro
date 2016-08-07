@@ -22,16 +22,18 @@ QMAKE_CXXFLAGS += \
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx:{
-QMAKE_CFLAGS    += -Wno-unused-but-set-variable -Wno-deprecated-register
-QMAKE_CXXFLAGS  += -Wno-unused-but-set-variable -Wno-deprecated-register
-QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_CFLAGS    += -Wno-unused-but-set-variable -Wno-deprecated-register
+    QMAKE_CXXFLAGS  += -Wno-unused-but-set-variable -Wno-deprecated-register
+    QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
 include ($$PWD/../../_common/lib_destdir.pri)
 TARGET = SDL2_mixer_ext
-win32:enable-stdcalls:{ #Useful for VB6 usage
+
+win32:enable-stdcalls:{ #Required for building a VB6-compatible version
     TARGET = SDL2MixerVB
 }
+
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
 

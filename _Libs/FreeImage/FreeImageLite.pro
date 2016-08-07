@@ -19,17 +19,19 @@ QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unus
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter  \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-unused-value \
                 -Wno-type-limits -Wno-reorder
+
 macx:{
- QMAKE_CFLAGS+= -Wno-unused-const-variable -Wno-uninitialized
- QMAKE_CXXFLAGS += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
-}
-!macx:{
- QMAKE_CFLAGS+= -Wno-unused-but-set-variable -Wno-maybe-uninitialized
- QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
- QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_CFLAGS+= -Wno-unused-const-variable -Wno-uninitialized
+    QMAKE_CXXFLAGS += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
 }
 
-include ($$PWD/../../_common/lib_destdir.pri)
+!macx:{
+    QMAKE_CFLAGS+= -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+    QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+    QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+}
+
+include($$PWD/../../_common/lib_destdir.pri)
 TARGET = freeimagelite
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
@@ -72,21 +74,9 @@ macx:{
     QMAKE_CFLAGS += -Os -fexceptions -fvisibility=hidden
     QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -stdlib=libc++ -Wc++11-narrowing
     DEFINES += NO_LCMS __ANSI__ DISABLE_PERF_MEASUREMENT
-} else {
-    #LIBS += -lSDL2
 }
 
 LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
-
-#!android:{
-#    win32:{
-#        LIBS += -lvorbisfile.dll -lvorbis.dll -lmodplug.dll -lFLAC.dll -logg.dll -static-libgcc -static-libstdc++ -static -lpthread
-#    } else {
-#        LIBS += -lvorbisfile -lvorbis -lmodplug -lFLAC -logg
-#    }
-#} else {
-#    LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
-#}
 
 FreeImageH.path =  $$PWD/../_builds/$$TARGETOS/include
 FreeImageH.files += Source/FreeImageLite.h

@@ -41,21 +41,14 @@ android:{
 
 include($$PWD/../_common/build_props.pri)
 
-#translates.path = $$LANGUAGES_TARGET
-#translates.files += $$PWD/languages/*.qm
-#translates.files += $$PWD/languages/*.png
-#tr_update.commands = lupdate $$PWD/pge_engine.pro
-release: {
+CONFIG(release, debug|release): {
     mkpath($$LANGUAGES_TARGET)
-    tr_release.commands = lrelease $$PWD/pge_editor.pro
-    #tr_release.depends = tr_update
-    translates.commands += $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\" $$escape_expand(\n\t)\
+    tr_release.commands = $$LRELEASE_EXECUTABLE $$PWD/pge_editor.pro
+    translates.commands += $(COPY) $$shell_path($$PWD/languages/*.qm)  \"$$shell_path($$LANGUAGES_TARGET)\" $$escape_expand(\n\t)\
                            $(COPY) $$shell_path($$PWD/languages/*.png) \"$$shell_path($$LANGUAGES_TARGET)\"
-    translates.depends = tr_release
-    #QMAKE_EXTRA_TARGETS += tr_update
+    translates.depends  = tr_release
     QMAKE_EXTRA_TARGETS += tr_release translates
-    #POST_TARGETDEPS += tr_update
-    POST_TARGETDEPS += tr_release translates
+    POST_TARGETDEPS     += tr_release translates
 }
 
 TRANSLATIONS += languages/editor_en.ts \

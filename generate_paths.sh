@@ -8,10 +8,13 @@ fi
 
 MACHINE_TYPE=$(uname -m)
 GCC_ARCH=gcc_64
+CLANG_ARCH=clang_64
 if [[ $MACHINE_TYPE=="x86_64" ]]; then
     GCC_ARCH=gcc_64
+    CLANG_ARCH=clang_64
 else
     GCC_ARCH=gcc_32
+    CLANG_ARCH=clang_32
 fi
 
 QMAKE_PATH=qmake
@@ -68,6 +71,18 @@ do
         QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
         AUTODETECTED=true
     fi
+    if [ -f /opt/Qt/$var/$CLANG_ARCH/bin/qmake ]; then
+        QT_VERSION=$var/$CLANG_ARCH
+        QT_PATH=~/Qt/$QT_VERSION/bin/
+        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+        AUTODETECTED=true
+    fi
+    if [ -f ~/Qt/$var/$CLANG_ARCH/bin/qmake ]; then
+        QT_VERSION=$var/$CLANG_ARCH
+        QT_PATH=~/Qt/$QT_VERSION/bin/
+        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+        AUTODETECTED=true
+    fi
 done
 
 OPEN_GEDIT=true
@@ -90,13 +105,21 @@ do
 done
 
 echo "#===============================================================================================" > _paths.sh
-echo "#=================PLEASE SET UP THE ABLSOLUTE PATHS TO QMAKE AND TO LRELEASE====================" >> _paths.sh
+echo "#===========================PLEASE SET UP THE ABLSOLUTE PATHS TO Qt=============================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
+echo "" >> _paths.sh
+echo "#-----------------Path to Qt bin directory-----------------" >> _paths.sh
 echo "QT_PATH=\"$QT_PATH\";" >> _paths.sh
+echo "" >> _paths.sh
+echo "#-----------------Path to Qt lib directory-----------------" >> _paths.sh
 echo "QT_LIB_PATH=\"$QT_LIB_PATH\";" >> _paths.sh
+echo "" >> _paths.sh
+echo "#-----------qmake executable name or full path-------------" >> _paths.sh
 echo "QMake=\"$QMAKE_PATH\";" >> _paths.sh
 echo "" >> _paths.sh
+echo "#---------lrelease executable name or full path------------" >> _paths.sh
 echo "LRelease=\"$LRELEASE_PATH\";" >> _paths.sh
+echo "" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh

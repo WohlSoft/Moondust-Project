@@ -26,7 +26,7 @@ QT -= dbus declarative svg testlib opengl winextras
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 !macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
-macx: QMAKE_CXXFLAGS += -Wno-header-guard
+macx:  QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 include($$PWD/../_common/strip_garbage.pri)
@@ -48,14 +48,12 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
-#LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 DEFINES += PGE_ENGINE USE_LUA_JIT
-
 
 include ($$PWD/../_common/lib_destdir.pri)
 
 android || macx: {
- DEFINES -= USE_LUA_JIT
+    DEFINES -= USE_LUA_JIT
 }
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
@@ -66,13 +64,11 @@ LIBS += -lluabind
 
 android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lfreeimagelite -lGLESv2 -lGLESv1_CM -ldl -landroid
-
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
                           $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
-                          #$$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
                           $$PWD/../_Libs/_builds/android/lib/libogg.so \
                           $$PWD/../_Libs/_builds/android/lib/libmad.so \
                           $$PWD/../_Libs/_builds/android/lib/libmodplug.so
@@ -93,7 +89,6 @@ macx: {
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
 
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    #INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_image.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -lfreeimagelite
     QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 }
@@ -111,24 +106,22 @@ contains(DEFINES, USE_LUA_JIT): {
     }
 }
 unix:{
-contains(CONFIG, debug)||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
+    CONFIG(debug, debug|release):||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
+
 android:{
     LANGUAGES_TARGET=/assets/languages
 } else {
     LANGUAGES_TARGET=$$DESTDIR/languages
 }
-release: {
+
+CONFIG(release, debug|release): {
     mkpath($$LANGUAGES_TARGET)
-    #tr_update.commands = lupdate $$PWD/pge_engine.pro
-    tr_release.commands = lrelease -idbased $$PWD/pge_engine.pro
-    #tr_release.depends = tr_update
+    tr_release.commands = $$LRELEASE_EXECUTABLE -idbased $$PWD/pge_engine.pro
     translates.commands = $(COPY) $$shell_path($$PWD/languages/*.qm) \"$$shell_path($$LANGUAGES_TARGET)\"
     translates.depends = tr_release
-    #QMAKE_EXTRA_TARGETS += tr_update
     QMAKE_EXTRA_TARGETS += tr_release translates
-    #POST_TARGETDEPS += tr_update
-    POST_TARGETDEPS += tr_release translates
+    POST_TARGETDEPS     += tr_release translates
 }
 
 TRANSLATIONS += languages/engine_en.ts \

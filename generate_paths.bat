@@ -12,16 +12,23 @@ FOR %%d IN (5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.
 FOR %%e IN (mingw480_32 mingw491_32 mingw492_32 mingw530_32) DO IF EXIST C:\Qt\Tools\%%e set MINGW_VERSION=%%e
 
 :detectGit
-IF EXIST "C:\Program Files\Git\cmd" set GIT_PATH=C:\Program Files\Git\cmd
-IF EXIST "C:\Program Files (x86)\Git\cmd" set GIT_PATH=C:\Program Files (x86)\Git\cmd
+IF EXIST "%ProgramFiles%\Git\cmd" set GIT_PATH=%ProgramFiles%\Git\cmd
+IF EXIST "%ProgramFiles(x86)%\Git\cmd" set GIT_PATH=%ProgramFiles(x86)%\Git\cmd
 
 echo @echo off > _paths.bat
 echo rem =============================================================================================== >> _paths.bat
-echo rem ============================PLEASE SET THE QT AND MINGW PATHS================================== >> _paths.bat
+echo rem ==========================PLEASE SET THE QT, MINGW and GIT PATHS=============================== >> _paths.bat
 echo rem =============================================================================================== >> _paths.bat
+echo. >> _paths.bat
+echo rem -----------------Actual path to Qt----------------- >> _paths.bat
 echo set QtDir=C:\Qt\%QT_VERSION%\bin>> _paths.bat
+echo. >> _paths.bat
+echo rem ------------Actual path to MinGW compiler---------- >> _paths.bat
 echo set MinGW=C:\Qt\Tools\%MINGW_VERSION%\bin>> _paths.bat
+echo. >> _paths.bat
+echo rem ------------Actual path to git for Windows--------- >> _paths.bat
 echo set GitDir=%GIT_PATH%>> _paths.bat
+echo. >> _paths.bat
 echo rem ===============================================================================================>> _paths.bat
 echo rem ===============================================================================================>> _paths.bat
 echo rem ===============================================================================================>> _paths.bat

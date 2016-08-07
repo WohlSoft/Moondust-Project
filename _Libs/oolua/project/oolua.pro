@@ -16,7 +16,7 @@ QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local
 macx:QMAKE_CXXFLAGS += -Wno-header-guard -stdlib=libstdc++
 
 macx||linux-g++:{
-DEFINES += LUA_USE_MKSTEMP
+    DEFINES += LUA_USE_MKSTEMP
 }
 macx: DEFINES += OOLUA_USE_EXCEPTIONS=1 OOLUA_STORE_LAST_ERROR=0 MAC_BUILD
 
