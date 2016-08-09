@@ -437,6 +437,7 @@ bool GraphicsHelps::setWindowIcon(SDL_Window *window, FIBITMAP *img, int iconSiz
     /* Set the icon for the window */
     SendMessage(windowH, WM_SETICON, (iconSize < 32) ? ICON_SMALL : ICON_BIG, (LPARAM) hicon);
     #else
+    (void)iconSize;
     SDL_Surface *sicon = GraphicsHelps::fi2sdl(img);
     SDL_SetWindowIcon(window, sicon);
     SDL_FreeSurface(sicon);
