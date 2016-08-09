@@ -68,6 +68,8 @@ public:
     void render();
     int  exec();
 
+    bool isVizibleOnScreen(PGE_RectF &rect);
+
     void tickAnimations(float ticks);
 
     bool isExit();

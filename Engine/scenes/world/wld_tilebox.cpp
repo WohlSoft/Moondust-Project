@@ -62,17 +62,17 @@ WorldNode::WorldNode(const WorldNode &xx)
 
 bool WorldNode::collidePoint(long rx, long ry)
 {
-    if(rx<x) return false;
-    if(ry<y) return false;
-    if(rx>x+w) return false;
-    if(ry>y+h) return false;
+    if(rx < x) return false;
+    if(ry < y) return false;
+    if(rx > x+w) return false;
+    if(ry > y+h) return false;
     return true;
 }
 
 bool WorldNode::collideWith(WorldNode *it)
 {
-    if((it->x+it->w) <= x) return false;
-    if((it->y+it->h) <= y) return false;
+    if( (it->x + it->w) <= x) return false;
+    if( (it->y + it->h) <= y) return false;
     if( (x+w) <= it->x) return false;
     if( (y+h) <= it->y) return false;
     return true;
@@ -84,17 +84,17 @@ bool WorldNode::collideWith(WorldNode *it)
 WldTileItem::WldTileItem(WorldTerrainTile _data): WorldNode()
 {
     data = _data;
-    x=data.x;
-    y=data.y;
-    Z=0.0+(double(data.meta.array_id)*0.0000001);
-    type=tile;
+    x = data.x;
+    y = data.y;
+    Z = 0.0+(double(data.meta.array_id)*0.0000001);
+    type = tile;
 }
 
 WldTileItem::WldTileItem(const WldTileItem &x): WorldNode(x)
 {
     data = x.data;
-    type=tile;
-    setup=x.setup;
+    type = tile;
+    setup = x.setup;
 }
 
 WldTileItem::~WldTileItem()
@@ -385,8 +385,12 @@ static bool _TreeSearchCallback(WorldNode* item, void* arg)
     QVector<WorldNode*>*list = static_cast<QVector<WorldNode*>* >(arg);
     if(list)
     {
-        if(item) (*list).push_back(item);
-    }
+        if(item)
+            (*list).push_back(item);
+        else
+            return false;
+    } else
+        return false;
     return true;
 }
 
@@ -407,8 +411,9 @@ static bool _TreeSearchCallback_with_vizibility(WorldNode* item, void* arg)
 void TileBox::query(long X, long Y, QVector<WorldNode *> &list)
 {
     //PGE_Point t = applyGrid(X,Y);
-    RPoint lt={ X-gridSize_h+1l, Y-gridSize_h+1l };
-    RPoint rb={ X+gridSize_h-1l, Y+gridSize_h-1l };
+    long margin = gridSize_h-1l;
+    RPoint lt={ X-margin, Y-margin };
+    RPoint rb={ X+margin, Y+margin };
     tree.Search(lt, rb, _TreeSearchCallback, (void*)&list);
 }
 

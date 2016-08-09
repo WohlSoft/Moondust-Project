@@ -199,7 +199,7 @@ void WorldScene::setGameState(EpisodeState *_state)
     }
     else
     {
-        gameState->episodeIsStarted=true;
+        gameState->episodeIsStarted = true;
         gameState->WorldPath = data.meta.path;
 
         //Detect gamestart and set position on them
@@ -209,8 +209,8 @@ void WorldScene::setGameState(EpisodeState *_state)
             {
                 posX=data.levels[i].x;
                 posY=data.levels[i].y;
-                gameState->game_state.worldPosX=posX;
-                gameState->game_state.worldPosY=posY;
+                gameState->game_state.worldPosX = posX;
+                gameState->game_state.worldPosY = posY;
                 break;
             }
         }
@@ -444,8 +444,11 @@ bool WorldScene::loadConfigs()
         if(!success) { _errorString="Fail on paths config loading";  exitWorldCode = WldExit::EXIT_error; goto abortInit;}
     success = ConfigManager::loadWorldLevels();  //!< Levels
         if(!success) { _errorString="Fail on level entrances config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
+    success = ConfigManager::loadLevelEffects();
+        if(!success) { _errorString="Fail on effects config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
 
     //Set paths
+    ConfigManager::Dir_EFFECT.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelEffect() );
     ConfigManager::Dir_Tiles.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldTiles() );
     ConfigManager::Dir_Scenery.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldScenery() );
     ConfigManager::Dir_WldPaths.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPaths() );
@@ -625,7 +628,6 @@ void WorldScene::update()
     tickAnimations(uTickf);
     Scene::update();
     updateLua();
-
     if(m_doExit)
     {
         if(exitWorldCode==WldExit::EXIT_close)
@@ -647,6 +649,7 @@ void WorldScene::update()
         processPauseMenu();
     } else {
         wld_events.processEvents(uTickf);
+        processEffects(uTickf);
 
         if(pathOpeningInProcess)
         {
@@ -660,9 +663,9 @@ void WorldScene::update()
             }
         }
 
-        if(walk_direction==Walk_Idle)
+        if(walk_direction == Walk_Idle)
         {
-            if(!lock_controls && (!controls_1.left || !controls_1.right) && (!controls_1.up|| !controls_1.down) )
+            if(!lock_controls && ( (controls_1.left ^ controls_1.right) || (controls_1.up ^ controls_1.down) ) )
             {
                 if(controls_1.left && (allow_left || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Left;
@@ -682,7 +685,7 @@ void WorldScene::update()
                 if (!controls_1.left&&!controls_1.right&&!controls_1.up&&!controls_1.down)
                     _playDenySnd=false;
             }
-            if(walk_direction!=Walk_Idle)
+            if(walk_direction != Walk_Idle)
             {
                 _playDenySnd=false;
                 _playStopSnd=false;
@@ -765,6 +768,9 @@ void WorldScene::update()
             }
             else if(jumpTo)
             {
+                //Don't inheret exit code when going through warps!
+                gameState->_recent_ExitCode_level = LvlExit::EXIT_Warp;
+
                 //Create events
                 EventQueueEntry<WorldScene >event1;
                 event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
@@ -780,7 +786,7 @@ void WorldScene::update()
                                       this->lock_controls=false;
                                       //Open new paths if possible
                                       this->pathOpener.startAt(PGE_PointF(this->posX, this->posY));
-                                      this->pathOpeningInProcess=true;
+                                      this->pathOpeningInProcess = true;
                                   }, 0);
                 wld_events.events.push_back(event3);
 
@@ -1089,16 +1095,23 @@ void WorldScene::render()
         const int render_sz = _itemsToRender.size();
         WorldNode** render_obj = _itemsToRender.data();
         for(int i=0; i<render_sz; i++)
-            render_obj[i]->render(render_obj[i]->x-renderX, render_obj[i]->y-renderY);
+            render_obj[i]->render(render_obj[i]->x - renderX,
+                                  render_obj[i]->y - renderY);
 
         //draw our "character"
         AniPos img(0,1); img = mapwalker_ani.image();
         GlRenderer::renderTexture(&mapwalker_texture,
-                                  posX-renderX+mapwalker_offset_x,
-                                  posY-renderY+mapwalker_offset_y,
+                                  posX - renderX + mapwalker_offset_x,
+                                  posY - renderY + mapwalker_offset_y,
                                   mapwalker_texture.w,
                                   mapwalker_img_h,
                                   img.first, img.second);
+
+        for(SceneEffectsArray::iterator it=WorkingEffects.begin(); it!=WorkingEffects.end(); it++ )
+        {
+             Scene_Effect &item=(*it);
+             item.render(renderX, renderY);
+        }
 
         //Restore viewport
         GlRenderer::resetViewport();
@@ -1417,6 +1430,17 @@ void WorldScene::mapwalker_refreshDirection()
         case Walk_Down:  mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
         default: break;
     }
+}
+
+bool WorldScene::isVizibleOnScreen(PGE_RectF &rect)
+{
+    PGE_RectF screen(0, 0, viewportRect.width(), viewportRect.height());
+    double renderX = posX+16-(viewportRect.width()/2);
+    double renderY = posY+16-(viewportRect.height()/2);
+    screen.setPos(renderX, renderY);
+    if(screen.collideRect(rect))
+        return true;
+    return false;
 }
 
 

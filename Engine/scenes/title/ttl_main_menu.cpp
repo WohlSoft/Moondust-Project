@@ -595,7 +595,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     }
     PGE_Rect menuBox = menu.rect();
     menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
-    LogDebug( QString("Menuitem ID: ") + menustates[_menu].first + ", scrolling offset: " + menustates[_menu].second );
+    LogDebug( QString("Menuitem ID: %1, scrolling offset: %2").arg(menustates[_menu].first).arg(menustates[_menu].second) );
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
 }

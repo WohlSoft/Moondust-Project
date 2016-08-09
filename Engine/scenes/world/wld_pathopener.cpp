@@ -22,6 +22,10 @@
 
 #include "../scene_world.h"
 
+#ifdef DEBUG_BUILD
+#include <common_features/logger.h>
+#endif
+
 void WldPathOpener::construct()
 {
     interval=1.f;
@@ -31,65 +35,79 @@ void WldPathOpener::construct()
 
 WldPathOpener::WldPathOpener()
 {
-    s=NULL;
+    s = nullptr;
     construct();
 }
 
 WldPathOpener::WldPathOpener(WorldScene *_s)
 {
-    s=_s;
+    s = _s;
     construct();
 }
 
 void WldPathOpener::setScene(WorldScene *_s)
 {
-    s=_s;
+    s = _s;
 }
 
 void WldPathOpener::setInterval(float _ms)
 {
-    if(_ms<=0) _ms=1.0f;
+    if(_ms <= 0.f)
+        _ms=1.0f;
     interval=_ms;
 }
 
 void WldPathOpener::startAt(PGE_PointF pos)
 {
     need_to_walk.clear();
-    _current_pos=pos;
-    _start_at=pos;
+    _current_pos = pos;
+    _start_at    = pos;
     initFetcher();
 }
 
 bool WldPathOpener::processOpener(float tickTime)
 {
-    _time-=tickTime;
-    while(_time<0.0f)
+    _time -= tickTime;
+    while(_time < 0.0f)
     {
-        _time+=interval;
+        _time += interval;
         doFetch();
-        if(need_to_walk.isEmpty() && next.isEmpty()) return false;
+        if(need_to_walk.isEmpty() && next.isEmpty())
+            return false;
     }
     return true;
 }
 
 void WldPathOpener::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float cx, float cy)
 {
-    side=false;
+    side = false;
     foreach (WorldNode* x, nodes)
     {
         if(x->type==WorldNode::path)
         {
-            side=x->collidePoint(cx, cy);
-            if(side && !x->vizible)
+            bool contact = x->collidePoint(cx, cy);
+            #ifdef DEBUG_BUILD
+                LogDebug(QString("Level node collision %1...").arg(contact?"passed":"missed"));
+            #endif
+            if(contact && !x->vizible)
             {
-                if(!need_to_walk.contains(_search_pos)) need_to_walk.push_back(_search_pos);
+                if(!need_to_walk.contains(_search_pos))
+                    need_to_walk.push_back(_search_pos);
                 next.push(x);
+                side |= contact;
             }
         }
-        if(x->type==WorldNode::level)
+        else if(x->type==WorldNode::level)
         {
-            side=x->collidePoint(cx, cy);
-            if(side && !x->vizible) next.push(x);
+            bool contact = x->collidePoint(cx, cy);
+            #ifdef DEBUG_BUILD
+                LogDebug(QString("Path node collision %1...").arg(contact?"passed":"missed"));
+            #endif
+            if(contact && !x->vizible)
+            {
+                next.push(x);
+                side |= contact;
+            }
         }
     }
 }
@@ -101,70 +119,92 @@ void WldPathOpener::doFetch()
     bool found=false;
     long x,y;
 
+    #ifdef DEBUG_BUILD
+        LogDebug("Fetch leaf....");
+    #endif
+
     if(!next.isEmpty())
     {
         findAndHideSceneries(next.pop());
         PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
     }
 
-    if(need_to_walk.isEmpty()) return;
-    _current_pos=need_to_walk.pop();
+    if(need_to_walk.isEmpty())
+        return;
+
+    _current_pos = need_to_walk.pop();
 
     //left
-    _search_pos.setX(_current_pos.x()-s->_indexTable.grid());
+    _search_pos.setX(_current_pos.x() - s->_indexTable.grid());
     _search_pos.setY(_current_pos.y());
-    x=_current_pos.x()+s->_indexTable.grid_half()-s->_indexTable.grid();
-    y=_current_pos.y()+s->_indexTable.grid_half();
-    s->_indexTable.query(x,y, nodes);
+    x = _current_pos.x() + s->_indexTable.grid_half() - s->_indexTable.grid();
+    y = _current_pos.y() + s->_indexTable.grid_half();
+    s->_indexTable.query(x, y, nodes);
     fetchSideNodes(found, nodes, x,y);
     nodes.clear();
 
     //Right
-    _search_pos.setX(_current_pos.x()+s->_indexTable.grid());
+    _search_pos.setX(_current_pos.x() + s->_indexTable.grid());
     _search_pos.setY(_current_pos.y());
-    x=_current_pos.x()+s->_indexTable.grid_half()+s->_indexTable.grid();
-    y=_current_pos.y()+s->_indexTable.grid_half();
-    s->_indexTable.query(x,y, nodes);
+    x = _current_pos.x() + s->_indexTable.grid_half() + s->_indexTable.grid();
+    y = _current_pos.y() + s->_indexTable.grid_half();
+    s->_indexTable.query(x, y, nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 
     //Top
     _search_pos.setX(_current_pos.x());
-    _search_pos.setY(_current_pos.y()-s->_indexTable.grid());
-    x=_current_pos.x()+s->_indexTable.grid_half();
-    y=_current_pos.y()+s->_indexTable.grid_half()-s->_indexTable.grid();
+    _search_pos.setY(_current_pos.y() - s->_indexTable.grid());
+    x = _current_pos.x() + s->_indexTable.grid_half();
+    y = _current_pos.y() + s->_indexTable.grid_half() - s->_indexTable.grid();
     s->_indexTable.query(x, y, nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 
     //Bottom
     _search_pos.setX(_current_pos.x());
-    _search_pos.setY(_current_pos.y()+s->_indexTable.grid());
-    x=_current_pos.x()+s->_indexTable.grid_half();
-    y=_current_pos.y()+s->_indexTable.grid_half()+s->_indexTable.grid();
-    s->_indexTable.query(x,y, nodes);
+    _search_pos.setY(_current_pos.y() + s->_indexTable.grid());
+    x = _current_pos.x() + s->_indexTable.grid_half();
+    y = _current_pos.y() + s->_indexTable.grid_half() + s->_indexTable.grid();
+    s->_indexTable.query(x, y, nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
+}
+
+static void spawnSmoke(WorldScene *s, WorldNode *at)
+{
+    SpawnEffectDef smoke = ConfigManager::g_setup_effects.m_smoke;
+    smoke.startX = float(at->x + at->w/2);
+    smoke.startY = float(at->y + at->h/2);
+    s->launchEffect(smoke, true);
 }
 
 void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
 {
     //Set element to be vizible
-    if(relativeTo->type==WorldNode::path)
+    if( relativeTo->type==WorldNode::path )
     {
         WldPathItem * y=dynamic_cast<WldPathItem *>(relativeTo);
-        if(y) y->vizible=true;
+        if(y)
+        {
+            y->vizible=true;
+            spawnSmoke(s, y);
+        }
     } else if(relativeTo->type==WorldNode::level) {
         WldLevelItem * y=dynamic_cast<WldLevelItem *>(relativeTo);
-        if(y) y->vizible=true;
+        if(y)
+        {
+            y->vizible=true;
+            spawnSmoke(s, y);
+        }
     }
 
     //Set all sceneries under this item to be invizible
     QVector<WorldNode* > nodes;
     s->_indexTable.query(relativeTo->x,
                          relativeTo->y,
-                         relativeTo->x+relativeTo->w,
-                         relativeTo->y+relativeTo->h,
+                         relativeTo->x + relativeTo->w,
+                         relativeTo->y + relativeTo->h,
                          nodes);
     foreach (WorldNode* x, nodes)
     {
@@ -177,76 +217,144 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
 }
 
 
-
 void WldPathOpener::initFetcher()
 {
-    QVector<WorldNode* > nodes;
-    int exitCode=s->gameState->_recent_ExitCode_level, x, y;
-    x=_current_pos.x()+s->_indexTable.grid_half();
-    y=_current_pos.y()+s->_indexTable.grid_half();
+    QVector<WorldNode* > lvlnodes;
+    int exitCode = s->gameState->_recent_ExitCode_level;
+    long lx, ly;
+    lx = _current_pos.x() + s->_indexTable.grid_half();
+    ly = _current_pos.y() + s->_indexTable.grid_half();
 
-    s->_indexTable.query(x, y, nodes);
-    foreach (WorldNode* x, nodes)
+#ifdef DEBUG_BUILD
+    LogDebug("Initialization of the path opener....");
+#endif
+
+    s->_indexTable.query(lx, ly, lvlnodes);
+    foreach (WorldNode* n, lvlnodes)
     {
-        if(x->type==WorldNode::level)
+        if(!n->collidePoint(lx, ly))
+            continue;
+        if(n->type == WorldNode::level)
         {
-            WldLevelItem * wl=dynamic_cast<WldLevelItem *>(x);
+            WldLevelItem * wl=dynamic_cast<WldLevelItem *>(n);
             if(wl)
             {
                 wl->vizible=true;
-                _current_pos.setX(wl->x);
-                _current_pos.setY(wl->y);
+                _current_pos.setX( wl->x );
+                _current_pos.setY( wl->y );
 
                 QVector<WorldNode* > nodes;
                 bool found=false;
-                long x,y;
+                long x, y;
 
-
-                if(force || ((wl->data.left_exit!=0)&&((wl->data.left_exit==exitCode) || (wl->data.left_exit<0))) )
+                #ifdef DEBUG_BUILD
+                    LogDebug("FETCH LEFT");
+                #endif
+                if( isAllowedSide(wl->data.left_exit, exitCode) )
                 {
                     //left
-                    _search_pos.setX(_current_pos.x()-s->_indexTable.grid());
+                    _search_pos.setX(_current_pos.x() - s->_indexTable.grid());
                     _search_pos.setY(_current_pos.y());
-                    x=_current_pos.x()+s->_indexTable.grid_half()-s->_indexTable.grid();
-                    y=_current_pos.y()+s->_indexTable.grid_half();
-                    s->_indexTable.query(x,y, nodes);
-                    fetchSideNodes(found, nodes, x,y);
-                    nodes.clear();
-                }
-                if(force || ((wl->data.right_exit!=0)&&((wl->data.right_exit==exitCode) || (wl->data.right_exit<0))) )
-                {
-                    //Right
-                    _search_pos.setX(_current_pos.x()+s->_indexTable.grid());
-                    _search_pos.setY(_current_pos.y());
-                    x=_current_pos.x()+s->_indexTable.grid_half()+s->_indexTable.grid();
-                    y=_current_pos.y()+s->_indexTable.grid_half();
-                    s->_indexTable.query(x,y, nodes);
+                    x = _current_pos.x() + s->_indexTable.grid_half() - s->_indexTable.grid();
+                    y = _current_pos.y() + s->_indexTable.grid_half();
+                    s->_indexTable.query(x, y, nodes);
+                    #ifdef DEBUG_BUILD
+                    if(nodes.isEmpty())
+                        LogDebug("No nodes at left");
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
-
+                    #ifdef DEBUG_BUILD
+                    if(found)
+                        LogDebug("Objects are been detected at left");
+                    #endif
                 }
-                if(force || ((wl->data.top_exit!=0)&&( (wl->data.top_exit==exitCode) || (wl->data.top_exit<0))) )
+                #ifdef DEBUG_BUILD
+                else
+                    LogDebug("Left side skipped");
+                #endif
+
+                #ifdef DEBUG_BUILD
+                    LogDebug("FETCH RIGHT");
+                #endif
+                if( isAllowedSide(wl->data.right_exit, exitCode) )
+                {
+                    //Right
+                    _search_pos.setX(_current_pos.x() + s->_indexTable.grid());
+                    _search_pos.setY(_current_pos.y());
+                    x = _current_pos.x() + s->_indexTable.grid_half() + s->_indexTable.grid();
+                    y = _current_pos.y() + s->_indexTable.grid_half();
+                    s->_indexTable.query(x, y, nodes);
+                    #ifdef DEBUG_BUILD
+                    if(nodes.isEmpty())
+                        LogDebug("No nodes at right");
+                    #endif
+                    fetchSideNodes(found, nodes, x, y);
+                    nodes.clear();
+                    #ifdef DEBUG_BUILD
+                    if(found)
+                        LogDebug("Objects are been detected at right");
+                    #endif
+                }
+                #ifdef DEBUG_BUILD
+                else
+                    LogDebug("Right side skipped");
+                #endif
+
+                #ifdef DEBUG_BUILD
+                    LogDebug("FETCH TOP");
+                #endif
+                if( isAllowedSide(wl->data.top_exit, exitCode) )
                 {
                     //Top
                     _search_pos.setX(_current_pos.x());
-                    _search_pos.setY(_current_pos.y()-s->_indexTable.grid());
-                    x=_current_pos.x()+s->_indexTable.grid_half();
-                    y=_current_pos.y()+s->_indexTable.grid_half()-s->_indexTable.grid();
+                    _search_pos.setY(_current_pos.y() - s->_indexTable.grid());
+                    x = _current_pos.x() + s->_indexTable.grid_half();
+                    y = _current_pos.y() + s->_indexTable.grid_half() - s->_indexTable.grid();
                     s->_indexTable.query(x, y, nodes);
+                    #ifdef DEBUG_BUILD
+                    if(nodes.isEmpty())
+                        LogDebug("No nodes at top");
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
+                    #ifdef DEBUG_BUILD
+                    if(found)
+                        LogDebug("Objects are been detected at top");
+                    #endif
                 }
-                if(force || ((wl->data.bottom_exit!=0)&&( (wl->data.bottom_exit==exitCode) || (wl->data.bottom_exit<0))) )
+                #ifdef DEBUG_BUILD
+                else
+                    LogDebug("Top side skipped");
+                #endif
+
+                #ifdef DEBUG_BUILD
+                    LogDebug("FETCH BOTTOM");
+                #endif
+                if( isAllowedSide(wl->data.bottom_exit, exitCode) )
                 {
                     //Bottom
                     _search_pos.setX(_current_pos.x());
-                    _search_pos.setY(_current_pos.y()+s->_indexTable.grid());
-                    x=_current_pos.x()+s->_indexTable.grid_half();
-                    y=_current_pos.y()+s->_indexTable.grid_half()+s->_indexTable.grid();
-                    s->_indexTable.query(x,y, nodes);
+                    _search_pos.setY(_current_pos.y() + s->_indexTable.grid());
+                    x = _current_pos.x() + s->_indexTable.grid_half();
+                    y = _current_pos.y() + s->_indexTable.grid_half() + s->_indexTable.grid();
+                    s->_indexTable.query(x, y, nodes);
+                    #ifdef DEBUG_BUILD
+                    if(nodes.isEmpty())
+                        LogDebug("No nodes at bottom");
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
+                    #ifdef DEBUG_BUILD
+                    if(found)
+                        LogDebug("Objects are been detected at bottom");
+                    #endif
                 }
+                #ifdef DEBUG_BUILD
+                else
+                    LogDebug("Bottom side skipped");
+                #endif
+
                 break;
             }
             force = false; // Reset "force"
@@ -257,4 +365,15 @@ void WldPathOpener::initFetcher()
 void WldPathOpener::setForce()
 {
     force=true;
+}
+
+bool WldPathOpener::isAllowedSide(int SideCode, int ExitCode)
+{
+    if(force)
+        return true;
+    if((ExitCode <= 0) || (SideCode == SIDE_DenyAny))
+        return false;
+    if((SideCode <= SIDE_AllowAny) || (SideCode == ExitCode))
+        return true;
+    return false;
 }

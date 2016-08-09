@@ -37,6 +37,11 @@ public:
     bool processOpener(float tickTime);
     void initFetcher();
     void setForce();
+    enum SideExitCode {
+        SIDE_AllowAny   = -1,
+        SIDE_DenyAny    = 0
+    };
+    bool isAllowedSide(int SideCode, int ExitCode);
 
 private:
     void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, float cx, float cy);

@@ -822,7 +822,7 @@ PlayLevel:
                 {
                     lScene->m_fader.setFade(10, 0.0f, 0.02f);
                     ExitCode = lScene->exec();
-                    _game_state._recent_ExitCode_level=ExitCode;
+                    _game_state._recent_ExitCode_level = ExitCode;
                 }
 
                 if(!sceneResult)
