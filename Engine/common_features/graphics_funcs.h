@@ -96,6 +96,7 @@ public:
     static bool getImageMetrics(QString imageFile, PGE_Size *imgSize);
     static void getMakedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize=0);
     static QImage convertToGLFormat(const QImage &img);//Taken from QGLWidget
+    static bool setWindowIcon(SDL_Window*window, FIBITMAP *img, int iconSize);
 };
 
 #endif // GRAPHICS_FUNCS_H

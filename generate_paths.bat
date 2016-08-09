@@ -14,6 +14,8 @@ FOR %%e IN (mingw480_32 mingw491_32 mingw492_32 mingw530_32) DO IF EXIST C:\Qt\T
 :detectGit
 IF EXIST "%ProgramFiles%\Git\cmd" set GIT_PATH=%ProgramFiles%\Git\cmd
 IF EXIST "%ProgramFiles(x86)%\Git\cmd" set GIT_PATH=%ProgramFiles(x86)%\Git\cmd
+IF EXIST "%APPDATA%\Programs\Git\cmd" set GIT_PATH=%APPDATA%\Programs\Git\cmd
+IF EXIST "%LOCALAPPDATA%\Programs\Git\cmd" set GIT_PATH=%LOCALAPPDATA%\Programs\Git\cmd
 
 echo @echo off > _paths.bat
 echo rem =============================================================================================== >> _paths.bat

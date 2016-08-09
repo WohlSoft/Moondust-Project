@@ -145,6 +145,25 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
 
     GraphicsHelps::initFreeImage();
 
+#ifdef _WIN32
+    FIBITMAP* img[2];
+    img[0] = GraphicsHelps::loadImageRC(":/icon/cat_16.png");
+    img[1] = GraphicsHelps::loadImageRC(":/icon/cat_32.png");
+    if(!GraphicsHelps::setWindowIcon(window, img[0], 16))
+    {
+                        //% "Unable to setup window icon!"
+        printSDLWarn( qtTrId("WINDOW_ICON_INIT_ERROR") );
+        SDL_ClearError();
+    }
+    if(!GraphicsHelps::setWindowIcon(window, img[1], 32))
+    {
+                //% "Unable to setup window icon!"
+        printSDLWarn( qtTrId("WINDOW_ICON_INIT_ERROR") );
+        SDL_ClearError();
+    }
+    GraphicsHelps::closeImage(img[0]);
+    GraphicsHelps::closeImage(img[1]);
+#else//IF _WIN32
     FIBITMAP* img;
     #ifdef Q_OS_MACX
     img = GraphicsHelps::loadImageRC(":/icon/cat_256.png");
@@ -164,6 +183,7 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
             SDL_ClearError();
         }
     }
+#endif//IF _WIN32 #else
     IsInit=true;
 
     //Init OpenGL (to work with textures, OpenGL should be load)
