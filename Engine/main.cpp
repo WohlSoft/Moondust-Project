@@ -166,9 +166,6 @@ int main(int argc, char *argv[])
     //Init system paths
     AppPathManager::initAppPath();
 
-    PGE_Translator translator;
-    translator.init(&a);
-
     foreach(QString arg, a.arguments())
     {
         if(arg=="--install")
@@ -193,10 +190,12 @@ int main(int argc, char *argv[])
 
     //Init log writer
     LoadLogSettings();
-
     LogDebug("<Application started>");
 
-    QString             configPath  ="";
+    PGE_Translator translator;
+    translator.init(&a);
+
+    QString             configPath  = "";
     QString             fileToOpen  = "";
     EpisodeState        _game_state;
     PlayEpisodeResult   episode;

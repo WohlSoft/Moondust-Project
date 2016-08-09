@@ -19,6 +19,7 @@
 #include <QApplication>
 #include "translator.h"
 #include "app_path.h"
+#include "logger.h"
 
 PGE_Translator::PGE_Translator()
 {}
@@ -31,12 +32,17 @@ void PGE_Translator::init(QApplication *app)
     m_langPath = ApplicationPath;
     m_langPath.append("/languages");
 
+    LogDebug( "Initializing translator in the path: " + m_langPath );
+
     m_currLang = defaultLocale;
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
 
     bool ok = m_translator.load(m_langPath + QString("/engine_%1.qm").arg(m_currLang));
              //WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
+
+    LogDebug( "Locale detected: " + m_currLang );
+
     if(ok)
        app->installTranslator(&m_translator);
     else
@@ -51,9 +57,7 @@ void PGE_Translator::init(QApplication *app)
     //qDebug() << "Common Translation: " << ok;
 
     ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-            //WriteToLog(QtDebugMsg, QString("Qt Translation: %1").arg((int)ok));
     if(ok)
        app->installTranslator(&m_translatorQt);
-    //qDebug() << "Qt Translation: " << ok;
 }
 
