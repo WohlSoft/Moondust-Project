@@ -754,12 +754,13 @@ void WorldScene::update()
 
     if(controls_1.jump || controls_1.alt_jump)
     {
-        if((!m_doExit)&&(!lock_controls) && (!isPauseMenu) && (gameState))
+        if( (!m_doExit) && (!lock_controls) && (!isPauseMenu) && (gameState))
         {
             if(!gameState->LevelFile.isEmpty())
             {
-                gameState->game_state.worldPosX=posX;
-                gameState->game_state.worldPosY=posY;
+                LogDebug(QString("Entering level %1...").arg(gameState->LevelFile));
+                gameState->game_state.worldPosX = posX;
+                gameState->game_state.worldPosY = posY;
                 saveElementsVisibility();
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
                 stopMusic(true, 300);
@@ -768,6 +769,7 @@ void WorldScene::update()
             }
             else if(jumpTo)
             {
+                LogDebug(QString("Trying to jump to X=%1, Y=%2...").arg(jumpToXY.x()).arg(jumpToXY.y()));
                 //Don't inheret exit code when going through warps!
                 gameState->_recent_ExitCode_level = LvlExit::EXIT_Warp;
 
@@ -875,14 +877,17 @@ void WorldScene::updateCenter()
     }
 
     levelTitle.clear();
-    jumpTo=false;
+    jumpTo = false;
 
     QVector<WorldNode* > nodes;
-    long px=posX+_indexTable.grid_half();
-    long py=posY+_indexTable.grid_half();
+    long px = posX + _indexTable.grid_half();
+    long py = posY + _indexTable.grid_half();
     _indexTable.query(px, py, nodes);
     foreach (WorldNode* x, nodes)
     {
+        //Skip uncollided elements!
+        if(!x->collidePoint(px, py))
+            continue;
         /*************MusicBox***************/
         if(x->type==WorldNode::musicbox)
         {
@@ -902,6 +907,7 @@ void WorldScene::updateCenter()
         /*************MusicBox***************/
 
         /*************Level Point***************/
+        else
         if(x->type==WorldNode::level)
         {
             WldLevelItem *y = dynamic_cast<WldLevelItem*>(x);
@@ -910,10 +916,12 @@ void WorldScene::updateCenter()
                 levelTitle = y->data.title;
                 if(!y->data.lvlfile.isEmpty())
                 {
-                    QString lvlPath=data.meta.path+"/"+y->data.lvlfile;
+                    QString lvlPath = data.meta.path+"/"+y->data.lvlfile;
+                    LogDebug(QString("Trying to check level path %1...").arg(lvlPath));
                     LevelData head;
                     if( FileFormats::OpenLevelFileHeader(lvlPath, head) )
                     {
+                        LogDebug(QString("FOUND!"));
                         if(!y->data.title.isEmpty())
                         {
                             levelTitle = y->data.title;
@@ -932,11 +940,17 @@ void WorldScene::updateCenter()
                             gameState->LevelFile = lvlPath;
                             gameState->LevelTargetWarp = y->data.entertowarp;
                         }
+                    } else {
+                        LogDebug(QString("FAILED: %1, line %2, data %3")
+                                 .arg(head.meta.ERROR_info)
+                                 .arg(head.meta.ERROR_linenum)
+                                 .arg(head.meta.ERROR_linedata));
                     }
                 }
                 else
                 {
-                    if( (y->data.gotox!=-1)&&(y->data.gotoy!=-1))
+                    LogDebug(QString("Checking for a warp coordinates..."));
+                    if( (y->data.gotox != -1) && (y->data.gotoy != -1))
                     {
                         jumpToXY.setX(y->data.gotox);
                         jumpToXY.setY(y->data.gotoy);
