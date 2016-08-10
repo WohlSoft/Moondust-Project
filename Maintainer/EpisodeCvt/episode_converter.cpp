@@ -55,6 +55,35 @@ bool EpisodeConverterWorker::initJob(QString path, bool recursive, int targetFor
     return true;
 }
 
+static bool preparePath(QDir &episode, QString &relDirPath, QString &inPath, QString &backupTo, bool doBackup)
+{
+    relDirPath = episode.relativeFilePath( inPath );
+    int idx = relDirPath.lastIndexOf('/');
+    if(idx >= 0)
+        relDirPath.remove(idx, relDirPath.size()-idx);
+    else
+        relDirPath.clear();
+
+    bool ret = relDirPath.startsWith("pge_maintainer_backup-", Qt::CaseInsensitive);
+
+    if(!ret && doBackup)
+    {
+        qDebug() << "Make backup";
+        QFileInfo oldFile(inPath);
+        episode.mkpath(backupTo + "/" + relDirPath);
+        QFile::copy(inPath, backupTo+"/" + relDirPath + "/" + oldFile.fileName() );
+    }
+    return ret;
+}
+
+static void renameExtension(QString &str, QString into)
+{
+    int dot = str.lastIndexOf('.');
+    if(dot==-1)
+        str.append(into);
+    str.replace(dot, str.size()-dot, into);
+}
+
 bool EpisodeConverterWorker::runJob()
 {
     m_jobRunning = true;
@@ -74,37 +103,16 @@ bool EpisodeConverterWorker::runJob()
         for(int i=0; i<m_episodeBox.d.size(); i++)
         {
             EpisodeBox_level& lvl = m_episodeBox.d[i];
-            qDebug() << "open level" << lvl.fPath;
-            QString relDirPath = m_episode.relativeFilePath( lvl.fPath );
-            int idx = relDirPath.lastIndexOf('/');
-            if(idx >= 0)
-                relDirPath.remove(idx, relDirPath.size()-idx);
-            else
-                relDirPath.clear();
-
-            if(relDirPath.startsWith("pge_maintainer_backup-", Qt::CaseInsensitive))
-                continue;
-
-            qDebug() << "Will be processed";
-
-            if(m_doBackup)
-            {
-                qDebug() << "Make backup";
-                QFileInfo oldFile(lvl.fPath);
-                m_episode.mkpath(BackupDirectory + "/" + relDirPath);
-                QFile::copy(lvl.fPath, BackupDirectory+"/" + relDirPath + "/" + oldFile.fileName() );
-            }
+            QString relDirPath;
             QString oldPath = lvl.fPath;
-
+            if(preparePath(m_episode, relDirPath, lvl.fPath, BackupDirectory, m_doBackup))
+                continue;
             switch(m_targetFormat)
             {
             case 0://PGE-X
                 qDebug() << "Make LVLX";
                 lvl.ftype = EpisodeBox_level::F_LVLX;
-                if(lvl.fPath.endsWith(".lvl", Qt::CaseInsensitive))
-                    lvl.fPath.append("x");
-                else if(!lvl.fPath.endsWith(".lvlx", Qt::CaseInsensitive))
-                    lvl.fPath.append(".lvlx");
+                renameExtension(lvl.fPath, ".lvlx");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_PGEX))
                     throw(FileFormats::errorString);
                 break;
@@ -112,20 +120,14 @@ bool EpisodeConverterWorker::runJob()
                 qDebug() << "Make LVL SMBX" << lvl.ftypeVer;
                 lvl.ftype = EpisodeBox_level::F_LVL;
                 lvl.ftypeVer = m_targetFormatVer;
-                if(lvl.fPath.endsWith(".lvlx", Qt::CaseInsensitive))
-                    lvl.fPath.remove(lvl.fPath.size()-1, 1);
-                else if(!lvl.fPath.endsWith(".lvl", Qt::CaseInsensitive))
-                    lvl.fPath.append(".lvl");
+                renameExtension(lvl.fPath, ".lvl");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX64, m_targetFormatVer))
                     throw(FileFormats::errorString);
                 break;
             case 2://SMBX-38A
                 qDebug() << "Make LVL SMBX-38a";
                 lvl.ftype = EpisodeBox_level::F_LVL38A;
-                if(lvl.fPath.endsWith(".lvlx", Qt::CaseInsensitive))
-                    lvl.fPath.remove(lvl.fPath.size()-1, 1);
-                else if(!lvl.fPath.endsWith(".lvl", Qt::CaseInsensitive))
-                    lvl.fPath.append(".lvl");
+                renameExtension(lvl.fPath, ".lvl");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX38A))
                     throw(FileFormats::errorString);
                 break;
@@ -133,13 +135,10 @@ bool EpisodeConverterWorker::runJob()
 
             if(oldPath != lvl.fPath)
             {
-                qDebug() << "Rename all levels";
                 m_episodeBox.renameLevel(oldPath, lvl.fPath);
-                qDebug() << "Remove old file";
                 QFile::remove(oldPath);
             }
-
-            qDebug() << "do next";
+            qDebug() << "Successfully!";
             m_currentValue++;
         }
 
@@ -147,14 +146,8 @@ bool EpisodeConverterWorker::runJob()
         {
             EpisodeBox_world& wld = m_episodeBox.dw[i];
             qDebug() << "Open world map" << wld.fPath;
-            QString relDirPath = m_episode.relativeFilePath( wld.fPath );
-            int idx = relDirPath.lastIndexOf('/');
-            if(idx >= 0)
-                relDirPath.remove(idx, relDirPath.size()-idx);
-            else
-                relDirPath.clear();
-
-            if(relDirPath.startsWith("pge_maintainer_backup-", Qt::CaseInsensitive))
+            QString relDirPath;
+            if(preparePath(m_episode, relDirPath, wld.fPath, BackupDirectory, m_doBackup))
                 continue;
 
             qDebug() << "Will be processed";
@@ -173,10 +166,7 @@ bool EpisodeConverterWorker::runJob()
             case 0://PGE-X
                 qDebug() << "Make WLDX";
                 wld.ftype = EpisodeBox_world::F_WLDX;
-                if(wld.fPath.endsWith(".wld", Qt::CaseInsensitive))
-                    wld.fPath.append("x");
-                else if(!wld.fPath.endsWith(".wldx", Qt::CaseInsensitive))
-                    wld.fPath.append(".wldx");
+                renameExtension(wld.fPath, ".wldx");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_PGEX))
                     throw(FileFormats::errorString);
                 break;
@@ -184,20 +174,14 @@ bool EpisodeConverterWorker::runJob()
                 qDebug() << "Make WLD SMBX "<<wld.ftypeVer;
                 wld.ftype = EpisodeBox_world::F_WLD;
                 wld.ftypeVer = m_targetFormatVer;
-                if(wld.fPath.endsWith(".wldx", Qt::CaseInsensitive))
-                    wld.fPath.remove(wld.fPath.size()-1, 1);
-                else if(!wld.fPath.endsWith(".wld", Qt::CaseInsensitive))
-                    wld.fPath.append(".wld");
+                renameExtension(wld.fPath, ".wld");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX64, m_targetFormatVer))
                     throw(FileFormats::errorString);
                 break;
             case 2://SMBX-38A
                 qDebug() << "Make WLD SMBX-38a";
                 wld.ftype = EpisodeBox_world::F_WLD38A;
-                if(wld.fPath.endsWith(".wldx", Qt::CaseInsensitive))
-                    wld.fPath.remove(wld.fPath.size()-1, 1);
-                else if(!wld.fPath.endsWith(".wld", Qt::CaseInsensitive))
-                    wld.fPath.append(".wld");
+                renameExtension(wld.fPath, ".wld");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX38A))
                     throw(FileFormats::errorString);
                 break;
@@ -209,8 +193,7 @@ bool EpisodeConverterWorker::runJob()
                 //m_episodeBox.renameLevel(oldPath, wld.fPath);
                 QFile::remove(oldPath);
             }
-
-            qDebug() << "Process next";
+            qDebug() << "Successfully!";
             m_currentValue++;
         }
 
