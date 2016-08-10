@@ -57,6 +57,7 @@ cp PNG2GIFs "$DeployDir/$PgePrjSD"
 cp LazyFixTool "$DeployDir/$PgePrjSD"
 cp pge_calibrator "$DeployDir/$PgePrjSD"
 cp pge_engine "$DeployDir/$PgePrjSD"
+cp pge_maintainer "$DeployDir/$PgePrjSD"
 cp pge_musplay "$DeployDir/$PgePrjSD"
 
 cp -a *.so* "$DeployDir/$PgePrjSD"

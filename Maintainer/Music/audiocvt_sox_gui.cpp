@@ -144,6 +144,7 @@ void AudioCvt_Sox_gui::start()
     {
         job=CVT_LVL;
         episodeBoxLvl.open(ui->cvt_lvlfile->text());
+        episodeBoxLvl.buildEntriesCache();
         for(int i=0; i<episodeBoxLvl.d.sections.size(); i++)
         {
             if(!episodeBoxLvl.d.sections[i].music_file.isEmpty())
@@ -218,7 +219,7 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
 
 void AudioCvt_Sox_gui::CollectEpisodeData()
 {
-    episodeBox.openEpisode( ui->cvt_episode->text() );
+    episodeBox.openEpisode( ui->cvt_episode->text(), true );
     QDir musicDir( ui->cvt_episode->text() );
     QStringList filters;
     filters //MPEG 1 Layer III (LibMAD)

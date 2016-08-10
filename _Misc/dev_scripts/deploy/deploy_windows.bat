@@ -92,6 +92,7 @@ copy PNG2GIFs.exe "%DeployDir%\%PgePrjSD%"
 copy LazyFixTool.exe "%DeployDir%\%PgePrjSD%"
 copy pge_calibrator.exe "%DeployDir%\%PgePrjSD%"
 copy pge_engine.exe "%DeployDir%\%PgePrjSD%"
+copy pge_maintainer.exe "%DeployDir%\%PgePrjSD%"
 copy pge_musplay.exe "%DeployDir%\%PgePrjSD%"
 
 copy *.dll "%DeployDir%\%PgePrjSD%"
@@ -176,6 +177,7 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\*Readme.txt"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\LazyFixTool.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\PNG2GIFs.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_calibrator.exe"
+SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_maintainer.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
@@ -199,3 +201,4 @@ echo ERROR: 7zip not found: %SEVENZIP%
 echo.
 :exitFrom
 if not "%1"=="nopause" pause
+

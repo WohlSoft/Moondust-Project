@@ -74,7 +74,9 @@ void LogWriter::LoadLogSettings()
 
     logSettings.endGroup();
     qDebug()<< QString("LogLevel %1, log file %2").arg(logLevel).arg(DebugLogFile);
+    #ifndef DEBUG_BUILD
     qInstallMessageHandler(logMessageHandler);
+    #endif
 }
 
 void LogWriter::WriteToLog(QtMsgType type, QString msg)

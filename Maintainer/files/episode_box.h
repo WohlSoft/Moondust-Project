@@ -19,29 +19,44 @@ public:
         F_LVL38A=2
     };
     fType ftype;
+    int   ftypeVer;
     LevelData d;
     QString fPath;
     bool m_wasOverwritten;
+    void buildEntriesCache();
     QList<MusicField> music_entries;
+    QList<MusicField> level_entries;
     EpisodeBox_level();
     EpisodeBox_level(const EpisodeBox_level&e);
     ~EpisodeBox_level();
     bool open(QString filePath);
     bool renameMusic(QString oldMus, QString newMus);
+    bool renameLevel(QString oldLvl, QString newLvl);
     void save();
 };
 
 class EpisodeBox_world{
 public:
+    enum fType{
+        F_NONE = -1,
+        F_WLD = 0,
+        F_WLDX = 1,
+        F_WLD38A = 2
+    };
+    fType ftype;
+    int   ftypeVer;
     WorldData d;
     QString fPath;
     bool m_wasOverwritten;
+    void buildEntriesCache();
     QList<MusicField> music_entries;
+    QList<MusicField> level_entries;
     EpisodeBox_world();
     EpisodeBox_world(const EpisodeBox_world&w);
     ~EpisodeBox_world();
     bool open(QString filePath);
     bool renameMusic(QString oldMus, QString newMus);
+    bool renameLevel(QString oldLvl, QString newLvl);
     void save();
 };
 
@@ -49,10 +64,12 @@ class EpisodeBox{
 public:
     EpisodeBox();
     ~EpisodeBox();
-    void openEpisode(QString dirPath);
+    void openEpisode(QString dirPath, bool recursive);
     void renameMusic(QString oldMus, QString newMus);
+    void renameLevel(QString oldLvl, QString newLvl);
     long overwrittenLevels();
     long overwrittenWorlds();
+    int  totalElements();
     QString epPath;
     QList<EpisodeBox_level> d;
     QList<EpisodeBox_world> dw;

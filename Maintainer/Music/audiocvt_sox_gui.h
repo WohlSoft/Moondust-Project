@@ -70,7 +70,7 @@ private:
 
     EpisodeBox        episodeBox;
     EpisodeBox_level  episodeBoxLvl;
-    EpisodeBox_level  episodeBoxWld;
+    EpisodeBox_world  episodeBoxWld;
 
     //statistics
     void resetStat();

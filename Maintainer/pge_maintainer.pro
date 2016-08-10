@@ -33,8 +33,10 @@ INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 TARGET = pge_maintainer
 TEMPLATE = app
 
-include($$PWD/../_common/strip_garbage.pri)
+debug: DEFINES += DEBUG_BUILD
 
+
+include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 
 SOURCES += main.cpp\

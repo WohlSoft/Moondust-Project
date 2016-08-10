@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
+    <width>449</width>
     <height>273</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@ Supported formats:
     <widget class="QLineEdit" name="episodePath"/>
    </item>
    <item row="1" column="5">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="browse">
      <property name="text">
       <string>Browse...</string>
      </property>
