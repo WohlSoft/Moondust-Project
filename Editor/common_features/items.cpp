@@ -56,12 +56,12 @@ inline void TPL_getItemGFX(const OBJ_ITEM *inObj, QPixmap &outImg, bool &whole, 
     if(inObj->isValid)
     {
         const QPixmap *srcImage = inObj->cur_image ? inObj->cur_image : &inObj->image;
-        if( (!whole) && (inObj->animated) )
+        if( (!whole) && (inObj->setup.animated) )
         {
             outImg =  srcImage->copy(0,
-                                    (int)round(srcImage->height()/inObj->frames) * inObj->display_frame,
+                                    (int)round(srcImage->height()/inObj->setup.frames) * inObj->setup.display_frame,
                                     srcImage->width(),
-                                    (int)round(srcImage->height() / inObj->frames));
+                                    (int)round(srcImage->height() / inObj->setup.frames));
         }
         else
         {

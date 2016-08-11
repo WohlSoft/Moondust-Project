@@ -372,7 +372,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         {
             foreach(LevelBlock y, box->LvlData.blocks)
             {
-                if(y.id == x->id)
+                if(y.id == x->setup.id)
                 {
 
                     QString image;
@@ -381,17 +381,17 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     QString transformTo_image;
                     QString transformTo_mask;
 
-                    image = levelCustomDirectory + "/" + x->image_n;
-                    mask = levelCustomDirectory + "/" + x->mask_n;
-                    transformTo = x->transfororm_on_hit_into;
+                    image = levelCustomDirectory + "/" + x->setup.image_n;
+                    mask = levelCustomDirectory + "/" + x->setup.mask_n;
+                    transformTo = x->setup.transfororm_on_hit_into;
 
                     if(transformTo>0)
                     {
                         obj_block&t=configs.main_block[transformTo];
                         if(t.isValid)
                         {
-                            transformTo_image = levelCustomDirectory + "/" + t.image_n;
-                            transformTo_mask = levelCustomDirectory + "/" + t.mask_n;
+                            transformTo_image = levelCustomDirectory + "/" + t.setup.image_n;
+                            transformTo_mask = levelCustomDirectory + "/" + t.setup.mask_n;
                         }
                     }
 

@@ -70,15 +70,15 @@ void LvlScene::buildAnimators()
                          ((t_block.cur_image->isNull())?
                                 m_dummyBlockImg:
                                 *t_block.cur_image),
-                                t_block.animated,
-                                t_block.frames,
-                                t_block.framespeed, 0, -1,
-                                t_block.animation_rev,
-                                t_block.animation_bid
+                                t_block.setup.animated,
+                                t_block.setup.frames,
+                                t_block.setup.framespeed, 0, -1,
+                                t_block.setup.animation_rev,
+                                t_block.setup.animation_bid
                               );
 
-        if(!t_block.frame_sequence.isEmpty())
-            aniBlock->setFrameSequance(t_block.frame_sequence);
+        if(!t_block.setup.frame_sequence.isEmpty())
+            aniBlock->setFrameSequance(t_block.setup.frame_sequence);
 
         m_animatorsBlocks.push_back( aniBlock );
         m_animationTimer.registerAnimation( aniBlock );

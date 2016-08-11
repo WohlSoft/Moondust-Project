@@ -158,8 +158,8 @@ QString CustomCounterGUI::makeItemName(long item)
                 return QString("Block-%1").arg(item);
             else
             {
-                if(!t_block.name.isEmpty())
-                    return t_block.name + QString(" (Block-%1)").arg(item);
+                if(!t_block.setup.name.isEmpty())
+                    return t_block.setup.name + QString(" (Block-%1)").arg(item);
                 else
                     return QString("Block-%1").arg(item);
             }

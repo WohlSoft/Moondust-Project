@@ -102,7 +102,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 blockC.image = m_dummyBlockImg;
             }
 
-            LvlPlacingItems::gridSz=blockC.grid;
+            LvlPlacingItems::gridSz=blockC.setup.grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
             if( (itemID != LvlPlacingItems::blockSet.id) || (m_placingItemType!=PLC_Block) )
@@ -116,7 +116,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             m_placingItemType=PLC_Block;
 
             //Place sizable blocks in the square fill mode
-            if(blockC.sizable)
+            if(blockC.setup.sizable)
             {
                 LvlPlacingItems::sizableBlock=true;
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
@@ -137,7 +137,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 flag.second=QString::number(LvlPlacingItems::blockSet.id);
             LvlPlacingItems::flags.push_back(flag);
 
-            if(blockC.sizable)
+            if(blockC.setup.sizable)
             {
                 flag.first=ITEM_BLOCK_IS_SIZABLE;
                 flag.second = "sizable";
@@ -145,7 +145,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
 
                 flag.first = ITEM_BLOCK_SHAPE;
-                flag.second = QString::number(blockC.phys_shape);
+                flag.second = QString::number(blockC.setup.phys_shape);
             LvlPlacingItems::flags.push_back(flag);
 
                 flag.first = ITEM_WIDTH;

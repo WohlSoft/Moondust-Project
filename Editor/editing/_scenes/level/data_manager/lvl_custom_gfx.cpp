@@ -191,21 +191,21 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bool custom=false;
 
-        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->id)+".ini", true);
+        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->id)+".txt", true);
+            CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
             custom=true;
         }
 
-        QString CustomFile=uLVL.getCustomFile(t_block.image_n, true);
+        QString CustomFile=uLVL.getCustomFile(t_block.setup.image_n, true);
         if(!CustomFile.isEmpty())
         {
             if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uLVL.getCustomFile(t_block.mask_n, false);
+                QString CustomMask = uLVL.getCustomFile(t_block.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomFile);
@@ -223,15 +223,15 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         SimpleAnimator * aniBlock = new SimpleAnimator(
                     ((t_block.cur_image->isNull())?
                             m_dummyBlockImg : *t_block.cur_image),
-                              t_block.animated,
-                              t_block.frames,
-                              t_block.framespeed, 0, -1,
-                              t_block.animation_rev,
-                              t_block.animation_bid
+                              t_block.setup.animated,
+                              t_block.setup.frames,
+                              t_block.setup.framespeed, 0, -1,
+                              t_block.setup.animation_rev,
+                              t_block.setup.animation_bid
                               );
 
-        if(!t_block.frame_sequence.isEmpty())
-            aniBlock->setFrameSequance(t_block.frame_sequence);
+        if(!t_block.setup.frame_sequence.isEmpty())
+            aniBlock->setFrameSequance(t_block.setup.frame_sequence);
 
         t_block.animator_id = m_animatorsBlocks.size();
         m_animatorsBlocks.push_back( aniBlock );
@@ -479,7 +479,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
         return m_dummyNpcImg;
     }
 
-    if(Direction<=0)
+    if(Direction <= 0)
     {
         int frame=0;
         if(merged.setup.custom_animate)

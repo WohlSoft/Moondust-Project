@@ -220,6 +220,7 @@ public:
 
     /*****Level blocks************/
     static bool loadLevelBlocks();
+    static bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, QSettings *setup);
     static long getBlockTexture(long blockID);
     /*****************************/
     static PGE_DataArray<obj_block>   lvl_block_indexes;
@@ -364,7 +365,6 @@ public:
     static QString PathSound();
 
     static QString clearMusTrack(QString path);
-
 private:
     static void checkForImage(QString &imgPath, QString root);
 

@@ -184,8 +184,8 @@ void LevelScene::toggleSwitch(int switch_id)
     {
         QList<LVL_Block*> &list = switch_blocks[switch_id];
         for(int x=0;x<list.size();x++) {
-            if((list[x]->setup->switch_Block)&&(list[x]->setup->switch_ID==switch_id)) {
-                list[x]->transformTo(list[x]->setup->switch_transform, 2);
+            if((list[x]->setup->setup.switch_Block)&&(list[x]->setup->setup.switch_ID==switch_id)) {
+                list[x]->transformTo(list[x]->setup->setup.switch_transform, 2);
             } else {
                 list.removeAt(x); x--; //Remove blocks which are not fits into specific Switch-ID
             }

@@ -178,9 +178,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             obj_block &blockItem = (*array)[i];
             QPixmap tmpI;
             Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
-            QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
+            QListWidgetItem* item = new QListWidgetItem( blockItem.setup.name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number( blockItem.id ) );
+            item->setData(3, QString::number( blockItem.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Block->addItem(item);
         }
@@ -414,9 +414,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 obj_block &block=*(scene_lvl->m_customBlocks[i]);
                 Items::getItemGFX(&block, tmpI, false, QSize(16,16));
-                item = new QListWidgetItem( block.name );
+                item = new QListWidgetItem( block.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(block.id) );
+                item->setData(3, QString::number(block.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_Block->addItem( item );
@@ -432,7 +432,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             //Add Group
             needToAdd = true;
-            if( blockItem.group.isEmpty() )
+            if( blockItem.setup.group.isEmpty() )
             {
                 needToAdd=false;
             } //Skip empty values
@@ -441,7 +441,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach( QString grp, tmpGrpList )
                 {
-                    if(blockItem.group == grp)
+                    if(blockItem.setup.group == grp)
                     {
                         needToAdd=false; break;
                     }
@@ -449,12 +449,12 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             }
             if(needToAdd)
             {
-                tmpGrpList.push_back(blockItem.group);
+                tmpGrpList.push_back(blockItem.setup.group);
             }
 
             //Add category
             needToAdd = true;
-            if( (blockItem.group != grp_blocks) && (grp_blocks != allLabel) )
+            if( (blockItem.setup.group != grp_blocks) && (grp_blocks != allLabel) )
             {
                 needToAdd=false;
             }
@@ -462,7 +462,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach( QString cat, tmpList )
                 {
-                    if( blockItem.category == cat )
+                    if( blockItem.setup.category == cat )
                     {
                         needToAdd=false; break;
                     }
@@ -471,18 +471,18 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             if(needToAdd)
             {
-                tmpList.push_back(blockItem.category);
+                tmpList.push_back(blockItem.setup.category);
             }
 
             if(
-                ( (blockItem.group == grp_blocks) || ( grp_blocks == allLabel) || (grp_blocks == "") )&&
-                ( (blockItem.category == cat_blocks) || ( cat_blocks == allLabel) )
+                ( (blockItem.setup.group == grp_blocks) || ( grp_blocks == allLabel) || (grp_blocks == "") )&&
+                ( (blockItem.setup.category == cat_blocks) || ( cat_blocks == allLabel) )
               )
             {
                 Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
-                item = new QListWidgetItem( blockItem.name );
+                item = new QListWidgetItem( blockItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(blockItem.id) );
+                item->setData(3, QString::number(blockItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_Block->addItem( item );

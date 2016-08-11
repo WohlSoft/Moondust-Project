@@ -37,8 +37,8 @@ long  ConfigManager::getBlockTexture(long blockID)
     }
     else
     {
-        QString imgFile = Dir_Blocks.getCustomFile(blkSetup->image_n);
-        QString maskFile = Dir_Blocks.getCustomFile(blkSetup->mask_n);
+        QString imgFile = Dir_Blocks.getCustomFile(blkSetup->setup.image_n);
+        QString maskFile = Dir_Blocks.getCustomFile(blkSetup->setup.mask_n);
 
         long id = level_textures.size();
         blkSetup->textureArrayId = id;
@@ -56,35 +56,34 @@ long  ConfigManager::getBlockTexture(long blockID)
         blkSetup->isInit = true;
 
         //Also, load and init animator
-        if(blkSetup->animated)
+        if(blkSetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast  = -1;
-
-            switch(blkSetup->algorithm)
-            {
-                case 1: // Invisible block
-                {
-                    frameFirst = 0;
-                    frameLast = 0;
-                    break;
-                }
-                default: //Default block
-                {
-                    frameFirst = 0;
-                    frameLast = -1;
-                    break;
-                }
-            }
+            //switch(blkSetup->setup.algorithm)
+            //{
+            //    case 1: // Invisible block
+            //    {
+            //        frameFirst = 0;
+            //        frameLast = 0;
+            //        break;
+            //    }
+            //    default: //Default block
+            //    {
+            //        frameFirst = 0;
+            //        frameLast = -1;
+            //        break;
+            //    }
+            //}
 
             SimpleAnimator animator(
                             true,
-                            blkSetup->frames,
-                            blkSetup->framespeed,
+                            blkSetup->setup.frames,
+                            blkSetup->setup.framespeed,
                             frameFirst,
                             frameLast,
-                            blkSetup->animation_rev,
-                            blkSetup->animation_bid
+                            blkSetup->setup.animation_rev,
+                            blkSetup->setup.animation_bid
                         );
 
             Animator_Blocks.push_back(animator);

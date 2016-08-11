@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
+#ifndef CONFIG_NPC_H
+#define CONFIG_NPC_H
+
 #include <QString>
 #include <QList>
 #include <QSize>
@@ -260,3 +264,5 @@ struct NpcSetup
     bool            default_special;
     long            default_special_value;
 };
+
+#endif //CONFIG_NPC_H

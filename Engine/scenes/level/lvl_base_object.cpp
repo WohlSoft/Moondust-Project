@@ -652,19 +652,19 @@ PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &bloc
                 LVL_Block* b = static_cast<LVL_Block*>(blocks[i]);
                 switch(b->shape)
                 {
-                    case LVL_Block::shape_tr_bottom_right:
+                    case LVL_Block::shape_tr_left_top:
                         blockY=nearest->posRect.top()+SL_HeightTopRight(*this, nearest);
                         break;
 
-                    case LVL_Block::shape_tr_bottom_left:
+                    case LVL_Block::shape_tr_right_top:
                         blockY=nearest->posRect.top()+SL_HeightTopLeft(*this, nearest);
                         break;
 
-                    case LVL_Block::shape_tr_top_right:
+                    case LVL_Block::shape_tr_right_bottom:
                         blockY=nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
                         break;
 
-                    case LVL_Block::shape_tr_top_left:
+                    case LVL_Block::shape_tr_left_bottom:
                         blockY=nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         break;
 

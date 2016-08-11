@@ -142,7 +142,7 @@ void LVL_Npc::updateCollisions()
                 LVL_Block *blk= static_cast<LVL_Block*>(nearest);
                 if(blk && (blk->shape!=LVL_Block::shape_rect))
                 {
-                    if(blk->shape==LVL_Block::shape_tr_top_right)
+                    if(blk->shape==LVL_Block::shape_tr_right_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
@@ -150,7 +150,7 @@ void LVL_Npc::updateCollisions()
                         else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
                     }
                     else
-                    if(blk->shape==LVL_Block::shape_tr_top_left)
+                    if(blk->shape==LVL_Block::shape_tr_left_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
@@ -424,7 +424,7 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_bottom[intptr_t(collided)]=collided;//bottom of player
-                        if(blk->setup->lava) kill(DAMAGE_LAVABURN);
+                        if(blk->setup->setup.lava) kill(DAMAGE_LAVABURN);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Top of block";
                         #endif
@@ -439,54 +439,54 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 //*****************************Feet of NPC****************************/
                 if(
                     (( (blk->shape==LVL_Block::shape_rect)||
-                       (blk->shape==LVL_Block::shape_tr_bottom_left)||
-                       (blk->shape==LVL_Block::shape_tr_bottom_right) ) && isCollideFloor(*this, collided))||
-                    ((blk->shape==LVL_Block::shape_tr_top_right)&&isCollideSlopeFloor(*this, collided, SLOPE_RIGHT)) ||
-                    ((blk->shape==LVL_Block::shape_tr_top_left)&&isCollideSlopeFloor(*this, collided, SLOPE_LEFT))
+                       (blk->shape==LVL_Block::shape_tr_right_top)||
+                       (blk->shape==LVL_Block::shape_tr_left_top) ) && isCollideFloor(*this, collided))||
+                    ((blk->shape==LVL_Block::shape_tr_right_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_RIGHT)) ||
+                    ((blk->shape==LVL_Block::shape_tr_left_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_LEFT))
 
                   ){
                     if(blk->isHidden) break;
                     collided_bottom[intptr_t(collided)]=collided;//bottom of NPC
-                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
+                    if(blk->setup->setup.lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Head of NPC****************************/
                 else if(
                         (( (blk->shape==LVL_Block::shape_rect)||
-                            (blk->shape==LVL_Block::shape_tr_top_left)||
-                            (blk->shape==LVL_Block::shape_tr_top_right)) &&
+                            (blk->shape==LVL_Block::shape_tr_left_bottom)||
+                            (blk->shape==LVL_Block::shape_tr_right_bottom)) &&
                             isCollideCelling(*this, collided, _heightDelta, forceCollideCenter))||
-                        ((blk->shape==LVL_Block::shape_tr_bottom_right)&&isCollideSlopeCelling(*this, collided, SLOPE_RIGHT)) ||
-                        ((blk->shape==LVL_Block::shape_tr_bottom_left)&&isCollideSlopeCelling(*this, collided, SLOPE_LEFT))
+                        ((blk->shape==LVL_Block::shape_tr_left_top)&&isCollideSlopeCelling(*this, collided, SLOPE_RIGHT)) ||
+                        ((blk->shape==LVL_Block::shape_tr_right_top)&&isCollideSlopeCelling(*this, collided, SLOPE_LEFT))
                        )
                 {
                     collided_top[intptr_t(collided)]=collided;//top of NPC
-                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
+                    if(blk->setup->setup.lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==-2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Left****************************/
                 else if( (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
-                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_top_left)
+                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_bottom)
                           &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopRight(*this, collided)+1.0)))||
-                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_bottom_left)
+                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_top)
                           &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopRight(*this, collided)-1.0))) )
                 {
                     if(blk->isHidden) break;
                     collided_left[intptr_t(collided)]=collided;//right of NPC
-                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
+                    if(blk->setup->setup.lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Right****************************/
                 else if( (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
-                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_top_right)
+                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_bottom)
                          &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopLeft(*this, collided)+1.0)))||
-                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_bottom_right)
+                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_top)
                          &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopLeft(*this, collided)-1.0)))
                        )
                 {
                     if(blk->isHidden) break;
                     collided_right[intptr_t(collided)]=collided;//left of NPC
-                    if(blk->setup->lava) kill(DAMAGE_LAVABURN);
+                    if(blk->setup->setup.lava) kill(DAMAGE_LAVABURN);
                     //else if(blk->setup->danger==1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                 }
 

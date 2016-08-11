@@ -605,10 +605,10 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
     if(mergedSet)
     {
         m_localProps = (*mergedSet);
-        m_sizable = m_localProps.sizable;
-        m_gridSize = m_localProps.grid;
+        m_sizable = m_localProps.setup.sizable;
+        m_gridSize = m_localProps.setup.grid;
 
-        if(m_localProps.sizable)
+        if(m_localProps.setup.sizable)
         {
             setZValue( m_scene->Z_blockSizable + ((double)m_data.y/(double)100000000000)
                      + 1 - ((double)m_data.w * (double)0.0000000000000001) ); // applay sizable block Z
@@ -617,14 +617,14 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         }
         else
         {
-            if(m_localProps.view==1)
+            if(m_localProps.setup.view==1)
                 setZValue(m_scene->Z_BlockFore); // applay lava block Z
             else
                 setZValue(m_scene->Z_Block); // applay standart block Z
 
             setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
         }
-        setData(ITEM_BLOCK_SHAPE, m_localProps.phys_shape);
+        setData(ITEM_BLOCK_SHAPE, m_localProps.setup.phys_shape);
     }
 
     if(animator)

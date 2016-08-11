@@ -118,11 +118,11 @@ void LVL_Block::transformTo_x(long id)
         newSetup = &ConfigManager::lvl_block_indexes[int(id)];
 
         //Remove registration of switch block
-        if(setup->switch_Block &&
-                ( ((setup->switch_ID != newSetup->switch_ID) && (newSetup->switch_Block)) || (!newSetup->switch_Block) ) )
+        if(setup->setup.switch_Block &&
+                ( ((setup->setup.switch_ID != newSetup->setup.switch_ID) && (newSetup->setup.switch_Block)) || (!newSetup->setup.switch_Block) ) )
         {
-            if(_scene->switch_blocks.contains(setup->switch_ID))
-                _scene->switch_blocks[setup->switch_ID].removeAll(this);
+            if(_scene->switch_blocks.contains(setup->setup.switch_ID))
+                _scene->switch_blocks[setup->setup.switch_ID].removeAll(this);
         }
         transformedFromBlockID = int(data.id);//Remember transform source
     } else
@@ -131,7 +131,7 @@ void LVL_Block::transformTo_x(long id)
 
     setup = newSetup;
 
-    if(setup->sizable)
+    if(setup->setup.sizable)
     {
         z_index = LevelScene::Z_blockSizable +
                 (static_cast<long double>(data.y)/1000000000.0L) + 1 -
@@ -140,7 +140,7 @@ void LVL_Block::transformTo_x(long id)
     else
     {
 
-        if(setup->view==1)
+        if(setup->setup.view==1)
             z_index = LevelScene::Z_BlockFore;
         else
             z_index = LevelScene::Z_Block;
@@ -150,22 +150,22 @@ void LVL_Block::transformTo_x(long id)
             _scene->zCounter=0.0L;
     }
 
-    bool do_init_player_switch=((setup->animator_ID==0)&&(setup->plSwitch_Button));
-    bool do_init_player_filter=((setup->animator_ID==0)&&(setup->plFilter_Block));
+    bool do_init_player_switch=((setup->animator_ID==0)&&(setup->setup.plSwitch_Button));
+    bool do_init_player_filter=((setup->animator_ID==0)&&(setup->setup.plFilter_Block));
 
     long tID = ConfigManager::getBlockTexture(int(data.id));
     if( tID >= 0 )
     {
         texId = ConfigManager::level_textures[int(tID)].texture;
         texture = ConfigManager::level_textures[int(tID)];
-        animated = setup->animated;
+        animated = setup->setup.animated;
         animator_ID = setup->animator_ID;
     }
 
-    if(!setup->sizable)
+    if(!setup->setup.sizable)
     {
         data.w = texture.w;
-        data.h = (unsigned(texture.h)/setup->frames);
+        data.h = (unsigned(texture.h)/setup->setup.frames);
     }
 
     if(!_isInited)
@@ -174,42 +174,42 @@ void LVL_Block::transformTo_x(long id)
     }
     setSize(data.w, data.h);
 
-    sizable = setup->sizable;
+    sizable = setup->setup.sizable;
     isHidden = data.invisible;
     collide_player = COLLISION_ANY;
     slippery_surface = data.slippery;
-    if((setup->sizable) || (setup->collision==2))
+    if((setup->setup.sizable) || (setup->setup.collision==2))
     {
         collide_player = COLLISION_TOP;
     }
     else
-    if(setup->collision==0)
+    if(setup->setup.collision==0)
     {
         collide_player = COLLISION_NONE;
     }
 
-    this->shape = setup->phys_shape;
-    if(shape==shape_tr_top_right)
+    this->shape = setup->setup.phys_shape;
+    if(shape==shape_tr_right_bottom)
         shape_slope_angle_ratio=-(height()/width());
-    if(shape==shape_tr_top_left)
+    if(shape==shape_tr_left_bottom)
         shape_slope_angle_ratio=(height()/width());
-    if(shape==shape_tr_bottom_right)
+    if(shape==shape_tr_left_top)
         shape_slope_angle_ratio=(height()/width());
-    if(shape==shape_tr_bottom_left)
+    if(shape==shape_tr_right_top)
         shape_slope_angle_ratio=-(height()/width());
 
-    isRectangle=(setup->phys_shape==0);
-    if(setup->algorithm==3)
-         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
+    isRectangle=(setup->setup.phys_shape == 0);
+//    if(setup->setup.algorithm==3)
+//         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
     // Register switch block
-    if(setup->switch_Block)
+    if(setup->setup.switch_Block)
     {
-        if(!_scene->switch_blocks.contains(setup->switch_ID) )
-            _scene->switch_blocks[setup->switch_ID].clear();
-        _scene->switch_blocks[setup->switch_ID].push_back(this);
+        if(!_scene->switch_blocks.contains(setup->setup.switch_ID) )
+            _scene->switch_blocks[setup->setup.switch_ID].clear();
+        _scene->switch_blocks[setup->setup.switch_ID].push_back(this);
         //Fill switch states until it will be fited to defined SwitchID
-        while( _scene->switch_states.size() <= setup->switch_ID )
+        while( _scene->switch_states.size() <= setup->setup.switch_ID )
             _scene->switch_states.push_back(false);
     }
 
@@ -474,7 +474,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     bool doFade=false, triggerEvent=false, playHitSnd=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
-    if((setup->destroyable)&&(data.npc_id==0))
+    if((setup->setup.destroyable)&&(data.npc_id==0))
     {
         destroy( true );
         return;
@@ -488,10 +488,10 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin);
         data.npc_id++;
         doFade=true;
-        if((!setup->bounce)&&(!setup->switch_Button))
+        if((!setup->setup.bounce)&&(!setup->setup.switch_Button))
         {
             if(data.npc_id==0)
-                transformTo(long(setup->transfororm_on_hit_into), 2);
+                transformTo(long(setup->setup.transfororm_on_hit_into), 2);
         }
 
         if(!_scene->player_states.isEmpty())
@@ -564,9 +564,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                 PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
 
             doFade=true;
-            if((!setup->bounce)&&(!setup->switch_Button))
+            if((!setup->setup.bounce)&&(!setup->setup.switch_Button))
             {
-                transformTo(long(setup->transfororm_on_hit_into), 2);
+                transformTo(long(setup->setup.transfororm_on_hit_into), 2);
             }
 
             LevelNPC npcDef = FileFormats::CreateLvlNpc();
@@ -599,23 +599,23 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         }
     }
 
-    if(setup->switch_Button)
+    if(setup->setup.switch_Button)
     {
         triggerEvent=true;
-        _scene->toggleSwitch(setup->switch_ID);
+        _scene->toggleSwitch(setup->setup.switch_ID);
     }
 
-    if(setup->hitable)
+    if(setup->setup.hitable)
     {
         triggerEvent=true;
-        transformTo(long(setup->spawn_obj_id), setup->spawn_obj);
+        transformTo(long(setup->setup.spawn_obj_id), setup->setup.spawn_obj);
         doFade = true;
         playHitSnd=!destroyed;
     }
 
-    if(playHitSnd && (setup->hit_sound_id>0))
+    if(playHitSnd && (setup->setup.hit_sound_id>0))
     {
-        PGE_Audio::playSound(setup->hit_sound_id);
+        PGE_Audio::playSound(setup->setup.hit_sound_id);
     }
 
     if(triggerEvent && (!data.event_hit.isEmpty()))
@@ -645,10 +645,10 @@ void LVL_Block::destroy(bool playEffect)
 {
     if( playEffect )
     {
-        if( setup->destroy_sound_id == 0 )
+        if( setup->setup.destroy_sound_id == 0 )
             PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         else
-            PGE_Audio::playSound(setup->destroy_sound_id);
+            PGE_Audio::playSound(setup->setup.destroy_sound_id);
 
         Scene_Effect_Phys p;
         p.decelerate_x = 1.5f;

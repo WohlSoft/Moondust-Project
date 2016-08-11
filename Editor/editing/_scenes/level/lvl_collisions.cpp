@@ -193,10 +193,10 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
                            (it->data(ITEM_TYPE).toString()=="Block")//Don't collide NPC's with triangle blocks
                            &&
                             (
-                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_bottom_left)||
-                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_bottom_right)||
-                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_top_left)||
-                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_top_right)
+                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_right_top)||
+                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_left_bottom)||
+                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_right_bottom)||
+                             (it->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_left_top)
                             )
                           )
                           ||
@@ -228,10 +228,10 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
                           (it->data(ITEM_TYPE).toString()=="NPC")//Don't collide NPC's with triangle blocks
                            &&
                             (
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_bottom_left)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_bottom_right)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_top_left)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_top_right)
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_right_top)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_left_bottom)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_right_bottom)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_left_bottom)
                             )
                           )
                  )

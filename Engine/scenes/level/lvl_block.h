@@ -50,7 +50,7 @@ public:
     obj_block * setup;//Global config
 
     enum directions{
-        left=0,
+        left = 0,
         right,
         up,
         down
@@ -58,10 +58,10 @@ public:
 
     enum shapes{
         shape_rect              = 0,
-        shape_tr_top_left       = 1,
-        shape_tr_top_right      =-1,
-        shape_tr_bottom_right   = 2,
-        shape_tr_bottom_left    =-2,
+        shape_tr_left_bottom    = 1,
+        shape_tr_right_bottom   =-1,
+        shape_tr_left_top       = 2,
+        shape_tr_right_top      =-2,
         stape_polygon           = 3
     };
 

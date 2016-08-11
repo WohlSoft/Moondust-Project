@@ -23,13 +23,15 @@
 #include <QString>
 #include <QPixmap>
 #include <QList>
+#include <ConfigPackManager/level/config_block.h>
 
 struct obj_block
 {
     obj_block();
     bool isValid;
     unsigned long animator_id;
-    QPixmap * cur_image;
+    QPixmap *cur_image;
+    QPixmap image;
 
     /*!
      * \brief Quickly copies all properties except images
@@ -37,71 +39,7 @@ struct obj_block
      */
     void copyTo(obj_block &block);
 
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-    QString name;
-    //    grid=32				; 32 | 16 Default="32"
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool sizable;
-    int danger;
-    int collision;
-    bool slopeslide;
-    int phys_shape;
-    enum shapes
-    {
-        SHAPE_rect=0,
-        SHAPE_triangle_top_left=-1,
-        SHAPE_triangle_top_right=1,
-        SHAPE_triangle_bottom_left=-2,
-        SHAPE_triangle_bottom_right=2,
-        SHAPE_polygonal=3,
-        SHAPE_cyrcle=4
-    };
-    bool lava;
-    bool destroyable;
-    bool destroyable_by_bomb;
-    bool destroyable_by_fireball;
-    bool spawn; //split string by "-" in != "0"
-        int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
-        enum spawnes{
-            SPAWN_Nothing=0,
-            SPAWN_NPC=1,
-            SPAWN_Block=2,
-            SPAWN_BGO=3
-        };
-        unsigned long spawn_obj_id;
-    unsigned long effect;
-    bool bounce;
-    bool hitable;
-    unsigned long transfororm_on_hit_into;
-
-    unsigned int  view;
-    bool animated;
-    bool animation_rev; //Reverse animation
-    bool animation_bid; //Bidirectional animation
-    unsigned int frames;
-    int framespeed;
-
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-    QList<int>   frame_sequence;//Custom editor specific frame sequence
-
-    unsigned int display_frame;
-
-    //Editor defaults
-    bool default_slippery; //Slippery flag
-    bool default_slippery_value;
-
-    bool default_invisible; //Invisible flag
-    bool default_invisible_value;
-
-    bool default_content; //Content value
-    long default_content_value;
-
+    BlockSetup setup;
 };
 
 

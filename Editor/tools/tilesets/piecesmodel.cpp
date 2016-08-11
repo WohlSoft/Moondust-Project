@@ -64,11 +64,11 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_BLOCK)
     {
         obj_block& block = scene_lvl ? scene_lvl->m_localConfigBlocks[index] : m_conf->main_block[index];
-        pixmapNames.insert(pixmaps.size(), block.name);
+        pixmapNames.insert(pixmaps.size(), block.setup.name);
         QPixmap img;
         Items::getItemGFX(&block, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), block.id);
+        pixmapId.insert(pixmaps.size(), block.setup.id);
     }
     else
     if(m_type==LEVELPIECE_BGO)

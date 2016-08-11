@@ -29,8 +29,7 @@
 #include <QtDebug>
 
 ConfigManager::ConfigManager()
-{
-}
+{}
 
 DataFolders      ConfigManager::dirs;
 QString          ConfigManager::config_dir;

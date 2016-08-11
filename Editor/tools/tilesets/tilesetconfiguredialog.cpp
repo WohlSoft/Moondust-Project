@@ -130,7 +130,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( lvl_scene && (mode==GFX_Level) )
             {
                 for(int i = 0; i < lvl_scene->m_customBlocks.size(); ++i) {
-                    m_model->addPiece(lvl_scene->m_customBlocks[i]->id);
+                    m_model->addPiece(lvl_scene->m_customBlocks[i]->setup.id);
                 }
             }
         }
@@ -140,7 +140,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( lvl_scene && (mode==GFX_Level) )
             {
                 for(int i = 0; i < lvl_scene->m_customBlocks.size(); ++i) {
-                    customElements[lvl_scene->m_customBlocks[i]->id] = i;
+                    customElements[lvl_scene->m_customBlocks[i]->setup.id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_block.size(); ++i) {

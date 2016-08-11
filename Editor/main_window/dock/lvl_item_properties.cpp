@@ -264,14 +264,14 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         if(newItem && (!dont_reset_props))
         {
-            LvlPlacingItems::blockSet.invisible = t_block.default_invisible_value;
-            block.invisible = t_block.default_invisible_value;
+            LvlPlacingItems::blockSet.invisible = t_block.setup.default_invisible_value;
+            block.invisible = t_block.setup.default_invisible_value;
 
-            LvlPlacingItems::blockSet.slippery = t_block.default_slippery_value;
-            block.slippery = t_block.default_slippery_value;
+            LvlPlacingItems::blockSet.slippery = t_block.setup.default_slippery_value;
+            block.slippery = t_block.setup.default_slippery_value;
 
-            LvlPlacingItems::blockSet.npc_id = t_block.default_content_value;
-            block.npc_id = t_block.default_content_value;
+            LvlPlacingItems::blockSet.npc_id = t_block.setup.default_content_value;
+            block.npc_id = t_block.setup.default_content_value;
 
             LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             block.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
@@ -298,8 +298,8 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
-        ui->PROPS_BlockResize->setVisible( t_block.sizable );
-        ui->sizeOfBlock->setVisible( t_block.sizable && (!newItem) );
+        ui->PROPS_BlockResize->setVisible( t_block.setup.sizable );
+        ui->sizeOfBlock->setVisible( t_block.setup.sizable && (!newItem) );
         ui->BLOCK_Width->setValue(block.w);
         ui->BLOCK_Height->setValue(block.h);
 

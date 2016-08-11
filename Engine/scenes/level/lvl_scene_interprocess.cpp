@@ -78,10 +78,10 @@ void LevelScene::process_InterprocessCommands()
                     {
                         placingMode_texture = ConfigManager::level_textures[tID];
                         obj_block &bl = ConfigManager::lvl_block_indexes[placingMode_block.id];
-                        placingMode_animated = bl.animated;
+                        placingMode_animated = bl.setup.animated;
                         placingMode_animatorID = bl.animator_ID;
                         placingMode_drawSize.setX(placingMode_texture.w);
-                        placingMode_drawSize.setY(placingMode_texture.h/bl.frames);
+                        placingMode_drawSize.setY(placingMode_texture.h/bl.setup.frames);
                     }
                 } else
                 if(raw.startsWith("BGO_PLACE", Qt::CaseInsensitive))

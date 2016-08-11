@@ -43,12 +43,12 @@ void CharacterSwitcherEngine::setScene(LevelScene *scene)
 
 void CharacterSwitcherEngine::buildSwitch(obj_block &blk)
 {
-    if(blk.plSwitch_Button)
+    if(blk.setup.plSwitch_Button)
     {
         CharacterSwitchState swst;
-        swst.CharacterID=blk.plSwitch_Button_id;
-        swst.sequence_on=blk.plSwitch_frames_true;
-        swst.sequence_off=blk.plSwitch_frames_false;
+        swst.CharacterID=blk.setup.plSwitch_Button_id;
+        swst.sequence_on=blk.setup.plSwitch_frames_true;
+        swst.sequence_off=blk.setup.plSwitch_frames_false;
         if(blk.animator_ID<ConfigManager::Animator_Blocks.size())
         {
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
@@ -59,12 +59,12 @@ void CharacterSwitcherEngine::buildSwitch(obj_block &blk)
 
 void CharacterSwitcherEngine::buildBrick(obj_block &blk)
 {
-    if(blk.plFilter_Block)
+    if(blk.setup.plFilter_Block)
     {
         CharacterBlockState swst;
-        swst.CharacterID=blk.plFilter_Block_id;
-        swst.sequence_on=blk.plFilter_frames_true;
-        swst.sequence_off=blk.plFilter_frames_false;
+        swst.CharacterID=blk.setup.plFilter_Block_id;
+        swst.sequence_on=blk.setup.plFilter_frames_true;
+        swst.sequence_off=blk.setup.plFilter_frames_false;
         if(blk.animator_ID<ConfigManager::Animator_Blocks.size())
         {
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];

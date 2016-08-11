@@ -45,7 +45,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     QPoint newPos = QPoint(block.x, block.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(block.x, block.y), mergedSet.grid);
+        newPos = applyGrid(QPoint(block.x, block.y), mergedSet.setup.grid);
         block.x = newPos.x();
         block.y = newPos.y();
     }
