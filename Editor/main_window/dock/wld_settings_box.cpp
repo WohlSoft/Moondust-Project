@@ -369,7 +369,7 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
         //Mark all stars
         for(int q=0; q< getLevelHead.npc.size(); q++)
         {
-           getLevelHead.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[getLevelHead.npc[q].id].is_star;
+           getLevelHead.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[getLevelHead.npc[q].id].setup.is_star;
            if((getLevelHead.npc[q].is_star)&&(!getLevelHead.npc[q].friendly))
                 foundStars++;
 

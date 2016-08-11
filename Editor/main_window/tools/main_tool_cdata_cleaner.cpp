@@ -462,9 +462,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //Used in level
             foreach(LevelNPC y, box->LvlData.npc)
             {
-                if(y.id==x->id)
+                if(y.id==x->setup.id)
                 {
-                    usedIDs.push_back(x->id);
+                    usedIDs.push_back(x->setup.id);
                     break;
                 }
             }
@@ -477,9 +477,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 {
                     if(y.id == z)
                     {
-                        if(y.special_data == (signed)x->id)
+                        if(y.special_data == (signed)x->setup.id)
                         {
-                            usedIDs.push_back(x->id);
+                            usedIDs.push_back(x->setup.id);
                             found=true;
                         }
                         break;
@@ -491,9 +491,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //included into blocks
             foreach(LevelBlock y, box->LvlData.blocks)
             {
-                if((y.npc_id>0) && ((unsigned long)y.npc_id == x->id))
+                if((y.npc_id>0) && ((unsigned long)y.npc_id == x->setup.id))
                 {
-                    usedIDs.push_back(x->id);
+                    usedIDs.push_back(x->setup.id);
                     break;
                 }
             }
@@ -505,8 +505,8 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 QString textConfig;
                 if( (npcID>0) && configs.main_npc.contains(npcID) )
                 {
-                    image = levelCustomDirectory + "/" + x->image_n;
-                    mask = levelCustomDirectory + "/" + x->mask_n;
+                    image = levelCustomDirectory + "/" + x->setup.image_n;
+                    mask = levelCustomDirectory + "/" + x->setup.mask_n;
                     textConfig = levelCustomDirectory + "/npc-"+QString::number(npcID)+".txt";
                 }
 

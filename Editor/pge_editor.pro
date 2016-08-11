@@ -121,6 +121,7 @@ else
 }
 
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
+include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -366,7 +367,6 @@ SOURCES += main.cpp\
     common_features/bool_reseter.cpp \
     common_features/version_cmp.cpp \
     main_window/tip_of_day/tip_of_day.cpp \
-    ../_common/data_functions/npctxt_manager.cpp \
     ../_common/data_functions/smbx64_validation_messages.cpp \
     main_window/testing/testing_settings.cpp \
     common_features/file_mapper.cpp \
@@ -375,7 +375,6 @@ SOURCES += main.cpp\
     main_window/dock/variables_box.cpp \
     main_window/script/script_editor.cpp \
     common_features/animation_timer.cpp \
-    common_features/number_limiter.cpp \
     data_configs/obj_block.cpp \
     data_configs/obj_bgo.cpp \
     data_configs/obj_BG.cpp \
@@ -570,7 +569,6 @@ HEADERS  += defines.h \
     common_features/version_cmp.h \
     common_features/RTree.h \
     main_window/tip_of_day/tip_of_day.h \
-    ../_common/data_functions/npctxt_manager.h \
     ../_common/data_functions/smbx64_validation_messages.h \
     main_window/testing/testing_settings.h \
     common_features/data_array.h \

@@ -98,9 +98,9 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(npc.x, npc.y), mergedSet.grid,
-                           QPoint(mergedSet.grid_offset_x,
-                                  mergedSet.grid_offset_y));
+        newPos = applyGrid(QPoint(npc.x, npc.y), mergedSet.setup.grid,
+                           QPoint(mergedSet.setup.grid_offset_x,
+                                  mergedSet.setup.grid_offset_y));
         npc.x = newPos.x();
         npc.y = newPos.y();
     }

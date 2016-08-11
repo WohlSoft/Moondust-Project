@@ -238,6 +238,7 @@ public:
 
     /*****Level NPC************/
     static bool loadLevelNPC();
+    static bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static void loadNpcTxtConfig(long npcID);
     static long getNpcTexture(long npcID);
     /*****************************/
@@ -253,7 +254,7 @@ public:
 
     /*****Level Backgrounds************/
     static bool loadLevelBackG();
-    static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
+    static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
     static PGE_DataArray<obj_BG>   lvl_bg_indexes;

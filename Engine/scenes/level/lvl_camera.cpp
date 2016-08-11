@@ -256,7 +256,7 @@ void PGE_LevelCamera::update(float ticks)
                 else
                 {
                     if(npc->is_activity)
-                        npc->activationTimeout = npc->setup->deactivetionDelay;
+                        npc->activationTimeout = npc->setup->setup.deactivationDelay;
                     else
                         npc->activationTimeout = 150;
                 }

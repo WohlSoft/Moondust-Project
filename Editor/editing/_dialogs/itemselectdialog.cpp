@@ -210,9 +210,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             obj_npc &npcItem = (*array)[i];
             QPixmap tmpI;
             Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
-            QListWidgetItem* item = new QListWidgetItem( npcItem.name, ui->Sel_List_NPC );
+            QListWidgetItem* item = new QListWidgetItem( npcItem.setup.name, ui->Sel_List_NPC );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(npcItem.id) );
+            item->setData(3, QString::number(npcItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_NPC->addItem(item);
         }
@@ -632,9 +632,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 obj_npc& npc = *(scene_lvl->m_customNPCs[i]);
                 Items::getItemGFX(&npc, tmpI, false, QSize(16,16));
-                item = new QListWidgetItem( npc.name );
+                item = new QListWidgetItem( npc.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(npc.id) );
+                item->setData(3, QString::number(npc.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_NPC->addItem( item );
@@ -650,7 +650,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             //Add Group
             needToAdd = true;
-            if( npcItem.group.isEmpty() )
+            if( npcItem.setup.group.isEmpty() )
             {
                 needToAdd=false;
             }//Skip empty values
@@ -659,7 +659,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach(QString grp, tmpGrpList)
                 {
-                    if( npcItem.group==grp )
+                    if( npcItem.setup.group==grp )
                     {
                         needToAdd=false; break;
                     }
@@ -668,12 +668,12 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             if(needToAdd)
             {
-                tmpGrpList.push_back(npcItem.group);
+                tmpGrpList.push_back(npcItem.setup.group);
             }
 
             //Add category
             needToAdd = true;
-            if( (npcItem.group != grp_npc) && (grp_npc != allLabel) )
+            if( (npcItem.setup.group != grp_npc) && (grp_npc != allLabel) )
             {
                 needToAdd = false;
             }
@@ -682,7 +682,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach(QString cat, tmpList)
                 {
-                    if(npcItem.category==cat)
+                    if(npcItem.setup.category==cat)
                     {
                         needToAdd = false; break;
                     }
@@ -690,18 +690,18 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             }
             if(needToAdd)
             {
-                tmpList.push_back(npcItem.category);
+                tmpList.push_back(npcItem.setup.category);
             }
 
             if(
-                ( (npcItem.group==grp_npc) || (grp_npc==allLabel) || (grp_npc=="") )&&
-                ( (npcItem.category==cat_npcs) || (cat_npcs==allLabel) )
+                ( (npcItem.setup.group==grp_npc) || (grp_npc==allLabel) || (grp_npc=="") )&&
+                ( (npcItem.setup.category==cat_npcs) || (cat_npcs==allLabel) )
               )
             {
                 Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
-                item = new QListWidgetItem( npcItem.name );
+                item = new QListWidgetItem( npcItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(npcItem.id) );
+                item->setData(3, QString::number(npcItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_NPC->addItem( item );

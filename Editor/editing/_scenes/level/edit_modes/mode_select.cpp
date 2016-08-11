@@ -375,8 +375,8 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     {
         sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->m_data.x, dynamic_cast<ItemNPC *>(it)->m_data.y);
         gridSize = dynamic_cast<ItemNPC *>(it)->m_gridSize;
-        offsetX = dynamic_cast<ItemNPC *>(it)->m_localProps.grid_offset_x;
-        offsetY = dynamic_cast<ItemNPC *>(it)->m_localProps.grid_offset_y;
+        offsetX = dynamic_cast<ItemNPC *>(it)->m_localProps.setup.grid_offset_x;
+        offsetY = dynamic_cast<ItemNPC *>(it)->m_localProps.setup.grid_offset_y;
     }
     else
     if( ObjType == "Block")

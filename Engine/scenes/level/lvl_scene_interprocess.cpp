@@ -112,10 +112,10 @@ void LevelScene::process_InterprocessCommands()
                     {
                         placingMode_texture = ConfigManager::level_textures[tID];
                         obj_npc &np=ConfigManager::lvl_npc_indexes[placingMode_npc.id];
-                        placingMode_animated = ((np.frames>1) || (np.framestyle>0));
+                        placingMode_animated = ((np.setup.frames>1) || (np.setup.framestyle>0));
                         if(np.animator_ID < 0)
                         {
-                            if( (np.frames > 1) || (np.framestyle > 0) )
+                            if( (np.setup.frames > 1) || (np.setup.framestyle > 0) )
                             {
                                 AdvNpcAnimator animator(placingMode_texture, np);
                                 ConfigManager::Animator_NPC.push_back(animator);
@@ -126,13 +126,13 @@ void LevelScene::process_InterprocessCommands()
                             }
                         }
                         placingMode_animatorID = np.animator_ID;
-                        placingMode_drawSize.setX(np.gfx_w);
-                        placingMode_drawSize.setY(np.gfx_h);
+                        placingMode_drawSize.setX(np.setup.gfx_w);
+                        placingMode_drawSize.setY(np.setup.gfx_h);
 
                         int d=placingMode_npc.direct; if(d==0) d=-1;
-                        int imgOffsetX = -((int)round( - ( ( (double)np.gfx_w - (double)np.width ) / 2 ) )
-                                            +(-((double)np.gfx_offset_x)*d));
-                        int imgOffsetY = (int)round( - (double)np.gfx_h + (double)np.height + (double)np.gfx_offset_y);
+                        int imgOffsetX = -((int)round( - ( ( (double)np.setup.gfx_w - (double)np.setup.width ) / 2 ) )
+                                            +(-((double)np.setup.gfx_offset_x)*d));
+                        int imgOffsetY = (int)round( - (double)np.setup.gfx_h + (double)np.setup.height + (double)np.setup.gfx_offset_y);
 
                         placingMode_renderOffset.setPoint(imgOffsetX, imgOffsetY);
                     }

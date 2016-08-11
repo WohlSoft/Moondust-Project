@@ -186,8 +186,8 @@ QString CustomCounterGUI::makeItemName(long item)
             else
             {
                 obj_npc& t_npc = m_configs->main_npc[item];
-                if(!t_npc.name.isEmpty())
-                    return t_npc.name + QString(" (NPC-%1)").arg(item);
+                if(!t_npc.setup.name.isEmpty())
+                    return t_npc.setup.name + QString(" (NPC-%1)").arg(item);
                 else
                     return QString("NPC-%1").arg(item);
             }

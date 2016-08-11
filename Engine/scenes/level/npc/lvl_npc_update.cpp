@@ -54,7 +54,7 @@ void LVL_Npc::update(float tickTime)
         if(!collided_right.isEmpty())
             setDirection(-1);
         else
-        if(setup->turn_on_cliff_detect && cliffDetected)
+        if(setup->setup.turn_on_cliff_detect && cliffDetected)
         {
             setDirection(_direction*-1);
             cliffDetected=false;
@@ -95,7 +95,7 @@ void LVL_Npc::update(float tickTime)
         else
         if(posY()>sBox.bottom() + 1 )
             setPosY(sBox.top()-_height+1);
-    } else if((setup->kill_on_pit_fall) && (posY() > sBox.bottom()+_height) ) {
+    } else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom()+_height) ) {
         kill(DAMAGE_PITFALL);
     }
 

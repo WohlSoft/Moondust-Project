@@ -65,7 +65,7 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     //Offset at right side, crop left side
                     double cropLeft = 0.0;
-                    double offset = (warpResizedBody?double(setup->width) : bodyPos.width())*double(warpSpriteOffset);
+                    double offset = (warpResizedBody?double(setup->setup.width) : bodyPos.width())*double(warpSpriteOffset);
                     bodyPos.setRight( bodyPos.right()-offset );
                     textPos.setPos(textPos.x()-offset, textPos.y());
                     if(textPos.left() < bodyPos.left())
@@ -83,7 +83,7 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     //Offset at bottom side, crop top side
                     double cropTop = 0.0;
-                    double offset = (warpResizedBody?double(setup->height) : bodyPos.height())*double(warpSpriteOffset);
+                    double offset = (warpResizedBody?double(setup->setup.height) : bodyPos.height())*double(warpSpriteOffset);
                     bodyPos.setBottom( bodyPos.bottom()-offset );
                     textPos.setPos(textPos.x(), textPos.y()-offset);
                     if(textPos.top() < bodyPos.top())
@@ -101,7 +101,7 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     //Offset at left side, crop right side
                     double cropRight = 0.0;
-                    double offset = (warpResizedBody?double(setup->width) : bodyPos.width())*double(warpSpriteOffset);
+                    double offset = (warpResizedBody?double(setup->setup.width) : bodyPos.width())*double(warpSpriteOffset);
                     bodyPos.setLeft( bodyPos.left()+offset );
                     textPos.setPos(textPos.x()+(warpResizedBody ? 0.0 : offset), textPos.y());
                     if(textPos.right() > bodyPos.right())
@@ -119,7 +119,7 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     //Offset at top side, crop bottop side
                     double cropBottom = 0.0;
-                    double offset = (warpResizedBody?double(setup->height) : bodyPos.height())*double(warpSpriteOffset);
+                    double offset = (warpResizedBody?double(setup->setup.height) : bodyPos.height())*double(warpSpriteOffset);
                     bodyPos.setTop( bodyPos.top()+offset );
                     textPos.setPos(textPos.x(), textPos.y()+(warpResizedBody ? 0.0 : offset));
                     if(textPos.bottom() > bodyPos.bottom())

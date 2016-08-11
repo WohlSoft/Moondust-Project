@@ -52,7 +52,7 @@ void LVL_Npc::harm(int damage, int damageReason)
     health -= damage;
     if(health <= 0)
     {
-        if( setup->contents_id == 0)
+        if( setup->setup.contents_id == 0)
         {
             kill(damageReason);
         }
@@ -60,17 +60,17 @@ void LVL_Npc::harm(int damage, int damageReason)
         {
             //Spawn the contents of the dead NPC's container
             if (damageReason == LVL_Npc::DAMAGE_STOMPED)
-                transformTo_x(setup->contents_id);
+                transformTo_x(setup->setup.contents_id);
             else
                 kill(damageReason);
         }
     }
     else
     {
-        if(setup->hit_sound_id==0)
+        if(setup->setup.hit_sound_id==0)
             PGE_Audio::playSoundByRole(obj_sound_role::NpcHit);
         else
-            PGE_Audio::playSound(setup->hit_sound_id);
+            PGE_Audio::playSound(setup->setup.hit_sound_id);
     }
 }
 
@@ -90,7 +90,7 @@ void LVL_Npc::talkWith()
 
 void LVL_Npc::kill(int damageReason)
 {
-    if((damageReason==DAMAGE_LAVABURN) && (setup->lava_protect)) return;
+    if((damageReason==DAMAGE_LAVABURN) && (setup->setup.lava_protect)) return;
 
     try{
         KillEvent event;
@@ -111,9 +111,9 @@ void LVL_Npc::kill(int damageReason)
     switch(damageReason)
     {
         case DAMAGE_NOREASON:
-            if(setup->effect_1 > 0)
+            if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->effect_1,
+                _scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             1, 0, 0, 0, 0,
@@ -121,9 +121,9 @@ void LVL_Npc::kill(int damageReason)
             }
         break;
         case DAMAGE_STOMPED:
-            if(setup->effect_1 > 0)
+            if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->effect_1,
+                _scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             0, 500, 0, 0, 0,
@@ -131,9 +131,9 @@ void LVL_Npc::kill(int damageReason)
             }
         break;
         case DAMAGE_TAKEN:
-            if(setup->effect_1 > 0)
+            if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->effect_1,
+                _scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             1, 0, 0, 0, 0,
@@ -154,9 +154,9 @@ void LVL_Npc::kill(int damageReason)
             //Don't spawn effects
         break;
         case DAMAGE_BY_KICK:
-            if( setup->effect_2 > 0 )
+            if( setup->setup.effect_2 > 0 )
             {
-                _scene->launchStaticEffectC(setup->effect_2,
+                _scene->launchStaticEffectC(setup->setup.effect_2,
                                             posCenterX(),
                                             posCenterY(),
                                             0, 5000, -3.0f*_direction, -6.0f, 18.0f,
@@ -177,12 +177,12 @@ void LVL_Npc::kill(int damageReason)
 
     if(damageReason != DAMAGE_LAVABURN)
     {
-        if(setup->death_sound_id==0)
+        if(setup->setup.death_sound_id==0)
             PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
         else
         {
-            if(setup->death_sound_id>0)
-                PGE_Audio::playSound(setup->death_sound_id);
+            if(setup->setup.death_sound_id>0)
+                PGE_Audio::playSound(setup->setup.death_sound_id);
         }
     } else {
         PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);

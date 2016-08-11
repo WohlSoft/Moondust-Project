@@ -305,12 +305,12 @@ public:
     inline bool getCollideWithBlocks() { return !disableBlockCollision; }
     inline void setCollideWithBlocks(bool blkcol) { disableBlockCollision=!blkcol; }
 
-    inline bool getKillByFire() { return setup->kill_by_fireball; }
-    inline bool getKillByIce() { return setup->freeze_by_iceball; }
-    inline bool getKillByHammer() { return setup->kill_hammer; }
-    inline bool getKillByForcejump() { return setup->kill_by_spinjump; }
-    inline bool getKillByStatue() { return setup->kill_by_statue; }
-    inline bool getKillByVehicle() { return setup->kill_by_mounted_item; }
+    inline bool getKillByFire() { return setup->setup.kill_by_fireball; }
+    inline bool getKillByIce() { return setup->setup.freeze_by_iceball; }
+    inline bool getKillByHammer() { return setup->setup.kill_hammer; }
+    inline bool getKillByForcejump() { return setup->setup.kill_by_spinjump; }
+    inline bool getKillByStatue() { return setup->setup.kill_by_statue; }
+    inline bool getKillByVehicle() { return setup->setup.kill_by_mounted_item; }
     bool isLuaNPC;
     /********************Lua Stuff******************/
 

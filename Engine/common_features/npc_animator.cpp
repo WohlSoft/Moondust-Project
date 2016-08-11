@@ -58,27 +58,27 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     isEnabled=false;
 
     animated = true;
-    framesQ = setup.frames;
-    _frameSpeed = setup.framespeed;
-    frameStyle = setup.framestyle;
+    framesQ = setup.setup.frames;
+    _frameSpeed = setup.setup.framespeed;
+    frameStyle = setup.setup.framestyle;
     frameStep = 1;
 
     frameSequance = false;
 
-    aniBiDirect = setup.ani_bidir;
-    customAniAlg = setup.custom_ani_alg;
+    aniBiDirect = setup.setup.ani_bidir;
+    customAniAlg = setup.setup.custom_ani_alg;
 
-    customAnimate = setup.custom_animate;
+    customAnimate = setup.setup.custom_animate;
 
-    custom_frameFL = setup.custom_ani_fl;//first left
-    custom_frameEL = setup.custom_ani_el;//end left
-    custom_frameFR = setup.custom_ani_fr;//first right
-    custom_frameER = setup.custom_ani_er;//enf right
+    custom_frameFL = setup.setup.custom_ani_fl;//first left
+    custom_frameEL = setup.setup.custom_ani_el;//end left
+    custom_frameFR = setup.setup.custom_ani_fr;//first right
+    custom_frameER = setup.setup.custom_ani_er;//enf right
 
     //bool refreshFrames = updFrames;
 
-    frameSize = setup.gfx_h; // height of one frame
-    frameWidth = setup.gfx_w; //width of target image
+    frameSize = setup.setup.gfx_h; // height of one frame
+    frameWidth = setup.setup.gfx_w; //width of target image
 
     frameHeight = mainImage.h; // Height of target image
 
@@ -96,15 +96,15 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     //        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
     //    }
 
-    if(setup.ani_directed_direct)
+    if(setup.setup.ani_directed_direct)
     {
-        aniDirectL = (true) ^ (setup.ani_direct);
-        aniDirectR = (false) ^ (setup.ani_direct);
+        aniDirectL = (true) ^ (setup.setup.ani_direct);
+        aniDirectR = (false) ^ (setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.ani_direct;
-        aniDirectR = setup.ani_direct;
+        aniDirectL = setup.setup.ani_direct;
+        aniDirectR = setup.setup.ani_direct;
     }
 
     if(customAnimate) // User defined spriteSet (example: boss)
@@ -116,7 +116,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
         {
         case ANI_CustomSequence:
             frameSequance = true;
-            frames_listL = setup.frames_left;
+            frames_listL = setup.setup.frames_left;
             frameFirstL = 0;
             frameLastL = frames_listL.size()-1;
             break;
@@ -134,7 +134,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
         {
         case ANI_CustomSequence:
             frameSequance = true;
-            frames_listR = setup.frames_right;
+            frames_listR = setup.setup.frames_right;
             frameFirstR = 0;
             frameLastR = frames_listR.size()-1; break;
         case ANI_FrameJump:
@@ -150,7 +150,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
         switch(frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesQ = setup.frames*4;
+            framesQ = setup.setup.frames*4;
 
              //left
                 frameFirstL = 0;
@@ -161,7 +161,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
 
             break;
         case 1: //Left-Right sprite
-            framesQ=setup.frames*2;
+            framesQ=setup.setup.frames*2;
              //left
                 frameFirstL = 0;
                 frameLastL = (int)(framesQ / 2)-1;
@@ -258,7 +258,7 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
         frameLastL = _frames.size()-1;
         frames_listR.clear();
         for(int i=0;i<_frames.size();i++)
-            frames_listR.push_back(_frames[i]+setup.frames);
+            frames_listR.push_back(_frames[i]+setup.setup.frames);
         frameFirstR = 0;
         frameLastR = _frames.size()-1;
         break;
@@ -319,16 +319,16 @@ void AdvNpcAnimator::setBidirectional(bool bid)
 
 void AdvNpcAnimator::setDirectedSequence(bool dd)
 {
-    setup.ani_directed_direct=dd;
+    setup.setup.ani_directed_direct=dd;
     if(dd)
     {
-        aniDirectL = (true) ^ (setup.ani_direct);
-        aniDirectR = (false) ^ (setup.ani_direct);
+        aniDirectL = (true) ^ (setup.setup.ani_direct);
+        aniDirectR = (false) ^ (setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.ani_direct;
-        aniDirectR = setup.ani_direct;
+        aniDirectL = setup.setup.ani_direct;
+        aniDirectR = setup.setup.ani_direct;
     }
 }
 

@@ -31,9 +31,9 @@ void Items::getItemGFX(const obj_npc *inObj, QPixmap &outImg, bool whole, QSize 
         if( !whole )
         {
             outImg = srcImage->copy(0,
-                                   inObj->gfx_h*inObj->display_frame,
-                                   inObj->gfx_w,
-                                   inObj->gfx_h);
+                                   inObj->setup.gfx_h*inObj->setup.display_frame,
+                                   inObj->setup.gfx_w,
+                                   inObj->setup.gfx_h);
         }
         else
         {

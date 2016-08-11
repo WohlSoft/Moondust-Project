@@ -144,12 +144,12 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         }
     }
 
-    if(target->setup->exit_is)
+    if(target->setup->setup.exit_is)
     {
-        long snd=target->setup->exit_snd;
+        long snd=target->setup->setup.exit_snd;
         if(snd<=0)
         {
-            switch(target->setup->exit_code)
+            switch(target->setup->setup.exit_code)
             {
                 case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
                 case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
@@ -177,13 +177,13 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         _scene->player2Controller->sendControls();
         _scene->player2Controller->removeFromControl(this);
         /***********************Reset and unplug controllers*end********************/
-        if(target->setup->exit_walk_direction<0)
+        if(target->setup->setup.exit_walk_direction<0)
             keys.left=true;
         else
-        if(target->setup->exit_walk_direction>0)
+        if(target->setup->setup.exit_walk_direction>0)
             keys.right=true;
         isExiting=true;
-        _scene->setExiting(target->setup->exit_delay, target->setup->exit_code);
+        _scene->setExiting(target->setup->setup.exit_delay, target->setup->setup.exit_code);
     }
 }
 

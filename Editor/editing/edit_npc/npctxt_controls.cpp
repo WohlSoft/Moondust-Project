@@ -18,7 +18,6 @@
 
 #include <common_features/graphics_funcs.h>
 #include <PGE_File_Formats/file_formats.h>
-#include <data_functions/npctxt_manager.h>
 #include <common_features/themes.h>
 
 #include "npcedit.h"
@@ -645,21 +644,21 @@ void NpcEdit::loadPreview()
         LogWarning(QString("NPC-Edit Preview -> NPC Entry not found"));
         npcImage = Themes::Image(Themes::dummy_npc);
         pConfigs->main_npc[1].copyTo(defaultNPC);
-        defaultNPC.frames=1;
+        defaultNPC.setup.frames=1;
         defaultNPC.cur_image=&npcImage;
     }
     else
     {
         pConfigs->main_npc[npc_id].copyTo(defaultNPC);
-        LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.id).arg(defaultNPC.name));
+        LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.setup.id).arg(defaultNPC.setup.name));
         if(isUntitled)
             npcImage = *defaultNPC.cur_image;
         else
             loadImageFile();
     }
 
-    obj_npc targetNPC;
-    targetNPC = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    obj_npc targetNPC = defaultNPC;
+    targetNPC.setup.applyNPCtxt(&NpcData, targetNPC.setup, npcImage.size());
 
     LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;
@@ -672,14 +671,14 @@ void NpcEdit::loadPreview()
     npcPreview->setZValue(1);
     PreviewScene->addItem(npcPreview);
 
-    if(npcPreview->m_localProps.frames>1)
+    if(npcPreview->m_localProps.setup.frames>1)
     {
         npcPreview->setData(4, "animated");
     }
 
     physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
     physics->setBrush(Qt::transparent);
-    physics->setRect(0,0, npcPreview->m_localProps.width, npcPreview->m_localProps.height);
+    physics->setRect(0,0, npcPreview->m_localProps.setup.width, npcPreview->m_localProps.setup.height);
 
     physics->setZValue(777);
     ui->PreviewBox->setScene(PreviewScene);
@@ -688,12 +687,12 @@ void NpcEdit::loadPreview()
     PreviewScene->addItem(physics);
 
     npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
                 );
     physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
                 );
 
     npcPreview->_internal_animator->connect(npcPreview->_internal_animator,
@@ -707,7 +706,9 @@ void NpcEdit::updatePreview()
     if(!physics || !npcPreview)
         return;
 
-    obj_npc merged = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    obj_npc merged = defaultNPC;
+    merged.setup.applyNPCtxt(&NpcData, merged.setup, npcImage.size());
+
     LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;
     npcData.x = 10;
@@ -715,14 +716,14 @@ void NpcEdit::updatePreview()
     npcData.direct = direction;
     npcPreview->setNpcData(npcData, &merged);
 
-    physics->setRect(0,0, npcPreview->m_localProps.width, npcPreview->m_localProps.height);
+    physics->setRect(0,0, npcPreview->m_localProps.setup.width, npcPreview->m_localProps.setup.height);
     npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
                 );
     physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.height)/qreal(2))
+                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
                 );
 
     PreviewScene->update();
@@ -733,14 +734,14 @@ void NpcEdit::loadImageFile()
 {
     QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
     CustomDirManager fileDir(imagePath, "npcx");
-    QString CustomImage=fileDir.getCustomFile(defaultNPC.image_n);
+    QString CustomImage=fileDir.getCustomFile(defaultNPC.setup.image_n);
     QImage tempImg;
 
     if(!CustomImage.isEmpty())
     {
         if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
         {
-            QString CustomMask=fileDir.getCustomFile(defaultNPC.mask_n);
+            QString CustomMask=fileDir.getCustomFile(defaultNPC.setup.mask_n);
             GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
         } else {
             GraphicsHelps::loadQImage(tempImg, CustomImage);

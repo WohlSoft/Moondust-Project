@@ -84,11 +84,11 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_NPC)
     {
         obj_npc& npc = scene_lvl ? scene_lvl->m_localConfigNPCs[index] : m_conf->main_npc[index];
-        pixmapNames.insert(pixmaps.size(), npc.name);
+        pixmapNames.insert(pixmaps.size(), npc.setup.name);
         QPixmap img;
         Items::getItemGFX(&npc, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), npc.id);
+        pixmapId.insert(pixmaps.size(), npc.setup.id);
     }
     else
     if(m_type==WORLDPIECE_TILE)

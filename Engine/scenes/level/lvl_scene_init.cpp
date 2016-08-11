@@ -294,10 +294,10 @@ bool LevelScene::init_items()
     for(int i=1; i<ConfigManager::lvl_npc_indexes.size(); i++)
     {
         obj_npc&npc=ConfigManager::lvl_npc_indexes[i];
-        QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.algorithm_script);
+        QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.setup.algorithm_script);
         if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
         {
-            luaEngine.loadNPCClass(npc.id, scriptPath);
+            luaEngine.loadNPCClass(npc.setup.id, scriptPath);
         }
     }
 

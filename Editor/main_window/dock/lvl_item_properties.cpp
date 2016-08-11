@@ -40,7 +40,7 @@ static obj_npc& getNpcProps(LevelNPC& npc, MainWindow*mw)
 {
     int tarNPC = npc.id;
     obj_npc *findNPC;
-    if(mw->configs.main_npc[tarNPC].container)
+    if(mw->configs.main_npc[tarNPC].setup.container)
         findNPC = &mw->configs.main_npc[npc.contents];
     else
         findNPC = &mw->configs.main_npc[tarNPC];
@@ -452,19 +452,19 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             LvlPlacingItems::npcSet.msg="";
             npc.msg="";
 
-            LvlPlacingItems::npcSet.friendly = t_npc.default_friendly_value;
-            npc.friendly = t_npc.default_friendly_value;
+            LvlPlacingItems::npcSet.friendly = t_npc.setup.default_friendly_value;
+            npc.friendly = t_npc.setup.default_friendly_value;
 
-            LvlPlacingItems::npcSet.nomove = t_npc.default_nomovable_value;
-            npc.nomove = t_npc.default_nomovable_value;
+            LvlPlacingItems::npcSet.nomove = t_npc.setup.default_nomovable_value;
+            npc.nomove = t_npc.setup.default_nomovable_value;
 
-            LvlPlacingItems::npcSet.is_boss = t_npc.default_boss_value;
-            npc.is_boss = t_npc.default_boss_value;
+            LvlPlacingItems::npcSet.is_boss = t_npc.setup.default_boss_value;
+            npc.is_boss = t_npc.setup.default_boss_value;
 
-            if(t_npc.default_special)
+            if(t_npc.setup.default_special)
             {
-                LvlPlacingItems::npcSet.special_data = t_npc.default_special_value;
-                npc.special_data = t_npc.default_special_value;
+                LvlPlacingItems::npcSet.special_data = t_npc.setup.default_special_value;
+                npc.special_data = t_npc.setup.default_special_value;
             }
             LvlPlacingItems::npcSet.special_data2 = 0;
             npc.special_data2 = 0;
@@ -506,20 +506,20 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
 
-        if(t_npc.direct_alt_title!="")
-            ui->PROPS_NpcDir->setTitle(t_npc.direct_alt_title);
+        if(t_npc.setup.direct_alt_title!="")
+            ui->PROPS_NpcDir->setTitle(t_npc.setup.direct_alt_title);
         else
             ui->PROPS_NpcDir->setTitle( tr("Direction") );
 
-        if(t_npc.direct_alt_left!="")
-            ui->PROPS_NPCDirLeft->setText( t_npc.direct_alt_left );
+        if(t_npc.setup.direct_alt_left!="")
+            ui->PROPS_NPCDirLeft->setText( t_npc.setup.direct_alt_left );
         else
             ui->PROPS_NPCDirLeft->setText( tr("Left") );
 
-        ui->PROPS_NPCDirRand->setEnabled( !t_npc.direct_disable_random );
+        ui->PROPS_NPCDirRand->setEnabled( !t_npc.setup.direct_disable_random );
 
-        if(t_npc.direct_alt_right!="")
-            ui->PROPS_NPCDirRight->setText( t_npc.direct_alt_right );
+        if(t_npc.setup.direct_alt_right!="")
+            ui->PROPS_NPCDirRight->setText( t_npc.setup.direct_alt_right );
         else
             ui->PROPS_NPCDirRight->setText( tr("Right") );
 
@@ -536,7 +536,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             break;
         }
 
-        if(t_npc.container)
+        if(t_npc.setup.container)
         {
             ui->PROPS_NpcContainsLabel->show();
             ui->PROPS_NPCContaiter->show();
@@ -1315,19 +1315,19 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
     ui->line_6->hide();
 
     //; 0 combobox, 1 - spin, 2 - npc-id
-    if( t_npc.special_option )
+    if( t_npc.setup.special_option )
     {
         ui->line_6->show();
-        switch(t_npc.special_type)
+        switch(t_npc.setup.special_type)
         {
         case 0:
             ui->PROPS_NPCBoxLabel->show();
-            ui->PROPS_NPCBoxLabel->setText(t_npc.special_name);
+            ui->PROPS_NPCBoxLabel->setText(t_npc.setup.special_name);
             ui->PROPS_NPCSpecialBox->show();
 
             if((newItem)&&(!dont_reset_props))
             {//Reset value to min, if it out of range
-                if((npc.special_data>=t_npc.special_combobox_opts.size())||
+                if((npc.special_data>=t_npc.setup.special_combobox_opts.size())||
                     (npc.special_data<0))
                 {
                    LvlPlacingItems::npcSet.special_data=0;
@@ -1338,16 +1338,16 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             }
 
             ui->PROPS_NPCSpecialBox->clear();
-            for(int i=0; i < t_npc.special_combobox_opts.size(); i++)
+            for(int i=0; i < t_npc.setup.special_combobox_opts.size(); i++)
             {
-                ui->PROPS_NPCSpecialBox->addItem( t_npc.special_combobox_opts[i] );
+                ui->PROPS_NPCSpecialBox->addItem( t_npc.setup.special_combobox_opts[i] );
                 if(i==npc.special_data) ui->PROPS_NPCSpecialBox->setCurrentIndex(i);
             }
 
             break;
         case 1:
             ui->PROPS_NpcSpinLabel->show();
-            ui->PROPS_NpcSpinLabel->setText( t_npc.special_name );
+            ui->PROPS_NpcSpinLabel->setText( t_npc.setup.special_name );
             ui->PROPS_NPCSpecialSpin->show();
 
             if((npcPtr<0)&&(newItem))
@@ -1361,17 +1361,17 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             }
             if((newItem)&&(!dont_reset_props))
             { //Reset value to min, if it out of range
-                if((npc.special_data>t_npc.special_spin_max)||
-                   (npc.special_data<t_npc.special_spin_max))
+                if((npc.special_data>t_npc.setup.special_spin_max)||
+                   (npc.special_data<t_npc.setup.special_spin_max))
                 {
-                   LvlPlacingItems::npcSet.special_data = t_npc.special_spin_min;
-                   npc.special_data = t_npc.special_spin_min;
+                   LvlPlacingItems::npcSet.special_data = t_npc.setup.special_spin_min;
+                   npc.special_data = t_npc.setup.special_spin_min;
                 }
             }
 
-            npcSpecSpinOffset = t_npc.special_spin_value_offset;
-            ui->PROPS_NPCSpecialSpin->setMinimum( t_npc.special_spin_min + npcSpecSpinOffset );
-            ui->PROPS_NPCSpecialSpin->setMaximum( t_npc.special_spin_max + npcSpecSpinOffset );
+            npcSpecSpinOffset = t_npc.setup.special_spin_value_offset;
+            ui->PROPS_NPCSpecialSpin->setMinimum( t_npc.setup.special_spin_min + npcSpecSpinOffset );
+            ui->PROPS_NPCSpecialSpin->setMaximum( t_npc.setup.special_spin_max + npcSpecSpinOffset );
 
             ui->PROPS_NPCSpecialSpin->setValue( npc.special_data + npcSpecSpinOffset );
             LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
@@ -1379,7 +1379,7 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             break;
         case 2:
             ui->PROPS_NPCNpcLabel->show();
-            ui->PROPS_NPCNpcLabel->setText( t_npc.special_name );
+            ui->PROPS_NPCNpcLabel->setText( t_npc.setup.special_name );
             ui->PROPS_NPCSpecialNPC->show();
             ui->PROPS_NPCSpecialNPC->setText(
                         ((npc.special_data>0)?QString("NPC-%1").arg(npc.special_data)
@@ -1401,28 +1401,28 @@ void LvlItemProperties::refreshSecondNpcSpecialOption(long npcID, long spcOpts, 
     ui->PROPS_NPCSpecial2Box->hide();
     ui->Line_Special2_sep->hide();
 
-    if((t_npc.special_option_2)&&
-            ((t_npc.special_2_npc_spin_required.isEmpty())||
-             (t_npc.special_2_npc_box_required.isEmpty())||
-             (t_npc.special_2_npc_spin_required.contains(spcOpts))||
-             (t_npc.special_2_npc_box_required.contains(spcOpts)))
+    if((t_npc.setup.special_option_2)&&
+            ((t_npc.setup.special_2_npc_spin_required.isEmpty())||
+             (t_npc.setup.special_2_npc_box_required.isEmpty())||
+             (t_npc.setup.special_2_npc_spin_required.contains(spcOpts))||
+             (t_npc.setup.special_2_npc_box_required.contains(spcOpts)))
             )
     {
         if(
-                ((t_npc.special_2_npc_box_required.isEmpty())&&
-                 (t_npc.special_2_type==0))
+                ((t_npc.setup.special_2_npc_box_required.isEmpty())&&
+                 (t_npc.setup.special_2_type==0))
                 ||
-                (t_npc.special_2_npc_box_required.contains(spcOpts))
+                (t_npc.setup.special_2_npc_box_required.contains(spcOpts))
           )
         {
             ui->Line_Special2_sep->show();
             ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(t_npc.special_2_name);
+            ui->PROPS_NpcSpecial2title->setText(t_npc.setup.special_2_name);
 
             ui->PROPS_NPCSpecial2Box->show();
             if((newItem)&&(!dont_reset_props))
             {//Reset value to min, if it out of range
-                if((spcOpts2>=t_npc.special_2_combobox_opts.size())||
+                if((spcOpts2>=t_npc.setup.special_2_combobox_opts.size())||
                     (spcOpts2<0))
                 {
                    LvlPlacingItems::npcSet.special_data2=0;
@@ -1431,38 +1431,38 @@ void LvlItemProperties::refreshSecondNpcSpecialOption(long npcID, long spcOpts, 
             }
 
             ui->PROPS_NPCSpecial2Box->clear();
-            for(int i=0; i < t_npc.special_2_combobox_opts.size(); i++)
+            for(int i=0; i < t_npc.setup.special_2_combobox_opts.size(); i++)
             {
-                ui->PROPS_NPCSpecial2Box->addItem( t_npc.special_2_combobox_opts[i] );
+                ui->PROPS_NPCSpecial2Box->addItem( t_npc.setup.special_2_combobox_opts[i] );
                 if(i==spcOpts2) ui->PROPS_NPCSpecial2Box->setCurrentIndex(i);
             }
         }
         else
         if(
-                ((t_npc.special_2_npc_spin_required.isEmpty())
-                 &&(t_npc.special_2_type==1))||
-                (t_npc.special_2_npc_spin_required.contains(spcOpts))
+                ((t_npc.setup.special_2_npc_spin_required.isEmpty())
+                 &&(t_npc.setup.special_2_type==1))||
+                (t_npc.setup.special_2_npc_spin_required.contains(spcOpts))
           )
         {
             ui->Line_Special2_sep->show();
             ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(t_npc.special_2_name);
+            ui->PROPS_NpcSpecial2title->setText(t_npc.setup.special_2_name);
 
             ui->PROPS_NPCSpecial2Spin->show();
             if((newItem)&&(!dont_reset_props))
             { //Reset value to min, if it out of range
-                if((spcOpts2>t_npc.special_2_spin_max)||
-                   (spcOpts2<t_npc.special_2_spin_max))
+                if((spcOpts2>t_npc.setup.special_2_spin_max)||
+                   (spcOpts2<t_npc.setup.special_2_spin_max))
                 {
-                   LvlPlacingItems::npcSet.special_data2 = t_npc.special_2_spin_min;
-                   spcOpts2 = t_npc.special_2_spin_min;
+                   LvlPlacingItems::npcSet.special_data2 = t_npc.setup.special_2_spin_min;
+                   spcOpts2 = t_npc.setup.special_2_spin_min;
                 }
             }
 
-            npcSpecSpinOffset_2 = t_npc.special_2_spin_value_offset;
+            npcSpecSpinOffset_2 = t_npc.setup.special_2_spin_value_offset;
 
-            ui->PROPS_NPCSpecial2Spin->setMinimum( t_npc.special_2_spin_min + npcSpecSpinOffset_2 );
-            ui->PROPS_NPCSpecial2Spin->setMaximum( t_npc.special_2_spin_max + npcSpecSpinOffset_2 );
+            ui->PROPS_NPCSpecial2Spin->setMinimum( t_npc.setup.special_2_spin_min + npcSpecSpinOffset_2 );
+            ui->PROPS_NPCSpecial2Spin->setMaximum( t_npc.setup.special_2_spin_max + npcSpecSpinOffset_2 );
 
             ui->PROPS_NPCSpecial2Spin->setValue( spcOpts2 + npcSpecSpinOffset_2 );
         }
@@ -1748,10 +1748,10 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
                 //Inherit preferences from contained NPC if this NPC a container
                 obj_npc &t_npc = getNpcProps(npc, mw());
 
-                if(t_npc.special_type != 1) //wrong type, go to next one
+                if(t_npc.setup.special_type != 1) //wrong type, go to next one
                     continue;
 
-                if(t_npc.special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
+                if(t_npc.setup.special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->m_data);
@@ -1917,7 +1917,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
                 //Inherit preferences from contained NPC if this NPC a container
                 obj_npc &t_npc = getNpcProps(npc, mw());
 
-                if(t_npc.special_type != 0) //wrong type, go to next one
+                if(t_npc.setup.special_type != 0) //wrong type, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->m_data);
@@ -1952,10 +1952,10 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
                 //Inherit preferences from contained NPC if this NPC a container
                 obj_npc &t_npc = getNpcProps(npc, mw());
 
-                if(t_npc.special_2_type != 1) //wrong type, go to next one
+                if(t_npc.setup.special_2_type != 1) //wrong type, go to next one
                     continue;
 
-                if(t_npc.special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
+                if(t_npc.setup.special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->m_data);
@@ -1992,7 +1992,7 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
                 //Inherit preferences from contained NPC if this NPC a container
                 obj_npc &t_npc = getNpcProps(npc, mw());
 
-                if(t_npc.special_2_type != 0) //wrong type, go to next one
+                if(t_npc.setup.special_2_type != 0) //wrong type, go to next one
                     continue;
 
                 selData.npc.push_back(((ItemNPC*)item)->m_data);

@@ -64,9 +64,9 @@ void LVL_Npc::setDirection(int dir)
 {
     if(dir==0) dir=(rand()%2) ? -1 : 1;
     _direction=Maths::sgn(dir);
-    int imgOffsetX = -((int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) )
-                        +(-((double)setup->gfx_offset_x)*_direction));
-    int imgOffsetY = -(int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
+    int imgOffsetX = -((int)round( - ( ( (double)setup->setup.gfx_w - (double)setup->setup.width ) / 2 ) )
+                        +(-((double)setup->setup.gfx_offset_x)*_direction));
+    int imgOffsetY = -(int)round( - (double)setup->setup.gfx_h + (double)setup->setup.height + (double)setup->setup.gfx_offset_y);
     offset.setPoint(imgOffsetX, imgOffsetY);
 }
 
@@ -119,11 +119,11 @@ void LVL_Npc::setDefaults()
 {
     if(!setup) return;
     setDirection(_direction);//Re-apply offset preferences
-    motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
-    is_scenery  = setup->scenery;
-    is_activity = setup->activity;
-    is_shared_animation = setup->shared_ani;
-    keep_position_on_despawn = setup->keep_position;
+    motionSpeed = ((!data.nomove)&&(setup->setup.movement)) ? ((float)setup->setup.speed) : 0.0f;
+    is_scenery  = setup->setup.scenery;
+    is_activity = setup->setup.activity;
+    is_shared_animation = setup->setup.shared_ani;
+    keep_position_on_despawn = setup->setup.keep_position;
 }
 
 void LVL_Npc::transformTo_x(long id)
@@ -144,15 +144,15 @@ void LVL_Npc::transformTo_x(long id)
     }
 
     double targetZ = 0;
-    if(setup->foreground)
+    if(setup->setup.foreground)
         targetZ = LevelScene::Z_npcFore;
     else
-    if(setup->background)
+    if(setup->setup.background)
         targetZ = LevelScene::Z_npcBack;
     else
         targetZ = LevelScene::Z_npcStd;
 
-    z_index = targetZ + setup->z_offset;
+    z_index = targetZ + setup->setup.z_offset;
 
     _scene->zCounter += 0.0000000000001L;
     z_index += _scene->zCounter;
@@ -164,7 +164,7 @@ void LVL_Npc::transformTo_x(long id)
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
-        animated = ((setup->frames>1) || (setup->framestyle>0));
+        animated = ((setup->setup.frames>1) || (setup->setup.framestyle>0));
         animator_ID = setup->animator_ID;
     }
 
@@ -174,16 +174,16 @@ void LVL_Npc::transformTo_x(long id)
     if(_isInited)
     {
         PGE_RectF old=posRect;
-        posRect.setSize(setup->width, setup->height);
+        posRect.setSize(setup->setup.width, setup->setup.height);
         posRect.setPos(old.center().x()-(posRect.width()/2),
                        old.bottom()-posRect.height());
     }
     else
     {
-        posRect.setSize(setup->width, setup->height);
+        posRect.setSize(setup->setup.width, setup->setup.height);
     }
-    _realWidth=setup->width;
-    _realHeight=setup->height;
+    _realWidth=setup->setup.width;
+    _realHeight=setup->setup.height;
     _width_half = _realWidth/2.0f;
     _height_half = _realHeight/2.0f;
     _syncPositionAndSize();
@@ -204,45 +204,45 @@ void LVL_Npc::transformTo_x(long id)
         return;
     }
 
-    deActivatable = ((setup->deactivation)||(!setup->activity));
-    offSectionDeactivate = setup->deactivate_off_room;
-    activationTimeout= setup->deactivetionDelay;
+    deActivatable = ((setup->setup.deactivation)||(!setup->setup.activity));
+    offSectionDeactivate = setup->setup.deactivate_off_room;
+    activationTimeout= setup->setup.deactivationDelay;
 
-    disableBlockCollision=!setup->collision_with_blocks;
-    disableNpcCollision  = setup->no_npc_collions;
+    disableBlockCollision=!setup->setup.collision_with_blocks;
+    disableNpcCollision  = setup->setup.no_npc_collisions;
 
-    frameSize.setSize(setup->gfx_w, setup->gfx_h);
+    frameSize.setSize(setup->setup.gfx_w, setup->setup.gfx_h);
     animator.construct(texture, *setup);
 
     setDefaults();
-    setGravityScale(setup->gravity ? 1.0f : 0.f);
+    setGravityScale(setup->setup.gravity ? 1.0f : 0.f);
 
-    if(setup->block_player)
+    if(setup->setup.block_player)
         collide_player = COLLISION_ANY;
     else
-    if(setup->block_player_top)
+    if(setup->setup.block_player_top)
         collide_player = COLLISION_TOP;
     else
         collide_player = COLLISION_NONE;
 
-    if(setup->block_npc)
+    if(setup->setup.block_npc)
         collide_npc = COLLISION_ANY;
     else
-    if(setup->block_npc_top)
+    if(setup->setup.block_npc_top)
         collide_npc = COLLISION_TOP;
     else
         collide_npc = COLLISION_NONE;
-    if(setup->no_npc_collions)
+    if(setup->setup.no_npc_collisions)
         collide_npc=COLLISION_NONE;
 
     if(_isInited)
     {
-       int leftHealth=setup->health-(setup->health-health);
+       int leftHealth=setup->setup.health-(setup->setup.health-health);
        health=(leftHealth>0)? leftHealth : 1;
        animator.start();
     }
     else
-       health=(setup->health>0)?setup->health : 1;
+       health=(setup->setup.health>0)?setup->setup.health : 1;
 
     if(_isInited)
     {

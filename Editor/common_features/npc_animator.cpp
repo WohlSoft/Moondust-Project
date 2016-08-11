@@ -92,30 +92,30 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 
     animated = true;
 
-    frameSpeed = setup.framespeed;
-    frameStyle = setup.framestyle;
+    frameSpeed = setup.setup.framespeed;
+    frameStyle = setup.setup.framestyle;
     frameStep  = 1;
 
     frameSequance = false;
 
-    aniBiDirect  = setup.ani_bidir;
-    customAniAlg = setup.custom_ani_alg;
+    aniBiDirect  = setup.setup.ani_bidir;
+    customAniAlg = setup.setup.custom_ani_alg;
 
-    customAnimate = setup.custom_animate;
+    customAnimate = setup.setup.custom_animate;
 
-    custom_frameFL = setup.custom_ani_fl;//first left
-    custom_frameEL = setup.custom_ani_el;//end left
-    custom_frameFR = setup.custom_ani_fr;//first right
-    custom_frameER = setup.custom_ani_er;//enf right
+    custom_frameFL = setup.setup.custom_ani_fl;//first left
+    custom_frameEL = setup.setup.custom_ani_el;//end left
+    custom_frameFR = setup.setup.custom_ani_fr;//first right
+    custom_frameER = setup.setup.custom_ani_er;//enf right
 
     //bool refreshFrames = updFrames;
 
-    frameHeight = setup.gfx_h; // height of one frame
-    frameWidth  = setup.gfx_w; //width of target image
+    frameHeight = setup.setup.gfx_h; // height of one frame
+    frameWidth  = setup.setup.gfx_w; //width of target image
 
     spriteHeight = mainImage->height(); // Height of target image
 
-    framesCountOneSide = setup.frames;
+    framesCountOneSide = setup.setup.frames;
     //int framesMod = spriteHeight % frameHeight;
     //int roundedSpriteHeight = (spriteHeight-framesMod) / frameHeight;
     int framesZoneHeight = 0;
@@ -142,15 +142,15 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
     //        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
     //    }
 
-    if(setup.ani_directed_direct)
+    if(setup.setup.ani_directed_direct)
     {
-        aniDirectL = (true) ^ (setup.ani_direct);
-        aniDirectR = (false) ^ (setup.ani_direct);
+        aniDirectL = (true) ^ (setup.setup.ani_direct);
+        aniDirectR = (false) ^ (setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.ani_direct;
-        aniDirectR = setup.ani_direct;
+        aniDirectL = setup.setup.ani_direct;
+        aniDirectR = setup.setup.ani_direct;
     }
 
     if(customAnimate) // User defined spriteSet (example: boss)
@@ -162,7 +162,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         {
         case 2:
             frameSequance = true;
-            frames_listL = setup.frames_left;
+            frames_listL = setup.setup.frames_left;
             frameFirstL = 0;
             frameLastL = frames_listL.size()-1;
             break;
@@ -180,7 +180,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         {
         case 2:
             frameSequance = true;
-            frames_listR = setup.frames_right;
+            frames_listR = setup.setup.frames_right;
             frameFirstR = 0;
             frameLastR = frames_listR.size()-1; break;
         case 1:
@@ -196,7 +196,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         switch(frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesCountOneSide = setup.frames*4;
+            framesCountOneSide = setup.setup.frames*4;
 
              //left
                 frameFirstL = 0;
@@ -207,7 +207,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 
             break;
         case 1: //Left-Right sprite
-            framesCountOneSide=setup.frames*2;
+            framesCountOneSide=setup.setup.frames*2;
              //left
                 frameFirstL = 0;
                 frameLastL = (int)(framesCountOneSide / 2)-1;

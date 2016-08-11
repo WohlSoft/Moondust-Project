@@ -130,17 +130,17 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                 ItemMenu.addSeparator();
 
     /*************Direction*******************/
-    QMenu * chDir =             ItemMenu.addMenu(tr("Set %1").arg( (!m_localProps.direct_alt_title.isEmpty()) ? m_localProps.direct_alt_title : tr("Direction") ) );
-    QAction *setLeft =          chDir->addAction( (!m_localProps.direct_alt_left.isEmpty()) ? m_localProps.direct_alt_left : tr("Left"));
+    QMenu * chDir =             ItemMenu.addMenu(tr("Set %1").arg( (!m_localProps.setup.direct_alt_title.isEmpty()) ? m_localProps.setup.direct_alt_title : tr("Direction") ) );
+    QAction *setLeft =          chDir->addAction( (!m_localProps.setup.direct_alt_left.isEmpty()) ? m_localProps.setup.direct_alt_left : tr("Left"));
         setLeft->setCheckable(true);
         setLeft->setChecked(m_data.direct==-1);
 
     QAction *setRand =          chDir->addAction(tr("Random"));
-        setRand->setVisible( !m_localProps.direct_disable_random );
+        setRand->setVisible( !m_localProps.setup.direct_disable_random );
         setRand->setCheckable(true);
         setRand->setChecked(m_data.direct==0);
 
-    QAction *setRight =         chDir->addAction( (!m_localProps.direct_alt_right.isEmpty()) ? m_localProps.direct_alt_right : tr("Right") );
+    QAction *setRight =         chDir->addAction( (!m_localProps.setup.direct_alt_right.isEmpty()) ? m_localProps.setup.direct_alt_right : tr("Right") );
         setRight->setCheckable(true);
         setRight->setChecked(m_data.direct==1);
                                 ItemMenu.addSeparator();
@@ -168,7 +168,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                 ItemMenu.addSeparator();
 
     QAction *chNPC = NULL;
-    if(m_localProps.container)
+    if(m_localProps.setup.container)
     {
         chNPC =                 ItemMenu.addAction(tr("Change included NPC..."));
                                 ItemMenu.addSeparator();
@@ -566,7 +566,7 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
         delete m_includedNPC;
         m_includedNPC = NULL;
     }
-    if(npcID==0 || !m_localProps.container)
+    if(npcID==0 || !m_localProps.setup.container)
     {
         if( !init && (m_data.contents != 0) )
         {
@@ -582,12 +582,12 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
     //Default included NPC pos
     m_includedNPC->setPos(
                 (
-                    this->scenePos().x()+qreal((qreal(m_localProps.width)-qreal(npcImg.width()))/qreal(2))
+                    this->scenePos().x()+qreal((qreal(m_localProps.setup.width)-qreal(npcImg.width()))/qreal(2))
                  ),
                 (
                     (m_scene->m_configs->marker_npc.buried == m_data.id)?
                        this->scenePos().y()
-                      :this->scenePos().y()+qreal((qreal(m_localProps.height)-qreal(npcImg.height()))/qreal(2))
+                      :this->scenePos().y()+qreal((qreal(m_localProps.setup.height)-qreal(npcImg.height()))/qreal(2))
                  ));
 
     if(m_scene->m_configs->marker_npc.bubble != m_data.id)
@@ -621,7 +621,7 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     if(!enable)
     {
         if(!init) arrayApply();
-        m_gridSize = m_localProps.grid;
+        m_gridSize = m_localProps.setup.grid;
         return;
     }
     else
@@ -677,10 +677,10 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
         //Default Generator arrow NPC pos
         m_generatorArrow->setPos(
                     (
-                        offset.x()+this->scenePos().x()+qreal((qreal(m_localProps.width) - qreal(32))/qreal(2))
+                        offset.x()+this->scenePos().x()+qreal((qreal(m_localProps.setup.width) - qreal(32))/qreal(2))
                      ),
                     (
-                        offset.y()+this->scenePos().y()+qreal((qreal(m_localProps.height) - qreal(32))/qreal(2))
+                        offset.y()+this->scenePos().y()+qreal((qreal(m_localProps.setup.height) - qreal(32))/qreal(2))
                      ));
 
         m_grp->addToGroup( m_generatorArrow );
@@ -821,22 +821,22 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
     if(mergedSet)
     {
         m_localProps = (*mergedSet);
-        if(m_localProps.foreground)
+        if(m_localProps.setup.foreground)
             setZValue(m_scene->Z_npcFore);
         else
-        if(m_localProps.background)
+        if(m_localProps.setup.background)
             setZValue(m_scene->Z_npcBack);
         else
             setZValue(m_scene->Z_npcStd);
 
-        if((m_localProps.container)&&(m_data.contents>0))
+        if((m_localProps.setup.container)&&(m_data.contents>0))
             setIncludedNPC(m_data.contents, true);
 
-        m_data.is_star = m_localProps.is_star;
+        m_data.is_star = m_localProps.setup.is_star;
 
-        m_gridOffsetX=m_localProps.grid_offset_x;
-        m_gridOffsetY=m_localProps.grid_offset_y;
-        m_gridSize =  m_localProps.grid;
+        m_gridOffsetX=m_localProps.setup.grid_offset_x;
+        m_gridOffsetY=m_localProps.setup.grid_offset_y;
+        m_gridSize =  m_localProps.setup.grid;
     }
 
     if(animator_id)
@@ -853,11 +853,11 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
     setData(ITEM_ID, QString::number(m_data.id) );
     setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
-    setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)m_localProps.collision_with_blocks) );
-    setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)m_localProps.no_npc_collions) );
+    setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)m_localProps.setup.collision_with_blocks) );
+    setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)m_localProps.setup.no_npc_collisions) );
 
-    setData(ITEM_WIDTH,  QString::number(m_localProps.width) ); //width
-    setData(ITEM_HEIGHT, QString::number(m_localProps.height) ); //height
+    setData(ITEM_WIDTH,  QString::number(m_localProps.setup.width) ); //width
+    setData(ITEM_HEIGHT, QString::number(m_localProps.setup.height) ); //height
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -867,9 +867,9 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
 QRectF ItemNPC::boundingRect() const
 {
     if(!m_animated)
-        return QRectF(0+m_imgOffsetX+(-((double)m_localProps.gfx_offset_x)*m_direction), 0+m_imgOffsetY, m_imageSize.width(), m_imageSize.height());
+        return QRectF(0+m_imgOffsetX+(-((double)m_localProps.setup.gfx_offset_x)*m_direction), 0+m_imgOffsetY, m_imageSize.width(), m_imageSize.height());
     else
-        return QRectF(0+m_imgOffsetX+(-((double)m_localProps.gfx_offset_x)*m_direction), 0+m_imgOffsetY, m_localProps.gfx_w, m_localProps.gfx_h);
+        return QRectF(0+m_imgOffsetX+(-((double)m_localProps.setup.gfx_offset_x)*m_direction), 0+m_imgOffsetY, m_localProps.setup.gfx_w, m_localProps.setup.gfx_h);
 }
 
 
@@ -945,10 +945,10 @@ bool ItemNPC::itemTypeIsLocked()
 
 void ItemNPC::refreshOffsets()
 {
-    m_imgOffsetX = (int)round( - ( ( (double)m_localProps.gfx_w - (double)m_localProps.width ) / 2 ) );
-    m_imgOffsetY = (int)round( - (double)m_localProps.gfx_h + (double)m_localProps.height + (double)m_localProps.gfx_offset_y);
+    m_imgOffsetX = (int)round( - ( ( (double)m_localProps.setup.gfx_w - (double)m_localProps.setup.width ) / 2 ) );
+    m_imgOffsetY = (int)round( - (double)m_localProps.setup.gfx_h + (double)m_localProps.setup.height + (double)m_localProps.setup.gfx_offset_y);
 
-    m_offset_x=m_imgOffsetX+(-((double)m_localProps.gfx_offset_x)*m_direction);
+    m_offset_x=m_imgOffsetX+(-((double)m_localProps.setup.gfx_offset_x)*m_direction);
     m_offset_y=m_imgOffsetY;
 
     m_offseted = m_imageSize;

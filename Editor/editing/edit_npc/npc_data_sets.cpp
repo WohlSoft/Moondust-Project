@@ -472,46 +472,46 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
     {
         obj_npc &t_npc = pConfigs->main_npc[npc_id];
 
-        DefaultNPCData.gfxoffsetx=t_npc.gfx_offset_x;
-        DefaultNPCData.gfxoffsety=t_npc.gfx_offset_y;
-        DefaultNPCData.width=t_npc.width;
-        DefaultNPCData.height=t_npc.height;
-        DefaultNPCData.gfxwidth=t_npc.gfx_w;
-        DefaultNPCData.gfxheight=t_npc.gfx_h;
-        DefaultNPCData.score=t_npc.score;
-        DefaultNPCData.playerblock=(int)t_npc.block_player;
-        DefaultNPCData.playerblocktop=(int)t_npc.block_player_top;
-        DefaultNPCData.npcblock=(int)t_npc.block_npc;
-        DefaultNPCData.npcblocktop=(int)t_npc.block_player_top;
-        DefaultNPCData.grabside=(int)t_npc.grab_side;
-        DefaultNPCData.grabtop=(int)t_npc.grab_top;
+        DefaultNPCData.gfxoffsetx=t_npc.setup.gfx_offset_x;
+        DefaultNPCData.gfxoffsety=t_npc.setup.gfx_offset_y;
+        DefaultNPCData.width=t_npc.setup.width;
+        DefaultNPCData.height=t_npc.setup.height;
+        DefaultNPCData.gfxwidth=t_npc.setup.gfx_w;
+        DefaultNPCData.gfxheight=t_npc.setup.gfx_h;
+        DefaultNPCData.score=t_npc.setup.score;
+        DefaultNPCData.playerblock=(int)t_npc.setup.block_player;
+        DefaultNPCData.playerblocktop=(int)t_npc.setup.block_player_top;
+        DefaultNPCData.npcblock=(int)t_npc.setup.block_npc;
+        DefaultNPCData.npcblocktop=(int)t_npc.setup.block_player_top;
+        DefaultNPCData.grabside=(int)t_npc.setup.grab_side;
+        DefaultNPCData.grabtop=(int)t_npc.setup.grab_top;
         DefaultNPCData.jumphurt=(int)(
-                    (t_npc.hurt_player)
+                    (t_npc.setup.hurt_player)
                                       &&
-                                      (!t_npc.kill_on_jump));
-        DefaultNPCData.nohurt=(int)(!t_npc.hurt_player);
-        DefaultNPCData.noblockcollision=(int)(!t_npc.collision_with_blocks);
-        DefaultNPCData.cliffturn=(int)t_npc.turn_on_cliff_detect;
-        DefaultNPCData.noyoshi=(int)(!t_npc.can_be_eaten);
-        DefaultNPCData.foreground=(int)t_npc.foreground;
+                                      (!t_npc.setup.kill_on_jump));
+        DefaultNPCData.nohurt=(int)(!t_npc.setup.hurt_player);
+        DefaultNPCData.noblockcollision=(int)(!t_npc.setup.collision_with_blocks);
+        DefaultNPCData.cliffturn=(int)t_npc.setup.turn_on_cliff_detect;
+        DefaultNPCData.noyoshi=(int)(!t_npc.setup.can_be_eaten);
+        DefaultNPCData.foreground=(int)t_npc.setup.foreground;
         DefaultNPCData.speed=1;
-        DefaultNPCData.nofireball=(int)(!t_npc.kill_by_fireball);
-        DefaultNPCData.nogravity=(int)(!t_npc.gravity);
-        DefaultNPCData.frames=t_npc.frames;
+        DefaultNPCData.nofireball=(int)(!t_npc.setup.kill_by_fireball);
+        DefaultNPCData.nogravity=(int)(!t_npc.setup.gravity);
+        DefaultNPCData.frames=t_npc.setup.frames;
         DefaultNPCData.framespeed=8;
-        DefaultNPCData.framestyle=t_npc.framestyle;
-        DefaultNPCData.noiceball=(int)(!t_npc.freeze_by_iceball);
+        DefaultNPCData.framestyle=t_npc.setup.framestyle;
+        DefaultNPCData.noiceball=(int)(!t_npc.setup.freeze_by_iceball);
         //Extended
-        DefaultNPCData.nohammer=(int)(!t_npc.kill_hammer);
-        DefaultNPCData.noshell=(int)(!t_npc.kill_by_npc);
-        DefaultNPCData.name=t_npc.name;
-        DefaultNPCData.health=t_npc.health;
-        DefaultNPCData.script=t_npc.algorithm_script;
-        DefaultNPCData.image=t_npc.image_n;
-        DefaultNPCData.grid=t_npc.grid;
+        DefaultNPCData.nohammer=(int)(!t_npc.setup.kill_hammer);
+        DefaultNPCData.noshell=(int)(!t_npc.setup.kill_by_npc);
+        DefaultNPCData.name=t_npc.setup.name;
+        DefaultNPCData.health=t_npc.setup.health;
+        DefaultNPCData.script=t_npc.setup.algorithm_script;
+        DefaultNPCData.image=t_npc.setup.image_n;
+        DefaultNPCData.grid=t_npc.setup.grid;
         DefaultNPCData.grid_offset_x=0;
         DefaultNPCData.grid_offset_y=0;
-        DefaultNPCData.grid_align=t_npc.grid_attach_style;
+        DefaultNPCData.grid_align=t_npc.setup.grid_attach_style;
     }
 }
 

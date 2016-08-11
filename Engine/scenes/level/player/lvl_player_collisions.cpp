@@ -135,7 +135,7 @@ void LVL_Player::updateCollisions()
                     foot_contacts_map[(intptr_t)collided]=collided;
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     floor_blocks.push_back(npc);
-                    if((npc->collide_player!=COLLISION_TOP) && (npc->setup->kill_on_jump))
+                    if((npc->collide_player!=COLLISION_TOP) && (npc->setup->setup.kill_on_jump))
                         npcs_to_stomp.push_back(npc);
                     else
                         npc->collision_speed_add.push_back(this);
@@ -714,7 +714,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                 if(!npc->enablePlayerCollision) break;
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
-                if(npc->setup->climbable)
+                if(npc->setup->setup.climbable)
                 {
                     bool set=climbable_map.isEmpty();
                     climbable_map[(intptr_t)collided]=collided;
@@ -724,7 +724,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         climbableHeight=collided->top();
                 }
 
-                if((!npc->data.friendly)&&(npc->setup->takable))
+                if((!npc->data.friendly)&&(npc->setup->setup.takable))
                 {
                     collided_talkable_npc=NULL;
                     npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
@@ -761,7 +761,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         } else {
                             if( (bottom()>(npc->top()+2)) && npc->posRect.collideRect(posRect) )
                             {
-                               if(npc->setup->hurt_player & !npc->setup->kill_on_jump) harm(1);
+                               if(npc->setup->setup.hurt_player & !npc->setup->setup.kill_on_jump) harm(1);
                             }
                         }
 
@@ -787,7 +787,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         else if( isCollideCelling(*this, collided, _heightDelta, forceCollideCenter) )
                         {
                             collided_top[(intptr_t)collided]=collided;//top of player
-                            if(npc->setup->hurt_player) harm(1);
+                            if(npc->setup->setup.hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Bottom of block";
                             found=true;
@@ -797,7 +797,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         else if( isCollideLeft(*this, collided) )
                         {
                             collided_left[(intptr_t)collided]=collided;//right of player
-                            if(npc->setup->hurt_player) harm(1);
+                            if(npc->setup->setup.hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Right of block";
                             #endif
@@ -806,7 +806,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         else if( isCollideRight(*this, collided) )
                         {
                             collided_right[(intptr_t)collided]=collided;//left of player
-                            if(npc->setup->hurt_player) harm(1);
+                            if(npc->setup->setup.hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Left of block";
                             found=true;
@@ -830,7 +830,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                                                          fabs(_velocityY_prev)*c+c*2.0)
                                 )
                         {
-                            if(npc->setup->hurt_player) harm(1);
+                            if(npc->setup->setup.hurt_player) harm(1);
                             if(!forceCollideCenter) break;
                             collided_center[(intptr_t)collided]=collided;
                             #ifdef COLLIDE_DEBUG
@@ -847,11 +847,11 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                     }
                 case COLLISION_NONE:
                     { //Detect top of stompable NPC!
-                        if(!npc->setup->kill_on_jump)
+                        if(!npc->setup->setup.kill_on_jump)
                         {
                             if( npc->posRect.collideRect(posRect))
                             {
-                               if(npc->setup->hurt_player) harm(1);
+                               if(npc->setup->setup.hurt_player) harm(1);
                             }
                             break;
                         }
@@ -867,7 +867,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                                 //The bug occurs when the player is moving fast enough when they land on an enemy that they
                                 //partially enter the enemy before the collision is resolved, causing the engine to think
                                 //that the player is INSIDE the NPC, when they are actually only JUMPING on the NPC.
-                                if(npc->setup->hurt_player /*& (!npc->setup->kill_on_jump || colliding_ySpeed > -1.0f)*/) harm(1);
+                                if(npc->setup->setup.hurt_player /*& (!npc->setup->kill_on_jump || colliding_ySpeed > -1.0f)*/) harm(1);
                             }
                         }
                         break;

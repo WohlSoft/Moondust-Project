@@ -192,8 +192,8 @@ long  ConfigManager::getNpcTexture(long npcID)
     }
     else
     {
-        QString imgFile = Dir_NPC.getCustomFile(npcSetup->image_n);
-        QString maskFile = Dir_NPC.getCustomFile(npcSetup->mask_n);
+        QString imgFile = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
+        QString maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
 
         long id = level_textures.size();
         npcSetup->textureArrayId = id;
@@ -211,7 +211,7 @@ long  ConfigManager::getNpcTexture(long npcID)
         npcSetup->isInit = true;
 
         //Also, load and init animator
-        if( (npcSetup->shared_ani)&&((npcSetup->frames > 1)||(npcSetup->framestyle > 0)) )
+        if( (npcSetup->setup.shared_ani)&&((npcSetup->setup.frames > 1)||(npcSetup->setup.framestyle > 0)) )
         {
             AdvNpcAnimator animator(*(npcSetup->image), *npcSetup);
             Animator_NPC.push_back(animator);

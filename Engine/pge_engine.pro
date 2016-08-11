@@ -110,6 +110,7 @@ unix:{
 }
 
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
+include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 
 SOURCES += \
     main.cpp \
@@ -256,7 +257,6 @@ SOURCES += \
     gui/pge_textinputbox.cpp \
     gui/pge_menuboxbase.cpp \
     settings/debugger.cpp \
-    ../_common/data_functions/npctxt_manager.cpp \
     script/bindings/core/lua_global_constants.cpp \
     scenes/world/wld_pathopener.cpp \
     scenes/level/npc_detectors/lvl_dtc_contact.cpp \
@@ -407,7 +407,6 @@ HEADERS  += \
     gui/pge_textinputbox.h \
     gui/pge_menuboxbase.h \
     settings/debugger.h \
-    ../_common/data_functions/npctxt_manager.h \
     script/bindings/core/lua_global_constants.h \
     script/lua_defines.h \
     scenes/level/collision_checks.h \

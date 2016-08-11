@@ -366,7 +366,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             if( (FileData.characterStates[i].itemID>0) && configs.main_npc.contains(FileData.characterStates[i].itemID) )
             {
                 statistics += QString("%2Has item: %1")
-                                .arg(configs.main_npc[FileData.characterStates[i].itemID].name)
+                                .arg(configs.main_npc[FileData.characterStates[i].itemID].setup.name)
                                 .arg(FileData.characterStates[i].mountType > 0 ? ",    ":"");
             }
 

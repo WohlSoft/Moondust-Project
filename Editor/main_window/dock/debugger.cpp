@@ -270,7 +270,7 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
                                 if( (e->LvlData.npc[j].id>0)&& e->scene->m_localConfigNPCs.contains(e->LvlData.npc[j].id) )
                                 {
                                     obj_npc &t_npc = e->scene->m_localConfigNPCs[ e->LvlData.npc[j].id ];
-                                    if(t_npc.container) {
+                                    if(t_npc.setup.container) {
                                         if(e->LvlData.npc[j].contents==q) {countItems++; break;}
                                     }
                                 }

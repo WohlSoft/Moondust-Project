@@ -32,6 +32,7 @@
 #endif
 
 #include <common_features/file_mapper.h>
+#include <ConfigPackManager/image_size.h>
 
 #ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
@@ -222,7 +223,7 @@ bool GraphicsHelps::getImageMetrics(QString imageFile, PGE_Size* imgSize)
 }
 
 
-void GraphicsHelps::getMakedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
+void GraphicsHelps::getMaskedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
 {
     if( in_imgName.isEmpty() )
     {
@@ -230,33 +231,31 @@ void GraphicsHelps::getMakedImageInfo(QString rootDir, QString in_imgName, QStri
         return;
     }
 
-    if(!QFile(rootDir+in_imgName).exists())
+    int errorCode, w, h;
+    if(!PGE_ImageInfo::getImageSize(rootDir + in_imgName, &w, &h, &errorCode))
     {
-        out_errStr="image file is not exist: "+rootDir+in_imgName;
+        switch(errorCode)
+        {
+        case PGE_ImageInfo::ERR_UNSUPPORTED_FILETYPE:
+            out_errStr = "Unsupported or corrupted file format: "+rootDir+in_imgName;
+            break;
+        case PGE_ImageInfo::ERR_NOT_EXISTS:
+            out_errStr = "image file is not exist: "+rootDir+in_imgName;
+            break;
+        case PGE_ImageInfo::ERR_CANT_OPEN:
+            out_errStr = "Can't open image file: "+rootDir+in_imgName;
+            break;
+        }
         return;
     }
 
-    out_maskName=in_imgName;
-    int i = out_maskName.size()-1;
-    for( ;i>0; i--)
-    {
-        if(out_maskName[i]=='.')
-        {
-            out_maskName.insert(i, 'm');
-            break;
-        }
-    }
-
-    if(i==0)
-    {
-        out_maskName = "";
-    }
+    out_maskName = PGE_ImageInfo::getMaskName(in_imgName);
     out_errStr = "";
 
     if(imgSize)
     {
-        if(!getImageMetrics(rootDir+in_imgName, imgSize))
-            out_errStr = "Invalid image file";
+        imgSize->setWidth(w);
+        imgSize->setHeight(h);
     }
 }
 

@@ -269,7 +269,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     for(int q=0; q< LvlData.npc.size(); q++)
     {
         if(LvlData.npc[q].id<=0) continue;
-        LvlData.npc[q].is_star = m_mw->configs.main_npc[LvlData.npc[q].id].is_star;
+        LvlData.npc[q].is_star = m_mw->configs.main_npc[LvlData.npc[q].id].setup.is_star;
         if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
             LvlData.npc[q].is_star=false;
     }

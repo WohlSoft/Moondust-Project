@@ -141,18 +141,18 @@ LvlScene::LvlScene(MainWindow* mw,
     m_animatorsBGO.push_back( tmpAnimator );
 
         obj_npc dummyNpc;
-        dummyNpc.frames = 1;
-        dummyNpc.framestyle = 0;
-        dummyNpc.framespeed = 64;
-        dummyNpc.width = m_dummyNpcImg.width();
-        dummyNpc.height = m_dummyNpcImg.height();
-        dummyNpc.gfx_w = m_dummyNpcImg.width();
-        dummyNpc.gfx_h = m_dummyNpcImg.height();
-        dummyNpc.ani_bidir = false;
-        dummyNpc.ani_direct = false;
-        dummyNpc.ani_directed_direct = false;
-        dummyNpc.custom_animate = false;
-        dummyNpc.custom_physics_to_gfx = true;
+        dummyNpc.setup.frames = 1;
+        dummyNpc.setup.framestyle = 0;
+        dummyNpc.setup.framespeed = 64;
+        dummyNpc.setup.width = m_dummyNpcImg.width();
+        dummyNpc.setup.height = m_dummyNpcImg.height();
+        dummyNpc.setup.gfx_w = m_dummyNpcImg.width();
+        dummyNpc.setup.gfx_h = m_dummyNpcImg.height();
+        dummyNpc.setup.ani_bidir = false;
+        dummyNpc.setup.ani_direct = false;
+        dummyNpc.setup.ani_directed_direct = false;
+        dummyNpc.setup.custom_animate = false;
+        dummyNpc.setup.custom_physics_to_gfx = true;
         AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(m_dummyNpcImg, dummyNpc);
     m_animatorsNPC.push_back( tmpNpcAnimator );
 

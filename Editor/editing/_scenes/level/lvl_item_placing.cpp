@@ -322,34 +322,34 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz=(m_configs->default_grid/2);
         else
-            LvlPlacingItems::gridSz=mergedSet.grid;
+            LvlPlacingItems::gridSz=mergedSet.setup.grid;
 
-        LvlPlacingItems::npcSet.is_star = mergedSet.is_star;
+        LvlPlacingItems::npcSet.is_star = mergedSet.setup.is_star;
 
-        LvlPlacingItems::npcGrid=mergedSet.grid;
+        LvlPlacingItems::npcGrid=mergedSet.setup.grid;
 
-        LvlPlacingItems::gridOffset = QPoint(mergedSet.grid_offset_x,
-                                             mergedSet.grid_offset_y);
+        LvlPlacingItems::gridOffset = QPoint(mergedSet.setup.grid_offset_x,
+                                             mergedSet.setup.grid_offset_y);
 
         LvlPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-        long imgOffsetX = (int)round( - ( ( (double)mergedSet.gfx_w -
-                                            (double)mergedSet.width ) / 2 ) );
+        long imgOffsetX = (int)round( - ( ( (double)mergedSet.setup.gfx_w -
+                                            (double)mergedSet.setup.width ) / 2 ) );
 
-        long imgOffsetY = (int)round( - (double)mergedSet.gfx_h +
-                                      (double)mergedSet.height +
-                                      (double)mergedSet.gfx_offset_y );
+        long imgOffsetY = (int)round( - (double)mergedSet.setup.gfx_h +
+                                      (double)mergedSet.setup.height +
+                                      (double)mergedSet.setup.gfx_offset_y );
 
         LvlPlacingItems::npcGfxOffsetX1 = imgOffsetX;
-        LvlPlacingItems::npcGfxOffsetX2 = (-((double)mergedSet.gfx_offset_x));
+        LvlPlacingItems::npcGfxOffsetX2 = (-((double)mergedSet.setup.gfx_offset_x));
         LvlPlacingItems::npcGfxOffsetY = imgOffsetY;
 
-        LvlPlacingItems::itemW = mergedSet.width;
-        LvlPlacingItems::itemH = mergedSet.height;
+        LvlPlacingItems::itemW = mergedSet.setup.width;
+        LvlPlacingItems::itemH = mergedSet.setup.height;
 
-        LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
-        LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
+        LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.setup.width) / 2);
+        LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.setup.height) / 2);
 
         m_placingItemType = PLC_NPC;
 
@@ -362,19 +362,19 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::flags.push_back(flag);
 
             flag.first=ITEM_NPC_BLOCK_COLLISION;
-            flag.second=QString::number((int)mergedSet.collision_with_blocks);
+            flag.second=QString::number((int)mergedSet.setup.collision_with_blocks);
         LvlPlacingItems::flags.push_back(flag);
 
             flag.first=ITEM_NPC_NO_NPC_COLLISION;
-            flag.second=QString::number((int)mergedSet.no_npc_collions);
+            flag.second=QString::number((int)mergedSet.setup.no_npc_collisions);
         LvlPlacingItems::flags.push_back(flag);
 
             flag.first=ITEM_WIDTH;
-            flag.second=QString::number(mergedSet.width);
+            flag.second=QString::number(mergedSet.setup.width);
         LvlPlacingItems::flags.push_back(flag);
 
             flag.first=ITEM_HEIGHT;
-            flag.second=QString::number(mergedSet.height);
+            flag.second=QString::number(mergedSet.setup.height);
         LvlPlacingItems::flags.push_back(flag);
 
             flag.first=ITEM_IS_CURSOR;

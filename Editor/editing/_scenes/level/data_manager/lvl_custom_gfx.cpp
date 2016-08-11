@@ -20,7 +20,6 @@
 #include <common_features/items.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
-#include <data_functions/npctxt_manager.h>
 
 #include "../../../../defines.h"
 
@@ -359,7 +358,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              // /////////////////////// Looking for user's NPC.txt ////////////////////////////
              // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
-             QString CustomTxt=uLVL.getCustomFile("npc-" + QString::number(t_npc.id)+".txt", true);
+             QString CustomTxt=uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id)+".txt", true);
              if(!CustomTxt.isEmpty())
              {
                 QFile file(CustomTxt);
@@ -371,18 +370,18 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     custom = true;
                 }
              }
-             QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.image_n;
+             QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.setup.image_n;
 
              // ///////////////////////Looking for user's GFX
              QString CustomImage=uLVL.getCustomFile(imgFileName, true);
              if(CustomImage.isEmpty())
-                CustomImage=uLVL.getCustomFile(t_npc.image_n, true);
+                CustomImage=uLVL.getCustomFile(t_npc.setup.image_n, true);
 
              if(!CustomImage.isEmpty())
              {
                  if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
                  {
-                     QString CustomMask = uLVL.getCustomFile(t_npc.mask_n, false);
+                     QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
                      GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
                  } else {
                      GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -401,7 +400,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              if(npctxt)
              {  //Merge global and user's settings from NPC.txt file
-                 t_npc = mergeNPCConfigs(t_npc, sets, capturedS);
+                 t_npc.setup.applyNPCtxt(&sets, t_npc.setup, capturedS);
              }
              else
              {
@@ -409,9 +408,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  {
                      NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
                      autoConf.gfxwidth = capturedS.width();
-                     t_npc = mergeNPCConfigs(
-                                 t_npc,
-                                 autoConf, capturedS);
+                     t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, capturedS);
                  }
              }
 
@@ -475,7 +472,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
     int gfxH = 0;
     obj_npc &merged = m_localConfigNPCs[npcID];
     found = merged.isValid;
-    gfxH  = merged.gfx_h;
+    gfxH  = merged.setup.gfx_h;
 
     if(merged.cur_image->isNull())
     {
@@ -485,9 +482,9 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
     if(Direction<=0)
     {
         int frame=0;
-        if(merged.custom_animate)
+        if(merged.setup.custom_animate)
         {
-            frame=merged.custom_ani_fl;
+            frame=merged.setup.custom_ani_fl;
         }
         return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
     }
@@ -495,20 +492,20 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
     {
         int frame=0;
         int framesQ;
-        if(merged.custom_animate)
+        if(merged.setup.custom_animate)
         {
-            frame=merged.custom_ani_fr;
+            frame=merged.setup.custom_ani_fr;
         }
         else
         {
-            switch(merged.framestyle)
+            switch(merged.setup.framestyle)
             {
             case 2:
-                framesQ = merged.frames * 4;
+                framesQ = merged.setup.frames * 4;
                 frame = (int)(framesQ-(framesQ/4)*3);
                 break;
             case 1:
-                framesQ = merged.frames * 2;
+                framesQ = merged.setup.frames * 2;
                 frame = (int)(framesQ / 2);
                 break;
             case 0:

@@ -246,7 +246,7 @@ bool ConfigManager::loadPlayableCharacters()
                     splayer.image_wld_n = imgFile;
                     {
                         QString err;
-                        GraphicsHelps::getMakedImageInfo(playerWldPath, splayer.image_wld_n, splayer.mask_wld_n, err);
+                        GraphicsHelps::getMaskedImageInfo(playerWldPath, splayer.image_wld_n, splayer.mask_wld_n, err);
                         if( imgFile=="" )
                         {
                             addError(QString("Character-%1 Wld Image filename isn't defined").arg(i));
@@ -286,7 +286,7 @@ bool ConfigManager::loadPlayableCharacters()
                         pstate.image_n = imgFile;
                         {
                             QString err;
-                            GraphicsHelps::getMakedImageInfo(playerLvlPath+splayer.sprite_folder+"/", imgFile, pstate.mask_n, err);
+                            GraphicsHelps::getMaskedImageInfo(playerLvlPath+splayer.sprite_folder+"/", imgFile, pstate.mask_n, err);
                             if( imgFile=="" )
                             {
                                 addError(QString("Character-%1 state-%2 Image filename isn't defined").arg(i).arg(j));
