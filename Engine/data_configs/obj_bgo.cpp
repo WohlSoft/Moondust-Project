@@ -65,65 +65,65 @@ bool ConfigManager::loadLevelBGO()
 
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
 
-            sbgo.name = bgoset.value("name", "").toString();
+            sbgo.setup.name = bgoset.value("name", "").toString();
 
-                if(sbgo.name=="")
+                if(sbgo.setup.name=="")
                 {
                     addError(QString("BGO-%1 Item name isn't defined").arg(i));
                     goto skipBGO;
                 }
-            sbgo.group = bgoset.value("group", "_NoGroup").toString();
-            sbgo.category = bgoset.value("category", "_Other").toString();
+            sbgo.setup.group = bgoset.value("group", "_NoGroup").toString();
+            sbgo.setup.category = bgoset.value("category", "_Other").toString();
             //sbgo.grid = bgoset.value("grid", default_grid).toInt();
             {
                 QString tmpStr=bgoset.value("view", "background").toString();
 
                 if(tmpStr=="foreground2")
-                    sbgo.view = 2;
+                    sbgo.setup.zLayer = 2;
                 else
                 if(tmpStr=="foreground")
-                    sbgo.view = 1;
+                    sbgo.setup.zLayer = 1;
                 else
                 if(tmpStr=="background")
-                    sbgo.view = 0;
+                    sbgo.setup.zLayer = 0;
                 else
                 if(tmpStr=="background2")
-                    sbgo.view = -1;
+                    sbgo.setup.zLayer = -1;
                 else
-                    sbgo.view = 0;
+                    sbgo.setup.zLayer = 0;
             }
 
-            sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
-            sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
-            sbgo.zOffset = bgoset.value("z-offset", 0.0).toDouble();
+            sbgo.setup.offsetX = bgoset.value("offset-x", "0").toInt();
+            sbgo.setup.offsetY = bgoset.value("offset-y", "0").toInt();
+            sbgo.setup.zOffset = bgoset.value("z-offset", 0.0).toDouble();
             imgFile = bgoset.value("image", "").toString();
             {
                 QString err;
-                GraphicsHelps::getMaskedImageInfo(bgoPath, imgFile, sbgo.mask_n, err);
-                sbgo.image_n = imgFile;
+                GraphicsHelps::getMaskedImageInfo(bgoPath, imgFile, sbgo.setup.mask_n, err);
+                sbgo.setup.image_n = imgFile;
                 if( imgFile=="" )
                 {
                     addError(QString("BGO-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
                     goto skipBGO;
                 }
             }
-            sbgo.climbing = (bgoset.value("climbing", 0).toBool());
-            sbgo.animated = (bgoset.value("animated", 0).toBool());
-            sbgo.frames = bgoset.value("frames", "1").toInt();
-                NumberLimiter::apply(sbgo.frames, 1u);
-            sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
-                NumberLimiter::apply(sbgo.framespeed, 1u);
+            sbgo.setup.climbing = (bgoset.value("climbing", 0).toBool());
+            sbgo.setup.animated = (bgoset.value("animated", 0).toBool());
+            sbgo.setup.frames = bgoset.value("frames", "1").toInt();
+                NumberLimiter::apply(sbgo.setup.frames, 1u);
+            sbgo.setup.framespeed = bgoset.value("frame-speed", "125").toInt();
+                NumberLimiter::apply(sbgo.setup.framespeed, 1u);
 
-            sbgo.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
-                NumberLimiter::apply(sbgo.frame_h, 0u);
+            sbgo.setup.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
+                NumberLimiter::apply(sbgo.setup.frame_h, 0u);
 
-            sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
-                NumberLimiter::apply(sbgo.display_frame, 0u);
-            sbgo.id = i;
+            sbgo.setup.display_frame = bgoset.value("display-frame", "0").toInt();
+                NumberLimiter::apply(sbgo.setup.display_frame, 0u);
+            sbgo.setup.id = i;
             //lvl_bgo.push_back(sbgo);
 
             //Add to Index
-            lvl_bgo_indexes.storeElement(sbgo.id, sbgo);
+            lvl_bgo_indexes.storeElement(sbgo.setup.id, sbgo);
 
         skipBGO:
         bgoset.endGroup();

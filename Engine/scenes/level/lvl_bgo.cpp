@@ -54,12 +54,12 @@ void LVL_Bgo::transformTo_x(long id)
     data.id=id;
     setup = &ConfigManager::lvl_bgo_indexes[data.id];
     long double targetZ = 0.0L;
-    long double zOffset = (long double)setup->zOffset;
+    long double zOffset = (long double)setup->setup.zOffset;
     int zMode = data.z_mode;
 
     if(zMode==LevelBGO::ZDefault)
     {
-        switch(setup->view)
+        switch(setup->setup.zLayer)
         {
             case -1: zMode = LevelBGO::Background2;break;
             case 0: zMode = LevelBGO::Background1;break;
@@ -94,7 +94,7 @@ void LVL_Bgo::transformTo_x(long id)
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
-        animated = setup->animated;
+        animated = setup->setup.animated;
         animator_ID = setup->animator_ID;
     }
     if(!_isInited)

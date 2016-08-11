@@ -427,13 +427,13 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         {
             foreach(LevelBGO y, box->LvlData.bgo)
             {
-                if(y.id == x->id)
+                if(y.id == x->setup.id)
                 {
                     QString image;
                     QString mask;
 
-                    image = levelCustomDirectory + "/" + x->image_n;
-                    mask = levelCustomDirectory + "/" + x->mask_n;
+                    image = levelCustomDirectory + "/" + x->setup.image_n;
+                    mask = levelCustomDirectory + "/" + x->setup.mask_n;
 
                     bool imageRemoved = !QFileInfo(image).exists();
                     bool maskRemoved = !QFileInfo(mask).exists();

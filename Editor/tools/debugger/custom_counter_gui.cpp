@@ -172,8 +172,8 @@ QString CustomCounterGUI::makeItemName(long item)
                 return QString("BGO-%1").arg(item);
             else
             {
-                if(!bgo.name.isEmpty())
-                    return bgo.name + QString(" (BGO-%1)").arg(item);
+                if(!bgo.setup.name.isEmpty())
+                    return bgo.setup.name + QString(" (BGO-%1)").arg(item);
                 else
                     return QString("BGO-%1").arg(item);
             }

@@ -221,9 +221,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
 
 
-        LvlPlacingItems::gridSz=bgoC.grid;
-        LvlPlacingItems::gridOffset = QPoint(bgoC.offsetX,
-                                             bgoC.offsetY);
+        LvlPlacingItems::gridSz=bgoC.setup.grid;
+        LvlPlacingItems::gridOffset = QPoint(bgoC.setup.offsetX,
+                                             bgoC.setup.offsetY);
 
         if( (itemID != LvlPlacingItems::bgoSet.id) || (m_placingItemType!=PLC_BGO) )
             LvlPlacingItems::bgoSet.layer = "Default";

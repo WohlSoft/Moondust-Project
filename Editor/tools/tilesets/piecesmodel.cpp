@@ -74,11 +74,11 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_BGO)
     {
         obj_bgo& bgo = scene_lvl ? scene_lvl->m_localConfigBGOs[index] : m_conf->main_bgo[index];
-        pixmapNames.insert(pixmaps.size(), bgo.name);
+        pixmapNames.insert(pixmaps.size(), bgo.setup.name);
         QPixmap img;
         Items::getItemGFX(&bgo, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), bgo.id);
+        pixmapId.insert(pixmaps.size(), bgo.setup.id);
     }
     else
     if(m_type==LEVELPIECE_NPC)

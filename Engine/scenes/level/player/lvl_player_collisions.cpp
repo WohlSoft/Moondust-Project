@@ -688,7 +688,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
             LVL_Bgo *bgo= static_cast<LVL_Bgo*>(collided);
             if(bgo)
             {
-                if(bgo->setup->climbing)
+                if(bgo->setup->setup.climbing)
                 {
                     bool set=climbable_map.isEmpty();
                     climbable_map[(intptr_t)collided]=collided;

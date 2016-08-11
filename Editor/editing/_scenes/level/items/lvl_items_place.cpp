@@ -71,8 +71,8 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet.grid,
-                           QPoint(mergedSet.offsetX, mergedSet.offsetY));
+        newPos = applyGrid(QPoint(bgo.x, bgo.y), mergedSet.setup.grid,
+                           QPoint(mergedSet.setup.offsetX, mergedSet.setup.offsetY));
         bgo.x = newPos.x();
         bgo.y = newPos.y();
     }

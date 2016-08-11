@@ -162,7 +162,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( lvl_scene && (mode==GFX_Level) )
             {
                 for(int i = 0; i < lvl_scene->m_customBGOs.size(); ++i) {
-                    m_model->addPiece( lvl_scene->m_customBGOs[i]->id );
+                    m_model->addPiece( lvl_scene->m_customBGOs[i]->setup.id );
                 }
             }
         }
@@ -172,7 +172,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( lvl_scene && (mode==GFX_Level) )
             {
                 for(int i = 0; i < lvl_scene->m_customBGOs.size(); ++i) {
-                    customElements[lvl_scene->m_customBGOs[i]->id] = i;
+                    customElements[lvl_scene->m_customBGOs[i]->setup.id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_bgo.size(); ++i) {

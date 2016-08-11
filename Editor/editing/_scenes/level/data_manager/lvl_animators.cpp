@@ -44,9 +44,9 @@ void LvlScene::buildAnimators()
                          ((t_bgo.cur_image->isNull()) ?
                                 m_dummyBgoImg:
                                *t_bgo.cur_image),
-                                t_bgo.animated,
-                                t_bgo.frames,
-                                t_bgo.framespeed
+                                t_bgo.setup.animated,
+                                t_bgo.setup.frames,
+                                t_bgo.setup.framespeed
                               );
 
         m_animatorsBGO.push_back( aniBGO );

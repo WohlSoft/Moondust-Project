@@ -194,9 +194,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             obj_bgo &bgoD = (*array)[i];
             QPixmap tmpI;
             Items::getItemGFX(&bgoD, tmpI, false, QSize(16,16));
-            QListWidgetItem* item = new QListWidgetItem( bgoD.name, ui->Sel_List_BGO );
+            QListWidgetItem* item = new QListWidgetItem( bgoD.setup.name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgoD.id) );
+            item->setData(3, QString::number(bgoD.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_BGO->addItem(item);
         }
@@ -522,9 +522,9 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 obj_bgo &bgo = *(scene_lvl->m_customBGOs[i]);
                 Items::getItemGFX(&bgo, tmpI, false, QSize(16,16));
-                item = new QListWidgetItem( bgo.name );
+                item = new QListWidgetItem( bgo.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo.id) );
+                item->setData(3, QString::number(bgo.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );
@@ -540,7 +540,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             //Add Group
             needToAdd = true;
-            if(bgoItem.group.isEmpty())
+            if(bgoItem.setup.group.isEmpty())
             {
                 needToAdd=false;
             }//Skip empty values
@@ -549,7 +549,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach(QString grp, tmpGrpList)
                 {
-                    if(bgoItem.group==grp)
+                    if(bgoItem.setup.group==grp)
                     {
                         needToAdd=false;
                         break;
@@ -558,12 +558,12 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             }
             if(needToAdd)
             {
-                tmpGrpList.push_back(bgoItem.group);
+                tmpGrpList.push_back(bgoItem.setup.group);
             }
 
             //Add category
             needToAdd = true;
-            if( (bgoItem.group != grp_bgo) && (grp_bgo != allLabel) )
+            if( (bgoItem.setup.group != grp_bgo) && (grp_bgo != allLabel) )
             {
                 needToAdd = false;
             }
@@ -572,7 +572,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             {
                 foreach(QString cat, tmpList)
                 {
-                    if(bgoItem.category==cat)
+                    if(bgoItem.setup.category==cat)
                     {
                         needToAdd = false; break;
                     }
@@ -581,19 +581,19 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
             if(needToAdd)
             {
-                tmpList.push_back(bgoItem.category);
+                tmpList.push_back(bgoItem.setup.category);
             }
 
             if(
-                ( (bgoItem.group==grp_bgo) || (grp_bgo==allLabel) || (grp_bgo=="") )&&
-                ( (bgoItem.category==cat_bgos) || (cat_bgos==allLabel) )
+                ( (bgoItem.setup.group==grp_bgo) || (grp_bgo==allLabel) || (grp_bgo=="") )&&
+                ( (bgoItem.setup.category==cat_bgos) || (cat_bgos==allLabel) )
               )
             {
                 Items::getItemGFX(&bgoItem, tmpI, false, QSize(16,16));
 
-                item = new QListWidgetItem( bgoItem.name );
+                item = new QListWidgetItem( bgoItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgoItem.id) );
+                item->setData(3, QString::number(bgoItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );

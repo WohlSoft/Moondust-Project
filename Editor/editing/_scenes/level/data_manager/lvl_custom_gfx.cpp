@@ -271,21 +271,21 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bgoD->copyTo(t_bgo);//init configs
 
-        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->id)+".ini", true);
+        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uLVL.getCustomFile("background-" + QString::number(bgoD->id)+".txt", true);
+            CustomTxt=uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadLevelBGO(t_bgo, "background", bgoD, CustomTxt);
             custom=true;
         }
 
-        QString CustomImage=uLVL.getCustomFile(t_bgo.image_n, true);
+        QString CustomImage=uLVL.getCustomFile(t_bgo.setup.image_n, true);
         if(!CustomImage.isEmpty())
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uLVL.getCustomFile(t_bgo.mask_n, false);
+                QString CustomMask = uLVL.getCustomFile(t_bgo.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -304,9 +304,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     ((t_bgo.cur_image->isNull())?
                             m_dummyBgoImg : *t_bgo.cur_image
                                ),
-                              t_bgo.animated,
-                              t_bgo.frames,
-                              t_bgo.framespeed
+                              t_bgo.setup.animated,
+                              t_bgo.setup.frames,
+                              t_bgo.setup.framespeed
                               );
 
         t_bgo.animator_id = m_animatorsBGO.size();

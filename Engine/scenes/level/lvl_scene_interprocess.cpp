@@ -95,7 +95,7 @@ void LevelScene::process_InterprocessCommands()
                     {
                         placingMode_texture = ConfigManager::level_textures[tID];
                         obj_bgo &bg=ConfigManager::lvl_bgo_indexes[placingMode_bgo.id];
-                        placingMode_animated = bg.animated;
+                        placingMode_animated = bg.setup.animated;
                         placingMode_animatorID = bg.animator_ID;
                         placingMode_drawSize.setX(placingMode_texture.w);
                         placingMode_drawSize.setY(placingMode_texture.h);

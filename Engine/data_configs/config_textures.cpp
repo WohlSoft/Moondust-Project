@@ -119,8 +119,8 @@ long  ConfigManager::getBgoTexture(long bgoID)
     }
     else
     {
-        QString imgFile = Dir_BGO.getCustomFile(bgoSetup->image_n);
-        QString maskFile = Dir_BGO.getCustomFile(bgoSetup->mask_n);
+        QString imgFile = Dir_BGO.getCustomFile(bgoSetup->setup.image_n);
+        QString maskFile = Dir_BGO.getCustomFile(bgoSetup->setup.mask_n);
 
         long id = level_textures.size();
 
@@ -139,23 +139,23 @@ long  ConfigManager::getBgoTexture(long bgoID)
         bgoSetup->isInit = true;
 
         //Also, load and init animator
-        if(bgoSetup->animated)
+        if(bgoSetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            bgoSetup->frame_h =
+            bgoSetup->setup.frame_h =
                     (int)round(double(level_textures[id].h)
-                               /double(bgoSetup->frames));
+                               /double(bgoSetup->setup.frames));
 
             //store animated texture value back
-            level_textures[id].frame_h = bgoSetup->frame_h;
+            level_textures[id].frame_h = bgoSetup->setup.frame_h;
 
             SimpleAnimator animator(
                             true,
-                            bgoSetup->frames,
-                            bgoSetup->framespeed,
+                            bgoSetup->setup.frames,
+                            bgoSetup->setup.framespeed,
                             frameFirst,
                             frameLast,
                             false,
