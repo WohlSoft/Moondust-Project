@@ -48,48 +48,21 @@ public:
      */
 
     static void getItemGFX(const obj_npc* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
+
     /*!
-     * \brief Retreives sprite or single frame of the Terrain tile object configuration
-     * \param [__in]  inObj Terrain tile object config structure
+     * \brief Retreives sprite or single frame of the any generic world map object configuration
+     * \param [__in]  inObj Generic world map object config structure
      * \param [__out] outImg Target Pixmap where will be stored requested sprite
      * \param [__in]  whole Retreive entire srite, overwise single default frame will be retured
      * \param [__in]  targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
      */
+    static void getItemGFX(const obj_wld_generic* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
 
-    static void getItemGFX(const obj_w_tile* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
-    /*!
-     * \brief Retreives sprite or single frame of the Scenery object configuration
-     * \param [__in]  inObj Scenery object config structure
-     * \param [__out] outImg Target Pixmap where will be stored requested sprite
-     * \param [__in]  whole Retreive entire srite, overwise single default frame will be retured
-     * \param [__in]  targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
-     */
-
-    static void getItemGFX(const obj_w_scenery* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
-    /*!
-     * \brief Retreives sprite or single frame of the world map path object configuration
-     * \param [__in]  inObj world map path object config structure
-     * \param [__out] outImg Target Pixmap where will be stored requested sprite
-     * \param [__in]  whole Retreive entire srite, overwise single default frame will be retured
-     * \param [__in]  targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
-     */
-
-    static void getItemGFX(const obj_w_path* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
-    /*!
-     * \brief Retreives sprite or single frame of the level entrance object configuration
-     * \param [__in]  inObj level entrance object config structure
-     * \param [__out] outImg Target Pixmap where will be stored requested sprite
-     * \param [__in]  whole Retreive entire srite, overwise single default frame will be retured
-     * \param [__in]  targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
-     */
-
-    static void getItemGFX(const obj_w_level* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
     /*!
      * \brief Convert item type string into ItemType enum enum
      * \param type String contains a word which specifies item type
      * \return Item type ID enumerated value
      */
-
     static int getItemType(QString type);
 };
 

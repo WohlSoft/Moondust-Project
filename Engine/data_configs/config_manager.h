@@ -117,6 +117,26 @@ struct MenuSetup
     int     font_id;
 };
 
+template<class obj_T>
+void loadCustomConfig(PGE_DataArray<obj_T> &container,
+                      int ID,
+                      CustomDirManager& dir,
+                      QString fileName = "file",
+                      QString section = "item",
+                      bool (*loaderFunk)(obj_T&, QString, obj_T*, QString, QSettings*) = nullptr
+                      )
+{
+    QString file = dir.getCustomFile(QString(fileName+"-%1.ini").arg(ID));
+    if(file.isEmpty())
+        file = dir.getCustomFile(QString(fileName+"-%1.txt").arg(ID));
+    if( !file.isEmpty() )
+    {
+        obj_T &sceneSetup = container[ID];
+        if(loaderFunk)
+            loaderFunk(sceneSetup, section, &sceneSetup, file, nullptr);
+    }
+}
+
 ////////////////////Common items///////////////////////////
 
 class ConfigManager
@@ -220,7 +240,7 @@ public:
 
     /*****Level blocks************/
     static bool loadLevelBlocks();
-    static bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, QSettings *setup);
+    static bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getBlockTexture(long blockID);
     /*****************************/
     static PGE_DataArray<obj_block>   lvl_block_indexes;
@@ -230,6 +250,7 @@ public:
 
     /*****Level BGO************/
     static bool loadLevelBGO();
+    static bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getBgoTexture(long bgoID);
     /*****************************/
     static PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
@@ -267,6 +288,7 @@ public:
     /*================================World config Data===========================*/
     /*****World Tiles************/
     static bool loadWorldTiles();
+    static bool loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getTileTexture(long tileID);
     /*****************************/
     static PGE_DataArray<obj_w_tile>   wld_tiles;
@@ -276,6 +298,7 @@ public:
 
     /*****World Scenery************/
     static bool loadWorldScenery();
+    static bool loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getSceneryTexture(long sceneryID);
     /*****************************/
     static PGE_DataArray<obj_w_scenery>   wld_scenery;
@@ -285,6 +308,7 @@ public:
 
     /*****World Paths************/
     static bool loadWorldPaths();
+    static bool loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getWldPathTexture(long pathID);
     /*****************************/
     static PGE_DataArray<obj_w_path>   wld_paths;
@@ -294,6 +318,7 @@ public:
 
     /*****World Levels************/
     static bool loadWorldLevels();
+    static bool loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
     static long getWldLevelTexture(long levelID);
     /*****************************/
     static PGE_DataArray<obj_w_level>   wld_levels;

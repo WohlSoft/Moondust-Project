@@ -38,28 +38,8 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.cur_image       = cur_image;
     if(cur_image==nullptr)
         bgo.cur_image   = &image;
-    bgo.setup.frame_h         = setup.frame_h;
-    /* for internal usage */
 
-    bgo.setup.id              = setup.id;
-    bgo.setup.name            = setup.name;
-    bgo.setup.group           = setup.group;
-    bgo.setup.category        = setup.category;
-    bgo.setup.grid            = setup.grid;
-
-    bgo.setup.zLayer          = setup.zLayer;
-    bgo.setup.offsetX         = setup.offsetX;
-    bgo.setup.offsetY         = setup.offsetY;
-    bgo.setup.zOffset         = setup.zOffset;
-
-    bgo.setup.image_n         = setup.image_n;
-    bgo.setup.mask_n          = setup.mask_n;
-
-    bgo.setup.climbing        = setup.climbing;
-    bgo.setup.animated        = setup.animated;
-    bgo.setup.frames          = setup.frames;
-    bgo.setup.framespeed      = setup.framespeed;
-    bgo.setup.display_frame   = setup.display_frame;
+    bgo.setup = setup;
 }
 
 /*!
@@ -75,82 +55,25 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 {
     bool valid=true;
     bool internal=!setup;
-    QString tmpStr, errStr;
+    QString errStr;
     if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
     if(!openSection(setup, section))
         return false;
 
-    sbgo.setup.name = setup->value("name", (merge_with? merge_with->setup.name : section) ).toString();
-    if(sbgo.setup.name=="")
+    if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
-        addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
-        valid=false;
-        goto abort;
+        sbgo.isValid = true;
+    }
+    else
+    {
+        addError(errStr);
+        sbgo.isValid = false;
     }
 
-    sbgo.setup.group =    setup->value("group", (merge_with? merge_with->setup.group : "_NoGroup")).toString();
-    sbgo.setup.category = setup->value("category", (merge_with? merge_with->setup.category : "_Other")).toString();
-    sbgo.setup.grid =     setup->value("grid", (merge_with? merge_with->setup.grid : default_grid)).toUInt();
-
-    {
-        tmpStr=setup->value("view", "background").toString();
-
-        if(tmpStr=="foreground2")
-            sbgo.setup.zLayer = obj_bgo::z_foreground_2;
-        else
-        if(tmpStr=="foreground")
-            sbgo.setup.zLayer = obj_bgo::z_foreground_1;
-        else
-        if(tmpStr=="background")
-            sbgo.setup.zLayer = (merge_with ? merge_with->setup.zLayer : obj_bgo::z_background_1);
-        else
-        if(tmpStr=="background2")
-            sbgo.setup.zLayer = obj_bgo::z_background_2;
-        else
-            sbgo.setup.zLayer = obj_bgo::z_background_1;
-    }
-
-    sbgo.setup.offsetX =      setup->value("offset-x", (merge_with? merge_with->setup.offsetX : 0)).toInt();
-    sbgo.setup.offsetY =      setup->value("offset-y", (merge_with? merge_with->setup.offsetY : 0)).toInt();
-    sbgo.setup.zOffset =      setup->value("z-offset", (merge_with? merge_with->setup.zOffset : 0.0)).toDouble();
-
-    sbgo.setup.image_n =      setup->value("image", (merge_with ? merge_with->setup.image_n : "")).toString();
-    /***************Load image*******************/
-    if(!merge_with)
-    {
-        GraphicsHelps::loadMaskedImage(bgoPath,
-           sbgo.setup.image_n, sbgo.setup.mask_n,
-           sbgo.image,
-           errStr);
-
-        if(!errStr.isEmpty())
-        {
-            addError(QString("%1 %2").arg(section.toUpper()).arg(errStr));
-            valid=false;
-            //goto abort;
-        }
-    }
-    /***************Load image*end***************/
-
-    sbgo.setup.climbing = (setup->value("climbing", (merge_with? merge_with->setup.climbing : false)).toBool());
-    sbgo.setup.animated = (setup->value("animated", (merge_with? merge_with->setup.animated : false)).toBool());
-    sbgo.setup.frames =        setup->value("frames", (merge_with? merge_with->setup.frames : 1)).toUInt();
-    sbgo.setup.framespeed =    setup->value("frame-speed", (merge_with? merge_with->setup.framespeed : 125)).toUInt();
-
-    sbgo.setup.frame_h =   uint(sbgo.setup.animated?
-                             qRound(
-                                 qreal(sbgo.image.height())/
-                                 sbgo.setup.frames)
-                           : sbgo.image.height());
-
-    sbgo.setup.display_frame = setup->value("display-frame", (merge_with? merge_with->setup.display_frame : 0)).toUInt();
-    sbgo.isValid = true; //Mark BGO as valid object
-
-    abort:
-        closeSection(setup);
-
-        if(internal) delete setup;
+    closeSection(setup);
+    if(internal)
+        delete setup;
     return valid;
 }
 
@@ -194,6 +117,22 @@ void dataconfigs::loadLevelBGO()
     {
         emit progressValue(int(i));
         bool valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &bgoset);
+        /***************Load image*******************/
+        if(valid)
+        {
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(bgoPath,
+               sbgo.setup.image_n, sbgo.setup.mask_n,
+               sbgo.image,
+               errStr);
+
+            if(!errStr.isEmpty())
+            {
+                valid=false;
+                addError(QString("BGO-%1 %2").arg(i).arg(errStr));
+            }
+        }
+        /***************Load image*end***************/
         sbgo.setup.id = i;
         main_bgo.storeElement(int(i), sbgo, valid);
 

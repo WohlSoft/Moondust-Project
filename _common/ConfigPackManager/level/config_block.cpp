@@ -53,7 +53,7 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, int defaultGrid, 
 
     image_n =           setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
 
-    if(!PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode))
+    if(!merge_with && !PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode))
     {
         if(error)
         {

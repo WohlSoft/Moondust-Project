@@ -46,6 +46,113 @@ QList<SimpleAnimator >   ConfigManager::Animator_WldLevel;
 wld_levels_Markers       ConfigManager::marker_wlvl;
 /*****World Levels************/
 
+bool ConfigManager::loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal = !setup;
+    QString errStr;
+    if(internal)
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    tile.isInit = false;
+    tile.image = NULL;
+    tile.textureArrayId = 0;
+    tile.animator_ID = 0;
+
+    setup->beginGroup( section );
+        if(tile.setup.parse(setup, tilePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        {
+            valid=true;
+        } else {
+            addError(errStr);
+            valid=false;
+        }
+    setup->endGroup();
+    if(internal) delete setup;
+    return valid;
+}
+
+bool ConfigManager::loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal = !setup;
+    QString errStr;
+    if(internal)
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    path.isInit = false;
+    path.image = NULL;
+    path.textureArrayId = 0;
+    path.animator_ID = 0;
+
+    setup->beginGroup( section );
+        if(path.setup.parse(setup, pathPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        {
+            valid=true;
+        } else {
+            addError(errStr);
+            valid=false;
+        }
+    setup->endGroup();
+    if(internal) delete setup;
+    return valid;
+}
+
+bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal = !setup;
+    QString errStr;
+    if(internal)
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    scene.isInit = false;
+    scene.image = NULL;
+    scene.textureArrayId = 0;
+    scene.animator_ID = 0;
+
+    setup->beginGroup( section );
+        if(scene.setup.parse(setup, scenePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        {
+            valid=true;
+        } else {
+            addError(errStr);
+            valid=false;
+        }
+    setup->endGroup();
+    if(internal) delete setup;
+    return valid;
+}
+
+bool ConfigManager::loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal = !setup;
+    QString errStr;
+    if(internal)
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    level.isInit = false;
+    level.image = NULL;
+    level.textureArrayId = 0;
+    level.animator_ID = 0;
+
+    setup->beginGroup( section );
+        if(level.setup.parse(setup, wlvlPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        {
+            valid=true;
+        } else {
+            addError(errStr);
+            valid=false;
+        }
+    setup->endGroup();
+    if(internal) delete setup;
+    return valid;
+}
+
+
+
+
 bool ConfigManager::loadWorldTiles()
 {
     unsigned int i;
@@ -90,46 +197,14 @@ bool ConfigManager::loadWorldTiles()
 
     for(i=1; i<=tiles_total; i++)
     {
-        //emit progressValue(i);
-        //QString errStr;
+        if(!loadWorldTile(stile, QString("tile-%1").arg(i), nullptr, "", &tileset))
+            return false;
 
-        tileset.beginGroup( QString("tile-"+QString::number(i)) );
-
-        stile.group = tileset.value("group", "_NoGroup").toString();
-        stile.category = tileset.value("category", "_Other").toString();
-
-        stile.image_n = tileset.value("image", "").toString();
-        /***************Load image*******************/
-        imgFile = tileset.value("image", "").toString();
-        {
-            QString err;
-            GraphicsHelps::getMaskedImageInfo(tilePath, imgFile, stile.mask_n, err);
-            stile.image_n = imgFile;
-            if( imgFile=="" )
-            {
-                addError(QString("TILE-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
-                goto skipTile;
-            }
-        }
-        /***************Load image*end***************/
-
-        stile.grid =            tileset.value("grid", default_grid).toInt();
-
-        stile.animated =       (tileset.value("animated", "0").toString()=="1");
-        stile.frames =          tileset.value("frames", "1").toInt();
-        stile.framespeed =      tileset.value("frame-speed", "150").toInt();
-
-        stile.frame_h = 0;
-
-        stile.display_frame =   tileset.value("display-frame", "0").toInt();
-        stile.row =             tileset.value("row", "0").toInt();
-        stile.col =             tileset.value("col", "0").toInt();
-
-        stile.id = i;
-        wld_tiles.storeElement(stile.id, stile);
-
-        skipTile:
-        tileset.endGroup();
+        stile.setup.id = i;
+        //Store loaded config
+        wld_tiles.storeElement(stile.setup.id, stile);
+        //Load custom config if possible
+        loadCustomConfig<obj_w_tile>(wld_tiles, i, Dir_Tiles, "tile", "tile", &loadWorldTile);
 
         if( tileset.status() != QSettings::NoError )
         {
@@ -146,9 +221,6 @@ bool ConfigManager::loadWorldTiles()
     }
     return true;
 }
-
-
-
 
 
 bool ConfigManager::loadWorldScenery()
@@ -191,43 +263,14 @@ bool ConfigManager::loadWorldScenery()
 
     for(i=1; i<=scenery_total; i++)
     {
-        sceneset.beginGroup( QString("scenery-"+QString::number(i)) );
+        if(!loadWorldScenery(sScene, QString("scenery-%1").arg(i), nullptr, "", &sceneset))
+            return false;
 
-            sScene.group =         sceneset.value("group", "_NoGroup").toString();
-            sScene.category =      sceneset.value("category", "_Other").toString();
-
-            sScene.image_n =       sceneset.value("image", "").toString();
-            /***************Load image*******************/
-            imgFile = sceneset.value("image", "").toString();
-            {
-                QString err;
-                GraphicsHelps::getMaskedImageInfo(scenePath, imgFile, sScene.mask_n, err);
-                sScene.image_n = imgFile;
-                if( imgFile=="" )
-                {
-                    addError(QString("SCENERY-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
-                    goto skipScene;
-                }
-            }
-            /***************Load image*end***************/
-
-            sScene.grid =          sceneset.value("grid", qRound(qreal(default_grid)/2)).toInt();
-
-            sScene.animated =     (sceneset.value("animated", "0").toString()=="1");
-            sScene.frames =        sceneset.value("frames", "1").toInt();
-            sScene.framespeed =    sceneset.value("frame-speed", "175").toInt();
-
-            sScene.frame_h = 0;
-
-            sScene.display_frame = sceneset.value("display-frame", "0").toInt();
-
-
-
-            sScene.id = i;
-            wld_scenery.storeElement(sScene.id, sScene);
-
-        skipScene:
-        sceneset.endGroup();
+        sScene.setup.id = i;
+        //Store loaded config
+        wld_scenery.storeElement(sScene.setup.id, sScene);
+        //Load custom config if possible
+        loadCustomConfig<obj_w_scenery>(wld_scenery, i, Dir_Scenery, "scene", "scenery", &loadWorldScenery);
 
         if( sceneset.status() != QSettings::NoError )
         {
@@ -288,44 +331,14 @@ bool ConfigManager::loadWorldPaths()
 
     for(i=1; i<=path_total; i++)
     {
-        pathset.beginGroup( QString("path-"+QString::number(i)) );
+        if(!loadWorldPath(sPath, QString("path-%1").arg(i), nullptr, "", &pathset))
+            return false;
 
-            sPath.group =       pathset.value("group", "_NoGroup").toString();
-            sPath.category =    pathset.value("category", "_Other").toString();
-
-            sPath.image_n =     pathset.value("image", "").toString();
-            /***************Load image*******************/
-            imgFile = pathset.value("image", "").toString();
-            {
-                QString err;
-                GraphicsHelps::getMaskedImageInfo(pathPath, imgFile, sPath.mask_n, err);
-                sPath.image_n = imgFile;
-                if( imgFile=="" )
-                {
-                    addError(QString("PATH-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
-                    goto skipPath;
-                }
-            }
-            /***************Load image*end***************/
-
-            sPath.grid =            pathset.value("grid", default_grid).toInt();
-
-            sPath.animated =       (pathset.value("animated", "0").toString()=="1");
-            sPath.frames =          pathset.value("frames", "1").toInt();
-            sPath.framespeed =      pathset.value("frame-speed", "175").toInt();
-
-            sPath.frame_h = 0;
-
-            sPath.display_frame=    pathset.value("display-frame", "0").toInt();
-            sPath.row =             pathset.value("row", "0").toInt();
-            sPath.col =             pathset.value("col", "0").toInt();
-
-
-            sPath.id = i;
-            wld_paths.storeElement(sPath.id, sPath);
-
-        skipPath:
-        pathset.endGroup();
+        sPath.setup.id = i;
+        //Store loaded config
+        wld_paths.storeElement(sPath.setup.id, sPath);
+        //Load custom config if possible
+        loadCustomConfig<obj_w_path>(wld_paths, i, Dir_WldPaths, "path", "path", &loadWorldPath);
 
         if( pathset.status() != QSettings::NoError )
         {
@@ -342,7 +355,6 @@ bool ConfigManager::loadWorldPaths()
     }
     return true;
 }
-
 
 
 bool ConfigManager::loadWorldLevels()
@@ -387,42 +399,14 @@ bool ConfigManager::loadWorldLevels()
 
     for(i=0; i<=levels_total; i++)
     {
-        levelset.beginGroup( QString("level-"+QString::number(i)) );
+        if(!loadWorldLevel(slevel, QString("level-%1").arg(i), nullptr, "", &levelset))
+            return false;
 
-        slevel.group =      levelset.value("group", "_NoGroup").toString();
-        slevel.category =   levelset.value("category", "_Other").toString();
-
-        slevel.image_n =    levelset.value("image", "").toString();
-        /***************Load image*******************/
-        imgFile = levelset.value("image", "").toString();
-        {
-            QString err;
-            GraphicsHelps::getMaskedImageInfo(wlvlPath, imgFile, slevel.mask_n, err);
-            slevel.image_n = imgFile;
-            if( imgFile=="" )
-            {
-                addError(QString("LEVEL-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
-                goto skipLevel;
-            }
-        }
-        /***************Load image*end***************/
-
-        slevel.grid =       levelset.value("grid", default_grid).toInt();
-
-        slevel.animated =  (levelset.value("animated", "0").toString()=="1");
-        slevel.frames =     levelset.value("frames", "1").toInt();
-        slevel.framespeed = levelset.value("frame-speed", "175").toInt();
-
-        slevel.frame_h =   0;
-
-        slevel.display_frame = levelset.value("display-frame", "0").toInt();
-
-
-        slevel.id = i;
-        wld_levels.storeElement(slevel.id, slevel);
-
-        skipLevel:
-        levelset.endGroup();
+        slevel.setup.id = i;
+        //Store loaded config
+        wld_levels.storeElement(slevel.setup.id, slevel);
+        //Load custom config if possible
+        loadCustomConfig<obj_w_level>(wld_levels, i, Dir_WldLevel, "level", "level", &loadWorldLevel);
 
         if( levelset.status() != QSettings::NoError )
         {
@@ -439,4 +423,3 @@ bool ConfigManager::loadWorldLevels()
     }
     return true;
 }
-

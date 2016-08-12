@@ -23,37 +23,32 @@
 
 #include "data_configs.h"
 
-obj_w_scenery::obj_w_scenery()
+bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, QSettings *setup)
 {
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
+    bool valid=true;
+    bool internal=!setup;
+    QString errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    if(!openSection(setup, section))
+        return false;
+
+    if(sScene.setup.parse(setup, scenePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    {
+        sScene.isValid = true;
+    }
+    else
+    {
+        addError(errStr);
+        sScene.isValid = false;
+    }
+    sScene.m_itemType = ItemTypes::WLD_Scenery;
+    closeSection(setup);
+    if(internal)
+        delete setup;
+    return valid;
 }
 
-void obj_w_scenery::copyTo(obj_w_scenery &scenery)
-{
-    /* for internal usage */
-    scenery.isValid         = isValid;
-    scenery.animator_id     = animator_id;
-    scenery.cur_image       = cur_image;
-    if(cur_image==nullptr)
-        scenery.cur_image   = &image;
-    scenery.frame_h         = frame_h;
-    /* for internal usage */
-
-    scenery.id              = id;
-    scenery.group           = group;
-    scenery.category        = category;
-    scenery.grid            = grid;
-
-    scenery.image_n         = image_n;
-    scenery.mask_n          = mask_n;
-
-    scenery.animated        = animated;
-    scenery.frames          = frames;
-    scenery.framespeed      = framespeed;
-    scenery.display_frame   = display_frame;
-}
 
 void dataconfigs::loadWorldScene()
 {
@@ -93,50 +88,25 @@ void dataconfigs::loadWorldScene()
 
     for(i=1; i <= scenery_total; i++)
     {
-        bool valid = true;
         emit progressValue(int(i));
-        QString errStr;
-
-        if( !openSection(&sceneset, QString("scenery-%1").arg(i)) )
-            break;
-
-        sScene.group =         sceneset.value("group", "_NoGroup").toString();
-        sScene.category =      sceneset.value("category", "_Other").toString();
-
-        sScene.image_n =       sceneset.value("image", "").toString();
+        bool valid = loadWorldScene(sScene, QString("scenery-%1").arg(i), 0, "", &sceneset);
         /***************Load image*******************/
-        GraphicsHelps::loadMaskedImage(scenePath,
-           sScene.image_n, sScene.mask_n,
-           sScene.image,
-           errStr);
-
-        if(!errStr.isEmpty())
+        if(valid)
         {
-            valid = false;
-            addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
-            //goto skipScene;
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(scenePath,
+               sScene.setup.image_n, sScene.setup.mask_n,
+               sScene.image,
+               errStr);
+            if(!errStr.isEmpty())
+            {
+                valid = false;
+                addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
+            }
         }
         /***************Load image*end***************/
-
-        sScene.grid =           sceneset.value("grid", qRound(qreal(default_grid)/2)).toUInt();
-
-        sScene.animated =       sceneset.value("animated", 0).toBool();
-        sScene.frames =         sceneset.value("frames", 1).toUInt();
-        sScene.framespeed =     sceneset.value("frame-speed", 175).toUInt();
-
-        sScene.frame_h =   uint(sScene.animated?
-                    qRound(qreal(sScene.image.height())/
-                               sScene.frames)
-                             : sScene.image.height());
-
-        sScene.display_frame = sceneset.value("display-frame", 0).toUInt();
-
-        sScene.isValid=true;
-
-        sScene.id = i;
+        sScene.setup.id = i;
         main_wscene.storeElement(int(i), sScene, valid);
-
-        closeSection(&sceneset);
 
         if( sceneset.status() != QSettings::NoError )
         {

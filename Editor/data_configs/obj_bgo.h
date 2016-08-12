@@ -20,8 +20,8 @@
 #ifndef OBJ_BGO_H
 #define OBJ_BGO_H
 
-#include <QString>
 #include <QPixmap>
+#include <ConfigPackManager/level/config_bgo.h>
 
 struct obj_bgo{
     obj_bgo();
@@ -36,46 +36,7 @@ struct obj_bgo{
      */
     void copyTo(obj_bgo &bgo);
 
-    struct BgoSetup
-    {
-        unsigned long id;
-        QString name;
-        QString group;
-        QString category;
-        unsigned int grid;
-
-        enum ZLayerEnum {
-            z_background_2 =-1,
-            z_background_1 = 0,
-            z_foreground_1 = 1,//Default
-            z_foreground_2 = 2
-        };
-        int zLayer; //-1, 0, 1, 2
-        int offsetX;
-        int offsetY;
-        double zOffset;
-
-        QString image_n;
-        QString mask_n;
-
-        unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-        bool climbing;
-        bool animated;
-        unsigned int frames;
-        unsigned int framespeed;
-
-        unsigned int display_frame;
-    };
-
     BgoSetup setup;
-
-    enum ZLayerEnum {
-        z_background_2 =-1,
-        z_background_1 = 0,
-        z_foreground_1 = 1,//Default
-        z_foreground_2 = 2
-    };
 };
 
 #endif // OBJ_BGO_H

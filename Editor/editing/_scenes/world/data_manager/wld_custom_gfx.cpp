@@ -112,22 +112,21 @@ void WldScene::loadUserData(QProgressDialog &progress)
         tileD.copyTo(t_tile);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("tile-" + QString::number(t_tile.id)+".ini", true);
+        QString CustomTxt = uWLD.getCustomFile("tile-" + QString::number(t_tile.setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("tile-" + QString::number(t_tile.id)+".txt", true);
+            CustomTxt=uWLD.getCustomFile("tile-" + QString::number(t_tile.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
-            //FIXME! Implement that at config pack side and uncommend those lines
-            //pConfigs->loadWorldTile(t_tile, "tile", tileD, CustomTxt);
-            //custom=true;
+            m_configs->loadWorldTerrain(t_tile, "tile", &tileD, CustomTxt);
+            custom=true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_tile.image_n, true);
+        QString CustomImage = uWLD.getCustomFile(t_tile.setup.image_n, true);
         if(! CustomImage.isEmpty() )
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uWLD.getCustomFile(t_tile.mask_n, false);
+                QString CustomMask = uWLD.getCustomFile(t_tile.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -146,9 +145,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
                             ((t_tile.cur_image->isNull())?
                             m_dummyTerrainImg : *t_tile.cur_image
                                ),
-                              t_tile.animated,
-                              t_tile.frames,
-                              t_tile.framespeed
+                              t_tile.setup.animated,
+                              t_tile.setup.frames,
+                              t_tile.setup.framespeed
                               );
         m_animatorsTerrain.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );
@@ -185,22 +184,21 @@ void WldScene::loadUserData(QProgressDialog &progress)
         sceneryD.copyTo(t_scenery);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("scene-" + QString::number(t_scenery.id)+".ini", true);
+        QString CustomTxt = uWLD.getCustomFile("scene-" + QString::number(t_scenery.setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("scene-" + QString::number(t_scenery.id)+".txt", true);
+            CustomTxt=uWLD.getCustomFile("scene-" + QString::number(t_scenery.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
-            //FIXME! Implement that at config pack side and uncommend those lines
-            //pConfigs->loadWorldScenery(t_scenery, "scene", sceneryD, CustomTxt);
-            //custom=true;
+            m_configs->loadWorldScene(t_scenery, "scenery", &sceneryD, CustomTxt);
+            custom=true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_scenery.image_n, true);
+        QString CustomImage = uWLD.getCustomFile(t_scenery.setup.image_n, true);
         if(! CustomImage.isEmpty() )
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uWLD.getCustomFile(t_scenery.mask_n, false);
+                QString CustomMask = uWLD.getCustomFile(t_scenery.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -219,9 +217,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
                             ((t_scenery.cur_image->isNull())?
                             m_dummySceneryImg : *t_scenery.cur_image
                                ),
-                              t_scenery.animated,
-                              t_scenery.frames,
-                              t_scenery.framespeed
+                              t_scenery.setup.animated,
+                              t_scenery.setup.frames,
+                              t_scenery.setup.framespeed
                               );
         m_animatorsScenery.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );
@@ -257,22 +255,21 @@ void WldScene::loadUserData(QProgressDialog &progress)
         pathD.copyTo(t_path);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("path-" + QString::number(t_path.id)+".ini", true);
+        QString CustomTxt = uWLD.getCustomFile("path-" + QString::number(t_path.setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("path-" + QString::number(t_path.id)+".txt", true);
+            CustomTxt=uWLD.getCustomFile("path-" + QString::number(t_path.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
-            //FIXME! Implement that at config pack side and uncommend those lines
-            //pConfigs->loadWorldPath(t_path, "path", pathD, CustomTxt);
-            //custom=true;
+            m_configs->loadWorldPath(t_path, "path", &pathD, CustomTxt);
+            custom=true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_path.image_n, true);
+        QString CustomImage = uWLD.getCustomFile(t_path.setup.image_n, true);
         if(! CustomImage.isEmpty() )
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uWLD.getCustomFile(t_path.mask_n, false);
+                QString CustomMask = uWLD.getCustomFile(t_path.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -291,9 +288,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
                             ((t_path.cur_image->isNull())?
                             m_dummyPathImg : *t_path.cur_image
                                ),
-                              t_path.animated,
-                              t_path.frames,
-                              t_path.framespeed
+                              t_path.setup.animated,
+                              t_path.setup.frames,
+                              t_path.setup.framespeed
                               );
         m_animatorsPaths.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );
@@ -330,22 +327,21 @@ void WldScene::loadUserData(QProgressDialog &progress)
         levelD.copyTo(t_level);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("level-" + QString::number(t_level.id)+".ini", true);
+        QString CustomTxt = uWLD.getCustomFile("level-" + QString::number(t_level.setup.id)+".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("level-" + QString::number(t_level.id)+".txt", true);
+            CustomTxt=uWLD.getCustomFile("level-" + QString::number(t_level.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
-            //FIXME! Implement that at config pack side and uncommend those lines
-            //pConfigs->loadWorldLevel(t_level, "level", sceneryD, CustomTxt);
-            //custom=true;
+            m_configs->loadWorldLevel(t_level, "level", &levelD, CustomTxt);
+            custom=true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_level.image_n, true);
+        QString CustomImage = uWLD.getCustomFile(t_level.setup.image_n, true);
         if(! CustomImage.isEmpty() )
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
-                QString CustomMask = uWLD.getCustomFile(t_level.mask_n, false);
+                QString CustomMask = uWLD.getCustomFile(t_level.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -364,9 +360,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
                             ((t_level.cur_image->isNull())?
                             m_dummyLevelImg : *t_level.cur_image
                                ),
-                              t_level.animated,
-                              t_level.frames,
-                              t_level.framespeed
+                              t_level.setup.animated,
+                              t_level.setup.frames,
+                              t_level.setup.framespeed
                               );
         m_animatorsLevels.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );

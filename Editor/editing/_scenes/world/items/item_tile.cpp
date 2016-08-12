@@ -299,7 +299,7 @@ void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *an
     if(mergedSet)
     {
         m_localProps = *mergedSet;
-        m_gridSize = m_localProps.grid;
+        m_gridSize = m_localProps.setup.grid;
     }
     if(animator_id)
         setAnimator(*animator_id);

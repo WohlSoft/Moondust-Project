@@ -534,8 +534,8 @@ long  ConfigManager::getTileTexture(long tileID)
     }
     else
     {
-        QString imgFile = Dir_Tiles.getCustomFile(tileSetup->image_n);
-        QString maskFile = Dir_Tiles.getCustomFile(tileSetup->mask_n);
+        QString imgFile = Dir_Tiles.getCustomFile(tileSetup->setup.image_n);
+        QString maskFile = Dir_Tiles.getCustomFile(tileSetup->setup.mask_n);
 
         long id = world_textures.size();
 
@@ -554,23 +554,23 @@ long  ConfigManager::getTileTexture(long tileID)
         tileSetup->isInit = true;
 
         //Also, load and init animator
-        if(tileSetup->animated)
+        if(tileSetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            tileSetup->frame_h =
+            tileSetup->setup.frame_h =
                     (int)round(double(world_textures[id].h)
-                               /double(tileSetup->frames));
+                               /double(tileSetup->setup.frames));
 
             //store animated texture value back
-            world_textures[id].frame_h = tileSetup->frame_h;
+            world_textures[id].frame_h = tileSetup->setup.frame_h;
 
             SimpleAnimator animator(
                             true,
-                            tileSetup->frames,
-                            tileSetup->framespeed,
+                            tileSetup->setup.frames,
+                            tileSetup->setup.framespeed,
                             frameFirst,
                             frameLast,
                             false,
@@ -605,8 +605,8 @@ long  ConfigManager::getSceneryTexture(long sceneryID)
     }
     else
     {
-        QString imgFile = Dir_Scenery.getCustomFile(scenerySetup->image_n);
-        QString maskFile = Dir_Scenery.getCustomFile(scenerySetup->mask_n);
+        QString imgFile = Dir_Scenery.getCustomFile(scenerySetup->setup.image_n);
+        QString maskFile = Dir_Scenery.getCustomFile(scenerySetup->setup.mask_n);
 
         long id = world_textures.size();
         scenerySetup->textureArrayId = id;
@@ -624,23 +624,23 @@ long  ConfigManager::getSceneryTexture(long sceneryID)
         scenerySetup->isInit = true;
 
         //Also, load and init animator
-        if(scenerySetup->animated)
+        if(scenerySetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            scenerySetup->frame_h =
+            scenerySetup->setup.frame_h =
                     (int)round(double(world_textures[id].h)
-                               /double(scenerySetup->frames));
+                               /double(scenerySetup->setup.frames));
 
             //store animated texture value back
-            world_textures[id].frame_h = scenerySetup->frame_h;
+            world_textures[id].frame_h = scenerySetup->setup.frame_h;
 
             SimpleAnimator animator(
                             true,
-                            scenerySetup->frames,
-                            scenerySetup->framespeed,
+                            scenerySetup->setup.frames,
+                            scenerySetup->setup.framespeed,
                             frameFirst,
                             frameLast,
                             false,
@@ -675,8 +675,8 @@ long  ConfigManager::getWldPathTexture(long pathID)
     }
     else
     {
-        QString imgFile = Dir_WldPaths.getCustomFile(pathSetup->image_n);
-        QString maskFile = Dir_WldPaths.getCustomFile(pathSetup->mask_n);
+        QString imgFile = Dir_WldPaths.getCustomFile(pathSetup->setup.image_n);
+        QString maskFile = Dir_WldPaths.getCustomFile(pathSetup->setup.mask_n);
 
         long id = world_textures.size();
         pathSetup->textureArrayId = id;
@@ -694,23 +694,23 @@ long  ConfigManager::getWldPathTexture(long pathID)
         pathSetup->isInit = true;
 
         //Also, load and init animator
-        if(pathSetup->animated)
+        if(pathSetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            pathSetup->frame_h =
+            pathSetup->setup.frame_h =
                     (int)round(double(world_textures[id].h)
-                               /double(pathSetup->frames));
+                               /double(pathSetup->setup.frames));
 
             //store animated texture value back
-            world_textures[id].frame_h = pathSetup->frame_h;
+            world_textures[id].frame_h = pathSetup->setup.frame_h;
 
             SimpleAnimator animator(
                             true,
-                            pathSetup->frames,
-                            pathSetup->framespeed,
+                            pathSetup->setup.frames,
+                            pathSetup->setup.framespeed,
                             frameFirst,
                             frameLast,
                             false,
@@ -746,8 +746,8 @@ long  ConfigManager::getWldLevelTexture(long levelID)
     }
     else
     {
-        QString imgFile = Dir_WldLevel.getCustomFile(lvlSetup->image_n);
-        QString maskFile = Dir_WldLevel.getCustomFile(lvlSetup->mask_n);
+        QString imgFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.image_n);
+        QString maskFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.mask_n);
 
         long id = world_textures.size();
         lvlSetup->textureArrayId = id;
@@ -765,23 +765,23 @@ long  ConfigManager::getWldLevelTexture(long levelID)
         lvlSetup->isInit = true;
 
         //Also, load and init animator
-        if(lvlSetup->animated)
+        if(lvlSetup->setup.animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            lvlSetup->frame_h =
+            lvlSetup->setup.frame_h =
                     (int)round(double(world_textures[id].h)
-                               /double(lvlSetup->frames));
+                               /double(lvlSetup->setup.frames));
 
             //store animated texture value back
-            world_textures[id].frame_h = lvlSetup->frame_h;
+            world_textures[id].frame_h = lvlSetup->setup.frame_h;
 
             SimpleAnimator animator(
                             true,
-                            lvlSetup->frames,
-                            lvlSetup->framespeed,
+                            lvlSetup->setup.frames,
+                            lvlSetup->setup.framespeed,
                             frameFirst,
                             frameLast,
                             false,

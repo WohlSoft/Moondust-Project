@@ -144,8 +144,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i < scene->m_localConfigTerrain.size(); i++)
     {
         obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
-        if( tableRows < (tileItem.row+1) ) tableRows = tileItem.row + 1;
-        if( tableCols < (tileItem.col+1) ) tableCols = tileItem.col + 1;
+        if( tableRows < (tileItem.setup.row+1) ) tableRows = tileItem.setup.row + 1;
+        if( tableCols < (tileItem.setup.col+1) ) tableCols = tileItem.setup.col + 1;
     }
 
     LogDebugQD("WorldTools -> set size");
@@ -159,7 +159,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
         Items::getItemGFX(&tileItem, tmpI, false, QSize(32,32));
 
-        QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
+        QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.setup.row, tileItem.setup.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
@@ -167,13 +167,13 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(tileItem.id) );
+            Titem->setData(3, QString::number(tileItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
-            ui->WLD_TilesList->setRowHeight(tileItem.row, 34);
-            ui->WLD_TilesList->setColumnWidth(tileItem.col, 34);
+            ui->WLD_TilesList->setRowHeight(tileItem.setup.row, 34);
+            ui->WLD_TilesList->setColumnWidth(tileItem.setup.col, 34);
 
-            ui->WLD_TilesList->setItem(tileItem.row,tileItem.col, Titem);
+            ui->WLD_TilesList->setItem(tileItem.setup.row,tileItem.setup.col, Titem);
         }
     }
 
@@ -186,7 +186,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI ) );
             item->setText( NULL );
-            item->setData(3, QString::number(sceneItem.id) );
+            item->setData(3, QString::number(sceneItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->WLD_SceneList->addItem( item );
@@ -200,8 +200,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i < scene->m_localConfigPaths.size(); i++ )
     {
         obj_w_path &pathItem = scene->m_localConfigPaths[i];
-        if( tableRows < (pathItem.row+1) ) tableRows=pathItem.row + 1;
-        if( tableCols < (pathItem.col+1) ) tableCols=pathItem.col + 1;
+        if( tableRows < (pathItem.setup.row+1) ) tableRows=pathItem.setup.row + 1;
+        if( tableCols < (pathItem.setup.col+1) ) tableCols=pathItem.setup.col + 1;
     }
 
     LogDebugQD("WorldTools -> Table of paths size define");
@@ -215,7 +215,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         obj_w_path &pathItem = scene->m_localConfigPaths[i];
         Items::getItemGFX(&pathItem, tmpI, false, QSize(32,32));
 
-        QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
+        QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.setup.row, pathItem.setup.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
@@ -223,13 +223,13 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(pathItem.id) );
+            Titem->setData(3, QString::number(pathItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
-            ui->WLD_PathsList->setRowHeight(pathItem.row, 34);
-            ui->WLD_PathsList->setColumnWidth(pathItem.col, 34);
+            ui->WLD_PathsList->setRowHeight(pathItem.setup.row, 34);
+            ui->WLD_PathsList->setColumnWidth(pathItem.setup.col, 34);
 
-            ui->WLD_PathsList->setItem(pathItem.row,pathItem.col, Titem);
+            ui->WLD_PathsList->setItem(pathItem.setup.row,pathItem.setup.col, Titem);
         }
     }
 
@@ -238,8 +238,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     {
         obj_w_level& levelItem = scene->m_localConfigLevels[i];
 
-        if((mw()->configs.marker_wlvl.path==levelItem.id)||
-           (mw()->configs.marker_wlvl.bigpath==levelItem.id))
+        if((mw()->configs.marker_wlvl.path==levelItem.setup.id)||
+           (mw()->configs.marker_wlvl.bigpath==levelItem.setup.id))
             continue;
 
         Items::getItemGFX(&levelItem, tmpI, false, QSize(32,32));
@@ -247,7 +247,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( NULL );
-        item->setData(3, QString::number(levelItem.id) );
+        item->setData(3, QString::number(levelItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->WLD_LevelList->addItem( item );

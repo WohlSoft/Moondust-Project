@@ -473,5 +473,21 @@ bool dataconfigs::check()
             );
 }
 
+long dataconfigs::getCharacterI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < characters.size(); j++)
+    {
+        if(characters[int(j)].id == itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+    if(!found) j=-1;
+    return j;
+}
 
 

@@ -55,7 +55,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, int defaultGrid, NpcS
 
     image_n =      setup->value("image", merge_with ? merge_with->image_n : "").toString();
 
-    if(!PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
+    if(!merge_with && !PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
     {
         if(error)
         {

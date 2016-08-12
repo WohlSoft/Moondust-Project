@@ -226,11 +226,11 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_scenery &sceneryItem = (*array)[i];
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("scene-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
+            QListWidgetItem* item = new QListWidgetItem(QString("scene-%1").arg(sceneryItem.setup.id), ui->Sel_List_Scenery);
             QPixmap tmpI;
             Items::getItemGFX(&sceneryItem, tmpI, false, QSize(16,16));
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(sceneryItem.id) );
+            item->setData(3, QString::number(sceneryItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Scenery->addItem(item);
         }
@@ -243,11 +243,11 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_level &levelItem = (*array)[i];
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("level-%1").arg(levelItem.id), ui->Sel_List_Level);
+            QListWidgetItem* item = new QListWidgetItem(QString("level-%1").arg(levelItem.setup.id), ui->Sel_List_Level);
             QPixmap tmpI;
             Items::getItemGFX(&levelItem, tmpI, false, QSize(16,16));
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(levelItem.id) );
+            item->setData(3, QString::number(levelItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Level->addItem(item);
         }
@@ -803,8 +803,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=1; i<array_tiles->size(); i++)
     {
         obj_w_tile &tileItem = (*array_tiles)[i];
-        if(tableRows<tileItem.row+1+roff) tableRows=tileItem.row+1+roff;
-        if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
+        if(tableRows<tileItem.setup.row+1+roff) tableRows=tileItem.setup.row+1+roff;
+        if(tableCols<tileItem.setup.col+1) tableCols=tileItem.setup.col+1;
     }
 
     LogDebug("WorldTools -> set size");
@@ -817,7 +817,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     {
         obj_w_tile &tileItem = (*array_tiles)[i];
         Items::getItemGFX(&tileItem, tmpI, false, QSize(32, 32));
-        QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.row, tileItem.col);
+        QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.setup.row, tileItem.setup.col);
 
         if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
@@ -825,13 +825,13 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(tileItem.id) );
+            Titem->setData(3, QString::number(tileItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-            ui->Sel_List_Tile->setRowHeight(tileItem.row, 34);
-            ui->Sel_List_Tile->setColumnWidth(tileItem.col, 34);
+            ui->Sel_List_Tile->setRowHeight(tileItem.setup.row, 34);
+            ui->Sel_List_Tile->setColumnWidth(tileItem.setup.col, 34);
 
-            ui->Sel_List_Tile->setItem(tileItem.row+roff,tileItem.col, Titem);
+            ui->Sel_List_Tile->setItem(tileItem.setup.row+roff,tileItem.setup.col, Titem);
         }
     }
 
@@ -869,7 +869,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
         item->setText( nullptr );
-        item->setData(3, QString::number(sceneItem.id) );
+        item->setData(3, QString::number(sceneItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->Sel_List_Scenery->addItem( item );
@@ -885,8 +885,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for( int i=1; i<array_paths->size(); i++ )
     {
         obj_w_path &pathItem = (*array_paths)[i];
-        if(tableRows<pathItem.row+1+roff) tableRows=pathItem.row+1+roff;
-        if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
+        if(tableRows<pathItem.setup.row+1+roff) tableRows=pathItem.setup.row+1+roff;
+        if(tableCols<pathItem.setup.col+1) tableCols=pathItem.setup.col+1;
     }
 
     LogDebug("WorldTools -> Table of paths size define");
@@ -900,7 +900,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         obj_w_path &pathItem = (*array_paths)[i];
         Items::getItemGFX(&pathItem, tmpI, false, QSize(32, 32));
 
-        QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.row, pathItem.col);
+        QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.setup.row, pathItem.setup.col);
 
         if ( (!Titem) || ( (Titem!=nullptr)&&(Titem->text().isEmpty())) )
         {
@@ -908,13 +908,13 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(pathItem.id) );
+            Titem->setData(3, QString::number(pathItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-            ui->Sel_List_Path->setRowHeight(pathItem.row+roff, 34);
-            ui->Sel_List_Path->setColumnWidth(pathItem.col, 34);
+            ui->Sel_List_Path->setRowHeight(pathItem.setup.row+roff, 34);
+            ui->Sel_List_Path->setColumnWidth(pathItem.setup.col, 34);
 
-            ui->Sel_List_Path->setItem(pathItem.row+roff,pathItem.col, Titem);
+            ui->Sel_List_Path->setItem(pathItem.setup.row+roff,pathItem.setup.col, Titem);
         }
     }
 
@@ -949,8 +949,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
     for(int i=0; i < array_levels->size(); i++)
     {
         obj_w_level &levelItem = (*array_levels)[i];
-        if((conf->marker_wlvl.path==levelItem.id)||
-           (conf->marker_wlvl.bigpath==levelItem.id))
+        if((conf->marker_wlvl.path==levelItem.setup.id)||
+           (conf->marker_wlvl.bigpath==levelItem.setup.id))
             continue;
 
         Items::getItemGFX(&levelItem, tmpI, false, QSize(32, 32));
@@ -958,7 +958,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
         item->setText( nullptr );
-        item->setData(3, QString::number(levelItem.id) );
+        item->setData(3, QString::number(levelItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->Sel_List_Level->addItem( item );

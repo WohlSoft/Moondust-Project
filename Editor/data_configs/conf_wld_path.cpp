@@ -23,38 +23,30 @@
 
 #include "data_configs.h"
 
-obj_w_path::obj_w_path()
+bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, QSettings *setup)
 {
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
+    bool valid=true;
+    bool internal=!setup;
+    QString errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-void obj_w_path::copyTo(obj_w_path &wpath)
-{
-    /* for internal usage */
-    wpath.isValid         = isValid;
-    wpath.animator_id     = animator_id;
-    wpath.cur_image       = cur_image;
-    if(cur_image==nullptr)
-        wpath.cur_image   = &image;
-    wpath.frame_h         = frame_h;
-    /* for internal usage */
+    if(!openSection(setup, section))
+        return false;
 
-    wpath.id              = id;
-    wpath.group           = group;
-    wpath.category        = category;
-    wpath.grid            = grid;
-
-    wpath.image_n         = image_n;
-    wpath.mask_n          = mask_n;
-
-    wpath.animated        = animated;
-    wpath.frames          = frames;
-    wpath.framespeed      = framespeed;
-    wpath.display_frame   = display_frame;
-    wpath.row             = row;
-    wpath.col             = col;
+    if(spath.setup.parse(setup, pathPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    {
+        spath.isValid = true;
+    }
+    else
+    {
+        addError(errStr);
+        spath.isValid = false;
+    }
+    spath.m_itemType = ItemTypes::WLD_Path;
+    closeSection(setup);
+    if(internal)
+        delete setup;
+    return valid;
 }
 
 void dataconfigs::loadWorldPaths()
@@ -94,50 +86,25 @@ void dataconfigs::loadWorldPaths()
 
     for(i=1; i<=path_total; i++)
     {
-        bool valid = true;
         emit progressValue(int(i));
-        QString errStr;
-
-        if( !openSection(&pathset, QString("path-%1").arg(i)) )
-            break;
-
-        sPath.group =       pathset.value("group", "_NoGroup").toString();
-        sPath.category =    pathset.value("category", "_Other").toString();
-
-        sPath.image_n =     pathset.value("image", "").toString();
+        bool valid = loadWorldPath(sPath, QString("path-%1").arg(i), 0, "", &pathset);
         /***************Load image*******************/
-        GraphicsHelps::loadMaskedImage(pathPath,
-           sPath.image_n, sPath.mask_n,
-           sPath.image,
-           errStr);
-
-        if(!errStr.isEmpty())
+        if(valid)
         {
-            valid = false;
-            addError(QString("PATH-%1 %2").arg(i).arg(errStr));
-            //goto skipPath;
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(pathPath,
+               sPath.setup.image_n, sPath.setup.mask_n,
+               sPath.image,
+               errStr);
+            if(!errStr.isEmpty())
+            {
+                valid = false;
+                addError(QString("PATH-%1 %2").arg(i).arg(errStr));
+            }
         }
         /***************Load image*end***************/
-
-        sPath.grid =            pathset.value("grid", default_grid).toUInt();
-
-        sPath.animated =        pathset.value("animated", 0).toBool();
-        sPath.frames =          pathset.value("frames", 1).toUInt();
-        sPath.framespeed =      pathset.value("frame-speed", 175).toUInt();
-
-        sPath.frame_h = uint(sPath.animated? qRound(qreal(sPath.image.height())/sPath.frames) : sPath.image.height());
-
-        sPath.display_frame =   pathset.value("display-frame", 0).toUInt();
-        sPath.row =             pathset.value("row", 0).toUInt();
-        sPath.col =             pathset.value("col", 0).toUInt();
-
-
-        sPath.isValid = true;
-        sPath.id = i;
-
+        sPath.setup.id = i;
         main_wpaths.storeElement(int(i), sPath, valid);
-
-        closeSection(&pathset);
 
         if( pathset.status() != QSettings::NoError )
         {

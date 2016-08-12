@@ -228,7 +228,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customTerrain.size(); ++i) {
-                    m_model->addPiece( wld_scene->m_customTerrain[i]->id );
+                    m_model->addPiece( wld_scene->m_customTerrain[i]->setup.id );
                 }
             }
         }
@@ -238,7 +238,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customTerrain.size(); ++i) {
-                    customElements[wld_scene->m_customTerrain[i]->id] = i;
+                    customElements[wld_scene->m_customTerrain[i]->setup.id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wtiles.size(); ++i) {
@@ -260,7 +260,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customSceneries.size(); ++i) {
-                    m_model->addPiece( wld_scene->m_customSceneries[i]->id );
+                    m_model->addPiece( wld_scene->m_customSceneries[i]->setup.id );
                 }
             }
         }
@@ -270,7 +270,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customSceneries.size(); ++i) {
-                    customElements[wld_scene->m_customSceneries[i]->id] = i;
+                    customElements[wld_scene->m_customSceneries[i]->setup.id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wscene.size(); ++i) {
@@ -290,7 +290,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customPaths.size(); ++i) {
-                    m_model->addPiece( wld_scene->m_customPaths[i]->id );
+                    m_model->addPiece( wld_scene->m_customPaths[i]->setup.id );
                 }
             }
         }
@@ -300,7 +300,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customPaths.size(); ++i) {
-                    customElements[wld_scene->m_customPaths[i]->id] = i;
+                    customElements[wld_scene->m_customPaths[i]->setup.id] = i;
                 }
             }
             for(int i = 1; i < m_conf->main_wpaths.size(); ++i) {
@@ -320,7 +320,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customLevels.size(); ++i) {
-                    m_model->addPiece( wld_scene->m_customLevels[i]->id );
+                    m_model->addPiece( wld_scene->m_customLevels[i]->setup.id );
                 }
             }
         }
@@ -330,7 +330,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             if( wld_scene && (mode==GFX_World) )
             {
                 for(int i = 0; i < wld_scene->m_customLevels.size(); ++i) {
-                    customElements[wld_scene->m_customLevels[i]->id] = i;
+                    customElements[wld_scene->m_customLevels[i]->setup.id] = i;
                 }
             }
             for(int i = 0; i < m_conf->main_wlevels.size(); ++i) {

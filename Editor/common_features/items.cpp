@@ -88,26 +88,23 @@ void Items::getItemGFX(const obj_bgo *inObj, QPixmap &outImg, bool whole, QSize 
     TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_bgo);
 }
 
-void Items::getItemGFX(const obj_w_tile *inObj, QPixmap &outImg, bool whole, QSize targetSize)
+void Items::getItemGFX(const obj_wld_generic *inObj, QPixmap &outImg, bool whole, QSize targetSize)
 {
-    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_terrain);
+    Themes::Images imgType = Themes::dummy_terrain;
+    switch(inObj->m_itemType)
+    {
+        case ItemTypes::WLD_Tile:
+            imgType = Themes::dummy_terrain; break;
+        case ItemTypes::WLD_Scenery:
+            imgType = Themes::dummy_scenery; break;
+        case ItemTypes::WLD_Path:
+            imgType = Themes::dummy_path; break;
+        case ItemTypes::WLD_Level:
+            imgType = Themes::dummy_wlevel; break;
+        default:;
+    }
+    TPL_getItemGFX(inObj, outImg, whole, targetSize, imgType);
 }
-
-void Items::getItemGFX(const obj_w_scenery *inObj, QPixmap &outImg, bool whole, QSize targetSize)
-{
-    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_scenery);
-}
-
-void Items::getItemGFX(const obj_w_path *inObj, QPixmap &outImg, bool whole, QSize targetSize)
-{
-    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_path);
-}
-
-void Items::getItemGFX(const obj_w_level *inObj, QPixmap &outImg, bool whole, QSize targetSize)
-{
-    TPL_getItemGFX(inObj, outImg, whole, targetSize, Themes::dummy_wlevel);
-}
-
 
 void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGraphicsScene *scene, bool whole, QSize targetSize)
 {

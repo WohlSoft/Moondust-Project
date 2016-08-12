@@ -228,10 +228,10 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
                           (it->data(ITEM_TYPE).toString()=="NPC")//Don't collide NPC's with triangle blocks
                            &&
                             (
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_right_top)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_left_bottom)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_right_bottom)||
-                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)obj_block::SHAPE_triangle_left_bottom)
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_right_top)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_left_top)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_right_bottom)||
+                             (item->data(ITEM_BLOCK_SHAPE).toInt()==(int)BlockSetup::SHAPE_triangle_left_bottom)
                             )
                           )
                  )

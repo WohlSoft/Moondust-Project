@@ -46,7 +46,7 @@ void WldScene::placeTile(WorldTerrainTile &tile, bool toGrid)
     QPoint newPos = QPoint(tile.x, tile.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(tile.x, tile.y), mergedSet.grid);
+        newPos = applyGrid(QPoint(tile.x, tile.y), mergedSet.setup.grid);
         tile.x = newPos.x();
         tile.y = newPos.y();
     }
@@ -78,7 +78,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
     QPoint newPos = QPoint(scenery.x, scenery.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(scenery.x, scenery.y), mergedSet.grid);
+        newPos = applyGrid(QPoint(scenery.x, scenery.y), mergedSet.setup.grid);
         scenery.x = newPos.x();
         scenery.y = newPos.y();
     }
@@ -110,7 +110,7 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
     QPoint newPos = QPoint(path.x, path.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(path.x, path.y), mergedSet.grid);
+        newPos = applyGrid(QPoint(path.x, path.y), mergedSet.setup.grid);
         path.x = newPos.x();
         path.y = newPos.y();
     }
@@ -147,7 +147,7 @@ void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
     QPoint newPos = QPoint(level.x, level.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(level.x, level.y), mergedSet.grid);
+        newPos = applyGrid(QPoint(level.x, level.y), mergedSet.setup.grid);
         level.x = newPos.x();
         level.y = newPos.y();
     }

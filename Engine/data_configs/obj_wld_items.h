@@ -19,15 +19,19 @@
 #ifndef OBJ_WLD_ITEMS_H
 #define OBJ_WLD_ITEMS_H
 
-#include <QString>
 #include <graphics/graphics.h>
+#include <ConfigPackManager/world/config_wld_generic.h>
 
 ////////////////////World map items///////////////////////////
-struct obj_w_tile{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-
+struct obj_wld_generic
+{
+    obj_wld_generic():
+        isInit(false),
+        image(nullptr),
+        textureID(0),
+        textureArrayId(0),
+        animator_ID(0)
+    {}
     /*   OpenGL    */
     bool isInit;
     PGE_Texture * image;
@@ -36,89 +40,13 @@ struct obj_w_tile{
     long animator_ID;
     /*   OpenGL    */
 
-        unsigned long row;
-        unsigned long col;
-
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
+    WldGenericSetup setup;
 };
 
-struct obj_w_scenery{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-
-    /*   OpenGL    */
-    bool isInit;
-    PGE_Texture * image;
-    GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
-    /*   OpenGL    */
-
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_level{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-
-    /*   OpenGL    */
-    bool isInit;
-    PGE_Texture * image;
-    GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
-    /*   OpenGL    */
-
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_path{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-
-    /*   OpenGL    */
-    bool isInit;
-    PGE_Texture * image;
-    GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
-    /*   OpenGL    */
-
-        unsigned long row;
-        unsigned long col;
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
+typedef obj_wld_generic obj_w_tile;
+typedef obj_wld_generic obj_w_scenery;
+typedef obj_wld_generic obj_w_path;
+typedef obj_wld_generic obj_w_level;
 
 //Markers
 struct wld_levels_Markers

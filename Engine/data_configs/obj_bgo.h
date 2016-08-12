@@ -20,7 +20,7 @@
 #define OBJ_BGO_H
 
 #include "../graphics/graphics.h"
-#include <QString>
+#include <ConfigPackManager/level/config_bgo.h>
 
 struct obj_bgo
 {
@@ -32,36 +32,6 @@ struct obj_bgo
     long animator_ID;
     /*   OpenGL    */
 
-    struct BgoSetup{
-        unsigned long id;
-        QString name;
-        QString group;
-        QString category;
-        unsigned int grid;
-
-        enum ZLayerEnum {
-            z_background_2 =-1,
-            z_background_1 = 0,
-            z_foreground_1 = 1,//Default
-            z_foreground_2 = 2
-        };
-        int zLayer; //-1, 0, 1, 2
-        int offsetX;
-        int offsetY;
-        long double zOffset;
-
-        QString image_n;
-        QString mask_n;
-
-        unsigned int frame_h;
-
-        bool climbing;
-        bool animated;
-        unsigned int frames;
-        unsigned int framespeed;
-
-        unsigned int display_frame;
-    };
     BgoSetup setup;
 };
 

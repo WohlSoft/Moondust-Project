@@ -27,6 +27,33 @@ CustomDirManager ConfigManager::Dir_BGO;
 QList<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
 
+bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
+{
+    bool valid=true;
+    bool internal = !setup;
+    QString errStr;
+    if(internal)
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+
+    sbgo.isInit = merge_with ? merge_with->isInit : false;
+    sbgo.image  = merge_with ? merge_with->image : nullptr;
+    sbgo.textureArrayId = merge_with ? merge_with->textureArrayId : 0;
+    sbgo.animator_ID = merge_with ? merge_with->animator_ID : 0;
+
+    setup->beginGroup( section );
+        if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        {
+            valid=true;
+        } else {
+            addError(errStr);
+            valid=false;
+        }
+    setup->endGroup();
+    if(internal) delete setup;
+    return valid;
+}
+
+
 bool ConfigManager::loadLevelBGO()
 {
     unsigned int i;
@@ -57,76 +84,14 @@ bool ConfigManager::loadLevelBGO()
 
     for(i=1; i<=bgo_total; i++)
     {
+        if(!loadLevelBGO(sbgo, QString("background-%1").arg(i), nullptr, "", &bgoset))
+            return false;
 
-        sbgo.isInit = false;
-        sbgo.image = NULL;
-        sbgo.textureArrayId = 0;
-        sbgo.animator_ID = 0;
-
-        bgoset.beginGroup( QString("background-"+QString::number(i)) );
-
-            sbgo.setup.name = bgoset.value("name", "").toString();
-
-                if(sbgo.setup.name=="")
-                {
-                    addError(QString("BGO-%1 Item name isn't defined").arg(i));
-                    goto skipBGO;
-                }
-            sbgo.setup.group = bgoset.value("group", "_NoGroup").toString();
-            sbgo.setup.category = bgoset.value("category", "_Other").toString();
-            //sbgo.grid = bgoset.value("grid", default_grid).toInt();
-            {
-                QString tmpStr=bgoset.value("view", "background").toString();
-
-                if(tmpStr=="foreground2")
-                    sbgo.setup.zLayer = 2;
-                else
-                if(tmpStr=="foreground")
-                    sbgo.setup.zLayer = 1;
-                else
-                if(tmpStr=="background")
-                    sbgo.setup.zLayer = 0;
-                else
-                if(tmpStr=="background2")
-                    sbgo.setup.zLayer = -1;
-                else
-                    sbgo.setup.zLayer = 0;
-            }
-
-            sbgo.setup.offsetX = bgoset.value("offset-x", "0").toInt();
-            sbgo.setup.offsetY = bgoset.value("offset-y", "0").toInt();
-            sbgo.setup.zOffset = bgoset.value("z-offset", 0.0).toDouble();
-            imgFile = bgoset.value("image", "").toString();
-            {
-                QString err;
-                GraphicsHelps::getMaskedImageInfo(bgoPath, imgFile, sbgo.setup.mask_n, err);
-                sbgo.setup.image_n = imgFile;
-                if( imgFile=="" )
-                {
-                    addError(QString("BGO-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
-                    goto skipBGO;
-                }
-            }
-            sbgo.setup.climbing = (bgoset.value("climbing", 0).toBool());
-            sbgo.setup.animated = (bgoset.value("animated", 0).toBool());
-            sbgo.setup.frames = bgoset.value("frames", "1").toInt();
-                NumberLimiter::apply(sbgo.setup.frames, 1u);
-            sbgo.setup.framespeed = bgoset.value("frame-speed", "125").toInt();
-                NumberLimiter::apply(sbgo.setup.framespeed, 1u);
-
-            sbgo.setup.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
-                NumberLimiter::apply(sbgo.setup.frame_h, 0u);
-
-            sbgo.setup.display_frame = bgoset.value("display-frame", "0").toInt();
-                NumberLimiter::apply(sbgo.setup.display_frame, 0u);
-            sbgo.setup.id = i;
-            //lvl_bgo.push_back(sbgo);
-
-            //Add to Index
-            lvl_bgo_indexes.storeElement(sbgo.setup.id, sbgo);
-
-        skipBGO:
-        bgoset.endGroup();
+        sbgo.setup.id = i;
+        //Store loaded config
+        lvl_bgo_indexes.storeElement(sbgo.setup.id, sbgo);
+        //Load custom config if possible
+        loadCustomConfig<obj_bgo>(lvl_bgo_indexes, i, Dir_BGO, "background", "background", &loadLevelBGO);
 
         if( bgoset.status() != QSettings::NoError )
         {

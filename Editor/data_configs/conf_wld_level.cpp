@@ -23,56 +23,31 @@
 
 #include "data_configs.h"
 
-obj_w_level::obj_w_level()
+bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, QSettings *setup)
 {
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
+    bool valid=true;
+    bool internal=!setup;
+    QString errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-void obj_w_level::copyTo(obj_w_level &level)
-{
-    /* for internal usage */
-    level.isValid         = isValid;
-    level.animator_id     = animator_id;
-    level.cur_image       = cur_image;
-    if(cur_image==nullptr)
-        level.cur_image   = &image;
-    level.frame_h         = frame_h;
-    /* for internal usage */
+    if(!openSection(setup, section))
+        return false;
 
-    level.id              = id;
-    level.group           = group;
-    level.category        = category;
-    level.grid            = grid;
-
-    level.image_n         = image_n;
-    level.mask_n          = mask_n;
-
-    level.animated        = animated;
-    level.frames          = frames;
-    level.framespeed      = framespeed;
-    level.display_frame   = display_frame;
-}
-
-long dataconfigs::getCharacterI(unsigned long itemID)
-{
-    long j;
-    bool found=false;
-
-    for(j=0; j < characters.size(); j++)
+    if(slevel.setup.parse(setup, wlvlPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
-        if(characters[int(j)].id == itemID)
-        {
-            found=true;
-            break;
-        }
+        slevel.isValid = true;
     }
-
-    if(!found) j=-1;
-    return j;
+    else
+    {
+        addError(errStr);
+        slevel.isValid = false;
+    }
+    slevel.m_itemType = ItemTypes::WLD_Level;
+    closeSection(setup);
+    if(internal)
+        delete setup;
+    return valid;
 }
-
 
 void dataconfigs::loadWorldLevels()
 {
@@ -114,50 +89,25 @@ void dataconfigs::loadWorldLevels()
 
     for(i=0; i<=levels_total; i++)
     {
-        bool valid = true;
         emit progressValue(int(i));
-        QString errStr;
-
-        if( !openSection(&levelset, QString("level-%1").arg(i)) )
-            break;
-
-        slevel.group =      levelset.value("group", "_NoGroup").toString();
-        slevel.category =   levelset.value("category", "_Other").toString();
-
-        slevel.image_n =    levelset.value("image", "").toString();
+        bool valid = loadWorldLevel(slevel, QString("level-%1").arg(i), 0, "", &levelset);
         /***************Load image*******************/
-        GraphicsHelps::loadMaskedImage(wlvlPath,
-           slevel.image_n, slevel.mask_n,
-           slevel.image,
-           errStr);
-
-        if(!errStr.isEmpty())
+        if(valid)
         {
-            valid=false;
-            addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
-            //goto skipLevel;
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(wlvlPath,
+               slevel.setup.image_n, slevel.setup.mask_n,
+               slevel.image,
+               errStr);
+            if(!errStr.isEmpty())
+            {
+                valid = false;
+                addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
+            }
         }
         /***************Load image*end***************/
-
-        slevel.grid =       levelset.value("grid", default_grid).toUInt();
-
-        slevel.animated =   levelset.value("animated", 0).toBool();
-        slevel.frames   =   levelset.value("frames", 1).toUInt();
-        slevel.framespeed = levelset.value("frame-speed", 175).toUInt();
-
-        slevel.frame_h =   (slevel.animated ?
-                                    uint( qRound(qreal(slevel.image.height())/
-                                             slevel.frames) )
-                                  : uint( slevel.image.height()) );
-
-        slevel.display_frame = levelset.value("display-frame", 0).toUInt();
-
-        slevel.isValid = true;
-
-        slevel.id = i;
+        slevel.setup.id = i;
         main_wlevels.storeElement(int(i), slevel, valid);
-
-        closeSection(&levelset);
 
         if( levelset.status() != QSettings::NoError )
         {

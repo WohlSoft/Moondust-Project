@@ -98,7 +98,7 @@ void PiecesModel::addPiece(const int &index)
         QPixmap img;
         Items::getItemGFX(&tile, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), tile.id);
+        pixmapId.insert(pixmaps.size(), tile.setup.id);
     }
     else
     if(m_type==WORLDPIECE_SCENERY)
@@ -108,7 +108,7 @@ void PiecesModel::addPiece(const int &index)
         QPixmap img;
         Items::getItemGFX(&scenery, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), scenery.id);
+        pixmapId.insert(pixmaps.size(), scenery.setup.id);
     }
     else
     if(m_type==WORLDPIECE_PATH)
@@ -118,7 +118,7 @@ void PiecesModel::addPiece(const int &index)
         QPixmap img;
         Items::getItemGFX(&wpath, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), wpath.id);
+        pixmapId.insert(pixmaps.size(), wpath.setup.id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
@@ -128,7 +128,7 @@ void PiecesModel::addPiece(const int &index)
         QPixmap img;
         Items::getItemGFX(&wlevel, img, false, QSize(32,32));
         pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), wlevel.id);
+        pixmapId.insert(pixmaps.size(), wlevel.setup.id);
     }
     endInsertRows();
 }

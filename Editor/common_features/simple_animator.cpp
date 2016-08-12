@@ -24,7 +24,8 @@ SimpleAnimator::SimpleAnimator(QObject *parent)
 {
     frame_delay = 0;
     ticks_left  = 0.0f;
-    QPixmap dummy;
+    QPixmap dummy(2, 2);
+    dummy.fill(Qt::white);
     setSettings(dummy, false, 1, 64, 0, -1, false, false);
 }
 
@@ -47,17 +48,9 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     frameWidth = a.frameWidth;
     frameHeight = a.frameHeight;
     frameHeight = a.frameHeight;
-    //frames = a.frames;
-
     //Inherets!
     frame_delay = a.frame_delay;
     ticks_left  = a.ticks_left;
-//    connect(
-//                &timer, SIGNAL(timeout()),
-//                this,
-//                SLOT( nextFrame() ) );
-//    if(a.timer.isActive())
-//        start();
 }
 
 SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)

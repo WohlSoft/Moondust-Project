@@ -23,38 +23,30 @@
 
 #include "data_configs.h"
 
-obj_w_tile::obj_w_tile()
+bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, QSettings *setup)
 {
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
+    bool valid=true;
+    bool internal=!setup;
+    QString errStr;
+    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
 
-void obj_w_tile::copyTo(obj_w_tile &tile)
-{
-    /* for internal usage */
-    tile.isValid         = isValid;
-    tile.animator_id     = animator_id;
-    tile.cur_image       = cur_image;
-    if(cur_image==nullptr)
-        tile.cur_image   = &image;
-    tile.frame_h         = frame_h;
-    /* for internal usage */
+    if(!openSection(setup, section))
+        return false;
 
-    tile.id              = id;
-    tile.group           = group;
-    tile.category        = category;
-    tile.grid            = grid;
-
-    tile.image_n         = image_n;
-    tile.mask_n          = mask_n;
-
-    tile.animated        = animated;
-    tile.frames          = frames;
-    tile.framespeed      = framespeed;
-    tile.display_frame   = display_frame;
-    tile.row             = row;
-    tile.col             = col;
+    if(stile.setup.parse(setup, tilePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    {
+        stile.isValid = true;
+    }
+    else
+    {
+        addError(errStr);
+        stile.isValid = false;
+    }
+    stile.m_itemType = ItemTypes::WLD_Tile;
+    closeSection(setup);
+    if(internal)
+        delete setup;
+    return valid;
 }
 
 void dataconfigs::loadWorldTiles()
@@ -95,53 +87,25 @@ void dataconfigs::loadWorldTiles()
 
     for(i=1; i<=tiles_total; i++)
     {
-        bool valid=true;
         emit progressValue(int(i));
-        QString errStr;
-
-        if( !openSection(&tileset, QString("tile-%1").arg(i)) )
-            break;
-
-        stile.group     = tileset.value("group", "_NoGroup").toString();
-        stile.category  = tileset.value("category", "_Other").toString();
-
-        stile.image_n   = tileset.value("image", "").toString();
+        bool valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), 0, "", &tileset);
         /***************Load image*******************/
-        GraphicsHelps::loadMaskedImage(tilePath,
-           stile.image_n, stile.mask_n,
-           stile.image,
-           errStr);
-
-        if(!errStr.isEmpty())
+        if(valid)
         {
-            valid = false;
-            addError(QString("TILE-%1 %2").arg(i).arg(errStr));
-            //goto skipTile;
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(tilePath,
+               stile.setup.image_n, stile.setup.mask_n,
+               stile.image,
+               errStr);
+            if(!errStr.isEmpty())
+            {
+                valid = false;
+                addError(QString("TILE-%1 %2").arg(i).arg(errStr));
+            }
         }
         /***************Load image*end***************/
-
-        stile.grid =            tileset.value("grid", default_grid).toUInt();
-
-        stile.animated =        tileset.value("animated", 0).toBool();
-        stile.frames =          tileset.value("frames", 1).toUInt();
-        stile.framespeed =      tileset.value("frame-speed", 175).toUInt();
-
-        stile.frame_h = uint(stile.animated?
-                             qRound(
-                                 qreal(stile.image.height())/
-                                 stile.frames)
-                            : stile.image.height());
-
-        stile.display_frame =   tileset.value("display-frame", 0).toUInt();
-        stile.row =             tileset.value("row", 0).toUInt();
-        stile.col =             tileset.value("col", 0).toUInt();
-
-        stile.isValid = true;
-
-        stile.id = i;
+        stile.setup.id = i;
         main_wtiles.storeElement(int(i), stile, valid);
-
-        closeSection(&tileset);
 
         if( tileset.status() != QSettings::NoError )
         {

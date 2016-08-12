@@ -113,7 +113,7 @@ bool WldTileItem::init()
     texture = ConfigManager::world_textures[tID];
 
     setup = ConfigManager::wld_tiles[data.id];
-    animated   = setup.animated;
+    animated   = setup.setup.animated;
     animatorID = setup.animator_ID;
     w = texture.frame_w;
     h = texture.frame_h;
@@ -170,7 +170,7 @@ bool WldSceneryItem::init()
     texture = ConfigManager::world_textures[tID];
     setup = ConfigManager::wld_scenery[data.id];
 
-    animated   = setup.animated;
+    animated   = setup.setup.animated;
     animatorID = setup.animator_ID;
     w = texture.frame_w;
     h = texture.frame_h;
@@ -224,7 +224,7 @@ bool WldPathItem::init()
     texture = ConfigManager::world_textures[tID];
     setup = ConfigManager::wld_paths[data.id];
 
-    animated   = setup.animated;
+    animated   = setup.setup.animated;
     animatorID = setup.animator_ID;
     w = texture.frame_w;
     h = texture.frame_h;
@@ -298,7 +298,7 @@ bool WldLevelItem::init()
     if(tID<0) return false; _path_big_tex = ConfigManager::world_textures[tID];
     setup = ConfigManager::wld_levels[data.id];
 
-    animated   = setup.animated;
+    animated   = setup.setup.animated;
     animatorID = setup.animator_ID;
     w = ConfigManager::default_grid;
     h = ConfigManager::default_grid;

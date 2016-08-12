@@ -39,9 +39,9 @@ void WldScene::buildAnimators()
                           ((t_tile.cur_image->isNull())?
                             m_dummyTerrainImg:
                            *t_tile.cur_image),
-                            t_tile.animated,
-                            t_tile.frames,
-                            t_tile.framespeed
+                            t_tile.setup.animated,
+                            t_tile.setup.frames,
+                            t_tile.setup.framespeed
                            );
 
         m_animatorsTerrain.push_back( aniTile );
@@ -62,9 +62,9 @@ void WldScene::buildAnimators()
                          ((t_scene.cur_image->isNull())?
                                 m_dummySceneryImg:
                                *t_scene.cur_image),
-                                t_scene.animated,
-                                t_scene.frames,
-                                t_scene.framespeed
+                                t_scene.setup.animated,
+                                t_scene.setup.frames,
+                                t_scene.setup.framespeed
                               );
 
         m_animatorsScenery.push_back( aniScene );
@@ -85,9 +85,9 @@ void WldScene::buildAnimators()
                          ((t_path.cur_image->isNull())?
                                 m_dummySceneryImg:
                                *t_path.cur_image),
-                                t_path.animated,
-                                t_path.frames,
-                                t_path.framespeed
+                                t_path.setup.animated,
+                                t_path.setup.frames,
+                                t_path.setup.framespeed
                               );
 
         m_animatorsPaths.push_back( aniScene );
@@ -108,9 +108,9 @@ void WldScene::buildAnimators()
                          ((t_level.cur_image->isNull())?
                                 m_dummySceneryImg:
                                *t_level.cur_image),
-                                t_level.animated,
-                                t_level.frames,
-                                t_level.framespeed
+                                t_level.setup.animated,
+                                t_level.setup.frames,
+                                t_level.setup.framespeed
                               );
 
         m_animatorsLevels.push_back( aniScene );

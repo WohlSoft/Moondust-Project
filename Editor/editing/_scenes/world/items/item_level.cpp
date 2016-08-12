@@ -427,7 +427,7 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
     if(mergedSet)
     {
         m_localProps = *mergedSet;
-        m_gridSize = m_localProps.grid;
+        m_gridSize = m_localProps.setup.grid;
     }
 
     if(animator_id && path_id && bPath_id)
