@@ -652,7 +652,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 
     /* Drop out some known but not supported file types (Archives, etc.) */
     if(strncmp((char *)magic, "PK\x03\x04", 3) == 0) {
-        return MUS_MOD;
+        return MUS_NONE;
     }
     if(strncmp((char *)extramagic, "\x37\x7A\xBC\xAF\x27\x1C", 6) == 0) {
         return MUS_NONE;
