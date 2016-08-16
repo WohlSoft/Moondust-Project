@@ -131,26 +131,38 @@ PGE_RectF PGE_RectF::withMargin(double marginX, double marginY)
 
 void PGE_RectF::setX(double x)
 {
-    _x=x;
-    _r=_x+_w;
+    _x = x;
+    _r = _x+_w;
 }
 
 void PGE_RectF::setY(double y)
 {
-    _y=y;
-    _b=_y+_h;
+    _y = y;
+    _b = _y+_h;
 }
 
 void PGE_RectF::setWidth(double w)
 {
-    _w=w;
-    _r=_x+_w;
+    _w = w;
+    _r = _x+_w;
 }
 
 void PGE_RectF::setHeight(double h)
 {
     _h=h;
     _b=_y+_h;
+}
+
+void PGE_RectF::addX(double x)
+{
+    _x += x;
+    _r = _x+_w;
+}
+
+void PGE_RectF::addY(double y)
+{
+    _y += y;
+    _b = _y+_h;
 }
 
 void PGE_RectF::setTopLeft(PGE_PointF p)
@@ -252,6 +264,16 @@ PGE_PointF PGE_RectF::center()
 PGE_SizeF PGE_RectF::size()
 {
     return PGE_SizeF(_w, _h);
+}
+
+double PGE_RectF::centerX()
+{
+    return _x+_w/2.0;
+}
+
+double PGE_RectF::centerY()
+{
+    return _y+_h/2.0;
 }
 
 bool PGE_RectF::collidePoint(double x, double y)

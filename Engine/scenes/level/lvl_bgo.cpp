@@ -98,7 +98,7 @@ void LVL_Bgo::transformTo_x(long id)
         animator_ID = setup->animator_ID;
     }
     if(!_isInited)
-        posRect.setPos(data.x, data.y);
+        m_posRect.setPos(data.x, data.y);
     setSize(texture.frame_w, texture.frame_h);
 }
 
@@ -108,7 +108,7 @@ void LVL_Bgo::render(double camX, double camY)
 
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
-    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, _width, _height, x.first, x.second);
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, m_width_registered, m_height_registered, x.first, x.second);
 }
 
 bool LVL_Bgo::isInited()

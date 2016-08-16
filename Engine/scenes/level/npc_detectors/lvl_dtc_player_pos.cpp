@@ -37,7 +37,7 @@ void PlayerPosDetector::processDetector()
         if((d1<d)||(i==0))
         {
             d=d1;
-            pos = p->posRect.center();
+            pos = p->m_posRect.center();
             _playersDirection=p->direction();
             if(_parentNPC->posCenterX() < pos.x())
                 _directedTo=1;

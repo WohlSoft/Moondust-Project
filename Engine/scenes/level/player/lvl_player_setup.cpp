@@ -132,10 +132,10 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     if(_isInited)
     {
         ducking = (ducking & state_cur.duck_allow);
-        float cx = posRect.center().x();
-        float b = posRect.bottom();
+        float cx = m_posRect.center().x();
+        float b = m_posRect.bottom();
         setSize(state_cur.width, ducking?state_cur.duck_height:state_cur.height);
-        setPos(cx-_width/2, b-_height);
+        setPos(cx-m_width_registered/2, b-m_height_registered);
         PlayerState x = _scene->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
@@ -169,7 +169,7 @@ void LVL_Player::setCharacterSafe(int CharacterID, int _stateID)
         setup = ConfigManager::playable_characters[CharacterID];
     states =   ConfigManager::playable_characters[CharacterID].states;
 
-    float oldHeight = posRect.height();
+    float oldHeight = m_posRect.height();
 
     if((_stateID<1) || !states.contains(_stateID))
     {

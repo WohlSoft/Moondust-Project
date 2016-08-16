@@ -73,7 +73,7 @@ void LVL_Npc::update(float tickTime)
     PGE_RectF sBox = section->sectionRect();
 
     if(offSectionDeactivate) {
-        if(!sBox.collideRect(posRect)) {
+        if(!sBox.collideRect(m_posRect)) {
             if(activationTimeout>100)
                 activationTimeout=100;
             //Iterate activation timeout if deactivation disabled by default
@@ -82,20 +82,20 @@ void LVL_Npc::update(float tickTime)
     }
 
     if(section->isWrapH()) {
-        if(posX()<sBox.left()-_width-1 )
+        if(posX()<sBox.left()-m_width_registered-1 )
             setPosX(sBox.right()-1);
         else
         if(posX()>sBox.right() + 1 )
-            setPosX(sBox.left()-_width+1);
+            setPosX(sBox.left()-m_width_registered+1);
     }
 
     if(section->isWrapV()) {
-        if(posY()<sBox.top()-_height-1 )
+        if(posY()<sBox.top()-m_height_registered-1 )
             setPosY(sBox.bottom()-1);
         else
         if(posY()>sBox.bottom() + 1 )
-            setPosY(sBox.top()-_height+1);
-    } else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom()+_height) ) {
+            setPosY(sBox.top()-m_height_registered+1);
+    } else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom()+m_height_registered) ) {
         kill(DAMAGE_PITFALL);
     }
 

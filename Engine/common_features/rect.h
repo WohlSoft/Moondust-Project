@@ -45,6 +45,8 @@ public:
     void setY(int y);
     void setWidth(int w);
     void setHeight(int h);
+    void addX(int x);
+    void addY(int y);
 
     void setTopLeft(PGE_Point p);
     void setTopRight(PGE_Point p);
@@ -69,6 +71,8 @@ public:
 
     PGE_Point center();
     PGE_Size size();
+    int centerX();
+    int centerY();
 
     bool collidePoint(int x, int y);
     bool collideRect(int x, int y, int w, int h);

@@ -246,8 +246,8 @@ void LVL_Player::kill(deathReason reason)
         SpawnEffectDef effect = setup.fail_effect;
         if(effect.id>0)
         {
-            effect.startX = posRect.center().x();
-            effect.startY = posRect.center().y();
+            effect.startX = m_posRect.center().x();
+            effect.startY = m_posRect.center().y();
             effect.velocityX *= _direction;
             effect.direction *= _direction;
             _scene->launchEffect(effect, true);
@@ -259,7 +259,7 @@ void LVL_Player::kill(deathReason reason)
 void LVL_Player::unregister()
 {
     isAlive = false;
-    _is_visible=false;
+    m_is_visible=false;
     //Unregister controllers
     if(_scene->player1Controller) _scene->player1Controller->removeFromControl(this);
     if(_scene->player2Controller) _scene->player2Controller->removeFromControl(this);

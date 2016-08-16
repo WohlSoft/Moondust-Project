@@ -100,7 +100,7 @@ void LVL_Block::transformTo(long id, int type)
         {
             npc->transformedFromBlock = this;
             npc->transformedFromBlockID = int(data.id);
-            npc->setCenterPos(posRect.center().x(), posRect.center().y());
+            npc->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
         }
         destroy( false );
     }
@@ -170,14 +170,14 @@ void LVL_Block::transformTo_x(long id)
 
     if(!_isInited)
     {
-        posRect.setPos(data.x, data.y);
+        m_posRect.setPos(data.x, data.y);
     }
     setSize(data.w, data.h);
 
     sizable = setup->setup.sizable;
     isHidden = data.invisible;
     collide_player = COLLISION_ANY;
-    slippery_surface = data.slippery;
+    m_slippery_surface = data.slippery;
     if((setup->setup.sizable) || (setup->setup.collision==2))
     {
         collide_player = COLLISION_TOP;
@@ -198,7 +198,7 @@ void LVL_Block::transformTo_x(long id)
     if(shape==shape_tr_right_top)
         shape_slope_angle_ratio=-(height()/width());
 
-    isRectangle=(setup->setup.phys_shape == 0);
+    m_isRectangle=(setup->setup.phys_shape == 0);
 //    if(setup->setup.algorithm==3)
 //         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
@@ -239,8 +239,8 @@ void LVL_Block::render(double camX, double camY)
     PGE_RectF blockG;
     blockG.setRect(posX()-camX+offset_x,
                          posY()-camY+offset_y,
-                         _width,
-                         _height);
+                         m_width_registered,
+                         m_height_registered);
 
 
     AniPos x(0,1);
@@ -253,8 +253,8 @@ void LVL_Block::render(double camX, double camY)
 
     if(sizable)
     {
-        int w = int(round(_width));
-        int h = int(round(_height));
+        int w = int(round(m_width_registered));
+        int h = int(round(m_height_registered));
 
         int x,y, x2, y2, i, j;
         int hc, wc;
@@ -585,11 +585,11 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                                          false);
             if(npc)
             {
-                npc->setCenterX(posRect.center().x());
+                npc->setCenterX(m_posRect.center().x());
                 if(_dir==up)
-                    npc->setPosY(posRect.top()-npc->height());
+                    npc->setPosY(m_posRect.top()-npc->height());
                 else
-                    npc->setPosY(posRect.bottom());
+                    npc->setPosY(m_posRect.bottom());
 
                 if(npcSet.block_spawn_type==1)
                 {

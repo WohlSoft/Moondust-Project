@@ -200,7 +200,7 @@ void LVL_Npc::kill(int damageReason)
 void LVL_Npc::unregister()
 {
     killed=true;
-    _is_visible=false;
+    m_is_visible=false;
     removeSpeedAddingPointers();
     unregisterFromTree();
     _scene->dead_npcs.push_back(this);

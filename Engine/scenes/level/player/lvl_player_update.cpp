@@ -85,7 +85,7 @@ void LVL_Player::update(float tickTime)
     on_slippery_surface = !foot_sl_contacts_map.isEmpty();
     bool climbableUp  = !climbable_map.isEmpty();
     bool climbableDown= climbableUp && !_onGround;
-    climbing = (climbableUp && climbing && !_onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
+    climbing = (climbableUp && climbing && !_onGround && (m_posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
     if(_onGround)
     {
         phys_setup.decelerate_x =
@@ -110,12 +110,12 @@ void LVL_Player::update(float tickTime)
         PGE_Phys_Object* climbableItem = *(climbable_map.begin());
         if(climbableItem)
         {
-            _velocityX_add=climbableItem->speedX();
-            _velocityY_add=climbableItem->speedY();
+            m_velocityX_add=climbableItem->speedX();
+            m_velocityY_add=climbableItem->speedY();
         } else
         {
-            _velocityX_add=0.0f;
-            _velocityY_add=0.0f;
+            m_velocityX_add=0.0f;
+            m_velocityY_add=0.0f;
         }
 
         if(gscale_Backup != 1)
@@ -262,7 +262,7 @@ void LVL_Player::update(float tickTime)
 
         if(climbing)
         {
-            if(posRect.center().y() >= climbableHeight)
+            if(m_posRect.center().y() >= climbableHeight)
                 setSpeedY(-physics_cur.velocity_climb_y_up);
         } else {
             if(collided_talkable_npc) collided_talkable_npc->talkWith();
@@ -397,7 +397,7 @@ void LVL_Player::update(float tickTime)
                 jumpTime=physics_cur.jump_time;
                 jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                _velocityY_add = 0;//Remove Y speed-add when player jumping
+                m_velocityY_add = 0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
@@ -469,12 +469,12 @@ void LVL_Player::update(float tickTime)
     //Return player to start position on fall down
     if(section->isWrapV())
     {
-        if(posY()<sBox.top()-_height-1 )
+        if(posY()<sBox.top()-m_height_registered-1 )
             setPosY(sBox.bottom()-1);
         else
         if(posY()>sBox.bottom() + 1 )
-            setPosY(sBox.top()-_height+1);
-    } else if( posY() > sBox.bottom()+_height ) {
+            setPosY(sBox.top()-m_height_registered+1);
+    } else if( posY() > sBox.bottom()+m_height_registered ) {
         kill(DEAD_fall);
     }
 
@@ -502,7 +502,7 @@ void LVL_Player::update(float tickTime)
     //Connection of section opposite sides
     if(isExiting) // Allow walk offscreen if exiting
     {
-        if((posX() < sBox.left()-_width-1 )||(posX() > sBox.right() + 1 ))
+        if((posX() < sBox.left()-m_width_registered-1 )||(posX() > sBox.right() + 1 ))
         {
             setGravityScale(0.0);//Prevent falling [we anyway exited from this level, isn't it?]
             setSpeedY(0.0);
@@ -526,11 +526,11 @@ void LVL_Player::update(float tickTime)
     else
     if(section->isWrapH())
     {
-        if(posX() < sBox.left()-_width-1 )
+        if(posX() < sBox.left()-m_width_registered-1 )
             setPosX( sBox.right()+1 );
         else
         if(posX() > sBox.right() + 1 )
-            setPosX( sBox.left()-_width-1 );
+            setPosX( sBox.left()-m_width_registered-1 );
     }
     else
     {
@@ -548,7 +548,7 @@ void LVL_Player::update(float tickTime)
                 }
             }
 
-            if((posX() < sBox.left()-_width-1 ) || (posX() > sBox.right() + 1 ))
+            if((posX() < sBox.left()-m_width_registered-1 ) || (posX() > sBox.right() + 1 ))
             {
                 setLocked(true);
                 _no_render=true;
@@ -567,9 +567,9 @@ void LVL_Player::update(float tickTime)
                 if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
             }
             else
-            if( posX()+_width > sBox.right())
+            if( posX()+m_width_registered > sBox.right())
             {
-                setPosX(sBox.right()-_width);
+                setPosX(sBox.right()-m_width_registered);
                 if(asVelX==0.0) setSpeedX(0.0);
                 if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
                 if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
@@ -579,7 +579,7 @@ void LVL_Player::update(float tickTime)
 
     if(_stucked)
     {
-        posRect.setX(posRect.x()-_direction*4);
+        m_posRect.setX(m_posRect.x()-_direction*4);
         applyAccel(0.0, 0.0);
     }
 

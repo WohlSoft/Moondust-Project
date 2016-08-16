@@ -54,7 +54,7 @@ void LVL_Npc::render(double camX, double camY)
     {
         if(warpSpriteOffset >= 1.0)
             return;
-        PGE_RectF  bodyPos = posRect;
+        PGE_RectF  bodyPos = m_posRect;
                    bodyPos.setPos(round(bodyPos.x()-camX), round(bodyPos.y()-camY));
         PGE_RectF &textPos = npc;
         //     Exit direction: [1] down  [3] up  [4] left  [2] right

@@ -61,9 +61,9 @@ void LVL_Player::setDuck(bool duck)
 {
     if(!duck_allow) return;
     if(duck==ducking) return;
-    float b=posRect.bottom();
+    float b=m_posRect.bottom();
     setSize(state_cur.width, duck? state_cur.duck_height : state_cur.height);
-    setPos(posX(), b-_height);
+    setPos(posX(), b-m_height_registered);
     ducking=duck;
     if(!duck && !isWarping)
     {

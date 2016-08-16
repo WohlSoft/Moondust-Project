@@ -91,7 +91,7 @@ void LVL_Npc::transformTo(long id, int type)
             transformedFromBlock->destroyed = false;
             transformedFromBlock->transformTo(id, 2);
             transformedFromBlock->transformedFromNpcID = data.id;
-            transformedFromBlock->setCenterPos(posRect.center().x(), posRect.center().y());
+            transformedFromBlock->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
         } else {
             def.x = round( posX() );
             def.y = round( posY() );
@@ -103,7 +103,7 @@ void LVL_Npc::transformTo(long id, int type)
             if(res)
             {
                 res->transformedFromNpcID = data.id;
-                res->setCenterPos(posRect.center().x(), posRect.center().y());
+                res->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
             }
         }
         this->unregister();
@@ -139,7 +139,7 @@ void LVL_Npc::transformTo_x(long id)
         _npc_id = id;
     } else {
         _npc_id=id;
-        posRect.setPos(data.x, data.y);
+        m_posRect.setPos(data.x, data.y);
         _syncSection(false);
     }
 
@@ -173,19 +173,19 @@ void LVL_Npc::transformTo_x(long id)
 
     if(_isInited)
     {
-        PGE_RectF old=posRect;
-        posRect.setSize(setup->setup.width, setup->setup.height);
-        posRect.setPos(old.center().x()-(posRect.width()/2),
-                       old.bottom()-posRect.height());
+        PGE_RectF old=m_posRect;
+        m_posRect.setSize(setup->setup.width, setup->setup.height);
+        m_posRect.setPos(old.center().x()-(m_posRect.width()/2),
+                       old.bottom()-m_posRect.height());
     }
     else
     {
-        posRect.setSize(setup->setup.width, setup->setup.height);
+        m_posRect.setSize(setup->setup.width, setup->setup.height);
     }
-    _realWidth=setup->setup.width;
-    _realHeight=setup->setup.height;
-    _width_half = _realWidth/2.0f;
-    _height_half = _realHeight/2.0f;
+    m_width_toRegister=setup->setup.width;
+    m_height_toRegister=setup->setup.height;
+    m_width_half = m_width_toRegister/2.0f;
+    m_height_half = m_height_toRegister/2.0f;
     _syncPositionAndSize();
 
     if(data.generator)

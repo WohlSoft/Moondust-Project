@@ -192,33 +192,33 @@ public:
     bool isWall(QVector<PGE_Phys_Object *> &blocks);
     bool isFloor(QVector<PGE_Phys_Object *> &blocks, bool *isCliff=0);
 
-    static const float _smbxTickTime;
+    static const float m_smbxTickTime;
     static float SMBXTicksToTime(float ticks);
 
     PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
-    PGE_RectF posRect;//!< Real body geometry and position
-    double _accelX; //!<Delta of X velocity in a second
-    double _accelY; //!<Delta of Y velocity in a second
+    PGE_RectF m_posRect;//!< Real body geometry and position
+    double m_accelX; //!<Delta of X velocity in a second
+    double m_accelY; //!<Delta of Y velocity in a second
 
-    double _velocityX;//!< current X speed (pixels per 1/65 of second)
-    double _velocityY;//!< current Y speed (pixels per 1/65 of second)
+    double m_velocityX;//!< current X speed (pixels per 1/65 of second)
+    double m_velocityY;//!< current Y speed (pixels per 1/65 of second)
 
-    double _velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
-    double _velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
+    double m_velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
+    double m_velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
-    double _velocityX_add; //!< additional X acceleration
-    double _velocityY_add; //!< additional Y acceleration
+    double m_velocityX_add; //!< additional X acceleration
+    double m_velocityY_add; //!< additional Y acceleration
 
-    double _posX; //!< Synchronized with R-Tree position
-    double _posY; //!< Synchronized with R-Tree position
+    double m_posX_registered; //!< Synchronized with R-Tree position
+    double m_posY_registered; //!< Synchronized with R-Tree position
 
-    double _width;  //!< Synchronized with R-Tree Width
-    double _height; //!< Synchronized with R-Tree Height
-    double _width_half;//!< Half of width
-    double _height_half;//!< Half of height
+    double m_width_registered;  //!< Synchronized with R-Tree Width
+    double m_height_registered; //!< Synchronized with R-Tree Height
+    double m_width_half;//!< Half of width
+    double m_height_half;//!< Half of height
 
-    double _realWidth;  //!< Width prepared to synchronize with R-Tree
-    double _realHeight; //!< Height prepared to synchronize with R-Tree
+    double m_width_toRegister;  //!< Width prepared to synchronize with R-Tree
+    double m_height_toRegister; //!< Height prepared to synchronize with R-Tree
 
     void setParentSection(LVL_Section* sct);
     LVL_Section* sct();
@@ -233,11 +233,12 @@ public:
         COLLISION_BOTTOM = 3
     };
 
+    //! FILTERS
     int collide_player;
     int collide_npc;
 
-    bool slippery_surface;
-    bool isRectangle;
+    bool m_slippery_surface;
+    bool m_isRectangle;
 
     PGE_Texture texture;
     GLuint texId;
@@ -248,7 +249,7 @@ public:
     virtual void show();
     virtual void hide();
     virtual bool isVisible();
-    bool _is_visible;
+    bool m_is_visible;
     /******************************************************************/
 
 public:
@@ -270,10 +271,10 @@ public:
     virtual void update(float ticks);
     virtual void render(double x, double y) { Q_UNUSED(x); Q_UNUSED(y); }
 
-    inline bool isPaused() { return _paused; }
-    inline void setPaused(bool p) { _paused=p; }
+    inline bool isPaused() { return m_paused; }
+    inline void setPaused(bool p) { m_paused=p; }
 private:
-    bool _paused;
+    bool m_paused;
 
 };
 

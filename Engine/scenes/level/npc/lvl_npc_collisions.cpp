@@ -66,10 +66,10 @@ void LVL_Npc::updateCollisions()
     bool resolveLeft=false;
     bool resolveRight=false;
 
-    double backupX  = posRect.x();
-    double backupY  = posRect.y();
-    double _wallX   = posRect.x();
-    double _floorY  = posRect.y();
+    double backupX  = m_posRect.x();
+    double backupY  = m_posRect.y();
+    double _wallX   = m_posRect.x();
+    double _floorY  = m_posRect.y();
 
     double _floorX_vel=0.0;//velocities sum
     double _floorX_num=0.0;//num of velocities
@@ -92,7 +92,7 @@ void LVL_Npc::updateCollisions()
                     LVL_Block *blk= static_cast<LVL_Block*>(collided);
                     if(!blk) continue;
                     foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
-                    if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(blk->m_slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(blk);
                     _floorY_vel+=blk->speedYsum();
@@ -105,7 +105,7 @@ void LVL_Npc::updateCollisions()
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
                     if(!npc) break;
                     foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
-                    if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(npc->m_slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(npc);
                     #ifndef DISABLE_OLD_SPEEDADD
@@ -145,23 +145,23 @@ void LVL_Npc::updateCollisions()
                     if(blk->shape==LVL_Block::shape_tr_right_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
-                        _floorY = nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
-                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
-                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                        _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
                     if(blk->shape==LVL_Block::shape_tr_left_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
-                        _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
-                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
-                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
+                        _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
+                        if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
+                        else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
-                        _floorY = nearest->posRect.top();
-                    _floorY-=posRect.height();
+                        _floorY = nearest->m_posRect.top();
+                    _floorY-=m_posRect.height();
                 } else {
-                    _floorY = nearest->posRect.top()-posRect.height();
+                    _floorY = nearest->m_posRect.top()-m_posRect.height();
                 }
                 resolveBottom=true;
             }
@@ -215,7 +215,7 @@ void LVL_Npc::updateCollisions()
             PGE_Phys_Object*nearest = nearestBlockY(topbottom_blocks);
             if(nearest)
             {
-                if(!resolveBottom) _floorY = nearest->posRect.bottom()+1;
+                if(!resolveBottom) _floorY = nearest->m_posRect.bottom()+1;
                 resolveTop=true;
             }
         }
@@ -237,7 +237,7 @@ void LVL_Npc::updateCollisions()
             PGE_Phys_Object*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
-                _wallX = nearest->posRect.right();
+                _wallX = nearest->m_posRect.right();
                 resolveLeft=true;
                 wall=true;
             }
@@ -257,7 +257,7 @@ void LVL_Npc::updateCollisions()
             PGE_Phys_Object*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
-                _wallX = nearest->posRect.left()-posRect.width();
+                _wallX = nearest->m_posRect.left()-m_posRect.width();
                 resolveRight=true;
                 wall=true;
             }
@@ -269,11 +269,11 @@ void LVL_Npc::updateCollisions()
         //check if on floor or in air
         bool _iswall=false;
         bool _isfloor=false;
-        posRect.setX(_wallX);
+        m_posRect.setX(_wallX);
         _isfloor = isFloor(floor_blocks, &cliffDetected);
-        posRect.setPos(backupX, _floorY);
+        m_posRect.setPos(backupX, _floorY);
         _iswall = isWall(wall_blocks);
-        posRect.setX(backupX);
+        m_posRect.setX(backupX);
         if(!_iswall && _isfloor)
         {
             resolveLeft = false;
@@ -292,22 +292,22 @@ void LVL_Npc::updateCollisions()
     if(resolveLeft || resolveRight)
     {
         //posRect.setX(_wallX);
-        correctX = _wallX - posRect.x();
+        correctX = _wallX - m_posRect.x();
         needCorrect = true;
         setSpeedX(0);
-        _velocityX_add=0;
+        m_velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         //posRect.setY(_floorY);
-        correctY = _floorY - posRect.y();
+        correctY = _floorY - m_posRect.y();
         needCorrect = true;
         //float bumpSpeed=speedY();
         //if(resolveTop)
             setSpeedY(0.0);
         //else
         //  setSpeedY(_floorY_vel);
-        _velocityY_add=0;
+        m_velocityY_add=0;
         //if(!blocks_to_hit.isEmpty())
         //{
         //    LVL_Block*nearest = nearestBlock(blocks_to_hit);
@@ -326,7 +326,7 @@ void LVL_Npc::updateCollisions()
     }
     else
     {
-        posRect.setY(backupY);
+        m_posRect.setY(backupY);
     }
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
@@ -387,8 +387,8 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
 
             contacted_blocks[intptr_t(collided)]=collided;
 
-            if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
-                ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )
+            if( ((!forceCollideCenter)&&(!collided->m_posRect.collideRect(m_posRect)))||
+                ((forceCollideCenter)&&(!collided->m_posRect.collideRectDeep(m_posRect, 1.0, -3.0))) )
             {
                 #ifdef COLLIDE_DEBUG
                 qDebug() << "No, is not collidng";
@@ -467,9 +467,9 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 //*****************************Left****************************/
                 else if( (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
                          (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_bottom)
-                          &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopRight(*this, collided)+1.0)))||
+                          &&(m_posRect.bottom()>=(collided->m_posRect.top()+SL_HeightTopRight(*this, collided)+1.0)))||
                          (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_top)
-                          &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopRight(*this, collided)-1.0))) )
+                          &&(m_posRect.top()<=(collided->m_posRect.bottom()-SL_HeightTopRight(*this, collided)-1.0))) )
                 {
                     if(blk->isHidden) break;
                     collided_left[intptr_t(collided)]=collided;//right of NPC
@@ -479,9 +479,9 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 //*****************************Right****************************/
                 else if( (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
                          (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_bottom)
-                         &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopLeft(*this, collided)+1.0)))||
+                         &&(m_posRect.bottom()>=(collided->m_posRect.top()+SL_HeightTopLeft(*this, collided)+1.0)))||
                          (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_top)
-                         &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopLeft(*this, collided)-1.0)))
+                         &&(m_posRect.top()<=(collided->m_posRect.bottom()-SL_HeightTopLeft(*this, collided)-1.0)))
                        )
                 {
                     if(blk->isHidden) break;
@@ -494,9 +494,9 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 float c=forceCollideCenter? 0.0f : 1.0f;
                 //*****************************Center****************************/
                 if( ((!forceCollideCenter && blk->shape==LVL_Block::shape_rect)||(forceCollideCenter))
-                        && blk->posRect.collideRectDeep(posRect,
-                                                 fabs(_velocityX_prev+_velocityX_add)*c+c*2.0,
-                                                 fabs(_velocityY_prev+_velocityY_add)*c+c*2.0)
+                        && blk->m_posRect.collideRectDeep(m_posRect,
+                                                 fabs(m_velocityX_prev+m_velocityX_add)*c+c*2.0,
+                                                 fabs(m_velocityY_prev+m_velocityY_add)*c+c*2.0)
                         )
                 {
                     if(blk->isHidden && !forceCollideCenter) break;
@@ -527,8 +527,8 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                 if(npc->isGenerator) break;
             }
 
-            if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
-                ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )
+            if( ((!forceCollideCenter)&&(!collided->m_posRect.collideRect(m_posRect)))||
+                ((forceCollideCenter)&&(!collided->m_posRect.collideRectDeep(m_posRect, 1.0, -3.0))) )
             {
                 break;
             }
@@ -648,9 +648,9 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
                                 "depths: "<< fabs(_velocityX_prev)*c+c*2.0 <<
                             fabs(_velocityY_prev)*c+c;
                     #endif
-                    if( npc->posRect.collideRectDeep(posRect,
-                                                     fabs(_velocityX_prev)*c+c*2.0,
-                                                     fabs(_velocityY_prev)*c+c*2.0)
+                    if( npc->m_posRect.collideRectDeep(m_posRect,
+                                                     fabs(m_velocityX_prev)*c+c*2.0,
+                                                     fabs(m_velocityY_prev)*c+c*2.0)
                             )
                     {
                         if(!forceCollideCenter) break;
@@ -686,14 +686,14 @@ void LVL_Npc::detectCollisions(PGE_Phys_Object *collided)
             contacted_players[intptr_t(collided)]=collided;
 
             //PGE_PointF c1 = posRect.center();
-            PGE_RectF &r1 = posRect;
+            PGE_RectF &r1 = m_posRect;
             //PGE_PointF cc = collided->posRect.center();
-            PGE_RectF  rc = collided->posRect;
+            PGE_RectF  rc = collided->m_posRect;
 
             //double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
-            double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+            double ySpeed = Maths::max(fabs(speedY()), fabs(m_velocityY_prev)) * Maths::sgn(speedY());
             //double xSpeedO = Maths::max(fabs(collided->speedX()), fabs(collided->_velocityX_prev)) * Maths::sgn(collided->speedX());
-            double ySpeedO = Maths::max(fabs(collided->speedY()), fabs(collided->_velocityY_prev)) * Maths::sgn(collided->speedY());
+            double ySpeedO = Maths::max(fabs(collided->speedY()), fabs(collided->m_velocityY_prev)) * Maths::sgn(collided->speedY());
             if( (
                          (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
                          &&
@@ -789,7 +789,7 @@ void LVL_Npc::updateSpeedAddingStack()
 
 void LVL_Npc::applyCorrectionToSA_stack(double offsetX, double offsetY)
 {
-    posRect.setPos(posRect.x()+offsetX, posRect.y()+offsetY);
+    m_posRect.setPos(m_posRect.x()+offsetX, m_posRect.y()+offsetY);
     _syncPosition();
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->applyCorrectionToSA_stack(offsetX, offsetY);

@@ -20,19 +20,19 @@
 
 void LevelScene::registerElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
-    if(item->_width<=0) { rb[0]=item->_posX+1;}
-    if(item->_height<=0) { rb[1]=item->_posY+1;}
+    RPoint lt={item->m_posX_registered, item->m_posY_registered};
+    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
+    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
     tree.Insert(lt, rb, item);
 }
 
 void LevelScene::unregisterElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
-    if(item->_width<=0) { rb[0]=item->_posX+1;}
-    if(item->_height<=0) { rb[1]=item->_posY+1;}
+    RPoint lt={item->m_posX_registered, item->m_posY_registered};
+    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
+    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
     tree.Remove(lt, rb, item);
 }
 

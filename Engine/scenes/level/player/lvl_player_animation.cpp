@@ -100,10 +100,10 @@ void LVL_Player::refreshAnimation()
             if(!busy)
             {
                 float velX = speedX();
-                if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(_accelX>0.0)) )
+                if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(m_accelX>0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, _direction,
                                                (100-((velX*12)<85 ? velX*12 : 85)) );
-                else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(_accelX<0.0)) )
+                else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(m_accelX<0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, _direction,
                                              (100-((-velX*12)<85 ? -velX*12 : 85)) );
                 else

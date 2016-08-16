@@ -36,29 +36,29 @@ void LVL_Player::processWarpChecking()
             switch(contactedWarp->data.idirect)
             {
                 case LevelDoor::ENTRANCE_RIGHT:
-                    if(posRect.right() >= contactedWarp->right()-1.0 &&
-                       posRect.right() <= contactedWarp->right()+speedX() &&
-                       posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
+                    if(m_posRect.right() >= contactedWarp->right()-1.0 &&
+                       m_posRect.right() <= contactedWarp->right()+speedX() &&
+                       m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_DOWN:
-                    if(posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       posRect.bottom() <= contactedWarp->bottom()+speedY() &&
-                       posRect.center().x() >= contactedWarp->left() &&
-                       posRect.center().x() <= contactedWarp->right()
+                    if(m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_posRect.bottom() <= contactedWarp->bottom()+speedY() &&
+                       m_posRect.center().x() >= contactedWarp->left() &&
+                       m_posRect.center().x() <= contactedWarp->right()
                             ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_LEFT:
-                    if(posRect.left() <= contactedWarp->left()+1.0 &&
-                       posRect.left() >= contactedWarp->left()+speedX() &&
-                       posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
+                    if(m_posRect.left() <= contactedWarp->left()+1.0 &&
+                       m_posRect.left() >= contactedWarp->left()+speedX() &&
+                       m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_UP:
-                    if(posRect.top() <= contactedWarp->top()+1.0 &&
-                       posRect.top() >= contactedWarp->top()+speedY() &&
-                       posRect.center().x() >= contactedWarp->left() &&
-                       posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
+                    if(m_posRect.top() <= contactedWarp->top()+1.0 &&
+                       m_posRect.top() >= contactedWarp->top()+speedY() &&
+                       m_posRect.center().x() >= contactedWarp->left() &&
+                       m_posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
                     break;
                 default:
                     break;
@@ -70,7 +70,7 @@ void LVL_Player::processWarpChecking()
                 switch(contactedWarp->data.idirect)
                 {
                     case LevelDoor::ENTRANCE_RIGHT:
-                        if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
+                        if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-m_posRect.width()); doTeleport=true; }
                         break;
                     case LevelDoor::ENTRANCE_DOWN:
                         if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height);
@@ -106,15 +106,15 @@ void LVL_Player::processWarpChecking()
         {
             bool isContacted=false;
 
-            if(posRect.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
-               posRect.bottom() >= contactedWarp->bottom()-fabs(speedY())-4.0 &&
-               posRect.center().x() >= contactedWarp->left() &&
-               posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
+            if(m_posRect.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
+               m_posRect.bottom() >= contactedWarp->bottom()-fabs(speedY())-4.0 &&
+               m_posRect.center().x() >= contactedWarp->left() &&
+               m_posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
 
             if(isContacted)
             {
-                setPosX(contactedWarp->posCenterX()-posRect.width()/2.0);
-                setPosY(contactedWarp->bottom()-posRect.height());
+                setPosX(contactedWarp->posCenterX()-m_posRect.width()/2.0);
+                setPosY(contactedWarp->bottom()-m_posRect.height());
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
                 wasEnteredTimeout=100;
@@ -155,8 +155,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
                                       isWarping=true; setPaused(true);
                                       warpPipeOffset=0.0;
                                       warpDirectO=0;
-                                      teleport(x+16-_width_half,
-                                                     y+32-_height);
+                                      teleport(x+16-m_width_half,
+                                                     y+32-m_height_registered);
                                       animator.unlock();
                                       animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                   }, 0);
@@ -201,7 +201,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
                                 _direction=1;
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
-                                teleport(x, y+32-_height);
+                                teleport(x, y+32-m_height_registered);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -212,7 +212,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
-                                teleport(x+16-_width_half, y);
+                                teleport(x+16-m_width_half, y);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -224,7 +224,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
                                 _direction=-1;
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
-                                teleport(x+32-_width, y+32-_height);
+                                teleport(x+32-m_width_registered, y+32-m_height_registered);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -235,8 +235,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
-                                teleport(x+16-_width_half,
-                                         y+32-_height);
+                                teleport(x+16-m_width_half,
+                                         y+32-m_height_registered);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -304,8 +304,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection, bool 
     case LevelDoor::WARP_INSTANT:
         setSpeed(0, (speedY()<0?speedY():0) );//zero X speed!
     case LevelDoor::WARP_PORTAL:
-        teleport(x+16-_width_half,
-                     y+32-_height);
+        teleport(x+16-m_width_half,
+                     y+32-m_height_registered);
         break;
     default:
         break;
@@ -347,7 +347,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                   _direction=1;
                                   animator.unlock();
                                   animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
-                                  setPos(warp.ix+32-_width, posY());
+                                  setPos(warp.ix+32-m_width_registered, posY());
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -359,7 +359,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                   warpDirectO=3;
                                   animator.unlock();
                                   animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
-                                  setPos(posX(), warp.iy+32-_height);
+                                  setPos(posX(), warp.iy+32-m_height_registered);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }

@@ -129,6 +129,18 @@ void PGE_Rect::setHeight(int h)
     _b=_y+_h;
 }
 
+void PGE_Rect::addX(int x)
+{
+    _x += x;
+    _r = _x+_w;
+}
+
+void PGE_Rect::addY(int y)
+{
+    _y += y;
+    _b = _y+_h;
+}
+
 void PGE_Rect::setTopLeft(PGE_Point p)
 {
     setLeft(p.x());
@@ -227,6 +239,16 @@ PGE_Point PGE_Rect::center()
 PGE_Size PGE_Rect::size()
 {
     return PGE_Size(_w, _h);
+}
+
+int PGE_Rect::centerX()
+{
+    return _x+_w/2.0;
+}
+
+int PGE_Rect::centerY()
+{
+    return _y+_h/2.0;
 }
 
 bool PGE_Rect::collidePoint(int x, int y)
