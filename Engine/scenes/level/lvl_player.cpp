@@ -49,8 +49,6 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     _stucked=false;
 
     JumpPressed=false;
-    _onGround=false;
-    on_slippery_surface=false;
     forceCollideCenter=false;
 
     climbing=false;

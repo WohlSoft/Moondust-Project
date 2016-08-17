@@ -154,8 +154,6 @@ class LVL_Player :
         /********************Jumps***************************/
         bool    JumpPressed;
         bool    onGround();
-        bool    _onGround;
-        bool    on_slippery_surface;
         QHash<intptr_t, PGE_Phys_Object* > foot_contacts_map;   //!< staying on ground surfaces
         QHash<intptr_t, PGE_Phys_Object* > foot_sl_contacts_map;//!< Slipery surfaces
         float   jumpTime;
