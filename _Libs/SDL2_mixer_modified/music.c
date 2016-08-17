@@ -519,15 +519,17 @@ static int detect_imf(SDL_RWops* in, Sint64 start)
     if(!in)
         return 0;
 
+    SDL_RWseek(in, start, RW_SEEK_SET);
+
     if(SDL_RWread(in, &word, 1, 2) != 2)
     {
-        SDL_RWseek(in, start, SEEK_SET);
+        SDL_RWseek(in, start, RW_SEEK_SET);
         return 0;
     }
     chunksize = SDL_SwapLE16(word);
     if ((chunksize == 0) || (chunksize & 3))
     {
-
+        SDL_RWseek(in, start, RW_SEEK_SET);
         return 0;
     }
 
@@ -535,21 +537,21 @@ static int detect_imf(SDL_RWops* in, Sint64 start)
     {
         if(SDL_RWread(in, &word, 1, 2) != 2)
         {
-            SDL_RWseek(in, start, SEEK_SET);
+            SDL_RWseek(in, start, RW_SEEK_SET);
             break;
         }
         buff = SDL_SwapLE16(word);
         sum1 += buff;
         if(SDL_RWread(in, &word, 1, 2) != 2)
         {
-            SDL_RWseek(in, start, SEEK_SET);
+            SDL_RWseek(in, start, RW_SEEK_SET);
             break;
         }
         buff = SDL_SwapLE16(word);
         sum2 += buff;
         i--;
     }
-    SDL_RWseek(in, start, SEEK_SET);
+    SDL_RWseek(in, start, RW_SEEK_SET);
     return (sum1 > sum2);
 }
 
@@ -793,11 +795,14 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MP3;
     }
     #endif
+
     /* Detect id Software Music Format file */
     if(detect_imf(src, start)) {
         return MUS_MID;
     }
 
+    //Reset position to zero!
+    SDL_RWseek(src, start, RW_SEEK_SET);
     /* Assume MOD format.
      *
      * Apparently there is no way to check if the file is really a MOD,
