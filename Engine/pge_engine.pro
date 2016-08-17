@@ -284,7 +284,8 @@ SOURCES += \
     script/bindings/level/classes/luaclass_level_playerstate.cpp \
     script/bindings/level/classes/luaclass_level_camera.cpp \
     script/bindings/core/classes/luaclass_core_scene_effects.cpp \
-    common_features/pge_application.cpp
+    common_features/pge_application.cpp \
+    scenes/level/base/lvl_base_physics.cpp
 
 HEADERS  += \
     graphics/graphics.h \

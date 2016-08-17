@@ -19,11 +19,13 @@ public:
         static_assert(std::is_arithmetic<T>::value, "The value for \"min\" must be arithemtic");
         return (n1<n2) ? n1 : n2;
     }
-
-    template <typename T>
-    static int sgn(T val) {
-        static_assert(std::is_arithmetic<T>::value, "The value for \"val\" must be arithemtic");
-        return int(T(0) < val) - int(val < T(0));
+//    template <typename T>
+//    static int sgn(T val) {
+//        static_assert(std::is_arithmetic<T>::value, "The value for \"val\" must be arithemtic");
+//        return int(T(0) < val) - int(val < T(0));
+//    }
+    template <typename T> T sgn(T val) {
+        return (T(0) < val) - (val < T(0));
     }
 };
 

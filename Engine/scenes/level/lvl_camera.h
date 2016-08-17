@@ -33,6 +33,7 @@
 
 class   PGE_Phys_Object;
 typedef QVector<PGE_Phys_Object *> PGE_RenderList;
+typedef int                        PGE_SizeT;
 
 class LVL_Background;
 class LVL_Section;

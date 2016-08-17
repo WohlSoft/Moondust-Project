@@ -77,7 +77,7 @@ public:
     int transformedFromNpcID;
 
     void hit(directions _dir=up);
-    void hit(bool isUp, LVL_Player* player, int numHits=1);
+    void hit(directions _dir, LVL_Player* player, int numHits=1);
     void destroy(bool playEffect=false);
     directions hitDirection;
 

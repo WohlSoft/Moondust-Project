@@ -632,11 +632,11 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     }
 }
 
-void LVL_Block::hit(bool isUp, LVL_Player *, int numHits)
+void LVL_Block::hit(directions _dir, LVL_Player *, int numHits)
 {
     while(numHits>0)
     {
-        hit(isUp?up:down);
+        hit(_dir);
         numHits--;
     }
 }
