@@ -17,4 +17,6 @@ TRANSLATIONS += \
     $$PWD/languages/engine_es.ts \
     $$PWD/languages/engine_it.ts \
     $$PWD/languages/engine_pl.ts \
-    $$PWD/languages/engine_pt.ts
+    $$PWD/languages/engine_pt.ts \
+    $$PWD/languages/engine_sv.ts
+

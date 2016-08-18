@@ -64,6 +64,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     m_allowHoleRuning(false),
     m_onSlopeFloorTopAlign(false),
     m_blocked{Block_NONE, Block_ALL, Block_ALL},
+    m_danger{Block_NONE, Block_NONE, Block_NONE},
     m_filterID(0),
     /*****Physical engine locals*END***/
 

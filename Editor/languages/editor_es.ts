@@ -4950,32 +4950,32 @@ All elements of this layer will be removed too!</source>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="96"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="95"/>
         <source>Search User Backgrounds %1</source>
         <translation>Buscar fondos personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="179"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="178"/>
         <source>Search User Blocks %1</source>
         <translation>Buscar bloques personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="256"/>
         <source>Search User BGOs %1</source>
         <translation>Buscar OFs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="334"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="333"/>
         <source>Search User NPCs %1</source>
         <translation>Buscar PNJs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="456"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="453"/>
         <source>Wrong custom images</source>
         <translation>Imágenes equivocadas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="457"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="454"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -10592,7 +10592,7 @@ Razón: Violación de segmentación de señal [SIGSERV]
         <translation>Deshabilitar límite de tamaño</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_bgo.cpp" line="181"/>
+        <location filename="../data_configs/obj_bgo.cpp" line="104"/>
         <source>Loading BGOs...</source>
         <translation>Cargando OFs...</translation>
     </message>
@@ -10602,12 +10602,12 @@ Razón: Violación de segmentación de señal [SIGSERV]
         <translation>Cargando fondos...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_block.cpp" line="288"/>
+        <location filename="../data_configs/obj_block.cpp" line="107"/>
         <source>Loading Blocks...</source>
         <translation>Cargando bloques...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_npc.cpp" line="202"/>
+        <location filename="../data_configs/obj_npc.cpp" line="108"/>
         <source>Loading NPCs...</source>
         <translation>Cargando PNJs...</translation>
     </message>
@@ -10622,22 +10622,22 @@ Razón: Violación de segmentación de señal [SIGSERV]
         <translation>Cargando Sonido...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="103"/>
+        <location filename="../data_configs/conf_wld_level.cpp" line="78"/>
         <source>Loading Level images...</source>
         <translation>Cargando imágenes de nivel...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="83"/>
+        <location filename="../data_configs/conf_wld_path.cpp" line="75"/>
         <source>Loading Paths images...</source>
         <translation>Cargando imágenes de caminos...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="82"/>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="77"/>
         <source>Loading Sceneries...</source>
         <translation>Cargando decoraciones...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="76"/>
         <source>Loading Tiles...</source>
         <translation>Cargando azulejos...</translation>
     </message>
@@ -12349,27 +12349,27 @@ Abajo:	%4</translation>
         <translation>Buscar azulejos del usuario %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="172"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="171"/>
         <source>Search User Sceneries %1</source>
         <translation>Buscar decoraciones de usuario %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="244"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="242"/>
         <source>Search User Paths %1</source>
         <translation>Buscar caminos de usuario %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="316"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="313"/>
         <source>Search User Levels %1</source>
         <translation>Buscar niveles de usuario %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="394"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="390"/>
         <source>Wrong custom images</source>
         <translation>Imágenes equivocadas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="395"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="391"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>

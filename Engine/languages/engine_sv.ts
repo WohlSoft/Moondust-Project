@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_ES">
+<TS version="2.1" language="sv_SE">
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
@@ -93,6 +93,36 @@ and retry your recent action to take more detail info.</source>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="132"/>
         <source>Engine has interrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="RENDERER_NO_OPENGL_ERROR">
+        <location filename="../graphics/window.cpp" line="102"/>
+        <source>Unable to find OpenGL support!
+Software renderer will be started.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="NO_RENDERER_ERROR">
+        <location filename="../graphics/window.cpp" line="114"/>
+        <source>Renderer is not selected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WINDOW_CREATE_ERROR">
+        <location filename="../graphics/window.cpp" line="130"/>
+        <location filename="../graphics/window.cpp" line="138"/>
+        <source>Unable to create window!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WINDOW_ICON_INIT_ERROR">
+        <location filename="../graphics/window.cpp" line="155"/>
+        <location filename="../graphics/window.cpp" line="161"/>
+        <location filename="../graphics/window.cpp" line="182"/>
+        <source>Unable to setup window icon!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="RENDERER_CONTEXT_INIT_ERROR">
+        <location filename="../graphics/window.cpp" line="194"/>
+        <source>Unable to initialize renderer context!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -191,8 +221,6 @@ Enter to: %2</source>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="371"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
-        <oldsource>Fatal error: Impossible to find start section.
-Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
@@ -428,36 +456,6 @@ Are you placed player start point (or entrance warp point) too far off of the se
     <message id="MSG_LEVELS_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="668"/>
         <source>&lt;levels not found&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="RENDERER_NO_OPENGL_ERROR">
-        <location filename="../graphics/window.cpp" line="102"/>
-        <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="NO_RENDERER_ERROR">
-        <location filename="../graphics/window.cpp" line="114"/>
-        <source>Renderer is not selected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="WINDOW_CREATE_ERROR">
-        <location filename="../graphics/window.cpp" line="130"/>
-        <location filename="../graphics/window.cpp" line="138"/>
-        <source>Unable to create window!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="WINDOW_ICON_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="155"/>
-        <location filename="../graphics/window.cpp" line="161"/>
-        <location filename="../graphics/window.cpp" line="182"/>
-        <source>Unable to setup window icon!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="RENDERER_CONTEXT_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="194"/>
-        <source>Unable to initialize renderer context!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

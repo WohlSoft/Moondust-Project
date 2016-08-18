@@ -64,6 +64,9 @@ class LVL_Player :
 
         void refreshEnvironmentState();
 
+        void processContacts();
+        void preCollision();
+        void postCollision();
         void updateCollisions();
         void detectCollisions(PGE_Phys_Object *collided);
         bool forceCollideCenter;//!< collide with invizible blocks at center

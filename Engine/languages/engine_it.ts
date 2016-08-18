@@ -124,18 +124,18 @@ and retry your recent action to take more detail info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="437"/>
+        <location filename="../main.cpp" line="436"/>
         <source>Unable to init SDL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="653"/>
-        <location filename="../main.cpp" line="795"/>
+        <location filename="../main.cpp" line="656"/>
+        <location filename="../main.cpp" line="798"/>
         <source>No opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="666"/>
+        <location filename="../main.cpp" line="669"/>
         <source>ERROR:
 Fail to start world map
 
@@ -143,24 +143,24 @@ Fail to start world map
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="684"/>
+        <location filename="../main.cpp" line="687"/>
         <source>World map was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="701"/>
+        <location filename="../main.cpp" line="704"/>
         <source>Start level
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="703"/>
+        <location filename="../main.cpp" line="706"/>
         <source>Type an exit code (signed integer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="861"/>
+        <location filename="../main.cpp" line="864"/>
         <source>Warp exit
 
 Exit to:
@@ -170,20 +170,20 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="906"/>
+        <location filename="../main.cpp" line="909"/>
         <source>Level was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="244"/>
-        <location filename="../scenes/scene_world.cpp" line="465"/>
+        <location filename="../scenes/scene_world.cpp" line="468"/>
         <source>Invalid playable character ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="254"/>
-        <location filename="../scenes/scene_world.cpp" line="475"/>
+        <location filename="../scenes/scene_world.cpp" line="478"/>
         <source>Invalid playable character state ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -243,34 +243,34 @@ Are you placed player start point (or entrance warp point) too far off of the se
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="520"/>
-        <location filename="../scenes/scene_world.cpp" line="547"/>
+        <location filename="../scenes/scene_world.cpp" line="523"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="527"/>
-        <location filename="../scenes/scene_world.cpp" line="554"/>
+        <location filename="../scenes/scene_world.cpp" line="530"/>
+        <location filename="../scenes/scene_world.cpp" line="557"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="529"/>
+        <location filename="../scenes/scene_world.cpp" line="532"/>
         <source>Save and continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="531"/>
+        <location filename="../scenes/scene_world.cpp" line="534"/>
         <source>Save and quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="533"/>
+        <location filename="../scenes/scene_world.cpp" line="536"/>
         <source>Exit without saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="556"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,12 +449,14 @@ Software renderer will be started.
         <translation type="unfinished"></translation>
     </message>
     <message id="WINDOW_ICON_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="163"/>
+        <location filename="../graphics/window.cpp" line="155"/>
+        <location filename="../graphics/window.cpp" line="161"/>
+        <location filename="../graphics/window.cpp" line="182"/>
         <source>Unable to setup window icon!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="174"/>
+        <location filename="../graphics/window.cpp" line="194"/>
         <source>Unable to initialize renderer context!</source>
         <translation type="unfinished"></translation>
     </message>
