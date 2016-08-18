@@ -57,6 +57,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     m_crushedHard(false),
     m_crushedHardDelay(0),
     m_cliff(false),
+    m_onSlippery(false),
     m_moveLeft(false),
     m_moveRight(false),
     m_onSlopeYAdd(0.0),

@@ -42,10 +42,10 @@ void LVL_Player::refreshEnvironmentState()
 
         phys_setup.max_vel_x = fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk) *(_onGround?physics_cur.ground_c_max:1.0f);
+                    physics_cur.MaxSpeed_walk) *(m_stand ? physics_cur.ground_c_max : 1.0f);
         phys_setup.min_vel_x = -fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk) *(_onGround?physics_cur.ground_c_max:1.0f);
+                    physics_cur.MaxSpeed_walk) *(m_stand ? physics_cur.ground_c_max : 1.0f);
         phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
         phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
         phys_setup.decelerate_x = physics_cur.decelerate_air;
@@ -105,7 +105,7 @@ bool LVL_Player::isRunning()
 
 bool LVL_Player::onGround()
 {
-    return _onGround;
+    return m_stand;
 }
 
 int LVL_Player::direction()

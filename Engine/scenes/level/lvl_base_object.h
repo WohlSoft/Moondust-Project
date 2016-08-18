@@ -214,6 +214,7 @@ public:
         m_crushedOld = m_crushed;
         m_crushed    = false;
         m_stand      = false;
+        m_onSlippery = false;
         m_standOnYMovable = false;
         #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
         if(m_crushedHardDelay > 0)
@@ -248,6 +249,7 @@ public:
     bool    m_crushedHard;
     int     m_crushedHardDelay;
     bool    m_cliff;
+    bool    m_onSlippery;
     /*************************************/
     bool    m_moveLeft;
     bool    m_moveRight;

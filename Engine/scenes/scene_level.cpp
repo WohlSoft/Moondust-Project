@@ -361,7 +361,7 @@ void LevelScene::update()
             {
                 debug_player_jumping = plr->JumpPressed;
                 debug_player_onground= plr->onGround();
-                debug_player_foots   = plr->foot_contacts_map.size();
+                debug_player_foots   = plr->l_contactB.size();
             }
         }
 

@@ -81,17 +81,17 @@ void LVL_Player::update(float tickTime)
         }
     }
 
-    _onGround = !foot_contacts_map.isEmpty();
-    on_slippery_surface = !foot_sl_contacts_map.isEmpty();
+    //_onGround = !foot_contacts_map.isEmpty();
+    //on_slippery_surface = !foot_sl_contacts_map.isEmpty();
     bool climbableUp  = !climbable_map.isEmpty();
-    bool climbableDown= climbableUp && !_onGround;
-    climbing = (climbableUp && climbing && !_onGround && (m_posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
-    if(_onGround)
+    bool climbableDown= climbableUp && !m_stand;
+    climbing = (climbableUp && climbing && !m_stand && (m_posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
+    if(m_stand)
     {
         phys_setup.decelerate_x =
                 (fabs(speedX())<=physics_cur.MaxSpeed_walk)?
-                (on_slippery_surface?physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop):
-                (on_slippery_surface?physics_cur.decelerate_run/physics_cur.slippery_c : physics_cur.decelerate_run);
+                (m_onSlippery ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop):
+                (m_onSlippery ? physics_cur.decelerate_run/physics_cur.slippery_c : physics_cur.decelerate_run);
 
         if(physics_cur.strict_max_speed_on_ground)
         {
@@ -163,7 +163,7 @@ void LVL_Player::update(float tickTime)
 
     refreshEnvironmentState();
 
-    if(_onGround)
+    if(m_stand)
     {
         if(!floating_isworks)
         {
@@ -197,10 +197,10 @@ void LVL_Player::update(float tickTime)
     {
         phys_setup.max_vel_x = fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk) *(_onGround?physics_cur.ground_c_max:1.0f);
+                    physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0f);
         phys_setup.min_vel_x = -fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk) *(_onGround?physics_cur.ground_c_max:1.0f);
+                    physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0f);
     }
 
 
@@ -304,13 +304,15 @@ void LVL_Player::update(float tickTime)
                     physics_cur.decelerate_turn :
                     (fabs(speedX())>physics_cur.MaxSpeed_walk)?physics_cur.run_force : physics_cur.walk_force;
 
-        if(on_slippery_surface) force=force/physics_cur.slippery_c;
-        else if((_onGround)&&(physics_cur.ground_c!=1.0f)) force=force*physics_cur.ground_c;
+        if(m_onSlippery)
+            force = force/physics_cur.slippery_c;
+        else if( (m_stand)&&(physics_cur.ground_c!=1.0f) )
+            force=force*physics_cur.ground_c;
 
         if(keys.left) _direction=-1;
         if(keys.right) _direction=1;
 
-        if(!ducking || !_onGround)
+        if(!ducking || !m_stand)
         {
             //If left key is pressed
             if(keys.right && collided_right.isEmpty())
@@ -329,7 +331,7 @@ void LVL_Player::update(float tickTime)
                     applyAccel(-force, 0.0);
             }
 
-            if( (keys.left || keys.right) && turning && _onGround )
+            if( (keys.left || keys.right) && turning && m_stand )
             {
                 SpawnEffectDef effect;
                 effect.id = 74;
@@ -360,7 +362,7 @@ void LVL_Player::update(float tickTime)
         if(!JumpPressed)
         {
             if(environment!=LVL_PhysEnv::Env_Water)
-                { if(climbing || _onGround || (environment==LVL_PhysEnv::Env_Quicksand))
+                { if(climbing || m_stand || (environment==LVL_PhysEnv::Env_Quicksand))
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
             else
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerWaterSwim);
@@ -391,7 +393,7 @@ void LVL_Player::update(float tickTime)
         if(!JumpPressed)
         {
             JumpPressed=true;
-            if(_onGround || climbing)
+            if(m_stand || climbing)
             {
                 climbing=false;
                 jumpTime=physics_cur.jump_time;

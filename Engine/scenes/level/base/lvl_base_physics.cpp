@@ -1499,7 +1499,9 @@ void PGE_Phys_Object::updateCollisions()
             i--;
         }
         #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-           else l_contactB[i]->m_touch = PhysObject::Contact_Top;
+            else l_contactB[i]->m_touch = PhysObject::Contact_Top;
+        #else
+            else m_onSlippery |= l_contactB[i]->m_slippery_surface;
         #endif
     }
 
@@ -1542,10 +1544,8 @@ void PGE_Phys_Object::updateCollisions()
                 (collideAtBottom->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
                   (m_momentum.h > fabs(collideAtTop->m_momentum.bottom() - collideAtBottom->m_momentum.top())) )
             {
-                m_crushedHardDelay = 30;
+                //m_crushedHardDelay = 30;
                 m_crushedHard = true;
-                printf("CRUSHED BETWEEN VERTICAL!!!\n");
-                fflush(stdout);
             }
         }
     }
@@ -1562,10 +1562,8 @@ void PGE_Phys_Object::updateCollisions()
                 (collideAtRight->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
                  (m_momentum.w > fabs(collideAtLeft->m_momentum.right() - collideAtRight->m_momentum.left())) )
             {
-                m_crushedHardDelay = 30;
+                //m_crushedHardDelay = 30;
                 m_crushedHard = true;
-                printf("CRUSHED BETWEEN HORIZONTAL!!!\n");
-                fflush(stdout);
             }
         }
     }

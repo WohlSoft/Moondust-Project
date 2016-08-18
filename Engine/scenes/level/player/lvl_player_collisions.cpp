@@ -61,10 +61,10 @@ void LVL_Player::updateCollisions()
         m_velocityY_add=0.0;
     }
     foot_contacts_map.clear();
-    _onGround=false;
+    //_onGround=false;
     foot_sl_contacts_map.clear();
     contactedWarp = NULL;
-    contactedWithWarp=false;
+    contactedWithWarp = false;
     climbable_map.clear();
     environments_map.clear();
 
