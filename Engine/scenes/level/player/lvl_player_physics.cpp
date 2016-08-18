@@ -56,6 +56,16 @@ void LVL_Player::refreshEnvironmentState()
     }
 }
 
+void LVL_Player::preCollision()
+{
+
+}
+
+void LVL_Player::postCollision()
+{
+
+}
+
 
 void LVL_Player::setDuck(bool duck)
 {

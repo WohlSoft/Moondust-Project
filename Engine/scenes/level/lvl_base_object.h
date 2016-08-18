@@ -370,7 +370,9 @@ public:
 
     void iterateStep(double ticks);
     void iterateStepPostCollide(float ticks);
-    virtual void updateCollisions();
+    virtual void preCollision() {}
+    virtual void postCollision() {}
+    void updateCollisions();
     virtual void detectCollisions(PGE_Phys_Object *collided);
     double colliding_xSpeed;
     double colliding_ySpeed;
