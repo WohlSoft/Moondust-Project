@@ -64,6 +64,7 @@ class LVL_Player :
 
         void refreshEnvironmentState();
 
+        void processContacts();
         void preCollision();
         void postCollision();
         void updateCollisions();

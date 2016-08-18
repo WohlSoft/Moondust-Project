@@ -551,19 +551,14 @@ void PGE_Phys_Object::updateCollisions()
     _scene->queryItems(posRectC, &objs);
 
     double k = 0;
-    int tm=0, td=0;
+    int tm=-1, td=0;
     PhysObject::ContactAt contactAt = PhysObject::Contact_None;
     bool colH=false, colV=false;
-    tm = -1;
-    td = 0;
-
     bool doHit = false;
     bool doCliffCheck = false;
     bool xSpeedWasReversed = false;
     std::vector<PhysObject*> l_clifCheck;
     std::vector<PhysObject*> l_toBump;
-
-    resetEvents();
 
     PhysObject* collideAtTop  = nullptr;
     PhysObject* collideAtBottom = nullptr;
@@ -579,6 +574,10 @@ void PGE_Phys_Object::updateCollisions()
     PGE_SizeT   blockSkipI = 0;
     double oldSpeedX = m_momentum.velX;
     double oldSpeedY = m_momentum.velY;
+
+
+    resetEvents();
+    preCollision();
 
     PhysObject* CUR=nullptr;
     PGE_SizeT i = 0;
@@ -687,7 +686,7 @@ void PGE_Phys_Object::updateCollisions()
                             contactAt = PhysObject::Contact_Top;
                             doCliffCheck = true;
                             l_clifCheck.push_back(CUR);
-                            l_contactB.push_back(CUR);
+                            l_pushB(CUR);
                             collideAtBottom = CUR;
                             //CUR->m_momentum.touch = contactAt;
                             if(m_slopeCeiling.has)
@@ -735,7 +734,7 @@ void PGE_Phys_Object::updateCollisions()
                             contactAt = PhysObject::Contact_Bottom;
                             doHit = true;
                             collideAtTop = CUR;
-                            l_contactT.push_back(CUR);
+                            l_pushT(CUR);
                             if(m_slopeFloor.has)
                             {
                                 if( findMinimalHeight(m_slopeFloor.shape, m_slopeFloor.rect, 0.0,
@@ -793,7 +792,7 @@ void PGE_Phys_Object::updateCollisions()
                                 speedNum = 0.0;
                                 contactAt = PhysObject::Contact_Left;
                                 collideAtRight = CUR;
-                                l_contactR.push_back(CUR);
+                                l_pushR(CUR);
                                 m_blockedAtRight=true;
                             }
                     tipRectL_Skip:;
@@ -838,7 +837,7 @@ void PGE_Phys_Object::updateCollisions()
                                 speedNum = 0.0;
                                 contactAt = PhysObject::Contact_Right;
                                 collideAtLeft = CUR;
-                                l_contactL.push_back(CUR);
+                                l_pushL(CUR);
                                 m_blockedAtLeft=true;
                             }
                     tipRectR_Skip:;
@@ -947,7 +946,7 @@ void PGE_Phys_Object::updateCollisions()
                             contactAt = PhysObject::Contact_Top;
                             doCliffCheck = true;
                             l_clifCheck.push_back(CUR);
-                            l_contactB.push_back(CUR);
+                            l_pushB(CUR);
                             if(m_slopeCeiling.has)
                             {
                                 if( findMinimalHeight(CUR->m_shape, CUR->m_momentum.rect(), CUR->m_momentum.velX,
@@ -1051,7 +1050,7 @@ void PGE_Phys_Object::updateCollisions()
                             contactAt = PhysObject::Contact_Top;
                             doCliffCheck = true;
                             l_clifCheck.push_back(CUR);
-                            l_contactB.push_back(CUR);
+                            l_pushB(CUR);
                             if(m_slopeCeiling.has)
                             {
                                 if( findMinimalHeight(CUR->m_shape, CUR->m_momentum.rect(), CUR->m_momentum.velX,
@@ -1138,7 +1137,7 @@ void PGE_Phys_Object::updateCollisions()
                             m_slopeCeiling.rect  = CUR->m_momentum.rect();
                             contactAt = PhysObject::Contact_Bottom;
                             doHit = true;
-                            l_contactT.push_back(CUR);
+                            l_pushT(CUR);
                             if(m_slopeFloor.has)
                             {
                                 if( findMinimalHeight(m_slopeFloor.shape, m_slopeFloor.rect, 0.0,
@@ -1225,7 +1224,7 @@ void PGE_Phys_Object::updateCollisions()
                             m_slopeCeiling.rect  = CUR->m_momentum.rect();
                             contactAt = PhysObject::Contact_Bottom;
                             doHit = true;
-                            l_contactT.push_back(CUR);
+                            l_pushT(CUR);
                             if(m_slopeFloor.has)
                             {
                                 if( findMinimalHeight(m_slopeFloor.shape, m_slopeFloor.rect, 0.0f,
@@ -1282,9 +1281,19 @@ void PGE_Phys_Object::updateCollisions()
             }
         }
 
+        /* ********************Find intere*********************************** */
+
+        if(
+            (CUR->m_shape == PhysObject::SL_Rect) &&
+            figureTouch(m_momentum, CUR->m_momentum, 0.0, 0.0)
+             )
+        {
+            l_pushAny(CUR);
+        }
+
         /* ********************Find wall touch blocks************************ */
-        if(  figureTouch(m_momentum, objs[i]->m_momentum, 0.0, -1.0) &&
-            !figureTouch(m_momentum, objs[i]->m_momentum, 0.0, 0.0) )
+        if(  figureTouch(m_momentum, CUR->m_momentum, 0.0, -1.0) &&
+            !figureTouch(m_momentum, CUR->m_momentum, 0.0, 0.0) )
         {
             if( m_momentum.betweenV( CUR->m_momentum.centerY() ) )
             {
@@ -1320,7 +1329,7 @@ void PGE_Phys_Object::updateCollisions()
                     (oldSpeedX >= CUR->m_momentum.velX) &&
                     m_moveRight)
                 {
-                    l_contactR.push_back(CUR);
+                    l_pushR(CUR);
                 }
                 else
                 if( (m_momentum.left() >= CUR->m_momentum.right()) &&
@@ -1329,15 +1338,15 @@ void PGE_Phys_Object::updateCollisions()
                     (oldSpeedX <= CUR->m_momentum.velX) &&
                     m_moveLeft)
                 {
-                    l_contactL.push_back(CUR);
+                    l_pushL(CUR);
                 }
             }
         }
 
         /* ***********Find touching blocks (needed to process danger surfaces)*********** */
         if( ((contactAt == PhysObject::Contact_None) || (contactAt == PhysObject::Contact_Skipped)) &&//Don't push duplicates
-            figureTouch(m_momentum, objs[i]->m_momentum, -1.0, 0.0) &&
-            !figureTouch(m_momentum, objs[i]->m_momentum, 0.0, 0.0) )
+            figureTouch(m_momentum, CUR->m_momentum, -1.0, 0.0) &&
+            !figureTouch(m_momentum, CUR->m_momentum, 0.0, 0.0) )
         {
             if(m_momentum.betweenH(m_momentum.left(), m_momentum.right()))
             {
@@ -1345,7 +1354,7 @@ void PGE_Phys_Object::updateCollisions()
                     isBlockFloor(CUR->m_shape) &&
                     ((CUR->m_blocked[m_filterID]&PhysObject::Block_TOP) != 0))
                 {
-                    l_contactB.push_back(CUR);
+                    l_pushB(CUR);
                 }
                 else
                 if( (m_momentum.top() >= CUR->m_momentum.bottom()) &&
@@ -1356,7 +1365,7 @@ void PGE_Phys_Object::updateCollisions()
                     ((CUR->m_blocked[m_filterID]&PhysObject::Block_BOTTOM) != 0) &&
                     (oldSpeedY < CUR->m_momentum.velY) )
                 {
-                    l_contactT.push_back(CUR);
+                    l_pushT(CUR);
                 }
             }
         }
@@ -1458,51 +1467,41 @@ void PGE_Phys_Object::updateCollisions()
     }
 
     /* *********************** Check all collided sides ***************************** */
-    for(int i=0; i<l_contactL.size(); i++)
+    for(ObjectCollidersIt it=l_contactL.begin(); it!=l_contactL.end(); it++)
     {
-        if(!l_contactL[i]->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+        PhysObject* cEL = it.value();
+        if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
         {
-            l_contactL.erase(l_contactL.begin()+i);
-            i--;
+            l_contactL.erase(it);
+            it--;
         }
-        #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-        else l_contactL[i]->m_touch = PhysObject::Contact_Right;
-        #endif
     }
-    for(int i=0; i<l_contactR.size(); i++)
+    for(ObjectCollidersIt it=l_contactR.begin(); it!=l_contactR.end(); it++)
     {
-        if(!l_contactR[i]->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+        PhysObject* cEL = it.value();
+        if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
         {
-            l_contactR.erase(l_contactR.begin()+i);
-            i--;
+            l_contactR.erase(it);
+            it--;
         }
-        #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-        else l_contactR[i]->m_touch = PhysObject::Contact_Left;
-        #endif
     }
-    for(int i=0; i<l_contactT.size(); i++)
+    for(ObjectCollidersIt it=l_contactT.begin(); it!=l_contactT.end(); it++)
     {
-        if(!l_contactT[i]->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+        PhysObject* cEL = it.value();
+        if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
         {
-            l_contactT.erase(l_contactT.begin()+i);
-            i--;
+            l_contactT.erase(it);
+            it--;
         }
-        #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-           else l_contactT[i]->m_touch = PhysObject::Contact_Bottom;
-        #endif
     }
-    for(int i=0; i<l_contactB.size(); i++)
+    for(ObjectCollidersIt it=l_contactB.begin(); it!=l_contactB.end(); it++)
     {
-        if(!l_contactB[i]->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+        PhysObject* cEL = it.value();
+        if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
         {
-            l_contactB.erase(l_contactB.begin()+i);
-            i--;
+            l_contactB.erase(it);
+            it--;
         }
-        #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-            else l_contactB[i]->m_touch = PhysObject::Contact_Top;
-        #else
-            else m_onSlippery |= l_contactB[i]->m_slippery_surface;
-        #endif
     }
 
     /* ****************************Detection of the crush****************************** */
@@ -1567,15 +1566,17 @@ void PGE_Phys_Object::updateCollisions()
             }
         }
     }
+
     /* ****************************************************************************** */
 
     if( doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0) )
     {
         m_momentum.velX = m_momentum.velXsrc + (speedSum/speedNum);
     }
-
     _syncPosition();
+    processContacts();
 
+    postCollision();
 }
 
 void PGE_Phys_Object::detectCollisions(PGE_Phys_Object *)

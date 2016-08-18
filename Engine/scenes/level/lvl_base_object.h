@@ -23,6 +23,7 @@
 #include <common_features/pointf.h>
 #include <common_features/pge_texture.h>
 
+#include <QHash>
 #include <QVector>
 #ifdef __APPLE__
 #include <tgmath.h>
@@ -195,11 +196,18 @@ public:
         objRect rect;
         int     shape;
     };
-
-    QVector<PGE_Phys_Object*> l_contactL;
-    QVector<PGE_Phys_Object*> l_contactR;
-    QVector<PGE_Phys_Object*> l_contactT;
-    QVector<PGE_Phys_Object*> l_contactB;
+    typedef QHash<intptr_t, PGE_Phys_Object*> ObjectColliders;
+    typedef QHash<intptr_t, PGE_Phys_Object*>::iterator ObjectCollidersIt;
+    ObjectColliders l_contactAny;
+    ObjectColliders l_contactL;
+    ObjectColliders l_contactR;
+    ObjectColliders l_contactT;
+    ObjectColliders l_contactB;
+    inline void l_pushAny(PGE_Phys_Object*ob) { l_contactAny[intptr_t(ob)] = ob; }
+    inline void l_pushL(PGE_Phys_Object*ob) { l_contactL[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushR(PGE_Phys_Object*ob) { l_contactR[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushT(PGE_Phys_Object*ob) { l_contactT[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushB(PGE_Phys_Object*ob) { l_contactB[intptr_t(ob)] = ob; l_pushAny(ob); }
 
     int         m_shape;
     Momentum    m_momentum;
@@ -223,6 +231,7 @@ public:
         #endif
             m_crushedHard = false;
 
+        l_contactAny.clear();
         l_contactL.clear();
         l_contactR.clear();
         l_contactT.clear();
@@ -262,9 +271,11 @@ public:
     bool    m_allowHoleRuning;
     //! Enable automatical aligning of position while staying on top corner of slope
     bool    m_onSlopeFloorTopAlign;
-    //! Blocking filters (0 - playable characters, 1 - NPCs)
+    //! Blocking filters (1 - playable characters, 2 - NPCs)
     int     m_blocked[3];
-    //! Type of self (0 - playable characters, 1 - NPCs)
+    //! Danger surface (1 - playable characters, 2 - NPCs)
+    int     m_danger[3];
+    //! Type of self (1 - playable characters, 2 - NPCs)
     int     m_filterID;
 
     /***********************Physical engine locals***END***********************/
@@ -372,6 +383,7 @@ public:
 
     void iterateStep(double ticks);
     void iterateStepPostCollide(float ticks);
+    virtual void processContacts() {}
     virtual void preCollision() {}
     virtual void postCollision() {}
     void updateCollisions();
