@@ -24,5 +24,6 @@ TRANSLATIONS += \
     $$PWD/languages/editor_ja.ts \
     $$PWD/languages/editor_zh.ts \
     $$PWD/languages/editor_bg.ts \
-    $$PWD/languages/editor_id.ts
+    $$PWD/languages/editor_id.ts \
+    $$PWD/languages/editor_sv.ts
 
