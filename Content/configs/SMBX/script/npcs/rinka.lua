@@ -27,18 +27,21 @@ function rinka:onLoop(tickTime)
             hDirect = self.player_pos_detector:directedTo()
             vDirect = 0
             if(pposY<self.npc_obj.center_y)then
-                vDirect=-1
+                vDirect =-1
             else
-                vDirect=1
+                vDirect = 1
             end
             hdist = math.abs(pposX-self.npc_obj.center_x)
             vdist = math.abs(pposY-self.npc_obj.center_y)
             angle = 0
             if(vdist~=0)then
                 angle = math.atan(hdist/vdist)
+                self.npc_obj.speedX = math.sin(angle)*self.def_speed*hDirect
+                self.npc_obj.speedY = math.cos(angle)*self.def_speed*vDirect
+            else
+                self.npc_obj.speedX = self.def_speed*hDirect
+                self.npc_obj.speedY = 0.0
             end
-            self.npc_obj.speedX=math.sin(angle)*self.def_speed*hDirect
-            self.npc_obj.speedY=math.cos(angle)*self.def_speed*vDirect
             self.target_detected = true
         end
     end
