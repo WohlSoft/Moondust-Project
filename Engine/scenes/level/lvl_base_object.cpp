@@ -35,6 +35,7 @@ float PGE_Phys_Object::SMBXTicksToTime(float ticks)
 }
 
 PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
+    PGE_physBody(),
 
     /*****Renderer flags*******/
     _vizible_on_screen(false),
@@ -42,31 +43,6 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     _scene(_parent),
     _is_registered(false),
     /*****Renderer flags*END***/
-
-    /*****Physical engine locals*******/
-    m_shape(SL_Rect),
-    m_momentum(0.0, 0.0),
-    m_touchLeftWall(false),
-    m_touchRightWall(false),
-    m_blockedAtLeft(false),
-    m_blockedAtRight(false),
-    m_stand(false),
-    m_standOnYMovable(false),
-    m_crushed(false),
-    m_crushedOld(false),
-    m_crushedHard(false),
-    m_crushedHardDelay(0),
-    m_cliff(false),
-    m_onSlippery(false),
-    m_moveLeft(false),
-    m_moveRight(false),
-    m_onSlopeYAdd(0.0),
-    m_allowHoleRuning(false),
-    m_onSlopeFloorTopAlign(false),
-    m_blocked{Block_NONE, Block_ALL, Block_ALL},
-    m_danger{Block_NONE, Block_NONE, Block_NONE},
-    m_filterID(0),
-    /*****Physical engine locals*END***/
 
     m_posX_registered(0.0),
     m_posY_registered(0.0),
