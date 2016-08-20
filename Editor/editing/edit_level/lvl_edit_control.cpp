@@ -53,7 +53,6 @@ LevelEdit::~LevelEdit()
 {
     //free(scene);
     delete ui;
-    LvlData.metaData.script.reset();
     LogDebug("LevelEdit -> Class destroyed");
 }
 

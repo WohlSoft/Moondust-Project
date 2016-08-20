@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1469</width>
-    <height>598</height>
+    <width>1675</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -90,8 +90,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1469</width>
-     <height>21</height>
+     <width>1675</width>
+     <height>19</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -257,7 +257,6 @@
     <addaction name="actionLVLSearchBox"/>
     <addaction name="actionWLD_SearchBox"/>
     <addaction name="actionVariables"/>
-    <addaction name="actionScriptEditor"/>
     <addaction name="separator"/>
     <addaction name="actionBookmarkBox"/>
     <addaction name="actionTilesetBox"/>
@@ -364,20 +363,23 @@
     <property name="title">
      <string>Script</string>
     </property>
-    <widget class="QMenu" name="menuSwitch_Compiler">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QMenu" name="menuLunaLUA_scripts">
      <property name="title">
-      <string>Switch Compiler</string>
+      <string>LunaLUA scripts</string>
      </property>
-     <addaction name="actionAutocode_Lunadll_Original_Language"/>
-     <addaction name="actionLunaLua"/>
+     <property name="icon">
+      <iconset resource="_resources/editor.qrc">
+       <normaloff>:/lunalua.ico</normaloff>:/lunalua.ico</iconset>
+     </property>
+     <addaction name="actionLunaLUA_lvl"/>
+     <addaction name="actionLunaLUA_eps"/>
+     <addaction name="actionLunaLUA_wld"/>
     </widget>
-    <addaction name="actionAdditional_Settings"/>
+    <addaction name="actionCreateScriptEpisode"/>
+    <addaction name="actionCreateScriptLocal"/>
+    <addaction name="menuLunaLUA_scripts"/>
     <addaction name="separator"/>
-    <addaction name="menuSwitch_Compiler"/>
-    <addaction name="actionCompile_To"/>
+    <addaction name="actionScriptEditor"/>
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
@@ -653,7 +655,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -703,7 +705,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../Engine/_resources/engine.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -715,7 +717,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -2959,12 +2961,42 @@
     <string>Run configure tool...</string>
    </property>
   </action>
+  <action name="actionCreateScriptLocal">
+   <property name="text">
+    <string>Open local script</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the level / world map local script. If not exist - file will be created.</string>
+   </property>
+  </action>
+  <action name="actionCreateScriptEpisode">
+   <property name="text">
+    <string>Open episode script</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the episode common script. If not exist - file will be created.</string>
+   </property>
+  </action>
+  <action name="actionLunaLUA_lvl">
+   <property name="text">
+    <string notr="true">lunadll.lua</string>
+   </property>
+  </action>
+  <action name="actionLunaLUA_eps">
+   <property name="text">
+    <string notr="true">lunaworld.lua</string>
+   </property>
+  </action>
+  <action name="actionLunaLUA_wld">
+   <property name="text">
+    <string notr="true">lunaoverworld.lua</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
-  <include location="_resources/editor.qrc"/>
   <include location="../Engine/_resources/engine.qrc"/>
+  <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

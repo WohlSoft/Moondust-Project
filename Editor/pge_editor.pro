@@ -225,14 +225,6 @@ SOURCES += main.cpp\
     main_window/tools/main_tool_cdata_import.cpp \
     main_window/tools/main_tool_cdata_lazyfix.cpp \
     networking/engine_intproc.cpp \
-    script/scriptholder.cpp \
-    script/command_compiler/autocodecompiler.cpp \
-    script/command_compiler/basiccompiler.cpp \
-    script/command_compiler/lunaluacompiler.cpp \
-    script/commands/basiccommand.cpp \
-    script/commands/eventcommand.cpp \
-    script/commands/memorycommand.cpp \
-    script/gui/additionalsettings.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
     tools/external_tools/gifs2png_gui.cpp \
@@ -266,8 +258,6 @@ SOURCES += main.cpp\
     main_window/file/file_new.cpp \
     main_window/file/lvl_export_image.cpp \
     main_window/world/world_locks.cpp \
-    main_window/script/script_compile.cpp \
-    main_window/script/script_additional_settings.cpp \
     audio/music_player.cpp \
     main_window/testing/testing.cpp \
     main_window/file/file_recent.cpp \
@@ -394,7 +384,8 @@ SOURCES += main.cpp\
     SingleApplication/editor_application.cpp \
     common_features/safe_msg_box.cpp \
     main_window/testing/luna_tester.cpp \
-    editing/_scenes/world/wld_point_selector.cpp
+    editing/_scenes/world/wld_point_selector.cpp \
+    main_window/script/script_luafiles.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -472,14 +463,6 @@ HEADERS  += defines.h \
     main_window/global_settings.h \
     main_window/about_dialog/aboutdialog.h \
     networking/engine_intproc.h \
-    script/scriptholder.h \
-    script/command_compiler/autocodecompiler.h \
-    script/command_compiler/basiccompiler.h \
-    script/command_compiler/lunaluacompiler.h \
-    script/commands/basiccommand.h \
-    script/commands/eventcommand.h \
-    script/commands/memorycommand.h \
-    script/gui/additionalsettings.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     tools/external_tools/gifs2png_gui.h \
@@ -613,7 +596,6 @@ FORMS    += \
     editing/edit_npc/npcedit.ui \
     editing/edit_world/world_edit.ui \
     main_window/about_dialog/aboutdialog.ui \
-    script/gui/additionalsettings.ui \
     tools/external_tools/gifs2png_gui.ui \
     tools/external_tools/lazyfixtool_gui.ui \
     tools/external_tools/png2gifs_gui.ui \

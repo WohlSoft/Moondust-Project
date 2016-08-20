@@ -468,6 +468,13 @@ public:
 
 // ///////////////////// Sub Windows /////////////////////////
     public:
+        enum WindowType
+        {
+            WND_Level=1,
+            WND_NpcTxt=2,
+            WND_World=3
+        };
+
         ///
         /// \brief activeChildWindow returns type of active sub window
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
@@ -923,10 +930,12 @@ public:
 
 // ///////////////////// Script ///////////////////////////
     private slots:
-        void on_actionAdditional_Settings_triggered();
-        void on_actionCompile_To_triggered();
-        void on_actionAutocode_Lunadll_Original_Language_triggered();
-        void on_actionLunaLua_triggered();
+        void on_actionCreateScriptLocal_triggered();
+        void on_actionCreateScriptEpisode_triggered();
+        void on_actionLunaLUA_lvl_triggered();
+        void on_actionLunaLUA_eps_triggered();
+        void on_actionLunaLUA_wld_triggered();
+
 // ////////////////////////////////////////////////////////
 
 
@@ -1044,6 +1053,7 @@ public:
 public slots:
     protected:
     private slots:
+
 
 signals:
     void closeEditor();

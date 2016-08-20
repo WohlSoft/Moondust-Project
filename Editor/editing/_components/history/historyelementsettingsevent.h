@@ -4,8 +4,10 @@
 
 #include <QObject>
 
+#include <defines.h>
 #include "ihistoryelement.h"
 #include <PGE_File_Formats/file_formats.h>
+
 
 class HistoryElementSettingsEvent : public QObject, public IHistoryElement
 {

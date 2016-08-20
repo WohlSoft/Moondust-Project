@@ -25,7 +25,6 @@
 #include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
-#include <script/scriptholder.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/smbx64_validation_messages.h>
@@ -44,7 +43,6 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     FileFormats::CreateLevelData(LvlData);
-    LvlData.metaData.script.reset(new ScriptHolder());
     LvlData.meta.untitled = true;
     StartLvlData = LvlData;
 
@@ -413,7 +411,6 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
 {
     QFile file(fileName);
     LvlData = FileData;
-    LvlData.metaData.script.reset(new ScriptHolder());
     bool modifystate = false;
     bool untitledstate = false;
     LvlData.meta.modified = false;

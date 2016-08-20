@@ -21,7 +21,6 @@
 
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
-#include <script/gui/additionalsettings.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_item_toolbox.h>

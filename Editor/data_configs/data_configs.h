@@ -105,6 +105,10 @@ public:
     DataFolders dirs;
     QString config_dir;
     QString data_dir;
+    QString localScriptName_lvl;
+    QString commonScriptName_lvl;
+    QString localScriptName_wld;
+    QString commonScriptName_wld;
 
     QString splash_logo;
     QList<obj_splash_ani > animations;

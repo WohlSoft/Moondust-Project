@@ -18,6 +18,8 @@ Editor 0.3.1.11
 - Settings are will be saved into separated "settings" directory to have convenient way to update portable PGE package
 - Fixed config reloading crash on Windows
 - Implemented full support for custom config files for all elements: block-*.ini, background-*.ini, tile-*.ini, scene-*.ini, path-*.ini, level-*.ini
+- Removed a useles auto-script generation thing
+- Added auto-crearing/opening for lunadll.lua/lunaworld.lua/lunaoverworld.lua files and configurable PGE-Specific level/world script names
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names

@@ -164,7 +164,6 @@ void IntEngine::sendLevelBuffer()
 void IntEngine::setTestLvlBuffer(LevelData &buffer)
 {
     testBuffer = buffer;
-    testBuffer.metaData.script.reset(); //avoid editor crash after file reloading
 }
 
 bool IntEngine::sendMessage(QString msg)
