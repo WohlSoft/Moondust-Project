@@ -470,9 +470,10 @@ public:
     public:
         enum WindowType
         {
-            WND_Level=1,
-            WND_NpcTxt=2,
-            WND_World=3
+            WND_NoWindow    = 0,
+            WND_Level       = 1,
+            WND_NpcTxt      = 2,
+            WND_World       = 3
         };
 
         ///

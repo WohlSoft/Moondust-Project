@@ -144,6 +144,8 @@ void MainWindow::setUiDefults()
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus(QMdiSubWindow*)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
     connect(&engine_proc, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(testingFinished()));
+    connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
+    connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
     windowMapper = new QSignalMapper(this);
 

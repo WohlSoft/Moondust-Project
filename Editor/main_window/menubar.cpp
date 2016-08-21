@@ -66,7 +66,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
 
     int WinType = activeChildWindow(LastActiveSubWindow); // 1 lvledit, 2 npcedit, 3 wldedit
-    bool hasSWindow = (WinType != 0);
+    bool hasSWindow = (WinType != WND_NoWindow);
 
     ui->PlacingToolbar->setVisible(false);
     ui->ResizingToolbar->setVisible(false);
@@ -77,148 +77,148 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     ui->actionClose->setEnabled(hasSWindow);
 
     ui->action_openEpisodeFolder->setEnabled( WinType!=0 );
-    ui->action_openCustomFolder->setEnabled( (WinType==1) || (WinType==3) );
+    ui->action_openCustomFolder->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
 
-    ui->menuView->setEnabled( (hasSWindow) && (WinType!=2) );
+    ui->menuView->setEnabled( (hasSWindow) && (WinType != WND_NpcTxt) );
 
-    ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionSelectOnly->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionReload->setEnabled( (WinType==1) || (WinType==2) || (WinType==3));
+    ui->actionSelect->setEnabled( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionSelectOnly->setEnabled( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionEriser->setEnabled( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionHandScroll->setEnabled( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionReload->setEnabled( (WinType==WND_Level) || (WinType == WND_NpcTxt) || (WinType == WND_World));
 
-    ui->menuWorld->setEnabled(( WinType==3) );
-    ui->actionWLDToolBox->setVisible( (WinType==3));
+    ui->menuWorld->setEnabled(( WinType==WND_World) );
+    ui->actionWLDToolBox->setVisible( (WinType==WND_World));
 
-    ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionCopy->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionPaste->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionCut->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
 
-    ui->menuTest->setEnabled( (WinType==1)||(WinType==3) );
-    ui->action_doTest->setEnabled( (WinType==1) );
-    ui->action_doSafeTest->setEnabled( (WinType==1) || (WinType==3) );
+    ui->menuTest->setEnabled( (WinType==WND_Level)||(WinType==WND_World) );
+    ui->action_doTest->setEnabled( (WinType==WND_Level) );
+    ui->action_doSafeTest->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
     #ifdef Q_OS_WIN
-    ui->actionRunTestSMBX->setEnabled( (WinType==1) );
+    ui->actionRunTestSMBX->setEnabled( (WinType==WND_Level) );
     #endif
 
-    ui->LevelObjectToolbar->setVisible( (WinType==1) );
-    ui->WorldObjectToolbar->setVisible( (WinType==3) );
+    ui->LevelObjectToolbar->setVisible( (WinType==WND_Level) );
+    ui->WorldObjectToolbar->setVisible( (WinType==WND_World) );
 
     dock_LvlItemProps->setVisible(false);
     dock_WldItemProps->setVisible(false);
 
     //Change visibility of toolboxes
     /***************Level specific toolboxes****************/
-    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )   { docks_level.hideAll(); }
-    if((GlobalSettings::lastWinType !=1) && (WinType==1))       { docks_level.showAll(); }
+    if((!(WinType==WND_Level))&& (GlobalSettings::lastWinType == WND_Level) )   { docks_level.hideAll(); }
+    if((GlobalSettings::lastWinType !=1) && (WinType==WND_Level))       { docks_level.showAll(); }
 
     /***************World specific toolboxes****************/
-    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )   { docks_world.hideAll(); }
-    if((GlobalSettings::lastWinType !=3) && (WinType==3))       { docks_world.showAll(); }
+    if((!(WinType==WND_World))&& (GlobalSettings::lastWinType == WND_World) )   { docks_world.hideAll(); }
+    if((GlobalSettings::lastWinType !=3) && (WinType==WND_World))       { docks_world.showAll(); }
 
     /***************World and Level specific toolboxes****************/
-    if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
+    if( (!(WinType==WND_Level))&&(!(WinType==WND_World)) && (GlobalSettings::lastWinType == WND_Level || GlobalSettings::lastWinType == WND_World) )
     { docks_level_and_world.hideAll(); }
-    if( (!(GlobalSettings::lastWinType==1))&&(!(GlobalSettings::lastWinType==3)) && (WinType == 1 || WinType == 3) )
+    if( (!(GlobalSettings::lastWinType==WND_Level))&&(!(GlobalSettings::lastWinType==WND_World)) && (WinType == WND_Level || WinType == WND_World) )
     { docks_level_and_world.showAll(); }
 
     GlobalSettings::lastWinType =   WinType;
 
-    ui->actionLVLToolBox->setVisible( (WinType==1) );
-    ui->actionWarpsAndDoors->setVisible( (WinType==1) );
-    ui->actionSection_Settings->setVisible( (WinType==1) );
-    ui->actionLevelProp->setVisible( (WinType==1) );
-    ui->actionLayersBox->setVisible( (WinType==1) );
-    ui->actionLevelEvents->setVisible( (WinType==1) );
-    ui->actionWarpsAndDoors->setVisible( (WinType==1) );
-    ui->actionLVLSearchBox->setVisible( (WinType==1) );
+    ui->actionLVLToolBox->setVisible( (WinType==WND_Level) );
+    ui->actionWarpsAndDoors->setVisible( (WinType==WND_Level) );
+    ui->actionSection_Settings->setVisible( (WinType==WND_Level) );
+    ui->actionLevelProp->setVisible( (WinType==WND_Level) );
+    ui->actionLayersBox->setVisible( (WinType==WND_Level) );
+    ui->actionLevelEvents->setVisible( (WinType==WND_Level) );
+    ui->actionWarpsAndDoors->setVisible( (WinType==WND_Level) );
+    ui->actionLVLSearchBox->setVisible( (WinType==WND_Level) );
 
-    ui->actionTilesetBox->setVisible( (WinType==1) || (WinType==3));
-    ui->actionBookmarkBox->setVisible( (WinType==1) || (WinType==3));
-    ui->actionDebugger->setVisible( (WinType==1) || (WinType==3));
+    ui->actionTilesetBox->setVisible( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionBookmarkBox->setVisible( (WinType==WND_Level) || (WinType==WND_World));
+    ui->actionDebugger->setVisible( (WinType==WND_Level) || (WinType==WND_World));
 
-    ui->actionWLDToolBox->setVisible( (WinType==3) );
-    ui->actionWorld_settings->setVisible( (WinType==3) );
-    ui->actionWLD_SearchBox->setVisible( (WinType==3) );
+    ui->actionWLDToolBox->setVisible( (WinType==WND_World) );
+    ui->actionWorld_settings->setVisible( (WinType==WND_World) );
+    ui->actionWLD_SearchBox->setVisible( (WinType==WND_World) );
 
-    ui->actionSemi_transparent_paths->setVisible( (WinType==3) );
+    ui->actionSemi_transparent_paths->setVisible( (WinType==WND_World) );
 
-    ui->menuLevel->setEnabled( (WinType==1) );
+    ui->menuLevel->setEnabled( (WinType==WND_Level) );
 
 
 
-    ui->actionLevNoBack->setEnabled( (WinType==1) );
-    ui->actionLevOffScr->setEnabled( (WinType==1) );
-    ui->actionWrapHorizontal->setEnabled( (WinType==1) );
-    ui->actionWrapVertically->setEnabled( (WinType==1) );
-    ui->actionLevUnderW->setEnabled( (WinType==1) );
+    ui->actionLevNoBack->setEnabled( (WinType==WND_Level) );
+    ui->actionLevOffScr->setEnabled( (WinType==WND_Level) );
+    ui->actionWrapHorizontal->setEnabled( (WinType==WND_Level) );
+    ui->actionWrapVertically->setEnabled( (WinType==WND_Level) );
+    ui->actionLevUnderW->setEnabled( (WinType==WND_Level) );
 
-    ui->actionLevelProp->setEnabled( (WinType==1) );
+    ui->actionLevelProp->setEnabled( (WinType==WND_Level) );
 
-    ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionExport_to_image_section->setVisible( (WinType==1) );
+    ui->actionExport_to_image->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionExport_to_image_section->setVisible( (WinType==WND_Level) );
 
-    ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionZoomReset->setEnabled( (WinType==1) || (WinType==3) );
-    zoom->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionZoomIn->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionZoomOut->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionZoomReset->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    zoom->setEnabled( (WinType==WND_Level) || (WinType==WND_World));
 
-    ui->actionGotoLeftBottom->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionGotoLeftTop->setEnabled( (WinType==1) );
-    ui->actionGotoTopRight->setEnabled( (WinType==1) );
-    ui->actionGotoRightBottom->setEnabled( (WinType==1) );
+    ui->actionGotoLeftBottom->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionGotoLeftTop->setEnabled( (WinType==WND_Level) );
+    ui->actionGotoTopRight->setEnabled( (WinType==WND_Level) );
+    ui->actionGotoRightBottom->setEnabled( (WinType==WND_Level) );
 
-    ui->actionSection_1->setEnabled( (WinType==1) );
-    ui->actionSection_2->setEnabled( (WinType==1) );
-    ui->actionSection_3->setEnabled( (WinType==1) );
-    ui->actionSection_4->setEnabled( (WinType==1) );
-    ui->actionSection_5->setEnabled( (WinType==1) );
-    ui->actionSection_6->setEnabled( (WinType==1) );
-    ui->actionSection_7->setEnabled( (WinType==1) );
-    ui->actionSection_8->setEnabled( (WinType==1) );
-    ui->actionSection_9->setEnabled( (WinType==1) );
-    ui->actionSection_10->setEnabled( (WinType==1) );
-    ui->actionSection_11->setEnabled( (WinType==1) );
-    ui->actionSection_12->setEnabled( (WinType==1) );
-    ui->actionSection_13->setEnabled( (WinType==1) );
-    ui->actionSection_14->setEnabled( (WinType==1) );
-    ui->actionSection_15->setEnabled( (WinType==1) );
-    ui->actionSection_16->setEnabled( (WinType==1) );
-    ui->actionSection_17->setEnabled( (WinType==1) );
-    ui->actionSection_18->setEnabled( (WinType==1) );
-    ui->actionSection_19->setEnabled( (WinType==1) );
-    ui->actionSection_20->setEnabled( (WinType==1) );
-    ui->actionSection_21->setEnabled( (WinType==1) );
-    ui->actionSectionMore->setEnabled( (WinType==1) );
+    ui->actionSection_1->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_2->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_3->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_4->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_5->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_6->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_7->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_8->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_9->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_10->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_11->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_12->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_13->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_14->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_15->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_16->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_17->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_18->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_19->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_20->setEnabled( (WinType==WND_Level) );
+    ui->actionSection_21->setEnabled( (WinType==WND_Level) );
+    ui->actionSectionMore->setEnabled( (WinType==WND_Level) );
 
-    ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
-    ui->actionShowGrid->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionGridEn->setEnabled( (WinType==WND_Level)|| (WinType==WND_World) );
+    ui->actionShowGrid->setEnabled( (WinType==WND_Level)|| (WinType==WND_World) );
 
-    ui->actionFixWrongMasks->setEnabled( (WinType==1)|| (WinType==3) );
-    ui->actionCDATA_clear_unused->setEnabled( (WinType==1)|| (WinType==3) );
-    ui->actionCDATA_Import->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionFixWrongMasks->setEnabled( (WinType==WND_Level)|| (WinType==WND_World) );
+    ui->actionCDATA_clear_unused->setEnabled( (WinType==WND_Level)|| (WinType==WND_World) );
+    ui->actionCDATA_Import->setEnabled( (WinType==WND_Level)|| (WinType==WND_World) );
 
-    ui->actionAlign_selected->setEnabled(  (WinType==1)|| (WinType==3)  );
-    ui->actionFlipHorizontal->setEnabled(  (WinType==1)|| (WinType==3)  );
-    ui->actionFlipVertical->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionAlign_selected->setEnabled(  (WinType==WND_Level)|| (WinType==WND_World)  );
+    ui->actionFlipHorizontal->setEnabled(  (WinType==WND_Level)|| (WinType==WND_World)  );
+    ui->actionFlipVertical->setEnabled(  (WinType==WND_Level)|| (WinType==WND_World)  );
 
-    ui->actionRotateLeft->setEnabled(  (WinType==1)|| (WinType==3)  );
-    ui->actionRotateRight->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionRotateLeft->setEnabled(  (WinType==WND_Level)|| (WinType==WND_World)  );
+    ui->actionRotateRight->setEnabled(  (WinType==WND_Level)|| (WinType==WND_World)  );
 
-    ui->actionCloneSectionTo->setEnabled( (WinType==1) );
-    ui->actionSCT_Delete->setEnabled( (WinType==1) );
-    ui->actionSCT_FlipHorizontal->setEnabled( (WinType==1) );
-    ui->actionSCT_FlipVertical->setEnabled( (WinType==1) );
-    ui->actionSCT_RotateLeft->setEnabled( (WinType==1) );
-    ui->actionSCT_RotateRight->setEnabled( (WinType==1) );
+    ui->actionCloneSectionTo->setEnabled( (WinType==WND_Level) );
+    ui->actionSCT_Delete->setEnabled( (WinType==WND_Level) );
+    ui->actionSCT_FlipHorizontal->setEnabled( (WinType==WND_Level) );
+    ui->actionSCT_FlipVertical->setEnabled( (WinType==WND_Level) );
+    ui->actionSCT_RotateLeft->setEnabled( (WinType==WND_Level) );
+    ui->actionSCT_RotateRight->setEnabled( (WinType==WND_Level) );
 
-    ui->actionAdditional_Settings->setEnabled( (WinType==1) );
+    ui->actionAdditional_Settings->setEnabled( (WinType==WND_Level) );
 
-    ui->menuScript->setEnabled( (WinType == 1) || (WinType==3) );
-    ui->actionCreateScriptLocal->setEnabled( (WinType==1) || (WinType==3) );
-    ui->actionCreateScriptEpisode->setEnabled( (WinType==1) || (WinType==3) );
+    ui->menuScript->setEnabled( (WinType == WND_Level) || (WinType==WND_World) );
+    ui->actionCreateScriptLocal->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->actionCreateScriptEpisode->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
 
-    if(WinType==1)
+    if(WinType==WND_Level)
     {
         emit setSMBX64Strict(lvlWin->LvlData.meta.smbx64strict);
 
@@ -275,7 +275,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
     }
     else
-    if(WinType==3)
+    if(WinType==WND_World)
     {
         emit setSMBX64Strict(wldWin->WldData.meta.smbx64strict);
 
