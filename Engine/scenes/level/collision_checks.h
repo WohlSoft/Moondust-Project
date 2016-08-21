@@ -30,8 +30,8 @@ PGE_RectF  rc = collided->posRect;
 inline bool isCollideFloorToponly(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 {
     float summSpeedY =
-            ( body.m_velocityY + body.m_velocityY_add )
-            -( collided->m_velocityY + collided->m_velocityY_add );
+            ( body.LEGACY_m_velocityY + body.LEGACY_m_velocityY_add )
+            -( collided->LEGACY_m_velocityY + collided->LEGACY_m_velocityY_add );
     float summSpeedYprv =
             body.colliding_ySpeed - collided->colliding_ySpeed;
 
@@ -55,15 +55,15 @@ inline bool isCollideFloor(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 {
     return (
      (
-        ( ( body.m_velocityY + body.m_velocityY_add >= 0.0 )
-          ||( (collided->m_velocityY + collided->m_velocityY_add) <= 0.0 ) )
+        ( ( body.LEGACY_m_velocityY + body.LEGACY_m_velocityY_add >= 0.0 )
+          ||( (collided->LEGACY_m_velocityY + collided->LEGACY_m_velocityY_add) <= 0.0 ) )
         &&
         (
             (floor(body.m_posRect.bottom()) + collided->colliding_ySpeed)
                         <
              ( collided->m_posRect.top()
-               +fabs(body.m_velocityY
-               +body.m_velocityX_add)
+               +fabs(body.LEGACY_m_velocityY
+               +body.LEGACY_m_velocityX_add)
                +2.0+body.colliding_ySpeed )
           )
         &&( !( ( body.m_posRect.left() >= (collided->m_posRect.right() - 0.2) )
@@ -80,8 +80,8 @@ inline bool isCollideCelling(PGE_Phys_Object &body,
 {
     return ( (
                  (
-                     ( (!forceCollideCenter) && ( body.m_velocityY+body.m_velocityY_add<0.0 ) )
-                     ||( forceCollideCenter && ( (body.m_velocityY + body.m_velocityY_add) <= 0.0 ) )
+                     ( (!forceCollideCenter) && ( body.LEGACY_m_velocityY+body.LEGACY_m_velocityY_add<0.0 ) )
+                     ||( forceCollideCenter && ( (body.LEGACY_m_velocityY + body.LEGACY_m_velocityY_add) <= 0.0 ) )
                   )
                  &&
                  ( (body.m_posRect.top()+collided->colliding_ySpeed)
@@ -96,7 +96,7 @@ inline bool isCollideCelling(PGE_Phys_Object &body,
 
 inline bool isCollideLeft(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 {
-    return ( (body.m_velocityX + body.m_velocityX_add) < 0.0)
+    return ( (body.LEGACY_m_velocityX + body.LEGACY_m_velocityX_add) < 0.0)
             &&( body.m_posRect.center().x() > collided->m_posRect.center().x())
             &&( (body.m_posRect.left() + collided->colliding_xSpeed)
                     >=
@@ -108,7 +108,7 @@ inline bool isCollideLeft(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 
 inline bool isCollideRight(PGE_Phys_Object &body, PGE_Phys_Object *collided)
 {
-    return ( (body.m_velocityX + body.m_velocityX_add) > 0.0)
+    return ( (body.LEGACY_m_velocityX + body.LEGACY_m_velocityX_add) > 0.0)
             &&( body.m_posRect.center().x() < collided->m_posRect.center().x())
             &&( (body.m_posRect.right() + collided->colliding_xSpeed)
                 <=

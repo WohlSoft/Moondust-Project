@@ -26,11 +26,10 @@ void LVL_Npc::update(float tickTime)
     if(killed) return;
     if(wasDeactivated) return;
 
-    _onGround = !collided_bottom.isEmpty();
+    //_onGround = !collided_bottom.isEmpty();
 
     if(isGenerator) {
-        updateCollisions();
-        activationTimeout-=tickTime;
+        activationTimeout -= tickTime;
         updateGenerator(tickTime);
         return;
     }
@@ -45,39 +44,42 @@ void LVL_Npc::update(float tickTime)
     }
 
     PGE_Phys_Object::update(tickTime);
-    if(deActivatable) activationTimeout-=tickTime;
+    if(deActivatable)
+        activationTimeout-=tickTime;
 
-    if(motionSpeed!=0) {
-        if(!collided_left.isEmpty())
+    if(motionSpeed != 0) {
+        if(m_blockedAtLeft)
             setDirection(1);
         else
-        if(!collided_right.isEmpty())
+        if(m_blockedAtRight)
             setDirection(-1);
         else
-        if(setup->setup.turn_on_cliff_detect && cliffDetected)
+        if(setup->setup.turn_on_cliff_detect && m_cliff)
         {
             setDirection(_direction*-1);
-            cliffDetected=false;
         }
-
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
 
-    if(not_movable()) {
+    if(not_movable())
+    {
         detector_player_pos.processDetector();
-        if(detector_player_pos.directedTo()!=0)
+        if(detector_player_pos.directedTo() != 0)
             setDirection(detector_player_pos.directedTo());
     }
 
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
 
-    if(offSectionDeactivate) {
-        if(!sBox.collideRect(m_posRect)) {
+    if(offSectionDeactivate)
+    {
+        if(!sBox.collideRect(m_momentum.x, m_momentum.y, m_momentum.w, m_momentum.h))
+        {
             if(activationTimeout>100)
                 activationTimeout=100;
             //Iterate activation timeout if deactivation disabled by default
-            if(!deActivatable) activationTimeout-=tickTime;
+            if(!deActivatable)
+                activationTimeout-=tickTime;
         }
     }
 

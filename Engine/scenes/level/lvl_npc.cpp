@@ -23,6 +23,12 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     PGE_Phys_Object(_parent),
     detector_player_pos(this)
 {
+    /* ****** PHYSICS ******* */
+    m_filterID = 2;
+    m_allowHoleRuning = true;
+    m_onSlopeFloorTopAlign = false;
+    /* ****** PHYSICS ******* */
+
     type = LVLNPC;
     _npc_id = 0;
     data = FileFormats::CreateLvlNpc();

@@ -246,8 +246,8 @@ void LVL_Player::kill(deathReason reason)
         SpawnEffectDef effect = setup.fail_effect;
         if(effect.id>0)
         {
-            effect.startX = m_posRect.center().x();
-            effect.startY = m_posRect.center().y();
+            effect.startX = m_momentum.centerX();
+            effect.startY = m_momentum.centerY();
             effect.velocityX *= _direction;
             effect.direction *= _direction;
             _scene->launchEffect(effect, true);

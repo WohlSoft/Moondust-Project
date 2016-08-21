@@ -33,11 +33,11 @@ void PlayerPosDetector::processDetector()
     for(int i=0; i<_scene->players.size(); i++)
     {
         LVL_Player *p = _scene->players[i];
-        float d1=distance(p);
+        float d1 = distance(p);
         if((d1<d)||(i==0))
         {
-            d=d1;
-            pos = p->m_posRect.center();
+            d = d1;
+            pos.setPoint(p->m_momentum.centerX(), p->m_momentum.centerY());
             _playersDirection=p->direction();
             if(_parentNPC->posCenterX() < pos.x())
                 _directedTo=1;

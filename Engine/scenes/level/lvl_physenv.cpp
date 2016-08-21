@@ -41,8 +41,8 @@ void LVL_PhysEnv::init()
         case LevelPhysEnv::ENV_AIR:         env_type = Env_Air; break;
         default:                            env_type = Env_SameAsAround;
     }
-    collide_player = COLLISION_NONE;
-    collide_npc = COLLISION_NONE;
+    LEGACY_collide_player = COLLISION_NONE;
+    LEGACY_collide_npc = COLLISION_NONE;
     _scene->layers.registerItem(data.layer, this);
 }
 

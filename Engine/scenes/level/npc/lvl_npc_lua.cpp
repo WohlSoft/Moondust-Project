@@ -73,7 +73,7 @@ void LVL_Npc::lua_setFrameDelay(int ms)
 int LVL_Npc::lua_activate_neighbours()
 {
     QVector<PGE_Phys_Object*> bodies;
-    PGE_RectF posRectC = m_posRect.withMargin(2.0);
+    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
     _scene->queryItems(posRectC, &bodies);
 
     int found=0;

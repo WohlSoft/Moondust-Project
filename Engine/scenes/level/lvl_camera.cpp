@@ -657,6 +657,17 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
 }
 
 
+bool LevelScene::isVizibleOnScreen(PGE_Phys_Object::Momentum &momentum)
+{
+    PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
+    for(LevelScene::LVL_CameraList::iterator it=cameras.begin();it!=cameras.end();it++)
+    {
+        screen.setPos((*it).posX(), (*it).posY());
+        if(screen.collideRect(momentum.x, momentum.y, momentum.w, momentum.h))
+            return true;
+    }
+    return false;
+}
 
 bool LevelScene::isVizibleOnScreen(PGE_RectF &rect)
 {

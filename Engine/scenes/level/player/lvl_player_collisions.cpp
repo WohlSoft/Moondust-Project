@@ -33,32 +33,13 @@
 #define DISABLE_OLD_SPEEDADD
 //#define COLLIDE_DEBUG
 
-static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*nearest)
-{
-    //Do transformation if needed
-    if( nearest->setup->setup.plSwitch_Button && (player->characterID!=nearest->setup->setup.plSwitch_Button_id) )
-    {
-        int target_id = (nearest->setup->setup.plSwitch_Button_id-1);
-        QVector<saveCharState>&states=player->_scene->getGameState()->game_state.characterStates;
-        if(target_id >= states.size())
-        {
-            PlayerState x = player->_scene->getGameState()->getPlayerState(player->playerID);
-            x.characterID    = target_id+1;
-            x.stateID        = 1;
-            x._chsetup.state = 1;
-            player->_scene->getGameState()->setPlayerState(player->playerID, x);
-        }
-        saveCharState&st = states[target_id];
-        player->setCharacterSafe(nearest->setup->setup.plSwitch_Button_id, st.state);
-    }
-}
 
-void LVL_Player::updateCollisions()
+void LVL_Player::updateCollisionsOLD()
 {
     if(foot_contacts_map.isEmpty())
     {
-        m_velocityX_add=0.0;
-        m_velocityY_add=0.0;
+        LEGACY_m_velocityX_add=0.0;
+        LEGACY_m_velocityY_add=0.0;
     }
     foot_contacts_map.clear();
     //_onGround=false;
@@ -135,7 +116,7 @@ void LVL_Player::updateCollisions()
                     foot_contacts_map[(intptr_t)collided]=collided;
                     if(npc->m_slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     floor_blocks.push_back(npc);
-                    if((npc->collide_player!=COLLISION_TOP) && (npc->setup->setup.kill_on_jump))
+                    if((npc->LEGACY_collide_player!=COLLISION_TOP) && (npc->setup->setup.kill_on_jump))
                         npcs_to_stomp.push_back(npc);
                     else
                         npc->collision_speed_add.push_back(this);
@@ -164,9 +145,9 @@ void LVL_Player::updateCollisions()
             if(nearest)
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(nearest);
-                if(blk && (blk->shape!=LVL_Block::shape_rect))
+                if(blk && (blk->LEGACY_shape!=LVL_Block::shape_rect))
                 {
-                    if(blk->shape==LVL_Block::shape_tr_right_bottom)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
@@ -174,7 +155,7 @@ void LVL_Player::updateCollisions()
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
-                    if(blk->shape==LVL_Block::shape_tr_left_bottom)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
@@ -215,16 +196,16 @@ void LVL_Player::updateCollisions()
                 if(!resolveBottom)
                 {
                     LVL_Block *blk= static_cast<LVL_Block*>(nearest);
-                    if(blk && (blk->shape!=LVL_Block::shape_rect))
+                    if(blk && (blk->LEGACY_shape!=LVL_Block::shape_rect))
                     {
-                        if(blk->shape==LVL_Block::shape_tr_left_top)
+                        if(blk->LEGACY_shape==LVL_Block::shape_tr_left_top)
                         {
                             _floorY = nearest->m_posRect.top()+SL_HeightTopLeft(*this, nearest);
                             if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                             else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                         }
                         else
-                        if(blk->shape==LVL_Block::shape_tr_right_top)
+                        if(blk->LEGACY_shape==LVL_Block::shape_tr_right_top)
                         {
                             _floorY = nearest->m_posRect.top()+SL_HeightTopRight(*this, nearest);
                             if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
@@ -359,7 +340,7 @@ void LVL_Player::updateCollisions()
         if(!npcs_to_stomp.isEmpty())
         {   //Don't apply speed-adding from stomped NPCs
             foot_contacts_map.clear();
-            m_velocityX_add=0.0f;
+            LEGACY_m_velocityX_add=0.0f;
             correctX = 0.0f;
         }
         applyCorrectionToSA_stack(correctX, correctY);
@@ -453,23 +434,23 @@ void LVL_Player::_collideUnduck()
             if(nearest)
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(nearest);
-                if((nearest->type==LVLBlock) && (blk) && (blk->shape!=LVL_Block::shape_rect))
+                if((nearest->type==LVLBlock) && (blk) && (blk->LEGACY_shape!=LVL_Block::shape_rect))
                 {
-                    if(blk->shape==LVL_Block::shape_tr_left_top)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_left_top)
                     {
                         _floorY = nearest->m_posRect.top()+SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
-                    if(blk->shape==LVL_Block::shape_tr_right_top)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_right_top)
                     {
                         _floorY = nearest->m_posRect.top()+SL_HeightTopRight(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
-                    if(blk->shape==LVL_Block::shape_tr_right_bottom)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
@@ -477,7 +458,7 @@ void LVL_Player::_collideUnduck()
                         else if(_floorY > nearest->bottom()) _floorY=nearest->m_posRect.bottom();
                     }
                     else
-                    if(blk->shape==LVL_Block::shape_tr_left_bottom)
+                    if(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                     {
                         collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
@@ -583,7 +564,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
 //            PGE_PointF cc = collided->posRect.center();
 //            PGE_RectF  rc = collided->posRect;
 
-            switch(collided->collide_player)
+            switch(collided->LEGACY_collide_player)
             {
                 case COLLISION_TOP:
                 {
@@ -606,11 +587,11 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                     #endif
                     //*****************************Feet of player****************************/
                     if(
-                        (( (blk->shape==LVL_Block::shape_rect)||
-                           (blk->shape==LVL_Block::shape_tr_right_top)||
-                           (blk->shape==LVL_Block::shape_tr_left_top) ) && isCollideFloor(*this, collided))||
-                        ((blk->shape==LVL_Block::shape_tr_right_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_RIGHT)) ||
-                        ((blk->shape==LVL_Block::shape_tr_left_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_LEFT))
+                        (( (blk->LEGACY_shape==LVL_Block::shape_rect)||
+                           (blk->LEGACY_shape==LVL_Block::shape_tr_right_top)||
+                           (blk->LEGACY_shape==LVL_Block::shape_tr_left_top) ) && isCollideFloor(*this, collided))||
+                        ((blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_RIGHT)) ||
+                        ((blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)&&isCollideSlopeFloor(*this, collided, SLOPE_LEFT))
 
                       ){
                         if(blk->isHidden) break;
@@ -620,12 +601,12 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of player****************************/
                     else if(
-                            (( (blk->shape==LVL_Block::shape_rect)||
-                                (blk->shape==LVL_Block::shape_tr_left_bottom)||
-                                (blk->shape==LVL_Block::shape_tr_right_bottom)) &&
+                            (( (blk->LEGACY_shape==LVL_Block::shape_rect)||
+                                (blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)||
+                                (blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)) &&
                                 isCollideCelling(*this, collided, _heightDelta, forceCollideCenter))||
-                            ((blk->shape==LVL_Block::shape_tr_left_top)&&isCollideSlopeCelling(*this, collided, SLOPE_RIGHT)) ||
-                            ((blk->shape==LVL_Block::shape_tr_right_top)&&isCollideSlopeCelling(*this, collided, SLOPE_LEFT))
+                            ((blk->LEGACY_shape==LVL_Block::shape_tr_left_top)&&isCollideSlopeCelling(*this, collided, SLOPE_RIGHT)) ||
+                            ((blk->LEGACY_shape==LVL_Block::shape_tr_right_top)&&isCollideSlopeCelling(*this, collided, SLOPE_LEFT))
                            )
                     {
                         collided_top[(intptr_t)collided]=collided;//top of player
@@ -633,10 +614,10 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         else if(blk->setup->setup.danger==-2||blk->setup->setup.danger==-3||blk->setup->setup.danger==4) harm(1);
                     }
                     //*****************************Left****************************/
-                    else if( (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
-                             (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_bottom)
+                    else if( (isCollideLeft(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_rect))||
+                             (isCollideLeft(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                               &&(m_posRect.bottom()>=(collided->m_posRect.top()+SL_HeightTopRight(*this, collided)+1.0)))||
-                             (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_top)
+                             (isCollideLeft(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_tr_right_top)
                               &&(m_posRect.top()<=(collided->m_posRect.bottom()-SL_HeightTopRight(*this, collided)-1.0))) )
                     {
                         if(blk->isHidden) break;
@@ -645,10 +626,10 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                         else if(blk->setup->setup.danger==-1||blk->setup->setup.danger==3||blk->setup->setup.danger==4) harm(1);
                     }
                     //*****************************Right****************************/
-                    else if( (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
-                             (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_right_bottom)
+                    else if( (isCollideRight(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_rect))||
+                             (isCollideRight(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                              &&(m_posRect.bottom()>=(collided->m_posRect.top()+SL_HeightTopLeft(*this, collided)+1.0)))||
-                             (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_left_top)
+                             (isCollideRight(*this, collided)&&(blk->LEGACY_shape==LVL_Block::shape_tr_left_top)
                              &&(m_posRect.top()<=(collided->m_posRect.bottom()-SL_HeightTopLeft(*this, collided)-1.0)))
                            )
                     {
@@ -661,10 +642,10 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
 
                     float c=forceCollideCenter? 0.0f : 1.0f;
                     //*****************************Center****************************/
-                    if( ((!forceCollideCenter && blk->shape==LVL_Block::shape_rect)||(forceCollideCenter))
+                    if( ((!forceCollideCenter && blk->LEGACY_shape==LVL_Block::shape_rect)||(forceCollideCenter))
                             && blk->m_posRect.collideRectDeep(m_posRect,
-                                                     fabs(m_velocityX_prev+m_velocityX_add)*c+c*2.0,
-                                                     fabs(m_velocityY_prev+m_velocityY_add)*c+c*2.0)
+                                                     fabs(LEGACY_m_velocityX_prev+LEGACY_m_velocityX_add)*c+c*2.0,
+                                                     fabs(LEGACY_m_velocityY_prev+LEGACY_m_velocityY_add)*c+c*2.0)
                             )
                     {
                         if(blk->isHidden && !forceCollideCenter) break;
@@ -748,7 +729,7 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                 //PGE_PointF cc = collided->posRect.center();
                 //PGE_RectF  rc = collided->posRect;
 
-                switch(collided->collide_player)
+                switch(collided->LEGACY_collide_player)
                 {
                     case COLLISION_TOP:
                     {
@@ -826,8 +807,8 @@ void LVL_Player::detectCollisions(PGE_Phys_Object *collided)
                                 fabs(_velocityY_prev)*c+c;
                         #endif
                         if( npc->m_posRect.collideRectDeep(m_posRect,
-                                                         fabs(m_velocityX_prev)*c+c*2.0,
-                                                         fabs(m_velocityY_prev)*c+c*2.0)
+                                                         fabs(LEGACY_m_velocityX_prev)*c+c*2.0,
+                                                         fabs(LEGACY_m_velocityY_prev)*c+c*2.0)
                                 )
                         {
                             if(npc->setup->setup.hurt_player) harm(1);

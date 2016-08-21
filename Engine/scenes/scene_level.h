@@ -324,6 +324,7 @@ public:
     EpisodeState *getGameState();
 
     bool isVizibleOnScreen(PGE_RectF &rect);
+    bool isVizibleOnScreen(PGE_Phys_Object::Momentum &momentum);
     bool isVizibleOnScreen(double x, double y, double w, double h);
 
 private:
@@ -393,6 +394,7 @@ private:
 public:
    float globalGravity;
    void processPhysics(float ticks);
+   void processAllCollisions();
 
    typedef PGE_Phys_Object* PhysObjPtr;
 private:

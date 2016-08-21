@@ -89,8 +89,6 @@ PGE_physBody::PGE_physBody(const PGE_physBody& o) :
     m_filterID(o.m_filterID)
 {}
 
-
-
 static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*nearest)
 {
     //Do transformation if needed
@@ -612,8 +610,8 @@ void PGE_Phys_Object::updateCollisions()
     bool doHit = false;
     bool doCliffCheck = false;
     bool xSpeedWasReversed = false;
-    std::vector<PhysObject*> l_clifCheck;
-    std::vector<PhysObject*> l_toBump;
+    std::vector<PGE_Phys_Object*> l_clifCheck;
+    std::vector<PGE_Phys_Object*> l_toBump;
 
     PhysObject* collideAtTop  = nullptr;
     PhysObject* collideAtBottom = nullptr;
@@ -634,8 +632,8 @@ void PGE_Phys_Object::updateCollisions()
     resetEvents();
     preCollision();
 
-    PhysObject* CUR=nullptr;
-    PGE_Phys_Object* CURO=nullptr;
+    PGE_Phys_Object* CUR=nullptr;
+    //PGE_Phys_Object* CURO=nullptr;
     PGE_SizeT i = 0;
 
     for(i=0; i<objs.size(); i++)
@@ -647,12 +645,12 @@ void PGE_Phys_Object::updateCollisions()
         }
 
         CUR = objs[i];
-        CURO = static_cast<PGE_Phys_Object*>(CUR);
-        if(!CURO) continue;
+        //CURO = static_cast<PGE_Phys_Object*>(CUR);
+        if(!CUR) continue;
 
         if(CUR==this) continue;
-        if(CURO->m_paused) continue;
-        if(!CURO->m_is_visible) continue;
+        if(CUR->m_paused) continue;
+        if(!CUR->m_is_visible) continue;
 
         #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
         CUR->m_bumped = false;
@@ -1463,51 +1461,6 @@ void PGE_Phys_Object::updateCollisions()
         }
     }
 
-    /* ***********************Hit a block********************************** */
-    if(doHit && !l_toBump.empty())
-    {
-        PhysObject*candidate = nullptr;
-        for(unsigned int bump=0; bump<l_toBump.size(); bump++)
-        {
-            PhysObject* x = l_toBump[bump];
-            if(candidate == x)
-                continue;
-            if(!candidate)
-                candidate = x;
-            if( x->m_momentum.betweenH(m_momentum.centerX()) )
-            {
-                candidate = x;
-            }
-        }
-        if(candidate)
-        {
-            #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
-            candidate->m_bumped = true;
-            #else
-            if(CURO->type == LVLBlock)
-            {
-                LVL_Block* nearest = static_cast<LVL_Block*>(CUR);
-                if(type==LVLPlayer)
-                {
-                    LVL_Player* plr = static_cast<LVL_Player*>(this);
-                    processCharacterSwitchBlock(plr, nearest);//Do transformation if needed
-                    long npcid=nearest->data.npc_id;
-                    nearest->hit(LVL_Block::up, plr, 1);
-                    if( nearest->setup->setup.hitable ||
-                        (npcid !=0 ) ||
-                        (nearest->destroyed) ||
-                        (nearest->setup->setup.bounce) )
-                    {
-                        plr->bump(false, speedY());
-                    }
-                }
-            } else {
-                PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
-            }
-            #endif
-        }
-    }
-
     /* ***********************Detect a cliff********************************** */
     if(doCliffCheck && !l_clifCheck.empty())
     {
@@ -1625,8 +1578,13 @@ void PGE_Phys_Object::updateCollisions()
         }
     }
 
-    /* ****************************************************************************** */
+    /* ***********************Hit a block********************************** */
+    if(doHit && !l_toBump.empty())
+    {
+        collisionHitBlockTop(l_toBump);
+    }
 
+    /* ****************************************************************************** */
     if( doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0) )
     {
         m_momentum.velX = m_momentum.velXsrc + (speedSum/speedNum);

@@ -162,6 +162,7 @@ public:
     virtual void processContacts() {}
     virtual void preCollision() {}
     virtual void postCollision() {}
+    virtual void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit) {Q_UNUSED(blocksHit);}
     void updateCollisions();
     virtual void detectCollisions(PGE_Phys_Object *collided);
     double colliding_xSpeed;
@@ -192,14 +193,14 @@ public:
     double m_accelX; //!<Delta of X velocity in a second
     double m_accelY; //!<Delta of Y velocity in a second
 
-    double m_velocityX;//!< current X speed (pixels per 1/65 of second)
-    double m_velocityY;//!< current Y speed (pixels per 1/65 of second)
+    double LEGACY_m_velocityX;//!< current X speed (pixels per 1/65 of second)
+    double LEGACY_m_velocityY;//!< current Y speed (pixels per 1/65 of second)
 
-    double m_velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
-    double m_velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
+    double LEGACY_m_velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
+    double LEGACY_m_velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
-    double m_velocityX_add; //!< additional X acceleration
-    double m_velocityY_add; //!< additional Y acceleration
+    double LEGACY_m_velocityX_add; //!< additional X acceleration
+    double LEGACY_m_velocityY_add; //!< additional Y acceleration
 
     double m_posX_registered; //!< Synchronized with R-Tree position
     double m_posY_registered; //!< Synchronized with R-Tree position
@@ -226,11 +227,11 @@ public:
     };
 
     //! FILTERS
-    int collide_player;
-    int collide_npc;
-
     bool m_slippery_surface;
-    bool m_isRectangle;
+
+    int LEGACY_collide_player;
+    int LEGACY_collide_npc;
+    bool LEGACY_m_isRectangle;
 
     PGE_Texture texture;
     GLuint texId;

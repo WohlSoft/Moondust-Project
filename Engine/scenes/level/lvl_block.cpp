@@ -31,7 +31,7 @@ LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
     sizable=false;
     animator_ID=0;
 
-    shape=0;
+    LEGACY_shape=0;
     shape_slope_angle_ratio=0.0;
 
     offset_x = 0.f;
@@ -100,7 +100,7 @@ void LVL_Block::transformTo(long id, int type)
         {
             npc->transformedFromBlock = this;
             npc->transformedFromBlockID = int(data.id);
-            npc->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
+            npc->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
         }
         destroy( false );
     }
@@ -170,35 +170,52 @@ void LVL_Block::transformTo_x(long id)
 
     if(!_isInited)
     {
-        m_posRect.setPos(data.x, data.y);
+        m_momentum.x = data.x;
+        m_momentum.y = data.y;
     }
     setSize(data.w, data.h);
 
     sizable = setup->setup.sizable;
     isHidden = data.invisible;
-    collide_player = COLLISION_ANY;
+    LEGACY_collide_player = COLLISION_ANY;
+    m_blocked[1] = Block_ALL;
+    m_blocked[2] = Block_ALL;
     m_slippery_surface = data.slippery;
-    if((setup->setup.sizable) || (setup->setup.collision==2))
+    if( (setup->setup.sizable) || (setup->setup.collision==2) )
     {
-        collide_player = COLLISION_TOP;
+        m_blocked[1] = Block_TOP;
+        m_blocked[2] = Block_TOP;
+        LEGACY_collide_player = COLLISION_TOP;
     }
     else
     if(setup->setup.collision==0)
     {
-        collide_player = COLLISION_NONE;
+        m_blocked[1] = Block_NONE;
+        m_blocked[2] = Block_NONE;
+        LEGACY_collide_player = COLLISION_NONE;
     }
 
-    this->shape = setup->setup.phys_shape;
-    if(shape==shape_tr_right_bottom)
+    switch(setup->setup.phys_shape)
+    {
+    default:
+    case 0:  m_shape = SL_Rect; break;
+    case 1:  m_shape = SL_LeftBottom; break;
+    case -1: m_shape = SL_RightBottom; break;
+    case 2:  m_shape = SL_LeftTop; break;
+    case -2: m_shape = SL_RightTop; break;
+    }
+
+    this->LEGACY_shape = setup->setup.phys_shape;
+    if(LEGACY_shape==shape_tr_right_bottom)
         shape_slope_angle_ratio=-(height()/width());
-    if(shape==shape_tr_left_bottom)
+    if(LEGACY_shape==shape_tr_left_bottom)
         shape_slope_angle_ratio=(height()/width());
-    if(shape==shape_tr_left_top)
+    if(LEGACY_shape==shape_tr_left_top)
         shape_slope_angle_ratio=(height()/width());
-    if(shape==shape_tr_right_top)
+    if(LEGACY_shape==shape_tr_right_top)
         shape_slope_angle_ratio=-(height()/width());
 
-    m_isRectangle=(setup->setup.phys_shape == 0);
+    LEGACY_m_isRectangle=(setup->setup.phys_shape == 0);
 //    if(setup->setup.algorithm==3)
 //         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
@@ -225,7 +242,7 @@ void LVL_Block::transformTo_x(long id)
         _scene->character_switchers.buildBrick(*setup);
     }
 
-    collide_npc=collide_player;
+    LEGACY_collide_npc=LEGACY_collide_player;
 
 }
 
@@ -443,7 +460,7 @@ void LVL_Block::lua_setSlippery(bool sl)
 
 bool LVL_Block::lua_isSolid()
 {
-    return (collide_npc==COLLISION_ANY);
+    return (LEGACY_collide_npc==COLLISION_ANY);
 }
 
 void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
@@ -551,7 +568,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     }
     else
-    if(data.npc_id>0)
+    if(data.npc_id > 0)
     {
         triggerEvent=true;
         playHitSnd=true;
@@ -585,11 +602,11 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                                          false);
             if(npc)
             {
-                npc->setCenterX(m_posRect.center().x());
+                npc->setCenterX(m_momentum.centerX());
                 if(_dir==up)
-                    npc->setPosY(m_posRect.top()-npc->height());
+                    npc->setPosY(m_momentum.top()-npc->height());
                 else
-                    npc->setPosY(m_posRect.bottom());
+                    npc->setPosY(m_momentum.bottom());
 
                 if(npcSet.block_spawn_type==1)
                 {

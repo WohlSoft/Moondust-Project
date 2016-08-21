@@ -37,8 +37,8 @@ void LVL_Bgo::init()
 {
     if(_isInited) return;
     transformTo_x(data.id);
-    collide_player=COLLISION_NONE;
-    collide_npc = COLLISION_NONE;
+    LEGACY_collide_player=COLLISION_NONE;
+    LEGACY_collide_npc = COLLISION_NONE;
     _isInited=true;
     _scene->layers.registerItem(data.layer, this);
 }
@@ -98,7 +98,10 @@ void LVL_Bgo::transformTo_x(long id)
         animator_ID = setup->animator_ID;
     }
     if(!_isInited)
-        m_posRect.setPos(data.x, data.y);
+    {
+        m_momentum.x = data.x;
+        m_momentum.y = data.y;
+    }
     setSize(texture.frame_w, texture.frame_h);
 }
 

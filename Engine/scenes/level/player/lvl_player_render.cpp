@@ -110,14 +110,14 @@ void LVL_Player::render(double camX, double camY)
     if(PGE_Window::showDebugInfo)
     {
         //FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), round(posX()-camX), round(posY()-camY));
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5 [T-%7,B-%8] %6")
-                               .arg(collided_top.size())
-                               .arg(collided_left.size())
-                               .arg(collided_center.size())
-                               .arg(collided_right.size())
-                               .arg(collided_bottom.size()).arg(collided_slope?"slope!":"")
-                               .arg(m_speedAddingTopElements.size())
-                               .arg(m_speedAddingBottomElements.size())
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5 %6")
+                               .arg(l_contactT.size())
+                               .arg(l_contactL.size())
+                               .arg(l_contactAny.size())
+                               .arg(l_contactR.size())
+                               .arg(l_contactB.size()).arg(m_slopeFloor.has ? "slope!" : "" )
+                               //.arg(m_speedAddingTopElements.size())
+                               //.arg(m_speedAddingBottomElements.size())
                                , int(round(20+posX()-camX)), -50+int(round(posY()-camY)), 3);
     }
 

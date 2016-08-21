@@ -35,7 +35,7 @@ void LVL_Warp::init()
         setSize(32, data.length_i);
 
     setPos(data.ix, data.iy);
-    collide_player = COLLISION_NONE;
-    collide_npc = COLLISION_NONE;
+    LEGACY_collide_player = COLLISION_NONE;
+    LEGACY_collide_npc = COLLISION_NONE;
     _scene->layers.registerItem(data.layer, this);
 }

@@ -138,27 +138,26 @@ void LevelScene::processPhysics(float ticks)
     {
         LVL_Player*plr=(*it);
         plr->iterateStep(ticks);
-        plr->_syncPosition();
     }
     //Iterate activated NPCs
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->iterateStep(ticks);
-        active_npcs[i]->_syncPosition();
     }
+}
 
+void LevelScene::processAllCollisions()
+{
     //Process collision check and resolving for playable characters
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
         LVL_Player*plr=(*it);
         plr->updateCollisions();
-        plr->iterateStepPostCollide(ticks);
     }
     //Process collision check and resolving for activated NPC's
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->updateCollisions();
-        active_npcs[i]->iterateStepPostCollide(ticks);
     }
 }
 
@@ -388,13 +387,19 @@ void LevelScene::update()
                     active_npcs[i]->deActivate();
                 if(active_npcs[i]->wasDeactivated)
                 {
-                    if(!isVizibleOnScreen(active_npcs[i]->m_posRect)||!active_npcs[i]->isVisible() || !active_npcs[i]->is_activity)
+                    if(!isVizibleOnScreen(active_npcs[i]->m_momentum)||!active_npcs[i]->isVisible() || !active_npcs[i]->is_activity)
                     {
                         active_npcs[i]->wasDeactivated=false;
                         active_npcs.removeAt(i); i--;
                     }
                 }
             }
+        }
+
+        if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
+        {
+            //Process and resolve collisions
+            processAllCollisions();
         }
 
         /***************Collect garbage****************/

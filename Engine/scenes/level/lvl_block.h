@@ -65,7 +65,7 @@ public:
         stape_polygon           = 3
     };
 
-    int shape;
+    int LEGACY_shape;
     double shape_slope_angle_ratio;
 
     int taskToTransform;

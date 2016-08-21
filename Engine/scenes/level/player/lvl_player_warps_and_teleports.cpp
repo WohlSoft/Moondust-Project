@@ -36,29 +36,29 @@ void LVL_Player::processWarpChecking()
             switch(contactedWarp->data.idirect)
             {
                 case LevelDoor::ENTRANCE_RIGHT:
-                    if(m_posRect.right() >= contactedWarp->right()-1.0 &&
-                       m_posRect.right() <= contactedWarp->right()+speedX() &&
-                       m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       m_posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
+                    if(m_momentum.right() >= contactedWarp->right()-1.0 &&
+                       m_momentum.right() <= contactedWarp->right()+speedX() &&
+                       m_momentum.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_momentum.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_DOWN:
-                    if(m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       m_posRect.bottom() <= contactedWarp->bottom()+speedY() &&
-                       m_posRect.center().x() >= contactedWarp->left() &&
-                       m_posRect.center().x() <= contactedWarp->right()
+                    if(m_momentum.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_momentum.bottom() <= contactedWarp->bottom()+speedY() &&
+                       m_momentum.centerX() >= contactedWarp->left() &&
+                       m_momentum.centerX() <= contactedWarp->right()
                             ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_LEFT:
-                    if(m_posRect.left() <= contactedWarp->left()+1.0 &&
-                       m_posRect.left() >= contactedWarp->left()+speedX() &&
-                       m_posRect.bottom() >= contactedWarp->bottom()-1.0 &&
-                       m_posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
+                    if(m_momentum.left() <= contactedWarp->left()+1.0 &&
+                       m_momentum.left() >= contactedWarp->left()+speedX() &&
+                       m_momentum.bottom() >= contactedWarp->bottom()-1.0 &&
+                       m_momentum.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                     break;
                 case LevelDoor::ENTRANCE_UP:
-                    if(m_posRect.top() <= contactedWarp->top()+1.0 &&
-                       m_posRect.top() >= contactedWarp->top()+speedY() &&
-                       m_posRect.center().x() >= contactedWarp->left() &&
-                       m_posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
+                    if(m_momentum.top() <= contactedWarp->top()+1.0 &&
+                       m_momentum.top() >= contactedWarp->top()+speedY() &&
+                       m_momentum.centerX() >= contactedWarp->left() &&
+                       m_momentum.centerX() <= contactedWarp->right()  ) isContacted = true;
                     break;
                 default:
                     break;
@@ -70,7 +70,7 @@ void LVL_Player::processWarpChecking()
                 switch(contactedWarp->data.idirect)
                 {
                     case LevelDoor::ENTRANCE_RIGHT:
-                        if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-m_posRect.width()); doTeleport=true; }
+                        if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-m_momentum.w); doTeleport=true; }
                         break;
                     case LevelDoor::ENTRANCE_DOWN:
                         if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height);
@@ -106,15 +106,15 @@ void LVL_Player::processWarpChecking()
         {
             bool isContacted=false;
 
-            if(m_posRect.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
-               m_posRect.bottom() >= contactedWarp->bottom()-fabs(speedY())-4.0 &&
-               m_posRect.center().x() >= contactedWarp->left() &&
-               m_posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
+            if(m_momentum.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
+               m_momentum.bottom() >= contactedWarp->bottom()-fabs(speedY())-4.0 &&
+               m_momentum.centerX() >= contactedWarp->left() &&
+               m_momentum.centerX() <= contactedWarp->right()  ) isContacted = true;
 
             if(isContacted)
             {
-                setPosX(contactedWarp->posCenterX()-m_posRect.width()/2.0);
-                setPosY(contactedWarp->bottom()-m_posRect.height());
+                setPosX(contactedWarp->posCenterX()-m_momentum.w/2.0);
+                setPosY(contactedWarp->bottom()-m_momentum.h);
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
                 wasEnteredTimeout=100;

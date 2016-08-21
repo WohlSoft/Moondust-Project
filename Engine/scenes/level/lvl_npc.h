@@ -89,7 +89,7 @@ public:
     void Activate();
     void deActivate();
 
-    void updateCollisions();
+    void updateCollisionsOLD();
     void detectCollisions(PGE_Phys_Object *collided);
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching

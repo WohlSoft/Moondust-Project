@@ -91,7 +91,7 @@ void LVL_Npc::transformTo(long id, int type)
             transformedFromBlock->destroyed = false;
             transformedFromBlock->transformTo(id, 2);
             transformedFromBlock->transformedFromNpcID = data.id;
-            transformedFromBlock->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
+            transformedFromBlock->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
         } else {
             def.x = round( posX() );
             def.y = round( posY() );
@@ -103,7 +103,7 @@ void LVL_Npc::transformTo(long id, int type)
             if(res)
             {
                 res->transformedFromNpcID = data.id;
-                res->setCenterPos(m_posRect.center().x(), m_posRect.center().y());
+                res->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
             }
         }
         this->unregister();
@@ -197,8 +197,8 @@ void LVL_Npc::transformTo_x(long id)
 
         deActivatable    = true;
         activationTimeout= 150;
-        collide_npc=COLLISION_NONE;
-        collide_player=COLLISION_NONE;
+        LEGACY_collide_npc=COLLISION_NONE;
+        LEGACY_collide_player=COLLISION_NONE;
         disableBlockCollision=true;
         setGravityScale(0.0f);
         return;
@@ -218,22 +218,22 @@ void LVL_Npc::transformTo_x(long id)
     setGravityScale(setup->setup.gravity ? 1.0f : 0.f);
 
     if(setup->setup.block_player)
-        collide_player = COLLISION_ANY;
+        LEGACY_collide_player = COLLISION_ANY;
     else
     if(setup->setup.block_player_top)
-        collide_player = COLLISION_TOP;
+        LEGACY_collide_player = COLLISION_TOP;
     else
-        collide_player = COLLISION_NONE;
+        LEGACY_collide_player = COLLISION_NONE;
 
     if(setup->setup.block_npc)
-        collide_npc = COLLISION_ANY;
+        LEGACY_collide_npc = COLLISION_ANY;
     else
     if(setup->setup.block_npc_top)
-        collide_npc = COLLISION_TOP;
+        LEGACY_collide_npc = COLLISION_TOP;
     else
-        collide_npc = COLLISION_NONE;
+        LEGACY_collide_npc = COLLISION_NONE;
     if(setup->setup.no_npc_collisions)
-        collide_npc=COLLISION_NONE;
+        LEGACY_collide_npc=COLLISION_NONE;
 
     if(_isInited)
     {

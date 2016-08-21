@@ -85,7 +85,7 @@ void LVL_Player::update(float tickTime)
     //on_slippery_surface = !foot_sl_contacts_map.isEmpty();
     bool climbableUp  = !climbable_map.isEmpty();
     bool climbableDown= climbableUp && !m_stand;
-    climbing = (climbableUp && climbing && !m_stand && (m_posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
+    climbing = (climbableUp && climbing && !m_stand && (m_momentum.centerY() >= (climbableHeight - physics_cur.velocity_climb_y_up)) );
     if(m_stand)
     {
         phys_setup.decelerate_x =
@@ -110,12 +110,12 @@ void LVL_Player::update(float tickTime)
         PGE_Phys_Object* climbableItem = *(climbable_map.begin());
         if(climbableItem)
         {
-            m_velocityX_add=climbableItem->speedX();
-            m_velocityY_add=climbableItem->speedY();
+            LEGACY_m_velocityX_add=climbableItem->speedX();
+            LEGACY_m_velocityY_add=climbableItem->speedY();
         } else
         {
-            m_velocityX_add=0.0f;
-            m_velocityY_add=0.0f;
+            LEGACY_m_velocityX_add=0.0f;
+            LEGACY_m_velocityY_add=0.0f;
         }
 
         if(gscale_Backup != 1)
@@ -262,7 +262,7 @@ void LVL_Player::update(float tickTime)
 
         if(climbing)
         {
-            if(m_posRect.center().y() >= climbableHeight)
+            if(m_momentum.centerY() >= climbableHeight)
                 setSpeedY(-physics_cur.velocity_climb_y_up);
         } else {
             if(collided_talkable_npc) collided_talkable_npc->talkWith();
@@ -399,7 +399,7 @@ void LVL_Player::update(float tickTime)
                 jumpTime=physics_cur.jump_time;
                 jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                m_velocityY_add = 0;//Remove Y speed-add when player jumping
+                LEGACY_m_velocityY_add = 0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
@@ -579,9 +579,9 @@ void LVL_Player::update(float tickTime)
         }
     }
 
-    if(_stucked)
+    if(m_crushed && m_crushedOld)
     {
-        m_posRect.setX(m_posRect.x()-_direction*4);
+        m_momentum.x -= _direction*4;
         applyAccel(0.0, 0.0);
     }
 

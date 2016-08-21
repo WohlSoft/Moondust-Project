@@ -21,20 +21,27 @@
 
 LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
-    camera = NULL;
+    camera = nullptr;
+
+    /* ****** PHYSICS ******* */
+    m_filterID = 1;
+    m_allowHoleRuning = true;
+    m_onSlopeFloorTopAlign = false;
+    /* ****** PHYSICS ******* */
+
+    type = LVLPlayer;
 
     playerID = 0;
     isLocked = false;
     _no_render = false;
     _isInited = false;
-    global_state = NULL;
+    global_state = nullptr;
     isLuaPlayer = false;
 
     isExiting = false;
 
     _direction = 1;
 
-    type = LVLPlayer;
 
     frameW=100;
     frameH=100;
@@ -53,8 +60,8 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
 
     climbing=false;
 
-    collide_player = COLLISION_ANY;
-    collide_npc    = COLLISION_NONE;
+    LEGACY_collide_player = COLLISION_ANY;
+    LEGACY_collide_npc    = COLLISION_NONE;
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;

@@ -4,7 +4,8 @@
 #include <QHash>
 #include <common_features/rectf.h>
 
-typedef QVector<PGE_physBody *> PGE_RenderList;
+class PGE_Phys_Object;
+typedef QVector<PGE_Phys_Object *> PGE_RenderList;
 
 struct PGE_Phys_Object_Phys
 {
@@ -155,18 +156,18 @@ public:
         objRect rect;
         int     shape;
     };
-    typedef QHash<intptr_t, PGE_physBody*> ObjectColliders;
-    typedef QHash<intptr_t, PGE_physBody*>::iterator ObjectCollidersIt;
+    typedef QHash<intptr_t, PGE_Phys_Object*> ObjectColliders;
+    typedef QHash<intptr_t, PGE_Phys_Object*>::iterator ObjectCollidersIt;
     ObjectColliders l_contactAny;
     ObjectColliders l_contactL;
     ObjectColliders l_contactR;
     ObjectColliders l_contactT;
     ObjectColliders l_contactB;
-    inline void l_pushAny(PGE_physBody*ob) { l_contactAny[intptr_t(ob)] = ob; }
-    inline void l_pushL(PGE_physBody*ob) { l_contactL[intptr_t(ob)] = ob; l_pushAny(ob); }
-    inline void l_pushR(PGE_physBody*ob) { l_contactR[intptr_t(ob)] = ob; l_pushAny(ob); }
-    inline void l_pushT(PGE_physBody*ob) { l_contactT[intptr_t(ob)] = ob; l_pushAny(ob); }
-    inline void l_pushB(PGE_physBody*ob) { l_contactB[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushAny(PGE_Phys_Object*ob) { l_contactAny[intptr_t(ob)] = ob; }
+    inline void l_pushL(PGE_Phys_Object*ob) { l_contactL[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushR(PGE_Phys_Object*ob) { l_contactR[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushT(PGE_Phys_Object*ob) { l_contactT[intptr_t(ob)] = ob; l_pushAny(ob); }
+    inline void l_pushB(PGE_Phys_Object*ob) { l_contactB[intptr_t(ob)] = ob; l_pushAny(ob); }
 
     int         m_shape;
     Momentum    m_momentum;
