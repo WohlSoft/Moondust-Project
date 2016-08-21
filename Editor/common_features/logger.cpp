@@ -114,13 +114,15 @@ LogWriterSignal *LogWriter::consoleConnector=nullptr;
 
 void LogWriter::LoadLogSettings()
 {
+    QDate d = QDate::currentDate();
+    QTime t = QTime::currentTime();
     QString logFileName = QString("PGE_Editor_log_%1-%2-%3_%4-%5-%6.txt")
-            .arg(QDate().currentDate().year())
-            .arg(QDate().currentDate().month())
-            .arg(QDate().currentDate().day())
-            .arg(QTime().currentTime().hour())
-            .arg(QTime().currentTime().minute())
-            .arg(QTime().currentTime().second());
+            .arg(d.year())
+            .arg(d.month())
+            .arg(d.day())
+            .arg(t.hour())
+            .arg(t.minute())
+            .arg(t.second());
     logLevel = PGE_LogLevel::Debug;
 
     QString mainIniFile = AppPathManager::settingsFile();

@@ -24,6 +24,8 @@
 #include <QFileInfo>
 #include <QUrl>
 #include <QDir>
+#include <QDateTime>
+#include <QTextStream>
 
 static void showUnsavedFileNotify(MainWindow *p)
 {
@@ -34,8 +36,70 @@ static void showUnsavedFileNotify(MainWindow *p)
 
 }
 
+static void processLuaMacros(QString luaFile, QString newFile, const QStringList &enabledMacros)
+{
+    QFile f(luaFile);
+    QFile of(newFile);
+
+    f.open(QIODevice::ReadOnly|QIODevice::Text);
+    of.open(QIODevice::WriteOnly|QIODevice::Text);
+
+    QTextStream lua(&f);
+    lua.setCodec("UTF-8");
+    QDate d = QDate::currentDate();
+    QTime t = QTime::currentTime();
+    QString dateTime = QString("%1:%2 %3-%4-%5")
+            .arg(t.hour())
+            .arg(t.minute())
+            .arg(d.year())
+            .arg(d.month())
+            .arg(d.day());
+
+    bool macroOpened=false;
+    bool macroWriting=false;
+
+    while(!lua.atEnd())
+    {
+        QString line = lua.readLine();
+        if(macroOpened)
+        {
+            if(line.startsWith("@}"))
+            {
+                macroOpened=false;
+                continue;
+            }
+            if(macroWriting)
+            {
+                of.write(line.toUtf8());
+                of.write("\r\n", 2);
+            }
+        } else {
+            if(line.startsWith(QChar('@'))&&line.endsWith(QChar('{')))
+            {
+                line.remove(0, 1);
+                line.remove(line.size()-1, 1);
+                macroWriting = enabledMacros.contains(line);
+                macroOpened=true;
+                continue;
+            }
+            else
+            if(line.contains("@DATETIME@"))
+                line.replace("@DATETIME@", dateTime);
+            of.write(line.toUtf8());
+            of.write("\r\n", 2);
+        }
+    }
+    f.close();
+    of.close();
+}
+
 static void openLuaFile(QString path, QString fileName, QString tplFile="")
 {
+    QStringList macros;
+    macros.append("ONSTART");
+    macros.append("ONTICK");
+    macros.append("ONEVENT");
+
     QString fullPath = path+"/"+fileName;
     if(!QFile::exists(path+"/"+fileName))
     {
@@ -43,7 +107,7 @@ static void openLuaFile(QString path, QString fileName, QString tplFile="")
         dir.mkpath(path);
         if(!tplFile.isEmpty())
         {
-            QFile::copy(tplFile, fullPath);
+            processLuaMacros(tplFile, fullPath, macros);
         } else {
             QFile f(fullPath);
             f.open(QIODevice::WriteOnly|QIODevice::Truncate);
