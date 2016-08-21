@@ -126,6 +126,9 @@
         <file>constributors/Valtteri.png</file>
         <file>constributors/Wohlstand.png</file>
         <file>constributors/Enjl.png</file>
+        <file>lunalua/templates/lunadll.lua</file>
+        <file>lunalua/templates/lunaoverworld.lua</file>
+        <file>lunalua/templates/lunaworld.lua</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
