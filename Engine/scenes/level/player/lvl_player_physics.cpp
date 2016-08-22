@@ -133,6 +133,18 @@ void LVL_Player::processContacts()
                 }
                 break;
             }
+        case PGE_Phys_Object::LVLBlock:
+            {
+                LVL_Block *blk= static_cast<LVL_Block*>(cEL);
+                if(blk->isHidden)
+                    break;
+                if(blk->setup->setup.lava)
+                {
+                    doKill=true;
+                    killReason = DEAD_burn;
+                }
+                break;
+            }
         case PGE_Phys_Object::LVLNPC:
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);

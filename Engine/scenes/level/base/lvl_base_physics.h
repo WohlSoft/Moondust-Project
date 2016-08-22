@@ -7,6 +7,8 @@
 class PGE_Phys_Object;
 typedef QVector<PGE_Phys_Object *> PGE_RenderList;
 
+#define BLOCK_FILTER_COUNT 3
+
 struct PGE_Phys_Object_Phys
 {
     double min_vel_x;//!< Min allowed X velocity
@@ -232,9 +234,9 @@ public:
     //! Enable automatical aligning of position while staying on top corner of slope
     bool    m_onSlopeFloorTopAlign;
     //! Blocking filters (1 - playable characters, 2 - NPCs)
-    int     m_blocked[3];
+    int     m_blocked[BLOCK_FILTER_COUNT];
     //! Danger surface (1 - playable characters, 2 - NPCs)
-    int     m_danger[3];
+    int     m_danger[BLOCK_FILTER_COUNT];
     //! Type of self (1 - playable characters, 2 - NPCs)
     int     m_filterID;
     /***********************Physical engine locals***END***********************/

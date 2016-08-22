@@ -44,6 +44,7 @@ public:
     float offset_y;
 
     bool isHidden;
+    bool m_blockedOrigin[BLOCK_FILTER_COUNT];
 
     bool destroyed;
 

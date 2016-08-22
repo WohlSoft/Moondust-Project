@@ -176,7 +176,7 @@ void LVL_Block::transformTo_x(long id)
     setSize(data.w, data.h);
 
     sizable = setup->setup.sizable;
-    isHidden = data.invisible;
+
     LEGACY_collide_player = COLLISION_ANY;
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
@@ -194,6 +194,7 @@ void LVL_Block::transformTo_x(long id)
         m_blocked[2] = Block_NONE;
         LEGACY_collide_player = COLLISION_NONE;
     }
+    lua_setInvisible(data.invisible);
 
     switch(setup->setup.phys_shape)
     {
@@ -440,12 +441,22 @@ void LVL_Block::lua_setContentID(int npcid)
 
 bool LVL_Block::lua_invisible()
 {
-    return data.invisible;
+    return isHidden;
 }
 
 void LVL_Block::lua_setInvisible(bool iv)
 {
-    data.invisible=iv;
+    if(isHidden && !iv)
+        memcpy(m_blocked, m_blockedOrigin, sizeof(bool)*BLOCK_FILTER_COUNT);
+    else
+    if(!isHidden && iv)
+    {
+        memcpy(m_blockedOrigin, m_blocked, sizeof(bool)*BLOCK_FILTER_COUNT);
+        m_blocked[1] = Block_BOTTOM;
+        m_blocked[2] = Block_BOTTOM;
+    }
+    data.invisible = iv;
+    isHidden = iv;
 }
 
 bool LVL_Block::lua_slippery()
@@ -472,7 +483,7 @@ void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
     tx.setBottom(texture.bottom()/this->texture.h);
 
     PGE_RectF blockG;
-    blockG.setX(target.x()+block.x());
+    blockG.setX(target.x()+ block.x());
     blockG.setY(target.y()+block.y());
     blockG.setRight(target.x()+block.x()+block.width());
     blockG.setBottom(target.y()+block.y()+block.height());
@@ -486,8 +497,9 @@ void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
 void LVL_Block::hit(LVL_Block::directions _dir)
 {
     hitDirection = _dir;
-    isHidden=false;
-    data.invisible=false;
+    if(isHidden)
+        lua_setInvisible(false);
+
     bool doFade=false, triggerEvent=false, playHitSnd=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
