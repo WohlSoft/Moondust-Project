@@ -315,7 +315,7 @@ void LVL_Player::update(float tickTime)
         if(!ducking || !m_stand)
         {
             //If left key is pressed
-            if(keys.right && collided_right.isEmpty())
+            if(keys.right && LEGACY_collided_right.isEmpty())
             {
                 if(climbing)
                     setSpeedX(physics_cur.velocity_climb_x);
@@ -323,7 +323,7 @@ void LVL_Player::update(float tickTime)
                     applyAccel(force, 0.0);
             }
             //If right key is pressed
-            if(keys.left && collided_left.isEmpty())
+            if(keys.left && LEGACY_collided_left.isEmpty())
             {
                 if(climbing)
                     setSpeedX(-physics_cur.velocity_climb_x);

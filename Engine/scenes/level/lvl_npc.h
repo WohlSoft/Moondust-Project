@@ -89,8 +89,13 @@ public:
     void Activate();
     void deActivate();
 
-    void updateCollisionsOLD();
-    void detectCollisions(PGE_Phys_Object *collided);
+    void processContacts();
+    void preCollision();
+    void postCollision();
+    void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
+
+    void LEGACY_updateCollisions();
+    void LEGACY_detectCollisions(PGE_Phys_Object *collided);
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
@@ -108,11 +113,11 @@ public:
     QHash<intptr_t, PGE_Phys_Object*> contacted_players;
 
     typedef QHash<intptr_t, PGE_Phys_Object*> PlayerColliders;
-    QHash<intptr_t, PGE_Phys_Object*> collided_top;
-    QHash<intptr_t, PGE_Phys_Object*> collided_left;
-    QHash<intptr_t, PGE_Phys_Object*> collided_right;
-    QHash<intptr_t, PGE_Phys_Object*> collided_bottom;
-    QHash<intptr_t, PGE_Phys_Object*> collided_center;
+    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_top;
+    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_left;
+    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_right;
+    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_bottom;
+    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_center;
     bool  disableBlockCollision;
     bool  disableNpcCollision;
     bool  enablePlayerCollision;

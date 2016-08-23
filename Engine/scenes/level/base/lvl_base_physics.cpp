@@ -1595,6 +1595,6 @@ void PGE_Phys_Object::updateCollisions()
     postCollision();
 }
 
-void PGE_Phys_Object::detectCollisions(PGE_Phys_Object *)
+void PGE_Phys_Object::LEGACY_detectCollisions(PGE_Phys_Object *)
 {}
 

@@ -139,7 +139,8 @@ void LVL_Npc::transformTo_x(long id)
         _npc_id = id;
     } else {
         _npc_id=id;
-        m_posRect.setPos(data.x, data.y);
+        m_momentum.x = data.x;
+        m_momentum.y = data.y;
         _syncSection(false);
     }
 
@@ -173,17 +174,20 @@ void LVL_Npc::transformTo_x(long id)
 
     if(_isInited)
     {
-        PGE_RectF old=m_posRect;
-        m_posRect.setSize(setup->setup.width, setup->setup.height);
-        m_posRect.setPos(old.center().x()-(m_posRect.width()/2),
-                       old.bottom()-m_posRect.height());
+        double oldCX = m_momentum.centerX();
+        double oldB = m_momentum.bottom();
+        m_momentum.w = setup->setup.width;
+        m_momentum.h = setup->setup.height;
+        m_momentum.x = oldCX-m_momentum.w/2.0;
+        m_momentum.y = oldB-m_momentum.h;
     }
     else
     {
-        m_posRect.setSize(setup->setup.width, setup->setup.height);
+        m_momentum.w = setup->setup.width;
+        m_momentum.h = setup->setup.height;
     }
-    m_width_toRegister=setup->setup.width;
-    m_height_toRegister=setup->setup.height;
+    m_width_toRegister  = m_momentum.w;
+    m_height_toRegister = m_momentum.h;
     m_width_half = m_width_toRegister/2.0f;
     m_height_half = m_height_toRegister/2.0f;
     _syncPositionAndSize();

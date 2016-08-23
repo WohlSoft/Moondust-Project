@@ -68,18 +68,18 @@ class LVL_Player :
         void preCollision();
         void postCollision();
         void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
-        void updateCollisionsOLD();
-        void detectCollisions(PGE_Phys_Object *collided);
+        void LEGACY_updateCollisions();
+        void LEGACY_detectCollisions(PGE_Phys_Object *collided);
         bool forceCollideCenter;//!< collide with invizible blocks at center
         float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
         /*****************NPC's and blocks******************/
         typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
-        QHash<int, PGE_Phys_Object*> collided_top;
-        QHash<int, PGE_Phys_Object*> collided_left;
-        QHash<int, PGE_Phys_Object*> collided_right;
-        QHash<int, PGE_Phys_Object*> collided_bottom;
-        QHash<int, PGE_Phys_Object*> collided_center;
+        QHash<int, PGE_Phys_Object*> LEGACY_collided_top;
+        QHash<int, PGE_Phys_Object*> LEGACY_collided_left;
+        QHash<int, PGE_Phys_Object*> LEGACY_collided_right;
+        QHash<int, PGE_Phys_Object*> LEGACY_collided_bottom;
+        QHash<int, PGE_Phys_Object*> LEGACY_collided_center;
         LVL_Npc *  collided_talkable_npc;
         bool _stucked;
 

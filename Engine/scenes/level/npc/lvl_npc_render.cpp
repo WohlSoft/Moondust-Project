@@ -54,7 +54,7 @@ void LVL_Npc::render(double camX, double camY)
     {
         if(warpSpriteOffset >= 1.0)
             return;
-        PGE_RectF  bodyPos = m_posRect;
+        PGE_RectF  bodyPos = m_momentum.rectF();
                    bodyPos.setPos(round(bodyPos.x()-camX), round(bodyPos.y()-camY));
         PGE_RectF &textPos = npc;
         //     Exit direction: [1] down  [3] up  [4] left  [2] right
@@ -165,11 +165,11 @@ void LVL_Npc::render(double camX, double camY)
             }
         }
         FontManager::printText(QString(" %1 \n%2%3%4\n %5  [T-%8,B-%9] %6  %7")
-                               .arg(collided_top.size())
-                               .arg(collided_left.size())
-                               .arg(collided_center.size())
-                               .arg(collided_right.size())
-                               .arg(collided_bottom.size())
+                               .arg(LEGACY_collided_top.size())
+                               .arg(LEGACY_collided_left.size())
+                               .arg(LEGACY_collided_center.size())
+                               .arg(LEGACY_collided_right.size())
+                               .arg(LEGACY_collided_bottom.size())
                                .arg(collision_speed_add.size())
                                .arg(warpingInfo)
                                .arg(m_speedAddingTopElements.size())

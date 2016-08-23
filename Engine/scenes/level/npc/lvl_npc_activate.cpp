@@ -77,4 +77,3 @@ void LVL_Npc::deActivate()
         }
     }
 }
-

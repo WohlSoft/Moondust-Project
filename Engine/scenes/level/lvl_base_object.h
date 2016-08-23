@@ -164,7 +164,7 @@ public:
     virtual void postCollision() {}
     virtual void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit) {Q_UNUSED(blocksHit);}
     void updateCollisions();
-    virtual void detectCollisions(PGE_Phys_Object *collided);
+    virtual void LEGACY_detectCollisions(PGE_Phys_Object *collided);
     double colliding_xSpeed;
     double colliding_ySpeed;
 

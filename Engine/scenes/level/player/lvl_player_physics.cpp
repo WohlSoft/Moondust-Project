@@ -351,11 +351,11 @@ void LVL_Player::preCollision()
     climbable_map.clear();
     environments_map.clear();
 
-    collided_top.clear();
-    collided_left.clear();
-    collided_right.clear();
-    collided_bottom.clear();
-    collided_center.clear();
+    LEGACY_collided_top.clear();
+    LEGACY_collided_left.clear();
+    LEGACY_collided_right.clear();
+    LEGACY_collided_bottom.clear();
+    LEGACY_collided_center.clear();
 }
 
 void LVL_Player::postCollision()
