@@ -93,6 +93,7 @@ public:
     void preCollision();
     void postCollision();
     void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
+    bool preCollisionCheck(PGE_Phys_Object* body);
     #ifdef OLD_COLLIDERS
     void LEGACY_updateCollisions();
     void LEGACY_detectCollisions(PGE_Phys_Object *collided);

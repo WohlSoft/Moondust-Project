@@ -118,3 +118,14 @@ void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
     Q_UNUSED(blocksHit);
 
 }
+
+bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
+{
+    Q_ASSERT(body);
+    if(body->type == LVLBlock)
+    {
+        if(this->disableBlockCollision)
+            return true;
+    }
+    return false;
+}
