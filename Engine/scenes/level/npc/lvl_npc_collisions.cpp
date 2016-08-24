@@ -29,6 +29,7 @@
 
 #define DISABLE_OLD_SPEEDADD
 
+#ifdef OLD_COLLIDERS
 void LVL_Npc::LEGACY_updateCollisions()
 {
     foot_contacts_map.clear();
@@ -48,12 +49,12 @@ void LVL_Npc::LEGACY_updateCollisions()
     LEGACY_collided_right.clear();
     LEGACY_collided_bottom.clear();
     LEGACY_collided_center.clear();
-    cliffDetected=false;
+    LEGACY_cliffDetected=false;
 
-    collided_slope=false;
-    collided_slope_angle_ratio=0.0f;
-    collided_slope_celling=false;
-    collided_slope_angle_ratio_celling=0.0f;
+    LEGACY_collided_slope=false;
+    LEGACY_collided_slope_angle_ratio=0.0f;
+    LEGACY_collided_slope_celling=false;
+    LEGACY_collided_slope_angle_ratio_celling=0.0f;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -134,7 +135,7 @@ void LVL_Npc::LEGACY_updateCollisions()
             }
         }
 
-        if(isFloor(floor_blocks, &cliffDetected))
+        if(isFloor(floor_blocks, &LEGACY_cliffDetected))
         {
             PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
@@ -144,7 +145,7 @@ void LVL_Npc::LEGACY_updateCollisions()
                 {
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -152,7 +153,7 @@ void LVL_Npc::LEGACY_updateCollisions()
                     else
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -270,7 +271,7 @@ void LVL_Npc::LEGACY_updateCollisions()
         bool _iswall=false;
         bool _isfloor=false;
         m_posRect.setX(_wallX);
-        _isfloor = isFloor(floor_blocks, &cliffDetected);
+        _isfloor = isFloor(floor_blocks, &LEGACY_cliffDetected);
         m_posRect.setPos(backupX, _floorY);
         _iswall = isWall(wall_blocks);
         m_posRect.setX(backupX);
@@ -350,7 +351,6 @@ void LVL_Npc::LEGACY_updateCollisions()
     qDebug() << "=====Collision check and resolve end======";
     #endif
 }
-
 
 void LVL_Npc::LEGACY_detectCollisions(PGE_Phys_Object *collided)
 {
@@ -709,10 +709,11 @@ void LVL_Npc::LEGACY_detectCollisions(PGE_Phys_Object *collided)
     default: break;
     }
 }
+#endif
 
 bool LVL_Npc::onCliff()
 {
-    return cliffDetected;
+    return m_cliff;
 }
 
 bool LVL_Npc::onGround()
@@ -720,6 +721,7 @@ bool LVL_Npc::onGround()
     return m_stand;
 }
 
+#ifdef OLD_COLLIDERS
 void LVL_Npc::updateSpeedAddingStack()
 {
     if(!LEGACY_collided_bottom.isEmpty())
@@ -794,6 +796,7 @@ void LVL_Npc::applyCorrectionToSA_stack(double offsetX, double offsetY)
     for(int i=0; i<collision_speed_add.size(); i++)
         collision_speed_add[i]->applyCorrectionToSA_stack(offsetX, offsetY);
 }
+#endif
 
 //void LVL_Npc::iterateSpeedAddingStack(double offsetX, double offsetY)
 //{

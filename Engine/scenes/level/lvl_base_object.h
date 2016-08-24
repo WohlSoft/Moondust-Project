@@ -123,10 +123,14 @@ public:
     void applyAccel(double x, double y);
 
     //! Elements staying on top (or bumped from side)
-    QList<PGE_Phys_Object*> m_speedAddingTopElements;
-    QList<PGE_Phys_Object*> m_speedAddingBottomElements;
+    #ifdef OLD_COLLIDERS
+    QList<PGE_Phys_Object*> LEGACY_m_speedAddingTopElements;
+    QList<PGE_Phys_Object*> LEGACY_m_speedAddingBottomElements;
     virtual void iterateSpeedAddingStack(double ticks);
     virtual void removeSpeedAddingPointers();
+    #endif
+
+    #ifdef OLD_COLLIDERS
     /*!
      * \brief Update Speed-adding stack if needed
      */
@@ -137,6 +141,7 @@ public:
      * param offsetY Apply offset on Y
      */
     virtual void applyCorrectionToSA_stack(double, double) {}
+    #endif
 
     inline double  gravityScale() { return phys_setup.gravityScale; }
     inline void    setGravityScale(double scl) { phys_setup.gravityScale = scl; }
@@ -163,17 +168,27 @@ public:
     virtual void preCollision() {}
     virtual void postCollision() {}
     virtual void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit) {Q_UNUSED(blocksHit);}
+    /**
+     * @brief Function called before collision resolving process. Allows filter some collisions
+     * @param body Physical body
+     * @return true if collision must be skipped, false - if need to check it
+     */
+    virtual bool preCollisionCheck(PGE_Phys_Object* body) { Q_UNUSED(body); return false; }
+
     void updateCollisions();
+    #ifdef OLD_COLLIDERS
     virtual void LEGACY_detectCollisions(PGE_Phys_Object *collided);
-    double colliding_xSpeed;
-    double colliding_ySpeed;
+    double LEGACY_colliding_xSpeed;
+    double LEGACY_colliding_ySpeed;
+    #endif
 
     virtual bool onGround() { return m_stand; }
 
-    bool   collided_slope;
-    float  collided_slope_angle_ratio;
-    bool   collided_slope_celling;
-    float  collided_slope_angle_ratio_celling;
+    #ifdef OLD_COLLIDERS
+    bool   LEGACY_collided_slope;
+    float  LEGACY_collided_slope_angle_ratio;
+    bool   LEGACY_collided_slope_celling;
+    float  LEGACY_collided_slope_angle_ratio_celling;
 
     enum Slopes{
         SLOPE_LEFT=-1,
@@ -184,15 +199,19 @@ public:
     PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);
     bool isWall(QVector<PGE_Phys_Object *> &blocks);
     bool isFloor(QVector<PGE_Phys_Object *> &blocks, bool *isCliff=0);
+    #endif
 
     static const float m_smbxTickTime;
     static float SMBXTicksToTime(float ticks);
 
     PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
+    #ifdef OLD_COLLIDERS
     PGE_RectF m_posRect;//!< Real body geometry and position
+    #endif
     double m_accelX; //!<Delta of X velocity in a second
     double m_accelY; //!<Delta of Y velocity in a second
 
+    #ifdef OLD_COLLIDERS
     double LEGACY_m_velocityX;//!< current X speed (pixels per 1/65 of second)
     double LEGACY_m_velocityY;//!< current Y speed (pixels per 1/65 of second)
 
@@ -201,6 +220,7 @@ public:
 
     double LEGACY_m_velocityX_add; //!< additional X acceleration
     double LEGACY_m_velocityY_add; //!< additional Y acceleration
+    #endif
 
     double m_posX_registered; //!< Synchronized with R-Tree position
     double m_posY_registered; //!< Synchronized with R-Tree position
@@ -219,19 +239,23 @@ public:
 
     int type;
 
+    #ifdef OLD_COLLIDERS
     enum CollisionType{
         COLLISION_NONE = 0,
         COLLISION_ANY = 1,
         COLLISION_TOP = 2,
         COLLISION_BOTTOM = 3
     };
+    #endif
 
     //! FILTERS
     bool m_slippery_surface;
 
+    #ifdef OLD_COLLIDERS
     int LEGACY_collide_player;
     int LEGACY_collide_npc;
     bool LEGACY_m_isRectangle;
+    #endif
 
     PGE_Texture texture;
     GLuint texId;

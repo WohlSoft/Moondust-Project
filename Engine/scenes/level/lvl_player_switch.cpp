@@ -46,9 +46,9 @@ void CharacterSwitcherEngine::buildSwitch(obj_block &blk)
     if(blk.setup.plSwitch_Button)
     {
         CharacterSwitchState swst;
-        swst.CharacterID=blk.setup.plSwitch_Button_id;
-        swst.sequence_on=blk.setup.plSwitch_frames_true;
-        swst.sequence_off=blk.setup.plSwitch_frames_false;
+        swst.CharacterID  = blk.setup.plSwitch_Button_id;
+        swst.sequence_on  = blk.setup.plSwitch_frames_true;
+        swst.sequence_off = blk.setup.plSwitch_frames_false;
         if(blk.animator_ID<ConfigManager::Animator_Blocks.size())
         {
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
@@ -62,9 +62,9 @@ void CharacterSwitcherEngine::buildBrick(obj_block &blk)
     if(blk.setup.plFilter_Block)
     {
         CharacterBlockState swst;
-        swst.CharacterID=blk.setup.plFilter_Block_id;
-        swst.sequence_on=blk.setup.plFilter_frames_true;
-        swst.sequence_off=blk.setup.plFilter_frames_false;
+        swst.CharacterID  = blk.setup.plFilter_Block_id;
+        swst.sequence_on  = blk.setup.plFilter_frames_true;
+        swst.sequence_off = blk.setup.plFilter_frames_false;
         if(blk.animator_ID<ConfigManager::Animator_Blocks.size())
         {
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
@@ -107,7 +107,7 @@ void CharacterSwitcherEngine::refreshState()
             bool found=false;
             for(int j=1; j<=m_scene->numberOfPlayers; j++)
             {
-                if(needed==m_scene->gameState->getPlayerState(j).characterID) { found=true; break; }
+                if(needed == m_scene->gameState->getPlayerState(j).characterID) { found=true; break; }
             }
             if(found)
             {

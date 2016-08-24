@@ -110,18 +110,19 @@ void LVL_Player::update(float tickTime)
         PGE_Phys_Object* climbableItem = *(climbable_map.begin());
         if(climbableItem)
         {
-            LEGACY_m_velocityX_add=climbableItem->speedX();
-            LEGACY_m_velocityY_add=climbableItem->speedY();
-        } else
+            m_momentum.velX = climbableItem->speedX();
+            m_momentum.velY = climbableItem->speedY();
+            //LEGACY_m_velocityX_add=climbableItem->speedX();
+            //LEGACY_m_velocityY_add=climbableItem->speedY();
+        } /*else
         {
-            LEGACY_m_velocityX_add=0.0f;
-            LEGACY_m_velocityY_add=0.0f;
-        }
-
-        if(gscale_Backup != 1)
+            //LEGACY_m_velocityX_add=0.0f;
+            //LEGACY_m_velocityY_add=0.0f;
+        }*/
+        if(gscale_Backup != 1.0)
         {
             setGravityScale(0);
-            gscale_Backup = 1;
+            gscale_Backup = 1.0;
         }
     }
     else
@@ -345,9 +346,11 @@ void LVL_Player::update(float tickTime)
                 effect.framespeed = 64;
                 _scene->launchEffect(effect, true);
             }
-
         }
     }
+
+    m_moveLeft =  keys.left;
+    m_moveRight = keys.right;
 
     if( keys.alt_jump && PGE_Debugger::cheat_superman )
     {
@@ -399,8 +402,10 @@ void LVL_Player::update(float tickTime)
                 jumpTime=physics_cur.jump_time;
                 jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                LEGACY_m_velocityY_add = 0;//Remove Y speed-add when player jumping
+                //LEGACY_m_velocityY_add = 0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
+                if(m_stand)
+                    m_momentum.y += m_momentum.velY;
             }
             else
             if((floating_allow)&&(floating_timer > 0.0f))
@@ -420,6 +425,8 @@ void LVL_Player::update(float tickTime)
             {
                 jumpTime -= tickTime;
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
+                if(m_stand)
+                    m_momentum.y += m_momentum.velY;
             }
 
             if(floating_isworks)
@@ -579,11 +586,12 @@ void LVL_Player::update(float tickTime)
         }
     }
 
+    /*
     if(m_crushed && m_crushedOld)
     {
         m_momentum.x -= _direction*4;
         applyAccel(0.0, 0.0);
-    }
+    }*/
 
     processWarpChecking();
 
@@ -594,7 +602,7 @@ void LVL_Player::update(float tickTime)
     } catch (luabind::error& e) {
         _scene->getLuaEngine()->postLateShutdownError(e);
     }
-    updateCamera();
+    _syncPosition();
 }
 
 void LVL_Player::updateCamera()

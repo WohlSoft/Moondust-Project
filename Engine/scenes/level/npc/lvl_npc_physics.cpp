@@ -25,7 +25,78 @@
 
 void LVL_Npc::processContacts()
 {
+    /* *********************** Check all collided sides ***************************** */
+    bool doHurt = false;
+    int  hurtDamage=0;
+    bool doKill = false;
+    int  killReason = DAMAGE_NOREASON;
 
+    for(ObjectCollidersIt it=l_contactAny.begin(); it!=l_contactAny.end(); it++)
+    {
+        PGE_Phys_Object* cEL = it.value();
+        switch(cEL->type)
+        {
+        case PGE_Phys_Object::LVLBGO:
+            {
+                LVL_Bgo *bgo= static_cast<LVL_Bgo*>(cEL);
+                if(bgo)
+                {
+                    l_pushBgo(bgo);
+                }
+                break;
+            }
+        case PGE_Phys_Object::LVLPhysEnv:
+            {
+                LVL_PhysEnv *env = static_cast<LVL_PhysEnv*>(cEL);
+                if(env)
+                {
+                    environments_map[intptr_t(env)] = env->env_type;
+                }
+                break;
+            }
+        case PGE_Phys_Object::LVLBlock:
+            {
+                LVL_Block *blk= static_cast<LVL_Block*>(cEL);
+                if( blk->isHidden )
+                    break;
+
+                if(blk->setup->setup.lava)
+                {
+                    l_pushBlk(blk);
+                    doKill = true;
+                    killReason = DAMAGE_LAVABURN;
+                }
+                break;
+            }
+        case PGE_Phys_Object::LVLPlayer:
+            {
+                LVL_Player*plr = static_cast<LVL_Player*>(cEL);
+                if(plr)
+                {
+                    l_pushPlr(plr);
+                }
+            }
+        case PGE_Phys_Object::LVLNPC:
+            {
+                LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
+                if(npc)
+                {
+                    if(npc->data.friendly) break;
+                    if(npc->isGenerator) break;
+
+                    if(!npc->isActivated)
+                        break;
+                    l_pushNpc(npc);
+                }
+                break;
+            }
+        }
+    }
+
+    if(doHurt)
+        harm(hurtDamage, killReason);
+    if(doKill)
+        kill(killReason);
 }
 
 void LVL_Npc::preCollision()
@@ -44,5 +115,6 @@ void LVL_Npc::postCollision()
 
 void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 {
+    Q_UNUSED(blocksHit);
 
 }

@@ -164,16 +164,16 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_BOTTOM:   warpingInfo="BOTTOM"; break;
             }
         }
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5  [T-%8,B-%9] %6  %7")
-                               .arg(LEGACY_collided_top.size())
-                               .arg(LEGACY_collided_left.size())
-                               .arg(LEGACY_collided_center.size())
-                               .arg(LEGACY_collided_right.size())
-                               .arg(LEGACY_collided_bottom.size())
-                               .arg(collision_speed_add.size())
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6")
+                               .arg(l_contactT.size())
+                               .arg(l_contactL.size())
+                               .arg(l_contactAny.size())
+                               .arg(l_contactR.size())
+                               .arg(l_contactB.size())
+                               //.arg(collision_speed_add.size())
                                .arg(warpingInfo)
-                               .arg(m_speedAddingTopElements.size())
-                               .arg(m_speedAddingBottomElements.size())
+                               //.arg(LEGACY_m_speedAddingTopElements.size())
+                               //.arg(LEGACY_m_speedAddingBottomElements.size())
                                , int(round(20+posX()-camX)), -50+int(round(posY()-camY)), 3);
     }
 }

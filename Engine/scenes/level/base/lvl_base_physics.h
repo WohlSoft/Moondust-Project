@@ -58,6 +58,11 @@ public:
         Block_ALL       = 0xF,
     };
 
+    enum BodyType {
+        Body_STATIC=0,
+        Body_DYNAMIC=1
+    };
+
     struct objRect
     {
         double x;
@@ -228,6 +233,8 @@ public:
     SlopeState m_slopeCeiling;
     //! Y-speed add while standing on the slope
     double  m_onSlopeYAdd;
+    //! Body type
+    BodyType m_bodytype;
 
     //! Allow running over floor holes
     bool    m_allowHoleRuning;
@@ -239,6 +246,10 @@ public:
     int     m_danger[BLOCK_FILTER_COUNT];
     //! Type of self (1 - playable characters, 2 - NPCs)
     int     m_filterID;
+    int     collidePlayer() { return m_blocked[1]; }
+    void    setCollidePlayer(int cp) { m_blocked[1]=cp; }
+    int     collideNpc() { return m_blocked[2]; }
+    void    setCollideNpc(int cn) { m_blocked[2]=cn; }
     /***********************Physical engine locals***END***********************/
 
 };

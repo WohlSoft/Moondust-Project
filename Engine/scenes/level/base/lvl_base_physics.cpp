@@ -56,6 +56,7 @@ PGE_physBody::PGE_physBody() :
     m_moveLeft(false),
     m_moveRight(false),
     m_onSlopeYAdd(0.0),
+    m_bodytype(Body_STATIC),
     m_allowHoleRuning(false),
     m_onSlopeFloorTopAlign(false),
     m_blocked{Block_NONE, Block_ALL, Block_ALL},
@@ -114,13 +115,25 @@ void PGE_Phys_Object::iterateStep(double ticks)
     if(m_paused)
         return;
 
-    double G = phys_setup.gravityScale * _scene->globalGravity;
-    double accelCof = ticks/1000.0;
+    if(!m_stand)
+        m_momentum.velX = m_momentum.velXsrc;
 
     double iterateX = (m_momentum.velX) * (ticks/m_smbxTickTime);
     double iterateY = (m_momentum.velY) * (ticks/m_smbxTickTime);
 
-    double Xmod = 0;
+    if(m_slopeFloor.has)
+        iterateY += (m_onSlopeYAdd) * (ticks/m_smbxTickTime);
+
+    // Iterate movement
+    m_momentum.saveOld();
+    m_momentum.x += iterateX;
+    m_momentum.y += iterateY;
+
+
+    double G = phys_setup.gravityScale * _scene->globalGravity;
+    double accelCof = ticks/1000.0;
+
+    double Xmod = 0.0;
 
     // Iterate accelerators
     if(m_accelX != 0.0f)
@@ -132,25 +145,25 @@ void PGE_Phys_Object::iterateStep(double ticks)
     if(phys_setup.decelerate_x != 0.0f)
     {
         double decX = phys_setup.decelerate_x*accelCof;
-        if(m_momentum.velX > 0.0)
+        if(m_momentum.velXsrc > 0.0)
         {
-            if(m_momentum.velX - decX > 0.0)
-                m_momentum.velX -= decX;
+            if(m_momentum.velXsrc - decX > 0.0)
+                m_momentum.velXsrc -= decX;
             else
-                m_momentum.velX = 0;
-        } else if(m_momentum.velX < 0.0) {
-            if(m_momentum.velX + decX < 0.0)
-                m_momentum.velX += decX;
+                m_momentum.velXsrc = 0;
+        } else if(m_momentum.velXsrc < 0.0) {
+            if(m_momentum.velXsrc + decX < 0.0)
+                m_momentum.velXsrc += decX;
             else
-                m_momentum.velX = 0;
+                m_momentum.velXsrc = 0;
         }
     }
 
     m_momentum.velX    += Xmod;
     m_momentum.velXsrc += Xmod;
 
-    if( ((m_accelY != 0.0f) && !onGround())||
-        ((m_accelY <  0.0f) &&  onGround()) )
+    if( ((m_accelY != 0.0f) && !m_stand)||
+        ((m_accelY <  0.0f) &&  m_stand) )
     {
         m_momentum.velY += m_accelY * accelCof*( (G==0.0f) ? 1.0f : G );
         m_accelY = 0.0f;
@@ -188,25 +201,13 @@ void PGE_Phys_Object::iterateStep(double ticks)
         m_momentum.velY += (G*phys_setup.gravityAccel)*accelCof;
     }
 
-    if(!m_stand)
-        m_momentum.velX = m_momentum.velXsrc;
-
-    // Iterate movement
-    m_momentum.saveOld();
-    m_momentum.x += iterateX;
-    m_momentum.y += iterateY;
-
-    if(m_slopeFloor.has)
-        m_momentum.y += m_onSlopeYAdd;
-
-
-    if( (phys_setup.max_vel_x != 0.0) && (m_momentum.velX > phys_setup.max_vel_x) )
+    if( (phys_setup.max_vel_x != 0.0) && (m_momentum.velXsrc > phys_setup.max_vel_x) )
     {
-        m_momentum.velX -= phys_setup.grd_dec_x*accelCof;
+        m_momentum.velXsrc -= phys_setup.grd_dec_x*accelCof;
     }
-    if( (phys_setup.min_vel_x != 0.0) && (m_momentum.velX < phys_setup.min_vel_x) )
+    if( (phys_setup.min_vel_x != 0.0) && (m_momentum.velXsrc < phys_setup.min_vel_x) )
     {
-        m_momentum.velX += phys_setup.grd_dec_x*accelCof;
+        m_momentum.velXsrc += phys_setup.grd_dec_x*accelCof;
     }
     if( (phys_setup.max_vel_y != 0.0) && (m_momentum.velY > phys_setup.max_vel_y) )
     {
@@ -594,7 +595,7 @@ void PGE_Phys_Object::updateCollisions()
     if(m_paused) return;
 
     QVector<PGE_Phys_Object*> objs;
-    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
+    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0+fabs(m_momentum.velX)+fabs(m_momentum.velY));
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
     {
         posRectC.setRight(posRectC.right() + posRectC.width());
@@ -648,9 +649,21 @@ void PGE_Phys_Object::updateCollisions()
         //CURO = static_cast<PGE_Phys_Object*>(CUR);
         if(!CUR) continue;
 
-        if(CUR==this) continue;
+        if(CUR == this) continue;
         if(CUR->m_paused) continue;
         if(!CUR->m_is_visible) continue;
+
+        if(preCollisionCheck(CUR))
+        {
+            if(
+                (CUR->m_shape == PhysObject::SL_Rect) &&
+                figureTouch(m_momentum, CUR->m_momentum, 0.0, 0.0)
+                 )
+            {
+                l_pushAny(CUR);
+            }
+            continue;
+        }
 
         #ifdef IS_MINIPHYSICS_DEMO_PROGRAM
         CUR->m_bumped = false;
@@ -764,6 +777,8 @@ void PGE_Phys_Object::updateCollisions()
                         {
                     tipRectB://Impacted at bottom of block (top of player)
                             if((CUR->m_blocked[m_filterID]&PhysObject::Block_BOTTOM) == 0)
+                                goto tipRectB_Skip;
+                            if(CUR->m_bodytype != Body_STATIC)
                                 goto tipRectB_Skip;
 
                             /* ************************************************************
@@ -1449,17 +1464,18 @@ void PGE_Phys_Object::updateCollisions()
         goto tipRectShape;
     }
 
+    /*
     if(m_crushed && m_crushedOld )
     {
         if(m_stand)
         {
-            /*HELP ME TO AVOID THIS CRAP!!!!*/
+            //HELP ME TO AVOID THIS CRAP!!!!
             doSpeedStack = false;
             m_momentum.velXsrc = 0.0;
             m_momentum.velX = 0.0;
             m_momentum.x += 8.0;
         }
-    }
+    }*/
 
     /* ***********************Detect a cliff********************************** */
     if(doCliffCheck && !l_clifCheck.empty())
@@ -1478,40 +1494,51 @@ void PGE_Phys_Object::updateCollisions()
     }
 
     /* *********************** Check all collided sides ***************************** */
-    for(ObjectCollidersIt it=l_contactL.begin(); it!=l_contactL.end(); it++)
     {
-        PhysObject* cEL = it.value();
-        if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+        ObjectCollidersIt it=l_contactL.begin();
+        while(it!=l_contactL.end())
         {
-            l_contactL.erase(it);
-            it--;
+            PhysObject* cEL = it.value();
+            if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+                it = l_contactL.erase(it);
+            else
+                ++it;
         }
     }
-    for(ObjectCollidersIt it=l_contactR.begin(); it!=l_contactR.end(); it++)
+
     {
-        PhysObject* cEL = it.value();
-        if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+        ObjectCollidersIt it=l_contactR.begin();
+        while(it!=l_contactR.end())
         {
-            l_contactR.erase(it);
-            it--;
+            PhysObject* cEL = it.value();
+            if(!cEL->m_momentum.betweenV(m_momentum.top()+1.0, m_momentum.bottom()-1.0))
+                it = l_contactR.erase(it);
+            else
+                ++it;
         }
     }
-    for(ObjectCollidersIt it=l_contactT.begin(); it!=l_contactT.end(); it++)
+
     {
-        PhysObject* cEL = it.value();
-        if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+        ObjectCollidersIt it=l_contactT.begin();
+        while(it!=l_contactT.end())
         {
-            l_contactT.erase(it);
-            it--;
+            PhysObject* cEL = it.value();
+            if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+                it = l_contactT.erase(it);
+            else
+                ++it;
         }
     }
-    for(ObjectCollidersIt it=l_contactB.begin(); it!=l_contactB.end(); it++)
+
     {
-        PhysObject* cEL = it.value();
-        if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+        ObjectCollidersIt it=l_contactB.begin();
+        while(it!=l_contactB.end())
         {
-            l_contactB.erase(it);
-            it--;
+            PhysObject* cEL = it.value();
+            if(!cEL->m_momentum.betweenH(m_momentum.left()+1.0, m_momentum.right()-1.0))
+                it = l_contactB.erase(it);
+            else
+                ++it;
         }
     }
 
@@ -1519,7 +1546,8 @@ void PGE_Phys_Object::updateCollisions()
     if(collideAtBottom && collideAtTop)
     {
         //If character got crushed between moving layers
-        if(collideAtBottom->m_momentum.velY < collideAtTop->m_momentum.velY )
+        if( (collideAtTop->m_bodytype==Body_STATIC) &&
+            (collideAtBottom->m_momentum.velY < collideAtTop->m_momentum.velY) )
         {
             m_stand = false;
             m_momentum.y = collideAtTop->m_momentum.bottom();
@@ -1595,6 +1623,8 @@ void PGE_Phys_Object::updateCollisions()
     postCollision();
 }
 
+#ifdef OLD_COLLIDERS
 void PGE_Phys_Object::LEGACY_detectCollisions(PGE_Phys_Object *)
 {}
+#endif
 

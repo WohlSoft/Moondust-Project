@@ -67,7 +67,7 @@ public:
     };
 
     int LEGACY_shape;
-    double shape_slope_angle_ratio;
+    double LEGACY_shape_slope_angle_ratio;
 
     int taskToTransform;
     int taskToTransform_t;

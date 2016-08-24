@@ -25,11 +25,16 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
 
     /* ****** PHYSICS ******* */
     m_filterID = 1;
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
+    m_danger[1] = Block_NONE;
+    m_danger[2] = Block_NONE;
     m_allowHoleRuning = true;
-    m_onSlopeFloorTopAlign = false;
+    m_onSlopeFloorTopAlign = true;
     /* ****** PHYSICS ******* */
 
     type = LVLPlayer;
+    m_bodytype = Body_DYNAMIC;
 
     playerID = 0;
     isLocked = false;
@@ -59,9 +64,6 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     forceCollideCenter=false;
 
     climbing=false;
-
-    LEGACY_collide_player = COLLISION_ANY;
-    LEGACY_collide_npc    = COLLISION_NONE;
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;

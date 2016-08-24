@@ -19,6 +19,7 @@
 #ifndef COLLISION_CHECKS_H
 #define COLLISION_CHECKS_H
 
+#ifdef OLD_COLLIDERS
 #include "lvl_base_object.h"
 #include <tgmath.h>
 /*
@@ -165,6 +166,7 @@ inline bool isCollideSlopeCelling(PGE_Phys_Object &body,
             &&(!( ( body.m_posRect.left() + collided->colliding_xSpeed >= collided->m_posRect.right() + body.colliding_xSpeed)
                 ||( body.m_posRect.right() + collided->colliding_xSpeed <= collided->m_posRect.left() + body.colliding_xSpeed) ) );
 }
+#endif
 
 #endif // COLLISION_CHECKS_H
 

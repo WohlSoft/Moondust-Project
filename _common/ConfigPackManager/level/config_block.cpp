@@ -131,15 +131,18 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, int defaultGrid, 
         NumberLimiter::apply(plSwitch_Button_id, 0);
     plSwitch_frames_true.clear();
     plSwitch_frames_false.clear();
+
     if(plSwitch_Button)
     {
-        if(setup->contains("player-switch-frames-true"))
-            CSV2NumArray(setup->value("player-switch-frames-true", "").toString(), plSwitch_frames_true, 0);
+        QString framesTrue = setup->value("player-switch-frames-true", "").toString();
+        QString framesFalse = setup->value("player-switch-frames-false", "").toString();
+        if(!framesTrue.isEmpty())
+            CSV2NumArray(framesTrue, plSwitch_frames_true, 0);
         else if(merge_with)
             plSwitch_frames_true = merge_with->plSwitch_frames_true;
 
-        if(setup->contains("player-switch-frames-false"))
-            CSV2NumArray(setup->value("player-switch-frames-false", "").toString(), plSwitch_frames_false, 0);
+        if(!framesFalse.isEmpty())
+            CSV2NumArray(framesFalse, plSwitch_frames_false, 0);
         else if(merge_with)
             plSwitch_frames_false = merge_with->plSwitch_frames_false;
         frame_sequence = plSwitch_frames_false;
@@ -153,13 +156,16 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, int defaultGrid, 
 
     if(plFilter_Block)
     {
-        if(setup->contains("player-filter-frames-true"))
-            CSV2NumArray(setup->value("player-filter-frames-true", "").toString(),  plFilter_frames_true, 0);
-        else if(merge_with)
-            plFilter_frames_true = merge_with->plFilter_frames_true;
+        QString framesTrue = setup->value("player-filter-frames-true", "").toString();
+        QString framesFalse = setup->value("player-filter-frames-false", "").toString();
+        if(!framesTrue.isEmpty())
+            CSV2NumArray(framesTrue, plFilter_frames_true, 0);
+        else
+            if(merge_with)
+                plFilter_frames_true = merge_with->plFilter_frames_true;
 
-        if(setup->contains("player-filter-frames-false"))
-            CSV2NumArray(setup->value("player-filter-frames-false", "").toString(),  plFilter_frames_false, 0);
+        if(!framesFalse.isEmpty())
+            CSV2NumArray(framesFalse,  plFilter_frames_false, 0);
         else if(merge_with)
             plFilter_frames_false = merge_with->plFilter_frames_false;
         frame_sequence = plFilter_frames_false;

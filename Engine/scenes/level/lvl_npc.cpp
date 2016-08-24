@@ -25,11 +25,17 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
 {
     /* ****** PHYSICS ******* */
     m_filterID = 2;
-    m_allowHoleRuning = true;
-    m_onSlopeFloorTopAlign = false;
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
+    m_danger[1] = Block_ALL;
+    m_danger[2] = Block_NONE;
+    m_allowHoleRuning = false;
+    m_onSlopeFloorTopAlign = true;
     /* ****** PHYSICS ******* */
 
     type = LVLNPC;
+    m_bodytype = Body_DYNAMIC;
+
     _npc_id = 0;
     data = FileFormats::CreateLvlNpc();
     animated=false;
@@ -73,7 +79,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
 
     forceCollideCenter=false;
     _heightDelta=0.0f;
-    cliffDetected=false;
+    LEGACY_cliffDetected=false;
 
     health = 1;
 
@@ -88,7 +94,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     buddies_updated=false;
     buddies_leader=NULL;
 
-    collision_speed_add.clear();
+    //collision_speed_add.clear();
 }
 
 LVL_Npc::~LVL_Npc()

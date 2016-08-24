@@ -22,6 +22,7 @@
 LVL_Warp::LVL_Warp(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
      type = LVLWarp;
+     m_bodytype = Body_STATIC;
 }
 
 LVL_Warp::~LVL_Warp()
@@ -35,7 +36,8 @@ void LVL_Warp::init()
         setSize(32, data.length_i);
 
     setPos(data.ix, data.iy);
-    LEGACY_collide_player = COLLISION_NONE;
-    LEGACY_collide_npc = COLLISION_NONE;
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
     _scene->layers.registerItem(data.layer, this);
+    m_momentum.saveOld();
 }

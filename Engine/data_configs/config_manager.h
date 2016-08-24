@@ -126,10 +126,11 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
                       bool (*loaderFunk)(obj_T&, QString, obj_T*, QString, QSettings*) = nullptr
                       )
 {
-    QString file = dir.getCustomFile(QString(fileName+"-%1.ini").arg(ID));
+    bool isDefault=false;
+    QString file = dir.getCustomFile(QString(fileName+"-%1.ini").arg(ID), &isDefault);
     if(file.isEmpty())
-        file = dir.getCustomFile(QString(fileName+"-%1.txt").arg(ID));
-    if( !file.isEmpty() )
+        file = dir.getCustomFile(QString(fileName+"-%1.txt").arg(ID), &isDefault);
+    if( !file.isEmpty() && !isDefault )
     {
         obj_T &sceneSetup = container[ID];
         if(loaderFunk)

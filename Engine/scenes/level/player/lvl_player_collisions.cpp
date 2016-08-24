@@ -33,7 +33,7 @@
 #define DISABLE_OLD_SPEEDADD
 //#define COLLIDE_DEBUG
 
-
+#ifdef OLD_COLLIDERS
 void LVL_Player::LEGACY_updateCollisions()
 {
     if(foot_contacts_map.isEmpty())
@@ -57,10 +57,10 @@ void LVL_Player::LEGACY_updateCollisions()
 
     collided_talkable_npc = NULL;
 
-    collided_slope=false;
-    collided_slope_angle_ratio=0.0f;
-    collided_slope_celling=false;
-    collided_slope_angle_ratio_celling=0.0f;
+    LEGACY_collided_slope=false;
+    LEGACY_collided_slope_angle_ratio=0.0f;
+    LEGACY_collided_slope_celling=false;
+    LEGACY_collided_slope_angle_ratio_celling=0.0f;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -149,7 +149,7 @@ void LVL_Player::LEGACY_updateCollisions()
                 {
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -157,7 +157,7 @@ void LVL_Player::LEGACY_updateCollisions()
                     else
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -166,7 +166,7 @@ void LVL_Player::LEGACY_updateCollisions()
                         _floorY = nearest->m_posRect.top();
                     _floorY-=m_posRect.height();
                 } else {
-                    collided_slope=false;
+                    LEGACY_collided_slope=false;
                     _floorY = nearest->m_posRect.top()-m_posRect.height();
                 }
                 resolveBottom=true;
@@ -374,8 +374,6 @@ void LVL_Player::LEGACY_updateCollisions()
     #endif
 }
 
-
-
 void LVL_Player::_collideUnduck()
 {
     _syncPosition();
@@ -401,7 +399,7 @@ void LVL_Player::_collideUnduck()
         if(body==this) continue;
         if(body->isPaused()) continue;
         if(!body->isVisible()) continue;
-        LEGACY_detectCollisions(body);
+        //LEGACY_detectCollisions(body);
     }
     forceCollideCenter=false;
 
@@ -452,7 +450,7 @@ void LVL_Player::_collideUnduck()
                     else
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_right_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
                         if(_floorY < nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY > nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -460,7 +458,7 @@ void LVL_Player::_collideUnduck()
                     else
                     if(blk->LEGACY_shape==LVL_Block::shape_tr_left_bottom)
                     {
-                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        LEGACY_collided_slope=true; LEGACY_collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
                         _floorY = nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->m_posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->m_posRect.bottom();
@@ -505,9 +503,9 @@ void LVL_Player::_collideUnduck()
     qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
     #endif
 }
+#endif
 
-
-
+#ifdef OLD_COLLIDERS
 void LVL_Player::LEGACY_detectCollisions(PGE_Phys_Object *collided)
 {
     if(!collided) return;
@@ -931,4 +929,4 @@ void LVL_Player::applyCorrectionToSA_stack(double offsetX, double offsetY)
     m_posRect.setPos(m_posRect.x()+offsetX, m_posRect.y()+offsetY);
     _syncPosition();
 }
-
+#endif

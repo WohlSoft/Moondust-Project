@@ -150,6 +150,10 @@ void LVL_Player::processContacts()
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
                 if(npc)
                 {
+                    if(!npc->data.msg.isEmpty())
+                    {
+                        collided_talkable_npc = npc;
+                    }
                     if(!npc->enablePlayerCollision) break;
                     if(npc->data.friendly) break;
                     if(npc->isGenerator) break;
@@ -191,7 +195,8 @@ void LVL_Player::processContacts()
                         }
                         kill_npc(npc, NPC_Stomped);
                     } else {
-                        if(npc->setup->setup.hurt_player)
+                        if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
+                             npc->setup->setup.hurt_player)
                         {
                             doHurt = true;
                             hurtDamage = 1;
@@ -360,7 +365,16 @@ void LVL_Player::preCollision()
 
 void LVL_Player::postCollision()
 {
-
+    if( m_crushed && m_crushedOld )
+    {
+        if(m_stand)
+        {
+            m_momentum.velXsrc = 0.0;
+            m_momentum.velX = -_direction*8;
+            applyAccel(0.0, 0.0);
+        }
+    }
+    updateCamera();
 }
 
 void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
@@ -375,6 +389,8 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
             continue;
         }
         if(candidate == x)
+            continue;
+        if((x->m_blocked[m_filterID]&Block_BOTTOM)==0)
             continue;
         if(!candidate)
             candidate = x;
@@ -404,7 +420,22 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         } else {
             PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
         }
+        jumpTime = 0;
     }
+}
+
+bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
+{
+    Q_ASSERT( body );
+    if(body->type==LVLBlock)
+    {
+        LVL_Block *blk= static_cast<LVL_Block*>(body);
+        if(!blk) return false;
+        if( blk->setup->setup.plFilter_Block &&
+            (characterID==blk->setup->setup.plFilter_Block_id) )
+            return true;
+    }
+    return false;
 }
 
 void LVL_Player::setDuck(bool duck)

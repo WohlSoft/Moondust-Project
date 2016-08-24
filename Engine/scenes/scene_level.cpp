@@ -140,7 +140,7 @@ void LevelScene::processPhysics(float ticks)
         plr->iterateStep(ticks);
     }
     //Iterate activated NPCs
-    for(int i=0;i<active_npcs.size();i++)
+    for(int i=0; i<active_npcs.size(); i++)
     {
         active_npcs[i]->iterateStep(ticks);
     }

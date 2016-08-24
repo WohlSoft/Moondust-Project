@@ -24,6 +24,7 @@
 LVL_Bgo::LVL_Bgo(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLBGO;
+    m_bodytype = Body_STATIC;
     data=FileFormats::CreateLvlBgo();
     animated=false;
     animator_ID=0;
@@ -37,10 +38,11 @@ void LVL_Bgo::init()
 {
     if(_isInited) return;
     transformTo_x(data.id);
-    LEGACY_collide_player=COLLISION_NONE;
-    LEGACY_collide_npc = COLLISION_NONE;
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
     _isInited=true;
     _scene->layers.registerItem(data.layer, this);
+    m_momentum.saveOld();
 }
 
 void LVL_Bgo::transformTo_x(long id)

@@ -25,6 +25,7 @@ LVL_PhysEnv::LVL_PhysEnv(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLPhysEnv;
     env_type = Env_Water;
+    m_bodytype = Body_STATIC;
 }
 
 LVL_PhysEnv::~LVL_PhysEnv()
@@ -41,8 +42,9 @@ void LVL_PhysEnv::init()
         case LevelPhysEnv::ENV_AIR:         env_type = Env_Air; break;
         default:                            env_type = Env_SameAsAround;
     }
-    LEGACY_collide_player = COLLISION_NONE;
-    LEGACY_collide_npc = COLLISION_NONE;
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
     _scene->layers.registerItem(data.layer, this);
+    m_momentum.saveOld();
 }
 

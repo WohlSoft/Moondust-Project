@@ -26,13 +26,17 @@
 LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
     type = LVLBlock;
+    m_bodytype = Body_STATIC;
+
+    m_blocked[1] = Block_ALL;
+    m_blocked[2] = Block_ALL;
 
     animated=false;
     sizable=false;
     animator_ID=0;
 
     LEGACY_shape=0;
-    shape_slope_angle_ratio=0.0;
+    LEGACY_shape_slope_angle_ratio=0.0;
 
     offset_x = 0.f;
     offset_y = 0.f;
@@ -64,6 +68,7 @@ void LVL_Block::init()
     _scene->layers.registerItem(data.layer, this);
     transformTo_x(signed(data.id));
     _isInited=true;
+    m_momentum.saveOld();
 }
 
 void LVL_Block::transformTo(long id, int type)
@@ -150,8 +155,8 @@ void LVL_Block::transformTo_x(long id)
             _scene->zCounter=0.0L;
     }
 
-    bool do_init_player_switch=((setup->animator_ID==0)&&(setup->setup.plSwitch_Button));
-    bool do_init_player_filter=((setup->animator_ID==0)&&(setup->setup.plFilter_Block));
+    bool do_init_player_switch = ((setup->animator_ID<=0) && (setup->setup.plSwitch_Button));
+    bool do_init_player_filter = ((setup->animator_ID<=0) && (setup->setup.plFilter_Block));
 
     long tID = ConfigManager::getBlockTexture(int(data.id));
     if( tID >= 0 )
@@ -177,7 +182,7 @@ void LVL_Block::transformTo_x(long id)
 
     sizable = setup->setup.sizable;
 
-    LEGACY_collide_player = COLLISION_ANY;
+    //LEGACY_collide_player = COLLISION_ANY;
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
     m_slippery_surface = data.slippery;
@@ -185,14 +190,12 @@ void LVL_Block::transformTo_x(long id)
     {
         m_blocked[1] = Block_TOP;
         m_blocked[2] = Block_TOP;
-        LEGACY_collide_player = COLLISION_TOP;
     }
     else
     if(setup->setup.collision==0)
     {
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
-        LEGACY_collide_player = COLLISION_NONE;
     }
     lua_setInvisible(data.invisible);
 
@@ -206,6 +209,28 @@ void LVL_Block::transformTo_x(long id)
     case -2: m_shape = SL_RightTop; break;
     }
 
+    m_danger[1] = Block_NONE;
+    m_danger[2] = Block_NONE;
+
+    switch(setup->setup.danger)
+    {
+    case 1:
+        m_danger[1] = Block_LEFT; break;
+    case -1:
+        m_danger[1] = Block_RIGHT; break;
+    case 2:
+        m_danger[1] = Block_TOP; break;
+    case -2:
+        m_danger[1] = Block_BOTTOM; break;
+    case 3:
+        m_danger[1] = Block_LEFT|Block_RIGHT; break;
+    case -3:
+        m_danger[1] = Block_TOP|Block_BOTTOM; break;
+    case 4:
+        m_danger[1] = Block_ALL; break;
+    }
+
+    /*
     this->LEGACY_shape = setup->setup.phys_shape;
     if(LEGACY_shape==shape_tr_right_bottom)
         shape_slope_angle_ratio=-(height()/width());
@@ -215,8 +240,9 @@ void LVL_Block::transformTo_x(long id)
         shape_slope_angle_ratio=(height()/width());
     if(LEGACY_shape==shape_tr_right_top)
         shape_slope_angle_ratio=-(height()/width());
+    */
 
-    LEGACY_m_isRectangle=(setup->setup.phys_shape == 0);
+//LEGACY_m_isRectangle=(setup->setup.phys_shape == 0);
 //    if(setup->setup.algorithm==3)
 //         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
@@ -242,9 +268,6 @@ void LVL_Block::transformTo_x(long id)
     {
         _scene->character_switchers.buildBrick(*setup);
     }
-
-    LEGACY_collide_npc=LEGACY_collide_player;
-
 }
 
 
@@ -471,7 +494,7 @@ void LVL_Block::lua_setSlippery(bool sl)
 
 bool LVL_Block::lua_isSolid()
 {
-    return (LEGACY_collide_npc==COLLISION_ANY);
+    return (m_blocked[2]==Block_ALL);
 }
 
 void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
@@ -688,6 +711,10 @@ void LVL_Block::destroy(bool playEffect)
         _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000,  3.0f + ROFFSET, -6.0f + ROFFSET, 18.0f, 0, p);
         _scene->launchStaticEffectC(1, float(posCenterX()), float(posCenterY()), 0, 5000,  4.0f + ROFFSET, -7.0f + ROFFSET, 18.0f, 0, p);
     }
+
+    m_blocked[1] = Block_NONE;
+    m_blocked[2] = Block_NONE;
+
     destroyed = true;
     QString oldLayer=data.layer;
     _scene->layers.removeRegItem(data.layer, this);

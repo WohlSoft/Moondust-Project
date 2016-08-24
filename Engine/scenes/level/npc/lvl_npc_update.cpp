@@ -59,6 +59,10 @@ void LVL_Npc::update(float tickTime)
             setDirection(_direction*-1);
         }
         setSpeedX((motionSpeed*accelCof)*_direction);
+        if(motionSpeed<0.0f)
+            m_moveLeft = true;
+        if(motionSpeed>0.0f)
+            m_moveRight = true;
     }
 
     if(not_movable())

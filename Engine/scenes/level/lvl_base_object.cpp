@@ -67,16 +67,17 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     }
 
     z_index = 0.0L;
-    LEGACY_m_isRectangle = true;
-
     m_slippery_surface = false;
+
+    #ifdef OLD_COLLIDERS
+    LEGACY_m_isRectangle = true;
     LEGACY_collide_player = COLLISION_ANY;
     LEGACY_collide_npc = COLLISION_ANY;
-
-    collided_slope=false;
-    collided_slope_angle_ratio=0.0f;
-    collided_slope_celling=false;
-    collided_slope_angle_ratio_celling=0.0f;
+    LEGACY_collided_slope=false;
+    LEGACY_collided_slope_angle_ratio=0.0f;
+    LEGACY_collided_slope_celling=false;
+    LEGACY_collided_slope_angle_ratio_celling=0.0f;
+    #endif
 
     _parentSection=NULL;
     m_width_registered = 0.0;
@@ -85,6 +86,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     m_height_toRegister=0.0;
     m_posX_registered=0.0;
     m_posY_registered=0.0;
+    #ifdef OLD_COLLIDERS
     LEGACY_m_velocityX=0.0;
     LEGACY_m_velocityY=0.0;
     LEGACY_m_velocityX_prev=0.0;
@@ -92,8 +94,9 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     LEGACY_m_velocityX_add=0.0;
     LEGACY_m_velocityY_add=0.0;
 
-    colliding_xSpeed=0.0;
-    colliding_ySpeed=0.0;
+    LEGACY_colliding_xSpeed=0.0;
+    LEGACY_colliding_ySpeed=0.0;
+    #endif
 
     m_paused=false;
 
@@ -268,7 +271,7 @@ void PGE_Phys_Object::setCenterPos(double x, double y)
 
 double PGE_Phys_Object::speedX()
 {
-    return m_momentum.velX;
+    return m_momentum.velXsrc;
 }
 
 double PGE_Phys_Object::speedY()
@@ -313,9 +316,9 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     m_accelY = y;
 }
 
+#ifdef OLD_COLLIDERS
 void PGE_Phys_Object::iterateSpeedAddingStack(double ticks)
 {
-#if 0
     for(int i=0; i < m_speedAddingTopElements.size(); i++)
     {
         PGE_Phys_Object* &topEl = m_speedAddingTopElements[i];
@@ -361,14 +364,15 @@ void PGE_Phys_Object::iterateSpeedAddingStack(double ticks)
             //continue;
         }
     }
-#endif
 }
+#endif
 
+#ifdef OLD_COLLIDERS
 void PGE_Phys_Object::removeSpeedAddingPointers()
 {
-    for(int i=0; i<m_speedAddingBottomElements.size(); i++)
+    for(int i=0; i<LEGACY_m_speedAddingBottomElements.size(); i++)
     {
-        QList<PGE_Phys_Object*>  &te = m_speedAddingBottomElements[i]->m_speedAddingTopElements;
+        QList<PGE_Phys_Object*>  &te = LEGACY_m_speedAddingBottomElements[i]->LEGACY_m_speedAddingTopElements;
         for(int j=0; j<te.size(); j++)
         {
             if(te[j]==this)
@@ -378,9 +382,9 @@ void PGE_Phys_Object::removeSpeedAddingPointers()
             }
         }
     }
-    for(int i=0; i<m_speedAddingTopElements.size(); i++)
+    for(int i=0; i<LEGACY_m_speedAddingTopElements.size(); i++)
     {
-        QList<PGE_Phys_Object*>  &be = m_speedAddingTopElements[i]->m_speedAddingBottomElements;
+        QList<PGE_Phys_Object*>  &be = LEGACY_m_speedAddingTopElements[i]->LEGACY_m_speedAddingBottomElements;
         for(int j=0; j<be.size(); j++)
         {
             if(be[j]==this)
@@ -391,6 +395,7 @@ void PGE_Phys_Object::removeSpeedAddingPointers()
         }
     }
 }
+#endif
 
 void PGE_Phys_Object::_syncPosition()
 {
@@ -439,6 +444,7 @@ void PGE_Phys_Object::renderDebug(double _camX, double _camY)
     }
 }
 
+#ifdef OLD_COLLIDERS
 bool PGE_Phys_Object::isWall(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.isEmpty())
@@ -507,7 +513,9 @@ PGE_Phys_Object *PGE_Phys_Object::nearestBlock(QVector<PGE_Phys_Object *> &block
     }
     return nearest;
 }
+#endif
 
+#ifdef OLD_COLLIDERS
 PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.size()==1)
@@ -558,7 +566,7 @@ PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &bloc
     }
     return nearest;
 }
-
+#endif
 
 
 
@@ -591,15 +599,15 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 
 PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
 {
-    min_vel_x=0.f;
-    min_vel_y=0.f;
-    max_vel_x=0.f;
-    max_vel_y=0.f;
-    grd_dec_x=0.f;
-    decelerate_x=0.f;
-    decelerate_y=0.f;
-    gravityScale=1.0f;
-    gravityAccel=26.0f;
+    min_vel_x = 0.f;
+    min_vel_y = 0.f;
+    max_vel_x = 0.f;
+    max_vel_y = 0.f;
+    grd_dec_x = 0.f;
+    decelerate_x = 0.f;
+    decelerate_y = 0.f;
+    gravityScale = 1.0f;
+    gravityAccel = 26.0f;
 }
 
 void PGE_Phys_Object::show()

@@ -93,13 +93,14 @@ public:
     void preCollision();
     void postCollision();
     void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
-
+    #ifdef OLD_COLLIDERS
     void LEGACY_updateCollisions();
     void LEGACY_detectCollisions(PGE_Phys_Object *collided);
+    #endif
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
-    bool cliffDetected;
+    bool LEGACY_cliffDetected;
 
     /*****************NPC's and blocks******************/
     bool onGround();
@@ -111,6 +112,10 @@ public:
     QHash<intptr_t, PGE_Phys_Object*> contacted_bgos;
     QHash<intptr_t, PGE_Phys_Object*> contacted_npc;
     QHash<intptr_t, PGE_Phys_Object*> contacted_players;
+    inline void l_pushBlk(PGE_Phys_Object*ob) { contacted_blocks[intptr_t(ob)] = ob; }
+    inline void l_pushBgo(PGE_Phys_Object*ob) { contacted_bgos[intptr_t(ob)] = ob; }
+    inline void l_pushNpc(PGE_Phys_Object*ob) { contacted_npc[intptr_t(ob)] = ob; }
+    inline void l_pushPlr(PGE_Phys_Object*ob) { contacted_players[intptr_t(ob)] = ob; }
 
     typedef QHash<intptr_t, PGE_Phys_Object*> PlayerColliders;
     QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_top;
@@ -123,9 +128,11 @@ public:
     bool  enablePlayerCollision;
     bool _stucked;
 
+    #ifdef OLD_COLLIDERS
     QVector<PGE_Phys_Object*>   collision_speed_add;
     void updateSpeedAddingStack();
     void applyCorrectionToSA_stack(double offsetX, double offsetY);
+    #endif
     //void iterateSpeedAddingStack(double offsetX, double offsetY);
 
     bool    bumpDown;

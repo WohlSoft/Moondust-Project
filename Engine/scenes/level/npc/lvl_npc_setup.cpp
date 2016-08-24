@@ -47,6 +47,8 @@ void LVL_Npc::init()
 
     _isInited=true;
     _scene->layers.registerItem(data.layer, this);
+
+    m_momentum.saveOld();
 }
 
 void LVL_Npc::setScenePointer(LevelScene *_pointer)
@@ -201,8 +203,8 @@ void LVL_Npc::transformTo_x(long id)
 
         deActivatable    = true;
         activationTimeout= 150;
-        LEGACY_collide_npc=COLLISION_NONE;
-        LEGACY_collide_player=COLLISION_NONE;
+        m_blocked[1] = Block_NONE;
+        m_blocked[2] = Block_NONE;
         disableBlockCollision=true;
         setGravityScale(0.0f);
         return;
@@ -221,23 +223,27 @@ void LVL_Npc::transformTo_x(long id)
     setDefaults();
     setGravityScale(setup->setup.gravity ? 1.0f : 0.f);
 
+    m_blocked[1] = Block_NONE;
     if(setup->setup.block_player)
-        LEGACY_collide_player = COLLISION_ANY;
-    else
+        m_blocked[1] = Block_LEFT|Block_RIGHT;
     if(setup->setup.block_player_top)
-        LEGACY_collide_player = COLLISION_TOP;
-    else
-        LEGACY_collide_player = COLLISION_NONE;
+        m_blocked[1] = Block_TOP;
+    if(setup->setup.block_player && setup->setup.block_player_top)
+        m_blocked[1] = Block_ALL;
 
+    if(data.friendly || setup->setup.takable)
+        m_blocked[1] = Block_NONE;
+
+    m_blocked[2] = Block_NONE;
     if(setup->setup.block_npc)
-        LEGACY_collide_npc = COLLISION_ANY;
-    else
+        m_blocked[2] = Block_LEFT|Block_RIGHT;
     if(setup->setup.block_npc_top)
-        LEGACY_collide_npc = COLLISION_TOP;
-    else
-        LEGACY_collide_npc = COLLISION_NONE;
-    if(setup->setup.no_npc_collisions)
-        LEGACY_collide_npc=COLLISION_NONE;
+        m_blocked[2] = Block_TOP;
+    if(setup->setup.block_npc && setup->setup.block_npc_top)
+        m_blocked[2] = Block_ALL;
+
+    if(data.friendly)
+        m_blocked[2] = Block_NONE;
 
     if(_isInited)
     {
