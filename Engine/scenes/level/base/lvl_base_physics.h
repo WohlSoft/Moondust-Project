@@ -1,8 +1,10 @@
 #ifndef LVL_BASE_PHYSICS_H
 #define LVL_BASE_PHYSICS_H
 
+#include <cmath>
 #include <QHash>
 #include <common_features/rectf.h>
+
 
 class PGE_Phys_Object;
 typedef QVector<PGE_Phys_Object *> PGE_RenderList;
@@ -127,10 +129,10 @@ public:
         inline void setCenterX(double newx) { x = newx - w/2.0; }
         inline void setCenterY(double newy) { y = newy - h/2.0; }
         inline void setCenterPos(double X, double Y) { x=X-(w/2.0); y=Y-(h/2.0); }
-        inline void setLeft(double newx) { w = fabs(newx-(x+w)); x = newx; }
-        inline void setRight(double newx) { w = fabs(x-newx); }
-        inline void setTop(double newy) { h = fabs(newy-(y+h)); y = newy; }
-        inline void setBottom(double newy) { h = fabs(y-newy); }
+        inline void setLeft(double newx) { w = std::fabs(newx-(x+w)); x = newx; }
+        inline void setRight(double newx) { w = std::fabs(x-newx); }
+        inline void setTop(double newy) { h = std::fabs(newy-(y+h)); y = newy; }
+        inline void setBottom(double newy) { h = std::fabs(y-newy); }
 
         inline double left(){return x;}
         inline double top(){return y;}

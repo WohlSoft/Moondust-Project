@@ -595,7 +595,7 @@ void PGE_Phys_Object::updateCollisions()
     if(m_paused) return;
 
     QVector<PGE_Phys_Object*> objs;
-    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0+fabs(m_momentum.velX)+fabs(m_momentum.velY));
+    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0+std::fabs(m_momentum.velX)+std::fabs(m_momentum.velY));
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
     {
         posRectC.setRight(posRectC.right() + posRectC.width());
@@ -849,7 +849,7 @@ void PGE_Phys_Object::updateCollisions()
                                 {
                                     if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
                                             (m_momentum.velY > 0.0) && (m_momentum.velX > 0.0 ) &&
-                                            (fabs(m_momentum.velX) > fabs(m_momentum.velY)) )
+                                            (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
                                 m_momentum.x = CUR->m_momentum.x - m_momentum.w;
@@ -894,7 +894,7 @@ void PGE_Phys_Object::updateCollisions()
                                 {
                                     if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
                                             (m_momentum.velY > 0.0) && (m_momentum.velX < 0.0 ) &&
-                                            (fabs(m_momentum.velX) > fabs(m_momentum.velY)) )
+                                            (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
                                 m_momentum.x = CUR->m_momentum.x + CUR->m_momentum.w;
@@ -1003,7 +1003,7 @@ void PGE_Phys_Object::updateCollisions()
                             {
                                 m_onSlopeYAdd = m_momentum.velX * k;
                                 if((m_onSlopeYAdd < 0.0) && (m_momentum.bottom() + m_onSlopeYAdd < CUR->m_momentum.y))
-                                    m_onSlopeYAdd = -fabs(m_momentum.bottom() - CUR->m_momentum.y);
+                                    m_onSlopeYAdd = -std::fabs(m_momentum.bottom() - CUR->m_momentum.y);
                             }
                             m_stand = true;
                             m_standOnYMovable = (CUR->m_momentum.velY != 0.0);
@@ -1107,7 +1107,7 @@ void PGE_Phys_Object::updateCollisions()
                             } else {
                                 m_onSlopeYAdd = -m_momentum.velX * k;
                                 if((m_onSlopeYAdd < 0.0) && (m_momentum.bottom() + m_onSlopeYAdd < CUR->m_momentum.y))
-                                    m_onSlopeYAdd = -fabs(m_momentum.bottom() - CUR->m_momentum.y);
+                                    m_onSlopeYAdd = -std::fabs(m_momentum.bottom() - CUR->m_momentum.y);
                             }
                             m_stand = true;
                             m_standOnYMovable = (CUR->m_momentum.velY != 0.0);
@@ -1340,7 +1340,7 @@ void PGE_Phys_Object::updateCollisions()
                 {
                     if(tm == signed(i))
                     {
-                        if( fabs(m_momentum.velY) > fabs(m_momentum.velX) )
+                        if( std::fabs(m_momentum.velY) > std::fabs(m_momentum.velX) )
                             goto tipRectV;
                         else
                             goto tipRectH;
@@ -1580,7 +1580,7 @@ void PGE_Phys_Object::updateCollisions()
             } else
             if( (collideAtTop->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
                 (collideAtBottom->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
-                  (m_momentum.h > fabs(collideAtTop->m_momentum.bottom() - collideAtBottom->m_momentum.top())) )
+                  (m_momentum.h > std::fabs(collideAtTop->m_momentum.bottom() - collideAtBottom->m_momentum.top())) )
             {
                 //m_crushedHardDelay = 30;
                 m_crushedHard = true;
@@ -1598,7 +1598,7 @@ void PGE_Phys_Object::updateCollisions()
             #endif
             if( (collideAtLeft->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
                 (collideAtRight->m_blocked[m_filterID]==PhysObject::Block_ALL) &&
-                 (m_momentum.w > fabs(collideAtLeft->m_momentum.right() - collideAtRight->m_momentum.left())) )
+                 (m_momentum.w > std::fabs(collideAtLeft->m_momentum.right() - collideAtRight->m_momentum.left())) )
             {
                 //m_crushedHardDelay = 30;
                 m_crushedHard = true;
