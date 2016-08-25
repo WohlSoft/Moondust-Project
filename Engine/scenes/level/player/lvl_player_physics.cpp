@@ -25,6 +25,7 @@
 
 #include "../../scene_level.h"
 #include <audio/pge_audio.h>
+#include <cassert>
 
 static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*nearest)
 {
@@ -103,39 +104,36 @@ void LVL_Player::processContacts()
         case LVLWarp:
             {
                 contactedWarp = static_cast<LVL_Warp*>(cEL);
-                if(contactedWarp)
-                    contactedWithWarp=true;
+                assert(contactedWarp);
+                contactedWithWarp=true;
                 break;
             }
         case PGE_Phys_Object::LVLBGO:
             {
                 LVL_Bgo *bgo= static_cast<LVL_Bgo*>(cEL);
-                if(bgo)
+                assert(bgo);
+                if(bgo->setup->setup.climbing)
                 {
-                    if(bgo->setup->setup.climbing)
-                    {
-                        bool hasClimbables = climbable_map.isEmpty();
-                        climbable_map[intptr_t(cEL)] = cEL;
-                        if(hasClimbables)
-                            climbableHeight = cEL->m_momentum.top();
-                        else if(cEL->top() < climbableHeight)
-                            climbableHeight = cEL->m_momentum.top();
-                    }
+                    bool hasClimbables = climbable_map.isEmpty();
+                    climbable_map[intptr_t(cEL)] = cEL;
+                    if(hasClimbables)
+                        climbableHeight = cEL->m_momentum.top();
+                    else if(cEL->top() < climbableHeight)
+                        climbableHeight = cEL->m_momentum.top();
                 }
                 break;
             }
         case PGE_Phys_Object::LVLPhysEnv:
             {
                 LVL_PhysEnv *env= static_cast<LVL_PhysEnv*>(cEL);
-                if(env)
-                {
-                    environments_map[intptr_t(env)] = env->env_type;
-                }
+                assert(env);
+                environments_map[intptr_t(env)] = env->env_type;
                 break;
             }
         case PGE_Phys_Object::LVLBlock:
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
+                assert(blk);
                 if(blk->isHidden)
                     break;
                 if(blk->setup->setup.lava)
@@ -148,59 +146,57 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLNPC:
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
-                if(npc)
+                assert(npc);
+                if(!npc->data.msg.isEmpty())
                 {
-                    if(!npc->data.msg.isEmpty())
-                    {
-                        collided_talkable_npc = npc;
-                    }
-                    if(!npc->enablePlayerCollision) break;
-                    if(npc->data.friendly) break;
-                    if(npc->isGenerator) break;
-                    if(npc->setup->setup.climbable)
-                    {
-                        bool set=climbable_map.isEmpty();
-                        climbable_map[intptr_t(cEL)]=cEL;
-                        if(set)
-                            climbableHeight=cEL->m_momentum.top();
-                        else if(cEL->m_momentum.top()<climbableHeight)
-                            climbableHeight=cEL->m_momentum.top();
-                    }
-                    if( (!npc->data.friendly) && (npc->setup->setup.takable) )
-                    {
-                        collided_talkable_npc = nullptr;
-                        npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
-                        kill_npc(npc, LVL_Player::NPC_Taked_Coin);
-                    }
+                    collided_talkable_npc = npc;
+                }
+                if(!npc->enablePlayerCollision) break;
+                if(npc->data.friendly) break;
+                if(npc->isGenerator) break;
+                if(npc->setup->setup.climbable)
+                {
+                    bool set=climbable_map.isEmpty();
+                    climbable_map[intptr_t(cEL)]=cEL;
+                    if(set)
+                        climbableHeight=cEL->m_momentum.top();
+                    else if(cEL->m_momentum.top()<climbableHeight)
+                        climbableHeight=cEL->m_momentum.top();
+                }
+                if( (!npc->data.friendly) && (npc->setup->setup.takable) )
+                {
+                    collided_talkable_npc = nullptr;
+                    npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
+                    kill_npc(npc, LVL_Player::NPC_Taked_Coin);
+                }
 
-                    if(bumpUp || bumpDown)
-                        break;
+                if(bumpUp || bumpDown)
+                    break;
 
-                    if(!npc->isActivated)
-                        break;
+                if(!npc->isActivated)
+                    break;
 
-                    //If character fell to the head of the NPC
+                //If character fell to the head of the NPC
+                if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
+                     (m_momentum.bottom() > npc->m_momentum.top()) &&
+                     (m_momentum.bottomOld()<= npc->m_momentum.topOld()) &&
+                      npc->setup->setup.kill_on_jump )
+                {
+                    npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
+                    bump(true);
+                    floating_timer = floating_maxtime;
+                    if(floating_isworks)
+                    {
+                        floating_isworks=false;
+                        setGravityScale(climbing ? 0 : physics_cur.gravity_scale);
+                    }
+                    kill_npc(npc, NPC_Stomped);
+                } else {
                     if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
-                         (m_momentum.bottom() > npc->m_momentum.top()) &&
-                         (m_momentum.bottomOld()<= npc->m_momentum.topOld()) &&
-                          npc->setup->setup.kill_on_jump )
+                         npc->setup->setup.hurt_player)
                     {
-                        npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
-                        bump(true);
-                        floating_timer = floating_maxtime;
-                        if(floating_isworks)
-                        {
-                            floating_isworks=false;
-                            setGravityScale(climbing ? 0 : physics_cur.gravity_scale);
-                        }
-                        kill_npc(npc, NPC_Stomped);
-                    } else {
-                        if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
-                             npc->setup->setup.hurt_player)
-                        {
-                            doHurt = true;
-                            hurtDamage = 1;
-                        }
+                        doHurt = true;
+                        hurtDamage = 1;
                     }
                 }
                 break;
@@ -216,7 +212,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
-                if(!blk) continue;
+                assert(blk);// continue;
                 if(blk->setup->setup.bounce)
                     blocks_to_bounce_bottom.push_back(blk);
                 if((blk->m_danger[m_filterID]&Block_TOP) != 0)
@@ -229,7 +225,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLNPC:
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
-                if(!npc) continue;
+                assert(npc);// continue;
                 if( ((npc->m_blocked[m_filterID]&Block_TOP) != 0) &&
                      (npc->setup->setup.kill_on_jump) )
                     npcs_to_stomp.push_back(npc);
@@ -247,7 +243,8 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
-                if(!blk) continue;
+                //if(!blk) continue;
+                assert(blk);
                 if((blk->m_danger[m_filterID]&Block_BOTTOM) != 0)
                 {
                     doHurt = true;
@@ -267,7 +264,8 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
-                if(!blk) continue;
+                //if(!blk) continue;
+                assert(blk);
                 if((blk->m_danger[m_filterID]&Block_RIGHT) != 0)
                 {
                     doHurt = true;
@@ -287,7 +285,8 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
-                if(!blk) continue;
+                //if(!blk) continue;
+                assert(blk);
                 if((blk->m_danger[m_filterID]&Block_LEFT) != 0)
                 {
                     doHurt = true;
@@ -310,6 +309,10 @@ void LVL_Player::processContacts()
         for(/*unsigned*/ int bump=0; bump < blocks_to_bounce_bottom.size(); bump++)
         {
             LVL_Block* x = blocks_to_bounce_bottom[bump];
+            assert(x);
+            if( (x->m_blocked[m_filterID]&Block_TOP) == 0 )
+                continue;
+
             if(!candidate)
             {
                 candidate = x;
@@ -423,6 +426,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         if(candidate->type == LVLBlock)
         {
             LVL_Block* nearest = static_cast<LVL_Block*>(candidate);
+            assert(nearest);
             processCharacterSwitchBlock(this, nearest);//Do transformation if needed
             long npcid=nearest->data.npc_id;
             nearest->hit(LVL_Block::up, this, 1);
@@ -448,7 +452,7 @@ bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
     if(body->type==LVLBlock)
     {
         LVL_Block *blk= static_cast<LVL_Block*>(body);
-        if(!blk) return false;
+        assert(blk);//if(!blk) return false;
         if( blk->setup->setup.plFilter_Block &&
             (characterID==blk->setup->setup.plFilter_Block_id) )
             return true;
