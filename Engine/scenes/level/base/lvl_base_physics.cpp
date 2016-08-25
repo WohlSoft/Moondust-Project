@@ -162,15 +162,18 @@ void PGE_Phys_Object::iterateStep(double ticks)
         (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
        )
     */
-    if(
-         (G*phys_setup.gravityAccel < 0.0f) ||
-         (
-             (G*phys_setup.gravityAccel != 0.0f) &&
-             (!m_stand || m_standOnYMovable || (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
-         )
-      )
+    if(m_bodytype==Body_DYNAMIC)//Affect gravity only to dynamic objects!
     {
-        m_momentum.velY += ( G * phys_setup.gravityAccel) * accelCof;
+        if(
+             (G*phys_setup.gravityAccel < 0.0f) ||
+             (
+                 (G*phys_setup.gravityAccel != 0.0f) &&
+                 (!m_stand || m_standOnYMovable || (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
+             )
+          )
+        {
+            m_momentum.velY += ( G * phys_setup.gravityAccel) * accelCof;
+        }
     }
 
     if(phys_setup.decelerate_y != 0.0f)
