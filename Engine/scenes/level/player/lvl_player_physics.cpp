@@ -213,6 +213,7 @@ void LVL_Player::processContacts()
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 assert(blk);// continue;
+                m_onSlippery |= blk->m_slippery_surface;
                 if(blk->setup->setup.bounce)
                     blocks_to_bounce_bottom.push_back(blk);
                 if((blk->m_danger[m_filterID]&Block_TOP) != 0)
@@ -226,6 +227,7 @@ void LVL_Player::processContacts()
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
                 assert(npc);// continue;
+                m_onSlippery |= npc->m_slippery_surface;
                 if( ((npc->m_blocked[m_filterID]&Block_TOP) != 0) &&
                      (npc->setup->setup.kill_on_jump) )
                     npcs_to_stomp.push_back(npc);

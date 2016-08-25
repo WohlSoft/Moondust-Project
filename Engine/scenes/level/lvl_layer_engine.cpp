@@ -120,14 +120,16 @@ void LVL_LayerEngine::processMoving(float tickTime)
         {
             PGE_Phys_Object*obj = (*l.m_members)[i];
             //Don't iterate playable characters
-            if(obj->type==PGE_Phys_Object::LVLPlayer) continue;
+            if(obj->type == PGE_Phys_Object::LVLPlayer)
+                continue;
 
             obj->setSpeed(l.m_speedX, l.m_speedY);
             //Don't iterate activated NPC's!
-            if(obj->type==PGE_Phys_Object::LVLNPC)
+            if(obj->type == PGE_Phys_Object::LVLNPC)
             {
-                LVL_Npc*npc=(LVL_Npc*)obj;
-                if(npc->isActivated) continue;
+                LVL_Npc*npc = (LVL_Npc*)obj;
+                if(npc->isActivated)
+                    continue;
             }
             obj->iterateStep(tickTime);
             obj->_syncPosition();
