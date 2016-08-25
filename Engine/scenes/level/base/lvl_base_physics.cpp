@@ -115,21 +115,6 @@ void PGE_Phys_Object::iterateStep(double ticks)
     if(m_paused)
         return;
 
-    if(!m_stand)
-        m_momentum.velX = m_momentum.velXsrc;
-
-    double iterateX = (m_momentum.velX) * (ticks/m_smbxTickTime);
-    double iterateY = (m_momentum.velY) * (ticks/m_smbxTickTime);
-
-    if(m_slopeFloor.has)
-        iterateY += (m_onSlopeYAdd) * (ticks/m_smbxTickTime);
-
-    // Iterate movement
-    m_momentum.saveOld();
-    m_momentum.x += iterateX;
-    m_momentum.y += iterateY;
-
-
     double G = phys_setup.gravityScale * _scene->globalGravity;
     double accelCof = ticks/1000.0;
 
@@ -162,11 +147,31 @@ void PGE_Phys_Object::iterateStep(double ticks)
     m_momentum.velX    += Xmod;
     m_momentum.velXsrc += Xmod;
 
-    if( ((m_accelY != 0.0f) && !m_stand)||
+    if( ((m_accelY != 0.0f) && !m_stand) ||
         ((m_accelY <  0.0f) &&  m_stand) )
     {
-        m_momentum.velY += m_accelY * accelCof*( (G==0.0f) ? 1.0f : G );
+        m_momentum.velY += m_accelY * accelCof * ( (G==0.0f) ? 1.0f : G );
         m_accelY = 0.0f;
+    }
+
+    //    if( ((phys_setup.gravityAccel != 0.0f) && !onGround()) ||
+    //        ((phys_setup.gravityAccel < 0.0f)  &&  onGround()) )
+    /*
+    if( (m_momentum.velY < 8) &&
+        (!m_stand || m_standOnYMovable ||
+        (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
+       )
+    */
+    if(
+         (phys_setup.gravityAccel < 0.0f) ||
+         (
+             (phys_setup.gravityAccel != 0.0f) &&
+             (!m_stand || m_standOnYMovable ||
+             (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
+         )
+      )
+    {
+        m_momentum.velY += (G*phys_setup.gravityAccel)*accelCof;
     }
 
     if(phys_setup.decelerate_y != 0.0f)
@@ -185,21 +190,27 @@ void PGE_Phys_Object::iterateStep(double ticks)
                 m_momentum.velY = 0;
         }
     }
+
+    if(!m_stand)
+        m_momentum.velX = m_momentum.velXsrc;
+
+    double iterateX = (m_momentum.velX) * (ticks/m_smbxTickTime);
+    double iterateY = (m_momentum.velY) * (ticks/m_smbxTickTime);
+
+    if(m_slopeFloor.has)
+        iterateY += (m_onSlopeYAdd) * (ticks/m_smbxTickTime);
+
+    // Iterate movement
+    m_momentum.saveOld();
+    m_momentum.x += iterateX;
+    m_momentum.y += iterateY;
+
     /*
     if( (m_momentum.velY < phys_setup.max_vel_y) &&
         (!onGround() || m_standOnYMovable ||
         (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
        )
     */
-//    if( ((phys_setup.gravityAccel != 0.0f) && !onGround()) ||
-//        ((phys_setup.gravityAccel < 0.0f)  &&  onGround()) )
-    if( (m_momentum.velY < phys_setup.max_vel_y) &&
-        (!onGround() || m_standOnYMovable ||
-        (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
-       )
-    {
-        m_momentum.velY += (G*phys_setup.gravityAccel)*accelCof;
-    }
 
     if( (phys_setup.max_vel_x != 0.0) && (m_momentum.velXsrc > phys_setup.max_vel_x) )
     {
@@ -677,6 +688,12 @@ void PGE_Phys_Object::updateCollisions()
                 l_clifCheck.push_back(CUR);
             } else {
                 l_toBump.push_back(CUR);
+                if( (CUR->m_bodytype == Body_DYNAMIC) &&
+                    (CUR->m_stand) &&
+                    (CUR->bottom() <= top()) && (CUR->bottom() >= top()-1.0) )
+                {
+                    l_pushT(CUR);
+                }
             }
         }
 
@@ -779,7 +796,10 @@ void PGE_Phys_Object::updateCollisions()
                             if((CUR->m_blocked[m_filterID]&PhysObject::Block_BOTTOM) == 0)
                                 goto tipRectB_Skip;
                             if(CUR->m_bodytype != Body_STATIC)
+                            {
+                                l_pushT(CUR);
                                 goto tipRectB_Skip;
+                            }
 
                             /* ************************************************************
                              * Aligned contact check to allow catching hole on the ceiling
