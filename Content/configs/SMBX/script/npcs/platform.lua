@@ -29,7 +29,11 @@ function platform:initProps()
     self.direction = DIR_AUTO
     self.speed = 2
     self.state = self.npc_obj.direction
-    self.npc_obj.gravity = 1
+    if(self.state == ST_ON)then
+        self.npc_obj.gravity = 1
+    else
+        self.npc_obj.gravity = 0
+    end    
     self.found = false
     self.needCorrection = false
     self.lead = nil
@@ -495,9 +499,9 @@ function platform:onLoop(tickTime)
         self.npc_obj.speedX=0
         self.npc_obj.speedY=0
         if(self.contacts:detected())then
-            local plrs= self.contacts:getPlayers()
+            local plrs = self.contacts:getPlayers()
             for K,Plr in pairs(plrs) do
-                if(Plr.bottom==self.npc_obj.top)then
+                if(Plr.bottom <= self.npc_obj.top and Plr.onGround)then
                     self.state=ST_ON
                 end                    
             end
