@@ -220,7 +220,10 @@ void LVL_Player::processContacts()
                 if(blk->setup->setup.bounce)
                     blocks_to_bounce_bottom.push_back(blk);
                 if((blk->m_danger[m_filterID]&Block_TOP) != 0)
+                {
                     doHurt = true;
+                    hurtDamage = 1;
+                }
             }
             break;
         case PGE_Phys_Object::LVLNPC:
@@ -246,7 +249,10 @@ void LVL_Player::processContacts()
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 if(!blk) continue;
                 if((blk->m_danger[m_filterID]&Block_BOTTOM) != 0)
+                {
                     doHurt = true;
+                    hurtDamage = 1;
+                }
             }
             break;
         default:;
@@ -263,7 +269,10 @@ void LVL_Player::processContacts()
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 if(!blk) continue;
                 if((blk->m_danger[m_filterID]&Block_RIGHT) != 0)
+                {
                     doHurt = true;
+                    hurtDamage = 1;
+                }
             }
             break;
         default:;
@@ -280,7 +289,10 @@ void LVL_Player::processContacts()
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 if(!blk) continue;
                 if((blk->m_danger[m_filterID]&Block_LEFT) != 0)
+                {
                     doHurt = true;
+                    hurtDamage = 1;
+                }
             }
             break;
         default:;
@@ -365,6 +377,12 @@ void LVL_Player::preCollision()
 
 void LVL_Player::postCollision()
 {
+    if(m_crushedHard)
+    {
+        //harm(1);
+        kill(DEAD_killed);
+    }
+
     if( m_crushed && m_crushedOld )
     {
         if(m_stand)
@@ -383,14 +401,14 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
     for(unsigned int bump=0; bump<blocksHit.size(); bump++)
     {
         PGE_Phys_Object* x = blocksHit[bump];
+        if((x->m_blocked[m_filterID]&Block_BOTTOM)==0)
+            continue;
         if(!candidate)
         {
             candidate = x;
             continue;
         }
         if(candidate == x)
-            continue;
-        if((x->m_blocked[m_filterID]&Block_BOTTOM)==0)
             continue;
         if(!candidate)
             candidate = x;

@@ -110,7 +110,10 @@ void LVL_Npc::preCollision()
 
 void LVL_Npc::postCollision()
 {
-
+    if(m_crushedHard)
+    {
+        kill(DAMAGE_BY_KICK);
+    }
 }
 
 void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
