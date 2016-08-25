@@ -4,11 +4,27 @@
 #include <common_features/rectf.h>
 #include <common_features/pointf.h>
 
+luabind::scope Binding_Level_Class_PhysObj::bindBaseToLua()
+{
+    using namespace luabind;
+    return
+        class_<PGE_physBody>("PhysBase")
+            .enum_("CollisionType")
+            [
+                value("COLLISION_NONE",   PGE_physBody::Block_NONE),
+                value("COLLISION_ANY",    PGE_physBody::Block_ALL),
+                value("COLLISION_TOP",    PGE_physBody::Block_TOP),
+                value("COLLISION_BOTTOM", PGE_physBody::Block_BOTTOM),
+                value("COLLISION_LEFT",   PGE_physBody::Block_LEFT),
+                value("COLLISION_RIGHT",  PGE_physBody::Block_RIGHT)
+            ];
+}
+
 luabind::scope Binding_Level_Class_PhysObj::bindToLua()
 {
     using namespace luabind;
     return
-        class_<PGE_Phys_Object>("PhysBase")
+        class_<PGE_Phys_Object, PGE_physBody>("PhysBase")
             .enum_("ObjTypes")
             [
                 value("Unknown", PGE_Phys_Object::LVLUnknown),
@@ -19,15 +35,6 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
                 value("Warp", PGE_Phys_Object::LVLWarp),
                 value("Special", PGE_Phys_Object::LVLSpecial),
                 value("PhysEnv", PGE_Phys_Object::LVLPhysEnv)
-            ]
-            .enum_("CollisionType")
-            [
-                value("COLLISION_NONE",   PGE_Phys_Object::Block_NONE),
-                value("COLLISION_ANY",    PGE_Phys_Object::Block_ALL),
-                value("COLLISION_TOP",    PGE_Phys_Object::Block_TOP),
-                value("COLLISION_BOTTOM", PGE_Phys_Object::Block_BOTTOM),
-                value("COLLISION_LEFT",   PGE_Phys_Object::Block_LEFT),
-                value("COLLISION_RIGHT",  PGE_Phys_Object::Block_RIGHT)
             ]
             //Size and position
             .property("x", &PGE_Phys_Object::posX, &PGE_Phys_Object::setPosX)

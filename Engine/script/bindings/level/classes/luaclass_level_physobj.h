@@ -7,6 +7,7 @@
 class Binding_Level_Class_PhysObj
 {
 public:
+    static luabind::scope bindBaseToLua();
     static luabind::scope bindToLua();
 };
 

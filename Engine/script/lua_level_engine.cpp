@@ -129,6 +129,7 @@ void LuaLevelEngine::setPlayerBaseClassPath(const QString &playerBaseClassPath)
 void LuaLevelEngine::onBindAll()
 {
     luabind::module(getNativeState())[
+        Binding_Level_Class_PhysObj::bindBaseToLua(),
         Binding_Level_Class_PhysObj::bindToLua(),
         Binding_Level_Class_InAreaDetector::bindToLua(),
         Binding_Level_Class_PlayerPosDetector::bindToLua(),
