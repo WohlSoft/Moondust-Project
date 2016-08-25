@@ -197,6 +197,7 @@ void LVL_Block::transformTo_x(long id)
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
     }
+    memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
     lua_setInvisible(data.invisible);
 
     switch(setup->setup.phys_shape)
@@ -470,11 +471,11 @@ bool LVL_Block::lua_invisible()
 void LVL_Block::lua_setInvisible(bool iv)
 {
     if(isHidden && !iv)
-        memcpy(m_blocked, m_blockedOrigin, sizeof(bool)*BLOCK_FILTER_COUNT);
+        memcpy(m_blocked, m_blockedOrigin, sizeof(int)*BLOCK_FILTER_COUNT);
     else
     if(!isHidden && iv)
     {
-        memcpy(m_blockedOrigin, m_blocked, sizeof(bool)*BLOCK_FILTER_COUNT);
+        memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
         m_blocked[1] = Block_BOTTOM;
         m_blocked[2] = Block_BOTTOM;
     }
