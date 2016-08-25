@@ -150,7 +150,7 @@ void PGE_Phys_Object::iterateStep(double ticks)
     if( ((m_accelY != 0.0f) && !m_stand) ||
         ((m_accelY <  0.0f) &&  m_stand) )
     {
-        m_momentum.velY += m_accelY * accelCof * ( (G==0.0f) ? 1.0f : G );
+        m_momentum.velY += m_accelY * accelCof /* * ( (G==0.0f) ? 1.0f : G )*/;
         m_accelY = 0.0f;
     }
 
@@ -163,15 +163,14 @@ void PGE_Phys_Object::iterateStep(double ticks)
        )
     */
     if(
-         (phys_setup.gravityAccel < 0.0f) ||
+         (G*phys_setup.gravityAccel < 0.0f) ||
          (
-             (phys_setup.gravityAccel != 0.0f) &&
-             (!m_stand || m_standOnYMovable ||
-             (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
+             (G*phys_setup.gravityAccel != 0.0f) &&
+             (!m_stand || m_standOnYMovable || (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
          )
       )
     {
-        m_momentum.velY += (G*phys_setup.gravityAccel)*accelCof;
+        m_momentum.velY += ( G * phys_setup.gravityAccel) * accelCof;
     }
 
     if(phys_setup.decelerate_y != 0.0f)
@@ -190,20 +189,6 @@ void PGE_Phys_Object::iterateStep(double ticks)
                 m_momentum.velY = 0;
         }
     }
-
-    if(!m_stand)
-        m_momentum.velX = m_momentum.velXsrc;
-
-    double iterateX = (m_momentum.velX) * (ticks/m_smbxTickTime);
-    double iterateY = (m_momentum.velY) * (ticks/m_smbxTickTime);
-
-    if(m_slopeFloor.has)
-        iterateY += (m_onSlopeYAdd) * (ticks/m_smbxTickTime);
-
-    // Iterate movement
-    m_momentum.saveOld();
-    m_momentum.x += iterateX;
-    m_momentum.y += iterateY;
 
     /*
     if( (m_momentum.velY < phys_setup.max_vel_y) &&
@@ -228,6 +213,20 @@ void PGE_Phys_Object::iterateStep(double ticks)
     {
         m_momentum.velY = phys_setup.min_vel_y;
     }
+
+    if(!m_stand)
+        m_momentum.velX = m_momentum.velXsrc;
+
+    double iterateX = (m_momentum.velX) * (ticks/m_smbxTickTime);
+    double iterateY = (m_momentum.velY) * (ticks/m_smbxTickTime);
+
+    if(m_slopeFloor.has)
+        iterateY += (m_onSlopeYAdd) * (ticks/m_smbxTickTime);
+
+    // Iterate movement
+    m_momentum.saveOld();
+    m_momentum.x += iterateX;
+    m_momentum.y += iterateY;
 
     _syncPosition();
 }
