@@ -687,9 +687,13 @@ void PGE_Phys_Object::updateCollisions()
         {
             if(m_momentum.centerY() < CUR->m_momentum.centerY())
             {
-                l_clifCheck.push_back(CUR);
+                if( ((CUR->m_blocked[m_filterID]&Block_TOP) !=0) &&
+                     (CUR->m_momentum.top()>= m_momentum.bottom())
+                    )
+                    l_clifCheck.push_back(CUR);
             } else {
-                l_toBump.push_back(CUR);
+                if( (CUR->m_blocked[m_filterID]&Block_BOTTOM) !=0 )
+                    l_toBump.push_back(CUR);
                 if( (CUR->m_bodytype == Body_DYNAMIC) &&
                     (CUR->m_stand) &&
                     (CUR->bottom() <= top()) && (CUR->bottom() >= top()-1.0) )
@@ -700,7 +704,9 @@ void PGE_Phys_Object::updateCollisions()
         }
 
         /* ****Collect extra candidates for a cliff detection on the slope******** */
-        if(m_slopeFloor.has || m_slopeFloor.hasOld)
+        if(  ((CUR->m_blocked[m_filterID]&Block_TOP) !=0 ) &&
+              (m_slopeFloor.has || m_slopeFloor.hasOld)
+             )
         {
             PhysObject::Momentum &mPlr = m_momentum;
             PhysObject::Momentum &mBlk = CUR->m_momentum;
