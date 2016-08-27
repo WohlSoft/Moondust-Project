@@ -96,7 +96,7 @@ void InAreaDetector::processDetector()
                 {
                     LVL_Block* s= dynamic_cast<LVL_Block*>(visibleBody);
                     if(!s) continue;
-                    if(!s->destroyed)
+                    if(!s->m_destroyed)
                         detectedBlocks.push_back(s);
                     detectedBLK[s->data.id]=1;
                     break;

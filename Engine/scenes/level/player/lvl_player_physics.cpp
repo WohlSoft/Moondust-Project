@@ -134,7 +134,7 @@ void LVL_Player::processContacts()
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 assert(blk);
-                if(blk->isHidden)
+                if(blk->m_isHidden)
                     break;
                 if(blk->setup->setup.lava)
                 {
@@ -334,7 +334,7 @@ void LVL_Player::processContacts()
         long npcid = candidate->data.npc_id;
         candidate->hit(LVL_Block::down);
         if(  candidate->setup->setup.hitable || (npcid !=0) ||
-            (candidate->destroyed) || candidate->setup->setup.bounce )
+            (candidate->m_destroyed) || candidate->setup->setup.bounce )
             bump(true, physics_cur.velocity_jump_bounce, physics_cur.jump_time_bounce);
 
     }
@@ -434,7 +434,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
             nearest->hit(LVL_Block::up, this, 1);
             if( nearest->setup->setup.hitable ||
                 (npcid !=0 ) ||
-                (nearest->destroyed) ||
+                (nearest->m_destroyed) ||
                 (nearest->setup->setup.bounce) )
             {
                 bump(false,
@@ -455,6 +455,8 @@ bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
     {
         LVL_Block *blk= static_cast<LVL_Block*>(body);
         assert(blk);//if(!blk) return false;
+        if(blk->m_destroyed)
+            return true;
         if( blk->setup->setup.plFilter_Block &&
             (characterID==blk->setup->setup.plFilter_Block_id) )
             return true;

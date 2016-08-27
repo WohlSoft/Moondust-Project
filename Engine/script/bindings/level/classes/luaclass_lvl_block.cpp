@@ -39,7 +39,7 @@ luabind::scope LVL_Block::bindToLua()
             .property("invisible", &LVL_Block::lua_invisible, &LVL_Block::lua_setInvisible)
             .property("slippery", &LVL_Block::lua_slippery, &LVL_Block::lua_setSlippery)
             .property("isSolid", &LVL_Block::lua_isSolid)
-            .def_readonly("is_destroyed", &LVL_Block::destroyed);
+            .def_readonly("is_destroyed", &LVL_Block::m_destroyed);
 }
 
 

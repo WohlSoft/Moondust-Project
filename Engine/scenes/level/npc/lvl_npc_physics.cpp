@@ -56,7 +56,7 @@ void LVL_Npc::processContacts()
             {
                 LVL_Block *blk= static_cast<LVL_Block*>(cEL);
                 assert(blk);
-                if( blk->isHidden )
+                if( blk->m_isHidden )
                     break;
 
                 l_pushBlk(blk);
@@ -121,9 +121,19 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
     switch(body->type)
     {
         case LVLBlock:
+        {
+            if(this->disableBlockCollision)
+                return true;
+            LVL_Block* blk = static_cast<LVL_Block*>(body);
+            if(blk->m_destroyed)
+                return true;
+        }
+        break;
         case LVLNPC:
-        if(this->disableBlockCollision)
-            return true;
+        {
+            if(this->disableBlockCollision)
+                return true;
+        }
         default:;
     }
     return false;

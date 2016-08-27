@@ -43,10 +43,10 @@ public:
     float offset_x;
     float offset_y;
 
-    bool isHidden;
+    bool m_isHidden;
     int  m_blockedOrigin[BLOCK_FILTER_COUNT];
 
-    bool destroyed;
+    bool m_destroyed;
 
     obj_block * setup;//Global config
 
@@ -81,6 +81,7 @@ public:
     void hit(directions _dir, LVL_Player* player, int numHits=1);
     void destroy(bool playEffect=false);
     directions hitDirection;
+    void setDestroyed(bool dstr);
 
     long double zIndex();
 

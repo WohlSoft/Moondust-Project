@@ -84,16 +84,16 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     foreach(LVL_Block *x, target_blocks)
     {
         if(!x) continue;
-        if(x->destroyed) continue;
+        if(x->m_destroyed) continue;
         if(x->sizable && _dir==Attack_Forward)
             continue;
         x->hit();
-        if(!x->destroyed)
+        if(!x->m_destroyed)
         {
             _scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
         }
-        x->destroyed=true;
+        x->setDestroyed(true);
     }
     foreach(LVL_Npc *x, target_npcs)
     {

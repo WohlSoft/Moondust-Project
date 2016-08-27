@@ -41,8 +41,8 @@ LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
     offset_x = 0.f;
     offset_y = 0.f;
 
-    isHidden=false;
-    destroyed=false;
+    m_isHidden=false;
+    m_destroyed=false;
 
     fadeOffset=0;
     targetOffset=0;
@@ -275,8 +275,8 @@ void LVL_Block::transformTo_x(long id)
 void LVL_Block::render(double camX, double camY)
 {
     //Don't draw hidden block before it will be hitten
-    if(isHidden) return;
-    if(destroyed) return;
+    if(m_isHidden) return;
+    if(m_destroyed) return;
 
     PGE_RectF blockG;
     blockG.setRect(posX()-camX+offset_x,
@@ -465,22 +465,22 @@ void LVL_Block::lua_setContentID(int npcid)
 
 bool LVL_Block::lua_invisible()
 {
-    return isHidden;
+    return m_isHidden;
 }
 
 void LVL_Block::lua_setInvisible(bool iv)
 {
-    if(isHidden && !iv)
+    if(m_isHidden && !iv)
         memcpy(m_blocked, m_blockedOrigin, sizeof(int)*BLOCK_FILTER_COUNT);
     else
-    if(!isHidden && iv)
+    if(!m_isHidden && iv)
     {
         memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
         m_blocked[1] = Block_BOTTOM;
         m_blocked[2] = Block_BOTTOM;
     }
     data.invisible = iv;
-    isHidden = iv;
+    m_isHidden = iv;
 }
 
 bool LVL_Block::lua_slippery()
@@ -521,7 +521,7 @@ void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
 void LVL_Block::hit(LVL_Block::directions _dir)
 {
     hitDirection = _dir;
-    if(isHidden)
+    if(m_isHidden)
         lua_setInvisible(false);
 
     bool doFade=false, triggerEvent=false, playHitSnd=false;
@@ -663,7 +663,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         triggerEvent=true;
         transformTo(long(setup->setup.spawn_obj_id), setup->setup.spawn_obj);
         doFade = true;
-        playHitSnd=!destroyed;
+        playHitSnd=!m_destroyed;
     }
 
     if(playHitSnd && (setup->setup.hit_sound_id>0))
@@ -716,7 +716,7 @@ void LVL_Block::destroy(bool playEffect)
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
 
-    destroyed = true;
+    m_destroyed = true;
     QString oldLayer=data.layer;
     _scene->layers.removeRegItem(data.layer, this);
     data.layer="Destroyed Blocks";
@@ -730,6 +730,32 @@ void LVL_Block::destroy(bool playEffect)
         if(_scene->layers.isEmpty(oldLayer))
             _scene->events.triggerEvent(data.event_emptylayer);
     }
+}
+
+void LVL_Block::setDestroyed(bool dstr)
+{
+    if(!m_isHidden)
+    {
+        if(!m_destroyed && dstr)
+            memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
+        else
+        if(m_destroyed && !dstr)
+        {
+            memcpy(m_blocked, m_blockedOrigin, sizeof(int)*BLOCK_FILTER_COUNT);
+        }
+    } else {
+        if(!m_destroyed && dstr)
+        {
+            m_blocked[1] = Block_NONE;
+            m_blocked[2] = Block_NONE;
+        }else
+        if(m_destroyed && !dstr)
+        {
+            m_blocked[1] = Block_BOTTOM;
+            m_blocked[2] = Block_NONE;
+        }
+    }
+    m_destroyed = dstr;
 }
 
 long double LVL_Block::zIndex()
