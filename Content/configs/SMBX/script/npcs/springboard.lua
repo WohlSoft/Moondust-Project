@@ -27,7 +27,7 @@ function Springboard:__init(npc_obj)
     self.npc_obj = npc_obj
     self.contacts = npc_obj:installContactDetector()
     self.spring_vel = 9.3
-    self.spring_time = 530
+    self.spring_time = 575
     self.npc_obj:setSequence({0})
 
     self.sequ_is_idle=true
