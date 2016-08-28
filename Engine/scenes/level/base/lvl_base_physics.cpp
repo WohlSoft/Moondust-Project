@@ -767,7 +767,8 @@ void PGE_Phys_Object::updateCollisions()
                             if((CUR->m_blocked[m_filterID]&PhysObject::Block_TOP) == 0)
                                 goto tipRectT_Skip;
                             m_momentum.y = CUR->m_momentum.y - m_momentum.h;
-                            m_momentum.velY   = CUR->m_momentum.velY;
+                            if(CUR->m_momentum.velY <= m_momentum.velY)
+                                m_momentum.velY   = CUR->m_momentum.velY;
                             m_stand  = true;
                             m_standOnYMovable = (CUR->m_momentum.velY != 0.0);
                             if(doSpeedStack)
@@ -1018,13 +1019,15 @@ void PGE_Phys_Object::updateCollisions()
                             }
 
                             m_momentum.y = CUR->m_momentum.y + ( (m_momentum.x - CUR->m_momentum.x) * k ) - m_momentum.h;
-                            m_momentum.velY = CUR->m_momentum.velY;
+                            if(CUR->m_momentum.velY <= m_momentum.velY)
+                                m_momentum.velY = CUR->m_momentum.velY;
                             m_slopeFloor.has = true;
                             m_slopeFloor.shape = CUR->m_shape;
                             m_slopeFloor.rect  = CUR->m_momentum.rect();
                             if( (m_momentum.velX > 0.0) || !m_onSlopeFloorTopAlign)
                             {
-                                m_momentum.velY = CUR->m_momentum.velY +m_momentum.velX * k;
+                                if(CUR->m_momentum.velY <= m_momentum.velY)
+                                    m_momentum.velY = CUR->m_momentum.velY +m_momentum.velX * k;
                                 m_onSlopeYAdd = 0.0;
                             }
                             else
@@ -1124,13 +1127,15 @@ void PGE_Phys_Object::updateCollisions()
                             }
 
                             m_momentum.y = CUR->m_momentum.y + ( (CUR->m_momentum.right() - m_momentum.x - m_momentum.w) * k) - m_momentum.h;
-                            m_momentum.velY = CUR->m_momentum.velY;
+                            if(CUR->m_momentum.velY <= m_momentum.velY)
+                                m_momentum.velY = CUR->m_momentum.velY;
                             m_slopeFloor.has = true;
                             m_slopeFloor.shape = CUR->m_shape;
                             m_slopeFloor.rect  = CUR->m_momentum.rect();
                             if( (m_momentum.velX < 0.0) || !m_onSlopeFloorTopAlign)
                             {
-                                m_momentum.velY = CUR->m_momentum.velY -m_momentum.velX * k;
+                                if(CUR->m_momentum.velY <= m_momentum.velY)
+                                    m_momentum.velY = CUR->m_momentum.velY -m_momentum.velX * k;
                                 m_onSlopeYAdd = 0.0;
                             } else {
                                 m_onSlopeYAdd = -m_momentum.velX * k;

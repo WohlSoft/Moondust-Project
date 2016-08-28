@@ -78,6 +78,7 @@ void LVL_Npc::processContacts()
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
                 assert(npc);
+                if(npc->killed) break;
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
                 if(!npc->isActivated) break;

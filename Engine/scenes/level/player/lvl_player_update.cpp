@@ -404,8 +404,6 @@ void LVL_Player::update(float tickTime)
                 floating_timer = floating_maxtime;
                 //LEGACY_m_velocityY_add = 0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
-                if(m_stand)
-                    m_momentum.y += m_momentum.velY;
             }
             else
             if((floating_allow)&&(floating_timer > 0.0f))
@@ -425,8 +423,6 @@ void LVL_Player::update(float tickTime)
             {
                 jumpTime -= tickTime;
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
-                if(m_stand)
-                    m_momentum.y += m_momentum.velY;
             }
 
             if(floating_isworks)

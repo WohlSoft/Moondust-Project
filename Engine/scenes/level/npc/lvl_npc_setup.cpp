@@ -227,7 +227,7 @@ void LVL_Npc::transformTo_x(long id)
     if(setup->setup.block_player)
         m_blocked[1] = Block_LEFT|Block_RIGHT;
     if(setup->setup.block_player_top)
-        m_blocked[1] = Block_TOP;
+        m_blocked[1] |= Block_TOP;
     if(setup->setup.block_player && setup->setup.block_player_top)
         m_blocked[1] = Block_ALL;
 
@@ -238,7 +238,7 @@ void LVL_Npc::transformTo_x(long id)
     if(setup->setup.block_npc)
         m_blocked[2] = Block_LEFT|Block_RIGHT;
     if(setup->setup.block_npc_top)
-        m_blocked[2] = Block_TOP;
+        m_blocked[2] |= Block_TOP;
     if(setup->setup.block_npc && setup->setup.block_npc_top)
         m_blocked[2] = Block_ALL;
 

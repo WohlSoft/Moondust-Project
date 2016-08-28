@@ -147,6 +147,7 @@ void LVL_Player::processContacts()
             {
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
                 assert(npc);
+                if(npc->killed) break; //Don't deal with a corpses!
                 if(!npc->data.msg.isEmpty())
                 {
                     collided_talkable_npc = npc;
@@ -163,11 +164,13 @@ void LVL_Player::processContacts()
                     else if(cEL->m_momentum.top()<climbableHeight)
                         climbableHeight=cEL->m_momentum.top();
                 }
+
                 if( (!npc->data.friendly) && (npc->setup->setup.takable) )
                 {
                     collided_talkable_npc = nullptr;
                     npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
+                    break;
                 }
 
                 if(bumpUp || bumpDown)
@@ -177,26 +180,26 @@ void LVL_Player::processContacts()
                     break;
 
                 //If character fell to the head of the NPC
-                if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
+                if( ((npc->m_blocked[m_filterID]&Block_TOP)==0) &&
                      (m_momentum.bottom() > npc->m_momentum.top()) &&
                      (m_momentum.bottomOld()<= npc->m_momentum.topOld()) &&
                       npc->setup->setup.kill_on_jump )
                 {
-                    npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
-                    bump(true);
-                    floating_timer = floating_maxtime;
-                    if(floating_isworks)
-                    {
-                        floating_isworks=false;
-                        setGravityScale(climbing ? 0 : physics_cur.gravity_scale);
-                    }
-                    kill_npc(npc, NPC_Stomped);
+                    npcs_to_stomp.push_back(npc);
+                    //npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
+                    //bump(true);
+                    //kill_npc(npc, NPC_Stomped);
                 } else {
-                    if( ((m_blocked[m_filterID]&Block_TOP)==0) &&
-                         npc->setup->setup.hurt_player)
+                    if( npc->setup->setup.hurt_player )
                     {
-                        doHurt = true;
-                        hurtDamage = 1;
+                        if( ((npc->m_blocked[m_filterID]&Block_TOP)==0) ||
+                            ( ((npc->m_blocked[m_filterID]&Block_TOP) != 0 ) &&
+                               (m_momentum.bottom() > npc->m_momentum.top())&&
+                               (m_momentum.bottomOld() > npc->m_momentum.topOld()) ) )
+                        {
+                            doHurt = true;
+                            hurtDamage = 1;
+                        }
                     }
                 }
                 break;
@@ -324,6 +327,7 @@ void LVL_Player::processContacts()
                 continue;
             if(!candidate)
                 candidate = x;
+
             if( x->m_momentum.betweenH(m_momentum.centerX()) )
             {
                 candidate = x;
@@ -335,7 +339,11 @@ void LVL_Player::processContacts()
         candidate->hit(LVL_Block::down);
         if(  candidate->setup->setup.hitable || (npcid !=0) ||
             (candidate->m_destroyed) || candidate->setup->setup.bounce )
+        {
+            if(m_momentum.bottom() >= candidate->m_momentum.top())
+                m_momentum.setYatBottom( candidate->m_momentum.top()-std::fabs(physics_cur.velocity_jump_bounce) );
             bump(true, physics_cur.velocity_jump_bounce, physics_cur.jump_time_bounce);
+        }
 
     }
 
@@ -344,11 +352,11 @@ void LVL_Player::processContacts()
     {
         LVL_Npc* npc = npcs_to_stomp.last();
         npcs_to_stomp.pop_back();
-        /*
+
         //Avoid workarround "don't hurt while flying up"
-        if(bottom() >= npc->top())
-            setPosY( npc->top() - height()-1 );
-        */
+        if(m_momentum.bottom() >= npc->m_momentum.top())
+            m_momentum.setYatBottom( npc->m_momentum.top()-1.0 );
+        setSpeedY( npc->speedY() );
         npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
         bump(true);
 
