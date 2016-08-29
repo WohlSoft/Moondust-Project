@@ -608,7 +608,7 @@ void PGE_Phys_Object::updateCollisions()
     if(m_paused) return;
 
     QVector<PGE_Phys_Object*> objs;
-    PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0+std::fabs(m_momentum.velX)+std::fabs(m_momentum.velY));
+    PGE_RectF posRectC = m_momentum.rectF().withMargin(m_momentum.w/2.0);
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
     {
         posRectC.setRight(posRectC.right() + m_slopeFloor.rect.w);
@@ -977,10 +977,12 @@ void PGE_Phys_Object::updateCollisions()
                             }
                         }
                         /* *************** Resolve collision with footer corner on right bottom side **************** */
-                        else if( ( m_momentum.bottom() > CUR->m_momentum.bottom() ) &&
-                                ((!m_slopeFloor.hasOld && (m_momentum.bottomOld() > CUR->m_momentum.bottomOld())) ||
-                                  ((m_slopeFloor.shape != CUR->m_shape)&&(m_slopeFloor.shape >=0))
-                                 ))
+                        else if( (m_momentum.bottom() > CUR->m_momentum.bottom()) &&
+                                 (m_momentum.bottomOld() > CUR->m_momentum.bottomOld()) &&
+                                (
+                                     (!m_slopeFloor.hasOld) ||
+                                     ( (m_slopeFloor.shape != CUR->m_shape) && (m_slopeFloor.shape >=0) )
+                                 ) )
                         {
                             if(!colH)
                             {
@@ -1082,10 +1084,12 @@ void PGE_Phys_Object::updateCollisions()
                             }
                         }
                         /* ************** Resolve collision with footer corner on left bottom side **************** */
-                        else if( ( m_momentum.bottom() > CUR->m_momentum.bottom() ) &&
-                                ((!m_slopeFloor.hasOld && (m_momentum.bottomOld() > CUR->m_momentum.bottomOld())) ||
-                                  ((m_slopeFloor.shape != CUR->m_shape)&&(m_slopeFloor.shape >=0))
-                                 ))
+                        else if( (m_momentum.bottom() > CUR->m_momentum.bottom()) &&
+                                 (m_momentum.bottomOld() > CUR->m_momentum.bottomOld())&&
+                                (
+                                     (!m_slopeFloor.hasOld)||
+                                     ((m_slopeFloor.shape != CUR->m_shape) && (m_slopeFloor.shape >=0))
+                                 ) )
                         {
                             if(!colH)
                             {
