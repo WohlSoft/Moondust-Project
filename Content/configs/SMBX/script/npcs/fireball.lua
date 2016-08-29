@@ -7,9 +7,9 @@ end
 function fireball:__init(npc_obj)
     self.npc_obj = npc_obj
     self.cur_character = 1
-    self.def_normalJumpsSpeedY = -4.5    
+    self.def_normalJumpsSpeedY = -4.5
     self.contacts = npc_obj:installContactDetector()
-    
+
     self:initProps()
 end
 
@@ -34,7 +34,9 @@ function fireball:onLoop(tickTime)
                     BLOCK.slippery = false
                     self.npc_obj:kill(NPC_DAMAGE_NOREASON)
                     Audio.playSoundByRole(SoundRoles.BlockHit)
-                elseif( BLOCK.top < self.npc_obj.bottom )then
+                elseif( (BLOCK.bottom <= self.npc_obj.top) or 
+                         self.npc_obj.blockedAtLeft or
+                         self.npc_obj.blockedAtRight )then
                     self.npc_obj:kill(NPC_DAMAGE_NOREASON)
                     Audio.playSoundByRole(SoundRoles.BlockHit)
                 end

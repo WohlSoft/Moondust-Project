@@ -17,7 +17,9 @@ luabind::scope Binding_Level_Class_PhysObj::bindBaseToLua()
                 value("COLLISION_BOTTOM", PGE_physBody::Block_BOTTOM),
                 value("COLLISION_LEFT",   PGE_physBody::Block_LEFT),
                 value("COLLISION_RIGHT",  PGE_physBody::Block_RIGHT)
-            ];
+            ]
+            .def_readonly("blockedAtLeft",  &PGE_Phys_Object::m_blockedAtLeft)
+            .def_readonly("blockedAtRight", &PGE_Phys_Object::m_blockedAtRight);
 }
 
 luabind::scope Binding_Level_Class_PhysObj::bindToLua()
