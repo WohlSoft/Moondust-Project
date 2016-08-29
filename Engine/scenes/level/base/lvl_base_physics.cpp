@@ -642,8 +642,7 @@ void PGE_Phys_Object::updateCollisions()
     double oldSpeedX = m_momentum.velX;
     double oldSpeedY = m_momentum.velY;
 
-
-    resetEvents();
+    //resetEvents();
     preCollision();
 
     PGE_Phys_Object* CUR=nullptr;
@@ -894,6 +893,15 @@ void PGE_Phys_Object::updateCollisions()
                                 collideAtRight = CUR;
                                 l_pushR(CUR);
                                 m_blockedAtRight=true;
+                                if(CUR->m_bodytype==Body_DYNAMIC)
+                                {
+                                    CUR->m_blockedAtLeft=true;
+                                    blockSkipI = i;
+                                    i = blockSkipStartFrom;
+                                    CUR = objs[i];
+                                    blockSkipStartFrom = blockSkipI;
+                                    blockSkip = true;
+                                }
                             }
                     tipRectL_Skip:;
                         }
@@ -939,6 +947,15 @@ void PGE_Phys_Object::updateCollisions()
                                 collideAtLeft = CUR;
                                 l_pushL(CUR);
                                 m_blockedAtLeft=true;
+                                if(CUR->m_bodytype==Body_DYNAMIC)
+                                {
+                                    CUR->m_blockedAtRight=true;
+                                    blockSkipI = i;
+                                    i = blockSkipStartFrom;
+                                    CUR = objs[i];
+                                    blockSkipStartFrom = blockSkipI;
+                                    blockSkip = true;
+                                }
                             }
                     tipRectR_Skip:;
                         }

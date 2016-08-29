@@ -148,6 +148,19 @@ void LevelScene::processPhysics(float ticks)
 
 void LevelScene::processAllCollisions()
 {
+    //Reset events first
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->resetEvents();
+    }
+    //Process collision check and resolving for activated NPC's
+    for(int i=0; i<active_npcs.size(); i++)
+    {
+        active_npcs[i]->resetEvents();
+    }
+
+
     //Process collision check and resolving for playable characters
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
