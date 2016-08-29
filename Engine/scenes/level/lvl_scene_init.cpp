@@ -48,18 +48,20 @@ bool LevelScene::setEntrance(int entr)
         plr++;
     }
 
-    if((entr<=0) || (entr>data.doors.size()))
+    if((entr <= 0) || (entr > data.doors.size()))
     {
-        isWarpEntrance=false;
+        isWarpEntrance = false;
         bool found=false;
-        for(int i=0; i<data.players.size(); i++)
+        for(int i=0, j=0; (i < data.players.size()) && (j < numberOfPlayers); i++)
         {
             if(data.players[i].w==0 && data.players[i].h==0)
                 continue; //Skip empty points
+
             LVL_PlayerDef d = player_defs[data.players[i].id];
-            cameraStart.setX( data.players[i].x+(data.players[i].w/2)-(d.width()/2) );
-            cameraStart.setY( data.players[i].y+data.players[i].h-d.height() );
+            cameraStart.setX( data.players[i].x + (data.players[i].w/2) - (d.width()/2) );
+            cameraStart.setY( data.players[i].y +  data.players[i].h    -  d.height() );
             found=true;
+            j++;
             break;
         }
 
@@ -137,8 +139,8 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
             point.h=60;
         } else if(!data.sections.isEmpty()) {
             //Construct point based on first section boundary coordinates
-            point.x=data.sections[0].size_left+20;
-            point.y=data.sections[0].size_top+60;
+            point.x = data.sections[0].size_left+20;
+            point.y = data.sections[0].size_top+60;
             point.w = 20;
             point.h = 60;
         } else {
@@ -148,40 +150,43 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
             point.w=0;
             point.h=0;
         }
-        point.direction=1;
-        point.id=playerID;
+        point.direction = 1;
+        point.id = playerID;
         return point;
     }
 
     foreach(PlayerPoint p, data.players)
-    {   //Return player ID specific spawn point
-        if(p.id==(unsigned)playerID)
+    {
+        //Return player ID specific spawn point
+        if(p.id == unsigned(playerID))
         {
             //Must not be null!
-            if((p.w!=0)&&(p.h!=0))
+            if((p.w != 0) && (p.h != 0))
                 return p;
         }
     }
 
-    if(playerID<=data.players.size())
+    if(playerID <= data.players.size())
     {
         PlayerPoint p = data.players[playerID-1];
         //Return spawn point by array index if not out of range [Not null]
-        if((p.w!=0)&&(p.h!=0))
+        if((p.w != 0) && (p.h != 0))
         {
-            p.id=playerID;
+            p.id = playerID;
             return data.players[playerID-1];
         }
     }
 
     foreach(PlayerPoint p, data.players)
-    {   //Return first not null point
-        if((p.w!=0)&&(p.h!=0))
+    {
+        //Return first not null point
+        if((p.w != 0) && (p.h != 0))
         {
             p.id=playerID;
             return p;
         }
     }
+
     //Return first presented point entry even if null
     return data.players.first();
 }

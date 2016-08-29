@@ -259,6 +259,8 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
             PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
         else if(warpType==0)
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
+    } else {
+        player->camera->changeSection(sct, true);
     }
 }
 

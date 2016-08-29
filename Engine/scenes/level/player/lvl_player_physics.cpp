@@ -231,9 +231,9 @@ void LVL_Player::processContacts()
                 LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
                 assert(npc);// continue;
                 m_onSlippery |= npc->m_slippery_surface;
-                if( ((npc->m_blocked[m_filterID]&Block_TOP) != 0) &&
-                     (npc->setup->setup.kill_on_jump) )
-                    npcs_to_stomp.push_back(npc);
+//                if( ((npc->m_blocked[m_filterID]&Block_TOP) == 0) &&
+//                     (npc->setup->setup.kill_on_jump) )
+//                    npcs_to_stomp.push_back(npc);
             }
             break;
         default:;
