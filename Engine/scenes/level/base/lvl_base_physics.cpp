@@ -611,9 +611,9 @@ void PGE_Phys_Object::updateCollisions()
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0+std::fabs(m_momentum.velX)+std::fabs(m_momentum.velY));
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
     {
-        posRectC.setRight(posRectC.right() + posRectC.width());
-        posRectC.setLeft(posRectC.left() - posRectC.width());
-        posRectC.setBottom(posRectC.bottom() + posRectC.width()/2.0);
+        posRectC.setRight(posRectC.right() + m_slopeFloor.rect.w);
+        posRectC.setLeft(posRectC.left() - m_slopeFloor.rect.w);
+        posRectC.setBottom(posRectC.bottom() + m_slopeFloor.rect.h * 1.5);
     }
     _scene->queryItems(posRectC, &objs);
 
@@ -714,7 +714,7 @@ void PGE_Phys_Object::updateCollisions()
             PhysObject::objRect  r2 = CUR->m_momentum.rect();
             if( (m_slopeFloor.shape == PhysObject::SL_LeftBottom) && (mPlr.velX >= 0.0) )
             {
-                if( recttouch(mPlr.x + mPlr.w, mPlr.centerY(), mPlr.w, r2.h,
+                if( recttouch(mPlr.x+(mPlr.w/2.0), mPlr.centerY(), mPlr.w, (r2.h+r1.h*1.5),
                               mBlk.x, mBlk.y, mBlk.w, mBlk.h)
                     &&
                       //is touching corners
@@ -728,7 +728,7 @@ void PGE_Phys_Object::updateCollisions()
             else
             if( (m_slopeFloor.shape == PhysObject::SL_RightBottom) && (mPlr.velX <= 0.0) )
             {
-                if( recttouch(mPlr.x, mPlr.centerY(), mPlr.w, r2.h,
+                if( recttouch(mPlr.x-(mPlr.w/2.0), mPlr.centerY(), mPlr.w, (r2.h+r1.h*1.5),
                               mBlk.x, mBlk.y, mBlk.w, mBlk.h)
                         &&
                           //is touching corners
@@ -1654,6 +1654,8 @@ void PGE_Phys_Object::updateCollisions()
     processContacts();
 
     postCollision();
+    l_clifCheck.clear();
+    l_toBump.clear();
 }
 
 #ifdef OLD_COLLIDERS
