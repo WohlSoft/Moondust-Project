@@ -41,8 +41,8 @@ static void processLuaMacros(QString luaFile, QString newFile, const QStringList
     QFile f(luaFile);
     QFile of(newFile);
 
-    f.open(QIODevice::ReadOnly|QIODevice::Text);
-    of.open(QIODevice::WriteOnly|QIODevice::Text);
+    f.open(QIODevice::ReadOnly/*|QIODevice::Text*/);
+    of.open(QIODevice::WriteOnly/*|QIODevice::Text*/);
 
     QTextStream lua(&f);
     lua.setCodec("UTF-8");
