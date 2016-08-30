@@ -60,9 +60,10 @@ bool ConfigManager::loadLevelBlocks()
 
     obj_block sblock;
     unsigned int block_total=0;
-
+    bool useDirectory=false;
 
     QString block_ini = config_dir + "lvl_blocks.ini";
+    QString blocks_nestDir = "";
 
     if(!QFile::exists(block_ini))
     {
@@ -78,6 +79,12 @@ bool ConfigManager::loadLevelBlocks()
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", 0).toUInt();
+        blocks_nestDir = blockset.value("config-dir", "").toString();
+        if(!blocks_nestDir.isEmpty())
+        {
+            blocks_nestDir = config_dir + blocks_nestDir;
+            useDirectory = true;
+        }
     blockset.endGroup();
 
 
@@ -94,8 +101,16 @@ bool ConfigManager::loadLevelBlocks()
 
     for(i=1; i<=block_total; i++)
     {
-        if(!loadLevelBlock(sblock, QString("block-%1").arg(i), nullptr, "", &blockset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i), &blockset))
+                return false;
+        }
+        else
+        {
+            if(!loadLevelBlock(sblock, QString("block-%1").arg(i), nullptr, "", &blockset))
+                return false;
+        }
 
         sblock.setup.id = i;
         //Store loaded config

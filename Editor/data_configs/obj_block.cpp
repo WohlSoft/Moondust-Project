@@ -85,10 +85,13 @@ void dataconfigs::loadLevelBlocks()
 
     obj_block sblock;
     unsigned long block_total=0;
+    bool useDirectory=false;
 
     QString block_ini = getFullIniPath("lvl_blocks.ini");
     if(block_ini.isEmpty())
         return;
+
+    QString blocks_nestDir = "";
 
     QSettings blockset(block_ini, QSettings::IniFormat);
     blockset.setIniCodec("UTF-8");
@@ -98,7 +101,13 @@ void dataconfigs::loadLevelBlocks()
 
     if(!openSection(&blockset, "blocks-main")) return;
         block_total = blockset.value("total", 0).toUInt();
-        total_data +=block_total;
+        total_data += block_total;
+        blocks_nestDir = blockset.value("config-dir", "").toString();
+        if(!blocks_nestDir.isEmpty())
+        {
+            blocks_nestDir = config_dir + blocks_nestDir;
+            useDirectory = true;
+        }
     closeSection(&blockset);
 
     emit progressPartNumber(2);
@@ -120,7 +129,15 @@ void dataconfigs::loadLevelBlocks()
     {
         emit progressValue(int(i));
 
-        bool valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &blockset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i), &blockset);
+        }
+        else
+        {
+            valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &blockset);
+        }
 
         /***************Load image*******************/
         if(valid)
