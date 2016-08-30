@@ -55,19 +55,29 @@ void dataconfigs::loadWorldPaths()
 
     obj_w_path sPath;
     unsigned long path_total=0;
+    bool useDirectory=false;
 
     QString scene_ini = getFullIniPath("wld_paths.ini");
-    if(scene_ini.isEmpty()) return;
+    if(scene_ini.isEmpty())
+        return;
 
-    QSettings pathset(scene_ini, QSettings::IniFormat);
-    pathset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(scene_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_wpaths.clear();   //Clear old
 
-    if(!openSection(&pathset, "path-main")) return;
-        path_total = pathset.value("total", 0).toUInt();
+    if(!openSection(&setup, "path-main")) return;
+        path_total = setup.value("total", 0).toUInt();
         total_data +=path_total;
-    closeSection(&pathset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(6);
     emit progressMax(int(path_total));
@@ -87,7 +97,15 @@ void dataconfigs::loadWorldPaths()
     for(i=1; i<=path_total; i++)
     {
         emit progressValue(int(i));
-        bool valid = loadWorldPath(sPath, QString("path-%1").arg(i), 0, "", &pathset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadWorldPath(sPath, "path", nullptr, QString("%1/path-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadWorldPath(sPath, QString("path-%1").arg(i), 0, "", &setup);
+        }
         /***************Load image*******************/
         if(valid)
         {
@@ -106,9 +124,9 @@ void dataconfigs::loadWorldPaths()
         sPath.setup.id = i;
         main_wpaths.storeElement(int(i), sPath, valid);
 
-        if( pathset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(pathset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

@@ -159,7 +159,10 @@ bool ConfigManager::loadWorldTiles()
 
     obj_w_tile stile;
     unsigned long tiles_total=0;
+    bool useDirectory=false;
+
     QString tile_ini = config_dir + "wld_tiles.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(tile_ini))
     {
@@ -168,14 +171,20 @@ bool ConfigManager::loadWorldTiles()
         return false;
     }
 
-    QSettings tileset(tile_ini, QSettings::IniFormat);
-    tileset.setIniCodec("UTF-8");
+    QSettings setup(tile_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     wld_tiles.clear();   //Clear old
 
-    tileset.beginGroup("tiles-main");
-        tiles_total = tileset.value("total", "0").toInt();
-    tileset.endGroup();
+    setup.beginGroup("tiles-main");
+        tiles_total = setup.value("total", "0").toInt();
+        nestDir =     setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    setup.endGroup();
 
     wld_tiles.allocateSlots(tiles_total);
 
@@ -197,8 +206,14 @@ bool ConfigManager::loadWorldTiles()
 
     for(i=1; i<=tiles_total; i++)
     {
-        if(!loadWorldTile(stile, QString("tile-%1").arg(i), nullptr, "", &tileset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadWorldTile(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        } else {
+            if(!loadWorldTile(stile, QString("tile-%1").arg(i), nullptr, "", &setup))
+                return false;
+        }
 
         stile.setup.id = i;
         //Store loaded config
@@ -206,10 +221,10 @@ bool ConfigManager::loadWorldTiles()
         //Load custom config if possible
         loadCustomConfig<obj_w_tile>(wld_tiles, i, Dir_Tiles, "tile", "tile", &loadWorldTile);
 
-        if( tileset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(tileset.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::error(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(tileset.status()).arg(i));
+            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
+            PGE_MsgBox::error(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i));
             return false;
         }
     }
@@ -229,7 +244,10 @@ bool ConfigManager::loadWorldScenery()
 
     obj_w_scenery sScene;
     unsigned long scenery_total=0;
+    bool useDirectory=false;
+
     QString scene_ini = config_dir + "wld_scenery.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(scene_ini))
     {
@@ -238,14 +256,20 @@ bool ConfigManager::loadWorldScenery()
         return false;
     }
 
-    QSettings sceneset(scene_ini, QSettings::IniFormat);
-    sceneset.setIniCodec("UTF-8");
+    QSettings setup(scene_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     wld_scenery.clear();   //Clear old
 
-    sceneset.beginGroup("scenery-main");
-        scenery_total = sceneset.value("total", "0").toInt();
-    sceneset.endGroup();
+    setup.beginGroup("scenery-main");
+        scenery_total = setup.value("total", "0").toInt();
+        nestDir =       setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    setup.endGroup();
 
     wld_scenery.allocateSlots(scenery_total);
 
@@ -263,8 +287,14 @@ bool ConfigManager::loadWorldScenery()
 
     for(i=1; i<=scenery_total; i++)
     {
-        if(!loadWorldScenery(sScene, QString("scenery-%1").arg(i), nullptr, "", &sceneset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadWorldScenery(sScene, "scenery", nullptr, QString("%1/scenery-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        } else {
+            if(!loadWorldScenery(sScene, QString("scenery-%1").arg(i), nullptr, "", &setup))
+                return false;
+        }
 
         sScene.setup.id = i;
         //Store loaded config
@@ -272,10 +302,10 @@ bool ConfigManager::loadWorldScenery()
         //Load custom config if possible
         loadCustomConfig<obj_w_scenery>(wld_scenery, i, Dir_Scenery, "scene", "scenery", &loadWorldScenery);
 
-        if( sceneset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(sceneset.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::error(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(sceneset.status()).arg(i));
+            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
+            PGE_MsgBox::error(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(setup.status()).arg(i));
             return false;
         }
     }
@@ -296,7 +326,10 @@ bool ConfigManager::loadWorldPaths()
 
     obj_w_path sPath;
     unsigned long path_total=0;
+    bool useDirectory=false;
+
     QString scene_ini = config_dir + "wld_paths.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(scene_ini))
     {
@@ -305,14 +338,20 @@ bool ConfigManager::loadWorldPaths()
         return false;
     }
 
-    QSettings pathset(scene_ini, QSettings::IniFormat);
-    pathset.setIniCodec("UTF-8");
+    QSettings setup(scene_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     wld_paths.clear();   //Clear old
 
-    pathset.beginGroup("path-main");
-        path_total = pathset.value("total", "0").toInt();
-    pathset.endGroup();
+    setup.beginGroup("path-main");
+        path_total = setup.value("total", "0").toInt();
+        nestDir =    setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    setup.endGroup();
 
     if(path_total==0)
     {
@@ -331,8 +370,16 @@ bool ConfigManager::loadWorldPaths()
 
     for(i=1; i<=path_total; i++)
     {
-        if(!loadWorldPath(sPath, QString("path-%1").arg(i), nullptr, "", &pathset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadWorldPath(sPath, "path", nullptr, QString("%1/path-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        }
+        else
+        {
+            if(!loadWorldPath(sPath, QString("path-%1").arg(i), nullptr, "", &setup))
+                return false;
+        }
 
         sPath.setup.id = i;
         //Store loaded config
@@ -340,10 +387,10 @@ bool ConfigManager::loadWorldPaths()
         //Load custom config if possible
         loadCustomConfig<obj_w_path>(wld_paths, i, Dir_WldPaths, "path", "path", &loadWorldPath);
 
-        if( pathset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(pathset.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::fatal(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(pathset.status()).arg(i));
+            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
+            PGE_MsgBox::fatal(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(setup.status()).arg(i));
             return false;
         }
     }
@@ -363,7 +410,11 @@ bool ConfigManager::loadWorldLevels()
 
     obj_w_level slevel;
     unsigned long levels_total=0;
+    bool useDirectory=false;
+
     QString level_ini = config_dir + "wld_levels.ini";
+    QString nestDir = "";
+
 
     if(!QFile::exists(level_ini))
     {
@@ -373,16 +424,23 @@ bool ConfigManager::loadWorldLevels()
     }
 
 
-    QSettings levelset(level_ini, QSettings::IniFormat);
-    levelset.setIniCodec("UTF-8");
+    QSettings setup(level_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     wld_levels.clear();   //Clear old
 
-    levelset.beginGroup("levels-main");
-        levels_total = levelset.value("total", "0").toInt();
-        marker_wlvl.path = levelset.value("path", "0").toInt();
-        marker_wlvl.bigpath = levelset.value("bigpath", "0").toInt();
-    levelset.endGroup();
+    setup.beginGroup("levels-main");
+        levels_total =  setup.value("total", "0").toInt();
+        nestDir =       setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+
+        marker_wlvl.path = setup.value("path", "0").toInt();
+        marker_wlvl.bigpath = setup.value("bigpath", "0").toInt();
+    setup.endGroup();
 
     if(levels_total==0)
     {
@@ -399,8 +457,16 @@ bool ConfigManager::loadWorldLevels()
 
     for(i=0; i<=levels_total; i++)
     {
-        if(!loadWorldLevel(slevel, QString("level-%1").arg(i), nullptr, "", &levelset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadWorldLevel(slevel, "level", nullptr, QString("%1/level-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        }
+        else
+        {
+            if(!loadWorldLevel(slevel, QString("level-%1").arg(i), nullptr, "", &setup))
+                return false;
+        }
 
         slevel.setup.id = i;
         //Store loaded config
@@ -408,10 +474,10 @@ bool ConfigManager::loadWorldLevels()
         //Load custom config if possible
         loadCustomConfig<obj_w_level>(wld_levels, i, Dir_WldLevel, "level", "level", &loadWorldLevel);
 
-        if( levelset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::error(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i));
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
+            PGE_MsgBox::error(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.status()).arg(i));
             return false;
         }
     }

@@ -55,20 +55,29 @@ void dataconfigs::loadWorldTiles()
 
     obj_w_tile stile;
     unsigned long tiles_total=0;
+    bool useDirectory=false;
 
     QString tile_ini = getFullIniPath("wld_tiles.ini");
     if(tile_ini.isEmpty())
         return;
 
-    QSettings tileset(tile_ini, QSettings::IniFormat);
-    tileset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(tile_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_wtiles.clear();   //Clear old
 
-    if(!openSection(&tileset, "tiles-main")) return;
-        tiles_total = tileset.value("total", 0).toUInt();
+    if(!openSection(&setup, "tiles-main")) return;
+        tiles_total = setup.value("total", 0).toUInt();
         total_data +=tiles_total;
-    closeSection(&tileset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(4);
     emit progressMax(int(tiles_total));
@@ -88,7 +97,15 @@ void dataconfigs::loadWorldTiles()
     for(i=1; i<=tiles_total; i++)
     {
         emit progressValue(int(i));
-        bool valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), 0, "", &tileset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadWorldTerrain(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), 0, "", &setup);
+        }
         /***************Load image*******************/
         if(valid)
         {
@@ -107,9 +124,9 @@ void dataconfigs::loadWorldTiles()
         stile.setup.id = i;
         main_wtiles.storeElement(int(i), stile, valid);
 
-        if( tileset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(tileset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

@@ -84,19 +84,29 @@ void dataconfigs::loadLevelBGO()
 
     obj_bgo sbgo;
     unsigned long bgo_total=0;
+    bool useDirectory=false;
+
     QString bgo_ini = getFullIniPath("lvl_bgo.ini");
     if(bgo_ini.isEmpty())
         return;
 
-    QSettings bgoset(bgo_ini, QSettings::IniFormat);
-    bgoset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(bgo_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_bgo.clear();   //Clear old
 
-    if(!openSection( &bgoset, "background-main")) return;
-        bgo_total = bgoset.value("total", 0).toUInt();
+    if(!openSection( &setup, "background-main")) return;
+        bgo_total = setup.value("total", 0).toUInt();
         total_data +=bgo_total;
-    closeSection(&bgoset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(1);
     emit progressMax(int(bgo_total));
@@ -116,7 +126,17 @@ void dataconfigs::loadLevelBGO()
     for(i=1; i<=bgo_total; i++)
     {
         emit progressValue(int(i));
-        bool valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &bgoset);
+        bool valid=false;
+
+        if(useDirectory)
+        {
+            valid = loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &setup);
+        }
+
         /***************Load image*******************/
         if(valid)
         {
@@ -136,9 +156,9 @@ void dataconfigs::loadLevelBGO()
         sbgo.setup.id = i;
         main_bgo.storeElement(int(i), sbgo, valid);
 
-        if( bgoset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

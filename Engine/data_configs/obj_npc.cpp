@@ -72,7 +72,10 @@ bool ConfigManager::loadLevelNPC()
 
     obj_npc snpc;
     unsigned long npc_total=0;
+    bool useDirectory=false;
+
     PGESTRING npc_ini = config_dir + "lvl_npc.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(npc_ini))
     {
@@ -90,6 +93,13 @@ bool ConfigManager::loadLevelNPC()
 
     npcset.beginGroup("npc-main");
         npc_total =                  npcset.value("total", 0).toInt();
+        nestDir =                    npcset.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+
         g_setup_npc.bubble =         npcset.value("bubble", 283).toInt();
         g_setup_npc.egg =            npcset.value("egg", 96).toInt();
         g_setup_npc.lakitu =         npcset.value("lakitu", 284).toInt();
@@ -123,8 +133,14 @@ bool ConfigManager::loadLevelNPC()
 
     for(i=1; i<= npc_total; i++)
     {
-        if(!loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &npcset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadLevelNPC(snpc, "npc", nullptr, QString("%1/npc-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        } else {
+            if(!loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &npcset))
+                return false;
+        }
 
         snpc.setup.id = i;
         lvl_npc_indexes.storeElement(snpc.setup.id, snpc);

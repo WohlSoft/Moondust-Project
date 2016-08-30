@@ -60,7 +60,10 @@ bool ConfigManager::loadLevelBGO()
 
     obj_bgo sbgo;
     unsigned long bgo_total=0;
+    bool useDirectory=false;
+
     QString bgo_ini = config_dir + "lvl_bgo.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(bgo_ini))
     {
@@ -78,14 +81,26 @@ bool ConfigManager::loadLevelBGO()
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();
+        nestDir =   bgoset.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
     bgoset.endGroup();
 
     lvl_bgo_indexes.allocateSlots(bgo_total);
 
     for(i=1; i<=bgo_total; i++)
     {
-        if(!loadLevelBGO(sbgo, QString("background-%1").arg(i), nullptr, "", &bgoset))
-            return false;
+        if(useDirectory)
+        {
+            if(!loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i)))
+                return false;
+        } else {
+            if(!loadLevelBGO(sbgo, QString("background-%1").arg(i), nullptr, "", &bgoset))
+                return false;
+        }
 
         sbgo.setup.id = i;
         //Store loaded config

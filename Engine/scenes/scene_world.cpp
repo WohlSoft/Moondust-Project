@@ -422,18 +422,27 @@ bool WorldScene::loadConfigs()
     bool success=true;
     QString musIni=data.meta.path+"/music.ini";
     QString sndIni=data.meta.path+"/sounds.ini";
-    if(ConfigManager::music_lastIniFile!=musIni)
+    if(ConfigManager::music_lastIniFile != musIni)
     {
         ConfigManager::loadDefaultMusics();
         ConfigManager::loadMusic(data.meta.path+"/", musIni, true);
     }
-    if(ConfigManager::sound_lastIniFile!=sndIni)
+    if(ConfigManager::sound_lastIniFile != sndIni)
     {
         ConfigManager::loadDefaultSounds();
         ConfigManager::loadSound(data.meta.path+"/", sndIni, true);
         if(ConfigManager::soundIniChanged())
             ConfigManager::buildSoundIndex();
     }
+
+    //Set paths
+    ConfigManager::Dir_EFFECT.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelEffect() );
+    ConfigManager::Dir_Tiles.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldTiles() );
+    ConfigManager::Dir_Scenery.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldScenery() );
+    ConfigManager::Dir_WldPaths.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPaths() );
+    ConfigManager::Dir_WldLevel.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldLevels() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayable() );
+    ConfigManager::Dir_PlayerWld.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPlayable() );
 
     //Load INI-files
     success = ConfigManager::loadWorldTiles();   //!< Tiles
@@ -446,15 +455,6 @@ bool WorldScene::loadConfigs()
         if(!success) { _errorString="Fail on level entrances config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
     success = ConfigManager::loadLevelEffects();
         if(!success) { _errorString="Fail on effects config loading"; exitWorldCode = WldExit::EXIT_error; goto abortInit;}
-
-    //Set paths
-    ConfigManager::Dir_EFFECT.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelEffect() );
-    ConfigManager::Dir_Tiles.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldTiles() );
-    ConfigManager::Dir_Scenery.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldScenery() );
-    ConfigManager::Dir_WldPaths.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPaths() );
-    ConfigManager::Dir_WldLevel.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldLevels() );
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayable() );
-    ConfigManager::Dir_PlayerWld.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathWorldPlayable() );
 
     //Validate all playable characters until use game state!
     if(gameState)

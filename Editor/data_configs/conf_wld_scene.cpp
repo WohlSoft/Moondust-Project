@@ -56,20 +56,29 @@ void dataconfigs::loadWorldScene()
 
     obj_w_scenery sScene;
     unsigned long scenery_total=0;
+    bool useDirectory=false;
 
     QString scene_ini = getFullIniPath("wld_scenery.ini");
     if(scene_ini.isEmpty())
         return;
 
-    QSettings sceneset(scene_ini, QSettings::IniFormat);
-    sceneset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(scene_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_wscene.clear();   //Clear old
 
-    if(!openSection(&sceneset, "scenery-main")) return;
-        scenery_total = sceneset.value("total", 0).toUInt();
+    if(!openSection(&setup, "scenery-main")) return;
+        scenery_total = setup.value("total", 0).toUInt();
         total_data +=scenery_total;
-    closeSection(&sceneset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(5);
     emit progressMax(int(scenery_total));
@@ -89,7 +98,15 @@ void dataconfigs::loadWorldScene()
     for(i=1; i <= scenery_total; i++)
     {
         emit progressValue(int(i));
-        bool valid = loadWorldScene(sScene, QString("scenery-%1").arg(i), 0, "", &sceneset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadWorldScene(sScene, "scenery", nullptr, QString("%1/scenery-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadWorldScene(sScene, QString("scenery-%1").arg(i), 0, "", &setup);
+        }
         /***************Load image*******************/
         if(valid)
         {
@@ -108,9 +125,9 @@ void dataconfigs::loadWorldScene()
         sScene.setup.id = i;
         main_wscene.storeElement(int(i), sScene, valid);
 
-        if( sceneset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(sceneset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

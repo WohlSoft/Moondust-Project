@@ -55,22 +55,31 @@ void dataconfigs::loadWorldLevels()
 
     obj_w_level slevel;
     unsigned long levels_total=0;
+    bool useDirectory=false;
 
     QString level_ini = getFullIniPath("wld_levels.ini");
     if(level_ini.isEmpty())
         return;
 
-    QSettings levelset(level_ini, QSettings::IniFormat);
-    levelset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(level_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_wlevels.clear();   //Clear old
 
-    if(!openSection(&levelset, "levels-main")) return;
-        levels_total        = levelset.value("total", 0).toUInt();
-        marker_wlvl.path    = levelset.value("path", 0).toUInt();
-        marker_wlvl.bigpath = levelset.value("bigpath", 0).toUInt();
+    if(!openSection(&setup, "levels-main")) return;
+        levels_total        = setup.value("total", 0).toUInt();
+        marker_wlvl.path    = setup.value("path", 0).toUInt();
+        marker_wlvl.bigpath = setup.value("bigpath", 0).toUInt();
         total_data +=levels_total;
-    closeSection(&levelset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(7);
     emit progressMax(int(levels_total));
@@ -90,7 +99,16 @@ void dataconfigs::loadWorldLevels()
     for(i=0; i<=levels_total; i++)
     {
         emit progressValue(int(i));
-        bool valid = loadWorldLevel(slevel, QString("level-%1").arg(i), 0, "", &levelset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadWorldLevel(slevel, "level", nullptr, QString("%1/level-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadWorldLevel(slevel, QString("level-%1").arg(i), 0, "", &setup);
+        }
+
         /***************Load image*******************/
         if(valid)
         {
@@ -109,9 +127,9 @@ void dataconfigs::loadWorldLevels()
         slevel.setup.id = i;
         main_wlevels.storeElement(int(i), slevel, valid);
 
-        if( levelset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

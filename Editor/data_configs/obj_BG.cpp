@@ -192,20 +192,29 @@ void dataconfigs::loadLevelBackgrounds()
     unsigned int i;
     obj_BG sbg;
     unsigned long bg_total=0;
+    bool useDirectory=false;
 
     QString bg_ini = getFullIniPath("lvl_bkgrd.ini");
     if( bg_ini.isEmpty() )
         return;
 
-    QSettings bgset(bg_ini, QSettings::IniFormat);
-    bgset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(bg_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_bg.clear();   //Clear old
 
-    if(!openSection(&bgset, "background2-main")) return;
-        bg_total = bgset.value("total", 0).toUInt();
+    if(!openSection(&setup, "background2-main")) return;
+        bg_total = setup.value("total", 0).toUInt();
         total_data += bg_total;
-    closeSection(&bgset);
+        nestDir = setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+    closeSection(&setup);
 
     emit progressPartNumber(0);
     emit progressMax(int(bg_total));
@@ -225,13 +234,22 @@ void dataconfigs::loadLevelBackgrounds()
     {
         emit progressValue(int(i));
 
-        bool valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &bgset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadLevelBackground(sbg, "background2", nullptr, QString("%1/background2-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &setup);
+        }
+
         sbg.id = i;
         main_bg.storeElement(int(i), sbg, valid);
 
-        if( bgset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
         }
     }
 }

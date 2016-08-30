@@ -91,24 +91,24 @@ void dataconfigs::loadLevelBlocks()
     if(block_ini.isEmpty())
         return;
 
-    QString blocks_nestDir = "";
+    QString nestDir = "";
 
-    QSettings blockset(block_ini, QSettings::IniFormat);
-    blockset.setIniCodec("UTF-8");
+    QSettings setup(block_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_block.clear();   //Clear old
     //index_blocks.clear();
 
-    if(!openSection(&blockset, "blocks-main")) return;
-        block_total = blockset.value("total", 0).toUInt();
+    if(!openSection(&setup, "blocks-main")) return;
+        block_total = setup.value("total", 0).toUInt();
         total_data += block_total;
-        blocks_nestDir = blockset.value("config-dir", "").toString();
-        if(!blocks_nestDir.isEmpty())
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
         {
-            blocks_nestDir = config_dir + blocks_nestDir;
+            nestDir = config_dir + nestDir;
             useDirectory = true;
         }
-    closeSection(&blockset);
+    closeSection(&setup);
 
     emit progressPartNumber(2);
     emit progressMax(int(block_total));
@@ -132,11 +132,11 @@ void dataconfigs::loadLevelBlocks()
         bool valid = false;
         if(useDirectory)
         {
-            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i));
+            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(nestDir).arg(i));
         }
         else
         {
-            valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &blockset);
+            valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &setup);
         }
 
         /***************Load image*******************/
@@ -158,9 +158,9 @@ void dataconfigs::loadLevelBlocks()
         sblock.setup.id = i;
         main_block.storeElement(int(i), sblock, valid);
 
-        if( blockset.status()!=QSettings::NoError)
+        if( setup.status()!=QSettings::NoError)
         {
-            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

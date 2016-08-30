@@ -77,30 +77,41 @@ void dataconfigs::loadLevelNPC()
 
     obj_npc snpc;
     unsigned long npc_total=0;
+    bool useDirectory=false;
+
     QString npc_ini = getFullIniPath("lvl_npc.ini");
     if(npc_ini.isEmpty())
         return;
 
-    QSettings npcset(npc_ini, QSettings::IniFormat);
-    npcset.setIniCodec("UTF-8");
+    QString nestDir = "";
+
+    QSettings setup(npc_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     main_npc.clear();   //Clear old
 
-    if(!openSection(&npcset, "npc-main")) return;
-        npc_total =                 npcset.value("total", 0).toUInt();
+    if(!openSection(&setup, "npc-main")) return;
+        npc_total =                 setup.value("total", 0).toUInt();
         total_data +=npc_total;
 
-        marker_npc.bubble =         npcset.value("bubble", 283).toUInt();
-        marker_npc.egg =            npcset.value("egg", 96).toUInt();
-        marker_npc.lakitu =         npcset.value("lakitu", 284).toUInt();
-        marker_npc.buried =         npcset.value("buried", 91).toUInt();
-        marker_npc.ice_cube =       npcset.value("icecube", 91).toUInt();
-        marker_npc.iceball =        npcset.value("iceball", 265).toUInt();
-        marker_npc.fireball =       npcset.value("fireball", 13).toUInt();
-        marker_npc.hammer =         npcset.value("hammer", 171).toUInt();
-        marker_npc.boomerang =      npcset.value("boomerang", 292).toUInt();
-        marker_npc.coin_in_block =  npcset.value("coin-in-block", 10).toUInt();
-    closeSection(&npcset);
+        nestDir =   setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+
+        marker_npc.bubble =         setup.value("bubble", 283).toUInt();
+        marker_npc.egg =            setup.value("egg", 96).toUInt();
+        marker_npc.lakitu =         setup.value("lakitu", 284).toUInt();
+        marker_npc.buried =         setup.value("buried", 91).toUInt();
+        marker_npc.ice_cube =       setup.value("icecube", 91).toUInt();
+        marker_npc.iceball =        setup.value("iceball", 265).toUInt();
+        marker_npc.fireball =       setup.value("fireball", 13).toUInt();
+        marker_npc.hammer =         setup.value("hammer", 171).toUInt();
+        marker_npc.boomerang =      setup.value("boomerang", 292).toUInt();
+        marker_npc.coin_in_block =  setup.value("coin-in-block", 10).toUInt();
+    closeSection(&setup);
 
     emit progressPartNumber(3);
     emit progressMax(int(npc_total));
@@ -121,7 +132,15 @@ void dataconfigs::loadLevelNPC()
     {
         emit progressValue(int(i));
 
-        bool valid = loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &npcset);
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadLevelNPC(snpc, "npc", nullptr, QString("%1/npc-%2.ini").arg(nestDir).arg(i));
+        }
+        else
+        {
+            valid = loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &setup);
+        }
         /***************Load image*******************/
         if(valid)
         {
@@ -141,9 +160,9 @@ void dataconfigs::loadLevelNPC()
         snpc.setup.id = i;
         main_npc.storeElement( int(i), snpc, valid);
 
-        if( npcset.status() != QSettings::NoError )
+        if( setup.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

@@ -63,7 +63,7 @@ bool ConfigManager::loadLevelBlocks()
     bool useDirectory=false;
 
     QString block_ini = config_dir + "lvl_blocks.ini";
-    QString blocks_nestDir = "";
+    QString nestDir = "";
 
     if(!QFile::exists(block_ini))
     {
@@ -72,20 +72,20 @@ bool ConfigManager::loadLevelBlocks()
         return false;
     }
 
-    QSettings blockset(block_ini, QSettings::IniFormat);
-    blockset.setIniCodec("UTF-8");
+    QSettings setup(block_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     lvl_block_indexes.clear();//Clear old
 
-    blockset.beginGroup("blocks-main");
-        block_total = blockset.value("total", 0).toUInt();
-        blocks_nestDir = blockset.value("config-dir", "").toString();
-        if(!blocks_nestDir.isEmpty())
+    setup.beginGroup("blocks-main");
+        block_total = setup.value("total", 0).toUInt();
+        nestDir =     setup.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
         {
-            blocks_nestDir = config_dir + blocks_nestDir;
+            nestDir = config_dir + nestDir;
             useDirectory = true;
         }
-    blockset.endGroup();
+    setup.endGroup();
 
 
 
@@ -103,12 +103,12 @@ bool ConfigManager::loadLevelBlocks()
     {
         if(useDirectory)
         {
-            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i)))
+            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(nestDir).arg(i)))
                 return false;
         }
         else
         {
-            if(!loadLevelBlock(sblock, QString("block-%1").arg(i), nullptr, "", &blockset))
+            if(!loadLevelBlock(sblock, QString("block-%1").arg(i), nullptr, "", &setup))
                 return false;
         }
 
@@ -118,11 +118,11 @@ bool ConfigManager::loadLevelBlocks()
         //Load custom config if possible
         loadCustomConfig<obj_block>(lvl_block_indexes, i, Dir_Blocks, "block", "block", &loadLevelBlock);
 
-        if( blockset.status()!=QSettings::NoError)
+        if( setup.status()!=QSettings::NoError)
         {
-            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
 
-            PGE_MsgBox::error(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            PGE_MsgBox::error(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i));
             break;
         }
    }

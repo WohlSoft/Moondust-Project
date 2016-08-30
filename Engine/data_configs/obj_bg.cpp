@@ -139,8 +139,10 @@ bool ConfigManager::loadLevelBackG()
     unsigned int i;
     obj_BG sbg;
     unsigned long bg_total=0;
+    bool useDirectory=false;
 
     QString bg_ini = config_dir + "lvl_bkgrd.ini";
+    QString nestDir = "";
 
     if(!QFile::exists(bg_ini))
     {
@@ -154,7 +156,13 @@ bool ConfigManager::loadLevelBackG()
     lvl_bg_indexes.clear();//Clear old
 
     bgset.beginGroup("background2-main");
-        bg_total = bgset.value("total", "0").toInt();
+        bg_total =  bgset.value("total", "0").toInt();
+        nestDir =   bgset.value("config-dir", "").toString();
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
     bgset.endGroup();
 
     lvl_bg_indexes.allocateSlots(bg_total);
@@ -171,7 +179,15 @@ bool ConfigManager::loadLevelBackG()
         sbg.second_textureArrayId = 0;
         sbg.second_animator_ID = 0;
 
-        if( loadLevelBackground(sbg, QString("background2-"+QString::number(i)), 0, "", &bgset) )
+        bool valid = false;
+        if(useDirectory)
+        {
+            valid = loadLevelBackground(sbg, "background2", nullptr, QString("%1/background2-%2.ini").arg(nestDir).arg(i));
+        } else {
+            valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &bgset);
+        }
+
+        if( valid )
         {
             sbg.id = i;
             lvl_bg_indexes.storeElement(sbg.id, sbg);

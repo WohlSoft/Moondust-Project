@@ -14,6 +14,7 @@
 - Enabled ability to spawn effects on the world map (one effect is spawning a smoke when level or path enabling)
 - Fixed exit code management in the path opener processor
 - Implemented full support for custom config files for all elements: block-*.ini, background-*.ini, tile-*.ini, scene-*.ini, path-*.ini, level-*.ini
+- Fully implemented support of slitted configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
