@@ -18,6 +18,11 @@ function needQuotes($value)
     return "\"".$value."\"";
 }
 
+function EndsWith($Haystack, $Needle){
+    // Recommended version, using strpos
+    return strrpos($Haystack, $Needle) === strlen($Haystack)-strlen($Needle);
+}
+
 foreach($ini_array as $key => &$section)
 {
     echo $key;
@@ -26,7 +31,8 @@ foreach($ini_array as $key => &$section)
     {
         $out_data .= $param . " = " . needQuotes($value) . "\n";
     }
-    file_put_contents($targetDirectory . $key . ".ini", $out_data);
+    if(!EndsWith($key, "-main"))
+        file_put_contents($targetDirectory . $key . ".ini", $out_data);
 }
 echo "\n";
 

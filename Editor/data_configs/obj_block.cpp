@@ -132,7 +132,7 @@ void dataconfigs::loadLevelBlocks()
         bool valid = false;
         if(useDirectory)
         {
-            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i), &blockset);
+            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i));
         }
         else
         {

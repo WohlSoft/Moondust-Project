@@ -103,7 +103,7 @@ bool ConfigManager::loadLevelBlocks()
     {
         if(useDirectory)
         {
-            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i), &blockset))
+            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(blocks_nestDir).arg(i)))
                 return false;
         }
         else
