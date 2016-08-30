@@ -880,12 +880,22 @@ void PGE_Phys_Object::updateCollisions()
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
-                                m_momentum.x = CUR->m_momentum.x - m_momentum.w;
-                                double &splr = m_momentum.velX;
-                                double &sbox = CUR->m_momentum.velX;
-                                xSpeedWasReversed = splr <= sbox;
-                                splr = std::min( splr, sbox );
-                                m_momentum.velXsrc = splr;
+                                if(CUR->m_bodytype==Body_DYNAMIC)
+                                {
+                                    CUR->m_blockedAtLeft = true;
+                                    /*blockSkipI = i;
+                                    i = blockSkipStartFrom;
+                                    CUR = objs[i];
+                                    blockSkipStartFrom = blockSkipI;
+                                    blockSkip = true;*/
+                                } else {
+                                    m_momentum.x = CUR->m_momentum.x - m_momentum.w;
+                                    double &splr = m_momentum.velX;
+                                    double &sbox = CUR->m_momentum.velX;
+                                    xSpeedWasReversed = splr <= sbox;
+                                    splr = std::min( splr, sbox );
+                                    m_momentum.velXsrc = splr;
+                                }
                                 doSpeedStack = false;
                                 speedSum = 0.0;
                                 speedNum = 0.0;
@@ -893,15 +903,6 @@ void PGE_Phys_Object::updateCollisions()
                                 collideAtRight = CUR;
                                 l_pushR(CUR);
                                 m_blockedAtRight=true;
-                                if(CUR->m_bodytype==Body_DYNAMIC)
-                                {
-                                    CUR->m_blockedAtLeft=true;
-                                    blockSkipI = i;
-                                    i = blockSkipStartFrom;
-                                    CUR = objs[i];
-                                    blockSkipStartFrom = blockSkipI;
-                                    blockSkip = true;
-                                }
                             }
                     tipRectL_Skip:;
                         }
@@ -934,12 +935,22 @@ void PGE_Phys_Object::updateCollisions()
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
-                                m_momentum.x = CUR->m_momentum.x + CUR->m_momentum.w;
-                                double &splr = m_momentum.velX;
-                                double &sbox = CUR->m_momentum.velX;
-                                xSpeedWasReversed = splr >= sbox;
-                                splr = std::max( splr, sbox );
-                                m_momentum.velXsrc = splr;
+                                if(CUR->m_bodytype==Body_DYNAMIC)
+                                {
+                                    CUR->m_blockedAtRight = true;
+                                    /*blockSkipI = i;
+                                    i = blockSkipStartFrom;
+                                    CUR = objs[i];
+                                    blockSkipStartFrom = blockSkipI;
+                                    blockSkip = true;*/
+                                } else {
+                                    m_momentum.x = CUR->m_momentum.x + CUR->m_momentum.w;
+                                    double &splr = m_momentum.velX;
+                                    double &sbox = CUR->m_momentum.velX;
+                                    xSpeedWasReversed = splr >= sbox;
+                                    splr = std::max( splr, sbox );
+                                    m_momentum.velXsrc = splr;
+                                }
                                 doSpeedStack = false;
                                 speedSum = 0.0;
                                 speedNum = 0.0;
@@ -947,15 +958,6 @@ void PGE_Phys_Object::updateCollisions()
                                 collideAtLeft = CUR;
                                 l_pushL(CUR);
                                 m_blockedAtLeft=true;
-                                if(CUR->m_bodytype==Body_DYNAMIC)
-                                {
-                                    CUR->m_blockedAtRight=true;
-                                    blockSkipI = i;
-                                    i = blockSkipStartFrom;
-                                    CUR = objs[i];
-                                    blockSkipStartFrom = blockSkipI;
-                                    blockSkip = true;
-                                }
                             }
                     tipRectR_Skip:;
                         }
@@ -1645,7 +1647,9 @@ void PGE_Phys_Object::updateCollisions()
     if(collideAtLeft && collideAtRight)
     {
         //If character got crushed between moving layers
-        if(collideAtRight->m_momentum.velX < collideAtLeft->m_momentum.velX )
+        if( (collideAtLeft->m_bodytype==Body_STATIC)&&
+            (collideAtRight->m_bodytype==Body_STATIC)&&
+            (collideAtRight->m_momentum.velX < collideAtLeft->m_momentum.velX) )
         {
             #ifdef STOP_LOOP_ON_CRUSH
             alive = false;
