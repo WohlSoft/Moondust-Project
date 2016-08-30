@@ -1,38 +1,20 @@
 <?php
 
+require_once("_ini_splitter.php");
 echo "\n";
-$ini_array = parse_ini_file("lvl_blocks.ini", true);
-$targetDirectory = "items/blocks/";
-$sectionName = "block";
 
-function needQuotes($value)
-{
-    if($value == (string)intval($value))
-        return $value;
-    if($value == (string)doubleval($value))
-        return $value;
-    if($value == "true")
-        return $value;
-    if($value == "false")
-        return $value;
-    return "\"".$value."\"";
-}
+if(!is_dir("items"))
+    mkdir("items");
 
-function EndsWith($Haystack, $Needle){
-    // Recommended version, using strpos
-    return strrpos($Haystack, $Needle) === strlen($Haystack)-strlen($Needle);
-}
+splitIni("lvl_blocks.ini", "items/blocks/", "block");
+splitIni("lvl_bgo.ini", "items/bgo/", "background");
+splitIni("lvl_npc.ini", "items/npc/", "npc");
+splitIni("lvl_bkgrd.ini", "items/backgrounds/", "background2");
 
-foreach($ini_array as $key => &$section)
-{
-    echo $key;
-    $out_data = "[".$sectionName."]\n";
-    foreach($section as $param => &$value)
-    {
-        $out_data .= $param . " = " . needQuotes($value) . "\n";
-    }
-    if(!EndsWith($key, "-main"))
-        file_put_contents($targetDirectory . $key . ".ini", $out_data);
-}
+splitIni("wld_tiles.ini", "items/terrain/", "tile");
+splitIni("wld_scenery.ini", "items/scenery/", "scenery");
+splitIni("wld_paths.ini", "items/scenery/", "path");
+splitIni("wld_levels.ini", "items/levels/", "level");
+
 echo "\n";
 
