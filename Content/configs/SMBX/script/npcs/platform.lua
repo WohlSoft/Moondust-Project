@@ -29,6 +29,8 @@ function platform:initProps()
     self.direction = DIR_AUTO
     self.speed = 2
     self.state = self.npc_obj.direction
+    self.npc_obj.speedX = 0
+    self.npc_obj.speedY = 0
     if(self.state == ST_ON)then
         self.npc_obj.gravity = 1
     else
