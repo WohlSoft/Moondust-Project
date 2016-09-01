@@ -131,6 +131,7 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, int defaultGrid, 
         NumberLimiter::apply(plSwitch_Button_id, 0);
     plSwitch_frames_true.clear();
     plSwitch_frames_false.clear();
+    frame_sequence.clear();
 
     if(plSwitch_Button)
     {
