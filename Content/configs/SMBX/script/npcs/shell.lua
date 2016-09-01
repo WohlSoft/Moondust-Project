@@ -11,6 +11,7 @@ function shell:initProps()
     self.cur_mode=AI_IDLING
     self.npc_obj.motionSpeed = 0
     self.npc_obj.speedX = 0
+    self.npc_obj.speedY = 0
     self.npc_obj:setSequence({0})
 end
 
@@ -73,7 +74,7 @@ end
 function shell:toggleState()
     if(self.cur_mode == AI_IDLING)then
         self.cur_mode=AI_RUNNING
-        self.npc_obj.motionSpeed = 550
+        self.npc_obj.motionSpeed = 7.1
         self.npc_obj.frameDelay = 32
         self.npc_obj:setSequence({0,1,2,3})
         Audio.playSoundByRole(SoundRoles.PlayerKick)

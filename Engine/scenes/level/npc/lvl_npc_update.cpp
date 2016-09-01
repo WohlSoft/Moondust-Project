@@ -22,7 +22,6 @@
 
 void LVL_Npc::update(float tickTime)
 {
-    float accelCof=tickTime/1000.0f;
     if(killed) return;
     if(wasDeactivated) return;
 
@@ -45,9 +44,10 @@ void LVL_Npc::update(float tickTime)
 
     PGE_Phys_Object::update(tickTime);
     if(deActivatable)
-        activationTimeout-=tickTime;
+        activationTimeout -= tickTime;
 
-    if(motionSpeed != 0) {
+    if(motionSpeed != 0)
+    {
         if(m_blockedAtLeft)
             setDirection(1);
         else
@@ -55,12 +55,11 @@ void LVL_Npc::update(float tickTime)
             setDirection(-1);
         else
         if(setup->setup.turn_on_cliff_detect && m_cliff)
-        {
             setDirection(_direction*-1);
-        }
-        setSpeedX((motionSpeed*accelCof)*_direction);
+        setSpeedX( motionSpeed * double(_direction) );
         if(motionSpeed<0.0f)
             m_moveLeft = true;
+        else
         if(motionSpeed>0.0f)
             m_moveRight = true;
     }

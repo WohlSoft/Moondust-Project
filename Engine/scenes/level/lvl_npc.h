@@ -44,7 +44,7 @@ public:
     void setDirection(int dir);
     int  direction();
     int _direction;
-    float motionSpeed;
+    double motionSpeed;
     bool  is_scenery;
     bool  is_activity;
     bool  is_shared_animation;

@@ -121,7 +121,7 @@ void LVL_Npc::setDefaults()
 {
     if(!setup) return;
     setDirection(_direction);//Re-apply offset preferences
-    motionSpeed = ((!data.nomove)&&(setup->setup.movement)) ? ((float)setup->setup.speed) : 0.0f;
+    motionSpeed = ((!data.nomove)&&(setup->setup.movement)) ? (setup->setup.speed) : 0.0;
     is_scenery  = setup->setup.scenery;
     is_activity = setup->setup.activity;
     is_shared_animation = setup->setup.shared_ani;

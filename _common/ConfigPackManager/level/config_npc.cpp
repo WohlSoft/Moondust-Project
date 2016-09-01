@@ -228,7 +228,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, int defaultGrid, NpcS
     /*************Build special value combobox***end*****/
 
     score =        setup->value("score", merge_with ? merge_with->score : 0).toInt();
-    speed =        setup->value("speed", merge_with ? merge_with->speed : 64).toInt();
+    speed =        setup->value("speed", merge_with ? merge_with->speed : 2.0).toDouble();
     coins =        setup->value("coins", merge_with ? merge_with->coins : 0).toInt();
     movement =     setup->value("moving", merge_with ? merge_with->movement : 1).toBool();
     activity =     setup->value("activity", merge_with ? merge_with->activity : 1).toBool();

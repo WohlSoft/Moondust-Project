@@ -164,7 +164,7 @@ end
 function ShootFireball(plr)
     local thrownNPC=plr:spawnNPC(13, GENERATOR_APPEAR, SPAWN_UP, false)
     if(thrownNPC~=nil)then
-        thrownNPC.motionSpeed = 256 + math.abs(plr.speedX)*32
+        thrownNPC.motionSpeed = 5 + math.abs(plr.speedX)
         thrownNPC.direction = plr.direction
         if(plr:getKeyState(KEY_UP))then
             thrownNPC.speedY = -4
@@ -185,10 +185,10 @@ function ShootHammer(plr)
         thrownNPC.direction = plr.direction
         if(plr:getKeyState(KEY_UP))then
             thrownNPC.speedY = -7
-            thrownNPC.motionSpeed = 128 + math.abs(plr.speedX)*32
+            thrownNPC.motionSpeed = 5 + math.abs(plr.speedX)
         else
             thrownNPC.speedY = -3
-            thrownNPC.motionSpeed = 256 + math.abs(plr.speedX)*32
+            thrownNPC.motionSpeed = 5 + math.abs(plr.speedX)
         end
         thrownNPC.center_x = plr.center_x + plr.direction*(plr.width/2)
         thrownNPC.center_y = plr.center_y-16

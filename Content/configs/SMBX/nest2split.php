@@ -23,7 +23,7 @@ function splitIni($iniFile, $targetDirectory, $sectionName)
 {
     if(!is_dir($targetDirectory))
         mkdir($targetDirectory);
-    $ini_array = parse_ini_file($iniFile, true);
+    $ini_array = parse_ini_file($iniFile, true, INI_SCANNER_RAW);
     foreach($ini_array as $key => &$section)
     {
         //echo $key;

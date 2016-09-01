@@ -179,7 +179,7 @@ struct NpcSetup
                             //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
     int             coins; //Add number of coins
 
-    int             speed;     //    speed=64			; Default movement speed in px/s
+    double          speed;     //    speed=64			; Default movement speed in px/s
     bool            movement; //    moving=1			; NPC simply moving right/left
     bool            scenery;  //    scenery=0			; NPC as block
     bool            immortal; //    immortal=0			; NPC Can't be destroy
