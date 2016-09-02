@@ -195,7 +195,12 @@ struct NpcSetup
     bool            grab_any; //    grab-any=0			; NPC can be grabbed on any collisions
     int             health;    //    default-health=1		; NPC's health value
     bool            hurt_player; //    hurtplayer=1			; Hurt player on contact
+    bool            hurt_player_on_stomp;//    Hurt player on attempt to apply a stomp attack
+    bool            hurt_player_on_spinstomp;//Hurt player on attempt to apply a spin-stomp attack
     bool            hurt_npc; //    hurtnpc=0			; Hurt other npc on contact
+    int             damage_stomp;//     Damage sensitivity from stomp attak
+    int             damage_spinstomp;// Damage sensitivity from spin-stomp attak
+    int             damage_itemkick;//  Damage sensitivity from kick by thrown item (other NPC) attak
 
     //Hardcoded sound effects
     int             hit_sound_id;

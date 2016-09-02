@@ -246,7 +246,14 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, int defaultGrid, NpcS
     grab_any =     setup->value("grab-any", merge_with ? merge_with->grab_any : 0).toBool();
     health =       setup->value("default-health", merge_with ? merge_with->health : 0).toInt();
     hurt_player =  setup->value("hurtplayer", merge_with ? merge_with->hurt_player : 0).toBool();
+    hurt_player_on_stomp =  setup->value("hurtplayer-on-stomp", merge_with ? merge_with->hurt_player_on_stomp : 0).toBool();
+    hurt_player_on_spinstomp =  setup->value("hurtplayer-on-spinstomp", merge_with ? merge_with->hurt_player_on_spinstomp : 0).toBool();
     hurt_npc =     setup->value("hurtnpc", merge_with ? merge_with->hurt_npc : 0).toBool();
+
+    //Damage level on attacks types
+    damage_stomp = setup->value("damage-sensitive-stomp", merge_with ? merge_with->damage_stomp : 0).toInt();
+    damage_spinstomp = setup->value("damage-sensitive-spinstomp", merge_with ? merge_with->damage_spinstomp : 0).toInt();
+    damage_itemkick = setup->value("damage-sensitive-itemkick", merge_with ? merge_with->damage_itemkick : 0).toInt();
 
     //Sound effects
     hit_sound_id = setup->value("hit-sound-id", merge_with ? merge_with->hit_sound_id : 0).toInt();
