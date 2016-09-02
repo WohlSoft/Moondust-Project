@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>485</width>
-    <height>492</height>
+    <width>580</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -464,6 +464,21 @@ QGroupBox
             <item>
              <property name="text">
               <string>68 = OP3 (4op bank by James Alan Nguyen)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>69 = TMB (Blood)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>70 = TMB (Lee)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>71 = TMB (Nam)</string>
              </property>
             </item>
            </widget>
