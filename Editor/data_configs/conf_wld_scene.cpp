@@ -28,7 +28,11 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
     bool valid=true;
     bool internal=!setup;
     QString errStr;
-    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+    if(internal)
+    {
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     if(!openSection(setup, section))
         return false;

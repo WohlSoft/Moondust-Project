@@ -40,7 +40,10 @@ bool ConfigManager::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     snpc.isInit = false;
     snpc.image = NULL;

@@ -33,7 +33,10 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     sbgo.isInit = merge_with ? merge_with->isInit : false;
     sbgo.image  = merge_with ? merge_with->image : nullptr;

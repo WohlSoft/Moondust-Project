@@ -34,7 +34,10 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, QString section, obj_block
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     sblock.isInit = false;
     sblock.image = NULL;

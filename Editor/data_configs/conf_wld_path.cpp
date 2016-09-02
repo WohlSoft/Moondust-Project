@@ -28,7 +28,11 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
     bool valid=true;
     bool internal=!setup;
     QString errStr;
-    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+    if(internal)
+    {
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     if(!openSection(setup, section))
         return false;

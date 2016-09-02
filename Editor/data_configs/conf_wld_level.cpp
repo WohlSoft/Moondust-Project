@@ -28,7 +28,11 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
     bool valid=true;
     bool internal=!setup;
     QString errStr;
-    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+    if(internal)
+    {
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     if(!openSection(setup, section))
         return false;

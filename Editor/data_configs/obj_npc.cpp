@@ -51,7 +51,11 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
 {
     bool internal = !setup;
     QString errStr;
-    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+    if(internal)
+    {
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     if(!openSection( setup, section ))
         return false;

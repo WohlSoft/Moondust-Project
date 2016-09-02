@@ -31,7 +31,11 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *me
     bool valid=true;
     bool internal=!setup;
     QString tmpstr, imgFile;
-    if(internal) setup=new QSettings(iniFile, QSettings::IniFormat);
+    if(internal)
+    {
+        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     setup->beginGroup( section );
         sbg.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();

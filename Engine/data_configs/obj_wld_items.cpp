@@ -52,7 +52,10 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile 
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     tile.isInit = false;
     tile.image = NULL;
@@ -78,7 +81,10 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, QString section, obj_w_path 
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     path.isInit = false;
     path.image = NULL;
@@ -104,7 +110,10 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, QString section, obj_
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     scene.isInit = false;
     scene.image = NULL;
@@ -130,7 +139,10 @@ bool ConfigManager::loadWorldLevel(obj_w_level &level, QString section, obj_w_le
     bool internal = !setup;
     QString errStr;
     if(internal)
+    {
         setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup->setIniCodec("UTF-8");
+    }
 
     level.isInit = false;
     level.image = NULL;
