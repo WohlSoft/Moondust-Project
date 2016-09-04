@@ -36,7 +36,7 @@
 #include <audio/SdlMusPlayer.h>
 #include <settings/global_settings.h>
 
-#include <map>
+#include <algorithm>
 
 #include <QApplication>
 #include <QtDebug>
@@ -148,45 +148,36 @@ void LevelScene::processPhysics(double ticks)
     }
 }
 
+static bool comparePosY(PGE_Phys_Object* i, PGE_Phys_Object*j)
+{
+    return (i->m_momentum.y > j->m_momentum.y);
+}
+
 void LevelScene::processAllCollisions()
 {
-    std::map<double, QList<PGE_Phys_Object*> > toCheck;
+    std::vector<PGE_Phys_Object*> toCheck;
 
     //Reset events first
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
         LVL_Player*plr=(*it);
         plr->resetEvents();
-        toCheck[plr->posY()].push_back(plr);
+        toCheck.push_back(plr);
     }
 
     //Process collision check and resolving for activated NPC's
     for(int i=0; i<active_npcs.size(); i++)
     {
         active_npcs[i]->resetEvents();
-        toCheck[active_npcs[i]->posY()].push_back(active_npcs[i]);
+        toCheck.push_back(active_npcs[i]);
     }
 
-    for(std::map<double, QList<PGE_Phys_Object*> >::reverse_iterator it = toCheck.rbegin(); it != toCheck.rend(); it++)
+    std::stable_sort(toCheck.begin(), toCheck.end(), comparePosY);
+    for(std::vector<PGE_Phys_Object*>::iterator it = toCheck.begin(); it != toCheck.end(); it++)
     {
-        QList<PGE_Phys_Object*> &list = it->second;
-        for(QList<PGE_Phys_Object*>::iterator jt = list.begin(); jt != list.end(); jt++)
-        {
-            (*jt)->updateCollisions();
-        }
+        PGE_Phys_Object* obj = *it;
+        obj->updateCollisions();
     }
-    /*
-    //Process collision check and resolving for playable characters
-    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
-    {
-        LVL_Player*plr=(*it);
-        plr->updateCollisions();
-    }
-    //Process collision check and resolving for activated NPC's
-    for(int i=0;i<active_npcs.size();i++)
-    {
-        active_npcs[i]->updateCollisions();
-    }*/
 }
 
 
