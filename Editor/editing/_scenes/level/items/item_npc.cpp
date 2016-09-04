@@ -579,24 +579,25 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
     QPixmap npcImg = QPixmap( m_scene->getNPCimg( npcID ) );
     m_includedNPC = m_scene->addPixmap( npcImg );
 
-    //Default included NPC pos
-    m_includedNPC->setPos(
-                (
-                    this->scenePos().x()+qreal((qreal(m_localProps.setup.width)-qreal(npcImg.width()))/qreal(2))
-                 ),
-                (
-                    (m_scene->m_configs->marker_npc.buried == m_data.id)?
-                       this->scenePos().y()
-                      :this->scenePos().y()+qreal((qreal(m_localProps.setup.height)-qreal(npcImg.height()))/qreal(2))
-                 ));
+    double containerAlignXTo = scenePos().x() +
+            qreal( (qreal(m_localProps.setup.width)-qreal(npcImg.width())) / 2.0);
 
-    if(m_scene->m_configs->marker_npc.bubble != m_data.id)
+    double containerAlignYTo = 0.0;
+    switch(m_localProps.setup.container_align_contents)
     {
-        m_includedNPC->setOpacity(qreal(0.4));
-        m_includedNPC->setZValue(this->zValue() + 0.0000010);
+    default:
+    case 0: containerAlignYTo = scenePos().y() +
+                qreal( (qreal(m_localProps.setup.height) - qreal(npcImg.height()))
+                       / 2.0 ); break;
+    case 1: containerAlignYTo = scenePos().y(); break;
+    case 2: containerAlignYTo = scenePos().y() + qreal(m_localProps.setup.height); break;
     }
-    else
-        m_includedNPC->setZValue(this->zValue() - 0.0000010);
+
+    //Default included NPC pos
+    m_includedNPC->setPos( containerAlignXTo, containerAlignYTo );
+
+    m_includedNPC->setOpacity(m_localProps.setup.container_show_contents ? qreal(1.0) : qreal(0.4));
+    m_includedNPC->setZValue(this->zValue() + m_localProps.setup.container_content_z_offset);
     m_grp->addToGroup(m_includedNPC);
 
     if(!init) m_data.contents = npcID;

@@ -99,7 +99,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, int defaultGrid, NpcS
     container_elastic =          setup->value("container-elastic", merge_with ? merge_with->container_elastic : false).toBool();
     container_elastic_border_w = setup->value("container-elastic-border-w", merge_with ? merge_with->container_elastic_border_w : 4).toInt();
         NumberLimiter::apply(container_elastic_border_w, 0);
-    container_show_contents    = setup->value("container-show-contents", merge_with ? merge_with->container_show_contents : true).toBool();
+    container_show_contents    = setup->value("container-show-contents", merge_with ? merge_with->container_show_contents : false).toBool();
     container_content_z_offset = setup->value("container-content-z-offset", merge_with ? merge_with->container_content_z_offset : -0.00001f).toFloat();
     container_crop_contents    = setup->value("container-crop-contents", merge_with ? merge_with->container_crop_contents : false).toBool();
     container_align_contents   = setup->value("container-align-contents", merge_with ? merge_with->container_align_contents : 0 ).toInt();
