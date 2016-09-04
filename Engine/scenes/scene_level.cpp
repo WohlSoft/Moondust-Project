@@ -36,6 +36,8 @@
 #include <audio/SdlMusPlayer.h>
 #include <settings/global_settings.h>
 
+#include <map>
+
 #include <QApplication>
 #include <QtDebug>
 
@@ -148,19 +150,32 @@ void LevelScene::processPhysics(float ticks)
 
 void LevelScene::processAllCollisions()
 {
+    std::map<double, QList<PGE_Phys_Object*> > toCheck;
+
     //Reset events first
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
         LVL_Player*plr=(*it);
         plr->resetEvents();
+        toCheck[plr->posY()].push_back(plr);
     }
+
     //Process collision check and resolving for activated NPC's
     for(int i=0; i<active_npcs.size(); i++)
     {
         active_npcs[i]->resetEvents();
+        toCheck[active_npcs[i]->posY()].push_back(active_npcs[i]);
     }
 
-
+    for(std::map<double, QList<PGE_Phys_Object*> >::reverse_iterator it = toCheck.rbegin(); it != toCheck.rend(); it++)
+    {
+        QList<PGE_Phys_Object*> &list = it->second;
+        for(QList<PGE_Phys_Object*>::iterator jt = list.begin(); jt != list.end(); jt++)
+        {
+            (*jt)->updateCollisions();
+        }
+    }
+    /*
     //Process collision check and resolving for playable characters
     for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
     {
@@ -171,7 +186,7 @@ void LevelScene::processAllCollisions()
     for(int i=0;i<active_npcs.size();i++)
     {
         active_npcs[i]->updateCollisions();
-    }
+    }*/
 }
 
 
