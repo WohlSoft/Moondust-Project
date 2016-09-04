@@ -176,19 +176,19 @@ Enter to: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="244"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="249"/>
         <location filename="../scenes/scene_world.cpp" line="468"/>
         <source>Invalid playable character ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="254"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="259"/>
         <location filename="../scenes/scene_world.cpp" line="478"/>
         <source>Invalid playable character state ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="371"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="376"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <oldsource>Fatal error: Impossible to find start section.
