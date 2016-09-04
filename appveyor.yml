@@ -51,6 +51,7 @@ install:
   - echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat
   - echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
   - echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
+  - C:\Program Files\Git\bin\bash.exe" -l -c "date +'%Y-%m-%d %H:%M:%S'>build_date_dev_win32.txt"
 
 build_script:
   - build_deps.bat nopause
@@ -65,6 +66,7 @@ artifacts:
   - path: bin-w32\_packed\install-pge-editor-dev-win32.zip
   - path: bin-w32\_packed\install-pge-engine-dev-win32.zip #This archive has no built applications (engine disabled to don't excite building timeout)
   - path: bin-w32\_packed\install-pge-tools-dev-win32.zip  #This archive has no built applications (toosl are disabled to don't excite building timeout)
+  - path: build_date_dev_win32.txt
 
 deploy:
   - provider: Environment
