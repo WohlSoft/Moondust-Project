@@ -24,14 +24,14 @@
 
 LVL_EventAction::LVL_EventAction()
 {
-    timeDelayLeft=0.0f;
+    m_timeDelayLeft=0.0;
 }
 
 LVL_EventAction::LVL_EventAction(const LVL_EventAction &ea)
 {
-    action = ea.action;
-    timeDelayLeft=ea.timeDelayLeft;
-    eventName=ea.eventName;
+    m_action        = ea.m_action;
+    m_timeDelayLeft = ea.m_timeDelayLeft;
+    m_eventName     = ea.m_eventName;
 }
 
 LVL_EventAction::~LVL_EventAction()
@@ -51,29 +51,29 @@ LVL_EventEngine::~LVL_EventEngine()
 void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 {
     LVL_EventAction evntAct;
-        evntAct.eventName=evt.name;
-        evntAct.timeDelayLeft=0;
+        evntAct.m_eventName = evt.name;
+        evntAct.m_timeDelayLeft=0.0;
 
         EventQueueEntry<LVL_EventAction> hideLayers;
         hideLayers.makeCaller([this,evt]()->void{
                                foreach(QString ly, evt.layers_hide)
                                    _scene->layers.hide(ly, !evt.nosmoke);
                            }, 0);
-        evntAct.action.events.push_back(hideLayers);
+        evntAct.m_action.events.push_back(hideLayers);
 
         EventQueueEntry<LVL_EventAction> showLayers;
         showLayers.makeCaller([this,evt]()->void{
                                foreach(QString ly, evt.layers_show)
                                    _scene->layers.show(ly, !evt.nosmoke);
                            }, 0);
-        evntAct.action.events.push_back(showLayers);
+        evntAct.m_action.events.push_back(showLayers);
 
         EventQueueEntry<LVL_EventAction> toggleLayers;
         toggleLayers.makeCaller([this,evt]()->void{
                                foreach(QString ly, evt.layers_toggle)
                                    _scene->layers.toggle(ly, !evt.nosmoke);
                            }, 0);
-        evntAct.action.events.push_back(toggleLayers);
+        evntAct.m_action.events.push_back(toggleLayers);
 
         if(evt.sound_id>0)
         {
@@ -81,7 +81,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             playsnd.makeCaller([this,evt]()->void{
                                        PGE_Audio::playSound(evt.sound_id);
                                }, 0);
-            evntAct.action.events.push_back(playsnd);
+            evntAct.m_action.events.push_back(playsnd);
         }
 
         for(int i=0;i<evt.sets.size(); i++)
@@ -120,7 +120,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                         }
                     }, 0);
                 }
-                evntAct.action.events.push_back(bgToggle);
+                evntAct.m_action.events.push_back(bgToggle);
             }
             if(evt.sets[i].music_id!=-1)
             {
@@ -155,7 +155,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                         }
                     }, 0);
                 }
-                evntAct.action.events.push_back(musToggle);
+                evntAct.m_action.events.push_back(musToggle);
             }
             if(evt.sets[i].position_left!=-1)
             {
@@ -180,7 +180,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                         }
                     }, 0);
                 }
-                evntAct.action.events.push_back(bordersToggle);
+                evntAct.m_action.events.push_back(bordersToggle);
             }
         }
 
@@ -200,7 +200,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                                            }
                                        }
                                }, 0);
-            evntAct.action.events.push_back(installAutoscroll);
+            evntAct.m_action.events.push_back(installAutoscroll);
         }
 
         if(!evt.msg.isEmpty())
@@ -218,7 +218,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                                 }, 0);
                 _scene->system_events.events.push_back(msgBox);
                                }, 0);
-            evntAct.action.events.push_back(message);
+            evntAct.m_action.events.push_back(message);
         }
 
         if(!evt.movelayer.isEmpty())
@@ -227,7 +227,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             movelayer.makeCaller([this,evt]()->void{
                                        _scene->layers.installLayerMotion(evt.movelayer, evt.layer_speed_x, evt.layer_speed_y);
                                }, 0);
-            evntAct.action.events.push_back(movelayer);
+            evntAct.m_action.events.push_back(movelayer);
         }
 
     events[evt.name].push_back(evntAct);
@@ -235,13 +235,16 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     if(!evt.trigger.isEmpty())
     {
         LVL_EventAction trigger;
-        trigger.eventName=evt.name;
-        trigger.timeDelayLeft=0;
+        trigger.m_eventName=evt.name;
+        trigger.m_timeDelayLeft = 0.0;
         EventQueueEntry<LVL_EventAction> triggerEvent;
         triggerEvent.makeCaller([this,evt]()->void{
                                 _scene->events.triggerEvent(evt.trigger);
-                               }, evt.trigger_timer*100);
-        trigger.action.events.push_back(triggerEvent);
+                               },
+                    double(evt.trigger_timer) * 100.0
+//                ((double(evt.trigger_timer) / 10.0) * 65.0)
+        );
+        trigger.m_action.events.push_back(triggerEvent);
         events[evt.name].push_back(trigger);
     }
 
@@ -250,10 +253,10 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         workingEvents.push_back(events[evt.name]);
 }
 
-void LVL_EventEngine::processTimers(float tickTime)
+void LVL_EventEngine::processTimers(double tickTime)
 {
     QHash<QString, bool > triggered;
-
+    //static double smbxTimeUnit = 65.0 / 1000.0;
     for(int i=0; i<workingEvents.size(); i++)
     {
         if(workingEvents[i].isEmpty())
@@ -263,24 +266,24 @@ void LVL_EventEngine::processTimers(float tickTime)
 
         for(int j=0; j<workingEvents[i].size(); j++)
         {
-            if(workingEvents[i][j].timeDelayLeft<=0)
+            if(workingEvents[i][j].m_timeDelayLeft <= 0.0)
             {
-                workingEvents[i][j].action.processEvents(tickTime);
-                if(workingEvents[i][j].action.events.isEmpty())
+                workingEvents[i][j].m_action.processEvents( tickTime /* *smbxTimeUnit*/ );
+                if(workingEvents[i][j].m_action.events.isEmpty())
                 {
-                    if(triggered.contains(workingEvents[i][j].eventName))
+                    if(triggered.contains(workingEvents[i][j].m_eventName))
                     {
                         workingEvents[i].removeAt(j); j--;
                         break;
                     }
-                    triggered[workingEvents[i][j].eventName]=true;
+                    triggered[workingEvents[i][j].m_eventName]=true;
                     workingEvents[i].removeAt(j); j--;
                     continue;
                 }
             }
             else
             {
-                workingEvents[i][j].timeDelayLeft-=tickTime;
+                workingEvents[i][j].m_timeDelayLeft -= tickTime;
             }
         }
     }

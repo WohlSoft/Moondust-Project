@@ -760,15 +760,15 @@ void LVL_Block::setDestroyed(bool dstr)
 
 long double LVL_Block::zIndex()
 {
-    if( fadeOffset != 0.f )
-        return z_index+10;
+    if( fadeOffset != 0.0 )
+        return z_index + 100.0L;
     else
         return z_index;
 }
 
 
 /**************************Fader*******************************/
-void LVL_Block::setFade(int speed, float target, float step)
+void LVL_Block::setFade(double speed, double target, double step)
 {
     fade_step = fabsf(step);
     targetOffset = target;
@@ -781,10 +781,11 @@ bool LVL_Block::isFading()
     return (fadeOffset != targetOffset);
 }
 
-bool LVL_Block::tickFader(int ticks)
+bool LVL_Block::tickFader(double ticks)
 {
-    if(fadeSpeed<1) return true; //Idling animation
-    manual_ticks-=abs(ticks);
+    if(fadeSpeed < 1.0)
+        return true; //Idling animation
+    manual_ticks -= fabs(ticks);
         while(manual_ticks<=0)
         {
             fadeStep();
@@ -800,12 +801,12 @@ void LVL_Block::fadeStep()
     else
         fadeOffset-=fade_step;
 
-    if(fadeOffset>=1.0f)
+    if(fadeOffset>=1.0)
         setFade(fadeSpeed, 0.0f, fade_step);
 
-    if(fadeOffset>1.0f) fadeOffset = 1.0f;
+    if(fadeOffset>1.0) fadeOffset = 1.0;
     else
-    if(fadeOffset<0.0f) fadeOffset = 0.0f;
+    if(fadeOffset<0.0) fadeOffset = 0.0;
 
     switch(hitDirection)
     {

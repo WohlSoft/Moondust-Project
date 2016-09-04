@@ -125,7 +125,7 @@ public:
     void render();
     int exec();
 
-    void tickAnimations(float ticks);
+    void tickAnimations(double ticks);
 
     QString getLastError();
 
@@ -393,7 +393,7 @@ private:
 
 public:
    float globalGravity;
-   void processPhysics(float ticks);
+   void processPhysics(double ticks);
    void processAllCollisions();
 
    typedef PGE_Phys_Object* PhysObjPtr;

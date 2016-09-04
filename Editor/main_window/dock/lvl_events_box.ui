@@ -139,9 +139,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-510</y>
          <width>257</width>
-         <height>1930</height>
+         <height>1923</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -190,7 +190,7 @@
              <x>0</x>
              <y>0</y>
              <width>237</width>
-             <height>418</height>
+             <height>414</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -488,7 +488,7 @@
             <item row="3" column="0">
              <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spX">
               <property name="decimals">
-               <number>17</number>
+               <number>15</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -521,7 +521,7 @@
             <item row="5" column="0">
              <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spY">
               <property name="decimals">
-               <number>17</number>
+               <number>15</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -658,7 +658,7 @@
             <item row="2" column="0" colspan="2">
              <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
               <property name="decimals">
-               <number>17</number>
+               <number>15</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -671,7 +671,7 @@
             <item row="4" column="0" colspan="2">
              <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
               <property name="decimals">
-               <number>17</number>
+               <number>15</number>
               </property>
               <property name="minimum">
                <double>-99999999.000000000000000</double>
@@ -752,7 +752,7 @@
              <x>0</x>
              <y>0</y>
              <width>249</width>
-             <height>525</height>
+             <height>523</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">

@@ -54,7 +54,7 @@ void LVL_Player::lua_processKeyEvents()
     }
 }
 
-void LVL_Player::update(float tickTime)
+void LVL_Player::update(double tickTime)
 {
     if(isLocked) return;
     if(!_isInited) return;

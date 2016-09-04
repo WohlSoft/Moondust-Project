@@ -21,9 +21,12 @@
 #include "blocksperseconddialog.h"
 #include <ui_blocksperseconddialog.h>
 
+//(1000.0/65.0)
+#define FRAMEVALUE 15.285
+
 BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond( 1000.0/15.285 ),
+    m_framesPerSecond( 1000.0/FRAMEVALUE ),
     ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
@@ -32,7 +35,7 @@ BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(unsigned int defBlockSize, QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond( 1000.0/15.285 ),
+    m_framesPerSecond( 1000.0/FRAMEVALUE ),
     ui( new Ui::BlocksPerSecondDialog )
 {
     ui->setupUi(this);

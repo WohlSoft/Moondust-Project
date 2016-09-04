@@ -26,11 +26,15 @@ void LVL_Npc::Activate()
     else
         activationTimeout = 150;
 
-    if(isActivated) return;
+    if(isActivated)
+        return;
+
     setPaused(false);
 
     deActivatable = ((setup->setup.deactivation)||(!setup->setup.activity)); //!< Allow deactivation of this NPC when it going offscreen
     wasDeactivated=false;
+
+    setSpeed(0.0, 0.0);
 
     animator.start();
     isActivated=true;

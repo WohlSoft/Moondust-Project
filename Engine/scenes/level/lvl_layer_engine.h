@@ -45,7 +45,7 @@ public:
     void installLayerMotion(QString layer, double speedX, double speedY);
     QHash<QString, QList<PGE_Phys_Object* > > members;
     QHash<QString, MovingLayer> moving_layers;
-    void processMoving(float tickTime);
+    void processMoving(double tickTime);
 };
 
 #endif // LVL_LAYER_H

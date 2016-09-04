@@ -83,7 +83,7 @@ public:
     int transformedFromBlockID;
     int transformedFromNpcID;
 
-    void update(float tickTime);
+    void update(double tickTime);
     void render(double camX, double camY);
     void setDefaults();
     void Activate();

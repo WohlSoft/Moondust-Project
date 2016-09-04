@@ -9,7 +9,7 @@ LuaEvent BindingCore_Events_Engine::createInitEngineEvent(LuaEngine *engine)
     return event;
 }
 
-LuaEvent BindingCore_Events_Engine::createLoopEvent(LuaEngine *engine, float ticks)
+LuaEvent BindingCore_Events_Engine::createLoopEvent(LuaEngine *engine, double ticks)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("loop");

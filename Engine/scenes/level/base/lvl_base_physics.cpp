@@ -110,9 +110,9 @@ static inline void processCharacterSwitchBlock(LVL_Player*player, LVL_Block*near
     }
 }
 
-void PGE_Phys_Object::iterateStep(double ticks)
+void PGE_Phys_Object::iterateStep(double ticks, bool force)
 {
-    if(m_paused)
+    if(m_paused && !force)
         return;
 
     double G = phys_setup.gravityScale * _scene->globalGravity;
@@ -162,13 +162,15 @@ void PGE_Phys_Object::iterateStep(double ticks)
         (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
        )
     */
-    if(m_bodytype==Body_DYNAMIC)//Affect gravity only to dynamic objects!
+    //Affect gravity only to dynamic objects!
+    if( m_bodytype == Body_DYNAMIC )
     {
         if(
-             (G*phys_setup.gravityAccel < 0.0f) ||
+             (G * phys_setup.gravityAccel < 0.0f) ||
              (
-                 (G*phys_setup.gravityAccel != 0.0f) &&
-                 (!m_stand || m_standOnYMovable || (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
+                 (G * phys_setup.gravityAccel != 0.0f) &&
+                 (!m_stand || m_standOnYMovable ||
+                    (!m_allowHoleRuning && m_cliff && (m_momentum.velXsrc != 0.0)) )
              )
           )
         {
@@ -179,7 +181,7 @@ void PGE_Phys_Object::iterateStep(double ticks)
     if(phys_setup.decelerate_y != 0.0f)
     {
         double decY = phys_setup.decelerate_y*accelCof;
-        if(m_momentum.velY>0)
+        if(m_momentum.velY > 0)
         {
             if(m_momentum.velY - decY>0.0)
                 m_momentum.velY -= decY;

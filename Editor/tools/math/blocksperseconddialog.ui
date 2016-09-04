@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
+    <width>467</width>
     <height>117</height>
    </rect>
   </property>
@@ -57,7 +57,7 @@
       <string> blocks</string>
      </property>
      <property name="decimals">
-      <number>17</number>
+      <number>15</number>
      </property>
      <property name="minimum">
       <double>0.000000000000000</double>
@@ -79,7 +79,7 @@
       <string> second</string>
      </property>
      <property name="decimals">
-      <number>17</number>
+      <number>15</number>
      </property>
      <property name="minimum">
       <double>0.000000000000000</double>

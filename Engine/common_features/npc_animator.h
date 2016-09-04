@@ -66,7 +66,7 @@ public:
     void start();
     void stop();
 
-    void manualTick(int ticks);
+    void manualTick(double ticks);
 
 private:
     bool isValid;
@@ -77,7 +77,7 @@ private:
 
     QList<AniPos> frames;
 
-    int manual_ticks;
+    double manual_ticks;
     bool onceMode;
     bool _animationFinished;
 
@@ -87,7 +87,7 @@ private:
 
     bool animated;
 
-    int _frameSpeed;
+    double _frameSpeed;
     int frameStyle;
 
     bool aniBiDirect;

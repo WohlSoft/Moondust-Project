@@ -31,9 +31,9 @@ public:
     LVL_EventAction(const LVL_EventAction& ea);
     virtual ~LVL_EventAction();
 
-    QString eventName;
-    EventQueue<LVL_EventAction > action;
-    float timeDelayLeft;
+    QString m_eventName;
+    EventQueue<LVL_EventAction > m_action;
+    double m_timeDelayLeft;
 };
 
 class LevelScene;
@@ -45,7 +45,7 @@ public:
     LVL_EventEngine();
     ~LVL_EventEngine();
     void addSMBX64Event(LevelSMBX64Event &evt);
-    void processTimers(float tickTime);
+    void processTimers(double tickTime);
     void triggerEvent(QString event);
 
     QList<QList<LVL_EventAction > > workingEvents;

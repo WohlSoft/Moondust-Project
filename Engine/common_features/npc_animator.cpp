@@ -378,16 +378,16 @@ void AdvNpcAnimator::stop()
     setFrameR(frameFirstR);
 }
 
-void AdvNpcAnimator::manualTick(int ticks)
+void AdvNpcAnimator::manualTick(double ticks)
 {
     if(!isEnabled) return;
     if(_frameSpeed<1) return; //Idling animation
 
-    manual_ticks-=abs(ticks);
-        while(manual_ticks<=0)
+    manual_ticks-=fabs(ticks);
+        while(manual_ticks <= 0.0)
         {
             nextFrame();
-            manual_ticks+=_frameSpeed;
+            manual_ticks += _frameSpeed;
         }
 }
 

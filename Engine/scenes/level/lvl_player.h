@@ -59,7 +59,7 @@ class LVL_Player :
     public:
         void setPlayerPointInfo(PlayerPoint pt);
         void init();
-        void update(float tickTime);
+        void update(double tickTime);
         void updateCamera();
 
         void refreshEnvironmentState();

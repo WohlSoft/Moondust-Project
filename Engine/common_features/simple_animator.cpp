@@ -28,33 +28,33 @@ SimpleAnimator::SimpleAnimator()
 
 SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
 {
-    speed=animator.speed;
-    pos1=animator.pos1;
-    pos2=animator.pos2;
-    manual_ticks = animator.manual_ticks;
-    onceMode = animator.onceMode;
-    onceMode_loops = animator.onceMode_loops;
-    animationFinished = animator.animationFinished;
+    m_frameDelay=animator.m_frameDelay;
+    m_pos1=animator.m_pos1;
+    m_pos2=animator.m_pos2;
+    m_nextFrameTime = animator.m_nextFrameTime;
+    m_onceMode = animator.m_onceMode;
+    m_onceMode_loops = animator.m_onceMode_loops;
+    m_animationFinished = animator.m_animationFinished;
 
-    frame_sequance_enabled = animator.frame_sequance_enabled;
-    frame_sequance = animator.frame_sequance;
-    frame_sequance_cur = animator.frame_sequance_cur;
+    m_frameSequanceEnabled = animator.m_frameSequanceEnabled;
+    m_frameSequance = animator.m_frameSequance;
+    m_frameSequanceCur = animator.m_frameSequanceCur;
 
-    CurrentFrame = animator.CurrentFrame;
+    m_currentFrame = animator.m_currentFrame;
 
-    animated = animator.animated;
+    m_animated = animator.m_animated;
 
-    bidirectional = animator.bidirectional;
-    reverce = animator.reverce;
+    m_bidirectional = animator.m_bidirectional;
+    m_reverce = animator.m_reverce;
 
-    isEnabled = animator.isEnabled;
-    timer_id = animator.timer_id;
+    m_isEnabled = animator.m_isEnabled;
+    m_timerId = animator.m_timerId;
 
-    framesQ = animator.framesQ;
+    m_framesCount = animator.m_framesCount;
 
     //Animation alhorithm
-    frameFirst = animator.frameFirst;
-    frameLast = animator.frameLast;
+    m_frameFirst = animator.m_frameFirst;
+    m_frameLast = animator.m_frameLast;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
@@ -64,46 +64,46 @@ SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First,
 
 void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
-    animated = enables;
-    frameFirst = First;
-    frameLast = Last;
-    CurrentFrame = 0;
+    m_animated = enables;
+    m_frameFirst = First;
+    m_frameLast = Last;
+    m_currentFrame = 0;
 
-    frame_sequance_enabled=false;
-    frame_sequance_cur=0;
+    m_frameSequanceEnabled=false;
+    m_frameSequanceCur=0;
 
-    manual_ticks = fspeed;
+    m_nextFrameTime = fspeed;
 
-    onceMode=false;
-    animationFinished=false;
-    onceMode_loops=1;
+    m_onceMode=false;
+    m_animationFinished=false;
+    m_onceMode_loops=1;
 
-    isEnabled=false;
+    m_isEnabled=false;
 
-    pos1 = 0.0;
-    pos2 = 1.0f;
+    m_pos1 = 0.0;
+    m_pos2 = 1.0f;
 
-    bidirectional = bid;
-    reverce = rev;
+    m_bidirectional = bid;
+    m_reverce = rev;
 
-    speed=fspeed;
-    framesQ = framesq;
+    m_frameDelay=fspeed;
+    m_framesCount = framesq;
 
-    setFrame(frameFirst);
+    setFrame(m_frameFirst);
 }
 
 void SimpleAnimator::setFrameSequance(QList<int> sequance)
 {
-    frame_sequance = sequance;
-    frame_sequance_enabled = true;
-    frame_sequance_cur = 0;
-    animationFinished = false;
-    if(!frame_sequance.isEmpty())
+    m_frameSequance = sequance;
+    m_frameSequanceEnabled = true;
+    m_frameSequanceCur = 0;
+    m_animationFinished = false;
+    if(!m_frameSequance.isEmpty())
     {
-        CurrentFrame = frame_sequance[frame_sequance_cur];
-        pos1 = CurrentFrame/framesQ;
-        pos2 = CurrentFrame/framesQ + 1.0/framesQ;
-        manual_ticks = speed;
+        m_currentFrame = m_frameSequance[m_frameSequanceCur];
+        m_pos1 = m_currentFrame/m_framesCount;
+        m_pos2 = m_currentFrame/m_framesCount + 1.0/m_framesCount;
+        m_nextFrameTime = m_frameDelay;
     }
 }
 
@@ -119,48 +119,48 @@ bool SimpleAnimator::operator!=(const SimpleAnimator &animator) const
 
 bool SimpleAnimator::operator==(const SimpleAnimator &animator) const
 {
-    if(animator.speed != speed) return false;
-    if(animator.animated != animated) return false;
-    if(animator.framesQ != framesQ) return false;
-    if(animator.frameFirst != frameFirst) return false;
-    if(animator.frameLast != frameLast) return false;
-    if(animator.reverce != reverce) return false;
-    if(animator.bidirectional != bidirectional) return false;
-    if(animator.manual_ticks != manual_ticks) return false;
-    if(animator.animationFinished != animationFinished) return false;
-    if(animator.onceMode != onceMode) return false;
+    if(animator.m_frameDelay != m_frameDelay) return false;
+    if(animator.m_animated != m_animated) return false;
+    if(animator.m_framesCount != m_framesCount) return false;
+    if(animator.m_frameFirst != m_frameFirst) return false;
+    if(animator.m_frameLast != m_frameLast) return false;
+    if(animator.m_reverce != m_reverce) return false;
+    if(animator.m_bidirectional != m_bidirectional) return false;
+    if(animator.m_nextFrameTime != m_nextFrameTime) return false;
+    if(animator.m_animationFinished != m_animationFinished) return false;
+    if(animator.m_onceMode != m_onceMode) return false;
     return true;
 }
 
 SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &animator)
 {
-    speed=animator.speed;
-    pos1=animator.pos1;
-    pos2=animator.pos2;
-    manual_ticks=animator.manual_ticks;
-    onceMode=animator.onceMode;
-    onceMode_loops=animator.onceMode_loops;
-    animationFinished=animator.animationFinished;
+    m_frameDelay=animator.m_frameDelay;
+    m_pos1=animator.m_pos1;
+    m_pos2=animator.m_pos2;
+    m_nextFrameTime=animator.m_nextFrameTime;
+    m_onceMode=animator.m_onceMode;
+    m_onceMode_loops=animator.m_onceMode_loops;
+    m_animationFinished=animator.m_animationFinished;
 
-    frame_sequance_enabled=animator.frame_sequance_enabled;
-    frame_sequance=animator.frame_sequance;
-    frame_sequance_cur=animator.frame_sequance_cur;
+    m_frameSequanceEnabled=animator.m_frameSequanceEnabled;
+    m_frameSequance=animator.m_frameSequance;
+    m_frameSequanceCur=animator.m_frameSequanceCur;
 
-    CurrentFrame=animator.CurrentFrame;
+    m_currentFrame=animator.m_currentFrame;
 
-    animated=animator.animated;
+    m_animated=animator.m_animated;
 
-    bidirectional=animator.bidirectional;
-    reverce=animator.reverce;
+    m_bidirectional=animator.m_bidirectional;
+    m_reverce=animator.m_reverce;
 
-    isEnabled=animator.isEnabled;
-    timer_id=animator.timer_id;
+    m_isEnabled=animator.m_isEnabled;
+    m_timerId=animator.m_timerId;
 
-    framesQ=animator.framesQ;
+    m_framesCount=animator.m_framesCount;
 
     //Animation alhorithm
-    frameFirst=animator.frameFirst;
-    frameLast=animator.frameLast;
+    m_frameFirst=animator.m_frameFirst;
+    m_frameLast=animator.m_frameLast;
     return *this;
 }
 
@@ -168,65 +168,65 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &animator)
 
 AniPos SimpleAnimator::image(double frame)
 {
-    if((frame<0)||(frame>=framesQ))
-        return AniPos(pos1, pos2);
+    if((frame<0)||(frame>=m_framesCount))
+        return AniPos(m_pos1, m_pos2);
     else
-        return AniPos(frame/framesQ, frame/framesQ + 1.0/framesQ);
+        return AniPos(frame/m_framesCount, frame/m_framesCount + 1.0/m_framesCount);
 }
 
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    if(animationFinished) return;
+    if(m_animationFinished) return;
 
-    if(frame_sequance_enabled)
+    if(m_frameSequanceEnabled)
     {
-        frame_sequance_cur++;
-        if(frame_sequance_cur<0)
-            frame_sequance_cur=0;
-        if(frame_sequance_cur >= frame_sequance.size())
+        m_frameSequanceCur++;
+        if(m_frameSequanceCur<0)
+            m_frameSequanceCur=0;
+        if(m_frameSequanceCur >= m_frameSequance.size())
         {
-            frame_sequance_cur=0;
-            if(onceMode)
+            m_frameSequanceCur=0;
+            if(m_onceMode)
             {
-                onceMode_loops--;
-                if(onceMode_loops<=0)
-                    animationFinished=true;
+                m_onceMode_loops--;
+                if(m_onceMode_loops<=0)
+                    m_animationFinished=true;
             }
         }
-        if(!frame_sequance.isEmpty())
-            CurrentFrame = frame_sequance[frame_sequance_cur];
+        if(!m_frameSequance.isEmpty())
+            m_currentFrame = m_frameSequance[m_frameSequanceCur];
         goto makeFrame;
     }
 
-    if(reverce)
+    if(m_reverce)
     { // Reverce animation
-        CurrentFrame--;
-        if(CurrentFrame<frameFirst)
+        m_currentFrame--;
+        if(m_currentFrame<m_frameFirst)
         {
-            if(bidirectional)
+            if(m_bidirectional)
             {
-                reverce=!reverce; // change direction on first frame
-                CurrentFrame+=2;
-                if(onceMode)
+                m_reverce=!m_reverce; // change direction on first frame
+                m_currentFrame+=2;
+                if(m_onceMode)
                 {
-                    onceMode_loops--;
-                    if(onceMode_loops<=0)
-                        animationFinished=true;
+                    m_onceMode_loops--;
+                    if(m_onceMode_loops<=0)
+                        m_animationFinished=true;
                 }
             }
             else
             {
                  // Return to last frame;
-                if(frameLast<0)
-                    CurrentFrame=framesQ-1;
+                if(m_frameLast<0)
+                    m_currentFrame=m_framesCount-1;
                 else
-                    CurrentFrame=frameLast;
-                if(onceMode)
+                    m_currentFrame=m_frameLast;
+                if(m_onceMode)
                 {
-                    onceMode_loops--;
-                    if(onceMode_loops<=0)
-                        animationFinished=true;
+                    m_onceMode_loops--;
+                    if(m_onceMode_loops<=0)
+                        m_animationFinished=true;
                 }
             }
         }
@@ -234,81 +234,81 @@ void SimpleAnimator::nextFrame()
     }
     else
     { // Direct animation
-        CurrentFrame++;
-        if(((CurrentFrame>=framesQ)&&(frameLast<0))||
-           ((CurrentFrame>frameLast)&&(frameLast>=0)))
+        m_currentFrame++;
+        if(((m_currentFrame>=m_framesCount)&&(m_frameLast<0))||
+           ((m_currentFrame>m_frameLast)&&(m_frameLast>=0)))
         {
-            if(bidirectional)
+            if(m_bidirectional)
             {
-                reverce=!reverce; // change direction on last frame
-                CurrentFrame-=2;
+                m_reverce=!m_reverce; // change direction on last frame
+                m_currentFrame-=2;
             }
             else
             {
-                CurrentFrame=frameFirst; // Return to first frame;
-                if(onceMode)
+                m_currentFrame=m_frameFirst; // Return to first frame;
+                if(m_onceMode)
                 {
-                    onceMode_loops--;
-                    if(onceMode_loops<=0)
-                        animationFinished=true;
+                    m_onceMode_loops--;
+                    if(m_onceMode_loops<=0)
+                        m_animationFinished=true;
                 }
             }
         }
     }
 
 makeFrame:
-    pos1 = CurrentFrame/framesQ;
-    pos2 = CurrentFrame/framesQ + 1.0/framesQ;
+    m_pos1 = m_currentFrame/m_framesCount;
+    m_pos2 = m_currentFrame/m_framesCount + 1.0/m_framesCount;
 
-    if(isEnabled)
-        timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
+    if(m_isEnabled)
+        m_timerId = SDL_AddTimer(m_frameDelay, &SimpleAnimator::TickAnimation, this);
 }
 
 
 void SimpleAnimator::setFrame(int y)
 {
-    if(frame_sequance_enabled)
+    if(m_frameSequanceEnabled)
     {
-        if( (y>=0) && (y<frame_sequance.size()) )
+        if( (y>=0) && (y<m_frameSequance.size()) )
         {
-            frame_sequance_cur = y;
-            CurrentFrame = frame_sequance[frame_sequance_cur];
+            m_frameSequanceCur = y;
+            m_currentFrame = m_frameSequance[m_frameSequanceCur];
         }
     } else {
-        if(y>=framesQ) y= frameFirst;
-        if(y<frameFirst) y = (frameLast<0)? framesQ-1 : frameLast;
-        CurrentFrame = y;
+        if(y>=m_framesCount) y= m_frameFirst;
+        if(y<m_frameFirst) y = (m_frameLast<0)? m_framesCount-1 : m_frameLast;
+        m_currentFrame = y;
     }
 
-    pos1 = CurrentFrame/framesQ;
-    pos2 = CurrentFrame/framesQ + 1.0/framesQ;
+    m_pos1 = m_currentFrame/m_framesCount;
+    m_pos2 = m_currentFrame/m_framesCount + 1.0/m_framesCount;
 }
 
 void SimpleAnimator::setFrames(int first, int last)
 {
-    if((frameFirst == first) && (frameLast == last)) return;
-        frameFirst = first;
-        frameLast = last;
-        setFrame(frameFirst);
+    if((m_frameFirst == first) && (m_frameLast == last)) return;
+        m_frameFirst = first;
+        m_frameLast = last;
+        setFrame(m_frameFirst);
 }
 
 void SimpleAnimator::start()
 {
-    if(!animated) return;
-    if(isEnabled) return;
+    if(!m_animated) return;
+    if(m_isEnabled) return;
 
-    if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
-    isEnabled=true;
-    timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
+    if((m_frameLast>0)&&((m_frameLast-m_frameFirst)<=1)) return; //Don't start singleFrame animation
+    m_isEnabled=true;
+    m_timerId = SDL_AddTimer(m_frameDelay, &SimpleAnimator::TickAnimation, this);
 }
 
 void SimpleAnimator::stop()
 {
-    if(!animated) return;
-    if(!isEnabled) return;
-    isEnabled=false;
-    SDL_RemoveTimer(timer_id);
-    setFrame(frameFirst);
+    if(!m_animated) return;
+    if(!m_isEnabled) return;
+    m_isEnabled=false;
+    SDL_RemoveTimer(m_timerId);
+    setFrame(m_frameFirst);
 }
 
 unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
@@ -321,29 +321,29 @@ unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
 
 void SimpleAnimator::setOnceMode(bool once, int loops)
 {
-    onceMode=once;
-    onceMode_loops=loops;
-    animationFinished=false;
+    m_onceMode=once;
+    m_onceMode_loops=loops;
+    m_animationFinished=false;
     if(once)
-        setFrame(frameFirst);
+        setFrame(m_frameFirst);
 }
 
 //Ability to tick animation manually!
-void SimpleAnimator::manualTick(float ticks)
+void SimpleAnimator::manualTick(double ticks)
 {
-    if(speed<1) return; //Idling animation
+    if(m_frameDelay<1.0) return; //Idling animation
 
-    manual_ticks-=fabs(ticks);
-        while(manual_ticks<=0.0f)
+    m_nextFrameTime -= fabs(ticks);
+        while(m_nextFrameTime<=0.0f)
         {
             nextFrame();
-            manual_ticks+=speed;
+            m_nextFrameTime += m_frameDelay;
         }
 }
 
 bool SimpleAnimator::isFinished()
 {
-    return animationFinished;
+    return m_animationFinished;
 }
 
 

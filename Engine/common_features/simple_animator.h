@@ -51,43 +51,43 @@ public:
     void start();
     void stop();
 
-    int speed;
+    double m_frameDelay;
 
     static unsigned int TickAnimation(unsigned int x, void *p);
 
     void setOnceMode(bool once, int loops=1);
-    void manualTick(float ticks);
+    void manualTick(double ticks);
     bool isFinished();
 public:
     void nextFrame();
 
 private:
-    double pos1;
-    double pos2;
-    float  manual_ticks;
-    bool onceMode;
-    int  onceMode_loops;
-    bool animationFinished;
+    double m_pos1;
+    double m_pos2;
+    double m_nextFrameTime;
+    bool m_onceMode;
+    int  m_onceMode_loops;
+    bool m_animationFinished;
 
-    bool       frame_sequance_enabled;
-    QList<int> frame_sequance;
-    int        frame_sequance_cur;
+    bool       m_frameSequanceEnabled;
+    QList<int> m_frameSequance;
+    int        m_frameSequanceCur;
 
-    int CurrentFrame;
+    int m_currentFrame;
 
-    bool animated;
+    bool m_animated;
 
-    bool bidirectional;
-    bool reverce;
+    bool m_bidirectional;
+    bool m_reverce;
 
-    bool isEnabled;
-    SDL_TimerID timer_id;
+    bool m_isEnabled;
+    SDL_TimerID m_timerId;
 
-    double framesQ;
+    double m_framesCount;
 
     //Animation alhorithm
-    int frameFirst;
-    int frameLast;
+    int m_frameFirst;
+    int m_frameLast;
 };
 
 #endif // SIMPLE_ANIMATOR_H

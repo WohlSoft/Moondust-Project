@@ -109,9 +109,10 @@ void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double sp
     }
 }
 
-void LVL_LayerEngine::processMoving(float tickTime)
+void LVL_LayerEngine::processMoving(double tickTime)
 {
-    if(moving_layers.isEmpty()) return;
+    if(moving_layers.isEmpty())
+        return;
     QVector<QString> remove_list;
     for(QHash<QString, MovingLayer>::iterator it = moving_layers.begin(); it != moving_layers.end(); it++)
     {
@@ -124,17 +125,31 @@ void LVL_LayerEngine::processMoving(float tickTime)
                 continue;
 
             obj->setSpeed(l.m_speedX, l.m_speedY);
+
             //Don't iterate activated NPC's!
             if(obj->type == PGE_Phys_Object::LVLNPC)
             {
                 LVL_Npc*npc = (LVL_Npc*)obj;
-                if(npc->isActivated)
+                if( npc->isActivated /* &&
+                   !npc->isGenerator &&
+                   !npc->is_scenery*/ )
                     continue;
             }
-            obj->iterateStep(tickTime);
+            obj->iterateStep(tickTime, true);
+
+            if( (l.m_speedX == 0.0) && (l.m_speedY == 0.0) )
+            {
+                if(obj->m_bodytype == PGE_physBody::Body_STATIC)
+                {
+                    obj->m_momentum.x = round(obj->m_momentum.x);
+                    obj->m_momentum.y = round(obj->m_momentum.y);
+                }
+            }
             obj->_syncPosition();
-            if((l.m_speedX==0.0)&&(l.m_speedY==0.0))
-                remove_list.push_back(it.key());
+        }
+        if( (l.m_speedX==0.0) && (l.m_speedY==0.0) )
+        {
+            remove_list.push_back(it.key());
         }
     }
     //Remove zero-speed layers

@@ -9,7 +9,7 @@ class BindingCore_Events_Engine
 {
 public:
     static LuaEvent createInitEngineEvent(LuaEngine* engine);
-    static LuaEvent createLoopEvent(LuaEngine* engine, float ticks);
+    static LuaEvent createLoopEvent(LuaEngine* engine, double ticks);
 
     static LuaEvent createDrawLevelHUDEvent(LuaEngine* engine,
                                             PGE_LevelCamera* camera,

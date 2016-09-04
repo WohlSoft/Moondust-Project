@@ -86,14 +86,14 @@ public:
     long double zIndex();
 
     /**************Fader**************/
-    float fadeOffset;
-    float targetOffset;
-    float fade_step;
-    int   fadeSpeed;
-    void setFade(int speed, float target, float step);
+    double fadeOffset;
+    double targetOffset;
+    double fade_step;
+    double fadeSpeed;
+    void setFade(double speed, double target, double step);
     bool isFading();
-    bool tickFader(int ticks);
-    int manual_ticks;
+    bool tickFader(double ticks);
+    double manual_ticks;
     void fadeStep();
     /**************Fader**************/
 

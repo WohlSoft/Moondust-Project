@@ -162,7 +162,7 @@ public:
     void _syncSection(bool sync_position=true);
     void renderDebug(double _camX, double _camY);
 
-    void iterateStep(double ticks);
+    void iterateStep(double ticks, bool force=false);
     void iterateStepPostCollide(float ticks);
     virtual void processContacts() {}
     virtual void preCollision() {}
@@ -201,8 +201,8 @@ public:
     bool isFloor(QVector<PGE_Phys_Object *> &blocks, bool *isCliff=0);
     #endif
 
-    static const float m_smbxTickTime;
-    static float SMBXTicksToTime(float ticks);
+    static const double m_smbxTickTime;
+    static double SMBXTicksToTime(double ticks);
 
     PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
     #ifdef OLD_COLLIDERS
@@ -285,7 +285,7 @@ public:
     };
 
     virtual void update();
-    virtual void update(float ticks);
+    virtual void update(double ticks);
     virtual void render(double x, double y) { Q_UNUSED(x); Q_UNUSED(y); }
 
     inline bool isPaused() { return m_paused; }

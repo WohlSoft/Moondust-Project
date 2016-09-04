@@ -20,7 +20,7 @@
 #include "../lvl_section.h"
 #include "../../scene_level.h"
 
-void LVL_Npc::update(float tickTime)
+void LVL_Npc::update(double tickTime)
 {
     if(killed) return;
     if(wasDeactivated) return;
@@ -37,7 +37,8 @@ void LVL_Npc::update(float tickTime)
 
     animator.manualTick(tickTime);
 
-    if(warpSpawing) {
+    if(warpSpawing)
+    {
         setSpeed(0.0, 0.0);
         return;
     }

@@ -164,7 +164,7 @@ protected:
     bool        m_doShutDown;
     bool        m_doExit;
     int         uTick;
-    float       uTickf;
+    double      uTickf;
 
     /************waiting timer************/
     typedef std::chrono::high_resolution_clock StClock;

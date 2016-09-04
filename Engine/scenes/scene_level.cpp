@@ -130,7 +130,7 @@ LevelScene::LevelScene()
     debug_event_delay=0;
 }
 
-void LevelScene::processPhysics(float ticks)
+void LevelScene::processPhysics(double ticks)
 {
     //Iterate layer movement
     layers.processMoving(uTickf);
@@ -296,7 +296,7 @@ LevelScene::~LevelScene()
 }
 
 
-void LevelScene::tickAnimations(float ticks)
+void LevelScene::tickAnimations(double ticks)
 {
     //tick animation
     for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Blocks.begin();
@@ -310,7 +310,7 @@ void LevelScene::tickAnimations(float ticks)
         it->manualTick(ticks);
     for(QList<AdvNpcAnimator>::iterator it=ConfigManager::Animator_NPC.begin();
         it!=ConfigManager::Animator_NPC.end(); it++)
-        it->manualTick(int(ticks));
+        it->manualTick(ticks);
 }
 
 

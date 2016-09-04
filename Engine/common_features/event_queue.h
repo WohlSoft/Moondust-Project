@@ -47,7 +47,7 @@ struct EventQueueEntry
     /// \param _caller pointer to a static or any non-member function
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCaller( void(*_caller)(void), int _delay=0)
+    void makeCaller( void(*_caller)(void), double _delay=0)
     {
         type=caller;
         call = _caller;
@@ -61,7 +61,7 @@ struct EventQueueEntry
     /// \param _obj pointer to object where function must be executed
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCallerT(T*_obj, void(T::*_caller)(void), int _delay=0)
+    void makeCallerT(T*_obj, void(T::*_caller)(void), double _delay=0)
     {
         obj=_obj;
         type=caller_t;
@@ -76,7 +76,7 @@ struct EventQueueEntry
     /// \param _call_func lamda-function which returns void
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCaller( std::function<void()> _call_func, int _delay=0)
+    void makeCaller( std::function<void()> _call_func, double _delay=0)
     {
         type=caller_func;
         call_func=_call_func;
@@ -102,7 +102,7 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlag(bool *_flag, bool target=true, int _delay=0)
+    void makeWaiterFlag(bool *_flag, bool target=true, double _delay=0)
     {
         flag_var=_flag;
         delay=_delay;
@@ -116,7 +116,7 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlag(bool(*_flag)(), bool target=true, int _delay=0)
+    void makeWaiterFlag(bool(*_flag)(), bool target=true, double _delay=0)
     {
         flag_func=_flag;
         delay=_delay;
@@ -131,7 +131,7 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlagT(T*_obj, bool(T::*_flag)(), bool target=true, int _delay=0)
+    void makeWaiterFlagT(T*_obj, bool(T::*_flag)(), bool target=true, double _delay=0)
     {
         obj=_obj;
         flag_func_t=_flag;
@@ -147,7 +147,7 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterCond(std::function<bool()> _condition, bool target=true, int _delay=0)
+    void makeWaiterCond(std::function<bool()> _condition, bool target=true, double _delay=0)
     {
         condition = _condition;
         delay=_delay;
@@ -167,7 +167,7 @@ struct EventQueueEntry
     /// \param step time delay between loop steps
     /// \return time left after delaying. Append this piece to step value in next time
     ///
-    float trigger(float step=1)
+    double trigger(double step=1)
     {
         delay-=step;
         switch(type)
@@ -224,7 +224,7 @@ struct EventQueueEntry
     //for function
     std::function<void()> call_func;
     //for caller, function and for waiting timer
-    float delay;
+    double delay;
     //for a flag waiter
     bool *flag_var;
     bool (*flag_func)();
@@ -288,7 +288,7 @@ public:
     ~EventQueue()
     {}
 
-    void processEvents(float timeStep=1.0f)
+    void processEvents(double timeStep=1.0)
     {
         left_time = 0;
       process_event:
@@ -308,7 +308,7 @@ public:
         left_time=0;
     }
 
-    float left_time;
+    double left_time;
     QQueue<EventQueueEntry<T > > events;
 };
 
