@@ -136,13 +136,11 @@ void LVL_LayerEngine::processMoving(double tickTime)
                     continue;
             }
             obj->iterateStep(tickTime, true);
-
             if( (l.m_speedX == 0.0) && (l.m_speedY == 0.0) )
             {
                 if(obj->m_bodytype == PGE_physBody::Body_STATIC)
                 {
-                    obj->m_momentum.x = round(obj->m_momentum.x);
-                    obj->m_momentum.y = round(obj->m_momentum.y);
+                    obj->m_momentum.y = obj->m_momentum.y < 0 ? floor(obj->m_momentum.y) : ceil(obj->m_momentum.y);
                 }
             }
             obj->_syncPosition();
