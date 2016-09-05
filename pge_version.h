@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,13 @@
 #define GLOBAL_PGE_VERSION
 
 //Version of whole project
-#define _VERSION "0.3.3.4"
+#define _VERSION "0.4.0.0"
 #define _RELEASE "" //Developing state (for release this field must be empty)
 
 #define _VP1 0
-#define _VP2 3
-#define _VP3 3
-#define _VP4 4
-
+#define _VP2 4
+#define _VP3 0
+#define _VP4 0
 
 #define _COPYRIGHT "2014-2016 by Wohlstand"
 
@@ -55,3 +54,4 @@
 
 
 #endif
+
