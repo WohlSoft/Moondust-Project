@@ -51,8 +51,11 @@ install:
   - cmd: echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat
   - cmd: echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
   - cmd: echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
-  - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" -l -c \"date +'%Y-%m-%d %H:%M:%S'>build_date_dev_win32.txt\""
+  - cmd: echo date +'%Y-%m-%d %H:%M:%S'^>build_date_dev_win32.txt > temp.sh
+  - cmd: type temp.sh
+  - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh"
   - cmd: type build_date_dev_win32.txt
+  - cmd: del temp.sh
 
 build_script:
   - build_deps.bat nopause
