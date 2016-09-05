@@ -20,7 +20,7 @@ Editor 0.3.1.11
 - Implemented full support for custom config files for all elements: block-*.ini, background-*.ini, tile-*.ini, scene-*.ini, path-*.ini, level-*.ini
 - Removed a useles auto-script generation thing
 - Added auto-crearing/opening for lunadll.lua/lunaworld.lua/lunaoverworld.lua files and configurable PGE-Specific level/world script names
-- Fully implemented support of slitted configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
+- Fully implemented support of split configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
