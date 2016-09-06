@@ -21,6 +21,8 @@
 #include <QMessageBox>
 #include <QDesktopWidget>
 
+#define ToBTNS(btn) QMessageBox::StandardButtons(QMessageBox::StandardButton(btn))
+
 SafeMsgBox::SafeMsgBox(QObject *parent) :
     QObject(parent)
 {}
@@ -28,7 +30,7 @@ SafeMsgBox::SafeMsgBox(QObject *parent) :
 void SafeMsgBox::info(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    QMessageBox::StandardButton ret = QMessageBox::information(p, title, text, QMessageBox::StandardButtons(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::information(p, title, text, ToBTNS(buttons));
     if(reply)
         *reply=ret;
 }
@@ -36,7 +38,7 @@ void SafeMsgBox::info(QString title, QString text, unsigned long buttons, int *r
 void SafeMsgBox::question(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    QMessageBox::StandardButton ret = QMessageBox::question(p, title, text, QMessageBox::StandardButtons(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::question(p, title, text, ToBTNS(buttons));
     if(reply)
         *reply=ret;
 }
@@ -44,7 +46,7 @@ void SafeMsgBox::question(QString title, QString text, unsigned long buttons, in
 void SafeMsgBox::warning(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    QMessageBox::StandardButton ret = QMessageBox::warning(p, title, text, QMessageBox::StandardButtons(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::warning(p, title, text, ToBTNS(buttons));
     if(reply)
         *reply=ret;
 }
@@ -52,7 +54,7 @@ void SafeMsgBox::warning(QString title, QString text, unsigned long buttons, int
 void SafeMsgBox::critical(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    QMessageBox::StandardButton ret = QMessageBox::critical(p, title, text, QMessageBox::StandardButtons(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::critical(p, title, text, ToBTNS(buttons));
     if(reply)
         *reply=ret;
 }
@@ -73,7 +75,7 @@ void SafeMsgBox::richBox(QString title, QString text, unsigned long buttons, int
     msgBox.move( QPoint( screenRect.width()/2 - mSize.width()/2,
         screenRect.height()/2 - mSize.height()/2 ) );
     msgBox.setIcon(QMessageBox::Icon(msgType));
-    msgBox.setStandardButtons(QMessageBox::StandardButtons(buttons));
+    msgBox.setStandardButtons(ToBTNS(buttons));
     int ret = msgBox.exec();
     if(reply)
         *reply = ret;
