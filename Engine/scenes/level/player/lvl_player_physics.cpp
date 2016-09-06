@@ -303,10 +303,10 @@ void LVL_Player::processContacts()
         }
     }
 
-    if(doHurt)
-        harm(hurtDamage);
     if(doKill)
         kill(killReason);
+    else if(doHurt)
+        harm(hurtDamage);
 
     if(!blocks_to_bounce_bottom.isEmpty())
     {

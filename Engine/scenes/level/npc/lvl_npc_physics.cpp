@@ -88,10 +88,10 @@ void LVL_Npc::processContacts()
         }
     }
 
-    if(doHurt)
-        harm(hurtDamage, killReason);
     if(doKill)
         kill(killReason);
+    else if(doHurt)
+        harm(hurtDamage, killReason);
 }
 
 void LVL_Npc::preCollision()
