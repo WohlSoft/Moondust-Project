@@ -34,13 +34,13 @@ public:
 signals:
 
 public slots:
-    void info(QString title,        QString text,   int buttons, int *reply=nullptr);
-    void question(QString title,     QString text,  int buttons, int *reply=nullptr);
-    void warning(QString title,     QString text,   int buttons, int *reply=nullptr);
-    void critical(QString title,    QString text,   int buttons, int *reply=nullptr);
+    void info(QString title,        QString text,   unsigned long buttons, int *reply=nullptr);
+    void question(QString title,     QString text,  unsigned long buttons, int *reply=nullptr);
+    void warning(QString title,     QString text,   unsigned long buttons, int *reply=nullptr);
+    void critical(QString title,    QString text,   unsigned long buttons, int *reply=nullptr);
     void richBox(QString title,
                  QString text,
-                 int buttons,
+                 unsigned long buttons,
                  int msgType,
                  int *reply=nullptr);
 };
@@ -53,18 +53,18 @@ class SafeMsgBoxInterface : public QObject
     Q_OBJECT
 public:
     explicit SafeMsgBoxInterface(SafeMsgBox* target, QObject*parent = 0);
-    int info(QString title,        QString text,   int buttons);
-    int question(QString title,    QString text,   int buttons);
-    int warning(QString title,     QString text,   int buttons);
-    int critical(QString title,    QString text,   int buttons);
-    int richBox(QString title,     QString text,   int buttons, int msgType);
+    int info(QString title,        QString text,   unsigned long buttons);
+    int question(QString title,    QString text,   unsigned long buttons);
+    int warning(QString title,     QString text,   unsigned long buttons);
+    int critical(QString title,    QString text,   unsigned long buttons);
+    int richBox(QString title,     QString text,   unsigned long buttons, int msgType);
 
 signals:
-    void info(QString title,        QString text,   int buttons, int *reply);
-    void question(QString title,    QString text,   int buttons, int *reply);
-    void warning(QString title,     QString text,   int buttons, int *reply);
-    void critical(QString title,    QString text,   int buttons, int *reply);
-    void richBox(QString title, QString text, int buttons, int msgType, int *reply);
+    void info(QString title,        QString text,   unsigned long buttons, int *reply);
+    void question(QString title,    QString text,   unsigned long buttons, int *reply);
+    void warning(QString title,     QString text,   unsigned long buttons, int *reply);
+    void critical(QString title,    QString text,   unsigned long buttons, int *reply);
+    void richBox(QString title,     QString text,   unsigned long buttons, int msgType, int *reply);
 };
 
 #endif // SAFEMSGBOX_H

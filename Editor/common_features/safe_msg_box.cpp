@@ -25,39 +25,39 @@ SafeMsgBox::SafeMsgBox(QObject *parent) :
     QObject(parent)
 {}
 
-void SafeMsgBox::info(QString title, QString text, int buttons, int *reply)
+void SafeMsgBox::info(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    QMessageBox::StandardButton ret = QMessageBox::information(p, title, text, QMessageBox::StandardButton(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::information(p, title, text, QMessageBox::StandardButtons(buttons));
     if(reply)
         *reply=ret;
 }
 
-void SafeMsgBox::question(QString title, QString text, int buttons, int *reply)
+void SafeMsgBox::question(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    int ret = QMessageBox::question(p, title, text, QMessageBox::StandardButton(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::question(p, title, text, QMessageBox::StandardButtons(buttons));
     if(reply)
         *reply=ret;
 }
 
-void SafeMsgBox::warning(QString title, QString text, int buttons, int *reply)
+void SafeMsgBox::warning(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    int ret = QMessageBox::warning(p, title, text, QMessageBox::StandardButton(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::warning(p, title, text, QMessageBox::StandardButtons(buttons));
     if(reply)
         *reply=ret;
 }
 
-void SafeMsgBox::critical(QString title, QString text, int buttons, int *reply)
+void SafeMsgBox::critical(QString title, QString text, unsigned long buttons, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
-    int ret = QMessageBox::critical(p, title, text, QMessageBox::StandardButton(buttons));
+    QMessageBox::StandardButton ret = QMessageBox::critical(p, title, text, QMessageBox::StandardButtons(buttons));
     if(reply)
         *reply=ret;
 }
 
-void SafeMsgBox::richBox(QString title, QString text, int buttons, int msgType, int *reply)
+void SafeMsgBox::richBox(QString title, QString text, unsigned long buttons, int msgType, int *reply)
 {
     QWidget* p = qobject_cast<QWidget*>(parent());
     QMessageBox msgBox(p);
@@ -85,52 +85,52 @@ SafeMsgBoxInterface::SafeMsgBoxInterface(SafeMsgBox *target, QObject *parent) :
     QObject(parent)
 {
     Q_ASSERT(target);
-    connect(this, SIGNAL(info(QString,QString,int,int*)),
-            target, SLOT(info(QString,QString,int,int*)),
+    connect(this, SIGNAL(info(QString,QString,unsigned long,int*)),
+            target, SLOT(info(QString,QString,unsigned long,int*)),
             Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(question(QString,QString,int,int*)),
-            target, SLOT(question(QString,QString,int,int*)),
+    connect(this, SIGNAL(question(QString,QString,unsigned long,int*)),
+            target, SLOT(question(QString,QString,unsigned long,int*)),
             Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(warning(QString,QString,int,int*)),
-            target, SLOT(warning(QString,QString,int,int*)),
+    connect(this, SIGNAL(warning(QString,QString,unsigned long,int*)),
+            target, SLOT(warning(QString,QString,unsigned long,int*)),
             Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(critical(QString,QString,int,int*)),
-            target, SLOT(critical(QString,QString,int,int*)),
+    connect(this, SIGNAL(critical(QString,QString,unsigned long,int*)),
+            target, SLOT(critical(QString,QString,unsigned long,int*)),
             Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(richBox(QString,QString,int,int,int*)),
-            target, SLOT(richBox(QString,QString,int,int,int*)),
+    connect(this, SIGNAL(richBox(QString,QString,unsigned long,int,int*)),
+            target, SLOT(richBox(QString,QString,unsigned long,int,int*)),
             Qt::BlockingQueuedConnection);
 }
 
-int SafeMsgBoxInterface::info(QString title, QString text, int buttons)
+int SafeMsgBoxInterface::info(QString title, QString text, unsigned long buttons)
 {
     int reply = QMessageBox::NoButton;
     emit info(title, text, buttons, &reply);
     return reply;
 }
 
-int SafeMsgBoxInterface::question(QString title, QString text, int buttons)
+int SafeMsgBoxInterface::question(QString title, QString text, unsigned long buttons)
 {
     int reply = QMessageBox::NoButton;
     emit question(title, text, buttons, &reply);
     return reply;
 }
 
-int SafeMsgBoxInterface::warning(QString title, QString text, int buttons)
+int SafeMsgBoxInterface::warning(QString title, QString text, unsigned long buttons)
 {
     int reply = QMessageBox::NoButton;
     emit warning(title, text, buttons, &reply);
     return reply;
 }
 
-int SafeMsgBoxInterface::critical(QString title, QString text, int buttons)
+int SafeMsgBoxInterface::critical(QString title, QString text, unsigned long buttons)
 {
     int reply = QMessageBox::NoButton;
     emit critical(title, text, buttons, &reply);
     return reply;
 }
 
-int SafeMsgBoxInterface::richBox(QString title, QString text, int buttons, int msgType)
+int SafeMsgBoxInterface::richBox(QString title, QString text, unsigned long buttons, int msgType)
 {
     int reply = QMessageBox::NoButton;
     emit richBox(title, text, buttons, msgType, &reply);
