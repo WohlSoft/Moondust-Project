@@ -127,7 +127,18 @@ private:
     bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
 
     /**
-     * @brief Starts legacy engine with attaching LunaLUA library
+     * @brief Starts legacy engine with attaching LunaLUA library by hexing way
+     * @param pathToLegacyEngine full path to legacy engine executive
+     * @param cmdLineArgs full list of arguments to start legacy engine
+     * @param workingDir working directory (must be equal to legacy engine executable!)
+     * @return Result code
+     */
+    LunaLoaderResult LunaHexerRun(const wchar_t *pathToLegacyEngine,
+                                  const wchar_t *cmdLineArgs,
+                                  const wchar_t *workingDir);
+
+    /**
+     * @brief Starts legacy engine with attaching LunaLUA library by in-memory patching way
      * @param pathToLegacyEngine full path to legacy engine executive
      * @param cmdLineArgs full list of arguments to start legacy engine
      * @param workingDir working directory (must be equal to legacy engine executable!)

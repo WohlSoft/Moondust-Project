@@ -305,6 +305,213 @@ static std::string ReadMsgString(HANDLE hInputRead)
 }
 
 
+static void patch(FILE* f, unsigned int at, void* data, unsigned int size)
+{
+    fseek(f, at, SEEK_SET);
+    fwrite(data, 1, size, f);
+}
+
+static void patchAStr(FILE* f, unsigned int at, char* str, unsigned int maxlen)
+{
+    char data[maxlen];
+    memset(data, 0, maxlen);
+    unsigned int i;
+    unsigned int len = strlen(str);
+    for(i=0; (i<len) && (i<maxlen-1); i++)
+    {
+        data[i] = str[i];
+    }
+    fseek(f, at, SEEK_SET);
+    fwrite(data, 1, maxlen, f);
+}
+
+static void patchUStr(FILE* f, unsigned int at, char* str, unsigned int maxlen)
+{
+    char data[maxlen];
+    memset(data, 0, maxlen);
+    unsigned int i, j;
+    unsigned int len = strlen(str);
+    for(i=0, j=0; (i<len) && (j<maxlen); i++, j+=2)
+    {
+        data[j] = str[i];
+        data[j+1] = 0;
+    }
+    fseek(f, at, SEEK_SET);
+    fwrite(data, 1, maxlen, f);
+}
+
+static unsigned char lunaPatch[132] =
+{
+    0x1C, 0x40, 0x72, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0x70, 0x42, 0x72, 0x00, 0x00, 0x10, 0x00, 0x00,
+    0x79, 0x60, 0x74, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x3C, 0x60, 0x74, 0x00, 0x69, 0x60, 0x74, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x4C, 0x75, 0x6E, 0x61, 0x44, 0x6C, 0x6C, 0x2E, 0x64, 0x6C,
+    0x6C, 0x00, 0x00, 0x00, 0x48, 0x55, 0x44, 0x48, 0x6F, 0x6F,
+    0x6B, 0x00, 0x00, 0x00, 0x4F, 0x6E, 0x4C, 0x76, 0x6C, 0x4C,
+    0x6F, 0x61, 0x64, 0x00, 0x00, 0x00, 0x54, 0x65, 0x73, 0x74,
+    0x46, 0x75, 0x6E, 0x63, 0x00, 0x48, 0x60, 0x74, 0x00, 0x52,
+    0x60, 0x74, 0x00, 0x5E, 0x60, 0x74, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x48, 0x60, 0x74, 0x00, 0x52, 0x60, 0x74, 0x00, 0x5E,
+    0x60, 0x74
+};
+
+#ifdef _WIN32
+typedef wchar_t LUNACHAR;
+#define LunaFOPEN _wfopen
+#define LunaR L"rb"
+#define LunaW L"wb"
+#else
+typedef char LUNACHAR;
+#define LunaFOPEN fopen
+#define LunaR "rb"
+#define LunaW "wb"
+#endif
+
+static int patchSMBX(const LUNACHAR* srcexe, const LUNACHAR* dstexe)
+{
+    char ch=0; char null[4096];
+    memset(null, 0, 4096);
+    FILE *src = LunaFOPEN(srcexe, LunaR);
+    FILE *dst = LunaFOPEN(dstexe, LunaW);
+    if(src == NULL)
+        return 1;
+    if(dst == NULL)
+        return 2;
+    //Copy original SMBX.EXE into the new file
+    while(fread(&ch, 1, 1, src)==1)
+        fwrite(&ch, 1, 1, dst);
+    fclose(src);
+
+    patch(dst, 0xBE,  (void*)"\x04", 1);
+    patch(dst, 0x109, (void*)"\x70", 1);
+    patch(dst, 0x138, (void*)"\x00\x60\x74\x00\x3C", 5);
+    patch(dst, 0x188, (void*)"\x00\x00\x00\x00\x00", 5);
+    patch(dst, 0x1D7, (void*)"\xE0", 1);
+    patch(dst, 0x228, (void*)"\x2E\x4E\x65\x77\x49\x54\x00\x00\x89", 9);
+    patch(dst, 0x235, (void*)"\x60\x74\x00\x00\x10\x00\x00\x00\xD0\x72\x00\x00\x00\x00\x00", 15);
+    patch(dst, 0x24F, (void*)"\xC0", 1);
+    patchUStr(dst, 0x27614, (char*)"LunaLUA-SMBX Version 1.3.0.2 http://wohlsoft.ru", 124);
+    patchAStr(dst, 0x67F6A, (char*)"LunaLUA-SMBX Version 1.3.0.2 http://wohlsoft.ru", 63);
+    patchAStr(dst, 0xA1FE3, (char*)"LunaLUA-SMBX Version 1.3.0.2 http://wohlsoft.ru", 78);
+    patchAStr(dst, 0xC9FC0, (char*)"LunaLUA-SMBX Version 1.3.0.2 http://wohlsoft.ru", 65);
+
+    patchUStr(dst, 0x31A34, (char*)"about:blank", 82);//Kill annoying web viewer!
+
+    #ifdef OVERRIDE_VERSIONINFO_1301 //in Redigit's 1.3 exe version info offset is different
+    patchUStr(dst, 0x72C584, (char*)"Hacked with LunaLUA", 46);//Comment
+    patchUStr(dst, 0x72C5D4, (char*)"WohlSoft Team", 46);//Company
+    patchUStr(dst, 0x72C62C, (char*)"www.wohlsoft.ru", 46);//File description
+    patchUStr(dst, 0x72C680, (char*)"sucks!", 54);//Copyright
+    patchUStr(dst, 0x72C6E4, (char*)"triple sucks!", 54);//Trade marks
+    patchUStr(dst, 0x72C740, (char*)"LunaLUA-SMBX", 38);//Product name
+    patchUStr(dst, 0x72C788, (char*)"1.3.0.2", 14);//Version 1
+    patchUStr(dst, 0x72C7BC, (char*)"1.3.0.2", 14);//Version 2
+    #endif
+    patch(dst, 0x4CA23B, (void*)"\xFF\x15\x71\x60\xB4\x00", 6);
+    patch(dst, 0x4D9446, (void*)"\xFF\x15\x6D\x60\xB4\x00\x90", 7);
+    patch(dst, 0x56C030, (void*)"\xFF\x15\x69\x60\xB4\x00", 6);
+    patch(dst, 0x72D000, null, 4096);
+    patch(dst, 0x72D000, lunaPatch, 132);
+    fclose(dst);
+
+    return 0;
+}
+
+
+LunaTester::LunaLoaderResult LunaTester::LunaHexerRun(
+        const wchar_t *pathToLegacyEngine,
+        const wchar_t *cmdLineArgs,
+        const wchar_t *workingDir)
+{
+    STARTUPINFO si;
+    memset(&si, 0, sizeof(si));
+    memset(&m_pi, 0, sizeof(m_pi));
+    {
+        SECURITY_ATTRIBUTES sa;
+        // Set up the security attributes struct.
+        sa.nLength= sizeof(SECURITY_ATTRIBUTES);
+        sa.lpSecurityDescriptor = NULL;
+        sa.bInheritHandle = TRUE;
+
+        if( ! CreatePipe( &m_ipc_pipe_out_i, &m_ipc_pipe_out, &sa, 0))
+        {
+            m_ipc_pipe_out=0;
+            m_ipc_pipe_out_i=0;
+        }
+        if( ! CreatePipe( &m_ipc_pipe_in,  &m_ipc_pipe_in_o, &sa, 0))
+        {
+            m_ipc_pipe_in=0;
+            m_ipc_pipe_in_o=0;
+        }
+        si.dwFlags = STARTF_USESTDHANDLES;
+        si.hStdInput   = m_ipc_pipe_out_i;
+        si.hStdOutput  = m_ipc_pipe_in_o;
+        si.cb = sizeof(si);
+        // Don't let child process take the write handle here
+        SetHandleInformation(m_ipc_pipe_out, HANDLE_FLAG_INHERIT, 0);
+        // Don't let child process take the read handle here
+        SetHandleInformation(m_ipc_pipe_in, HANDLE_FLAG_INHERIT, 0);
+    }
+
+    std::wstring newPath(pathToLegacyEngine);
+    newPath.append(L".hexed");
+    int err = patchSMBX(pathToLegacyEngine, newPath.c_str());
+
+    if(err != 0)
+    {
+        CloseHandle(m_ipc_pipe_out_i);
+        CloseHandle(m_ipc_pipe_in_o);
+        return LUNALOADER_PATCH_FAIL;
+    }
+
+    // Prepare command line
+    size_t pos = 0;
+    std::wstring quotedPathToSMBX(newPath.c_str());
+    while ((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos) {
+        quotedPathToSMBX.replace(pos, 1, L"\\\"");
+        pos += 2;
+    }
+    std::wstring strCmdLine = (
+        std::wstring(L"\"") + quotedPathToSMBX + std::wstring(L"\" ") +
+        std::wstring(cmdLineArgs)
+        );
+    uint32_t cmdLineMemoryLen = sizeof(wchar_t) * (strCmdLine.length() + 1); // Include null terminator
+    wchar_t* cmdLine = (wchar_t*)malloc(cmdLineMemoryLen);
+    std::memcpy(cmdLine, strCmdLine.c_str(), cmdLineMemoryLen);
+
+    // Create process
+    if (!CreateProcessW(newPath.c_str(), // Launch legacy engine executable
+        cmdLine,          // Command line
+        NULL,             // Process handle not inheritable
+        NULL,             // Thread handle not inheritable
+        TRUE,             // Set handle inheritance to FALSE
+        0, //No flags
+        NULL,             // Use parent's environment block
+        workingDir,       // Use parent's starting directory
+        &si,              // Pointer to STARTUPINFO structure
+        &m_pi)              // Pointer to PROCESS_INFORMATION structure
+        )
+    {
+        free(cmdLine); cmdLine = NULL;
+        return LUNALOADER_CREATEPROCESS_FAIL;
+    }
+    free(cmdLine); cmdLine = NULL;
+
+    // Close handles
+    CloseHandle(m_ipc_pipe_out_i);
+    CloseHandle(m_ipc_pipe_in_o);
+    CloseHandle(m_pi.hThread);
+    m_ipc_pipe_out_i = 0;
+    m_ipc_pipe_in_o  = 0;
+
+    return LUNALOADER_OK;
+}
+
+
+
 static inline void setJmpAddr(uint8_t* patch, DWORD patchAddr, DWORD patchOffset, DWORD target)
 {
     DWORD* dwordAddr = (DWORD*)&patch[patchOffset+1];
@@ -974,7 +1181,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 this->m_ipc_pipe_in = 0;
             }
 
-            LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
+            LunaLoaderResult res = LunaHexerRun(command.toStdWString().c_str(),
                                                  argString.toStdWString().c_str(),
                                                  smbxPath.toStdWString().c_str());
 
@@ -997,9 +1204,9 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 switch(res)
                 {
                 case LUNALOADER_CREATEPROCESS_FAIL:
-                    luna_error=LunaTester::tr("process execution is failed.");
+                    luna_error=LunaTester::tr("process execution is failed."); break;
                 case LUNALOADER_PATCH_FAIL:
-                    luna_error=LunaTester::tr("patching has failed.");
+                    luna_error=LunaTester::tr("patching has failed."); break;
                 default:
                     break;
                 }
