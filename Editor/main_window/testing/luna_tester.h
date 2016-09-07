@@ -54,6 +54,8 @@ public:
     ~LunaTester();
     //! Pointer to main window
     MainWindow* m_mw;
+    //! List of registered menu items
+    QAction* m_menuItems[3];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
@@ -61,6 +63,10 @@ public:
      * @param insert_before Action where is need to insert LunaTester menu
      */
     void initLunaMenu(MainWindow *mw, QMenu* mainmenu, QAction* insert_before, QAction *defaultTestAction);
+    /**
+     * @brief Refresh menu text
+     */
+    void retranslateMenu();
     //! LunaLoader process information
     PROCESS_INFORMATION m_pi;
     //! LunaLUA IPC Out pipe

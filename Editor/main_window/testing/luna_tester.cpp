@@ -103,32 +103,32 @@ void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_b
     QMenu* lunaMenu = mainmenu->addMenu(QIcon(":/lunalua.ico"), "LunaTester");
     mainmenu->insertMenu(insert_before, lunaMenu);
 
-
-    QAction* RunLunaTest = lunaMenu->addAction(tr("Run testing"));
-    RunLunaTest->setToolTip(tr("Starts testing in the legacy engine.\n"
-                               "To have this feature work, latest LunaLUA must be installed.\n"
-                               "Otherwise it will be very limited."));
+    QAction* RunLunaTest = lunaMenu->addAction("runTesting");
     mw->connect(RunLunaTest,    &QAction::triggered,
                 this,           &LunaTester::startLunaTester,
                 Qt::QueuedConnection);
+    m_menuItems[0] = RunLunaTest;
 
 
-    QAction* ResetCheckPoints = lunaMenu->addAction(tr("Reset checkpoints"));
-    ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+    QAction* ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
     mw->connect(ResetCheckPoints,   &QAction::triggered,
                 this,               &LunaTester::resetCheckPoints,
                 Qt::QueuedConnection);
+    m_menuItems[1] = ResetCheckPoints;
 
 
-    QAction* KillFrozenThread = lunaMenu->addAction(tr("Termitate frozen loader"));
-    KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
+    QAction* KillFrozenThread = lunaMenu->addAction("Termitate frozen loader");
     mw->connect(KillFrozenThread,   &QAction::triggered,
                 this,               &LunaTester::killFrozenThread,
                 Qt::QueuedConnection);
+    m_menuItems[2] = KillFrozenThread;
 
 
     QAction* sep = lunaMenu->addSeparator();
     mainmenu->insertAction(insert_before, sep);
+
+    retranslateMenu();
+    connect(mw, &MainWindow::languageSwitched, this, &LunaTester::retranslateMenu);
 
     if(ConfStatus::SmbxTest_By_Default)
     {
@@ -138,6 +138,24 @@ void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_b
         RunLunaTest->setShortcut(QStringLiteral("F5"));
         RunLunaTest->setShortcutContext(Qt::WindowShortcut);
     }
+}
+
+void LunaTester::retranslateMenu()
+{
+    QAction* RunLunaTest = m_menuItems[0];
+    RunLunaTest->setText(tr("Run testing"));
+    RunLunaTest->setToolTip(tr("Starts testing in the legacy engine.\n"
+                               "To have this feature work, latest LunaLUA must be installed.\n"
+                               "Otherwise it will be very limited."));
+
+    QAction* ResetCheckPoints = m_menuItems[1];
+    ResetCheckPoints->setText(tr("Reset checkpoints"));
+    ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+
+    QAction* KillFrozenThread = m_menuItems[2];
+    ResetCheckPoints->setText(tr("Termitate frozen loader"));
+    KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
+
 }
 
 /*****************************************Menu slots*************************************************/
