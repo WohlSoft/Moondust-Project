@@ -78,7 +78,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     QRect mwg = mw()->geometry();
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
-    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(mw(), &MainWindow::languageSwitched, this, &LvlItemProperties::re_translate);
     connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelProp, SLOT(setChecked(bool)));
 
