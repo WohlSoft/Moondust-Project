@@ -153,7 +153,7 @@ void LunaTester::retranslateMenu()
     ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
 
     QAction* KillFrozenThread = m_menuItems[2];
-    ResetCheckPoints->setText(tr("Termitate frozen loader"));
+    KillFrozenThread->setText(tr("Termitate frozen loader"));
     KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
 
 }
