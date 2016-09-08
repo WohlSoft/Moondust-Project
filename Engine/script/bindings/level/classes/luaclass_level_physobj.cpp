@@ -53,6 +53,7 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
 
             //Physics
             .property("paused_physics", &PGE_Phys_Object::isPaused, &PGE_Phys_Object::setPaused)
+            .property("visible", &PGE_Phys_Object::isVisible, &PGE_Phys_Object::setVisible)
             .property("speedX", &PGE_Phys_Object::speedX, &PGE_Phys_Object::setSpeedX)
             .property("speedY", &PGE_Phys_Object::speedY, &PGE_Phys_Object::setSpeedY)
             .property("minVelX", &PGE_Phys_Object::minVelX, &PGE_Phys_Object::setMinVelX)

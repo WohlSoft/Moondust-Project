@@ -76,7 +76,7 @@ LevelScene::LevelScene()
       luaEngine(this)
 {
     tree.RemoveAll();
-    layers._scene=this;
+    layers.m_scene=this;
     events._scene=this;
 
     data.meta.ReadFileValid = false;
@@ -186,7 +186,7 @@ void LevelScene::processAllCollisions()
 LevelScene::~LevelScene()
 {
     GlRenderer::clearScreen();
-    layers.members.clear();
+    layers.clear();
 
     switch_blocks.clear();
     //destroy textures

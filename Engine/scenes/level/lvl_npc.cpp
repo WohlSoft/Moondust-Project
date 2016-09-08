@@ -52,6 +52,8 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     wasDeactivated=false;
     offSectionDeactivate=false;
     activationTimeout=4000;
+    m_spawnedGeneratorType = LevelScene::GENERATOR_APPEAR;
+    m_spawnedGeneratorDirection = LevelScene::SPAWN_UP;
     warpSpawing=false;
 
     _isInited=false;

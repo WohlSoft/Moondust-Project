@@ -153,6 +153,8 @@ public:
     bool wasDeactivated;
     bool offSectionDeactivate;
     int  activationTimeout;
+    int  m_spawnedGeneratorType;
+    int  m_spawnedGeneratorDirection;
 
     /********************Detectors**********************/
     //!< dummy detectors made directly from a base class, for a some tests

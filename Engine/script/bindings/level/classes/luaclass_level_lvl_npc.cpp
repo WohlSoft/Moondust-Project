@@ -70,6 +70,19 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
                 value("WARP_BOTTOM", LVL_Npc::WarpingSide::WARP_BOTTOM),
                 value("WARP_RIGHT", LVL_Npc::WarpingSide::WARP_RIGHT)
             ]
+            .enum_("SpawnType")
+            [
+                value("SPAWN_APPEAR", 0),
+                value("SPAWN_WARP", 1),
+                value("SPAWN_PROJECTILE", 2)
+            ]
+            .enum_("SpawnDirection")
+            [
+                value("SPAWN_LEFT", 2),
+                value("SPAWN_RIGHT", 4),
+                value("SPAWN_UP", 1),
+                value("SPAWN_DOWN", 3)
+            ]
             .def(constructor<>())
             //Events
             .def("onActivated", &LVL_Npc::lua_onActivated, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onActivated)
@@ -83,6 +96,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("transformTo", &LVL_Npc::transformTo)
             .def_readonly("transformedFromBlockID", &LVL_Npc::transformedFromBlockID)
             .def_readonly("transformedFromNpcID", &LVL_Npc::transformedFromNpcID)
+            .def_readonly("spawneGenType", &LVL_Npc::m_spawnedGeneratorType)
+            .def_readonly("spawneGenDirection", &LVL_Npc::m_spawnedGeneratorDirection)
 
             //Functions
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)

@@ -9,7 +9,7 @@ function p_switch.toggle()
     local allBlocks = Block.get();
 
     for K,Blk in pairs(allBlocks)do
-        if( (not Blk.is_destroyed) and (Blk.contentNPC_ID == 0) )then
+        if( (Blk.visible) and (not Blk.is_destroyed) and (Blk.contentNPC_ID == 0) )then
             if(Blk.id==4)then
                 if(Blk.transformedFromNpcID==251)then
                     Blk:transformTo(251, 1)
@@ -39,28 +39,30 @@ function p_switch.toggle()
     end
 
     for K,Npc in pairs(allNPCs)do
-        if(Npc.id==10)then
-            Npc:transformTo(4, 2)
-        elseif(Npc.id==33)then
-            Npc:transformTo(89, 2)
-        elseif(Npc.id==258)then
-            Npc:transformTo(89, 2)
-        elseif(Npc.id==88)then
-            if(Npc.transformedFromBlockID==60)then
-                Npc:transformTo(60, 2)
-            else
-                Npc:transformTo(188, 2)
+        if(Npc.visible)then
+            if(Npc.id==10)then
+                Npc:transformTo(4, 2)
+            elseif(Npc.id==33)then
+                Npc:transformTo(89, 2)
+            elseif(Npc.id==258)then
+                Npc:transformTo(89, 2)
+            elseif(Npc.id==88)then
+                if(Npc.transformedFromBlockID==60)then
+                    Npc:transformTo(60, 2)
+                else
+                    Npc:transformTo(188, 2)
+                end
+            elseif(Npc.id==103)then
+                Npc:transformTo(280, 2)
+            elseif(Npc.id==138)then
+                Npc:transformTo(293, 2)
+            elseif(Npc.id==251)then
+                Npc:transformTo(4, 2)
+            elseif(Npc.id==252)then
+                Npc:transformTo(4, 2)
+            elseif(Npc.id==253)then
+                Npc:transformTo(4, 2)
             end
-        elseif(Npc.id==103)then
-            Npc:transformTo(280, 2)
-        elseif(Npc.id==138)then
-            Npc:transformTo(293, 2)
-        elseif(Npc.id==251)then
-            Npc:transformTo(4, 2)
-        elseif(Npc.id==252)then
-            Npc:transformTo(4, 2)
-        elseif(Npc.id==253)then
-            Npc:transformTo(4, 2)
         end
     end
     
@@ -82,7 +84,6 @@ function p_switch.pend()
     if(p_switch_enabled)then
         p_switch_enabled=false
         p_switch.toggle()
-        Level.triggerEvent("P Switch - End")
     end
 end
 
@@ -93,6 +94,11 @@ function p_switch.process(tickTime)
     end
     Renderer.printText("P-SWITCH LEFT "..tostring(p_switch_time_left), 10, 10, 0, 15, 0xFF0000FF)
     p_switch_time_left = p_switch_time_left - tickTime
+    -- Trigger stop even on last frame of P-Switch time. Because real triggering of event will happen in next frame
+    if((p_switch_time_left <= tickTime) and (p_switch_time_left >= 0.0))then
+        Level.triggerEvent("P Switch - End")
+    end
+    -- Stop P-Switch processing
     if(p_switch_time_left<0.0)then
         p_switch.pend()
     end

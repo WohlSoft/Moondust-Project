@@ -26,7 +26,7 @@ class LevelScene;
 class LVL_LayerEngine
 {
     friend class LevelScene;
-    LevelScene * _scene;
+    LevelScene * m_scene;
 public:
     LVL_LayerEngine(LevelScene *_parent=NULL);
     void hide(QString layer, bool smoke=true);
@@ -35,16 +35,24 @@ public:
     void registerItem(QString layer, PGE_Phys_Object* item);
     void removeRegItem(QString layer, PGE_Phys_Object* item);
     bool isEmpty(QString layer);
+    void clear();
 
+    struct Layer
+    {
+        Layer() { m_vizible=true; }
+        bool m_vizible;
+        typedef QHash<intptr_t, PGE_Phys_Object* > Members;
+        Members m_members;
+    };
     struct MovingLayer
     {
         double m_speedX;
         double m_speedY;
-        QList<PGE_Phys_Object* >*m_members;
+        Layer::Members *m_members;
     };
     void installLayerMotion(QString layer, double speedX, double speedY);
-    QHash<QString, QList<PGE_Phys_Object* > > members;
-    QHash<QString, MovingLayer> moving_layers;
+    QHash<QString, Layer> m_layers;
+    QHash<QString, MovingLayer> m_movingLayers;
     void processMoving(double tickTime);
 };
 

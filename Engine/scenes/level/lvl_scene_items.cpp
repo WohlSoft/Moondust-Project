@@ -44,7 +44,7 @@ LVL_Block * LevelScene::spawnBlock(LevelBlock blockData)
 {
     if(blockData.id<=0) return NULL;
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
-        return NULL;
+        return nullptr;
     LVL_Block * block;
     blockData.meta.array_id= ++data.blocks_array_id;
     block = new LVL_Block(this);
@@ -139,6 +139,8 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     npc->reSpawnable=reSpawnable;
     npc->data = npcData;
     npc->init();
+    npc->m_spawnedGeneratorType = sp_type;
+    npc->m_spawnedGeneratorDirection = sp_dir;
     switch(sp_type)
     {
         case GENERATOR_WARP:

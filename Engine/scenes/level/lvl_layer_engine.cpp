@@ -20,58 +20,63 @@
 #include <data_configs/config_manager.h>
 #include "../scene_level.h"
 
-LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) : _scene(_parent), members()
+LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) : m_scene(_parent), m_layers()
 {}
 
 void LVL_LayerEngine::hide(QString layer, bool smoke)
 {
-    QList<PGE_Phys_Object* > &lyr = members[layer];
-    for(int i=0; i<lyr.size(); i++)
+    Layer &lyr = m_layers[layer];
+    lyr.m_vizible = false;
+    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++ )
     {
-        if(!lyr[i]->isVisible()) continue;
-        lyr[i]->hide();
+        PGE_Phys_Object*body = it.value();
+        if(!body->isVisible())
+            continue;
+        body->hide();
         if(smoke)
         {
-            _scene->launchStaticEffectC(10,
-                                              lyr[i]->posCenterX(),
-                                              lyr[i]->posCenterY(),
-                                              1, 0, 0, 0, 0);
+            SpawnEffectDef smoke = ConfigManager::g_setup_effects.m_smoke;
+            smoke.startX = body->posCenterX();
+            smoke.startY = body->posCenterY();
+            m_scene->launchEffect(smoke, true);
         }
     }
 }
 
-void LVL_LayerEngine::show(QString layer,bool smoke)
+void LVL_LayerEngine::show(QString layer, bool smoke)
 {
-    QList<PGE_Phys_Object* > &lyr = members[layer];
-    for(int i=0; i<lyr.size(); i++)
+    Layer &lyr = m_layers[layer];
+    lyr.m_vizible = true;
+    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++ )
     {
-        if(lyr[i]->isVisible()) continue;
-        lyr[i]->show();
+        PGE_Phys_Object*body = it.value();
+        if(body->isVisible())
+            continue;
+        body->show();
         if(smoke)
         {
-            _scene->launchStaticEffectC(10,
-                                              lyr[i]->posCenterX(),
-                                              lyr[i]->posCenterY(),
-                                              1, 0, 0, 0, 0);
+            SpawnEffectDef smoke = ConfigManager::g_setup_effects.m_smoke;
+            smoke.startX = body->posCenterX();
+            smoke.startY = body->posCenterY();
+            m_scene->launchEffect(smoke, true);
         }
     }
 }
 
 void LVL_LayerEngine::toggle(QString layer, bool smoke)
 {
-    QList<PGE_Phys_Object* > &lyr = members[layer];
-    if(lyr.isEmpty()) return;
-    bool show=!lyr.first()->isVisible();
-
-    for(int i=0; i<lyr.size(); i++)
+    Layer &lyr = m_layers[layer];
+    lyr.m_vizible = !lyr.m_vizible;
+    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++ )
     {
-        if(show) lyr[i]->show(); else lyr[i]->hide();
+        PGE_Phys_Object*body = it.value();
+        body->setVisible(lyr.m_vizible);
         if(smoke)
         {
-            _scene->launchStaticEffectC(10,
-                                              lyr[i]->posCenterX(),
-                                              lyr[i]->posCenterY(),
-                                              1, 0, 0, 0, 0);
+            SpawnEffectDef smoke = ConfigManager::g_setup_effects.m_smoke;
+            smoke.startX = body->posCenterX();
+            smoke.startY = body->posCenterY();
+            m_scene->launchEffect(smoke, true);
         }
     }
 }
@@ -79,47 +84,51 @@ void LVL_LayerEngine::toggle(QString layer, bool smoke)
 void LVL_LayerEngine::registerItem(QString layer, PGE_Phys_Object *item)
 {
     //Register item in the layer
-    QList<PGE_Phys_Object* > &lyr = members[layer];
-    if(!lyr.contains(item))
-        lyr.push_back(item);
+    Layer &lyr = m_layers[layer];
+    if(!lyr.m_members.contains(intptr_t(item)))
+        lyr.m_members[intptr_t(item)] = item;
+    item->setVisible(lyr.m_vizible);
 }
 
 void LVL_LayerEngine::removeRegItem(QString layer, PGE_Phys_Object *item)
 {
     //Remove item from the layer
-    QList<PGE_Phys_Object* > &lyr = members[layer];
-    lyr.removeAll(item);
+    Layer &lyr = m_layers[layer];
+    lyr.m_members.remove(intptr_t(item));
 }
 
 void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double speedY)
 {
-    if(moving_layers.contains(layer))
+    if(m_movingLayers.contains(layer))
     {
-        MovingLayer &l = moving_layers[layer];
+        MovingLayer &l = m_movingLayers[layer];
         l.m_speedX=speedX;
         l.m_speedY=speedY;
     } else {
         if((speedX==0.0)&&(speedY==0.0))
             return;//Don't store zero-speed layers!
+        if(!m_layers.contains(layer))
+            return;
+        Layer &lyr = m_layers[layer];
         MovingLayer l;
         l.m_speedX=speedX;
         l.m_speedY=speedY;
-        l.m_members = &members[layer];
-        moving_layers[layer]=l;
+        l.m_members = &lyr.m_members;
+        m_movingLayers[layer]=l;
     }
 }
 
 void LVL_LayerEngine::processMoving(double tickTime)
 {
-    if(moving_layers.isEmpty())
+    if(m_movingLayers.isEmpty())
         return;
     QVector<QString> remove_list;
-    for(QHash<QString, MovingLayer>::iterator it = moving_layers.begin(); it != moving_layers.end(); it++)
+    for(QHash<QString, MovingLayer>::iterator it = m_movingLayers.begin(); it != m_movingLayers.end(); it++)
     {
         MovingLayer &l = (*it);
-        for(int i=0; i<l.m_members->size(); i++)
+        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++ )
         {
-            PGE_Phys_Object*obj = (*l.m_members)[i];
+            PGE_Phys_Object*obj = it.value();
             //Don't iterate playable characters
             if(obj->type == PGE_Phys_Object::LVLPlayer)
                 continue;
@@ -140,7 +149,8 @@ void LVL_LayerEngine::processMoving(double tickTime)
             {
                 if(obj->m_bodytype == PGE_physBody::Body_STATIC)
                 {
-                    obj->m_momentum.y = obj->m_momentum.y < 0 ? floor(obj->m_momentum.y) : ceil(obj->m_momentum.y);
+                    //obj->m_momentum.y = obj->m_momentum.y < 0 ? floor(obj->m_momentum.y) : ceil(obj->m_momentum.y);
+                    obj->m_momentum.saveOld();
                 }
             }
             obj->_syncPosition();
@@ -152,11 +162,17 @@ void LVL_LayerEngine::processMoving(double tickTime)
     }
     //Remove zero-speed layers
     for(int i=0;i<remove_list.size(); i++)
-        moving_layers.remove(remove_list[i]);
+        m_movingLayers.remove(remove_list[i]);
 }
 
 bool LVL_LayerEngine::isEmpty(QString layer)
 {
-    return members[layer].isEmpty();
+    return !m_layers.contains(layer) || m_layers[layer].m_members.isEmpty();
+}
+
+void LVL_LayerEngine::clear()
+{
+    m_movingLayers.clear();
+    m_layers.clear();
 }
 

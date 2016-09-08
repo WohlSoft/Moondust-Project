@@ -88,9 +88,10 @@ void LVL_Npc::transformTo(long id, int type)
         {
             def = transformedFromBlock->data;
             _scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
-            _scene->layers.registerItem(def.layer, transformedFromBlock);
+            transformedFromBlock->data.layer = data.layer;
+            _scene->layers.registerItem(data.layer, transformedFromBlock);
             transformedFromBlock->setPos( round(posX()), round(posY()) );
-            transformedFromBlock->m_destroyed = false;
+            transformedFromBlock->setDestroyed( false );
             transformedFromBlock->transformTo(id, 2);
             transformedFromBlock->transformedFromNpcID = data.id;
             transformedFromBlock->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
@@ -106,6 +107,9 @@ void LVL_Npc::transformTo(long id, int type)
             {
                 res->transformedFromNpcID = data.id;
                 res->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
+                res->m_momentum.saveOld();
+                res->data.x = long(round(res->m_momentum.x));
+                res->data.y = long(round(res->m_momentum.y));
             }
         }
         this->unregister();

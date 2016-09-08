@@ -265,6 +265,7 @@ public:
     /**************************Layer member****************************/
     virtual void show();
     virtual void hide();
+    virtual void setVisible(bool vizible);
     virtual bool isVisible();
     bool m_is_visible;
     /******************************************************************/

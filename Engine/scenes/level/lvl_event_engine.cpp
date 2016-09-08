@@ -54,26 +54,35 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         evntAct.m_eventName = evt.name;
         evntAct.m_timeDelayLeft=0.0;
 
-        EventQueueEntry<LVL_EventAction> hideLayers;
-        hideLayers.makeCaller([this,evt]()->void{
-                               foreach(QString ly, evt.layers_hide)
-                                   _scene->layers.hide(ly, !evt.nosmoke);
-                           }, 0);
-        evntAct.m_action.events.push_back(hideLayers);
+        if(!evt.layers_hide.empty())
+        {
+            EventQueueEntry<LVL_EventAction> hideLayers;
+            hideLayers.makeCaller([this,evt]()->void{
+                                   foreach(QString ly, evt.layers_hide)
+                                       _scene->layers.hide(ly, !evt.nosmoke);
+                               }, 0);
+            evntAct.m_action.events.push_back(hideLayers);
+        }
 
-        EventQueueEntry<LVL_EventAction> showLayers;
-        showLayers.makeCaller([this,evt]()->void{
-                               foreach(QString ly, evt.layers_show)
-                                   _scene->layers.show(ly, !evt.nosmoke);
-                           }, 0);
-        evntAct.m_action.events.push_back(showLayers);
+        if(!evt.layers_show.empty())
+        {
+            EventQueueEntry<LVL_EventAction> showLayers;
+            showLayers.makeCaller([this,evt]()->void{
+                                   foreach(QString ly, evt.layers_show)
+                                       _scene->layers.show(ly, !evt.nosmoke);
+                               }, 0);
+            evntAct.m_action.events.push_back(showLayers);
+        }
 
-        EventQueueEntry<LVL_EventAction> toggleLayers;
-        toggleLayers.makeCaller([this,evt]()->void{
-                               foreach(QString ly, evt.layers_toggle)
-                                   _scene->layers.toggle(ly, !evt.nosmoke);
-                           }, 0);
-        evntAct.m_action.events.push_back(toggleLayers);
+        if(!evt.layers_toggle.empty())
+        {
+            EventQueueEntry<LVL_EventAction> toggleLayers;
+            toggleLayers.makeCaller([this,evt]()->void{
+                                   foreach(QString ly, evt.layers_toggle)
+                                       _scene->layers.toggle(ly, !evt.nosmoke);
+                               }, 0);
+            evntAct.m_action.events.push_back(toggleLayers);
+        }
 
         if(evt.sound_id>0)
         {
@@ -228,6 +237,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                                        _scene->layers.installLayerMotion(evt.movelayer, evt.layer_speed_x, evt.layer_speed_y);
                                }, 0);
             evntAct.m_action.events.push_back(movelayer);
+            evntAct.m_timeDelayLeft = 0.0;
         }
 
     events[evt.name].push_back(evntAct);
@@ -236,7 +246,6 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     {
         LVL_EventAction trigger;
         trigger.m_eventName=evt.name;
-        trigger.m_timeDelayLeft = 0.0;
         EventQueueEntry<LVL_EventAction> triggerEvent;
         triggerEvent.makeCaller([this,evt]()->void{
                                 _scene->events.triggerEvent(evt.trigger);
@@ -294,7 +303,9 @@ void LVL_EventEngine::triggerEvent(QString event)
     if(event.isEmpty())
         return;
     if(events.contains(event))
+    {
         workingEvents.push_back(events[event]);
+    }
 }
 
 

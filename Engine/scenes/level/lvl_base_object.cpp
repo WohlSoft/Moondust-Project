@@ -620,6 +620,11 @@ void PGE_Phys_Object::hide()
     m_is_visible=false;
 }
 
+void PGE_Phys_Object::setVisible(bool vizible)
+{
+    m_is_visible=vizible;
+}
+
 bool PGE_Phys_Object::isVisible()
 {
     return m_is_visible;

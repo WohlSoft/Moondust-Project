@@ -34,7 +34,8 @@ void LVL_Npc::Activate()
     deActivatable = ((setup->setup.deactivation)||(!setup->setup.activity)); //!< Allow deactivation of this NPC when it going offscreen
     wasDeactivated=false;
 
-    setSpeed(0.0, 0.0);
+    if(m_spawnedGeneratorType != LevelScene::GENERATOR_PROJECTILE)
+        setSpeed(0.0, 0.0);
 
     animator.start();
     isActivated=true;

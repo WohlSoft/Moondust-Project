@@ -106,6 +106,9 @@ void LVL_Block::transformTo(long id, int type)
             npc->transformedFromBlock = this;
             npc->transformedFromBlockID = int(data.id);
             npc->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
+            npc->m_momentum.saveOld();
+            npc->data.x = long(round(npc->m_momentum.x));
+            npc->data.y = long(round(npc->m_momentum.y));
         }
         destroy( false );
     }
@@ -471,11 +474,12 @@ bool LVL_Block::lua_invisible()
 void LVL_Block::lua_setInvisible(bool iv)
 {
     if(m_isHidden && !iv)
+    {
         memcpy(m_blocked, m_blockedOrigin, sizeof(int)*BLOCK_FILTER_COUNT);
+    }
     else
     if(!m_isHidden && iv)
     {
-        memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
         m_blocked[1] = Block_BOTTOM;
         m_blocked[2] = Block_BOTTOM;
     }
@@ -736,19 +740,19 @@ void LVL_Block::setDestroyed(bool dstr)
 {
     if(!m_isHidden)
     {
-        if(!m_destroyed && dstr)
-            memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
-        else
         if(m_destroyed && !dstr)
         {
             memcpy(m_blocked, m_blockedOrigin, sizeof(int)*BLOCK_FILTER_COUNT);
         }
-    } else {
+    }
+    else
+    {
         if(!m_destroyed && dstr)
         {
             m_blocked[1] = Block_NONE;
             m_blocked[2] = Block_NONE;
-        }else
+        }
+        else
         if(m_destroyed && !dstr)
         {
             m_blocked[1] = Block_BOTTOM;
