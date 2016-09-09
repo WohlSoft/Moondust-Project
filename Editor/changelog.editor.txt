@@ -21,6 +21,8 @@ Editor 0.3.1.11
 - Removed a useles auto-script generation thing
 - Added auto-crearing/opening for lunadll.lua/lunaworld.lua/lunaoverworld.lua files and configurable PGE-Specific level/world script names
 - Fully implemented support of split configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
+- Fixed dead lock and wired question dialog on attempt to start LunaTester while SMBX Editor opened in parallel and when file in PGE Editor isn't saved
+- Fixed crash on attempt toggle layer in the warp entry while placing mode of block, BGO or NPC in process
 
 Editor 0.3.1.10
 - Fixed custom folder confusion caused with dot-contained file names
