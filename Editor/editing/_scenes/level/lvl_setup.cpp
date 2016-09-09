@@ -144,65 +144,63 @@ void LvlScene::setTiledBackground(bool forceTiled)
 void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem*> ItemList = items();
-    QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        QGraphicsItem* item = (*it);
+        if(!item->data(ITEM_IS_CURSOR).isNull())
+            continue;
+
         if((*it)->data(ITEM_TYPE)=="Block")
         {
-            tmp = (*it);
             foreach(LevelLayer layer, m_data->layers)
             {
-                if( dynamic_cast<ItemBlock *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemBlock *>(item)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemBlock *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBlock *>(item)->setVisible( !layer.hidden ); break;
                 }
             }
         }
         else
-        if((*it)->data(ITEM_TYPE)=="BGO")
+        if(item->data(ITEM_TYPE)=="BGO")
         {
-            tmp = (*it);
             foreach(LevelLayer layer, m_data->layers)
             {
-                if( dynamic_cast<ItemBGO *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemBGO *>(item)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemBGO *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBGO *>(item)->setVisible( !layer.hidden ); break;
                 }
             }
         }
         else
-        if((*it)->data(ITEM_TYPE)=="NPC")
+        if(item->data(ITEM_TYPE)=="NPC")
         {
-            tmp = (*it);
             foreach(LevelLayer layer, m_data->layers)
             {
-                if( dynamic_cast<ItemNPC *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemNPC *>(item)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemNPC *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemNPC *>(item)->setVisible( !layer.hidden ); break;
                 }
             }
         }
         else
-        if((*it)->data(ITEM_TYPE)=="Water")
+        if(item->data(ITEM_TYPE)=="Water")
         {
-            tmp = (*it);
             foreach(LevelLayer layer, m_data->layers)
             {
-                if( dynamic_cast<ItemPhysEnv *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemPhysEnv *>(item)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemPhysEnv *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemPhysEnv *>(item)->setVisible( !layer.hidden ); break;
                 }
             }
         }
         else
-        if(((*it)->data(ITEM_TYPE)=="Door_enter")||((*it)->data(ITEM_TYPE)=="Door_exit"))
+        if( (item->data(ITEM_TYPE)=="Door_enter") || (item->data(ITEM_TYPE)=="Door_exit") )
         {
-            tmp = (*it);
             foreach(LevelLayer layer, m_data->layers)
             {
-                if( dynamic_cast<ItemDoor *>(tmp)->m_data.layer == layer.name)
+                if( dynamic_cast<ItemDoor *>(item)->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemDoor *>(tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemDoor *>(item)->setVisible( !layer.hidden ); break;
                 }
             }
         }
