@@ -1181,9 +1181,15 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 this->m_ipc_pipe_in = 0;
             }
 
+            #ifdef USE_LUNAHEXER //Hexes legacy SMBX.exe and starts it as regular exe
             LunaLoaderResult res = LunaHexerRun(command.toStdWString().c_str(),
                                                  argString.toStdWString().c_str(),
                                                  smbxPath.toStdWString().c_str());
+            #else
+            LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
+                                                 argString.toStdWString().c_str(),
+                                                 smbxPath.toStdWString().c_str());
+            #endif
 
             if(res == LUNALOADER_OK)
             {
