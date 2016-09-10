@@ -483,27 +483,6 @@ void LVL_Player::update(double tickTime)
         kill(DEAD_fall);
     }
 
-    if(bumpDown)
-    {
-        bumpDown=false;
-        jumpTime=0;
-        setSpeedY(bumpVelocity);
-    }
-    else
-    if(bumpUp)
-    {
-        bumpUp=false;
-        if(keys.jump)
-        {
-            jumpTime=bumpJumpTime;
-            jumpVelocity=bumpJumpVelocity;
-        }
-        setSpeedY( (keys.jump ?
-                        (-fabs(bumpJumpVelocity)-fabs(speedX()/physics_cur.velocity_jump_c)):
-                         -fabs(bumpJumpVelocity)) );
-    }
-
-
     //Connection of section opposite sides
     if(isExiting) // Allow walk offscreen if exiting
     {

@@ -172,7 +172,6 @@ void LVL_Player::processContacts()
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                     break;
                 }
-
                 if(bumpUp || bumpDown)
                     break;
 
@@ -223,6 +222,47 @@ void LVL_Player::processContacts()
                 {
                     doHurt = true;
                     hurtDamage = 1;
+                }
+
+                if(m_onSlopeFloorTopAlign && !m_slopeFloor.has && m_stand &&
+                   (blk->m_momentum.velY <= m_momentum.velY) )
+                {
+                    switch(blk->m_shape)
+                    {
+                    case PGE_physBody::SL_LeftBottom:
+                    {
+                        if( (m_momentum.left() <= blk->m_momentum.left()) &&
+                            (m_momentum.left() + m_momentum.velX > m_momentum.left()) )
+                        {
+                            double k = blk->m_momentum.h / blk->m_momentum.w;
+                            double newx = m_momentum.x + m_momentum.velX;
+                            double newy = blk->m_momentum.y + ( (newx - blk->m_momentum.x) * k ) - m_momentum.h;
+                            m_momentum.velY = fabs(m_momentum.y - newy);
+                            m_slopeFloor.has = true;
+                            m_slopeFloor.shape = blk->m_shape;
+                            m_slopeFloor.rect  = blk->m_momentum.rect();
+                            m_onSlopeYAdd = 0.0;
+                        }
+                        break;
+                    }
+                    case PGE_physBody::SL_RightBottom:
+                    {
+                        if( (m_momentum.right() >= blk->m_momentum.right()) &&
+                            (m_momentum.right() + m_momentum.velX < m_momentum.right()) )
+                        {
+                            double k = blk->m_momentum.h / blk->m_momentum.w;
+                            double newx = m_momentum.x + m_momentum.velX;
+                            double newy = blk->m_momentum.y + ( (blk->m_momentum.right() - newx - m_momentum.w) * k) - m_momentum.h;
+                            m_momentum.velY = fabs(m_momentum.y - newy);
+                            m_slopeFloor.has = true;
+                            m_slopeFloor.shape = blk->m_shape;
+                            m_slopeFloor.rect  = blk->m_momentum.rect();
+                            m_onSlopeYAdd = 0.0;
+                        }
+                        break;
+                    }
+                    default:;
+                    }
                 }
             }
             break;
@@ -373,6 +413,8 @@ void LVL_Player::processContacts()
 
 void LVL_Player::preCollision()
 {
+    bumpDown = false;
+    bumpUp = false;
     contactedWarp = nullptr;
     contactedWithWarp = false;
 
@@ -446,7 +488,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
                 (nearest->setup->setup.bounce) )
             {
                 bump(false,
-                     speedY(),
+                     fabs(m_momentum.oldx - m_momentum.x),
                      physics_cur.jump_time_bounce);
             }
         } else {
@@ -495,11 +537,22 @@ void LVL_Player::bump(bool _up, double bounceSpeed, int timeToJump)
         bumpUp=true;
         bumpJumpTime = (timeToJump>0) ? timeToJump: physics_cur.jump_time_bounce ;
         bumpJumpVelocity = (bounceSpeed>0) ? bounceSpeed : physics_cur.velocity_jump_bounce;
+
+        if(keys.jump)
+        {
+            jumpTime = bumpJumpTime;
+            jumpVelocity = bumpJumpVelocity;
+        }
+        setSpeedY( (keys.jump ?
+                   (-fabs(bumpJumpVelocity) - fabs(speedX()/physics_cur.velocity_jump_c)):
+                    -fabs(bumpJumpVelocity)) );
     }
     else
     {
         bumpDown=true;
-        bumpVelocity = fabs(bounceSpeed)/4.0;
+        bumpVelocity = fabs(bounceSpeed);//4.0;
+        setSpeedY( bumpVelocity );
+        jumpTime = 0;
     }
 }
 

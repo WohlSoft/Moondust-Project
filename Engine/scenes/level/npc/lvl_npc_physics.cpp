@@ -66,6 +66,47 @@ void LVL_Npc::processContacts()
                     doKill = true;
                     killReason = DAMAGE_LAVABURN;
                 }
+
+                if(m_onSlopeFloorTopAlign && !m_slopeFloor.has && m_stand &&
+                  (blk->m_momentum.velY <= m_momentum.velY) )
+                {
+                    switch(blk->m_shape)
+                    {
+                    case PGE_physBody::SL_LeftBottom:
+                    {
+                        if( (m_momentum.left() <= blk->m_momentum.left()) &&
+                            (m_momentum.left() + m_momentum.velX > m_momentum.left()) )
+                        {
+                            double k = blk->m_momentum.h / blk->m_momentum.w;
+                            double newx = m_momentum.x + m_momentum.velX;
+                            double newy = blk->m_momentum.y + ( (newx - blk->m_momentum.x) * k ) - m_momentum.h;
+                            m_momentum.velY = fabs(m_momentum.y - newy);
+                            m_slopeFloor.has = true;
+                            m_slopeFloor.shape = blk->m_shape;
+                            m_slopeFloor.rect  = blk->m_momentum.rect();
+                            m_onSlopeYAdd = 0.0;
+                        }
+                        break;
+                    }
+                    case PGE_physBody::SL_RightBottom:
+                    {
+                        if( (m_momentum.right() >= blk->m_momentum.right()) &&
+                            (m_momentum.right() + m_momentum.velX < m_momentum.right()) )
+                        {
+                            double k = blk->m_momentum.h / blk->m_momentum.w;
+                            double newx = m_momentum.x + m_momentum.velX;
+                            double newy = blk->m_momentum.y + ( (blk->m_momentum.right() - newx - m_momentum.w) * k) - m_momentum.h;
+                            m_momentum.velY = fabs(m_momentum.y - newy);
+                            m_slopeFloor.has = true;
+                            m_slopeFloor.shape = blk->m_shape;
+                            m_slopeFloor.rect  = blk->m_momentum.rect();
+                            m_onSlopeYAdd = 0.0;
+                        }
+                        break;
+                    }
+                    default:;
+                    }
+                }
                 break;
             }
         case PGE_Phys_Object::LVLPlayer:
