@@ -16,6 +16,7 @@
 - Implemented full support for custom config files for all elements: block-*.ini, background-*.ini, tile-*.ini, scene-*.ini, path-*.ini, level-*.ini
 - Fully implemented support of split configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
 - Resolved a visibility management of the layers and transforming between blocks and NPCs
+- Fixed autoscroll processing (crush, camera moving after playable character's death)
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names

@@ -463,13 +463,11 @@ void LVL_Player::update(double tickTime)
     animator.tickAnimation(tickTime);
 
     PGE_RectF sBox = section->sectionLimitBox();
-    float asVelX=0.0f;
+    struct {double speedX; double speedY;}
+           sAS{camera->m_autoScrool.velX, camera->m_autoScrool.velY};
 
-    if((section->isAutoscroll)&&(camera->isAutoscroll))
-    {
+    if( (section->isAutoscroll) && (camera->m_autoScrool.enabled) )
         sBox = camera->limitBox;
-        asVelX = camera->_autoscrollVelocityX;
-    }
 
     //Return player to start position on fall down
     if(section->isWrapV())
@@ -479,7 +477,7 @@ void LVL_Player::update(double tickTime)
         else
         if(posY()>sBox.bottom() + 1 )
             setPosY(sBox.top()-m_height_registered+1);
-    } else if( posY() > sBox.bottom()+m_height_registered ) {
+    } else if( posY() > sBox.bottom() + m_height_registered ) {
         kill(DEAD_fall);
     }
 
@@ -510,29 +508,52 @@ void LVL_Player::update(double tickTime)
     else
     if(section->isWrapH())
     {
-        if(posX() < sBox.left()-m_width_registered-1 )
-            setPosX( sBox.right()+1 );
+        if(posX() < sBox.left() - m_width_registered - 1.0 )
+            setPosX( sBox.right() + 1.0 );
         else
-        if(posX() > sBox.right() + 1 )
-            setPosX( sBox.left()-m_width_registered-1 );
+        if(posX() > sBox.right() + 1.0 )
+            setPosX( sBox.left() - m_width_registered - 1.0 );
     }
     else
     {
-
         if(section->ExitOffscreen())
         {
-            if(section->RightOnly())
+            if(section->LeftOnly() ^ section->RightOnly())
             {
-                if( posX() < sBox.left())
+                if(section->RightOnly())
                 {
-                    setPosX( sBox.left() );
-                    if(asVelX==0.0) setSpeedX(0.0);
-                    if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
-                    if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
+                    if( posX() < sBox.left() )
+                    {
+                        setPosX( sBox.left() );
+                        if(sAS.speedX==0.0)
+                            setSpeedX(0.0);
+                        else
+                        {
+                            setSpeedX(sAS.speedX >= speedX() ? sAS.speedX : speedX());
+                            if(m_blockedAtRight)
+                                kill(DEAD_killed);
+                        }
+                    }
+                }
+
+                if(section->LeftOnly())
+                {
+                    if( posX() + m_width_registered > sBox.right() )
+                    {
+                        setPosX( sBox.right() - m_width_registered );
+                        if(sAS.speedX==0.0)
+                            setSpeedX(0.0);
+                        else
+                        {
+                            setSpeedX(sAS.speedX <= speedX() ? sAS.speedX : speedX());
+                            if(m_blockedAtLeft)
+                                kill(DEAD_killed);
+                        }
+                    }
                 }
             }
 
-            if((posX() < sBox.left()-m_width_registered-1 ) || (posX() > sBox.right() + 1 ))
+            if( (posX() < sBox.left()-m_width_registered - 1.0 ) || (posX() > sBox.right() + 1.0 ))
             {
                 setLocked(true);
                 _no_render=true;
@@ -546,21 +567,30 @@ void LVL_Player::update(double tickTime)
             if( posX() < sBox.left())
             {
                 setPosX(sBox.left());
-                if(asVelX==0.0) setSpeedX(0.0);
-                if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
-                if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
+                if(sAS.speedX==0.0)
+                    setSpeedX(0.0);
+                else
+                {
+                    setSpeedX(sAS.speedX >= speedX() ? sAS.speedX : speedX());
+                    if(m_blockedAtRight)
+                        kill(DEAD_killed);
+                }
             }
             else
-            if( posX()+m_width_registered > sBox.right())
+            if( posX()+m_width_registered > sBox.right() )
             {
                 setPosX(sBox.right()-m_width_registered);
-                if(asVelX==0.0) setSpeedX(0.0);
-                if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
-                if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
+                if(sAS.speedX==0.0)
+                    setSpeedX(0.0);
+                else
+                {
+                    setSpeedX(sAS.speedX <= speedX() ? sAS.speedX : speedX());
+                    if(m_blockedAtLeft)
+                        kill(DEAD_killed);
+                }
             }
         }
     }
-
     /*
     if(m_crushed && m_crushedOld)
     {

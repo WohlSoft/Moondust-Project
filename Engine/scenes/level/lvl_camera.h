@@ -106,14 +106,15 @@ public:
 
     double centerY();
 
-    void init(float x, float y, float w, float h);
+    void init(double x, double y, double w, double h);
 
-    void setPos(float x, float y);
-    void setRenderPos(float x, float y);
-    void setCenterPos(float x, float y);
+    void setPos(double x, double y);
+    void setRenderPos(double x, double y);
+    void setCenterPos(double x, double y);
     void setSize(int w, int h);
     void setOffset(int x, int y);
-    void update(float ticks);
+    void updatePre(double ticks);
+    void updatePost(double ticks);
     void drawBackground();
     void drawForeground();
 
@@ -134,15 +135,15 @@ public:
     PGE_RectF posRect;
 
     //! Recent center X position gotten from playable character
-    float focus_x;
+    double focus_x;
     //! Recent center Y position gotten from playable character
-    float focus_y;
+    double focus_y;
 
-    float render_x;
-    float render_y;
+    double render_x;
+    double render_y;
 
-    float offset_x;
-    float offset_y;
+    double offset_x;
+    double offset_y;
 
     //! ID of player who owns this camera
     int playerID;
@@ -152,13 +153,25 @@ public:
     /**************Fader**************/
 
     /**************Autoscrool**************/
-    void resetAutoscroll();
-    void processAutoscroll(float tickTime);
-    bool  isAutoscroll;
-    float _autoscrollVelocityX_max;
-    float _autoscrollVelocityY_max;
-    float _autoscrollVelocityX;
-    float _autoscrollVelocityY;
+    struct AutoScrooler
+    {
+        AutoScrooler() :
+            camera(nullptr),
+            enabled(false),
+            velXmax(0.0),
+            velYmax(0.0),
+            velX(0.0),
+            velY(0.0)
+        {}
+        void resetAutoscroll();
+        void processAutoscroll(double tickTime);
+        PGE_LevelCamera* camera;
+        bool  enabled;
+        double velXmax;
+        double velYmax;
+        double velX;
+        double velY;
+    } m_autoScrool;
     PGE_RectF limitBox;
     /**************Autoscrool**************/
 

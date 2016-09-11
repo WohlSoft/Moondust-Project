@@ -37,42 +37,35 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 {
     posRect.setWidth(800);
     posRect.setHeight(600);
-    render_x=0.0f;
-    render_y=0.0f;
+    render_x = 0.0;
+    render_y = 0.0;
 
-    offset_x=0.0f;
-    offset_y=0.0f;
+    offset_x = 0.0;
+    offset_y = 0.0;
 
-    focus_x = 0.0f;
-    focus_y = 0.0f;
+    focus_x = 0.0;
+    focus_y = 0.0;
 
     playerID = 0;
     section = 0;
-    cur_section = NULL;
+    cur_section = nullptr;
     fader.setNull();
 
-    isAutoscroll=false;
-    _autoscrollVelocityX_max=0.0f;
-    _autoscrollVelocityY_max=0.0f;
-    _autoscrollVelocityX=0.0f;
-    _autoscrollVelocityY=0.0f;
+    m_autoScrool.camera = this;
 
-    _objects_to_render_max=1000;
-    _objects_to_render=(PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
-    if(!_objects_to_render)
-    {
-        throw("Out of memory");
-    }
+    _objects_to_render_max = 1000;
+    _objects_to_render = (PGE_Phys_Object**)malloc(sizeof(PGE_Phys_Object*)*_objects_to_render_max);
+    assert(_objects_to_render && "Out of memory");
     _objects_to_render_stored=0;
     _objects_to_render_recent=0;
     _disable_cache_mode=false;
 
-    shake_enabled_x=false;
-    shake_enabled_y=false;
-    shake_force_decelerate_x=0.0;
-    shake_force_decelerate_y=0.0;
-    shake_force_x=0.0;
-    shake_force_y=0.0;
+    shake_enabled_x = false;
+    shake_enabled_y = false;
+    shake_force_decelerate_x = 0.0;
+    shake_force_decelerate_y = 0.0;
+    shake_force_x = 0.0;
+    shake_force_y = 0.0;
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene)
@@ -95,12 +88,8 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene
     cur_section = cam.cur_section;
 
     fader = cam.fader;
-
-    isAutoscroll = cam.isAutoscroll;
-    _autoscrollVelocityX_max=cam._autoscrollVelocityX_max;
-    _autoscrollVelocityY_max=cam._autoscrollVelocityY_max;
-    _autoscrollVelocityX=cam._autoscrollVelocityX;
-    _autoscrollVelocityY=cam._autoscrollVelocityY;
+    m_autoScrool = cam.m_autoScrool;
+    m_autoScrool.camera = this;
 
     _objects_to_render_max = cam._objects_to_render_max;
     _objects_to_render_stored = cam._objects_to_render_stored;
@@ -122,7 +111,7 @@ PGE_LevelCamera::~PGE_LevelCamera()
     free(_objects_to_render);
 }
 
-void PGE_LevelCamera::init(float x, float y, float w, float h)
+void PGE_LevelCamera::init(double x, double y, double w, double h)
 {
     posRect.setRect(x, y, w, h);
 }
@@ -168,22 +157,22 @@ double PGE_LevelCamera::centerY()
     return (double)render_y+(posRect.height()/2.0);
 }
 
-void PGE_LevelCamera::setPos(float x, float y)
+void PGE_LevelCamera::setPos(double x, double y)
 {
     posRect.setPos(round(x), round(y));
     _applyLimits();
 }
 
-void PGE_LevelCamera::setRenderPos(float x, float y)
+void PGE_LevelCamera::setRenderPos(double x, double y)
 {
     render_x = x;
     render_y = y;
 }
 
-void PGE_LevelCamera::setCenterPos(float x, float y)
+void PGE_LevelCamera::setCenterPos(double x, double y)
 {
     focus_x = x; focus_y = y;
-    posRect.setPos(round((double)x-posRect.width()/2.0), round((double)y-posRect.height()/2.0));
+    posRect.setPos(round(x-posRect.width()/2.0), round(y-posRect.height()/2.0));
     _applyLimits();
 }
 
@@ -198,14 +187,21 @@ void PGE_LevelCamera::setOffset(int x, int y)
     offset_y=y;
 }
 
-void PGE_LevelCamera::update(float ticks)
+void PGE_LevelCamera::updatePre(double ticks)
 {
-    //objects_to_render.clear();
+    if(!cur_section)
+        return;
 
-    if(!cur_section) return;
     fader.tickFader(ticks);
 
-    if(isAutoscroll) processAutoscroll(ticks);
+    if(m_autoScrool.enabled)
+        m_autoScrool.processAutoscroll(ticks);
+}
+
+void PGE_LevelCamera::updatePost(double ticks)
+{
+    if(!cur_section)
+        return;
 
     if(_disable_cache_mode)
     {
@@ -484,55 +480,59 @@ void PGE_LevelCamera::queryItems(PGE_RectF &zone)
     _scene->tree.Search(lt, rb, _TreeSearchCallback, (void*)this);
 }
 
-void PGE_LevelCamera::resetAutoscroll()
+void PGE_LevelCamera::AutoScrooler::resetAutoscroll()
 {
-    _autoscrollVelocityX=0.0f;
-    _autoscrollVelocityY=0.0f;
-    if(!cur_section) return;
-    limitBox=cur_section->sectionLimitBox();
-    _autoscrollVelocityX_max = cur_section->_autoscrollVelocityX;
-    _autoscrollVelocityY_max = cur_section->_autoscrollVelocityY;
+    velX = 0.0;
+    velY = 0.0;
+    if(!camera->cur_section)
+        return;
+    camera->limitBox = camera->cur_section->sectionLimitBox();
+    velXmax  = camera->cur_section->_autoscrollVelocityX;
+    velYmax  = camera->cur_section->_autoscrollVelocityY;
 }
 
-void PGE_LevelCamera::processAutoscroll(float tickTime)
+void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
 {
-    if(!isAutoscroll) return;
-    if(!cur_section) return;
+    if(!enabled) return;
+    if(!camera->cur_section) return;
 
-    float coff=tickTime/_smbxTickTime;
-    PGE_RectF sectionBox = cur_section->sectionRect();
+    double coff = tickTime/_smbxTickTime;
+    PGE_RectF sectionBox = camera->cur_section->sectionRect();
 
-    limitBox.setX(limitBox.x() + _autoscrollVelocityX*coff);
-        if(limitBox.left()<sectionBox.left()) limitBox.setX(sectionBox.x());
-        if(limitBox.right()>sectionBox.right()) limitBox.setX(sectionBox.right()-limitBox.width());
-    limitBox.setY(limitBox.y() + _autoscrollVelocityY*coff);
-        if(limitBox.top()<sectionBox.top()) limitBox.setY(sectionBox.y());
-        if(limitBox.bottom()>sectionBox.bottom()) limitBox.setY(sectionBox.bottom()-limitBox.height());
-
-    if((_autoscrollVelocityX_max>0)&&(_autoscrollVelocityX<_autoscrollVelocityX_max)) {
-        _autoscrollVelocityX+=0.05f*coff;
-        if(_autoscrollVelocityX>_autoscrollVelocityX_max)
-           _autoscrollVelocityX=_autoscrollVelocityX_max;
-    } else if((_autoscrollVelocityX_max<0)&&(_autoscrollVelocityX>_autoscrollVelocityX_max)) {
-        _autoscrollVelocityX-=0.05f*coff;
-        if(_autoscrollVelocityX<_autoscrollVelocityX_max)
-           _autoscrollVelocityX=_autoscrollVelocityX_max;
+    if( (velXmax > 0.0) && ( velX < velXmax) ) {
+        velX += 0.05f*coff;
+        if(velX > velXmax)
+            velX = velXmax;
+    } else if( (velXmax < 0.0) && (velX>velXmax)) {
+        velX -= 0.05f*coff;
+        if(velX < velXmax)
+           velX = velXmax;
     }
 
-    if((_autoscrollVelocityY_max>0)&&(_autoscrollVelocityY<_autoscrollVelocityY_max)) {
-        _autoscrollVelocityY+=0.05f*coff;
-        if(_autoscrollVelocityY>_autoscrollVelocityY_max)
-           _autoscrollVelocityY=_autoscrollVelocityY_max;
-    } else if((_autoscrollVelocityY_max<0)&&(_autoscrollVelocityY>_autoscrollVelocityY_max)) {
-        _autoscrollVelocityY-=0.05f*coff;
-        if(_autoscrollVelocityY<_autoscrollVelocityY_max)
-           _autoscrollVelocityY=_autoscrollVelocityY_max;
+    if( (velYmax > 0.0) && (velY < velYmax)) {
+        velY += 0.05f*coff;
+        if(velY > velYmax)
+           velY = velYmax;
+    } else if( (velYmax < 0.0) && (velY > velYmax) ) {
+        velY -= 0.05f*coff;
+        if(velY < velYmax)
+           velY = velYmax;
     }
+
+    PGE_RectF& limitBox = camera->limitBox;
+    limitBox.setX(limitBox.x() + velX*coff);
+        if(limitBox.left()  < sectionBox.left())  limitBox.setX(sectionBox.x());
+        if(limitBox.right() > sectionBox.right()) limitBox.setX(sectionBox.right()-limitBox.width());
+    limitBox.setY(limitBox.y() + velY*coff);
+        if(limitBox.top()    < sectionBox.top())    limitBox.setY(sectionBox.y());
+        if(limitBox.bottom() > sectionBox.bottom()) limitBox.setY(sectionBox.bottom()-limitBox.height());
+
+    camera->_applyLimits();
 }
 
 void PGE_LevelCamera::_applyLimits()
 {
-    if(isAutoscroll)
+    if(m_autoScrool.enabled)
     {
         if(posRect.width()>limitBox.width())
         {
@@ -561,7 +561,9 @@ void PGE_LevelCamera::_applyLimits()
         return;
     }
 
-    if(!cur_section) return;
+    if(!cur_section)
+        return;
+
     PGE_RectF &limBox = cur_section->limitBox;
     if(posRect.width() > limBox.width())
     {
@@ -614,7 +616,7 @@ void PGE_LevelCamera::drawForeground()
     }
     if(cur_section)
     {
-        PGE_RectF *limBox = isAutoscroll ? &limitBox: &(cur_section->limitBox);
+        PGE_RectF *limBox = m_autoScrool.enabled ? &limitBox: &(cur_section->limitBox);
         double left   = posRect.left()+(double)offset_x;
         double top    = posRect.top() +(double)offset_y;
         double right  = posRect.right()+(double)offset_x;
@@ -651,8 +653,8 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
     {
         cur_section->playMusic();//Play current section music
         cur_section->initBG();   //Init background if not initialized
-        isAutoscroll=cur_section->isAutoscroll;
-        if(cur_section->isAutoscroll) resetAutoscroll();
+        m_autoScrool.enabled=cur_section->isAutoscroll;
+        if(cur_section->isAutoscroll) m_autoScrool.resetAutoscroll();
     }
 }
 

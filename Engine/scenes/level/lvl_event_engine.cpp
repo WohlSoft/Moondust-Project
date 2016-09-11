@@ -204,8 +204,8 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                                        {
                                            if(_scene->cameras[j].cur_section==&_scene->sections[evt.scroll_section])
                                            {
-                                               _scene->cameras[j].isAutoscroll=true;
-                                               _scene->cameras[j].resetAutoscroll();
+                                               _scene->cameras[j].m_autoScrool.enabled=true;
+                                               _scene->cameras[j].m_autoScrool.resetAutoscroll();
                                            }
                                        }
                                }, 0);

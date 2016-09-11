@@ -342,14 +342,24 @@ void LevelScene::update()
             if(m_fader.isFull())
                 m_isRunning=false;
         }
-    } else if(m_isPauseMenu) {
+    }
+    else if(m_isPauseMenu)
+    {
         processPauseMenu();
-    } else {//Update physics is not pause menu
+    }
+    else
+    {//Update physics is not pause menu
 
         updateLua();//Process LUA code
 
         system_events.processEvents(uTickf);
         events.processTimers(uTickf);
+
+        //update cameras
+        for(QList<PGE_LevelCamera>::iterator cam=cameras.begin(); cam != cameras.end(); cam++)
+        {
+            cam->updatePre(uTickf);
+        }
 
         processEffects(uTickf);
 
@@ -431,7 +441,7 @@ void LevelScene::update()
         //update cameras
         for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
         {
-            cam->update(uTickf);
+            cam->updatePost(uTickf);
 
             //! --------------DRAW HUD--------------------------------------
             LuaEngine* sceneLuaEngine = getLuaEngine();
@@ -451,18 +461,12 @@ void LevelScene::update()
         //Clear garbage (be careful!)
         //luaEngine.runGarbageCollector();
     }
-
     process_InterprocessCommands();
 
 }
 
 void LevelScene::processEvents()
 {
-//    #ifndef __APPLE__
-//    if(g_AppSettings.interprocessing)
-//        qApp->processEvents();
-//    #endif
-    //SDL_PumpEvents();
     Scene::processEvents();
     player1Controller->update();
     player2Controller->update();
@@ -544,7 +548,6 @@ void LevelScene::render()
     if(PGE_Window::showDebugInfo)
     {
         //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
-
         int dpos=60;
         FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\n"
                                        "NPC's: %5, Active %6; BLOCKS: %7")

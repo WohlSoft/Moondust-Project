@@ -79,29 +79,29 @@ void LVL_Npc::update(double tickTime)
     {
         if(!sBox.collideRect(m_momentum.x, m_momentum.y, m_momentum.w, m_momentum.h))
         {
-            if(activationTimeout>100)
-                activationTimeout=100;
+            if(activationTimeout > 100)
+                activationTimeout = 100;
             //Iterate activation timeout if deactivation disabled by default
             if(!deActivatable)
-                activationTimeout-=tickTime;
+                activationTimeout -= tickTime;
         }
     }
 
     if(section->isWrapH()) {
-        if(posX()<sBox.left()-m_width_registered-1 )
-            setPosX(sBox.right()-1);
+        if(posX() < sBox.left() - m_width_registered - 1.0 )
+            setPosX(sBox.right() - 1.0);
         else
-        if(posX()>sBox.right() + 1 )
-            setPosX(sBox.left()-m_width_registered+1);
+        if(posX() > sBox.right() + 1.0 )
+            setPosX(sBox.left() - m_width_registered + 1.0);
     }
 
     if(section->isWrapV()) {
-        if(posY()<sBox.top()-m_height_registered-1 )
-            setPosY(sBox.bottom()-1);
+        if( posY() < sBox.top() - m_height_registered - 1.0 )
+            setPosY(sBox.bottom() - 1.0);
         else
-        if(posY()>sBox.bottom() + 1 )
-            setPosY(sBox.top()-m_height_registered+1);
-    } else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom()+m_height_registered) ) {
+        if(posY() > sBox.bottom() + 1.0 )
+            setPosY(sBox.top() - m_height_registered + 1.0);
+    } else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom() + m_height_registered) ) {
         kill(DAMAGE_PITFALL);
     }
 

@@ -173,6 +173,11 @@ bool LVL_Section::isWrapV()
     return data.wrap_v;
 }
 
+bool LVL_Section::LeftOnly()
+{
+    return data.lock_right_scroll;
+}
+
 bool LVL_Section::RightOnly()
 {
     return data.lock_left_scroll;

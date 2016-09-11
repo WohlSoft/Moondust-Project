@@ -73,6 +73,7 @@ public:
 
     bool isWrapH();
     bool isWrapV();
+    bool LeftOnly();
     bool RightOnly();
     bool ExitOffscreen();
 
