@@ -3065,80 +3065,80 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTester</name>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="148"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="146"/>
         <source>Run testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="154"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="152"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="155"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="153"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="992"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1009"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1203"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1220"/>
         <source>LunaTester error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="149"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="147"/>
         <source>Starts testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise it will be very limited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="158"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="156"/>
         <source>Termitate frozen loader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="159"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="157"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="169"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="167"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="213"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="211"/>
         <source>Are you really want to termitate loader thread?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="231"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="229"/>
         <source>Loader thread is not running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="601"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="806"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="609"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="814"/>
         <source>LunaTester error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="622"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="827"/>
         <source>LunaLUA tester is not started!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="705"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="910"/>
         <source>SMBX64 limits are excited!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="706"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="911"/>
         <source>Violation of SMBX64 standard has beeen found!
 %1
 , legacy engine may crash!
@@ -3147,34 +3147,34 @@ Are you want continue process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="724"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="929"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="725"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="930"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="748"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="953"/>
         <source>SMBX Test is already runned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="749"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="954"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="770"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="975"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="771"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="976"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -3188,105 +3188,105 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="935"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1140"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="936"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1141"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="993"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1204"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1002"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1213"/>
         <source>process execution is failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1004"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1215"/>
         <source>patching has failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1010"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1221"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1022"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1233"/>
         <source>Save file first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1023"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1234"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1030"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1241"/>
         <source>Incompatible file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1031"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1242"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1042"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1091"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1106"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1121"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1130"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1169"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1253"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1302"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1317"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1332"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1341"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1380"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1043"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1254"/>
         <source>Fail to create temp file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1064"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1275"/>
         <source>LunaLUA Level test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1065"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1276"/>
         <source>Do you wanna to save file before start testing?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1092"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1303"/>
         <source>SMBX with LunaDLL is not running!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1107"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1318"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1122"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1333"/>
         <source>Could not map view of LunaLUA shared memory (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1131"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1342"/>
         <source>Too long path: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1170"/>
+        <location filename="../main_window/testing/luna_tester.cpp" line="1381"/>
         <source>Failed to find SMBX Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6204,7 +6204,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="60"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="82"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="203"/>
         <source>Abort</source>
@@ -6413,65 +6413,66 @@ File not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="60"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Clonning of section...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="61"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="204"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="226"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="229"/>
         <source>Section has been clonned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="227"/>
-        <source>Section has been successfully clonned!</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="230"/>
+        <source>Section has been successfully clonned!
+Do you want to clone another section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="240"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="249"/>
         <source>Remove section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="241"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="250"/>
         <source>Do you want to remove all objects of this section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="247"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="333"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="360"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="387"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="414"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="256"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="342"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="369"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="396"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="423"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="248"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="257"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="317"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="326"/>
         <source>Section has been removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="318"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="327"/>
         <source>Section %1 has been successfully deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="334"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="361"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="388"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="343"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="370"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="397"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="424"/>
         <source>Please select, how far items out of section should be rotated too (in pixels)</source>
         <translation type="unfinished"></translation>
     </message>
