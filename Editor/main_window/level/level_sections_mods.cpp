@@ -28,204 +28,213 @@
 
 void MainWindow::on_actionCloneSectionTo_triggered()
 {
-    LvlCloneSection box(this);
-    box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
-
-
-    //Creating of level files list
-    QList<LevelEdit *> openedLeves;
-
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    while(1)
     {
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+        LvlCloneSection box(this);
+        box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
+
+
+        //Creating of level files list
+        QList<LevelEdit *> openedLeves;
+
+        foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
         {
-            openedLeves.push_back(qobject_cast<LevelEdit *>(window->widget()));
-        }
-    }
-
-    LevelEdit* activeLvlWin=NULL;
-    if(activeChildWindow()==1)
-        activeLvlWin = activeLvlEditWin();
-
-    if(!activeLvlWin) return;
-    box.addLevelList(openedLeves, activeLvlWin);
-    if(box.exec()==QDialog::Accepted)
-    {
-        long x=0;
-        long y=0;
-        long w=0;
-        long h=0;
-
-        QProgressDialog progress(tr("Clonning of section..."), tr("Abort"), 0, 5, this);
-        progress.setWindowTitle(tr("Please wait..."));
-        progress.setWindowModality(Qt::WindowModal);
-        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-        progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-        progress.setCancelButton(0);
-        progress.setMinimumDuration(0);
-
-        LevelEdit * src = box.clone_source;
-        int s_id = box.clone_source_id;
-        LevelEdit * dst = box.clone_target;
-        int d_id = box.clone_target_id;
-
-        //Init target section
-        dst->scene->InitSection(d_id);
-
-        x = dst->LvlData.sections[d_id].size_left;
-        y = dst->LvlData.sections[d_id].size_top;
-
-        w = labs(src->LvlData.sections[s_id].size_left-
-                src->LvlData.sections[s_id].size_right);
-        h = labs(src->LvlData.sections[s_id].size_top-
-                src->LvlData.sections[s_id].size_bottom);
-
-        if(h!=600)
-        {
-            QPoint aligned;
-            aligned = dst->scene->applyGrid(QPoint(x,y), configs.default_grid);
-            x = aligned.x();
-            y = aligned.y();
-        }
-
-        //copy settings
-        dst->LvlData.sections[d_id] = src->LvlData.sections[s_id];
-        dst->LvlData.sections[d_id].id = d_id;
-
-        dst->LvlData.sections[d_id].size_left = x;
-        dst->LvlData.sections[d_id].size_top = y;
-        dst->LvlData.sections[d_id].size_right = x+w;
-        dst->LvlData.sections[d_id].size_bottom = y+h;
-
-        dst->LvlData.sections[d_id].PositionX = x-10;
-        dst->LvlData.sections[d_id].PositionY = y-10;
-
-        dst->scene->ChangeSectionBG(
-                    dst->LvlData.sections[d_id].background,
-                    d_id
-                );
-
-        if(!progress.wasCanceled()) progress.setValue(1);
-        qApp->processEvents();
-
-        //copy items
-        QRectF zone;
-        zone.setLeft(src->LvlData.sections[s_id].size_left-box.clone_margin);
-        zone.setTop(src->LvlData.sections[s_id].size_top-box.clone_margin);
-        zone.setRight(src->LvlData.sections[s_id].size_right+box.clone_margin);
-        zone.setBottom(src->LvlData.sections[s_id].size_bottom+box.clone_margin);
-
-        src->scene->clearSelection();
-
-        foreach(QGraphicsItem *x, src->scene->items(zone))
-        {
-            if(x->data(ITEM_TYPE)=="Block")
-                x->setSelected(true);
-            else
-            if(x->data(ITEM_TYPE)=="BGO")
-                x->setSelected(true);
-            if(x->data(ITEM_TYPE)=="NPC")
-                x->setSelected(true);
-            if(x->data(ITEM_TYPE)=="Water")
-                x->setSelected(true);
-        }
-
-        if(!progress.wasCanceled()) progress.setValue(2);
-        qApp->processEvents();
-
-        LevelData buffer = src->scene->copy();
-
-        src->scene->clearSelection();
-        //paste into target
-
-        if(!progress.wasCanceled()) progress.setValue(3);
-        qApp->processEvents();
-
-        long baseX, baseY;
-        bool doCloneItems=true;
-        //set first base
-        if(!buffer.blocks.isEmpty()){
-            baseX = buffer.blocks[0].x;
-            baseY = buffer.blocks[0].y;
-        }else if(!buffer.bgo.isEmpty()){
-            baseX = buffer.bgo[0].x;
-            baseY = buffer.bgo[0].y;
-        }else if(!buffer.npc.isEmpty()){
-            baseX = buffer.npc[0].x;
-            baseY = buffer.npc[0].y;
-        }else if(!buffer.physez.isEmpty()){
-            baseX = buffer.physez[0].x;
-            baseY = buffer.physez[0].y;
-        }else{
-            //nothing to clone
-            doCloneItems = false;
-        }
-
-        if(!progress.wasCanceled()) progress.setValue(4);
-        qApp->processEvents();
-
-        if(doCloneItems)
-        {
-            foreach (LevelBlock block, buffer.blocks)
+            if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
             {
-                if(block.x<baseX) {
-                    baseX = block.x;
-                }
-                if(block.y<baseY) {
-                    baseY = block.y;
-                }
+                openedLeves.push_back(qobject_cast<LevelEdit *>(window->widget()));
             }
-            foreach (LevelBGO bgo, buffer.bgo){
-                if(bgo.x<baseX){
-                    baseX = bgo.x;
-                }
-                if(bgo.y<baseY){
-                    baseY = bgo.y;
-                }
-            }
-            foreach (LevelNPC npc, buffer.npc){
-                if(npc.x<baseX){
-                    baseX = npc.x;
-                }
-                if(npc.y<baseY){
-                    baseY = npc.y;
-                }
-            }
-            foreach (LevelPhysEnv water, buffer.physez){
-                if(water.x<baseX){
-                    baseX = water.x;
-                }
-                if(water.y<baseY){
-                    baseY = water.y;
-                }
-            }
-
-            long targetX;// = baseX;
-
-            if(baseX<src->LvlData.sections[s_id].size_left)
-                targetX = x-labs(baseX-src->LvlData.sections[s_id].size_left);
-            else
-                targetX = x+labs(src->LvlData.sections[s_id].size_left-baseX);
-            long targetY;// = baseY;
-
-            if(baseY<src->LvlData.sections[s_id].size_top)
-                targetY = y-labs(baseY-src->LvlData.sections[s_id].size_top);
-            else
-                targetY = y+labs(src->LvlData.sections[s_id].size_top-baseY);
-
-            dst->scene->paste(buffer, QPoint(targetX, targetY));
         }
 
-        if(!progress.wasCanceled()) progress.setValue(5);
-        qApp->processEvents();
+        LevelEdit* activeLvlWin=NULL;
+        if(activeChildWindow()==1)
+            activeLvlWin = activeLvlEditWin();
 
-        progress.close();
+        if(!activeLvlWin) return;
+        box.addLevelList(openedLeves, activeLvlWin);
+        if(box.exec()==QDialog::Accepted)
+        {
+            long x=0;
+            long y=0;
+            long w=0;
+            long h=0;
 
-        QMessageBox::information(this, tr("Section has been clonned"),
-                             tr("Section has been successfully clonned!"));
+            QProgressDialog progress(tr("Clonning of section..."), tr("Abort"), 0, 5, this);
+            progress.setWindowTitle(tr("Please wait..."));
+            progress.setWindowModality(Qt::WindowModal);
+            progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+            progress.setFixedSize(progress.size());
+            progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+            progress.setCancelButton(0);
+            progress.setMinimumDuration(0);
 
+            LevelEdit * src = box.clone_source;
+            int s_id = box.clone_source_id;
+            LevelEdit * dst = box.clone_target;
+            int d_id = box.clone_target_id;
+
+            //Init target section
+            dst->scene->InitSection(d_id);
+
+            x = dst->LvlData.sections[d_id].size_left;
+            y = dst->LvlData.sections[d_id].size_top;
+
+            w = labs(src->LvlData.sections[s_id].size_left-
+                    src->LvlData.sections[s_id].size_right);
+            h = labs(src->LvlData.sections[s_id].size_top-
+                    src->LvlData.sections[s_id].size_bottom);
+
+            if(h!=600)
+            {
+                QPoint aligned;
+                aligned = dst->scene->applyGrid(QPoint(x,y), configs.default_grid);
+                x = aligned.x();
+                y = aligned.y();
+            }
+
+            //copy settings
+            dst->LvlData.sections[d_id] = src->LvlData.sections[s_id];
+            dst->LvlData.sections[d_id].id = d_id;
+
+            dst->LvlData.sections[d_id].size_left = x;
+            dst->LvlData.sections[d_id].size_top = y;
+            dst->LvlData.sections[d_id].size_right = x+w;
+            dst->LvlData.sections[d_id].size_bottom = y+h;
+
+            dst->LvlData.sections[d_id].PositionX = x-10;
+            dst->LvlData.sections[d_id].PositionY = y-10;
+
+            dst->scene->ChangeSectionBG(
+                        dst->LvlData.sections[d_id].background,
+                        d_id
+                    );
+
+            if(!progress.wasCanceled()) progress.setValue(1);
+            qApp->processEvents();
+
+            //copy items
+            QRectF zone;
+            zone.setLeft(src->LvlData.sections[s_id].size_left-box.clone_margin);
+            zone.setTop(src->LvlData.sections[s_id].size_top-box.clone_margin);
+            zone.setRight(src->LvlData.sections[s_id].size_right+box.clone_margin);
+            zone.setBottom(src->LvlData.sections[s_id].size_bottom+box.clone_margin);
+
+            src->scene->clearSelection();
+
+            foreach(QGraphicsItem *x, src->scene->items(zone))
+            {
+                if(x->data(ITEM_TYPE)=="Block")
+                    x->setSelected(true);
+                else
+                if(x->data(ITEM_TYPE)=="BGO")
+                    x->setSelected(true);
+                if(x->data(ITEM_TYPE)=="NPC")
+                    x->setSelected(true);
+                if(x->data(ITEM_TYPE)=="Water")
+                    x->setSelected(true);
+            }
+
+            if(!progress.wasCanceled()) progress.setValue(2);
+            qApp->processEvents();
+
+            LevelData buffer = src->scene->copy();
+
+            src->scene->clearSelection();
+            //paste into target
+
+            if(!progress.wasCanceled()) progress.setValue(3);
+            qApp->processEvents();
+
+            long baseX, baseY;
+            bool doCloneItems=true;
+            //set first base
+            if(!buffer.blocks.isEmpty()){
+                baseX = buffer.blocks[0].x;
+                baseY = buffer.blocks[0].y;
+            }else if(!buffer.bgo.isEmpty()){
+                baseX = buffer.bgo[0].x;
+                baseY = buffer.bgo[0].y;
+            }else if(!buffer.npc.isEmpty()){
+                baseX = buffer.npc[0].x;
+                baseY = buffer.npc[0].y;
+            }else if(!buffer.physez.isEmpty()){
+                baseX = buffer.physez[0].x;
+                baseY = buffer.physez[0].y;
+            }else{
+                //nothing to clone
+                doCloneItems = false;
+            }
+
+            if(!progress.wasCanceled()) progress.setValue(4);
+            qApp->processEvents();
+
+            if(doCloneItems)
+            {
+                foreach (LevelBlock block, buffer.blocks)
+                {
+                    if(block.x<baseX) {
+                        baseX = block.x;
+                    }
+                    if(block.y<baseY) {
+                        baseY = block.y;
+                    }
+                }
+                foreach (LevelBGO bgo, buffer.bgo){
+                    if(bgo.x<baseX){
+                        baseX = bgo.x;
+                    }
+                    if(bgo.y<baseY){
+                        baseY = bgo.y;
+                    }
+                }
+                foreach (LevelNPC npc, buffer.npc){
+                    if(npc.x<baseX){
+                        baseX = npc.x;
+                    }
+                    if(npc.y<baseY){
+                        baseY = npc.y;
+                    }
+                }
+                foreach (LevelPhysEnv water, buffer.physez){
+                    if(water.x<baseX){
+                        baseX = water.x;
+                    }
+                    if(water.y<baseY){
+                        baseY = water.y;
+                    }
+                }
+
+                long targetX;// = baseX;
+
+                if(baseX<src->LvlData.sections[s_id].size_left)
+                    targetX = x-labs(baseX-src->LvlData.sections[s_id].size_left);
+                else
+                    targetX = x+labs(src->LvlData.sections[s_id].size_left-baseX);
+                long targetY;// = baseY;
+
+                if(baseY<src->LvlData.sections[s_id].size_top)
+                    targetY = y-labs(baseY-src->LvlData.sections[s_id].size_top);
+                else
+                    targetY = y+labs(src->LvlData.sections[s_id].size_top-baseY);
+
+                dst->scene->paste(buffer, QPoint(targetX, targetY));
+            }
+
+            if(!progress.wasCanceled()) progress.setValue(5);
+            qApp->processEvents();
+
+            progress.close();
+
+            QMessageBox::StandardButton reply =  QMessageBox::information(this,
+                                     tr("Section has been clonned"),
+                                     tr("Section has been successfully clonned!\n"
+                                        "Do you want to clone another section?"),
+                                                QMessageBox::Yes|QMessageBox::No);
+            if(reply != QMessageBox::Yes)
+                return;
+        } else {
+            return;
+        }
     }
 }
 
