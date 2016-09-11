@@ -497,7 +497,8 @@ void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
     if(!camera->cur_section) return;
 
     double coff = tickTime/_smbxTickTime;
-    PGE_RectF sectionBox = camera->cur_section->sectionRect();
+    PGE_RectF  sectionBox   = camera->cur_section->sectionRect();
+    PGE_RectF& limitBox     = camera->limitBox;
 
     if( (velXmax > 0.0) && ( velX < velXmax) ) {
         velX += 0.05f*coff;
@@ -519,7 +520,20 @@ void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
            velY = velYmax;
     }
 
-    PGE_RectF& limitBox = camera->limitBox;
+    if( ((velXmax < 0.0) && (limitBox.left() <= sectionBox.left())) ||
+        ((velXmax > 0.0) && (limitBox.right() >= sectionBox.right())) )
+    {
+        velX = 0.0;
+        velXmax = 0.0;
+    }
+
+    if( ((velYmax > 0.0) &&(limitBox.bottom() >= sectionBox.bottom()))||
+        ((velYmax < 0.0) && (limitBox.top() <= sectionBox.top())) )
+    {
+        velY = 0.0;
+        velYmax = 0.0;
+    }
+
     limitBox.setX(limitBox.x() + velX*coff);
         if(limitBox.left()  < sectionBox.left())  limitBox.setX(sectionBox.x());
         if(limitBox.right() > sectionBox.right()) limitBox.setX(sectionBox.right()-limitBox.width());
