@@ -765,7 +765,7 @@ void LVL_Block::setDestroyed(bool dstr)
 long double LVL_Block::zIndex()
 {
     if( fadeOffset != 0.0 )
-        return z_index + 100.0L;
+        return z_index + 0.0001L;
     else
         return z_index;
 }

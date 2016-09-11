@@ -667,7 +667,8 @@ void PGE_Phys_Object::updateCollisions()
         if(CUR->m_paused) continue;
         if(!CUR->m_is_visible) continue;
 
-        if(preCollisionCheck(CUR))
+        if( preCollisionCheck(CUR) ||
+            (CUR->m_blocked[m_filterID]==Block_NONE))
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
@@ -872,9 +873,6 @@ void PGE_Phys_Object::updateCollisions()
                             }
                     tipRectL://Impacted at left (right of player)
                             {
-                                if((CUR->m_blocked[m_filterID]&PhysObject::Block_LEFT) == 0)
-                                    goto tipRectL_Skip;
-
                                 if(m_allowHoleRuning)
                                 {
                                     if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
@@ -882,6 +880,10 @@ void PGE_Phys_Object::updateCollisions()
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
+
+                                if((CUR->m_blocked[m_filterID]&PhysObject::Block_LEFT) == 0)
+                                    goto tipRectL_Skip;
+
                                 if(CUR->m_bodytype==Body_DYNAMIC)
                                 {
                                     CUR->m_blockedAtLeft = true;
@@ -927,9 +929,6 @@ void PGE_Phys_Object::updateCollisions()
                             }
                     tipRectR://Impacted at right (left of player)
                             {
-                                if((CUR->m_blocked[m_filterID]&PhysObject::Block_RIGHT) == 0)
-                                    goto tipRectR_Skip;
-
                                 if(m_allowHoleRuning)
                                 {
                                     if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
@@ -937,6 +936,10 @@ void PGE_Phys_Object::updateCollisions()
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
+
+                                if((CUR->m_blocked[m_filterID]&PhysObject::Block_RIGHT) == 0)
+                                    goto tipRectR_Skip;
+
                                 if(CUR->m_bodytype==Body_DYNAMIC)
                                 {
                                     CUR->m_blockedAtRight = true;
