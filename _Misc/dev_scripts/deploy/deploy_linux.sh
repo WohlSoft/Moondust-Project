@@ -69,7 +69,7 @@ if [ ! -d "$DeployDir/$PgePrjSD/help" ]; then
 fi
 cp -r ./calibrator "$DeployDir/$PgePrjSD"
 cp $SOURCEDIR/Content/readmes/*.txt "$DeployDir/$PgePrjSD"
-cp "$SOURCEDIR/Editor/changelog.editor.txt" "$DeployDir/$PgePrjSD"
+cp "$SOURCEDIR/changelog."*".txt" "$DeployDir/$PgePrjSD"
 cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 
 rm $DeployDir/$PgePrjSD/themes/*.zip

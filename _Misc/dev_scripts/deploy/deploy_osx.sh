@@ -89,7 +89,7 @@ if [ ! -d "$DeployDir/$PgePrjSD/help" ]; then
 fi
 cp -r ./calibrator "$DeployDir/$PgePrjSD"
 cp $SOURCEDIR/Content/readmes/*.txt "$DeployDir/$PgePrjSD"
-cp "$SOURCEDIR/Editor/changelog.editor.txt" "$DeployDir/$PgePrjSD"
+cp "$SOURCEDIR/changelog."*".txt" "$DeployDir/$PgePrjSD"
 cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 
 if [ -f "$DeployDir/$PgePrjSD/themes/*.zip" ]; then
@@ -129,3 +129,4 @@ echo "All done!"
 echo ""
 cd $InitDir
 if [[ $1 != "nopause" ]]; then read -n 1; fi
+
