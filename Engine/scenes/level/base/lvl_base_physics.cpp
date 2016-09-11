@@ -875,8 +875,10 @@ void PGE_Phys_Object::updateCollisions()
                             {
                                 if(m_allowHoleRuning)
                                 {
-                                    if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
-                                            (m_momentum.velY > 0.0) && (m_momentum.velX > 0.0 ) &&
+                                    double add = 2.0 + ((CUR->m_momentum.velY < 0.0) ?
+                                                         fabs(CUR->m_momentum.velY) : 0.0);
+                                    if( (m_momentum.bottom() < (CUR->m_momentum.top() + add)) &&
+                                            (m_momentum.velY > CUR->m_momentum.velY) && (m_momentum.velX > 0.0 ) &&
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
@@ -931,8 +933,10 @@ void PGE_Phys_Object::updateCollisions()
                             {
                                 if(m_allowHoleRuning)
                                 {
-                                    if( (m_momentum.bottom() < (CUR->m_momentum.top() + 2.0)) &&
-                                            (m_momentum.velY > 0.0) && (m_momentum.velX < 0.0 ) &&
+                                    double add = 2.0 + ((CUR->m_momentum.velY < 0.0) ?
+                                                         fabs(CUR->m_momentum.velY) : 0.0);
+                                    if( (m_momentum.bottom() < (CUR->m_momentum.top() + add)) &&
+                                            (m_momentum.velY > CUR->m_momentum.velY) && (m_momentum.velX < 0.0 ) &&
                                             (std::fabs(m_momentum.velX) > std::fabs(m_momentum.velY)) )
                                         goto tipRectT;
                                 }
