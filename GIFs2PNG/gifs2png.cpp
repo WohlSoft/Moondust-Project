@@ -81,7 +81,7 @@ void mergeBitBltToRGBA(FIBITMAP *image, QString pathToMask)
     unsigned int mask_w = FreeImage_GetWidth(mask);
     unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++ )
+    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++)
     {
         for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
         {
@@ -126,6 +126,7 @@ void mergeBitBltToRGBA(FIBITMAP *image, QString pathToMask)
 
 void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPackMiniManager &cnf)
 {
+    QTextStream pout(stdout);
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
 
@@ -162,7 +163,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPa
 
     if(image)
     {
-        QTextStream(stdout) << path+q <<"\n";
+        pout << path+q <<"\n";
         if(FreeImage_Save(FIF_PNG, image, QString(OPath+tmp[0]+".png").toLocal8Bit().data()))
         {
             if(removeMode) // Detele old files
@@ -170,7 +171,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPa
                 QFile::remove( path+q );
                 QFile::remove( path+imgFileM );
             }
-            QTextStream(stdout) << OPath+tmp[0]+".png" <<"\n";
+            pout << OPath+tmp[0]+".png" <<"\n";
         }
         FreeImage_Unload(image);
     }
@@ -226,6 +227,8 @@ int main(int argc, char *argv[])
     bool removeMode=false;
     QStringList fileList;
 
+    QTextStream pout(stdout);
+
     FreeImage_Initialise();
 
     ConfigPackMiniManager config;
@@ -234,24 +237,31 @@ int main(int argc, char *argv[])
     bool walkSubDirs=false;
     bool cOpath=false;
     bool singleFiles=false;
+    bool skipBackground2=false;
 
     QString argPath;
     QString argOPath;
 
     QString configPath;
 
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"This program is distributed under the GNU GPLv3 license \n";
-    QTextStream(stdout) <<"============================================================================\n";
+    pout <<"============================================================================\n";
+    pout <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
+    pout <<"============================================================================\n";
+    pout <<"This program is distributed under the GNU GPLv3 license \n";
+    pout <<"============================================================================\n";
+    pout.flush();
 
-
-    QRegExp isGif = QRegExp("*.gif");
+    QRegExp isGif("*.gif");
     isGif.setPatternSyntax(QRegExp::Wildcard);
+    isGif.setCaseSensitivity(Qt::CaseInsensitive);
 
-    QRegExp isMask = QRegExp("*m.gif");
+    QRegExp isMask("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
+    isMask.setCaseSensitivity(Qt::CaseInsensitive);
+
+    QRegExp bg2("background2\\-\\d+\\.gif$");
+    bg2.setPatternSyntax(QRegExp::RegExp);
+    bg2.setCaseSensitivity(Qt::CaseInsensitive);
 
     if(a.arguments().size()==1)
     {
@@ -265,13 +275,22 @@ int main(int argc, char *argv[])
             goto DisplayHelp;
         }
         else
-        if((QString(a.arguments().at(arg)).toLower()==("-r")) | (QString(a.arguments().at(arg)).toLower()=="/r"))
+        if( (QString(a.arguments().at(arg)).toLower()==("-r"))||
+            (QString(a.arguments().at(arg)).toLower()=="/r"))
         {
             removeMode=true;
         }
         else
-        if((QString(a.arguments().at(arg)).toLower()=="-d") | (QString(a.arguments().at(arg)).toLower()=="/d")
-                | (QString(a.arguments().at(arg)).toLower()=="-w") | (QString(a.arguments().at(arg)).toLower()=="/w"))
+        if( (QString(a.arguments().at(arg)).toLower()==("-b"))||
+            (QString(a.arguments().at(arg)).toLower()=="/b"))
+        {
+            skipBackground2=true;
+        }
+        else
+        if( (QString(a.arguments().at(arg)).toLower()=="-d")||
+            (QString(a.arguments().at(arg)).toLower()=="/d")||
+            (QString(a.arguments().at(arg)).toLower()=="-w")||
+            (QString(a.arguments().at(arg)).toLower()=="/w") )
         {
             walkSubDirs=true;
         }
@@ -331,7 +350,6 @@ int main(int argc, char *argv[])
         filters << "*.gif" << "*.GIF";
         imagesDir.setSorting(QDir::Name);
         imagesDir.setNameFilters(filters);
-
         path = imagesDir.absolutePath() + "/";
     }
 
@@ -349,21 +367,24 @@ int main(int argc, char *argv[])
         cOpath=true;
     }
 
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Converting images...\n";
-    QTextStream(stdout) <<"============================================================================\n";
+    pout <<"============================================================================\n";
+    pout <<"Converting images...\n";
+    pout <<"============================================================================\n";
+    pout.flush();
 
     config.setConfigDir(configPath);
 
     if(!singleFiles)
-      QTextStream(stdout) << QString("Input path:  "+path+"\n");
-    QTextStream(stdout) << QString("Output path: "+OPath+"\n");
-    QTextStream(stdout) <<"============================================================================\n";
+      pout << QString("Input path:  "+path+"\n");
+    pout << QString("Output path: "+OPath+"\n");
+    pout <<"============================================================================\n";
+    pout.flush();
     if(!configPath.isEmpty())
     {
-        QTextStream(stdout) <<"============================================================================\n";
-        QTextStream(stdout) <<QString("Used config pack: "+configPath+"\n");
-        QTextStream(stdout) <<"============================================================================\n";
+        pout <<"============================================================================\n";
+        pout <<QString("Used config pack: "+configPath+"\n");
+        pout <<"============================================================================\n";
+        pout.flush();
     }
     if(singleFiles) //By files
     {
@@ -371,6 +392,8 @@ int main(int argc, char *argv[])
         {
             path=QFileInfo(q).absoluteDir().path()+"/";
             QString fname = QFileInfo(q).fileName();
+            if(skipBackground2 && bg2.exactMatch(fname))
+                continue;
             if(cOpath) OPath=path;
             doMagicIn(path, fname , OPath, removeMode, config);
         }
@@ -378,10 +401,14 @@ int main(int argc, char *argv[])
     else
     {
         fileList << imagesDir.entryList(filters);
-    if(!walkSubDirs) //By directories
-        foreach(QString q, fileList)
+        if(!walkSubDirs) //By directories
         {
-            doMagicIn(path, q, OPath, removeMode, config);
+            foreach(QString q, fileList)
+            {
+                if(skipBackground2 && bg2.exactMatch(q))
+                    continue;
+                doMagicIn(path, q, OPath, removeMode, config);
+            }
         }
         else
         {
@@ -390,26 +417,29 @@ int main(int argc, char *argv[])
                                   QDirIterator::Subdirectories);
 
             while(dirsList.hasNext())
-              {
-                    dirsList.next();
-                    if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
-                        continue;
+            {
+                dirsList.next();
+                if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
+                    continue;
 
-                    if(cOpath) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
+                if(skipBackground2 && bg2.exactMatch(dirsList.filePath()))
+                    continue;
 
-                    doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode, config);
-              }
+                if(cOpath) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
 
-
+                doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode, config);
+            }
         }
     }
 
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Done!\n\n";
+    pout <<"============================================================================\n";
+    pout <<"Done!\n\n";
+    pout.flush();
 
     if(!nopause)
     {
-        QTextStream(stdout) <<"Press any key to exit...\n";
+        pout <<"Press any key to exit...\n";
+        pout.flush();
         getchar();
     }
 
@@ -419,44 +449,43 @@ DisplayHelp:
     //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
     //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
 
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"This utility will merge GIF images and their masks into solid PNG images:\n";
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Syntax:\n\n";
+    pout <<"============================================================================\n";
+    pout <<"This utility will merge GIF images and their masks into solid PNG images:\n";
+    pout <<"============================================================================\n";
+    pout <<"Syntax:\n\n";
 #ifdef Q_OS_WIN
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [/R] file1.gif [file2.gif] [...] [/O path/to/output]\n";
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [/D] [/R] path/to/input [/O path/to/output]\n\n";
-    QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
-    QTextStream(stdout) <<" /O path/to/output   - path to a directory where the PNG images will be saved\n";
-    QTextStream(stdout) <<" /R                  - Remove source images after a succesful conversion\n";
-    QTextStream(stdout) <<" /D                  - Look for images in subdirectories\n";
+#define ARGSIGN "/"
 #else
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O path/to/output]\n";
-    QTextStream(stdout) <<"   GIFs2PNG [--help] [-D] [-R] path/to/input [-O path/to/output]\n\n";
-    QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" path/to/input       - path to a directory with pairs of GIF files\n";
-    QTextStream(stdout) <<" -O path/to/output   - path to a directory where the PNG images will be saved\n";
-    QTextStream(stdout) <<" -R                  - Remove source images after a succesful conversion\n";
-    QTextStream(stdout) <<" -D                  - Look for images in subdirectories\n";
+#define ARGSIGN "-"
 #endif
-    QTextStream(stdout) <<"\n";
-    QTextStream(stdout) <<" --config=/path/to/config/pack\n";
-    QTextStream(stdout) <<"                     - Allow usage of default masks from specific PGE config pack\n";
-    QTextStream(stdout) <<"                       (Useful for cases where the GFX designer didn't make a mask image)\n";
-    QTextStream(stdout) <<" --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
-    QTextStream(stdout) <<"\n\n";
+    pout <<"   GIFs2PNG [--help] [" ARGSIGN "R] file1.gif [file2.gif] [...] [" ARGSIGN "O path/to/output]\n";
+    pout <<"   GIFs2PNG [--help] [" ARGSIGN "D] [" ARGSIGN "R] path/to/input [" ARGSIGN "O path/to/output]\n\n";
+    pout <<" --help              - Display this help\n";
+    pout <<" path/to/input       - path to a directory with pairs of GIF files\n";
+    pout <<" " ARGSIGN "O path/to/output   - path to a directory where the PNG images will be saved\n";
+    pout <<" " ARGSIGN "R                  - Remove source images after a succesful conversion\n";
+    pout <<" " ARGSIGN "D                  - Look for images in subdirectories\n";
+    pout <<" " ARGSIGN "B                  - Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)\n";
+
+    pout <<"\n";
+    pout <<" --config=/path/to/config/pack\n";
+    pout <<"                     - Allow usage of default masks from specific PGE config pack\n";
+    pout <<"                       (Useful for cases where the GFX designer didn't make a mask image)\n";
+    pout <<" --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
+    pout <<"\n\n";
+    pout.flush();
 
     getchar();
 
     exit(0);
     return 0;
 WrongInputPath:
-    QTextStream(stdout) <<"============================================================================\n";
+    pout <<"============================================================================\n";
     QTextStream(stderr) <<"Wrong input path!\n";
     goto DisplayHelp;
 WrongOutputPath:
-    QTextStream(stdout) <<"============================================================================\n";
+    pout <<"============================================================================\n";
+    pout.flush();
     QTextStream(stderr) <<"Wrong output path!\n";
     goto DisplayHelp;
 }
