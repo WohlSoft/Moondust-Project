@@ -577,7 +577,8 @@ HEADERS  += defines.h \
     SingleApplication/semaphore_winapi.h \
     editing/_scenes/level/lvl_history_manager.h \
     editing/_scenes/world/wld_history_manager.h \
-    editing/_scenes/world/wld_point_selector.h
+    editing/_scenes/world/wld_point_selector.h \
+    editing/_components/history/history_manager.h
 
 FORMS    += \
     common_features/crashhandler.ui \
