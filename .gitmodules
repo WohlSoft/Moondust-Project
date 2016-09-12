@@ -1,5 +1,5 @@
 [submodule "_common/PGE_File_Formats"]
     path = _common/PGE_File_Formats
-    url = https://github.com/Wohlhabend-Networks/PGE-File-Library-STL.git
+    url = https://github.com/WohlSoft/PGE-File-Library-STL.git
     branch = master
 
