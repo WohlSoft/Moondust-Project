@@ -13,9 +13,9 @@ public:
     HistoryManagerElementNEW(T* scene):
         m_scene(scene)
     {}
-    virtual void undo() {}
-    virtual void redo() {}
-    virtual QString actionDesc() { return "Unknown"; }
+    virtual void undo() = 0;
+    virtual void redo() = 0;
+    virtual QString actionDesc()  = 0;
 };
 
 template<class T>
