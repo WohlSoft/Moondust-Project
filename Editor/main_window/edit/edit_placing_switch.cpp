@@ -45,6 +45,7 @@ void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
                 {
                     dock_LvlItemProps->show();
                     dock_LvlItemProps->raise();
+                    setFocus(Qt::ActiveWindowFocusReason);
                 }
                 else
                     dock_LvlItemProps->hide();
@@ -62,6 +63,7 @@ void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
                 {
                     dock_WldItemProps->show();
                     dock_WldItemProps->raise();
+                    setFocus(Qt::ActiveWindowFocusReason);
                 }
                 else
                     dock_WldItemProps->hide();
@@ -261,7 +263,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                }
            }
            qApp->setActiveWindow(this);
-           activeLvlEditWin()->setFocus();
+           raise();
+           setFocus(Qt::ActiveWindowFocusReason);
+           activeLvlEditWin()->scene->setFocus(Qt::MouseFocusReason);
        }
     }
     else if(activeChildWindow()==3) // World editing window
@@ -359,9 +363,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                         break;
                     }
             }
-
             qApp->setActiveWindow(this);
-            activeWldEditWin()->setFocus();
+            raise();
+            setFocus(Qt::ActiveWindowFocusReason);
+            activeWldEditWin()->scene->setFocus(Qt::MouseFocusReason);
         }
     }
 }
