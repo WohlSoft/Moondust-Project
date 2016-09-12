@@ -259,7 +259,7 @@ int main(int argc, char *argv[])
     isMask.setPatternSyntax(QRegExp::Wildcard);
     isMask.setCaseSensitivity(Qt::CaseInsensitive);
 
-    QRegExp bg2("background2\\-\\d+\\.gif$");
+    QRegExp bg2("background2\\-\\d+\\.gif");
     bg2.setPatternSyntax(QRegExp::RegExp);
     bg2.setCaseSensitivity(Qt::CaseInsensitive);
 
@@ -392,7 +392,7 @@ int main(int argc, char *argv[])
         {
             path=QFileInfo(q).absoluteDir().path()+"/";
             QString fname = QFileInfo(q).fileName();
-            if(skipBackground2 && bg2.exactMatch(fname))
+            if(skipBackground2 && (bg2.indexIn(fname) != -1))
                 continue;
             if(cOpath) OPath=path;
             doMagicIn(path, fname , OPath, removeMode, config);
@@ -405,7 +405,7 @@ int main(int argc, char *argv[])
         {
             foreach(QString q, fileList)
             {
-                if(skipBackground2 && bg2.exactMatch(q))
+                if(skipBackground2 && (bg2.indexIn(q) != -1))
                     continue;
                 doMagicIn(path, q, OPath, removeMode, config);
             }
@@ -422,7 +422,7 @@ int main(int argc, char *argv[])
                 if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
                     continue;
 
-                if(skipBackground2 && bg2.exactMatch(dirsList.filePath()))
+                if(skipBackground2 && (bg2.indexIn(dirsList.filePath()) != -1))
                     continue;
 
                 if(cOpath) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
