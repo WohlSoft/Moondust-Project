@@ -188,6 +188,12 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.p2_vehicleType  = settings.value("p2-vehicle-type", 0).toInt();
     settings.endGroup();
 
+    settings.beginGroup("screen-grab");
+        GlobalSettings::screenGrab.sizeType   = settings.value("grab-size", 0).toInt();
+        GlobalSettings::screenGrab.width      = settings.value("grab-w", 800).toInt();
+        GlobalSettings::screenGrab.height      = settings.value("grab-h", 600).toInt();
+    settings.endGroup();
+
     settings.beginGroup("Recent");
         for(int i = 1; i<=10;i++){
             recentOpen.push_back(settings.value("recent"+QString::number(i),"<empty>").toString());
@@ -329,6 +335,12 @@ void MainWindow::saveSettings()
         settings.setValue("p2-state", GlobalSettings::testing.p2_state);
         settings.setValue("p2-vehicle-id", GlobalSettings::testing.p2_vehicleID);
         settings.setValue("p2-vehicle-type", GlobalSettings::testing.p2_vehicleType);
+    settings.endGroup();
+
+    settings.beginGroup("screen-grab");
+        settings.setValue("grab-size", GlobalSettings::screenGrab.sizeType);
+        settings.setValue("grab-w", GlobalSettings::screenGrab.width);
+        settings.setValue("grab-h", GlobalSettings::screenGrab.height);
     settings.endGroup();
 
     settings.beginGroup("Recent");

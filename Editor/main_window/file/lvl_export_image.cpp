@@ -58,8 +58,14 @@ void LevelEdit::ExportToImage_fn_piece()
 
     scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
     scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
-    scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
-    scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
+    if(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Fit)
+    {
+        scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
+        scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
+    } else {
+        scene->captutedSize.setWidth(GlobalSettings::screenGrab.width);
+        scene->captutedSize.setHeight(GlobalSettings::screenGrab.height);
+    }
 
     scene->setScreenshotSelector(true);
 }
