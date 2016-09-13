@@ -110,6 +110,11 @@ void g_AppSettings::loadSettings()
 
     ui->historyLimit->setValue(GlobalSettings::historyLimit);
 
+    ui->screengrabFit->setChecked(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Fit);
+    ui->screengrabCustom->setChecked(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Custom);
+    ui->screengrabW->setValue(GlobalSettings::screenGrab.width);
+    ui->screengrabH->setValue(GlobalSettings::screenGrab.height);
+
     LogWriter::loadLogLevels(ui->logLevel);
     ui->logLevel->setCurrentIndex( int(LogWriter::logLevel) );
     ui->logFileName->setText( LogWriter::DebugLogFile );
@@ -196,6 +201,15 @@ void g_AppSettings::on_buttonBox_accepted()
 
     GlobalSettings::Placing_dontShowPropertiesBox = ui->Editor_placing_dontShowPropsBox->isChecked();
     GlobalSettings::historyLimit = ui->historyLimit->value();
+
+    if(ui->screengrabFit->isChecked())
+        GlobalSettings::screenGrab.sizeType = SETTINGS_ScreenGrabSettings::GRAB_Fit;
+    else
+    if(ui->screengrabCustom->isChecked())
+        GlobalSettings::screenGrab.sizeType = SETTINGS_ScreenGrabSettings::GRAB_Custom;
+
+    GlobalSettings::screenGrab.width = ui->screengrabW->value();
+    GlobalSettings::screenGrab.height = ui->screengrabH->value();
 
     if(ui->MView_SubWindows->isChecked())
         GlobalSettings::MainWindowView = QMdiArea::SubWindowView;
