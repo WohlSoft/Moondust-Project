@@ -33,6 +33,8 @@ language: cpp
 os:
   - osx
 
+osx_image: xcode7
+
 compiler:
   - clang++
 
