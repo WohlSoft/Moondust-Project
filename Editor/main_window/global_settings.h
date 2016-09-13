@@ -68,6 +68,16 @@ struct SETTINGS_TestSettings {
     int  p2_vehicleType;
 };
 
+struct SETTINGS_ScreenGrabSettings {
+    enum GrabSize{
+        GRAB_Fit,
+        GRAB_Custom
+    };
+    int sizeType;
+    int width;
+    int height;
+};
+
 class GlobalSettings
 {
 public:
@@ -76,6 +86,7 @@ public:
 
     //! Testing settings
     static SETTINGS_TestSettings testing;
+    static SETTINGS_ScreenGrabSettings screenGrab;
 
     //! Current language
     static QString locale;
