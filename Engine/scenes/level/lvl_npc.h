@@ -337,7 +337,7 @@ public:
 
     bool isInited();
 private:
-    bool _isInited;
+    bool m_isInited;
 
 };
 

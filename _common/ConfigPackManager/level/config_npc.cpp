@@ -93,6 +93,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, int defaultGrid, NpcS
     collision_with_blocks= setup->value("collision-blocks", merge_with ? merge_with->collision_with_blocks : false).toBool();
     gravity =              setup->value("gravity", merge_with ? merge_with->gravity : false).toBool();
     adhesion =             setup->value("adhesion", merge_with ? merge_with->adhesion : false).toBool();
+    contact_padding =      setup->value("contact-padding", merge_with ? merge_with->contact_padding : 0.0).toDouble();
 
     container =            setup->value("container", merge_with ? merge_with->container : false).toBool();
     contents_id =                setup->value("contents-id", merge_with ? merge_with->contents_id : 0).toUInt();

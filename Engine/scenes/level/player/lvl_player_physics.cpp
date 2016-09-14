@@ -180,7 +180,7 @@ void LVL_Player::processContacts()
 
                 //If character fell to the head of the NPC
                 if( ((npc->m_blocked[m_filterID]&Block_TOP)==0) &&
-                     (m_momentum.bottom() > npc->m_momentum.top()) &&
+                     (m_momentum.bottom() >= npc->m_momentum.top()) &&
                      (m_momentum.bottomOld()<= npc->m_momentum.topOld()) &&
                       npc->setup->setup.kill_on_jump )
                 {
@@ -193,6 +193,7 @@ void LVL_Player::processContacts()
                     {
                         if( ((npc->m_blocked[m_filterID]&Block_TOP)==0) ||
                             ( ((npc->m_blocked[m_filterID]&Block_TOP) != 0 ) &&
+                               (m_momentum.top() > m_momentum.topOld())&&//Avoid post-resize shit
                                (m_momentum.bottom() > npc->m_momentum.top())&&
                                (m_momentum.bottomOld() > npc->m_momentum.topOld()) ) )
                         {
@@ -394,8 +395,10 @@ void LVL_Player::processContacts()
         npcs_to_stomp.pop_back();
 
         //Avoid workarround "don't hurt while flying up"
-        if(m_momentum.bottom() >= npc->m_momentum.top())
-            m_momentum.setYatBottom( npc->m_momentum.top()-1.0 );
+        if(m_momentum.bottom() >= npc->m_momentum.top() + m_contactPadding)
+        {
+            m_momentum.setYatBottom( npc->m_momentum.top() + m_contactPadding - 0.2 );
+        }
         setSpeedY( npc->speedY() );
         npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
         bump(true);
