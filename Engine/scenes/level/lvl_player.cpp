@@ -31,6 +31,7 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     m_danger[2] = Block_NONE;
     m_allowHoleRuning = true;
     m_onSlopeFloorTopAlign = true;
+    m_contactPadding = -1.0;
     /* ****** PHYSICS ******* */
 
     type = LVLPlayer;

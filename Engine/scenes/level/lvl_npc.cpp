@@ -56,7 +56,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     m_spawnedGeneratorDirection = LevelScene::SPAWN_UP;
     warpSpawing=false;
 
-    _isInited=false;
+    m_isInited=false;
     isLuaNPC=false;
     isWarping=false;
     is_scenery=false;

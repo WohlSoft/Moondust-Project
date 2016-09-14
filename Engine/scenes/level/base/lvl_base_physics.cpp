@@ -53,6 +53,7 @@ PGE_physBody::PGE_physBody() :
     m_crushedHardDelay(0),
     m_cliff(false),
     m_onSlippery(false),
+    m_contactPadding(0.0),
     m_moveLeft(false),
     m_moveRight(false),
     m_onSlopeYAdd(0.0),
@@ -79,6 +80,7 @@ PGE_physBody::PGE_physBody(const PGE_physBody& o) :
     m_crushedHard(o.m_crushedHard),
     m_crushedHardDelay(o.m_crushedHardDelay),
     m_cliff(o.m_cliff),
+    m_contactPadding(o.m_contactPadding),
     m_moveLeft(o.m_moveLeft),
     m_moveRight(o.m_moveRight),
     m_slopeFloor(o.m_slopeFloor),
@@ -672,7 +674,7 @@ void PGE_Phys_Object::updateCollisions()
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
-                figureTouch(m_momentum, CUR->m_momentum, -1.0, -1.0)
+                figureTouch(m_momentum, CUR->m_momentum, CUR->m_contactPadding, CUR->m_contactPadding)
                  )
             {
                 l_pushAny(CUR);
