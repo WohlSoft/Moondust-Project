@@ -672,7 +672,7 @@ void PGE_Phys_Object::updateCollisions()
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
-                figureTouch(m_momentum, CUR->m_momentum, 0.0, 0.0)
+                figureTouch(m_momentum, CUR->m_momentum, -1.0, -1.0)
                  )
             {
                 l_pushAny(CUR);
