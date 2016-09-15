@@ -71,7 +71,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
 
     _onGround=false;
 
-    disableBlockCollision=false;
+    m_disableBlockCollision=false;
     disableNpcCollision=false;
     enablePlayerCollision=true;
     _stucked=false;
@@ -85,7 +85,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
 
     health = 1;
 
-    isGenerator=false;
+    m_isGenerator=false;
     generatorTimeLeft=0;
     generatorType=0;
     generatorDirection=0;

@@ -94,10 +94,7 @@ public:
     void postCollision();
     void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
     bool preCollisionCheck(PGE_Phys_Object* body);
-    #ifdef OLD_COLLIDERS
-    void LEGACY_updateCollisions();
-    void LEGACY_detectCollisions(PGE_Phys_Object *collided);
-    #endif
+
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
@@ -109,6 +106,7 @@ public:
     QHash<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
     QHash<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
 
+    typedef QHash<intptr_t, PGE_Phys_Object*> CollisionTable;
     QHash<intptr_t, PGE_Phys_Object*> contacted_blocks;
     QHash<intptr_t, PGE_Phys_Object*> contacted_bgos;
     QHash<intptr_t, PGE_Phys_Object*> contacted_npc;
@@ -118,23 +116,10 @@ public:
     inline void l_pushNpc(PGE_Phys_Object*ob) { contacted_npc[intptr_t(ob)] = ob; }
     inline void l_pushPlr(PGE_Phys_Object*ob) { contacted_players[intptr_t(ob)] = ob; }
 
-    typedef QHash<intptr_t, PGE_Phys_Object*> PlayerColliders;
-    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_top;
-    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_left;
-    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_right;
-    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_bottom;
-    QHash<intptr_t, PGE_Phys_Object*> LEGACY_collided_center;
-    bool  disableBlockCollision;
+    bool  m_disableBlockCollision;
     bool  disableNpcCollision;
     bool  enablePlayerCollision;
     bool _stucked;
-
-    #ifdef OLD_COLLIDERS
-    QVector<PGE_Phys_Object*>   collision_speed_add;
-    void updateSpeedAddingStack();
-    void applyCorrectionToSA_stack(double offsetX, double offsetY);
-    #endif
-    //void iterateSpeedAddingStack(double offsetX, double offsetY);
 
     bool    bumpDown;
     bool    bumpUp;
@@ -206,7 +191,7 @@ public:
     /***************************************************/
 
     /***********************Generator*******************/
-    bool  isGenerator;
+    bool  m_isGenerator;
     float generatorTimeLeft;
     int   generatorType;
     int   generatorDirection;
@@ -317,8 +302,8 @@ public:
     inline int  getID() { return _npc_id; }
     inline long getHealth() { return health; }
     inline void setHealth(int _health) { health=_health; }
-    inline bool getCollideWithBlocks() { return !disableBlockCollision; }
-    inline void setCollideWithBlocks(bool blkcol) { disableBlockCollision=!blkcol; }
+    inline bool getCollideWithBlocks() { return !m_disableBlockCollision; }
+    inline void setCollideWithBlocks(bool blkcol) { m_disableBlockCollision=!blkcol; }
 
     inline bool getKillByFire() { return setup->setup.kill_by_fireball; }
     inline bool getKillByIce() { return setup->setup.freeze_by_iceball; }

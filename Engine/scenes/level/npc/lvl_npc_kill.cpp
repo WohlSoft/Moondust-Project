@@ -201,9 +201,6 @@ void LVL_Npc::unregister()
 {
     killed=true;
     m_is_visible=false;
-    #ifdef OLD_COLLIDERS
-    removeSpeedAddingPointers();
-    #endif
     unregisterFromTree();
     _scene->dead_npcs.push_back(this);
     _scene->layers.removeRegItem(data.layer, this);

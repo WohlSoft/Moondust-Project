@@ -27,7 +27,7 @@ void LVL_Npc::update(double tickTime)
 
     //_onGround = !collided_bottom.isEmpty();
 
-    if(isGenerator) {
+    if(m_isGenerator) {
         activationTimeout -= tickTime;
         updateGenerator(tickTime);
         return;

@@ -26,7 +26,7 @@
 void LVL_Npc::render(double camX, double camY)
 {
     if(killed) return;
-    if(isGenerator) return;
+    if(m_isGenerator) return;
     if((!isActivated)&&(!warpSpawing)) return;
 
     bool doDraw=true;

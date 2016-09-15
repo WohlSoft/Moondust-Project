@@ -122,27 +122,6 @@ public:
     void setDecelX(double x);
     void applyAccel(double x, double y);
 
-    //! Elements staying on top (or bumped from side)
-    #ifdef OLD_COLLIDERS
-    QList<PGE_Phys_Object*> LEGACY_m_speedAddingTopElements;
-    QList<PGE_Phys_Object*> LEGACY_m_speedAddingBottomElements;
-    virtual void iterateSpeedAddingStack(double ticks);
-    virtual void removeSpeedAddingPointers();
-    #endif
-
-    #ifdef OLD_COLLIDERS
-    /*!
-     * \brief Update Speed-adding stack if needed
-     */
-    virtual void updateSpeedAddingStack() {}
-    /*!
-     * \brief Apply position correction to members of speed-adding stack (to don't cause through-fall when rider will touch floor)
-     * param offsetX Apply offset on X
-     * param offsetY Apply offset on Y
-     */
-    virtual void applyCorrectionToSA_stack(double, double) {}
-    #endif
-
     inline double  gravityScale() { return phys_setup.gravityScale; }
     inline void    setGravityScale(double scl) { phys_setup.gravityScale = scl; }
     inline double  gravityAccel() { return phys_setup.gravityAccel; }
@@ -176,51 +155,14 @@ public:
     virtual bool preCollisionCheck(PGE_Phys_Object* body) { Q_UNUSED(body); return false; }
 
     void updateCollisions();
-    #ifdef OLD_COLLIDERS
-    virtual void LEGACY_detectCollisions(PGE_Phys_Object *collided);
-    double LEGACY_colliding_xSpeed;
-    double LEGACY_colliding_ySpeed;
-    #endif
-
     virtual bool onGround() { return m_stand; }
-
-    #ifdef OLD_COLLIDERS
-    bool   LEGACY_collided_slope;
-    float  LEGACY_collided_slope_angle_ratio;
-    bool   LEGACY_collided_slope_celling;
-    float  LEGACY_collided_slope_angle_ratio_celling;
-
-    enum Slopes{
-        SLOPE_LEFT=-1,
-        SLOPE_RIGHT=1
-    };
-
-    PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
-    PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);
-    bool isWall(QVector<PGE_Phys_Object *> &blocks);
-    bool isFloor(QVector<PGE_Phys_Object *> &blocks, bool *isCliff=0);
-    #endif
 
     static const double m_smbxTickTime;
     static double SMBXTicksToTime(double ticks);
 
     PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
-    #ifdef OLD_COLLIDERS
-    PGE_RectF m_posRect;//!< Real body geometry and position
-    #endif
     double m_accelX; //!<Delta of X velocity in a second
     double m_accelY; //!<Delta of Y velocity in a second
-
-    #ifdef OLD_COLLIDERS
-    double LEGACY_m_velocityX;//!< current X speed (pixels per 1/65 of second)
-    double LEGACY_m_velocityY;//!< current Y speed (pixels per 1/65 of second)
-
-    double LEGACY_m_velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
-    double LEGACY_m_velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
-
-    double LEGACY_m_velocityX_add; //!< additional X acceleration
-    double LEGACY_m_velocityY_add; //!< additional Y acceleration
-    #endif
 
     double m_posX_registered; //!< Synchronized with R-Tree position
     double m_posY_registered; //!< Synchronized with R-Tree position
@@ -239,23 +181,8 @@ public:
 
     int type;
 
-    #ifdef OLD_COLLIDERS
-    enum CollisionType{
-        COLLISION_NONE = 0,
-        COLLISION_ANY = 1,
-        COLLISION_TOP = 2,
-        COLLISION_BOTTOM = 3
-    };
-    #endif
-
     //! FILTERS
     bool m_slippery_surface;
-
-    #ifdef OLD_COLLIDERS
-    int LEGACY_collide_player;
-    int LEGACY_collide_npc;
-    bool LEGACY_m_isRectangle;
-    #endif
 
     PGE_Texture texture;
     GLuint texId;

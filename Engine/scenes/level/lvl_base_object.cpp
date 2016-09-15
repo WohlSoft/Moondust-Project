@@ -23,8 +23,6 @@
 
 #include <QVector>
 
-#include "collision_checks.h"
-
 const double PGE_Phys_Object::m_smbxTickTime = 1000.0/65.0/*15.285f*/;
 //1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 //BUT, Experimentally was found that in real is approximately is 15.285
@@ -69,16 +67,6 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     z_index = 0.0L;
     m_slippery_surface = false;
 
-    #ifdef OLD_COLLIDERS
-    LEGACY_m_isRectangle = true;
-    LEGACY_collide_player = COLLISION_ANY;
-    LEGACY_collide_npc = COLLISION_ANY;
-    LEGACY_collided_slope=false;
-    LEGACY_collided_slope_angle_ratio=0.0f;
-    LEGACY_collided_slope_celling=false;
-    LEGACY_collided_slope_angle_ratio_celling=0.0f;
-    #endif
-
     _parentSection=NULL;
     m_width_registered = 0.0;
     m_height_registered = 0.0;
@@ -86,17 +74,6 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     m_height_toRegister=0.0;
     m_posX_registered=0.0;
     m_posY_registered=0.0;
-    #ifdef OLD_COLLIDERS
-    LEGACY_m_velocityX=0.0;
-    LEGACY_m_velocityY=0.0;
-    LEGACY_m_velocityX_prev=0.0;
-    LEGACY_m_velocityY_prev=0.0;
-    LEGACY_m_velocityX_add=0.0;
-    LEGACY_m_velocityY_add=0.0;
-
-    LEGACY_colliding_xSpeed=0.0;
-    LEGACY_colliding_ySpeed=0.0;
-    #endif
 
     m_paused=false;
 
@@ -316,87 +293,6 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     m_accelY = y;
 }
 
-#ifdef OLD_COLLIDERS
-void PGE_Phys_Object::iterateSpeedAddingStack(double ticks)
-{
-    for(int i=0; i < m_speedAddingTopElements.size(); i++)
-    {
-        PGE_Phys_Object* &topEl = m_speedAddingTopElements[i];
-        PGE_RectF &posR = topEl->m_posRect;
-        QList<PGE_Phys_Object*> &be = topEl->m_speedAddingBottomElements;
-        int beI=0;
-        double middleX = 0.0;
-        double middleX_num = 0.0;
-        double middleY = 0.0;
-        //topEl->_velocityX_add = 0.0;
-        //topEl->_velocityY_add = 0.0;
-        for(int j=0; j<be.size(); j++)
-        {
-            //Find middle value
-            middleX     += be[j]->speedXsum();
-            middleX_num += 1.0;
-            //Don't fall through floor!!!
-            if( j == 0 )
-                middleY = be[j]->speedYsum();
-            else if(middleY > be[j]->speedYsum())
-                middleY = be[j]->speedYsum();
-            if(be[j] == this)
-            {
-                beI = j;
-            }
-        }
-        if(middleX_num != 0.0)  middleX /= middleX_num;
-        topEl->LEGACY_m_velocityX_add = middleX;
-        topEl->LEGACY_m_velocityY_add = middleY;
-        if(middleX_num != 0.0)  middleX /= middleX_num;
-        double iterateX = (middleX) * (ticks/m_smbxTickTime);
-        double iterateY = (middleY) * (ticks/m_smbxTickTime);
-        topEl->setPos(posR.x()+iterateX, posR.y()+iterateY);
-        //topEl->iterateSpeedAddingStack(ticks);
-        if( !m_posRect.collideRectDeep( posR, -2.0 )
-        /* || (posRect.top()+speedYsum() < posR.bottom()-topEl->speedYsum() )*/
-           ||  (m_posRect.top() < posR.bottom()-topEl->colliding_ySpeed) )
-        {
-            topEl->LEGACY_m_velocityX_add = 0.0;
-            topEl->LEGACY_m_velocityY_add = 0.0;
-            be.removeAt(beI);
-            m_speedAddingTopElements.removeAt(i); i--;
-            //continue;
-        }
-    }
-}
-#endif
-
-#ifdef OLD_COLLIDERS
-void PGE_Phys_Object::removeSpeedAddingPointers()
-{
-    for(int i=0; i<LEGACY_m_speedAddingBottomElements.size(); i++)
-    {
-        QList<PGE_Phys_Object*>  &te = LEGACY_m_speedAddingBottomElements[i]->LEGACY_m_speedAddingTopElements;
-        for(int j=0; j<te.size(); j++)
-        {
-            if(te[j]==this)
-            {
-                te.removeAt(j);
-                j--;
-            }
-        }
-    }
-    for(int i=0; i<LEGACY_m_speedAddingTopElements.size(); i++)
-    {
-        QList<PGE_Phys_Object*>  &be = LEGACY_m_speedAddingTopElements[i]->LEGACY_m_speedAddingBottomElements;
-        for(int j=0; j<be.size(); j++)
-        {
-            if(be[j]==this)
-            {
-                be.removeAt(j);
-                j--;
-            }
-        }
-    }
-}
-#endif
-
 void PGE_Phys_Object::_syncPosition()
 {
     if(_is_registered) _scene->unregisterElement(this);
@@ -443,132 +339,6 @@ void PGE_Phys_Object::renderDebug(double _camX, double _camY)
     case LVLPhysEnv:    GlRenderer::renderRect(float(m_momentum.x-_camX), float(m_momentum.y-_camY), float(m_momentum.w)-1.0f, float(m_momentum.h)-1.0f, 1.0f, 1.0f, 0.0f, 0.5f, true);  break;
     }
 }
-
-#ifdef OLD_COLLIDERS
-bool PGE_Phys_Object::isWall(QVector<PGE_Phys_Object *> &blocks)
-{
-    if(blocks.isEmpty())
-        return false;
-    double higher = blocks.first()->m_posRect.top();
-    double lower  = blocks.first()->m_posRect.bottom();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->m_posRect.bottom()>lower)
-            lower = blocks[i]->m_posRect.bottom();
-        if(blocks[i]->m_posRect.top()<higher)
-            higher = blocks[i]->m_posRect.top();
-    }
-    if(m_posRect.top() >= lower) return false;
-    if(m_posRect.bottom() <= higher) return false;
-    return true;
-}
-
-bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks, bool *isCliff)
-{
-    if(isCliff)
-        *isCliff=false;
-
-    if(blocks.isEmpty())
-        return false;
-    double lefter  = blocks.first()->m_posRect.left();
-    double righter = blocks.first()->m_posRect.right();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->m_posRect.right()>righter)
-            righter=blocks[i]->m_posRect.right();
-        if(blocks[i]->m_posRect.left()<lefter)
-            lefter=blocks[i]->m_posRect.left();
-    }
-
-    if(m_posRect.left() >= righter) return false;
-    if(m_posRect.right() <= lefter) return false;
-
-    if(isCliff)
-    {
-        if((speedX() < 0.0) && ( lefter > m_posRect.center().x()) )
-            *isCliff=true;
-        else
-        if((speedX() > 0.0) && (righter < m_posRect.center().x()) )
-            *isCliff=true;
-    }
-    return true;
-}
-
-PGE_Phys_Object *PGE_Phys_Object::nearestBlock(QVector<PGE_Phys_Object *> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    PGE_Phys_Object*nearest=NULL;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            if( fabs(blocks[i]->m_posRect.center().x()-m_posRect.center().x())<
-                fabs(nearest->m_posRect.center().x()-m_posRect.center().x()) )
-                nearest=blocks[i];
-        }
-    }
-    return nearest;
-}
-#endif
-
-#ifdef OLD_COLLIDERS
-PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    PGE_Phys_Object*nearest=NULL;
-    double nearest_blockY=0.0;
-    double blockY=0.0;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            //Check for a possible slope
-            if(blocks[i]->type==PGE_Phys_Object::LVLBlock)
-            {
-                LVL_Block* b = static_cast<LVL_Block*>(blocks[i]);
-                switch(b->LEGACY_shape)
-                {
-                    case LVL_Block::shape_tr_left_top:
-                        blockY=nearest->m_posRect.top()+SL_HeightTopRight(*this, nearest);
-                        break;
-
-                    case LVL_Block::shape_tr_right_top:
-                        blockY=nearest->m_posRect.top()+SL_HeightTopLeft(*this, nearest);
-                        break;
-
-                    case LVL_Block::shape_tr_right_bottom:
-                        blockY=nearest->m_posRect.bottom()-SL_HeightTopRight(*this, nearest);
-                        break;
-
-                    case LVL_Block::shape_tr_left_bottom:
-                        blockY=nearest->m_posRect.bottom()-SL_HeightTopLeft(*this, nearest);
-                        break;
-
-                    default:break;
-                        blockY=blocks[i]->m_posRect.center().y();
-                }
-            } else blockY=blocks[i]->m_posRect.center().y();
-            if( fabs(blockY-m_posRect.center().y())<
-                fabs(nearest_blockY-m_posRect.center().y()) )
-            {
-                nearest=blocks[i];
-                nearest_blockY=blockY;
-            }
-        }
-    }
-    return nearest;
-}
-#endif
-
-
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)
 {
