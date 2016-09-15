@@ -141,7 +141,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             Items::getItemGFX(&block, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( block.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(block.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(block.setup.id) );
+            item->setData(Qt::UserRole, int(block.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->BlockItemsList->addItem( item );
@@ -205,7 +206,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             Items::getItemGFX(&blockItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( blockItem.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(blockItem.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(blockItem.setup.id) );
+            item->setData(Qt::UserRole, int(blockItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->BlockItemsList->addItem( item );
@@ -247,7 +249,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
             item = new QListWidgetItem( bgo.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgo.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(bgo.setup.id) );
+            item->setData(Qt::UserRole, int(bgo.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->BGOItemsList->addItem( item );
         }
@@ -312,7 +315,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             Items::getItemGFX(&bgoItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( bgoItem.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgoItem.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(bgoItem.setup.id) );
+            item->setData(Qt::UserRole, int(bgoItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->BGOItemsList->addItem( item );
@@ -354,7 +358,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
             item = new QListWidgetItem( npc.setup.name.isEmpty() ? QString("npc-%1").arg(npc.setup.id) : npc.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(npc.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(npc.setup.id) );
+            item->setData(Qt::UserRole, int(npc.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->NPCItemsList->addItem( item );
@@ -419,7 +424,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             Items::getItemGFX(&npcItem, tmpI, false, QSize(48,48));
             item = new QListWidgetItem( npcItem.setup.name );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(npcItem.setup.id) );
+            item->setToolTip( QString("ID: %1").arg(npcItem.setup.id) );
+            item->setData(Qt::UserRole, int(npcItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->NPCItemsList->addItem( item );
@@ -453,6 +459,121 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     mw()->ui->menuNew->setEnabled(true);
     mw()->ui->actionNew->setEnabled(true);
 }
+
+void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->BlockItemsList->selectedItems().isEmpty())
+        return;
+
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    QListWidgetItem *item = ui->BlockItemsList->selectedItems()[0];
+    QString episodeDir = edit->LvlData.meta.path;
+    QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    int itemID = item->data(Qt::UserRole).toInt();
+
+    obj_block &block = mw()->configs.main_block[itemID];
+    QString newImg = block.setup.image_n;
+    if(newImg.endsWith(".gif", Qt::CaseInsensitive))
+        newImg.replace(newImg.size()-4, 4, ".png");
+    QPixmap &orig = block.image;
+
+    QMenu itemMenu(this);
+    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
+    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
+    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+
+    if(reply==copyToC)
+    {
+        if(!QFile::exists(customDir + "/" + newImg))
+            orig.save(customDir + "/" + newImg, "PNG");
+    }
+    else
+    if(reply==copyToE)
+    {
+        if(!QFile::exists(episodeDir + "/" + newImg))
+            orig.save(episodeDir + "/" + newImg, "PNG");
+    }
+}
+
+void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->BGOItemsList->selectedItems().isEmpty())
+        return;
+
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    QListWidgetItem *item = ui->BGOItemsList->selectedItems()[0];
+    QString episodeDir = edit->LvlData.meta.path;
+    QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    int itemID = item->data(Qt::UserRole).toInt();
+
+    obj_bgo &bgo = mw()->configs.main_bgo[itemID];
+    QString newImg = bgo.setup.image_n;
+    if(newImg.endsWith(".gif", Qt::CaseInsensitive))
+        newImg.replace(newImg.size()-4, 4, ".png");
+    QPixmap &orig = bgo.image;
+
+    QMenu itemMenu(this);
+    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
+    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
+    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+
+    if(reply==copyToC)
+    {
+        if(!QFile::exists(customDir + "/" + newImg))
+            orig.save(customDir + "/" + newImg, "PNG");
+    }
+    else
+    if(reply==copyToE)
+    {
+        if(!QFile::exists(episodeDir + "/" + newImg))
+            orig.save(episodeDir + "/" + newImg, "PNG");
+    }
+}
+
+void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->NPCItemsList->selectedItems().isEmpty())
+        return;
+
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    QListWidgetItem *item = ui->NPCItemsList->selectedItems()[0];
+    QString episodeDir = edit->LvlData.meta.path;
+    QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    int itemID = item->data(Qt::UserRole).toInt();
+
+    obj_npc &npc = mw()->configs.main_npc[itemID];
+    QString newImg = npc.setup.image_n;
+    if(newImg.endsWith(".gif", Qt::CaseInsensitive))
+        newImg.replace(newImg.size()-4, 4, ".png");
+    QPixmap &orig = npc.image;
+
+    QMenu itemMenu(this);
+    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
+    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
+    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+
+    if(reply==copyToC)
+    {
+        if(!QFile::exists(customDir + "/" + newImg))
+            orig.save(customDir + "/" + newImg, "PNG");
+    }
+    else
+    if(reply==copyToE)
+    {
+        if(!QFile::exists(episodeDir + "/" + newImg))
+            orig.save(episodeDir + "/" + newImg, "PNG");
+    }
+}
+
 
 // ///////////////////////////////////
 void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
@@ -532,7 +653,7 @@ void LevelItemBox::on_BlockItemsList_itemClicked(QListWidgetItem *item)
     //placeBlock
     if ((mw()->activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::LVL_Block, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_Block, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -541,7 +662,7 @@ void LevelItemBox::on_BGOItemsList_itemClicked(QListWidgetItem *item)
     //placeBGO
     if ((mw()->activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -550,7 +671,7 @@ void LevelItemBox::on_NPCItemsList_itemClicked(QListWidgetItem *item)
     //placeNPC
     if ((mw()->activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -608,4 +729,5 @@ void LevelItemBox::on_NPCFilterType_currentIndexChanged(int /*index*/)
 {
     updateFilters();
 }
+
 
