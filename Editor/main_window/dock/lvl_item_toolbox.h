@@ -35,6 +35,10 @@ public slots:
     void clearFilter();
 
 private slots:
+    void on_BlockItemsList_customContextMenuRequested(const QPoint &pos);
+    void on_BGOItemsList_customContextMenuRequested(const QPoint &pos);
+    void on_NPCItemsList_customContextMenuRequested(const QPoint &pos);
+
     void on_BlockUniform_clicked(bool checked);
     void on_BGOUniform_clicked(bool checked);
     void on_NPCUniform_clicked(bool checked);
@@ -59,6 +63,7 @@ private slots:
     void on_BlockItemsList_itemClicked(QListWidgetItem *item);
     void on_BGOItemsList_itemClicked(QListWidgetItem *item);
     void on_NPCItemsList_itemClicked(QListWidgetItem *item);
+
 
 private:
     QString cat_blocks; //!< Category

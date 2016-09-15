@@ -28,7 +28,7 @@
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="documentMode">
     <bool>true</bool>
@@ -74,6 +74,9 @@
      </item>
      <item row="4" column="0" colspan="4">
       <widget class="QListWidget" name="BlockItemsList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="lineWidth">
         <number>1</number>
        </property>
@@ -247,6 +250,9 @@
      </item>
      <item row="3" column="0" colspan="4">
       <widget class="QListWidget" name="BGOItemsList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="lineWidth">
         <number>1</number>
        </property>
@@ -436,6 +442,9 @@
      </item>
      <item row="3" column="0" colspan="4">
       <widget class="QListWidget" name="NPCItemsList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="lineWidth">
         <number>1</number>
        </property>
