@@ -200,16 +200,17 @@ void LVL_Npc::transformTo_x(long id)
 
     if(data.generator)
     {
-        isGenerator=true;
-        generatorDirection=data.generator_direct;
-        generatorTimeLeft= 1;
-        generatorType    = data.generator_type;
+        m_isGenerator = true;
+        generatorDirection = data.generator_direct;
+        generatorTimeLeft  = 1;
+        generatorType      = data.generator_type;
 
-        deActivatable    = true;
-        activationTimeout= 150;
+        deActivatable     = true;
+        activationTimeout = 150;
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
-        disableBlockCollision=true;
+        m_contactPadding = 1.0;
+        m_disableBlockCollision = true;
         setGravityScale(0.0f);
         return;
     }
@@ -218,7 +219,7 @@ void LVL_Npc::transformTo_x(long id)
     offSectionDeactivate = setup->setup.deactivate_off_room;
     activationTimeout= setup->setup.deactivationDelay;
 
-    disableBlockCollision=!setup->setup.collision_with_blocks;
+    m_disableBlockCollision=!setup->setup.collision_with_blocks;
     disableNpcCollision  = setup->setup.no_npc_collisions;
 
     m_contactPadding = setup->setup.contact_padding;

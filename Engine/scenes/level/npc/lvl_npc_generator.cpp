@@ -21,7 +21,7 @@
 
 void LVL_Npc::updateGenerator(float tickTime)
 {
-    if(!isGenerator) return;
+    if(!m_isGenerator) return;
     generatorTimeLeft-=tickTime;
     if(generatorTimeLeft<=0)
     {

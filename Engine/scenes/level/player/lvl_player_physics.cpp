@@ -154,7 +154,7 @@ void LVL_Player::processContacts()
                 }
                 if(!npc->enablePlayerCollision) break;
                 if(npc->data.friendly) break;
-                if(npc->isGenerator) break;
+                if(npc->m_isGenerator) break;
                 if(npc->setup->setup.climbable)
                 {
                     bool set=climbable_map.isEmpty();
@@ -425,12 +425,6 @@ void LVL_Player::preCollision()
 
     climbable_map.clear();
     environments_map.clear();
-
-    LEGACY_collided_top.clear();
-    LEGACY_collided_left.clear();
-    LEGACY_collided_right.clear();
-    LEGACY_collided_bottom.clear();
-    LEGACY_collided_center.clear();
 }
 
 void LVL_Player::postCollision()
