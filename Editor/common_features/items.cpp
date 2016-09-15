@@ -194,7 +194,7 @@ int Items::getItemType(QString type)
     if(type.toLower()=="level")
         target=ItemTypes::WLD_Level;
     else
-    if(type.toLower()=="musicbix")
+    if(type.toLower()=="musicbox")
         target=ItemTypes::WLD_MusicBox;
     else
     {
