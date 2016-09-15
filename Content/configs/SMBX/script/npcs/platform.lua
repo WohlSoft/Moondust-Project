@@ -31,17 +31,24 @@ function platform:initProps()
     self.state = self.npc_obj.direction
     self.npc_obj.speedX = 0
     self.npc_obj.speedY = 0
+    self.wasSpawned = false
+    self.npc_obj.gravity = 0
     if(self.state == ST_ON)then
-        self.npc_obj.gravity = 1
-    else
-        self.npc_obj.gravity = 0
-    end    
+        if(self.npc_obj.spawnedGenType ~= BaseNPC.SPAWN_APPEAR) then
+            self.wasSpawned = true
+                if self.npc_obj.spawnedGenDirection == BaseNPC.SPAWN_UP      then self.direction = DIR_UP
+            elseif self.npc_obj.spawnedGenDirection == BaseNPC.SPAWN_LEFT    then self.direction = DIR_LEFT
+            elseif self.npc_obj.spawnedGenDirection == BaseNPC.SPAWN_RIGHT   then self.direction = DIR_RIGHT
+            elseif self.npc_obj.spawnedGenDirection == BaseNPC.SPAWN_DOWN    then self.direction = DIR_DOWN
+            end
+        end
+    end
     self.found = false
     self.needCorrection = false
     self.lead = nil
     self.oldSpeedX = 0
     self.oldSpeedY = 0
-    self.check_time_left = CHECK_DELAY
+    self.check_time_left = 0
     self.watchForMaxHeight = true --Until path will be catched
     self.maxHeight = self.npc_obj.y
     self.RecentMaxHeight = self.npc_obj.y
@@ -249,7 +256,8 @@ end
 
 function platform:onLoop(tickTime)
     if(self.state==ST_ON)then
-        if(self.found)then
+        if(self.found or self.wasSpawned)then
+            self.wasSpawned = false
             if(self.needCorrection)then
                 self.npc_obj.speedX = self.oldSpeedX
                 self.npc_obj.speedY = self.oldSpeedY
@@ -503,7 +511,7 @@ function platform:onLoop(tickTime)
         if(self.contacts:detected())then
             local plrs = self.contacts:getPlayers()
             for K,Plr in pairs(plrs) do
-                if(Plr.bottom <= self.npc_obj.top and Plr.onGround)then
+                if(Plr.bottom == self.npc_obj.top and Plr.onGround)then
                     self.state=ST_ON
                 end                    
             end

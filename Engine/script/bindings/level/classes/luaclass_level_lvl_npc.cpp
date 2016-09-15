@@ -96,8 +96,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("transformTo", &LVL_Npc::transformTo)
             .def_readonly("transformedFromBlockID", &LVL_Npc::transformedFromBlockID)
             .def_readonly("transformedFromNpcID", &LVL_Npc::transformedFromNpcID)
-            .def_readonly("spawneGenType", &LVL_Npc::m_spawnedGeneratorType)
-            .def_readonly("spawneGenDirection", &LVL_Npc::m_spawnedGeneratorDirection)
+            .def_readonly("spawnedGenType", &LVL_Npc::m_spawnedGeneratorType)
+            .def_readonly("spawnedGenDirection", &LVL_Npc::m_spawnedGeneratorDirection)
 
             //Functions
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)

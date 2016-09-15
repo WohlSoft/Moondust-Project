@@ -114,6 +114,7 @@ void LVL_Npc::processContacts()
                 LVL_Player*plr = static_cast<LVL_Player*>(cEL);
                 assert(plr);
                 l_pushPlr(plr);
+                break;
             }
         case PGE_Phys_Object::LVLNPC:
             {

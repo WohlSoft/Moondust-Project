@@ -222,6 +222,7 @@ struct NpcSetup
     bool            collision_with_blocks; //    collision-blocks=1	; Enable collisions with blocks
     bool            gravity;       //    gravity=1		; Enable gravitation for this NPC
     bool            adhesion;      //    adhesion=0		; allows to NPC walking on wall and on celling
+    double          contact_padding;//  negative value will increase "contactable zone" (non-collidable contacts only)
 
 //    ;Events
     bool            deactivation;  //deactivate=1		; Deactivate on state offscreen > 4 sec ago

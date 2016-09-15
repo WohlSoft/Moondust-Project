@@ -1,0 +1,12 @@
+342:frames = 8: framestyle = 1: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: gfxoffsety = 2: score = 0: grabside = 1: nofireball = 1: nohurt = 1: speed = 1.8: cliffturn = 1
+343:frames = 8: framestyle = 1: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: gfxoffsety = 2: score = 0: grabside = 1: nofireball = 1: nohurt = 1: speed = 1.8: cliffturn = 1
+344:frames = 8: framestyle = 1: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: gfxoffsety = 2: score = 0: grabside = 1: nofireball = 1: nohurt = 1: speed = 1.8: cliffturn = 1
+345:frames = 8: framestyle = 1: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: gfxoffsety = 2: score = 0: grabside = 1: nofireball = 1: nohurt = 1: speed = 1.8: cliffturn = 1
+346:frames = 3: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: gfxsetx = 2: nofireball = 1: Noyoshi = 1: nogravity = 1: nohurt = 1: noblockcollision = 1
+347:frames = 1: framespeed = 8: width = 32: height = 32: gfxwidth = 32: gfxheight = 32: nohurt = 1: npcblock = 1
+348:frames = 1: framespeed = 8: framestyle = 1: width = 16: height = 16: gfxwidth = 16: gfxheight = 18: gfxoffsety = 2: speed = 1.2: score = 2: npcblock = 1
+349:frames = 4: framespeed = 8: width = 16: height = 16: gfxwidth = 16: gfxheight = 16: speed = 2: jumphurt = 1: nofireball = 1: Noyoshi = 1: nogravity = 1: noblockcollision = 1
+350:frames = 2: framestyle = 1: framespeed = 8: width = 32: height = 64: gfxwidth = 64: gfxheight = 64: gfxoffsety = 2: score = 3: npcblock = 1: nofireball = 1: Noyoshi = 1: nogravity = 1
+351:frames = 3: framespeed = 4: width = 4: height = 4: gfxoffsety = 14: gfxwidth = 32: gfxheight = 32: speed = 4: jumphurt = 1: nofireball = 1: Noyoshi = 1: nogravity = 1: noblockcollision = 1
+
+for more infomation, see the custom npc editor in smbx.exe

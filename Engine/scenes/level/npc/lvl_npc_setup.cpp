@@ -24,12 +24,12 @@
 
 bool LVL_Npc::isInited()
 {
-    return _isInited;
+    return m_isInited;
 }
 
 void LVL_Npc::init()
 {
-    if(_isInited) return;
+    if(m_isInited) return;
 
     phys_setup.gravityAccel=ConfigManager::g_setup_npc.phs_gravity_accel;
     phys_setup.max_vel_y=   ConfigManager::g_setup_npc.phs_max_fall_speed;
@@ -45,7 +45,7 @@ void LVL_Npc::init()
         }
     }
 
-    _isInited=true;
+    m_isInited=true;
     _scene->layers.registerItem(data.layer, this);
 
     m_momentum.saveOld();
@@ -134,7 +134,7 @@ void LVL_Npc::setDefaults()
 
 void LVL_Npc::transformTo_x(long id)
 {
-    if(_isInited)
+    if(m_isInited)
     {
         if(_npc_id==abs(id)) return;
         if(id<=0) return;
@@ -178,7 +178,7 @@ void LVL_Npc::transformTo_x(long id)
     warpFrameW = texture.frame_w;
     warpFrameH = texture.frame_h;
 
-    if(_isInited)
+    if(m_isInited)
     {
         double oldCX = m_momentum.centerX();
         double oldB = m_momentum.bottom();
@@ -221,6 +221,8 @@ void LVL_Npc::transformTo_x(long id)
     disableBlockCollision=!setup->setup.collision_with_blocks;
     disableNpcCollision  = setup->setup.no_npc_collisions;
 
+    m_contactPadding = setup->setup.contact_padding;
+
     frameSize.setSize(setup->setup.gfx_w, setup->setup.gfx_h);
     animator.construct(texture, *setup);
 
@@ -249,7 +251,7 @@ void LVL_Npc::transformTo_x(long id)
     if(data.friendly)
         m_blocked[2] = Block_NONE;
 
-    if(_isInited)
+    if(m_isInited)
     {
        int leftHealth=setup->setup.health-(setup->setup.health-health);
        health=(leftHealth>0)? leftHealth : 1;
@@ -258,7 +260,7 @@ void LVL_Npc::transformTo_x(long id)
     else
        health=(setup->setup.health>0)?setup->setup.health : 1;
 
-    if(_isInited)
+    if(m_isInited)
     {
         try{
             lua_onTransform(_npc_id);

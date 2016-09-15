@@ -229,6 +229,7 @@ public:
     bool    m_cliff;
     bool    m_onSlippery;
     /*************************************/
+    double  m_contactPadding;
     bool    m_moveLeft;
     bool    m_moveRight;
     SlopeState m_slopeFloor;
