@@ -135,12 +135,15 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
 
+    if(event->button() != Qt::LeftButton)
+        return;
+
     bool skip = m_ignoreRelease;
 
     m_ignoreMove    = false;
     m_ignoreRelease = false;
 
-    if((event->button() != Qt::LeftButton) || skip)
+    if(skip)
         return;
 
     m_mouseEnd = event->pos();
