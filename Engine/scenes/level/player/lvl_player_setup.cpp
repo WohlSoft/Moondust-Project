@@ -143,17 +143,10 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         x.stateID        = stateID;
         x._chsetup.state = stateID;
         _scene->getGameState()->setPlayerState(playerID, x);
-#ifdef OLD_COLLIDERS
-        _collideUnduck();
-#endif
+
         //Apply changed animation on character switchers and configure switches and filters
         _scene->character_switchers.refreshState();
 
-        #ifdef COLLIDE_DEBUG
-        //Freeze time to check out what happening at moment
-        //GlRenderer::makeShot();
-        //_scene->isTimeStopped=true;
-        #endif
         try{
             lua_onTransform(characterID, stateID);
         } catch (luabind::error& e) {

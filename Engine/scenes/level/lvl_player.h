@@ -69,27 +69,14 @@ class LVL_Player :
         void postCollision();
         void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
         bool preCollisionCheck(PGE_Phys_Object* body);
-        #ifdef OLD_COLLIDERS
-        void LEGACY_updateCollisions();
-        void LEGACY_detectCollisions(PGE_Phys_Object *collided);
-        #endif
+
         bool forceCollideCenter;//!< collide with invizible blocks at center
         float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
         /*****************NPC's and blocks******************/
         typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
-        QHash<int, PGE_Phys_Object*> LEGACY_collided_top;
-        QHash<int, PGE_Phys_Object*> LEGACY_collided_left;
-        QHash<int, PGE_Phys_Object*> LEGACY_collided_right;
-        QHash<int, PGE_Phys_Object*> LEGACY_collided_bottom;
-        QHash<int, PGE_Phys_Object*> LEGACY_collided_center;
         LVL_Npc *  collided_talkable_npc;
         bool _stucked;
-
-        #ifdef OLD_COLLIDERS
-        void updateSpeedAddingStack();
-        void applyCorrectionToSA_stack(double offsetX, double offsetY);
-        #endif
         /***************************************************/
 
         int playerID;
@@ -245,11 +232,6 @@ class LVL_Player :
         bool duck_allow;
         bool ducking;
         void setDuck(bool duck);
-private:
-        #ifdef OLD_COLLIDERS
-        void _collideUnduck();//!< Re-checks collisions after player disabled duck.
-                                                    //!< Pre-velocity needs if you call "setCharacter" function before iterate physics
-        #endif
         /******************Duck*************************/
 public:
         void render(double camX, double camY);

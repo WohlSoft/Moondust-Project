@@ -122,7 +122,7 @@ void LVL_Npc::processContacts()
                 assert(npc);
                 if(npc->killed) break;
                 if(npc->data.friendly) break;
-                if(npc->isGenerator) break;
+                if(npc->m_isGenerator) break;
                 if(!npc->isActivated) break;
                 l_pushNpc(npc);
                 break;
@@ -165,7 +165,7 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
     {
         case LVLBlock:
         {
-            if(this->disableBlockCollision)
+            if(this->m_disableBlockCollision)
                 return true;
             LVL_Block* blk = static_cast<LVL_Block*>(body);
             if(blk->m_destroyed)
@@ -174,10 +174,21 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
         break;
         case LVLNPC:
         {
-            if(this->disableBlockCollision)
+            if(this->m_disableBlockCollision)
                 return true;
         }
         default:;
     }
     return false;
+}
+
+
+bool LVL_Npc::onCliff()
+{
+    return m_cliff;
+}
+
+bool LVL_Npc::onGround()
+{
+    return m_stand;
 }

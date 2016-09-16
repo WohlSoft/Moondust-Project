@@ -4,8 +4,7 @@
 #include <QWidget>
 #include <QList>
 #include <QRect>
-#include <QMouseEvent>
-#include <QPaintEvent>
+#include <QHash>
 
 class TheScene;
 
@@ -50,6 +49,19 @@ public:
             return false;
         return true;
     }
+
+    bool isTouches(QRect &rect)
+    {
+        if(m_posRect.left() > rect.right())
+            return false;
+        if(m_posRect.right() < rect.left())
+            return false;
+        if(m_posRect.top() > rect.bottom())
+            return false;
+        if(m_posRect.bottom() < rect.top())
+            return false;
+        return true;
+    }
 };
 
 class TheScene : public QWidget
@@ -66,16 +78,25 @@ public:
     }
 
     void clearSelection();
+    void select(Item& item);
+    void deselect(Item& item);
+    void toggleselect(Item& item);
 
     QList<Item>  m_items;
-    QList<Item*> m_selectedItems;
-    QPoint      m_mouseOld;
-
+    typedef QHash<intptr_t, Item*> SelectionMap;
+    SelectionMap m_selectedItems;
+    QPoint       m_mouseOld;
+    QPoint       m_mouseBegin;
+    QPoint       m_mouseEnd;
+    bool         m_ignoreMove;
+    bool         m_ignoreRelease;
+    bool         m_rectSelect;
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // THESCENE_H

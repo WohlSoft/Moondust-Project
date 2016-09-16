@@ -35,7 +35,6 @@
 #include <audio/pge_audio.h>
 
 #include <QVector>
-#include "../collision_checks.h"
 
 PGE_physBody::PGE_physBody() :
     /*****Physical engine locals*******/
@@ -1693,9 +1692,4 @@ void PGE_Phys_Object::updateCollisions()
     l_clifCheck.clear();
     l_toBump.clear();
 }
-
-#ifdef OLD_COLLIDERS
-void PGE_Phys_Object::LEGACY_detectCollisions(PGE_Phys_Object *)
-{}
-#endif
 
