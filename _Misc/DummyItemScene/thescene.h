@@ -82,6 +82,8 @@ public:
     void deselect(Item& item);
     void toggleselect(Item& item);
 
+    void moveSelection(int deltaX, int deltaY);
+
     QList<Item>  m_items;
     typedef QHash<intptr_t, Item*> SelectionMap;
     SelectionMap m_selectedItems;

@@ -47,6 +47,18 @@ void TheScene::toggleselect(Item &item)
         m_selectedItems.remove(intptr_t(&item));
 }
 
+void TheScene::moveSelection(int deltaX, int deltaY)
+{
+    for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
+    {
+        QRect&r = it.value()->m_posRect;
+        int x= r.x();
+        int y= r.y();
+        r.moveTo(x+deltaX, y+deltaY);
+    }
+    repaint();
+}
+
 void TheScene::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() != Qt::LeftButton)
@@ -196,12 +208,26 @@ void TheScene::paintEvent(QPaintEvent */*event*/)
 
 void TheScene::keyReleaseEvent(QKeyEvent *event)
 {
+    bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
+
     switch(event->key())
     {
     case Qt::Key_Escape:
         clearSelection();
         m_rectSelect=false;
         repaint();
+        break;
+    case Qt::Key_Left:
+        if(isCtrl) moveSelection(-1, 0);
+        break;
+    case Qt::Key_Right:
+        if(isCtrl) moveSelection(1, 0);
+        break;
+    case Qt::Key_Up:
+        if(isCtrl) moveSelection(0, -1);
+        break;
+    case Qt::Key_Down:
+        if(isCtrl) moveSelection(0, 1);
         break;
     }
 }
