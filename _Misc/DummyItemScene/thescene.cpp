@@ -206,17 +206,11 @@ void TheScene::paintEvent(QPaintEvent */*event*/)
     p.end();
 }
 
-void TheScene::keyReleaseEvent(QKeyEvent *event)
+void TheScene::keyPressEvent(QKeyEvent *event)
 {
     bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
-
     switch(event->key())
     {
-    case Qt::Key_Escape:
-        clearSelection();
-        m_rectSelect=false;
-        repaint();
-        break;
     case Qt::Key_Left:
         if(isCtrl) moveSelection(-1, 0);
         break;
@@ -228,6 +222,18 @@ void TheScene::keyReleaseEvent(QKeyEvent *event)
         break;
     case Qt::Key_Down:
         if(isCtrl) moveSelection(0, 1);
+        break;
+    }
+}
+
+void TheScene::keyReleaseEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Escape:
+        clearSelection();
+        m_rectSelect=false;
+        repaint();
         break;
     }
 }
