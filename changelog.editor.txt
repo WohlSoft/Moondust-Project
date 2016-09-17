@@ -1,6 +1,8 @@
 Editor 0.3.1.11-patch-1
 - Added draggable splitter in the events toolbox
 - Added ability to define fixed size for exportable section piece
+- Fixed crash, caused by very small pictures (1 px height)
+- Added preview counter of coins in the blocks
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

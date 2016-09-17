@@ -71,6 +71,7 @@ public:
 private:
     QGraphicsItemGroup * m_grp;
     QGraphicsItem *      m_includedNPC;
+    QGraphicsPixmapItem* m_coinCounter;
     QPixmap              m_currentImage;
     bool                 m_sizable;
     void drawSizableBlock(int w, int h, QPixmap srcimg);
