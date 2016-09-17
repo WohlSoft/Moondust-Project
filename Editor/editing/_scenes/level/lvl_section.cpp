@@ -279,6 +279,8 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 
 bool LvlScene::isInSection(long x, long y, int sectionIndex, int padding)
 {
+    assert(sectionIndex >= 0);
+    assert(sectionIndex < m_data->sections.size());
     return (x >= m_data->sections[sectionIndex].size_left-padding) &&
         (x <= m_data->sections[sectionIndex].size_right+padding) &&
         (y >= m_data->sections[sectionIndex].size_top-padding) &&
@@ -288,7 +290,20 @@ bool LvlScene::isInSection(long x, long y, int sectionIndex, int padding)
 
 bool LvlScene::isInSection(long x, long y, int width, int height, int sectionIndex, int padding)
 {
-    return isInSection(x, y, sectionIndex, padding) && isInSection(x+width, y+height, sectionIndex, padding);
+    assert(sectionIndex >= 0);
+    assert(sectionIndex < m_data->sections.size());
+    LevelSection& sct = m_data->sections[sectionIndex];
+    int r = x+width;
+    int b = y+height;
+    if(r < sct.size_left - padding)
+        return false;
+    if(x > sct.size_right + padding)
+        return false;
+    if(b < sct.size_top - padding)
+        return false;
+    if(y > sct.size_bottom + padding)
+        return false;
+    return true;
 }
 
 

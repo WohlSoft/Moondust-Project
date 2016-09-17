@@ -4,6 +4,7 @@ Editor 0.3.1.11-patch-1
 - Fixed crash, caused by very small pictures (1 px height)
 - Added preview counter of coins in the blocks
 - Added direction arrows for a warp points of pipe type
+- Fixed in-bounds of section detection used by flood-fill algorithm
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
