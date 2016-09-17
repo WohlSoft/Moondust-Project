@@ -198,6 +198,20 @@ void Render_SW_SDL::getScreenPixels(int x, int y, int w, int h, unsigned char *p
                           w*3 + (w%4) );
 }
 
+void Render_SW_SDL::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels)
+{
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    SDL_RenderReadPixels( m_gRenderer,
+                          &rect,
+                          SDL_PIXELFORMAT_RGBA8888,
+                          pixels,
+                          w*3 + (w%4) );
+}
+
 void Render_SW_SDL::setViewport(int x, int y, int w, int h)
 {
     SDL_Rect topLeftViewport;

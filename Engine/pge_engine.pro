@@ -434,7 +434,8 @@ HEADERS  += \
     script/bindings/level/classes/luaclass_level_playerstate.h \
     script/bindings/core/classes/luaclass_core_scene_effects.h \
     common_features/pge_application.h \
-    scenes/level/base/lvl_base_physics.h
+    scenes/level/base/lvl_base_physics.h \
+    common_features/gif-h/gif.h
 
 FORMS    += \
     data_configs/select_config.ui

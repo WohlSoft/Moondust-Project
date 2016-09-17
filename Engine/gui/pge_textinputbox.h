@@ -40,20 +40,20 @@ class PGE_TextInputBox : public PGE_BoxBase
 public:
     PGE_TextInputBox();
     PGE_TextInputBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     PGE_TextInputBox(const PGE_TextInputBox &mb);
     ~PGE_TextInputBox();
 
-    void setBoxSize(float _Width, float _Height, float _padding);
-    void update(float ticks);
+    void setBoxSize(double _Width, double _Height, double _padding);
+    void update(double ticktime);
     void render();
     void restart();
     bool isRunning();
     void exec();
 
-    void processLoader(float ticks);
-    void processBox(float tickTime);
-    void processUnLoader(float ticks);
+    void processLoader(double ticks);
+    void processBox(double tickTime);
+    void processUnLoader(double ticks);
 
     void setInputText(QString text);
     QString inputText();
@@ -69,7 +69,7 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     int     _page;
     bool    running;
     int     fontID;
@@ -82,17 +82,17 @@ private:
     Sint32 selection_len;
     int _text_input_h_offset;
 
-    bool  blink_shown;
-    float blink_timeout;
+    bool   blink_shown;
+    double blink_timeout;
 
     controller_keys keys;
 
     msgType type;
     PGE_Rect _sizeRect;
     QString message;
-    float width;
-    float height;
-    float padding;
+    double width;
+    double height;
+    double padding;
     QColor bg_color;
     void updateControllers();
 };

@@ -19,7 +19,7 @@
 #include "pge_menubox.h"
 
 PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
-                       PGE_Point boxCenterPos, float _padding, QString texture)
+                       PGE_Point boxCenterPos, double _padding, QString texture)
     : PGE_MenuBoxBase(_parentScene)
 {
     setParentScene(_parentScene);

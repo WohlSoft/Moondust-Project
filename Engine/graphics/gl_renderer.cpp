@@ -28,6 +28,7 @@
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/gif-h/gif.h>
 #include <gui/pge_msgbox.h>
 
 #define SDL_MAIN_HANDLED
@@ -1005,6 +1006,97 @@ int GlRenderer::makeShot_action(void *_pixels)
     return 0;
 }
 
+
+static struct gifRecord
+{
+    bool        enabled;
+    GifWriter   writer;
+    SDL_Thread* worker;
+    SDL_mutex*  mutex;
+} g_gif{false, {nullptr, nullptr, true}, 0, 0};
+
+bool GlRenderer::recordInProcess()
+{
+    return g_gif.enabled;
+}
+
+void GlRenderer::toggleRecorder()
+{
+    if(!g_gif.enabled)
+    {
+        QDate date = QDate::currentDate();
+        QTime time = QTime::currentTime();
+        QString saveTo = QString("%1Scr_%2_%3_%4_%5_%6_%7_%8.gif").arg(ScreenshotPath)
+                .arg(date.year()).arg(date.month()).arg(date.day())
+                .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
+
+        if(GifBegin(&g_gif.writer, saveTo.toUtf8().data(), window_w, window_h, 3, 8, false))
+        {
+            g_gif.enabled = true;
+            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+        }
+    } else {
+        GifEnd(&g_gif.writer);
+        g_gif.enabled = false;
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+    }
+}
+
+void GlRenderer::processRecorder(double /*ticktime*/)
+{
+    if(g_gif.enabled)
+    {
+        static bool skip=true;
+        skip = !skip;
+        if(skip) return;
+
+        // Make the BYTE array, factor of 3 because it's RBG.
+        int w, h;
+        SDL_GetWindowSize(PGE_Window::window, &w, &h);
+        if((w==0) || (h==0))
+        {
+            PGE_Audio::playSoundByRole(obj_sound_role::WeaponFire);
+            return;
+        }
+
+        w = w-offset_x*2;
+        h = h-offset_y*2;
+
+        uchar* pixels = new uchar[4*w*h];
+        g_renderer->getScreenPixelsRGBA(offset_x, offset_y, w, h, pixels);
+
+        FIBITMAP* shotImg = FreeImage_ConvertFromRawBitsEx(false, (BYTE*)pixels, FIT_BITMAP, w, h,
+                                         4*w, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, true);
+
+        if((w != window_w)||(h != window_h))
+        {
+            FIBITMAP* temp;
+            temp = FreeImage_Rescale(shotImg, window_w, window_h, FILTER_BOX);
+            if(!temp) {
+                FreeImage_Unload(shotImg);
+                delete[] pixels;
+                pixels=nullptr;
+                return;
+            }
+            FreeImage_Unload(shotImg);
+            shotImg = temp;
+        }
+
+        if(FreeImage_HasPixels(shotImg) == FALSE) {
+            qWarning() <<"Can't save gif frame: no pixel data!";
+        }
+
+        uint8_t* img = FreeImage_GetBits(shotImg);
+        GifWriteFrame(&g_gif.writer, img, window_w, window_h, 4/*uint32_t((ticktime)/10.0)*/, 8, false);
+
+        FreeImage_Unload(shotImg);
+        delete[] pixels;
+        pixels=nullptr;
+    }
+}
+
+
+
 bool GlRenderer::ready()
 {
     return _isReady;
@@ -1018,6 +1110,7 @@ void GlRenderer::flush()
 void GlRenderer::repaint()
 {
     g_renderer->repaint();
+    GlRenderer::processRecorder(65.f);
 }
 
 void GlRenderer::setClearColor(float r, float g, float b, float a)

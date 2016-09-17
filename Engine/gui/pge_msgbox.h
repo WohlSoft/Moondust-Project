@@ -40,20 +40,20 @@ class PGE_MsgBox : public PGE_BoxBase
 public:
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
-    void setBoxSize(float _Width, float _Height, float _padding);
-    void update(float ticks);
+    void setBoxSize(double _Width, double _Height, double _padding);
+    void update(double ticks);
     void render();
     void restart();
     bool isRunning();
     void exec();
 
-    void processLoader(float ticks);
-    void processBox(float);
-    void processUnLoader(float ticks);
+    void processLoader(double ticks);
+    void processBox(double);
+    void processUnLoader(double ticks);
 
     static void info(QString msg);
     //static void info(std::string msg);
@@ -66,7 +66,7 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     int     _page;
     bool    running;
     int     fontID;
@@ -78,9 +78,9 @@ private:
     msgType type;
     PGE_Rect _sizeRect;
     QString message;
-    float width;
-    float height;
-    float padding;
+    double width;
+    double height;
+    double padding;
     QColor bg_color;
     void updateControllers();
 };

@@ -44,7 +44,7 @@ PGE_MsgBox::PGE_MsgBox()
 
 PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type,
                        PGE_Point boxCenterPos,
-                       float _padding, QString texture)
+                       double _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
     construct(msg,_type, boxCenterPos, _padding, texture);
@@ -71,7 +71,7 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
 }
 
 
-void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos, float _padding, QString texture)
+void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos, double _padding, QString texture)
 {
     loadTexture(texture);
 
@@ -126,18 +126,18 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos
 PGE_MsgBox::~PGE_MsgBox()
 {}
 
-void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
+void PGE_MsgBox::setBoxSize(double _Width, double _Height, double _padding)
 {
     width = _Width;
     height = _Height;
     padding = _padding;
 }
 
-void PGE_MsgBox::update(float ticks)
+void PGE_MsgBox::update(double ticks)
 {
     switch(_page)
     {
-        case 0: setFade(10, 1.0f, 0.05f); _page++; break;
+        case 0: setFade(10, 1.0, 0.05); _page++; break;
         case 1: processLoader(ticks); break;
         case 2: processBox(ticks); break;
         case 3: processUnLoader(ticks); break;
@@ -222,7 +222,7 @@ void PGE_MsgBox::exec()
     }
 }
 
-void PGE_MsgBox::processLoader(float ticks)
+void PGE_MsgBox::processLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {
@@ -233,10 +233,10 @@ void PGE_MsgBox::processLoader(float ticks)
     updateControllers();
     tickFader(ticks);
 
-    if(fader_opacity>=1.0f) _page++;
+    if(fader_opacity>=1.0) _page++;
 }
 
-void PGE_MsgBox::processBox(float)
+void PGE_MsgBox::processBox(double)
 {
 //    #ifndef __APPLE__
 //    if(g_AppSettings.interprocessing)
@@ -299,7 +299,7 @@ void PGE_MsgBox::processBox(float)
 
 
 
-void PGE_MsgBox::processUnLoader(float ticks)
+void PGE_MsgBox::processUnLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {
@@ -310,7 +310,7 @@ void PGE_MsgBox::processUnLoader(float ticks)
 
     updateControllers();
     tickFader(ticks);
-    if(fader_opacity<=0.0f) _page++;
+    if(fader_opacity <= 0.0) _page++;
 }
 
 
@@ -363,10 +363,6 @@ void PGE_MsgBox::info(QString msg)
         QMessageBox::information(NULL, qtTrId("MSGBOX_INFO"), msg, QMessageBox::Ok);
     }
 }
-//void PGE_MsgBox::info(std::string msg)
-//{
-//    PGE_MsgBox::info(QString::fromStdString(msg));
-//}
 
 void PGE_MsgBox::warn(QString msg)
 {
@@ -382,11 +378,6 @@ void PGE_MsgBox::warn(QString msg)
         QMessageBox::warning(NULL, qtTrId("MSGBOX_WARN"), msg, QMessageBox::Ok);
     }
 }
-//void PGE_MsgBox::warn(std::string msg)
-//{
-//    PGE_MsgBox::warn(QString::fromStdString(msg));
-//}
-
 
 void PGE_MsgBox::error(QString msg)
 {
@@ -402,11 +393,6 @@ void PGE_MsgBox::error(QString msg)
         QMessageBox::critical(NULL, qtTrId("MSGBOX_ERROR"), msg, QMessageBox::Ok);
     }
 }
-//void PGE_MsgBox::error(std::string msg)
-//{
-//    PGE_MsgBox::error(QString::fromStdString(msg));
-//}
-
 
 void PGE_MsgBox::fatal(QString msg)
 {
@@ -422,8 +408,4 @@ void PGE_MsgBox::fatal(QString msg)
         QMessageBox::critical(NULL, qtTrId("MSGBOX_FATAL"), msg, QMessageBox::Ok);
     }
 }
-//void PGE_MsgBox::fatal(std::string msg)
-//{
-//    PGE_MsgBox::fatal(QString::fromStdString(msg));
-//}
 

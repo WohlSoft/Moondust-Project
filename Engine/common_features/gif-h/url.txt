@@ -1,0 +1,4 @@
+Project gotten from here:
+
+https://github.com/ginsweater/gif-h
+
