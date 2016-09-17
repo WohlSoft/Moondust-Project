@@ -89,6 +89,9 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     m_frameDelay=fspeed;
     m_framesCount = framesq;
 
+    if(m_framesCount <= 0.0)
+        m_framesCount = 1.0;
+
     setFrame(m_frameFirst);
 }
 

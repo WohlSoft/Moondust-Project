@@ -130,6 +130,9 @@ void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int
     if( framesCount > spriteHeight)
         framesCount = frameHeight;
 
+    if(framesCount <= 0) //Avoid SIGFPE if so small image while so much frames
+        framesCount = 1;
+
     if(animated)
         frameHeight = qRound(qreal(spriteHeight/framesCount));
     else
