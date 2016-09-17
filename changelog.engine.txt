@@ -1,3 +1,7 @@
+0.2.6-patch-1
+- Fixed some NPC-AI API properties
+- Added GIF recorder (working everywhere, by F11 key press)
+
 0.2.6
 - Improved testing of the renderers support to avoid accidental running of the unsupported renderer
 - Added software renderer support for video cards which are not supports OpenGL

@@ -24,6 +24,7 @@
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
+#include <common_features/graphics_funcs.h>
 #include <PGE_File_Formats/file_formats.h>
 
 #include "../lvl_history_manager.h"
@@ -50,13 +51,17 @@ void ItemBlock::construct()
 {
     m_gridSize=32;
     setData(ITEM_TYPE, "Block");
+    m_includedNPC = nullptr;
+    m_coinCounter = nullptr;
+    m_grp = nullptr;
 }
 
 
 ItemBlock::~ItemBlock()
 {
-    if(m_includedNPC!=NULL) delete m_includedNPC;
-    if(m_grp!=NULL) delete m_grp;
+    if(m_includedNPC!=nullptr) delete m_includedNPC;
+    if(m_coinCounter!=nullptr) delete m_coinCounter;
+    if(m_grp!=nullptr) delete m_grp;
     m_scene->unregisterElement(this);
 }
 
@@ -451,14 +456,22 @@ void ItemBlock::setLayer(QString layer)
 
 void ItemBlock::setIncludedNPC(int npcID, bool init)
 {
-    if(m_includedNPC!=NULL)
+    if(m_includedNPC != nullptr)
     {
         m_grp->removeFromGroup(m_includedNPC);
         m_scene->removeItem(m_includedNPC);
         delete m_includedNPC;
-        m_includedNPC = NULL;
+        m_includedNPC = nullptr;
     }
-    if(npcID==0)
+    if(m_coinCounter != nullptr)
+    {
+        m_grp->removeFromGroup(m_coinCounter);
+        m_scene->removeItem(m_coinCounter);
+        delete m_coinCounter;
+        m_coinCounter = nullptr;
+    }
+
+    if(npcID == 0)
     {
         if(!init) m_data.npc_id = 0;
         if(!init) arrayApply();
@@ -467,7 +480,6 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 
     QPixmap npcImg = QPixmap( m_scene->getNPCimg( ((npcID > 0)? (npcID) : m_scene->m_configs->marker_npc.coin_in_block ) ) );
     m_includedNPC = m_scene->addPixmap( npcImg );
-
     m_includedNPC->setPos(
                 (
                     m_data.x+((m_data.w-npcImg.width())/2)
@@ -478,6 +490,15 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
     m_includedNPC->setZValue(m_scene->Z_Block + 10);
     m_includedNPC->setOpacity(qreal(0.6));
     m_grp->addToGroup(m_includedNPC);
+
+    if(npcID < 0)
+    {
+        m_coinCounter = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(abs(npcID)));
+        m_coinCounter->setPos(x(), y());
+        m_coinCounter->setOpacity(1.0);
+        m_coinCounter->setZValue(m_scene->Z_Block + 11);
+        m_grp->addToGroup(m_coinCounter);
+    }
 
     if(!init) m_data.npc_id = npcID;
     if(!init) arrayApply();
@@ -712,7 +733,8 @@ void ItemBlock::setScenePoint(LvlScene *theScene)
 {
     LvlBaseItem::setScenePoint(theScene);
     m_grp = new QGraphicsItemGroup(this);
-    m_includedNPC = NULL;
+    m_includedNPC = nullptr;
+    m_coinCounter = nullptr;
 }
 
 bool ItemBlock::itemTypeIsLocked()
