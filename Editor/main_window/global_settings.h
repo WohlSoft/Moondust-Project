@@ -30,6 +30,8 @@ struct EditingSettings
     bool animationEnabled;
     bool collisionsEnabled;
     bool grid_snap;
+    bool grid_override;
+    QSize customGrid;
     bool grid_show;
     //World map only
     bool semiTransparentPaths;

@@ -210,7 +210,7 @@ WldScene::~WldScene()
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    if(!opts.grid_show) return;
+    if(!m_opts.grid_show) return;
 
     int gridSize=m_configs->default_grid;
     qreal left = int(rect.left()) - (int(rect.left()) % gridSize);

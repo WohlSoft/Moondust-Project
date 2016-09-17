@@ -174,6 +174,33 @@ void MainWindow::setUiDefults()
      addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
 #endif
 
+    {
+        QAction* action = ui->menuSetGridSize->addAction(tr("Default by item"));
+        action->setData(0);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+        ui->menuSetGridSize->addSeparator();
+
+        action = ui->menuSetGridSize->addAction("8 x 8");
+        action->setData(8);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction("16 x 16");
+        action->setData(16);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction("32 x 32");
+        action->setData(32);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction("64 x 64");
+        action->setData(64);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction(tr("Custom..."));
+        action->setData(-1);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+    }
+
 
 
     ui->menuView->setEnabled(false);

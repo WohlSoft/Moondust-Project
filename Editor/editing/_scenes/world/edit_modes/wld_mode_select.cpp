@@ -179,7 +179,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         //Only if collision ckecking enabled
         if(!s->m_pastingMode)
         {
-            if(s->opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
+            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
             {
                 collisionPassed = false;
                 s->returnItemBackGroup(selectedList);
@@ -193,7 +193,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         }
 
 
-        if((collisionPassed) || (!s->opts.collisionsEnabled))
+        if((collisionPassed) || (!s->m_opts.collisionsEnabled))
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin();
              it != selectedList.end(); it++)
         { ////////////////////////SECOND FETCH///////////////////////

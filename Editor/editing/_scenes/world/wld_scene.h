@@ -123,7 +123,7 @@ public:
 
     // ///////////////////Miscellaneous////////////////////////
     public:
-        EditingSettings opts;
+        EditingSettings m_opts;
 
         //! Returns current position of viewport
         QPoint  getViewportPos();

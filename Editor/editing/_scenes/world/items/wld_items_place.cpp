@@ -118,7 +118,7 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
     ItemPath *PathItem = new ItemPath(this);
     PathItem->setPathData(path, &mergedSet, &animator);
 
-    PathItem->setOpacity(opts.semiTransparentPaths ? 0.5 : 1);
+    PathItem->setOpacity(m_opts.semiTransparentPaths ? 0.5 : 1);
 
     PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockPath));
     PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!m_lockPath));

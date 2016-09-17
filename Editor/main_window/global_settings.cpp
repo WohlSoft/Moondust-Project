@@ -23,6 +23,9 @@ EditingSettings::EditingSettings()
     animationEnabled=true;
     collisionsEnabled=true;
     grid_snap=true;
+    grid_override=false;
+    customGrid.setWidth(0);
+    customGrid.setHeight(0);
     grid_show=false;
     semiTransparentPaths=false;
 }

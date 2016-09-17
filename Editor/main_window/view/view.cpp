@@ -21,18 +21,23 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <QInputDialog>
 
 // //////////////////////////////////////////////////////////////
 void MainWindow::on_actionGridEn_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->m_opts.grid_snap = checked;
+        LevelEdit *e = activeLvlEditWin();
+        assert(e);
+        e->scene->m_opts.grid_snap = checked;
     }
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->scene->opts.grid_snap = checked;
+        WorldEdit *e = activeWldEditWin();
+        assert(e);
+        e->scene->m_opts.grid_snap = checked;
     }
 }
 
@@ -42,14 +47,56 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
     GlobalSettings::LvlOpts.grid_show = checked;
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->m_opts.grid_show = checked;
-       activeLvlEditWin()->scene->update();
+        LevelEdit *e = activeLvlEditWin();
+        assert(e);
+        e->scene->m_opts.grid_show = checked;
+        e->scene->update();
     }
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->scene->opts.grid_show = checked;
-       activeWldEditWin()->scene->update();
+        WorldEdit *e = activeWldEditWin();
+        assert(e);
+        e->scene->m_opts.grid_show = checked;
+        e->scene->update();
+    }
+}
+
+void MainWindow::customGrid(bool)
+{
+    QAction* action = (QAction*)sender();
+    int gridSize = action->data().toInt();
+
+    GlobalSettings::LvlOpts.grid_override = (gridSize != 0);
+    if(gridSize != 0)
+    {
+        if(gridSize == -1)
+        {
+            bool ok=0;
+            gridSize = QInputDialog::getInt(this,
+                                            tr("Custom align grid size"),
+                                            tr("Please enter align grid size:"),
+                                            32, 0, 2147483647, 1, &ok);
+            if(!ok) return;
+        }
+        GlobalSettings::LvlOpts.customGrid.setWidth(gridSize);
+        GlobalSettings::LvlOpts.customGrid.setHeight(gridSize);
+    }
+
+    if (activeChildWindow()==1)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        assert(e);
+        e->scene->m_opts.grid_override = GlobalSettings::LvlOpts.grid_override;
+        e->scene->m_opts.customGrid = GlobalSettings::LvlOpts.customGrid;
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+        WorldEdit *e = activeWldEditWin();
+        assert(e);
+        e->scene->m_opts.grid_override = GlobalSettings::LvlOpts.grid_override;
+        e->scene->m_opts.customGrid = GlobalSettings::LvlOpts.customGrid;
     }
 }
 
@@ -57,7 +104,7 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
     GlobalSettings::LvlOpts.animationEnabled = checked;
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
         LevelEdit *e=activeLvlEditWin(); if(!e) return;
         LvlScene  *s=e->scene; if(!s) return;
@@ -68,9 +115,9 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
         s->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
     }
     else
-    if (activeChildWindow()==3)
+    if(activeChildWindow() == 3)
     {
-        activeWldEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        activeWldEditWin()->scene->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
         if(GlobalSettings::LvlOpts.animationEnabled)
         {
             activeWldEditWin()->scene->startAnimation();
@@ -91,7 +138,7 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
     else
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
+        activeWldEditWin()->scene->m_opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
 
 }
@@ -114,7 +161,7 @@ void MainWindow::on_actionSemi_transparent_paths_triggered(bool checked)
     GlobalSettings::LvlOpts.semiTransparentPaths = checked;
     if(activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->opts.semiTransparentPaths = GlobalSettings::LvlOpts.semiTransparentPaths;
+        activeWldEditWin()->scene->m_opts.semiTransparentPaths = GlobalSettings::LvlOpts.semiTransparentPaths;
         activeWldEditWin()->scene->setSemiTransparentPaths(GlobalSettings::LvlOpts.semiTransparentPaths);
     }
 

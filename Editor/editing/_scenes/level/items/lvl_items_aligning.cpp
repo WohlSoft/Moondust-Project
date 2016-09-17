@@ -27,8 +27,12 @@
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
-    if((m_opts.grid_snap)&&(gridSize>0))
+    if( (m_opts.grid_snap) && (gridSize>0) )
+    {
+        if(m_opts.grid_override)
+            gridSize = m_opts.customGrid.width();
         return Grid::applyGrid(source, gridSize, gridOffset);
+    }
     else
         return source;
 }
