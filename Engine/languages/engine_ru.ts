@@ -108,21 +108,21 @@ and retry your recent action to take more detail info.</source>
     </message>
     <message id="MSGBOX_WARN">
         <location filename="../gui/pge_menuboxbase.cpp" line="549"/>
-        <location filename="../gui/pge_msgbox.cpp" line="382"/>
+        <location filename="../gui/pge_msgbox.cpp" line="378"/>
         <location filename="../gui/pge_textinputbox.cpp" line="433"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message id="MSGBOX_ERROR">
         <location filename="../gui/pge_menuboxbase.cpp" line="569"/>
-        <location filename="../gui/pge_msgbox.cpp" line="402"/>
+        <location filename="../gui/pge_msgbox.cpp" line="393"/>
         <location filename="../gui/pge_textinputbox.cpp" line="453"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_menuboxbase.cpp" line="589"/>
-        <location filename="../gui/pge_msgbox.cpp" line="422"/>
+        <location filename="../gui/pge_msgbox.cpp" line="408"/>
         <location filename="../gui/pge_textinputbox.cpp" line="473"/>
         <source>Fatal</source>
         <translation>Авария</translation>

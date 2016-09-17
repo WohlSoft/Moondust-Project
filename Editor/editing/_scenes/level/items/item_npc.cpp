@@ -186,6 +186,9 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *cutNpc =           ItemMenu.addAction(tr("Cut"));
                                 ItemMenu.addSeparator();
     QAction *remove =           ItemMenu.addAction(tr("Remove"));
+    QAction *remove_all_s =     ItemMenu.addAction(tr("Remove all %1 in this section").arg("NPC-%1").arg(m_data.id));
+    QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("NPC-%1").arg(m_data.id));
+
                                 ItemMenu.addSeparator();
     QAction *props =            ItemMenu.addAction(tr("Properties..."));
 
@@ -469,6 +472,50 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     if(selected==remove)
     {
         m_scene->removeSelectedLvlItems();
+    }
+    else
+    if((selected==remove_all_s)||(selected==remove_all))
+    {
+        QList<QGraphicsItem *> our_items;
+        QList<QGraphicsItem *> selectedList;
+        unsigned long oldID = m_data.id;
+
+        if(selected==remove_all)
+        {
+            our_items = m_scene->items();
+        }
+        else
+        if(selected == remove_all_s)
+        {
+            bool ok=false;
+            long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
+                           tr("Please select, how far items out of section should be removed too (in pixels)"),
+                           32, 0, 214948, 1, &ok);
+            if(!ok) goto cancelRemoveSSS;
+            LevelSection &s=m_scene->m_data->sections[m_scene->m_data->CurSection];
+            QRectF section;
+            section.setLeft(s.size_left-mg);
+            section.setTop(s.size_top-mg);
+            section.setRight(s.size_right+mg);
+            section.setBottom(s.size_bottom+mg);
+            our_items = m_scene->items(section, Qt::IntersectsItemShape);
+        }
+        foreach(QGraphicsItem * SelItem, our_items )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="NPC")
+            {
+                if( ((ItemNPC *) SelItem)->m_data.id == oldID)
+                {
+                    selectedList.push_back(SelItem);
+                }
+            }
+        }
+        if(!selectedList.isEmpty())
+        {
+            m_scene->removeLvlItems(selectedList);
+            m_scene->Debugger_updateItemList();
+        }
+        cancelRemoveSSS:;
     }
     else
     if(selected==props)

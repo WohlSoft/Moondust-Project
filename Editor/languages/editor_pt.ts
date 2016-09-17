@@ -151,32 +151,57 @@
         <translation>O número máximo de ações que serão guardadas no histórico.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="412"/>
+        <location filename="../main_window/tools/app_settings.ui" line="411"/>
+        <source>Screen capture default size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="417"/>
+        <source>Use custom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="427"/>
+        <source>Width:</source>
+        <translation type="unfinished">Largura:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="453"/>
+        <source>Height:</source>
+        <translation type="unfinished">Altura:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="476"/>
+        <source>Fit to window size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="490"/>
         <source>Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="424"/>
+        <location filename="../main_window/tools/app_settings.ui" line="502"/>
         <source>Classic Events tabs auto-expending</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="437"/>
+        <location filename="../main_window/tools/app_settings.ui" line="515"/>
         <source>Common</source>
         <translation>Comum</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="451"/>
+        <location filename="../main_window/tools/app_settings.ui" line="529"/>
         <source>Layer movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="458"/>
+        <location filename="../main_window/tools/app_settings.ui" line="536"/>
         <source>Trigger event</source>
         <translation>Ativar evento</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="465"/>
+        <location filename="../main_window/tools/app_settings.ui" line="543"/>
         <source>Hold buttons</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,111 +210,111 @@
         <translation type="obsolete">Configurações da seção</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="504"/>
+        <location filename="../main_window/tools/app_settings.ui" line="582"/>
         <source>NPC settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="516"/>
+        <location filename="../main_window/tools/app_settings.ui" line="594"/>
         <source>Generator</source>
         <translation>Gerador</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="547"/>
+        <location filename="../main_window/tools/app_settings.ui" line="625"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="555"/>
+        <location filename="../main_window/tools/app_settings.ui" line="633"/>
         <source>Warp</source>
         <translation>Transportado</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="560"/>
+        <location filename="../main_window/tools/app_settings.ui" line="638"/>
         <source>Projectile</source>
         <translation>Projétil</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="568"/>
+        <location filename="../main_window/tools/app_settings.ui" line="646"/>
         <source>Delay:</source>
         <translation>Intervalo:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="597"/>
+        <location filename="../main_window/tools/app_settings.ui" line="675"/>
         <source>Direction</source>
         <translation>Direção</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="618"/>
+        <location filename="../main_window/tools/app_settings.ui" line="696"/>
         <source>Left</source>
         <translation>Esquerda</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="625"/>
+        <location filename="../main_window/tools/app_settings.ui" line="703"/>
         <source>Random</source>
         <translation>Aleatório</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="632"/>
+        <location filename="../main_window/tools/app_settings.ui" line="710"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="667"/>
+        <location filename="../main_window/tools/app_settings.ui" line="745"/>
         <source>Warps and Doors</source>
         <translation>Transportes &amp; Portas</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="673"/>
+        <location filename="../main_window/tools/app_settings.ui" line="751"/>
         <source>Warp type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="681"/>
+        <location filename="../main_window/tools/app_settings.ui" line="759"/>
         <source>0 - Instant</source>
         <translation>0 - Instântaneo</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="686"/>
+        <location filename="../main_window/tools/app_settings.ui" line="764"/>
         <source>1 - Pipe</source>
         <translation>1 - Cano</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="691"/>
+        <location filename="../main_window/tools/app_settings.ui" line="769"/>
         <source>2 - Door</source>
         <translation>2 - Porta</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="696"/>
+        <location filename="../main_window/tools/app_settings.ui" line="774"/>
         <source>3 - Portal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="708"/>
+        <location filename="../main_window/tools/app_settings.ui" line="786"/>
         <source>View</source>
         <translation>Visualização</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="750"/>
+        <location filename="../main_window/tools/app_settings.ui" line="828"/>
         <source>Level item Toolbox</source>
         <translation>Caixa de ferramentas de itens do nível</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="720"/>
-        <location filename="../main_window/tools/app_settings.ui" line="756"/>
-        <location filename="../main_window/tools/app_settings.ui" line="791"/>
+        <location filename="../main_window/tools/app_settings.ui" line="798"/>
+        <location filename="../main_window/tools/app_settings.ui" line="834"/>
+        <location filename="../main_window/tools/app_settings.ui" line="869"/>
         <source>Display tabs horizontal</source>
         <translation>Guias horizontais</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="727"/>
-        <location filename="../main_window/tools/app_settings.ui" line="763"/>
-        <location filename="../main_window/tools/app_settings.ui" line="798"/>
+        <location filename="../main_window/tools/app_settings.ui" line="805"/>
+        <location filename="../main_window/tools/app_settings.ui" line="841"/>
+        <location filename="../main_window/tools/app_settings.ui" line="876"/>
         <source>Display tabs vertical</source>
         <translation>Guias verticais</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="714"/>
+        <location filename="../main_window/tools/app_settings.ui" line="792"/>
         <source>World item Toolbox</source>
         <translation>Caixa de ferramentas de itens do mundo</translation>
     </message>
@@ -299,47 +324,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="430"/>
+        <location filename="../main_window/tools/app_settings.ui" line="508"/>
         <source>Autoscroll section</source>
         <translation>Seção em autorolagem</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="444"/>
+        <location filename="../main_window/tools/app_settings.ui" line="522"/>
         <source>Layer visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="472"/>
+        <location filename="../main_window/tools/app_settings.ui" line="550"/>
         <source>Section settings</source>
         <translation>Configurações da seção</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="773"/>
+        <location filename="../main_window/tools/app_settings.ui" line="851"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="785"/>
+        <location filename="../main_window/tools/app_settings.ui" line="863"/>
         <source>Tilesets Item Toolbox</source>
         <translation>Caixa de ferramentas de tileset</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="809"/>
+        <location filename="../main_window/tools/app_settings.ui" line="887"/>
         <source>Loging</source>
         <translation>Logging</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="815"/>
+        <location filename="../main_window/tools/app_settings.ui" line="893"/>
         <source>Log level</source>
         <translation>Logar level</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="825"/>
+        <location filename="../main_window/tools/app_settings.ui" line="903"/>
         <source>Browse</source>
         <translation>Procurar</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="832"/>
+        <location filename="../main_window/tools/app_settings.ui" line="910"/>
         <source>Log file</source>
         <translation>Arquivo de log</translation>
     </message>
@@ -1582,40 +1607,52 @@ Please save them first before doing anything else.</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
+        <source>Remove all %1 in this section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="140"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="236"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="283"/>
         <source>Z-Offset</source>
         <translation>Localização Z</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="237"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="284"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Por favor, insira o valor-Z da localização:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="283"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="330"/>
         <source>Margin of section</source>
         <translation type="unfinished">Margem de seção</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="284"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="321"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="343"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="355"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="368"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="378"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="390"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="402"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1623,12 +1660,12 @@ Please save them first before doing anything else.</source>
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="78"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="83"/>
         <source>Layer: </source>
         <translation>Camada:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="81"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="86"/>
         <source>Add to new layer...</source>
         <translation>Adicionar a nova camada...</translation>
     </message>
@@ -1637,122 +1674,134 @@ Please save them first before doing anything else.</source>
         <translation type="vanished">[oculto]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="89"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="94"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="99"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="104"/>
         <source>Invisible</source>
         <translation>Invisível</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="103"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="108"/>
         <source>Slippery</source>
         <translation>Escorregadio</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="107"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
         <source>Resize</source>
         <translation>Redimensionar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="113"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="118"/>
         <source>Transform into</source>
         <translation>Transformar em</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="119"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="125"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="121"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
         <source>Block-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="122"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="123"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="155"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="167"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="179"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
+        <source>Remove all %1 in this section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="164"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="176"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="220"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="229"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="414"/>
         <source>Margin of section</source>
         <translation type="unfinished">Margem de seção</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="221"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="230"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="415"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
         <source>Event name</source>
         <translation>Nome do evento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="266"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="275"/>
         <source>Please enter the name of event:</source>
         <translation>Por favor, insira o nome do evento:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="282"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Coloque aqui a mensagem que será mostrada.
 Apenas 27 caracteres por linha</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="274"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="283"/>
         <source>Hit message text</source>
         <translation>Texto da mensagem do evento Bater</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="304"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="313"/>
         <source>Event has been created</source>
         <translation>O evento foi criado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="314"/>
         <source>Message event has been created!</source>
         <translation>Evento de mensagem criado!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="319"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>O campo de evento &apos;Bater&apos; está ocupado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="311"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
     </message>
@@ -1765,32 +1814,32 @@ Apenas 27 caracteres por linha</translation>
         <translation type="vanished">Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="111"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
         <source>Change included NPC...</source>
         <translation>Mudar NPC incluído...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="121"/>
         <source>Make message box...</source>
         <translation>Fazer caixa de mensagem...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
@@ -1798,94 +1847,94 @@ Apenas 27 caracteres por linha</translation>
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="79"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="83"/>
         <source>Open target level: %1</source>
         <translation>Abrir nível desejado: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="84"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="88"/>
         <source>Layer: </source>
         <translation>Camada:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="88"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="92"/>
         <source>Add to new layer...</source>
         <translation>Adicionar a nova camada...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="95"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="108"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="112"/>
         <source>Jump to exit</source>
         <translation>Pular para saída</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="114"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="118"/>
         <source>Jump to entrance</source>
         <translation>Pular para a entrada</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="122"/>
         <source>No Vehicles</source>
         <translation>Barrar veículos</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="122"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="126"/>
         <source>Allow NPC</source>
         <translation>Permitir NPCs</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="126"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="130"/>
         <source>Locked</source>
         <translation>Trancado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="133"/>
         <source>Need a bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="136"/>
         <source>Required special state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="144"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="145"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="152"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="315"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="327"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="339"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="319"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="331"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="343"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1963,15 +2012,20 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="104"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="223"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="233"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="257"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="224"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="234"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="246"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="258"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2070,10 +2124,15 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="132"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="142"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="154"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="166"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="133"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="143"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="155"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="167"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2211,25 +2270,37 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="189"/>
+        <source>Remove all %1 in this section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="238"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
         <source>Margin of section</source>
         <translation type="unfinished">Margem de seção</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="239"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="242"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="303"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="313"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="325"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="337"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="306"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="316"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="328"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="340"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2287,10 +2358,15 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="89"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="99"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="111"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="123"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="90"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="100"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="112"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="124"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2505,10 +2581,15 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="102"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="112"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="124"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="136"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="88"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="113"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="125"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="137"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2729,10 +2810,15 @@ Apenas 27 caracteres por linha</translation>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="89"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="99"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="111"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="123"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
+        <source>Remove all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="90"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="100"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="112"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="124"/>
         <source>Preferences has been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2919,28 +3005,28 @@ Por favor, verifique a pasta do aplicativo.</translation>
         <translation type="vanished">6/%1 Aplicando portas...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="121"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="127"/>
         <source>Export current section to image</source>
         <translation>Exportar seção atual em imagem</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="126"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
         <source>PNG Image (*.png)</source>
         <translation>Imagem PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="134"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="140"/>
         <source>Saving section image...</source>
         <translation>Salvando imagem da seção...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="470"/>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="134"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="140"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="135"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="141"/>
         <source>Please wait...</source>
         <translation>Aguarde...</translation>
     </message>
@@ -3211,55 +3297,69 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="71"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="244"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="433"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="247"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="439"/>
         <source>Category:</source>
         <translation>Categoria:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="157"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="340"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="423"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="160"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="346"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="429"/>
         <source>Filter:</source>
         <translation>Filtro:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="168"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="379"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="551"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="171"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="385"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="560"/>
         <source>Text</source>
         <translation>Texto</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="173"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="384"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="556"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="176"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="390"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="565"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="193"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="356"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="540"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="196"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="362"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="549"/>
         <source>Uniform icon size</source>
         <translation>Tamanho de ícones uniforme</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="206"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="333"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="564"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="209"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="339"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="573"/>
         <source>Group:</source>
         <translation>Grupo:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="223"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="226"/>
         <source>BGO</source>
         <translation>Objetos decorativos</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="402"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="408"/>
         <source>NPC</source>
         <translation>NPC</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="484"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="522"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="560"/>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="485"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="523"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="561"/>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3918,254 +4018,254 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
         <translation>Eventos clássicos</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="30"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="58"/>
         <source>Events list</source>
         <translation>Lista de eventos</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="166"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="189"/>
         <source>Layer visibly</source>
         <translation>Visibilidade de camadas</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="200"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="229"/>
         <source>Disable smoke effects</source>
         <translation>Desabilitar efeitos de fumaça</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="371"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="407"/>
         <source>Show</source>
         <translation>Exibir</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="384"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="420"/>
         <source>Toggle</source>
         <translation>Alternar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="258"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="287"/>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="437"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="484"/>
         <source>Layers movement</source>
         <translation>Movimento de camadas</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="566"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="687"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="634"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="779"/>
         <source>Horisontal speed:</source>
         <translation>Velocidade horizontal:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="510"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="543"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="631"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="644"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="572"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="611"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="705"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="718"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="517"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="694"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="579"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="786"/>
         <source>Vertical speed:</source>
         <translation>Velocidade vertical:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="477"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="527"/>
         <source>Set moving layer</source>
         <translation>Camada a ser movida</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="584"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="652"/>
         <source>Autoscroll section</source>
         <translation>Seção em autorolagem</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="618"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="692"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="397"/>
         <source>Section</source>
         <translation>Seção</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="728"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="820"/>
         <source>Section settings</source>
         <translation>Configurações da seção</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="768"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="866"/>
         <source>Current section:</source>
         <translation>Seção atual:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="790"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="895"/>
         <source>Set size and position</source>
         <translation>Alterar tamanho e posição</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="802"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="985"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="907"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1090"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1176"/>
         <source>Don&apos;t change</source>
         <translation>Não mudar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="926"/>
         <source>Capture...</source>
         <translation>Capturar...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="834"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="998"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1072"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="939"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1103"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1183"/>
         <source>Reset to default</source>
         <translation>Resetar para o padrão</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="853"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1373"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1502"/>
         <source>Left</source>
         <translation>Esquerda</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="875"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="980"/>
         <source>Top</source>
         <translation>Cima</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="891"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="996"/>
         <source>Define new:</source>
         <translation>Definir novo:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="910"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1015"/>
         <source>Bottom</source>
         <translation>Fundo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="932"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1387"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1037"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1516"/>
         <source>Right</source>
         <translation>Direita</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="973"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1078"/>
         <source>Set music</source>
         <translation>Alterar música</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1011"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Replace music to:</source>
         <translation>Substituir por:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
         <source>Set background</source>
         <translation>Alterar plano de fundo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1079"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1190"/>
         <source>Replace background to:</source>
         <translation>Substituir por:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1148"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1265"/>
         <source>Common</source>
         <translation>Comum</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1233"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1356"/>
         <source>Do end game:</source>
         <translation>Terminar o jogo:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1195"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1312"/>
         <source>Play sound:</source>
         <translation>Tocar som:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1220"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1343"/>
         <source>Test</source>
         <translation>Testar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1279"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1408"/>
         <source>Display message:</source>
         <translation>Exibir mensagem:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1244"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1373"/>
         <source>Nothing</source>
         <translation>Nada</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1378"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Fim do jogo &quot;Bowser Derrotado&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1297"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
         <source>Player Control hold keys</source>
         <translation>Controles do jogador</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1467"/>
         <source>Run</source>
         <translation>Correr</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1352"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1481"/>
         <source>Down</source>
         <translation>Baixo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1331"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1460"/>
         <source>Up</source>
         <translation>Cima</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1345"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1474"/>
         <source>Drop</source>
         <translation>Liberar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1359"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1488"/>
         <source>Alt-run</source>
         <translation>Correr alternativo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1366"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1495"/>
         <source>Start</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1380"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1509"/>
         <source>Jump</source>
         <translation>Pulo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1394"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1523"/>
         <source>Alt-jump</source>
         <translation>Pulo alternativo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1557"/>
         <source>Trigger event</source>
         <translation>Ativar evento</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1469"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1604"/>
         <source>Delay</source>
         <translation>Esperar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="129"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="151"/>
         <source>Autostart event</source>
         <translation>Iniciar evento automaticamente</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="112"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="97"/>
         <source>Create copy of event</source>
         <translation>Copiar evento</translation>
     </message>
@@ -5579,7 +5679,7 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="109"/>
-        <location filename="../mainwindow.ui" line="2131"/>
+        <location filename="../mainwindow.ui" line="2137"/>
         <source>New</source>
         <translation>Novo</translation>
     </message>
@@ -5614,12 +5714,12 @@ Escolha qual da lista quer utilizar:</translation>
         <translation>Visualização</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="275"/>
+        <location filename="../mainwindow.ui" line="281"/>
         <source>Window</source>
         <translation>Janela</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="281"/>
+        <location filename="../mainwindow.ui" line="287"/>
         <source>Tools</source>
         <translation>Ferramentas</translation>
     </message>
@@ -5628,42 +5728,42 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Configuração global</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="325"/>
+        <location filename="../mainwindow.ui" line="331"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="426"/>
+        <location filename="../mainwindow.ui" line="432"/>
         <source>General</source>
         <translation>Geral</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1455"/>
+        <location filename="../mainwindow.ui" line="1461"/>
         <source>Level Toolbox</source>
         <translation>Caixa de ferramentas de itens do nível</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="461"/>
+        <location filename="../mainwindow.ui" line="467"/>
         <source>CommonEdit Bar</source>
         <translation>Barra de comandos de edição comuns</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="484"/>
+        <location filename="../mainwindow.ui" line="490"/>
         <source>EditingTools</source>
         <translation>Ferramentas de edição</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="522"/>
+        <location filename="../mainwindow.ui" line="528"/>
         <source>LevelObj Tools</source>
         <translation>Ferramentas para objetos do nível</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="579"/>
+        <location filename="../mainwindow.ui" line="585"/>
         <source>Level Sections Switch</source>
         <translation>Seleção de seções</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1536"/>
+        <location filename="../mainwindow.ui" line="1542"/>
         <source>Section Settings</source>
         <translation>Configurações da seção</translation>
     </message>
@@ -5672,83 +5772,83 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Conectar esquerda e direita</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1391"/>
+        <location filename="../mainwindow.ui" line="1397"/>
         <source>Underwater</source>
         <translation>Subaquático</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2322"/>
+        <location filename="../mainwindow.ui" line="2328"/>
         <source>Apply</source>
         <translation>Aplicar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2337"/>
+        <location filename="../mainwindow.ui" line="2343"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1786"/>
+        <location filename="../mainwindow.ui" line="1792"/>
         <source>Warps and Doors</source>
         <translation>Transportes &amp; Portas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2108"/>
+        <location filename="../mainwindow.ui" line="2114"/>
         <source>Events</source>
         <translation>Eventos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2006"/>
+        <location filename="../mainwindow.ui" line="2012"/>
         <source>Layers</source>
         <translation>Camada</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="354"/>
+        <location filename="../mainwindow.ui" line="360"/>
         <source>Test</source>
         <translation>Testar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="679"/>
+        <location filename="../mainwindow.ui" line="685"/>
         <source>Exit program</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <translation>Sair</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1568"/>
+        <location filename="../mainwindow.ui" line="1574"/>
         <source>Go to left-bottom of the section</source>
         <translation>Ir para o canto inferior esquerdo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1571"/>
+        <location filename="../mainwindow.ui" line="1577"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Retornar para o canto inferior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1804"/>
+        <location filename="../mainwindow.ui" line="1810"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativar animação de objetos&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Se o mapa tem muitos objetos, recomendamos que &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;desative&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; esta opção!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2093"/>
+        <location filename="../mainwindow.ui" line="2099"/>
         <source>Go to the left-top of the section</source>
         <translation>Ir para o canto superior esquerdo da seção</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2096"/>
+        <location filename="../mainwindow.ui" line="2102"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Retornar para o canto superior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2157"/>
+        <location filename="../mainwindow.ui" line="2163"/>
         <source>Refresh menus</source>
         <translation>Atualizar menus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2168"/>
+        <location filename="../mainwindow.ui" line="2174"/>
         <source>Fullscreen</source>
         <translation>Tela cheia</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2244"/>
+        <location filename="../mainwindow.ui" line="2250"/>
         <source>Lock Scenery tiles</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5761,43 +5861,43 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Preenchimento quadrado (Shift + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2313"/>
+        <location filename="../mainwindow.ui" line="2319"/>
         <source>Overwrite mode</source>
         <translation>Modo de substituição</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2325"/>
+        <location filename="../mainwindow.ui" line="2331"/>
         <source>Apply (Enter)</source>
         <translation>Aplicar (Enter)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2340"/>
+        <location filename="../mainwindow.ui" line="2346"/>
         <source>Cancel (Esc)</source>
         <translation>Cancelar (Esc)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2355"/>
+        <location filename="../mainwindow.ui" line="2361"/>
         <source>Line</source>
         <translation>Linha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2358"/>
+        <location filename="../mainwindow.ui" line="2364"/>
         <source>Line (Shift+D)</source>
         <translation>Linha (Shift+D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2373"/>
+        <location filename="../mainwindow.ui" line="2379"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
         <translation>Buscar no mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="294"/>
+        <location filename="../mainwindow.ui" line="300"/>
         <source>External tools</source>
         <translation>Ferramentas externas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="553"/>
+        <location filename="../mainwindow.ui" line="559"/>
         <source>World map Toolbar</source>
         <translation>Caixa de ferramentas de itens do mundo</translation>
     </message>
@@ -5812,18 +5912,18 @@ Escolha qual da lista quer utilizar:</translation>
         <translation>Modificações da seção</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="285"/>
+        <location filename="../mainwindow.ui" line="291"/>
         <source>Palettes and tilesets</source>
         <translatorcomment>No accurate translation for tilesets :P</translatorcomment>
         <translation>Paletas e tilesets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="303"/>
+        <location filename="../mainwindow.ui" line="309"/>
         <source>Custom data</source>
         <translation>Dados personalizados</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="364"/>
+        <location filename="../mainwindow.ui" line="370"/>
         <source>Script</source>
         <translation>Script</translation>
     </message>
@@ -5832,43 +5932,43 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Escolher compilador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="624"/>
+        <location filename="../mainwindow.ui" line="630"/>
         <source>Placing</source>
         <translation>Colocação</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="642"/>
+        <location filename="../mainwindow.ui" line="648"/>
         <source>Resizing</source>
         <translation>Redimensionamento</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2231"/>
+        <location filename="../mainwindow.ui" line="2237"/>
         <source>Lock Terrain tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2440"/>
+        <location filename="../mainwindow.ui" line="2446"/>
         <source>Tileset Item Box</source>
         <translation>Caixa de itens do tileset</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2452"/>
+        <location filename="../mainwindow.ui" line="2458"/>
         <source>Debugger</source>
         <translation>Depurador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2495"/>
-        <location filename="../mainwindow.ui" line="2498"/>
+        <location filename="../mainwindow.ui" line="2501"/>
+        <location filename="../mainwindow.ui" line="2504"/>
         <source>Testing settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2573"/>
+        <location filename="../mainwindow.ui" line="2579"/>
         <source>Position bookmarks</source>
         <translation>Marcadores de posição</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="662"/>
+        <location filename="../mainwindow.ui" line="668"/>
         <source>Open...</source>
         <translation>Abrir...</translation>
     </message>
@@ -5878,654 +5978,664 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="368"/>
+        <location filename="../mainwindow.ui" line="252"/>
+        <source>Set align grid size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="374"/>
         <source>LunaLUA scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="386"/>
+        <location filename="../mainwindow.ui" line="392"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="396"/>
+        <location filename="../mainwindow.ui" line="402"/>
         <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="665"/>
+        <location filename="../mainwindow.ui" line="671"/>
         <source>Open (Ctrl+O)</source>
         <translation>Abrir (Ctrl+O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="694"/>
+        <location filename="../mainwindow.ui" line="700"/>
         <source>Level...</source>
         <translation>Nível...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="703"/>
+        <location filename="../mainwindow.ui" line="709"/>
         <source>World map...</source>
         <translation>Mundo...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="712"/>
+        <location filename="../mainwindow.ui" line="718"/>
         <source>NPC config...</source>
         <translation>Configurações do NPC...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="724"/>
+        <location filename="../mainwindow.ui" line="730"/>
         <location filename="../main_window/windows_extras.cpp" line="20"/>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="727"/>
+        <location filename="../mainwindow.ui" line="733"/>
         <source>Save (Ctrl+S)</source>
         <translation>Salvar (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="748"/>
+        <location filename="../mainwindow.ui" line="754"/>
         <source>Save as...</source>
         <translation>Salvar como...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="751"/>
+        <location filename="../mainwindow.ui" line="757"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>Salvar como (Ctrl+Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="768"/>
+        <location filename="../mainwindow.ui" line="774"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="776"/>
+        <location filename="../mainwindow.ui" line="782"/>
         <source>Save all</source>
         <translation>Salvar tudo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="779"/>
+        <location filename="../mainwindow.ui" line="785"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>Salvar tudo (Ctrl+Alt+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="787"/>
+        <location filename="../mainwindow.ui" line="793"/>
         <source>About</source>
         <translation>Sobre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="801"/>
+        <location filename="../mainwindow.ui" line="807"/>
         <source>Contents</source>
         <translation>Conteúdos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="810"/>
         <source>Contents (F1)</source>
         <translation>Conteúdos (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="826"/>
+        <location filename="../mainwindow.ui" line="832"/>
         <source>Section 1</source>
         <translation>Seção 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="829"/>
+        <location filename="../mainwindow.ui" line="835"/>
         <source>Section 1 (Ctrl+1)</source>
         <translation>Seção 1 (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="851"/>
+        <location filename="../mainwindow.ui" line="857"/>
         <source>Section 2</source>
         <translation>Seção 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="854"/>
+        <location filename="../mainwindow.ui" line="860"/>
         <source>Section 2 (Ctrl+2)</source>
         <translation>Seção 2 (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="876"/>
+        <location filename="../mainwindow.ui" line="882"/>
         <source>Section 3</source>
         <translation>Seção 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="879"/>
+        <location filename="../mainwindow.ui" line="885"/>
         <source>Section 3 (Ctrl+3)</source>
         <translation>Seção 3 (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="901"/>
+        <location filename="../mainwindow.ui" line="907"/>
         <source>Section 4</source>
         <translation>Seção 4 (Ctrl+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="904"/>
+        <location filename="../mainwindow.ui" line="910"/>
         <source>Section 4 (Ctrl+4)</source>
         <translation>Seção 4 (Ctrl+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="926"/>
+        <location filename="../mainwindow.ui" line="932"/>
         <source>Section 5</source>
         <translation>Seção 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="929"/>
+        <location filename="../mainwindow.ui" line="935"/>
         <source>Section 5 (Ctrl+5)</source>
         <translation>Seção 5 (Ctrl+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="951"/>
+        <location filename="../mainwindow.ui" line="957"/>
         <source>Section 6</source>
         <translation>Seção 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="954"/>
+        <location filename="../mainwindow.ui" line="960"/>
         <source>Section 6 (Ctrl+6)</source>
         <translation>Seção 6 (Ctrl+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="976"/>
+        <location filename="../mainwindow.ui" line="982"/>
         <source>Section 7</source>
         <translation>Seção 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="979"/>
+        <location filename="../mainwindow.ui" line="985"/>
         <source>Section 7 (Ctrl+7)</source>
         <translation>Seção 7 (Ctrl+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1001"/>
+        <location filename="../mainwindow.ui" line="1007"/>
         <source>Section 8</source>
         <translation>Seção 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1004"/>
+        <location filename="../mainwindow.ui" line="1010"/>
         <source>Section 8 (Ctrl+8)</source>
         <translation>Seção 8 (Ctrl+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1026"/>
+        <location filename="../mainwindow.ui" line="1032"/>
         <source>Section 9</source>
         <translation>Seção 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1029"/>
+        <location filename="../mainwindow.ui" line="1035"/>
         <source>Section 9 (Ctrl+9)</source>
         <translation>Seção 9 (Ctrl+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1051"/>
+        <location filename="../mainwindow.ui" line="1057"/>
         <source>Section 10</source>
         <translation>Seção 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1054"/>
+        <location filename="../mainwindow.ui" line="1060"/>
         <source>Section 10 (Ctrl+0)</source>
         <translation>Seção 0 (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1076"/>
+        <location filename="../mainwindow.ui" line="1082"/>
         <source>Section 11</source>
         <translation>Seção 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1079"/>
+        <location filename="../mainwindow.ui" line="1085"/>
         <source>Section 11 (Ctrl+Alt+1)</source>
         <translation>Seção 11 (Ctrl+Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1101"/>
+        <location filename="../mainwindow.ui" line="1107"/>
         <source>Section 12</source>
         <translation>Seção 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1104"/>
+        <location filename="../mainwindow.ui" line="1110"/>
         <source>Section 12 (Ctrl+Alt+2)</source>
         <translation>Seção 12 (Ctrl+Alt+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1126"/>
+        <location filename="../mainwindow.ui" line="1132"/>
         <source>Section 13</source>
         <translation>Seção 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1129"/>
+        <location filename="../mainwindow.ui" line="1135"/>
         <source>Section 13 (Ctrl+Alt+3)</source>
         <translation>Seção 13 (Ctrl+Alt+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1151"/>
+        <location filename="../mainwindow.ui" line="1157"/>
         <source>Section 14</source>
         <translation>Seção 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1154"/>
+        <location filename="../mainwindow.ui" line="1160"/>
         <source>Section 14 (Ctrl+Alt+4)</source>
         <translation>Seção 14 (Ctrl+Alt+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1176"/>
+        <location filename="../mainwindow.ui" line="1182"/>
         <source>Section 15</source>
         <translation>Seção 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1179"/>
+        <location filename="../mainwindow.ui" line="1185"/>
         <source>Section 15 (Ctrl+Alt+5)</source>
         <translation>Seção 15 (Ctrl+Alt+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1201"/>
+        <location filename="../mainwindow.ui" line="1207"/>
         <source>Section 16</source>
         <translation>Seção 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1204"/>
+        <location filename="../mainwindow.ui" line="1210"/>
         <source>Section 16 (Ctrl+Alt+6)</source>
         <translation>Seção 16 (Ctrl+Alt+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1226"/>
+        <location filename="../mainwindow.ui" line="1232"/>
         <source>Section 17</source>
         <translation>Seção 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1229"/>
+        <location filename="../mainwindow.ui" line="1235"/>
         <source>Section 17 (Ctrl+Alt+7)</source>
         <translation>Seção 17 (Ctrl+Alt+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1251"/>
+        <location filename="../mainwindow.ui" line="1257"/>
         <source>Section 18</source>
         <translation>Seção 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1254"/>
+        <location filename="../mainwindow.ui" line="1260"/>
         <source>Section 18 (Ctrl+Alt+8)</source>
         <translation>Seção 18 (Ctrl+Alt+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1276"/>
+        <location filename="../mainwindow.ui" line="1282"/>
         <source>Section 19</source>
         <translation>Seção 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1279"/>
+        <location filename="../mainwindow.ui" line="1285"/>
         <source>Section 19 (Ctrl+Alt+9)</source>
         <translation>Seção 19 (Ctrl+Alt+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1301"/>
+        <location filename="../mainwindow.ui" line="1307"/>
         <source>Section 20</source>
         <translation>Seção 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1304"/>
+        <location filename="../mainwindow.ui" line="1310"/>
         <source>Section 20 (Ctrl+Alt+0)</source>
         <translation>Seção 10 (Ctrl+Alt+0)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1326"/>
+        <location filename="../mainwindow.ui" line="1332"/>
         <source>Section 21</source>
         <translation>Seção 21</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1329"/>
+        <location filename="../mainwindow.ui" line="1335"/>
         <source>Section 21 (Alt+1)</source>
         <translation>Seção 21 (Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1346"/>
+        <location filename="../mainwindow.ui" line="1352"/>
         <source>Wrap Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1363"/>
+        <location filename="../mainwindow.ui" line="1369"/>
         <source>Offscreen exit</source>
         <translation>Sair pela tela</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1377"/>
+        <location filename="../mainwindow.ui" line="1383"/>
         <source>No turn back</source>
         <translation>Rolagem em uma única direção</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1402"/>
+        <location filename="../mainwindow.ui" line="1408"/>
         <source>Export to image...</source>
         <translation>Exportar em imagem...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1405"/>
+        <location filename="../mainwindow.ui" line="1411"/>
         <source>Export current section to image (F12)</source>
         <translation>Exportar seção atual em imagem (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1416"/>
-        <location filename="../mainwindow.ui" line="1440"/>
+        <location filename="../mainwindow.ui" line="1422"/>
+        <location filename="../mainwindow.ui" line="1446"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1427"/>
+        <location filename="../mainwindow.ui" line="1433"/>
         <source>Disable world map</source>
         <translation>Desabilitar mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1435"/>
+        <location filename="../mainwindow.ui" line="1441"/>
         <source>Restart level after fail</source>
         <translation>Reiniciar o level em caso d&apos;o jogador falhar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1458"/>
+        <location filename="../mainwindow.ui" line="1464"/>
         <source>Level objects tool box</source>
         <translation>Caixa de ferramentas de objetos do nível</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1473"/>
+        <location filename="../mainwindow.ui" line="1479"/>
         <source>World Toolbox</source>
         <translation>Caixa de ferramentas de itens do mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1494"/>
+        <location filename="../mainwindow.ui" line="1500"/>
         <source>Select and Move</source>
         <translation>Selecionar e mover</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1497"/>
+        <location filename="../mainwindow.ui" line="1503"/>
         <source>Select (S)</source>
         <translation>Selecionar (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1518"/>
+        <location filename="../mainwindow.ui" line="1524"/>
         <source>Eriser</source>
         <translation>Borracha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1521"/>
+        <location filename="../mainwindow.ui" line="1527"/>
         <source>Eriser (E)</source>
         <translation>Borracha (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1550"/>
+        <location filename="../mainwindow.ui" line="1556"/>
         <source>Reload configurations</source>
         <translation>Recarregar configurações</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1586"/>
+        <location filename="../mainwindow.ui" line="1592"/>
         <source>Attach to grid</source>
         <translation>Anexar a grade</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1602"/>
+        <location filename="../mainwindow.ui" line="1608"/>
         <source>Lock all Blocks</source>
         <translation>Trancar todos os blocos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1615"/>
+        <location filename="../mainwindow.ui" line="1621"/>
         <source>Lock all BGO</source>
         <translation>Trancas todos os objetos decorativos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1628"/>
+        <location filename="../mainwindow.ui" line="1634"/>
         <source>Lock all NPC</source>
         <translation>Trancar todos os NPCs</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1641"/>
+        <location filename="../mainwindow.ui" line="1647"/>
         <source>Lock all door objects</source>
         <translation>Trancar todos os transportes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1654"/>
+        <location filename="../mainwindow.ui" line="1660"/>
         <source>Lock all water squares</source>
         <translation>Trancar todas as zonas aquáticas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1666"/>
+        <location filename="../mainwindow.ui" line="1672"/>
         <source>Set first player position</source>
         <translation>Definir posição do Jogador 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1669"/>
+        <location filename="../mainwindow.ui" line="1675"/>
         <source>Set first player start point</source>
         <translation>Definir ponto de início do Jogador 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1681"/>
+        <location filename="../mainwindow.ui" line="1687"/>
         <source>Set second player position</source>
         <translation>Definir posição do Jogador 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1684"/>
+        <location filename="../mainwindow.ui" line="1690"/>
         <source>Set second player start point</source>
         <translation>Definir ponto de início do Jogador 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1696"/>
+        <location filename="../mainwindow.ui" line="1702"/>
         <source>Play music</source>
         <translation>Tocar música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1699"/>
+        <location filename="../mainwindow.ui" line="1705"/>
         <source>Play music (F11)</source>
         <translation>Tocar música (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1714"/>
+        <location filename="../mainwindow.ui" line="1720"/>
         <source>Reload file data</source>
         <translation>Recarregar dados do arquivo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1717"/>
+        <location filename="../mainwindow.ui" line="1723"/>
         <source>Reload current file data</source>
         <translation>Recarregar dados do arquivo atual</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1738"/>
+        <location filename="../mainwindow.ui" line="1744"/>
         <source>Scroll hand</source>
         <translation>Panorama</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1741"/>
+        <location filename="../mainwindow.ui" line="1747"/>
         <source>Scrolling (D)</source>
         <translation>Rolagem (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1756"/>
+        <location filename="../mainwindow.ui" line="1762"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1771"/>
+        <location filename="../mainwindow.ui" line="1777"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1801"/>
+        <location filename="../mainwindow.ui" line="1807"/>
         <source>Animation</source>
         <translation>Animação</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1815"/>
-        <location filename="../mainwindow.ui" line="1826"/>
-        <location filename="../mainwindow.ui" line="1837"/>
-        <location filename="../mainwindow.ui" line="1848"/>
-        <location filename="../mainwindow.ui" line="1859"/>
-        <location filename="../mainwindow.ui" line="1870"/>
-        <location filename="../mainwindow.ui" line="1881"/>
-        <location filename="../mainwindow.ui" line="1892"/>
-        <location filename="../mainwindow.ui" line="1903"/>
-        <location filename="../mainwindow.ui" line="1914"/>
+        <location filename="../mainwindow.ui" line="1821"/>
+        <location filename="../mainwindow.ui" line="1832"/>
+        <location filename="../mainwindow.ui" line="1843"/>
+        <location filename="../mainwindow.ui" line="1854"/>
+        <location filename="../mainwindow.ui" line="1865"/>
+        <location filename="../mainwindow.ui" line="1876"/>
+        <location filename="../mainwindow.ui" line="1887"/>
+        <location filename="../mainwindow.ui" line="1898"/>
+        <location filename="../mainwindow.ui" line="1909"/>
+        <location filename="../mainwindow.ui" line="1920"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;vazio&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1929"/>
+        <location filename="../mainwindow.ui" line="1935"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1932"/>
+        <location filename="../mainwindow.ui" line="1938"/>
         <source>Copy selected items</source>
         <translation>Copiar itens selecionados</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1943"/>
+        <location filename="../mainwindow.ui" line="1949"/>
         <source>Collisions</source>
         <translation>Colisões</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1946"/>
+        <location filename="../mainwindow.ui" line="1952"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Colocação de itens para proteção de itens&lt;/p&gt;&lt;p&gt;(Se ativado pode causar &lt;i&gt;lag&lt;/i&gt; na operação de movimento)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1961"/>
+        <location filename="../mainwindow.ui" line="1967"/>
         <source>Draw Water zone</source>
         <translation>Desenhar zona de água</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1964"/>
+        <location filename="../mainwindow.ui" line="1970"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>Segure o botão do mouse no mapa e mova para desenhar uma zona de água</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1976"/>
+        <location filename="../mainwindow.ui" line="1982"/>
         <source>Draw QuickSand zone</source>
         <translation>Desenhar zona de areia movediça</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1979"/>
+        <location filename="../mainwindow.ui" line="1985"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>Segure o botão do mouse no mapa e mova para desenhar uma zona de areia movediça</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1991"/>
+        <location filename="../mainwindow.ui" line="1997"/>
         <source>Paste</source>
         <translation>Colar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2017"/>
+        <location filename="../mainwindow.ui" line="2023"/>
         <source>[No opened files]</source>
         <translation>[Nenhum arquivo aberto]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2035"/>
+        <location filename="../mainwindow.ui" line="2041"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2067"/>
+        <location filename="../mainwindow.ui" line="2073"/>
         <source>Select only</source>
         <translation>Selecionar apenas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2075"/>
+        <location filename="../mainwindow.ui" line="2081"/>
         <source>Application settings</source>
         <translation>Configurações do aplicativo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2119"/>
+        <location filename="../mainwindow.ui" line="2125"/>
         <source>Current configuration status...</source>
         <translation>Estado da atual configuração...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2146"/>
+        <location filename="../mainwindow.ui" line="2152"/>
         <source>Level Search</source>
         <translation>Buscar no nível</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2149"/>
+        <location filename="../mainwindow.ui" line="2155"/>
         <source>Search for an Item on the Level</source>
         <translation>Buscar por um item no nível</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2176"/>
+        <location filename="../mainwindow.ui" line="2182"/>
         <source>Tilesets Editor</source>
         <translation>Editor de tilesets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2184"/>
+        <location filename="../mainwindow.ui" line="2190"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>Corrigir máscaras &quot;preguiçosas&quot; (LazyFix Tool)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2192"/>
+        <location filename="../mainwindow.ui" line="2198"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>Converter GIF+Máscara para PNG (GIFs2PNG)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2200"/>
+        <location filename="../mainwindow.ui" line="2206"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>Converter PNG para GIF+Máscara (PNG2GIFs)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2215"/>
+        <location filename="../mainwindow.ui" line="2221"/>
         <source>World settings</source>
         <translation>Configurações do mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2884"/>
+        <location filename="../mainwindow.ui" line="2890"/>
         <source>Circular fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2887"/>
+        <location filename="../mainwindow.ui" line="2893"/>
         <source>Circular fill (Shift+C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2905"/>
+        <location filename="../mainwindow.ui" line="2911"/>
         <source>Show grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2913"/>
+        <location filename="../mainwindow.ui" line="2919"/>
         <source>Modern GUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2924"/>
+        <location filename="../mainwindow.ui" line="2930"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2936"/>
+        <location filename="../mainwindow.ui" line="2942"/>
         <source>Go to top-right of the section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2948"/>
+        <location filename="../mainwindow.ui" line="2954"/>
         <source>Go to right-bottom of the section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2953"/>
+        <location filename="../mainwindow.ui" line="2959"/>
         <source>Script Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2961"/>
+        <location filename="../mainwindow.ui" line="2967"/>
         <source>Run configure tool...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2966"/>
+        <location filename="../mainwindow.ui" line="2972"/>
         <source>Open local script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2969"/>
+        <location filename="../mainwindow.ui" line="2975"/>
         <source>Open the level / world map local script. If not exist - file will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2974"/>
+        <location filename="../mainwindow.ui" line="2980"/>
         <source>Open episode script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2977"/>
+        <location filename="../mainwindow.ui" line="2983"/>
         <source>Open the episode common script. If not exist - file will be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3003"/>
+        <source>Item default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6537,128 +6647,128 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Trancar objetos de cenário</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2257"/>
+        <location filename="../mainwindow.ui" line="2263"/>
         <source>Lock Paths</source>
         <translation>Trancar caminhos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2270"/>
+        <location filename="../mainwindow.ui" line="2276"/>
         <source>Lock Levels</source>
         <translation>Trancar níveis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2283"/>
+        <location filename="../mainwindow.ui" line="2289"/>
         <source>Lock Music Boxes</source>
         <translation>Trancar caixas de música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2295"/>
+        <location filename="../mainwindow.ui" line="2301"/>
         <source>Rectangular fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2298"/>
+        <location filename="../mainwindow.ui" line="2304"/>
         <source>Rectangular Fill (Shift+S)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2381"/>
+        <location filename="../mainwindow.ui" line="2387"/>
         <source>Show Development Console</source>
         <translation>Mostrar consoles de desenvolvimento</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2389"/>
+        <location filename="../mainwindow.ui" line="2395"/>
         <source>Tileset Groups Editor</source>
         <translation>Editor de grupos de tilesets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2401"/>
+        <location filename="../mainwindow.ui" line="2407"/>
         <source>Zoom In</source>
         <translation>Mais zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2413"/>
+        <location filename="../mainwindow.ui" line="2419"/>
         <source>Zoom Out</source>
         <translation>Menos zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2425"/>
+        <location filename="../mainwindow.ui" line="2431"/>
         <source>Reset Zoom</source>
         <translation>Resetar zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2457"/>
+        <location filename="../mainwindow.ui" line="2463"/>
         <source>Change configuration...</source>
         <translation>Mudar configurações...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2468"/>
+        <location filename="../mainwindow.ui" line="2474"/>
         <source>Semi-transparent paths</source>
         <translation>Caminhos semi-transparentes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2473"/>
+        <location filename="../mainwindow.ui" line="2479"/>
         <source>Export section to image...</source>
         <translation>Exportar seção em imagem...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2476"/>
+        <location filename="../mainwindow.ui" line="2482"/>
         <source>Export whole level section to image</source>
         <translation>Exportar toda a seção do nível em imagem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2481"/>
+        <location filename="../mainwindow.ui" line="2487"/>
         <source>Run testing &lt;Alpha&gt;</source>
         <translation>Rodar teste &lt;Alpha&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2805"/>
+        <location filename="../mainwindow.ui" line="2811"/>
         <source>Clear NPC garbadge...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2816"/>
         <location filename="../mainwindow.ui" line="2822"/>
+        <location filename="../mainwindow.ui" line="2828"/>
         <source>More sections...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2827"/>
+        <location filename="../mainwindow.ui" line="2833"/>
         <source>Tip of the day...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2839"/>
+        <location filename="../mainwindow.ui" line="2845"/>
         <source>Start Engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2842"/>
+        <location filename="../mainwindow.ui" line="2848"/>
         <source>Launch game engine application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2850"/>
+        <location filename="../mainwindow.ui" line="2856"/>
         <source>Open folder of current file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2853"/>
+        <location filename="../mainwindow.ui" line="2859"/>
         <source>Open folder which contains currently opened file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2858"/>
+        <location filename="../mainwindow.ui" line="2864"/>
         <source>Open custom data folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2861"/>
+        <location filename="../mainwindow.ui" line="2867"/>
         <source>Open custom folder: a folder with a name equal to basename of currently opened file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2869"/>
+        <location filename="../mainwindow.ui" line="2875"/>
         <source>Wrap Vertically</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6667,37 +6777,37 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Configurações</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2513"/>
+        <location filename="../mainwindow.ui" line="2519"/>
         <source>Fill</source>
         <translation>Preencher</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2521"/>
+        <location filename="../mainwindow.ui" line="2527"/>
         <source>Clear unused data</source>
         <translation>Limpar dados não-utilizados</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2536"/>
+        <location filename="../mainwindow.ui" line="2542"/>
         <source>Show properties</source>
         <translation>Mostrar propiedades</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2539"/>
+        <location filename="../mainwindow.ui" line="2545"/>
         <source>Show properties of item</source>
         <translation>Mostrar propiedades de um item</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2547"/>
+        <location filename="../mainwindow.ui" line="2553"/>
         <source>Sprite Editor</source>
         <translation>Editor de sprites</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2555"/>
+        <location filename="../mainwindow.ui" line="2561"/>
         <source>Import...</source>
         <translation>Importar...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2558"/>
+        <location filename="../mainwindow.ui" line="2564"/>
         <source>Import</source>
         <translation>Importar</translation>
     </message>
@@ -6710,106 +6820,106 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">Esta opção ativa um algoritmo alternativo de sobreposição da mask no arquivo que permite exibição correta de arquivos com máscaras &apos;preguiçosas&apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2576"/>
+        <location filename="../mainwindow.ui" line="2582"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
         <translation>Marcadores de posição. Savar a posição atual da câmera e lhe dá a habilidade de fazer um pulo rápido para lá.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2584"/>
+        <location filename="../mainwindow.ui" line="2590"/>
         <source>Clone section to...</source>
         <translation>Clonar seção...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2595"/>
-        <location filename="../mainwindow.ui" line="2644"/>
+        <location filename="../mainwindow.ui" line="2601"/>
+        <location filename="../mainwindow.ui" line="2650"/>
         <source>Rotate left</source>
         <translation>Rotacionar para a esquerda</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2603"/>
-        <location filename="../mainwindow.ui" line="2652"/>
+        <location filename="../mainwindow.ui" line="2609"/>
+        <location filename="../mainwindow.ui" line="2658"/>
         <source>Rotate right</source>
         <translation>Rotacionar para a direita</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2614"/>
-        <location filename="../mainwindow.ui" line="2660"/>
+        <location filename="../mainwindow.ui" line="2620"/>
+        <location filename="../mainwindow.ui" line="2666"/>
         <source>Flip horizontal</source>
         <translation>Inverter horizontalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2625"/>
-        <location filename="../mainwindow.ui" line="2668"/>
+        <location filename="../mainwindow.ui" line="2631"/>
+        <location filename="../mainwindow.ui" line="2674"/>
         <source>Flip vertical</source>
         <translation>Inverter verticalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2636"/>
+        <location filename="../mainwindow.ui" line="2642"/>
         <source>Align selected</source>
         <translation>Alinhar selecionar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2673"/>
+        <location filename="../mainwindow.ui" line="2679"/>
         <source>Fix wrong masks</source>
         <translation>Corrigir máscaras defeituosas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2676"/>
+        <location filename="../mainwindow.ui" line="2682"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Esta ferramente corrige todas as máscaras defeituosas que causam defeitos na exibição</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2687"/>
+        <location filename="../mainwindow.ui" line="2693"/>
         <source>Delete section</source>
         <translation>Deletar seção</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2695"/>
+        <location filename="../mainwindow.ui" line="2701"/>
         <source>Additional Settings</source>
         <translation>Configurações adicionais</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2706"/>
+        <location filename="../mainwindow.ui" line="2712"/>
         <source>Compile To: </source>
         <translation>Compilar para:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2720"/>
+        <location filename="../mainwindow.ui" line="2726"/>
         <source>Autocode [Lunadll Original Language]</source>
         <translation>Autocode [Linguagem Original LunaDLL]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2734"/>
+        <location filename="../mainwindow.ui" line="2740"/>
         <source>LunaLua</source>
         <translation>LunaLua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2748"/>
+        <location filename="../mainwindow.ui" line="2754"/>
         <source>Don&apos;t fill out of section</source>
         <translation>Não preencher fora da seção</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2753"/>
+        <location filename="../mainwindow.ui" line="2759"/>
         <source>SMBX-like GUI</source>
         <translation>Interface SMBX-semelhante</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2761"/>
+        <location filename="../mainwindow.ui" line="2767"/>
         <source>Run testing of saved file</source>
         <translation>Testar arquivo salvo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2769"/>
+        <location filename="../mainwindow.ui" line="2775"/>
         <source>Change log</source>
         <translation>O que há de novo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2777"/>
+        <location filename="../mainwindow.ui" line="2783"/>
         <source>Check for updates...</source>
         <translation>Verificar por atualizações...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2789"/>
+        <location filename="../mainwindow.ui" line="2795"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation>Rodar teste em SMBX (Requer LunaDLL)</translation>
     </message>
@@ -6818,7 +6928,7 @@ Escolha qual da lista quer utilizar:</translation>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inicia o teste do nível direto no editor SMBX aberto.&lt;/p&gt;&lt;p&gt;Este recurso vai utilizar LunaDLL para enviar o comando para SMBX, então seu SMBX deve ter LunaDLL atualizado.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Sem LunaDLL (a partir de LunaLua 0.5.3) não vai funcionar!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2797"/>
+        <location filename="../mainwindow.ui" line="2803"/>
         <source>Convert Audio (SoX)...</source>
         <translation>Converter áudio (SoX)...</translation>
     </message>
@@ -7543,6 +7653,26 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
 Please save file firtst</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../main_window/_settings/defaults.cpp" line="178"/>
+        <source>Default by item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/_settings/defaults.cpp" line="199"/>
+        <source>Custom...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/view/view.cpp" line="77"/>
+        <source>Custom align grid size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/view/view.cpp" line="78"/>
+        <source>Please enter align grid size:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -8054,7 +8184,7 @@ ao salvar o arquivo</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="257"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="271"/>
         <source>File association failed.</source>
         <translation>Falha ao associar as extensões de arquivo.</translation>
     </message>
@@ -10222,7 +10352,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation>Não mostrar caxias de música</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="191"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="196"/>
         <source>Will be exported:
 Top:	%1
 Left:	%2
@@ -10676,22 +10806,22 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation type="vanished">Configurações não foram carregadas</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="93"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="98"/>
         <source>Export selected area to image</source>
         <translation>Exportar área selacionada em imagem</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="97"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="102"/>
         <source>PNG Image (*.png)</source>
         <translation>Imagem PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="106"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="111"/>
         <source>Saving section image...</source>
         <translation>Salvando imagem da seção...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="107"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="112"/>
         <source>Please wait...</source>
         <translation>Aguarde...</translation>
     </message>
@@ -10793,7 +10923,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="359"/>
-        <location filename="../main_window/file/wld_export_image.cpp" line="106"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="111"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
@@ -10987,27 +11117,27 @@ therefore you can use same link to get updated version</source>
 <context>
     <name>g_AppSettings</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="179"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="184"/>
         <source>Set log file</source>
         <translation type="unfinished">Definir arquivo de log</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="180"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="185"/>
         <source>Text files (*.txt *.log)</source>
         <translation type="unfinished">Arquivos de texto (*.txt *.log)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="255"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="269"/>
         <source>Success</source>
         <translation type="unfinished">Sucesso</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="255"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="269"/>
         <source>All file associations have been set</source>
         <translation type="unfinished">Todas as associações de arquivos definidas</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="257"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="271"/>
         <source>Error</source>
         <translation type="unfinished">Erro</translation>
     </message>
