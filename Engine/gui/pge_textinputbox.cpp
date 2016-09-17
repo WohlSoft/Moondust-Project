@@ -45,7 +45,7 @@ PGE_TextInputBox::PGE_TextInputBox()
 
 PGE_TextInputBox::PGE_TextInputBox(Scene *_parentScene, QString msg, msgType _type,
                        PGE_Point boxCenterPos,
-                       float _padding, QString texture)
+                       double _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
     construct(msg,_type, boxCenterPos, _padding, texture);
@@ -74,7 +74,7 @@ PGE_TextInputBox::PGE_TextInputBox(const PGE_TextInputBox &mb)
 }
 
 
-void PGE_TextInputBox::construct(QString msg, PGE_TextInputBox::msgType _type, PGE_Point pos, float _padding, QString texture)
+void PGE_TextInputBox::construct(QString msg, PGE_TextInputBox::msgType _type, PGE_Point pos, double _padding, QString texture)
 {
     loadTexture(texture);
 
@@ -139,21 +139,21 @@ void PGE_TextInputBox::construct(QString msg, PGE_TextInputBox::msgType _type, P
 PGE_TextInputBox::~PGE_TextInputBox()
 {}
 
-void PGE_TextInputBox::setBoxSize(float _Width, float _Height, float _padding)
+void PGE_TextInputBox::setBoxSize(double _Width, double _Height, double _padding)
 {
     width = _Width;
     height = _Height;
     padding = _padding;
 }
 
-void PGE_TextInputBox::update(float ticks)
+void PGE_TextInputBox::update(double ticktime)
 {
     switch(_page)
     {
         case 0: setFade(10, 1.0f, 0.05f); _page++; break;
-        case 1: processLoader(ticks); break;
-        case 2: processBox(ticks); break;
-        case 3: processUnLoader(ticks); break;
+        case 1: processLoader(ticktime); break;
+        case 2: processBox(ticktime); break;
+        case 3: processUnLoader(ticktime); break;
         case 4:
         default: running=false; break;
     }
@@ -231,7 +231,7 @@ void PGE_TextInputBox::exec()
     }
 }
 
-void PGE_TextInputBox::processLoader(float ticks)
+void PGE_TextInputBox::processLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {
@@ -245,7 +245,7 @@ void PGE_TextInputBox::processLoader(float ticks)
     if(fader_opacity>=1.0f) _page++;
 }
 
-void PGE_TextInputBox::processBox(float tickTime)
+void PGE_TextInputBox::processBox(double tickTime)
 {
 //    #ifndef __APPLE__
 //    if(g_AppSettings.interprocessing)
@@ -336,7 +336,7 @@ void PGE_TextInputBox::processBox(float tickTime)
 
 
 
-void PGE_TextInputBox::processUnLoader(float ticks)
+void PGE_TextInputBox::processUnLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {

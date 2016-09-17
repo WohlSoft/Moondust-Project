@@ -33,17 +33,17 @@ public:
     virtual void setParentScene(Scene *_parentScene);
 
     virtual void exec();
-    virtual void update(float ticks);
+    virtual void update(double ticktime);
     virtual void render();
 
     /**************Fader**************/
-    float fader_opacity;
-    float target_opacity;
-    float fade_step;
+    double fader_opacity;
+    double target_opacity;
+    double fade_step;
     int fadeSpeed;
-    float manual_ticks;
-    void setFade(int speed, float target, float step);
-    bool tickFader(float ticks);
+    double manual_ticks;
+    void setFade(int speed, double target, double step);
+    bool tickFader(double ticks);
     void fadeStep();
     /**************Fader**************/
 
@@ -54,8 +54,8 @@ public:
 protected:
     Scene * parentScene;
     void construct(Scene *_parentScene = 0);
-    float uTickf;
-    int   uTick;
+    double uTickf;
+    int    uTick;
 
     void drawTexture(int left, int top, int right, int bottom, int border=32, float opacity=1.0f);
     void drawTexture(PGE_Rect _rect, int border=32, float opacity=1.0f);

@@ -189,6 +189,11 @@ void Render_OpenGL31::getScreenPixels(int x, int y, int w, int h, unsigned char 
     glReadPixels(x, y, w, h, GL_BGR, GL_UNSIGNED_BYTE, pixels);
 }
 
+void Render_OpenGL31::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels)
+{
+    glReadPixels(x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+}
+
 void Render_OpenGL31::setViewport(int x, int y, int w, int h)
 {
     glViewport(offset_x+x*viewport_scale_x,

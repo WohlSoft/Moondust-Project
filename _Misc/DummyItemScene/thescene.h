@@ -41,24 +41,24 @@ public:
     {
         if(m_posRect.left() > x)
             return false;
-        if(m_posRect.right() < x)
+        if((m_posRect.right()+1) < x)
             return false;
         if(m_posRect.top() > y)
             return false;
-        if(m_posRect.bottom() < y)
+        if((m_posRect.bottom()+1) < y)
             return false;
         return true;
     }
 
     bool isTouches(QRect &rect)
     {
-        if(m_posRect.left() > rect.right())
+        if(m_posRect.left() > (rect.right()+1))
             return false;
-        if(m_posRect.right() < rect.left())
+        if((m_posRect.right()+1) < rect.left())
             return false;
-        if(m_posRect.top() > rect.bottom())
+        if(m_posRect.top() > (rect.bottom()+1))
             return false;
-        if(m_posRect.bottom() < rect.top())
+        if((m_posRect.bottom()+1) < rect.top())
             return false;
         return true;
     }

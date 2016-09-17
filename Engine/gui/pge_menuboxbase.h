@@ -44,11 +44,11 @@ class PGE_MenuBoxBase : public PGE_BoxBase
 {
 public:
     PGE_MenuBoxBase(Scene * _parentScene=NULL, PGE_Menu::menuAlignment alignment=PGE_Menu::menuAlignment::VERTICLE, int gapSpace=0, QString _title="Menu is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     PGE_MenuBoxBase(const PGE_MenuBoxBase &mb);
 
     void construct(QString _title="Menu is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
 
     ~PGE_MenuBoxBase();
 
@@ -63,10 +63,10 @@ public:
     void addMenuItem(QString &menuitem);
     void addMenuItems(QStringList &menuitems);
 
-    void setPos(float x, float y);
+    void setPos(double x, double y);
     void setMaxMenuItems(int items);
-    void setBoxSize(float _Width, float _Height, float _padding);
-    void update(float ticks);
+    void setBoxSize(double _Width, double _Height, double _padding);
+    void update(double ticks);
     void render();
     void restart();
     bool isRunning();
@@ -78,9 +78,9 @@ public:
 
     void processKeyEvent(SDL_Keycode &key);
 
-    void processLoader(float ticks);
-    void processBox(float);
-    void processUnLoader(float ticks);
+    void processLoader(double ticks);
+    void processBox(double);
+    void processUnLoader(double ticks);
 
     static void info(QString msg);
     //static void info(std::string msg);
@@ -112,9 +112,9 @@ private:
     QString  title;
     PGE_Size title_size;
 
-    float width;
-    float height;
-    float padding;
+    double width;
+    double height;
+    double padding;
     QColor bg_color;
     void initControllers();
     void updateControllers();

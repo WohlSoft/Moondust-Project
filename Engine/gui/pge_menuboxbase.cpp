@@ -35,7 +35,7 @@
 
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, QString _title, msgType _type,
-                       PGE_Point boxCenterPos, float _padding, QString texture)
+                       PGE_Point boxCenterPos, double _padding, QString texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
 {
     setParentScene(_parentScene);
@@ -70,7 +70,7 @@ PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
 
 
 void PGE_MenuBoxBase::construct(QString _title, PGE_MenuBoxBase::msgType _type,
-                            PGE_Point pos, float _padding, QString texture)
+                            PGE_Point pos, double _padding, QString texture)
 {
     if(!texture.isEmpty())
         loadTexture(texture);
@@ -141,7 +141,7 @@ void PGE_MenuBoxBase::setPadding(int _padding)
     padding=_padding;
 }
 
-void PGE_MenuBoxBase::setPos(float x, float y)
+void PGE_MenuBoxBase::setPos(double x, double y)
 {
     _pos.setX(x);
     _pos.setY(y);
@@ -154,7 +154,7 @@ void PGE_MenuBoxBase::setMaxMenuItems(int items)
     updateSize();
 }
 
-void PGE_MenuBoxBase::setBoxSize(float _Width, float _Height, float _padding)
+void PGE_MenuBoxBase::setBoxSize(double _Width, double _Height, double _padding)
 {
     width = _Width;
     height = _Height;
@@ -213,7 +213,7 @@ void PGE_MenuBoxBase::addMenuItems(QStringList &menuitems)
 }
 
 
-void PGE_MenuBoxBase::update(float ticks)
+void PGE_MenuBoxBase::update(double ticks)
 {
     switch(_page)
     {
@@ -377,7 +377,7 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
     }
 }
 
-void PGE_MenuBoxBase::processLoader(float ticks)
+void PGE_MenuBoxBase::processLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {
@@ -389,7 +389,7 @@ void PGE_MenuBoxBase::processLoader(float ticks)
     if(fader_opacity>=1.0f) _page++;
 }
 
-void PGE_MenuBoxBase::processBox(float)
+void PGE_MenuBoxBase::processBox(double)
 {
 //    #ifndef __APPLE__
 //    if(g_AppSettings.interprocessing)
@@ -423,7 +423,7 @@ void PGE_MenuBoxBase::processBox(float)
 
 
 
-void PGE_MenuBoxBase::processUnLoader(float ticks)
+void PGE_MenuBoxBase::processUnLoader(double ticks)
 {
     SDL_Event event;
     while ( SDL_PollEvent(&event) ) {

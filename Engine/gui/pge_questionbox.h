@@ -7,7 +7,7 @@ class PGE_QuestionBox : public PGE_MenuBoxBase
 {
 public:
     PGE_QuestionBox(Scene * _parentScene=NULL, QString _title="Menu is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
     PGE_QuestionBox(const PGE_QuestionBox &mb);
 
     ~PGE_QuestionBox();

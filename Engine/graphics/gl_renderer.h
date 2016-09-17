@@ -52,6 +52,11 @@ public:
     static QString ScreenshotPath;
     static void makeShot();
     static int  makeShot_action(void *_pixels);
+
+    static bool recordInProcess();
+    static void toggleRecorder();
+    static void processRecorder(double ticktime);
+
     static bool ready();
     static void flush();
     static void repaint();

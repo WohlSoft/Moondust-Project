@@ -58,7 +58,7 @@ void PGE_BoxBase::setParentScene(Scene *_parentScene)
 void PGE_BoxBase::exec()
 {}
 
-void PGE_BoxBase::update(float)
+void PGE_BoxBase::update(double)
 {}
 
 void PGE_BoxBase::render()
@@ -74,7 +74,7 @@ void PGE_BoxBase::render()
 
 
 /**************************Fader*******************************/
-void PGE_BoxBase::setFade(int speed, float target, float step)
+void PGE_BoxBase::setFade(int speed, double target, double step)
 {
     fade_step = fabs(step);
     target_opacity = target;
@@ -82,29 +82,33 @@ void PGE_BoxBase::setFade(int speed, float target, float step)
     manual_ticks = speed;
 }
 
-bool PGE_BoxBase::tickFader(float ticks)
+bool PGE_BoxBase::tickFader(double ticks)
 {
-    if(fadeSpeed<1) return true; //Idling animation
+    if(fadeSpeed < 1) return true; //Idling animation
 
     manual_ticks-=fabs(ticks);
-        while(manual_ticks<=0.0f)
-        {
-            fadeStep();
-            manual_ticks+=fadeSpeed;
-        }
+
+    while(manual_ticks <= 0.0)
+    {
+        fadeStep();
+        manual_ticks+=fadeSpeed;
+    }
+
     return (fader_opacity==target_opacity);
 }
 
 void PGE_BoxBase::fadeStep()
 {
     if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
+        fader_opacity += fade_step;
     else
-        fader_opacity-=fade_step;
+        fader_opacity -= fade_step;
 
-    if(fader_opacity>1.0f) fader_opacity = 1.0f;
+    if(fader_opacity > 1.0)
+        fader_opacity = 1.0;
     else
-        if(fader_opacity<0.0f) fader_opacity = 0.0f;
+    if(fader_opacity < 0.0)
+        fader_opacity = 0.0;
 }
 /**************************Fader**end**************************/
 
@@ -118,7 +122,7 @@ void PGE_BoxBase::loadTexture(QString path)
         GlRenderer::deleteTexture( styleTexture );
     }
     GlRenderer::loadTextureP(styleTexture, path);
-    if(styleTexture.texture>0)
+    if(styleTexture.texture > 0)
         _textureUsed=true;
 }
 
@@ -126,8 +130,8 @@ void PGE_BoxBase::updateTickValue()
 {
     uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick = round(uTickf);
-    if(uTick<=0) uTick=1;
-    if(uTickf<=0) uTickf=1.0;
+    if(uTick<=0)    uTick = 1;
+    if(uTickf<=0.0) uTickf = 1.0;
 }
 
 void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border, float opacity)

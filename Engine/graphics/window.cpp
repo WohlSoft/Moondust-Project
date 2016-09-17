@@ -416,6 +416,11 @@ int PGE_Window::processEvents(SDL_Event &event)
                 PGE_Window::showDebugInfo = !PGE_Window::showDebugInfo;
                 return 2;
             }
+            case SDLK_F11:
+            {
+                GlRenderer::toggleRecorder();
+                return 2;
+            }
             case SDLK_F12:
             {
                 GlRenderer::makeShot();
