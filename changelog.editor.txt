@@ -3,6 +3,7 @@ Editor 0.3.1.11-patch-1
 - Added ability to define fixed size for exportable section piece
 - Fixed crash, caused by very small pictures (1 px height)
 - Added preview counter of coins in the blocks
+- Added direction arrows for a warp points of pipe type
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

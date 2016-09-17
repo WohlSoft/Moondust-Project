@@ -50,13 +50,17 @@ void ItemDoor::construct()
     this->setData(ITEM_WIDTH, 32);
     this->setData(ITEM_HEIGHT, 32);
     m_grp = NULL;
-    m_doorLabel = NULL;
+    m_doorLabel = nullptr;
+    m_arrowEnter = nullptr;
+    m_arrowExit = nullptr;
 }
 
 ItemDoor::~ItemDoor()
 {
-    if(m_doorLabel!=NULL) delete m_doorLabel;
-    if(m_grp!=NULL) delete m_grp;
+    if(m_doorLabel != nullptr) delete m_doorLabel;
+    if(m_arrowEnter != nullptr) delete m_arrowEnter;
+    if(m_arrowExit != nullptr) delete m_arrowExit;
+    if(m_grp != nullptr) delete m_grp;
     m_scene->unregisterElement(this);
 }
 
@@ -309,8 +313,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2;")
-                               .arg(direction==D_Entrance ? m_data.ix : m_data.ox)
-                               .arg(direction==D_Entrance ? m_data.iy : m_data.oy)
+                               .arg(m_pointSide==D_Entrance ? m_data.ix : m_data.ox)
+                               .arg(m_pointSide==D_Entrance ? m_data.iy : m_data.oy)
                                );
         m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -319,8 +323,8 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         QApplication::clipboard()->setText(
                             QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(direction==D_Entrance ? m_data.ix : m_data.ox)
-                               .arg(direction==D_Entrance ? m_data.iy : m_data.oy)
+                               .arg(m_pointSide==D_Entrance ? m_data.ix : m_data.ox)
+                               .arg(m_pointSide==D_Entrance ? m_data.iy : m_data.oy)
                                .arg(m_itemSize.width())
                                .arg(m_itemSize.height())
                                );
@@ -331,10 +335,10 @@ void ItemDoor::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     {
         QApplication::clipboard()->setText(
                             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(direction==D_Entrance ? m_data.ix : m_data.ox)
-                               .arg(direction==D_Entrance ? m_data.iy : m_data.oy)
-                               .arg((direction==D_Entrance ? m_data.ix : m_data.ox)+m_itemSize.width())
-                               .arg((direction==D_Entrance ? m_data.iy : m_data.oy)+m_itemSize.height())
+                               .arg(m_pointSide==D_Entrance ? m_data.ix : m_data.ox)
+                               .arg(m_pointSide==D_Entrance ? m_data.iy : m_data.oy)
+                               .arg((m_pointSide==D_Entrance ? m_data.ix : m_data.ox)+m_itemSize.width())
+                               .arg((m_pointSide==D_Entrance ? m_data.iy : m_data.oy)+m_itemSize.height())
                                );
         m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -387,16 +391,103 @@ void ItemDoor::setLayer(QString layer)
     }
 }
 
+void ItemDoor::refreshArrows()
+{
+    if(m_arrowEnter != nullptr)
+    {
+        m_grp->removeFromGroup(m_arrowEnter);
+        m_scene->removeItem(m_arrowEnter);
+        delete m_arrowEnter;
+        m_arrowEnter = nullptr;
+    }
+    if(m_arrowExit != nullptr)
+    {
+        m_grp->removeFromGroup(m_arrowExit);
+        m_scene->removeItem(m_arrowExit);
+        delete m_arrowExit;
+        m_arrowExit = nullptr;
+    }
+
+    if(m_data.type == LevelDoor::WARP_PIPE)
+    {
+        if((m_pointSide == D_Entrance) || m_data.two_way)
+        {
+            m_arrowEnter = new QGraphicsPixmapItem;
+            m_arrowEnter->setPixmap( QPixmap(":/npc/proj.png") );
+            m_scene->addItem( m_arrowEnter );
+            m_arrowEnter->setOpacity(qreal(0.6));
+
+            QPointF offset = QPoint(0,0);
+            switch(m_data.idirect)
+            {
+            case LevelDoor::ENTRANCE_LEFT:
+                m_arrowEnter->setRotation(270);
+                offset.setY(32);
+                break;
+            case LevelDoor::ENTRANCE_DOWN:
+                m_arrowEnter->setRotation(180);
+                offset.setX(32);
+                offset.setY(32);
+                break;
+            case LevelDoor::ENTRANCE_RIGHT:
+                m_arrowEnter->setRotation(90);
+                offset.setX(32);
+                break;
+            case LevelDoor::ENTRANCE_UP:
+            default:
+                m_arrowEnter->setRotation(0);
+                break;
+            }
+            m_arrowEnter->setZValue(this->zValue() + 0.0000015);
+            m_arrowEnter->setPos( ( offset.x() + scenePos().x() ), ( offset.y() + scenePos().y() ));
+            m_grp->addToGroup( m_arrowEnter );
+        }
+
+        if((m_pointSide == D_Exit) || m_data.two_way)
+        {
+            m_arrowExit = new QGraphicsPixmapItem;
+            m_arrowExit->setPixmap( QPixmap(":/npc/warp.png") );
+            m_scene->addItem( m_arrowExit );
+            m_arrowExit->setOpacity(qreal(0.6));
+
+            QPointF offset = QPoint(0,0);
+            switch(m_data.odirect)
+            {
+            case LevelDoor::EXIT_LEFT:
+                m_arrowExit->setRotation(270);
+                offset.setY(32);
+                break;
+            case LevelDoor::EXIT_DOWN:
+                m_arrowExit->setRotation(180);
+                offset.setX(32);
+                offset.setY(32);
+                break;
+            case LevelDoor::EXIT_RIGHT:
+                m_arrowExit->setRotation(90);
+                offset.setX(32);
+                break;
+            case LevelDoor::EXIT_UP:
+            default:
+                m_arrowExit->setRotation(0);
+                break;
+            }
+            m_arrowExit->setZValue(this->zValue() + 0.0000010);
+            m_arrowExit->setPos( ( offset.x() + scenePos().x() ), ( offset.y() + scenePos().y() ));
+            m_grp->addToGroup( m_arrowExit );
+        }
+    }
+}
+
 void ItemDoor::arrayApply()
 {
     bool found=false;
 
-    if((direction==D_Entrance) && m_data.isSetIn)
+    if((m_pointSide==D_Entrance) && m_data.isSetIn)
     {
         m_data.ix = qRound(this->scenePos().x());
         m_data.iy = qRound(this->scenePos().y());
     }
-    else if((direction==D_Exit) && m_data.isSetOut )
+    else if((m_pointSide==D_Exit) && m_data.isSetOut )
     {
         m_data.ox = qRound(this->scenePos().x());
         m_data.oy = qRound(this->scenePos().y());
@@ -443,7 +534,7 @@ void ItemDoor::arrayApply()
     }
 
     //Sync data to his pair door item
-    if(direction==D_Entrance)
+    if(m_pointSide==D_Entrance)
     {
         if(m_data.isSetOut)
         {
@@ -451,7 +542,9 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.meta.array_id))
                 {
-                    ((ItemDoor *)door)->m_data = m_data;
+                    ItemDoor *d = (ItemDoor *)door;
+                    d->m_data = m_data;
+                    d->refreshArrows();
                     break;
                 }
             }
@@ -465,7 +558,9 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==m_data.meta.array_id))
                 {
-                    ((ItemDoor *)door)->m_data = m_data;
+                    ItemDoor *d = (ItemDoor *)door;
+                    d->m_data = m_data;
+                    d->refreshArrows();
                     break;
                 }
             }
@@ -480,7 +575,7 @@ void ItemDoor::arrayApply()
 
 void ItemDoor::removeFromArray()
 {
-    if(direction==D_Entrance)
+    if(m_pointSide==D_Entrance)
     {
         m_data.isSetIn=false;
         m_data.ix = 0;
@@ -498,7 +593,7 @@ void ItemDoor::removeFromArray()
 
 void ItemDoor::returnBack()
 {
-    if(direction==D_Entrance)
+    if(m_pointSide==D_Entrance)
         this->setPos(m_data.ix, m_data.iy);
     else
         this->setPos(m_data.ox, m_data.oy);
@@ -506,7 +601,7 @@ void ItemDoor::returnBack()
 
 QPoint ItemDoor::sourcePos()
 {
-    if(direction==D_Entrance)
+    if(m_pointSide==D_Entrance)
         return QPoint(m_data.ix, m_data.iy);
     else
         return QPoint(m_data.ox, m_data.oy);
@@ -522,7 +617,7 @@ bool ItemDoor::itemTypeIsLocked()
 void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 {
     m_data = inD;
-    direction = doorDir;
+    m_pointSide = doorDir;
 
     long ix, iy, ox, oy;
     QColor cEnter(qRgb(0xff,0x00,0x7f));
@@ -537,7 +632,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 
     m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(m_data.meta.array_id));
 
-    if(direction==D_Entrance)
+    if(m_pointSide==D_Entrance)
     {
         m_data.isSetIn=true;
         m_brush = QBrush(cEnter);
@@ -562,12 +657,14 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     this->setFlag(QGraphicsItem::ItemIsSelectable, (!m_scene->m_lockDoor));
     this->setFlag(QGraphicsItem::ItemIsMovable, (!m_scene->m_lockDoor));
 
-    m_doorLabel->setZValue(m_scene->Z_sys_door+0.0000002);
+    m_doorLabel->setZValue(m_scene->Z_sys_door + 0.0000020);
 
-    this->setData(ITEM_ID, QString::number(0) );
-    this->setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
+    setData(ITEM_ID, QString::number(0) );
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
 
-    this->setZValue(m_scene->Z_sys_door);
+    setZValue(m_scene->Z_sys_door);
+
+    refreshArrows();
 
     if(!init)
     {
