@@ -171,8 +171,14 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
 
                     if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
-                        if(LvlPlacingItems::noOutSectionFlood){
-                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::blockSet.w, LvlPlacingItems::blockSet.h, scene->m_data->CurSection)){
+                        if(LvlPlacingItems::noOutSectionFlood)
+                        {
+                            if(!scene->isInSection(coor.first,
+                                                   coor.second,
+                                                   LvlPlacingItems::blockSet.w,
+                                                   LvlPlacingItems::blockSet.h,
+                                                   scene->m_data->CurSection, -1))
+                            {
                                 blackList << coor;
                                 continue;
                             }
