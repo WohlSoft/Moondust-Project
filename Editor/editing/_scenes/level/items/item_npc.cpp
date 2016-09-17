@@ -559,12 +559,12 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
     if(m_DisableScene)
         return;
 
-    if(m_includedNPC!=NULL)
+    if(m_includedNPC != nullptr)
     {
         m_grp->removeFromGroup(m_includedNPC);
         m_scene->removeItem(m_includedNPC);
         delete m_includedNPC;
-        m_includedNPC = NULL;
+        m_includedNPC = nullptr;
     }
     if(npcID==0 || !m_localProps.setup.container)
     {

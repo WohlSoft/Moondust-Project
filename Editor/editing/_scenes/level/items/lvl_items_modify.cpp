@@ -114,15 +114,19 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
                    ((m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)))
                  ) || (remove))
             {
-                dynamic_cast<ItemDoor *>(item)->m_data = m_data->doors[i];
-                dynamic_cast<ItemDoor *>(item)->removeFromArray();
-                delete dynamic_cast<ItemDoor *>(item);
+                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                d->m_data = m_data->doors[i];
+                d->removeFromArray();
+                delete d;
                 doorEntranceSynced = true;
+
             }
             else
             {
                 m_data->doors[i].isSetIn=true;
-                dynamic_cast<ItemDoor *>(item)->m_data = m_data->doors[i];
+                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                d->m_data = m_data->doors[i];
+                d->refreshArrows();
                 doorEntranceSynced = true;
             }
         }
@@ -133,15 +137,18 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
                      (m_data->doors[i].lvl_i) )
                  ) || (remove) )
             {
-                dynamic_cast<ItemDoor *>(item)->m_data = m_data->doors[i];
-                dynamic_cast<ItemDoor *>(item)->removeFromArray();
-                delete dynamic_cast<ItemDoor *>(item);
+                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                d->m_data = m_data->doors[i];
+                d->removeFromArray();
+                delete d;
                 doorExitSynced = true;
             }
             else
             {
                 m_data->doors[i].isSetOut=true;
-                dynamic_cast<ItemDoor *>(item)->m_data = m_data->doors[i];
+                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                d->m_data = m_data->doors[i];
+                d->refreshArrows();
                 doorExitSynced = true;
             }
         }

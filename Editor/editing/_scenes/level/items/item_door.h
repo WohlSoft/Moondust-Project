@@ -37,7 +37,7 @@ public:
     void setDoorData(LevelDoor inD, int doorDir, bool init=false);
     void setScenePoint(LvlScene *theScene);
 
-    int direction;
+    int m_pointSide;
     enum doorDirect{
         D_Entrance=0,
         D_Exit
@@ -47,6 +47,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
     void setLayer(QString layer);
+
+    void refreshArrows();
 
     void arrayApply();
     void removeFromArray();
@@ -65,6 +67,8 @@ private:
     QPen   m_pen;
     QGraphicsItemGroup *    m_grp;
     QGraphicsPixmapItem *   m_doorLabel;
+    QGraphicsPixmapItem *   m_arrowEnter;
+    QGraphicsPixmapItem *   m_arrowExit;
 };
 
 #endif // ITEM_DOOR_H
