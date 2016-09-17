@@ -5,6 +5,7 @@ Editor 0.3.1.11-patch-1
 - Added preview counter of coins in the blocks
 - Added direction arrows for a warp points of pipe type
 - Fixed in-bounds of section detection used by flood-fill algorithm
+- Added ability to override grid size with custom
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

@@ -60,7 +60,7 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     }
 
     scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
-    scene->opts = options;
+    scene->m_opts = options;
 
     //scene->InitSection(0);
     //scene->drawSpace();
@@ -349,7 +349,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     //Declaring of the scene
     scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
 
-    scene->opts = options;
+    scene->m_opts = options;
 
     int DataSize=0;
 

@@ -99,7 +99,7 @@ void WorldEdit::dropEvent(QDropEvent *e)
 
 void WorldEdit::updateScene()
 {
-        if(scene->opts.animationEnabled)
+        if(scene->m_opts.animationEnabled)
         {
             QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
             scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );

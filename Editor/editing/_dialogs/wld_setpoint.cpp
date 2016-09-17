@@ -66,7 +66,7 @@ WLD_SetPoint::~WLD_SetPoint()
 
 void WLD_SetPoint::updateScene()
 {
-    if(m_scene->opts.animationEnabled)
+    if(m_scene->m_opts.animationEnabled)
     {
         QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
         m_scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
@@ -204,10 +204,10 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     //Declaring of the scene
     m_scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
 
-    m_scene->opts = options;
+    m_scene->m_opts = options;
     m_scene->m_isSelectionDialog = true;
 
-    ui->animation->setChecked(m_scene->opts.animationEnabled);
+    ui->animation->setChecked(m_scene->m_opts.animationEnabled);
 
     //Preparing point selection mode
     m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
@@ -333,7 +333,7 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
 
         if(progress.wasCanceled()) return false;
 
-    if(m_scene->opts.animationEnabled)
+    if(m_scene->m_opts.animationEnabled)
         m_scene->startAnimation(); //Apply block animation
 
     if(!sceneCreated)
@@ -490,7 +490,7 @@ void WLD_SetPoint::on_ResetPosition_clicked()
 
 void WLD_SetPoint::on_animation_clicked(bool checked)
 {
-    m_scene->opts.animationEnabled = checked;
+    m_scene->m_opts.animationEnabled = checked;
 
     if(checked)
         m_scene->startAnimation();

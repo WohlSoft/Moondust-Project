@@ -865,6 +865,7 @@ public:
     public slots:
         void on_actionGridEn_triggered(bool checked);
         void on_actionShowGrid_triggered(bool checked);
+        void customGrid(bool checked=false);
 
     private slots:
         void on_actionSection_Settings_triggered(bool checked);

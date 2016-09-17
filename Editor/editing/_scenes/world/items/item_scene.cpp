@@ -226,7 +226,7 @@ void ItemScene::transformTo(long target_id)
     setSceneData(m_data, &mergedSet, &animator);
     arrayApply();
 
-    if(!m_scene->opts.animationEnabled)
+    if(!m_scene->m_opts.animationEnabled)
         m_scene->update();
 }
 

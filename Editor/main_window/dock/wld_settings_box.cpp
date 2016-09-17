@@ -516,7 +516,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         /****************************************************************************************/
 
         /***********************Resume stoped animation and restore 'count' button state**************************/
-        if(edit->scene->opts.animationEnabled)
+        if(edit->scene->m_opts.animationEnabled)
             edit->scene->startAnimation();
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);

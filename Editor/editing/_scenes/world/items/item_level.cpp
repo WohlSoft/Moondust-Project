@@ -304,7 +304,7 @@ void ItemLevel::transformTo(long target_id)
     setLevelData(m_data, &mergedSet, &animator, &m_pathID, &m_bPathID);
     arrayApply();
 
-    if(!m_scene->opts.animationEnabled)
+    if(!m_scene->m_opts.animationEnabled)
         m_scene->update();
 }
 

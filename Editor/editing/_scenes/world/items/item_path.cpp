@@ -213,7 +213,7 @@ void ItemPath::transformTo(long target_id)
     setPathData(m_data, &mergedSet, &animator);
     arrayApply();
 
-    if(!m_scene->opts.animationEnabled)
+    if(!m_scene->m_opts.animationEnabled)
         m_scene->update();
 }
 

@@ -295,11 +295,11 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
             ui->actionLockMusicBoxes->setChecked(scn->m_lockMusicBox);
 
             LogDebug("-> Get scene flags: grid");
-            ui->actionGridEn->setChecked(scn->opts.grid_snap);
-            ui->actionShowGrid->setChecked(scn->opts.grid_show);
+            ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
+            ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
 
             LogDebug("-> Get scene flags: animation and collision");
-            GlobalSettings::LvlOpts = scn->opts;
+            GlobalSettings::LvlOpts = scn->m_opts;
             ui->actionUndo->setEnabled(scn->canUndo());
             ui->actionRedo->setEnabled(scn->canRedo());
 

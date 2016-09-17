@@ -451,8 +451,8 @@ void WldScene::placeAll(const WorldData &data){
     }
 
     //refresh Animation control
-    if(opts.animationEnabled) stopAnimation();
-    if(opts.animationEnabled) startAnimation();
+    if(m_opts.animationEnabled) stopAnimation();
+    if(m_opts.animationEnabled) startAnimation();
 }
 
 

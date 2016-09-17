@@ -247,6 +247,11 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuSetGridSize">
+     <property name="title">
+      <string>Set align grid size</string>
+     </property>
+    </widget>
     <addaction name="actionWLDToolBox"/>
     <addaction name="actionWorld_settings"/>
     <addaction name="actionLVLToolBox"/>
@@ -266,6 +271,7 @@
     <addaction name="separator"/>
     <addaction name="actionGridEn"/>
     <addaction name="actionShowGrid"/>
+    <addaction name="menuSetGridSize"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
@@ -705,7 +711,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -2992,11 +2998,16 @@
     <string notr="true">lunaoverworld.lua</string>
    </property>
   </action>
+  <action name="actionSetGridItemDefault">
+   <property name="text">
+    <string>Item default</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Engine/_resources/engine.qrc"/>
   <include location="_resources/editor.qrc"/>
+  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

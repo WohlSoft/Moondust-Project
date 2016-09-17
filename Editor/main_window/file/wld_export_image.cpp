@@ -162,7 +162,7 @@ void WorldEdit::ExportingReady() //slot
         if(hideMusic) scene->hideMusicBoxes(true);
         if(hidePathLevels) scene->hidePathAndLevels(true);
 
-        if(scene->opts.animationEnabled) scene->startAnimation(); // Restart animation
+        if(scene->m_opts.animationEnabled) scene->startAnimation(); // Restart animation
 
 
         if(!progress.wasCanceled()) progress.setValue(100);

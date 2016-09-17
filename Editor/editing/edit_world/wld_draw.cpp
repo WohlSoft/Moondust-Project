@@ -92,7 +92,7 @@ bool WorldEdit::DrawObjects(QProgressDialog &progress)
 
         if(progress.wasCanceled()) return false;
 
-    if(scene->opts.animationEnabled)
+    if(scene->m_opts.animationEnabled)
         scene->startAnimation(); //Apply block animation
 
     if(!sceneCreated)
