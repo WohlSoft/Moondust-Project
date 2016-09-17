@@ -78,6 +78,7 @@ void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("PATH-%1").arg(m_data.id));
                                 ItemMenu.addSeparator();
     QAction *remove =           ItemMenu.addAction(tr("Remove"));
+    QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("PATH-%1").arg(m_data.id));
 
 
     QAction *selected =         ItemMenu.exec(mouseEvent->screenPos());
@@ -180,6 +181,30 @@ void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     if(selected==remove)
     {
        m_scene->removeSelectedWldItems();
+    }
+    else
+    if(selected==remove_all)
+    {
+        QList<QGraphicsItem *> our_items;
+        QList<QGraphicsItem *> selectedList;
+        unsigned long oldID = m_data.id;
+        our_items = m_scene->items();
+
+        foreach(QGraphicsItem * SelItem, our_items )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="PATH")
+            {
+                if( ((ItemPath*) SelItem)->m_data.id == oldID)
+                {
+                    selectedList.push_back(SelItem);
+                }
+            }
+        }
+        if(!selectedList.isEmpty())
+        {
+            m_scene->removeWldItems(selectedList);
+            m_scene->Debugger_updateItemList();
+        }
     }
 }
 
