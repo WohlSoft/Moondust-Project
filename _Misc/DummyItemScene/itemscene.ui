@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>ItemScene</string>
   </property>
-  <widget class="TheScene" name="centralWidget"/>
+  <widget class="PGE_EditScene" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -29,9 +29,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TheScene</class>
+   <class>PGE_EditScene</class>
    <extends>QWidget</extends>
-   <header>thescene.h</header>
+   <header>item_scene/pge_edit_scene.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
