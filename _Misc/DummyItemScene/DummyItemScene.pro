@@ -11,11 +11,13 @@ TEMPLATE = app
 
 CONFIG  += c++11
 
-
 SOURCES += main.cpp\
         itemscene.cpp \
-    thescene.cpp
+    item_scene/pge_edit_scene.cpp \
+    item_scene/pge_edit_scene_item.cpp
 
 HEADERS  += itemscene.h \
-    thescene.h
+    item_scene/pge_edit_scene.h \
+    item_scene/pge_edit_scene_item.h
+
 FORMS    += itemscene.ui
