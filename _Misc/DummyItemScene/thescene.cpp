@@ -34,20 +34,18 @@ void TheScene::addRect(int x, int y)
 
 void TheScene::clearSelection()
 {
-    for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
+    for(Item*item : m_selectedItems)
     {
-        Item*i = (*it);
-        i->m_selected = false;
+        item->m_selected = false;
     }
     m_selectedItems.clear();
 }
 
 void TheScene::moveSelection(int deltaX, int deltaY)
 {
-    for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
+    for(Item*item : m_selectedItems)
     {
-        Item*i = (*it);
-        QRect&r = i->m_posRect;
+        QRect&r = item->m_posRect;
         int x= r.x();
         int y= r.y();
         r.moveTo(x+deltaX, y+deltaY);
@@ -126,26 +124,26 @@ void TheScene::mousePressEvent(QMouseEvent *event)
     m_mouseBegin = pos;
     m_mouseOld   = pos;
 
-    bool isShift = (event->modifiers()&Qt::ShiftModifier) != 0;
-    bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
+    bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
+    bool isCtrl =   (event->modifiers() & Qt::ControlModifier) != 0;
 
     if( !isShift )
     {
         bool catched = false;
-        for(int i=0; i<m_items.size(); i++)
+        for(Item&item : m_items)
         {
-            if( m_items[i].isTouches(m_mouseOld.x(), m_mouseOld.y()) )
+            if( item.isTouches(m_mouseOld.x(), m_mouseOld.y()) )
             {
                 catched = true;
                 if(isCtrl)
                 {
-                    toggleselect(m_items[i]);
+                    toggleselect(item);
                 }
                 else
-                if(!m_items[i].selected())
+                if(!item.selected())
                 {
                     clearSelection();
-                    select(m_items[i]);
+                    select(item);
                 }
                 break;
             }
@@ -170,7 +168,7 @@ void TheScene::mousePressEvent(QMouseEvent *event)
 
 void TheScene::mouseMoveEvent(QMouseEvent *event)
 {
-    if((event->buttons()&Qt::LeftButton)==0)
+    if((event->buttons() & Qt::LeftButton) == 0)
         return;
 
     QPoint pos = mapToWorld(event->pos());
@@ -181,9 +179,8 @@ void TheScene::mouseMoveEvent(QMouseEvent *event)
     QPoint delta = m_mouseOld - pos;
     if(!m_rectSelect)
     {
-        for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
+        for(Item*i : m_selectedItems)
         {
-            Item*i = (*it);
             Item& item = *i;
             int x = item.m_posRect.x();
             int y = item.m_posRect.y();
@@ -196,11 +193,11 @@ void TheScene::mouseMoveEvent(QMouseEvent *event)
 
 void TheScene::mouseReleaseEvent(QMouseEvent *event)
 {
-    bool isShift = (event->modifiers()&Qt::ShiftModifier) != 0;
-    bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
+    bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
+    bool isCtrl  =  (event->modifiers() & Qt::ControlModifier) != 0;
     QPoint pos = mapToWorld(event->pos());
 
-    if(event->button()==Qt::RightButton && (event->buttons()==0))
+    if( (event->button()==Qt::RightButton) && (event->buttons() == 0) )
     {
         QMenu test;
         test.addAction("Meow  1");
@@ -230,14 +227,14 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
         int bottom = m_mouseBegin.y() > m_mouseEnd.y() ? m_mouseBegin.y() : m_mouseEnd.y();
         QRect selZone;
         selZone.setCoords(left, top, right, bottom);
-        for(int i=0; i<m_items.size(); i++)
+        for(Item& item : m_items)
         {
-            if( m_items[i].isTouches(selZone) )
+            if( item.isTouches(selZone) )
             {
                 if(isShift && isCtrl)
-                    toggleselect(m_items[i]);
+                    toggleselect(item);
                 else
-                    select(m_items[i]);
+                    select(item);
             }
         }
         m_rectSelect=false;
@@ -247,7 +244,7 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
 
 void TheScene::wheelEvent(QWheelEvent *event)
 {
-    if((event->modifiers()&Qt::AltModifier) != 0)
+    if( (event->modifiers() & Qt::AltModifier) != 0 )
     {
         if(event->delta() > 0)
             m_zoom += 0.1;
@@ -263,13 +260,13 @@ void TheScene::paintEvent(QPaintEvent */*event*/)
     p.setBrush(QColor(Qt::white));
     p.setOpacity(1.0);
 
-    for(int i=0; i<m_items.size(); i++)
+    for(Item&item : m_items)
     {
-        if(m_items[i].selected())
+        if(item.selected())
             p.setPen(QColor(Qt::green));
         else
             p.setPen(QColor(Qt::black));
-        QRect r = applyZoom(m_items[i].m_posRect);
+        QRect r = applyZoom(item.m_posRect);
         p.drawRect(r);
     }
     if(m_rectSelect)
@@ -285,7 +282,7 @@ void TheScene::paintEvent(QPaintEvent */*event*/)
 
 void TheScene::keyPressEvent(QKeyEvent *event)
 {
-    bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
+    bool isCtrl = (event->modifiers() & Qt::ControlModifier) != 0;
     switch(event->key())
     {
     case Qt::Key_Left:
