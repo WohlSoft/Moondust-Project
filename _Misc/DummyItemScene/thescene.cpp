@@ -3,6 +3,7 @@
 #include <QAction>
 #include <QPainter>
 #include <QMouseEvent>
+#include <QWheelEvent>
 #include <QPaintEvent>
 #include <QKeyEvent>
 #include "thescene.h"
@@ -11,9 +12,15 @@ TheScene::TheScene(QWidget *parent) :
     QWidget(parent),
     m_ignoreMove(false),
     m_ignoreRelease(false),
-    m_rectSelect(false)
+    m_rectSelect(false),
+    m_zoom(1.0)
 {
-    this->setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::StrongFocus);
+    setMouseTracking(true);
+    connect(&m_mover.timer,
+            &QTimer::timeout,
+            this,
+            static_cast<void (TheScene::*)()>(&TheScene::moveCamera) );
 }
 
 void TheScene::clearSelection()
@@ -59,13 +66,46 @@ void TheScene::moveSelection(int deltaX, int deltaY)
     repaint();
 }
 
+QPoint TheScene::mapToWorld(const QPoint &mousePos)
+{
+    QPoint w = mousePos;
+    w.setX( qRound(qreal(w.x())/m_zoom) );
+    w.setY( qRound(qreal(w.y())/m_zoom) );
+    w -= m_cameraPos;
+    return w;
+}
+
+QRect TheScene::applyZoom(const QRect &r)
+{
+    QRect t = r;
+    t.moveTo( t.topLeft() + m_cameraPos );
+    t.moveTo( qRound(qreal(t.x())*m_zoom), qRound(qreal(t.y())*m_zoom));
+    t.setWidth( qRound(qreal(t.width())*m_zoom) );
+    t.setHeight( qRound(qreal(t.height())*m_zoom) );
+    return t;
+}
+
+void TheScene::moveCamera()
+{
+    moveCamera(m_mover.speedX, m_mover.speedY);
+    repaint();
+}
+
+void TheScene::moveCamera(int deltaX, int deltaY)
+{
+    m_cameraPos.setX( m_cameraPos.x() - deltaX );
+    m_cameraPos.setY( m_cameraPos.y() - deltaY );
+}
+
 void TheScene::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() != Qt::LeftButton)
         return;
 
-    m_mouseBegin = event->pos();
-    m_mouseOld   = event->pos();
+    QPoint pos = mapToWorld(event->pos());
+
+    m_mouseBegin = pos;
+    m_mouseOld   = pos;
 
     bool isShift = (event->modifiers()&Qt::ShiftModifier) != 0;
     bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
@@ -114,10 +154,12 @@ void TheScene::mouseMoveEvent(QMouseEvent *event)
     if((event->buttons()&Qt::LeftButton)==0)
         return;
 
+    QPoint pos = mapToWorld(event->pos());
+
     if(m_ignoreMove)
         return;
 
-    QPoint delta = m_mouseOld - event->pos();
+    QPoint delta = m_mouseOld - pos;
     if(!m_rectSelect)
     {
         for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
@@ -128,7 +170,7 @@ void TheScene::mouseMoveEvent(QMouseEvent *event)
             item.m_posRect.moveTo( x-delta.x(), y-delta.y() );
         }
     }
-    m_mouseOld = event->pos();
+    m_mouseOld = pos;
     repaint();
 }
 
@@ -136,6 +178,7 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
 {
     bool isShift = (event->modifiers()&Qt::ShiftModifier) != 0;
     bool isCtrl = (event->modifiers()&Qt::ControlModifier) != 0;
+    QPoint pos = mapToWorld(event->pos());
 
     if(event->button()==Qt::RightButton && (event->buttons()==0))
     {
@@ -158,7 +201,7 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
     if(skip)
         return;
 
-    m_mouseEnd = event->pos();
+    m_mouseEnd = pos;
     if(m_rectSelect)
     {
         int left   = m_mouseBegin.x() < m_mouseEnd.x() ? m_mouseBegin.x() : m_mouseEnd.x();
@@ -182,6 +225,18 @@ void TheScene::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+void TheScene::wheelEvent(QWheelEvent *event)
+{
+    if((event->modifiers()&Qt::AltModifier) != 0)
+    {
+        if(event->delta() > 0)
+            m_zoom += 0.1;
+        else
+            m_zoom -= 0.1;
+        repaint();
+    }
+}
+
 void TheScene::paintEvent(QPaintEvent */*event*/)
 {
     QPainter p(this);
@@ -194,14 +249,16 @@ void TheScene::paintEvent(QPaintEvent */*event*/)
             p.setPen(QColor(Qt::green));
         else
             p.setPen(QColor(Qt::black));
-        p.drawRect(m_items[i].m_posRect);
+        QRect r = applyZoom(m_items[i].m_posRect);
+        p.drawRect(r);
     }
     if(m_rectSelect)
     {
         p.setBrush(QBrush(Qt::green));
         p.setPen(QPen(Qt::darkGreen));
         p.setOpacity(0.5);
-        p.drawRect(QRect(m_mouseBegin, m_mouseOld));
+        QRect r = applyZoom(QRect(m_mouseBegin, m_mouseOld));
+        p.drawRect(r);
     }
     p.end();
 }
@@ -212,18 +269,53 @@ void TheScene::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Left:
-        if(isCtrl) moveSelection(-1, 0);
+        if(isCtrl)
+        {
+            moveSelection(-1, 0);
+        }
+        else
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedX = -32;
+        }
         break;
     case Qt::Key_Right:
-        if(isCtrl) moveSelection(1, 0);
+        if(isCtrl)
+        {
+            moveSelection(1, 0);
+        }
+        else
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedX = 32;
+        }
         break;
     case Qt::Key_Up:
-        if(isCtrl) moveSelection(0, -1);
+        if(isCtrl)
+        {
+            moveSelection(0, -1);
+        }
+        else
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedY = -32;
+        }
         break;
     case Qt::Key_Down:
-        if(isCtrl) moveSelection(0, 1);
+        if(isCtrl)
+        {
+            moveSelection(0, 1);
+        }
+        else
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedY = 32;
+        }
         break;
     }
+
+    if((m_mover.speedX != 0) || (m_mover.speedY != 0))
+        m_mover.timer.start(32);
 }
 
 void TheScene::keyReleaseEvent(QKeyEvent *event)
@@ -235,5 +327,31 @@ void TheScene::keyReleaseEvent(QKeyEvent *event)
         m_rectSelect=false;
         repaint();
         break;
+    case Qt::Key_Left:
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedX = 0;
+        }
+        break;
+    case Qt::Key_Right:
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedX = 0;
+        }
+        break;
+    case Qt::Key_Up:
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedY = 0;
+        }
+        break;
+    case Qt::Key_Down:
+        {
+            if(event->isAutoRepeat()) return;
+            m_mover.speedY = 0;
+        }
+        break;
     }
+    if((m_mover.speedX==0) && (m_mover.speedY==0))
+        m_mover.timer.stop();
 }
