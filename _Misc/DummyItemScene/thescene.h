@@ -5,6 +5,7 @@
 #include <QList>
 #include <QRect>
 #include <QHash>
+#include <QTimer>
 
 class TheScene;
 
@@ -93,10 +94,27 @@ public:
     bool         m_ignoreMove;
     bool         m_ignoreRelease;
     bool         m_rectSelect;
+    QPoint       m_cameraPos;
+    double       m_zoom;
+
+    QPoint       mapToWorld(const QPoint &mousePos);
+    QRect applyZoom(const QRect &r);
+
+    struct Mover
+    {
+        Mover(): speedX(0), speedY(0) {}
+        QTimer  timer;
+        int     speedX;
+        int     speedY;
+    } m_mover;
+    void moveCamera();
+    void moveCamera(int deltaX, int deltaY);
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
