@@ -17,53 +17,72 @@ TheScene::TheScene(QWidget *parent) :
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
+    //Temporary, need to grab keyboard when current subwindow is focused (use signals/slots for that)
+    grabKeyboard();
     connect(&m_mover.timer,
             &QTimer::timeout,
             this,
             static_cast<void (TheScene::*)()>(&TheScene::moveCamera) );
 }
 
+void TheScene::addRect(int x, int y)
+{
+    Item item(this);
+    item.m_posRect.setRect(x, y, 32, 32);
+    m_items.append(item);
+}
+
 void TheScene::clearSelection()
 {
     for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
     {
-        it.value()->setSelected(false);
+        Item*i = (*it);
+        i->m_selected = false;
     }
     m_selectedItems.clear();
-}
-
-void TheScene::select(Item &item)
-{
-    item.setSelected( true );
-    m_selectedItems[intptr_t(&item)] = &item;
-}
-
-void TheScene::deselect(Item &item)
-{
-    item.setSelected( false );
-    m_selectedItems.remove(intptr_t(&item));
-}
-
-void TheScene::toggleselect(Item &item)
-{
-    bool to = !item.selected();
-    item.setSelected(to);
-    if(to)
-        m_selectedItems[intptr_t(&item)] = &item;
-    else
-        m_selectedItems.remove(intptr_t(&item));
 }
 
 void TheScene::moveSelection(int deltaX, int deltaY)
 {
     for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
     {
-        QRect&r = it.value()->m_posRect;
+        Item*i = (*it);
+        QRect&r = i->m_posRect;
         int x= r.x();
         int y= r.y();
         r.moveTo(x+deltaX, y+deltaY);
     }
     repaint();
+}
+
+void TheScene::select(Item &item)
+{
+    item.m_selected = true;
+    m_selectedItems.insert(&item);
+}
+
+void TheScene::deselect(Item &item)
+{
+    item.m_selected = false;
+    m_selectedItems.remove(&item);
+}
+
+void TheScene::toggleselect(Item &item)
+{
+    item.m_selected = !item.m_selected;
+    if(item.m_selected)
+        m_selectedItems.insert(&item);
+    else
+        m_selectedItems.remove(&item);
+}
+
+void TheScene::setItemSelected(Item &item, bool selected)
+{
+    item.m_selected = selected;
+    if(item.m_selected)
+        m_selectedItems.insert(&item);
+    else
+        m_selectedItems.remove(&item);
 }
 
 QPoint TheScene::mapToWorld(const QPoint &mousePos)
@@ -164,7 +183,8 @@ void TheScene::mouseMoveEvent(QMouseEvent *event)
     {
         for(SelectionMap::iterator it = m_selectedItems.begin(); it != m_selectedItems.end(); it++)
         {
-            Item& item = *it.value();
+            Item*i = (*it);
+            Item& item = *i;
             int x = item.m_posRect.x();
             int y = item.m_posRect.y();
             item.m_posRect.moveTo( x-delta.x(), y-delta.y() );
@@ -312,6 +332,9 @@ void TheScene::keyPressEvent(QKeyEvent *event)
             m_mover.speedY = 32;
         }
         break;
+    default:
+        QWidget::keyPressEvent(event);
+        return;
     }
 
     if((m_mover.speedX != 0) || (m_mover.speedY != 0))
@@ -351,6 +374,9 @@ void TheScene::keyReleaseEvent(QKeyEvent *event)
             m_mover.speedY = 0;
         }
         break;
+    default:
+        QWidget::keyReleaseEvent(event);
+        return;
     }
     if((m_mover.speedX==0) && (m_mover.speedY==0))
         m_mover.timer.stop();

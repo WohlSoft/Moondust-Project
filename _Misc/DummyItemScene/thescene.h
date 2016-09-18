@@ -4,10 +4,62 @@
 #include <QWidget>
 #include <QList>
 #include <QRect>
-#include <QHash>
+#include <QSet>
 #include <QTimer>
 
-class TheScene;
+class Item;
+class TheScene : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit TheScene(QWidget *parent = 0);
+
+    void addRect(int x, int y);
+
+    void clearSelection();
+    void moveSelection(int deltaX, int deltaY);
+
+    void select(Item& item);
+    void deselect(Item& item);
+    void toggleselect(Item& item);
+    void setItemSelected(Item& item, bool selected);
+
+
+    QList<Item>  m_items;
+    typedef QSet<Item*> SelectionMap;
+    SelectionMap m_selectedItems;
+    QPoint       m_mouseOld;
+    QPoint       m_mouseBegin;
+    QPoint       m_mouseEnd;
+    bool         m_ignoreMove;
+    bool         m_ignoreRelease;
+    bool         m_rectSelect;
+    QPoint       m_cameraPos;
+    double       m_zoom;
+
+    QPoint       mapToWorld(const QPoint &mousePos);
+    QRect applyZoom(const QRect &r);
+
+    struct Mover
+    {
+        Mover(): speedX(0), speedY(0) {}
+        QTimer  timer;
+        int     speedX;
+        int     speedY;
+    } m_mover;
+    void moveCamera();
+    void moveCamera(int deltaX, int deltaY);
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+    void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+};
+
 
 class Item
 {
@@ -28,7 +80,7 @@ public:
 
     void setSelected(bool selected)
     {
-        m_selected = selected;
+        m_scene->setItemSelected(*this, selected);
     }
 
     bool selected()
@@ -63,61 +115,6 @@ public:
             return false;
         return true;
     }
-};
-
-class TheScene : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit TheScene(QWidget *parent = 0);
-
-    void addRect(int x, int y)
-    {
-        Item item(this);
-        item.m_posRect.setRect(x, y, 32, 32);
-        m_items.append(item);
-    }
-
-    void clearSelection();
-    void select(Item& item);
-    void deselect(Item& item);
-    void toggleselect(Item& item);
-
-    void moveSelection(int deltaX, int deltaY);
-
-    QList<Item>  m_items;
-    typedef QHash<intptr_t, Item*> SelectionMap;
-    SelectionMap m_selectedItems;
-    QPoint       m_mouseOld;
-    QPoint       m_mouseBegin;
-    QPoint       m_mouseEnd;
-    bool         m_ignoreMove;
-    bool         m_ignoreRelease;
-    bool         m_rectSelect;
-    QPoint       m_cameraPos;
-    double       m_zoom;
-
-    QPoint       mapToWorld(const QPoint &mousePos);
-    QRect applyZoom(const QRect &r);
-
-    struct Mover
-    {
-        Mover(): speedX(0), speedY(0) {}
-        QTimer  timer;
-        int     speedX;
-        int     speedY;
-    } m_mover;
-    void moveCamera();
-    void moveCamera(int deltaX, int deltaY);
-
-protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
-    void paintEvent(QPaintEvent *event);
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // THESCENE_H
