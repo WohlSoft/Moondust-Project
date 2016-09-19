@@ -170,7 +170,6 @@ public:
     void moveCamera(int deltaX, int deltaY);
     void moveCameraUpdMouse(int deltaX, int deltaY);
 
-protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
@@ -178,6 +177,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    void focusInEvent(QFocusEvent *event);
     void focusOutEvent(QFocusEvent *event);
 };
 
