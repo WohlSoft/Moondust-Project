@@ -6,32 +6,83 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>911</width>
+    <height>674</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ItemScene</string>
   </property>
-  <widget class="PGE_EditScene" name="centralWidget"/>
+  <widget class="QMdiArea" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>911</width>
      <height>19</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSome">
+    <property name="title">
+     <string>Some</string>
+    </property>
+    <addaction name="actionPoke"/>
+   </widget>
+   <addaction name="menuSome"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="KeyDropper" name="dockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>231</width>
+     <height>35</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <widget class="QRadioButton" name="radioButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>100</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>RadioButton</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="lcdNumber">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <action name="actionPoke">
+   <property name="text">
+    <string>Poke</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>PGE_EditScene</class>
-   <extends>QWidget</extends>
-   <header>item_scene/pge_edit_scene.h</header>
+   <class>KeyDropper</class>
+   <extends>QDockWidget</extends>
+   <header>key_dropper.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
