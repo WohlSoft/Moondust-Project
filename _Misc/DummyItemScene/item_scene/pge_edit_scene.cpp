@@ -6,6 +6,8 @@
 #include <QWheelEvent>
 #include <QPaintEvent>
 #include <QKeyEvent>
+#include <QMessageBox>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include "pge_edit_scene.h"
 
@@ -15,7 +17,9 @@ PGE_EditScene::PGE_EditScene(QWidget *parent) :
     m_ignoreRelease(false),
     m_moveInProcess(false),
     m_rectSelect(false),
-    m_zoom(1.0)
+    m_zoom(1.0),
+    m_isBusy(false),
+    m_abortThread(false)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
@@ -27,6 +31,7 @@ PGE_EditScene::PGE_EditScene(QWidget *parent) :
 
 PGE_EditScene::~PGE_EditScene()
 {
+    m_tree.RemoveAll();
     m_items.clear();
 }
 
@@ -95,6 +100,29 @@ void PGE_EditScene::moveStart()
 void PGE_EditScene::moveEnd(bool /*esc*/)
 {
     m_moveInProcess = false;
+}
+
+void PGE_EditScene::startInitAsync()
+{
+    m_isBusy = true;
+    QtConcurrent::run<void>(this, &PGE_EditScene::initThread);
+}
+
+void PGE_EditScene::initThread()
+{
+    m_isBusy = true;
+    bool offset = false;
+    for(int y= -1024; y<32000; y+=32)
+        for(int x= -1024; x<32000; x+=32)
+        {
+            if(m_abortThread) goto threadEnd;
+            addRect(x,  y + (offset ? 16 : 0));
+            offset = !offset;
+        }
+threadEnd:
+
+    m_isBusy = false;
+    metaObject()->invokeMethod(this, "repaint", Qt::QueuedConnection);
 }
 
 
@@ -191,8 +219,24 @@ void PGE_EditScene::moveCameraUpdMouse(int deltaX, int deltaY)
     }
 }
 
+void PGE_EditScene::closeEvent(QCloseEvent *event)
+{
+    m_abortThread = true;
+
+    bool wasBusy = m_isBusy;
+    while(m_isBusy)
+        QThread::msleep(1);
+
+    if(wasBusy)
+        QMessageBox::information(this, "Closed", "Ouuuuch.... :-P");
+    event->accept();
+}
+
 void PGE_EditScene::mousePressEvent(QMouseEvent *event)
 {
+    if(m_isBusy)
+        return;
+
     if(event->button() != Qt::LeftButton)
         return;
 
@@ -249,6 +293,9 @@ void PGE_EditScene::mousePressEvent(QMouseEvent *event)
 
 void PGE_EditScene::mouseMoveEvent(QMouseEvent *event)
 {
+    if(m_isBusy)
+        return;
+
     if((event->buttons() & Qt::LeftButton) == 0)
         return;
 
@@ -268,6 +315,8 @@ void PGE_EditScene::mouseMoveEvent(QMouseEvent *event)
 
 void PGE_EditScene::mouseReleaseEvent(QMouseEvent *event)
 {
+    if(m_isBusy)
+        return;
     bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
     bool isCtrl  =  (event->modifiers() & Qt::ControlModifier) != 0;
     QPoint pos = mapToWorld(event->pos());
@@ -322,9 +371,12 @@ void PGE_EditScene::mouseReleaseEvent(QMouseEvent *event)
 
 void PGE_EditScene::wheelEvent(QWheelEvent *event)
 {
+    if(m_isBusy)
+        return;
+
     bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
     bool isCtrl  =  (event->modifiers() & Qt::ControlModifier) != 0;
-    bool isAlt  =  (event->modifiers() & Qt::AltModifier) != 0;
+    bool isAlt   =  (event->modifiers() & Qt::AltModifier) != 0;
 
     if( isAlt )
     {
@@ -358,6 +410,14 @@ void PGE_EditScene::wheelEvent(QWheelEvent *event)
 void PGE_EditScene::paintEvent(QPaintEvent */*event*/)
 {
     QPainter p(this);
+    if(m_isBusy)
+    {
+        p.setBrush(QBrush(Qt::black));
+        p.setPen(QPen(Qt::black));
+        p.drawText(QPointF(20.0, 20.0), "Loading...");
+        p.end();
+        return;
+    }
 
     PGE_EditItemList list;
     RRect vizArea = {m_cameraPos.x(),
@@ -384,6 +444,9 @@ void PGE_EditScene::paintEvent(QPaintEvent */*event*/)
 
 void PGE_EditScene::keyPressEvent(QKeyEvent *event)
 {
+    if(m_isBusy)
+        return;
+
     bool isCtrl = (event->modifiers() & Qt::ControlModifier) != 0;
     switch(event->key())
     {
@@ -447,6 +510,9 @@ void PGE_EditScene::keyPressEvent(QKeyEvent *event)
 
 void PGE_EditScene::keyReleaseEvent(QKeyEvent *event)
 {
+    if(m_isBusy)
+        return;
+
     switch(event->key())
     {
     case Qt::Key_Escape:
