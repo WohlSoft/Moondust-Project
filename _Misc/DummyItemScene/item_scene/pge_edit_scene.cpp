@@ -19,8 +19,6 @@ PGE_EditScene::PGE_EditScene(QWidget *parent) :
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
-    //Temporary, need to grab keyboard when current subwindow is focused (use signals/slots for that)
-    grabKeyboard();
     connect(&m_mover.timer,
             &QTimer::timeout,
             this,
@@ -490,8 +488,14 @@ void PGE_EditScene::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+void PGE_EditScene::focusInEvent(QFocusEvent *event)
+{
+    QWidget::focusInEvent(event);
+}
+
 void PGE_EditScene::focusOutEvent(QFocusEvent *event)
 {
+    //releaseKeyboard();
     m_mover.reset();
     QWidget::focusOutEvent(event);
 }
