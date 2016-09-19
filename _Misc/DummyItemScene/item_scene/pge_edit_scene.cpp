@@ -11,9 +11,9 @@
 
 PGE_EditScene::PGE_EditScene(QWidget *parent) :
     QWidget(parent),
-    m_moveInProcess(false),
     m_ignoreMove(false),
     m_ignoreRelease(false),
+    m_moveInProcess(false),
     m_rectSelect(false),
     m_zoom(1.0)
 {
@@ -25,6 +25,11 @@ PGE_EditScene::PGE_EditScene(QWidget *parent) :
             &QTimer::timeout,
             this,
             static_cast<void (PGE_EditScene::*)()>(&PGE_EditScene::moveCamera) );
+}
+
+PGE_EditScene::~PGE_EditScene()
+{
+    m_items.clear();
 }
 
 void PGE_EditScene::addRect(int x, int y)
@@ -167,13 +172,7 @@ QRect PGE_EditScene::applyZoom(const QRect &r)
 void PGE_EditScene::moveCamera()
 {
     moveCamera(m_mover.speedX, m_mover.speedY);
-    if(m_moveInProcess || m_rectSelect)
-    {
-        m_mouseOld.setX(m_mouseOld.x() + m_mover.speedX);
-        m_mouseOld.setY(m_mouseOld.y() + m_mover.speedY);
-        if(m_moveInProcess)
-            moveSelection(m_mover.speedX, m_mover.speedY);
-    }
+    moveCameraUpdMouse(m_mover.speedX, m_mover.speedY);
     repaint();
 }
 
@@ -181,6 +180,17 @@ void PGE_EditScene::moveCamera(int deltaX, int deltaY)
 {
     m_cameraPos.setX( m_cameraPos.x() + deltaX );
     m_cameraPos.setY( m_cameraPos.y() + deltaY );
+}
+
+void PGE_EditScene::moveCameraUpdMouse(int deltaX, int deltaY)
+{
+    if(m_moveInProcess || m_rectSelect)
+    {
+        m_mouseOld.setX(m_mouseOld.x() + deltaX);
+        m_mouseOld.setY(m_mouseOld.y() + deltaY);
+        if(m_moveInProcess)
+            moveSelection(deltaX, deltaY);
+    }
 }
 
 void PGE_EditScene::mousePressEvent(QMouseEvent *event)
@@ -314,7 +324,11 @@ void PGE_EditScene::mouseReleaseEvent(QMouseEvent *event)
 
 void PGE_EditScene::wheelEvent(QWheelEvent *event)
 {
-    if( (event->modifiers() & Qt::AltModifier) != 0 )
+    bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
+    bool isCtrl  =  (event->modifiers() & Qt::ControlModifier) != 0;
+    bool isAlt  =  (event->modifiers() & Qt::AltModifier) != 0;
+
+    if( isAlt )
     {
         if(event->delta() > 0)
             m_zoom += 0.1;
@@ -324,6 +338,21 @@ void PGE_EditScene::wheelEvent(QWheelEvent *event)
         if(m_zoom <= 0.1)
             m_zoom = 0.1;
 
+        repaint();
+    }
+    else
+    if( isCtrl )
+    {
+        int delta = m_mover.scrollStep * (event->delta() < 0 ? 1 : -1) * (isShift ? 4 : 1);
+        moveCamera(delta, 0);
+        moveCameraUpdMouse(delta, 0);
+        repaint();
+    }
+    else
+    {
+        int delta = m_mover.scrollStep * (event->delta() < 0 ? 1 : -1) * (isShift ? 4 : 1);
+        moveCamera(0, delta);
+        moveCameraUpdMouse(0, delta);
         repaint();
     }
 }

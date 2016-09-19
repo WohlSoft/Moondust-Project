@@ -15,7 +15,7 @@ class PGE_EditScene : public QWidget
     Q_OBJECT
 public:
     explicit PGE_EditScene(QWidget *parent = 0);
-    virtual ~PGE_EditScene() {}
+    virtual ~PGE_EditScene();
 
     void addRect(int x, int y);
 
@@ -27,7 +27,6 @@ public:
     void toggleselect(PGE_EditSceneItem& item);
     void setItemSelected(PGE_EditSceneItem& item, bool selected);
 
-    bool m_moveInProcess;
     void moveStart();
     void moveEnd(bool esc=false);
 
@@ -44,15 +43,18 @@ public:
     void unregisterElement(PGE_EditSceneItem *item);
 
     typedef QSet<PGE_EditSceneItem*> SelectionMap;
-    SelectionMap m_selectedItems;
-    QPoint       m_mouseOld;
-    QPoint       m_mouseBegin;
-    QPoint       m_mouseEnd;
-    bool         m_ignoreMove;
-    bool         m_ignoreRelease;
-    bool         m_rectSelect;
-    QPoint       m_cameraPos;
-    double       m_zoom;
+    SelectionMap    m_selectedItems;
+    QPoint          m_mouseOld;
+    QPoint          m_mouseBegin;
+    QPoint          m_mouseEnd;
+
+    bool            m_ignoreMove;
+    bool            m_ignoreRelease;
+    bool            m_moveInProcess;
+    bool            m_rectSelect;
+
+    QPoint          m_cameraPos;
+    double          m_zoom;
 
     QPoint       mapToWorld(const QPoint &mousePos);
     QRect        applyZoom(const QRect &r);
@@ -62,11 +64,14 @@ public:
         Mover():
             speedX(0),
             speedY(0),
+            scrollStep(32),
             m_keys(K_NONE)
         {}
         QTimer  timer;
         int     speedX;
         int     speedY;
+
+        int     scrollStep;
 
         enum Keys
         {
@@ -140,19 +145,19 @@ public:
             speedY = 0;
             if( key(K_LEFT) ^ key(K_RIGHT) )
             {
-                speedX = 32 *(key(K_LEFT) ? -1 : 1);
+                speedX = scrollStep *(key(K_LEFT) ? -1 : 1);
             }
 
             if( key(K_UP) ^ key(K_DOWN) )
             {
-                speedY = 32 *(key(K_UP) ? -1 : 1);
+                speedY = scrollStep *(key(K_UP) ? -1 : 1);
             }
 
             if( noKeys() )
                 timer.stop();
             else
             {
-                int interval = key(K_SHIFT) ? 16 : 32;
+                int interval = key(K_SHIFT) ? 8 : 32;
                 if(timer.isActive())
                     timer.setInterval(interval);
                 else
@@ -163,6 +168,7 @@ public:
 
     void moveCamera();
     void moveCamera(int deltaX, int deltaY);
+    void moveCameraUpdMouse(int deltaX, int deltaY);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
