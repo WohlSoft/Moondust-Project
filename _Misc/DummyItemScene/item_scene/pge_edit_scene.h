@@ -15,6 +15,7 @@ class PGE_EditScene : public QWidget
     Q_OBJECT
 public:
     explicit PGE_EditScene(QWidget *parent = 0);
+    virtual ~PGE_EditScene() {}
 
     void addRect(int x, int y);
 
@@ -25,6 +26,11 @@ public:
     void deselect(PGE_EditSceneItem& item);
     void toggleselect(PGE_EditSceneItem& item);
     void setItemSelected(PGE_EditSceneItem& item, bool selected);
+
+    bool m_moveInProcess;
+    void moveStart();
+    void moveEnd(bool esc=false);
+
 
     typedef QList<PGE_EditSceneItem*> PGE_EditItemList;
     typedef RTree<PGE_EditSceneItem*, int, 2, int > IndexTree;
@@ -53,19 +59,106 @@ public:
 
     struct Mover
     {
-        Mover(): speedX(0), speedY(0), keysH(K_NONE), keysV(K_NONE) {}
+        Mover():
+            speedX(0),
+            speedY(0),
+            m_keys(K_NONE)
+        {}
         QTimer  timer;
         int     speedX;
         int     speedY;
-        enum Keys{
-            K_NONE = 0,
-            K_LEFT = 1,
-            K_RIGHT= 2,
-            K_UP   = 4,
-            K_DOWN = 8,
+
+        enum Keys
+        {
+            K_NONE  = 0x00,
+            K_LEFT  = 0x01,
+            K_RIGHT = 0x02,
+            K_UP    = 0x04,
+            K_DOWN  = 0x08,
+            K_SHIFT = 0x10,
         };
-        int     keysH;
-        int     keysV;
+
+        unsigned int    m_keys;
+
+        inline void set(Keys k, bool v)
+        {
+            if(v)
+                m_keys |= k;
+            else
+                m_keys &= ~k;
+        }
+
+        inline bool key(Keys k)
+        {
+            return (m_keys & k) != 0;
+        }
+
+        inline bool noKeys()
+        {
+            return (m_keys & 0x0F) == 0;
+        }
+
+        void setLeft(bool key)
+        {
+            set(K_LEFT, key);
+            updTimer();
+        }
+
+        void setRight(bool key)
+        {
+            set(K_RIGHT, key);
+            updTimer();
+        }
+
+        void setUp(bool key)
+        {
+            set(K_UP, key);
+            updTimer();
+        }
+
+        void setDown(bool key)
+        {
+            set(K_DOWN, key);
+            updTimer();
+        }
+
+        void setFaster(bool key)
+        {
+            set(K_SHIFT, key);
+            updTimer();
+        }
+
+        void reset()
+        {
+            m_keys = K_NONE;
+            updTimer();
+        }
+
+        void updTimer()
+        {
+            speedX = 0;
+            speedY = 0;
+            if( key(K_LEFT) ^ key(K_RIGHT) )
+            {
+                speedX = 32 *(key(K_LEFT) ? -1 : 1);
+            }
+
+            if( key(K_UP) ^ key(K_DOWN) )
+            {
+                speedY = 32 *(key(K_UP) ? -1 : 1);
+            }
+
+            if( noKeys() )
+                timer.stop();
+            else
+            {
+                int interval = key(K_SHIFT) ? 16 : 32;
+                if(timer.isActive())
+                    timer.setInterval(interval);
+                else
+                    timer.start(interval);
+            }
+        }
     } m_mover;
 
     void moveCamera();
@@ -79,6 +172,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    void focusOutEvent(QFocusEvent *event);
 };
 
 

@@ -6,17 +6,17 @@ ItemScene::ItemScene(QWidget *parent) :
     ui(new Ui::ItemScene)
 {
     ui->setupUi(this);
-    ui->centralWidget->addRect(20,  20);
-    ui->centralWidget->addRect(60,  20);
-    ui->centralWidget->addRect(100, 20);
-    ui->centralWidget->addRect(140, 20);
-    ui->centralWidget->addRect(180, 20);
-    ui->centralWidget->addRect(20,  60);
-    ui->centralWidget->addRect(60,  60);
-    ui->centralWidget->addRect(100, 60);
-    ui->centralWidget->addRect(140, 60);
-    ui->centralWidget->addRect(180, 60);
+    bool offset=false;
+    for(int y= -1024; y<32000; y+=32)
+        for(int x= -1024; x<32000; x+=32)
+        {
+
+            ui->centralWidget->addRect(x,  y + (offset ? 16 : 0));
+            offset=!offset;
+        }
     update();
+
+    setWindowTitle( windowTitle() + QString(" (totally items on this map: %1)").arg(ui->centralWidget->m_items.count()) );
 }
 
 ItemScene::~ItemScene()
