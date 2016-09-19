@@ -11,6 +11,7 @@
 
 PGE_EditScene::PGE_EditScene(QWidget *parent) :
     QWidget(parent),
+    m_moveInProcess(false),
     m_ignoreMove(false),
     m_ignoreRelease(false),
     m_rectSelect(false),
@@ -47,12 +48,10 @@ void PGE_EditScene::moveSelection(int deltaX, int deltaY)
 {
     for(PGE_EditSceneItem* item : m_selectedItems)
     {
-        QRect&r = item->m_posRect;
-        int x= r.x();
-        int y= r.y();
-        r.moveTo(x+deltaX, y+deltaY);
+        item->m_posRect.moveBy(deltaX, deltaY);
+        unregisterElement(item);
+        registerElement(item);
     }
-    repaint();
 }
 
 void PGE_EditScene::select(PGE_EditSceneItem &item)
@@ -85,6 +84,15 @@ void PGE_EditScene::setItemSelected(PGE_EditSceneItem &item, bool selected)
         m_selectedItems.remove(&item);
 }
 
+void PGE_EditScene::moveStart()
+{
+    m_moveInProcess = true;
+}
+
+void PGE_EditScene::moveEnd(bool /*esc*/)
+{
+    m_moveInProcess = false;
+}
 
 
 
@@ -113,24 +121,26 @@ void PGE_EditScene::queryItems(int x, int y, PGE_EditScene::PGE_EditItemList *re
 
 void PGE_EditScene::registerElement(PGE_EditSceneItem *item)
 {
-    QRect &r = item->m_posRect;
-    RPoint lt={r.x(), r.y()};
-    RPoint rb={r.right()+1, r.bottom()+1};
-    if(rb[0]<=0) { rb[0]=lt[0]+1; }
-    if(rb[1]<=0) { rb[1]=lt[1]+1; }
+    PGE_Rect<int> &r = item->m_posRect;
+    RPoint lt={ r.left(),  r.top() };
+    RPoint rb={ r.right(), r.bottom() };
+    if(rb[0] < lt[0]) { rb[0]=lt[0]+1; }
+    if(rb[1] < lt[1]) { rb[1]=lt[1]+1; }
     m_tree.Insert(lt, rb, item);
     item->m_posRectTree = r;
 }
 
 void PGE_EditScene::unregisterElement(PGE_EditSceneItem *item)
 {
-    QRect &r = item->m_posRectTree;
-    RPoint lt={ r.x(), r.y() };
-    RPoint rb={ r.right()+1, r.bottom()+1};
-    if(rb[0]<=0) { rb[0]=lt[0]+1; }
-    if(rb[1]<=0) { rb[1]=lt[1]+1; }
+    PGE_Rect<int> &r = item->m_posRectTree;
+    RPoint lt={ r.left(),  r.top() };
+    RPoint rb={ r.right(), r.bottom()};
+    if(rb[0] < lt[0]) { rb[0]=lt[0]+1; }
+    if(rb[1] < lt[1]) { rb[1]=lt[1]+1; }
     m_tree.Remove(lt, rb, item);
 }
+
+
 
 
 
@@ -140,14 +150,14 @@ QPoint PGE_EditScene::mapToWorld(const QPoint &mousePos)
     QPoint w = mousePos;
     w.setX( qRound(qreal(w.x())/m_zoom) );
     w.setY( qRound(qreal(w.y())/m_zoom) );
-    w -= m_cameraPos;
+    w += m_cameraPos;
     return w;
 }
 
 QRect PGE_EditScene::applyZoom(const QRect &r)
 {
     QRect t = r;
-    t.moveTo( t.topLeft() + m_cameraPos );
+    t.moveTo( t.topLeft() - m_cameraPos );
     t.moveTo( qRound(qreal(t.x())*m_zoom), qRound(qreal(t.y())*m_zoom));
     t.setWidth( qRound(qreal(t.width())*m_zoom) );
     t.setHeight( qRound(qreal(t.height())*m_zoom) );
@@ -157,13 +167,20 @@ QRect PGE_EditScene::applyZoom(const QRect &r)
 void PGE_EditScene::moveCamera()
 {
     moveCamera(m_mover.speedX, m_mover.speedY);
+    if(m_moveInProcess || m_rectSelect)
+    {
+        m_mouseOld.setX(m_mouseOld.x() + m_mover.speedX);
+        m_mouseOld.setY(m_mouseOld.y() + m_mover.speedY);
+        if(m_moveInProcess)
+            moveSelection(m_mover.speedX, m_mover.speedY);
+    }
     repaint();
 }
 
 void PGE_EditScene::moveCamera(int deltaX, int deltaY)
 {
-    m_cameraPos.setX( m_cameraPos.x() - deltaX );
-    m_cameraPos.setY( m_cameraPos.y() - deltaY );
+    m_cameraPos.setX( m_cameraPos.x() + deltaX );
+    m_cameraPos.setY( m_cameraPos.y() + deltaY );
 }
 
 void PGE_EditScene::mousePressEvent(QMouseEvent *event)
@@ -202,6 +219,11 @@ void PGE_EditScene::mousePressEvent(QMouseEvent *event)
         }
         if(!catched && !isCtrl)
             clearSelection();
+        else
+        if(catched)
+        {
+            moveStart();
+        }
     }
 
     if( (m_selectedItems.isEmpty() && !isCtrl) || isShift)
@@ -214,7 +236,6 @@ void PGE_EditScene::mousePressEvent(QMouseEvent *event)
         m_ignoreMove = true;
         m_ignoreRelease = true;
     }
-
     repaint();
 }
 
@@ -231,15 +252,7 @@ void PGE_EditScene::mouseMoveEvent(QMouseEvent *event)
     QPoint delta = m_mouseOld - pos;
     if(!m_rectSelect)
     {
-        for(PGE_EditSceneItem* it : m_selectedItems)
-        {
-            PGE_EditSceneItem& item = *it;
-            int x = item.m_posRect.x();
-            int y = item.m_posRect.y();
-            item.m_posRect.moveTo( x-delta.x(), y-delta.y() );
-            unregisterElement(&item);
-            registerElement(&item);
-        }
+        moveSelection(-delta.x(), -delta.y());
     }
     m_mouseOld = pos;
     repaint();
@@ -250,6 +263,9 @@ void PGE_EditScene::mouseReleaseEvent(QMouseEvent *event)
     bool isShift =  (event->modifiers() & Qt::ShiftModifier) != 0;
     bool isCtrl  =  (event->modifiers() & Qt::ControlModifier) != 0;
     QPoint pos = mapToWorld(event->pos());
+
+    if(m_moveInProcess)
+        moveEnd(false);
 
     if( (event->button()==Qt::RightButton) && (event->buttons() == 0) )
     {
@@ -304,6 +320,10 @@ void PGE_EditScene::wheelEvent(QWheelEvent *event)
             m_zoom += 0.1;
         else
             m_zoom -= 0.1;
+
+        if(m_zoom <= 0.1)
+            m_zoom = 0.1;
+
         repaint();
     }
 }
@@ -311,25 +331,19 @@ void PGE_EditScene::wheelEvent(QWheelEvent *event)
 void PGE_EditScene::paintEvent(QPaintEvent */*event*/)
 {
     QPainter p(this);
-    p.setBrush(QColor(Qt::white));
-    p.setOpacity(1.0);
 
     PGE_EditItemList list;
-    RRect vizArea = {-m_cameraPos.x(),
-                     -m_cameraPos.y(),
-                     -m_cameraPos.x() + qRound(qreal(width()) / m_zoom),
-                     -m_cameraPos.y() + qRound(qreal(height()) / m_zoom) };
+    RRect vizArea = {m_cameraPos.x(),
+                     m_cameraPos.y(),
+                     m_cameraPos.x() + qRound(qreal(width()) / m_zoom),
+                     m_cameraPos.y() + qRound(qreal(height()) / m_zoom) };
     queryItems(vizArea, &list);
 
     for(PGE_EditSceneItem* item : list)
     {
-        if(item->selected())
-            p.setPen(QColor(Qt::green));
-        else
-            p.setPen(QColor(Qt::black));
-        QRect r = applyZoom(item->m_posRect);
-        p.drawRect(r);
+        item->paint(&p, m_cameraPos, m_zoom);
     }
+
     if(m_rectSelect)
     {
         p.setBrush(QBrush(Qt::green));
@@ -350,53 +364,58 @@ void PGE_EditScene::keyPressEvent(QKeyEvent *event)
         if(isCtrl)
         {
             moveSelection(-1, 0);
+            repaint();
         }
         else
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedX = -32;
+            m_mover.setLeft(true);
         }
         break;
     case Qt::Key_Right:
         if(isCtrl)
         {
             moveSelection(1, 0);
+            repaint();
         }
         else
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedX = 32;
+            m_mover.setRight(true);
         }
         break;
     case Qt::Key_Up:
         if(isCtrl)
         {
             moveSelection(0, -1);
+            repaint();
         }
         else
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedY = -32;
+            m_mover.setUp(true);
         }
         break;
     case Qt::Key_Down:
         if(isCtrl)
         {
             moveSelection(0, 1);
+            repaint();
         }
         else
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedY = 32;
+            m_mover.setDown(true);
         }
+        break;
+    case Qt::Key_Shift:
+        if(event->isAutoRepeat()) return;
+        m_mover.setFaster(true);
         break;
     default:
         QWidget::keyPressEvent(event);
         return;
     }
-
-    if((m_mover.speedX != 0) || (m_mover.speedY != 0))
-        m_mover.timer.start(32);
 }
 
 void PGE_EditScene::keyReleaseEvent(QKeyEvent *event)
@@ -411,31 +430,39 @@ void PGE_EditScene::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_Left:
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedX = 0;
+            m_mover.setLeft(false);
         }
         break;
     case Qt::Key_Right:
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedX = 0;
+            m_mover.setRight(false);
         }
         break;
     case Qt::Key_Up:
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedY = 0;
+            m_mover.setUp(false);
         }
         break;
     case Qt::Key_Down:
         {
             if(event->isAutoRepeat()) return;
-            m_mover.speedY = 0;
+            m_mover.setDown(false);
         }
+        break;
+    case Qt::Key_Shift:
+        if(event->isAutoRepeat()) return;
+        m_mover.setFaster(false);
         break;
     default:
         QWidget::keyReleaseEvent(event);
         return;
     }
-    if((m_mover.speedX==0) && (m_mover.speedY==0))
-        m_mover.timer.stop();
+}
+
+void PGE_EditScene::focusOutEvent(QFocusEvent *event)
+{
+    m_mover.reset();
+    QWidget::focusOutEvent(event);
 }
