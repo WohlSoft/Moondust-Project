@@ -159,12 +159,15 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    app->setStyle(new PGE_ProxyStyle);
+    app->setStyle(new PGE_ProxyStyle(app->style()));
 #ifdef Q_OS_LINUX
     {
         QStringList availableStyles = QStyleFactory::keys();
         if( availableStyles.contains("GTK", Qt::CaseInsensitive) )
-            app->setStyle("GTK");
+            app->setStyle(QStyleFactory::create("GTK"));
+        else
+        if( availableStyles.contains("Fusion", Qt::CaseInsensitive) )
+            app->setStyle(QStyleFactory::create("Fusion"));
     }
 #endif
 
