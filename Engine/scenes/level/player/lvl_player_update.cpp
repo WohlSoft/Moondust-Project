@@ -477,8 +477,25 @@ void LVL_Player::update(double tickTime)
         else
         if(posY()>sBox.bottom() + 1 )
             setPosY(sBox.top()-m_height_registered+1);
-    } else if( posY() > sBox.bottom() + m_height_registered ) {
-        kill(DEAD_fall);
+    }
+    else
+    {
+        if( posY() > sBox.bottom() + m_height_registered )
+        {
+            kill(DEAD_fall);
+        }
+        else
+        if( (sAS.speedY > 0.0)
+            && (m_momentum.bottom() < (sBox.top() - 32.0))
+            && m_stand )
+        {
+            kill(DEAD_fall);
+        }
+        else
+        if( (m_momentum.bottom() < (sBox.top() - 64.0)) && (!m_stand) )
+        {
+            m_momentum.setYatBottom( sBox.top() - 64.0 );
+        }
     }
 
     //Connection of section opposite sides
@@ -567,7 +584,7 @@ void LVL_Player::update(double tickTime)
             if( posX() < sBox.left())
             {
                 setPosX(sBox.left());
-                if(sAS.speedX==0.0)
+                if(sAS.speedX == 0.0)
                     setSpeedX(0.0);
                 else
                 {
@@ -577,10 +594,10 @@ void LVL_Player::update(double tickTime)
                 }
             }
             else
-            if( posX()+m_width_registered > sBox.right() )
+            if( posX() + m_width_registered > sBox.right() )
             {
-                setPosX(sBox.right()-m_width_registered);
-                if(sAS.speedX==0.0)
+                setPosX(sBox.right() - m_width_registered);
+                if(sAS.speedX == 0.0)
                     setSpeedX(0.0);
                 else
                 {
