@@ -17,6 +17,12 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+private slots:
+    void on_actionAdd80_triggered();
+    void on_actionAdd1000000_triggered();
+
+    void on_actionPoke_triggered();
+
 private:
     Ui::ItemScene *ui;
 };

@@ -6,6 +6,7 @@
 #include <QRect>
 #include <QSet>
 #include <QTimer>
+#include <QAtomicInteger>
 
 #include "pge_edit_scene_item.h"
 #include "RTree.h"
@@ -29,6 +30,9 @@ public:
 
     void moveStart();
     void moveEnd(bool esc=false);
+
+    virtual void startInitAsync();
+    virtual void initThread();
 
 
     typedef QList<PGE_EditSceneItem*> PGE_EditItemList;
@@ -55,6 +59,8 @@ public:
 
     QPoint          m_cameraPos;
     double          m_zoom;
+    QAtomicInteger<bool> m_isBusy;
+    QAtomicInteger<bool> m_abortThread;
 
     QPoint       mapToWorld(const QPoint &mousePos);
     QRect        applyZoom(const QRect &r);
@@ -169,6 +175,8 @@ public:
     void moveCamera();
     void moveCamera(int deltaX, int deltaY);
     void moveCameraUpdMouse(int deltaX, int deltaY);
+
+    void closeEvent(QCloseEvent *event);
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

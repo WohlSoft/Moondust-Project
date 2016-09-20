@@ -28,6 +28,8 @@
      <string>Some</string>
     </property>
     <addaction name="actionPoke"/>
+    <addaction name="actionAdd80"/>
+    <addaction name="actionAdd1000000"/>
    </widget>
    <addaction name="menuSome"/>
   </widget>
@@ -74,6 +76,16 @@
   <action name="actionPoke">
    <property name="text">
     <string>Poke</string>
+   </property>
+  </action>
+  <action name="actionAdd80">
+   <property name="text">
+    <string>Make sub-window with 80 entries</string>
+   </property>
+  </action>
+  <action name="actionAdd1000000">
+   <property name="text">
+    <string>Make sub-window with million entries</string>
    </property>
   </action>
  </widget>
