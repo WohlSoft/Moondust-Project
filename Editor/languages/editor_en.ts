@@ -7579,7 +7579,41 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Open the episode common script. If not exist - file will be created.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3003"/>
+        <location filename="../mainwindow.ui" line="2988"/>
+        <source>Level local (%1)</source>
+        <translation>Level local (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2991"/>
+        <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
+        <translation>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2996"/>
+        <source>Level global (%1)</source>
+        <translation>Level global (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2999"/>
+        <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
+        <translation>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</translation>
+    </message>
+    <message>
+        <source>Global level scrupt for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
+        <translation type="vanished">Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3004"/>
+        <source>World map script (%1)</source>
+        <translation>World map script (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3007"/>
+        <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
+        <translation>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3012"/>
         <source>Item default</source>
         <translation>Item default</translation>
     </message>
@@ -9171,7 +9205,7 @@ The configuration pack was loaded, but contains error.</translation>
         <translation>[No files open]</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="237"/>
+        <location filename="../main_window/translator.cpp" line="240"/>
         <source>Current Language changed to %1</source>
         <translation>Current language changed to %1</translation>
     </message>
@@ -9928,12 +9962,12 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</translation>
         <translation>Initialize section %1...</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="33"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="39"/>
         <source>File is not saved</source>
         <translation>File is not saved</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="34"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
         <source>Impossible to open/create script file.
 Please save file firtst</source>
         <translation>Impossible to open/create script file.

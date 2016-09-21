@@ -7521,7 +7521,41 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Открыть общий сценарий эпизода. Будет создан если не существует.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3003"/>
+        <location filename="../mainwindow.ui" line="2988"/>
+        <source>Level local (%1)</source>
+        <translation>Уровень, локальный (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2991"/>
+        <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
+        <translation>Локальный сценарий уровня для текущего уровня. Новое имя файла сценария заменяет старый &quot;lunadll.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2996"/>
+        <source>Level global (%1)</source>
+        <translation>Уровень, глобальный (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2999"/>
+        <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
+        <translation>Глобальный сценарий для всех уровней эпизона. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
+    </message>
+    <message>
+        <source>Global level scrupt for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
+        <translation type="vanished">Глобальный сценарий для всех уровней эпизона. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3004"/>
+        <source>World map script (%1)</source>
+        <translation>Сценарий карты мина (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3007"/>
+        <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
+        <translation>Глобальный сценарий карты мира. Новое имя файла сценария заменяет старый &quot;lunaoverworld.lua&quot;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3012"/>
         <source>Item default</source>
         <translation>По-умолчанию</translation>
     </message>
@@ -9133,7 +9167,7 @@ Configuration package loaded with errors.</source>
         <translation>[Нет открытых файлов]</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="237"/>
+        <location filename="../main_window/translator.cpp" line="240"/>
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
     </message>
@@ -9893,12 +9927,12 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation>Инициализировать секцию %1...</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="33"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="39"/>
         <source>File is not saved</source>
         <translation>Файл не сохранён</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="34"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
         <source>Impossible to open/create script file.
 Please save file firtst</source>
         <translation>Невозможно открыть/создать файл сценария.
