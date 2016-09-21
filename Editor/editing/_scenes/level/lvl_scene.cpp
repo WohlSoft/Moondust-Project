@@ -103,7 +103,7 @@ LvlScene::LvlScene(MainWindow* mw,
     setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
-        if(strcmp(parent->metaObject()->className(), "LevelEdit")==0)
+        if(strcmp(parent->metaObject()->className(), LEVEL_EDIT_CLASS)==0)
         {
             m_subWindow = qobject_cast<LevelEdit*>(parent);
         }

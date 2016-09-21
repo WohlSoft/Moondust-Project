@@ -2985,17 +2985,26 @@
   </action>
   <action name="actionLunaLUA_lvl">
    <property name="text">
-    <string notr="true">lunadll.lua</string>
+    <string>Level local (%1)</string>
+   </property>
+   <property name="toolTip">
+    <string>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</string>
    </property>
   </action>
   <action name="actionLunaLUA_eps">
    <property name="text">
-    <string notr="true">lunaworld.lua</string>
+    <string>Level global (%1)</string>
+   </property>
+   <property name="toolTip">
+    <string>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</string>
    </property>
   </action>
   <action name="actionLunaLUA_wld">
    <property name="text">
-    <string notr="true">lunaoverworld.lua</string>
+    <string>World map script (%1)</string>
+   </property>
+   <property name="toolTip">
+    <string>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</string>
    </property>
   </action>
   <action name="actionSetGridItemDefault">

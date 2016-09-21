@@ -44,6 +44,10 @@ public:
     explicit NpcEdit(dataconfigs *configs, QWidget *parent = 0);
     ~NpcEdit();
 
+public slots:
+    void reTranslate();
+
+public:
     void newFile(unsigned long npcID);
     bool loadFile(const QString &fileName, NPCConfigFile FileData);
     NPCConfigFile NpcData;

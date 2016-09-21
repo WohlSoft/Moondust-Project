@@ -107,7 +107,7 @@ WldScene::WldScene(MainWindow *mw,
     setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
-        if(strcmp(parent->metaObject()->className(), "WorldEdit")==0)
+        if(strcmp(parent->metaObject()->className(), WORLD_EDIT_CLASS)==0)
         {
             m_subWindow = qobject_cast<WorldEdit*>(parent);
         }

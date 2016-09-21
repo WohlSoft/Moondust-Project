@@ -218,7 +218,6 @@ void NpcEdit::makeCrashState()
     this->isModyfied = true; //just in case
 }
 
-
 QString NpcEdit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();

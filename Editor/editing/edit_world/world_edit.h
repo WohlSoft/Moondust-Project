@@ -46,7 +46,10 @@ class WorldEdit : public QWidget
 public:
     explicit WorldEdit(MainWindow* mw, QWidget *parent = 0);
     ~WorldEdit();
+public slots:
+    void reTranslate();
 
+public:
     MainWindow* m_mw;
 
     WorldData WldData;

@@ -68,6 +68,12 @@ LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
     #endif
 }
 
+void LevelEdit::reTranslate()
+{
+    QString backup = windowTitle();
+    ui->retranslateUi(this);
+    setWindowTitle(backup);
+}
 
 void LevelEdit::focusInEvent(QFocusEvent *event)
 {
