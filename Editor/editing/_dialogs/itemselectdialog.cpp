@@ -91,12 +91,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     empScenery->setText(emTxt);
     empLevel->setText(emTxt);
     empMusic->setText(emTxt);
-    empBlock->setData(3, QVariant(0));
-    empBGO->setData(3, QVariant(0));
-    empNPC->setData(3, QVariant(0));
-    empScenery->setData(3, QVariant(0));
-    empLevel->setData(3, QVariant(0));
-    empMusic->setData(3, QVariant(0));
+    empBlock->setData(Qt::UserRole, QVariant(0));
+    empBGO->setData(Qt::UserRole, QVariant(0));
+    empNPC->setData(Qt::UserRole, QVariant(0));
+    empScenery->setData(Qt::UserRole, QVariant(0));
+    empLevel->setData(Qt::UserRole, QVariant(0));
+    empMusic->setData(Qt::UserRole, QVariant(0));
 
     ui->Sel_List_Block->insertItem(0,empBlock);
     ui->Sel_List_BGO->insertItem(0,empBGO);
@@ -180,7 +180,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( blockItem.setup.name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number( blockItem.setup.id ) );
+            item->setData(Qt::UserRole, int(blockItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( blockItem.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Block->addItem(item);
         }
@@ -196,7 +197,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             Items::getItemGFX(&bgoD, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( bgoD.setup.name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(bgoD.setup.id) );
+            item->setData(Qt::UserRole, int(bgoD.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( bgoD.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_BGO->addItem(item);
         }
@@ -212,7 +214,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
             QListWidgetItem* item = new QListWidgetItem( npcItem.setup.name, ui->Sel_List_NPC );
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(npcItem.setup.id) );
+            item->setData(Qt::UserRole, int(npcItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( npcItem.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_NPC->addItem(item);
         }
@@ -230,7 +233,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             QPixmap tmpI;
             Items::getItemGFX(&sceneryItem, tmpI, false, QSize(16,16));
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(sceneryItem.setup.id) );
+            item->setData(Qt::UserRole, int(sceneryItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( sceneryItem.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Scenery->addItem(item);
         }
@@ -247,7 +251,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             QPixmap tmpI;
             Items::getItemGFX(&levelItem, tmpI, false, QSize(16,16));
             item->setIcon( QIcon( tmpI ) );
-            item->setData(3, QString::number(levelItem.setup.id) );
+            item->setData(Qt::UserRole, int(levelItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( levelItem.setup.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Level->addItem(item);
         }
@@ -261,7 +266,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("wldmusic-%1").arg(musicItem.id), ui->Sel_List_Music);
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png") ) );
-            item->setData(3, QString::number(musicItem.id) );
+            item->setData(Qt::UserRole, int(musicItem.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg( musicItem.id ) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Music->addItem(item);
         }
@@ -292,28 +298,28 @@ ItemSelectDialog::~ItemSelectDialog()
 
 void ItemSelectDialog::removeEmptyEntry(int tabs)
 {
-    if(tabs & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Block->item(0);
 
-    if(tabs & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_BGO && ui->Sel_List_BGO->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_BGO->item(0);
 
-    if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_NPC->item(0);
 
-    if(tabs & TAB_TILE && ui->Sel_List_Tile->item(0,0)->data(3).toInt() == 0)
+    if(tabs & TAB_TILE && ui->Sel_List_Tile->item(0,0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Tile->item(0,0);
 
-    if(tabs & TAB_SCENERY && ui->Sel_List_Scenery->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_SCENERY && ui->Sel_List_Scenery->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Scenery->item(0);
 
-    if(tabs & TAB_PATH && ui->Sel_List_Path->item(0,0)->data(3).toInt() == 0)
+    if(tabs & TAB_PATH && ui->Sel_List_Path->item(0,0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Path->item(0,0);
 
-    if(tabs & TAB_LEVEL && ui->Sel_List_Level->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_LEVEL && ui->Sel_List_Level->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Level->item(0);
 
-    if(tabs & TAB_MUSIC && ui->Sel_List_Music->item(0)->data(3).toInt() == 0)
+    if(tabs & TAB_MUSIC && ui->Sel_List_Music->item(0)->data(Qt::UserRole).toInt() == 0)
         delete ui->Sel_List_Music->item(0);
 
     removalFlags = tabs;
@@ -416,7 +422,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&block, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( block.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(block.setup.id) );
+                item->setData(Qt::UserRole, int(block.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(block.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_Block->addItem( item );
@@ -482,7 +489,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&blockItem, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( blockItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(blockItem.setup.id) );
+                item->setData(Qt::UserRole, int(blockItem.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(blockItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_Block->addItem( item );
@@ -524,7 +532,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&bgo, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( bgo.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgo.setup.id) );
+                item->setData(Qt::UserRole, int(bgo.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(bgo.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );
@@ -593,7 +602,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
                 item = new QListWidgetItem( bgoItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(bgoItem.setup.id) );
+                item->setData(Qt::UserRole, int(bgoItem.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(bgoItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_BGO->addItem( item );
@@ -634,7 +644,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&npc, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( npc.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(npc.setup.id) );
+                item->setData(Qt::UserRole, int(npc.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(npc.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_NPC->addItem( item );
@@ -701,7 +712,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&npcItem, tmpI, false, QSize(16,16));
                 item = new QListWidgetItem( npcItem.setup.name );
                 item->setIcon( QIcon( tmpI ) );
-                item->setData(3, QString::number(npcItem.setup.id) );
+                item->setData(Qt::UserRole, int(npcItem.setup.id) );
+                item->setData(Qt::ToolTipRole, QString("ID: %1").arg(npcItem.setup.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->Sel_List_NPC->addItem( item );
@@ -825,7 +837,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(tileItem.setup.id) );
+            Titem->setData(Qt::UserRole, int(tileItem.setup.id) );
+            Titem->setData(Qt::ToolTipRole, QString("ID: %1").arg(tileItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Tile->setRowHeight(tileItem.setup.row, 34);
@@ -850,7 +863,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, 0 );
+            Titem->setData(Qt::UserRole, 0 );
+            Titem->setData(Qt::ToolTipRole, QString("Empty element") );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Tile->setRowHeight(0, 34);
@@ -869,7 +883,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
         item->setText( nullptr );
-        item->setData(3, QString::number(sceneItem.setup.id) );
+        item->setData(Qt::UserRole, int(sceneItem.setup.id) );
+        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(sceneItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->Sel_List_Scenery->addItem( item );
@@ -908,7 +923,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(pathItem.setup.id) );
+            Titem->setData(Qt::UserRole, int(pathItem.setup.id) );
+            Titem->setData(Qt::ToolTipRole, QString("ID: %1").arg(pathItem.setup.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Path->setRowHeight(pathItem.setup.row+roff, 34);
@@ -934,7 +950,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
             Titem->setText( nullptr );
             Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, 0 );
+            Titem->setData(Qt::UserRole, 0 );
+            Titem->setData(Qt::ToolTipRole, QString("Empty element"));
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->Sel_List_Path->setRowHeight(0, 34);
@@ -958,7 +975,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI ) );
         item->setText( nullptr );
-        item->setData(3, QString::number(levelItem.setup.id) );
+        item->setData(Qt::UserRole, int(levelItem.setup.id) );
+        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(levelItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->Sel_List_Level->addItem( item );
@@ -971,7 +989,8 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
             item = new QListWidgetItem();
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
             item->setText( musicItem.name );
-            item->setData(3, QString::number(musicItem.id) );
+            item->setData(Qt::UserRole, int(musicItem.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(musicItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->Sel_List_Music->addItem( item );
@@ -1148,12 +1167,12 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
                 npcID = npcCoinsSel->value();
             }else{
                 if(!ui->Sel_List_NPC->selectedItems().isEmpty()){
-                    npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt();
+                    npcID = ui->Sel_List_NPC->selectedItems()[0]->data(Qt::UserRole).toInt();
                 }
             }
         }else{
             if(!ui->Sel_List_NPC->selectedItems().isEmpty()){
-                npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt();
+                npcID = ui->Sel_List_NPC->selectedItems()[0]->data(Qt::UserRole).toInt();
             }
         }
     }
@@ -1239,7 +1258,7 @@ void ItemSelectDialog::on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int)
 void ItemSelectDialog::selectListItem(QListWidget* w, int array_id)
 {
     for(int i = 0; i < w->count(); i++){
-        if(w->item(i)->data(3).toInt()==array_id){
+        if(w->item(i)->data(Qt::UserRole).toInt()==array_id){
             w->setCurrentRow(i);
         }
     }
@@ -1251,7 +1270,7 @@ void ItemSelectDialog::selectListItem(QTableWidget *w, int array_id)
         for(int y = 0; y < w->rowCount(); ++y){
             QTableWidgetItem* i = w->item(x,y);
             if(i){
-                if(i->data(3)==array_id){
+                if(i->data(Qt::UserRole)==array_id){
                     w->setCurrentItem(i);
                 }
             }
@@ -1267,9 +1286,10 @@ void ItemSelectDialog::makeEmptyItem(QListWidget *wid, int rmflag)
     empTar->setFont(font);
     QString emTxt = tr("[Empty]");
     empTar->setText(emTxt);
-    empTar->setData(3, QVariant(0));
+    empTar->setData(Qt::UserRole, QVariant(0));
+    empTar->setData(Qt::ToolTipRole, "Empty element");
     wid->insertItem(0,empTar);
-    if(removalFlags & rmflag && wid->item(0)->data(3).toInt() == 0)
+    if(removalFlags & rmflag && wid->item(0)->data(Qt::UserRole).toInt() == 0)
         delete wid->item(0);
 }
 
@@ -1307,7 +1327,7 @@ int ItemSelectDialog::extractID(QListWidget *w)
 {
     if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
         if(!w->selectedItems().isEmpty()){
-            return w->selectedItems()[0]->data(3).toInt();
+            return w->selectedItems()[0]->data(Qt::UserRole).toInt();
         }
     }
     return 0;
@@ -1317,7 +1337,7 @@ int ItemSelectDialog::extractID(QTableWidget *w)
 {
     if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
         if(!w->selectedItems().isEmpty()){
-            return w->selectedItems()[0]->data(3).toInt();
+            return w->selectedItems()[0]->data(Qt::UserRole).toInt();
         }
     }
     return 0;
@@ -1328,7 +1348,7 @@ QList<int> ItemSelectDialog::extractIDs(QListWidget *w)
     QList<int> elements;
     if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
         for(int i=0; i<w->selectedItems().size(); i++) {
-            elements.push_back(w->selectedItems()[i]->data(3).toInt());
+            elements.push_back(w->selectedItems()[i]->data(Qt::UserRole).toInt());
         }
     }
     return elements;
@@ -1339,7 +1359,7 @@ QList<int> ItemSelectDialog::extractIDs(QTableWidget *w)
     QList<int> elements;
     if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
         for(int i=0; i<w->selectedItems().size(); i++) {
-            elements.push_back(w->selectedItems()[i]->data(3).toInt());
+            elements.push_back(w->selectedItems()[i]->data(Qt::UserRole).toInt());
         }
     }
     return elements;

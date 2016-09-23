@@ -50,7 +50,7 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
             if(!conv) { //cannot convert
                 break;
             }
-            if( item->data(3).toInt() == toIdSearch ) {
+            if( item->data(Qt::UserRole).toInt() == toIdSearch ) {
                 itemList->setItemHidden(item, false);
             } else {
                 itemList->setItemHidden(item, true);
