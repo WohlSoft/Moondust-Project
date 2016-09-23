@@ -32,34 +32,57 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
 {
     QString toSearch;
     toSearch = searchEdit->text();
+    int searchType = typeBox->currentIndex();
     for(int i = 0; i < itemList->count(); i++)
     {
         QListWidgetItem * item = itemList->item(i);
-        if(toSearch.isEmpty()) {
+        if(toSearch.isEmpty())
+        {
             itemList->setItemHidden(item, false);
             continue;
-        } else if(typeBox->currentIndex()==0) { //search by text
-            if( !item->text().contains(toSearch, Qt::CaseInsensitive) ) {
-                itemList->setItemHidden(item, true);
-            } else {
-                itemList->setItemHidden(item, false);
-            }
-        } else if(typeBox->currentIndex()==1) { //search by id
-            bool conv = false;
-            int toIdSearch = toSearch.toInt(&conv);
-            if(!conv) { //cannot convert
+        }
+        switch(searchType)
+        {
+            case 0:
+            { //search by text
+                if( !item->text().contains(toSearch, Qt::CaseInsensitive) ) {
+                    itemList->setItemHidden(item, true);
+                } else {
+                    itemList->setItemHidden(item, false);
+                }
                 break;
             }
-            if( item->data(Qt::UserRole).toInt() == toIdSearch ) {
-                itemList->setItemHidden(item, false);
-            } else {
-                itemList->setItemHidden(item, true);
+            case 1:
+            { //search by id
+                bool conv = false;
+                int toIdSearch = toSearch.toInt(&conv);
+                if(!conv)
+                {//cannot convert
+                    break;
+                }
+                if( item->data(Qt::UserRole).toInt() == toIdSearch ) {
+                    itemList->setItemHidden(item, false);
+                } else {
+                    itemList->setItemHidden(item, true);
+                }
+                break;
             }
-        } else {//else do nothing
-            break;
+            case 2:
+            { //search by ID (contains)
+                if( !item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive) ) {
+                    itemList->setItemHidden(item, true);
+                } else {
+                    itemList->setItemHidden(item, false);
+                }
+                break;
+            }
+            default:
+            {//else do nothing
+                break;
+            }
         }
     }
-    itemList->updateGeometry();
+    itemList->update();
 }
 
 void util::memclear(QListWidget *wid)
