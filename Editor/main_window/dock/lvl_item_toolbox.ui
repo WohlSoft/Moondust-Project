@@ -28,7 +28,7 @@
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="documentMode">
     <bool>true</bool>
@@ -173,7 +173,12 @@
        </item>
        <item>
         <property name="text">
-         <string>ID</string>
+         <string notr="true">ID</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ID (contains)</string>
         </property>
        </item>
       </widget>
@@ -387,7 +392,12 @@
        </item>
        <item>
         <property name="text">
-         <string>ID</string>
+         <string notr="true">ID</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ID (contains)</string>
         </property>
        </item>
       </widget>
@@ -562,7 +572,12 @@
        </item>
        <item>
         <property name="text">
-         <string>ID</string>
+         <string notr="true">ID</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ID (contains)</string>
         </property>
        </item>
       </widget>

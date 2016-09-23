@@ -44,6 +44,13 @@ NpcEdit::~NpcEdit()
     delete ui;
 }
 
+void NpcEdit::reTranslate()
+{
+    QString backup = windowTitle();
+    ui->retranslateUi(this);
+    setWindowTitle(backup);
+}
+
 void NpcEdit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {

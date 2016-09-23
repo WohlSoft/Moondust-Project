@@ -43,6 +43,10 @@ public:
     explicit LevelEdit(MainWindow* mw, QWidget *parent = 0);
     ~LevelEdit();
 
+public slots:
+    void reTranslate();
+
+public:
     LevelData LvlData;
     //QGraphicsScene LvlScene;
 

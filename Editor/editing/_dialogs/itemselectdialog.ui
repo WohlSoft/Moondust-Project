@@ -78,7 +78,12 @@
            </item>
            <item>
             <property name="text">
-             <string>ID</string>
+             <string notr="true">ID</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID (contains)</string>
             </property>
            </item>
           </widget>
@@ -189,7 +194,12 @@
            </item>
            <item>
             <property name="text">
-             <string>ID</string>
+             <string notr="true">ID</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID (contains)</string>
             </property>
            </item>
           </widget>
@@ -276,7 +286,12 @@
            </item>
            <item>
             <property name="text">
-             <string>ID</string>
+             <string notr="true">ID</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID (contains)</string>
             </property>
            </item>
           </widget>

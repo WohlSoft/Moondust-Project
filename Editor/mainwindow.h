@@ -932,6 +932,7 @@ public:
 
 // ///////////////////// Script ///////////////////////////
     private slots:
+        void refreshLunaLUAMenuItems();
         void on_actionCreateScriptLocal_triggered();
         void on_actionCreateScriptEpisode_triggered();
         void on_actionLunaLUA_lvl_triggered();
