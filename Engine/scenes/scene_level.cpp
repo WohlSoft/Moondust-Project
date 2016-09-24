@@ -116,8 +116,8 @@ LevelScene::LevelScene()
     initPauseMenu1();
     /*********Pause menu*************/
 
-    frameSkip=g_AppSettings.frameSkip;
-
+    frameSkip = g_AppSettings.frameSkip;
+    m_messages.m_scene = this;
     errorMsg = "";
 
     gameState = NULL;
@@ -461,8 +461,12 @@ void LevelScene::update()
         //Clear garbage (be careful!)
         //luaEngine.runGarbageCollector();
     }
+
+    //Process interprocessing commands cache
     process_InterprocessCommands();
 
+    //Process message boxes
+    m_messages.process();
 }
 
 void LevelScene::processEvents()

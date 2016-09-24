@@ -27,6 +27,7 @@
 #include <common_features/rectf.h>
 #include <script/lua_engine.h>
 #include <scenes/_base/gfx_effect.h>
+#include <scenes/_base/msgbox_queue.h>
 #include <data_configs/spawn_effect_def.h>
 
 #include <functional>
@@ -158,6 +159,9 @@ public:
     /*  Effects engine   */
 
     QString errorString();
+
+    //! Queue of message boxes to show them after all code of one frame will be updated/processed
+    MessageBoxQueue m_messages;
 
 protected:
     bool        m_isRunning;

@@ -37,11 +37,7 @@ void LevelScene::process_InterprocessCommands()
         {
             case IntProc::MsgBox:
             {
-                PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
-                                  PGE_MsgBox::msg_info, PGE_Point(-1, -1),
-                                   ConfigManager::setup_message_box.box_padding,
-                                   ConfigManager::setup_message_box.sprite);
-                msgBox.exec();
+                m_messages.showMsg( IntProc::getCMD() );
                 break;
             }
             case IntProc::Cheat:
