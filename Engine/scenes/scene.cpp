@@ -26,6 +26,7 @@
 
 void Scene::construct()
 {
+    m_messages.m_scene = this;
     m_fader.setFull();
     m_fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
     m_isRunning=true;

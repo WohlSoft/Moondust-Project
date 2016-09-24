@@ -95,6 +95,11 @@ void MainWindow::setDefLang()
        qDebug() << "Qt Translation: " << ok;
 
        ui->retranslateUi(this);
+       refreshLunaLUAMenuItems();
+       connect(this,
+               SIGNAL(languageSwitched()),
+               this,
+               SLOT(refreshLunaLUAMenuItems()));
 }
 
 void MainWindow::langListSync()
@@ -138,6 +143,14 @@ void MainWindow::langListSync()
 
 }
 
+template<class T>
+static void reTranslateWidget(QWidget* w)
+{
+    T* wnd = qobject_cast<T*>(w);
+    Q_ASSERT(wnd);
+    wnd->reTranslate();
+}
+
 void MainWindow::slotLanguageChanged(QAction* action)
 {
     LogDebug(QString("Translation->SlotStarted"));
@@ -154,26 +167,16 @@ void MainWindow::slotLanguageChanged(QAction* action)
         QList<QMdiSubWindow*> subWS = ui->centralWidget->subWindowList();
         foreach(QMdiSubWindow* w, subWS)
         {
-            if(QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-            {
-                QString backup = qobject_cast<LevelEdit*>(w->widget())->windowTitle();
-                qobject_cast<LevelEdit*>(w->widget())->ui->retranslateUi(qobject_cast<LevelEdit*>(w->widget()));
-                qobject_cast<LevelEdit*>(w->widget())->setWindowTitle(backup);
-            }
+            QWidget* wd = w->widget();
+            QString className = wd->metaObject()->className();
+            if(className==LEVEL_EDIT_CLASS)
+                reTranslateWidget<LevelEdit>(wd);
             else
-            if(QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-            {
-                QString backup = qobject_cast<WorldEdit*>(w->widget())->windowTitle();
-                qobject_cast<WorldEdit*>(w->widget())->ui->retranslateUi(qobject_cast<WorldEdit*>(w->widget()));
-                qobject_cast<WorldEdit*>(w->widget())->setWindowTitle(backup);
-            }
+            if(className==WORLD_EDIT_CLASS)
+                reTranslateWidget<WorldEdit>(wd);
             else
-            if(QString(w->widget()->metaObject()->className())==NPC_EDIT_CLASS)
-            {
-                QString backup = qobject_cast<NpcEdit*>(w->widget())->windowTitle();
-                qobject_cast<NpcEdit*>(w->widget())->ui->retranslateUi(qobject_cast<NpcEdit*>(w->widget()));
-                qobject_cast<NpcEdit*>(w->widget())->setWindowTitle(backup);
-            }
+            if(className==NPC_EDIT_CLASS)
+                reTranslateWidget<NpcEdit>(wd);
         }
     }
 }

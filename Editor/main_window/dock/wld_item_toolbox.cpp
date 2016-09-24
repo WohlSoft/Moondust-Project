@@ -159,21 +159,22 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
         Items::getItemGFX(&tileItem, tmpI, false, QSize(32,32));
 
-        QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.setup.row, tileItem.setup.col);
+        QTableWidgetItem * item = ui->WLD_TilesList->item(tileItem.setup.row, tileItem.setup.col);
 
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!item) || ( (item!=NULL)&&(item->text().isEmpty())) )
         {
-            Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI ) );
-            Titem->setText( NULL );
-            Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(tileItem.setup.id) );
-            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            item = new QTableWidgetItem();
+            item->setIcon( QIcon( tmpI ) );
+            item->setText( NULL );
+            item->setSizeHint(QSize(32,32));
+            item->setData(Qt::UserRole, int(tileItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(tileItem.setup.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->WLD_TilesList->setRowHeight(tileItem.setup.row, 34);
             ui->WLD_TilesList->setColumnWidth(tileItem.setup.col, 34);
 
-            ui->WLD_TilesList->setItem(tileItem.setup.row,tileItem.setup.col, Titem);
+            ui->WLD_TilesList->setItem(tileItem.setup.row,tileItem.setup.col, item);
         }
     }
 
@@ -186,7 +187,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI ) );
             item->setText( NULL );
-            item->setData(3, QString::number(sceneItem.setup.id) );
+            item->setData(Qt::UserRole, int(sceneItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(sceneItem.setup.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->WLD_SceneList->addItem( item );
@@ -215,21 +217,22 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         obj_w_path &pathItem = scene->m_localConfigPaths[i];
         Items::getItemGFX(&pathItem, tmpI, false, QSize(32,32));
 
-        QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.setup.row, pathItem.setup.col);
+        QTableWidgetItem * item = ui->WLD_PathsList->item(pathItem.setup.row, pathItem.setup.col);
 
-        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        if ( (!item) || ( (item!=NULL)&&(item->text().isEmpty())) )
         {
-            Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI ) );
-            Titem->setText( NULL );
-            Titem->setSizeHint(QSize(32,32));
-            Titem->setData(3, QString::number(pathItem.setup.id) );
-            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            item = new QTableWidgetItem();
+            item->setIcon( QIcon( tmpI ) );
+            item->setText( NULL );
+            item->setSizeHint(QSize(32,32));
+            item->setData(Qt::UserRole, int(pathItem.setup.id) );
+            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(pathItem.setup.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->WLD_PathsList->setRowHeight(pathItem.setup.row, 34);
             ui->WLD_PathsList->setColumnWidth(pathItem.setup.col, 34);
 
-            ui->WLD_PathsList->setItem(pathItem.setup.row,pathItem.setup.col, Titem);
+            ui->WLD_PathsList->setItem(pathItem.setup.row,pathItem.setup.col, item);
         }
     }
 
@@ -247,7 +250,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( NULL );
-        item->setData(3, QString::number(levelItem.setup.id) );
+        item->setData(Qt::UserRole, int(levelItem.setup.id) );
+        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(levelItem.setup.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->WLD_LevelList->addItem( item );
@@ -258,7 +262,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( tr("[Silence]") );
-        item->setData(3, QString::number(0) );
+        item->setData(Qt::UserRole, 0 );
+        item->setData(Qt::ToolTipRole, "Empty element" );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->WLD_MusicList->addItem( item );
     };
@@ -269,7 +274,8 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item = new QListWidgetItem();
         item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( (musicItem.id==mw()->configs.music_w_custom_id)? customWLabel : musicItem.name );
-        item->setData(3, QString::number(musicItem.id) );
+        item->setData(Qt::UserRole, int(musicItem.id) );
+        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(musicItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->WLD_MusicList->addItem( item );
@@ -293,7 +299,7 @@ void WorldItemBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
     //placeTile
     if ((mw()->activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -303,7 +309,7 @@ void WorldItemBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
     //placeScenery
     if ((mw()->activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -312,7 +318,7 @@ void WorldItemBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
     //placePath
     if ((mw()->activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Path, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Path, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -321,7 +327,7 @@ void WorldItemBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
     //placeLevel
     if ((mw()->activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Level, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Level, item->data(Qt::UserRole).toInt());
     }
 }
 
@@ -332,7 +338,7 @@ void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
     {
 
         QString customMusicFile;
-        if((unsigned)item->data(3).toInt()==mw()->configs.music_w_custom_id)
+        if((unsigned)item->data(Qt::UserRole).toInt()==mw()->configs.music_w_custom_id)
         {
             QString dirPath;
             WorldEdit * edit = mw()->activeWldEditWin();
@@ -354,10 +360,10 @@ void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
         }
 
         WldPlacingItems::MusicSet.music_file = customMusicFile;
-        mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(Qt::UserRole).toInt());
 
         //Play selected music
-        mw()->activeWldEditWin()->currentMusic = item->data(3).toInt();
+        mw()->activeWldEditWin()->currentMusic = item->data(Qt::UserRole).toInt();
         mw()->activeWldEditWin()->currentCustomMusic = customMusicFile;
         LvlMusPlay::setMusic(LvlMusPlay::WorldMusic,
                              mw()->activeWldEditWin()->currentMusic,

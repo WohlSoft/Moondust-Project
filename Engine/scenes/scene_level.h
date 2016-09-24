@@ -320,6 +320,7 @@ public:
     void setGameState(EpisodeState *_gameState);
 
     EventQueue<LevelScene > system_events;
+
     LVL_Section *getSection(int sct);
     EpisodeState *getGameState();
 

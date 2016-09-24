@@ -219,11 +219,11 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                 EventQueueEntry<LevelScene > msgBox;
                 msgBox.makeCaller(
                             [this,evt]()->void{
-
-                                   PGE_MsgBox box(_scene, evt.msg,
-                                   PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
-                                   ConfigManager::setup_message_box.sprite);
-                                   box.exec();
+                                   _scene->m_messages.showMsg(evt.msg);
+//                                   PGE_MsgBox box(_scene, evt.msg,
+//                                   PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
+//                                   ConfigManager::setup_message_box.sprite);
+//                                   box.exec();
                                 }, 0);
                 _scene->system_events.events.push_back(msgBox);
                                }, 0);

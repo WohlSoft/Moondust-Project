@@ -53,6 +53,13 @@ WorldEdit::~WorldEdit()
     LogDebug("WorldEdit -> Class destroyed");
 }
 
+void WorldEdit::reTranslate()
+{
+    QString backup = windowTitle();
+    ui->retranslateUi(this);
+    setWindowTitle(backup);
+}
+
 
 
 void WorldEdit::ResetPosition()
