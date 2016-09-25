@@ -27,6 +27,7 @@ struct MessageBoxQueue
 {
     Scene* m_scene;
     std::deque<QString> messages;
+    void showMsg(const std::string &message);
     void showMsg(const QString &message);
     void process();
 };

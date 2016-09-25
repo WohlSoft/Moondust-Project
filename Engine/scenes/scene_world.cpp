@@ -798,6 +798,10 @@ void WorldScene::update()
             }
         }
     }
+    //Process Z-sort of the render functions
+    renderArrayPrepare();
+    //Process message boxes
+    m_messages.process();
 }
 
 

@@ -234,7 +234,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
         return;
     }
     player->setParentSection(sct);
-    player->z_index = Z_Player;
+    player->z_index = zOrder.player;
 
     player->global_state = (
                 ((unsigned)player_states.size() > (playerData.id-1)) ?

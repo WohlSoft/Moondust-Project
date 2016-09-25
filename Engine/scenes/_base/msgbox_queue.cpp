@@ -21,6 +21,11 @@
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
 
+void MessageBoxQueue::showMsg(const std::string &message)
+{
+    messages.push_back(QString::fromStdString(message));
+}
+
 void MessageBoxQueue::showMsg(const QString &message)
 {
     messages.push_back(message);

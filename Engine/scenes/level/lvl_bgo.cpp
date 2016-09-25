@@ -73,15 +73,15 @@ void LVL_Bgo::transformTo_x(long id)
     switch(zMode)
     {
         case LevelBGO::Background2:
-            targetZ = LevelScene::Z_BGOBack2 + zOffset + (long double)data.z_offset; break;
+            targetZ = LevelScene::zOrder.bgoBack2 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Background1:
-            targetZ = LevelScene::Z_BGOBack1 + zOffset + (long double)data.z_offset; break;
+            targetZ = LevelScene::zOrder.bgoBack1 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Foreground1:
-            targetZ = LevelScene::Z_BGOFore1 + zOffset + (long double)data.z_offset; break;
+            targetZ = LevelScene::zOrder.bgoFront1 + zOffset + (long double)data.z_offset; break;
         case LevelBGO::Foreground2:
-            targetZ = LevelScene::Z_BGOFore2 + zOffset + (long double)data.z_offset; break;
+            targetZ = LevelScene::zOrder.bgoFront2 + zOffset + (long double)data.z_offset; break;
         default:
-            targetZ = LevelScene::Z_BGOBack1 + zOffset + (long double)data.z_offset; break;
+            targetZ = LevelScene::zOrder.bgoBack1 + zOffset + (long double)data.z_offset; break;
     }
 
     z_index = targetZ;

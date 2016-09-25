@@ -28,7 +28,13 @@ public:
     static void drawImage(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, lua_State *L);
     static void drawImage(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L);
 
-    static float alignToCenter(float x, float width);
+    static void drawImageWP(const PGE_Texture*texture, float xPos, float yPos, long double zlayer, lua_State *L);
+    static void drawImageWP(const PGE_Texture*texture, float xPos, float yPos, float opacity, long double zlayer, lua_State *L);
+
+    static void drawImageWP(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, long double zlayer, lua_State *L);
+    static void drawImageWP(const PGE_Texture*texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, long double zlayer, lua_State *L);
+
+    static double alignToCenter(double x, double width);
 
     /*!
      * Remove all cached textures
