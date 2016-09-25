@@ -30,10 +30,10 @@
 #include <scenes/_base/msgbox_queue.h>
 #include <data_configs/spawn_effect_def.h>
 
+#include <queue>
+
 #include <functional>
 #include <QList>
-
-#include <chrono>
 
 struct LoopTiming
 {
@@ -106,8 +106,19 @@ public:
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
-    void addRenderFunction(const std::function<void()>& renderFunc);
-    void clearRenderFunctions();
+    struct RenderFuncs
+    {
+        long double           z_index;
+        std::function<void()> render;
+    };
+
+protected:
+    std::vector<RenderFuncs> luaRenders;
+
+public:
+    void renderArrayAddFunction(const std::function<void()>& renderFunc, long double zIndex = 400.0L);
+    void renderArrayPrepare();
+    void renderArrayClear();
 
     virtual bool isVizibleOnScreen(PGE_RectF &rect);
     virtual bool isVizibleOnScreen(double x, double y, double w, double h);
@@ -170,17 +181,9 @@ protected:
     int         uTick;
     double      uTickf;
 
-    /************waiting timer************/
-    typedef std::chrono::high_resolution_clock StClock;
-    typedef std::chrono::high_resolution_clock::time_point StTimePt;
-    void wait(float ms);
-    /************waiting timer************/
     QString _errorString;
 private:
     TypeOfScene sceneType;
-    float dif;
-
-    QVector<std::function<void()> > renderFunctions;
 };
 
 #endif // SCENE_H

@@ -464,7 +464,8 @@ void LevelScene::update()
 
     //Process interprocessing commands cache
     process_InterprocessCommands();
-
+    //Process Z-sort of the render functions
+    renderArrayPrepare();
     //Process message boxes
     m_messages.process();
 }
@@ -484,17 +485,25 @@ void LevelScene::render()
     if(!isInit) goto renderBlack;
 
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-    for(QList<PGE_LevelCamera>::iterator it=cameras.begin();it!=cameras.end(); it++)
+    /*QList<PGE_LevelCamera>::iterator it=cameras.begin(); it!=cameras.end(); it++*/
+    for(PGE_LevelCamera& cam : cameras )
     {
-        PGE_LevelCamera* cam=&(*it);
-
         if(numberOfPlayers>1)
-            GlRenderer::setViewport(cam->renderX(), cam->renderY(), cam->w(), cam->h());
+            GlRenderer::setViewport(cam.renderX(), cam.renderY(), cam.w(), cam.h());
 
-        cam->drawBackground();
+        cam.drawBackground();
 
-        int render_sz = cam->renderObjects_count();
-        PGE_Phys_Object** render_obj = cam->renderObjects_arr();
+        double camPosX = cam.posX();
+        double camPosY = cam.posY();
+
+        //Size of array with objects catched by camera
+        int render_sz = cam.renderObjects_count();
+        //Pointer to array with objects catched by camera
+        PGE_Phys_Object** render_obj = cam.renderObjects_arr();
+        //Index of array with lua-drawn elements
+        int currentLuaRenderObj = 0;
+        //Size of array with lua-drawn elements
+        int currentLuaRenderSz = luaRenders.size();
         for(int i=0; i<render_sz; i++)
         {
             switch(render_obj[i]->type)
@@ -503,31 +512,54 @@ void LevelScene::render()
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
-                render_obj[i]->render(cam->posX(), cam->posY());
-                break;
+                {
+                    PGE_Phys_Object* obj = render_obj[i];
+                    //Get Z-index of current element
+                    long double Z = obj->zIndex();
+                    //Draw lua-drew elements which are less than current Z-index
+                    while( currentLuaRenderObj < currentLuaRenderSz )
+                    {
+                        RenderFuncs& r = luaRenders[currentLuaRenderObj];
+                        if(r.z_index > Z)
+                            break;
+                        r.render();
+                        currentLuaRenderObj++;
+                    }
+                    //Draw element itself
+                    obj->render(camPosX, camPosY);
+                    break;
+                }
             default:
                 break;
             }
+        }
+        //Draw elements left after all camera objects are drawn
+        while( currentLuaRenderObj < currentLuaRenderSz )
+        {
+            RenderFuncs& r = luaRenders[currentLuaRenderObj];
+            r.render();
+            currentLuaRenderObj++;
         }
 
         for(SceneEffectsArray::iterator it=WorkingEffects.begin();it!=WorkingEffects.end(); it++ )
         {
              Scene_Effect &item=(*it);
-             item.render(cam->posX(), cam->posY());
+             item.render(camPosX, camPosY);
         }
 
         if(PGE_Window::showPhysicsDebug)
         {
             for(int i=0; i<render_sz; i++)
             {
-                render_obj[i]->renderDebug(cam->posX(), cam->posY());
-                if(render_obj[i]->type==PGE_Phys_Object::LVLNPC)
+                PGE_Phys_Object* obj = render_obj[i];
+                obj->renderDebug(camPosX, camPosY);
+                if(obj->type==PGE_Phys_Object::LVLNPC)
                 {
-                    LVL_Npc *npc=static_cast<LVL_Npc*>(render_obj[i]);
+                    LVL_Npc *npc=static_cast<LVL_Npc*>(obj);
                     for(int i=0; i<npc->detectors_inarea.size(); i++)
                     {
                         PGE_RectF trapZone = npc->detectors_inarea[i].trapZone();
-                        GlRenderer::renderRect(trapZone.x()-cam->posX(), trapZone.y()-cam->posY(),
+                        GlRenderer::renderRect(trapZone.x()-camPosX, trapZone.y()-camPosY,
                                                  trapZone.width(), trapZone.height(),
                                                  1.0f, 0.0, 0.0f, 1.0f, false);
                     }
@@ -535,7 +567,7 @@ void LevelScene::render()
             }
         }
 
-        cam->drawForeground();
+        cam.drawForeground();
 
         if(numberOfPlayers>1)
             GlRenderer::resetViewport();
@@ -597,7 +629,13 @@ void LevelScene::render()
                         .arg(PGE_MusPlayer::MUS_Title()), 10, 10, 0);
     }
 renderBlack:
-    Scene::render();
+    //Scene::render();
+    {
+        if(!m_fader.isNull())
+        {
+            GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, m_fader.fadeRatio());
+        }
+    }
     if(placingMode) drawPlacingItem();
 
     if(IsLoaderWorks) drawLoader();

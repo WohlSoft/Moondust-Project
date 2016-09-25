@@ -32,7 +32,6 @@ void Scene::construct()
     m_isRunning=true;
     m_doExit=false;
     m_doShutDown=false;
-    dif = 0;
     updateTickValue();    
 }
 
@@ -141,7 +140,7 @@ void Scene::update()
 void Scene::updateLua()
 {
     LuaEngine* sceneLuaEngine = getLuaEngine();
-    clearRenderFunctions();//Clean up last rendered stuff
+    renderArrayClear();//Clean up last rendered stuff
     if(sceneLuaEngine)
     {
         if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown()){
@@ -154,10 +153,9 @@ void Scene::updateLua()
 
 void Scene::render()
 {
-    const int sz = renderFunctions.size();
-    const std::function<void()>* fn = renderFunctions.data();
-    for(int i=0;i<sz; i++){//Call all render functions
-        (fn[i])();
+    for(RenderFuncs& rf : luaRenders)
+    {
+        (rf.render)();
     }
 
     if(!m_fader.isNull())
@@ -179,14 +177,24 @@ Scene::TypeOfScene Scene::type()
     return sceneType;
 }
 
-void Scene::addRenderFunction(const std::function<void ()> &renderFunc)
+void Scene::renderArrayAddFunction(const std::function<void ()> &renderFunc, long double zIndex)
 {
-    renderFunctions.push_back(renderFunc);
+    luaRenders.push_back( RenderFuncs{zIndex, renderFunc} );
 }
 
-void Scene::clearRenderFunctions()
+static bool compareZIndeces(const Scene::RenderFuncs& i, const Scene::RenderFuncs& j)
 {
-    renderFunctions.clear();
+    return (i.z_index < j.z_index);
+}
+
+void Scene::renderArrayPrepare()
+{
+    std::stable_sort(luaRenders.begin(), luaRenders.end(), compareZIndeces);
+}
+
+void Scene::renderArrayClear()
+{
+    luaRenders.clear();
 }
 
 bool Scene::isVizibleOnScreen(PGE_RectF &rect)
@@ -222,23 +230,6 @@ void Scene::setFade(int speed, float target, float step)
     m_fader.setFade(speed, target, step);
 }
 /**************************Fader**end**************************/
-
-/************waiting timer************/
-void Scene::wait(float ms)
-{
-    if(floor(ms)<=0.0f) return;
-    float totalDelay = floorf(ms+dif);
-    //StTimePt delayed=StClock::now();//for accuracy
-    //std::this_thread::sleep_for(std::chrono::milliseconds((long)(totalDelay)));
-    //if(totalDelay>0.0f)
-    SDL_Delay((Uint32)totalDelay);
-    //StTimePt isnow=StClock::now();
-    //printf("%f %f\n", totalDelay, (float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f));
-    //fflush(stdout);
-    //dif = (ms+dif)-totalDelay;//-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f);
-}
-/************waiting timer************/
-
 
 QString Scene::errorString()
 {

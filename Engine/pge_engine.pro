@@ -437,7 +437,8 @@ HEADERS  += \
     common_features/pge_application.h \
     scenes/level/base/lvl_base_physics.h \
     common_features/gif-h/gif.h \
-    scenes/_base/msgbox_queue.h
+    scenes/_base/msgbox_queue.h \
+    scenes/level/lvl_z_constants.h
 
 FORMS    += \
     data_configs/select_config.ui
