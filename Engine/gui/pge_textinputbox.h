@@ -58,15 +58,6 @@ public:
     void setInputText(QString text);
     QString inputText();
 
-    static void info(QString msg);
-    //static void info(std::string msg);
-    static void warn(QString msg);
-    //static void warn(std::string msg);
-    static void error(QString msg);
-    //static void error(std::string msg);
-    static void fatal(QString msg);
-    //static void fatal(std::string msg);
-
 private:
     void construct(QString msg="Message box is works!",
                     msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");

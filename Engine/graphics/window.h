@@ -58,6 +58,10 @@ public:
     static bool checkSDLError(const char *fn, int line, const char *func);
     static void printSDLWarn(QString info);
     static void printSDLError(QString info);
+
+    static int  msgBoxInfo(QString title, QString text);
+    static int  msgBoxWarning(QString title, QString text);
+    static int  msgBoxCritical(QString title, QString text);
 private:
     static bool IsInit;
     static bool showCursor;

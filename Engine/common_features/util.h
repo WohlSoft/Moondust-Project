@@ -20,11 +20,9 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <qlineedit.h>
-#include <qlistwidget.h>
-#include <qcombobox.h>
-#include <QListWidget>
-#include <qtablewidget.h>
+#include <QString>
+#include <QVector>
+#include <QList>
 #include <string>
 
 #include <luabind/luabind.hpp>
@@ -39,11 +37,6 @@
 class util
 {
 public:
-    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
-    static void memclear(QListWidget* wid);
-    static void memclear(QTableWidget* wid);
-    static void clearLayoutItems(QLayout* layout);
-    static bool contains(const QComboBox* b, const QString &s);
     static QString filePath(QString s);
     static bool strempty(const char* str);
 

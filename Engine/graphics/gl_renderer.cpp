@@ -52,7 +52,6 @@
 #include <QDir>
 #include <QImage>
 #include <QDateTime>
-#include <QMessageBox>
 #include <QtDebug>
 
 #ifdef DEBUG_BUILD
@@ -847,7 +846,7 @@ GLuint GlRenderer::QImage2Texture(QImage *img, PGE_Texture &tex)
 {
     if(!img)
         return 0;
-    QImage text_image = GraphicsHelps::convertToGLFormat(*img).mirrored(false, true);
+    QImage &text_image = (*img);
 
     if(tex.inited)
         deleteTexture(tex);

@@ -145,9 +145,10 @@ void Render_OpenGL31::initDummyTexture()
     FIBITMAP* image = GraphicsHelps::loadImageRC("://images/_broken.png");
     if(!image)
     {
-        QMessageBox::warning(nullptr, "OpenGL Error",
-                             QString("Can't initialize dummy texture!\n"
-                                     "In file: %1:%2").arg(__FILE__).arg(__LINE__));
+        std::string msg = QString("Can't initialize dummy texture!\n"
+                                  "In file: %1:%2").arg(__FILE__).arg(__LINE__).toStdString();
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                 "OpenGL Error", msg.c_str(), NULL);
         abort();
     }
     int w = FreeImage_GetWidth(image);

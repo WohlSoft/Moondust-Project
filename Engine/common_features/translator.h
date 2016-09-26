@@ -20,13 +20,13 @@
 #define PGE_TRANSLATOR_H
 
 #include <QTranslator>
-#include <QApplication>
+#include "pge_application.h"
 
 class PGE_Translator
 {
 public:
     PGE_Translator();
-    void init(QApplication *app);
+    void init(PGE_Application *app);
 private:
     QTranslator     m_translator;   /**< contains the translations for this application */
     QTranslator     m_translatorQt; /**< contains the translations for qt */

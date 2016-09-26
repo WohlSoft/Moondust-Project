@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
+#include "pge_application.h"
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
@@ -38,12 +38,12 @@ QString AppPathManager::m_userPath;
 
 void AppPathManager::initAppPath()
 {
-    QApplication::setOrganizationName(_COMPANY);
-    QApplication::setOrganizationDomain(_PGE_URL);
-    QApplication::setApplicationName("PGE Engine");
+    PGE_Application::setOrganizationName(_COMPANY);
+    PGE_Application::setOrganizationDomain(_PGE_URL);
+    PGE_Application::setApplicationName("PGE Engine");
 
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
+    ApplicationPath =   PGE_Application::applicationDirPath();
+    ApplicationPath_x = PGE_Application::applicationDirPath();
 
     #ifdef __APPLE__
     //Application path relative bundle folder of application

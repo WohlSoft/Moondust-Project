@@ -80,7 +80,8 @@ private:
 class FontManager
 {
 public:
-    static void init();
+    static void initBasic();
+    static void initFull();
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);

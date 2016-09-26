@@ -23,8 +23,6 @@
 #include <gui/pge_menubox.h>
 #include <settings/global_settings.h>
 
-#include <QApplication>
-
 GameOverScene::GameOverScene(): Scene(GameOver)
 {
     player1Controller = g_AppSettings.openController(1);

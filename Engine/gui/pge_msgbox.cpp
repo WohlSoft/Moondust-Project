@@ -29,9 +29,7 @@
 #include <settings/global_settings.h>
 
 #include <QFontMetrics>
-#include <QMessageBox>
 #include <QFileInfo>
-#include <QApplication>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
@@ -360,7 +358,7 @@ void PGE_MsgBox::info(QString msg)
     else
     {
                                        //% "Information"
-        QMessageBox::information(NULL, qtTrId("MSGBOX_INFO"), msg, QMessageBox::Ok);
+        PGE_Window::msgBoxInfo(qtTrId("MSGBOX_INFO"), msg);
     }
 }
 
@@ -375,7 +373,7 @@ void PGE_MsgBox::warn(QString msg)
     else
     {
                                    //% "Warning"
-        QMessageBox::warning(NULL, qtTrId("MSGBOX_WARN"), msg, QMessageBox::Ok);
+        PGE_Window::msgBoxWarning(qtTrId("MSGBOX_WARN"), msg);
     }
 }
 
@@ -390,7 +388,7 @@ void PGE_MsgBox::error(QString msg)
     else
     {
                                     //% "Error"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_ERROR"), msg, QMessageBox::Ok);
+        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_ERROR"), msg);
     }
 }
 
@@ -405,7 +403,7 @@ void PGE_MsgBox::fatal(QString msg)
     else
     {
                                     //% "Fatal"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_FATAL"), msg, QMessageBox::Ok);
+        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_FATAL"), msg);
     }
 }
 

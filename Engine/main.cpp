@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include <QDesktopWidget>
 #include <QDir>
 #include <QtDebug>
 
@@ -33,7 +31,6 @@
 
 #include <settings/global_settings.h>
 
-#include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
 
 #include "graphics/window.h"
@@ -52,14 +49,13 @@
 #include <settings/global_settings.h>
 #include <settings/debugger.h>
 
+#include "data_configs/config_select_scene/scene_config_select.h"
 #include "scenes/scene_level.h"
 #include "scenes/scene_world.h"
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
 #include "scenes/scene_credits.h"
 #include "scenes/scene_gameover.h"
-
-#include <QMessageBox>
 
 //#include <cstdlib>
 #include <ctime>
@@ -109,6 +105,7 @@ struct cmdArgs
 {
     cmdArgs() :
         debugMode(false),
+        audioEnabled(true),
         testWorld(false),
         testLevel(false),
         test_NumPlayers(1),
@@ -117,6 +114,7 @@ struct cmdArgs
         rendererType(GlRenderer::RENDER_AUTO)
     {}
     bool debugMode;
+    bool audioEnabled;
     bool testWorld;
     bool testLevel;
     int  test_NumPlayers;
@@ -151,18 +149,14 @@ int main(int argc, char *argv[])
 
     srand( std::time(NULL) );
 
-    QApplication::addLibraryPath( "." );
-    QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
-    QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+    PGE_Application::addLibraryPath( "." );
+    PGE_Application::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
+    PGE_Application::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
 
     PGE_Application a(argc, argv);
 
-    #ifdef Q_OS_LINUX
-    a.setStyle("GTK");
-    #endif
 
     ///Generating application path
-
     //Init system paths
     AppPathManager::initAppPath();
 
@@ -173,14 +167,14 @@ int main(int argc, char *argv[])
             AppPathManager::install();
             AppPathManager::initAppPath();
 
-            QApplication::quit();
-            QApplication::exit();
+            PGE_Application::quit();
+            PGE_Application::exit();
 
             return 0;
         } else if(arg=="--version") {
             std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE "-" _BUILD_VER << std::endl;
-            QApplication::quit();
-            QApplication::exit();
+            PGE_Application::quit();
+            PGE_Application::exit();
             return 0;
         }
     }
@@ -376,47 +370,6 @@ int main(int argc, char *argv[])
     if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
         QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
 
-    // Config manager
-    SelectConfig *cmanager = new SelectConfig();
-    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), a.desktop()->availableGeometry() ));
-
-    QString configPath_manager = cmanager->isPreLoaded();
-
-    //If application runned first time or target configuration is not exist
-    if(configPath_manager.isEmpty() && configPath.isEmpty())
-    {
-        //Ask for configuration
-        if(cmanager->exec()==QDialog::Accepted)
-        {
-            configPath = cmanager->currentConfigPath;
-        }
-        else
-        {
-            delete cmanager;
-            IntProc::quit();
-            exit(0);
-        }
-    } else if(!configPath_manager.isEmpty() && configPath.isEmpty()) {
-        configPath = cmanager->currentConfigPath;
-    }
-    delete cmanager;
-
-
-
-    //Load selected configuration pack
-
-    LogDebug("Opening of the configuration package...");
-    ConfigManager::setConfigPath(configPath);
-
-    LogDebug("Initalization of basic properties...");
-    if( !ConfigManager::loadBasics() )
-    {
-        LogDebug( "<Application closed with failture>" );
-        return 1;
-    }
-
-    LogDebug("Configuration package successfully loaded!");
 
     // Initalizing SDL
     LogDebug("Initialization of SDL...");
@@ -439,16 +392,14 @@ int main(int argc, char *argv[])
     }
 
     LogDebug("Initialization of Audio subsystem...");
-    if( PGE_MusPlayer::initAudio(44100, 32, 4096) == -1 )
+    if( _flags.audioEnabled && (PGE_MusPlayer::initAudio(44100, 32, 4096) == -1) )
     {
-        QMessageBox::warning(NULL, "Audio subsystem Error",
-                QString("Unable to load audio sub-system!\n%1\n\nContinuing without sound...")
-                .arg( Mix_GetError() ),
-                QMessageBox::Ok);
-    } else {
-        PGE_MusPlayer::MUS_changeVolume( g_AppSettings.volume_music );
-        LogDebug("Build SFX index cache...");
-        ConfigManager::buildSoundIndex(); //Load all sound effects into memory
+        std::string msg = QString("Unable to load audio sub-system!\n%1\n\nContinuing without sound...").arg( Mix_GetError() ).toStdString();
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                 "Audio subsystem Error",
+                                 msg.c_str(),
+                                 NULL);
+        _flags.audioEnabled = false;
     }
 
     LogDebug("Init main window...");
@@ -474,12 +425,92 @@ int main(int argc, char *argv[])
     GlRenderer::resetViewport();
 
     //Init font manager
-    LogDebug("Init font manager...");
-    FontManager::init();
+    LogDebug("Init basic font manager...");
+    FontManager::initBasic();
 
     LogDebug("Showing window...");
     SDL_ShowWindow(PGE_Window::window);
     SDL_PumpEvents();
+
+    {
+        ConfigSelectScene GOScene;
+        QString configPath_manager = GOScene.isPreLoaded();
+
+        //If application runned first time or target configuration is not exist
+        if(configPath_manager.isEmpty() && configPath.isEmpty())
+        {
+            //Ask for configuration
+            if(GOScene.exec() == 1)
+            {
+                configPath = GOScene.currentConfigPath;
+            }
+            else
+            {
+                goto ExitFromApplication;
+            }
+        }
+        else
+        if(!configPath_manager.isEmpty() && configPath.isEmpty())
+        {
+            configPath = GOScene.currentConfigPath;
+        }
+    /*
+    }
+    {        
+        // Config manager
+        SelectConfig *cmanager = new SelectConfig();
+        cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), a.desktop()->availableGeometry() ));
+
+        QString configPath_manager = cmanager->isPreLoaded();
+
+        //If application runned first time or target configuration is not exist
+        if(configPath_manager.isEmpty() && configPath.isEmpty())
+        {
+            //Ask for configuration
+            if(cmanager->exec()==QDialog::Accepted)
+            {
+                configPath = cmanager->currentConfigPath;
+            }
+            else
+            {
+                delete cmanager;
+                goto ExitFromApplication;
+                //IntProc::quit();
+                //exit(0);
+            }
+        } else if(!configPath_manager.isEmpty() && configPath.isEmpty()) {
+            configPath = cmanager->currentConfigPath;
+        }
+        delete cmanager;
+        */
+
+        //Load selected configuration pack
+
+        LogDebug("Opening of the configuration package...");
+        ConfigManager::setConfigPath(configPath);
+
+        LogDebug("Initalization of basic properties...");
+        if( !ConfigManager::loadBasics() )
+        {
+            LogDebug( "<Application closed with failture>" );
+            goto ExitFromApplication;
+            //return 1;
+        }
+
+        LogDebug("Configuration package successfully loaded!");
+        if(_flags.audioEnabled)
+        {
+            PGE_MusPlayer::MUS_changeVolume( g_AppSettings.volume_music );
+            LogDebug("Build SFX index cache...");
+            ConfigManager::buildSoundIndex(); //Load all sound effects into memory
+        }
+
+        //Init font manager
+        LogDebug("Init full font manager...");
+        FontManager::initFull();
+    }
+
 
     if( !fileToOpen.isEmpty() )
     {

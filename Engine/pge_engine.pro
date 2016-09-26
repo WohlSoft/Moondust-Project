@@ -21,7 +21,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui widgets network
+QT += core gui network widgets
 QT -= dbus declarative svg testlib opengl winextras
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0
@@ -133,7 +133,6 @@ SOURCES += \
     common_features/graphics_funcs.cpp \
     data_configs/obj_block.cpp \
     controls/controller_keyboard.cpp \
-    data_configs/select_config.cpp \
     common_features/util.cpp \
     scenes/level/lvl_block.cpp \
     data_configs/custom_data.cpp \
@@ -287,7 +286,8 @@ SOURCES += \
     common_features/pge_application.cpp \
     scenes/level/base/lvl_base_physics.cpp \
     scenes/level/npc/lvl_npc_physics.cpp \
-    scenes/_base/msgbox_queue.cpp
+    scenes/_base/msgbox_queue.cpp \
+    data_configs/config_select_scene/scene_config_select.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -308,7 +308,6 @@ HEADERS  += \
     common_features/graphics_funcs.h \
     common_features/pge_texture.h \
     controls/controller_keyboard.h \
-    data_configs/select_config.h \
     common_features/util.h \
     scenes/level/lvl_block.h \
     data_configs/custom_data.h \
@@ -438,10 +437,8 @@ HEADERS  += \
     scenes/level/base/lvl_base_physics.h \
     common_features/gif-h/gif.h \
     scenes/_base/msgbox_queue.h \
-    scenes/level/lvl_z_constants.h
-
-FORMS    += \
-    data_configs/select_config.ui
+    scenes/level/lvl_z_constants.h \
+    data_configs/config_select_scene/scene_config_select.h
 
 RESOURCES += \
     _resources/engine.qrc

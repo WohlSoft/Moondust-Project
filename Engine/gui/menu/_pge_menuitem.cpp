@@ -55,7 +55,7 @@ void PGE_Menuitem::toggle() {}
 void PGE_Menuitem::render(int x, int y)
 {
     float colorLevel = m_enabled ? 1.0 : 0.5;
-    FontManager::printText(title, x, y, _font_id, colorLevel, colorLevel, colorLevel);
+    FontManager::printText(title, x, y, _font_id, colorLevel, colorLevel, colorLevel, 1.0f);
 }
 
 

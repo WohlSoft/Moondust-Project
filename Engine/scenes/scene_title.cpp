@@ -457,7 +457,7 @@ int TitleScene::exec()
             times.start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            renderMouse();
+            if(!m_doExit) renderMouse();
             GlRenderer::flush();
             GlRenderer::repaint();
             times.stop_render=SDL_GetTicks();

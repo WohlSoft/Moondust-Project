@@ -30,16 +30,16 @@
 PGE_Menu::PGE_Menu(menuAlignment align, int itemGap)
 {
     alignment = align;
-    _itemsOnScreen=5;
+    _itemsOnScreen = 5;
     _currentItem = 0;
-    _line=0;
-    _offset=0;
-    arrowUpViz=false;
-    arrowDownViz=false;
-    _EndSelection=false;
-    _accept=false;
-    is_keygrab=false;
-    m_item=NULL;
+    _line = 0;
+    _offset = 0;
+    arrowUpViz = false;
+    arrowDownViz = false;
+    _EndSelection = false;
+    _accept = false;
+    is_keygrab = false;
+    m_item = nullptr;
 
     menuRect.setRect(260,380, 350, ConfigManager::setup_menus.item_height);
     _item_height = ConfigManager::setup_menus.item_height;
@@ -134,7 +134,7 @@ void PGE_Menu::addMenuItem(QString item_key, QString title, std::function<void()
         QString temp=FontManager::cropText(item.title, _text_len_limit);
         item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
-    item.extAction=_extAction;
+    item.extAction = _extAction;
     _items_normal.push_back(item);
     PGE_Menuitem *itemP = &_items_normal.last();
     _items.push_back( itemP );
@@ -932,7 +932,7 @@ void PGE_Menu::render()
         {
             if(_selector.w==0)
             {
-                GlRenderer::renderRect(xPos_s-10, yPos + (_item_height/2)-5, 20, 20, 1.f, 1.f, 0.f, 1.0f);
+                GlRenderer::renderRect(xPos_s-10, yPos + (_item_height/2)-5, 20, 2, 1.f, 1.f, 0.f, 1.0f);
             }
             else
             {

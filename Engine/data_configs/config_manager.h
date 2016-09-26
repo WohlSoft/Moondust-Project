@@ -69,6 +69,9 @@ struct DataFolders
 /*****************Fonts********************/
 struct FontsSetup
 {
+    FontsSetup() :
+        double_pixled(false)
+    {}
     bool double_pixled;
     QString fontname;
     QString rasterFontsFile;
@@ -86,6 +89,11 @@ struct MainCursors
 
 struct MessageBoxSetup
 {
+    MessageBoxSetup():
+        borderWidth(2),
+        box_padding(10),
+        font_id(-1)
+    {}
     QString sprite;
     int borderWidth;
     float   box_padding;
@@ -97,6 +105,11 @@ struct MessageBoxSetup
 
 struct MenuBoxSetup
 {
+    MenuBoxSetup():
+        borderWidth(2),
+        box_padding(10),
+        title_font_id(-1)
+    {}
     QString sprite;
     int borderWidth;
     float   box_padding;
@@ -108,6 +121,14 @@ struct MenuBoxSetup
 
 struct MenuSetup
 {
+    MenuSetup() :
+        selector(":/images/selector.png"),
+        scrollerUp(":/images/scroll_up.png"),
+        scrollerDown(":/images/scroll_down.png"),
+        item_height(32),
+        font_offset(4),
+        font_id(-1)
+    {}
     QString selector;
     QString scrollerUp;
     QString scrollerDown;
