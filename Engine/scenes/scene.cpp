@@ -155,7 +155,7 @@ void Scene::render()
 {
     for(RenderFuncs& rf : luaRenders)
     {
-        (rf.render)();
+        (rf.render)(0.0, 0.0);
     }
 
     if(!m_fader.isNull())
@@ -177,7 +177,7 @@ Scene::TypeOfScene Scene::type()
     return sceneType;
 }
 
-void Scene::renderArrayAddFunction(const std::function<void ()> &renderFunc, long double zIndex)
+void Scene::renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex)
 {
     luaRenders.push_back( RenderFuncs{zIndex, renderFunc} );
 }

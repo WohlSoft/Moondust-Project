@@ -59,7 +59,7 @@ void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int
 
 void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int y, int fontType, int size, unsigned int rgba, long double zorder, lua_State *L)
 {
-    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](){
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double /*CameraX*/, double /*CameraY*/){
         FontManager::printText(
                     QString(text.c_str()),
                     x,

@@ -108,15 +108,16 @@ public:
 
     struct RenderFuncs
     {
-        long double           z_index;
-        std::function<void()> render;
+        typedef std::function<void(double,double)> Function;
+        long double z_index;
+        Function    render;
     };
 
 protected:
     std::vector<RenderFuncs> luaRenders;
 
 public:
-    void renderArrayAddFunction(const std::function<void()>& renderFunc, long double zIndex = 400.0L);
+    void renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex = 400.0L);
     void renderArrayPrepare();
     void renderArrayClear();
 
@@ -147,7 +148,7 @@ public:
     /// \param gravity Y-gravitation will cause falling of effect picture
     /// \param phys Additional physical settings
     ///
-    void  launchEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void  launchEffect(long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
     ///
     /// \brief launchStaticEffectC
@@ -162,7 +163,7 @@ public:
     /// \param gravity Y-gravitation will cause falling of effect picture
     /// \param phys Additional physical settings
     ///
-    void launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void launchStaticEffectC(long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
     void launchEffect(SpawnEffectDef effect_def, bool centered=false);
 

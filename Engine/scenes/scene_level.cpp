@@ -458,14 +458,26 @@ void LevelScene::update()
             //! ------------------------------------------------------------
         }
 
+        //Add effects into the render table
+        for(SceneEffectsArray::iterator it=WorkingEffects.begin(); it != WorkingEffects.end(); it++ )
+        {
+            Scene_Effect *item = &(*it);
+            renderArrayAddFunction([this, item](double camPosX, double camPosY)
+            {
+                item->render(camPosX, camPosY);
+            }, item->m_zIndex);
+            //item.render(camPosX, camPosY);
+        }
         //Clear garbage (be careful!)
         //luaEngine.runGarbageCollector();
     }
 
     //Process interprocessing commands cache
     process_InterprocessCommands();
+
     //Process Z-sort of the render functions
     renderArrayPrepare();
+
     //Process message boxes
     m_messages.process();
 }
@@ -522,7 +534,7 @@ void LevelScene::render()
                         RenderFuncs& r = luaRenders[currentLuaRenderObj];
                         if(r.z_index > Z)
                             break;
-                        r.render();
+                        r.render(camPosX, camPosY);
                         currentLuaRenderObj++;
                     }
                     //Draw element itself
@@ -537,14 +549,8 @@ void LevelScene::render()
         while( currentLuaRenderObj < currentLuaRenderSz )
         {
             RenderFuncs& r = luaRenders[currentLuaRenderObj];
-            r.render();
+            r.render(camPosX, camPosY);
             currentLuaRenderObj++;
-        }
-
-        for(SceneEffectsArray::iterator it=WorkingEffects.begin();it!=WorkingEffects.end(); it++ )
-        {
-             Scene_Effect &item=(*it);
-             item.render(camPosX, camPosY);
         }
 
         if(PGE_Window::showPhysicsDebug)
@@ -579,7 +585,6 @@ void LevelScene::render()
     {
         GlRenderer::renderRect(0, cameras[c].h()*c-1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
     }
-
 
     if(PGE_Window::showDebugInfo)
     {
