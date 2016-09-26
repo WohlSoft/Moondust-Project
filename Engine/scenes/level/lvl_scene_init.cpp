@@ -433,8 +433,8 @@ bool LevelScene::init_items()
 
         LVL_Warp * warpP;
         LevelDoor door = data.doors[i];
-        bool two_way_opposite=false;
-        place_door_again:
+        bool two_way_opposite = false;
+    place_door_again:
         warpP = new LVL_Warp(this);
         warpP->data = door;
         warpP->init();

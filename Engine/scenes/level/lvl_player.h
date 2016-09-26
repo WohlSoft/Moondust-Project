@@ -24,11 +24,13 @@
 #include "lvl_npc.h"
 
 #include "lvl_base_object.h"
+#include <PGE_File_Formats/file_formats.h>
 #include <controls/controllable_object.h>
 #include <data_configs/obj_player.h>
 #include <common_features/matrix_animator.h>
-#include <PGE_File_Formats/file_formats.h>
+#include <common_features/point_mover.h>
 #include <common_features/event_queue.h>
+#include <common_features/data_array.h>
 
 #include <QHash>
 #include <QVector>
@@ -176,6 +178,7 @@ class LVL_Player :
         /********************Climbing***************************/
 
         /*******************Warps*********************/
+        PointMover m_cameraMover;
         bool    contactedWithWarp;
         LVL_Warp * contactedWarp;
         bool    wasEntered;
