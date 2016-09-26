@@ -342,14 +342,13 @@ void LVL_Player::WarpTo(LevelDoor warp)
         {
             setSpeed(0, 0);
             setPaused(true);
-
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
                                 setSpeed(0, 0); setPaused(true);
+                                setDuck(false);
                                 isWarping=true;
                                 warpPipeOffset=0.0f;
-                                setDuck(false);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
                               }, 0);
             event_queue.events.push_back(event1);
@@ -409,7 +408,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 break;
             }
 
-            float pStep = 1.5f/PGE_Window::TicksPerSecond;
+            double pStep = 1.5f/PGE_Window::TicksPerSecond;
             EventQueueEntry<LVL_Player >warpIn;
             warpIn.makeWaiterCond([this, pStep]()->bool{
                                       warpPipeOffset += pStep;
@@ -441,6 +440,47 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                           camera->fader.setFade(10, 1.0, 0.08);
                                       }, 0);
                     event_queue.events.push_back(event3);
+                } else {
+                    EventQueueEntry<LVL_Player >initCameraMover;
+                    initCameraMover.makeCaller([this,warp]()->void{
+                                               double x = warp.ox;
+                                               double y = warp.oy;
+                                               double targetX = x;
+                                               double targetY = y;
+                                               double w = m_width_registered;
+                                               double h = m_height_registered;
+                                               switch(warp.odirect)
+                                               {
+                                                   case LevelDoor::EXIT_RIGHT:
+                                                       targetX = x;
+                                                       targetY = y+32-h;
+                                                       break;
+                                                   case LevelDoor::EXIT_LEFT:
+                                                       targetX = x+32-w;
+                                                       targetY = y+32-h;
+                                                       break;
+                                                   case LevelDoor::EXIT_UP:
+                                                       targetX = x+16-(w/2.0);
+                                                       targetY = y+32-h;
+                                                       break;
+                                                   case LevelDoor::EXIT_DOWN:
+                                                       targetX = x+16-(w/2.0);
+                                                       targetY = y;
+                                                       break;
+                                                   default:
+                                                       break;
+                                               }
+                                               m_cameraMover.startAuto( posX(), posY(), targetX, targetY, 1500);
+                                          }, 0);
+                    event_queue.events.push_back(initCameraMover);
+
+                    EventQueueEntry<LVL_Player >whileOpacityFade;
+                    whileOpacityFade.makeWaiterCond([this]()->bool{
+                                                bool is = m_cameraMover.iterate(15.3);
+                                                setPos( m_cameraMover.posX(), m_cameraMover.posY() );
+                                                return is;
+                                          }, true, 0);
+                    event_queue.events.push_back(whileOpacityFade);
                 }
 
                 EventQueueEntry<LVL_Player >whileOpacityFade;
