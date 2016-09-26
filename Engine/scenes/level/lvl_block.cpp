@@ -141,7 +141,7 @@ void LVL_Block::transformTo_x(long id)
 
     if(setup->setup.sizable)
     {
-        z_index = LevelScene::Z_blockSizable +
+        z_index = LevelScene::zOrder.blockBack2 +
                 (static_cast<long double>(data.y)/1000000000.0L) + 1 -
                 (static_cast<long double>(data.w) *0.00000000000001L);
     }
@@ -149,9 +149,9 @@ void LVL_Block::transformTo_x(long id)
     {
 
         if(setup->setup.view==1)
-            z_index = LevelScene::Z_BlockFore;
+            z_index = LevelScene::zOrder.blockFront1;
         else
-            z_index = LevelScene::Z_Block;
+            z_index = LevelScene::zOrder.blockBack1;
         _scene->zCounter += 0.0000000000001L;
         z_index += _scene->zCounter;
         if( _scene->zCounter >= 1.0L )

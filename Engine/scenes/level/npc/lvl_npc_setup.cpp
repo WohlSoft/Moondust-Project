@@ -152,12 +152,12 @@ void LVL_Npc::transformTo_x(long id)
 
     double targetZ = 0;
     if(setup->setup.foreground)
-        targetZ = LevelScene::Z_npcFore;
+        targetZ = LevelScene::zOrder.npcFront;
     else
     if(setup->setup.background)
-        targetZ = LevelScene::Z_npcBack;
+        targetZ = LevelScene::zOrder.npcBack;
     else
-        targetZ = LevelScene::Z_npcStd;
+        targetZ = LevelScene::zOrder.npcStd;
 
     z_index = targetZ + setup->setup.z_offset;
 

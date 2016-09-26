@@ -286,7 +286,8 @@ SOURCES += \
     script/bindings/core/classes/luaclass_core_scene_effects.cpp \
     common_features/pge_application.cpp \
     scenes/level/base/lvl_base_physics.cpp \
-    scenes/level/npc/lvl_npc_physics.cpp
+    scenes/level/npc/lvl_npc_physics.cpp \
+    scenes/_base/msgbox_queue.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -435,7 +436,9 @@ HEADERS  += \
     script/bindings/core/classes/luaclass_core_scene_effects.h \
     common_features/pge_application.h \
     scenes/level/base/lvl_base_physics.h \
-    common_features/gif-h/gif.h
+    common_features/gif-h/gif.h \
+    scenes/_base/msgbox_queue.h \
+    scenes/level/lvl_z_constants.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -48,6 +48,8 @@
 #include "level/lvl_event_engine.h"
 #include "level/lvl_player_switch.h"
 
+#include "level/lvl_z_constants.h"
+
 #include <controls/controller.h>
 
 #include <data_configs/custom_data.h>
@@ -172,35 +174,8 @@ public:
     void collectGarbagePlayers();
 
     /**************Z-Layers**************/
-    long double zCounter;
-
-    static const long double Z_backImage; //Background
-
-    //Background-2
-    static const long double Z_BGOBack2; // backround BGO
-
-    static const long double Z_blockSizable; // sizable blocks
-
-    //Background-1
-    static const long double Z_BGOBack1; // backround BGO
-
-    static const long double Z_npcBack; // background NPC
-    static const long double Z_Block; // standart block
-    static const long double Z_npcStd; // standart NPC
-    static const long double Z_Player; //player Point
-
-    //Foreground-1
-    static const long double Z_BGOFore1; // foreground BGO
-    static const long double Z_npcFore; // foreground NPC
-    static const long double Z_BlockFore; // foreground blocks
-    //Foreground-2
-    static const long double Z_BGOFore2; // foreground BGO
-
-    //System layer
-    static const long double Z_sys_PhysEnv;
-    static const long double Z_sys_door;
-    static const long double Z_sys_interspace1; // interSection space layer
-    static const long double Z_sys_sctBorder; // section Border
+    long double  zCounter;
+    static const LevelZOrderTable zOrder;
     /**************Z-Layers**************/
 
 
@@ -320,6 +295,7 @@ public:
     void setGameState(EpisodeState *_gameState);
 
     EventQueue<LevelScene > system_events;
+
     LVL_Section *getSection(int sct);
     EpisodeState *getGameState();
 

@@ -23,23 +23,24 @@ public:
     unsigned int start_delay;
 
     long id;
-    float startX;
-    float startY;
+    double startX;
+    double startY;
     int animationLoops;
     int delay;
     int framespeed;
     QList<int> frame_sequence;
-    float velocityX;
-    float velocityY;
-    float gravity;
+    double velocityX;
+    double velocityY;
+    double zIndex;
+    double gravity;
     int direction;
 
-    float min_vel_x;
-    float min_vel_y;
-    float max_vel_x;
-    float max_vel_y;
-    float decelerate_x;
-    float decelerate_y;
+    double min_vel_x;
+    double min_vel_y;
+    double max_vel_x;
+    double max_vel_y;
+    double decelerate_x;
+    double decelerate_y;
 };
 
 #endif // SPAWNEFFECTDEF_H

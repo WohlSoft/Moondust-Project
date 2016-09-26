@@ -27,12 +27,13 @@
 #include <common_features/rectf.h>
 #include <script/lua_engine.h>
 #include <scenes/_base/gfx_effect.h>
+#include <scenes/_base/msgbox_queue.h>
 #include <data_configs/spawn_effect_def.h>
+
+#include <queue>
 
 #include <functional>
 #include <QList>
-
-#include <chrono>
 
 struct LoopTiming
 {
@@ -105,8 +106,20 @@ public:
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
-    void addRenderFunction(const std::function<void()>& renderFunc);
-    void clearRenderFunctions();
+    struct RenderFuncs
+    {
+        typedef std::function<void(double,double)> Function;
+        long double z_index;
+        Function    render;
+    };
+
+protected:
+    std::vector<RenderFuncs> luaRenders;
+
+public:
+    void renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex = 400.0L);
+    void renderArrayPrepare();
+    void renderArrayClear();
 
     virtual bool isVizibleOnScreen(PGE_RectF &rect);
     virtual bool isVizibleOnScreen(double x, double y, double w, double h);
@@ -135,7 +148,7 @@ public:
     /// \param gravity Y-gravitation will cause falling of effect picture
     /// \param phys Additional physical settings
     ///
-    void  launchEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void  launchEffect(long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
     ///
     /// \brief launchStaticEffectC
@@ -150,7 +163,7 @@ public:
     /// \param gravity Y-gravitation will cause falling of effect picture
     /// \param phys Additional physical settings
     ///
-    void launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void launchStaticEffectC(long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction=0, Scene_Effect_Phys phys=Scene_Effect_Phys());
 
     void launchEffect(SpawnEffectDef effect_def, bool centered=false);
 
@@ -159,6 +172,9 @@ public:
 
     QString errorString();
 
+    //! Queue of message boxes to show them after all code of one frame will be updated/processed
+    MessageBoxQueue m_messages;
+
 protected:
     bool        m_isRunning;
     bool        m_doShutDown;
@@ -166,17 +182,9 @@ protected:
     int         uTick;
     double      uTickf;
 
-    /************waiting timer************/
-    typedef std::chrono::high_resolution_clock StClock;
-    typedef std::chrono::high_resolution_clock::time_point StTimePt;
-    void wait(float ms);
-    /************waiting timer************/
     QString _errorString;
 private:
     TypeOfScene sceneType;
-    float dif;
-
-    QVector<std::function<void()> > renderFunctions;
 };
 
 #endif // SCENE_H

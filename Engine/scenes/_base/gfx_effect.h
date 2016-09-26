@@ -27,12 +27,12 @@
 struct Scene_Effect_Phys
 {
     Scene_Effect_Phys();
-    float min_vel_x;
-    float min_vel_y;
-    float max_vel_x;
-    float max_vel_y;
-    float decelerate_x;
-    float decelerate_y;
+    double min_vel_x;
+    double min_vel_y;
+    double max_vel_x;
+    double max_vel_y;
+    double decelerate_x;
+    double decelerate_y;
 };
 
 class Scene_Effect
@@ -44,33 +44,38 @@ public:
 
     void init();
 
-    float posX();
-    float posY();
+    double posX();
+    double posY();
+
     bool finished();
-    float startup_delay;
 
-    int direction;
-    int frameStyle;
+    double m_startupDelay;
 
-    bool _limit_delay;
-    float _delay;
+    double m_zIndex;
 
-    float m_velocityX;
-    float m_velocityY;
+    int m_direction;
+    int m_frameStyle;
 
-    float gravity;
-    Scene_Effect_Phys phys_setup;
+    bool m_limitLifeTime;
+    double m_lifeTime;
 
-    PGE_RectF posRect;
+    double m_velocityX;
+    double m_velocityY;
 
-    bool _finished;
-    obj_effect * setup;//Global config
-    PGE_Texture    texture;
-    SimpleAnimator animator;
+    double m_gravity;
+    Scene_Effect_Phys m_phys_setup;
 
-    void update(float ticks);
-    void iterateStep(float ticks);
-    static const float timeStep;
+    PGE_RectF m_posRect;
+
+    bool m_finished;
+    obj_effect*     m_setup;//Global config
+    PGE_Texture     m_texture;
+    bool            m_limitLoops;
+    SimpleAnimator  m_animator;
+
+    void update(double ticks);
+    void iterateStep(double ticks);
+    static const double timeStep;
 
     void render(double camX=0.0, double camY=0.0);
 };

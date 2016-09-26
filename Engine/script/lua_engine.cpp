@@ -328,7 +328,8 @@ void LuaEngine::bindCore()
     ];
     if(m_baseScene){
         luabind::module(L)[
-            Binding_Core_GlobalFuncs_Renderer::bindToLua(),
+            Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer(),
+            Binding_Core_GlobalFuncs_Renderer::bindToLuaText(),
             Binding_Core_Graphics::PGETexture_bindToLua(),
             Binding_Core_Graphics::bindToLua(),
             Binding_Core_GlobalFuncs_Effect::bindToLua()
