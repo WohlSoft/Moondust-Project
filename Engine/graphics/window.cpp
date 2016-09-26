@@ -26,7 +26,6 @@
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-#include <QMessageBox>
 #include <QtDebug>
 
 int PGE_Window::Width=800;
@@ -83,7 +82,31 @@ void PGE_Window::printSDLError(QString info)
     PGE_MsgBox::error( QString("%1\nSDL Error: %2")
                               .arg(info)
                               .arg( SDL_GetError() )
-                      );
+                       );
+}
+
+int PGE_Window::msgBoxInfo(QString title, QString text)
+{
+    std::string ttl = title.toStdString();
+    std::string msg = text.toStdString();
+    return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
+                             ttl.c_str(), msg.c_str(), window);
+}
+
+int PGE_Window::msgBoxWarning(QString title, QString text)
+{
+    std::string ttl = title.toStdString();
+    std::string msg = text.toStdString();
+    return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                             ttl.c_str(), msg.c_str(), window);
+}
+
+int PGE_Window::msgBoxCritical(QString title, QString text)
+{
+    std::string ttl = title.toStdString();
+    std::string msg = text.toStdString();
+    return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                             ttl.c_str(), msg.c_str(), window);
 }
 
 bool PGE_Window::init(QString WindowTitle, int renderType)

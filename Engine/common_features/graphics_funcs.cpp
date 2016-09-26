@@ -21,7 +21,6 @@
 #include <QRgb>
 
 #include <QFileInfo>
-#include <QMessageBox>
 #include <QSysInfo>
 
 #include "graphics_funcs.h"

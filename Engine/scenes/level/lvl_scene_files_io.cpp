@@ -23,7 +23,6 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QElapsedTimer>
-#include <QApplication>
 
 #include "../../networking/intproc.h"
 
@@ -70,10 +69,8 @@ bool LevelScene::loadFileIP()
     {
         loaderStep();
         //Abort loading process and exit from game if window was closed
-        if(!isLevelContinues) return false;
-        //#ifndef __APPLE__
-        //qApp->processEvents();
-        //#endif
+        if(!isLevelContinues)
+            return false;
 
         if(time.elapsed()>1500)
         {

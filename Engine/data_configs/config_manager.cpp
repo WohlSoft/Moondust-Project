@@ -20,11 +20,15 @@
 #include <common_features/version_cmp.h>
 #include "config_manager.h"
 #include <graphics/gl_renderer.h>
+#include <graphics/window.h>
+#include <gui/pge_msgbox.h>
 #include "../version.h"
 
-#include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
+
+#include <QDesktopServices>
+#include <QUrl>
 
 #include <QtDebug>
 
@@ -80,6 +84,14 @@ void ConfigManager::setConfigPath(QString p)
     config_id = QDir(p).dirName();
 }
 
+static void msgBox(QString title, QString text)
+{
+    std::string ttl = title.toStdString();
+    std::string msg = text.toStdString();
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                             ttl.c_str(), msg.c_str(),
+                             PGE_Window::window);
+}
 
 bool ConfigManager::loadBasics()
 {
@@ -97,9 +109,8 @@ bool ConfigManager::loadBasics()
     //dirs
     if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
     {
-        QMessageBox::critical(NULL, "Config error",
-                              QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir),
-                              QMessageBox::Ok);
+        msgBox( "Config error",
+                QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
         return false;
     }
 
@@ -107,9 +118,8 @@ bool ConfigManager::loadBasics()
 
     if(!QFileInfo(main_ini).exists())
     {
-        QMessageBox::critical(NULL, "Config error",
-                              QString("Can't open the 'main.ini' config file!"),
-                              QMessageBox::Ok);
+        msgBox("Config error",
+               QString("Can't open the 'main.ini' config file!"));
         return false;
     }
 
@@ -128,9 +138,8 @@ bool ConfigManager::loadBasics()
         else
         if(!QDir(data_dir).exists())//Check as absolute
         {
-            QMessageBox::critical(NULL, "Config error",
-                                  QString("Config data path not exists: %1").arg(data_dir),
-                                  QMessageBox::Ok);
+            msgBox("Config error",
+                   QString("Config data path not exists: %1").arg(data_dir));
             return false;
         }
 
@@ -141,19 +150,28 @@ bool ConfigManager::loadBasics()
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
         if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
         {
-            QMessageBox box;
+            std::string title = "Legacy configuration package";
+            std::string msg = QString("You have a legacy configuration package.\n"
+                                      "Game will be started, but you may have a some problems with gameplay.\n\n"
+                                      "Please download and install latest version of a configuration package:\n\n"
+                                      "Download: %1\n"
+                                      "Note: most of config packs are updates togeter with PGE,\n"
+                                      "therefore you can use same link to get updated version")
+                                      /*.arg("<a href=\"%1\">%1</a>")*/.arg(url).toStdString();
+
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                     title.c_str(), msg.c_str(),
+                                     PGE_Window::window);
+
+            QDesktopServices::openUrl(QUrl(url));
+            /*QMessageBox box;
             box.setWindowTitle( "Legacy configuration package" );
             box.setTextFormat(Qt::RichText);
             box.setTextInteractionFlags(Qt::TextBrowserInteraction);
-            box.setText(QString("You have a legacy configuration package.\n<br>"
-                                "Game will be started, but you may have a some problems with gameplay.\n<br>\n<br>"
-                                "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
-                                "Note: most of config packs are updates togeter with PGE,<br>\n"
-                                "therefore you can use same link to get updated version")
-                                .arg("<a href=\"%1\">%1</a>").arg(url));
+            box.setText();
             box.setStandardButtons(QMessageBox::Ok);
             box.setIcon(QMessageBox::Warning);
-            box.exec();
+            box.exec();*/
         }
 
         if(appDir)
@@ -184,9 +202,8 @@ bool ConfigManager::loadBasics()
 
     if( mainset.status() != QSettings::NoError )
     {
-        QMessageBox::critical(NULL, "Config error",
-                              QString("ERROR LOADING main.ini N:%1").arg(mainset.status()),
-                              QMessageBox::Ok);
+        msgBox( "Config error",
+                QString("ERROR LOADING main.ini N:%1").arg(mainset.status()) );
         return false;
     }
 

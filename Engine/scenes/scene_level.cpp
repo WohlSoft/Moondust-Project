@@ -38,7 +38,6 @@
 
 #include <algorithm>
 
-#include <QApplication>
 #include <QtDebug>
 
 #include <common_features/logger.h>
@@ -356,9 +355,9 @@ void LevelScene::update()
         events.processTimers(uTickf);
 
         //update cameras
-        for(QList<PGE_LevelCamera>::iterator cam=cameras.begin(); cam != cameras.end(); cam++)
+        for(PGE_LevelCamera& cam : cameras)
         {
-            cam->updatePre(uTickf);
+            cam.updatePre(uTickf);
         }
 
         processEffects(uTickf);
@@ -381,9 +380,8 @@ void LevelScene::update()
         player2Controller->sendControls();
 
         //update players
-        for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+        for(LVL_Player* plr : players)
         {
-            LVL_Player*plr=(*it);
             plr->update(uTickf);
             if(PGE_Window::showDebugInfo)
             {
@@ -393,7 +391,7 @@ void LevelScene::update()
             }
         }
 
-        for(int i=0;i<fading_blocks.size();i++)
+        for(int i=0; i<fading_blocks.size(); i++)
         {
             if(fading_blocks[i]->tickFader(uTickf))
             {
@@ -439,9 +437,9 @@ void LevelScene::update()
         /**********************************************/
 
         //update cameras
-        for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
+        for(PGE_LevelCamera& cam : cameras)
         {
-            cam->updatePost(uTickf);
+            cam.updatePost(uTickf);
 
             //! --------------DRAW HUD--------------------------------------
             LuaEngine* sceneLuaEngine = getLuaEngine();
@@ -450,8 +448,8 @@ void LevelScene::update()
                 if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown())
                 {
                     LuaEvent drawHUDEvent = BindingCore_Events_Engine::createDrawLevelHUDEvent(sceneLuaEngine,
-                                                                                              &(*cam),
-                                                                                              &player_states[(*cam).playerID-1]);
+                                                                                              &cam,
+                                                                                              &player_states[cam.playerID-1]);
                     sceneLuaEngine->dispatchEvent(drawHUDEvent);
                 }
             }
@@ -459,14 +457,12 @@ void LevelScene::update()
         }
 
         //Add effects into the render table
-        for(SceneEffectsArray::iterator it=WorkingEffects.begin(); it != WorkingEffects.end(); it++ )
+        for(Scene_Effect &item : WorkingEffects)
         {
-            Scene_Effect *item = &(*it);
-            renderArrayAddFunction([this, item](double camPosX, double camPosY)
+            renderArrayAddFunction([this, &item](double camPosX, double camPosY)
             {
-                item->render(camPosX, camPosY);
-            }, item->m_zIndex);
-            //item.render(camPosX, camPosY);
+                item.render(camPosX, camPosY);
+            },  item.m_zIndex);
         }
         //Clear garbage (be careful!)
         //luaEngine.runGarbageCollector();

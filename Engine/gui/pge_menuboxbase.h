@@ -82,15 +82,6 @@ public:
     void processBox(double);
     void processUnLoader(double ticks);
 
-    static void info(QString msg);
-    //static void info(std::string msg);
-    static void warn(QString msg);
-    //static void warn(std::string msg);
-    static void error(QString msg);
-    //static void error(std::string msg);
-    static void fatal(QString msg);
-    //static void fatal(std::string msg);
-
 protected:
     PGE_Menu _menu;
 

@@ -29,10 +29,7 @@
 #include <settings/global_settings.h>
 
 #include <QFontMetrics>
-#include <QMessageBox>
 #include <QFileInfo>
-#include <QApplication>
-
 
 PGE_TextInputBox::PGE_TextInputBox()
     : PGE_BoxBase(0)
@@ -397,84 +394,4 @@ void PGE_TextInputBox::updateControllers()
         }
     }
 }
-
-
-
-void PGE_TextInputBox::info(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_TextInputBox msgBox(NULL, msg,
-                          PGE_TextInputBox::msg_info_light);
-        msgBox.exec();
-    }
-    else
-    {
-                                       //% "Information"
-        QMessageBox::information(NULL, qtTrId("MSGBOX_INFO"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_TextInputBox::info(std::string msg)
-//{
-//    PGE_TextInputBox::info(QString::fromStdString(msg));
-//}
-
-void PGE_TextInputBox::warn(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_TextInputBox msgBox(NULL, msg,
-                          PGE_TextInputBox::msg_warn);
-        msgBox.exec();
-    }
-    else
-    {
-                                   //% "Warning"
-        QMessageBox::warning(NULL, qtTrId("MSGBOX_WARN"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_TextInputBox::warn(std::string msg)
-//{
-//    PGE_TextInputBox::warn(QString::fromStdString(msg));
-//}
-
-
-void PGE_TextInputBox::error(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_TextInputBox msgBox(NULL, msg,
-                          PGE_TextInputBox::msg_error);
-        msgBox.exec();
-    }
-    else
-    {
-                                    //% "Error"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_ERROR"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_TextInputBox::error(std::string msg)
-//{
-//    PGE_TextInputBox::error(QString::fromStdString(msg));
-//}
-
-
-void PGE_TextInputBox::fatal(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_TextInputBox msgBox(NULL, msg,
-                          PGE_TextInputBox::msg_fatal);
-        msgBox.exec();
-    }
-    else
-    {
-                                    //% "Fatal"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_FATAL"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_TextInputBox::fatal(std::string msg)
-//{
-//    PGE_TextInputBox::fatal(QString::fromStdString(msg));
-//}
 

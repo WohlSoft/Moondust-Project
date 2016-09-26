@@ -18,91 +18,11 @@
 
 
 #include "util.h"
-#include <QLayout>
-#include <QWidgetItem>
 #include <QFileInfo>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
-
-void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
-{
-    QString toSearch;
-    toSearch = searchEdit->text();
-    for(int i = 0; i < itemList->count(); i++){
-        if(toSearch.isEmpty()){
-            itemList->setRowHidden(i,false);
-            continue;
-        }
-        if(typeBox->currentIndex()==0){ //search by text
-            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
-                itemList->setRowHidden(i,true);
-            }else{
-                itemList->setRowHidden(i,false);
-            }
-        }else if(typeBox->currentIndex()==1){ //search by id
-            bool conv = false;
-            int toIdSearch = toSearch.toInt(&conv);
-            if(!conv){ //cannot convert
-                break;
-            }
-            if(itemList->item(i)->data(3).toInt()==toIdSearch){
-                itemList->setRowHidden(i,false);
-            }else{
-                itemList->setRowHidden(i,true);
-            }
-        }else{//else do nothing
-            break;
-        }
-    }
-}
-
-void util::memclear(QListWidget *wid)
-{
-    QList<QListWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    while(!items.isEmpty())
-    {
-        QListWidgetItem *tmp = items.first();
-        items.pop_front();
-        delete tmp;
-    }
-}
-
-void util::memclear(QTableWidget *wid)
-{
-    QList<QTableWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    while(!items.isEmpty())
-    {
-        QTableWidgetItem *tmp = items.first();
-        items.pop_front();
-        delete tmp;
-    }
-}
-
-void util::clearLayoutItems(QLayout *layout)
-{
-    QLayoutItem *child;
-    while ((child = layout->takeAt(0)) != 0) {
-        QWidgetItem* i = dynamic_cast<QWidgetItem*>(child);
-        if(i){
-            delete i->widget();
-        }
-
-        delete child;
-    }
-}
-
-bool util::contains(const QComboBox *b, const QString &s)
-{
-    for(int i = 0; i < b->count(); ++i){
-        if(b->itemText(i) == s){
-            return true;
-        }
-    }
-    return false;
-}
-
 
 QString util::filePath(QString s)
 {

@@ -5,7 +5,6 @@
 #include <QStringList>
 #include <QtDebug>
 #include <QElapsedTimer>
-#include <QApplication>
 
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
+#include <QLocale>
 #include "translator.h"
 #include "app_path.h"
 #include "logger.h"
@@ -24,7 +24,7 @@
 PGE_Translator::PGE_Translator()
 {}
 
-void PGE_Translator::init(QApplication *app)
+void PGE_Translator::init(PGE_Application *app)
 {
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));

@@ -32,8 +32,6 @@
 
 #include "../scene_title.h"
 
-#include <QApplication>
-
 void TitleScene::processMenu()
 {
     if(m_doExit) return;
@@ -47,9 +45,9 @@ void TitleScene::processMenu()
             if(filefind_finished) {
                 switch(_currentMenu)
                 {
-                    case menu_playepisode_wait: setMenu(menu_playepisode); return;
-                    case menu_playlevel_wait: setMenu(menu_playlevel); return;
-                    case menu_playbattle_wait: setMenu(menu_playbattle); return;
+                    case menu_playepisode_wait: setMenu(menu_playepisode);  return;
+                    case menu_playlevel_wait:   setMenu(menu_playlevel);    return;
+                    case menu_playbattle_wait:  setMenu(menu_playbattle);   return;
                     default: break;
                 }
                 return;

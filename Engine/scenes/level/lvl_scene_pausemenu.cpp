@@ -19,7 +19,6 @@
 #include "../scene_level.h"
 
 #include <audio/pge_audio.h>
-#include <QApplication>
 
 void LevelScene::initPauseMenu1()
 {

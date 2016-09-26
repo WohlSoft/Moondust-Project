@@ -3,7 +3,7 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
-#include <QMessageBox>
+#include <SDL2/SDL_messagebox.h>
 #include <sstream>
 
 static const char*getGlErrorStr(GLenum error)
@@ -46,12 +46,16 @@ static const char*getGlErrorStr(GLenum error)
 static inline void _GLErrorCheck(const char* fn, int line, const char* func)
 {
     GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
+    if (error != GL_NO_ERROR)
+    {
         std::ostringstream errMsg;
         errMsg << "OpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
         errMsg << "\r\n";
         errMsg << "Error code: "<< getGlErrorStr(error) << " (0x" << std::hex << (unsigned int)error << ")";
-        QMessageBox::warning(nullptr, "OpenGL Error", errMsg.str().c_str());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                 "OpenGL Error",
+                                 errMsg.str().c_str(),
+                                 NULL);
         abort();
     }
 }
@@ -71,7 +75,10 @@ static inline void _GLShowError(QString msg, const char* fn, int line, const cha
         errMsg << msg.toStdString();
         errMsg << "\nOpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
         errMsg << "\r\n";
-        QMessageBox::warning(nullptr, "OpenGL Error", errMsg.str().c_str());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                 "OpenGL Error",
+                                 errMsg.str().c_str(),
+                                 NULL);
         abort();
     }
 }

@@ -20,7 +20,6 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
-#include <QApplication>
 #include <QSettings>
 #include <QDateTime>
 #include <QtDebug>

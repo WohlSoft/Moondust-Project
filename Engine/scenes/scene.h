@@ -76,6 +76,7 @@ public:
     enum TypeOfScene
     {
         _Unknown=0,
+        ConfigSelect,
         Loading,
         Title,
         Level,

@@ -37,7 +37,6 @@
 #include <QPair>
 #include <QVector>
 #include <QFileInfo>
-#include <QApplication>
 #include <unordered_map>
 
 WorldScene::WorldScene()

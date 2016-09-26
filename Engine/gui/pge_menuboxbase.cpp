@@ -25,14 +25,13 @@
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
+#include "../data_configs/config_select_scene/scene_config_select.h"
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 #include "../scenes/scene_gameover.h"
 
-#include <QFontMetrics>
-#include <QMessageBox>
-#include <QApplication>
 
+#include <QFontMetrics>
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, QString _title, msgType _type,
                        PGE_Point boxCenterPos, double _padding, QString texture)
@@ -75,6 +74,9 @@ void PGE_MenuBoxBase::construct(QString _title, PGE_MenuBoxBase::msgType _type,
     if(!texture.isEmpty())
         loadTexture(texture);
 
+    _ctrl1 = nullptr;
+    _ctrl2 = nullptr;
+    fontRgba.setRgba(qRgba(255, 255, 255, 255));
     updateTickValue();
     _page=0;
     running=false;
@@ -238,7 +240,9 @@ void PGE_MenuBoxBase::render()
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
+                                   float(bg_color.red())/255.0f,
+                                   float(bg_color.green())/255.0f,
+                                   float(bg_color.blue())/255.0f, fader_opacity);
         }
         FontManager::printText(title,
                                _sizeRect.center().x()-title_size.w()/2,
@@ -262,11 +266,13 @@ void PGE_MenuBoxBase::render()
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity ,
-                                   _sizeRect.center().y() - (height+padding)*fader_opacity,
-                                     _sizeRect.center().x() + (width+padding)*fader_opacity,
-                                   _sizeRect.center().y() + (height+padding)*fader_opacity,
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
+            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity,
+                                    _sizeRect.center().y() - (height+padding)*fader_opacity,
+                                    _sizeRect.center().x() + (width+padding)*fader_opacity,
+                                    _sizeRect.center().y() + (height+padding)*fader_opacity,
+                                    float(bg_color.red())/255.0f,
+                                    float(bg_color.green())/255.0f,
+                                    float(bg_color.blue())/255.0f, fader_opacity);
         }
     }
 }
@@ -438,7 +444,7 @@ void PGE_MenuBoxBase::processUnLoader(double ticks)
 
 void PGE_MenuBoxBase::initControllers()
 {
-    if(parentScene!=NULL)
+    if(parentScene != nullptr)
     {
         if(parentScene->type()==Scene::Level)
         {
@@ -455,7 +461,7 @@ void PGE_MenuBoxBase::initControllers()
             if(s)
             {
                 _ctrl1 = s->player1Controller;
-                _ctrl2=NULL;
+                _ctrl2 = nullptr;
             }
         }
         else if(parentScene->type()==Scene::GameOver)
@@ -464,19 +470,28 @@ void PGE_MenuBoxBase::initControllers()
             if(s)
             {
                 _ctrl1 = s->player1Controller;
-                _ctrl2=NULL;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(parentScene->type()==Scene::ConfigSelect)
+        {
+            ConfigSelectScene * s = dynamic_cast<ConfigSelectScene *>(parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
             }
         }
         else
         {
-            _ctrl1=NULL;
-            _ctrl2=NULL;
+            _ctrl1=nullptr;
+            _ctrl2=nullptr;
         }
     }
     else
     {
-        _ctrl1=NULL;
-        _ctrl2=NULL;
+        _ctrl1=nullptr;
+        _ctrl2=nullptr;
     }
 }
 
@@ -513,84 +528,3 @@ void PGE_MenuBoxBase::updateControllers()
         }
     }
 }
-
-
-
-void PGE_MenuBoxBase::info(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MsgBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_info_light);
-        msgBox.exec();
-    }
-    else
-    {
-                                       //% "Information"
-        QMessageBox::information(NULL, qtTrId("MSGBOX_INFO"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::info(std::string msg)
-//{
-//    PGE_MenuBox::info(QString::fromStdString(msg));
-//}
-
-void PGE_MenuBoxBase::warn(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MsgBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_warn);
-        msgBox.exec();
-    }
-    else
-    {
-                                   //% "Warning"
-        QMessageBox::warning(NULL, qtTrId("MSGBOX_WARN"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::warn(std::string msg)
-//{
-//    PGE_MenuBox::warn(QString::fromStdString(msg));
-//}
-
-
-void PGE_MenuBoxBase::error(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MsgBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_error);
-        msgBox.exec();
-    }
-    else
-    {
-                                    //% "Error"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_ERROR"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::error(std::string msg)
-//{
-//    PGE_MenuBox::error(QString::fromStdString(msg));
-//}
-
-
-void PGE_MenuBoxBase::fatal(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MsgBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_fatal);
-        msgBox.exec();
-    }
-    else
-    {
-                                    //% "Fatal"
-        QMessageBox::critical(NULL, qtTrId("MSGBOX_FATAL"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::fatal(std::string msg)
-//{
-//    PGE_MenuBox::fatal(QString::fromStdString(msg));
-//}
-
