@@ -12,17 +12,18 @@ SpawnEffectDef::SpawnEffectDef()
     animationLoops=1;
     delay = 0;
     framespeed=64;
-    velocityX=0.0f;
-    velocityY=0.0f;
+    velocityX=0.0;
+    velocityY=0.0;
+    zIndex = -5.0;
     gravity=0.0f;
     direction=1;
 
-    min_vel_x=0.0f;
-    min_vel_y=0.0f;
-    max_vel_x=0.0f;
-    max_vel_y=0.0f;
-    decelerate_x=0.0f;
-    decelerate_y=0.0f;
+    min_vel_x=0.0;
+    min_vel_y=0.0;
+    max_vel_x=0.0;
+    max_vel_y=0.0;
+    decelerate_x=0.0;
+    decelerate_y=0.0;
 }
 
 SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
@@ -39,6 +40,7 @@ SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
     frame_sequence = c.frame_sequence;
     velocityX = c.velocityX;
     velocityY = c.velocityY;
+    zIndex    = c.zIndex;
     gravity = c.gravity;
 
     direction = c.direction;
@@ -59,21 +61,22 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
 
     id = setup->value(prefix+"-effect-id", 0).toInt();
     start_delay = setup->value(prefix+"-effect-start-delay", 0).toUInt();
-    startX = setup->value(prefix+"-effect-start-x", 0.0f).toFloat();
-    startY = setup->value(prefix+"-effect-start-y", 0.0f).toFloat();
+    startX = setup->value(prefix+"-effect-start-x", 0.0).toDouble();
+    startY = setup->value(prefix+"-effect-start-y", 0.0).toDouble();
     animationLoops = setup->value(prefix+"-effect-animation-loops", 1).toInt();
     delay = setup->value(prefix+"-effect-delay", 0).toInt();
     framespeed = setup->value(prefix+"-effect-framespeed", 0).toInt();
-    velocityX = setup->value(prefix+"-effect-velocity-x", 0.0f).toFloat();
-    velocityY = setup->value(prefix+"-effect-velocity-y", 0.0f).toFloat();
-    gravity = setup->value(prefix+"-effect-gravity", 0.0f).toFloat();
+    velocityX = setup->value(prefix+"-effect-velocity-x", 0.0).toDouble();
+    velocityY = setup->value(prefix+"-effect-velocity-y", 0.0).toDouble();
+    zIndex  = setup->value(prefix+"-effect-z-index", -5.0).toDouble();
+    gravity = setup->value(prefix+"-effect-gravity", 0.0).toDouble();
     direction = setup->value(prefix+"-effect-direction", 1).toInt();
-    min_vel_x = setup->value(prefix+"-effect-min-vel-x", 0.0f).toFloat();
-    min_vel_y = setup->value(prefix+"-effect-min-vel-y", 0.0f).toFloat();
-    max_vel_x = setup->value(prefix+"-effect-max-vel-x", 0.0f).toFloat();
-    max_vel_y = setup->value(prefix+"-effect-max-vel-y", 0.0f).toFloat();
-    decelerate_x = setup->value(prefix+"-effect-decelerate-x", 0.0f).toFloat();
-    decelerate_y = setup->value(prefix+"-effect-decelerate-y", 0.0f).toFloat();
+    min_vel_x = setup->value(prefix+"-effect-min-vel-x", 0.0).toDouble();
+    min_vel_y = setup->value(prefix+"-effect-min-vel-y", 0.0).toDouble();
+    max_vel_x = setup->value(prefix+"-effect-max-vel-x", 0.0).toDouble();
+    max_vel_y = setup->value(prefix+"-effect-max-vel-y", 0.0).toDouble();
+    decelerate_x = setup->value(prefix+"-effect-decelerate-x", 0.0).toDouble();
+    decelerate_y = setup->value(prefix+"-effect-decelerate-y", 0.0).toDouble();
 
     frame_sequence.clear();
     QString frame_sequence_str=setup->value(prefix+"-effect-frame-sequence", "").toString();

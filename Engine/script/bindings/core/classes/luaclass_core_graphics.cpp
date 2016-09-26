@@ -9,6 +9,73 @@
 
 #define DEFAULT_ZOFFSET  400.0L
 
+static inline bool calculateSides(
+        float xPos,
+        float yPos,
+        float sourceX,
+        float sourceY,
+        float width,
+        float height,
+        float txW,
+        float txH,
+
+        float &x,
+        float &y,
+        float &w,
+        float &h,
+        float &left,
+        float &top,
+        float &right,
+        float &bottom)
+{
+    float sX = sourceX, sY = sourceY;
+    x = xPos; y = yPos;
+    w = width; h = height;
+
+    if(w <= 0.0)
+        return false;
+
+    if(h <= 0.0)
+        return false;
+
+    if(sX < 0.0f)
+    {
+        if(sX < -txW)
+            return false;//Don't draw out of view!
+        x = x-sX;
+        sX = 0.0f;
+    }
+    else if(sX > txW)
+        return false; //Don't draw if out of view!
+    if(sY < 0.0f)
+    {
+        if(sY < -txH)
+            return false;//Don't draw out of view!
+        y = y-sY;
+        sY = 0.0f;
+    }
+    else if(sourceY > txH)
+        return false;//Don't draw if out of view!
+
+    if(w > (txW - sX))
+    {
+        w = (txW - sX);
+    }
+
+    if(h > (txH - sY))
+    {
+        h = (txH - sY);
+    }
+
+    left   = sX / txW;
+    top    = sY / txH;
+    right  = (sX + w) / txW;
+    bottom = (sY + h) / txH;
+
+    return true;
+}
+
+
 //! Cached textures
 QHash<QString, PGE_Texture> Binding_Core_Graphics::textureCache;
 
@@ -87,15 +154,6 @@ void Binding_Core_Graphics::drawImage(const PGE_Texture *texture, float xPos, fl
     drawImageWP(texture, xPos, yPos, sourceX, sourceY, width, height, opacity, DEFAULT_ZOFFSET, L);
 }
 
-void Binding_Core_Graphics::clearCache()
-{
-    for(QHash<QString, PGE_Texture>::iterator it = textureCache.begin(); it != textureCache.end(); it++)
-    {
-        PGE_Texture &texture = *it;
-        GlRenderer::deleteTexture(texture);
-    }
-    textureCache.clear();
-}
 
 void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, float yPos, long double zlayer, lua_State *L)
 {
@@ -106,7 +164,7 @@ void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, 
 void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, float yPos, float opacity, long double zlayer, lua_State *L)
 {
     if(!texture) return;
-    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=]()
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double /*CameraX*/, double /*CameraY*/)
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
         GlRenderer::renderTexture((PGE_Texture*)texture, xPos, yPos);
@@ -119,60 +177,95 @@ void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, 
     drawImageWP(texture, xPos, yPos, sourceX, sourceY, width, height, 1.0f, zlayer, L);
 }
 
-
 void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, float yPos, float sourceX, float sourceY, float width, float height, float opacity, long double zlayer, lua_State *L)
 {
     if(!texture) return;
-    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=]()
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double /*CameraX*/, double /*CameraY*/)
     {
-        float x = xPos, y = yPos,
-             sX = sourceX, sY = sourceY,
-              w = width, h = height,
-            txW = (float)texture->w, txH = (float)texture->h;
+        float x, y, w, h, left, top, right, bottom;
+        if( !calculateSides(xPos, yPos,
+                           sourceX, sourceY,
+                           width, height,
+                           float(texture->w), float(texture->h),
 
-        if(w <= 0.0)
+                           x, y, w, h,
+                           left, top, right, bottom) )
             return;
-
-        if(h <= 0.0)
-            return;
-
-        if(sX < 0.0f)
-        {
-            if(sX < -txW)
-                return;//Don't draw out of view!
-            x = x-sX;
-            sX = 0.0f;
-        }
-        else if(sX > txW)
-            return; //Don't draw if out of view!
-        if(sY < 0.0f)
-        {
-            if(sY < -txH)
-                return;//Don't draw out of view!
-            y = y-sY;
-            sY = 0.0f;
-        }
-        else if(sourceY > txH)
-            return;//Don't draw if out of view!
-
-        if(w > (txW - sX))
-        {
-            w = (txW - sX);
-        }
-
-        if(h > (txH - sY))
-        {
-            h = (txH - sY);
-        }
-
-        float left   = (sX/txW);
-        float top    = (sY/txH);
-        float right  = ((sX+w)/txW);
-        float bottom = ((sY+h)/txH);
-
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
         GlRenderer::renderTexture((PGE_Texture*)texture, x, y, w, h, top, bottom, left, right);
     }, zlayer);
+}
+
+
+
+void Binding_Core_Graphics::drawImageToScene(const PGE_Texture *texture, double xPos, double yPos, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, DEFAULT_ZOFFSET, L);
+}
+
+void Binding_Core_Graphics::drawImageToScene(const PGE_Texture *texture, double xPos, double yPos, float opacity, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, opacity, DEFAULT_ZOFFSET, L);
+}
+
+void Binding_Core_Graphics::drawImageToScene(const PGE_Texture *texture, double xPos, double yPos, float sourceX, float sourceY, float width, float height, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, sourceX, sourceY, width, height, DEFAULT_ZOFFSET, L);
+}
+
+void Binding_Core_Graphics::drawImageToScene(const PGE_Texture *texture, double xPos, double yPos, float sourceX, float sourceY, float width, float height, float opacity, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, sourceX, sourceY, width, height, opacity, DEFAULT_ZOFFSET, L);
+}
+
+
+void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, double xPos, double yPos, long double zlayer, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, 1.0f, zlayer, L);
+}
+
+void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, double xPos, double yPos, float opacity, long double zlayer, lua_State *L)
+{
+    if(!texture) return;
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double cameraX, double cameraY)
+    {
+        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
+        GlRenderer::renderTexture((PGE_Texture*)texture, float(xPos-cameraX), float(yPos-cameraY));
+    }, zlayer);
+}
+
+void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, double xPos, double yPos, float sourceX, float sourceY, float width, float height, long double zlayer, lua_State *L)
+{
+    drawImageToSceneWP(texture, xPos, yPos, sourceX, sourceY, width, height, 1.0f, zlayer, L);
+}
+
+void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, double xPos, double yPos, float sourceX, float sourceY, float width, float height, float opacity, long double zlayer, lua_State *L)
+{
+    if(!texture) return;
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double cameraX, double cameraY)
+    {
+        float x, y, w, h, left, top, right, bottom;
+        if( !calculateSides(float(xPos-cameraX), float(yPos-cameraY),
+                           sourceX, sourceY,
+                           width, height,
+                           float(texture->w), float(texture->h),
+
+                           x, y, w, h,
+                           left, top, right, bottom) )
+            return;
+        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
+        GlRenderer::renderTexture((PGE_Texture*)texture, x, y, w, h, top, bottom, left, right);
+    }, zlayer);
+}
+
+void Binding_Core_Graphics::clearCache()
+{
+    for(QHash<QString, PGE_Texture>::iterator it = textureCache.begin(); it != textureCache.end(); it++)
+    {
+        PGE_Texture &texture = *it;
+        GlRenderer::deleteTexture(texture);
+    }
+    textureCache.clear();
 }
 
 double Binding_Core_Graphics::alignToCenter(double x, double width)
@@ -206,6 +299,14 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             def("drawImageWP", (void(*)(const PGE_Texture*, float, float, float, long double, lua_State*))&drawImageWP),
             def("drawImageWP", (void(*)(const PGE_Texture*, float, float, float, float, float, float, long double, lua_State*))&drawImageWP),
             def("drawImageWP", (void(*)(const PGE_Texture*, float, float, float, float, float, float, float, long double, lua_State*))&drawImageWP),
+            def("drawImageToScene", (void(*)(const PGE_Texture*, double, double, lua_State*))&drawImageToScene),
+            def("drawImageToScene", (void(*)(const PGE_Texture*, double, double, float, lua_State*))&drawImageToScene),
+            def("drawImageToScene", (void(*)(const PGE_Texture*, double, double, float, float, float, float, lua_State*))&drawImageToScene),
+            def("drawImageToScene", (void(*)(const PGE_Texture*, double, double, float, float, float, float, float, lua_State*))&drawImageToScene),
+            def("drawImageToSceneWP", (void(*)(const PGE_Texture*, double, double, long double, lua_State*))&drawImageToSceneWP),
+            def("drawImageToSceneWP", (void(*)(const PGE_Texture*, double, double, float, long double, lua_State*))&drawImageToSceneWP),
+            def("drawImageToSceneWP", (void(*)(const PGE_Texture*, double, double, float, float, float, float, long double, lua_State*))&drawImageToSceneWP),
+            def("drawImageToSceneWP", (void(*)(const PGE_Texture*, double, double, float, float, float, float, float, long double, lua_State*))&drawImageToSceneWP),
             def("alignToHCenter", &alignToCenter)
         ];
 }
