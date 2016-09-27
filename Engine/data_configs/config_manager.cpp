@@ -41,6 +41,7 @@ QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
 int              ConfigManager::default_grid=32;
 
+static ScriptsSetup ConfigManager::setup_Scripts;
 
 QStringList ConfigManager::errorsList;
 
@@ -189,6 +190,11 @@ bool ConfigManager::loadBasics()
         dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
         dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
+
+        setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
+        setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
+        setup_Scripts.wld_local  = mainset.value("local-script-name-lvl", "world.lua").toString();
+        setup_Scripts.wld_common = mainset.value("common-script-name-lvl", "world.lua").toString();
 
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
