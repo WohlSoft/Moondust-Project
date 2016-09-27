@@ -58,7 +58,7 @@
 #include <QElapsedTimer>
 #endif
 
-static Render_Base      g_dummy;//Empty renderer
+static Render_dummy     g_dummy;//Empty renderer
 static Render_OpenGL31  g_opengl31;
 static Render_OpenGL21  g_opengl21;
 static Render_SW_SDL    g_swsdl;
@@ -66,13 +66,13 @@ static Render_SW_SDL    g_swsdl;
 Render_Base      *g_renderer=&g_dummy;
 
 
-bool GlRenderer::_isReady=false;
-SDL_Thread *GlRenderer::thread = NULL;
+bool GlRenderer::m_isReady=false;
+SDL_Thread *GlRenderer::m_screenshot_thread = NULL;
 
-int GlRenderer::window_w=800;
-int GlRenderer::window_h=600;
-float GlRenderer::offset_x=0.0f;
-float GlRenderer::offset_y=0.0f;
+int     GlRenderer::m_viewport_w    = 800;
+int     GlRenderer::m_viewport_h    = 600;
+float   GlRenderer::m_offset_x  = 0.0f;
+float   GlRenderer::m_offset_y  = 0.0f;
 
 static bool isGL_Error()
 {
@@ -698,13 +698,13 @@ bool GlRenderer::init()
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
 
-    _isReady = g_renderer->init();
-    if(_isReady)
+    m_isReady = g_renderer->init();
+    if(m_isReady)
     {
         g_renderer->resetViewport();
         g_renderer->initDummyTexture();
     }
-    return _isReady;
+    return m_isReady;
 }
 
 bool GlRenderer::uninit()
@@ -895,6 +895,11 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
     tx.ColorLower.r=0; tx.ColorLower.g=0; tx.ColorLower.b=0;
 }
 
+bool GlRenderer::isTopDown()
+{
+    return g_renderer->isTopDown();
+}
+
 int GlRenderer::getPixelDataSize(const PGE_Texture *tx)
 {
     if(!tx)
@@ -916,7 +921,7 @@ struct PGE_GL_shoot{
 
 void GlRenderer::makeShot()
 {
-    if(!_isReady) return;
+    if(!m_isReady) return;
 
     // Make the BYTE array, factor of 3 because it's RBG.
     int w, h;
@@ -927,17 +932,17 @@ void GlRenderer::makeShot()
         return;
     }
 
-    w=w-offset_x*2;
-    h=h-offset_y*2;
+    w=w-m_offset_x*2;
+    h=h-m_offset_y*2;
 
     uchar* pixels = new uchar[4*w*h];
-    g_renderer->getScreenPixels(offset_x, offset_y, w, h, pixels);
+    g_renderer->getScreenPixels(m_offset_x, m_offset_y, w, h, pixels);
 
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
     shoot->h=h;
-    thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)shoot );
+    m_screenshot_thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)shoot );
 
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
 }
@@ -947,7 +952,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     PGE_GL_shoot *shoot = (PGE_GL_shoot*)_pixels;
 
     FIBITMAP* shotImg = FreeImage_ConvertFromRawBits((BYTE*)shoot->pixels, shoot->w, shoot->h,
-                                     3*shoot->w+shoot->w%4, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+                                     3*shoot->w+shoot->w%4, 24, 0xFF0000, 0x00FF00, 0x0000FF, !g_renderer->isTopDown());
     if(!shotImg)
     {
         delete []shoot->pixels;
@@ -969,10 +974,10 @@ int GlRenderer::makeShot_action(void *_pixels)
     FreeImage_Unload(shotImg);
     shotImg = temp;
 
-    if((shoot->w!=window_w)||(shoot->h!=window_h))
+    if((shoot->w!=m_viewport_w)||(shoot->h!=m_viewport_h))
     {
         FIBITMAP* temp;
-        temp = FreeImage_Rescale(shotImg, window_w, window_h, FILTER_BOX);
+        temp = FreeImage_Rescale(shotImg, m_viewport_w, m_viewport_h, FILTER_BOX);
         if(!temp) {
             FreeImage_Unload(shotImg);
             delete []shoot->pixels;
@@ -1034,7 +1039,7 @@ void GlRenderer::toggleRecorder()
                 .arg(date.year()).arg(date.month()).arg(date.day())
                 .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
 
-        if(GifBegin(&g_gif.writer, saveTo.toUtf8().data(), window_w, window_h, 3, 8, false))
+        if(GifBegin(&g_gif.writer, saveTo.toUtf8().data(), m_viewport_w, m_viewport_h, 3, 8, false))
         {
             g_gif.enabled = true;
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
@@ -1063,19 +1068,19 @@ void GlRenderer::processRecorder(double /*ticktime*/)
             return;
         }
 
-        w = w-offset_x*2;
-        h = h-offset_y*2;
+        w = w-m_offset_x*2;
+        h = h-m_offset_y*2;
 
         uchar* pixels = new uchar[4*w*h];
-        g_renderer->getScreenPixelsRGBA(offset_x, offset_y, w, h, pixels);
+        g_renderer->getScreenPixelsRGBA(m_offset_x, m_offset_y, w, h, pixels);
 
         FIBITMAP* shotImg = FreeImage_ConvertFromRawBitsEx(false, (BYTE*)pixels, FIT_BITMAP, w, h,
-                                         4*w, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, true);
+                                         4*w, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());
 
-        if((w != window_w)||(h != window_h))
+        if((w != m_viewport_w)||(h != m_viewport_h))
         {
             FIBITMAP* temp;
-            temp = FreeImage_Rescale(shotImg, window_w, window_h, FILTER_BOX);
+            temp = FreeImage_Rescale(shotImg, m_viewport_w, m_viewport_h, FILTER_BOX);
             if(!temp) {
                 FreeImage_Unload(shotImg);
                 delete[] pixels;
@@ -1091,7 +1096,7 @@ void GlRenderer::processRecorder(double /*ticktime*/)
         }
 
         uint8_t* img = FreeImage_GetBits(shotImg);
-        GifWriteFrame(&g_gif.writer, img, window_w, window_h, 4/*uint32_t((ticktime)/10.0)*/, 8, false);
+        GifWriteFrame(&g_gif.writer, img, m_viewport_w, m_viewport_h, 4/*uint32_t((ticktime)/10.0)*/, 8, false);
 
         FreeImage_Unload(shotImg);
         delete[] pixels;
@@ -1103,7 +1108,7 @@ void GlRenderer::processRecorder(double /*ticktime*/)
 
 bool GlRenderer::ready()
 {
-    return _isReady;
+    return m_isReady;
 }
 
 void GlRenderer::flush()

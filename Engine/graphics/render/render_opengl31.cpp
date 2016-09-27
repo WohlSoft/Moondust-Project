@@ -63,6 +63,9 @@ Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
                          1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
+Render_OpenGL31::~Render_OpenGL31()
+{}
+
 void Render_OpenGL31::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();
@@ -183,6 +186,11 @@ void Render_OpenGL31::loadTexture(PGE_Texture &target, int width, int height, un
 void Render_OpenGL31::deleteTexture(PGE_Texture &tx)
 {
     glDeleteTextures( 1, &(tx.texture) );
+}
+
+bool Render_OpenGL31::isTopDown()
+{
+    return true;
 }
 
 void Render_OpenGL31::getScreenPixels(int x, int y, int w, int h, unsigned char *pixels)

@@ -26,6 +26,7 @@ class Render_OpenGL31 : public Render_Base
 {
 public:
     Render_OpenGL31();
+    ~Render_OpenGL31();
     virtual void set_SDL_settings();
     virtual unsigned int SDL_InitFlags();
     virtual bool init();
@@ -34,6 +35,7 @@ public:
     virtual PGE_Texture getDummyTexture();
     virtual void loadTexture(PGE_Texture &target, int width, int height, unsigned char* RGBApixels);
     virtual void deleteTexture(PGE_Texture &tx);
+    virtual bool isTopDown();
     virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
     virtual void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels);
     virtual void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
