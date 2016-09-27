@@ -22,6 +22,7 @@
 #include <scenes/scene.h>
 #include <controls/controller.h>
 #include <gui/pge_menu.h>
+#include <graphics/gl_color.h>
 
 #include <QList>
 
@@ -52,6 +53,8 @@ public:
 
     Controller* controller;
 
+    void setLabel(QString label);
+
 private:
     struct ConfigPackEntry
     {
@@ -62,6 +65,11 @@ private:
         QString path;
     };
     int ret;//!< Exit code
+    QString  m_label;
+    QString  m_waterMark;
+    PGE_Rect m_waterMarkRect;
+    GlColor  m_waterMarkColor;
+    int      m_waterMarkFontSize;
     PGE_Point mousePos;
     QList<ConfigPackEntry> m_availablePacks;
     PGE_Menu menu;

@@ -351,12 +351,19 @@ private:
         PAUSE_2_Continue=0,
         PAUSE_2_Exit
     };
+    enum PauseMenuItems_Menu3
+    {
+        PAUSE_3_Continue=0,
+        PAUSE_3_Replay,
+        PAUSE_3_Exit
+    };
     int         _pauseMenuID;
     bool        m_isPauseMenu;
     PGE_MenuBox m_pauseMenu;
     bool        _pauseMenu_opened;
     void initPauseMenu1();
     void initPauseMenu2();
+    void initPauseMenu3();
     void processPauseMenu();
     /*****************Pause Menu**end**************/
 

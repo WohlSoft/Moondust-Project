@@ -4,6 +4,9 @@
 - Fixed rendering of lua-rendered stuff hidden by message boxes
 - Added support of Z-Index for image and text rendering from lua code
 - Config pack selection dialog has been reorganized into scene (that allows using joystick in it, maiking screnshots from it and even recording GIFs from it!). It's one of steps to reducing Qt usage on engine side. Target is using QCoreApplication only to reduse size of engine's static build.
+- Font manager has been improved and fixed
+- Special pause menu for level testing mode with ability to restart level!
+- Don't close IPC-ran level on restarting
 
 0.2.6
 - Improved testing of the renderers support to avoid accidental running of the unsupported renderer

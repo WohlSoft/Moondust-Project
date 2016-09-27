@@ -47,6 +47,7 @@ bool LevelScene::loadFileIP()
 {
     if(!IntProc::isEnabled()) return false;
 
+    FileFormats::CreateLevelData(data);
     data.meta.ReadFileValid = false;
 
     LogDebug("ICP: Requesting editor for a file....");

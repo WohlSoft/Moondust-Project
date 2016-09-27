@@ -113,6 +113,8 @@ void EditorPipe::icomingData(QString in)
     else
     if(in.startsWith("SEND_LVLX: ", Qt::CaseSensitive))
     {
+        //Delete old cached stuff
+        accepted_lvl_raw.clear();
         qDebug() << "IN: >>"<< (in.size()>30 ? QString(in).remove(30, in.size()-31) : in);
         in.remove("SEND_LVLX: ");
         accepted_lvl_path   = in;

@@ -30,6 +30,8 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include <QDesktopServices>
+
 #include <common_features/app_path.h>
 
 #include <common_features/util.h>
@@ -39,9 +41,20 @@
 ConfigSelectScene::ConfigSelectScene(): Scene(ConfigSelect)
 {
     ret = 0;
-    bgcolor.r = 1.0f;
-    bgcolor.g = 1.0f;
-    bgcolor.b = 1.0f;    
+    bgcolor.r = 0.0f;
+    bgcolor.g = 0.0f;
+    bgcolor.b = 0.1f;
+
+    m_label = "Choose a game:";
+
+    m_waterMark = "WohlSoft team 2016 by Wohlstand (http://wohlsoft.ru)";
+    m_waterMarkRect.setPos(200, PGE_Window::Height-50);
+    m_waterMarkFontSize = 20;
+    PGE_Size s = FontManager::textSize(m_waterMark, -2, 10000, false, m_waterMarkFontSize);
+    m_waterMarkRect.setSize(s.w(), s.h());
+    m_waterMarkColor.setRgba(0.5, 0.5, 1.0, 1.0);
+
+    mousePos.setPoint(-1000, -1000);
 
     GlRenderer::loadTextureP(cursor, ":/images/cursor.png");
 
@@ -127,7 +140,7 @@ ConfigSelectScene::ConfigSelectScene(): Scene(ConfigSelect)
         item.fullname = configName;
         item.key  = c;
         item.path = config_dir;
-        FontManager::optimizeText(description, 50);
+        FontManager::optimizeText(description, 28);
         item.description = description;
         GlRenderer::loadTextureP(item.image, splash_logo);
         //item = new QListWidgetItem( configName );
@@ -222,6 +235,11 @@ void ConfigSelectScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
     mousePos = GlRenderer::MapToScr(mmevent.x, mmevent.y);
     if(!m_doExit)
         menu.setMouseHoverPos(mousePos.x(), mousePos.y());
+
+    if(m_waterMarkRect.collidePoint(mousePos.x(), mousePos.y()))
+        m_waterMarkColor.setRgba(1.0, 0.0, 1.0, 1.0);
+    else
+        m_waterMarkColor.setRgba(0.5, 0.5, 1.0, 1.0);
 }
 
 void ConfigSelectScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
@@ -233,6 +251,8 @@ void ConfigSelectScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
         case SDL_BUTTON_LEFT:
             mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
             menu.setMouseClickPos(mousePos.x(), mousePos.y());
+            if(m_waterMarkRect.collidePoint(mousePos.x(), mousePos.y()))
+                QDesktopServices::openUrl(QUrl("http://wohlsoft.ru/PGE"));
         break;
         case SDL_BUTTON_RIGHT:
             menu.rejectItem();
@@ -269,13 +289,45 @@ void ConfigSelectScene::update()
 void ConfigSelectScene::render()
 {
     GlRenderer::clearScreen();
-    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
+
+    static double hue = 0.0;
+    static double brightness = 0.0;
+    static double brightnessDelta = +0.003;
+    GlColor c;
+    c.setHsva(hue, 1.0, 1.0, 1.0);
+
+    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, float(brightness), float(brightness), float(brightness)/*bgcolor.b*/, 1.0);
+
 
     int padding = 20;
     GlRenderer::renderRect(padding, padding,
                            PGE_Window::Width - padding*2,
                            PGE_Window::Height - padding*2,
                            0.0f, 0.0f, 0.2f, 1.0f);
+    padding = 15;
+    GlRenderer::renderRect(padding, padding,
+                           PGE_Window::Width - padding*2,
+                           PGE_Window::Height - padding*2,
+                           c.Red(), c.Green(), c.Blue(), c.Alpha(), false);
+
+    padding = 13;
+    GlRenderer::renderRect(padding, padding,
+                           PGE_Window::Width - padding*2,
+                           PGE_Window::Height - padding*2,
+                           c.Red(), c.Green(), c.Blue(), c.Alpha(), false);
+    padding = 12;
+    GlRenderer::renderRect(padding, padding,
+                           PGE_Window::Width - padding*2,
+                           PGE_Window::Height - padding*2,
+                           c.Red(), c.Green(), c.Blue(), c.Alpha(), false);
+
+    hue += 2.0;
+    while(hue >= 360.0)
+        hue -= 360.0;
+
+    brightness += brightnessDelta;
+    if((brightness>=0.2)||(brightness<=0.0))
+        brightnessDelta *= -1.0;
 
     {
         int key = menu.currentItem().item_key.toInt();
@@ -290,23 +342,37 @@ void ConfigSelectScene::render()
             w = 200;
         }
         GlRenderer::renderTexture(&item.image, 30, 30, w, h);
-        FontManager::printText(item.description, 30, 170, -2, 1.0, 1.0, 1.0, 1.0, 14);
+        FontManager::printText(item.description, 30, 170, -2, 1.0, 1.0, 1.0, 1.0, 18);
     }
 
-    FontManager::printText("Choose a game:", 240, 80, -2, 1.0, 1.0, 1.0, 1.0, 25);
+    FontManager::printText(m_label, 240, 80, -2, 1.0, 1.0, 1.0, 1.0, 48);
 
-    FontManager::printText("WohlSoft team 2016 by Wohlstand  [http://wohlsoft.ru]",
-                           200, PGE_Window::Height-50, -2,
-                           0.5, 0.5, 1.0, 1.0, 15);
+    FontManager::printText(m_waterMark,
+                           m_waterMarkRect.x(), m_waterMarkRect.y(), -2,
+                           m_waterMarkColor.Red(),
+                           m_waterMarkColor.Green(),
+                           m_waterMarkColor.Blue(),
+                           m_waterMarkColor.Alpha(), m_waterMarkFontSize);
+
+    if(PGE_Window::showPhysicsDebug)
+    {
+        GlRenderer::renderRect(float(m_waterMarkRect.x()),
+                               float(m_waterMarkRect.y()),
+                               float(m_waterMarkRect.width()),
+                               float(m_waterMarkRect.height()),
+                               1.0f, 1.0f, 0.2f, 1.0f, false);
+    }
 
     menu.render();
-    Scene::render();
 
     if(PGE_Window::showDebugInfo)
     {
         FontManager::printText(QString("Graphical engine: %1").arg(GlRenderer::engineName()),
-                               500, 30, -2, 1.0, 1.0, 1.0, 0.5, 12);
+                               500, 30, -2, 1.0, 1.0, 1.0, 0.5, 18);
     }
+
+    Scene::render();
+
 }
 
 void ConfigSelectScene::renderMouse()
@@ -404,5 +470,10 @@ void ConfigSelectScene::processEvents()
     SDL_PumpEvents();
     controller->update();
     Scene::processEvents();
+}
+
+void ConfigSelectScene::setLabel(QString label)
+{
+    m_label = label;
 }
 

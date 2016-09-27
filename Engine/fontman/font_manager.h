@@ -86,7 +86,7 @@ public:
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
 
-    static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false);
+    static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
     static int getFontID(QString fontName);
 
     static void getChar1(QChar _x, int px_size, PGE_Texture &tex);
@@ -95,6 +95,7 @@ public:
     static QFont font();
     enum DefaultFont
     {
+        TTF_Font = -2,
         DefaultTTF_Font=-1,
         DefaultRaster=0
     };

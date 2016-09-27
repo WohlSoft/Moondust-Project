@@ -12,25 +12,63 @@ public:
     GlColor(GLuint rgba);
     GlColor(QString rgba);
     ~GlColor();
+    void setRgb(GLuint rgb);
     void setRgba(GLuint rgba);
     void setRgba(QString rgba);
-    void setRed(float _r);
-    void setGreen(float _g);
-    void setBlue(float _b);
-    void setAlpha(float _a);
-    void setRedI(float _r);
-    void setGreenI(float _g);
-    void setBlueI(float _b);
-    void setAlphaI(float _a);
+    void setRgba(double _r, double _g, double _b, double _a);
+    void setHsv(double _h, double _s, double _v);
+    void setHsva(double _h, double _s, double _v, double _a);
+    /**
+     * @brief Set red from 0.0 to 1.0
+     * @param _r
+     */
+    void setRed(double _r);
+    /**
+     * @brief Set green from 0.0 to 1.0
+     * @param _g
+     */
+    void setGreen(double _g);
+    /**
+     * @brief Set blue from from 0.0 to 1.0
+     * @param _b
+     */
+    void setBlue(double _b);
+    /**
+     * @brief Set alpha from 0.0 to 1.0
+     * @param _a
+     */
+    void setAlpha(double _a);
+    /**
+     * @brief Set red from 0.0 to 255.0
+     * @param _r
+     */
+    void setRedI(double _r);
+    /**
+     * @brief Set green from 0.0 to 255.0
+     * @param _g
+     */
+    void setGreenI(double _g);
+    /**
+     * @brief Set blue from 0.0 to 255.0
+     * @param _b
+     */
+    void setBlueI(double _b);
+    /**
+     * @brief Set alpha from 0.0 to 255.0
+     * @param _a
+     */
+    void setAlphaI(double _a);
+
     float Red();
     float Green();
     float Blue();
     float Alpha();
+    void getHsv(double &h, double &s, double &v);
 private:
-    float r;
-    float g;
-    float b;
-    float a;
+    double m_r;
+    double m_g;
+    double m_b;
+    double m_a;
 };
 
 #endif // GLCOLOR_H

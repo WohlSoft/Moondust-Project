@@ -77,6 +77,34 @@ void LevelScene::initPauseMenu2()
     isTimeStopped=false;
 }
 
+void LevelScene::initPauseMenu3()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=3;
+    m_pauseMenu.setParentScene(this);
+    m_pauseMenu.construct(
+                //% "Pause"
+                qtTrId("LVL_MENU_PAUSE_TTL"),
+                PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                ConfigManager::setup_menu_box.box_padding,
+                ConfigManager::setup_menu_box.sprite);
+    m_pauseMenu.clearMenu();
+
+    QStringList items;
+    //% "Continue"
+    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    //% "Replay level"
+    items << qtTrId("LVL_MENU_PAUSE_REPLAY");
+    //% "Quit"
+    items << qtTrId("LVL_MENU_PAUSE_EXIT");
+
+    m_pauseMenu.addMenuItems(items);
+    m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    m_pauseMenu.setMaxMenuItems(3);
+    m_isPauseMenu=false;
+    isTimeStopped=false;
+}
+
 void LevelScene::processPauseMenu()
 {
     if(!_pauseMenu_opened)
@@ -90,8 +118,9 @@ void LevelScene::processPauseMenu()
         m_pauseMenu.update(uTickf);
         if(!m_pauseMenu.isRunning())
         {
-            if(_pauseMenuID==1)
+            switch(_pauseMenuID)
             {
+            case 1:
                 switch(m_pauseMenu.answer())
                 {
                 case PAUSE_Continue:
@@ -112,7 +141,8 @@ void LevelScene::processPauseMenu()
                 break;
                 default: break;
                 }
-            } else {
+            break;
+            case 2:
                 switch(m_pauseMenu.answer())
                 {
                 case PAUSE_2_Continue:
@@ -124,6 +154,24 @@ void LevelScene::processPauseMenu()
                 break;
                 default: break;
                 }
+                break;
+            case 3:
+                switch(m_pauseMenu.answer())
+                {
+                case PAUSE_3_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_3_Replay:
+                    //Replay same level again
+                    setExiting(0, LvlExit::EXIT_ReplayRequest);
+                break;
+                case PAUSE_3_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, LvlExit::EXIT_MenuExit);
+                break;
+                default: break;
+                }
+                break;
             }
             _pauseMenu_opened=false;
             m_isPauseMenu=false;
