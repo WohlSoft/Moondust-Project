@@ -41,7 +41,7 @@ QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
 int              ConfigManager::default_grid=32;
 
-static ScriptsSetup ConfigManager::setup_Scripts;
+ScriptsSetup ConfigManager::setup_Scripts;
 
 QStringList ConfigManager::errorsList;
 
