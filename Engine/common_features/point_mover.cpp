@@ -50,6 +50,8 @@ void PointMover::startAuto(double posX, double posY, double toPosX, double toPos
 
     double distance = std::sqrt( pow( toPosX-posX, 2 ) + pow( toPosY-posY, 2 ) );
     m_speed = distance/timeMS;
+    if(m_speed<1.0)
+        m_speed = 1.0;
     makeSpeed();
     m_moving = true;
 }
@@ -86,19 +88,19 @@ bool PointMover::iterate(double tickTime)
             m_posY = m_targetY;
             return false;
         }
+
+        m_posX += m_speedX*tickTime;
+        m_posY += m_speedY*tickTime;
+
         if(passedTargetX())
         {
             m_posX = m_targetX;
             m_speedX = 0.0;
-        } else {
-            m_posX += m_speedX*tickTime;
         }
         if(passedTargetY())
         {
             m_posY = m_targetY;
             m_speedY = 0.0;
-        } else {
-            m_posY += m_speedY*tickTime;
         }
         return true;
     }

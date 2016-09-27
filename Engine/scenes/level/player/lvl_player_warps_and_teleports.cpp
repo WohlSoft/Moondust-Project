@@ -433,7 +433,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             else
             {
                 int sID = _scene->findNearestSection(warp.ox, warp.oy);
-                if(camera->section->id != _scene->levelData()->sections[sID].id)
+                if( camera->section->id != _scene->levelData()->sections[sID].id )
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
