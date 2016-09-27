@@ -300,12 +300,12 @@ bool dataconfigs::loadconfigs()
         dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
         dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        localScriptName_lvl = mainset.value("local-script-name-lvl", "level.lua").toString();
-        commonScriptName_lvl = mainset.value("common-script-name-lvl", "levelglobal.lua").toString();
-        localScriptName_wld = mainset.value("local-script-name-lvl", "world.lua").toString();
-        commonScriptName_wld = mainset.value("common-script-name-lvl", "worldglobal.lua").toString();
+        localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toString();
+        commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toString();
+        localScriptName_wld  = mainset.value("local-script-name-lvl", "world.lua").toString();
+        commonScriptName_wld = mainset.value("common-script-name-lvl", "world.lua").toString();
 
-        dirs.gcustom = data_dir+ mainset.value("custom-data", "data-custom").toString() + "/";
+        dirs.gcustom = data_dir+mainset.value("custom-data", "data-custom").toString() + "/";
     closeSection(&mainset);
 
     //Check existing of most important graphics paths

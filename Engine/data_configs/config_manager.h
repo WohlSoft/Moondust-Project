@@ -138,6 +138,18 @@ struct MenuSetup
     int     font_id;
 };
 
+struct ScriptsSetup
+{
+    //Script in the level custom folder
+    QString lvl_local;
+    //Script in the same folder as level
+    QString lvl_common;
+    //Script in the world map custom folder
+    QString wld_local;
+    //Script in the same folder as world map
+    QString wld_common;
+};
+
 template<class obj_T>
 void loadCustomConfig(PGE_DataArray<obj_T> &container,
                       int ID,
@@ -171,6 +183,9 @@ public:
     static QString config_dir;
     static QString data_dir;
     static int default_grid;
+
+    //Scripts setup
+    static ScriptsSetup setup_Scripts;
 
     //Common Data
     static QList<PGE_Texture > common_textures;
