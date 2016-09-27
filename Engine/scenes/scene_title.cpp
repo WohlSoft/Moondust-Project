@@ -357,7 +357,9 @@ void TitleScene::render()
 
     if(g_AppSettings.showDebugInfo)
     {
-        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\nfader ratio %4 N%5 F%6 TKS-%7\nTICK: %8")
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\n"
+                                       "fader ratio %4 N%5 F%6 TKS-%7\n"
+                                       "TICK: %8, Graphical engine: %9")
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype)
@@ -365,8 +367,8 @@ void TitleScene::render()
                                .arg(m_fader.isNull())
                                .arg(m_fader.isFull())
                                .arg(m_fader.ticksLeft())
-                               .arg(uTickf)
-                               ,10, 10);
+                               .arg(uTickf).arg(GlRenderer::engineName())
+                               ,10, 10, FontManager::DefaultRaster, 1.0, 1.0, 1.0, 0.5);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
 //                               "abcdefghijklmnopqrstuvwxyz\n"
 //                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
@@ -382,7 +384,7 @@ void TitleScene::render()
                                "ØÙÚÛÜÝÞß÷ © ®\n\n"
                                "Ich bin glücklich!\n\n"
                                "Как хорошо, что всё работает!\n"
-                               "Живіть всі дружно!", 10, 100, 0, 0.75, 1.0, 0.7, 1.0);
+                               "Живіть всі дружно!", 10, 100, 0, 0.75, 0.5, 0.7, 1.0);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
 //        FontManager::printText("0123456789\n"
 //                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
@@ -393,7 +395,6 @@ void TitleScene::render()
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 250, 3, 1.0, 1.0, 1.0, 1.0);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 290, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
     }
-
 
     menu.render();
 

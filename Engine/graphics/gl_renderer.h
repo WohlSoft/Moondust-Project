@@ -44,6 +44,8 @@ public:
     static void setup_OpenGL31();
     static void setup_SW_SDL();
 
+    static QString engineName();
+
     static unsigned int SDL_InitFlags();
 
     static bool init();
