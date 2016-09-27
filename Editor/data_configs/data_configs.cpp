@@ -302,8 +302,8 @@ bool dataconfigs::loadconfigs()
 
         localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toString();
         commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toString();
-        localScriptName_wld  = mainset.value("local-script-name-lvl", "world.lua").toString();
-        commonScriptName_wld = mainset.value("common-script-name-lvl", "world.lua").toString();
+        localScriptName_wld  = mainset.value("local-script-name-wld", "world.lua").toString();
+        commonScriptName_wld = mainset.value("common-script-name-wld", "world.lua").toString();
 
         dirs.gcustom = data_dir+mainset.value("custom-data", "data-custom").toString() + "/";
     closeSection(&mainset);

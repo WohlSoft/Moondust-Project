@@ -193,8 +193,8 @@ bool ConfigManager::loadBasics()
 
         setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
         setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
-        setup_Scripts.wld_local  = mainset.value("local-script-name-lvl", "world.lua").toString();
-        setup_Scripts.wld_common = mainset.value("common-script-name-lvl", "world.lua").toString();
+        setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
+        setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
 
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
