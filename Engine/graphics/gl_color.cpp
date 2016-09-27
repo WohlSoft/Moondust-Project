@@ -1,6 +1,7 @@
 #include "gl_color.h"
 
 #include <QColor>
+#include <cmath>
 
 GlColor::GlColor()
 {

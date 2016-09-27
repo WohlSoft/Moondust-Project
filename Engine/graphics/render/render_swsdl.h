@@ -40,13 +40,16 @@ class Render_SW_SDL : public Render_Base
 {
 public:
     Render_SW_SDL();
+    ~Render_SW_SDL();
     virtual void set_SDL_settings();
+    virtual unsigned int SDL_InitFlags() {return 0;}
     virtual bool init();
     virtual bool uninit();
     virtual void initDummyTexture();
     virtual PGE_Texture getDummyTexture();
     virtual void loadTexture(PGE_Texture &target, int width, int height, unsigned char* RGBApixels);
     virtual void deleteTexture(PGE_Texture &tx);
+    virtual bool isTopDown();
     virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
     virtual void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels);
     virtual void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);

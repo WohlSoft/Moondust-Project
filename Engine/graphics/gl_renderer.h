@@ -20,10 +20,9 @@
 #define GL_RENDERER_H
 
 #include <QString>
-#include "render/render_base.h"
 #include <common_features/rectf.h>
-
-extern Render_Base* g_renderer;
+#include <common_features/point.h>
+#include <common_features/pge_texture.h>
 
 struct SDL_Thread;
 class  QImage;
@@ -44,7 +43,7 @@ public:
     static void setup_OpenGL31();
     static void setup_SW_SDL();
 
-    static QString engineName();
+    static QString  engineName();
 
     static unsigned int SDL_InitFlags();
 
@@ -98,24 +97,25 @@ public:
     static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);
 
+    static bool isTopDown();
     static int  getPixelDataSize(const PGE_Texture *tx);
     static void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
 
 private:
-
     //Virtual resolution of renderable zone
-    static int window_w;
-    static int window_h;
+    static int m_viewport_w;
+    static int m_viewport_h;
 
     //Scale of virtual and window resolutuins
-    static float scale_x;
-    static float scale_y;
-    //Side offsets to keep ratio
-    static float offset_x;
-    static float offset_y;
+    static float m_scale_x;
+    static float m_scale_y;
 
-    static SDL_Thread *thread;
-    static bool _isReady;
+    //Side offsets to keep ratio
+    static float m_offset_x;
+    static float m_offset_y;
+
+    static SDL_Thread*  m_screenshot_thread;
+    static bool         m_isReady;
 };
 
 #endif // GL_RENDERER_H

@@ -66,6 +66,9 @@ Render_SW_SDL::Render_SW_SDL() : Render_Base("Software SDL"),
     m_textureBank.push_back(NULL);
 }
 
+Render_SW_SDL::~Render_SW_SDL()
+{}
+
 void Render_SW_SDL::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();
@@ -185,6 +188,11 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     tx.inited=false;
 }
 
+bool Render_SW_SDL::isTopDown()
+{
+    return false;
+}
+
 void Render_SW_SDL::getScreenPixels(int x, int y, int w, int h, unsigned char *pixels)
 {
     SDL_Rect rect;
@@ -208,9 +216,9 @@ void Render_SW_SDL::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned cha
     rect.h = h;
     SDL_RenderReadPixels( m_gRenderer,
                           &rect,
-                          SDL_PIXELFORMAT_RGBA8888,
+                          SDL_PIXELFORMAT_ABGR8888,
                           pixels,
-                          w*3 + (w%4) );
+                          w*4 );
 }
 
 void Render_SW_SDL::setViewport(int x, int y, int w, int h)
