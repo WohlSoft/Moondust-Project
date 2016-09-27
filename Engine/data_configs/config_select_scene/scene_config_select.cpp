@@ -301,6 +301,12 @@ void ConfigSelectScene::render()
 
     menu.render();
     Scene::render();
+
+    if(PGE_Window::showDebugInfo)
+    {
+        FontManager::printText(QString("Graphical engine: %1").arg(GlRenderer::engineName()),
+                               500, 30, -2, 1.0, 1.0, 1.0, 0.5, 12);
+    }
 }
 
 void ConfigSelectScene::renderMouse()

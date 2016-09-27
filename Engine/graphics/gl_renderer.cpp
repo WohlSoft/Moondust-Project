@@ -686,6 +686,11 @@ void GlRenderer::setup_SW_SDL()
     g_renderer->set_SDL_settings();
 }
 
+QString GlRenderer::engineName()
+{
+    return g_renderer->name();
+}
+
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())

@@ -287,7 +287,8 @@ SOURCES += \
     scenes/level/base/lvl_base_physics.cpp \
     scenes/level/npc/lvl_npc_physics.cpp \
     scenes/_base/msgbox_queue.cpp \
-    data_configs/config_select_scene/scene_config_select.cpp
+    data_configs/config_select_scene/scene_config_select.cpp \
+    common_features/point_mover.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -438,7 +439,8 @@ HEADERS  += \
     common_features/gif-h/gif.h \
     scenes/_base/msgbox_queue.h \
     scenes/level/lvl_z_constants.h \
-    data_configs/config_select_scene/scene_config_select.h
+    data_configs/config_select_scene/scene_config_select.h \
+    common_features/point_mover.h
 
 RESOURCES += \
     _resources/engine.qrc
