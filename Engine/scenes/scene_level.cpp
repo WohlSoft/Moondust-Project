@@ -924,8 +924,11 @@ void LevelScene::setGameState(EpisodeState *_gameState)
     if(gameState)
     {
         numberOfPlayers = gameState->numOfPlayers;
-        if(gameState->isEpisode && !gameState->isHubLevel)
+        if((gameState->isEpisode) && (!gameState->isHubLevel))
             initPauseMenu2();
+        else
+        if(gameState->isTestingModeL)
+            initPauseMenu3();
         else
             initPauseMenu1();
     }

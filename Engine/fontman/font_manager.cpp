@@ -19,6 +19,7 @@
 #include "font_manager.h"
 
 #include <common_features/app_path.h>
+#include <common_features/pge_application.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
@@ -399,8 +400,8 @@ QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_2;
 QHash<QString, int> FontManager::fonts;
 
 int     FontManager::fontID;
-QFont *FontManager::defaultFont=NULL;
-bool FontManager::double_pixled=false;
+QFont*  FontManager::defaultFont = nullptr;
+bool    FontManager::double_pixled = false;
 
 void FontManager::initBasic()
 {
@@ -483,7 +484,7 @@ void FontManager::quit()
         delete defaultFont;
 }
 
-PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool cut)
+PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool cut, int ttfFontPixelSize)
 {
     if(!isInit) return PGE_Size(text.length()*20, text.split(QChar(QChar::LineFeed)).size()*20);
     if(text.isEmpty()) return PGE_Size(0, 0);
@@ -513,10 +514,12 @@ PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, b
 
     //Use TTF font
     QFont fnt = font();
-    QFontMetrics meter(fnt);
+    if(ttfFontPixelSize>0)
+        fnt.setPixelSize(ttfFontPixelSize);
 
+    QFontMetrics meter(fnt);
     optimizeText(text, max_line_lenght);
-    QSize meterSize = meter.size(Qt::TextExpandTabs, text);
+    QSize meterSize = meter.boundingRect(text).size();
     return PGE_Size(meterSize.width(), meterSize.height());
 }
 
@@ -541,7 +544,7 @@ void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines
                 break;
         }
 
-        if(x>=27)//If lenght more than allowed
+        if(x>=max_line_lenght)//If lenght more than allowed
         {
             maxWidth=x;
             if(lastspace>0)
@@ -647,7 +650,7 @@ void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb c
             family = QFontDatabase::applicationFontFamilies(fontID).at(0);
 
     QFont font(family);//font.setWeight(14);
-    font.setPointSize(pointSize);
+    font.setPixelSize(pointSize);
 
     PGE_Texture tex;
     SDL_string_texture_create(font, color, text, &tex);
@@ -789,7 +792,7 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
     QPainter x(&text_image);
     QFont font_i = font;
     if(borders)
-        font_i.setPointSize(font_i.pointSize()-1);
+        font_i.setPixelSize(font_i.pixelSize()-1);
     x.setFont(font_i);
     x.setBrush(QBrush(color));
     x.setPen(QPen(QBrush(color), 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
@@ -819,7 +822,7 @@ void FontManager::SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int
     QFont font_i = font;
     if(borders)
     {
-        font_i.setPointSize(font_i.pointSize()-1);
+        font_i.setPixelSize(font_i.pixelSize()-1);
     }
     QFontMetrics meter(font_i);
     QPainter x(&text_image);

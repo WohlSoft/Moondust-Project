@@ -152,6 +152,7 @@ int main(int argc, char *argv[])
     PGE_Application::addLibraryPath( "." );
     PGE_Application::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     PGE_Application::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+    PGE_Application::setAttribute(Qt::AA_Use96Dpi);
 
     PGE_Application a(argc, argv);
 
@@ -436,6 +437,11 @@ int main(int argc, char *argv[])
         ConfigSelectScene GOScene;
         QString configPath_manager = GOScene.isPreLoaded();
 
+        if(!fileToOpen.isEmpty())
+        {
+            GOScene.setLabel("Choose a game to test:");
+        }
+
         //If application runned first time or target configuration is not exist
         if(configPath_manager.isEmpty() && configPath.isEmpty())
         {
@@ -454,38 +460,6 @@ int main(int argc, char *argv[])
         {
             configPath = GOScene.currentConfigPath;
         }
-    /*
-    }
-    {        
-        // Config manager
-        SelectConfig *cmanager = new SelectConfig();
-        cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), a.desktop()->availableGeometry() ));
-
-        QString configPath_manager = cmanager->isPreLoaded();
-
-        //If application runned first time or target configuration is not exist
-        if(configPath_manager.isEmpty() && configPath.isEmpty())
-        {
-            //Ask for configuration
-            if(cmanager->exec()==QDialog::Accepted)
-            {
-                configPath = cmanager->currentConfigPath;
-            }
-            else
-            {
-                delete cmanager;
-                goto ExitFromApplication;
-                //IntProc::quit();
-                //exit(0);
-            }
-        } else if(!configPath_manager.isEmpty() && configPath.isEmpty()) {
-            configPath = cmanager->currentConfigPath;
-        }
-        delete cmanager;
-        */
-
-        //Load selected configuration pack
 
         LogDebug("Opening of the configuration package...");
         ConfigManager::setConfigPath(configPath);
@@ -526,7 +500,8 @@ int main(int argc, char *argv[])
         {
             _game_state.LevelFile = fileToOpen;
             _game_state.isEpisode = false;
-
+            _game_state.isTestingModeL = true;
+            _game_state.isTestingModeW = false;
             _flags.testLevel=true;
             _flags.testWorld=false;
             goto PlayLevel;
@@ -540,11 +515,12 @@ int main(int argc, char *argv[])
             episode.character=1;
             episode.savefile="save1.savx";
             episode.worldfile=fileToOpen;
-            _game_state._episodePath= QFileInfo(fileToOpen).absoluteDir().absolutePath()+"/";
+            _game_state._episodePath = QFileInfo(fileToOpen).absoluteDir().absolutePath()+"/";
             _game_state.saveFileName = episode.savefile;
             _game_state.isEpisode = true;
             _game_state.WorldFile = fileToOpen;
-
+            _game_state.isTestingModeL = false;
+            _game_state.isTestingModeW = true;
             _flags.testLevel=false;
             _flags.testWorld=true;
             goto PlayWorldMap;
@@ -639,6 +615,7 @@ MainMenu:
                     _game_state.LevelFile = res_level.levelfile;
                     _game_state._episodePath.clear();
                     _game_state.saveFileName.clear();
+                    _game_state.isTestingModeL = true;
                     goto PlayLevel;
                 }
             case TitleScene::ANSWER_PLAYEPISODE:
@@ -802,7 +779,8 @@ PlayLevel:
 
             int ExitCode=0;
                 lScene = new LevelScene();
-
+                if(g_AppSettings.interprocessing)
+                    _game_state.isTestingModeL = true;
                 lScene->setGameState( &_game_state );
                 bool sceneResult=true;
 
@@ -904,6 +882,11 @@ PlayLevel:
                         playAgain = false;
                     }
                     break;
+                case LvlExit::EXIT_ReplayRequest:
+                    {
+                        playAgain = true;
+                    }
+                    break;
                 case LvlExit::EXIT_MenuExit:
                     {
                         end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
@@ -950,10 +933,10 @@ PlayLevel:
 
                 ConfigManager::unloadLevelConfigs();
                 delete lScene;
-
-                if(g_AppSettings.interprocessing)
-                    goto ExitFromApplication;
         }
+
+        if(g_AppSettings.interprocessing)
+            goto ExitFromApplication;
 
         switch(end_level_jump)
         {

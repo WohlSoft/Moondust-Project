@@ -19,6 +19,9 @@ void EpisodeState::reset()
     isEpisode=false;
     isHubLevel=false;
 
+    isTestingModeL = false;
+    isTestingModeW = false;
+
     numOfPlayers = 1;
 
     LevelFile_hub.clear();

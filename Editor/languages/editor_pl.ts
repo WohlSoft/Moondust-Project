@@ -2523,127 +2523,131 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="51"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="176"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="263"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="380"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="490"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="588"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="749"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="877"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="181"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="273"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="395"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="505"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="603"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="764"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="892"/>
         <source>Filter:</source>
         <translation>Filtr:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="58"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="157"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="244"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="312"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="468"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="632"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="727"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="855"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="162"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="254"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="327"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="483"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="647"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="742"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="870"/>
         <source>Category:</source>
         <translation>Kategoria:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="68"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="138"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="225"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="334"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="446"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="625"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="705"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="833"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="143"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="235"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="349"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="461"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="640"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="720"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="848"/>
         <source>Group:</source>
         <translation>Grupa:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="76"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="187"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="274"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="352"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="508"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="575"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="767"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="895"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="192"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="284"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="367"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="523"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="590"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="782"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="910"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="81"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="192"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="279"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="357"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="513"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="580"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="772"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="900"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="372"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="528"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="595"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="787"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="915"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="93"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="105"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="149"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="168"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="236"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="255"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="326"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="372"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="460"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="482"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="602"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="98"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="110"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="154"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="173"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="246"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="265"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="341"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="387"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="475"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="497"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="617"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="719"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="741"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="847"/>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="869"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="632"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="734"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="756"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="862"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="884"/>
         <source>[all]</source>
         <translation>[wszystkie]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="117"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="86"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="202"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="294"/>
+        <source>ID (contains)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="122"/>
         <source>BGO</source>
         <translation>Obiekty tła</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="204"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="214"/>
         <source>NPC</source>
         <translation>NPC</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="306"/>
         <source>Terrain tile</source>
         <translation>Obiekty mapy</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="425"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="440"/>
         <source>Scenery</source>
         <translation>Sceneria</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="550"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="565"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="684"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="699"/>
         <source>Level</source>
         <translation>Poziom</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="812"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="827"/>
         <source>Music</source>
         <translation>Muzyka</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.ui" line="917"/>
+        <location filename="../editing/_dialogs/itemselectdialog.ui" line="932"/>
         <source>Extra Data:</source>
         <translation>Dodatkowe informacje:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="87"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1268"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1287"/>
         <source>[Empty]</source>
         <translation>[Pusty]</translation>
     </message>
@@ -2658,12 +2662,12 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
         <translation>Monety</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1134"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1153"/>
         <source>Please, save file</source>
         <translation>Proszę, zapisz plik</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1134"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1153"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Proszę zapisz plik, jeżeli chcesz wybrać własną muzykę.</translation>
     </message>
@@ -3190,53 +3194,57 @@ Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="71"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="247"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="439"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="252"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="449"/>
         <source>Category:</source>
         <translation>Kategoria:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="160"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="346"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="429"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="351"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="439"/>
         <source>Filter:</source>
         <translation>Filtr:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="171"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="385"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="560"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="390"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="570"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="176"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="390"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="565"/>
-        <source>ID</source>
-        <translation>ID</translation>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="181"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="400"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="580"/>
+        <source>ID (contains)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="196"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="362"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="549"/>
+        <source>ID</source>
+        <translation type="vanished">ID</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="201"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="367"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="559"/>
         <source>Uniform icon size</source>
         <translation>Rozmiarjednolitej ikony</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="209"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="339"/>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="573"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="214"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="344"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="588"/>
         <source>Group:</source>
         <translation>Grupa:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="226"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="231"/>
         <source>BGO</source>
         <translation>Obiekt tła</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="408"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.ui" line="418"/>
         <source>NPC</source>
         <translation>NPC</translation>
     </message>
@@ -6644,16 +6652,16 @@ Proszę, wybierz jeden plik z listy:</translation>
         <translation>Połącz górę z dołem</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="368"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="743"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="374"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="755"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="97"/>
         <location filename="../main_window/dock/wld_item_toolbox.cpp" line="100"/>
         <source>[all]</source>
         <translation>[wszystko]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="369"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="744"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="375"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="756"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="98"/>
         <location filename="../main_window/dock/wld_item_toolbox.cpp" line="101"/>
         <source>[custom]</source>
@@ -10493,17 +10501,17 @@ Czy chcesz zapisać zmiany?</translation>
         <translation>Muzyczny blok</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="260"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="264"/>
         <source>[Silence]</source>
         <translation>[Cisza]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="345"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="351"/>
         <source>Please, save file</source>
         <translation>Proszę, zapisz plik</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="345"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="351"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Proszę zapisz plik, jeżeli chcesz wybrać własną muzykę.</translation>
     </message>
