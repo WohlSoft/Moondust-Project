@@ -24,6 +24,7 @@
 #include <QFileInfo>
 #include <QUrl>
 #include <QDir>
+#include <QFile>
 #include <QDateTime>
 #include <QTextStream>
 
@@ -202,9 +203,20 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(lvl->LvlData.meta.path+"/"+lvl->LvlData.meta.filename,
-                    LUNA_LEVEL_LOCAL,
-                    ":/lunalua/templates/lunadll.lua");
+        //Checking for legacy file name
+        if(QFile::exists(lvl->LvlData.meta.path+QStringLiteral("/")+lvl->LvlData.meta.filename + QStringLiteral("/lunadll.lua")))
+        {
+            //If exists, open it
+            openLuaFile(lvl->LvlData.meta.path+QStringLiteral("/")+lvl->LvlData.meta.filename, QStringLiteral("lunadll.lua"),
+                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+        }
+        else
+        {
+            //or look for new file name
+            openLuaFile(lvl->LvlData.meta.path+QStringLiteral("/")+lvl->LvlData.meta.filename,
+                        LUNA_LEVEL_LOCAL,
+                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+        }
     }
     else
     if(wnd == WND_World)
@@ -217,9 +229,19 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(wld->WldData.meta.path+"/"+wld->WldData.meta.filename,
-                    LUNA_LEVEL_LOCAL,
-                    ":/lunalua/templates/lunadll.lua");
+        //Checking for legacy file name
+        if(QFile::exists(wld->WldData.meta.path+QStringLiteral("/")+wld->WldData.meta.filename + QStringLiteral("/lunadll.lua")))
+        {
+            //If exists, open it
+            openLuaFile(wld->WldData.meta.path+QStringLiteral("/")+wld->WldData.meta.filename, QStringLiteral("lunadll.lua"),
+                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+        }
+        else
+        {
+            openLuaFile(wld->WldData.meta.path+"/"+wld->WldData.meta.filename,
+                        LUNA_LEVEL_LOCAL,
+                        ":/lunalua/templates/lunadll.lua");
+        }
     }
 }
 
@@ -236,9 +258,20 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(lvl->LvlData.meta.path,
-                    LUNA_LEVEL_GLOBAL,
-                    ":/lunalua/templates/lunaworld.lua");
+
+        //Checking for legacy file name
+        if(QFile::exists(lvl->LvlData.meta.path + QStringLiteral("/lunaworld.lua")))
+        {
+            //If exists, open it
+            openLuaFile(lvl->LvlData.meta.path, QStringLiteral("lunaworld.lua"),
+                        QStringLiteral(":/lunalua/templates/lunaworld.lua"));
+        }
+        else
+        {
+            openLuaFile(lvl->LvlData.meta.path,
+                        LUNA_LEVEL_GLOBAL,
+                        ":/lunalua/templates/lunaworld.lua");
+        }
     }
     else
     if(wnd == WND_World)
@@ -251,9 +284,17 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(wld->WldData.meta.path,
-                    LUNA_LEVEL_GLOBAL,
-                    ":/lunalua/templates/lunaworld.lua");
+        //Checking for legacy file name
+        if(QFile::exists(wld->WldData.meta.path + QStringLiteral("/lunaworld.lua")))
+        {
+            //If exists, open it
+            openLuaFile(wld->WldData.meta.path, QStringLiteral("lunaworld.lua"),
+                        QStringLiteral(":/lunalua/templates/lunaworld.lua"));
+        } else {
+            openLuaFile(wld->WldData.meta.path,
+                        LUNA_LEVEL_GLOBAL,
+                        ":/lunalua/templates/lunaworld.lua");
+        }
     }
 }
 
@@ -270,9 +311,19 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(lvl->LvlData.meta.path,
-                    LUNA_WORLD_GLOBAL,
-                    ":/lunalua/templates/lunaoverworld.lua");
+        //Checking for legacy file name
+        if(QFile::exists(lvl->LvlData.meta.path + QStringLiteral("/lunaoverworld.lua")))
+        {
+            //If exists, open it
+            openLuaFile(lvl->LvlData.meta.path, QStringLiteral("lunaoverworld.lua"),
+                        QStringLiteral(":/lunalua/templates/lunaoverworld.lua"));
+        }
+        else
+        {
+            openLuaFile(lvl->LvlData.meta.path,
+                        LUNA_WORLD_GLOBAL,
+                        ":/lunalua/templates/lunaoverworld.lua");
+        }
     }
     else
     if(wnd == WND_World)
@@ -285,8 +336,18 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
             showUnsavedFileNotify(this);
             return;
         }
-        openLuaFile(wld->WldData.meta.path,
-                    LUNA_WORLD_GLOBAL,
-                    ":/lunalua/templates/lunaoverworld.lua");
+        //Checking for legacy file name
+        if(QFile::exists(wld->WldData.meta.path + QStringLiteral("/lunaoverworld.lua")))
+        {
+            //If exists, open it
+            openLuaFile(wld->WldData.meta.path, QStringLiteral("lunaoverworld.lua"),
+                        QStringLiteral(":/lunalua/templates/lunaoverworld.lua"));
+        }
+        else
+        {
+            openLuaFile(wld->WldData.meta.path,
+                        LUNA_WORLD_GLOBAL,
+                        ":/lunalua/templates/lunaoverworld.lua");
+        }
     }
 }
