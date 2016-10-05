@@ -385,7 +385,8 @@ SOURCES += main.cpp\
     common_features/safe_msg_box.cpp \
     main_window/testing/luna_tester.cpp \
     editing/_scenes/world/wld_point_selector.cpp \
-    main_window/script/script_luafiles.cpp
+    main_window/script/script_luafiles.cpp \
+    js_engine/proxies/js_lua_preproc.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -577,7 +578,8 @@ HEADERS  += defines.h \
     SingleApplication/semaphore_winapi.h \
     editing/_scenes/level/lvl_history_manager.h \
     editing/_scenes/world/wld_history_manager.h \
-    editing/_scenes/world/wld_point_selector.h
+    editing/_scenes/world/wld_point_selector.h \
+    js_engine/proxies/js_lua_preproc.h
 
 FORMS    += \
     common_features/crashhandler.ui \
