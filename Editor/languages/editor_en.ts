@@ -9970,12 +9970,12 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</translation>
         <translation>Initialize section %1...</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="39"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
         <source>File is not saved</source>
         <translation>File is not saved</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="41"/>
         <source>Impossible to open/create script file.
 Please save file firtst</source>
         <translation>Impossible to open/create script file.

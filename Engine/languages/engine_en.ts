@@ -124,7 +124,7 @@ and retry your recent action to take more detail info.</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="664"/>
-        <location filename="../main.cpp" line="806"/>
+        <location filename="../main.cpp" line="807"/>
         <source>No opened files</source>
         <translation>No opened files</translation>
     </message>
@@ -159,7 +159,7 @@ Fail to start world map
         <translation>Type an exit code (signed integer)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="872"/>
+        <location filename="../main.cpp" line="873"/>
         <source>Warp exit
 
 Exit to:
@@ -174,7 +174,7 @@ Exit to:
 Enter to: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="922"/>
+        <location filename="../main.cpp" line="923"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Level was closed with error.
