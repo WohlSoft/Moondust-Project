@@ -38,14 +38,16 @@
 #include <common_features/graphics_funcs.h>
 
 
-ConfigSelectScene::ConfigSelectScene(): Scene(ConfigSelect)
+ConfigSelectScene::ConfigSelectScene():
+    Scene(ConfigSelect)
 {
     ret = 0;
     bgcolor.r = 0.0f;
     bgcolor.g = 0.0f;
     bgcolor.b = 0.1f;
 
-    m_label = "Choose a game:";
+                 //% "Choose a game:"
+    m_label = qtTrId("CONFIG_SELECT");
 
     m_waterMark = "WohlSoft team 2016 by Wohlstand (http://wohlsoft.ru)";
     m_waterMarkRect.setPos(200, PGE_Window::Height-50);
