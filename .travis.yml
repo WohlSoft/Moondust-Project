@@ -21,6 +21,12 @@
 #                       created 2015-11-26
 #----------------------------------------------------------------------------
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "eZjlsg6iAuRaU2qiofJUOFT8qmomXTgy9IpfbuI4UOLQpz7bXq9CVCrCE2HhoPLEj08AjLvn60sBDJE3vX7TWVDYAS4/tNx2mcWbRjPSlI0uIIC1ehCKUFoPu8wH8eJZCrJUijyPBf7WbZ2uDCar+pgAbecv+Fi//jUk1i+W/Q0="
+
 git:
   depth: 1
 
@@ -48,6 +54,7 @@ before_script:
 
 
 before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 # ==============================================================================
 # Downloading and unpacking of pre-built static Qt 5.7.0 on OS X 10.10.5
 # ------------------------------------------------------------------------------
@@ -107,4 +114,12 @@ after_success:
 # Upload created DMG file to the server
 # ==============================================================================
   - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
+
+addons:
+  coverity_scan:
+    project:
+      name: "WohlSoft/PGE-Project"
+      description: "PGE Project - a free and open source game engine to create games of platform genre"
+    notification_email: admin@wohlnet.ru
+    branch_pattern: master
 
