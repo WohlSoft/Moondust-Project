@@ -568,6 +568,7 @@ HEADERS  += defines.h \
     js_engine/proxies/js_common.h \
     js_engine/proxies/js_utils.h \
     js_engine/proxies/js_ini.h \
+    js_engine/proxies/js_lua_preproc.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorplugininfo.h \
@@ -578,8 +579,8 @@ HEADERS  += defines.h \
     SingleApplication/semaphore_winapi.h \
     editing/_scenes/level/lvl_history_manager.h \
     editing/_scenes/world/wld_history_manager.h \
-    editing/_scenes/world/wld_point_selector.h \
-    js_engine/proxies/js_lua_preproc.h
+    editing/_scenes/world/wld_point_selector.h
+
 
 FORMS    += \
     common_features/crashhandler.ui \
