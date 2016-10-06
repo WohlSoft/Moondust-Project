@@ -170,10 +170,10 @@ Exit to:
 Enter to: %2</source>
         <translation>Выходной проход
 
-Выход через:
+Переход на:
 %1
 
-Вход в: %2</translation>
+Входной проход №: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="923"/>
