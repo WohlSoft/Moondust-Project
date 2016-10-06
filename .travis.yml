@@ -38,82 +38,28 @@ language: cpp
 
 os:
   - osx
+  - linux
 
 osx_image: xcode7
 
 compiler:
   - clang++
 
-env:
-# Default build. Release.
-  - PATH=/Users/StaticQt/5.7.0/bin:/Users/StaticQt/5.7.0/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
-
 before_script:
-  - sudo systemsetup -settimezone Europe/Moscow;
-    echo $(date)
-
+  - bash _common/travis-ci/before-script.sh
 
 before_install:
-  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
-# ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.7.0 on OS X 10.10.5
-# ------------------------------------------------------------------------------
-# Static Qt is dependent to absolute build path, so,
-# we are re-making same tree which was on previous machine where this build of Qt was built
-# ==============================================================================
-  - git submodule init;
-    git submodule update;
-    sudo mkdir -p /Users/StaticQt/;
-    sudo chown -R travis /Users/StaticQt/;
-    wget http://wohlsoft.ru/docs/Software/QtBuilts/qt-5.7.0-static-osx-10.10.5.tar.gz -O /Users/StaticQt/qt-5.7.0-static-osx-10.10.5.tar.gz;
-    Bak=~+;
-    cd /Users/StaticQt/;
-    tar -xf qt-5.7.0-static-osx-10.10.5.tar.gz;
-    cd $Bak;
-
-# ==============================================================================
-# Installing of required for building process tools via homebrew toolset
-# ==============================================================================
-# - brew install qt5 #Don't install dynamic version of Qt 5 because we are have our pre-built static version of Qt
-  - brew install lftp;
-    brew install coreutils;
-    brew install binutils;
-    brew install gnu-sed;
-# ==============================================================================
-# Making "_paths.sh" config file
-# ==============================================================================
-  - echo "QT_PATH=\"/Users/StaticQt/5.7.0/bin/\"" > _paths.sh;
-    echo "QMake=\"qmake\"" > _paths.sh;
-    echo "LRelease=\"lrelease\"" >> _paths.sh;
-    echo "" >> _paths.sh;
-    chmod u+x _paths.sh;
-
-# ==============================================================================
-# Building of dependencies of PGE
-# ==============================================================================
-  - bash build_deps.sh no-pause;
-    bash -c "TZ=Europe/Moscow date +\"%Y-%m-%d %H:%M:%S\">/Users/travis/build_date_dev_osx.txt"
+  - bash _common/travis-ci/before-install.sh
+  - bash _common/travis-ci/build-deps.sh
 
 install: true
 
 script:
-# ==============================================================================
-# Building of PGE
-# ==============================================================================
-  - bash build.sh no-pause
+  - bash _common/travis-ci/build.sh
 
 after_success:
-# ==============================================================================
-# Deploying of built PGE
-# ==============================================================================
-  - cd _Misc/dev_scripts/deploy;
-    bash deploy_osx.sh nopause;
-    cd ../../..;
-
-# ==============================================================================
-# Upload created DMG file to the server
-# ==============================================================================
-  - lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
+  - bash _common/travis-ci/deploy.sh
+  - bash _common/travis-ci/upload.sh
 
 addons:
   coverity_scan:
