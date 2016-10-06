@@ -31,7 +31,7 @@
     <message id="CRASH_KILLED_MSG">
         <location filename="../common_features/crash_handler.cpp" line="83"/>
         <source>Engine has killed by mad maniac :-P</source>
-        <translation>Engine has killed by mad maniac :-P</translation>
+        <translation>Engine has been killed by a mad maniac :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="90"/>
@@ -61,7 +61,7 @@
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="114"/>
         <source>Engine has crashed because wrong arithmetical opreation!</source>
-        <translation>Engine has crashed because wrong arithmetical opreation!</translation>
+        <translation>Engine has crashed because of a wrong arithmetical operation!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="121"/>
@@ -83,9 +83,9 @@
         <source>Engine has crashed because Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent action to take more detail info.</source>
-        <translation>Engine has crashed because Segmentation fault.
+        <translation>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
-and retry your recent action to take more detail info.</translation>
+and retry your recent actions to get more detailed information.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="141"/>
@@ -95,7 +95,7 @@ and retry your recent action to take more detail info.</translation>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="143"/>
         <source>Engine has interrupted</source>
-        <translation>Engine has interrupted</translation>
+        <translation>Engine has been interrupted</translation>
     </message>
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="361"/>
@@ -115,7 +115,7 @@ and retry your recent action to take more detail info.</translation>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="406"/>
         <source>Fatal</source>
-        <translation>Fatal</translation>
+        <translation>Fatal error</translation>
     </message>
     <message id="SDL_INIT_ERROR">
         <location filename="../main.cpp" line="390"/>
@@ -135,7 +135,7 @@ Fail to start world map
 
 %1</source>
         <translation>ERROR:
-Fail to start world map
+Failed to start world map
 
 %1</translation>
     </message>
@@ -168,10 +168,10 @@ Exit to:
 Enter to: %2</source>
         <translation>Warp exit
 
-Exit to:
+Exit into:
 %1
 
-Enter to: %2</translation>
+Entrance point #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="923"/>
@@ -199,7 +199,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <oldsource>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
         <translation>Fatal error: Impossible to find start section.
-Did you placed player start point (or entrance warp point) too far off of the section(s)?</translation>
+Did you place  the player start point (or entrance warp point) too far out of the section(s)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="32"/>
