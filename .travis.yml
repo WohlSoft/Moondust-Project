@@ -41,6 +41,7 @@ os:
   - linux
 
 osx_image: xcode7
+dist: trusty
 
 compiler:
   - clang++
