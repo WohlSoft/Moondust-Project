@@ -164,7 +164,7 @@ Software renderaar wordt opgestart.</translation>
     <message id="CONFIG_SELECT_TEST">
         <location filename="../main.cpp" line="451"/>
         <source>Choose a game to test:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een spel om te testen:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="673"/>
@@ -496,7 +496,7 @@ Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</tran
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="50"/>
         <source>Choose a game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een spel:</translation>
     </message>
 </context>
 </TS>
