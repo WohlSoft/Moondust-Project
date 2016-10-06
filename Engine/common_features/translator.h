@@ -26,8 +26,10 @@ class PGE_Translator
 {
 public:
     PGE_Translator();
-    void init(PGE_Application *app);
+    void init();
+    void toggleLanguage(QString lang);
 private:
+    bool            m_isInit;
     QTranslator     m_translator;   /**< contains the translations for this application */
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */

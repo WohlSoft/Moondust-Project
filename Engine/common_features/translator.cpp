@@ -21,43 +21,58 @@
 #include "app_path.h"
 #include "logger.h"
 
-PGE_Translator::PGE_Translator()
+PGE_Translator::PGE_Translator() :
+    m_isInit(false)
 {}
 
-void PGE_Translator::init(PGE_Application *app)
+void PGE_Translator::init()
 {
+    if(m_isInit)
+        return;
+
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
     m_langPath = ApplicationPath;
     m_langPath.append("/languages");
-
     LogDebug( "Initializing translator in the path: " + m_langPath );
-
-    m_currLang = defaultLocale;
-    QLocale locale = QLocale(m_currLang);
-    QLocale::setDefault(locale);
-
-    bool ok = m_translator.load(m_langPath + QString("/engine_%1.qm").arg(m_currLang));
-             //WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
-
     LogDebug( "Locale detected: " + m_currLang );
+    toggleLanguage(defaultLocale);
+}
 
-    if(ok)
-       app->installTranslator(&m_translator);
-    else
+void PGE_Translator::toggleLanguage(QString lang)
+{
+    if(!m_isInit || (m_currLang != lang))
     {
-        m_currLang="en"; //set to English if no other translations are found
+        if(m_isInit)
+        {
+            qApp->removeTranslator(&m_translator);
+            qApp->removeTranslator(&m_translatorQt);
+        }
+
+        m_currLang = lang;
         QLocale locale = QLocale(m_currLang);
         QLocale::setDefault(locale);
-        ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-        if(ok)
-           app->installTranslator(&m_translator);
-    }
-    //qDebug() << "Common Translation: " << ok;
 
-    ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-    if(ok)
-       app->installTranslator(&m_translatorQt);
+        bool ok = m_translator.load(m_langPath + QString("/engine_%1.qm").arg(m_currLang));
+
+        if(ok)
+           qApp->installTranslator(&m_translator);
+        else
+        {
+            m_currLang="en"; //set to English if no other translations are found
+            QLocale locale = QLocale(m_currLang);
+            QLocale::setDefault(locale);
+            ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+            if(ok)
+               qApp->installTranslator(&m_translator);
+        }
+
+        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
+        if(ok)
+            qApp->installTranslator(&m_translatorQt);
+
+        m_isInit = true;
+    }
 }
 

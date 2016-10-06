@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
     LogDebug("<Application started>");
 
     PGE_Translator translator;
-    translator.init(&a);
+    translator.init();
 
     QString             configPath  = "";
     QString             fileToOpen  = "";
@@ -302,6 +302,14 @@ int main(int argc, char *argv[])
         {
             IntProc::init();
             g_AppSettings.interprocessing=true;
+        }
+        else
+        if(param.startsWith("--lang="))
+        {
+            QString tmp; bool ok=false;
+            tmp = takeStrFromArg(param, ok);
+            ok &= (tmp.size()==2);
+            if(ok) translator.toggleLanguage(tmp);
         }
         else
         if(param == ("--render-auto"))
