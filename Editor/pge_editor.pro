@@ -385,7 +385,8 @@ SOURCES += main.cpp\
     common_features/safe_msg_box.cpp \
     main_window/testing/luna_tester.cpp \
     editing/_scenes/world/wld_point_selector.cpp \
-    main_window/script/script_luafiles.cpp
+    main_window/script/script_luafiles.cpp \
+    js_engine/proxies/js_lua_preproc.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -567,6 +568,7 @@ HEADERS  += defines.h \
     js_engine/proxies/js_common.h \
     js_engine/proxies/js_utils.h \
     js_engine/proxies/js_ini.h \
+    js_engine/proxies/js_lua_preproc.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorplugininfo.h \
@@ -579,6 +581,7 @@ HEADERS  += defines.h \
     editing/_scenes/world/wld_history_manager.h \
     editing/_scenes/world/wld_point_selector.h \
     editing/_components/history/history_manager.h
+
 
 FORMS    += \
     common_features/crashhandler.ui \

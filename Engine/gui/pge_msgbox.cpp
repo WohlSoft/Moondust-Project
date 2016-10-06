@@ -402,7 +402,7 @@ void PGE_MsgBox::fatal(QString msg)
     }
     else
     {
-                                    //% "Fatal"
+                                    //% "Fatal error"
         PGE_Window::msgBoxCritical(qtTrId("MSGBOX_FATAL"), msg);
     }
 }

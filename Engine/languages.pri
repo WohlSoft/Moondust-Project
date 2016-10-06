@@ -11,12 +11,13 @@ win32: system(for /r $$shell_path($$PWD/languages) %B in (*.ts) do $$shell_path(
 system($$QMAKE_COPY $$shell_path($$PWD/languages/*.qm)  \"$$shell_path($$LANGUAGES_TARGET)\")
 
 TRANSLATIONS += \
-    $$PWD/languages/engine_en.ts \
-    $$PWD/languages/engine_ru.ts \
     $$PWD/languages/engine_de.ts \
+    $$PWD/languages/engine_en.ts \
     $$PWD/languages/engine_es.ts \
     $$PWD/languages/engine_it.ts \
+    $$PWD/languages/engine_jp.ts \
+    $$PWD/languages/engine_nl.ts \
     $$PWD/languages/engine_pl.ts \
     $$PWD/languages/engine_pt.ts \
+    $$PWD/languages/engine_ru.ts \
     $$PWD/languages/engine_sv.ts
-

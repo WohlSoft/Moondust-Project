@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_TRANSLATOR_H
-#define PGE_TRANSLATOR_H
+#include "js_lua_preproc.h"
 
-#include <QTranslator>
-#include "pge_application.h"
+PGE_JS_LuaPreprocessor::PGE_JS_LuaPreprocessor(QObject *parent) :
+    QObject(parent)
+{}
 
-class PGE_Translator
-{
-public:
-    PGE_Translator();
-    void init();
-    void toggleLanguage(QString lang);
-private:
-    bool            m_isInit;
-    QTranslator     m_translator;   /**< contains the translations for this application */
-    QTranslator     m_translatorQt; /**< contains the translations for qt */
-    QString         m_currLang;     /**< contains the currently loaded language */
-    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
-};
+PGE_JS_LuaPreprocessor::PGE_JS_LuaPreprocessor(QString luaFile, QStringList macros, QObject *parent):
+    QObject(parent),
+    m_luaFile(luaFile),
+    m_macros(macros)
+{}
 
-#endif // PGE_TRANSLATOR_H
+PGE_JS_LuaPreprocessor::PGE_JS_LuaPreprocessor(const PGE_JS_LuaPreprocessor &lp):
+    QObject(lp.parent()),
+    m_luaFile(lp.m_luaFile),
+    m_macros(lp.m_macros)
+{}
+
+PGE_JS_LuaPreprocessor::~PGE_JS_LuaPreprocessor()
+{}

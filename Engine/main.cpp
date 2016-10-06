@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
     LogDebug("<Application started>");
 
     PGE_Translator translator;
-    translator.init(&a);
+    translator.init();
 
     QString             configPath  = "";
     QString             fileToOpen  = "";
@@ -302,6 +302,14 @@ int main(int argc, char *argv[])
         {
             IntProc::init();
             g_AppSettings.interprocessing=true;
+        }
+        else
+        if(param.startsWith("--lang="))
+        {
+            QString tmp; bool ok=false;
+            tmp = takeStrFromArg(param, ok);
+            ok &= (tmp.size()==2);
+            if(ok) translator.toggleLanguage(tmp);
         }
         else
         if(param == ("--render-auto"))
@@ -439,7 +447,8 @@ int main(int argc, char *argv[])
 
         if(!fileToOpen.isEmpty())
         {
-            GOScene.setLabel("Choose a game to test:");
+                                //% "Choose a game to test:"
+            GOScene.setLabel(qtTrId("CONFIG_SELECT_TEST"));
         }
 
         //If application runned first time or target configuration is not exist
@@ -864,13 +873,23 @@ PlayLevel:
 
                        if(_game_state.LevelFile.isEmpty()) playAgain = false;
 
-
                        if(g_AppSettings.debugMode)
                        {
-                           if(!fileToOpen.isEmpty())
+                           QString target;
+                           if(lScene->warpToWorld)
                            {
-                                               //% "Warp exit\n\nExit to:\n%1\n\nEnter to: %2"
-                               PGE_MsgBox::warn( qtTrId("LVL_EXIT_WARP_INFO") .arg(fileToOpen) .arg(entranceID) );
+                               target = QString("X=%1, Y=%2")
+                                       .arg(_game_state.game_state.worldPosX)
+                                       .arg(_game_state.game_state.worldPosY);
+
+                           } else {
+                               target = _game_state.LevelFile;
+                           }
+
+                           if(!target.isEmpty())
+                           {
+                                                //% "Warp exit\n\nExit into:\n%1\n\nEntrance point: %2"
+                               PGE_MsgBox::warn( qtTrId("LVL_EXIT_WARP_INFO").arg(target) .arg(entranceID) );
                            }
                            playAgain = false;
                        }

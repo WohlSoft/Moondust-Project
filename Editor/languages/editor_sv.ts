@@ -6884,12 +6884,12 @@ See in %1 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="39"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
         <source>File is not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
+        <location filename="../main_window/script/script_luafiles.cpp" line="41"/>
         <source>Impossible to open/create script file.
 Please save file firtst</source>
         <translation type="unfinished"></translation>
