@@ -30,7 +30,8 @@
     </message>
     <message id="CRASH_KILLED_MSG">
         <location filename="../common_features/crash_handler.cpp" line="83"/>
-        <source>Engine has killed by mad maniac :-P</source>
+        <source>Engine has been killed by a mad maniac :-P</source>
+        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation>Engine has been killed by a mad maniac :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -60,7 +61,8 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="114"/>
-        <source>Engine has crashed because wrong arithmetical opreation!</source>
+        <source>Engine has crashed because of a wrong arithmetical operation!</source>
+        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>Engine has crashed because of a wrong arithmetical operation!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -80,9 +82,12 @@
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
         <location filename="../common_features/crash_handler.cpp" line="134"/>
-        <source>Engine has crashed because Segmentation fault.
+        <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
-and retry your recent action to take more detail info.</source>
+and retry your recent actions to get more detailed information.</source>
+        <oldsource>Engine has crashed because Segmentation fault.
+Run debugging with a built in debug mode application
+and retry your recent action to take more detail info.</oldsource>
         <translation>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</translation>
@@ -94,7 +99,8 @@ and retry your recent actions to get more detailed information.</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="143"/>
-        <source>Engine has interrupted</source>
+        <source>Engine has been interrupted</source>
+        <oldsource>Engine has interrupted</oldsource>
         <translation>Engine has been interrupted</translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -114,22 +120,28 @@ and retry your recent actions to get more detailed information.</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="406"/>
-        <source>Fatal</source>
+        <source>Fatal error</source>
+        <oldsource>Fatal</oldsource>
         <translation>Fatal error</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="390"/>
+        <location filename="../main.cpp" line="398"/>
         <source>Unable to init SDL!</source>
         <translation>Unable to init SDL!</translation>
     </message>
+    <message id="CONFIG_SELECT_TEST">
+        <location filename="../main.cpp" line="451"/>
+        <source>Choose a game to test:</source>
+        <translation>Choose a game to test:</translation>
+    </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="664"/>
-        <location filename="../main.cpp" line="807"/>
+        <location filename="../main.cpp" line="673"/>
+        <location filename="../main.cpp" line="816"/>
         <source>No opened files</source>
         <translation>No opened files</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="677"/>
+        <location filename="../main.cpp" line="686"/>
         <source>ERROR:
 Fail to start world map
 
@@ -140,32 +152,38 @@ Failed to start world map
 %1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="695"/>
+        <location filename="../main.cpp" line="704"/>
         <source>World map was closed with error.
 %1</source>
         <translation>World map was closed with error.
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="712"/>
+        <location filename="../main.cpp" line="721"/>
         <source>Start level
 %1</source>
         <translation>Start level
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="714"/>
+        <location filename="../main.cpp" line="723"/>
         <source>Type an exit code (signed integer)</source>
         <translation>Type an exit code (signed integer)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="873"/>
+        <location filename="../main.cpp" line="881"/>
         <source>Warp exit
+
+Exit into:
+%1
+
+Entrance point: %2</source>
+        <oldsource>Warp exit
 
 Exit to:
 %1
 
-Enter to: %2</source>
+Enter to: %2</oldsource>
         <translation>Warp exit
 
 Exit into:
@@ -174,7 +192,7 @@ Exit into:
 Entrance point #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="923"/>
+        <location filename="../main.cpp" line="931"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Level was closed with error.
@@ -474,6 +492,11 @@ Software renderer will be started.</translation>
         <location filename="../graphics/window.cpp" line="217"/>
         <source>Unable to initialize renderer context!</source>
         <translation>Unable to initialize renderer context!</translation>
+    </message>
+    <message id="CONFIG_SELECT">
+        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="50"/>
+        <source>Choose a game:</source>
+        <translation>Choose a game:</translation>
     </message>
 </context>
 <context>
