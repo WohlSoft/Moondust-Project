@@ -50,7 +50,7 @@ before_script:
 
 before_install:
   - bash _common/travis-ci/before-install.sh
-  - bash _common/travis-ci/build-deps.sh
+  - bash _common/travis-ci/build_dependencies.sh
 
 install: true
 
