@@ -10,6 +10,8 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
+    source _common/travis-ci/_osx_env.sh
+
     cd _Misc/dev_scripts/deploy
     bash deploy_osx.sh nopause
     cd ../../..

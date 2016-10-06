@@ -7,6 +7,7 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
+    source _common/travis-ci/_osx_env.sh
     bash ./build_deps.sh no-pause
 
 fi

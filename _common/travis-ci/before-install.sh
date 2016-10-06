@@ -24,6 +24,8 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
+    source _common/travis-ci/_osx_env.sh
+
     sudo mkdir -p /Users/StaticQt/;
     sudo chown -R travis /Users/StaticQt/;
 # ==============================================================================
