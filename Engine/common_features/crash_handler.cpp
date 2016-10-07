@@ -79,7 +79,7 @@ void CrashHandler::handle_signal(int signal)
             msgBox(
                     //% "Killed!"
                     qtTrId("CRASH_KILLED_TITLE"),
-                    //% "Engine has killed by mad maniac :-P"
+                    //% "Engine has been killed by a mad maniac :-P"
                     qtTrId("CRASH_KILLED_MSG"));
             exit(signal);
             break;
@@ -110,7 +110,7 @@ void CrashHandler::handle_signal(int signal)
             msgBox(
                   //% "Wrong arithmetical operation"
                   qtTrId("CRASH_FPE_TITLE"),
-                  //% "Engine has crashed because wrong arithmetical opreation!"
+                  //% "Engine has crashed because of a wrong arithmetical operation!"
                   qtTrId("CRASH_FPE_MSG"));
             exit(signal);
             break;
@@ -128,9 +128,9 @@ void CrashHandler::handle_signal(int signal)
                   //% "Segmentation fault"
                   qtTrId("CRASH_SIGSEGV_TITLE"),
 
-                  /*% "Engine has crashed because Segmentation fault.\n"
+                  /*% "Engine has crashed because of a Segmentation fault.\n"
                       "Run debugging with a built in debug mode application\n"
-                      "and retry your recent action to take more detail info." */
+                      "and retry your recent actions to get more detailed information." */
                   qtTrId("CRASH_SIGSEGV_MSG."));
             exit(signal);
             break;
@@ -139,7 +139,7 @@ void CrashHandler::handle_signal(int signal)
             msgBox(
                   //% "Interrupt"
                   qtTrId("CRASH_INT_TITLE"),
-                  //% "Engine has interrupted"
+                  //% "Engine has been interrupted"
                   qtTrId("CRASH_INT_MSG"));
             exit(0);
             break;

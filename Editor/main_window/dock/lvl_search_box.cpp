@@ -497,7 +497,7 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
     if(curSearchBlock.meta.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchBlock.meta.index+1; i < gr.size(); ++i){
             qDebug() << "Next Index: " << i;
-            if(gr[i]->data(0).toString()=="Block"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="Block"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBlock->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->m_data.id == (unsigned int)curSearchBlock.id;
@@ -546,7 +546,7 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchBGO.meta.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchBGO.meta.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="BGO"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="BGO"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBGO->isChecked()&&curSearchBGO.id!=0&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->m_data.id == (unsigned int)curSearchBGO.id;
@@ -580,7 +580,7 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchNPC.meta.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchNPC.meta.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="NPC"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="NPC"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeNPC->isChecked()&&curSearchNPC.id!=0&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->m_data.id == (unsigned int)curSearchNPC.id;

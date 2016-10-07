@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl_PL">
+<TS version="2.1">
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
@@ -31,7 +31,6 @@
     <message id="CRASH_KILLED_MSG">
         <location filename="../common_features/crash_handler.cpp" line="83"/>
         <source>Engine has been killed by a mad maniac :-P</source>
-        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -62,7 +61,6 @@
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="114"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -85,9 +83,6 @@
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <oldsource>Engine has crashed because Segmentation fault.
-Run debugging with a built in debug mode application
-and retry your recent action to take more detail info.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_INT_TITLE">
@@ -98,7 +93,41 @@ and retry your recent action to take more detail info.</oldsource>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="143"/>
         <source>Engine has been interrupted</source>
-        <oldsource>Engine has interrupted</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="CONFIG_SELECT">
+        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="50"/>
+        <source>Choose a game:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="RENDERER_NO_OPENGL_ERROR">
+        <location filename="../graphics/window.cpp" line="125"/>
+        <source>Unable to find OpenGL support!
+Software renderer will be started.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="NO_RENDERER_ERROR">
+        <location filename="../graphics/window.cpp" line="137"/>
+        <source>Renderer is not selected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WINDOW_CREATE_ERROR">
+        <location filename="../graphics/window.cpp" line="153"/>
+        <location filename="../graphics/window.cpp" line="161"/>
+        <source>Unable to create window!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WINDOW_ICON_INIT_ERROR">
+        <location filename="../graphics/window.cpp" line="178"/>
+        <location filename="../graphics/window.cpp" line="184"/>
+        <location filename="../graphics/window.cpp" line="205"/>
+        <source>Unable to setup window icon!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="RENDERER_CONTEXT_INIT_ERROR">
+        <location filename="../graphics/window.cpp" line="217"/>
+        <source>Unable to initialize renderer context!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -119,7 +148,6 @@ and retry your recent action to take more detail info.</oldsource>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="406"/>
         <source>Fatal error</source>
-        <oldsource>Fatal</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="SDL_INIT_ERROR">
@@ -164,23 +192,17 @@ Fail to start world map
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="881"/>
+        <location filename="../main.cpp" line="892"/>
         <source>Warp exit
 
 Exit into:
 %1
 
 Entrance point: %2</source>
-        <oldsource>Warp exit
-
-Exit to:
-%1
-
-Enter to: %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="931"/>
+        <location filename="../main.cpp" line="942"/>
         <source>Level was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
@@ -201,8 +223,6 @@ Enter to: %2</oldsource>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="376"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
-        <oldsource>Fatal error: Impossible to find start section.
-Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
@@ -446,41 +466,6 @@ Are you placed player start point (or entrance warp point) too far off of the se
     <message id="MSG_LEVELS_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="666"/>
         <source>&lt;levels not found&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="RENDERER_NO_OPENGL_ERROR">
-        <location filename="../graphics/window.cpp" line="125"/>
-        <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="NO_RENDERER_ERROR">
-        <location filename="../graphics/window.cpp" line="137"/>
-        <source>Renderer is not selected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="WINDOW_CREATE_ERROR">
-        <location filename="../graphics/window.cpp" line="153"/>
-        <location filename="../graphics/window.cpp" line="161"/>
-        <source>Unable to create window!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="WINDOW_ICON_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="178"/>
-        <location filename="../graphics/window.cpp" line="184"/>
-        <location filename="../graphics/window.cpp" line="205"/>
-        <source>Unable to setup window icon!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="RENDERER_CONTEXT_INIT_ERROR">
-        <location filename="../graphics/window.cpp" line="217"/>
-        <source>Unable to initialize renderer context!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="CONFIG_SELECT">
-        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="50"/>
-        <source>Choose a game:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

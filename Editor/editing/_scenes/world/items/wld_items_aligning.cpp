@@ -62,9 +62,10 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             ObjType == "LEVEL" ||
             ObjType == "MUSICBOX")
         {
-            offset    = dynamic_cast<WldBaseItem *>(it)->gridOffset();
-            sourcePos = dynamic_cast<WldBaseItem *>(it)->sourcePos();
-            gridSize  = dynamic_cast<WldBaseItem *>(it)->getGridSize();
+            WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
+            offset    = item->gridOffset();
+            sourcePos = item->sourcePos();
+            gridSize  = item->getGridSize();
         }
 
         if(gridSize>gridSizeMax)
@@ -127,9 +128,10 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
             ObjType == "LEVEL" ||
             ObjType == "MUSICBOX")
         {
-            offset   =  dynamic_cast<WldBaseItem *>(it)->gridOffset();
-            sourcePos = dynamic_cast<WldBaseItem *>(it)->sourcePos();
-            gridSize =  dynamic_cast<WldBaseItem *>(it)->getGridSize();
+            WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
+            offset    = item->gridOffset();
+            sourcePos = item->sourcePos();
+            gridSize  = item->getGridSize();
         }
 
         it->setPos( QPointF(Grid::applyGrid(it->pos().toPoint(), gridSize, QPoint(offset.x(), offset.y()))) );

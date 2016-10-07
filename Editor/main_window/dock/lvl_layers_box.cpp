@@ -323,14 +323,14 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         {
             if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
-                if(((*it)->data(0).toString()=="Door_enter")){
+                if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")){
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     delData.doors.push_back(tData);
                 }
                 else
-                if(((*it)->data(0).toString()=="Door_exit")){
+                if(((*it)->data(ITEM_TYPE).toString()=="Door_exit")){
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = false;
                     tData.isSetOut = true;

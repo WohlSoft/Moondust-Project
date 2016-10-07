@@ -483,7 +483,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel*)item)->m_data.top_exit = index-1;
@@ -540,7 +540,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel*)item)->m_data.right_exit = index-1;
@@ -569,7 +569,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel*)item)->m_data.bottom_exit = index-1;
@@ -636,7 +636,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel*)item)->m_data.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();

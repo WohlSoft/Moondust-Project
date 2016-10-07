@@ -102,7 +102,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 blockC.image = m_dummyBlockImg;
             }
 
-            LvlPlacingItems::gridSz=blockC.setup.grid;
+            LvlPlacingItems::gridSz = blockC.setup.grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
             if( (itemID != LvlPlacingItems::blockSet.id) || (m_placingItemType!=PLC_Block) )
@@ -221,7 +221,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
 
 
-        LvlPlacingItems::gridSz=bgoC.setup.grid;
+        LvlPlacingItems::gridSz = bgoC.setup.grid;
         LvlPlacingItems::gridOffset = QPoint(bgoC.setup.offsetX,
                                              bgoC.setup.offsetY);
 
@@ -320,13 +320,13 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::npcSet.id = itemID;
 
         if(LvlPlacingItems::npcSet.generator)
-            LvlPlacingItems::gridSz=(m_configs->default_grid/2);
+            LvlPlacingItems::gridSz = (m_configs->default_grid/2);
         else
-            LvlPlacingItems::gridSz=mergedSet.setup.grid;
+            LvlPlacingItems::gridSz = mergedSet.setup.grid;
 
         LvlPlacingItems::npcSet.is_star = mergedSet.setup.is_star;
 
-        LvlPlacingItems::npcGrid=mergedSet.setup.grid;
+        LvlPlacingItems::npcGrid = mergedSet.setup.grid;
 
         LvlPlacingItems::gridOffset = QPoint(mergedSet.setup.grid_offset_x,
                                              mergedSet.setup.grid_offset_y);
@@ -442,19 +442,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         break;
     case 5: //PlayerPoint
         {
-        m_placingItemType=PLC_PlayerPoint;
+        m_placingItemType = PLC_PlayerPoint;
         LvlPlacingItems::playerID = itemID;
-
-        LvlPlacingItems::gridSz=2;
-        LvlPlacingItems::gridOffset = QPoint(0,2);
-
-        LvlPlacingItems::c_offset_x = 16;
-        LvlPlacingItems::c_offset_y = 16;
+        LvlPlacingItems::gridSz = 4;
 
         LvlPlacingItems::layer = "";
 
         QPixmap playerPixmap;
-        switch(itemID+1)
+        switch( itemID + 1 )
         {
             case 1:
                 playerPixmap = Themes::Image(Themes::player1); break;
@@ -466,8 +461,24 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         PlayerPoint x = FileFormats::CreateLvlPlayerPoint(itemID+1);
 
+        int grid_offset_x = 0;
+        int grid_offset_y = 0;
+        int grid = 4;
+        if(((int)x.w>=(int)grid))
+            grid_offset_x = -1 * qRound( qreal((int)x.w % grid)/2 );
+        else
+            grid_offset_x = qRound( qreal( grid - (int)x.w )/2 ) + (grid/2);
+        grid_offset_y = -x.h % grid;
+
+        LvlPlacingItems::gridOffset = QPoint(grid_offset_x, grid_offset_y);
+
+        LvlPlacingItems::c_offset_x = 16;
+        LvlPlacingItems::c_offset_y = 16;
+
         m_cursorItemImg = addPixmap(playerPixmap);
-        dynamic_cast<QGraphicsPixmapItem *>(m_cursorItemImg)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );
+        int w = playerPixmap.width();
+        int h = playerPixmap.height();
+        dynamic_cast<QGraphicsPixmapItem *>(m_cursorItemImg)->setOffset(qRound(qreal(x.w-w)/2.0), x.h-h);
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity( 0.8 );

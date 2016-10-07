@@ -29,7 +29,7 @@ QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 macx:  QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-QMAKE_CXXFLAGS += -ffloat-store
+!macx: QMAKE_CXXFLAGS += -ffloat-store
 
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/dest_dir.pri)
