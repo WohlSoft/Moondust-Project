@@ -121,7 +121,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
-            if(SelItem->data(0).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->setShowSmallPathBG( setPathBG->isChecked() );
@@ -136,7 +136,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
-            if(SelItem->data(0).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->setShowBigPathBG( setBigPathBG->isChecked() );
@@ -151,7 +151,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData selData;
         foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
         {
-            if(SelItem->data(0).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );

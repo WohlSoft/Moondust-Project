@@ -1806,7 +1806,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton* btn)
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * targetItem, items1)
         {
-            if((targetItem->data(ITEM_TYPE).toString()=="NPC")&&((targetItem->data(2).toInt()==npcPtr)))
+            if((targetItem->data(ITEM_TYPE).toString()=="NPC")&&((targetItem->data(ITEM_ARRAY_ID).toInt()==npcPtr)))
             {
                 contID = ((ItemNPC*)targetItem)->m_data.id;
                 npcID = ((ItemNPC*)targetItem)->m_data.contents;
@@ -1850,7 +1850,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton* btn)
             QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
             foreach(QGraphicsItem * item, items)
             {
-                if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==blockPtr))*/)
+                if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==blockPtr))*/)
                 {
                     ItemNPC* npcI = ((ItemNPC*)item);
                     selData.npc.push_back(npcI->m_data);
@@ -2133,7 +2133,7 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
             {
                 modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->m_data.generator_period = qRound(arg1*10);
@@ -2161,7 +2161,7 @@ void LvlItemProperties::on_PROPS_NPCGenUp_clicked()
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
             {
                 modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
@@ -2191,7 +2191,7 @@ void LvlItemProperties::on_PROPS_NPCGenLeft_clicked()
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
             {
                 modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
@@ -2220,7 +2220,7 @@ void LvlItemProperties::on_PROPS_NPCGenDown_clicked()
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
             {
                 modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,
@@ -2249,7 +2249,7 @@ void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(ITEM_TYPE).toString()=="NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
             {
                 modData.npc.push_back(((ItemNPC*)item)->m_data);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->m_data.generator,

@@ -66,8 +66,8 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
 
     //9 - width, 10 - height
     QRectF findZone = QRectF(items->first()->scenePos(),
-                      QSizeF(items->first()->data(9).toInt(),
-                            items->first()->data(10).toInt()) );
+                      QSizeF(items->first()->data(ITEM_WIDTH).toInt(),
+                            items->first()->data(ITEM_HEIGHT).toInt()) );
     //get Zone
     foreach(QGraphicsItem * it, *items)
     {
@@ -75,10 +75,10 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
         if(it->scenePos().x()-10 < findZone.left()) findZone.setLeft(it->scenePos().x());
         if(it->scenePos().y()-10 < findZone.top()) findZone.setTop(it->scenePos().y());
 
-        if(it->scenePos().x()+it->data(9).toInt() > findZone.right())
-            findZone.setRight(it->scenePos().x()+it->data(9).toInt());
-        if(it->scenePos().y()+it->data(10).toInt() > findZone.bottom())
-            findZone.setBottom(it->scenePos().y()+it->data(10).toInt());
+        if(it->scenePos().x()+it->data(ITEM_WIDTH).toInt() > findZone.right())
+            findZone.setRight(it->scenePos().x()+it->data(ITEM_WIDTH).toInt());
+        if(it->scenePos().y()+it->data(ITEM_HEIGHT).toInt() > findZone.bottom())
+            findZone.setBottom(it->scenePos().y()+it->data(ITEM_HEIGHT).toInt());
     }
 
     findZone.setLeft(findZone.left()-10);

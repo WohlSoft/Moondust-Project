@@ -88,8 +88,8 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             if(s->selectedItems().size()==1)
             {
                 QGraphicsItem * it = s->selectedItems().first();
-                QString itp = it->data(0).toString();
-                long itd = it->data(1).toInt();
+                QString itp = it->data(ITEM_TYPE).toString();
+                long itd = it->data(ITEM_ID).toInt();
                 if(itp=="TILE")
                 {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Tile, itd); return;}
                 else if(itp=="SCENERY")
@@ -161,7 +161,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     {
 
         //Set Grid Size/Offset, sourcePosition
-        setItemSourceData(selectedList.first(), selectedList.first()->data(0).toString());
+        setItemSourceData(selectedList.first(), selectedList.first()->data(ITEM_TYPE).toString());
         //Check first selected element is it was moved
         if( (sourcePos == QPoint(
                  (long)(selectedList.first()->scenePos().x()),
@@ -197,10 +197,10 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin();
              it != selectedList.end(); it++)
         { ////////////////////////SECOND FETCH///////////////////////
-           ObjType = (*it)->data(0).toString();
+           ObjType = (*it)->data(ITEM_TYPE).toString();
 
            /////////////////////////GET DATA///////////////
-           setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
+           setItemSourceData((*it), (*it)->data(ITEM_TYPE).toString()); //Set Grid Size/Offset, sourcePosition
            /////////////////////////GET DATA/////////////////////
 
            //Check position

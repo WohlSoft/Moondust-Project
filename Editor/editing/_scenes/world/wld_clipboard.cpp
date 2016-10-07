@@ -36,7 +36,7 @@ WorldData WldScene::copy(bool cut)
     {
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
-            QString ObjType = (*it)->data(0).toString();
+            QString ObjType = (*it)->data(ITEM_TYPE).toString();
 
             if( ObjType == "TILE")
             {
