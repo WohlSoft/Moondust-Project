@@ -41,7 +41,7 @@
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
 
-#include <data_configs/config_manager.h>
+#include <data_configs/selection_dialog/config_manager.h>
 
 #include <networking/engine_intproc.h>
 #include <audio/sdl_music_player.h>

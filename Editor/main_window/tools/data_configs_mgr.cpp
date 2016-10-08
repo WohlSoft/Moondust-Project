@@ -19,8 +19,8 @@
 #include <QDesktopWidget>
 #include <QtConcurrent>
 
-#include <data_configs/configstatus.h>
-#include <data_configs/config_manager.h>
+#include <data_configs/config_status/config_status.h>
+#include <data_configs/selection_dialog/config_manager.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

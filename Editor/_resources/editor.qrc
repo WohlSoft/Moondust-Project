@@ -129,6 +129,8 @@
         <file>lunalua/templates/lunadll.lua</file>
         <file>lunalua/templates/lunaoverworld.lua</file>
         <file>lunalua/templates/lunaworld.lua</file>
+        <file>pge_newui.png</file>
+        <file>pge_oldui.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

@@ -93,11 +93,11 @@ void MainWindow::setUiDefults()
     dock_WldItemBox      = new WorldItemBox(this);
 
     dock_LvlWarpProps    = new LvlWarpBox(this);
-    dock_LvlSectionProps = new LvlSectionProps(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
     dock_LvlSearchBox    = new LvlSearchBox(this);
-    dock_LvlLayers       = new LvlLayersBox(this);
     dock_LvlEvents       = new LvlEventsBox(this);
+    dock_LvlLayers       = new LvlLayersBox(this);
+    dock_LvlSectionProps = new LvlSectionProps(this);
 
     dock_WldItemProps    = new WLD_ItemProps(this);
     dock_WldSearchBox    = new WldSearchBox(this);

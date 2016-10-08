@@ -155,8 +155,8 @@ SOURCES += main.cpp\
     data_configs/conf_wld_path.cpp \
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_tile.cpp \
-    data_configs/config_manager.cpp \
-    data_configs/configstatus.cpp \
+    data_configs/selection_dialog/config_manager.cpp \
+    data_configs/config_status/config_status.cpp \
     data_configs/custom_data.cpp \
     dev_console/devconsole.cpp \
     editing/_dialogs/itemselectdialog.cpp \
@@ -386,7 +386,8 @@ SOURCES += main.cpp\
     main_window/testing/luna_tester.cpp \
     editing/_scenes/world/wld_point_selector.cpp \
     main_window/script/script_luafiles.cpp \
-    js_engine/proxies/js_lua_preproc.cpp
+    js_engine/proxies/js_lua_preproc.cpp \
+    main_window/greeting_dialog/greeting_dialog.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -417,8 +418,8 @@ HEADERS  += defines.h \
     common_features/util.h \
     common_features/resizer/corner_grabber.h \
     common_features/resizer/item_resizer.h \
-    data_configs/config_manager.h \
-    data_configs/configstatus.h \
+    data_configs/selection_dialog/config_manager.h \
+    data_configs/config_status/config_status.h \
     data_configs/custom_data.h \
     data_configs/data_configs.h \
     data_configs/obj_BG.h \
@@ -572,6 +573,7 @@ HEADERS  += defines.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorplugininfo.h \
+    main_window/greeting_dialog/greeting_dialog.h \
     common_features/main_window_ptr.h \
     SingleApplication/editor_application.h \
     main_window/testing/luna_tester.h \
@@ -581,11 +583,10 @@ HEADERS  += defines.h \
     editing/_scenes/world/wld_history_manager.h \
     editing/_scenes/world/wld_point_selector.h
 
-
 FORMS    += \
     common_features/crashhandler.ui \
-    data_configs/config_manager.ui \
-    data_configs/configstatus.ui \
+    data_configs/selection_dialog/config_manager.ui \
+    data_configs/config_status/config_status.ui \
     dev_console/devconsole.ui \
     editing/_dialogs/itemselectdialog.ui \
     editing/_dialogs/levelfilelist.ui \
@@ -631,7 +632,8 @@ FORMS    += \
     main_window/testing/testing_settings.ui \
     main_window/dock/variables_box.ui \
     main_window/script/script_editor.ui \
-    main_window/plugins/pge_editorplugininfo.ui
+    main_window/plugins/pge_editorplugininfo.ui \
+    main_window/greeting_dialog/greeting_dialog.ui
 
 RESOURCES += \
     _resources/editor.qrc

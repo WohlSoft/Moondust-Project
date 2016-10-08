@@ -42,16 +42,14 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelEvents, SLOT(setChecked(bool)));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
-                mwg.y()+120,
+                mwg.right() - width() - GOffset,
+                mwg.y()+180,
                 width(),
                 height()
                 );
