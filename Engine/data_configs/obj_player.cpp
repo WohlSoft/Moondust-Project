@@ -215,6 +215,7 @@ bool ConfigManager::loadPlayableCharacters()
                     goto skipPLAYER;
                 }
                 splayer.fail_effect.fill("fail", &playerset);
+                splayer.slide_effect.fill("floor-slide", &playerset);
             playerset.endGroup();
 
             {//States

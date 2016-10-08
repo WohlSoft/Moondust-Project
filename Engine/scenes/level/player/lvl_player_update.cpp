@@ -334,16 +334,9 @@ void LVL_Player::update(double tickTime)
 
             if( (keys.left || keys.right) && turning && m_stand )
             {
-                SpawnEffectDef effect;
-                effect.id = 74;
+                SpawnEffectDef effect = setup.slide_effect;
                 effect.startX = (float)posCenterX();
                 effect.startY = (float)bottom()+2.0f;
-                effect.gravity = 0.f;
-                effect.start_delay = 0.0f;
-                effect.velocityY = 0.f;
-                effect.delay = 0;
-                effect.animationLoops = 1;
-                effect.framespeed = 64;
                 _scene->launchEffect(effect, true);
             }
         }
