@@ -60,7 +60,7 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
     if(!openSection( setup, section ))
         return false;
 
-    if(snpc.setup.parse(setup, npcPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(snpc.setup.parse(setup, npcPath, defaultGrid.npc, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         snpc.isValid = true;
     } else {
@@ -96,6 +96,7 @@ void dataconfigs::loadLevelNPC()
 
     if(!openSection(&setup, "npc-main")) return;
         npc_total =                 setup.value("total", 0).toUInt();
+        defaultGrid.npc = setup.value("grid", defaultGrid.npc).toUInt();
         total_data +=npc_total;
 
         nestDir =   setup.value("config-dir", "").toString();

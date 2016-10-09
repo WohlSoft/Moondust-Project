@@ -65,7 +65,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     if(!openSection(setup, section))
         return false;
 
-    if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sbgo.setup.parse(setup, bgoPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         sbgo.isValid = true;
     }
@@ -103,6 +103,7 @@ void dataconfigs::loadLevelBGO()
 
     if(!openSection( &setup, "background-main")) return;
         bgo_total = setup.value("total", 0).toUInt();
+        defaultGrid.bgo = setup.value("grid", defaultGrid.bgo).toUInt();
         total_data +=bgo_total;
         nestDir =   setup.value("config-dir", "").toString();
         if(!nestDir.isEmpty())

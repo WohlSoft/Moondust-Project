@@ -37,7 +37,7 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
     if(!openSection(setup, section))
         return false;
 
-    if(spath.setup.parse(setup, pathPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(spath.setup.parse(setup, pathPath, defaultGrid.paths, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         spath.isValid = true;
     }
@@ -74,6 +74,7 @@ void dataconfigs::loadWorldPaths()
 
     if(!openSection(&setup, "path-main")) return;
         path_total = setup.value("total", 0).toUInt();
+        defaultGrid.paths = setup.value("grid", defaultGrid.paths).toUInt();
         total_data +=path_total;
         nestDir =   setup.value("config-dir", "").toString();
         if(!nestDir.isEmpty())

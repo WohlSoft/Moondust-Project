@@ -305,7 +305,7 @@ void WLD_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    gridSize = s->m_configs->default_grid;
+    gridSize = s->m_configs->defaultGrid.general;
     offsetX = 0;
     offsetY = 0;
 

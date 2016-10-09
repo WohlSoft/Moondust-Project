@@ -37,7 +37,7 @@ ItemPhysEnv::ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     m_scene->addItem(this);
-    m_gridSize = m_scene->m_configs->default_grid/2;
+    m_gridSize = m_scene->m_configs->defaultGrid.general/2;
     setZValue(m_scene->Z_sys_PhysEnv);
     setLocked(m_scene->m_lockPhysenv);
 }

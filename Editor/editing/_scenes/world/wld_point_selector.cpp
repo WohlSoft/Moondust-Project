@@ -46,7 +46,7 @@ void WldPointSelector::setPoint(QPoint p)
      {
          ItemPoint* itemPtr = new ItemPoint(m_scene, nullptr);
          m_pointItem = itemPtr;
-         itemPtr->setGridSize(m_scene->m_configs->default_grid);
+         itemPtr->setGridSize(m_scene->m_configs->defaultGrid.general);
          m_scene->addItem(itemPtr);
          itemPtr->setData(ITEM_TYPE, "POINT");
          itemPtr->setZValue(6000);
