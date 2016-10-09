@@ -87,7 +87,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             if(h!=600)
             {
                 QPoint aligned;
-                aligned = dst->scene->applyGrid(QPoint(x,y), configs.default_grid);
+                aligned = dst->scene->applyGrid(QPoint(x,y), configs.defaultGrid.general);
                 x = aligned.x();
                 y = aligned.y();
             }

@@ -724,9 +724,11 @@ public:
 // /////////////////////// Help ///////////////////////////
     public slots:
         void showTipOfDay();
+        void showWelcomeDialog();
     private slots:
         void on_actionContents_triggered();
         void on_actionTipOfDay_triggered();
+        void on_actionWelcome_triggered();
         void on_actionAbout_triggered();
         void on_actionSMBX_like_GUI_triggered();
         void on_actionModern_GUI_triggered();
