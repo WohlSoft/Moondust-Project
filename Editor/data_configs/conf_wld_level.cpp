@@ -37,7 +37,7 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
     if(!openSection(setup, section))
         return false;
 
-    if(slevel.setup.parse(setup, wlvlPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(slevel.setup.parse(setup, wlvlPath, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         slevel.isValid = true;
     }
@@ -74,6 +74,7 @@ void dataconfigs::loadWorldLevels()
 
     if(!openSection(&setup, "levels-main")) return;
         levels_total        = setup.value("total", 0).toUInt();
+        defaultGrid.levels = setup.value("grid", defaultGrid.levels).toUInt();
         marker_wlvl.path    = setup.value("path", 0).toUInt();
         marker_wlvl.bigpath = setup.value("bigpath", 0).toUInt();
         total_data +=levels_total;

@@ -94,6 +94,17 @@ struct obj_playable_character
     QString name;
 };
 
+struct obj_gridSizes {
+    unsigned int general;
+    unsigned int block;
+    unsigned int bgo;
+    unsigned int npc;
+    unsigned int terrain;
+    unsigned int scenery;
+    unsigned int paths;
+    unsigned int levels;
+};
+
 
 class dataconfigs : public QObject
 {
@@ -150,7 +161,7 @@ public:
     bool check(); //Returns true, if something config entry is not initialized
 
     //Graphics
-    unsigned int default_grid;
+    obj_gridSizes defaultGrid;
 
     //Debug
     QStringList errorsList;

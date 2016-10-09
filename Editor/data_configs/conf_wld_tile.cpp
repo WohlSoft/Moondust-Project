@@ -37,7 +37,7 @@ bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_til
     if(!openSection(setup, section))
         return false;
 
-    if(stile.setup.parse(setup, tilePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(stile.setup.parse(setup, tilePath, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         stile.isValid = true;
     }
@@ -74,6 +74,7 @@ void dataconfigs::loadWorldTiles()
 
     if(!openSection(&setup, "tiles-main")) return;
         tiles_total = setup.value("total", 0).toUInt();
+        defaultGrid.terrain = setup.value("grid", defaultGrid.terrain).toUInt();
         total_data +=tiles_total;
         nestDir =   setup.value("config-dir", "").toString();
         if(!nestDir.isEmpty())

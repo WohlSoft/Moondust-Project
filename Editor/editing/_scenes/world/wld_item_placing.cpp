@@ -441,17 +441,17 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         m_placingItemType=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz     = m_configs->default_grid;
+        WldPlacingItems::gridSz     = m_configs->defaultGrid.general;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = m_configs->default_grid/2;
-        WldPlacingItems::c_offset_y = m_configs->default_grid/2;
+        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general/2;
+        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general/2;
 
-        m_cursorItemImg = addRect(0,0, m_configs->default_grid, m_configs->default_grid);
+        m_cursorItemImg = addRect(0,0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
         m_cursorItemImg->setData(ITEM_TYPE, "MUSICBOX");
         m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
-        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->default_grid));
-        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->default_grid));
+        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->defaultGrid.general));
+        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->defaultGrid.general));
         ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
@@ -467,17 +467,17 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         m_placingItemType=MODE_SetPoint;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=m_configs->default_grid;
+        WldPlacingItems::gridSz=m_configs->defaultGrid.general;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = m_configs->default_grid/2;
-        WldPlacingItems::c_offset_y = m_configs->default_grid/2;
+        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general/2;
+        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general/2;
 
-        m_cursorItemImg = addRect(0,0, m_configs->default_grid, m_configs->default_grid);
+        m_cursorItemImg = addRect(0,0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
         m_cursorItemImg->setData(ITEM_TYPE, "WorldMapPoint");
         m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
-        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->default_grid));
-        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->default_grid));
+        m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->defaultGrid.general));
+        m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->defaultGrid.general));
         ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");

@@ -68,7 +68,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
     if(!openSection( setup, section ))
         return false;
 
-    if(sblock.setup.parse(setup, blockPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sblock.setup.parse(setup, blockPath, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         sblock.isValid = true;
     } else {
@@ -105,6 +105,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(!openSection(&setup, "blocks-main")) return;
         block_total = setup.value("total", 0).toUInt();
+        defaultGrid.block = setup.value("grid", defaultGrid.block).toUInt();
         total_data += block_total;
         nestDir =   setup.value("config-dir", "").toString();
         if(!nestDir.isEmpty())

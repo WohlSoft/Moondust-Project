@@ -63,7 +63,14 @@ QString ConfStatus::defaultTheme="";
 
 dataconfigs::dataconfigs()
 {
-    default_grid=0;
+    defaultGrid.general = 0;
+    defaultGrid.block = 32;
+    defaultGrid.bgo = 32;
+    defaultGrid.npc = 32;
+    defaultGrid.terrain = 32;
+    defaultGrid.scenery = 16;
+    defaultGrid.paths = 32;
+    defaultGrid.levels = 32;
 
     engine.screen_w=800;
     engine.screen_h=600;
@@ -238,7 +245,7 @@ bool dataconfigs::loadconfigs()
     //unsigned long i;//, prgs=0;
 
     total_data=0;
-    default_grid=0;
+    defaultGrid.general=0;
     errorsList.clear();
 
     m_recentIniFile.clear();
@@ -323,7 +330,7 @@ bool dataconfigs::loadconfigs()
     ConfStatus::configPath = config_dir;
 
     mainset.beginGroup("graphics");
-        default_grid = mainset.value("default-grid", 32).toUInt();
+        defaultGrid.general = mainset.value("default-grid", 32).toUInt();
     mainset.endGroup();
 
     if( mainset.status() != QSettings::NoError )

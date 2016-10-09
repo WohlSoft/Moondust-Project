@@ -234,7 +234,7 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
     QGraphicsScene::drawForeground(painter, rect);
     if(!m_opts.grid_show) return;
 
-    int gridSize=m_configs->default_grid;
+    int gridSize = m_configs->defaultGrid.general;
     qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
     qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 

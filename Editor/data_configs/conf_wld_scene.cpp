@@ -37,7 +37,7 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
     if(!openSection(setup, section))
         return false;
 
-    if(sScene.setup.parse(setup, scenePath, default_grid/2, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sScene.setup.parse(setup, scenePath, defaultGrid.scenery, merge_with ? &merge_with->setup : nullptr, &errStr))
     {
         sScene.isValid = true;
     }
@@ -75,6 +75,7 @@ void dataconfigs::loadWorldScene()
 
     if(!openSection(&setup, "scenery-main")) return;
         scenery_total = setup.value("total", 0).toUInt();
+        defaultGrid.scenery = setup.value("grid", defaultGrid.scenery).toUInt();
         total_data +=scenery_total;
         nestDir =   setup.value("config-dir", "").toString();
         if(!nestDir.isEmpty())
