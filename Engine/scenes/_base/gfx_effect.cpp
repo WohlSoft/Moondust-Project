@@ -150,6 +150,7 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     LogDebug(QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.m_frameStyle).arg(frms)
                .arg(frame1).arg(frameE));
 
+    if(frms<=0) frms = 1;
     _effect.m_animator.construct(true, frms, _effect.m_setup->framespeed, frame1, frameE);
     _effect.m_posRect.setSize(_effect.m_texture.w, _effect.m_texture.h/frms);
 

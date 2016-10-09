@@ -70,18 +70,17 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::BottomDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                dg.x()+GOffset,
-                dg.y()+dg.height()-600,
+                dg.x() + GOffset,
+                dg.bottom() - height() -5,
                 800,
-                300
+                250
                 );
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::TilesetBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 

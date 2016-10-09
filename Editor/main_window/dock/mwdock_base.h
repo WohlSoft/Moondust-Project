@@ -32,15 +32,14 @@ public:
 
 //public slots:
 //    virtual void re_translate();
-
-//signals:
+    bool m_lastVisibilityState;
 
 protected:
     virtual void construct(MainWindow *ParentMW);
 
 private:
     void setParentMW(MainWindow *ParentMW);
-    MainWindow *_mw;
+    MainWindow *m_mw;
 };
 
 #endif // MWDOCK_BASE_H

@@ -22,7 +22,7 @@
 
 #include <QDialog>
 
-#include "data_configs.h"
+#include "../data_configs.h"
 #include <main_window/global_settings.h>
 
 namespace Ui {

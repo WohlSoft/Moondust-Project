@@ -33,6 +33,29 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+static void loadToolboxProps(QSettings &s,
+                             QString keyprefix,
+                             MWDock_Base* widget,
+                             bool defViz,
+                             bool defFloat)
+{
+    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
+    widget->m_lastVisibilityState = s.value( keyprefix + QStringLiteral("-visible"), defViz).toBool();
+    dw->setFloating( s.value( keyprefix + QStringLiteral("-float"), defFloat).toBool() );
+    dw->restoreGeometry( s.value( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() ).toByteArray() );
+}
+
+static void saveToolboxProps(QSettings &s,
+                             QString keyprefix,
+                             MWDock_Base* widget)
+{
+    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
+    s.setValue( keyprefix + QStringLiteral("-visible"),  widget->m_lastVisibilityState );
+    s.setValue( keyprefix + QStringLiteral("-float"),    dw->isFloating() );
+    s.setValue( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() );
+}
+
+
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
@@ -49,26 +72,6 @@ void MainWindow::loadSettings()
 
     settings.beginGroup("Main");
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
-        GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
-        GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
-        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
-
-        GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", true).toBool();
-        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", true).toBool();
-        GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", false).toBool();
-        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", true).toBool();
-        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", true).toBool();
-        GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", false).toBool();
-
-        GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", true).toBool();
-        GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", false).toBool();
-        GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", false).toBool();
-
-        GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", false).toBool();
-        GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", false).toBool();
-        GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", false).toBool();
-        GlobalSettings::VariablesBoxVis = settings.value("variables-box-visible", false).toBool();
-
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
@@ -113,38 +116,30 @@ void MainWindow::loadSettings()
 
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
-        dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", FloatDocks).toBool());
-        dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", FloatDocks).toBool());
-        dock_LvlLayers->setFloating(settings.value("level-layers-float", FloatDocks).toBool());
-        dock_LvlEvents->setFloating(settings.value("level-events-float", FloatDocks).toBool());
-        dock_LvlItemProps->setFloating(settings.value("item-props-box-float", FloatDocks).toBool());
-        dock_LvlSearchBox->setFloating(settings.value("level-search-float", FloatDocks).toBool());
-        dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
-        dock_WldSettingsBox->setFloating(settings.value("world-settings-box-float", FloatDocks).toBool());
-        dock_WldItemProps->setFloating(settings.value("world-itemprops-box-float", FloatDocks).toBool());
-        dock_WldSearchBox->setFloating(settings.value("world-search-float", FloatDocks).toBool());
-        dock_TilesetBox->setFloating(settings.value("tileset-box-float", FloatDocks).toBool());
-        dock_DebuggerBox->setFloating(settings.value("debugger-box-float", FloatDocks).toBool());
-        dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", FloatDocks).toBool());
-        dock_VariablesBox->setFloating(settings.value("variables-box-float", FloatDocks).toBool());
-
-        dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
-        dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
-        dock_LvlLayers->restoreGeometry(settings.value("level-layers-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
-        dock_LvlEvents->restoreGeometry(settings.value("level-events-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
-        dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
-        dock_LvlSearchBox->restoreGeometry(settings.value("level-search-geometry", dock_LvlSearchBox->saveGeometry()).toByteArray());
-        dock_WldItemBox->restoreGeometry(settings.value("world-item-box-geometry", dock_WldItemBox->saveGeometry()).toByteArray());
-        dock_WldSettingsBox->restoreGeometry(settings.value("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry()).toByteArray());
-        dock_WldItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry()).toByteArray());
-        dock_WldSearchBox->restoreGeometry(settings.value("world-search-geometry", dock_WldSearchBox->saveGeometry()).toByteArray());
-
-        dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
-        dock_DebuggerBox->restoreGeometry(settings.value("debugger-box-geometry", dock_DebuggerBox->saveGeometry()).toByteArray());
-        dock_BookmarksBox->restoreGeometry(settings.value("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry()).toByteArray());
-        dock_VariablesBox->restoreGeometry(settings.value("variables-box-geometry", dock_VariablesBox->saveGeometry()).toByteArray());
+        GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
+
+        //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.    flaoting
+        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        true,   false);
+        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"),dock_LvlItemProps,     false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      false,  true);
+
+        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        true,   false);
+        loadToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox,    false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"),dock_WldItemProps,     false,  false);
+        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      false,  true);
+
+        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        false,  true);
+        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       false,  true);
+        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      false,  true);
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
@@ -162,7 +157,6 @@ void MainWindow::loadSettings()
            updateWindowMenu();
            updateMenus(NULL, true);
         }
-
     settings.endGroup();
 
     settings.beginGroup("ext-tools");
@@ -215,107 +209,75 @@ void MainWindow::saveSettings()
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
-    settings.setValue("pos", pos());
-    settings.setValue("lastpath", GlobalSettings::openPath);
-    settings.setValue("lastsavepath", GlobalSettings::savePath);
-    settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
+        settings.setValue("pos", pos());
+        settings.setValue("lastpath", GlobalSettings::openPath);
+        settings.setValue("lastsavepath", GlobalSettings::savePath);
+        settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-    settings.setValue("world-tb-visible", GlobalSettings::WorldItemBoxVis);
-    settings.setValue("world-props-visible", GlobalSettings::WorldSettingsToolboxVis);
-    settings.setValue("world-search-visible", GlobalSettings::WorldSearchBoxVis);
+        saveToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox);
+        saveToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps);
+        saveToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps);
+        saveToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps);
+        saveToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers);
+        saveToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents);
+        saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox);
 
-    settings.setValue("level-tb-visible", GlobalSettings::LevelItemBoxVis);
-    settings.setValue("section-tb-visible", GlobalSettings::LevelSectionBoxVis);
-    settings.setValue("level-layers-vis", GlobalSettings::LevelLayersBoxVis);
-    settings.setValue("level-events-vis", GlobalSettings::LevelEventsBoxVis);
-    settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
-    settings.setValue("level-search-vis", GlobalSettings::LevelSearchBoxVis);
+        saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox);
+        saveToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox);
+        saveToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps);
+        saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox);
 
-    settings.setValue("tileset-box-visible", GlobalSettings::TilesetBoxVis);
-    settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
-    settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
-    settings.setValue("variables-box-visible", GlobalSettings::VariablesBoxVis);
+        saveToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox);
+        saveToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox);
+        saveToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox);
+        saveToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox);
 
-    settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
-    settings.setValue("level-section-set-float", dock_LvlSectionProps->isFloating());
-    settings.setValue("level-layers-float", dock_LvlLayers->isFloating());
-    settings.setValue("level-events-float", dock_LvlEvents->isFloating());
-    settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
-    settings.setValue("level-search-float", dock_LvlSearchBox->isFloating());
+        settings.setValue("geometry", saveGeometry());
+        settings.setValue("windowState", saveState());
 
-    settings.setValue("world-item-box-float", dock_WldItemBox->isFloating());
-    settings.setValue("world-settings-box-float", dock_WldSettingsBox->isFloating());
-    settings.setValue("world-itemprops-box-float", dock_WldItemProps->isFloating());
-    settings.setValue("world-search-float", dock_WldSearchBox->isFloating());
-    settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
-    settings.setValue("debugger-box-float", dock_DebuggerBox->isFloating());
-    settings.setValue("bookmarks-box-float", dock_BookmarksBox->isFloating());
-    settings.setValue("variables-box-float", dock_VariablesBox->isFloating());
+        settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
+        settings.setValue("music-volume", PGE_MusPlayer::currentVolume());
 
-    settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
-    settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
-    settings.setValue("level-layers-geometry", dock_LvlLayers->saveGeometry());
-    settings.setValue("level-events-geometry", dock_LvlEvents->saveGeometry());
-    settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
-    settings.setValue("level-search-geometry", dock_LvlSearchBox->saveGeometry());
+        settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
+        settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
+        settings.setValue("editor-midmouse-allowdrag", GlobalSettings::MidMouse_allowSwitchToDrag);
 
-    settings.setValue("world-item-box-geometry", dock_WldItemBox->saveGeometry());
-    settings.setValue("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry());
-    settings.setValue("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry());
-    settings.setValue("world-search-geometry", dock_WldSearchBox->saveGeometry());
+        settings.setValue("editor-placing-no-propsbox", GlobalSettings::Placing_dontShowPropertiesBox);
 
-    settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
-    settings.setValue("debugger-box-geometry", dock_DebuggerBox->saveGeometry());
-    settings.setValue("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry());
-    settings.setValue("variables-box-geometry", dock_VariablesBox->saveGeometry());
+        settings.setValue("history-limit", GlobalSettings::historyLimit);
 
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("windowState", saveState());
+        settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+        settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
+        settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
+        settings.setValue("tileset-toolbox-pos", static_cast<int>(GlobalSettings::TSTToolboxPos));
 
-    settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
-    settings.setValue("music-volume", PGE_MusPlayer::currentVolume());
+        settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
+        settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
+        settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
+        settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
-    settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
-    settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
-    settings.setValue("editor-midmouse-allowdrag", GlobalSettings::MidMouse_allowSwitchToDrag);
+        settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
+        settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);
+        settings.setValue("defaults-npc-gen-delay", GlobalSettings::LvlItemDefaults.npc_generator_delay);
+        settings.setValue("defaults-warp-type", GlobalSettings::LvlItemDefaults.warp_type);
+        settings.setValue("defaults-classicevents-tabs-layerviz", GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
+        settings.setValue("defaults-classicevents-tabs-layermov", GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov);
+        settings.setValue("defaults-classicevents-tabs-autoscroll", GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll);
+        settings.setValue("defaults-classicevents-tabs-secset", GlobalSettings::LvlItemDefaults.classicevents_tabs_secset);
+        settings.setValue("defaults-classicevents-tabs-common", GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
+        settings.setValue("defaults-classicevents-tabs-buttons", GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
+        settings.setValue("defaults-classicevents-tabs-trigger", GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
 
-    settings.setValue("editor-placing-no-propsbox", GlobalSettings::Placing_dontShowPropertiesBox);
+        settings.setValue("language", GlobalSettings::locale);
 
-    settings.setValue("history-limit", GlobalSettings::historyLimit);
+        settings.setValue("current-theme", GlobalSettings::currentTheme);
+        settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
-    settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
-    settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
-    settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
-    settings.setValue("tileset-toolbox-pos", static_cast<int>(GlobalSettings::TSTToolboxPos));
-
-    settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
-    settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
-    settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
-    settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
-
-    settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
-    settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);
-    settings.setValue("defaults-npc-gen-delay", GlobalSettings::LvlItemDefaults.npc_generator_delay);
-    settings.setValue("defaults-warp-type", GlobalSettings::LvlItemDefaults.warp_type);
-    settings.setValue("defaults-classicevents-tabs-layerviz", GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
-    settings.setValue("defaults-classicevents-tabs-layermov", GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov);
-    settings.setValue("defaults-classicevents-tabs-autoscroll", GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll);
-    settings.setValue("defaults-classicevents-tabs-secset", GlobalSettings::LvlItemDefaults.classicevents_tabs_secset);
-    settings.setValue("defaults-classicevents-tabs-common", GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
-    settings.setValue("defaults-classicevents-tabs-buttons", GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
-    settings.setValue("defaults-classicevents-tabs-trigger", GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
-
-    settings.setValue("language", GlobalSettings::locale);
-
-    settings.setValue("current-theme", GlobalSettings::currentTheme);
-    settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
-
-    settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
-
+        settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
     settings.endGroup();
 
     settings.beginGroup("ext-tools");
-    settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
+        settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
     settings.endGroup();
 
     settings.beginGroup("testing");

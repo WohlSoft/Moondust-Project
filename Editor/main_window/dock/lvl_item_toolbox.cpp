@@ -53,8 +53,9 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLVLToolBox, SLOT(setChecked(bool)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelItemBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 LevelItemBox::~LevelItemBox()

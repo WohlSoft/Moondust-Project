@@ -35,13 +35,13 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionBookmarkBox, SLOT(setChecked(bool)));
     setFloating(true);
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.right() - width() - GOffset,
                 mwg.y()+120,
                 width(),
                 height()
@@ -50,8 +50,9 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::BookmarksBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 BookmarksBox::~BookmarksBox()

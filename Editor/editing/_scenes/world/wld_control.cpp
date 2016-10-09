@@ -260,7 +260,7 @@ void WldScene::openProps()
     QList<QGraphicsItem * > items = this->selectedItems();
     if(!items.isEmpty())
     {
-        if(items.first()->data(0).toString()=="LEVEL")
+        if(items.first()->data(ITEM_TYPE).toString()=="LEVEL")
         {
             MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps(0,
                           ((ItemLevel *)items.first())->m_data,

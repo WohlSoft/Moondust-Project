@@ -69,7 +69,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
     switch(itemType)
     {
-    case 0: //Tiles
+    case 0: //Terrain tiles
     {
         obj_w_tile &tileConf = m_localConfigTerrain[itemID];
         Items::getItemGFX(&tileConf, tImg, false);
@@ -83,7 +83,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             tileConf.image = m_dummyTerrainImg;
         }
 
-        WldPlacingItems::gridSz=m_configs->default_grid;
+        WldPlacingItems::gridSz = tileConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::TileSet.id = itemID;
@@ -174,7 +174,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             sceneConf.image = m_dummySceneryImg;
         }
 
-        WldPlacingItems::gridSz=qRound(qreal(m_configs->default_grid)/2);
+        WldPlacingItems::gridSz = sceneConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::SceneSet.id = itemID;
@@ -209,7 +209,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Rect)
         {
             setRectDrawer(); return;
         }
@@ -265,7 +265,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             pathConf.image = m_dummyPathImg;
         }
 
-        WldPlacingItems::gridSz=m_configs->default_grid;
+        WldPlacingItems::gridSz = pathConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::PathSet.id = itemID;
@@ -356,7 +356,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             wlevelConf.image = m_dummyLevelImg;
         }
 
-        WldPlacingItems::gridSz=m_configs->default_grid;
+        WldPlacingItems::gridSz = wlevelConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::LevelSet.id = itemID;
@@ -441,7 +441,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         m_placingItemType=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=m_configs->default_grid;
+        WldPlacingItems::gridSz     = m_configs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
         WldPlacingItems::c_offset_x = m_configs->default_grid/2;

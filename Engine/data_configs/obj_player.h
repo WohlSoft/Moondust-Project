@@ -115,6 +115,7 @@ struct obj_player
     int frame_height;
 
     SpawnEffectDef fail_effect;
+    SpawnEffectDef slide_effect;
 
     /*   OpenGL    */
         //for world map

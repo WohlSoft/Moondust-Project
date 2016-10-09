@@ -120,7 +120,7 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     if(item==NULL) return NULL;
 
-    if(item->data(0).toString()=="YellowRectangle")
+    if(item->data(ITEM_TYPE).toString()=="YellowRectangle")
         return NULL;
 
     QList<QGraphicsItem *> collisions;

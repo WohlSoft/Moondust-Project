@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "configstatus.h"
-#include <ui_configstatus.h>
+#include "config_status.h"
+#include <ui_config_status.h>
 
 #include <QDesktopWidget>
 #ifdef Q_OS_WIN

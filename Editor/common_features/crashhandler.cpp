@@ -197,8 +197,8 @@ void CrashHandler::attemptCrashsave()
      */
     if( crashSave.exists("__crashsave") )
     {
-        LogFatalNC("We are detected that crass has been occouped on attempt to load or initialize backup files. Backup directory has been renamed into \"__crashsave_danger\".");
-        LogFatalNC("Please attach all files in that directory and, if possible, additional contents (custom images, sounds, musics, configs and scripts) while reporting this crash.");
+        LogCriticalNC("We are detected that crash has been occouped on attempt to load or initialize backup files. Backup directory has been renamed into \"__crashsave_danger\".");
+        LogCriticalNC("Please attach all files in that directory and, if possible, additional contents (custom images, sounds, musics, configs and scripts) while reporting this crash.");
         QDir    dupeDir(AppPathManager::userAppDir() + "/__crashsave_danger");
              if(dupeDir.exists())
                 dupeDir.removeRecursively();
@@ -320,7 +320,7 @@ void CrashHandler::checkCrashsaves()
         crashSave.removeRecursively();
 
         QMessageBox::information(mw,
-                                 tr("Crashsave"),
+                                 tr("Crashsave", "Crash-Save - emergency file saving after crash. A title of message box."),
                                  tr("Since the last crash, the editor recovered some files.\n"
                                     "Please save them before doing anything else."),
                                  QMessageBox::Ok);

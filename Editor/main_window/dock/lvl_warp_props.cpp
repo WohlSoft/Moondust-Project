@@ -50,15 +50,13 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     lockWarpSetSettings = false;
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionWarpsAndDoors, SLOT(setChecked(bool)));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.right() - width() - GOffset,
                 mwg.y()+120,
                 width(),
                 height()
@@ -67,8 +65,9 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
                    this, SLOT(setSMBX64Strict(bool)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelDoorsBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 LvlWarpBox::~LvlWarpBox()
@@ -373,9 +372,9 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
                }
                foreach (QGraphicsItem* item, edit->scene->items())
                {
-                   if(item->data(0).toString()=="Door_enter")
+                   if(item->data(ITEM_TYPE).toString()=="Door_enter")
                    {
-                       if(item->data(2).toInt()==array_id)
+                       if(item->data(ITEM_ARRAY_ID).toInt()==array_id)
                        {
                            item->setSelected(true);
                            break;
@@ -428,9 +427,9 @@ void LvlWarpBox::on_WarpSetExit_clicked()
                }
                foreach (QGraphicsItem* item, edit->scene->items())
                {
-                   if(item->data(0).toString()=="Door_exit")
+                   if(item->data(ITEM_TYPE).toString()=="Door_exit")
                    {
-                       if(item->data(2).toInt()==array_id)
+                       if(item->data(ITEM_ARRAY_ID).toInt()==array_id)
                        {
                            item->setSelected(true);
                            break;

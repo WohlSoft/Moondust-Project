@@ -43,16 +43,14 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLayersBox, SLOT(setChecked(bool)));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
-                mwg.y()+120,
+                mwg.right() - width() - GOffset,
+                mwg.y() + 120,
                 width(),
                 height()
                 );
@@ -60,8 +58,9 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelLayersBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     lockLayerEdit=false;
 }
@@ -323,14 +322,14 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
         {
             if(((ItemDoor *)(*it))->m_data.layer==layerName)
             {
-                if(((*it)->data(0).toString()=="Door_enter")){
+                if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")){
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     delData.doors.push_back(tData);
                 }
                 else
-                if(((*it)->data(0).toString()=="Door_exit")){
+                if(((*it)->data(ITEM_TYPE).toString()=="Door_exit")){
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
