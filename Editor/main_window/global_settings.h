@@ -115,23 +115,6 @@ public:
     //! Recent state of the music playing button
     static bool recentMusicPlayingState;
 
-    //Toolboxes visibly states
-    static bool LevelItemBoxVis;
-    static bool LevelSectionBoxVis;
-    static bool LevelDoorsBoxVis;
-    static bool LevelLayersBoxVis;
-    static bool LevelEventsBoxVis;
-    static bool LevelSearchBoxVis;
-
-    static bool WorldItemBoxVis;
-    static bool WorldSettingsToolboxVis;
-    static bool WorldSearchBoxVis;
-
-    static bool TilesetBoxVis;
-    static bool DebuggerBoxVis;
-    static bool BookmarksBoxVis;
-    static bool VariablesBoxVis;
-
     // Editor flags
     //! Enalbe middle-mouse group duplicating feature
     static bool MidMouse_allowDuplicate;

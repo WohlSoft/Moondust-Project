@@ -57,8 +57,9 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelEventsBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     LvlEventBoxLock=false;
 

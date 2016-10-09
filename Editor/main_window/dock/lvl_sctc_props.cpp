@@ -78,8 +78,9 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->actionSection_Settings, SIGNAL(triggered(bool)), this, SLOT(setVisible(bool)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelSectionBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 

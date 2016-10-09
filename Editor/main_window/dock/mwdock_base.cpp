@@ -19,14 +19,16 @@
 #include "mwdock_base.h"
 #include <mainwindow.h>
 
-MWDock_Base::MWDock_Base(QObject *parent)//: QObject(parent)
+MWDock_Base::MWDock_Base(QObject *parent) :
+    m_lastVisibilityState(false),
+    m_mw(nullptr)
 {
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), "MainWindow")==0)
-            _mw = qobject_cast<MainWindow *>(parent);
+            m_mw = qobject_cast<MainWindow *>(parent);
         else
-            _mw = nullptr;
+            m_mw = nullptr;
     }
 }
 
@@ -35,7 +37,7 @@ MWDock_Base::~MWDock_Base()
 
 MainWindow *MWDock_Base::mw()
 {
-    return _mw;
+    return m_mw;
 }
 
 //void MWDock_Base::re_translate()
@@ -48,5 +50,5 @@ void MWDock_Base::construct(MainWindow *ParentMW)
 
 void MWDock_Base::setParentMW(MainWindow *ParentMW)
 {
-    _mw = ParentMW;
+    m_mw = ParentMW;
 }

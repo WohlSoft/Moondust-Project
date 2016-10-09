@@ -19,6 +19,9 @@
 #include <QFont>
 #include <QDesktopWidget>
 #include <QLineEdit>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QLabel>
 
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
@@ -65,10 +68,10 @@ void MainWindow::setDefaults()
     FileFormats::CreateWorldData(WldBuffer);
     FileFormats::CreateLevelData(LvlBuffer);
 
-    LastActiveSubWindow = NULL;
+    LastActiveSubWindow = nullptr;
 
 #ifdef Q_OS_WIN
-    pge_thumbbar        = NULL;
+    pge_thumbbar        = nullptr;
 #endif
 }
 
@@ -201,13 +204,115 @@ void MainWindow::setUiDefults()
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
     }
 
+    {//Vanilla editor's toolbar
+         m_toolbarVanilla = new QToolBar("Vanilla toolbar", this);
+         m_toolbarVanilla->setObjectName("m_toolbarVanilla");
 
+         QPushButton* select = new QPushButton(m_toolbarVanilla);
+         select->setText(tr("Select", "Vanilla-like toolbar"));
+         select->setCheckable(true);
+         select->setChecked(ui->actionSelect->isChecked());
+         connect(ui->actionSelect, &QAction::toggled, select, &QPushButton::setChecked);
+         connect(select, &QPushButton::clicked, ui->actionSelect, &QAction::trigger);
+         m_toolbarVanilla->insertWidget(nullptr, select);
+         QAction* selectA = m_toolbarVanilla->insertWidget(nullptr, select);
+         connect(this, &MainWindow::windowActiveLevelWorld, selectA, &QAction::setVisible);
 
-    ui->menuView->setEnabled(false);
-    ui->menuWindow->setEnabled(true);
-    ui->menuLevel->setEnabled(false);
-    ui->menuWorld->setEnabled(false);
-    ui->menuTest->setEnabled(false);
+         QPushButton* erase  = new QPushButton(m_toolbarVanilla);
+         erase->setText(tr("Erase", "Vanilla-like toolbar"));
+         erase->setCheckable(true);
+         erase->setChecked(ui->actionEriser->isChecked());
+         connect(ui->actionEriser, &QAction::toggled, erase, &QPushButton::setChecked);
+         connect(erase, &QPushButton::clicked, ui->actionEriser, &QAction::trigger);
+         m_toolbarVanilla->insertWidget(nullptr, erase);
+         QAction* eraseA = m_toolbarVanilla->insertWidget(nullptr, erase);
+         connect(this, &MainWindow::windowActiveLevelWorld, eraseA, &QAction::setVisible);
+
+         QPushButton* items  = new QPushButton(m_toolbarVanilla);
+         items->setText(tr("Items", "Vanilla-like toolbar"));
+         items->setCheckable(true);
+         items->setChecked(ui->actionTilesetBox->isChecked());
+         connect(ui->actionTilesetBox, &QAction::toggled, items , &QPushButton::setChecked);
+         connect(items , &QPushButton::clicked, ui->actionTilesetBox, &QAction::trigger);
+         m_toolbarVanilla->insertWidget(nullptr, items);
+         QAction* itemsA = m_toolbarVanilla->insertWidget(nullptr, items);
+         connect(this, &MainWindow::windowActiveLevelWorld, itemsA, &QAction::setVisible);
+
+         QPushButton* player  = new QPushButton(m_toolbarVanilla);
+         player->setText(tr("Player", "Vanilla-like toolbar"));
+         connect(player, &QPushButton::clicked, [=](bool) {
+             QMenu menu;
+             menu.insertAction(nullptr, ui->actionSetFirstPlayer);
+             menu.insertAction(nullptr, ui->actionSetSecondPlayer);
+             menu.exec(QCursor::pos());
+         });
+         m_toolbarVanilla->insertWidget(nullptr, player);
+         QAction* playerA = m_toolbarVanilla->insertWidget(nullptr, player);
+         connect(this, &MainWindow::windowActiveLevel, playerA, &QAction::setVisible);
+
+         QPushButton* section  = new QPushButton(m_toolbarVanilla);
+         section->setText(tr("Section", "Vanilla-like toolbar"));
+         section->setCheckable(true);
+         section->setChecked(ui->actionSection_Settings->isChecked());
+         connect(ui->actionSection_Settings, &QAction::toggled, section , &QPushButton::setChecked);
+         connect(section , &QPushButton::clicked, ui->actionSection_Settings, &QAction::trigger);
+         QAction* sectionA = m_toolbarVanilla->insertWidget(nullptr, section);
+         connect(this, &MainWindow::windowActiveLevel, sectionA, &QAction::setVisible);
+
+         QPushButton* wldProps  = new QPushButton(m_toolbarVanilla);
+         wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
+         wldProps->setCheckable(true);
+         wldProps->setChecked(ui->actionWorld_settings->isChecked());
+         connect(ui->actionWorld_settings, &QAction::toggled, wldProps , &QPushButton::setChecked);
+         connect(wldProps, &QPushButton::clicked, ui->actionWorld_settings, &QAction::trigger);
+         QAction* wldPropsAction = m_toolbarVanilla->insertWidget(nullptr, wldProps);
+         connect(this, &MainWindow::windowActiveWorld, wldPropsAction, &QAction::setVisible);
+
+         QPushButton* doors  = new QPushButton(m_toolbarVanilla);
+         doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
+         doors->setCheckable(true);
+         doors->setChecked(ui->actionWarpsAndDoors->isChecked());
+         connect(ui->actionWarpsAndDoors, &QAction::toggled, doors , &QPushButton::setChecked);
+         connect(doors, &QPushButton::clicked, ui->actionWarpsAndDoors, &QAction::trigger);
+         QAction* doorsA = m_toolbarVanilla->insertWidget(nullptr, doors);
+         connect(this, &MainWindow::windowActiveLevel, doorsA, &QAction::setVisible);
+
+         QPushButton* water  = new QPushButton(m_toolbarVanilla);
+         water->setText(tr("Water", "Vanilla-like toolbar"));
+         connect(water, &QPushButton::clicked, [=](bool) {
+             QMenu menu;
+             menu.insertAction(nullptr, ui->actionDrawWater);
+             menu.insertAction(nullptr, ui->actionDrawSand);
+             menu.exec(QCursor::pos());
+         });
+         m_toolbarVanilla->insertWidget(nullptr, water);
+         QAction* waterA = m_toolbarVanilla->insertWidget(nullptr, water);
+         connect(this, &MainWindow::windowActiveLevel, waterA, &QAction::setVisible);
+
+         QLabel *options = new QLabel(m_toolbarVanilla);
+         options->setText(QString("<a href=\"x\">%1</a>").arg(tr("Options")));
+         options->setTextFormat(Qt::RichText);
+         connect(options, &QLabel::linkActivated, [=](const QString&) {
+             QMenu menu;
+             menu.insertAction(nullptr, ui->actionGridEn);
+             menu.insertAction(nullptr, ui->actionShowGrid);
+             menu.addMenu(ui->menuSetGridSize);
+             menu.addSeparator();
+             menu.insertAction(nullptr, ui->actionAnimation);
+             menu.insertAction(nullptr, ui->actionCollisions);
+             menu.insertAction(nullptr, ui->actionSemi_transparent_paths);
+             menu.exec(QCursor::pos());
+         });
+         m_toolbarVanilla->insertWidget(nullptr, options);
+         addToolBar(Qt::BottomToolBarArea, m_toolbarVanilla);
+
+         m_toolbarVanilla->setVisible(false);
+    }
+
+    ui->menuWindow->menuAction()->setEnabled(true);
+    ui->menuLevel->menuAction()->setEnabled(false);
+    ui->menuWorld->menuAction()->setEnabled(false);
+    ui->menuTest->menuAction()->setEnabled(false);
 
     ui->LevelObjectToolbar->setVisible(false);
     ui->WorldObjectToolbar->setVisible(false);
@@ -260,7 +365,7 @@ void MainWindow::setUiDefults()
     zoom->setMinimumWidth(40);
     zoom->setMaximumWidth(50);
     #else
-    zoom->setMaximumWidth(24);
+    zoom->setMaximumWidth(28);
     #endif
     zoom->setEnabled(false);
 
@@ -274,5 +379,121 @@ void MainWindow::setUiDefults()
     ui->actionScriptEditor->setVisible(false);
     #endif
     /**************************************************************/
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionSelect, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionSelectOnly, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionEriser, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionHandScroll, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCopy, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionPaste, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCut, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGridEn, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->menuSetGridSize, &QMenu::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevel,  ui->menuLevel->menuAction(), &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveWorld,  ui->menuWorld->menuAction(), &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel,  ui->menuLevel->menuAction(), &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveWorld,  ui->menuWorld->menuAction(), &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld,  ui->menuView->menuAction(), &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveWorld,   ui->actionSemi_transparent_paths, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->menuTest->menuAction(), &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,       ui->action_doTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
+    #ifdef Q_OS_WIN
+    connect(this, &MainWindow::windowActiveLevel, ui->actionRunTestSMBX, &QAction::setEnabled);
+    #endif
+    connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
+    connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
+
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLVLToolBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionWarpsAndDoors, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSection_Settings, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevelProp, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLayersBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevelEvents, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionWarpsAndDoors, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLVLSearchBox, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionTilesetBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionBookmarkBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionDebugger, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveWorld, ui->actionWLDToolBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveWorld, ui->actionWorld_settings, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveWorld, ui->actionWLD_SearchBox, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevNoBack, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevOffScr, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionWrapHorizontal, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionWrapVertically, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevUnderW, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevel, ui->actionLevelProp, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevel, ui->actionExport_to_image_section, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionExport_to_image, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionZoomIn, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionZoomOut, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionZoomReset, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, zoom, &QLineEdit::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGotoLeftBottom, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionGotoLeftTop, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionGotoTopRight, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionGotoRightBottom, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionFixWrongMasks, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCDATA_clear_unused, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCDATA_Import, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionAlign_selected, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionFlipHorizontal, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionFlipVertical, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionRotateLeft, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionRotateRight, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevel, ui->actionCloneSectionTo, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_Delete, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_FlipHorizontal, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_FlipVertical, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateLeft, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateRight, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel, ui->actionAdditional_Settings, &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->menuScript->menuAction(), &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptLocal, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptEpisode, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->menuLunaLUA_scripts->menuAction(), &QAction::setEnabled);
+
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_1, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_2, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_3, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_4, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_5, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_6, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_7, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_8, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_9, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_10, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_11, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_12, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_13, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_14, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_15, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_16, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_17, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_18, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_19, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_20, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_21, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
 
 }

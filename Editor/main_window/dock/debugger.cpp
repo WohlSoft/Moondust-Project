@@ -54,8 +54,9 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
                 height()
                 );
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::DebuggerBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);

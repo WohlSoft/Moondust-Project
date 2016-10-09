@@ -50,8 +50,9 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::BookmarksBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 BookmarksBox::~BookmarksBox()

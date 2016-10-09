@@ -58,8 +58,9 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelLayersBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     lockLayerEdit=false;
 }

@@ -53,8 +53,9 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
                 height()
                 );
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelSearchBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     lockReset = false;
 

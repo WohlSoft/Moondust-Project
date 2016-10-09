@@ -65,8 +65,9 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
                    this, SLOT(setSMBX64Strict(bool)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelDoorsBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 LvlWarpBox::~LvlWarpBox()

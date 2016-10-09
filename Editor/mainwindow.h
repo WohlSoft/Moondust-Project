@@ -101,6 +101,7 @@ public:
  * - Recent Files
  * - Sub Windows
  * -- Latest Active Window (See sub_windows.cpp for comments)
+ * - Toolbars
  * - Dock widgwets
  * - Editing features
  * - Clipboard
@@ -526,6 +527,28 @@ public:
          */
         QList<QMdiSubWindow*> allEditWins();
 
+    signals:
+        /**
+         * @brief is level window activated or activated window of another type
+         * @param state true if level window activated
+         */
+        void windowActiveLevel(bool state);
+        /**
+         * @brief is NPC editor window activated or activated window of another type
+         * @param state true if NPC editor window activated
+         */
+        void windowActiveNPC(bool state);
+        /**
+         * @brief is world map window activated or activated window of another type
+         * @param state true if world map window activated
+         */
+        void windowActiveWorld(bool state);
+        /**
+         * @brief if level or world map window activated or another type
+         * @param state true if editor or world map window activated
+         */
+        void windowActiveLevelWorld(bool state);
+
     public slots:
         /*!
          * \brief Create empty Level Editing sub-window
@@ -590,8 +613,12 @@ public:
         // ////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////
 
+// ///////////////////// Toolbars /////////////////////////
+    private:
+        //! Vanilla editor's toolbar
+        QToolBar* m_toolbarVanilla;
 
-
+// ////////////////////////////////////////////////////////
 
 // ////////////////////Editing features////////////////////
     public slots:

@@ -7,6 +7,9 @@ Editor 0.3.1.11-patch-1
 - Fixed in-bounds of section detection used by flood-fill algorithm
 - Added ability to override grid size with custom
 - Added ability to delete all elements of specified ID
+- Fixed toolboxes visibility management
+- Fixed bug in default grid snap value applying
+- Added a vanilla-like toolbar which will be shown when SMBX-Like GUI will be requested
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

@@ -58,8 +58,9 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
                 height()
                 );
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_world.
-          addState(this, &GlobalSettings::WorldSettingsToolboxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 WorldSettingsBox::~WorldSettingsBox()

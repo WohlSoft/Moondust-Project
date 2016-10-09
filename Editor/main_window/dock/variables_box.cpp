@@ -34,8 +34,10 @@ VariablesBox::VariablesBox(QWidget *parent) :
                 width(),
                 height()
                 );
+
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::VariablesBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 VariablesBox::~VariablesBox()

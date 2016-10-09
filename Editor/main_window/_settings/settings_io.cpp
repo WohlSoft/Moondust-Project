@@ -35,24 +35,24 @@
 
 static void loadToolboxProps(QSettings &s,
                              QString keyprefix,
-                             QDockWidget* widget,
-                             bool &globalVisFlag,
+                             MWDock_Base* widget,
                              bool defViz,
                              bool defFloat)
 {
-    globalVisFlag = s.value( keyprefix + QStringLiteral("-visible"), defViz).toBool();
-    widget->setFloating( s.value( keyprefix + QStringLiteral("-float"), defFloat).toBool() );
-    widget->restoreGeometry( s.value( keyprefix + QStringLiteral("-geometry"), widget->saveGeometry() ).toByteArray() );
+    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
+    widget->m_lastVisibilityState = s.value( keyprefix + QStringLiteral("-visible"), defViz).toBool();
+    dw->setFloating( s.value( keyprefix + QStringLiteral("-float"), defFloat).toBool() );
+    dw->restoreGeometry( s.value( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() ).toByteArray() );
 }
 
 static void saveToolboxProps(QSettings &s,
                              QString keyprefix,
-                             QDockWidget* widget,
-                             bool globalVisFlag)
+                             MWDock_Base* widget)
 {
-    s.setValue( keyprefix + QStringLiteral("-visible"),  globalVisFlag );
-    s.setValue( keyprefix + QStringLiteral("-float"),    widget->isFloating() );
-    s.setValue( keyprefix + QStringLiteral("-geometry"), widget->saveGeometry() );
+    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
+    s.setValue( keyprefix + QStringLiteral("-visible"),  widget->m_lastVisibilityState );
+    s.setValue( keyprefix + QStringLiteral("-float"),    dw->isFloating() );
+    s.setValue( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() );
 }
 
 
@@ -122,25 +122,24 @@ void MainWindow::loadSettings()
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
-        bool vizNA=false;
         //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.    flaoting
-        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        GlobalSettings::LevelItemBoxVis,        true,   false);
-        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,    vizNA,                                  false,  true);
-        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   GlobalSettings::LevelSectionBoxVis,     true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      GlobalSettings::LevelDoorsBoxVis,       false,  true);
-        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         GlobalSettings::LevelLayersBoxVis,      true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         GlobalSettings::LevelEventsBoxVis,      true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      GlobalSettings::LevelSearchBoxVis,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        true,   false);
+        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"),dock_LvlItemProps,     false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         true,   true);
+        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      false,  true);
 
-        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        GlobalSettings::WorldItemBoxVis,        true,   false);
-        loadToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox,    GlobalSettings::WorldSettingsToolboxVis,false,  true);
-        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"),dock_WldItemProps,     vizNA,  false,  FloatDocks);
-        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      GlobalSettings::WorldSearchBoxVis,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        true,   false);
+        loadToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox,    false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"),dock_WldItemProps,     false,  false);
+        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      false,  true);
 
-        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        GlobalSettings::TilesetBoxVis,          false,  true);
-        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       GlobalSettings::DebuggerBoxVis,         false,  true);
-        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      GlobalSettings::BookmarksBoxVis,        false,  true);
-        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      GlobalSettings::VariablesBoxVis,        false,  true);
+        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        false,  true);
+        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       false,  true);
+        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      false,  true);
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
@@ -215,23 +214,23 @@ void MainWindow::saveSettings()
         settings.setValue("lastsavepath", GlobalSettings::savePath);
         settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-        saveToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        GlobalSettings::LevelItemBoxVis);
-        saveToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,    false);
-        saveToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   GlobalSettings::LevelSectionBoxVis);
-        saveToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      GlobalSettings::LevelDoorsBoxVis);
-        saveToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         GlobalSettings::LevelLayersBoxVis);
-        saveToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         GlobalSettings::LevelEventsBoxVis);
-        saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      GlobalSettings::LevelSearchBoxVis);
+        saveToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox);
+        saveToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps);
+        saveToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps);
+        saveToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps);
+        saveToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers);
+        saveToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents);
+        saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox);
 
-        saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        GlobalSettings::WorldItemBoxVis);
-        saveToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox,    GlobalSettings::WorldSettingsToolboxVis);
-        saveToolboxProps(settings, QStringLiteral("world-itemprops-box"),dock_WldItemProps,     false);
-        saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      GlobalSettings::WorldSearchBoxVis);
+        saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox);
+        saveToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox);
+        saveToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps);
+        saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox);
 
-        saveToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        GlobalSettings::TilesetBoxVis);
-        saveToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       GlobalSettings::DebuggerBoxVis);
-        saveToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      GlobalSettings::BookmarksBoxVis);
-        saveToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      GlobalSettings::VariablesBoxVis);
+        saveToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox);
+        saveToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox);
+        saveToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox);
+        saveToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox);
 
         settings.setValue("geometry", saveGeometry());
         settings.setValue("windowState", saveState());
