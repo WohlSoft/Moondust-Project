@@ -156,9 +156,6 @@ void MainWindow::setUiDefults()
         this, SLOT(setActiveSubWindow(QWidget*)));
 
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
-
-    ui->actionExport_to_image_section->setVisible(false);
-
     ui->centralWidget->cascadeSubWindows();
 
     ui->ResizingToolbar->setVisible(false);

@@ -194,7 +194,7 @@ Fail to start world map
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="881"/>
+        <location filename="../main.cpp" line="892"/>
         <source>Warp exit
 
 Exit into:
@@ -210,7 +210,7 @@ Enter to: %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="931"/>
+        <location filename="../main.cpp" line="942"/>
         <source>Level was closed with error.
 %1</source>
         <translation type="unfinished"></translation>
