@@ -278,6 +278,9 @@ int main(int argc, char *argv[])
     mWindow->initWindowsThumbnail();
 #endif
 
+    //Show greeting
+    mWindow->showWelcomeDialog();
+
     //Show tip of a day
     mWindow->showTipOfDay();
 

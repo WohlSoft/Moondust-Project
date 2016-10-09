@@ -11,6 +11,7 @@ Editor 0.3.1.11-patch-1
 - Fixed bug in default grid snap value applying
 - Added a vanilla-like toolbar which will be shown when SMBX-Like GUI will be requested
 - Added item type global grid field in the lvl_blocks, lvl_bgo, lvl_npc, wld_levels, wld_paths, wld_scenery and wld_tiles INIs
+- Added welcome dialog for a newbies
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

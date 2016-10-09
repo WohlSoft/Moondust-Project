@@ -316,6 +316,11 @@ void MainWindow::saveSettings()
         settings.setValue("log-level", int(LogWriter::logLevel));
     settings.endGroup();
 
+    //Output-only
+    settings.beginGroup("message-boxes");
+        settings.setValue("uidesign-editor-greeting", false);
+    settings.endGroup();
+
     //Save settings of custom counters in the debugger
     dock_DebuggerBox->Debugger_saveCustomCounters();
 }

@@ -156,6 +156,7 @@
     </widget>
     <addaction name="actionContents"/>
     <addaction name="actionTipOfDay"/>
+    <addaction name="actionWelcome"/>
     <addaction name="separator"/>
     <addaction name="actionCheckUpdates"/>
     <addaction name="actionChange_log"/>
@@ -3010,6 +3011,11 @@
   <action name="actionSetGridItemDefault">
    <property name="text">
     <string>Item default</string>
+   </property>
+  </action>
+  <action name="actionWelcome">
+   <property name="text">
+    <string>Welcome dialog</string>
    </property>
   </action>
  </widget>

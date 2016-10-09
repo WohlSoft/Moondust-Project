@@ -23,6 +23,7 @@
 #include <main_window/about_dialog/aboutdialog.h>
 #include <main_window/updater/check_updates.h>
 #include <main_window/tip_of_day/tip_of_day.h>
+#include <main_window/greeting_dialog/greeting_dialog.h>
 #include <main_window/global_settings.h>
 
 #include <mainwindow.h>
@@ -36,6 +37,29 @@
 void MainWindow::on_actionContents_triggered()
 {
     QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
+}
+
+void MainWindow::showWelcomeDialog()
+{
+    QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
+    setup.beginGroup("message-boxes");
+    bool showNotice = setup.value("uidesign-editor-greeting", true).toBool();
+    setup.endGroup();
+    if(showNotice)
+    {
+        on_actionWelcome_triggered();
+    }
+}
+
+void MainWindow::on_actionWelcome_triggered()
+{
+    GreetingDialog grtn(this);
+    grtn.connect(&grtn, &GreetingDialog::switchClassic, this, &MainWindow::on_actionSMBX_like_GUI_triggered);
+    grtn.connect(&grtn, &GreetingDialog::switchModern, this, &MainWindow::on_actionModern_GUI_triggered);
+    grtn.exec();
+    grtn.disconnect(&grtn, &GreetingDialog::switchClassic, this, &MainWindow::on_actionSMBX_like_GUI_triggered);
+    grtn.disconnect(&grtn, &GreetingDialog::switchModern, this, &MainWindow::on_actionModern_GUI_triggered);
 }
 
 void MainWindow::showTipOfDay()
