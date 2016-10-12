@@ -69,7 +69,7 @@ addons:
       description: "PGE Project - a free and open source game engine to create games of platform genre"
     notification_email: admin@wohlnet.ru
     build_command_prepend: "./clean_make.sh nopause"
-    build_command:   "./build.sh"
+    build_command:   "bash ./build.sh"
     branch_pattern: master
 
 
