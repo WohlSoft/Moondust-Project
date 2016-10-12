@@ -53,8 +53,9 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_world.
-          addState(this, &GlobalSettings::WorldItemBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 WorldItemBox::~WorldItemBox()

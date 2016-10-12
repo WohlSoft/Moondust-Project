@@ -76,19 +76,16 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     npcPtr=-1;
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), &MainWindow::languageSwitched, this, &LvlItemProperties::re_translate);
     connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelProp, SLOT(setChecked(bool)));
 
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
-
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
-                mwg.y()+120,
+                mwg.right() - width() - GOffset,
+                mwg.y() + 120,
                 width(),
                 height()
                 );

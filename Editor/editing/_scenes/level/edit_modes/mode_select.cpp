@@ -367,7 +367,7 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    gridSize = s->m_configs->default_grid;
+    gridSize = s->m_configs->defaultGrid.general;
     offsetX = 0;
     offsetY = 0;
 
@@ -397,18 +397,18 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
     if( ObjType == "Water")
     {
         sourcePos = QPoint(  dynamic_cast<ItemPhysEnv *>(it)->m_data.x, dynamic_cast<ItemPhysEnv *>(it)->m_data.y);
-        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->defaultGrid.general)/2);
     }
     else
     if( ObjType == "Door_enter")
     {
         sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ix, dynamic_cast<ItemDoor *>(it)->m_data.iy);
-        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->defaultGrid.general)/2);
     }
     else
     if( ObjType == "Door_exit"){
         sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->m_data.ox, dynamic_cast<ItemDoor *>(it)->m_data.oy);
-        gridSize = qRound(qreal(s->m_configs->default_grid)/2);
+        gridSize = qRound(qreal(s->m_configs->defaultGrid.general)/2);
     }
     else
     if( ObjType == "playerPoint" )

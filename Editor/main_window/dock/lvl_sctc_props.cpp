@@ -41,12 +41,13 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     lockSctSettingsProps=false;
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setFloating(true);
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
-                mwg.y()+120,
+                mwg.right() - width() - GOffset,
+                mwg.y() + 250,
                 width(),
                 height()
                 );
@@ -77,8 +78,9 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->actionSection_Settings, SIGNAL(triggered(bool)), this, SLOT(setVisible(bool)));
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelSectionBoxVis);
+          addState(this, &m_lastVisibilityState);
 }
 
 

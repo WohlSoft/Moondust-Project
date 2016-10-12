@@ -21,7 +21,7 @@
 
 #include <common_features/app_path.h>
 #include <dev_console/devconsole.h>
-#include <data_configs/configstatus.h>
+#include <data_configs/config_status/config_status.h>
 
 #include "gifs2png_gui.h"
 #include <ui_gifs2png_gui.h>

@@ -41,23 +41,22 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
     isLoaded=false;
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionDebugger, SLOT(setChecked(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(on_DEBUG_RefreshCoutners_clicked()));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.right() - width() - GOffset,
                 mwg.y()+120,
                 width(),
                 height()
                 );
 
+    m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::DebuggerBoxVis);
+          addState(this, &m_lastVisibilityState);
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);

@@ -30,13 +30,13 @@ EditingSettings::EditingSettings()
     semiTransparentPaths=false;
 }
 
-QString GlobalSettings::locale="";
-long GlobalSettings::animatorItemsLimit=25000;
-QString GlobalSettings::openPath=".";
-QString GlobalSettings::savePath=".";
-QString GlobalSettings::savePath_npctxt=".";
+QString GlobalSettings::locale          = "";
+long GlobalSettings::animatorItemsLimit = 25000;
+QString GlobalSettings::openPath        = ".";
+QString GlobalSettings::savePath        = ".";
+QString GlobalSettings::savePath_npctxt = ".";
 
-QString GlobalSettings::tools_sox_bin_path="/tools/sox/";
+QString GlobalSettings::tools_sox_bin_path  = "/tools/sox/";
 
 EditingSettings  GlobalSettings::LvlOpts;
 SETTINGS_ItemDefaults GlobalSettings::LvlItemDefaults;
@@ -47,38 +47,22 @@ bool GlobalSettings::autoPlayMusic  = false;
 int  GlobalSettings::musicVolume    = 128;
 bool GlobalSettings::recentMusicPlayingState = false;
 
-bool GlobalSettings::WorldItemBoxVis=true;
-bool GlobalSettings::WorldSettingsToolboxVis=false;
-bool GlobalSettings::WorldSearchBoxVis=false;
+bool GlobalSettings::MidMouse_allowDuplicate    = true;
+bool GlobalSettings::MidMouse_allowSwitchToPlace= true;
+bool GlobalSettings::MidMouse_allowSwitchToDrag = true;
 
-bool GlobalSettings::LevelItemBoxVis=true;
-bool GlobalSettings::LevelSectionBoxVis=false;
-bool GlobalSettings::LevelDoorsBoxVis=false;
-bool GlobalSettings::LevelLayersBoxVis=false;
-bool GlobalSettings::LevelEventsBoxVis=false;
-bool GlobalSettings::LevelSearchBoxVis=false;
+bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 
-bool GlobalSettings::TilesetBoxVis=false;
-bool GlobalSettings::DebuggerBoxVis=false;
-bool GlobalSettings::BookmarksBoxVis=false;
-bool GlobalSettings::VariablesBoxVis=false;
+int  GlobalSettings::historyLimit   = 300;
 
-bool GlobalSettings::MidMouse_allowDuplicate=true;
-bool GlobalSettings::MidMouse_allowSwitchToPlace=true;
-bool GlobalSettings::MidMouse_allowSwitchToDrag=true;
+QString GlobalSettings::currentTheme= "";
 
-bool GlobalSettings::Placing_dontShowPropertiesBox=false;
+bool GlobalSettings::ShowTipOfDay   = true;
 
-int  GlobalSettings::historyLimit=300;
+QMdiArea::ViewMode      GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+QTabWidget::TabPosition GlobalSettings::LVLToolboxPos  = QTabWidget::North;
+QTabWidget::TabPosition GlobalSettings::WLDToolboxPos  = QTabWidget::West;
+QTabWidget::TabPosition GlobalSettings::TSTToolboxPos  = QTabWidget::North;
 
-QString GlobalSettings::currentTheme="";
-
-bool GlobalSettings::ShowTipOfDay=true;
-
-QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
-QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
-QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
-QTabWidget::TabPosition GlobalSettings::TSTToolboxPos = QTabWidget::North;
-
-int GlobalSettings::lastWinType=0;
+int GlobalSettings::lastWinType     = 0;
 

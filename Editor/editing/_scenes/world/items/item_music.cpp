@@ -41,7 +41,7 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     m_scene->addItem(this);
     this->setZValue(m_scene->Z_MusicBoxes);
-    m_gridSize = m_scene->m_configs->default_grid;
+    m_gridSize = m_scene->m_configs->defaultGrid.general;
     m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
     setData(ITEM_WIDTH,  QString::number( m_gridSize ) ); //width
     setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height

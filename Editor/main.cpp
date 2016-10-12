@@ -41,7 +41,7 @@
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
 
-#include <data_configs/config_manager.h>
+#include <data_configs/selection_dialog/config_manager.h>
 
 #include <networking/engine_intproc.h>
 #include <audio/sdl_music_player.h>
@@ -277,6 +277,9 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     mWindow->initWindowsThumbnail();
 #endif
+
+    //Show greeting
+    mWindow->showWelcomeDialog();
 
     //Show tip of a day
     mWindow->showTipOfDay();

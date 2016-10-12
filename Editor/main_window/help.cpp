@@ -19,18 +19,47 @@
 #include <QDesktopServices>
 #include <common_features/app_path.h>
 #include <common_features/util.h>
+#include <common_features/themes.h>
 #include <main_window/about_dialog/aboutdialog.h>
 #include <main_window/updater/check_updates.h>
 #include <main_window/tip_of_day/tip_of_day.h>
+#include <main_window/greeting_dialog/greeting_dialog.h>
 #include <main_window/global_settings.h>
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
 
+#include "dock/lvl_item_toolbox.h"
+#include "dock/wld_item_toolbox.h"
+#include "dock/tileset_item_box.h"
+
 
 void MainWindow::on_actionContents_triggered()
 {
     QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
+}
+
+void MainWindow::showWelcomeDialog()
+{
+    QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
+    setup.beginGroup("message-boxes");
+    bool showNotice = setup.value("uidesign-editor-greeting", true).toBool();
+    setup.endGroup();
+    if(showNotice)
+    {
+        on_actionWelcome_triggered();
+    }
+}
+
+void MainWindow::on_actionWelcome_triggered()
+{
+    GreetingDialog grtn(this);
+    grtn.connect(&grtn, &GreetingDialog::switchClassic, this, &MainWindow::on_actionSMBX_like_GUI_triggered);
+    grtn.connect(&grtn, &GreetingDialog::switchModern, this, &MainWindow::on_actionModern_GUI_triggered);
+    grtn.exec();
+    grtn.disconnect(&grtn, &GreetingDialog::switchClassic, this, &MainWindow::on_actionSMBX_like_GUI_triggered);
+    grtn.disconnect(&grtn, &GreetingDialog::switchModern, this, &MainWindow::on_actionModern_GUI_triggered);
 }
 
 void MainWindow::showTipOfDay()
@@ -51,13 +80,18 @@ void MainWindow::on_actionSMBX_like_GUI_triggered()
 {
     setSubView();
 
-    if(activeChildWindow()==1)
+    int win = activeChildWindow();
+    if(win==WND_Level)
         on_actionLVLToolBox_triggered(false);
-    else
-    if(activeChildWindow()==3)
+    if(win==WND_World)
         on_actionWLDToolBox_triggered(false);
+    if((win==WND_Level) || (win==WND_World))
+        on_actionTilesetBox_triggered(true);
 
-    on_actionTilesetBox_triggered(true);
+    dock_LvlItemBox->m_lastVisibilityState = false;
+    dock_WldItemBox->m_lastVisibilityState = false;
+    dock_TilesetBox->m_lastVisibilityState = true;
+    m_toolbarVanilla->setVisible(true);
 }
 
 
@@ -65,14 +99,18 @@ void MainWindow::on_actionModern_GUI_triggered()
 {
     setTabView();
 
-    if(activeChildWindow()==1)
+    int win = activeChildWindow();
+    if(win==WND_Level)
         on_actionLVLToolBox_triggered(true);
-    else
-    if(activeChildWindow()==3)
+    if(win==WND_World)
         on_actionWLDToolBox_triggered(true);
+    if((win==WND_Level) || (win==WND_World))
+        on_actionTilesetBox_triggered(false);
 
-    on_actionTilesetBox_triggered(false);
-
+    dock_LvlItemBox->m_lastVisibilityState = true;
+    dock_WldItemBox->m_lastVisibilityState = true;
+    dock_TilesetBox->m_lastVisibilityState = false;
+    m_toolbarVanilla->setVisible(false);
 }
 
 

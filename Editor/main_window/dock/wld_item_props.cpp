@@ -42,14 +42,12 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     wld_tools_lock=false;
 
     QRect mwg = mw()->geometry();
-    int GOffset=240;
+    int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
-    #ifdef Q_OS_WIN
     setFloating(true);
-    #endif
     setGeometry(
-                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.right() - width() - GOffset,
                 mwg.y()+120,
                 width(),
                 height()
