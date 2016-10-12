@@ -136,3 +136,7 @@ libSDL2_mixer.dylib
 /Documents/Doxygen/PlayableCalibrator/
 /Documents/Doxygen/Manager/
 /Documents/Doxygen/Maintainer/
+
+#Coverity Scan output
+/cov-int/
+
