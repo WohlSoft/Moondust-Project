@@ -6,7 +6,11 @@
 
 if [ $TRAVIS_OS_NAME == linux ];
 then
-    _Misc/dev_scripts/deploy/deploy_linux.sh nopause
+    #Don't deploy on Travis-CI, because it used for Coverity Scan
+    if [[ $(whoami) != "travis" ]];
+    then
+        _Misc/dev_scripts/deploy/deploy_linux.sh nopause
+    fi
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then

@@ -49,7 +49,7 @@ matrix:
             description: "PGE Project - a free and open source game engine to create games of platform genre"
           notification_email: admin@wohlnet.ru
           build_command_prepend: "./clean_make.sh nopause"
-          build_command:   "bash ./build.sh"
+          build_command:   "bash ./build.sh no-pause use-ccache;"
           branch_pattern: master
     - os: osx
       osx_image: xcode7
