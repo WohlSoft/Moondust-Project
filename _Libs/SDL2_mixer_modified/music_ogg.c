@@ -99,7 +99,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         MyResample_zero(&music->resample);
 
         music->loop         = -1;
-        music->loop_start   =  0;
+        music->loop_start   = -1;
         music->loop_end     =  0;
         music->loop_len     =  0;
 
@@ -169,12 +169,16 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         else
             music->loop_len=music->loop_end-music->loop_start;
 
-        if( (music->loop_start > 0)&&
-            (music->loop_end > 0)&&
-            (music->loop_start < music->loop_end) &&
-            (music->loop_start < ov_pcm_total(&music->vf,-1))&&
-            (music->loop_end <= ov_pcm_total(&music->vf,-1)) )
+        ogg_int64_t total = ov_pcm_total(&music->vf,-1);
+        if( ((music->loop_start >= 0) || (music->loop_end > 0))&&
+            ((music->loop_start < music->loop_end) || (music->loop_end==0)) &&
+            (music->loop_start < total)&&
+            (music->loop_end <= total) )
         {
+            if(music->loop_start < 0)
+                music->loop_start = 0;
+            if(music->loop_end == 0)
+                music->loop_end = total;
             music->loop=1;
             vorbis_info *vi;
             vi = vorbis.ov_info(&music->vf, -1);
