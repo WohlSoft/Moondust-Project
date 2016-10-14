@@ -88,12 +88,19 @@ struct Reverb /* This reverb implementation is based on Freeverb impl. in Sox */
     }
 };
 
-static struct MyReverbData
+struct MyReverbData
 {
-    bool wetonly;
+    bool        wetonly;
+    unsigned    amplitude_display_counter = 0;
+    float       prev_avg_flt[2];
+
     Reverb chan[2];
-    MyReverbData() : wetonly(false)
+    MyReverbData() :
+        wetonly(false),
+        amplitude_display_counter(0),
+        prev_avg_flt{0,0}
     {
+
         for(size_t i=0; i<2; ++i)
             chan[i].Create(44100,
                 4.0,  // wet_gain_dB  (-10..10)
@@ -104,10 +111,15 @@ static struct MyReverbData
                 1,   // stereo_depth (0..1)
                 16384);
     }
-} reverb_data;
+};
+
+static MyReverbData* reverb_data = NULL;
 
 void reverbEffect(int, void *stream, int len, void *)
 {
+    if(!reverb_data)
+        reverb_data = new MyReverbData();
+
     int count = len/4;
     short* samples = (short*)stream;
     if(count % 2 == 1)
@@ -115,27 +127,29 @@ void reverbEffect(int, void *stream, int len, void *)
         // An uneven number of samples? To avoid complicating matters,
         // just ignore the odd sample.
         count   -= 1;
-        //samples += 1;
     }
-    if(!count) return;
+
+    if(!count)
+        return;
 
     // Attempt to filter out the DC component. However, avoid doing
     // sudden changes to the offset, for it can be audible.
-    double average[2]={0, 0};
+    double average[2] = {0, 0};
     for(unsigned w=0; w<2; ++w)
         for(int p = 0; p < count; ++p)
           average[w] += samples[p*2+w];
-    static float prev_avg_flt[2] = {0,0};
+
+    float *prev_avg_flt = reverb_data->prev_avg_flt;
+
     float average_flt[2] =
     {
         prev_avg_flt[0] = (prev_avg_flt[0] + average[0]*0.04/double(count)) / 1.04,
         prev_avg_flt[1] = (prev_avg_flt[1] + average[1]*0.04/double(count)) / 1.04
     };
 
-    static unsigned amplitude_display_counter = 0;
-    if(!amplitude_display_counter--)
+    if(!reverb_data->amplitude_display_counter--)
     {
-        amplitude_display_counter = (44100 / count) / 24;
+        reverb_data->amplitude_display_counter = (44100 / count) / 24;
         double amp[2]={0,0};
         for(int w=0; w<2; ++w)
         {
@@ -151,6 +165,8 @@ void reverbEffect(int, void *stream, int len, void *)
         //UI.IllustrateVolumes(amp[0], amp[1]);
     }
 
+    Reverb *chan = reverb_data->chan;
+
     // Convert input to float format
     std::vector<float> dry[2];
     for(int w=0; w<2; ++w)
@@ -163,21 +179,28 @@ void reverbEffect(int, void *stream, int len, void *)
             dry[w][p] = (s - a) * double(0.3/32768.0);
         }
         // ^  Note: ftree-vectorize causes an error in this loop on g++-4.4.5
-        reverb_data.chan[w].input_fifo.insert(
-        reverb_data.chan[w].input_fifo.end(),
+        chan[w].input_fifo.insert(
+        chan[w].input_fifo.end(),
             dry[w].begin(), dry[w].end());
     }
+
     // Reverbify it
     for(unsigned w=0; w<2; ++w)
-        reverb_data.chan[w].Process(count);
+        reverb_data->chan[w].Process(count);
 
     for(int p = 0; p < count; ++p)
         for(int w=0; w<2; ++w)
         {
-            float out = ((1 - reverb_data.wetonly) * dry[w][p] +
-                         .5 * (reverb_data.chan[0].out[w][p] +
-                            reverb_data.chan[1].out[w][p])) * 32768.0f
-                            +average_flt[w];
+            float out = ((1 - reverb_data->wetonly) * dry[w][p] +
+                         .5 * (chan[0].out[w][p] + chan[1].out[w][p])) * 32768.0f
+                            + average_flt[w];
               samples[p*2+w] = short(out<-32768.f ? -32768 : out>32767.f ?  32767 : out);
         }
+}
+
+void reverbEffectDone(int, void *)
+{
+    if(reverb_data)
+        delete reverb_data;
+    reverb_data = NULL;
 }

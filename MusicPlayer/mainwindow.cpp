@@ -565,7 +565,7 @@ void MainWindow::contextMenu(const QPoint &pos)
     {
         PGE_MusicPlayer::reverbEnabled = reverb->isChecked();
         if(PGE_MusicPlayer::reverbEnabled)
-            Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, NULL, NULL);
+            Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, NULL);
         else
             Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
     }
