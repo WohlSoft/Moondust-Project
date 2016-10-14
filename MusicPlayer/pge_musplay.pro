@@ -88,7 +88,8 @@ SOURCES += main.cpp\
     main_sdl_android.c \
     wave_writer.c \
     AssocFiles/assoc_files.cpp \
-    SingleApplication/pge_application.cpp
+    SingleApplication/pge_application.cpp \
+    Effects/reverb.cpp
 
 HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
@@ -96,7 +97,8 @@ HEADERS  += mainwindow.h \
     version.h \
     wave_writer.h \
     AssocFiles/assoc_files.h \
-    SingleApplication/pge_application.h
+    SingleApplication/pge_application.h \
+    Effects/reverb.h
 
 FORMS    += mainwindow.ui \
     AssocFiles/assoc_files.ui

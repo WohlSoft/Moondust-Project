@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "AssocFiles/assoc_files.h"
+#include "Effects/reverb.h"
 #include <math.h>
 
 #include <QtDebug>
@@ -27,6 +28,7 @@ namespace PGE_MusicPlayer
 {
     Mix_Music *play_mus = NULL;
     Mix_MusicType type  = MUS_NONE;
+    bool reverbEnabled = false;
 
     QString musicType()
     {
@@ -534,6 +536,9 @@ void MainWindow::contextMenu(const QPoint &pos)
     QAction* playpause   = x.addAction("Play/Pause");
     QAction* stop        = x.addAction("Stop");
                            x.addSeparator();
+    QAction* reverb       = x.addAction("Reverb");
+    reverb->setCheckable(true);
+    reverb->setChecked(PGE_MusicPlayer::reverbEnabled);
     QAction* assoc_files = x.addAction("Associate files");
                            x.addSeparator();
     QMenu  * about       = x.addMenu("About");
@@ -555,6 +560,14 @@ void MainWindow::contextMenu(const QPoint &pos)
     else if(stop == ret)
     {
         on_stop_clicked();
+    }
+    else if(reverb == ret)
+    {
+        PGE_MusicPlayer::reverbEnabled = reverb->isChecked();
+        if(PGE_MusicPlayer::reverbEnabled)
+            Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, NULL, NULL);
+        else
+            Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
     }
     else if(assoc_files == ret)
     {
