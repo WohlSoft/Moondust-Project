@@ -66,3 +66,32 @@ QTabWidget::TabPosition GlobalSettings::TSTToolboxPos  = QTabWidget::North;
 
 int GlobalSettings::lastWinType     = 0;
 
+
+long ConfStatus::total_characters = 0;
+long ConfStatus::total_blocks=0;
+long ConfStatus::total_bgo=0;
+long ConfStatus::total_bg=0;
+long ConfStatus::total_npc=0;
+
+long ConfStatus::total_wtile=0;
+long ConfStatus::total_wpath=0;
+long ConfStatus::total_wscene=0;
+long ConfStatus::total_wlvl=0;
+
+long ConfStatus::total_music_lvl=0;
+long ConfStatus::total_music_wld=0;
+long ConfStatus::total_music_spc=0;
+long ConfStatus::total_sound=0;
+
+QString ConfStatus::configName="";
+QString ConfStatus::configPath="";
+
+QString ConfStatus::configDataPath="";
+#ifdef _WIN32
+QString ConfStatus::SmbxEXE_Name="";
+bool    ConfStatus::SmbxTest_By_Default=false;
+#endif
+
+QString ConfStatus::defaultTheme="";
+
+

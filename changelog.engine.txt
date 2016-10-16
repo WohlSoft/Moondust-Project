@@ -3,22 +3,22 @@
 - Added GIF recorder (working everywhere, by F11 key press)
 - Fixed rendering of lua-rendered stuff hidden by message boxes
 - Added support of Z-Index for image and text rendering from lua code
-- Config pack selection dialog has been reorganized into scene (that allows using joystick in it, maiking screnshots from it and even recording GIFs from it!). It's one of steps to reducing Qt usage on engine side. Target is using QCoreApplication only to reduse size of engine's static build.
+- Config pack selection dialog has been reorganized into a scene (that allows using a joystick in it, making screenshots from it and even recording GIFs from it!). It's one of the steps to reducing Qt usage on the engine side. Target is using QCoreApplication only to reduce the size of engine's static build.
 - Font manager has been improved and fixed
-- Special pause menu for level testing mode with ability to restart level!
+- Special pause menu for the level testing mode with ability to restart the level!
 - Don't close IPC-ran level on restarting
 
 0.2.6
-- Improved testing of the renderers support to avoid accidental running of the unsupported renderer
+- Improved testing of the renderers supports to avoid accidental running of the unsupported renderer
 - Added software renderer support for video cards which are not supports OpenGL
 - Added ability to manually choice a renderer (by --render-gl3, --render-gl2 or by --render-sw arguments)
 - Added graphical API to load external graphic files with lua scripts
 - Added Paths functions to get full path to media folders
 - Added event to draw HUD with binding of the camera metrics and player state
 - Added binding to playOnceAnimation for playable character API
-- Added support of more advanced effects for lua API
-- Fixed sprite warping for NPCs, now there are correctly warping from warp generators with any sizes of sprites
-- Fixed inter-processing on Mac OS X, and no more requires manual event processing to accept IPC messages
+- Added support for more advanced effects for lua API
+- Fixed sprite warping for NPCs, now there is correctly going from warp generators with any sizes of sprites
+- Fixed inter-processing on Mac OS X and no more requires manual event processing to accept IPC messages
 - All debug keys (such as 1, 2, 3, 4, 5, 7, 8, 9, 0 and F5, F6, F7, F8) are now disabled by default and can be re-enabled with "takesecretkeychain" cheat command
 - Fixed path-opener wired vision bug on the world map
 - Enabled ability to spawn effects on the world map (one effect is spawning a smoke when level or path enabling)
@@ -26,13 +26,13 @@
 - Implemented full support for custom config files for all elements: block-*.ini, background-*.ini, tile-*.ini, scene-*.ini, path-*.ini, level-*.ini
 - Fully implemented support of split configurations for level backgrounds, blocks, BGOs, NPCs, terrain tiles, sceneries, paths and level tiles
 - Resolved a visibility management of the layers and transforming between blocks and NPCs
-- Fixed autoscroll processing (crush, camera moving after playable character's death)
+- Fixed auto-scroll processing (crush, camera moving after playable character's death)
 
 0.2.5.1
 - Fixed custom folder confusion caused with dot-contained file names
-- Added more physical environment zones types, include air chambers for underwater sections
+- Added more physical environment zones types include air chambers for underwater sections
 - Added separated support of portal and instant warps: instant warp will do same as in SMBX, portal warp will teleport character with keeping of kinetic energy
-- Added support of enter event for warps
+- Added support of entering event for warps
 - Added support of two-way directed warps
 - Added support of cannon exit warps
 - Better and stable inter-processing with editor based on stdin/stdout!1
@@ -58,16 +58,16 @@
 - Added experimental translator to have able to retranslated engine too
 - Optimized memory usage and increased performance
 - Now PGE Engine uses FreeImage library to load graphics
-- Finally resolved a troubles with a lazily-made graphics, all masked-gif based graphics are merging via bit-blit algorithm
+- Finally resolved troubles with a lazily-made graphics, all masked-gif based graphics are merging via bit-blit algorithm
 
 0.2.4
-- Working paths system on world map! Now there are closed at episode start, but opens on level passes.
+- Working paths system on the world map! Now there are closed at episode start, but opens on level passes.
 - Fixed bug with auto-spawning of "game over" question on non-zero exit codes
 - Fixed missed font-ID grabbing for live counter on the world map
 - Small reorganization of cheat codes:
   - illparkwhereiwant instead of "i" key
   - redigitiscool to spawn dummy message box
-  - iwishexitas X to exit from a level with specific exit code
+  - iwishexitas X to exit from a level with a specific exit code
 - Contact Detector for NPC-AI (detects elements which are contacted to self NPC and returns pointer to them)
 - Added ability to spawn other NPC's from NPC-AI scripts
 - Working projectile generators!
@@ -90,31 +90,24 @@
 - better V-Sync control
 
 0.2.2.4-alpha (First entry of engine change-log)
-- Experimental engine part which provides ability play SMBX-compatible levels and episodes
-with their configuration packages. Provides partial implementation of SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with ability to code NPC's in LUA.
+- Experimental engine part which provides ability play SMBX-compatible levels and episodes with their configuration packages. Provides a partial implementation of the SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with an ability to code NPC's in LUA.
 - Physics are completely replaced with own coded physical engine
 - Working NPC-AI system with support NPC's coded in the Lua
 - Exits works!
 - Kill effects [are not works perfect, need a lot of work, but there are works fine]
 - Added generators!
-- Player can climb on NPC-based climbable walls, not only on the BGO-based!
+- The player can climb on NPC-based climbable walls, not only on the BGO-based!
 - Fixed a lot of bugs
 - NPC's finally can be spawned from blocks where there are was included!
-- Added support of the layers and basic events! [layers: show, hide, toggle;
-message box; play SFX; trigger another event; auto-scroll speed, changing of limit
-borders per section, toggling section background, toggling section music,
-other event actions are not implemented yet].
-Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer
-[talk is not implemented yet!]
+- Added support for the layers and basic events! [layers: show, hide, toggle; message box; play SFX; trigger another event; auto-scroll speed, changing of limit borders per section, toggling section background, toggling section music, other event actions are not implemented yet]. Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer [talk is not implemented yet!]
 - Fixed random crash caused by lua activation event when camera caught a corpse of NPC
 - Fixed slow performance caused by bad time delay function
 - Player finally can ride on NPC's heads [anyway, is not finished yet]
 - Basic Detectors API for NPC-AI which giving able to catch objects came to specific area
 - Fixed bug with super-fast game loop
 - Stomp-able NPC's are can be stomped!
-- Work with a speed-summing part of physical engine gives ability to stay and ride on the moving objects
+- Work with a speed summing part of physical engine gives the ability to stay and ride on the moving objects
 - Fixed imperfection with auto-closing of message box while "run" or "jump" key are holding
 - Episode/Level lists are no more freezing engine!
-- Working auto scrolling of sections has been implemented! (Unlike SMBX, auto-scroll internally
-is an option of specific section which will works anyway, even you entered into this section from a side,
-you will get auto-scrolling in this section)
+- Working auto scrolling of sections has been implemented! (Unlike SMBX, auto-scroll internally is an option of specific section which will work anyway, even you entered into this section from a side, you will get auto-scrolling in this section)
+

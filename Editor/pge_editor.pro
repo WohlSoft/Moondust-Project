@@ -387,7 +387,8 @@ SOURCES += main.cpp\
     editing/_scenes/world/wld_point_selector.cpp \
     main_window/script/script_luafiles.cpp \
     js_engine/proxies/js_lua_preproc.cpp \
-    main_window/greeting_dialog/greeting_dialog.cpp
+    main_window/greeting_dialog/greeting_dialog.cpp \
+    data_configs/obj_player.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -426,6 +427,7 @@ HEADERS  += defines.h \
     data_configs/obj_bgo.h \
     data_configs/obj_block.h \
     data_configs/obj_npc.h \
+    data_configs/obj_player.h \
     data_configs/obj_tilesets.h \
     data_configs/obj_wld_items.h \
     dev_console/devconsole.h \

@@ -129,18 +129,18 @@ void WorldSettingsBox::setCurrentWorldSettings()
         //ui->WLD_DisableCharacters
 
         //Create absence data
-        if(edit->WldData.nocharacter.size() < mw()->configs.characters.size())
+        if(edit->WldData.nocharacter.size() < mw()->configs.main_characters.size())
         {
-            for(int i=0; i<=mw()->configs.characters.size()-edit->WldData.nocharacter.size(); i++ )
+            for(int i=0; i<=mw()->configs.main_characters.size()-edit->WldData.nocharacter.size(); i++ )
                 edit->WldData.nocharacter.push_back(false);
         }
 
-        for(int i = 0; i < mw()->configs.characters.size(); ++i){
-            QCheckBox* cur = new QCheckBox(mw()->configs.characters[i].name);
+        for(int i = 0; i < mw()->configs.main_characters.size(); ++i){
+            QCheckBox* cur = new QCheckBox(mw()->configs.main_characters[i].name);
             if(i < edit->WldData.nocharacter.size()){
                 cur->setChecked(edit->WldData.nocharacter[i]);
             }
-            WLD_CharacterCheckBoxes[cur] = mw()->configs.characters[i].id;
+            WLD_CharacterCheckBoxes[cur] = mw()->configs.main_characters[i].id;
             connect(cur, SIGNAL(clicked(bool)), this, SLOT(characterActivated(bool)));
             ui->WLD_DisableCharacters->layout()->addWidget(cur);
         }
