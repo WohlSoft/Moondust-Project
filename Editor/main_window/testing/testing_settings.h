@@ -18,6 +18,8 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
+    void reloadStates1(int index);
+    void reloadStates2(int index);
 signals:
     void windowShown();
 

@@ -145,6 +145,7 @@ class ConfStatus
 {
 //Configuration status
 public:
+    static long total_characters;
     static long total_blocks;
     static long total_bgo;
     static long total_bg;

@@ -36,6 +36,7 @@
 #include "obj_bgo.h"
 #include "obj_npc.h"
 #include "obj_BG.h"
+#include "obj_player.h"
 #include "obj_wld_items.h"
 #include "obj_tilesets.h"
 #include "obj_rotation_table.h"
@@ -88,12 +89,6 @@ struct obj_sound
     bool hidden;
 };
 
-struct obj_playable_character
-{
-    unsigned long id;
-    QString name;
-};
-
 struct obj_gridSizes {
     unsigned int general;
     unsigned int block;
@@ -105,10 +100,10 @@ struct obj_gridSizes {
     unsigned int levels;
 };
 
-
 class dataconfigs : public QObject
 {
     Q_OBJECT
+    bool    m_isValid;
 public:
     dataconfigs();
     virtual ~dataconfigs();
@@ -127,7 +122,7 @@ public:
     EngineSetup engine;
 
     //Playable Characters
-    QList<obj_playable_character > characters;
+    QList<obj_player > main_characters;
 
     //Level map items
     PGE_DataArray<obj_BG > main_bg;
@@ -226,6 +221,8 @@ private:
     QString pathPath;
     QString wlvlPath;
 
+    void loadPlayers();
+
     void loadLevelBGO();
     void loadLevelBlocks();
     void loadLevelNPC();
@@ -251,6 +248,7 @@ private:
     inline void closeSection(QSettings* file) { file->endGroup(); }
     void        addError(QString bug, PGE_LogLevel level=PGE_LogLevel::Warning);
 };
+
 
 
 
