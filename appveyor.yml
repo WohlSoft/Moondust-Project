@@ -70,6 +70,8 @@ artifacts:
   - path: bin-w32\_packed\install-pge-editor-dev-win32.zip
   - path: bin-w32\_packed\install-pge-engine-dev-win32.zip #This archive has no built applications (engine disabled to don't excite building timeout)
   - path: bin-w32\_packed\install-pge-tools-dev-win32.zip  #This archive has no built applications (toosl are disabled to don't excite building timeout)
+  - path: bin-w32\_packed\pge-maintainer-dev-win32.zip  #Standalone package of PGE Maintainer (work outside PGE)
+  - path: bin-w32\_packed\pge-musplay-dev-win32.zip     #Standalone package of PGE MusPlay (work outside PGE)
   - path: build_date_dev_win32.txt
 
 deploy:
