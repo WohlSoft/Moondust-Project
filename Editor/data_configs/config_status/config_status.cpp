@@ -25,6 +25,45 @@
 #include <QSysInfo>
 #endif
 
+static void setDirEntry(QTableWidget* w, int row, QString name, QString path)
+{
+    QTableWidgetItem * itemDir;
+    w->insertRow(row);
+
+    itemDir = new QTableWidgetItem(name);
+    w->setItem(row, 0, itemDir);
+
+    itemDir = new QTableWidgetItem(path);
+    itemDir->setToolTip(path);
+    w->setItem(row, 1, itemDir);
+}
+
+static void setRequiredStatusEntry(QListWidget* w, long count, long total, QString status)
+{
+    QListWidgetItem* item = new QListWidgetItem(w);
+    item->setText(status.arg(count).arg(total));
+    if(count == 0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+    else
+    if(count < total)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    w->addItem(item);
+}
+
+static void setOptionalStatusEntry(QListWidget* w, long count, long total, QString status)
+{
+    QListWidgetItem* item = new QListWidgetItem(w);
+    item->setText(status.arg(count));
+    if(count < total)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    w->addItem(item);
+}
+
+
 ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConfigStatus)
@@ -65,215 +104,44 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Create Statistics
     ui->ItemsStatus->clear();
-    QListWidgetItem * item;
 
     ui->ConfigNameLabel->setText(ConfStatus::configName);
     ui->ConfigPathLabel->setText(configs->config_dir);
 
     //Level Blocks
-    item = new QListWidgetItem;
-    item->setText(tr("Level: Blocks (%1/%2)").arg(configs->main_block.stored()).arg(ConfStatus::total_blocks));
-    if(configs->main_block.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_block.stored()<ConfStatus::total_blocks)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_block.stored(),   ConfStatus::total_blocks,   tr("Level: Blocks (%1/%2)"));
     //Level BGO
-    item = new QListWidgetItem;
-    item->setText(tr("Level: Background objects (%1/%2)").arg(configs->main_bgo.stored()).arg(ConfStatus::total_bgo));
-    if(configs->main_bgo.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_bgo.stored()<ConfStatus::total_bgo)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_bgo.stored(),     ConfStatus::total_bgo,      tr("Level: Background objects (%1/%2)"));
     //Level BG
-    item = new QListWidgetItem;
-    item->setText(tr("Level: Background images (%1/%2)").arg(configs->main_bg.stored()).arg(ConfStatus::total_bg));
-    if(configs->main_bg.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_bg.stored()<ConfStatus::total_bg)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_bg.stored(),      ConfStatus::total_bg,       tr("Level: Background images (%1/%2)"));
     //Level NPC
-    item = new QListWidgetItem;
-    item->setText(tr("Level: NPCs (%1/%2)").arg(configs->main_npc.stored()).arg(ConfStatus::total_npc));
-    if(configs->main_npc.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_npc.stored()<ConfStatus::total_npc)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_npc.stored(),     ConfStatus::total_npc,      tr("Level: NPCs (%1/%2)"));
     //MUSIC
-    item = new QListWidgetItem;
-    item->setText(tr("Music (level) (%1/%2)").arg(configs->main_music_lvl.stored()).arg(ConfStatus::total_music_lvl));
-    if(configs->main_music_lvl.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_music_lvl.stored()<ConfStatus::total_music_lvl)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
-    item = new QListWidgetItem;
-    item->setText(tr("Music (world) (%1/%2)").arg(configs->main_music_wld.stored()).arg(ConfStatus::total_music_wld));
-    if(configs->main_music_wld.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_music_wld.stored()<ConfStatus::total_music_wld)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
-    item = new QListWidgetItem;
-    item->setText(tr("Music (special) (%1/%2)").arg(configs->main_music_spc.stored()).arg(ConfStatus::total_music_spc));
-    if(configs->main_music_spc.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_music_spc.stored()<ConfStatus::total_music_spc)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_lvl.stored(), ConfStatus::total_music_lvl, tr("Music (level) (%1/%2)"));
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_wld.stored(), ConfStatus::total_music_wld, tr("Music (world) (%1/%2)"));
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_spc.stored(), ConfStatus::total_music_spc, tr("Music (special) (%1/%2)"));
     //SOUND
-    item = new QListWidgetItem;
-    item->setText(tr("Sounds (%1/%2)").arg(configs->main_sound.stored()).arg(ConfStatus::total_sound));
-    if(configs->main_sound.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_sound.stored()<ConfStatus::total_sound)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_sound.stored(),   ConfStatus::total_sound,    tr("Sounds (%1/%2)"));
     //World map Terrain tiles
-    item = new QListWidgetItem;
-    item->setText(tr("World map: Terrain tiles (%1/%2)").arg(configs->main_wtiles.stored()).arg(ConfStatus::total_wtile));
-    if(configs->main_wtiles.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_wtiles.stored()<ConfStatus::total_wtile)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_wtiles.stored(),  ConfStatus::total_wtile,    tr("World map: Terrain tiles (%1/%2)"));
     //World map Scenery
-    item = new QListWidgetItem;
-    item->setText(tr("World map: Scenery (%1/%2)").arg(configs->main_wscene.stored()).arg(ConfStatus::total_wscene));
-    if(configs->main_wscene.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_wscene.stored()<ConfStatus::total_wscene)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_wscene.stored(),  ConfStatus::total_wscene,   tr("World map: Scenery (%1/%2)"));
     //World Paths
-    item = new QListWidgetItem;
-    item->setText(tr("World map: Path tiles (%1/%2)").arg(configs->main_wpaths.stored()).arg(ConfStatus::total_wpath));
-    if(configs->main_wpaths.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_wpaths.stored()<ConfStatus::total_wpath)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_wpaths.stored(),  ConfStatus::total_wpath,    tr("World map: Path tiles (%1/%2)"));
     //World Levels
-    item = new QListWidgetItem;
-    item->setText(tr("World map: Level entrance tiles (%1/%2)").arg(configs->main_wlevels.stored()).arg(ConfStatus::total_wlvl));
-    if(configs->main_wlevels.stored()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(configs->main_wlevels.stored()<ConfStatus::total_wlvl)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_wlevels.stored(), ConfStatus::total_wlvl,     tr("World map: Level entrance tiles (%1/%2)"));
     //Rotation rules table
-    item = new QListWidgetItem;
-    item->setText(tr("Default rotation rules (%1)").arg(configs->main_rotation_table.size()));
-    if(configs->main_rotation_table.size()==0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
-    else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
-    ui->ItemsStatus->addItem(item);
-
+    setOptionalStatusEntry(ui->ItemsStatus, configs->main_rotation_table.size(), configs->main_rotation_table.size(), tr("Default rotation rules (%1)"));
 
     ////////////////////////DirList/////////////////////////
-    QTableWidgetItem * itemDir;
-    ui->ItemsDirs->insertRow(0);
-        itemDir = new QTableWidgetItem(tr("Level data"));
-        ui->ItemsDirs->setItem(0, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.glevel);
-        ui->ItemsDirs->setItem(0, 1, itemDir);
-    ui->ItemsDirs->insertRow(1);
-        itemDir = new QTableWidgetItem(tr("World data"));
-        ui->ItemsDirs->setItem(1, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.gworld);
-        ui->ItemsDirs->setItem(1, 1, itemDir);
-
-    ui->ItemsDirs->insertRow(2);
-        itemDir = new QTableWidgetItem(tr("Characters"));
-        ui->ItemsDirs->setItem(2, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.gplayble);
-        ui->ItemsDirs->setItem(2, 1, itemDir);
-
-    ui->ItemsDirs->insertRow(3);
-        itemDir = new QTableWidgetItem(tr("Game worlds"));
-        ui->ItemsDirs->setItem(3, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.worlds);
-        ui->ItemsDirs->setItem(3, 1, itemDir);
-
-    ui->ItemsDirs->insertRow(4);
-        itemDir = new QTableWidgetItem(tr("Music"));
-        ui->ItemsDirs->setItem(4, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.music);
-        ui->ItemsDirs->setItem(4, 1, itemDir);
-
-    ui->ItemsDirs->insertRow(5);
-        itemDir = new QTableWidgetItem(tr("Sounds"));
-        ui->ItemsDirs->setItem(5, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.sounds);
-        ui->ItemsDirs->setItem(5, 1, itemDir);
-
-    ui->ItemsDirs->insertRow(6);
-        itemDir = new QTableWidgetItem(tr("Custom data"));
-        ui->ItemsDirs->setItem(6, 0, itemDir);
-
-        itemDir = new QTableWidgetItem(configs->dirs.gcustom);
-        ui->ItemsDirs->setItem(6, 1, itemDir);
+    int row=0;
+    setDirEntry(ui->ItemsDirs, row++, tr("Level data"), configs->dirs.glevel);
+    setDirEntry(ui->ItemsDirs, row++, tr("World data"), configs->dirs.gworld);
+    setDirEntry(ui->ItemsDirs, row++, tr("Characters"), configs->dirs.gplayble);
+    setDirEntry(ui->ItemsDirs, row++, tr("Game worlds"),configs->dirs.worlds);
+    setDirEntry(ui->ItemsDirs, row++, tr("Music"),      configs->dirs.music);
+    setDirEntry(ui->ItemsDirs, row++, tr("Sounds"),     configs->dirs.sounds);
+    setDirEntry(ui->ItemsDirs, row++, tr("Custom data"),configs->dirs.gcustom);
 
     QTableWidgetItem * itemError;
     if(configs->errorsList.isEmpty())
@@ -290,7 +158,9 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         for(long e=0;e<configs->errorsList.size();e++)
         {
             ui->ItemsErrors->insertRow(int(e));
-                itemError = new QTableWidgetItem(configs->errorsList[int(e)]);
+                QString erroText = configs->errorsList[int(e)];
+                itemError = new QTableWidgetItem(erroText);
+                itemError->setToolTip(erroText);
                 ui->ItemsErrors->setItem(int(e), 0, itemError);
         }
 

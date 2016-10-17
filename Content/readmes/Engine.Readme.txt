@@ -79,7 +79,7 @@ S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
     S+Down - destroy blocks under self)
 
 ==============================================
-Engine reserved keys and key combinations
+  Engine reserved keys and key combinations
 ==============================================
 Ctrl+F - Toggle fullscreen mode
 

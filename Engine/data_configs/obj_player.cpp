@@ -159,14 +159,14 @@ bool ConfigManager::loadPlayableCharacters()
         return false;
     }
 
-    QSettings playerset(plr_ini, QSettings::IniFormat);
-    playerset.setIniCodec("UTF-8");
+    QSettings setup(plr_ini, QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
 
     playable_characters.clear();   //Clear old
 
-    playerset.beginGroup("main-characters");
-        players_total = playerset.value("total", "0").toInt();
-    playerset.endGroup();
+    setup.beginGroup("main-characters");
+        players_total = setup.value("total", "0").toInt();
+    setup.endGroup();
 
     if(players_total==0)
     {
@@ -196,38 +196,38 @@ bool ConfigManager::loadPlayableCharacters()
 
             int total_states=0;
 
-            playerset.beginGroup( QString("character-%1").arg(i) );
-                splayer.name = playerset.value("name", QString("player %1").arg(i) ).toString();
+            setup.beginGroup( QString("character-%1").arg(i) );
+                splayer.name = setup.value("name", QString("player %1").arg(i) ).toString();
                 if(splayer.name=="")
                 {
                     addError(QString("Player-%1 Item name isn't defined").arg(i));
                     goto skipPLAYER;
                 }
-                splayer.sprite_folder = playerset.value("sprite-folder", QString("player-%1").arg(i) ).toString();
-                splayer.state_type =  playerset.value("sprite-folder", 0 ).toInt();
-                splayer.matrix_width = playerset.value("matrix-width", 10 ).toInt();
-                splayer.matrix_height = playerset.value("matrix-height", 10 ).toInt();
-                splayer.script =  playerset.value("script-file", "" ).toString();
-                total_states = playerset.value("states-number", 0 ).toInt();
+                splayer.sprite_folder = setup.value("sprite-folder", QString("player-%1").arg(i) ).toString();
+                splayer.state_type =  setup.value("sprite-folder", 0 ).toInt();
+                splayer.matrix_width = setup.value("matrix-width", 10 ).toInt();
+                splayer.matrix_height = setup.value("matrix-height", 10 ).toInt();
+                splayer.script =  setup.value("script-file", "" ).toString();
+                total_states = setup.value("states-number", 0 ).toInt();
                 if(total_states==0)
                 {
                     addError(QString("player-%1 has no states!").arg(i));
                     goto skipPLAYER;
                 }
-                splayer.fail_effect.fill("fail", &playerset);
-                splayer.slide_effect.fill("floor-slide", &playerset);
-            playerset.endGroup();
+                splayer.fail_effect.fill("fail", &setup);
+                splayer.slide_effect.fill("floor-slide", &setup);
+            setup.endGroup();
 
             {//States
                 bool default_duck=false;
                 int floating_max_time=1500;
                 float floating_amplutude=0.8;
-                playerset.beginGroup( QString("character-%1-physics-common").arg(i) );
-                    default_duck =  playerset.value("duck-allow", false ).toBool();
-                    splayer.allowFloating =  playerset.value("allow-floating", false ).toBool();
-                    floating_max_time = playerset.value("floating-max-time", 1500 ).toInt();
-                    floating_amplutude = playerset.value("floating-amplitude", 0.8).toFloat();
-                playerset.endGroup();
+                setup.beginGroup( QString("character-%1-physics-common").arg(i) );
+                    default_duck =  setup.value("duck-allow", false ).toBool();
+                    splayer.allowFloating =  setup.value("allow-floating", false ).toBool();
+                    floating_max_time = setup.value("floating-max-time", 1500 ).toInt();
+                    floating_amplutude = setup.value("floating-amplitude", 0.8).toFloat();
+                setup.endGroup();
 
 
                 //default environment specific physics
@@ -238,12 +238,12 @@ bool ConfigManager::loadPlayableCharacters()
                 splayer.phys_default.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
                 splayer.phys_default.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
 
-                loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Air], QString("character-%1-env-common-air").arg(i));
-                loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Water], QString("character-%1-env-common-water").arg(i));
-                loadPlayerPhysicsSettings(playerset, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-common-quicksand").arg(i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Air], QString("character-%1-env-common-air").arg(i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Water], QString("character-%1-env-common-water").arg(i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-common-quicksand").arg(i));
 
-                playerset.beginGroup( QString("character-%1-world").arg(i) );
-                    imgFile = playerset.value("sprite-name", "").toString();
+                setup.beginGroup( QString("character-%1-world").arg(i) );
+                    imgFile = setup.value("sprite-name", "").toString();
                     splayer.image_wld_n = imgFile;
                     {
                         QString err;
@@ -255,24 +255,24 @@ bool ConfigManager::loadPlayableCharacters()
                         }
                     }
 
-                    splayer.wld_offset_y = playerset.value("offset-y", "0").toInt();
+                    splayer.wld_offset_y = setup.value("offset-y", "0").toInt();
 
-                    splayer.wld_frames = playerset.value("frames-total", "1").toInt();
+                    splayer.wld_frames = setup.value("frames-total", "1").toInt();
                         if(splayer.wld_frames<1) splayer.wld_frames=1;
-                    splayer.wld_framespeed = playerset.value("frame-speed", "128").toInt();
+                    splayer.wld_framespeed = setup.value("frame-speed", "128").toInt();
                         if(splayer.wld_framespeed<1) splayer.wld_framespeed=1;
                     {
                     QStringList frms;
-                            frms = playerset.value("frames-down", "").toString().split(",");
+                            frms = setup.value("frames-down", "").toString().split(",");
                         foreach(QString x, frms) splayer.wld_frames_down.push_back(x.toInt());
-                            frms = playerset.value("frames-right", "").toString().split(",");
+                            frms = setup.value("frames-right", "").toString().split(",");
                         foreach(QString x, frms) splayer.wld_frames_right.push_back(x.toInt());
-                            frms = playerset.value("frames-left", "").toString().split(",");
+                            frms = setup.value("frames-left", "").toString().split(",");
                         foreach(QString x, frms) splayer.wld_frames_left.push_back(x.toInt());
-                            frms = playerset.value("frames-up", "").toString().split(",");
+                            frms = setup.value("frames-up", "").toString().split(",");
                         foreach(QString x, frms) splayer.wld_frames_up.push_back(x.toInt());
                     }
-                playerset.endGroup();
+                setup.endGroup();
 
                 splayer.states.allocateSlots(total_states);
                 for(int j=1;j<=total_states;j++)
@@ -282,8 +282,9 @@ bool ConfigManager::loadPlayableCharacters()
                     pstate.image = NULL;
                     pstate.textureArrayId = 0;
                     pstate.animator_ID = 0;
-                    playerset.beginGroup( QString("character-%1-state-%2").arg(i).arg(j) );
-                        imgFile = playerset.value("sprite-name", "").toString();
+                    setup.beginGroup( QString("character-%1-state-%2").arg(i).arg(j) );
+                        pstate.name = setup.value("name", QString("State %1").arg(j) ).toString();
+                        imgFile = setup.value("sprite-name", "").toString();
                         pstate.image_n = imgFile;
                         {
                             QString err;
@@ -294,15 +295,15 @@ bool ConfigManager::loadPlayableCharacters()
                                 goto skipPLAYER;
                             }
                         }
-                        pstate.duck_allow = playerset.value("duck-allow", default_duck).toBool();
-                        pstate.allow_floating = playerset.value("allow-floating", splayer.allowFloating).toBool();
-                        pstate.floating_max_time  = playerset.value("floating-max-time", floating_max_time).toInt();
-                        pstate.floating_amplitude = playerset.value("floating-amplitude", floating_amplutude).toFloat();
-                        pstate.duck_height = playerset.value("default-duck-height", 30).toInt();
-                        pstate.height = playerset.value("default-height", 54).toInt();
-                        pstate.width = playerset.value("default-width", 24).toInt();
-                        pstate.event_script = playerset.value("events", QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
-                        QString sprite_settings = playerset.value("sprite-settings", QString("%2-%1.ini").arg(i).arg(splayer.sprite_folder)).toString();
+                        pstate.duck_allow = setup.value("duck-allow", default_duck).toBool();
+                        pstate.allow_floating = setup.value("allow-floating", splayer.allowFloating).toBool();
+                        pstate.floating_max_time  = setup.value("floating-max-time", floating_max_time).toInt();
+                        pstate.floating_amplitude = setup.value("floating-amplitude", floating_amplutude).toFloat();
+                        pstate.duck_height = setup.value("default-duck-height", 30).toInt();
+                        pstate.height = setup.value("default-height", 54).toInt();
+                        pstate.width = setup.value("default-width", 24).toInt();
+                        pstate.event_script = setup.value("events", QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
+                        QString sprite_settings = setup.value("sprite-settings", QString("%2-%1.ini").arg(i).arg(splayer.sprite_folder)).toString();
                         pstate.sprite_setup.init(splayer.matrix_width, splayer.matrix_height);
                         if(pstate.sprite_setup.load(config_dir+"characters/"+sprite_settings))
                         {
@@ -310,7 +311,7 @@ bool ConfigManager::loadPlayableCharacters()
                             pstate.height = pstate.sprite_setup.frameHeight;
                             pstate.duck_height = pstate.sprite_setup.frameHeightDuck;
                         }
-                    playerset.endGroup();
+                    setup.endGroup();
 
 
                     pstate.phys.allocateSlots(LVL_PhysEnv::numOfEnvironments);
@@ -318,9 +319,9 @@ bool ConfigManager::loadPlayableCharacters()
                     pstate.phys.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
                     pstate.phys.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
 
-                    loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Air], QString("character-%1-env-%2-air").arg(i).arg(j));
-                    loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Water], QString("character-%1-env-%2-water").arg(i).arg(j));
-                    loadPlayerPhysicsSettings(playerset, pstate.phys[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-%2-quicksand").arg(i).arg(j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Air], QString("character-%1-env-%2-air").arg(i).arg(j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Water], QString("character-%1-env-%2-water").arg(i).arg(j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-%2-quicksand").arg(i).arg(j));
 
                     splayer.states.storeElement(j, pstate);
                 }
@@ -330,11 +331,11 @@ bool ConfigManager::loadPlayableCharacters()
             playable_characters.storeElement(i, splayer);
 
           skipPLAYER:
-          if( playerset.status()!=QSettings::NoError)
+          if( setup.status()!=QSettings::NoError)
           {
-            addError(QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(playerset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
 
-            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(playerset.status()).arg(i),
+            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(setup.status()).arg(i),
                               PGE_MsgBox::msg_error);
             msgBox.exec();
 

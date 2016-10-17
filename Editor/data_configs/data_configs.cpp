@@ -34,35 +34,10 @@
 
 #include "data_configs.h"
 
-long ConfStatus::total_blocks=0;
-long ConfStatus::total_bgo=0;
-long ConfStatus::total_bg=0;
-long ConfStatus::total_npc=0;
-
-long ConfStatus::total_wtile=0;
-long ConfStatus::total_wpath=0;
-long ConfStatus::total_wscene=0;
-long ConfStatus::total_wlvl=0;
-
-long ConfStatus::total_music_lvl=0;
-long ConfStatus::total_music_wld=0;
-long ConfStatus::total_music_spc=0;
-long ConfStatus::total_sound=0;
-
-QString ConfStatus::configName="";
-QString ConfStatus::configPath="";
-
-QString ConfStatus::configDataPath="";
-#ifdef _WIN32
-QString ConfStatus::SmbxEXE_Name="";
-bool    ConfStatus::SmbxTest_By_Default=false;
-#endif
-
-QString ConfStatus::defaultTheme="";
-
-
 dataconfigs::dataconfigs()
 {
+    m_isValid = false;
+
     defaultGrid.general = 0;
     defaultGrid.block = 32;
     defaultGrid.bgo = 32;
@@ -244,6 +219,8 @@ bool dataconfigs::loadconfigs()
 {
     //unsigned long i;//, prgs=0;
 
+    m_isValid = false;
+
     total_data=0;
     defaultGrid.general=0;
     errorsList.clear();
@@ -339,22 +316,7 @@ bool dataconfigs::loadconfigs()
         return false;
     }
 
-
-    characters.clear();
-
     emit progressPartNumber(0);
-
-    mainset.beginGroup("characters");
-        int characters_q = mainset.value("characters", 0).toInt();
-        for(int i=1; i<= characters_q; i++)
-        {
-            obj_playable_character pchar;
-            pchar.id = ulong(i);
-            pchar.name = mainset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
-            characters.push_back(pchar);
-        }
-    mainset.endGroup();
-
 
     LogDebug("Loading some of engine.ini...");
     //Basic settings of engine
@@ -391,6 +353,8 @@ bool dataconfigs::loadconfigs()
 
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
+        LogDebug("Loading of lvl_characters.ini...");
+    loadPlayers();
         LogDebug("Loading of lvl_bkgrd.ini...");
     loadLevelBackgrounds();
         LogDebug("Loading of lvl_bgo.ini...");
@@ -449,6 +413,7 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded BGOs            %1/%2").arg(main_bgo.stored()).arg(ConfStatus::total_bgo));
     LogDebug(QString("Loaded NPCs            %1/%2").arg(main_npc.stored()).arg(ConfStatus::total_npc));
     LogDebug(QString("Loaded Backgrounds     %1/%2").arg(main_bg.stored()).arg(ConfStatus::total_bg));
+    LogDebug(QString("Loaded Pl. Characters  %1/%2").arg(main_characters.size()).arg(ConfStatus::total_bg));
     LogDebug(QString("Loaded Tiles           %1/%2").arg(main_wtiles.stored()).arg(ConfStatus::total_wtile));
     LogDebug(QString("Loaded Sceneries       %1/%2").arg(main_wscene.stored()).arg(ConfStatus::total_wscene));
     LogDebug(QString("Loaded Path images     %1/%2").arg(main_wpaths.stored()).arg(ConfStatus::total_wpath));
@@ -461,6 +426,8 @@ bool dataconfigs::loadconfigs()
     m_recentIniFile.clear();
     m_sectionsCache.clear();
     LogDebug(QString("-------------------------"));
+
+    m_isValid = check();
 
     return true;
 }
@@ -482,7 +449,7 @@ bool dataconfigs::check()
     (main_music_spc.stored()<=0)||
     (main_sound.stored()<=0)||
       !errorsList.isEmpty()
-            );
+            ) && (!m_isValid);
 }
 
 long dataconfigs::getCharacterI(unsigned long itemID)
@@ -490,9 +457,9 @@ long dataconfigs::getCharacterI(unsigned long itemID)
     long j;
     bool found=false;
 
-    for(j=0; j < characters.size(); j++)
+    for(j=0; j < main_characters.size(); j++)
     {
-        if(characters[int(j)].id == itemID)
+        if(main_characters[int(j)].id == itemID)
         {
             found=true;
             break;

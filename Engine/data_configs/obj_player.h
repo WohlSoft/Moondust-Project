@@ -76,26 +76,28 @@ struct obj_player_physics
 
 struct obj_player_state
 {
-    int width;
-    int height;
-   bool duck_allow;
-    int duck_height;
-    bool allow_floating;
-      int floating_max_time;
-    float floating_amplitude;
-    PGE_DataArray<obj_player_physics > phys;
-    QString event_script;//!< LUA-Script with events
+    QString name;
+    int     width;
+    int     height;
+    bool    duck_allow;
+    int     duck_height;
+    bool    allow_floating;
+      int   floating_max_time;
+    float   floating_amplitude;
 
-    obj_player_calibration sprite_setup;
+    PGE_DataArray<obj_player_physics > phys;
+    QString event_script;   //!< LUA-Script with events
+
+    obj_player_calibration  sprite_setup;
 
     QString image_n;
     QString mask_n;
     /*   OpenGL    */
-    bool isInit;
-    PGE_Texture *image;
-    GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
+    bool            isInit;
+    PGE_Texture*    image;
+    GLuint          textureID;
+    long            textureArrayId;
+    long            animator_ID;
     /*   OpenGL    */
 };
 

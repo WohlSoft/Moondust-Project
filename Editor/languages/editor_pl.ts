@@ -149,27 +149,27 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="411"/>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>Domyślny rozmiar przechwytywania ekranu</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="417"/>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Używaj niestandardowego:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="427"/>
         <source>Width:</source>
-        <translation type="unfinished">Szerokość:</translation>
+        <translation>Szerokość:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="453"/>
         <source>Height:</source>
-        <translation type="unfinished">Wysokość:</translation>
+        <translation>Wysokość:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="476"/>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopasuj do rozmiaru okna</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="490"/>
@@ -935,7 +935,7 @@ File path: %3</source>
         <location filename="../common_features/crashhandler.cpp" line="323"/>
         <source>Crashsave</source>
         <comment>Crash-Save - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Zapis Crashu</translation>
+        <translation>Zapis Crashu</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="324"/>
@@ -1264,37 +1264,37 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="14"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Witaj!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="39"/>
         <source>Choose the workspace design you want to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz układ którego chcesz używać</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowoczesny</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasyczny</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
         <source>Modern UI designed for convenient work on screens of various size.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowoczesny wygląd jest stworzony do wygodnej pracy na ekranach o różnych rozmiarach.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>Classic interface will be more similar to editor for legacy engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasyczny interfejs będzie podobny do edytora znanego z poprzenich wersji</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Witaj w PGE Editor!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1305,7 +1305,13 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 toolboxes from toolbars (draggable panels with icons on top side of window) and menus. This editor uses a multi-selection!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Wskazówka 1:&lt;/b&gt;Nadal możesz zmienić wygląd przez menu&lt;u&gt;Pomoc&lt;/u&gt; lub przełączenie wyglądu z menu &lt;u&gt;Wygląd&lt;/u&gt;i przełączenie
+trybu okien i kart z menu&lt;u&gt;Okna&lt;/u&gt; .&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Wskazówka 2:&lt;/b&gt;Większość opcji jest dostępna w menu, które możesz otworzyć klikając prawym przyciskiem myszy,
+pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze możesz używać zaznaczania i kopiowania!&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Wskazówka 3:&lt;/b&gt; Kliknij środkowym przyciskiem myszy aby przełączyć pomiędzy  umieszczaniem zaznaczonych elementów, lub kopiowaniem ich!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1594,12 +1600,12 @@ toolboxes from toolbars (draggable panels with icons on top side of window) and 
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1 z tej sekcji</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="140"/>
@@ -1737,12 +1743,12 @@ toolboxes from toolbars (draggable panels with icons on top side of window) and 
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1 z tej sekcji</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
@@ -1982,7 +1988,7 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="104"/>
@@ -2095,7 +2101,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="133"/>
@@ -2241,12 +2247,12 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="189"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1 z tej sekcji</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
@@ -2329,7 +2335,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="90"/>
@@ -2552,7 +2558,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="88"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="103"/>
@@ -2657,7 +2663,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="202"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="294"/>
         <source>ID (contains)</source>
-        <translation type="unfinished"></translation>
+        <translation>ID (zawiera)</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="122"/>
@@ -2781,7 +2787,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń wszystkie %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="90"/>
@@ -3272,7 +3278,7 @@ Czy chcesz zapisać zmiany?</translation>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="400"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="580"/>
         <source>ID (contains)</source>
-        <translation type="unfinished"></translation>
+        <translation>ID (zawiera)</translation>
     </message>
     <message>
         <source>ID</source>
@@ -3307,14 +3313,14 @@ Czy chcesz zapisać zmiany?</translation>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="523"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="561"/>
         <source>Copy graphic to custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Skopiuj grafikę do folderu</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="486"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="524"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="562"/>
         <source>Copy graphic to episode folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Skopiuj grafikę do folderu epizodu</translation>
     </message>
 </context>
 <context>
@@ -5700,12 +5706,12 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="253"/>
         <source>Set align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw rozmiar siatki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="375"/>
         <source>LunaLUA scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrypty LunaLUA</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="393"/>
@@ -6373,62 +6379,65 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <location filename="../mainwindow.ui" line="2973"/>
         <source>Open local script</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz lokalny skrypt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2976"/>
         <source>Open the level / world map local script. If not exist - file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Optwórz skrypt poziomu / mapy świata. Jeżeli nie istnieje, zostanie stworzony.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2981"/>
         <source>Open episode script</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz folder epizodu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2984"/>
         <source>Open the episode common script. If not exist - file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz skrypt epizodu. Jeśli nie istnieje zostanie stworzony.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2989"/>
         <source>Level local (%1)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>This may be translated incrorrectly, depends on its context</translatorcomment>
+        <translation>Lokalny poziom (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2992"/>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy skrypt dla lokalnego poziomu. Podaj nową nazwę pliku do zastąpienia lunadll.lua</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2997"/>
         <source>Level global (%1)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>This may be translated incrorrectly, depends on its context</translatorcomment>
+        <translation>Globalny poziom (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3000"/>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Globalny skrypt poziomu dla całego epizodu. Podaj nazwę skryptu do zastąpienia lunaworld.lua</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3005"/>
         <source>World map script (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrypt mapy świata (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3008"/>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Globalny skrypt mapy świata. Podaj nazwę skryptu do zastąpienia lunaoverworld.lua</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3013"/>
         <source>Item default</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>This may be translated incrorrectly, depends on its context</translatorcomment>
+        <translation>Domyślny przedmiot</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3018"/>
         <source>Welcome dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiadomość powitalna</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2320"/>
@@ -7245,7 +7254,8 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
         <location filename="../main_window/level/level_sections_mods.cpp" line="230"/>
         <source>Section has been successfully clonned!
 Do you want to clone another section?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekcja została pomyślnie sklonowana!
+Czy chcesz stworzyć klona innej sekcji?</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="249"/>
@@ -7469,86 +7479,88 @@ Ta operacja może być cofnięta przez wciśnięcie Ctrl+Z albo Edycja/Cofnij.</
     <message>
         <location filename="../main_window/script/script_luafiles.cpp" line="40"/>
         <source>File is not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik nie jest zapisany</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_luafiles.cpp" line="41"/>
         <source>Impossible to open/create script file.
 Please save file firtst</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć / stworzyć skryptu.
+Proszę  najpierw zapisać plik</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="178"/>
         <source>Default by item</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>This may be translated incrorrectly, depends on its context</translatorcomment>
+        <translation>Domyślny przedmiot</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="199"/>
         <source>Custom...</source>
-        <translation type="unfinished"></translation>
+        <translation>Niestandardowy...</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="209"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaznaczanie</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="219"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="229"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished">Obiekty</translation>
+        <translation>Obiekty</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="239"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gracz</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="251"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished">Sekcja</translation>
+        <translation>Sekcja</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="260"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished">Ustawienia świata</translation>
+        <translation>Ustawienia świata</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="269"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished">Przejścia i drzwi</translation>
+        <translation>Przejścia i drzwi</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="278"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished">Woda</translation>
+        <translation>Woda</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="290"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcje</translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="77"/>
         <source>Custom align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw niestandardowy rozmiar siatki</translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="78"/>
         <source>Please enter align grid size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podać rozmiar siatki:</translation>
     </message>
 </context>
 <context>

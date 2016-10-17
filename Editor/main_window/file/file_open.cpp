@@ -333,8 +333,8 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         statistics += "\n===========Players:============\n";
         for(int i=0; i<FileData.characterStates.size();i++)
         {
-            if(i<configs.characters.size())
-                statistics += QString("%1:\n").arg(configs.characters[i].name);
+            if(i<configs.main_characters.size())
+                statistics += QString("%1:\n").arg(configs.main_characters[i].name);
             else
                 statistics += QString("<unknown character>:\n");
             statistics += QString("Health: %1,    ").arg(FileData.characterStates[i].health);
