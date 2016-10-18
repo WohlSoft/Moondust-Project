@@ -1,0 +1,10 @@
+playerblocktop=1
+npcblocktop=1
+grabtop=1
+jumphurt=0
+speed=0
+frames=2
+framestyle=2
+name="Ninji (Banzai!!!)"
+image="npc-25.gif"
+script="ninji.lua"
