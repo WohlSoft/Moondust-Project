@@ -42,15 +42,18 @@ QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
        QString tmp=backupName;
        backupName=srcName;
        srcName=tmp;
-    } else if(name.endsWith(".png", Qt::CaseInsensitive)) {
+    }
+    else
+    if(name.endsWith(".png", Qt::CaseInsensitive))
+    {
         backupName=srcName;
         backupName.replace(backupName.size()-3, 3, "gif");
     }
 
     QString target="";
 tryBackup:
-    if((QFile::exists(m_dirCustom) ) &&
-            (QFile::exists(m_dirCustom+"/" + srcName)) )
+    if( (QFile::exists(m_dirCustom) ) &&
+        (QFile::exists(m_dirCustom+"/" + srcName)) )
     {
         target = m_dirCustom+"/"+srcName;
         if(isDefault) *isDefault = false;
