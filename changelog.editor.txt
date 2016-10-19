@@ -13,6 +13,7 @@ Editor 0.3.1.11-patch-1
 - Added item type global grid field in the lvl_blocks, lvl_bgo, lvl_npc, wld_levels, wld_paths, wld_scenery and wld_tiles INIs
 - Added welcome dialog for newbies
 - Get characters information from lvl_characters.ini instead of main.ini!
+- Fixed missed "modified" mark on elements deleting
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
@@ -100,7 +101,7 @@ Editor 0.3.1.3
 - With the updated SDL2_mixer_ext, it is now possible to have looped OGG files (Vorbis tags LOOPSTART and LOOPEND with PCM-sample position are required (you can insert this via Audacity))
 
 Editor 0.3.1.2
-- Fixed a small issue with not reseted NPC parameters on taking new NPC's to place
+- Fixed a small issue with not reset NPC parameters on taking new NPC's to place
 
 Editor 0.3.1.1
 - Added "tip of the day" to bring attention to some useful features in the Editor.
@@ -183,7 +184,7 @@ Editor 0.2.2
 - Added saving of SMBX LVL and WLD formats with selecting of file format version (useful to edit old episodes which made by old SMBX'es with saving of compatibility with them)
 - Added reading of SAV files which show game state statistics in the editor.
 - Better re-sizer boxes, now they are movable and more flexible, added context menu to cut size by any side.
-- Added custom counters which giving able to count any specific item ID's.
+- Added custom counters which giving able to count any specific item IDs.
 - Fixed placement of NPC's to the slopes
 - Added animated splash screens system into the editor
 - Fixed layers and event slots reset bug in the item properties dialog
@@ -318,7 +319,7 @@ Editor 0.0.8
 - History manager: you can undo/redo changes on level map [Not completely finished]
 - Added Clipboard support: you can now copy and paste tiles, NPCs, etc.
 - Added Item Properties window, and with them possible to FULL CONTROL of ALL level items
-- Added BGO wprkaround for placing BGOs in the foreground in legacy engine
+- Added BGO workaround for placing BGOs in the foreground in legacy engine
 - Added Item box and support for placing new items on map
 - Added Layer box: You can create/rename/delete layers, you can move layers in list by clicking and dragging, and you can change visibility of layers
 - Added more protectors: you can violate limits with itemID and if itemID > global array item number, you will see dummy image instead of crashing
@@ -355,7 +356,7 @@ Editor 0.0.7
 - Added support for editing tools: hand scrolling, objects selection, rubber for delete objects
 - Fixed Z-Values in configuration
 - Added "Reload file" option, for re-Open current file, if its data changed outside editor (for example, NPC.txt configs, added/removed/replaced user's sprites)
-This option help with speed-up file saving. As we know, SMBX tries to reload all data of current level file after saving. It makes saving process slow. Real saving from data array into target file is almost instant operation.
+This option help with speed-up file saving. As we know, SMBX tries to reload all data of current level file after saving. It makes the saving process slow. Real saving from data array into target file is almost instant operation.
 - Full support for big backgrounds
 - Added support for correctly aborting of the level loading process
 - Support for hot keys for fast select necessary tools
@@ -396,4 +397,3 @@ Editor 0.0.2
 
 Editor 0.0.1
 - First test version, can only check parsing of LVL files
-
