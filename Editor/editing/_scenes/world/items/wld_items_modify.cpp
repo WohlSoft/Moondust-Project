@@ -308,6 +308,7 @@ void WldScene::placeItemUnderCursor()
     }
     if(wasPlaced)
     {
+        //Mark world map as modified
         m_data->meta.modified = true;
     }
 }
@@ -416,6 +417,9 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
         }
         else
             m_history->addRemoveHistory(historyBuffer);
+
+        //Mark world map as modified
+        m_data->meta.modified = true;
     }
 }
 
