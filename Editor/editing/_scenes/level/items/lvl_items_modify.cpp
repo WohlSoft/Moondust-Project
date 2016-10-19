@@ -533,6 +533,7 @@ void LvlScene::placeItemUnderCursor()
     }
     if(wasPlaced)
     {
+        //Mark level as modified
         m_data->meta.modified = true;
     }
 }
@@ -695,6 +696,8 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
         }
         else
             m_history->addRemove(historyBuffer);
+        //Mark level as modified
+        m_data->meta.modified = true;
     }
 }
 

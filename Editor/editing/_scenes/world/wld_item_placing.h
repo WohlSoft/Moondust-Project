@@ -21,6 +21,8 @@
 #define WLD_ITEM_PLACING_H
 
 #include <QPoint>
+#include <QPair>
+#include <QVariant>
 
 #include <PGE_File_Formats/wld_filedata.h>
 

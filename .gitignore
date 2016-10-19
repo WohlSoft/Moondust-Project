@@ -68,6 +68,8 @@ Pods
 
 *.pro.user
 *.pro.user.*
+*.qbs.user
+*.qbs.user.*
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
