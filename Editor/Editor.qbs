@@ -1,11 +1,42 @@
 import qbs
 import qbs.FileInfo
+import qbs.Process
+
 Product
 {
     type: "application"
     Depends { name: "cpp" }
-    Depends { name: "Qt"; submodules: ["gui", "widgets", "network", "concurrent", "qml"] }
+    Depends {
+        name: "Qt";
+        submodules: ["gui", "widgets", "network", "concurrent", "qml"]
+    }
+    Depends {
+        name: "Qt";
+        submodules: ["winextras"]
+        condition: qbs.targetOS.contains("windows")
+    }
 
+    // Operating system identify
+    Properties{
+        condition: qbs.targetOS.contains("macx")
+        property string destOS: "macos"
+        property string binDir: "bin"
+        property string languageDir: binDir+"/languages"
+    }
+    Properties{
+        condition: qbs.targetOS.contains("linux")
+        property string destOS: "linux"
+        property string binDir: "bin"
+        property string languageDir: binDir+"/languages"
+    }
+    Properties{
+        condition: qbs.targetOS.contains("windows")
+        property string destOS: "win32"
+        property string binDir: "bin-w32"
+        property string languageDir: binDir+"/languages"
+    }
+
+    // Application name
     Properties {
         condition: qbs.targetOS.contains("macx")
         name: "PGE Editor"
@@ -14,28 +45,48 @@ Product
         condition: !qbs.targetOS.contains("macx")
         name: "pge_editor"
     }
+
+    property string  pgeRoot: {
+        var newPath = path;
+        newPath = newPath.substring(0, newPath.lastIndexOf("/"));
+        return newPath;
+    }
+
+    property string GIT_VERSION: {
+        var proc = new Process();
+        proc.exec("git", ["--git-dir", pgeRoot+"/.git", "--work-tree", pgeRoot+"/", "describe", "--always"]);
+        var out = proc.readStdOut();
+        return out.trim();
+    }
+
+    //Common linking properties
     Properties {
         condition: true
         cpp.staticLibraries: ['freeimagelite']
         cpp.cxxLanguageVersion: "c++11"
-        cpp.defines: ['PGE_EDITOR', 'USE_SDL_MIXER', 'PGE_FILES_QT']
+        cpp.defines: ['PGE_EDITOR', 'USE_SDL_MIXER', 'PGE_FILES_QT', 'GIT_VERSION="' + GIT_VERSION + '"']
         cpp.includePaths: [
             path,
-            path + "/../_Libs/_builds/linux/include",
+            path + "/../_Libs/_builds/" + destOS +"/include",
             path + "/../_Libs/SDL2_mixer_modified",
             path + "/_includes",
             path + "/../_Libs",
             path + "/../_common",
         ]
-        cpp.libraryPaths: [ path + "/../_Libs/_builds/linux/lib" ]
+        cpp.libraryPaths: [ path + "/../_Libs/_builds/" + destOS + "/lib" ]
         destinationDirectory: {
-            var newPath = path;// "/bin-fuck/";
-            newPath = newPath.substring(0, newPath.lastIndexOf("/"));
-            newPath += "/bin";
-            console.info("-> TARGET PATH: " + newPath);
+            var newPath = pgeRoot;
+            newPath += "/" + binDir;
+            console.info("-> PGE Editor: " + qbs.buildVariant +
+                         " for " + destOS + "-"+ qbs.architecture +
+                         ", GIT version " + GIT_VERSION +
+                         ", target path: " + newPath
+                         );
             return newPath;
         }
     }
+
+    // Build variant
     Properties {
         condition: qbs.buildVariant == "debug"
         cpp.debugInformation: true
@@ -46,18 +97,27 @@ Product
         cpp.debugInformation: false
         cpp.optimization: "fast"
     }
+
+    //Link libraries
     Properties {
         condition: qbs.targetOS.contains("linux")
         cpp.dynamicLibraries: ['SDL2', 'SDL2_mixer_ext']
+    }
+    Properties {
+        condition: qbs.targetOS.contains("windows")
+        cpp.dynamicLibraries: ['SDL2', 'SDL2_mixer_ext', 'SDL2main', 'version', 'dbghelp', 'winmm']
+        //cpp.staticLibraries: ['pthread']
+        //cpp.cppflags: ['-static-libgcc', '-static-libstdc++']
     }
     Properties {
         condition: qbs.targetOS.contains("macx")
         cpp.includePaths: [ path + '/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers' ]
         cpp.frameworkPaths: [ path + '/../_Libs/_builds/macos/frameworks' ]
         cpp.frameworks: [ 'SDL2' ]
-        //cpp.libraryPaths: [ 'SDL2_mixer_ext' ]
         cpp.dynamicLibraries: ['SDL2_mixer_ext']
     }
+
+    //Install properties
     consoleApplication: false
     Group {     // Properties for the produced executable
         fileTagsFilter: product.type
