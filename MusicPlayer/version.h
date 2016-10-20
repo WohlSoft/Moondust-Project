@@ -23,6 +23,9 @@
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 
+#define IDI_ICON1 30001
+#define IDI_ICON2 30002
+
 //Version of this program
 #define _FILE_VERSION "1.1.0"
 #define _FILE_RELEASE ""

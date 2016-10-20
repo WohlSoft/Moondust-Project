@@ -1,3 +1,4 @@
+#ifndef MUSPLAY_USE_WINAPI
 #include "assoc_files.h"
 #include "ui_assoc_files.h"
 #include <QListWidgetItem>
@@ -157,3 +158,5 @@ void AssocFiles::on_AssocFiles_accepted()
     }
 #endif
 }
+
+#endif

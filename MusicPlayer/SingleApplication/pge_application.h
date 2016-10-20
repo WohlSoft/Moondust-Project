@@ -17,7 +17,7 @@
  */
 
 #pragma once
-#ifndef PGE_EDITORAPPLICATION_H
+#if !defined(PGE_EDITORAPPLICATION_H) && !defined(MUSPLAY_USE_WINAPI)
 #define PGE_EDITORAPPLICATION_H
 
 #include <QApplication>

@@ -95,6 +95,18 @@ static int adlmidi_vibrato      = 1;
 static int adlmidi_scalemod     = 0;
 static int adlmidi_adlibdrums   = 0;
 
+int ADLMIDI_getBanksCount()
+{
+    return adl_getBanksCount();
+}
+
+extern const char* const banknames[];
+const char * const*ADLMIDI_getBankNames()
+{
+    return banknames;
+}
+
+
 int ADLMIDI_getBankID()
 {
     return adlmidi_bank;
@@ -367,4 +379,3 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
 }
 
 #endif
-

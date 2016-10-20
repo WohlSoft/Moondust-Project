@@ -2,31 +2,111 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#ifndef MUSPLAY_USE_WINAPI
 #include <QMainWindow>
 
 #include <QUrl>
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QTimer>
+#else
+#include <windows.h>
+#include "defines.h"
+#endif
 
+#ifndef MUSPLAY_USE_WINAPI
 namespace Ui {
 class MainWindow;
 }
+#endif
 
 /*!
  * \brief Class of main application window
  */
-class MainWindow : public QMainWindow
+class MainWindow
+        #ifndef MUSPLAY_USE_WINAPI
+        : public QMainWindow
+        #endif
 {
+    #ifndef MUSPLAY_USE_WINAPI
     Q_OBJECT
+    #endif
 
 public:
+    #ifndef MUSPLAY_USE_WINAPI
     explicit MainWindow(QWidget *parent = 0);
+    #else
+    enum Commands
+    {
+        CMD_Open=30000,
+        CMD_Play,
+        CMD_Stop,
+        CMD_TrackID,
+        CMD_MidiDevice,
+        CMD_RecordWave,
+        CMD_Bank,
+        CMD_Tremolo,
+        CMD_Vibrato,
+        CMD_AdLibDrums,
+        CMD_ScalableMod,
+        CMD_SetDefault,
+        GRP_GME,
+        GRP_MIDI,
+        GRP_ADLMIDI
+    };
+    static   MainWindow* m_self;
+    static   LRESULT CALLBACK MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    static   LRESULT CALLBACK SubCtrlProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    explicit MainWindow(HINSTANCE hInstance = 0, int nCmdShow = 0);
+
+    WNDCLASSEXW m_wc;
+    HINSTANCE   m_hInstance;
+    HWND        m_hWnd;
+    LPCWSTR     m_MainWndClass;
+
+    HWND        m_buttonOpen;
+    HWND        m_buttonPlay;
+    HWND        m_buttonStop;
+
+    HWND        m_labelTitle;
+    HWND        m_labelArtist;
+    HWND        m_labelAlboom;
+    HWND        m_labelCopyright;
+
+    HWND        m_groupGME;
+    struct GroupGME
+    {
+        HWND    m_labelTrack;
+        HWND    m_trackNum;
+    } m_gme;
+
+    HWND        m_groupMIDI;
+    struct GroupMIDI
+    {
+        HWND    m_labelDevice;
+        HWND    m_midiDevice;
+    } m_midi;
+
+    HWND        m_groupADLMIDI;
+    struct GroupADLMIDI
+    {
+        HWND    m_labelBank;
+        HWND    m_bankID;
+        HWND    m_tremolo;
+        HWND    m_vibrato;
+        HWND    m_adlibDrums;
+        HWND    m_scalableMod;
+        HWND    m_resetToDefault;
+    } m_adlmidi;
+
+    void        exec();
+    #endif
     ~MainWindow();
 
     //! Full path to currently opened music
     QString currentMusic;
 
+#ifndef MUSPLAY_USE_WINAPI
 public slots:
     /*!
      * \brief Drop event, triggers when some object was dropped to main window
@@ -39,6 +119,7 @@ public slots:
      * \param e Event parameters
      */
     void dragEnterEvent(QDragEnterEvent *e);
+#endif
 
     /*!
      * \brief Open music file
@@ -46,7 +127,9 @@ public slots:
      */
     void openMusicByArg(QString musPath);
 
+#ifndef MUSPLAY_USE_WINAPI
 private slots:
+#endif
     /*!
      * \brief Open button click event
      */
@@ -121,22 +204,27 @@ private slots:
      */
     void on_resetDefaultADLMIDI_clicked();
 
+    #ifndef MUSPLAY_USE_WINAPI
     /*!
      * \brief Context menu
      * \param pos Mouse cursor position
      */
     void contextMenu(const QPoint &pos);
-
+    #endif
 
 private:
+    #ifndef MUSPLAY_USE_WINAPI
     //! Controlls blinking of the wav-recording label
     QTimer m_blinker;
+    #endif
     bool   m_blink_state;
 
     int    m_prevTrackID;
 
+    #ifndef MUSPLAY_USE_WINAPI
     //! UI form class pointer
     Ui::MainWindow *ui;
+    #endif
 };
 
 #endif // MAINWINDOW_H
