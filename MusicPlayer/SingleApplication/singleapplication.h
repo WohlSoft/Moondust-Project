@@ -1,5 +1,5 @@
 #pragma once
-#ifndef APPLICATION_H
+#if !defined(APPLICATION_H) && !defined(MUSPLAY_USE_WINAPI)
 #define APPLICATION_H
 
 #include <QObject>

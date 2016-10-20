@@ -17,7 +17,8 @@
  */
 
 #pragma once
-#ifndef LOCALSERVER_H
+
+#if !defined(LOCALSERVER_H) && !defined(MUSPLAY_USE_WINAPI)
 #define LOCALSERVER_H
 
 #include <QThread>

@@ -40,6 +40,8 @@ struct MUSIC_MIDIADL
 };
 
 /*Setup editing functions (changes applying on file reopening)*/
+extern int  ADLMIDI_getBanksCount();
+extern const char * const *ADLMIDI_getBankNames();
 extern int  ADLMIDI_getBankID();
 extern void ADLMIDI_setBankID(int bnk);
 extern int  ADLMIDI_getTremolo();

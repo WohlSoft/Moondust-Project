@@ -4,8 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets network
-QT       -= opengl angle svg dbus opengl winextras
+!usewinapi:{
+    QT  += core gui widgets network
+    QT  -= opengl angle svg dbus opengl winextras
+} else {
+    CONFIG -= qt
+}
 
 QTPLUGIN =
 
@@ -13,7 +17,7 @@ CONFIG += static
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: {
-QMAKE_CXXFLAGS += -static -static-libgcc
+QMAKE_CXXFLAGS += -static -static-libgcc -static-libstdc++ -lpthread
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
@@ -36,10 +40,14 @@ win32:{
     RC_FILE = _resources/musicplayer.rc
 
     LIBS += -L$$PWD/../_Libs/_builds/win32/lib
-    LIBS += -lSDL2main -lversion -lSDL2_mixer_ext
+    LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
-    static: {
-        QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
+    usewinapi:{
+        DEFINES += MUSPLAY_USE_WINAPI
+    } else {
+        static: {
+            QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
+        }
     }
 }
 linux-g++||unix:!macx:!android:{
@@ -98,7 +106,8 @@ HEADERS  += mainwindow.h \
     wave_writer.h \
     AssocFiles/assoc_files.h \
     SingleApplication/pge_application.h \
-    Effects/reverb.h
+    Effects/reverb.h \
+    defines.h
 
 FORMS    += mainwindow.ui \
     AssocFiles/assoc_files.ui

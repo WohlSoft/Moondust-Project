@@ -144,6 +144,8 @@ echo Packing complete archive...
 "%SEVENZIP%\7z" a -tzip "%TarGzArName%" "%PgePrjSD%"
 move ".\%TarGzArName%" "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 
+SET PGEMaintainer=
+SET PGEMusPlay=
 SET PGECommon=
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\*.dll"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\license.txt"
@@ -157,7 +159,33 @@ rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\bearer"
 rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\platforms"
+
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Gui.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Network.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Widgets.dll"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\imageformats"
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\platforms"
+
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Gui.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Network.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Widgets.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\imageformats"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\platforms"
 :noDynamicQt3
+
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\SDL2.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\SDL2_mixer_ext.dll"
+SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
+
+SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\pge_maintainer.exe"
 
 SET PGEEditor=
 SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\changelog.editor.txt"
@@ -185,6 +213,8 @@ echo Packing of Online-Install packages data
 "%SEVENZIP%\7z" a -tzip "install-pge-editor-dev-win32.zip" %PGEEditor%
 "%SEVENZIP%\7z" a -tzip "install-pge-engine-dev-win32.zip" %PGEEngine%
 "%SEVENZIP%\7z" a -tzip "install-pge-tools-dev-win32.zip" %PGETools%
+"%SEVENZIP%\7z" a -tzip "pge-musplay-dev-win32.zip" %PGEMusPlay%
+"%SEVENZIP%\7z" a -tzip "pge-maintainer-dev-win32.zip" %PGEMaintainer%
 move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
 
 PATH=%OldPATH%

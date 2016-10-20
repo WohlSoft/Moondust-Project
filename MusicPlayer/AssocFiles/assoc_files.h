@@ -1,5 +1,6 @@
 #pragma once
-#ifndef ASSOC_FILES_H
+
+#if !defined(ASSOC_FILES_H) && !defined(MUSPLAY_USE_WINAPI)
 #define ASSOC_FILES_H
 
 #include <QDialog>
@@ -20,11 +21,8 @@ public:
 
 private slots:
     void on_AssocFiles_accepted();
-
     void on_selectAll_clicked();
-
     void on_clear_clicked();
-
     void on_reset_clicked();
 
 private:

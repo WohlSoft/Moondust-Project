@@ -28,6 +28,7 @@ PGE_JsEngine::PGE_JsEngine(QObject *parent) :
     QFile bootFile(":/plugin/plugin/main_boot.js");
     bool openResult = bootFile.open(QIODevice::ReadOnly | QIODevice::Text);
     assert(openResult); // This file must open!
+    Q_UNUSED(openResult);
 
     QTextStream bootFileStream(&bootFile);
     bootFileStream.setCodec("UTF-8");

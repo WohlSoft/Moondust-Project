@@ -1330,7 +1330,7 @@ void RTREE_QUAL::LoadNodes(Node* a_nodeA, Node* a_nodeB, PartitionVars* a_parVar
 
     // It is assured that AddBranch here will not cause a node split. 
     bool nodeWasSplit = AddBranch(&a_parVars->m_branchBuf[index], targetNodes[targetNodeIndex], NULL);
-    ASSERT(!nodeWasSplit);
+    ASSERT(!nodeWasSplit); (void)(nodeWasSplit);
   }
 }
 

@@ -1,9 +1,12 @@
 #include "mainwindow.h"
+#ifndef MUSPLAY_USE_WINAPI
 #include "ui_mainwindow.h"
+#endif
 #include "AssocFiles/assoc_files.h"
 #include "Effects/reverb.h"
 #include <math.h>
 
+#ifndef MUSPLAY_USE_WINAPI
 #include <QtDebug>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -11,6 +14,12 @@
 #include <QMenu>
 #include <QDesktopServices>
 #include <QUrl>
+#define DebugLog(msg) qDebug() << msg;
+#else
+#define DebugLog(msg)
+#include <assert.h>
+#include <windows.h>
+#endif
 
 #include "version.h"
 
@@ -20,6 +29,17 @@
 #undef main
 
 #include "wave_writer.h"
+
+#ifdef MUSPLAY_USE_WINAPI
+std::string Wstr2Str(const std::wstring &in)
+{
+    std::string out;
+    out.resize(in.size()*2);
+    int res = WideCharToMultiByte(CP_UTF8, 0, (wchar_t*)in.c_str(), in.size(), (char*)out.c_str(), out.size(), 0, 0);
+    out.resize(res);
+    return out;
+}
+#endif
 
 /*!
  *  SDL Mixer wrapper
@@ -52,7 +72,11 @@ namespace PGE_MusicPlayer
      */
     static void error(QString msg)
     {
+        #ifndef MUSPLAY_USE_WINAPI
         QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
+        #else
+        MessageBoxA(NULL, msg.c_str(), "SDL2 Mixer ext error", MB_OK|MB_ICONWARNING);
+        #endif
     }
 
     /*!
@@ -63,6 +87,7 @@ namespace PGE_MusicPlayer
         Mix_HaltMusic();
     }
 
+    #ifndef MUSPLAY_USE_WINAPI
     /*!
      * \brief Get music title of current track
      * \return music title of current music file
@@ -110,6 +135,55 @@ namespace PGE_MusicPlayer
         else
             return QString("");
     }
+    #else
+    /*!
+     * \brief Get music title of current track
+     * \return music title of current music file
+     */
+    const char* MUS_getMusTitle()
+    {
+        if(play_mus)
+            return Mix_GetMusicTitle(play_mus);
+        else
+            return "[No music]";
+    }
+
+    /*!
+     * \brief Get music artist tag text of current music track
+     * \return music artist tag text of current music track
+     */
+    const char* MUS_getMusArtist()
+    {
+        if(play_mus)
+            return Mix_GetMusicArtistTag(play_mus);
+        else
+            return "[Unknown Artist]";
+    }
+
+    /*!
+     * \brief Get music album tag text of current music track
+     * \return music ablum tag text of current music track
+     */
+    const char* MUS_getMusAlbum()
+    {
+        if(play_mus)
+            return Mix_GetMusicAlbumTag(play_mus);
+        else
+            return "[Unknown Album]";
+    }
+
+    /*!
+     * \brief Get music copyright tag text of current music track
+     * \return music copyright tag text of current music track
+     */
+    const char* MUS_getMusCopy()
+    {
+        if(play_mus)
+            return Mix_GetMusicCopyrightTag(play_mus);
+        else
+            return "";
+    }
+    #endif
 
     /*!
      * \brief Start playing of currently opened music track
@@ -120,14 +194,14 @@ namespace PGE_MusicPlayer
         {
             if(Mix_PlayMusic(play_mus, -1)==-1)
             {
-                error(QString("Mix_PlayMusic: %1").arg(Mix_GetError()));
+                error(QString("Mix_PlayMusic: ") + Mix_GetError());
                 // well, there's no music, but most games don't break without music...
             }
             //QString("Music is %1\n").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
         {
-            error(QString("Play nothing: Mix_PlayMusic: %1").arg(Mix_GetError()));
+            error(QString("Play nothing: Mix_PlayMusic: ") + Mix_GetError());
         }
         //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
     }
@@ -139,7 +213,7 @@ namespace PGE_MusicPlayer
     void MUS_changeVolume(int volume)
     {
         Mix_VolumeMusic(volume);
-        qDebug() << QString("Mix_VolumeMusic: %1\n").arg(volume);
+        DebugLog(QString("Mix_VolumeMusic: %1\n").arg(volume));
     }
 
     /*!
@@ -151,13 +225,17 @@ namespace PGE_MusicPlayer
     {
         type = MUS_NONE;
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
+        #ifndef MUSPLAY_USE_WINAPI
         play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
+        #else
+        play_mus = Mix_LoadMUS( musFile.c_str() );
+        #endif
         if(!play_mus) {
-            error(QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError()));
+            error(QString("Mix_LoadMUS(\"" + QString(musFile) + "\"): ") + Mix_GetError());
             return false;
         }
         type = Mix_GetMusicType( play_mus );
-        qDebug() << QString("Music type: %1").arg( musicType() );
+        DebugLog(QString("Music type: %1").arg( musicType() ));
         return true;
     }
 
@@ -176,7 +254,11 @@ namespace PGE_MusicPlayer
         if(!play_mus) return;
 
         /* Record 20 seconds to wave file */
+        #ifndef MUSPLAY_USE_WINAPI
         wave_open( 44100, target.toLocal8Bit().data() );
+        #else
+        wave_open( 44100, target.c_str() );
+        #endif
         wave_enable_stereo();
         Mix_SetPostMix(myMusicPlayer, NULL);
         wavOpened=true;
@@ -192,7 +274,7 @@ namespace PGE_MusicPlayer
 
 }
 
-
+#ifndef MUSPLAY_USE_WINAPI
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -204,6 +286,15 @@ MainWindow::MainWindow(QWidget *parent) :
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_musplay.ico"));
     #endif
+
+    ui->fmbank->clear();
+    int totalBakns = MIX_ADLMIDI_getTotalBanks();
+    const char*const* names = MIX_ADLMIDI_getBankNames();
+    for(int i=0; i<totalBakns; i++)
+    {
+        ui->fmbank->addItem(QString("%1 = %2").arg(i).arg(names[i]));
+    }
+
     ui->adlmidi_xtra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
@@ -216,9 +307,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->window()->resize(100, 100);
     this->connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
     this->connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
-    m_blink_state=false;
-
-    m_prevTrackID = ui->trackID->value();
 
     QApplication::setOrganizationName(_COMPANY);
     QApplication::setOrganizationDomain(_PGE_URL);
@@ -252,13 +340,432 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
     MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
     ui->volume->setValue(setup.value("Volume", 128).toInt());
+
+    m_prevTrackID = ui->trackID->value();
+#else
+
+MainWindow* MainWindow::m_self = nullptr;
+
+LRESULT MainWindow::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+        case WM_COMMAND:
+        {
+            switch(HIWORD(wParam))
+            {
+                case BN_CLICKED:
+                {
+                    switch( LOWORD(wParam) )
+                    {
+                    case CMD_Open:
+                        m_self->on_open_clicked();
+                        return 0;
+                    case CMD_Play:
+                        m_self->on_play_clicked();
+                        return 0;
+                    case CMD_Stop:
+                        m_self->on_stop_clicked();
+                        return 0;
+                    case CMD_SetDefault:
+                        m_self->on_resetDefaultADLMIDI_clicked();
+                        return 0;
+                    default:
+                        break;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        case WM_DROPFILES:
+        {
+            HDROP hDropInfo = (HDROP)wParam;
+            wchar_t sItem[MAX_PATH];
+            memset(sItem, 0, MAX_PATH*sizeof(wchar_t));
+            if(DragQueryFileW(hDropInfo, 0, (LPWSTR)sItem, sizeof(sItem)))
+            {
+                m_self->openMusicByArg(Wstr2Str(sItem));
+            }
+            DragFinish(hDropInfo);
+            return 0;
+        }
+        //Инфо о минимальном и максимальном размере окна
+        case WM_GETMINMAXINFO:
+        {
+            MINMAXINFO *minMax = (MINMAXINFO*)lParam;
+            minMax->ptMinTrackSize.x = 350;
+            minMax->ptMinTrackSize.y = 380;
+            return 0;
+        }
+        case WM_CREATE:
+        {
+            return 0;
+        }
+        //Окно было закрыто
+        case WM_DESTROY:
+        {
+            PostQuitMessage(0);
+            return 0;
+        }
+    }
+    return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+
+LRESULT MainWindow::SubCtrlProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    static WNDPROC OrigBtnProc = reinterpret_cast<WNDPROC>(static_cast<LONG_PTR>(GetWindowLongPtr(hWnd, GWLP_USERDATA)));
+    switch (msg)
+    {
+        case WM_COMMAND:
+        {
+            switch( LOWORD(wParam) )
+            {
+            case CMD_MidiDevice:
+            {
+                switch(HIWORD(wParam))
+                {
+                    case CBN_SELCHANGE:
+                    {
+                        LRESULT index = SendMessageW(m_self->m_midi.m_midiDevice, CB_GETCURSEL, 0, 0);
+                        if(index != CB_ERR)
+                            m_self->on_mididevice_currentIndexChanged(index);
+                        goto defaultWndProc;
+                    }
+                    break;
+                    default:
+                    break;
+                }
+                goto defaultWndProc;
+            }
+            case CMD_Bank:
+            {
+                switch(HIWORD(wParam))
+                {
+                    case CBN_SELCHANGE:
+                    {
+                        LRESULT index = SendMessageW(m_self->m_adlmidi.m_bankID, CB_GETCURSEL, 0, 0);
+                        if(index != CB_ERR)
+                            m_self->on_fmbank_currentIndexChanged(index);
+                        goto defaultWndProc;
+                    }
+                    break;
+                    default:
+                    break;
+                }
+                goto defaultWndProc;
+            }
+            case CMD_Tremolo:
+            {
+                BOOL checked = IsDlgButtonChecked(hWnd, CMD_Tremolo);
+                if (checked)
+                {
+                    CheckDlgButton(hWnd, CMD_Tremolo, BST_UNCHECKED);
+                    m_self->on_tremolo_clicked(false);
+                } else {
+                    CheckDlgButton(hWnd, CMD_Tremolo, BST_CHECKED);
+                    m_self->on_tremolo_clicked(true);
+                }
+                goto defaultWndProc;
+            }
+            case CMD_Vibrato:
+            {
+                BOOL checked = IsDlgButtonChecked(hWnd, CMD_Vibrato);
+                if (checked)
+                {
+                    CheckDlgButton(hWnd, CMD_Vibrato, BST_UNCHECKED);
+                    m_self->on_vibrato_clicked(false);
+                } else {
+                    CheckDlgButton(hWnd, CMD_Vibrato, BST_CHECKED);
+                    m_self->on_vibrato_clicked(true);
+                }
+                goto defaultWndProc;
+            }
+            case CMD_ScalableMod:
+            {
+                BOOL checked = IsDlgButtonChecked(hWnd, CMD_ScalableMod);
+                if (checked)
+                {
+                    CheckDlgButton(hWnd, CMD_ScalableMod, BST_UNCHECKED);
+                    m_self->on_modulation_clicked(false);
+                } else {
+                    CheckDlgButton(hWnd, CMD_ScalableMod, BST_CHECKED);
+                    m_self->on_modulation_clicked(true);
+                }
+                goto defaultWndProc;
+            }
+            case CMD_AdLibDrums:
+            {
+                BOOL checked = IsDlgButtonChecked(hWnd, CMD_AdLibDrums);
+                if (checked)
+                {
+                    CheckDlgButton(hWnd, CMD_AdLibDrums, BST_UNCHECKED);
+                    m_self->on_adlibMode_clicked(false);
+                } else {
+                    CheckDlgButton(hWnd, CMD_AdLibDrums, BST_CHECKED);
+                    m_self->on_adlibMode_clicked(true);
+                }
+                goto defaultWndProc;
+            }
+            default:
+                break;
+            }
+        }
+    }
+
+defaultWndProc:
+    return CallWindowProc(OrigBtnProc, hWnd, msg, wParam, lParam);
+}
+
+MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
+{
+    assert(!MainWindow::m_self && "Multiple instances of MainWindow are Forbidden! It's singleton!");
+    MainWindow::m_self = this;
+    m_MainWndClass = L"PGEMusPlayer";
+    m_hInstance = hInstance;
+
+    // Class for our main window.
+    memset(&m_wc, 0, sizeof(m_wc));
+    m_wc.cbSize        = sizeof(m_wc);
+    m_wc.style         = 0;
+    m_wc.lpfnWndProc   = &MainWindow::MainWndProc;
+    m_wc.cbClsExtra    = 0;
+    m_wc.cbWndExtra    = 0;
+    m_wc.hInstance     = hInstance;
+    m_wc.hIcon         = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 0, 0,
+                                         LR_DEFAULTSIZE | LR_DEFAULTCOLOR | LR_SHARED);
+    m_wc.hCursor       = (HCURSOR) LoadImage(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+    m_wc.hbrBackground = (HBRUSH) (COLOR_BTNFACE+1);
+    m_wc.lpszMenuName  = NULL;
+    m_wc.lpszClassName = m_MainWndClass;
+    m_wc.hIconSm       = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON,
+                                            GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON),
+                                            LR_DEFAULTCOLOR | LR_SHARED);
+
+    // Register our window classes, or error.
+    if(!RegisterClassExW(&m_wc))
+    {
+        MessageBoxA(NULL, "Error registering window class.", "Error", MB_ICONERROR | MB_OK);
+        return;
+    }
+
+    // Create instance of main window.
+    m_hWnd = CreateWindowExW(WS_EX_ACCEPTFILES,
+                             m_MainWndClass,
+                             m_MainWndClass,
+                             WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,
+                             CW_USEDEFAULT,
+                             CW_USEDEFAULT,
+                             320, 220, NULL, NULL, hInstance, NULL);
+
+    HFONT hFont = CreateFontW(-11, 0, 0, 0, FW_NORMAL, FALSE, FALSE,
+                               0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+                               CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+                               DEFAULT_PITCH | FF_SWISS, L"Tahoma");
+    HFONT hFontBold = CreateFontW(-11, 0, 0, 0, FW_BOLD, FALSE, FALSE,
+                               0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+                               CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+                               DEFAULT_PITCH | FF_SWISS, L"Tahoma");
+    int left = 5;
+    int top = 10;
+
+    HWND hText = CreateWindowExW(0, L"STATIC", L"Press \"Open\" or drag&&drop music file into this window",
+                                WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                left, top, 400, 15,
+                                m_hWnd, NULL, hInstance, NULL);
+    top += 25;
+
+    m_labelTitle = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                left, top, 400, 15,
+                                m_hWnd, NULL, hInstance, NULL);
+    top += 15;
+    m_labelArtist = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                left, top, 400, 15,
+                                m_hWnd, NULL, hInstance, NULL);
+    top += 15;
+    m_labelAlboom = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                left, top, 400, 15,
+                                m_hWnd, NULL, hInstance, NULL);
+    top += 15;
+    m_labelCopyright = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                left, top, 400, 15,
+                                m_hWnd, NULL, hInstance, NULL);
+    top += 15;
+
+
+    m_buttonOpen = CreateWindowExW(0, L"BUTTON", L"Open", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+                                left, top, 60, 21, m_hWnd,
+                                (HMENU)CMD_Open, // Here is the ID of your button ( You may use your own ID )
+                                hInstance, NULL);
+    left += 60;
+
+    m_buttonPlay = CreateWindowExW(0, L"BUTTON", L"Play/Pause", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+                                left, top, 60, 21, m_hWnd,
+                                (HMENU)CMD_Play, // Here is the ID of your button ( You may use your own ID )
+                                hInstance, NULL);
+    left += 60;
+
+    m_buttonStop = CreateWindowExW(0, L"BUTTON", L"Stop", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+                                left, top, 60, 21, m_hWnd,
+                                (HMENU)CMD_Stop, // Here is the ID of your button ( You may use your own ID )
+                                hInstance, NULL);
+    left = 5;
+    top += 21;
+
+    WNDPROC OldBtnProc;
+
+    m_groupGME = CreateWindowExW(0, L"BUTTON", L"Game Music Emulators setup", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+                                left, top, 330, 50, m_hWnd, (HMENU)GRP_GME, hInstance, NULL);
+    SendMessageW(m_groupGME, WM_SETFONT, (WPARAM)hFont, 0);
+    OldBtnProc = reinterpret_cast<WNDPROC>(static_cast<LONG_PTR>(
+                 SetWindowLongPtr(m_groupGME, GWLP_WNDPROC,
+                 reinterpret_cast<LONG_PTR>(MainWindow::SubCtrlProc))) );
+    SetWindowLongPtr(m_groupGME, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(OldBtnProc));
+
+    top += 50;
+
+    m_gme.m_labelTrack = CreateWindowExW(0, L"STATIC", L"Track number:", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                10, 20, 70, 15,
+                                 m_groupGME, NULL, hInstance, NULL);
+    SendMessageW(m_gme.m_labelTrack, WM_SETFONT, (WPARAM)hFont, 0);
+
+
+
+
+    m_groupMIDI = CreateWindowExW(0, L"BUTTON", L"MIDI Setup", WS_VISIBLE|WS_CHILD|BS_GROUPBOX|WS_GROUP,
+                                left, top, 330, 50,
+                                m_hWnd, (HMENU)GRP_MIDI, hInstance, NULL);
+    SendMessageW(m_groupMIDI, WM_SETFONT, (WPARAM)hFont, 0);
+
+    OldBtnProc = reinterpret_cast<WNDPROC>(static_cast<LONG_PTR>(
+                 SetWindowLongPtr(m_groupMIDI, GWLP_WNDPROC,
+                 reinterpret_cast<LONG_PTR>(MainWindow::SubCtrlProc))) );
+    SetWindowLongPtr(m_groupMIDI, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(OldBtnProc));
+
+    top += 50;
+
+    m_midi.m_labelDevice = CreateWindowExW(0, L"STATIC", L"MIDI Device:", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                10, 20, 70, 15,
+                                m_groupMIDI, NULL, hInstance, NULL);
+    SendMessageW(m_midi.m_labelDevice, WM_SETFONT, (WPARAM)hFont, 0);
+
+    const wchar_t* midiDevices[] = {
+        L"ADL Midi (OPL Synth emulation)",
+        L"Timidity (GUS-like wavetable MIDI Synth)",
+        L"Native midi (Built-in MIDI of your OS)"
+    };
+    m_midi.m_midiDevice = CreateWindowExW(0, L"COMBOBOX", L"MidiDevice", WS_VISIBLE|WS_CHILD|CBS_DROPDOWNLIST|WS_TABSTOP,
+                                              80, 17, 240, 210, m_groupMIDI, (HMENU)CMD_MidiDevice, hInstance, NULL);
+    SendMessageW(m_midi.m_midiDevice, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_midi.m_midiDevice, CB_ADDSTRING, 0, (LPARAM)midiDevices[0]);
+    SendMessageW(m_midi.m_midiDevice, CB_ADDSTRING, 0, (LPARAM)midiDevices[1]);
+    SendMessageW(m_midi.m_midiDevice, CB_ADDSTRING, 0, (LPARAM)midiDevices[2]);
+    SendMessageW(m_midi.m_midiDevice, CB_SETCURSEL, 0, 0);
+
+    m_groupADLMIDI = CreateWindowExW(0, L"BUTTON", L"ADLMIDI Extra Setup", WS_VISIBLE|WS_CHILD|BS_GROUPBOX|WS_GROUP,
+                                left, top, 330, 125,
+                                m_hWnd, (HMENU)GRP_ADLMIDI, hInstance, NULL);
+    SendMessageW(m_groupADLMIDI, WM_SETFONT, (WPARAM)hFont, 0);
+    top += 50;
+
+    OldBtnProc=reinterpret_cast<WNDPROC>(static_cast<LONG_PTR>(
+                 SetWindowLongPtr(m_groupADLMIDI, GWLP_WNDPROC,
+                 reinterpret_cast<LONG_PTR>(MainWindow::SubCtrlProc))) );
+    SetWindowLongPtr(m_groupADLMIDI, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(OldBtnProc));
+
+
+    m_adlmidi.m_labelBank = CreateWindowExW(0, L"STATIC", L"ADL Midi bank ID:", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                10, 20, 70, 15,
+                                m_groupADLMIDI, NULL, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_labelBank, WM_SETFONT, (WPARAM)hFont, 0);
+
+    m_adlmidi.m_bankID = CreateWindowExW(0, L"COMBOBOX", L"BankId", WS_VISIBLE|WS_CHILD|CBS_DROPDOWNLIST|CBS_DISABLENOSCROLL|WS_VSCROLL|CBS_NOINTEGRALHEIGHT|WS_TABSTOP,
+                                              80, 17, 240, 210, m_groupADLMIDI, (HMENU)CMD_Bank, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_bankID, WM_SETFONT, (WPARAM)hFont, 0);
+    int insCount            = MIX_ADLMIDI_getTotalBanks();
+    const char*const* names = MIX_ADLMIDI_getBankNames();
+    for(int i=0; i<insCount; i++)
+    {
+        SendMessageA(m_adlmidi.m_bankID, CB_ADDSTRING, 0, (LPARAM)names[i]);
+    }
+    SendMessageW(m_adlmidi.m_bankID, CB_SETCURSEL, 58, 0);
+
+
+    m_adlmidi.m_tremolo = CreateWindowExW(0, L"BUTTON", L"Deep tremolo", WS_VISIBLE|WS_CHILD|SS_LEFT|BS_CHECKBOX,
+                                          10, 40, 200, 15,
+                                          m_groupADLMIDI, (HMENU)CMD_Tremolo, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_tremolo, WM_SETFONT, (WPARAM)hFont, 0);
+    CheckDlgButton(m_groupADLMIDI, CMD_Tremolo, BST_CHECKED);
+
+    m_adlmidi.m_vibrato = CreateWindowExW(0, L"BUTTON", L"Deep vibrato", WS_VISIBLE|WS_CHILD|SS_LEFT|BS_CHECKBOX,
+                                          10, 60, 200, 15,
+                                          m_groupADLMIDI, (HMENU)CMD_Vibrato, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_vibrato, WM_SETFONT, (WPARAM)hFont, 0);
+    CheckDlgButton(m_groupADLMIDI, CMD_Vibrato, BST_CHECKED);
+
+    m_adlmidi.m_scalableMod = CreateWindowExW(0, L"BUTTON", L"Scalable modulation", WS_VISIBLE|WS_CHILD|SS_LEFT|BS_CHECKBOX,
+                                          10, 80, 200, 15,
+                                          m_groupADLMIDI, (HMENU)CMD_ScalableMod, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_scalableMod, WM_SETFONT, (WPARAM)hFont, 0);
+    CheckDlgButton(m_groupADLMIDI, CMD_ScalableMod, BST_UNCHECKED);
+
+    m_adlmidi.m_adlibDrums = CreateWindowExW(0, L"BUTTON", L"AdLib drums mode", WS_VISIBLE|WS_CHILD|SS_LEFT|BS_CHECKBOX,
+                                          10, 100, 200, 15,
+                                          m_groupADLMIDI, (HMENU)CMD_AdLibDrums, hInstance, NULL);
+    SendMessageW(m_adlmidi.m_adlibDrums, WM_SETFONT, (WPARAM)hFont, 0);
+    CheckDlgButton(m_groupADLMIDI, CMD_AdLibDrums, BST_UNCHECKED);
+
+
+
+
+
+    SendMessageW(m_hWnd, WM_SETFONT, (WPARAM)hFont, 0);
+
+    SendMessageW(m_buttonOpen, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_buttonPlay, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_buttonStop, WM_SETFONT, (WPARAM)hFont, 0);
+
+    SendMessageW(hText, WM_SETFONT, (WPARAM)hFontBold, 0);
+
+    SendMessageW(m_labelTitle, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_labelArtist, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_labelAlboom, WM_SETFONT, (WPARAM)hFont, 0);
+    SendMessageW(m_labelCopyright, WM_SETFONT, (WPARAM)hFont, 0);
+
+    SetWindowTextW(m_hWnd, L"Simple SDL2 Mixer X Music player [WinAPI-based]");
+
+    // Show window and force a paint.
+    ShowWindow(m_hWnd, nCmdShow);
+    UpdateWindow(m_hWnd);
+
+#endif
+    m_blink_state=false;
+    m_prevTrackID = 0;
+}
+
+#ifdef MUSPLAY_USE_WINAPI
+void MainWindow::exec()
+{
+    MSG msg;
+
+    // Main message loop.
+    while(GetMessage(&msg, NULL, 0, 0) > 0)
+    {
+        if (!TranslateAccelerator(msg.hwnd, NULL, &msg))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+}
+#endif
 
 MainWindow::~MainWindow()
 {
     on_stop_clicked();
     Mix_CloseAudio();
 
+    #ifndef MUSPLAY_USE_WINAPI
     QSettings setup;
     setup.setValue("Window-Geometry", saveGeometry());
     setup.setValue("MIDI-Device", ui->mididevice->currentIndex());
@@ -268,28 +775,35 @@ MainWindow::~MainWindow()
     setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
     setup.setValue("Volume", ui->volume->value());
-
     delete ui;
+    #else
+    MainWindow::m_self = nullptr;
+    #endif
 }
 
-
+#ifndef MUSPLAY_USE_WINAPI
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 {
     if (e->mimeData()->hasUrls()) {
         e->acceptProposedAction();
     }
 }
+#endif
 
 void MainWindow::openMusicByArg(QString musPath)
 {
+    #ifndef MUSPLAY_USE_WINAPI
     if(ui->recordWav->isChecked()) return;
-
+    #endif
     currentMusic=musPath;
+    #ifndef MUSPLAY_USE_WINAPI
     ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
+    #endif
     Mix_HaltMusic();
     on_play_clicked();
 }
 
+#ifndef MUSPLAY_USE_WINAPI
 void MainWindow::dropEvent(QDropEvent *e)
 {
     this->raise();
@@ -309,14 +823,38 @@ void MainWindow::dropEvent(QDropEvent *e)
     this->raise();
     e->accept();
 }
+#endif
 
 void MainWindow::on_open_clicked()
 {
+    #ifndef MUSPLAY_USE_WINAPI
     QString file = QFileDialog::getOpenFileName(this, tr("Open music file"),
                                                  (currentMusic.isEmpty() ? QApplication::applicationDirPath() : currentMusic), "All (*.*)");
     if(file.isEmpty()) return;
     currentMusic=file;
     ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
+    #else
+    OPENFILENAMEW open;
+    memset(&open, 0, sizeof(open));
+
+    wchar_t flnm[MAX_PATH];
+    flnm[0]=L'\0';
+    open.lStructSize = sizeof(OPENFILENAMEW);
+    open.hInstance = m_hInstance;
+    open.hwndOwner = m_hWnd;
+    open.lpstrFilter = L"All files (*.*)\0*.*";
+    open.lpstrDefExt = L"\0";
+    open.lpstrFile = flnm;
+    open.nMaxFile = MAX_PATH;
+    open.lpstrTitle = L"Open music file to play...";
+    open.Flags = OFN_FILEMUSTEXIST;
+    if(GetOpenFileNameW(&open)==TRUE)
+    {
+        currentMusic = Wstr2Str(open.lpstrFile);
+    } else {
+        return;
+    }
+    #endif
     Mix_HaltMusic();
     on_play_clicked();
 }
@@ -324,6 +862,7 @@ void MainWindow::on_open_clicked()
 void MainWindow::on_stop_clicked()
 {
     PGE_MusicPlayer::MUS_stopMusic();
+    #ifndef MUSPLAY_USE_WINAPI
     ui->play->setText(tr("Play"));
     if(ui->recordWav->isChecked())
     {
@@ -335,6 +874,7 @@ void MainWindow::on_stop_clicked()
         m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
+    #endif
 }
 
 void MainWindow::on_play_clicked()
@@ -344,25 +884,43 @@ void MainWindow::on_play_clicked()
         if(Mix_PausedMusic())
         {
             Mix_ResumeMusic();
+            #ifndef MUSPLAY_USE_WINAPI
             ui->play->setText(tr("Pause"));
+            #endif
             return;
         }
         else
         {
             Mix_PauseMusic();
+            #ifndef MUSPLAY_USE_WINAPI
             ui->play->setText(tr("Resume"));
+            #endif
             return;
         }
     }
 
+    #ifndef MUSPLAY_USE_WINAPI
     ui->play->setText(tr("Play"));
     m_prevTrackID = ui->trackID->value();
-    if(PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text()))
+    #else
+    if(currentMusic.empty())
+        return;
+    #endif
+    if(PGE_MusicPlayer::MUS_openFile(currentMusic
+                                     #ifndef MUSPLAY_USE_WINAPI
+                                     +"|"+ui->trackID->text()
+                                     #endif
+                                     ) )
     {
+        #ifndef MUSPLAY_USE_WINAPI
         PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
+        #endif
         PGE_MusicPlayer::MUS_playMusic();
+        #ifndef MUSPLAY_USE_WINAPI
         ui->play->setText(tr("Pause"));
+        #endif
     }
+    #ifndef MUSPLAY_USE_WINAPI
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
     ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
     ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
@@ -394,31 +952,48 @@ void MainWindow::on_play_clicked()
     }
     this->window()->updateGeometry();
     this->window()->resize(100,100);
+    #else
+    SetWindowTextA(m_labelTitle,        PGE_MusicPlayer::MUS_getMusTitle());
+    SetWindowTextA(m_labelArtist,       PGE_MusicPlayer::MUS_getMusArtist());
+    SetWindowTextA(m_labelAlboom,       PGE_MusicPlayer::MUS_getMusAlbum());
+    SetWindowTextA(m_labelCopyright,    PGE_MusicPlayer::MUS_getMusCopy());
+    #endif
 }
 
 void MainWindow::on_mididevice_currentIndexChanged(int index)
 {
+    #ifndef MUSPLAY_USE_WINAPI
     ui->midi_setup->setVisible(false);
     ui->adlmidi_xtra->setVisible(false);
     this->window()->resize(100,100);
     ui->midi_setup->setVisible(true);
+    #endif
     switch(index)
     {
         case 0: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        #ifndef MUSPLAY_USE_WINAPI
         ui->adlmidi_xtra->setVisible(true);
+        #endif
         break;
         case 1: MIX_SetMidiDevice(MIDI_Timidity);
+        #ifndef MUSPLAY_USE_WINAPI
         ui->adlmidi_xtra->setVisible(false);
+        #endif
         break;
         case 2: MIX_SetMidiDevice(MIDI_Native);
+        #ifndef MUSPLAY_USE_WINAPI
         ui->adlmidi_xtra->setVisible(false);
+        #endif
         break;
         default: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        #ifndef MUSPLAY_USE_WINAPI
         ui->adlmidi_xtra->setVisible(true);
+        #endif
         break;
     }
+    #ifndef MUSPLAY_USE_WINAPI
     this->window()->resize(100,100);
-
+    #endif
     if(Mix_PlayingMusic())
     {
         if(PGE_MusicPlayer::type==MUS_MID)
@@ -427,6 +1002,7 @@ void MainWindow::on_mididevice_currentIndexChanged(int index)
             on_play_clicked();
         }
     }
+
 }
 
 void MainWindow::on_fmbank_currentIndexChanged(int index)
@@ -466,16 +1042,19 @@ void MainWindow::on_trackID_editingFinished()
 {
     if(Mix_PlayingMusic())
     {
+        #ifndef MUSPLAY_USE_WINAPI
         if( (PGE_MusicPlayer::type == MUS_SPC) && (m_prevTrackID != ui->trackID->value()) )
         {
             Mix_HaltMusic();
             on_play_clicked();
         }
+        #endif
     }
 }
 
 void MainWindow::on_recordWav_clicked(bool checked)
 {
+    #ifndef MUSPLAY_USE_WINAPI
     if(checked)
     {
         PGE_MusicPlayer::MUS_stopMusic();
@@ -497,19 +1076,23 @@ void MainWindow::on_recordWav_clicked(bool checked)
         m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
+    #endif
 }
 
 void MainWindow::_blink_red()
 {
     m_blink_state=!m_blink_state;
+    #ifndef MUSPLAY_USE_WINAPI
     if(m_blink_state)
         ui->recordWav->setStyleSheet("background-color : red; color : black;");
     else
         ui->recordWav->setStyleSheet("background-color : black; color : red;");
+    #endif
 }
 
 void MainWindow::on_resetDefaultADLMIDI_clicked()
 {
+    #ifndef MUSPLAY_USE_WINAPI
     ui->fmbank->setCurrentIndex( 58 );
     ui->tremolo->setChecked(true);
     ui->vibrato->setChecked(true);
@@ -522,6 +1105,7 @@ void MainWindow::on_resetDefaultADLMIDI_clicked()
     MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
 
     on_fmbank_currentIndexChanged( ui->fmbank->currentIndex() );
+    #endif
 }
 
 void MainWindow::on_volume_valueChanged(int value)
@@ -529,6 +1113,7 @@ void MainWindow::on_volume_valueChanged(int value)
     PGE_MusicPlayer::MUS_changeVolume(value);
 }
 
+#ifndef MUSPLAY_USE_WINAPI
 void MainWindow::contextMenu(const QPoint &pos)
 {
     QMenu x;
@@ -584,3 +1169,4 @@ void MainWindow::contextMenu(const QPoint &pos)
         QDesktopServices::openUrl(QUrl("https://github.com/Wohlhabend-Networks/PGE-Project"));
     }
 }
+#endif

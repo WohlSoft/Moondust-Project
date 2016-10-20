@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef MUSPLAY_USE_WINAPI
+
 #include <QFile>
 #include <QStringList>
 #include <QtDebug>
@@ -188,3 +190,5 @@ void LocalServer::onCMD(QString data)
     else
         emit acceptedCommand(data);
 }
+
+#endif

@@ -2,7 +2,7 @@ Most of features are available on the <b>toolbars</b> and in the menus on top of
 <h3>Level</h3>
 <ul>
 <li><b><img src="qrc://images/section.png"/>Section settings</b> allows You to resize sections, As well as set music, background and properties</li>
-<li><b><img src="qrc://images/level.png"/>Item toolbox</b> provides a completed list of available to place elements with category/group and search filters</li>
+<li><b><img src="qrc://images/level.png"/>Item toolbox</b> provides a complete list of available to place elements with category/group and search filters</li>
 <li><b><img src="qrc://images/tileset_box.png"/>Tileset item box</b> provides a convenient, customizable and flexible item set. <i>If you prefer SMBX's Item Box, use this item box instead of regular item box!</i></li>
 <li><b><img src="qrc://doors.png"/>Warps and Doors</b> provides management of warp entries to connect different level areas.</li>
 <li><b><img src="qrc://layers.png"/>Layers</b> manages Layers which allows group item manipulation with events or scripts</li>
@@ -20,7 +20,7 @@ Most of features are available on the <b>toolbars</b> and in the menus on top of
 
 <hr>
 Use <b>context menu</b> to get access to properties of target item or selected item group.<br><br>
-Are you don't know what is a context menu? Context menu is a menu which pop-ups when you press a right (left for lefthander) mouse button.
+Didn't you know what is a context menu? The context menu is a menu which pop-ups when you press right (left for lefthander) mouse button.
 
 <hr>
 When you can't find your actual section or some zone on huge map, you can quickly return back to <img src="qrc://images/goto_left_top.png"/>left-top or <img src="qrc://images/goto_left_bottom.png"/>left-bottom of level section or to 0-0 position on the world map.
@@ -29,7 +29,7 @@ When you can't find your actual section or some zone on huge map, you can quickl
 <b><img src="qrc://images/bookmarks.png"/>Position bookmarks</b> is a good friend which remembers your screen position where you can quickly return back later.
 
 <hr>
-Do you remember the <a href="http://www.youtube.com/watch?v=d6qbuY6VVCY">bug with placing vines in SMBX</a>? You can clean-up your level from junk NPCs caused by this bug by the menu item:<br>
+Do you remember the <a href="http://www.youtube.com/watch?v=d6qbuY6VVCY">bug with placing vines in the SMBX Editor</a>? You can clean-up your level from junk NPCs caused by this bug by the menu item:<br>
 <b>Tools -&gt;Custom data -&gt;Remove NPC garbage...</b>
 
 <hr>
@@ -41,8 +41,8 @@ To export part of level or world map screen you can press <b>F12</b> key or open
 <b>Note:</b> To export entire level section you need to open <b>File -&gt; Export section to image...</b> menu item.
 
 <hr>
-Do you hear your musics playing too fast or plays buggy?<br>
-Be sure that your musics have a sample rate of 44100. If you hear that music plays too fast or buggy - your music file has a non-44100 hz sample rate. You can quickly fix your music file with the menu item:
+Do you hear your music playing too fast or plays buggy?<br>
+Be sure that your music has a sample rate of 44100. If you hear that music plays too fast or buggy - your music files are has a non-44100 Hz sample rate. You can quickly fix your music file with the menu item:
 <b>Tools -&gt;External tools -&gt;Convert audio (SoX)...</b>
 
 <hr>
@@ -50,35 +50,48 @@ You can use middle mouse button for advanced convenience!<br>
 <ul>
 <li>If no selected elements on a map, you will toggle into hand-drag mode</li>
 <li>If selected one element, you will switch "placing new" mode of same element</li>
-<li>If selected multiple elements, there are will be duplicated to current mouse position relative to left-top corner of selection area</li>
+<li>If selected multiple elements, they are will be duplicated to current mouse position relative to left-top corner of selection area</li>
 </ul>
 
 <hr>
 You have the <img src="qrc://images/overwrite.png"/><b>Overwrite mode</b> which allows you to place new elements over existing ones with removing of them. An icon will appear on the toolbar when you will pick up an item to place.
 
 <hr>
-Did you know that layers and events in a list are movable? Drag items in the list to change order of them!
+Did you know that Layers and Events in a list are movable? Drag items in the list to change the order of them!
 
 <hr>
-Are your custom images are semi-transparent? That may be happened if your custom images are have non Black & White mask or just having a lazily-made mask.<br>
+Are your custom images are semi-transparent? That may have happened if your custom images have a non-Black & White mask or just having a lazily-made mask.
 To quickly fix them you can try:
 <ul>
-<li>Run <b>Tools -&gt;Custom data -&gt;Fix wrong masks...</b> menuitem when you have opened level or world map with broken graphics</li>
-<li>Try to enable <b>View -&gt; Enable GFX-Fix</b> flag in the editor and reload your level with F5 key.</li>
+<li>Run <b>Tools -&gt;Custom data -&gt;Fix wrong masks...</b> menu item when you have opened level or world map with broken graphics, then reload your level with F8 key.</li>
 </ul>
 In next time use PNG2GIFs tool to create SMBX specific images instead of lazily-made sprites usage.
 
 <hr>
-You have a placement tools which you can find on the toolbar:<br>
+You have placement tools which you can find on the toolbar:<br>
 <ul>
-<li><b><img src="qrc://images/square_fill.png"/>Rectangle</b> allows to place bunch of items by rectangles drawing.</li>
 <li><b><img src="qrc://images/line_fill.png"/>Line</b> allows to place bunch of items by line drawing. Useful to draw columns, slopes, bridges, walls, gates, etc.</li>
+<li><b><img src="qrc://images/square_fill.png"/>Rectangle</b> allows to place bunch of items by rectangle drawing.</li>
+<li><b><img src="qrc://images/circle_fill.png"/>Circle</b> allows to place bunch of items by ellipse drawing.</li>
 <li><b><img src="qrc://images/flood_fill.png"/>Flood-fill</b> allows filling of a closed zone. Don't worry if you will fill outer space, you can undo your mistake with <u>Ctrl+Z</u> key combo</li>
 </ul>
 <b>Note:</b> Those buttons are will be available when you will pick up an item to place.
 
 <hr>
 If you want to place elements more accurate, you can <b><img src="qrc://images/zoom_in.png">zoom in</b> and disable grid aligning with toggling of <b><img src="qrc://images/grid.png">Snap to grid</b> switch.<br>
-Use mouse wheel and holden Alt key to zoom in or zoom out.
+Use mouse wheel and held Alt key to zoom in or zoom out.
 
+<hr>
+If you want to use legacy engine for level testing on the Windows platform,<br>
+use <b><img src="qrc:/lunalua.ico" width="24" height="24"/>LunaTester</b> utility which you can find in the <u>Test</u> menu.<br>
+<br>
+To take it working, you must have:
+<ul>
+  <li>Latets LunaLUA minimum requirement is <u>0.7.3.1</u></li>
+  <li>Integration configuration package with configured path to folder of legacy engine</li>
+</ul>
 
+<hr>
+Didn't you know that you can override size of grid alignment?<br>
+You can set any necessary size of grid in the <b>View -&gt;Set align grid size</b> menu.<br><br>
+<i><u>Don't forget to set <b>"Default by item"</b> to use default grid size of every element!</u></i>

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if !defined(MUSPLAY_USE_WINAPI)
 #include <QtDebug>
 
 #include "singleapplication.h"
@@ -175,3 +176,4 @@ void SingleApplication::slotAcceptedCommand(QString cmd)
     emit acceptedCommand(cmd);
 }
 
+#endif

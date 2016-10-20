@@ -2443,6 +2443,17 @@ void SDLCALLCC MIX_Timidity_addToPathList(const char *path)
 
 
 /* ADLMIDI Setup functions */
+
+int    SDLCALLCC  MIX_ADLMIDI_getTotalBanks()
+{
+    return ADLMIDI_getBanksCount();
+}
+
+const char* const*SDLCALLCC  MIX_ADLMIDI_getBankNames()
+{
+    return ADLMIDI_getBankNames();
+}
+
 int SDLCALLCC MIX_ADLMIDI_getBankID()
 {
     #ifdef USE_ADL_MIDI
