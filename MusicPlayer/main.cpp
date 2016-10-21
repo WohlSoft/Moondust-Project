@@ -40,8 +40,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     (void)(lpCmdLine);
     INITCOMMONCONTROLSEX icc;
     // Initialise common controls.
-    icc.dwSize = sizeof(icc);
-    icc.dwICC = ICC_WIN95_CLASSES;
+    icc.dwSize  = sizeof(icc);
+    icc.dwICC   = ICC_WIN95_CLASSES;
     InitCommonControlsEx(&icc);
 #endif
 
@@ -66,11 +66,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     #endif
     #endif
 
-    if(SDL_Init(SDL_INIT_AUDIO)==-1)
-        error(SDL_GetError());
+    if(SDL_Init(SDL_INIT_AUDIO) ==-1 )
+        error(QString("Failed to initialize audio: ") + SDL_GetError());
 
     if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MODPLUG )==-1)
-        error(Mix_GetError());
+        error(QString("Failed to initialize mixer: ") + Mix_GetError());
 
     #ifndef MUSPLAY_USE_WINAPI
     qDebug() << QString(a.applicationDirPath()+"/timidity/");
@@ -79,8 +79,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     MIX_Timidity_addToPathList("./timidity/");
     #endif
 
-    if(Mix_OpenAudio(44100, AUDIO_S16, 2, 4096)==-1)
-        error(Mix_GetError());
+    if(Mix_OpenAudio(44100, AUDIO_S16, 2, 4096) == -1)
+        error(QString("Failed to open audio stream: ") + Mix_GetError());
 
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
     MIX_SetLockMIDIArgs(1);

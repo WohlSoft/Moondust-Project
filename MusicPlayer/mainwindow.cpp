@@ -19,6 +19,7 @@
 #define DebugLog(msg)
 #include <assert.h>
 #include <windows.h>
+#include <commctrl.h>
 #endif
 
 #include "version.h"
@@ -50,9 +51,9 @@ namespace PGE_MusicPlayer
     Mix_MusicType type  = MUS_NONE;
     bool reverbEnabled = false;
 
-    QString musicType()
+    const char* musicTypeC()
     {
-        return QString(
+        return (
         type == MUS_NONE?"No Music":
         type == MUS_CMD?"CMD":
         type == MUS_WAV?"PCM Wave":
@@ -64,6 +65,10 @@ namespace PGE_MusicPlayer
         type == MUS_MP3_MAD?"MP3 (LibMAD)":
         type == MUS_FLAC?"FLAC":
         type == MUS_SPC?"Game Music Emulator": "<Unknown>" );
+    }
+    QString musicType()
+    {
+        return QString( musicTypeC() );
     }
 
     /*!
@@ -224,7 +229,7 @@ namespace PGE_MusicPlayer
     bool MUS_openFile(QString musFile)
     {
         type = MUS_NONE;
-        if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
+        if(play_mus != NULL) { Mix_FreeMusic(play_mus); play_mus=NULL; }
         #ifndef MUSPLAY_USE_WINAPI
         play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
         #else
@@ -350,6 +355,30 @@ LRESULT MainWindow::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 {
     switch (msg)
     {
+        case WM_HSCROLL:
+        {
+            if(m_self->m_volume == (HWND)lParam)
+            {
+                switch(LOWORD(wParam))
+                {
+                case TB_ENDTRACK:
+                case TB_THUMBPOSITION:
+                case TB_THUMBTRACK:
+                case SB_LEFT:
+                case SB_RIGHT:
+                    DWORD dwPos;// current position of slider
+                    dwPos = SendMessageW(m_self->m_volume, TBM_GETPOS, 0, 0);
+                    SendMessageW(m_self->m_volume, TBM_SETPOS,
+                                (WPARAM)TRUE,               //redraw flag
+                                (LPARAM)dwPos);
+                    m_self->on_volume_valueChanged(dwPos);
+                    return 0;
+                default:
+                    break;
+                }
+            }
+            break;
+        }
         case WM_COMMAND:
         {
             switch(HIWORD(wParam))
@@ -609,6 +638,26 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
                                 left, top, 60, 21, m_hWnd,
                                 (HMENU)CMD_Stop, // Here is the ID of your button ( You may use your own ID )
                                 hInstance, NULL);
+
+    left += 60;
+    m_volume    = CreateWindowExW(0, TRACKBAR_CLASS, L"Volume", WS_TABSTOP|WS_VISIBLE|WS_CHILD,
+                                  left, top-2, 80, 25, m_hWnd,
+                                  (HMENU)CMD_Volume, // Here is the ID of your button ( You may use your own ID )
+                                  hInstance, NULL);
+    SendMessageW(m_volume, TBM_SETRANGE,
+                (WPARAM)TRUE,               //redraw flag
+                (LPARAM)MAKELONG(0, 128));  //min. & max. positions
+    SendMessageW(m_volume, TBM_SETPOS,
+                (WPARAM)TRUE,               //redraw flag
+                (LPARAM)128);
+    SendMessageW(m_volume, WM_SETFONT, (WPARAM)hFont, 0);
+    left += 80;
+
+    m_formatInfo = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                   left, top, 200, 15,
+                                   m_hWnd, NULL, hInstance, NULL);
+    SendMessageW(m_formatInfo, WM_SETFONT, (WPARAM)hFont, 0);
+
     left = 5;
     top += 21;
 
@@ -622,12 +671,34 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
                  reinterpret_cast<LONG_PTR>(MainWindow::SubCtrlProc))) );
     SetWindowLongPtr(m_groupGME, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(OldBtnProc));
 
-    top += 50;
-
     m_gme.m_labelTrack = CreateWindowExW(0, L"STATIC", L"Track number:", WS_CHILD | WS_VISIBLE | SS_LEFT,
                                 10, 20, 70, 15,
                                  m_groupGME, NULL, hInstance, NULL);
     SendMessageW(m_gme.m_labelTrack, WM_SETFONT, (WPARAM)hFont, 0);
+
+    m_gme.m_trackNum = CreateWindowExW(0, L"EDIT", L"ED_RED",
+                                    WS_CHILD|WS_VISIBLE|WS_TABSTOP|ES_LEFT|WS_BORDER,
+                                    80, 20, 240, 20,
+                                    m_groupGME, (HMENU)(CMD_TrackID),
+                                    hInstance, NULL);
+    SendMessageW(m_gme.m_trackNum, WM_SETFONT, (WPARAM)hFont, 0);
+    // with a spin control to its right side
+    m_gme.m_trackNumUpDown = CreateWindowExW(0, UPDOWN_CLASS, L"SP_RED",
+                                            WS_CHILD | WS_VISIBLE | WS_TABSTOP
+                                            | UDS_WRAP | UDS_ARROWKEYS | UDS_ALIGNRIGHT
+                                            | UDS_SETBUDDYINT | WS_BORDER,
+                                            80, 20, 240, 20,
+                                            m_groupGME, (HMENU)(CMD_TrackIDspin), hInstance, NULL);
+    SendMessageW(m_gme.m_trackNumUpDown, WM_SETFONT, (WPARAM)hFont, 0);
+
+    // Set the buddy control.
+    SendMessage(m_gme.m_trackNumUpDown, UDM_SETBUDDY, (LONG)m_gme.m_trackNum, 0L);
+    // Set the range.
+    SendMessage(m_gme.m_trackNumUpDown, UDM_SETRANGE, 0L, MAKELONG(32000, 0) );
+    // Set the initial value
+    SendMessage(m_gme.m_trackNumUpDown, UDM_SETPOS, 0L, MAKELONG((int)(0), 0));
+
+    //SendMessage(m_gme.m_trackNumUpDown, UDS_WRAP, 0L, FALSE);
 
 
 
@@ -666,7 +737,7 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
                                 left, top, 330, 125,
                                 m_hWnd, (HMENU)GRP_ADLMIDI, hInstance, NULL);
     SendMessageW(m_groupADLMIDI, WM_SETFONT, (WPARAM)hFont, 0);
-    top += 50;
+    //top += 50;
 
     OldBtnProc=reinterpret_cast<WNDPROC>(static_cast<LONG_PTR>(
                  SetWindowLongPtr(m_groupADLMIDI, GWLP_WNDPROC,
@@ -716,7 +787,9 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
     CheckDlgButton(m_groupADLMIDI, CMD_AdLibDrums, BST_UNCHECKED);
 
 
-
+    ShowWindow(m_groupGME, SW_HIDE);
+    ShowWindow(m_groupMIDI, SW_HIDE);
+    ShowWindow(m_groupADLMIDI, SW_HIDE);
 
 
     SendMessageW(m_hWnd, WM_SETFONT, (WPARAM)hFont, 0);
@@ -953,10 +1026,26 @@ void MainWindow::on_play_clicked()
     this->window()->updateGeometry();
     this->window()->resize(100,100);
     #else
+    ShowWindow(m_groupGME, SW_HIDE);
+    ShowWindow(m_groupMIDI, SW_HIDE);
+    ShowWindow(m_groupADLMIDI, SW_HIDE);
+    switch(PGE_MusicPlayer::type)
+    {
+        case MUS_MID:
+            ShowWindow(m_groupMIDI,     SW_SHOW);
+            ShowWindow(m_groupADLMIDI,  SW_SHOW);
+            break;
+        case MUS_SPC:
+            ShowWindow(m_groupGME,  SW_SHOW);
+            break;
+        default:
+            break;
+    }
     SetWindowTextA(m_labelTitle,        PGE_MusicPlayer::MUS_getMusTitle());
     SetWindowTextA(m_labelArtist,       PGE_MusicPlayer::MUS_getMusArtist());
     SetWindowTextA(m_labelAlboom,       PGE_MusicPlayer::MUS_getMusAlbum());
     SetWindowTextA(m_labelCopyright,    PGE_MusicPlayer::MUS_getMusCopy());
+    SetWindowTextA(m_formatInfo,        PGE_MusicPlayer::musicTypeC());
     #endif
 }
 

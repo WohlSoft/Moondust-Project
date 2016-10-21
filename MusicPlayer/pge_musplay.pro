@@ -40,11 +40,15 @@ win32:{
     RC_FILE = _resources/musicplayer.rc
 
     LIBS += -L$$PWD/../_Libs/_builds/win32/lib
-    LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     usewinapi:{
         DEFINES += MUSPLAY_USE_WINAPI
+        LIBS += -static -static-libgcc -static-libstdc++ -static -lpthread \
+                -lSDL2 -lSDL_Mixer_Xstatic -lSDL2main \
+                -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a \
+                -lwinmm -lole32 -limm32 -lversion -loleaut32 -luuid -lcomctl32 -mwindows
     } else {
+        LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
         static: {
             QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
         }
@@ -85,7 +89,9 @@ macx:{
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 } else {
-    LIBS += -lSDL2 -lSDL2_mixer_ext
+    !usewinapi:{
+        LIBS += -lSDL2 -lSDL2_mixer_ext
+    }
 }
 
 
