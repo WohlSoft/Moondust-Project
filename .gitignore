@@ -40,6 +40,7 @@ _Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.la
 _Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.a
 _Libs/_builds/win32/lib/libSDL2MixerVB.la
 _Libs/_builds/win32/lib/libSDL2MixerVB.a
+_Libs/_builds/win32/lib/libSDL_Mixer_Xstatic.a
 _Libs/_builds/win32/share
 
 _Libs/.qmake.stash

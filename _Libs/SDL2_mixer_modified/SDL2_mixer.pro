@@ -1,8 +1,13 @@
 TEMPLATE = lib
 CONFIG -= app_bundle
 CONFIG -= qt
-CONFIG += dll
-CONFIG -= static
+static-sdlmixer:{
+    CONFIG -= dll
+    CONFIG += static
+} else {
+    CONFIG += dll
+    CONFIG -= static
+}
 
 QMAKE_CFLAGS += -std=c99
 
@@ -28,10 +33,14 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 }
 
 include ($$PWD/../../_common/lib_destdir.pri)
-TARGET = SDL2_mixer_ext
 
-win32:enable-stdcalls:{ #Required for building a VB6-compatible version
-    TARGET = SDL2MixerVB
+static-sdlmixer:{
+    TARGET = SDL_Mixer_Xstatic
+} else {
+    TARGET = SDL2_mixer_ext
+    win32:enable-stdcalls:{ #Required for building a VB6-compatible version
+        TARGET = SDL2MixerVB
+    }
 }
 
 include($$PWD/../../_common/build_props.pri)

@@ -41,7 +41,9 @@ public:
         CMD_Open=30000,
         CMD_Play,
         CMD_Stop,
+        CMD_Volume,
         CMD_TrackID,
+        CMD_TrackIDspin,
         CMD_MidiDevice,
         CMD_RecordWave,
         CMD_Bank,
@@ -68,6 +70,9 @@ public:
     HWND        m_buttonPlay;
     HWND        m_buttonStop;
 
+    HWND        m_volume;
+    HWND        m_formatInfo;
+
     HWND        m_labelTitle;
     HWND        m_labelArtist;
     HWND        m_labelAlboom;
@@ -78,6 +83,7 @@ public:
     {
         HWND    m_labelTrack;
         HWND    m_trackNum;
+        HWND    m_trackNumUpDown;
     } m_gme;
 
     HWND        m_groupMIDI;
