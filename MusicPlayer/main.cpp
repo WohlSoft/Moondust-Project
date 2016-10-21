@@ -1,24 +1,20 @@
-#include "mainwindow.h"
-#ifndef MUSPLAY_USE_WINAPI
-#include <QApplication>
-#else
-#include <windows.h>
-#include <commctrl.h>
-#include "defines.h"
-#endif
-
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer_ext.h>
 
-#include "SingleApplication/singleapplication.h"
-#include "SingleApplication/pge_application.h"
-
 #ifndef MUSPLAY_USE_WINAPI
+#include <QApplication>
 #include <QtDebug>
 #include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
+#include "SingleApplication/singleapplication.h"
+#include "SingleApplication/pge_application.h"
+#include "MainWindow/musplayer_qt.h"
+#else
+#include <windows.h>
+#include "defines.h"
+#include "MainWindow/musplayer_winapi.h"
 #endif
 
 static void error(QString msg)
@@ -33,25 +29,19 @@ static void error(QString msg)
 #ifndef MUSPLAY_USE_WINAPI
 int main(int argc, char *argv[])
 {
+
 #else
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     (void)(hPrevInstance);
     (void)(lpCmdLine);
-    INITCOMMONCONTROLSEX icc;
-    // Initialise common controls.
-    icc.dwSize  = sizeof(icc);
-    icc.dwICC   = ICC_WIN95_CLASSES;
-    InitCommonControlsEx(&icc);
 #endif
 
-    #ifndef MUSPLAY_USE_WINAPI
+#ifndef MUSPLAY_USE_WINAPI
     QApplication::addLibraryPath( "." );
     QApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
-    #endif
 
-    #ifndef MUSPLAY_USE_WINAPI
     PGE_Application a(argc, argv);
     QStringList args=a.arguments();
     SingleApplication *as = new SingleApplication(args);
@@ -64,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     #ifdef Q_OS_LINUX
     a.setStyle("GTK");
     #endif
-    #endif
+#endif
 
     if(SDL_Init(SDL_INIT_AUDIO) ==-1 )
         error(QString("Failed to initialize audio: ") + SDL_GetError());
@@ -85,13 +75,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
     MIX_SetLockMIDIArgs(1);
 
-    #ifndef MUSPLAY_USE_WINAPI
-    MainWindow w;
-    #else
-    MainWindow w(hInstance, nCmdShow);
-    #endif
-
 #ifndef MUSPLAY_USE_WINAPI
+    MusPlayer_Qt w;
     //Set acception of external file openings
     w.connect(as, SIGNAL(openFile(QString)), &w, SLOT(openMusicByArg(QString)));
 #ifdef __APPLE__
@@ -112,6 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     int result = a.exec();
     delete as;
 #else
+    MusPlayer_WinAPI w(hInstance, nCmdShow);
     int result = 0;
     w.exec();
 #endif

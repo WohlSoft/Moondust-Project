@@ -27,7 +27,7 @@
 #define IDI_ICON2 30002
 
 //Version of this program
-#define _FILE_VERSION "1.1.0"
+#define _FILE_VERSION "1.2.0"
 #define _FILE_RELEASE ""
 
 #define _VF1 1

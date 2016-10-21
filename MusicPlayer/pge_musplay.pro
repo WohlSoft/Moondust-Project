@@ -96,16 +96,19 @@ macx:{
 
 
 SOURCES += main.cpp\
-    mainwindow.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
     main_sdl_android.c \
     wave_writer.c \
     AssocFiles/assoc_files.cpp \
     SingleApplication/pge_application.cpp \
-    Effects/reverb.cpp
+    Effects/reverb.cpp \
+    MainWindow/musplayer_base.cpp \
+    Player/mus_player.cpp \
+    MainWindow/musplayer_winapi.cpp \
+    MainWindow/musplayer_qt.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     version.h \
@@ -113,10 +116,15 @@ HEADERS  += mainwindow.h \
     AssocFiles/assoc_files.h \
     SingleApplication/pge_application.h \
     Effects/reverb.h \
-    defines.h
+    defines.h \
+    MainWindow/musplayer_base.h \
+    Player/mus_player.h \
+    MainWindow/musplayer_winapi.h \
+    MainWindow/musplayer_qt.h
 
-FORMS    += mainwindow.ui \
-    AssocFiles/assoc_files.ui
+FORMS    += \
+    AssocFiles/assoc_files.ui \
+    MainWindow/mainwindow.ui
 
 RESOURCES += \
     _resources/musicplayer.qrc
