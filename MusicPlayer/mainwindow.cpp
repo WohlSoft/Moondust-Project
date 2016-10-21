@@ -40,6 +40,15 @@ std::string Wstr2Str(const std::wstring &in)
     out.resize(res);
     return out;
 }
+
+std::wstring Str2Wstr(const std::string &in)
+{
+    std::wstring out;
+    out.resize(in.size());
+    int res = MultiByteToWideChar(CP_UTF8, 0, (char*)in.c_str(), in.size(), (wchar_t*)out.c_str(), out.size());
+    out.resize(res);
+    return out;
+}
 #endif
 
 /*!
@@ -399,6 +408,18 @@ LRESULT MainWindow::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
                     case CMD_SetDefault:
                         m_self->on_resetDefaultADLMIDI_clicked();
                         return 0;
+                    case CMD_RecordWave:
+                    {
+                        BOOL checked = IsDlgButtonChecked(hWnd, CMD_RecordWave);
+                        if (checked)
+                        {
+                            CheckDlgButton(hWnd, CMD_RecordWave, BST_UNCHECKED);
+                            m_self->on_recordWav_clicked(false);
+                        } else {
+                            CheckDlgButton(hWnd, CMD_RecordWave, BST_CHECKED);
+                            m_self->on_recordWav_clicked(true);
+                        }
+                    }
                     default:
                         break;
                     }
@@ -424,7 +445,7 @@ LRESULT MainWindow::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
         {
             MINMAXINFO *minMax = (MINMAXINFO*)lParam;
             minMax->ptMinTrackSize.x = 350;
-            minMax->ptMinTrackSize.y = 380;
+            minMax->ptMinTrackSize.y = m_self->m_height;
             return 0;
         }
         case WM_CREATE:
@@ -450,6 +471,23 @@ LRESULT MainWindow::SubCtrlProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
         {
             switch( LOWORD(wParam) )
             {
+            case CMD_TrackID:
+            {
+                switch(HIWORD(wParam))
+                {
+                case  EN_UPDATE:
+                    {
+                        char trackIDtext[1024];
+                        memset(trackIDtext, 0, 1024);
+                        GetWindowTextA(m_self->m_gme.m_trackNum, trackIDtext, 1024);
+                        //int trackID = atoi(trackIDtext);
+                        SetWindowTextA(m_self->m_gme.m_labelTrack, trackIDtext);
+                        m_self->on_trackID_editingFinished();
+                        goto defaultWndProc;
+                    }
+                }
+                goto defaultWndProc;
+            }
             case CMD_MidiDevice:
             {
                 switch(HIWORD(wParam))
@@ -578,6 +616,8 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
         return;
     }
 
+
+    m_height = 170;
     // Create instance of main window.
     m_hWnd = CreateWindowExW(WS_EX_ACCEPTFILES,
                              m_MainWndClass,
@@ -585,7 +625,7 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
                              WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,
                              CW_USEDEFAULT,
                              CW_USEDEFAULT,
-                             320, 220, NULL, NULL, hInstance, NULL);
+                             320, m_height, NULL, NULL, hInstance, NULL);
 
     HFONT hFont = CreateFontW(-11, 0, 0, 0, FW_NORMAL, FALSE, FALSE,
                                0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
@@ -622,25 +662,25 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
     top += 15;
 
 
-    m_buttonOpen = CreateWindowExW(0, L"BUTTON", L"Open", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+    m_buttonOpen = CreateWindowExW(0, L"BUTTON", L"Open", WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
                                 left, top, 60, 21, m_hWnd,
                                 (HMENU)CMD_Open, // Here is the ID of your button ( You may use your own ID )
                                 hInstance, NULL);
     left += 60;
 
-    m_buttonPlay = CreateWindowExW(0, L"BUTTON", L"Play/Pause", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+    m_buttonPlay = CreateWindowExW(0, L"BUTTON", L"Play/Pause", WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
                                 left, top, 60, 21, m_hWnd,
                                 (HMENU)CMD_Play, // Here is the ID of your button ( You may use your own ID )
                                 hInstance, NULL);
     left += 60;
 
-    m_buttonStop = CreateWindowExW(0, L"BUTTON", L"Stop", WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
+    m_buttonStop = CreateWindowExW(0, L"BUTTON", L"Stop", WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,
                                 left, top, 60, 21, m_hWnd,
                                 (HMENU)CMD_Stop, // Here is the ID of your button ( You may use your own ID )
                                 hInstance, NULL);
 
     left += 60;
-    m_volume    = CreateWindowExW(0, TRACKBAR_CLASS, L"Volume", WS_TABSTOP|WS_VISIBLE|WS_CHILD,
+    m_volume    = CreateWindowExW(0, TRACKBAR_CLASS, L"Volume", WS_VISIBLE|WS_CHILD,
                                   left, top-2, 80, 25, m_hWnd,
                                   (HMENU)CMD_Volume, // Here is the ID of your button ( You may use your own ID )
                                   hInstance, NULL);
@@ -661,6 +701,14 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
     left = 5;
     top += 21;
 
+    m_recordWave = CreateWindowExW(0, L"BUTTON", L"Record wave", WS_VISIBLE|WS_CHILD|SS_LEFT|BS_CHECKBOX,
+                                                             left, top, 200, 15,
+                                                             m_hWnd, (HMENU)CMD_RecordWave, hInstance, NULL);
+    SendMessageW(m_recordWave, WM_SETFONT, (WPARAM)hFont, 0);
+    CheckDlgButton(m_groupADLMIDI, CMD_RecordWave, BST_UNCHECKED);
+
+    top += 18;
+
     WNDPROC OldBtnProc;
 
     m_groupGME = CreateWindowExW(0, L"BUTTON", L"Game Music Emulators setup", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
@@ -677,15 +725,16 @@ MainWindow::MainWindow(HINSTANCE hInstance, int nCmdShow)
     SendMessageW(m_gme.m_labelTrack, WM_SETFONT, (WPARAM)hFont, 0);
 
     m_gme.m_trackNum = CreateWindowExW(0, L"EDIT", L"ED_RED",
-                                    WS_CHILD|WS_VISIBLE|WS_TABSTOP|ES_LEFT|WS_BORDER,
+                                    WS_CHILD|WS_VISIBLE|ES_LEFT|WS_BORDER,
                                     80, 20, 240, 20,
                                     m_groupGME, (HMENU)(CMD_TrackID),
                                     hInstance, NULL);
+
     SendMessageW(m_gme.m_trackNum, WM_SETFONT, (WPARAM)hFont, 0);
     // with a spin control to its right side
     m_gme.m_trackNumUpDown = CreateWindowExW(0, UPDOWN_CLASS, L"SP_RED",
-                                            WS_CHILD | WS_VISIBLE | WS_TABSTOP
-                                            | UDS_WRAP | UDS_ARROWKEYS | UDS_ALIGNRIGHT
+                                            WS_CHILD | WS_VISIBLE
+                                            | UDS_ARROWKEYS | UDS_ALIGNRIGHT
                                             | UDS_SETBUDDYINT | WS_BORDER,
                                             80, 20, 240, 20,
                                             m_groupGME, (HMENU)(CMD_TrackIDspin), hInstance, NULL);
@@ -867,6 +916,9 @@ void MainWindow::openMusicByArg(QString musPath)
 {
     #ifndef MUSPLAY_USE_WINAPI
     if(ui->recordWav->isChecked()) return;
+    #else
+    BOOL waveRecorderInProcess = IsDlgButtonChecked(m_hWnd, CMD_RecordWave);
+    if(waveRecorderInProcess) return;
     #endif
     currentMusic=musPath;
     #ifndef MUSPLAY_USE_WINAPI
@@ -947,6 +999,24 @@ void MainWindow::on_stop_clicked()
         m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
+    #else
+    SetWindowTextW(m_buttonPlay, L"Play");
+    BOOL checked = IsDlgButtonChecked(m_hWnd, CMD_RecordWave);
+    if (checked)
+    {
+        CheckDlgButton(m_hWnd, CMD_RecordWave, BST_UNCHECKED);
+        PGE_MusicPlayer::stopWavRecording();
+        EnableWindow(m_buttonOpen, TRUE);
+        EnableWindow(m_buttonPlay, TRUE);
+        EnableWindow(m_gme.m_trackNum, TRUE);
+        EnableWindow(m_gme.m_trackNumUpDown, TRUE);
+        EnableWindow(m_midi.m_midiDevice, TRUE);
+        EnableWindow(m_adlmidi.m_bankID, TRUE);
+        EnableWindow(m_adlmidi.m_tremolo, TRUE);
+        EnableWindow(m_adlmidi.m_vibrato, TRUE);
+        EnableWindow(m_adlmidi.m_scalableMod, TRUE);
+        EnableWindow(m_adlmidi.m_adlibDrums, TRUE);
+    }
     #endif
 }
 
@@ -959,6 +1029,8 @@ void MainWindow::on_play_clicked()
             Mix_ResumeMusic();
             #ifndef MUSPLAY_USE_WINAPI
             ui->play->setText(tr("Pause"));
+            #else
+            SetWindowTextW(m_buttonPlay, L"Pause");
             #endif
             return;
         }
@@ -967,6 +1039,8 @@ void MainWindow::on_play_clicked()
             Mix_PauseMusic();
             #ifndef MUSPLAY_USE_WINAPI
             ui->play->setText(tr("Resume"));
+            #else
+            SetWindowTextW(m_buttonPlay, L"Resume");
             #endif
             return;
         }
@@ -976,12 +1050,20 @@ void MainWindow::on_play_clicked()
     ui->play->setText(tr("Play"));
     m_prevTrackID = ui->trackID->value();
     #else
+    char trackIDtext[1024];
+    memset(trackIDtext, 0, 1024);
+    GetWindowTextA(m_gme.m_trackNum, trackIDtext, 1024);
+    int trackID = /*(int)SendMessageW( m_gme.m_trackNumUpDown, UDM_GETPOS, 0, 0);//*/ atoi(trackIDtext);
+    m_prevTrackID = trackID;
+    SetWindowTextW(m_buttonPlay, L"Play");
     if(currentMusic.empty())
         return;
     #endif
     if(PGE_MusicPlayer::MUS_openFile(currentMusic
                                      #ifndef MUSPLAY_USE_WINAPI
                                      +"|"+ui->trackID->text()
+                                     #else
+                                     +"|"+trackIDtext //std::to_string(trackID)
                                      #endif
                                      ) )
     {
@@ -991,6 +1073,8 @@ void MainWindow::on_play_clicked()
         PGE_MusicPlayer::MUS_playMusic();
         #ifndef MUSPLAY_USE_WINAPI
         ui->play->setText(tr("Pause"));
+        #else
+        SetWindowTextW(m_buttonPlay, L"Pause");
         #endif
     }
     #ifndef MUSPLAY_USE_WINAPI
@@ -1034,17 +1118,22 @@ void MainWindow::on_play_clicked()
         case MUS_MID:
             ShowWindow(m_groupMIDI,     SW_SHOW);
             ShowWindow(m_groupADLMIDI,  SW_SHOW);
+            m_height = 350;
             break;
         case MUS_SPC:
             ShowWindow(m_groupGME,  SW_SHOW);
+            m_height = 220;
             break;
         default:
+            m_height = 170;
             break;
     }
-    SetWindowTextA(m_labelTitle,        PGE_MusicPlayer::MUS_getMusTitle());
-    SetWindowTextA(m_labelArtist,       PGE_MusicPlayer::MUS_getMusArtist());
-    SetWindowTextA(m_labelAlboom,       PGE_MusicPlayer::MUS_getMusAlbum());
-    SetWindowTextA(m_labelCopyright,    PGE_MusicPlayer::MUS_getMusCopy());
+    SetWindowPos(m_hWnd, HWND_TOP, 0, 0, 350, m_height, SWP_NOMOVE|SWP_NOZORDER);
+
+    SetWindowTextW(m_labelTitle,        Str2Wstr(PGE_MusicPlayer::MUS_getMusTitle()).c_str());
+    SetWindowTextW(m_labelArtist,       Str2Wstr(PGE_MusicPlayer::MUS_getMusArtist()).c_str());
+    SetWindowTextW(m_labelAlboom,       Str2Wstr(PGE_MusicPlayer::MUS_getMusAlbum()).c_str());
+    SetWindowTextW(m_labelCopyright,    Str2Wstr(PGE_MusicPlayer::MUS_getMusCopy()).c_str());
     SetWindowTextA(m_formatInfo,        PGE_MusicPlayer::musicTypeC());
     #endif
 }
@@ -1137,35 +1226,80 @@ void MainWindow::on_trackID_editingFinished()
             Mix_HaltMusic();
             on_play_clicked();
         }
+        #else
+        char buff[1024];
+        memset(buff, 0, 1024);
+        GetWindowTextA(m_gme.m_trackNum, buff, 1024);
+        int trackID = atoi(buff);
+        //int trackID = (int)SendMessageW( m_gme.m_trackNumUpDown, UDM_GETPOS, 0, 0);
+        if( (PGE_MusicPlayer::type == MUS_SPC) && (m_prevTrackID != trackID) )
+        {
+            Mix_HaltMusic();
+            on_play_clicked();
+        }
         #endif
     }
 }
 
 void MainWindow::on_recordWav_clicked(bool checked)
 {
-    #ifndef MUSPLAY_USE_WINAPI
     if(checked)
     {
         PGE_MusicPlayer::MUS_stopMusic();
+        #ifndef MUSPLAY_USE_WINAPI
         ui->play->setText(tr("Play"));
+        #else
+        SetWindowTextW(m_buttonPlay, L"Play");
+        #endif
+        #ifndef MUSPLAY_USE_WINAPI
         QFileInfo twav(currentMusic);
+        #endif
         PGE_MusicPlayer::stopWavRecording();
+        #ifndef MUSPLAY_USE_WINAPI
         PGE_MusicPlayer::startWavRecording(twav.absoluteDir().absolutePath()+"/"+twav.baseName()+".wav");
+        #else
+        PGE_MusicPlayer::startWavRecording(currentMusic + ".wav");
+        #endif
         on_play_clicked();
+        #ifndef MUSPLAY_USE_WINAPI
         ui->open->setEnabled(false);
         ui->play->setEnabled(false);
         ui->frame->setEnabled(false);
         m_blinker.start(500);
+        #else
+        EnableWindow(m_buttonOpen, FALSE);
+        EnableWindow(m_buttonPlay, FALSE);
+        EnableWindow(m_gme.m_trackNum, FALSE);
+        EnableWindow(m_gme.m_trackNumUpDown, FALSE);
+        EnableWindow(m_midi.m_midiDevice, FALSE);
+        EnableWindow(m_adlmidi.m_bankID, FALSE);
+        EnableWindow(m_adlmidi.m_tremolo, FALSE);
+        EnableWindow(m_adlmidi.m_vibrato, FALSE);
+        EnableWindow(m_adlmidi.m_scalableMod, FALSE);
+        EnableWindow(m_adlmidi.m_adlibDrums, FALSE);
+        #endif
     } else {
         on_stop_clicked();
         PGE_MusicPlayer::stopWavRecording();
+        #ifndef MUSPLAY_USE_WINAPI
         ui->open->setEnabled(true);
         ui->play->setEnabled(true);
         ui->frame->setEnabled(true);
         m_blinker.stop();
         ui->recordWav->setStyleSheet("");
+        #else
+        EnableWindow(m_buttonOpen, TRUE);
+        EnableWindow(m_buttonPlay, TRUE);
+        EnableWindow(m_gme.m_trackNum, TRUE);
+        EnableWindow(m_gme.m_trackNumUpDown, TRUE);
+        EnableWindow(m_midi.m_midiDevice, TRUE);
+        EnableWindow(m_adlmidi.m_bankID, TRUE);
+        EnableWindow(m_adlmidi.m_tremolo, TRUE);
+        EnableWindow(m_adlmidi.m_vibrato, TRUE);
+        EnableWindow(m_adlmidi.m_scalableMod, TRUE);
+        EnableWindow(m_adlmidi.m_adlibDrums, TRUE);
+        #endif
     }
-    #endif
 }
 
 void MainWindow::_blink_red()

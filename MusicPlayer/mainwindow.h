@@ -61,10 +61,14 @@ public:
     static   LRESULT CALLBACK SubCtrlProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     explicit MainWindow(HINSTANCE hInstance = 0, int nCmdShow = 0);
 
+    LONG        m_height;
+
     WNDCLASSEXW m_wc;
     HINSTANCE   m_hInstance;
-    HWND        m_hWnd;
+
     LPCWSTR     m_MainWndClass;
+
+    HWND        m_hWnd;
 
     HWND        m_buttonOpen;
     HWND        m_buttonPlay;
@@ -72,6 +76,8 @@ public:
 
     HWND        m_volume;
     HWND        m_formatInfo;
+
+    HWND        m_recordWave;
 
     HWND        m_labelTitle;
     HWND        m_labelArtist;
