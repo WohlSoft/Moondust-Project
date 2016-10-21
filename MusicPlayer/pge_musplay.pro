@@ -40,11 +40,15 @@ win32:{
     RC_FILE = _resources/musicplayer.rc
 
     LIBS += -L$$PWD/../_Libs/_builds/win32/lib
-    LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     usewinapi:{
         DEFINES += MUSPLAY_USE_WINAPI
+        LIBS += -static -static-libgcc -static-libstdc++ -static -lpthread \
+                -lSDL2 -lSDL_Mixer_Xstatic -lSDL2main \
+                -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a \
+                -lwinmm -lole32 -limm32 -lversion -loleaut32 -luuid -lcomctl32 -mwindows
     } else {
+        LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
         static: {
             QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
         }
@@ -85,21 +89,26 @@ macx:{
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
 } else {
-    LIBS += -lSDL2 -lSDL2_mixer_ext
+    !usewinapi:{
+        LIBS += -lSDL2 -lSDL2_mixer_ext
+    }
 }
 
 
 SOURCES += main.cpp\
-    mainwindow.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
     main_sdl_android.c \
     wave_writer.c \
     AssocFiles/assoc_files.cpp \
     SingleApplication/pge_application.cpp \
-    Effects/reverb.cpp
+    Effects/reverb.cpp \
+    MainWindow/musplayer_base.cpp \
+    Player/mus_player.cpp \
+    MainWindow/musplayer_winapi.cpp \
+    MainWindow/musplayer_qt.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     version.h \
@@ -107,10 +116,15 @@ HEADERS  += mainwindow.h \
     AssocFiles/assoc_files.h \
     SingleApplication/pge_application.h \
     Effects/reverb.h \
-    defines.h
+    defines.h \
+    MainWindow/musplayer_base.h \
+    Player/mus_player.h \
+    MainWindow/musplayer_winapi.h \
+    MainWindow/musplayer_qt.h
 
-FORMS    += mainwindow.ui \
-    AssocFiles/assoc_files.ui
+FORMS    += \
+    AssocFiles/assoc_files.ui \
+    MainWindow/mainwindow.ui
 
 RESOURCES += \
     _resources/musicplayer.qrc

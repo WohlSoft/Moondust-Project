@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef MUSPLAY_USE_WINAPI
+#include <windows.h>
+#endif
+
 /* Copyright (C) 2003-2007 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
@@ -46,7 +50,14 @@ void wave_open( long sample_rate, const char* filename )
 	if ( !buf )
 		exit_with_error( "Out of memory" );
 	
+#ifndef MUSPLAY_USE_WINAPI
 	file = fopen( filename, "wb" );
+#else
+    wchar_t widePath[MAX_PATH];
+    int size = MultiByteToWideChar(CP_UTF8, 0, filename, strlen(filename), widePath, MAX_PATH);
+    widePath[size] = '\0';
+    file = _wfopen( widePath, L"wb" );
+#endif
 	if ( !file )
 		exit_with_error( "Couldn't open WAVE file for writing" );
 	
