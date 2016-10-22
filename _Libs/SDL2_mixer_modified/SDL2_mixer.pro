@@ -45,7 +45,7 @@ static-sdlmixer:{
 
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
-
+COPY=cp
 win32:{
     LIBS += -L$$PWD/../_builds/win32/lib
     LIBS += -lmingw32 -lSDL2main -mwindows
@@ -57,6 +57,7 @@ win32:{
         DEFINES += FORCE_STDCALLS
     }
     RC_FILE = version.rc
+    COPY=copy
 }
 linux-g++||unix:!macx:!android:{
     LIBS += -L$$PWD/../_builds/linux/lib
@@ -86,6 +87,8 @@ win32:{
     LIBS += -lwinmm -lm -lwinmm
 }
 
+QMAKE_POST_LINK = $$COPY $$PWD/SDL_mixer_ext.h $$PWD/../_builds/$$TARGETOS/include/SDL2
+
 DEFINES += \
     main=SDL_main \
     HAVE_SIGNAL_H \
@@ -93,6 +96,7 @@ DEFINES += \
     WAV_MUSIC \
     MID_MUSIC \
     USE_TIMIDITY_MIDI \
+    USE_FLUIDSYNTH_MIDI \
     USE_ADL_MIDI \
     OGG_MUSIC \
     FLAC_MUSIC \
@@ -125,18 +129,18 @@ LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
+            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
         } else {
-            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
+            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
     }
     #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
         macx: {
-        LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad
+        LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad -lfluidsynth
         } else {
-        LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic
+        LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a -Wl,-Bdynamic
         }
     }
 } else {
@@ -181,6 +185,7 @@ win32: {
 INSTALLS = SDL2MixerH SDL2MixerSO
 
 HEADERS += \
+    SDL_mixer_ext.h \
     begin_code.h \
     close_code.h \
     dynamic_flac.h \
@@ -190,7 +195,6 @@ HEADERS += \
     dynamic_mp3.h \
     dynamic_ogg.h \
     effects_internal.h \
-    fluidsynth.h \
     load_aiff.h \
     load_flac.h \
     load_mp3.h \
@@ -217,7 +221,6 @@ HEADERS += \
     timidity/resample.h \
     timidity/tables.h \
     timidity/timidity.h \
-    SDL_mixer_ext.h \
     libid3tag/compat.h \
     libid3tag/crc.h \
     libid3tag/debug.h \
@@ -320,7 +323,8 @@ HEADERS += \
     modplug/tables.h \
     resample/my_resample.h \
     gme/GZipHelper.h \
-    mixer.h
+    mixer.h \
+    music_fluidsynth.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -331,7 +335,6 @@ SOURCES += \
     effect_position.c \
     effect_stereoreverse.c \
     effects_internal.c \
-    fluidsynth.c \
     load_aiff.c \
     load_flac.c \
     load_mp3.c \
@@ -483,6 +486,7 @@ SOURCES += \
     modplug/sndmix.cpp \
     vb6_sdl_binds.c \
     timidity/resample_timidity.c \
-    resample/my_resample.c
+    resample/my_resample.c \
+    music_fluidsynth.c
 
 

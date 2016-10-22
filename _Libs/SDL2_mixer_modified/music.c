@@ -52,7 +52,7 @@
 #    include "timidity/timidity.h"
 #  endif
 #  ifdef USE_FLUIDSYNTH_MIDI
-#    include "fluidsynth.h"
+#    include "music_fluidsynth.h"
 #  endif
 #  ifdef USE_NATIVE_MIDI
 #    include "native_midi/native_midi.h"
@@ -682,9 +682,17 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     if (strncmp((char *)magic, "MThd", 4) == 0) {
         return MUS_MID;
     }
+    #ifdef USE_ADL_MIDI
     if (strncmp((char *)magic, "MUS\x1A", 4) == 0) {
-        return MUS_MID;
+        return MUS_ADLMIDI;
     }
+    if (strncmp((char *)magic, "GMF\x1", 4) == 0) {
+        return MUS_ADLMIDI;
+    }
+    if (strncmp((char *)magic, "CTMF", 4) == 0) {
+        return MUS_ADLMIDI;
+    }
+    #endif
     /* MIDI files have the magic four bytes "RIFF" */
     if( (strncmp((char *)magic, "RIFF", 4) == 0)&&(strncmp((char *)(moremagic+4), "RMID", 4) == 0))
     {
@@ -796,10 +804,12 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     }
     #endif
 
+    #ifdef USE_ADL_MIDI
     /* Detect id Software Music Format file */
     if(detect_imf(src, start)) {
-        return MUS_MID;
+        return MUS_ADLMIDI;
     }
+    #endif
 
     //Reset position to zero!
     SDL_RWseek(src, start, RW_SEEK_SET);
@@ -1162,6 +1172,9 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
         break;
 #endif
 #ifdef MID_MUSIC
+    #ifdef USE_ADL_MIDI
+    case MUS_ADLMIDI:
+    #endif
     case MUS_MID:
         music->type = MUS_MID;
         if( (need_reset_midi == 1) || (lock_midi_args == 0) )
@@ -1172,8 +1185,14 @@ Mix_Music * SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int
             #endif
             parse_adlmidi_args(music_args);
         }
-        //Install next MIDI device
-        mididevice_current = mididevice_next;
+
+        #ifdef USE_ADL_MIDI
+        if(type==MUS_ADLMIDI) //Force ADLMIDI for file formats which are requires it (IMF, MUS, CMF and GMF)
+            mididevice_current = MIDI_ADLMIDI;
+        else //Install next MIDI device
+        #endif
+            mididevice_current = mididevice_next;
+
         switch(mididevice_current)
         {
 #ifdef USE_NATIVE_MIDI

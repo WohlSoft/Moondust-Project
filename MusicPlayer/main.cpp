@@ -69,6 +69,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     MIX_Timidity_addToPathList("./timidity/");
     #endif
 
+    #ifndef MUSPLAY_USE_WINAPI
+    Mix_SetSoundFonts(QString(a.applicationDirPath()+"/gm.sf2").toUtf8().data());
+    #else
+    Mix_SetSoundFonts("./gm.sf2");
+    #endif
+
     if(Mix_OpenAudio(44100, AUDIO_S16, 2, 4096) == -1)
         error(QString("Failed to open audio stream: ") + Mix_GetError());
 

@@ -73,6 +73,9 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
         case 2: MIX_SetMidiDevice(MIDI_Native);
         ui->adlmidi_xtra->setVisible(false);
         break;
+        case 3: MIX_SetMidiDevice(MIDI_Fluidsynth);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
         default: MIX_SetMidiDevice(MIDI_ADLMIDI);
         ui->adlmidi_xtra->setVisible(true);
         break;
@@ -303,6 +306,9 @@ void MusPlayer_Qt::on_mididevice_currentIndexChanged(int index)
         ui->adlmidi_xtra->setVisible(false);
         break;
         case 2: MIX_SetMidiDevice(MIDI_Native);
+        ui->adlmidi_xtra->setVisible(false);
+        break;
+        case 3: MIX_SetMidiDevice(MIDI_Fluidsynth);
         ui->adlmidi_xtra->setVisible(false);
         break;
         default: MIX_SetMidiDevice(MIDI_ADLMIDI);

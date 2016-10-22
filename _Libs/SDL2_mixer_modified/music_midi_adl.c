@@ -100,12 +100,10 @@ int ADLMIDI_getBanksCount()
     return adl_getBanksCount();
 }
 
-extern const char* const banknames[];
 const char * const*ADLMIDI_getBankNames()
 {
-    return banknames;
+    return adl_getBankNames();
 }
-
 
 int ADLMIDI_getBankID()
 {
@@ -279,7 +277,7 @@ struct MUSIC_MIDIADL *ADLMIDI_new_RW(struct SDL_RWops *src, int freesrc)
     adlmidiMusic = ADLMIDI_LoadSongRW(src);
     if (!adlmidiMusic)
     {
-        Mix_SetError("ADL-MIDI: Can't load file");
+        Mix_SetError("ADL-MIDI: Can't load file: %s", adl_errorString());
         return NULL;
     }
     if( freesrc )

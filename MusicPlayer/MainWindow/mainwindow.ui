@@ -199,6 +199,11 @@ QGroupBox
               <string>Native midi (Built-in MIDI of your OS)</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>FluidSynth (SF2-based wavetable MIDI Synth)</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

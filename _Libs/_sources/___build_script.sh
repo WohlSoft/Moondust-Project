@@ -46,8 +46,8 @@ UnArch()
 # $1 - archive name
     if [ ! -d $1 ]
 	    then
-        printf "tar -xf ../$1.tar.*z ..."
-	    tar -xf ../$1.tar.*z
+        printf "tar -xf ../$1.tar.*z* ..."
+	    tar -xf ../$1.tar.*z*
         if [ $? -eq 0 ]; then
           printf "OK!\n"
         else
@@ -246,6 +246,16 @@ BuildMAD()
         fi
 }
 
+BuildFluidSynth()
+{
+        UnArch 'fluidsynth-1.1.6'
+        ###########MODPLUG###########
+        echo "==========FLUIDSYNTH=========="
+        #Build minimalistic FluidSynth version to just generate raw audio output to handle in the SDL Mixer X
+        #./configure CFLAGS=-fPIC --prefix=/home/vitaly/_git_repos/PGE-Project/_Libs/_builds/linux/ --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --enable-static=yes --enable-shared=no
+        BuildSrc 'fluidsynth-1.1.6' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --enable-static=yes --enable-shared=no'
+}
+
 BuildLUAJIT()
 {
         UnArch 'luajit'
@@ -367,12 +377,13 @@ BuildGLEW()
 
 ########################Build & Install libraries##################################
 
-BuildSDL
 BuildOGG
 BuildVORBIS
 BuildFLAC
 #BuildMODPLUG
 BuildMAD
+BuildFluidSynth
+BuildSDL
 BuildLUAJIT
 #BuildGLEW
 
