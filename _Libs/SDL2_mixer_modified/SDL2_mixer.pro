@@ -138,7 +138,7 @@ LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
     #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
         macx: {
-        LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad -lfluidsynth
+        LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad #-lfluidsynth
         } else {
         LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic #-l:libfluidsynth.a
         }
