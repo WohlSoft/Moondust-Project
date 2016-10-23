@@ -87,7 +87,7 @@ win32:{
     LIBS += -lwinmm -lm -lwinmm
 }
 
-QMAKE_POST_LINK = $$COPY $$PWD/SDL_mixer_ext.h $$PWD/../_builds/$$TARGETOS/include/SDL2
+QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
 
 DEFINES += \
     main=SDL_main \
