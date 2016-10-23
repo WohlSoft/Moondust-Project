@@ -96,7 +96,7 @@ DEFINES += \
     WAV_MUSIC \
     MID_MUSIC \
     USE_TIMIDITY_MIDI \
-    USE_FLUIDSYNTH_MIDI \
+    #USE_FLUIDSYNTH_MIDI \
     USE_ADL_MIDI \
     OGG_MUSIC \
     FLAC_MUSIC \
@@ -129,9 +129,9 @@ LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
+            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid # -l:libfluidsynth.a
         } else {
-            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a
+            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a #-l:libfluidsynth.a
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
     }
@@ -140,7 +140,7 @@ LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
         macx: {
         LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad -lfluidsynth
         } else {
-        LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -l:libfluidsynth.a -Wl,-Bdynamic
+        LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic #-l:libfluidsynth.a
         }
     }
 } else {

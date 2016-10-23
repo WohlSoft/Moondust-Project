@@ -382,7 +382,7 @@ BuildVORBIS
 BuildFLAC
 #BuildMODPLUG
 BuildMAD
-BuildFluidSynth
+#BuildFluidSynth
 BuildSDL
 BuildLUAJIT
 #BuildGLEW
