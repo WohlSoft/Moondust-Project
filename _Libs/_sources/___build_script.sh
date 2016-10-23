@@ -188,6 +188,14 @@ BuildFLAC()
         set > env_flac.txt
         unset COLUMNS
         unset LINES
+        if [[ "$OurOS" == "linux" ]]; then
+            #Re-generate automake script to compare with version on current machine
+            cd "flac-1.3.1"
+            aclocal
+            automake --foreign --add-missing
+            autoconf
+            cd ..
+        fi
         ###########FLAC###########
         echo "==========FLAC========="
         $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
