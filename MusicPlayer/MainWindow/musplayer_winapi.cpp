@@ -724,6 +724,8 @@ void MusPlayer_WinAPI::on_mididevice_currentIndexChanged(int index)
         break;
         case 2: MIX_SetMidiDevice(MIDI_Native);
         break;
+        case 3: MIX_SetMidiDevice(MIDI_Fluidsynth);
+        break;
         default: MIX_SetMidiDevice(MIDI_ADLMIDI);
         break;
     }

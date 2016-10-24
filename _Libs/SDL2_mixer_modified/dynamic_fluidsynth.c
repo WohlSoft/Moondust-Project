@@ -24,7 +24,7 @@
 
 #ifdef USE_FLUIDSYNTH_MIDI
 
-#include "SDL_loadso.h"
+#include <SDL2/SDL_loadso.h>
 #include "dynamic_fluidsynth.h"
 
 fluidsynth_loader fluidsynth = {

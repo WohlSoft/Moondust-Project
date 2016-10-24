@@ -91,6 +91,7 @@ macx:{
 } else {
     !usewinapi:{
         LIBS += -lSDL2 -lSDL2_mixer_ext
+        debug: linux-g++: QMAKE_POST_LINK = cp $$PWD/../_Libs/_builds/linux/lib/libSDL2_mixer_ext.so $$DESTDIR
     }
 }
 
