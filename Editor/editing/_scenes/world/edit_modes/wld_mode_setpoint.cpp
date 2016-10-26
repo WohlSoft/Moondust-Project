@@ -56,6 +56,7 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
+    Q_ASSERT(s);
 
     if( (!s->m_isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton)!=0) )
     {
@@ -65,17 +66,16 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(s->m_cursorItemImg){
+    if(s->m_cursorItemImg)
+    {
         s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
                                            QPoint(WldPlacingItems::c_offset_x,
                                                   WldPlacingItems::c_offset_y),
                                            WldPlacingItems::gridSz,
                                            WldPlacingItems::gridOffset)));
+        s->m_pointSelector.setPoint(s->m_cursorItemImg->scenePos().toPoint());
+        emit s->m_pointSelector.pointSelected(s->m_pointSelector.m_pointCoord);
     }
-
-    s->m_pointSelector.setPoint(s->m_cursorItemImg->scenePos().toPoint());
-    emit s->m_pointSelector.pointSelected(s->m_pointSelector.m_pointCoord);
-
     dontCallEvent=true;
 }
 

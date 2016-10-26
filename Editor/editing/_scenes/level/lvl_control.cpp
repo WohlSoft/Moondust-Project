@@ -108,9 +108,12 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     LogDebug(QString("Current editing mode %1").arg(m_editMode));
 
-    if(m_editModeObj) m_editModeObj->mousePress(mouseEvent);
-
-    if(m_editModeObj->noEvent()) return;
+    if(m_editModeObj)
+    {
+        m_editModeObj->mousePress(mouseEvent);
+        if(m_editModeObj->noEvent())
+            return;
+    }
 
     if((m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
@@ -152,9 +155,12 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     m_contextMenuIsOpened=false;
     m_mouseIsMovedAfterKey = true;
 
-    if(m_editModeObj) m_editModeObj->mouseMove(mouseEvent);
-
-    if(m_editModeObj->noEvent()) return;
+    if(m_editModeObj)
+    {
+        m_editModeObj->mouseMove(mouseEvent);
+        if(m_editModeObj->noEvent())
+            return;
+    }
 
     bool haveSelected=(!selectedItems().isEmpty());
     if(haveSelected)
@@ -245,10 +251,12 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(m_editModeObj) m_editModeObj->mouseRelease(mouseEvent);
-
-    if(!m_editModeObj->noEvent())
-        QGraphicsScene::mouseReleaseEvent(mouseEvent);
+    if(m_editModeObj)
+    {
+        m_editModeObj->mouseRelease(mouseEvent);
+        if(!m_editModeObj->noEvent())
+            QGraphicsScene::mouseReleaseEvent(mouseEvent);
+    }
 }
 
 // //////////////////////////////////////////////EVENTS END/////////////////////////////////////////////////

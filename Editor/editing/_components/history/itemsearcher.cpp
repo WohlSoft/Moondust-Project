@@ -317,10 +317,9 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedPlayers.begin();
-
                 currentArrayId = (*beginItem).id;
 
-                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                if( (unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId )
                 {
                     emit foundPlayerPoint(*beginItem, item);
                 }

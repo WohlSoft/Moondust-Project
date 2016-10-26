@@ -15,10 +15,9 @@ Product
         submodules: ["winextras"]
         condition: qbs.targetOS.contains("windows")
     }
-
     // Operating system identify
     Properties{
-        condition: qbs.targetOS.contains("macx")
+        condition: qbs.targetOS.contains("osx")
         property string destOS: "macos"
         property string binDir: "bin"
         property string languageDir: binDir+"/languages"
@@ -38,15 +37,15 @@ Product
 
     // Application name
     Properties {
-        condition: qbs.targetOS.contains("macx")
+        condition: qbs.targetOS.contains("osx")
         name: "PGE Editor"
     }
     Properties {
-        condition: !qbs.targetOS.contains("macx")
+        condition: !qbs.targetOS.contains("osx")
         name: "pge_editor"
     }
 
-    property string  pgeRoot: {
+    property string  pgeRoot: { // Because impossible just type "path+/../" (in result path+/dotdot/), need do this
         var newPath = path;
         newPath = newPath.substring(0, newPath.lastIndexOf("/"));
         return newPath;
@@ -67,13 +66,13 @@ Product
         cpp.defines: ['PGE_EDITOR', 'USE_SDL_MIXER', 'PGE_FILES_QT', 'GIT_VERSION="' + GIT_VERSION + '"']
         cpp.includePaths: [
             path,
-            path + "/../_Libs/_builds/" + destOS +"/include",
-            path + "/../_Libs/SDL2_mixer_modified",
+            pgeRoot + "/_Libs/_builds/" + destOS +"/include",
+            pgeRoot + "/_Libs/SDL2_mixer_modified",
             path + "/_includes",
-            path + "/../_Libs",
-            path + "/../_common",
+            pgeRoot + "/_Libs",
+            pgeRoot + "/_common",
         ]
-        cpp.libraryPaths: [ path + "/../_Libs/_builds/" + destOS + "/lib" ]
+        cpp.libraryPaths: [ pgeRoot + "/_Libs/_builds/" + destOS + "/lib" ]
         destinationDirectory: {
             var newPath = pgeRoot;
             newPath += "/" + binDir;
@@ -110,9 +109,9 @@ Product
         //cpp.cppflags: ['-static-libgcc', '-static-libstdc++']
     }
     Properties {
-        condition: qbs.targetOS.contains("macx")
-        cpp.includePaths: [ path + '/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers' ]
-        cpp.frameworkPaths: [ path + '/../_Libs/_builds/macos/frameworks' ]
+        condition: qbs.targetOS.contains("osx")
+        cpp.includePaths: [pgeRoot + '/_Libs/_builds/macos/frameworks/SDL2.framework/Headers']
+        cpp.frameworkPaths: [ pgeRoot + '/_Libs/_builds/macos/frameworks' ]
         cpp.frameworks: [ 'SDL2' ]
         cpp.dynamicLibraries: ['SDL2_mixer_ext']
     }

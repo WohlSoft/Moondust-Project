@@ -347,17 +347,16 @@ QImage GraphicsHelps::fromGIF(QString &file)
                 ColorMapObject* colrMap = (t->Image.ColorMap
                                           ? t->Image.ColorMap
                                           : t->SColorMap);
-                QVector<QRgb> clTab;
+                QSet<QRgb> clTab;
                 int padding = ((Width % 4)!=0 ? 4 - (Width % 4) : 0);
                 for(int c=0; c<colrMap->ColorCount; c++)
                 {
-                    QRgb pix=0;
+                    QRgb pix = 0;
                     // 00000000 R24-00000000 G16-00000000 B8-00000000
-                    pix=(uint(colrMap->Colors[c].Red)<<16)|pix;
-                    pix=(uint(colrMap->Colors[c].Green)<<8)|pix;
-                    pix=(uint(colrMap->Colors[c].Blue))|pix;
+                    pix = (uint(colrMap->Colors[c].Red)<<16) | (uint(colrMap->Colors[c].Green)<<8) | (uint(colrMap->Colors[c].Blue)<<0);
+                    clTab.insert(pix);
                 }
-                tarImg.setColorTable(clTab);
+                tarImg.setColorTable(clTab.toList().toVector());
 
                 if (t->Image.Left + t->Image.Width > t->SWidth ||
                     t->Image.Top + t->Image.Height > t->SHeight)

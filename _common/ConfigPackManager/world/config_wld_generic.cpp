@@ -27,7 +27,8 @@ bool WldGenericSetup::parse(QSettings *setup, QString imgPath, int defaultGrid, 
     int errCode=PGE_ImageInfo::ERR_OK;
     QString section;
     /*************Buffers*********************/
-    int w, h;
+    int w = -1,
+        h = -1;
     /*************Buffers*********************/
     if(!setup)
     {
@@ -60,6 +61,8 @@ bool WldGenericSetup::parse(QSettings *setup, QString imgPath, int defaultGrid, 
         }
         return false;
     }
+    Q_ASSERT((w >= 0) && (h >=0) && "Width or height of image has negative value!");
+
     mask_n = PGE_ImageInfo::getMaskName(image_n);
 
     grid =            setup->value("grid", merge_with ? merge_with->grid : defaultGrid).toUInt();

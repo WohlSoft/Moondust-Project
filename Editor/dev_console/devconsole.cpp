@@ -387,6 +387,7 @@ void DevConsole::doFlood(QStringList args)
         if(fl == 0)
             log("No memory assigned");
         Q_UNUSED(fl)
+        delete[] fl;//Delete this crap if application has been survived a flood
     }
 }
 
