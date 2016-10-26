@@ -28,7 +28,8 @@ bool BgoSetup::parse(QSettings *setup, QString bgoImgPath, int defaultGrid, BgoS
     QString section;
     /*************Buffers*********************/
     QString tmpStr;
-    int w, h;
+    int w = -1,
+        h = -1;
     /*************Buffers*********************/
     if(!setup)
     {
@@ -73,6 +74,8 @@ bool BgoSetup::parse(QSettings *setup, QString bgoImgPath, int defaultGrid, BgoS
         }
         return false;
     }
+    Q_ASSERT((w >= 0) && (h >=0) && "Width or height of image has negative value!");
+
     mask_n = PGE_ImageInfo::getMaskName(image_n);
 
     {

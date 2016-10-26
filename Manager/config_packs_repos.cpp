@@ -94,7 +94,10 @@ void ConfPacksRepos::on_repoList_itemChanged(QListWidgetItem *item)
     if(lockAdd) return;
     if(!item) return;
     if(item->data(Qt::UserRole).isNull()) return;
-    ConfigPackRepo &rp=*(ConfigPackRepo*)item->data(Qt::UserRole).value<void*>();
+    ConfigPackRepo*rpp = (ConfigPackRepo*)item->data(Qt::UserRole).value<void*>();
+    Q_ASSERT(rpp && "Item pointer is null!");
+    if(!rpp) return;
+    ConfigPackRepo &rp = *rpp;
     rp.url=item->text();
     rp.enabled=(item->checkState()==Qt::Checked);
 }

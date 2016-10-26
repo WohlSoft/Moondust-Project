@@ -173,7 +173,7 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
         if(!found)
         {
-            q = m_scene->m_data->players.size();
+            //q = m_scene->m_data->players.size();
             m_scene->m_data->players.push_back(m_data);
         }
         else

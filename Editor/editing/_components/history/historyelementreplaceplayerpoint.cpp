@@ -79,6 +79,8 @@ void HistoryElementReplacePlayerPoint::historyRemovePlayerPoint(const PlayerPoin
                 oPoint.y = (long)mData[2].toLongLong();
                 oPoint.w = (long)mData[3].toLongLong();
                 oPoint.h = (long)mData[4].toLongLong();
+                oPoint.direction = 1;
+                oPoint.userdata = nullptr;
                 if(oPoint.id>0 && !(oPoint.x == 0 && oPoint.y == 0)) wasPlaced = true;
             }
         }
