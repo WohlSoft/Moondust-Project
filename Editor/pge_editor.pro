@@ -74,7 +74,7 @@ include($$PWD/../_common/lib_destdir.pri)
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 
-INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
+INCLUDEPATH += $$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 macx {

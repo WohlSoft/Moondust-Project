@@ -83,13 +83,13 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->fmbank->setCurrentIndex(setup.value("ADLMIDI-Bank-ID", 58).toInt());
     MIX_ADLMIDI_setBankID( ui->fmbank->currentIndex() );
     ui->tremolo->setChecked(setup.value("ADLMIDI-Tremolo", true).toBool());
-    MIX_ADLMIDI_setTremolo((int)ui->tremolo->isChecked());
+    MIX_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
     ui->vibrato->setChecked(setup.value("ADLMIDI-Vibrato", true).toBool());
-    MIX_ADLMIDI_setVibrato((int)ui->vibrato->isChecked());
+    MIX_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
     ui->adlibMode->setChecked(setup.value("ADLMIDI-AdLib-Drums-Mode", false).toBool());
-    MIX_ADLMIDI_setAdLibMode((int)ui->adlibMode->isChecked());
+    MIX_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
     ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
-    MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
+    MIX_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
     ui->volume->setValue(setup.value("Volume", 128).toInt());
 
     m_prevTrackID = ui->trackID->value();
@@ -371,10 +371,10 @@ void MusPlayer_Qt::on_resetDefaultADLMIDI_clicked()
     ui->adlibMode->setChecked(false);
     ui->modulation->setChecked(false);
 
-    MIX_ADLMIDI_setTremolo((int)ui->tremolo->isChecked());
-    MIX_ADLMIDI_setVibrato((int)ui->vibrato->isChecked());
-    MIX_ADLMIDI_setAdLibMode((int)ui->adlibMode->isChecked());
-    MIX_ADLMIDI_setScaleMod((int)ui->modulation->isChecked());
+    MIX_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
+    MIX_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
+    MIX_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
+    MIX_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
 
     on_fmbank_currentIndexChanged( ui->fmbank->currentIndex() );
 }

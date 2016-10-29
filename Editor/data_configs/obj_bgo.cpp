@@ -84,7 +84,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 
 void dataconfigs::loadLevelBGO()
 {
-    unsigned int i;
+    unsigned long i;
 
     obj_bgo sbgo;
     unsigned long bgo_total=0;
@@ -114,13 +114,13 @@ void dataconfigs::loadLevelBGO()
     closeSection(&setup);
 
     emit progressPartNumber(1);
-    emit progressMax(int(bgo_total));
+    emit progressMax(static_cast<int>(bgo_total));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading BGOs..."));
 
-    ConfStatus::total_bgo = long(bgo_total);
+    ConfStatus::total_bgo = static_cast<long>(bgo_total);
 
-    main_bgo.allocateSlots(int(bgo_total));
+    main_bgo.allocateSlots(static_cast<int>(bgo_total));
 
     if(ConfStatus::total_bgo==0)
     {
@@ -130,7 +130,7 @@ void dataconfigs::loadLevelBGO()
 
     for(i=1; i<=bgo_total; i++)
     {
-        emit progressValue(int(i));
+        emit progressValue(static_cast<int>(i));
         bool valid=false;
 
         if(useDirectory)
@@ -159,7 +159,7 @@ void dataconfigs::loadLevelBGO()
         }
         /***************Load image*end***************/
         sbgo.setup.id = i;
-        main_bgo.storeElement(int(i), sbgo, valid);
+        main_bgo.storeElement(static_cast<int>(i), sbgo, valid);
 
         if( setup.status() != QSettings::NoError )
         {
@@ -167,7 +167,7 @@ void dataconfigs::loadLevelBGO()
         }
     }
 
-    if(uint(main_bgo.stored()) < bgo_total)
+    if(static_cast<unsigned long>(main_bgo.stored()) < bgo_total)
     {
         addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.stored()));
     }

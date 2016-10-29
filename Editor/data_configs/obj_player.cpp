@@ -24,7 +24,7 @@ void dataconfigs::loadPlayers()
 {
     main_characters.clear();
 
-    unsigned int i;
+    unsigned long i;
     unsigned long players_total=0;
 
     QString player_ini = getFullIniPath("lvl_characters.ini");
@@ -35,17 +35,17 @@ void dataconfigs::loadPlayers()
     setup.setIniCodec("UTF-8");
 
     if(!openSection(&setup, "main-characters")) return;
-        players_total = setup.value("total", "0").toInt();
+        players_total = static_cast<unsigned long>(setup.value("total", 0u).toUInt());
     closeSection(&setup);
 
-    ConfStatus::total_characters = players_total;
+    ConfStatus::total_characters = static_cast<long>(players_total);
 
     if(players_total == 0)
     {
         return;
     }
 
-    main_characters.reserve(players_total);
+    main_characters.reserve(static_cast<int>(players_total));
     for(i=1; i<=players_total; i++)
     {
         obj_player splayer;
@@ -60,7 +60,7 @@ void dataconfigs::loadPlayers()
             return;
             splayer.id = i;
             splayer.name = setup.value("name", QString("player %1").arg(i) ).toString();
-            if(splayer.name=="")
+            if(splayer.name.isEmpty())
             {
                 addError(QString("Player-%1 Item name isn't defined").arg(i));
                 closeSection(&setup);
