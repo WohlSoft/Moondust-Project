@@ -56,14 +56,14 @@ struct NpcSetup
      * @param [out] error Error string
      * @return true if config parsed successfully, false on erros
      */
-    bool parse(QSettings* setup, QString npcImgPath, int defaultGrid, NpcSetup* merge_with = nullptr, QString *error=nullptr);
+    bool parse(QSettings* setup, QString npcImgPath, unsigned int defaultGrid, NpcSetup* merge_with = nullptr, QString *error=nullptr);
 
     /**
      * @brief Merges SMBX64-NPC.txt structure with default global NPC-configuration of specific NPC-ID and returns merged configuration
      * @param local SMBX64-NPC.txt structure readen from a file
      * @param global Default NPC configuration for specific NPC-ID
      */
-    void applyNPCtxt(const NPCConfigFile *local, const NpcSetup global, const QSize captured=QSize(0,0));
+    void applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, const QSize &captured=QSize(0,0));
 
 
     unsigned long   id;   //    [npc-1]
@@ -92,7 +92,7 @@ struct NpcSetup
     //! Allow automatic mapping of the customized hitbox metrics to frame size
     bool            custom_physics_to_gfx; //The GFX size defining by physics size in the custom configs
     //! Size of alignment grid while placing mode
-    int             grid;           //    grid=32
+    unsigned int    grid;           //    grid=32
     //! Offset X relative aligned position
     int             grid_offset_x;  //    grid-offset-x=0
     //! Offset Y relative aligned position

@@ -22,7 +22,7 @@
 #include "../image_size.h"
 #include "../../number_limiter.h"
 
-bool BgoSetup::parse(QSettings *setup, QString bgoImgPath, int defaultGrid, BgoSetup *merge_with, QString *error)
+bool BgoSetup::parse(QSettings *setup, QString bgoImgPath, unsigned int defaultGrid, BgoSetup *merge_with, QString *error)
 {
     int errCode=PGE_ImageInfo::ERR_OK;
     QString section;

@@ -32,7 +32,7 @@ struct BgoSetup
         grid = 32;
     }
 
-    bool parse(QSettings* setup, QString bgoImgPath, int defaultGrid, BgoSetup* merge_with = nullptr, QString *error=nullptr);
+    bool parse(QSettings* setup, QString bgoImgPath, unsigned int defaultGrid, BgoSetup* merge_with = nullptr, QString *error=nullptr);
 
     unsigned long id;
     QString name;

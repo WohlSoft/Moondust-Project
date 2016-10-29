@@ -51,7 +51,8 @@ struct obj_wld_generic
         item.isValid         = isValid;
         item.animator_id     = animator_id;
         item.cur_image       = cur_image;
-        if(cur_image==nullptr)
+
+        if(cur_image == nullptr)
             item.cur_image   = &image;
 
         item.setup = setup;
@@ -68,6 +69,10 @@ typedef obj_wld_generic obj_w_level;
 //Markers
 struct wld_levels_Markers
 {
+    wld_levels_Markers():
+        path(0),
+        bigpath(0)
+    {}
     unsigned long path;
     unsigned long bigpath;
 };

@@ -47,19 +47,10 @@ struct obj_npc
 
 struct npc_Markers
 {
-    //    ;Defines for SMBX64
-    unsigned long bubble;   //    bubble=283	; NPC-Container for packed in bubble
-    unsigned long egg;      //    egg=96		; NPC-Container for packed in egg
-    unsigned long lakitu;   //    lakitu=284	; NPC-Container for spawn by lakitu
-    unsigned long buried;   //    burred=91	; NPC-Container for packed in herb
-
-    unsigned long ice_cube; //    icecube=263	; NPC-Container for frozen NPCs
-
+    npc_Markers():
+        coin_in_block(0ul)
+    {}
     //    ;markers
-    unsigned long iceball;  //    iceball=265
-    unsigned long fireball; //    fireball=13
-    unsigned long hammer;   //    hammer=171
-    unsigned long boomerang;//    boomerang=292
     unsigned long coin_in_block; //    coin-in-block=10
 };
 

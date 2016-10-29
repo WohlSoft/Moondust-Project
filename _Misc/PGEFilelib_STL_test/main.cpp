@@ -143,9 +143,9 @@ int main()
     printLine();
     cout << "\n\nSMBX64 Level Read Header test:" << endl;
     FileFormats::ReadSMBX64LvlFileHeader("test.lvl", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -155,9 +155,9 @@ int main()
 
     cout << "\n\nSMBX64 Level Read test:" << endl;
     FileFormats::OpenLevelFile("test.lvl", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -172,9 +172,9 @@ int main()
     printLine();
     cout << "\n\nSMBX65-38A Level Read Header test:" << endl;
     FileFormats::ReadSMBX38ALvlFileHeader("test_65-38a.lvl", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -186,9 +186,9 @@ int main()
     printLine();
     cout << "\n\nSMBX65-38A Level Read test:" << endl;
     FileFormats::OpenLevelFile("test_65-38a.lvl", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -200,9 +200,9 @@ int main()
     printLine();
     cout << "\n\nPGE-X Level Read Header test:" << endl;
     FileFormats::ReadExtendedLvlFileHeader("test.lvlx", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -212,9 +212,9 @@ int main()
     printLine();
     cout << "\n\nPGE-X Level Read test:" << endl;
     FileFormats::OpenLevelFile("test.lvlx", level);
-    cout << level.filename << "\n";
-    cout << level.path << "\n";
-    if(!level.ReadFileValid)
+    cout << level.meta.filename << "\n";
+    cout << level.meta.path << "\n";
+    if(!level.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -232,9 +232,9 @@ int main()
     printLine();
     cout << "\n\nSMBX64 World Read Header test:" << endl;
     FileFormats::ReadSMBX64WldFileHeader("test.wld", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
+    cout << world.meta.filename << "\n";
+    cout << world.meta.path << "\n";
+    if(!world.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -244,9 +244,9 @@ int main()
     printLine();
     cout << "\n\nSMBX64 World Read test:" << endl;
     FileFormats::OpenWorldFile("test.wld", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
+    cout << world.meta.filename << "\n";
+    cout << world.meta.path << "\n";
+    if(!world.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -258,9 +258,9 @@ int main()
     printLine();
     cout << "\n\nPGE-X World Read Header test:" << endl;
     FileFormats::ReadExtendedWldFileHeader("test.wldx", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
+    cout << world.meta.filename << "\n";
+    cout << world.meta.path << "\n";
+    if(!world.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -270,9 +270,9 @@ int main()
     printLine();
     cout << "\n\nPGE-X World Read test:" << endl;
     FileFormats::OpenWorldFile("test.wldx", world);
-    cout << world.filename << "\n";
-    cout << world.path << "\n";
-    if(!world.ReadFileValid)
+    cout << world.meta.filename << "\n";
+    cout << world.meta.path << "\n";
+    if(!world.meta.ReadFileValid)
     {
         cout << "Invalid file\n" << FileFormats::errorString;
     } else {
@@ -322,9 +322,9 @@ int main()
         ElapsedTimer meter;
         meter.start();
 
-        for(int i=0; i<(signed)files.size(); i++)
+        for(size_t i=0; i<files.size(); i++)
         {
-            std::string file=files[i];
+            std::string file = files[i];
             PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
             LevelData FileDataNew;
 
@@ -339,7 +339,7 @@ int main()
 
                 meter.restart();
                 FileFormats::smbx64LevelPrepare(FileDataNew);
-                FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.RecentFormatVersion);
+                FileFormats::WriteSMBX64LvlFileF(wpath+file, FileDataNew, FileDataNew.meta.RecentFormatVersion);
                 got = meter.elapsed();
                 timesout << " WRITE -> " << got << "\n";
                 timesout.flush();
@@ -349,8 +349,8 @@ int main()
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
-                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
-                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                      << FileDataNew.meta.ERROR_info << "\r\nlinedata" << FileDataNew.meta.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.meta.ERROR_linenum << "\r\n\r\n";
                 niout.flush();
             }
             cout.flush();
@@ -420,8 +420,8 @@ int main()
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
-                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
-                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                      << FileDataNew.meta.ERROR_info << "\r\nlinedata" << FileDataNew.meta.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.meta.ERROR_linenum << "\r\n\r\n";
                 niout.flush();
             }
 
@@ -447,8 +447,8 @@ int main()
             } else {
                 cout << "OLD PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 oiout << path+file << "\r\nInfo: "
-                      << FileDataOld.ERROR_info << "\r\nlinedata" << FileDataOld.ERROR_linedata
-                      << "\r\nline:" << FileDataOld.ERROR_linenum << "\r\n\r\n";
+                      << FileDataOld.meta.ERROR_info << "\r\nlinedata" << FileDataOld.meta.ERROR_linedata
+                      << "\r\nline:" << FileDataOld.meta.ERROR_linenum << "\r\n\r\n";
                 oiout.flush();
             }
 
@@ -499,7 +499,7 @@ int main()
         ElapsedTimer meter;
         meter.start();
 
-        for(int i=0; i<(signed)files.size(); i++)
+        for(size_t i=0; i<files.size(); i++)
         {
             string file=files[i];
             PGE_FileFormats_misc::TextFileInput fileI(path+file, false);
@@ -524,8 +524,8 @@ int main()
             } else {
                 cout << "NEW PARSER FAILED: Invalid file\n" << FileFormats::errorString;
                 niout << path+file << "\r\nInfo: "
-                      << FileDataNew.ERROR_info << "\r\nlinedata" << FileDataNew.ERROR_linedata
-                      << "\r\nline:" << FileDataNew.ERROR_linenum << "\r\n\r\n";
+                      << FileDataNew.meta.ERROR_info << "\r\nlinedata" << FileDataNew.meta.ERROR_linedata
+                      << "\r\nline:" << FileDataNew.meta.ERROR_linenum << "\r\n\r\n";
                 niout.flush();
             }
             cout.flush();
