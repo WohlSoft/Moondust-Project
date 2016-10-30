@@ -13,7 +13,7 @@ class Binding_Level_ClassWrapper_LVL_NPC : public LVL_Npc, public luabind::wrap_
         virtual ~Binding_Level_ClassWrapper_LVL_NPC();
 
         virtual void lua_onActivated();
-        virtual void lua_onLoop(float tickTime);
+        virtual void lua_onLoop(double tickTime);
         virtual void lua_onInit();
         virtual void lua_onKill(KillEvent *killEvent);
         virtual void lua_onHarm(HarmEvent *harmEvent);
@@ -23,7 +23,7 @@ class Binding_Level_ClassWrapper_LVL_NPC : public LVL_Npc, public luabind::wrap_
         {
             base->LVL_Npc::lua_onActivated();
         }
-        static void def_lua_onLoop(LVL_Npc *base, float tickTime)
+        static void def_lua_onLoop(LVL_Npc *base, double tickTime)
         {
             base->LVL_Npc::lua_onLoop(tickTime);
         }
@@ -39,11 +39,10 @@ class Binding_Level_ClassWrapper_LVL_NPC : public LVL_Npc, public luabind::wrap_
         {
             base->LVL_Npc::lua_onHarm(harmEvent);
         }
-        static void def_lua_onTransform(LVL_Npc *base, long id)
+        static void def_lua_onTransform(LVL_Npc *base, unsigned long id)
         {
             base->LVL_Npc::lua_onTransform(id);
         }
-
 
         static luabind::scope bindToLua();
         static luabind::scope HarmEvent_bindToLua();

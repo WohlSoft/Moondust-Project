@@ -209,7 +209,7 @@ class LVL_Npc : public PGE_Phys_Object
         float generatorTimeLeft;
         int   generatorType;
         int   generatorDirection;
-        void  updateGenerator(float tickTime);
+        void  updateGenerator(double tickTime);
         /***************************************************/
 
         /*******************Throwned*by*********************/
@@ -285,7 +285,7 @@ class LVL_Npc : public PGE_Phys_Object
          ***********************************************/
         //Additional lua events
         virtual void lua_onActivated() {}
-        virtual void lua_onLoop(float) {}
+        virtual void lua_onLoop(double) {}
         virtual void lua_onInit() {}
         virtual void lua_onKill(KillEvent *) {}
         virtual void lua_onHarm(HarmEvent *) {}
