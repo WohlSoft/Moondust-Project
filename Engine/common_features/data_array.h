@@ -40,15 +40,15 @@ class PGE_DataArray
          */
         PGE_DataArray(const PGE_DataArray &other)
             : m_data(NULL),
-              m_size(other.m_size),
               m_total_elements(other.m_total_elements),
+              m_size(other.m_size),
               m_stored(other.m_stored)
         {
             if(m_size > 0)
             {
                 m_data = new T[m_size];
 
-                for(int i = 0; i < m_size; i++)
+                for(unsigned long i = 0; i < m_size; i++)
                     m_data[i] = other.m_data[i];
             }
         }
