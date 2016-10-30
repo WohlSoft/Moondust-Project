@@ -19,7 +19,7 @@
 #include "lvl_physenv.h"
 #include "../scene_level.h"
 
-const int LVL_PhysEnv::numOfEnvironments=3;
+const unsigned long LVL_PhysEnv::numOfEnvironments = 3;
 
 LVL_PhysEnv::LVL_PhysEnv(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
@@ -35,16 +35,27 @@ void LVL_PhysEnv::init()
 {
     setSize(data.w, data.h);
     setPos(data.x, data.y);
+
     switch(data.env_type)
     {
-        case LevelPhysEnv::ENV_WATER:       env_type = Env_Water; break;
-        case LevelPhysEnv::ENV_QUICKSAND:   env_type = Env_Quicksand; break;
-        case LevelPhysEnv::ENV_AIR:         env_type = Env_Air; break;
-        default:                            env_type = Env_SameAsAround;
+    case LevelPhysEnv::ENV_WATER:
+        env_type = Env_Water;
+        break;
+
+    case LevelPhysEnv::ENV_QUICKSAND:
+        env_type = Env_Quicksand;
+        break;
+
+    case LevelPhysEnv::ENV_AIR:
+        env_type = Env_Air;
+        break;
+
+    default:
+        env_type = Env_SameAsAround;
     }
+
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     _scene->layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }
-

@@ -96,7 +96,7 @@ struct MessageBoxSetup
     {}
     QString sprite;
     int borderWidth;
-    float   box_padding;
+    double  box_padding;
     QString font_name;
     int     font_id;
     QString font_color;
@@ -111,8 +111,8 @@ struct MenuBoxSetup
         title_font_id(-1)
     {}
     QString sprite;
-    int borderWidth;
-    float   box_padding;
+    int     borderWidth;
+    double  box_padding;
     QString title_font_name;
     int     title_font_id;
     QString title_font_color;
@@ -152,20 +152,23 @@ struct ScriptsSetup
 
 template<class obj_T>
 void loadCustomConfig(PGE_DataArray<obj_T> &container,
-                      int ID,
-                      CustomDirManager& dir,
+                      unsigned long ID,
+                      CustomDirManager &dir,
                       QString fileName = "file",
                       QString section = "item",
-                      bool (*loaderFunk)(obj_T&, QString, obj_T*, QString, QSettings*) = nullptr
-                      )
+                      bool (*loaderFunk)(obj_T &, QString, obj_T *, QString, QSettings *) = nullptr
+                     )
 {
-    bool isDefault=false;
-    QString file = dir.getCustomFile(QString(fileName+"-%1.ini").arg(ID), &isDefault);
+    bool isDefault = false;
+    QString file = dir.getCustomFile(QString(fileName + "-%1.ini").arg(ID), &isDefault);
+
     if(file.isEmpty())
-        file = dir.getCustomFile(QString(fileName+"-%1.txt").arg(ID), &isDefault);
-    if( !file.isEmpty() && !isDefault )
+        file = dir.getCustomFile(QString(fileName + "-%1.txt").arg(ID), &isDefault);
+
+    if(!file.isEmpty() && !isDefault)
     {
         obj_T &sceneSetup = container[ID];
+
         if(loaderFunk)
             loaderFunk(sceneSetup, section, &sceneSetup, file, nullptr);
     }
@@ -175,287 +178,288 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
 
 class ConfigManager
 {
-public:
-    ConfigManager();
+    public:
+        ConfigManager();
 
-    static DataFolders dirs;
-    static QString config_id;
-    static QString config_dir;
-    static QString data_dir;
-    static int default_grid;
+        static DataFolders dirs;
+        static QString config_id;
+        static QString config_dir;
+        static QString data_dir;
+        static unsigned int default_grid;
 
-    //Scripts setup
-    static ScriptsSetup setup_Scripts;
+        //Scripts setup
+        static ScriptsSetup setup_Scripts;
 
-    //Common Data
-    static QList<PGE_Texture > common_textures;
+        //Common Data
+        static QList<PGE_Texture > common_textures;
 
-    static unsigned int screen_width;
-    static unsigned int screen_height;
+        static unsigned int screen_width;
+        static unsigned int screen_height;
 
-    enum screenType{
-        SCR_Static=0, //Static / Scalable screen
-        SCR_Dynamic   //Dynamic screen
-    };
-    static screenType screen_type;
+        enum screenType
+        {
+            SCR_Static = 0, //Static / Scalable screen
+            SCR_Dynamic   //Dynamic screen
+        };
+        static screenType screen_type;
 
-    //Fonts
-    static FontsSetup setup_fonts;
-    //curors
-    static MainCursors setup_cursors;
-    //MessageBox setup
-    static MessageBoxSetup setup_message_box;
-    //MenuBox setup
-    static MenuBoxSetup    setup_menu_box;
-    //Menu setup
-    static MenuSetup setup_menus;
-
-
-    //LoadingScreen
-    friend struct LoadingScreenSetup;
-    static LoadingScreenSetup setup_LoadingScreen;
-
-    //Title Screen
-    friend struct TitleScreenSetup;
-    static TitleScreenSetup setup_TitleScreen;
-
-    //World map data
-    friend struct WorldMapSetup;
-    static WorldMapSetup setup_WorldMap;
-
-    //Level data
-    friend struct LevelSetup;
-    static LevelSetup setup_Level;
-
-    //Credits Screen
-    friend struct CreditsScreenSetup;
-    static CreditsScreenSetup setup_CreditsScreen;
+        //Fonts
+        static FontsSetup setup_fonts;
+        //curors
+        static MainCursors setup_cursors;
+        //MessageBox setup
+        static MessageBoxSetup setup_message_box;
+        //MenuBox setup
+        static MenuBoxSetup    setup_menu_box;
+        //Menu setup
+        static MenuSetup setup_menus;
 
 
-    /********Music and sounds*******/
-    static bool loadMusic(QString rootPath, QString iniFile, bool isCustom=false);
-    static bool loadDefaultMusics();
-    static QString getWldMusic(unsigned long musicID, QString customMusic="");
-    static QString getLvlMusic(unsigned long musicID, QString customMusic="");
-    static QString getSpecialMusic(unsigned long musicID);
+        //LoadingScreen
+        friend struct LoadingScreenSetup;
+        static LoadingScreenSetup setup_LoadingScreen;
 
-    static unsigned long music_custom_id;
-    static unsigned long music_w_custom_id;
-    static PGE_DataArray<obj_music> main_music_lvl;
-    static PGE_DataArray<obj_music> main_music_wld;
-    static PGE_DataArray<obj_music> main_music_spc;
+        //Title Screen
+        friend struct TitleScreenSetup;
+        static TitleScreenSetup setup_TitleScreen;
 
-    static bool loadDefaultSounds();
-    static bool loadSound(QString rootPath, QString iniFile, bool isCustom=false);
-    static QString getSound(unsigned long sndID);
-    static long getSoundByRole(obj_sound_role::roles role);
-    static bool loadSoundRolesTable();
+        //World map data
+        friend struct WorldMapSetup;
+        static WorldMapSetup setup_WorldMap;
 
-    static PGE_DataArray<obj_sound > main_sound;
-    static PGE_DataArray<long > main_sound_table;
-    static void buildSoundIndex();
-    static void clearSoundIndex();
-    static QVector<obj_sound_index > main_sfx_index;
+        //Level data
+        friend struct LevelSetup;
+        static LevelSetup setup_Level;
 
-    static bool musicIniChanged();
-    static bool soundIniChanged();
-    static QString music_lastIniFile;
-    static QString sound_lastIniFile;
-    static bool music_lastIniFile_changed;
-    static bool sound_lastIniFile_changed;
-    /********Music and sounds*******/
+        //Credits Screen
+        friend struct CreditsScreenSetup;
+        static CreditsScreenSetup setup_CreditsScreen;
 
 
-    static void setConfigPath(QString p);
-    //Load settings
-    static bool loadBasics();
-    static bool unloadLevelConfigs();
-    static bool unloadWorldConfigs();
-    static void unluadAll();
+        /********Music and sounds*******/
+        static bool loadMusic(QString rootPath, QString iniFile, bool isCustom = false);
+        static bool loadDefaultMusics();
+        static QString getWldMusic(unsigned long musicID, QString customMusic = "");
+        static QString getLvlMusic(unsigned long musicID, QString customMusic = "");
+        static QString getSpecialMusic(unsigned long musicID);
 
-    /*================================Level config Data===========================*/
+        static unsigned long music_custom_id;
+        static unsigned long music_w_custom_id;
+        static PGE_DataArray<obj_music> main_music_lvl;
+        static PGE_DataArray<obj_music> main_music_wld;
+        static PGE_DataArray<obj_music> main_music_spc;
 
-    /*****Level blocks************/
-    static bool loadLevelBlocks();
-    static bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getBlockTexture(long blockID);
-    /*****************************/
-    static PGE_DataArray<obj_block>   lvl_block_indexes;
-    static CustomDirManager Dir_Blocks;
-    static QList<SimpleAnimator > Animator_Blocks;
-    /*****Level blocks************/
+        static bool loadDefaultSounds();
+        static bool loadSound(QString rootPath, QString iniFile, bool isCustom = false);
+        static QString getSound(unsigned long sndID);
+        static long getSoundByRole(obj_sound_role::roles role);
+        static bool loadSoundRolesTable();
 
-    /*****Level BGO************/
-    static bool loadLevelBGO();
-    static bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getBgoTexture(long bgoID);
-    /*****************************/
-    static PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
-    static CustomDirManager Dir_BGO;
-    static QList<SimpleAnimator > Animator_BGO;
-    /*****Level BGO************/
+        static PGE_DataArray<obj_sound > main_sound;
+        static PGE_DataArray<long > main_sound_table;
+        static void buildSoundIndex();
+        static void clearSoundIndex();
+        static QVector<obj_sound_index > main_sfx_index;
 
-    /*****Level NPC************/
-    static bool loadLevelNPC();
-    static bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static void loadNpcTxtConfig(long npcID);
-    static long getNpcTexture(long npcID);
-    /*****************************/
-    static PGE_DataArray<obj_npc>   lvl_npc_indexes;
-    static NPC_GlobalSetup          g_setup_npc;
-    static CustomDirManager Dir_NPC;
-    static CustomDirManager Dir_NPCScript;
-    static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
-    /*****Level NPC************/
+        static bool musicIniChanged();
+        static bool soundIniChanged();
+        static QString music_lastIniFile;
+        static QString sound_lastIniFile;
+        static bool music_lastIniFile_changed;
+        static bool sound_lastIniFile_changed;
+        /********Music and sounds*******/
 
 
+        static void setConfigPath(QString p);
+        //Load settings
+        static bool loadBasics();
+        static bool unloadLevelConfigs();
+        static bool unloadWorldConfigs();
+        static void unluadAll();
 
+        /*================================Level config Data===========================*/
 
-    /*****Level Backgrounds************/
-    static bool loadLevelBackG();
-    static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getBGTexture(long bgID, bool isSecond=false);
-    /*****************************/
-    static PGE_DataArray<obj_BG>   lvl_bg_indexes;
-    static CustomDirManager Dir_BG;
-    static QList<SimpleAnimator > Animator_BG;
-    /*****Level Backgrounds************/
-    /*================================Level config Data===end=====================*/
+        /*****Level blocks************/
+        static bool loadLevelBlocks();
+        static bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getBlockTexture(unsigned long blockID);
+        /*****************************/
+        static PGE_DataArray<obj_block>   lvl_block_indexes;
+        static CustomDirManager Dir_Blocks;
+        static QList<SimpleAnimator > Animator_Blocks;
+        /*****Level blocks************/
 
-    /*================================World config Data===========================*/
-    /*****World Tiles************/
-    static bool loadWorldTiles();
-    static bool loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getTileTexture(long tileID);
-    /*****************************/
-    static PGE_DataArray<obj_w_tile>   wld_tiles;
-    static CustomDirManager         Dir_Tiles;
-    static QList<SimpleAnimator >   Animator_Tiles;
-    /*****World Tiles************/
+        /*****Level BGO************/
+        static bool loadLevelBGO();
+        static bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getBgoTexture(unsigned long bgoID);
+        /*****************************/
+        static PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
+        static CustomDirManager Dir_BGO;
+        static QList<SimpleAnimator > Animator_BGO;
+        /*****Level BGO************/
 
-    /*****World Scenery************/
-    static bool loadWorldScenery();
-    static bool loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getSceneryTexture(long sceneryID);
-    /*****************************/
-    static PGE_DataArray<obj_w_scenery>   wld_scenery;
-    static CustomDirManager         Dir_Scenery;
-    static QList<SimpleAnimator >   Animator_Scenery;
-    /*****World Scenery************/
-
-    /*****World Paths************/
-    static bool loadWorldPaths();
-    static bool loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getWldPathTexture(long pathID);
-    /*****************************/
-    static PGE_DataArray<obj_w_path>   wld_paths;
-    static CustomDirManager         Dir_WldPaths;
-    static QList<SimpleAnimator >   Animator_WldPaths;
-    /*****World Paths************/
-
-    /*****World Levels************/
-    static bool loadWorldLevels();
-    static bool loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with=0, QString iniFile="", QSettings *setup=nullptr);
-    static long getWldLevelTexture(long levelID);
-    /*****************************/
-    static PGE_DataArray<obj_w_level>   wld_levels;
-    static CustomDirManager         Dir_WldLevel;
-    static QList<SimpleAnimator >   Animator_WldLevel;
-    static wld_levels_Markers        marker_wlvl;
-    /*****World Levels************/
+        /*****Level NPC************/
+        static bool loadLevelNPC();
+        static bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static void loadNpcTxtConfig(unsigned long npcID);
+        static int getNpcTexture(unsigned long npcID);
+        /*****************************/
+        static PGE_DataArray<obj_npc>   lvl_npc_indexes;
+        static NPC_GlobalSetup          g_setup_npc;
+        static CustomDirManager Dir_NPC;
+        static CustomDirManager Dir_NPCScript;
+        static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
+        /*****Level NPC************/
 
 
 
-    /*================================World config Data===end=====================*/
 
-    /*================================Common config Data===========================*/
+        /*****Level Backgrounds************/
+        static bool loadLevelBackG();
+        static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getBGTexture(unsigned long bgID, bool isSecond = false);
+        /*****************************/
+        static PGE_DataArray<obj_BG>   lvl_bg_indexes;
+        static CustomDirManager Dir_BG;
+        static QList<SimpleAnimator > Animator_BG;
+        /*****Level Backgrounds************/
+        /*================================Level config Data===end=====================*/
 
-    /*****Level Effects************/
-    static bool loadLevelEffects();
-    static long getEffectTexture(long effectID);
-    /*****************************/
-    static PGE_DataArray<obj_effect>   lvl_effects_indexes;
-    static Effects_GlobalSetup         g_setup_effects;
-    static CustomDirManager Dir_EFFECT;
-    /*****Level Effects************/
+        /*================================World config Data===========================*/
+        /*****World Tiles************/
+        static bool loadWorldTiles();
+        static bool loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getTileTexture(unsigned long tileID);
+        /*****************************/
+        static PGE_DataArray<obj_w_tile>   wld_tiles;
+        static CustomDirManager         Dir_Tiles;
+        static QList<SimpleAnimator >   Animator_Tiles;
+        /*****World Tiles************/
+
+        /*****World Scenery************/
+        static bool loadWorldScenery();
+        static bool loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getSceneryTexture(unsigned long sceneryID);
+        /*****************************/
+        static PGE_DataArray<obj_w_scenery>   wld_scenery;
+        static CustomDirManager         Dir_Scenery;
+        static QList<SimpleAnimator >   Animator_Scenery;
+        /*****World Scenery************/
+
+        /*****World Paths************/
+        static bool loadWorldPaths();
+        static bool loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getWldPathTexture(unsigned long pathID);
+        /*****************************/
+        static PGE_DataArray<obj_w_path>   wld_paths;
+        static CustomDirManager         Dir_WldPaths;
+        static QList<SimpleAnimator >   Animator_WldPaths;
+        /*****World Paths************/
+
+        /*****World Levels************/
+        static bool loadWorldLevels();
+        static bool loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+        static int getWldLevelTexture(unsigned long levelID);
+        /*****************************/
+        static PGE_DataArray<obj_w_level>   wld_levels;
+        static CustomDirManager         Dir_WldLevel;
+        static QList<SimpleAnimator >   Animator_WldLevel;
+        static wld_levels_Markers        marker_wlvl;
+        /*****World Levels************/
 
 
-    /********Playable characters*******/
-    static long getLvlPlayerTexture(long playerID, int stateID);
-    static long getWldPlayerTexture(long playerID, int stateID);
-    static void resetPlayableTexuresState();        //!< Sets all 'isInit' state to false for all textures for level textutes
-    static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
-    static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
-    /*****************************/
-    static PGE_DataArray<obj_player > playable_characters;
-    static CustomDirManager Dir_PlayerWld;
-    static CustomDirManager Dir_PlayerLvl;
-    static CustomDirManager Dir_PlayerScript;
-    /********Playable characters*******/
 
-    /*================================Common config Data===end=====================*/
+        /*================================World config Data===end=====================*/
 
-    /***********Texture banks*************/
-    static QList<PGE_Texture > level_textures;
-    static QList<PGE_Texture > world_textures;
-    /***********Texture banks*************/
+        /*================================Common config Data===========================*/
 
-    static void addError(QString bug, QtMsgType level=QtWarningMsg);
+        /*****Level Effects************/
+        static bool loadLevelEffects();
+        static int getEffectTexture(unsigned long effectID);
+        /*****************************/
+        static PGE_DataArray<obj_effect>   lvl_effects_indexes;
+        static Effects_GlobalSetup         g_setup_effects;
+        static CustomDirManager Dir_EFFECT;
+        /*****Level Effects************/
 
-    static QStringList errorsList;
 
-    static QString PathLevelBGO();
-    static QString PathLevelBG();
-    static QString PathLevelBlock();
-    static QString PathLevelNPC();
-    static QString PathLevelNPCScript();
-    static QString PathLevelEffect();
-    static QString PathLevelPlayable();
-    static QString PathLevelPlayerScript();
+        /********Playable characters*******/
+        static int getLvlPlayerTexture(unsigned long playerID, unsigned long stateID);
+        static int getWldPlayerTexture(unsigned long playerID, unsigned long stateID);
+        static void resetPlayableTexuresState();        //!< Sets all 'isInit' state to false for all textures for level textutes
+        static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
+        static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
+        /*****************************/
+        static PGE_DataArray<obj_player > playable_characters;
+        static CustomDirManager Dir_PlayerWld;
+        static CustomDirManager Dir_PlayerLvl;
+        static CustomDirManager Dir_PlayerScript;
+        /********Playable characters*******/
 
-    static QString PathCommonGFX();
+        /*================================Common config Data===end=====================*/
 
-    static QString PathScript();
+        /***********Texture banks*************/
+        static QList<PGE_Texture > level_textures;
+        static QList<PGE_Texture > world_textures;
+        /***********Texture banks*************/
 
-    static QString PathWorldTiles();
-    static QString PathWorldScenery();
-    static QString PathWorldPaths();
-    static QString PathWorldLevels();
-    static QString PathWorldPlayable();
+        static void addError(QString bug, QtMsgType level = QtWarningMsg);
 
-    static QString PathMusic();
-    static QString PathSound();
+        static QStringList errorsList;
 
-    static QString clearMusTrack(QString path);
-private:
-    static void checkForImage(QString &imgPath, QString root);
+        static QString PathLevelBGO();
+        static QString PathLevelBG();
+        static QString PathLevelBlock();
+        static QString PathLevelNPC();
+        static QString PathLevelNPCScript();
+        static QString PathLevelEffect();
+        static QString PathLevelPlayable();
+        static QString PathLevelPlayerScript();
 
-    //special paths
-    static QString imgFile, imgFileM;
-    static QString tmpstr;
-    static QStringList tmp;
+        static QString PathCommonGFX();
 
-    static QString bgoPath;
-    static QString BGPath;
-    static QString blockPath;
-    static QString npcPath;
-    static QString npcScriptPath;
-    static QString effectPath;
-    static QString playerLvlPath;
-    static QString playerWldPath;
-    static QString playerScriptPath;
+        static QString PathScript();
 
-    static QString tilePath;
-    static QString scenePath;
-    static QString pathPath;
-    static QString wlvlPath;
+        static QString PathWorldTiles();
+        static QString PathWorldScenery();
+        static QString PathWorldPaths();
+        static QString PathWorldLevels();
+        static QString PathWorldPlayable();
 
-    static QString commonGPath;
+        static QString PathMusic();
+        static QString PathSound();
 
-    static QString scriptPath;
+        static QString clearMusTrack(QString path);
+    private:
+        static void checkForImage(QString &imgPath, QString root);
 
-    static void refreshPaths();
-    static bool loadEngineSettings(); //!< Load engine.ini file
+        //special paths
+        static QString imgFile, imgFileM;
+        static QString tmpstr;
+        static QStringList tmp;
+
+        static QString bgoPath;
+        static QString BGPath;
+        static QString blockPath;
+        static QString npcPath;
+        static QString npcScriptPath;
+        static QString effectPath;
+        static QString playerLvlPath;
+        static QString playerWldPath;
+        static QString playerScriptPath;
+
+        static QString tilePath;
+        static QString scenePath;
+        static QString pathPath;
+        static QString wlvlPath;
+
+        static QString commonGPath;
+
+        static QString scriptPath;
+
+        static void refreshPaths();
+        static bool loadEngineSettings(); //!< Load engine.ini file
 };
 
 

@@ -29,7 +29,7 @@ void Binding_Level_ClassWrapper_LVL_Player::lua_onHarm(LVL_Player_harm_event *ha
         call<void>("onHarm", harmevent);
 }
 
-void Binding_Level_ClassWrapper_LVL_Player::lua_onTransform(long character, long state)
+void Binding_Level_ClassWrapper_LVL_Player::lua_onTransform(unsigned long character, unsigned long state)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onTransform", character, state);
@@ -65,38 +65,31 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
     using namespace luabind;
     return
         class_<LVL_Player, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_Player>("BasePlayer")
-            .def(constructor<>())
-            .def("onInit", &LVL_Player::lua_onInit, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onInit)
-            .def("onLoop", &LVL_Player::lua_onLoop, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onLoop)
-            .def("onHarm", &LVL_Player::lua_onHarm, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onHarm)
-            .def("onTransform", &LVL_Player::lua_onTransform, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTransform)
-            .def("onTakeNpc", &LVL_Player::lua_onTakeNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTakeNpc)
-            .def("onKillNpc", &LVL_Player::lua_onKillNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKillNpc)
-            .def("onKeyPressed", &LVL_Player::lua_onKeyPressed, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyPressed)
-            .def("onKeyReleased", &LVL_Player::lua_onKeyReleased, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyReleased)
-
-            .def("spawnNPC", &LVL_Player::lua_spawnNPC)
-
-            .def("getKeyState",  &LVL_Player::lua_getKeyState)
-            .def("setAnimation", &LVL_Player::lua_setAnimation)
-            .def("playAnimationOnce", &LVL_Player::lua_playAnimationOnce)
-            .property("globalState",  &LVL_Player::global_state)
-
-            .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
-
-            .def("bump", &LVL_Player::bump)
-
-            .def("setState", &LVL_Player::setState)
-            .def("setCharacter", &LVL_Player::setCharacterID)
-            .def("setInvincible", &LVL_Player::setInvincible)
-            .def_readonly("characterID", &LVL_Player::characterID)
-            .def_readonly("stateID", &LVL_Player::stateID)
-            .property("direction", &LVL_Player::direction)
-
-            .def_readonly("onGround", &LVL_Player::onGround)
-            .def_readonly("isDucking", &LVL_Player::ducking)
-            ;
-
+        .def(constructor<>())
+        .def("onInit", &LVL_Player::lua_onInit, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onInit)
+        .def("onLoop", &LVL_Player::lua_onLoop, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onLoop)
+        .def("onHarm", &LVL_Player::lua_onHarm, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onHarm)
+        .def("onTransform", &LVL_Player::lua_onTransform, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTransform)
+        .def("onTakeNpc", &LVL_Player::lua_onTakeNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onTakeNpc)
+        .def("onKillNpc", &LVL_Player::lua_onKillNpc, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKillNpc)
+        .def("onKeyPressed", &LVL_Player::lua_onKeyPressed, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyPressed)
+        .def("onKeyReleased", &LVL_Player::lua_onKeyReleased, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onKeyReleased)
+        .def("spawnNPC", &LVL_Player::lua_spawnNPC)
+        .def("getKeyState",  &LVL_Player::lua_getKeyState)
+        .def("setAnimation", &LVL_Player::lua_setAnimation)
+        .def("playAnimationOnce", &LVL_Player::lua_playAnimationOnce)
+        .property("globalState",  &LVL_Player::global_state)
+        .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
+        .def("bump", &LVL_Player::bump)
+        .def("setState", &LVL_Player::setState)
+        .def("setCharacter", &LVL_Player::setCharacterID)
+        .def("setInvincible", &LVL_Player::setInvincible)
+        .def_readonly("characterID", &LVL_Player::characterID)
+        .def_readonly("stateID", &LVL_Player::stateID)
+        .property("direction", &LVL_Player::direction)
+        .def_readonly("onGround", &LVL_Player::onGround)
+        .def_readonly("isDucking", &LVL_Player::ducking)
+        ;
 }
 
 luabind::scope Binding_Level_ClassWrapper_LVL_Player::HarmEvent_bindToLua()
@@ -104,7 +97,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::HarmEvent_bindToLua()
     using namespace luabind;
     return
         class_<LVL_Player_harm_event>("BasePlayerHarmEvent")
-            .def(constructor<>())
-            .def_readwrite("do_harm", &LVL_Player_harm_event::doHarm)
-            .def_readwrite("damage", &LVL_Player_harm_event::doHarm_damage);
+        .def(constructor<>())
+        .def_readwrite("do_harm", &LVL_Player_harm_event::doHarm)
+        .def_readwrite("damage", &LVL_Player_harm_event::doHarm_damage);
 }

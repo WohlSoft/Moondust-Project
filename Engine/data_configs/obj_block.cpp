@@ -30,12 +30,13 @@ QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
 
 bool ConfigManager::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, QSettings *setup)
 {
-    bool valid=true;
+    bool valid = true;
     bool internal = !setup;
     QString errStr;
+
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup = new QSettings(iniFile, QSettings::IniFormat);
         setup->setIniCodec("UTF-8");
     }
 
@@ -43,28 +44,29 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, QString section, obj_block
     sblock.image = NULL;
     sblock.textureArrayId = 0;
     sblock.animator_ID = -1;
+    setup->beginGroup(section);
 
-    setup->beginGroup( section );
-        if(sblock.setup.parse(setup, blockPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        {
-            valid=true;
-        } else {
-            addError(errStr);
-            valid=false;
-        }
+    if(sblock.setup.parse(setup, blockPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        valid = true;
+    else
+    {
+        addError(errStr);
+        valid = false;
+    }
+
     setup->endGroup();
+
     if(internal) delete setup;
+
     return valid;
 }
 
 bool ConfigManager::loadLevelBlocks()
 {
-    unsigned int i;
-
+    unsigned long i;
     obj_block sblock;
-    unsigned int block_total=0;
-    bool useDirectory=false;
-
+    unsigned long block_total = 0;
+    bool useDirectory = false;
     QString block_ini = config_dir + "lvl_blocks.ini";
     QString nestDir = "";
 
@@ -77,32 +79,29 @@ bool ConfigManager::loadLevelBlocks()
 
     QSettings setup(block_ini, QSettings::IniFormat);
     setup.setIniCodec("UTF-8");
-
     lvl_block_indexes.clear();//Clear old
-
     setup.beginGroup("blocks-main");
-        block_total = setup.value("total", 0).toUInt();
-        nestDir =     setup.value("config-dir", "").toString();
-        if(!nestDir.isEmpty())
-        {
-            nestDir = config_dir + nestDir;
-            useDirectory = true;
-        }
+    block_total = setup.value("total", 0).toULongLong();
+    nestDir =     setup.value("config-dir", "").toString();
+
+    if(!nestDir.isEmpty())
+    {
+        nestDir = config_dir + nestDir;
+        useDirectory = true;
+    }
+
     setup.endGroup();
 
-
-
-    if(block_total==0)
+    if(block_total == 0)
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
         PGE_MsgBox::fatal(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"));
-
         return false;
     }
 
-    lvl_block_indexes.allocateSlots(signed(block_total));
+    lvl_block_indexes.allocateSlots(block_total);
 
-    for(i=1; i<=block_total; i++)
+    for(i = 1; i <= block_total; i++)
     {
         if(useDirectory)
         {
@@ -121,22 +120,16 @@ bool ConfigManager::loadLevelBlocks()
         //Load custom config if possible
         loadCustomConfig<obj_block>(lvl_block_indexes, i, Dir_Blocks, "block", "block", &loadLevelBlock);
 
-        if( setup.status()!=QSettings::NoError)
+        if(setup.status() != QSettings::NoError)
         {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
-
             PGE_MsgBox::error(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i));
             break;
         }
-   }
+    }
 
-   if(uint(lvl_block_indexes.stored()) < block_total)
-   {
-       addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.stored()), QtWarningMsg);
-   }
+    if(uint(lvl_block_indexes.stored()) < block_total)
+        addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.stored()), QtWarningMsg);
 
-   return true;
+    return true;
 }
-
-
-

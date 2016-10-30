@@ -81,6 +81,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
         return false;
     }
 
+    Q_ASSERT(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
     algorithm_script = setup->value("algorithm", merge_with ? merge_with->algorithm_script : QString("%1.lua").arg(section)).toString();
     effect_1 =         setup->value("default-effect", merge_with ? merge_with->effect_1 : 10u).toUInt();
@@ -116,7 +117,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
     frames = setup->value("frames", merge_with ? merge_with->frames : 1).toUInt();
     NumberLimiter::apply(frames, 1u);
     /****************Calculating of default frame height******************/
-    defGFX_h = gfx_h / static_cast<int>( frames * static_cast<unsigned int>(pow(2.0, static_cast<double>(framestyle))));
+    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(pow(2.0, static_cast<double>(framestyle))));
     /****************Calculating of default frame height**end*************/
     custom_physics_to_gfx = setup->value("physics-to-gfx", merge_with ? merge_with->custom_physics_to_gfx : true).toBool();
     gfx_h =                setup->value("gfx-height", merge_with ? merge_with->gfx_h : defGFX_h).toInt();

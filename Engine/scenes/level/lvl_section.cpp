@@ -26,28 +26,28 @@
 
 LVL_Section::LVL_Section()
 {
-    data= FileFormats::CreateLvlSection();
-    isInit=false;
-    curMus=0;
-    curBgID=0;
-    isAutoscroll=false;
-    _autoscrollVelocityX=0.0f;
-    _autoscrollVelocityY=0.0f;
+    data = FileFormats::CreateLvlSection();
+    isInit = false;
+    curMus = 0;
+    curBgID = 0;
+    isAutoscroll = false;
+    _autoscrollVelocityX = 0.0f;
+    _autoscrollVelocityY = 0.0f;
 }
 
 LVL_Section::LVL_Section(const LVL_Section &_sct)
 {
-    isInit=_sct.isInit;
-    sectionBox=_sct.sectionBox;
-    limitBox=_sct.limitBox;
-    data=_sct.data;
-    music_root=_sct.music_root;
-    curMus=_sct.curMus;
-    curCustomMus=_sct.curCustomMus;
-    curBgID=_sct.curBgID;
-    isAutoscroll=_sct.isAutoscroll;
-    _autoscrollVelocityX=_sct._autoscrollVelocityX;
-    _autoscrollVelocityY=_sct._autoscrollVelocityY;
+    isInit = _sct.isInit;
+    sectionBox = _sct.sectionBox;
+    limitBox = _sct.limitBox;
+    data = _sct.data;
+    music_root = _sct.music_root;
+    curMus = _sct.curMus;
+    curCustomMus = _sct.curCustomMus;
+    curBgID = _sct.curBgID;
+    isAutoscroll = _sct.isAutoscroll;
+    _autoscrollVelocityX = _sct._autoscrollVelocityX;
+    _autoscrollVelocityY = _sct._autoscrollVelocityY;
 }
 
 LVL_Section::~LVL_Section()
@@ -57,8 +57,8 @@ LVL_Section::~LVL_Section()
 
 void LVL_Section::setData(LevelSection _d)
 {
-    data=_d;
-    isInit=true;
+    data = _d;
+    isInit = true;
     resetMusic();
     curBgID = data.background;
     changeSectionBorders(data.size_left, data.size_top, data.size_right, data.size_bottom);
@@ -80,19 +80,21 @@ void LVL_Section::changeLimitBorders(long left, long top, long right, long botto
 
 void LVL_Section::resetLimits()
 {
-    limitBox=sectionBox;
+    limitBox = sectionBox;
 }
 
 void LVL_Section::setMusicRoot(QString _path)
 {
-    music_root=_path;
+    music_root = _path;
+
     if(!music_root.endsWith('/'))
         music_root.append('/');
 }
 
 void LVL_Section::playMusic()
 {
-    QString musFile = ConfigManager::getLvlMusic(curMus, music_root+curCustomMus.replace('\\', '/'));
+    QString musFile = ConfigManager::getLvlMusic(curMus, music_root + curCustomMus.replace('\\', '/'));
+
     if(!musFile.isEmpty())
     {
         PGE_MusPlayer::MUS_openFile(musFile);
@@ -118,12 +120,12 @@ void LVL_Section::setMusic(QString musFile)
     curCustomMus = musFile;
 }
 
-void LVL_Section::renderBG(float x, float y, float w, float h)
+void LVL_Section::renderBG(double x, double y, double w, double h)
 {
     _background.draw(x, y, w, h);
 }
 
-int LVL_Section::getBgId()
+unsigned long LVL_Section::getBgId()
 {
     return curBgID;
 }
@@ -133,19 +135,19 @@ void LVL_Section::initBG()
     setBG(curBgID);
 }
 
-void LVL_Section::setBG(int bgID)
+void LVL_Section::setBG(unsigned long bgID)
 {
-    if(_background.isInit() && (bgID==_background.curBgId())) return;
+    if(_background.isInit() && (bgID == _background.curBgId())) return;
 
-    if((bgID>0) && (ConfigManager::lvl_bg_indexes.contains(bgID)))
+    if((bgID > 0) && (ConfigManager::lvl_bg_indexes.contains(bgID)))
     {
-        obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[bgID];
+        obj_BG *bgSetup = &ConfigManager::lvl_bg_indexes[bgID];
         _background.setBg(*bgSetup);
     }
     else
         _background.setNone();
 
-    curBgID=bgID;
+    curBgID = bgID;
 }
 
 void LVL_Section::resetBG()
@@ -195,39 +197,40 @@ int LVL_Section::getPhysicalEnvironment()
 
 void LVL_Section::registerElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    RPoint lt = {item->m_posX_registered, item->m_posY_registered};
+    RPoint rb = {item->m_posX_registered + item->m_width_registered, item->m_posY_registered + item->m_height_registered};
     tree.Insert(lt, rb, item);
 }
 
 void LVL_Section::unregisterElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    RPoint lt = {item->m_posX_registered, item->m_posY_registered};
+    RPoint rb = {item->m_posX_registered + item->m_width_registered, item->m_posY_registered + item->m_height_registered};
     tree.Remove(lt, rb, item);
 }
 
 
-bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
+bool _TreeSearchCallback(PGE_Phys_Object *item, void *arg)
 {
-    R_itemList* list = static_cast<R_itemList* >(arg);
+    R_itemList *list = static_cast<R_itemList * >(arg);
+
     if(list)
     {
-        if(item) (*list).push_back(item);
+        if(item)(*list).push_back(item);
     }
+
     return true;
 }
 
 void LVL_Section::queryItems(PGE_RectF zone, R_itemList *resultList)
 {
-    RPoint lt={zone.left(), zone.top()};
-    RPoint rb={zone.right(), zone.bottom()};
-    tree.Search(lt, rb, _TreeSearchCallback, (void*)resultList);
+    RPoint lt = {zone.left(), zone.top()};
+    RPoint rb = {zone.right(), zone.bottom()};
+    tree.Search(lt, rb, _TreeSearchCallback, (void *)resultList);
 }
 
 void LVL_Section::queryItems(double x, double y, R_itemList *resultList)
 {
-    PGE_RectF zone=PGE_RectF(x, y, 1, 1);
+    PGE_RectF zone = PGE_RectF(x, y, 1, 1);
     queryItems(zone, resultList);
 }
-

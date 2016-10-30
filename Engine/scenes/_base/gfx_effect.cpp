@@ -22,16 +22,16 @@
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
 
-void Scene::launchEffect(long       effectID,
-                           double   startX,
-                           double   startY,
-                           int      animationLoops,
-                           int      delay,
-                           double   velocityX,
-                           double   velocityY,
-                           double   gravity,
-                           int      direction,
-                           Scene_Effect_Phys phys)
+void Scene::launchEffect(unsigned long effectID,
+                         double   startX,
+                         double   startY,
+                         int      animationLoops,
+                         int      delay,
+                         double   velocityX,
+                         double   velocityY,
+                         double   gravity,
+                         int      direction,
+                         Scene_Effect_Phys phys)
 {
     SpawnEffectDef effectDef;
     effectDef.id = effectID;
@@ -52,7 +52,7 @@ void Scene::launchEffect(long       effectID,
     launchEffect(effectDef, false);
 }
 
-void Scene::launchStaticEffectC(long    effectID,
+void Scene::launchStaticEffectC(unsigned long    effectID,
                                 double  startX,
                                 double  startY,
                                 int     animationLoops,
@@ -85,8 +85,9 @@ void Scene::launchStaticEffectC(long    effectID,
 void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
 {
     Scene_Effect _effect;
-    if(ConfigManager::lvl_effects_indexes.contains(int(effect_def.id)))
-        _effect.m_setup = &ConfigManager::lvl_effects_indexes[int(effect_def.id)];
+
+    if(ConfigManager::lvl_effects_indexes.contains(effect_def.id))
+        _effect.m_setup = &ConfigManager::lvl_effects_indexes[effect_def.id];
     else
     {
         PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effect_def.id), PGE_MsgBox::msg_error);
@@ -95,10 +96,9 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     }
 
     long tID = ConfigManager::getEffectTexture(effect_def.id);
-    if( tID >= 0 )
-    {
+
+    if(tID >= 0)
         _effect.m_texture = ConfigManager::level_textures[int(tID)];
-    }
     else
     {
         PGE_MsgBox oops(this, QString("Can't load texture for effect-%1").arg(effect_def.id), PGE_MsgBox::msg_error);
@@ -109,50 +109,56 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     _effect.m_velocityX = effect_def.velocityX;
     _effect.m_velocityY = effect_def.velocityY;
     _effect.m_zIndex    = effect_def.zIndex;
-    _effect.m_phys_setup.decelerate_x=effect_def.decelerate_x;
-    _effect.m_phys_setup.decelerate_y=effect_def.decelerate_y;
-    _effect.m_phys_setup.max_vel_x=effect_def.max_vel_x;
-    _effect.m_phys_setup.max_vel_y=effect_def.max_vel_y;
-    _effect.m_phys_setup.min_vel_x=effect_def.min_vel_x;
-    _effect.m_phys_setup.min_vel_y=effect_def.min_vel_y;
+    _effect.m_phys_setup.decelerate_x = effect_def.decelerate_x;
+    _effect.m_phys_setup.decelerate_y = effect_def.decelerate_y;
+    _effect.m_phys_setup.max_vel_x = effect_def.max_vel_x;
+    _effect.m_phys_setup.max_vel_y = effect_def.max_vel_y;
+    _effect.m_phys_setup.min_vel_x = effect_def.min_vel_x;
+    _effect.m_phys_setup.min_vel_y = effect_def.min_vel_y;
     _effect.m_gravity = effect_def.gravity;
-    if(effect_def.direction==0)
-        effect_def.direction = (rand()%2) ? -1 : 1;
+
+    if(effect_def.direction == 0)
+        effect_def.direction = (rand() % 2) ? -1 : 1;
+
     _effect.m_direction = effect_def.direction;
     _effect.m_frameStyle = _effect.m_setup->framestyle;
-    int frame1=0;
-    int frameE=-1;
-    int frms=0;
+    int frame1 = 0;
+    int frameE = -1;
+    int frms = 0;
     frms = int(_effect.m_setup->frames);
 
     switch(_effect.m_frameStyle)
     {
     case 1:
-        frms  = int(_effect.m_setup->frames)*2;
-        frame1= _effect.m_direction<0? 0 : int(_effect.m_setup->frames);
-        frameE= _effect.m_direction<0? int(_effect.m_setup->frames)-1: -1;
+        frms  = int(_effect.m_setup->frames) * 2;
+        frame1 = _effect.m_direction < 0 ? 0 : int(_effect.m_setup->frames);
+        frameE = _effect.m_direction < 0 ? int(_effect.m_setup->frames) - 1 : -1;
         break;
+
     case 2:
-        frms  = int(_effect.m_setup->frames)*4;
-        frame1= int(_effect.m_direction)<0 ? 0 : (frms-(int(_effect.m_setup->frames))*3);
-        frameE= int(_effect.m_direction)<0 ?  (frms-(int(_effect.m_setup->frames))*3)-1 : (frms/2)-1;
+        frms  = int(_effect.m_setup->frames) * 4;
+        frame1 = int(_effect.m_direction) < 0 ? 0 : (frms - (int(_effect.m_setup->frames)) * 3);
+        frameE = int(_effect.m_direction) < 0 ? (frms - (int(_effect.m_setup->frames)) * 3) - 1 : (frms / 2) - 1;
         break;
+
     case 3:
         break;
+
     default:
     case 0:
-        frms=int(_effect.m_setup->frames);
-        frame1=0;
-        frameE=-1;
+        frms = int(_effect.m_setup->frames);
+        frame1 = 0;
+        frameE = -1;
         break;
     }
 
     LogDebug(QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.m_frameStyle).arg(frms)
-               .arg(frame1).arg(frameE));
+             .arg(frame1).arg(frameE));
 
-    if(frms<=0) frms = 1;
+    if(frms <= 0) frms = 1;
+
     _effect.m_animator.construct(true, frms, _effect.m_setup->framespeed, frame1, frameE);
-    _effect.m_posRect.setSize(_effect.m_texture.w, _effect.m_texture.h/frms);
+    _effect.m_posRect.setSize(_effect.m_texture.w, _effect.m_texture.h / frms);
 
     if(!effect_def.frame_sequence.isEmpty())
     {
@@ -161,35 +167,38 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     }
 
     if(centered)
-        _effect.m_posRect.setPos(effect_def.startX-_effect.m_posRect.width()/2,
-                               effect_def.startY-_effect.m_posRect.height()/2);
+        _effect.m_posRect.setPos(effect_def.startX - _effect.m_posRect.width() / 2,
+                                 effect_def.startY - _effect.m_posRect.height() / 2);
     else
         _effect.m_posRect.setPos(effect_def.startX, effect_def.startY);
 
-    if( effect_def.delay > 0 )
+    if(effect_def.delay > 0)
     {
         _effect.m_limitLifeTime = true;
         _effect.m_lifeTime = effect_def.delay;
     }
+
     _effect.m_startupDelay = effect_def.start_delay;
 
-    if( effect_def.animationLoops > 0 )
+    if(effect_def.animationLoops > 0)
     {
         _effect.m_animator.setOnceMode(true, effect_def.animationLoops);
         _effect.m_limitLoops = true;
     }
+
     _effect.init();
     WorkingEffects.push_back(_effect);
 }
 
 
-void Scene::processEffects(float ticks)
+void Scene::processEffects(double ticks)
 {
-    for(int i=0; i<WorkingEffects.size(); i++)
+    for(int i = 0; i < WorkingEffects.size(); i++)
     {
         Scene_Effect &e = WorkingEffects[i];
         e.update(ticks);
-        if(e.finished() || (!e.m_limitLifeTime && !e.m_limitLoops && !isVizibleOnScreen(e.m_posRect)) )
+
+        if(e.finished() || (!e.m_limitLifeTime && !e.m_limitLoops && !isVizibleOnScreen(e.m_posRect)))
         {
             WorkingEffects.removeAt(i);
             i--;
@@ -198,12 +207,12 @@ void Scene::processEffects(float ticks)
 }
 
 
-const double Scene_Effect::timeStep = 15.6f;
+const double Scene_Effect::timeStep = 15.6;
 //1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 
 Scene_Effect::Scene_Effect() :
     m_startupDelay(0.0),
-    m_zIndex(-5.0),
+    m_zIndex(-5.0L),
     m_direction(0),
     m_frameStyle(0),
     m_limitLifeTime(false),
@@ -261,43 +270,52 @@ void Scene_Effect::update(double ticks)
     if(m_startupDelay > 0)
     {
         m_startupDelay -= ticks;
+
         if(m_startupDelay <= 0)
             ticks = (-m_startupDelay);
         else
             return;
-        if(ticks == 0.0f)
+
+        if(ticks == 0.0)
             return;
     }
 
     m_animator.manualTick(ticks);
+
     if(m_limitLifeTime)
     {
         m_lifeTime -= ticks;
+
         //I changed this because we don't want the animator to stop our effect if we specify a custom delay also!
-        if( (m_lifeTime <= 0.0) || m_animator.isFinished() )
-            m_finished=true;
+        if((m_lifeTime <= 0.0) || m_animator.isFinished())
+            m_finished = true;
     }
+
     if(!m_limitLifeTime & m_animator.isFinished())
-        m_finished=true;
+        m_finished = true;
+
     iterateStep(ticks);
 }
 
 void Scene_Effect::iterateStep(double ticks)
 {
-    m_posRect.setX( m_posRect.x() + m_velocityX * (ticks/timeStep) );
-    m_posRect.setY( m_posRect.y() + m_velocityY * (ticks/timeStep) );
+    m_posRect.setX(m_posRect.x() + m_velocityX * (ticks / timeStep));
+    m_posRect.setY(m_posRect.y() + m_velocityY * (ticks / timeStep));
+    double accelCof = ticks / 1000.0;
 
-    double accelCof = ticks/1000.0;
-    if(m_phys_setup.decelerate_x != 0.0f)
+    if(m_phys_setup.decelerate_x != 0.0)
     {
-        double decX = m_phys_setup.decelerate_x*accelCof;
+        double decX = m_phys_setup.decelerate_x * accelCof;
+
         if(m_velocityX > 0)
         {
             if((m_velocityX - decX > 0.0))
-                 m_velocityX -= decX;
+                m_velocityX -= decX;
             else
-                m_velocityX=0;
-        } else if(m_velocityX < 0) {
+                m_velocityX = 0;
+        }
+        else if(m_velocityX < 0)
+        {
             if((m_velocityX + decX < 0.0))
                 m_velocityX += decX;
             else
@@ -305,43 +323,48 @@ void Scene_Effect::iterateStep(double ticks)
         }
     }
 
-    if(m_phys_setup.decelerate_y != 0.0f)
+    if(m_phys_setup.decelerate_y != 0.0)
     {
-        double decY = m_phys_setup.decelerate_y*accelCof;
+        double decY = m_phys_setup.decelerate_y * accelCof;
+
         if(m_velocityY > 0)
         {
             if((m_velocityY - decY > 0.0))
                 m_velocityY -= decY;
             else
                 m_velocityY = 0;
-        } else if(m_velocityY < 0) {
-            if((m_velocityY + decY<0.0))
+        }
+        else if(m_velocityY < 0)
+        {
+            if((m_velocityY + decY < 0.0))
                 m_velocityY += decY;
             else
-                m_velocityY=0;
+                m_velocityY = 0;
         }
     }
 
-    if( m_gravity != 0.0 )
-    {
-        m_velocityY += m_gravity*accelCof;
-    }
-    if((m_phys_setup.max_vel_x != 0.0f) && (m_velocityX>m_phys_setup.max_vel_x)) m_velocityX=m_phys_setup.max_vel_x;
-    if((m_phys_setup.min_vel_x != 0.0f) && (m_velocityX<m_phys_setup.min_vel_x)) m_velocityX=m_phys_setup.min_vel_x;
-    if((m_phys_setup.max_vel_y != 0.0f) && (m_velocityY>m_phys_setup.max_vel_y)) m_velocityY=m_phys_setup.max_vel_y;
-    if((m_phys_setup.min_vel_y != 0.0f) && (m_velocityY<m_phys_setup.min_vel_y)) m_velocityY=m_phys_setup.min_vel_y;
+    if(m_gravity != 0.0)
+        m_velocityY += m_gravity * accelCof;
+
+    if((m_phys_setup.max_vel_x != 0.0) && (m_velocityX > m_phys_setup.max_vel_x)) m_velocityX = m_phys_setup.max_vel_x;
+
+    if((m_phys_setup.min_vel_x != 0.0) && (m_velocityX < m_phys_setup.min_vel_x)) m_velocityX = m_phys_setup.min_vel_x;
+
+    if((m_phys_setup.max_vel_y != 0.0) && (m_velocityY > m_phys_setup.max_vel_y)) m_velocityY = m_phys_setup.max_vel_y;
+
+    if((m_phys_setup.min_vel_y != 0.0) && (m_velocityY < m_phys_setup.min_vel_y)) m_velocityY = m_phys_setup.min_vel_y;
 }
 
 void Scene_Effect::render(double camX, double camY)
 {
-    if(m_startupDelay>0)
+    if(m_startupDelay > 0)
         return;
 
-    AniPos x(0,1);
+    AniPos x(0, 1);
     x = m_animator.image();
     GlRenderer::renderTexture(&m_texture,
-                              float(posX()-camX),
-                              float(posY()-camY),
+                              float(posX() - camX),
+                              float(posY() - camY),
                               float(m_posRect.width()),
                               float(m_posRect.height()),
                               float(x.first),
@@ -350,10 +373,10 @@ void Scene_Effect::render(double camX, double camY)
 
 Scene_Effect_Phys::Scene_Effect_Phys()
 {
-    min_vel_x=0;
-    min_vel_y=0;
-    max_vel_x=0;
-    max_vel_y=0;
-    decelerate_x=0;
-    decelerate_y=0;
+    min_vel_x = 0;
+    min_vel_y = 0;
+    max_vel_x = 0;
+    max_vel_y = 0;
+    decelerate_x = 0;
+    decelerate_y = 0;
 }

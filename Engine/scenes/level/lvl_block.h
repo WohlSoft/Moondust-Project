@@ -30,94 +30,96 @@
 
 class LVL_Block : public PGE_Phys_Object
 {
-public:
-    LVL_Block(LevelScene *_parent=NULL);
-    ~LVL_Block();
-    void init();
+    public:
+        LVL_Block(LevelScene *_parent = NULL);
+        ~LVL_Block();
+        void init();
 
-    LevelBlock data; //Local settings
+        LevelBlock data; //Local settings
 
-    bool animated;
-    bool sizable;
-    long animator_ID;
-    float offset_x;
-    float offset_y;
+        bool animated;
+        bool sizable;
+        long animator_ID;
+        double offset_x;
+        double offset_y;
 
-    bool m_isHidden;
-    int  m_blockedOrigin[BLOCK_FILTER_COUNT];
+        bool m_isHidden;
+        int  m_blockedOrigin[BLOCK_FILTER_COUNT];
 
-    bool m_destroyed;
+        bool m_destroyed;
 
-    obj_block * setup;//Global config
+        obj_block *setup; //Global config
 
-    enum directions{
-        left = 0,
-        right,
-        up,
-        down
-    };
+        enum directions
+        {
+            left = 0,
+            right,
+            up,
+            down
+        };
 
-    enum shapes{
-        shape_rect              = 0,
-        shape_tr_left_bottom    = 1,
-        shape_tr_right_bottom   =-1,
-        shape_tr_left_top       = 2,
-        shape_tr_right_top      =-2,
-        stape_polygon           = 3
-    };
+        enum shapes
+        {
+            shape_rect              = 0,
+            shape_tr_left_bottom    = 1,
+            shape_tr_right_bottom   = -1,
+            shape_tr_left_top       = 2,
+            shape_tr_right_top      = -2,
+            stape_polygon           = 3
+        };
 
-    int LEGACY_shape;
-    double LEGACY_shape_slope_angle_ratio;
+        int LEGACY_shape;
+        double LEGACY_shape_slope_angle_ratio;
 
-    int taskToTransform;
-    int taskToTransform_t;
-    void transformTo(long id, int type=2);
-    void transformTo_x(long id);
+        int taskToTransform;
+        int taskToTransform_t;
+        void transformTo(unsigned long id, int type = 2);
+        void transformTo_x(unsigned long id);
 
-    int transformedFromBlockID;
-    int transformedFromNpcID;
+        unsigned long transformedFromBlockID;
+        unsigned long transformedFromNpcID;
 
-    void hit(directions _dir=up);
-    void hit(directions _dir, LVL_Player* player, int numHits=1);
-    void destroy(bool playEffect=false);
-    directions hitDirection;
-    void setDestroyed(bool dstr);
+        void hit(directions _dir = up);
+        void hit(directions _dir, LVL_Player *player, int numHits = 1);
+        void destroy(bool playEffect = false);
+        directions hitDirection;
+        void setDestroyed(bool dstr);
 
-    long double zIndex();
+        long double zIndex();
 
-    /**************Fader**************/
-    double fadeOffset;
-    double targetOffset;
-    double fade_step;
-    double fadeSpeed;
-    void setFade(double speed, double target, double step);
-    bool isFading();
-    bool tickFader(double ticks);
-    double manual_ticks;
-    void fadeStep();
-    /**************Fader**************/
+        /**************Fader**************/
+        double fadeOffset;
+        double targetOffset;
+        double fade_step;
+        double fadeSpeed;
+        void setFade(double speed, double target, double step);
+        bool isFading();
+        bool tickFader(double ticks);
+        double manual_ticks;
+        void fadeStep();
+        /**************Fader**************/
 
-    void render(double camX, double camY);
+        void render(double camX, double camY);
 
-    bool isInited();
+        bool isInited();
 
-    /************LUA-Specific functions*********/
-    long lua_getID();
-    int  lua_contentID_old();
-    void lua_setContentID_old(int npcid);
-    int  lua_contentID();
-    void lua_setContentID(int npcid);
-    bool lua_invisible();
-    void lua_setInvisible(bool iv);
-    bool lua_slippery();
-    void lua_setSlippery(bool sl);
-    bool lua_isSolid();
-    static luabind::scope bindToLua();
-    /*******************************************/
+        /************LUA-Specific functions*********/
+        long lua_getID();
+        int  lua_contentID_old();
+        void lua_setContentID_old(int npcid);
+        int  lua_contentID();
+        void lua_setContentID(int npcid);
+        bool lua_invisible();
+        void lua_setInvisible(bool iv);
+        bool lua_slippery();
+        void lua_setSlippery(bool sl);
+        bool lua_isSolid();
+        static luabind::scope bindToLua();
+        /*******************************************/
 
-private:
-    void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
-    bool _isInited;
+    private:
+        void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
+        bool _isInited;
 };
 
 #endif // LVL_BLOCK_H

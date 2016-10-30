@@ -32,13 +32,13 @@ struct BlockSetup
         grid = 32;
     }
 
-    bool parse(QSettings* setup, QString blockImgPath, int defaultGrid, BlockSetup* merge_with = nullptr, QString *error=nullptr);
+    bool parse(QSettings *setup, QString blockImgPath, unsigned int defaultGrid, BlockSetup *merge_with = nullptr, QString *error = nullptr);
 
     unsigned long   id;
     QString         image_n;
     QString         mask_n;
     QString         name;
-    //    grid=32				; 32 | 16 Default="32"
+    //    grid=32               ; 32 | 16 Default="32"
     unsigned int    grid;
     QString         group;
     QString         category;
@@ -49,7 +49,7 @@ struct BlockSetup
     int             phys_shape;
     enum shapes
     {
-        SHAPE_rect=0,
+        SHAPE_rect = 0,
         /*     __
          *    |  |
          *    |  |
@@ -95,10 +95,10 @@ struct BlockSetup
     int             spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
     enum spawnes
     {
-        SPAWN_Nothing=0,
-        SPAWN_NPC=1,
-        SPAWN_Block=2,
-        SPAWN_BGO=3
+        SPAWN_Nothing = 0,
+        SPAWN_NPC = 1,
+        SPAWN_Block = 2,
+        SPAWN_BGO = 3
     };
     unsigned long   spawn_obj_id;
     unsigned int    effect;
@@ -109,17 +109,17 @@ struct BlockSetup
     //Toggable Switch blocks
     bool            switch_Button;
     bool            switch_Block;
-    int             switch_ID;
-    int             switch_transform;
+    unsigned int    switch_ID;
+    unsigned int    switch_transform;
 
     //Playable character Switch/Filter blocks
     bool            plSwitch_Button;
-    int             plSwitch_Button_id; //Target Character ID
+    unsigned int    plSwitch_Button_id; //Target Character ID
     QList<int>      plSwitch_frames_true;
     QList<int>      plSwitch_frames_false;
 
     bool            plFilter_Block;   //Target Character ID
-    int             plFilter_Block_id;//Target Character ID
+    unsigned int    plFilter_Block_id;//Target Character ID
     QList<int>      plFilter_frames_true;
     QList<int>      plFilter_frames_false;
 

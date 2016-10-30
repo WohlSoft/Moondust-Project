@@ -36,10 +36,10 @@ struct obj_npc
 {
     /*   OpenGL    */
     bool isInit;
-    PGE_Texture * image;
+    PGE_Texture *image;
     GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
+    int textureArrayId;
+    int animator_ID;
     PGE_Size      image_size;
     /*   OpenGL    */
 
@@ -49,14 +49,15 @@ struct obj_npc
     SpawnEffectDef effect_1_def;
     SpawnEffectDef effect_2_def;
 
-    enum blockSpawn {
-        spawn_warp=0,
+    enum blockSpawn
+    {
+        spawn_warp = 0,
         spawn_bump
     };
     //!Type of NPC spawn from block
     unsigned int block_spawn_type;
     //!NPC's initial Y Velocity after spawn from block
-    float        block_spawn_speed;
+    double       block_spawn_speed;
     //!Play sound on spawn from block (if false - spawn without 'radish' sound)
     bool         block_spawn_sound;
 };
@@ -66,12 +67,12 @@ struct obj_npc
 struct NPC_GlobalSetup
 {
     //    ;Defines for SMBX64
-    unsigned long bubble;   //    bubble=283	; NPC-Container for packed in bubble
-    unsigned long egg;      //    egg=96		; NPC-Container for packed in egg
-    unsigned long lakitu;   //    lakitu=284	; NPC-Container for spawn by lakitu
-    unsigned long buried;   //    burred=91	; NPC-Container for packed in herb
+    unsigned long bubble;   //    bubble=283    ; NPC-Container for packed in bubble
+    unsigned long egg;      //    egg=96        ; NPC-Container for packed in egg
+    unsigned long lakitu;   //    lakitu=284    ; NPC-Container for spawn by lakitu
+    unsigned long buried;   //    burred=91 ; NPC-Container for packed in herb
 
-    unsigned long ice_cube; //    icecube=263	; NPC-Container for frozen NPCs
+    unsigned long ice_cube; //    icecube=263   ; NPC-Container for frozen NPCs
 
     //    ;markers
     unsigned long iceball;  //    iceball=265
@@ -81,19 +82,18 @@ struct NPC_GlobalSetup
     unsigned long coin_in_block; //    coin-in-block=10
 
     // some physics settings
-            float phs_gravity_accel;
-            float phs_max_fall_speed;
+    double phs_gravity_accel;
+    double phs_max_fall_speed;
     //effects
     unsigned long eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
 
     //projectile properties
     SpawnEffectDef projectile_effect;
-    long  projectile_sound_id;
-    float projectile_speed;
+    long    projectile_sound_id;
+    double  projectile_speed;
 
     //Talking NPC's properties
     QString talking_sign_img;
 };
 
 #endif // OBJ_NPC_H
-

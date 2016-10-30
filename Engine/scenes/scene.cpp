@@ -20,6 +20,7 @@
 #include <QString>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
+#include <common_features/maths.h>
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
@@ -28,19 +29,25 @@ void Scene::construct()
 {
     m_messages.m_scene = this;
     m_fader.setFull();
-    m_fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
-    m_isRunning=true;
-    m_doExit=false;
-    m_doShutDown=false;
-    updateTickValue();    
+    m_fader.setFade(10, 0.0, 0.02); //!< Fade in scene when it was started
+    m_isRunning = true;
+    m_doExit = false;
+    m_doShutDown = false;
+    updateTickValue();
 }
 
 void Scene::updateTickValue()
 {
-    uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
-    uTick = round(uTickf);
-    if(uTick<=0) uTick=1;
-    if(uTickf<=0) uTickf=1.0;
+    uTickf = static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
+    uTick  = Maths::uRound(uTickf);
+
+    if(uTick == 0)
+        uTick = 1;
+
+    if(uTickf <= 0.0)
+        uTickf = 1.0;
+
+    assert((uTick < 2000u) && "uTick Must be less than two seconds!!!");
 }
 
 Scene::Scene()
@@ -91,37 +98,45 @@ void Scene::onMouseWheel(SDL_MouseWheelEvent &)
 void Scene::processEvents()
 {
     SDL_Event event; //  Events of SDL
-    while ( SDL_PollEvent(&event) )
+
+    while(SDL_PollEvent(&event))
     {
-        if(PGE_Window::processEvents(event)!=0) continue;
+        if(PGE_Window::processEvents(event) != 0) continue;
+
         switch(event.type)
         {
-            case SDL_QUIT:
-            {
-                m_doExit    = true;
-                m_isRunning = false;
-                m_doShutDown= true;
-                break;
-            }// End work of program
-            case SDL_KEYDOWN: // If pressed key
-                onKeyboardPressedSDL(event.key.keysym.sym, event.key.keysym.mod);
-                onKeyboardPressed(event.key.keysym.scancode);
+        case SDL_QUIT:
+        {
+            m_doExit    = true;
+            m_isRunning = false;
+            m_doShutDown = true;
             break;
-            case SDL_KEYUP: // If released key
-                onKeyboardReleasedSDL(event.key.keysym.sym, event.key.keysym.mod);
-                onKeyboardReleased(event.key.keysym.scancode);
+        }// End work of program
+
+        case SDL_KEYDOWN: // If pressed key
+            onKeyboardPressedSDL(event.key.keysym.sym, event.key.keysym.mod);
+            onKeyboardPressed(event.key.keysym.scancode);
             break;
-            case SDL_MOUSEBUTTONDOWN:
-                onMousePressed(event.button);
+
+        case SDL_KEYUP: // If released key
+            onKeyboardReleasedSDL(event.key.keysym.sym, event.key.keysym.mod);
+            onKeyboardReleased(event.key.keysym.scancode);
             break;
-            case SDL_MOUSEBUTTONUP:
-                onMouseReleased(event.button);
+
+        case SDL_MOUSEBUTTONDOWN:
+            onMousePressed(event.button);
             break;
-            case SDL_MOUSEWHEEL:
-                onMouseWheel(event.wheel);
+
+        case SDL_MOUSEBUTTONUP:
+            onMouseReleased(event.button);
             break;
-            case SDL_MOUSEMOTION:
-                onMouseMoved(event.motion);
+
+        case SDL_MOUSEWHEEL:
+            onMouseWheel(event.wheel);
+            break;
+
+        case SDL_MOUSEMOTION:
+            onMouseMoved(event.motion);
             break;
         }
     }
@@ -139,11 +154,13 @@ void Scene::update()
 
 void Scene::updateLua()
 {
-    LuaEngine* sceneLuaEngine = getLuaEngine();
+    LuaEngine *sceneLuaEngine = getLuaEngine();
     renderArrayClear();//Clean up last rendered stuff
+
     if(sceneLuaEngine)
     {
-        if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown()){
+        if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown())
+        {
             //sceneLuaEngine->runGarbageCollector();
             LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
             sceneLuaEngine->dispatchEvent(loopEvent);
@@ -153,15 +170,11 @@ void Scene::updateLua()
 
 void Scene::render()
 {
-    for(RenderFuncs& rf : luaRenders)
-    {
+    for(RenderFuncs &rf : luaRenders)
         (rf.render)(0.0, 0.0);
-    }
 
     if(!m_fader.isNull())
-    {
         GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, m_fader.fadeRatio());
-    }
 }
 
 void Scene::renderMouse()
@@ -179,10 +192,10 @@ Scene::TypeOfScene Scene::type()
 
 void Scene::renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex)
 {
-    luaRenders.push_back( RenderFuncs{zIndex, renderFunc} );
+    luaRenders.push_back(RenderFuncs{zIndex, renderFunc});
 }
 
-static bool compareZIndeces(const Scene::RenderFuncs& i, const Scene::RenderFuncs& j)
+static bool compareZIndeces(const Scene::RenderFuncs &i, const Scene::RenderFuncs &j)
 {
     return (i.z_index < j.z_index);
 }

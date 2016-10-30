@@ -28,30 +28,30 @@
 
 class LVL_Bgo : public PGE_Phys_Object
 {
-public:
-    LVL_Bgo(LevelScene *_parent=NULL);
-    ~LVL_Bgo();
-    void init();
+    public:
+        LVL_Bgo(LevelScene *_parent = NULL);
+        ~LVL_Bgo();
+        void init();
 
-    void transformTo_x(long id);
+        void transformTo_x(unsigned long id);
 
-    LevelBGO data; //Local settings
+        LevelBGO data; //Local settings
 
-    bool animated;
-    long animator_ID;
+        bool animated;
+        int  animator_ID;
 
-    obj_bgo * setup;//Global config
+        obj_bgo *setup; //Global config
 
-    void render(double camX, double camY);
-    bool isInited();
+        void render(double camX, double camY);
+        bool isInited();
 
-    /************LUA-Specific functions*********/
-    long lua_getID();
-    static luabind::scope bindToLua();
-    /*******************************************/
+        /************LUA-Specific functions*********/
+        unsigned long lua_getID();
+        static luabind::scope bindToLua();
+        /*******************************************/
 
-private:
-    bool _isInited;
+    private:
+        bool _isInited;
 };
 
 
