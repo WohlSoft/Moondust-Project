@@ -19,82 +19,112 @@
 #include "image_size.h"
 #include <QFile>
 
-static bool tryGIF(QFile &file, int *w, int*h)
+static bool tryGIF(QFile &file, int *w, int *h)
 {
     file.seek(0);
     const char *GIF1 = "GIF87a";
     const char *GIF2 = "GIF89a";
     char magic[6];
+
     if(file.read(magic, 6) != 6)
         return false;
-    bool found=false;
-    if(strncmp(magic, GIF1, 6)==0)
-        found=true;
-    if(strncmp(magic, GIF2, 6)==0)
-        found=true;
+
+    bool found = false;
+
+    if(strncmp(magic, GIF1, 6) == 0)
+        found = true;
+
+    if(strncmp(magic, GIF2, 6) == 0)
+        found = true;
+
     if(!found)
         return false;
-    char size[4];
-    if(file.read(size, 4) != 4)
+
+    unsigned char size[4];
+
+    if(file.read(reinterpret_cast<char *>(size), 4) != 4)
         return false;
 
-    *w = (int(size[0])&0x00) | ((int(size[1])<<8)&0xFF00);
-    *h = (int(size[2])&0x00) | ((int(size[3])<<8)&0xFF00);
+#define UINT(d) static_cast<unsigned int>(d)
+    *w = static_cast<int>((UINT(size[0]) & 0x00FF) | ((UINT(size[1]) << 8) & 0xFF00));
+    *h = static_cast<int>((UINT(size[2]) & 0x00FF) | ((UINT(size[3]) << 8) & 0xFF00));
+#undef UINT
+
     if(*w < 0)
         return false;
+
     if(*h < 0)
         return false;
+
     return true;
 }
 
-static bool tryBMP(QFile &file, int *w, int*h)
+static bool tryBMP(QFile &file, int *w, int *h)
 {
     file.seek(0);
-    const char *BMP= "BM";
+    const char *BMP = "BM";
     char magic[2];
+
     if(file.read(magic, 2) != 2)
         return false;
+
     if(strncmp(magic, BMP, 2) != 0)
         return false;
-    char size[8];
+
+    unsigned char size[8];
+
     if(!file.seek(18))
         return false;
-    if(file.read(size, 8) != 8)
+
+    if(file.read(reinterpret_cast<char *>(size), 8) != 8)
         return false;
 
-    *w = (int(size[0])&0x00) | ((int(size[1])<<8)&0xFF00) | ((int(size[2])<<16)&0xFF0000) | ((int(size[3])<<24)&0xFF000000);
-    *h = (int(size[4])&0x00) | ((int(size[5])<<8)&0xFF00) | ((int(size[6])<<16)&0xFF0000) | ((int(size[7])<<24)&0xFF000000);
+#define UINT(d) static_cast<unsigned int>(d)
+    *w = static_cast<int>((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
+    *h = static_cast<int>((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
+#undef UINT
+
     if(*w < 0)
         return false;
+
     if(*h < 0)
         return false;
-    return true;
 
+    return true;
 }
 
-static bool tryPNG(QFile &file, int *w, int*h)
+static bool tryPNG(QFile &file, int *w, int *h)
 {
     file.seek(0);
     const char *PNG  = "\211PNG\r\n\032\n";
     const char *IHDR = "IHDR";
     char magic[8];
+
     if(file.read(magic, 8) != 8)
         return false;
+
     if(strncmp(magic, PNG, 8) != 0)
         return false;
+
     if(file.read(magic, 8) != 8)
         return false;
-    if(strncmp(magic+4, IHDR, 4) != 0)
+
+    if(strncmp(magic + 4, IHDR, 4) != 0)
         return false;
 
-    char size[8];
-    if(file.read(size, 8) != 8)
+    unsigned char size[8];
+
+    if(file.read(reinterpret_cast<char *>(size), 8) != 8)
         return false;
 
-    *w = (int(size[3])&0x00) | ((int(size[2])<<8)&0xFF00) | ((int(size[1])<<16)&0xFF0000) | ((int(size[0])<<24)&0xFF000000);
-    *h = (int(size[7])&0x00) | ((int(size[6])<<8)&0xFF00) | ((int(size[5])<<16)&0xFF0000) | ((int(size[4])<<24)&0xFF000000);
+#define UINT(d) static_cast<unsigned int>(d)
+    *w = static_cast<int>((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
+    *h = static_cast<int>((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
+#undef UINT
+
     if(*w < 0)
         return false;
+
     if(*h < 0)
         return false;
 
@@ -112,6 +142,7 @@ bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode
     {
         if(errCode)
             *errCode = ERR_NOT_EXISTS;
+
         return false;
     }
 
@@ -119,13 +150,16 @@ bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode
     {
         if(errCode)
             *errCode = ERR_CANT_OPEN;
+
         return false;
     }
 
     if(tryGIF(image, w, h))
         return true;
+
     if(tryPNG(image, w, h))
         return true;
+
     if(tryBMP(image, w, h))
         return true;
 
@@ -138,18 +172,19 @@ bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode
 QString PGE_ImageInfo::getMaskName(QString imageFileName)
 {
     QString out_maskName = imageFileName;
-    int i = out_maskName.size()-1;
-    for( ;i>0; i--)
+    int i = out_maskName.size() - 1;
+
+    for(; i > 0; i--)
     {
-        if(out_maskName[i]=='.')
+        if(out_maskName[i] == '.')
         {
             out_maskName.insert(i, 'm');
             break;
         }
     }
-    if(i==0)
-    {
+
+    if(i == 0)
         out_maskName = "";
-    }
+
     return out_maskName;
 }

@@ -24,22 +24,22 @@
 
 class LVL_PhysEnv : public PGE_Phys_Object
 {
-public:
-    LVL_PhysEnv(LevelScene *_parent=NULL);
-    ~LVL_PhysEnv();
+    public:
+        LVL_PhysEnv(LevelScene *_parent = NULL);
+        ~LVL_PhysEnv();
 
-    void init();
-    static const int numOfEnvironments;
-    enum EnvType
-    {
-        Env_SameAsAround = -1,
-        Env_Air = 0,
-        Env_Water,
-        Env_Quicksand
-    };
-    int env_type;
+        void init();
+        static const unsigned long numOfEnvironments;
+        enum EnvType
+        {
+            Env_SameAsAround = -1,
+            Env_Air = 0,
+            Env_Water,
+            Env_Quicksand
+        };
+        int env_type;
 
-    LevelPhysEnv data;
+        LevelPhysEnv data;
 };
 
 #endif // LVL_PHYSENV_H

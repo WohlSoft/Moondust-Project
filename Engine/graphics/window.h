@@ -29,43 +29,43 @@
 
 class PGE_Window
 {
-public:
-    static int Width;
-    static int Height;
-    static int MaxFPS;
-    static bool vsync;
-    static bool vsyncIsSupported;
-    static float TicksPerSecond;
-    static int TimeOfFrame;
-    static bool showDebugInfo;
-    static bool showPhysicsDebug;
-    static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand", int renderType=0);
-    static void toggleVSync(bool vsync);
-    static bool uninit();
-    static bool isReady();
-    static void setCursorVisibly(bool viz);
-    static void clean();
+    public:
+        static int Width;
+        static int Height;
+        static int MaxFPS;
+        static bool vsync;
+        static bool vsyncIsSupported;
+        static double TicksPerSecond;
+        static int  TimeOfFrame;
+        static bool showDebugInfo;
+        static bool showPhysicsDebug;
+        static bool init(QString WindowTitle = "Platformer Game Engine by Wohldtand", int renderType = 0);
+        static void toggleVSync(bool vsync);
+        static bool uninit();
+        static bool isReady();
+        static void setCursorVisibly(bool viz);
+        static void clean();
 
-    static SDL_Window *window;
-    static SDL_GLContext glcontext_background;
-    static SDL_GLContext glcontext;
-    static int setFullScreen(bool fs);
-    static int SDL_ToggleFS(SDL_Window *win=NULL);
+        static SDL_Window *window;
+        static SDL_GLContext glcontext_background;
+        static SDL_GLContext glcontext;
+        static int setFullScreen(bool fs);
+        static int SDL_ToggleFS(SDL_Window *win = NULL);
 
-    static int processEvents(SDL_Event &event);
+        static int processEvents(SDL_Event &event);
 
-    static bool isSdlError();
-    static bool checkSDLError(const char *fn, int line, const char *func);
-    static void printSDLWarn(QString info);
-    static void printSDLError(QString info);
+        static bool isSdlError();
+        static bool checkSDLError(const char *fn, int line, const char *func);
+        static void printSDLWarn(QString info);
+        static void printSDLError(QString info);
 
-    static int  msgBoxInfo(QString title, QString text);
-    static int  msgBoxWarning(QString title, QString text);
-    static int  msgBoxCritical(QString title, QString text);
-private:
-    static bool IsInit;
-    static bool showCursor;
-    static SDL_bool IsFullScreen(SDL_Window *win);
+        static int  msgBoxInfo(QString title, QString text);
+        static int  msgBoxWarning(QString title, QString text);
+        static int  msgBoxCritical(QString title, QString text);
+    private:
+        static bool IsInit;
+        static bool showCursor;
+        static SDL_bool IsFullScreen(SDL_Window *win);
 };
 
 #endif // WINDOW_H

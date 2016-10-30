@@ -9,33 +9,33 @@ class LVL_Npc;
 
 class LuaLevelEngine : public LuaEngine
 {
-private:
-    Q_DISABLE_COPY(LuaLevelEngine)
-public:
-    LuaLevelEngine(LevelScene* scene);
-    ~LuaLevelEngine();
+    private:
+        Q_DISABLE_COPY(LuaLevelEngine)
+    public:
+        LuaLevelEngine(LevelScene *scene);
+        ~LuaLevelEngine();
 
-    LVL_Player* createLuaPlayer();
-    LVL_Npc* createLuaNpc(unsigned int id);
-    void destoryLuaNpc(LVL_Npc* npc);
-    void destoryLuaPlayer(LVL_Player *plr);
+        LVL_Player *createLuaPlayer();
+        LVL_Npc *createLuaNpc(unsigned long id);
+        void destoryLuaNpc(LVL_Npc *npc);
+        void destoryLuaPlayer(LVL_Player *plr);
 
-    void loadNPCClass(int id, const QString& path);
-    void loadPlayerClass(int id, const QString& path);
+        void loadNPCClass(unsigned long id, const QString &path);
+        void loadPlayerClass(unsigned long id, const QString &path);
 
-    LevelScene* getScene();
+        LevelScene *getScene();
 
-    QString getNpcBaseClassPath() const;
-    void setNpcBaseClassPath(const QString &npcBaseClassPath);
+        QString getNpcBaseClassPath() const;
+        void setNpcBaseClassPath(const QString &npcBaseClassPath);
 
-    QString getPlayerBaseClassPath() const;
-    void setPlayerBaseClassPath(const QString &playerBaseClassPath);
+        QString getPlayerBaseClassPath() const;
+        void setPlayerBaseClassPath(const QString &playerBaseClassPath);
 
-protected:
-    QString m_npcBaseClassPath;
-    QString m_playerBaseClassPath;
+    protected:
+        QString m_npcBaseClassPath;
+        QString m_playerBaseClassPath;
 
-    void onBindAll();
+        void onBindAll();
 };
 
 #endif // LUALEVELENGINE_H

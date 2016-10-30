@@ -20,9 +20,11 @@
 #define OBJ_BG_H
 
 #include <QString>
+#include <QList>
 #include "../graphics/graphics.h"
 
-struct obj_BG{
+struct obj_BG
+{
 
     unsigned long id;
     QString name;
@@ -31,16 +33,16 @@ struct obj_BG{
 
     /*   OpenGL    */
     bool isInit;
-    PGE_Texture * image;
+    PGE_Texture *image;
     GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
+    int textureArrayId;
+    int animator_ID;
     PGEColor Color_upper;
     PGEColor Color_lower;
     /*   OpenGL    */
 
     unsigned int type;//convert from string
-    float repeat_h;
+    double       repeat_h;
     unsigned int repead_v;
     unsigned int attached;
     bool editing_tiled;
@@ -54,25 +56,24 @@ struct obj_BG{
     bool magic;
     unsigned int magic_strips;
     QString magic_splits;
-    QList<int > magic_splits_i;
+    QList<int> magic_splits_i;
     QString magic_speeds;
-    QList<double > magic_speeds_i;
+    QList<double> magic_speeds_i;
 
     QString second_image_n;
     //QPixmap second_image;
 
     /*   OpenGL    */
     bool second_isInit;
-    PGE_Texture * second_image;
+    PGE_Texture *second_image;
     GLuint second_textureID;
-    long second_textureArrayId;
-    long second_animator_ID;
+    int second_textureArrayId;
+    int second_animator_ID;
     PGEColor second_Color_upper;
     PGEColor second_Color_lower;
     /*   OpenGL    */
 
-
-    float second_repeat_h;
+    double       second_repeat_h;
     unsigned int second_repeat_v;
     unsigned int second_attached;
 

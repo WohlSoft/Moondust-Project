@@ -38,49 +38,49 @@ struct LVL_Background_strip
 class PGE_LevelCamera;
 class LVL_Background
 {
-    friend class PGE_LevelCamera;
-public:
-    LVL_Background();
-    LVL_Background(const LVL_Background &_bg);
-    ~LVL_Background();
+        friend class PGE_LevelCamera;
+    public:
+        LVL_Background();
+        LVL_Background(const LVL_Background &_bg);
+        ~LVL_Background();
 
-    void setBg(obj_BG &bg);
-    void setNone();
-    void setBox(PGE_RectF &_box);
-    void draw(float x, float y, float w, float h); //draw by camera position
-    bool isInit();
-    int  curBgId();
+        void setBg(obj_BG &bg);
+        void setNone();
+        void setBox(PGE_RectF &_box);
+        void draw(double x, double y, double w, double h); //draw by camera position
+        bool isInit();
+        unsigned long curBgId();
 
-    bool _isInited;
+        bool _isInited;
 
-    enum type
-    {
-        single_row      = 0,
-        double_row      = 1,
-        tiled           = 2,
-        multi_layered   = 3
-    };
-    obj_BG setup;
-    type bgType;
+        enum type
+        {
+            single_row      = 0,
+            double_row      = 1,
+            tiled           = 2,
+            multi_layered   = 3
+        };
+        obj_BG setup;
+        type bgType;
 
-    bool isNoImage;
+        bool isNoImage;
 
-    PGE_Texture txData1;
-    PGE_Texture txData2;
+        PGE_Texture txData1;
+        PGE_Texture txData2;
 
-    bool isAnimated;
-    long animator_ID;
+        bool isAnimated;
+        long animator_ID;
 
-    bool isMagic;
-    QList<LVL_Background_strip > strips;
+        bool isMagic;
+        QList<LVL_Background_strip > strips;
 
-    PGEColor color;
+        PGEColor color;
 
-    PGE_RectF box;
+        PGE_RectF box;
 
-private:
-    void construct();
-    PGE_RectF backgrndG;//!< Used in draw process
+    private:
+        void construct();
+        PGE_RectF backgrndG;//!< Used in draw process
 };
 
 

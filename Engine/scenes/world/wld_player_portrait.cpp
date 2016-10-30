@@ -22,28 +22,27 @@
 
 WorldScene_Portrait::WorldScene_Portrait()
 {
-    posX=0;
-    posY=0;
-    posX_render=0;
-    posY_render=0;
+    posX = 0;
+    posY = 0;
+    posX_render = 0;
+    posY_render = 0;
     setup = ConfigManager::playable_characters[1];
     state_cur = ConfigManager::playable_characters[1].states[1];
     frameW = 0;
     frameH = 0;
 }
 
-WorldScene_Portrait::WorldScene_Portrait(int CharacterID, int stateID, int _posX, int _posY, QString ani, int framedelay, int dir)
+WorldScene_Portrait::WorldScene_Portrait(unsigned long CharacterID, unsigned long stateID, int _posX, int _posY, QString ani, int framedelay, int dir)
 {
-    posX=_posX;
-    posY=_posY;
+    posX = _posX;
+    posY = _posY;
     setup = ConfigManager::playable_characters[CharacterID];
     state_cur = ConfigManager::playable_characters[CharacterID].states[stateID];
+    posX_render = posX - state_cur.width / 2;
+    posY_render = posY - state_cur.height;
+    int tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
 
-    posX_render=posX-state_cur.width/2;
-    posY_render=posY-state_cur.height;
-
-    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
-    if( tID >= 0 )
+    if(tID >= 0)
     {
         texture = ConfigManager::level_textures[tID];
         frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
@@ -77,26 +76,24 @@ void WorldScene_Portrait::render()
 {
     PGE_RectF tPos = animator.curFrame();
     PGE_PointF Ofs = animator.curOffset();
-
     PGE_RectF player;
-    player.setRect( posX_render - Ofs.x(),
-                            posY_render-Ofs.y(),
-                            frameW,
-                            frameH
-                            );
+    player.setRect(posX_render - Ofs.x(),
+                   posY_render - Ofs.y(),
+                   frameW,
+                   frameH
+                  );
     GlRenderer::renderTexture(&texture,
-                              player.x(),
-                              player.y(),
-                              player.width(),
-                              player.height(),
-                              tPos.top(),
-                              tPos.bottom(),
-                              tPos.left(),
-                              tPos.right());
+                              static_cast<float>(player.x()),
+                              static_cast<float>(player.y()),
+                              static_cast<float>(player.width()),
+                              static_cast<float>(player.height()),
+                              static_cast<float>(tPos.top()),
+                              static_cast<float>(tPos.bottom()),
+                              static_cast<float>(tPos.left()),
+                              static_cast<float>(tPos.right()));
 }
 
-void WorldScene_Portrait::update(float ticks)
+void WorldScene_Portrait::update(double ticks)
 {
     animator.tickAnimation(ticks);
 }
-

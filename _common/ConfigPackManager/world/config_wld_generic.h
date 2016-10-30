@@ -35,7 +35,7 @@ struct WldGenericSetup
         display_frame = 0;
         frame_h = 0;
     }
-    bool parse(QSettings* setup, QString imgPath, int defaultGrid, WldGenericSetup* merge_with = nullptr, QString *error=nullptr);
+    bool parse(QSettings* setup, QString imgPath, unsigned int defaultGrid, WldGenericSetup* merge_with = nullptr, QString *error=nullptr);
 
     unsigned long id;
         QString image_n;

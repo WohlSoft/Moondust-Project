@@ -32,19 +32,25 @@ LuaLevelEngine::~LuaLevelEngine()
 
 LVL_Player *LuaLevelEngine::createLuaPlayer()
 {
-    try {
-        return luabind::call_function<LVL_Player*>(getNativeState(), "__create_luaplayer");
-    } catch (luabind::error& error){
+    try
+    {
+        return luabind::call_function<LVL_Player *>(getNativeState(), "__create_luaplayer");
+    }
+    catch(luabind::error &error)
+    {
         postLateShutdownError(error);
         return nullptr;
     }
 }
 
-LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned int id)
+LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned long id)
 {
-    try {
-        return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc", id);
-    } catch (luabind::error& error){
+    try
+    {
+        return luabind::call_function<LVL_Npc *>(getNativeState(), "__create_luanpc", id);
+    }
+    catch(luabind::error &error)
+    {
         postLateShutdownError(error);
         return nullptr;
     }
@@ -52,9 +58,12 @@ LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned int id)
 
 void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
 {
-    try {
+    try
+    {
         luabind::call_function<void>(getNativeState(), "__destroy_luanpc", npc);
-    } catch (luabind::error& error){
+    }
+    catch(luabind::error &error)
+    {
         postLateShutdownError(error);
         return;
     }
@@ -62,23 +71,26 @@ void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
 
 void LuaLevelEngine::destoryLuaPlayer(LVL_Player *plr)
 {
-    try {
+    try
+    {
         luabind::call_function<void>(getNativeState(), "__destroy_luaplayer", plr);
-    } catch (luabind::error& error){
+    }
+    catch(luabind::error &error)
+    {
         postLateShutdownError(error);
         return;
     }
 }
 
-void LuaLevelEngine::loadNPCClass(int id, const QString &path)
+void LuaLevelEngine::loadNPCClass(unsigned long id, const QString &path)
 {
     if(shouldShutdown())
         return;
 
     luabind::object _G = luabind::globals(getNativeState());
-    if(luabind::type(_G["npc_class_table"]) != LUA_TTABLE){
+
+    if(luabind::type(_G["npc_class_table"]) != LUA_TTABLE)
         _G["npc_class_table"] = luabind::newtable(getNativeState());
-    }
 
     if(luabind::type(_G["npc_class_table"][id]) != LUA_TNIL)
         return;
@@ -86,15 +98,15 @@ void LuaLevelEngine::loadNPCClass(int id, const QString &path)
     _G["npc_class_table"][id] = loadClassAPI(path);
 }
 
-void LuaLevelEngine::loadPlayerClass(int id, const QString &path)
+void LuaLevelEngine::loadPlayerClass(unsigned long id, const QString &path)
 {
     if(shouldShutdown())
         return;
 
     luabind::object _G = luabind::globals(getNativeState());
-    if(luabind::type(_G["player_class_table"]) != LUA_TTABLE){
+
+    if(luabind::type(_G["player_class_table"]) != LUA_TTABLE)
         _G["player_class_table"] = luabind::newtable(getNativeState());
-    }
 
     if(luabind::type(_G["player_class_table"][id]) != LUA_TNIL)
         return;
@@ -104,7 +116,7 @@ void LuaLevelEngine::loadPlayerClass(int id, const QString &path)
 
 LevelScene *LuaLevelEngine::getScene()
 {
-    return dynamic_cast<LevelScene*>(getBaseScene());
+    return dynamic_cast<LevelScene *>(getBaseScene());
 }
 QString LuaLevelEngine::getNpcBaseClassPath() const
 {
@@ -150,16 +162,13 @@ void LuaLevelEngine::onBindAll()
         PGE_LevelCamera::bindToLua()
     ];
     Binding_Global_Constants::bindToLua(getNativeState());
-
     {
         luabind::object _G = luabind::globals(getNativeState());
-        if(luabind::type(_G["bases"]) != LUA_TTABLE){
+
+        if(luabind::type(_G["bases"]) != LUA_TTABLE)
             _G["bases"] = luabind::newtable(getNativeState());
-        }
 
         _G["bases"]["npc"] = loadClassAPI(m_npcBaseClassPath);
         _G["bases"]["player"] = loadClassAPI(m_playerBaseClassPath);
     }
-
 }
-

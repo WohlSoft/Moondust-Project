@@ -29,12 +29,13 @@ QList<SimpleAnimator > ConfigManager::Animator_BGO;
 
 bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
 {
-    bool valid=true;
+    bool valid = true;
     bool internal = !setup;
     QString errStr;
+
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
+        setup = new QSettings(iniFile, QSettings::IniFormat);
         setup->setIniCodec("UTF-8");
     }
 
@@ -42,17 +43,20 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_
     sbgo.image  = merge_with ? merge_with->image : nullptr;
     sbgo.textureArrayId = merge_with ? merge_with->textureArrayId : 0;
     sbgo.animator_ID = merge_with ? merge_with->animator_ID : 0;
+    setup->beginGroup(section);
 
-    setup->beginGroup( section );
-        if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        {
-            valid=true;
-        } else {
-            addError(errStr);
-            valid=false;
-        }
+    if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+        valid = true;
+    else
+    {
+        addError(errStr);
+        valid = false;
+    }
+
     setup->endGroup();
+
     if(internal) delete setup;
+
     return valid;
 }
 
@@ -60,11 +64,9 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_
 bool ConfigManager::loadLevelBGO()
 {
     unsigned int i;
-
     obj_bgo sbgo;
-    unsigned long bgo_total=0;
-    bool useDirectory=false;
-
+    unsigned long bgo_total = 0;
+    bool useDirectory = false;
     QString bgo_ini = config_dir + "lvl_bgo.ini";
     QString nestDir = "";
 
@@ -79,28 +81,29 @@ bool ConfigManager::loadLevelBGO()
 
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     bgoset.setIniCodec("UTF-8");
-
     lvl_bgo_indexes.clear();//Clear old
-
     bgoset.beginGroup("background-main");
-        bgo_total = bgoset.value("total", "0").toInt();
-        nestDir =   bgoset.value("config-dir", "").toString();
-        if(!nestDir.isEmpty())
-        {
-            nestDir = config_dir + nestDir;
-            useDirectory = true;
-        }
-    bgoset.endGroup();
+    bgo_total = bgoset.value("total", 0).toULongLong();
+    nestDir =   bgoset.value("config-dir", "").toString();
 
+    if(!nestDir.isEmpty())
+    {
+        nestDir = config_dir + nestDir;
+        useDirectory = true;
+    }
+
+    bgoset.endGroup();
     lvl_bgo_indexes.allocateSlots(bgo_total);
 
-    for(i=1; i<=bgo_total; i++)
+    for(i = 1; i <= bgo_total; i++)
     {
         if(useDirectory)
         {
             if(!loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i)))
                 return false;
-        } else {
+        }
+        else
+        {
             if(!loadLevelBGO(sbgo, QString("background-%1").arg(i), nullptr, "", &bgoset))
                 return false;
         }
@@ -111,18 +114,17 @@ bool ConfigManager::loadLevelBGO()
         //Load custom config if possible
         loadCustomConfig<obj_bgo>(lvl_bgo_indexes, i, Dir_BGO, "background", "background", &loadLevelBGO);
 
-        if( bgoset.status() != QSettings::NoError )
-        {
+        if(bgoset.status() != QSettings::NoError)
             addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), QtCriticalMsg);
-        }
     }
 
-    if((unsigned int)lvl_bgo_indexes.stored()<bgo_total)
+    if(lvl_bgo_indexes.stored() < bgo_total)
     {
         addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()));
         PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }
+
     return true;
 }

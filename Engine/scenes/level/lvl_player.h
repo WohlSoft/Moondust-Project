@@ -37,10 +37,10 @@
 
 class LVL_Player_harm_event
 {
-public:
-    LVL_Player_harm_event();
-    bool    doHarm;
-    int     doHarm_damage;
+    public:
+        LVL_Player_harm_event();
+        bool    doHarm;
+        int     doHarm_damage;
 };
 
 class LVL_Section;
@@ -48,14 +48,14 @@ class LVL_Block;
 class lua_LevelPlayerState;
 
 class LVL_Player :
-        public PGE_Phys_Object,
-        public ControllableObject
+    public PGE_Phys_Object,
+    public ControllableObject
 {
     public:
-        LVL_Player(LevelScene *_parent=NULL);
+        LVL_Player(LevelScene *_parent = NULL);
         virtual ~LVL_Player();
-        void setCharacter(int CharacterID, int _stateID);
-        void setCharacterSafe(int CharacterID, int _stateID);
+        void setCharacter(unsigned long CharacterID, unsigned long _stateID);
+        void setCharacterSafe(unsigned long CharacterID, unsigned long _stateID);
     private:
         bool _doSafeSwitchCharacter;
     public:
@@ -69,47 +69,47 @@ class LVL_Player :
         void processContacts();
         void preCollision();
         void postCollision();
-        void collisionHitBlockTop(std::vector<PGE_Phys_Object*> &blocksHit);
-        bool preCollisionCheck(PGE_Phys_Object* body);
+        void collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit);
+        bool preCollisionCheck(PGE_Phys_Object *body);
 
         bool forceCollideCenter;//!< collide with invizible blocks at center
-        float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
+        double _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
         /*****************NPC's and blocks******************/
-        typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
-        LVL_Npc *  collided_talkable_npc;
+        typedef QHash<int, PGE_Phys_Object *> PlayerColliders;
+        LVL_Npc   *collided_talkable_npc;
         bool _stucked;
         /***************************************************/
 
         int playerID;
         obj_player setup;
         PlayerPoint data;
-        PGE_LevelCamera * camera;//!< Connected camera
+        PGE_LevelCamera *camera; //!< Connected camera
 
-        void teleport(float x, float y);
-        void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
+        void teleport(double x, double y);
+        void exitFromLevel(QString levelFile, unsigned long targetWarp, long wX = -1, long wY = -1);
 
         PGE_DataArray<obj_player_state > states;
-        int     characterID;
-        int     stateID;
+        unsigned long   characterID;
+        unsigned long   stateID;
         obj_player_state state_cur;
 
 
         enum kill_npc_reasons
         {
-            NPC_Unknown=-1,
-            NPC_Stomped=0,
+            NPC_Unknown = -1,
+            NPC_Stomped = 0,
             NPC_Kicked,
             NPC_Taked_Coin,
             NPC_Taked_Powerup
         };
 
-        void kill_npc(LVL_Npc*target, kill_npc_reasons reason);
+        void kill_npc(LVL_Npc *target, kill_npc_reasons reason);
         //QQueue<LVL_Npc*> npc_queue;
 
         /*******************Environmept*********************/
         PGE_DataArray<obj_player_physics > physics;
-        QHash<int, int > environments_map;
+        QHash<int, int> environments_map;
 
         obj_player_physics physics_cur;
         int     environment;
@@ -128,11 +128,11 @@ class LVL_Player :
         bool isAlive;
         enum deathReason
         {
-            DEAD_fall=0,
+            DEAD_fall = 0,
             DEAD_burn,
             DEAD_killed
         };
-        void    kill(deathReason reason=DEAD_killed);
+        void    kill(deathReason reason = DEAD_killed);
         void    unregister();
 
         bool    doKill;
@@ -143,36 +143,36 @@ class LVL_Player :
         float   invincible_delay;
         bool    blink_screen;
         bool    blink_screen_state;
-        void    harm(int _damage=1);
-        void    setInvincible(bool state, float delay, bool enableScreenBlink=false);
+        void    harm(int _damage = 1);
+        void    setInvincible(bool state, float delay, bool enableScreenBlink = false);
         /*******************Life and Death*****************/
 
-        float   gscale_Backup; //!< BackUP of last gravity scale
+        double  gscale_Backup; //!< BackUP of last gravity scale
 
         /********************Jumps***************************/
         bool    JumpPressed;
         bool    onGround();
-        QHash<intptr_t, PGE_Phys_Object* > foot_contacts_map;   //!< staying on ground surfaces
-        QHash<intptr_t, PGE_Phys_Object* > foot_sl_contacts_map;//!< Slipery surfaces
-        float   jumpTime;
-        float   jumpVelocity;
+        QHash<intptr_t, PGE_Phys_Object * > foot_contacts_map;  //!< staying on ground surfaces
+        QHash<intptr_t, PGE_Phys_Object * > foot_sl_contacts_map; //!< Slipery surfaces
+        double  jumpTime;
+        double  jumpVelocity;
         /********************Jumps***************************/
 
         /********************Bump***************************/
         bool    bumpDown;
         bool    bumpUp;
-        float   bumpVelocity;//!< down velocity
-        float   bumpJumpVelocity;//! Up jump velocity
+        double  bumpVelocity;//!< down velocity
+        double  bumpJumpVelocity;//! Up jump velocity
         int     bumpJumpTime;    //!< Up jump time
-        void    bump(bool _up=false, double bounceSpeed=0.0, int timeToJump=0);
-        inline void bumpf(bool _up, float bounceSpeed=0.0f, int timeToJump=0)
+        void    bump(bool _up = false, double bounceSpeed = 0.0, int timeToJump = 0);
+        inline void bumpf(bool _up, float bounceSpeed = 0.0f, int timeToJump = 0)
         {
-            bump(_up, (double)bounceSpeed, timeToJump);
+            bump(_up, static_cast<double>(bounceSpeed), timeToJump);
         }
         /********************Bump***************************/
 
         /********************Climbing***************************/
-        QHash<intptr_t, PGE_Phys_Object* > climbable_map;
+        QHash<intptr_t, PGE_Phys_Object * > climbable_map;
         bool        climbing;
         double      climbableHeight;
         /********************Climbing***************************/
@@ -180,27 +180,27 @@ class LVL_Player :
         /*******************Warps*********************/
         PointMover m_cameraMover;
         bool    contactedWithWarp;
-        LVL_Warp * contactedWarp;
+        LVL_Warp *contactedWarp;
         bool    wasEntered;
         int     wasEnteredTimeout;
         bool    isWarping;
 
         int     warpDirectO;
-        float   warpPipeOffset;
-        float   warpFrameW;
-        float   warpFrameH;
+        double  warpPipeOffset;
+        double  warpFrameW;
+        double  warpFrameH;
 
         EventQueue<LVL_Player > event_queue;
         void    processWarpChecking();
-        void    WarpTo(float x, float y, int warpType, int warpDirection=1, bool cannon=false, float cannon_speed=10.0f);
+        void    WarpTo(double x, double y, int warpType, int warpDirection = 1, bool cannon = false, double cannon_speed = 10.0);
         void    WarpTo(LevelDoor warp);
         /*******************Warps*********************/\
 
         /******************floating*******************/
         bool    floating_allow;
         bool    floating_isworks;
-        float   floating_timer;
-        float   floating_maxtime;
+        double  floating_timer;
+        double  floating_maxtime;
         bool    floating_start_type;//!< true= sin(time), false= cos(time)
         /******************floating*******************/
 
@@ -208,7 +208,7 @@ class LVL_Player :
         /*This feature will provide teporary ability to break any nearest blocks*/
         enum AttackDirection
         {
-            Attack_Forward=0,
+            Attack_Forward = 0,
             Attack_Up,
             Attack_Down
         };
@@ -236,7 +236,7 @@ class LVL_Player :
         bool ducking;
         void setDuck(bool duck);
         /******************Duck*************************/
-public:
+    public:
         void render(double camX, double camY);
         MatrixAnimator animator;
         int frameW;
@@ -260,40 +260,58 @@ public:
 
         /*Controller processing*/
         void lua_processKeyEvents();
-        void lua_updateKey(bool& target_key, ControllableObject::KeyType ktype, bool &state);
+        void lua_updateKey(bool &target_key, ControllableObject::KeyType ktype, bool &state);
         controller_keys keys_prev;
-        inline bool  lua_getKeyState(int keyType) { return getKeyState(keyType); }
+        inline bool  lua_getKeyState(int keyType)
+        {
+            return getKeyState(keyType);
+        }
         virtual void lua_onKeyPressed(ControllableObject::KeyType) {}
         virtual void lua_onKeyReleased(ControllableObject::KeyType) {}
         /*---------------------*/
 
         virtual void lua_onInit() {}
         virtual void lua_onLoop(float) {}
-        virtual void lua_onHarm(LVL_Player_harm_event*) {}
-        virtual void lua_onTransform(long, long) {}
-        virtual void lua_onTakeNpc(LVL_Npc*) {}
-        virtual void lua_onKillNpc(LVL_Npc*) {}
-        inline void lua_playAnimationOnce(int animationID, int speed, bool fixed_speed, bool locked, int skipLastFrames)
+        virtual void lua_onHarm(LVL_Player_harm_event *) {}
+        virtual void lua_onTransform(unsigned long, unsigned long) {}
+        virtual void lua_onTakeNpc(LVL_Npc *) {}
+        virtual void lua_onKillNpc(LVL_Npc *) {}
+        inline void lua_playAnimationOnce(int animationID,
+                                          int speed,
+                                          bool fixed_speed,
+                                          bool locked,
+                                          int skipLastFrames)
         {
-            animator.playOnce((MatrixAnimator::MatrixAnimates)animationID,
+            animator.playOnce(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
                               _direction, speed, fixed_speed,
                               locked, skipLastFrames);
         }
         inline void lua_setAnimation(int animationID, int framespeed)
         {
-            animator.switchAnimation((MatrixAnimator::MatrixAnimates)animationID, _direction, framespeed);
+            animator.switchAnimation(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
+                                     _direction,
+                                     framespeed);
         }
-        inline long getHealth() { return health; }
+        inline long getHealth()
+        {
+            return health;
+        }
         void setHealth(int _health);
-        inline void setCharacterID(int _character) { setCharacterSafe(_character, stateID);}
-        inline void setState(int _state) { setCharacterSafe(characterID, _state);}
-        LVL_Npc* lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable);
+        inline void setCharacterID(unsigned long _character)
+        {
+            setCharacterSafe(_character, stateID);
+        }
+        inline void setState(unsigned long _state)
+        {
+            setCharacterSafe(characterID, _state);
+        }
+        LVL_Npc *lua_spawnNPC(unsigned long npcID, int sp_type, int sp_dir, bool reSpawnable);
         bool isLuaPlayer;
         /********************Lua Stuff******************/
 
         bool isInited();
 
-private:
+    private:
         bool _no_render;
         bool isLocked;
         bool _isInited;
