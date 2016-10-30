@@ -18,26 +18,29 @@
 
 #include "../lvl_npc.h"
 #include "../../scene_level.h"
+#include <common_features/maths.h>
 
-void LVL_Npc::updateGenerator(float tickTime)
+void LVL_Npc::updateGenerator(double tickTime)
 {
     if(!m_isGenerator) return;
-    generatorTimeLeft-=tickTime;
-    if(generatorTimeLeft<=0)
+
+    generatorTimeLeft -= tickTime;
+
+    if(generatorTimeLeft <= 0)
     {
-        generatorTimeLeft += data.generator_period*100;
+        generatorTimeLeft += data.generator_period * 100;
+
         if(!contacted_npc.isEmpty()) return;
+
         if(!contacted_players.isEmpty()) return;
 
         LevelNPC def = data;
-        def.x=round(posX());
-        def.y=round(posY());
-        def.generator=false;
-        def.layer="Spawned NPCs";
+        def.x = Maths::lRound(posX());
+        def.y = Maths::lRound(posY());
+        def.generator = false;
+        def.layer = "Spawned NPCs";
         _scene->spawnNPC(def,
-                        (LevelScene::NpcSpawnType)generatorType,
-                        (LevelScene::NpcSpawnDirection)generatorDirection, false);
+                         static_cast<LevelScene::NpcSpawnType>(generatorType),
+                         static_cast<LevelScene::NpcSpawnDirection>(generatorDirection), false);
     }
-
 }
-

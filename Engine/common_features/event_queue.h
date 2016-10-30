@@ -16,8 +16,8 @@ struct EventQueueEntry
 {
     enum __Types
     {
-        dummy=-1, //do nothing, skip this event
-        caller=0,
+        dummy = -1, //do nothing, skip this event
+        caller = 0,
         caller_t,//caller, call a function via pointer. Also possible with delay
         caller_func,
         timer,    //timer, wait a time
@@ -29,15 +29,15 @@ struct EventQueueEntry
 
     EventQueueEntry()
     {
-        obj=NULL;
-        call=NULL;
-        call_t=NULL;
-        delay=0;
-        flag_var=NULL;
-        flag_func=NULL;
-        flag_func_t=NULL;
-        type=dummy;
-        flag_target=false;
+        obj = NULL;
+        call = NULL;
+        call_t = NULL;
+        delay = 0.0;
+        flag_var = NULL;
+        flag_func = NULL;
+        flag_func_t = NULL;
+        type = dummy;
+        flag_target = false;
     }
 
     ///
@@ -47,9 +47,9 @@ struct EventQueueEntry
     /// \param _caller pointer to a static or any non-member function
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCaller( void(*_caller)(void), double _delay=0)
+    void makeCaller(void(*_caller)(void), double _delay = 0)
     {
-        type=caller;
+        type = caller;
         call = _caller;
         delay = _delay;
     }
@@ -61,10 +61,10 @@ struct EventQueueEntry
     /// \param _obj pointer to object where function must be executed
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCallerT(T*_obj, void(T::*_caller)(void), double _delay=0)
+    void makeCallerT(T *_obj, void(T::*_caller)(void), double _delay = 0)
     {
-        obj=_obj;
-        type=caller_t;
+        obj = _obj;
+        type = caller_t;
         call_t = _caller;
         delay = _delay;
     }
@@ -76,10 +76,10 @@ struct EventQueueEntry
     /// \param _call_func lamda-function which returns void
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCaller( std::function<void()> _call_func, double _delay=0)
+    void makeCaller(std::function<void()> _call_func, double _delay = 0)
     {
-        type=caller_func;
-        call_func=_call_func;
+        type = caller_func;
+        call_func = _call_func;
         delay = _delay;
     }
 
@@ -91,8 +91,8 @@ struct EventQueueEntry
     ///
     void makeTimer(int _delay)
     {
-        delay=_delay;
-        type=timer;
+        delay = _delay;
+        type = timer;
     }
 
     ///
@@ -102,12 +102,12 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlag(bool *_flag, bool target=true, double _delay=0)
+    void makeWaiterFlag(bool *_flag, bool target = true, double _delay = 0)
     {
-        flag_var=_flag;
-        delay=_delay;
-        type=wait_flag_var;
-        flag_target=target;
+        flag_var = _flag;
+        delay = _delay;
+        type = wait_flag_var;
+        flag_target = target;
     }
     ///
     /// \brief makeWaiterFlag
@@ -116,12 +116,12 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlag(bool(*_flag)(), bool target=true, double _delay=0)
+    void makeWaiterFlag(bool(*_flag)(), bool target = true, double _delay = 0)
     {
-        flag_func=_flag;
-        delay=_delay;
-        type=wait_flag_func;
-        flag_target=target;
+        flag_func = _flag;
+        delay = _delay;
+        type = wait_flag_func;
+        flag_target = target;
     }
 
     ///
@@ -131,13 +131,13 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterFlagT(T*_obj, bool(T::*_flag)(), bool target=true, double _delay=0)
+    void makeWaiterFlagT(T *_obj, bool(T::*_flag)(), bool target = true, double _delay = 0)
     {
-        obj=_obj;
-        flag_func_t=_flag;
-        delay=_delay;
-        type=wait_flag_func_t;
-        flag_target=target;
+        obj = _obj;
+        flag_func_t = _flag;
+        delay = _delay;
+        type = wait_flag_func_t;
+        flag_target = target;
     }
 
     ///
@@ -147,17 +147,17 @@ struct EventQueueEntry
     /// \param target target state
     /// \param _delay milliseconds to wait before checking of target state will be processed
     ///
-    void makeWaiterCond(std::function<bool()> _condition, bool target=true, double _delay=0)
+    void makeWaiterCond(std::function<bool()> _condition, bool target = true, double _delay = 0)
     {
         condition = _condition;
-        delay=_delay;
-        type=wait_condition;
-        flag_target=target;
+        delay = _delay;
+        type = wait_condition;
+        flag_target = target;
     }
 
-/*
-    Private zone!
-*/
+    /*
+        Private zone!
+    */
 
     ///
     /// \brief trigger
@@ -167,57 +167,77 @@ struct EventQueueEntry
     /// \param step time delay between loop steps
     /// \return time left after delaying. Append this piece to step value in next time
     ///
-    double trigger(double step=1)
+    double trigger(double step = 1.0)
     {
-        delay-=step;
+        delay -= step;
+
         switch(type)
         {
         case caller:
-            if((delay<=0)&&(call))
+            if((delay <= 0.0) && (call))
                 call();
+
             break;
+
         case caller_t:
-            if((delay<=0)&&(obj)&&(call_t))
+            if((delay <= 0.0) && (obj) && (call_t))
                 (obj->*call_t)();
+
             break;
+
         case caller_func:
-            if(delay<=0)
+            if(delay <= 0.0)
                 call_func();
+
             break;
+
         case wait_flag_var:
-            if((delay<=0)&&(flag_var))
+            if((delay <= 0.0) && (flag_var))
             {
-                if( (*flag_var)==flag_target )
-                    delay=1;
+                if((*flag_var) == flag_target)
+                    delay = 1.0;
             }
+
             break;
+
         case wait_flag_func:
-            if((delay<=0)&&(flag_func))
+            if((delay <= 0.0) && (flag_func))
             {
-                if(flag_func()==flag_target)
-                    delay=1;
+                if(flag_func() == flag_target)
+                    delay = 1.0;
             }
+
             break;
+
         case wait_flag_func_t:
-            if((delay<=0)&&(obj)&&(flag_func_t))
+            if((delay <= 0.0) && (obj) && (flag_func_t))
             {
                 if((obj->*flag_func_t)() == flag_target)
-                    delay=1;
+                    delay = 1.0;
             }
+
             break;
+
         case wait_condition:
-            if(delay<=0)
+            if(delay <= 0.0)
             {
-                if( flag_target? ((condition())==true) : ((condition())==false) )
-                    delay=1;
+                if(flag_target ? ((condition()) == true) : ((condition()) == false))
+                    delay = 1.0;
             }
+
             break;
-            case timer: break; case dummy: break;
+
+        case timer:
+            break;
+
+        case dummy:
+            break;
         }
+
         return delay; //return leaved time
     }
 
-    T* obj;
+    T *obj;
     //for caller
     void (*call)(void);
     void (T::*call_t)(void);
@@ -273,43 +293,56 @@ struct EventQueueEntry
 template<class T>
 class EventQueue
 {
-public:
-    EventQueue()
-    {
-        left_time=0;
-    }
-
-    EventQueue(const EventQueue& eq)
-    {
-        left_time=eq.left_time;
-        events=eq.events;
-    }
-
-    ~EventQueue()
-    {}
-
-    void processEvents(double timeStep=1.0)
-    {
-        left_time = 0;
-      process_event:
-        if(events.isEmpty()) { left_time=0; return; }
-        left_time = events.first().trigger(timeStep);
-        if(left_time<=0)
+    public:
+        EventQueue()
         {
-            events.pop_front();
-            timeStep = fabs(left_time);
-            goto process_event;
+            left_time = 0;
         }
-    }
 
-    void abort()
-    {
-        events.clear();
-        left_time=0;
-    }
+        EventQueue(const EventQueue &eq)
+        {
+            left_time = eq.left_time;
+            events = eq.events;
+        }
 
-    double left_time;
-    QQueue<EventQueueEntry<T > > events;
+        ~EventQueue()
+        {}
+
+        void processEvents(double timeStep = 1.0)
+        {
+            left_time = 0.0;
+process_event:
+
+            if(events.isEmpty())
+            {
+                left_time = 0.0;
+                return;
+            }
+
+            left_time = events.first().trigger(timeStep);
+
+            if(left_time <= 0.0)
+            {
+                events.pop_front();
+
+                do
+                {
+                    timeStep = (left_time + timeStep);
+                }
+                while((timeStep != 0.0) && (timeStep < 0.0));
+
+                goto process_event;
+            }
+        }
+
+        void abort()
+        {
+            events.clear();
+            left_time = 0;
+        }
+
+        double left_time;
+        QQueue<EventQueueEntry<T > > events;
 };
 
 #endif // EVENTQUEUE_H

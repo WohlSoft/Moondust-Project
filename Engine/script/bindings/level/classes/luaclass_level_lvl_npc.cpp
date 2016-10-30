@@ -17,7 +17,7 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onActivated()
         call<void>("onActivated");
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop(float tickTime)
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop(double tickTime)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onLoop", tickTime);
