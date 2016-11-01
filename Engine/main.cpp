@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
     g_AppSettings.apply();
     //Init log writer
     LoadLogSettings();
-    LogDebug("<Application started>");
+    pLogDebug("<Application started>");
     PGE_Translator translator;
     translator.init();
     QString             configPath  = "";
@@ -203,7 +203,8 @@ int main(int argc, char *argv[])
     for(int pi = 1; pi < all_Args.size(); pi++)
     {
         QString &param = all_Args[pi];
-        LogDebug("Argument: [" + param + "]");
+        std::string param_s = param.toStdString();
+        pLogDebug("Argument: [%s]", param_s.c_str());
         int i = 0;
 
         for(i = 0; i < 4; i++)
@@ -331,14 +332,15 @@ int main(int argc, char *argv[])
         else
         {
             param = FileFormats::removeQuotes(param);
+            param_s = param.toStdString();
 
             if(QFile::exists(param))
             {
                 fileToOpen = param;
-                LogDebug("Got file path: [" + param + "]");
+                pLogDebug("Got file path: [%s]", param_s.c_str());
             }
             else
-                LogWarning("Invalid argument or file path: [" + param + "]");
+                pLogWarning("Invalid argument or file path: [%s]", param_s.c_str());
         }
     }
 
@@ -371,7 +373,7 @@ int main(int argc, char *argv[])
         QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
 
     // Initalizing SDL
-    LogDebug("Initialization of SDL...");
+    pLogDebug("Initialization of SDL...");
     Uint32 sdlInitFlags = 0;
     sdlInitFlags |= SDL_INIT_TIMER;
     sdlInitFlags |= SDL_INIT_AUDIO;
@@ -385,11 +387,11 @@ int main(int argc, char *argv[])
     {
         //% "Unable to init SDL!"
         PGE_Window::printSDLError(qtTrId("SDL_INIT_ERROR"));
-        LogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failture>");
         return 1;
     }
 
-    LogDebug("Initialization of Audio subsystem...");
+    pLogDebug("Initialization of Audio subsystem...");
 
     if(_flags.audioEnabled && (PGE_MusPlayer::initAudio(44100, 32, 4096) == -1))
     {
@@ -401,20 +403,20 @@ int main(int argc, char *argv[])
         _flags.audioEnabled = false;
     }
 
-    LogDebug("Init main window...");
+    pLogDebug("Init main window...");
 
     if(!PGE_Window::init(QString("Platformer Game Engine - v") +
                          _FILE_VERSION + _FILE_RELEASE + " build " + _BUILD_VER,
                          _flags.rendererType))
     {
-        LogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failture>");
         return 1;
     }
 
-    LogDebug("Init joystics...");
+    pLogDebug("Init joystics...");
     g_AppSettings.initJoysticks();
     g_AppSettings.loadJoystickSettings();
-    LogDebug("Clear screen...");
+    pLogDebug("Clear screen...");
     GlRenderer::clearScreen();
     GlRenderer::flush();
     GlRenderer::repaint();
@@ -424,9 +426,9 @@ int main(int argc, char *argv[])
     PGE_Window::setFullScreen(g_AppSettings.fullScreen);
     GlRenderer::resetViewport();
     //Init font manager
-    LogDebug("Init basic font manager...");
+    pLogDebug("Init basic font manager...");
     FontManager::initBasic();
-    LogDebug("Showing window...");
+    pLogDebug("Showing window...");
     SDL_ShowWindow(PGE_Window::window);
     SDL_PumpEvents();
     {
@@ -451,28 +453,28 @@ int main(int argc, char *argv[])
         else if(!configPath_manager.isEmpty() && configPath.isEmpty())
             configPath = GOScene.currentConfigPath;
 
-        LogDebug("Opening of the configuration package...");
+        pLogDebug("Opening of the configuration package...");
         ConfigManager::setConfigPath(configPath);
-        LogDebug("Initalization of basic properties...");
+        pLogDebug("Initalization of basic properties...");
 
         if(!ConfigManager::loadBasics())
         {
-            LogDebug("<Application closed with failture>");
+            pLogDebug("<Application closed with failture>");
             goto ExitFromApplication;
             //return 1;
         }
 
-        LogDebug("Configuration package successfully loaded!");
+        pLogDebug("Configuration package successfully loaded!");
 
         if(_flags.audioEnabled)
         {
             PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music);
-            LogDebug("Build SFX index cache...");
+            pLogDebug("Build SFX index cache...");
             ConfigManager::buildSoundIndex(); //Load all sound effects into memory
         }
 
         //Init font manager
-        LogDebug("Init full font manager...");
+        pLogDebug("Init full font manager...");
         FontManager::initFull();
     }
 
@@ -994,7 +996,7 @@ ExitFromApplication:
     IntProc::quit();
     FontManager::quit();
     PGE_Window::uninit();
-    LogDebug("<Application closed>");
+    pLogDebug("<Application closed>");
     CloseLog();
     a.quit();
     return 0;

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdarg.h>
 #include <mutex>
 #include <QFile>
 #include <QDir>
@@ -44,16 +45,20 @@ class MutexLocker
         }
 };
 
-QString         LogWriter::DebugLogFile;
-PGE_LogLevel    LogWriter::logLevel;
-bool            LogWriter::enabled;
+QString         LogWriter::m_logFilePath;
+PGE_LogLevel    LogWriter::m_logLevel;
+bool            LogWriter::m_enabled;
 
-bool LogWriter::_file_is_opened = false;
-std::shared_ptr<QFile>          LogWriter::_out_file;
-std::shared_ptr<QTextStream>    LogWriter::_out_stream;
+bool  LogWriter::m_logIsOpened = false;
+FILE* LogWriter::m_logout = nullptr;
+
+std::shared_ptr<QTextStream>    LogWriter::m_out_stream;
 
 void LogWriter::LoadLogSettings()
 {
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+
     QString logFileName = QString("PGE_Engine_log_%1-%2-%3_%4-%5-%6.txt")
                           .arg(QDate().currentDate().year())
                           .arg(QDate().currentDate().month())
@@ -61,8 +66,11 @@ void LogWriter::LoadLogSettings()
                           .arg(QTime().currentTime().hour())
                           .arg(QTime().currentTime().minute())
                           .arg(QTime().currentTime().second());
-    logLevel = PGE_LogLevel::Debug;
+
+    m_logLevel = PGE_LogLevel::Debug;
+
     QString mainIniFile = AppPathManager::settingsFile();
+
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
     QDir defLogDir(AppPathManager::userAppDir() + "/logs");
 
@@ -71,36 +79,156 @@ void LogWriter::LoadLogSettings()
             defLogDir.setPath(AppPathManager::userAppDir());
 
     logSettings.beginGroup("logging");
-    DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
+    m_logFilePath = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
 
-    if(!QFileInfo(DebugLogFile).absoluteDir().exists())
-        DebugLogFile = defLogDir.absolutePath() + "/" + logFileName;
+    if(!QFileInfo(m_logFilePath).absoluteDir().exists())
+        m_logFilePath = defLogDir.absolutePath() + "/" + logFileName;
 
-    logLevel = static_cast<PGE_LogLevel>(logSettings.value("log-level", static_cast<int>(PGE_LogLevel::Debug)).toInt());
-    enabled = (static_cast<int>(logLevel) != 0);
+    m_logLevel  = static_cast<PGE_LogLevel>(logSettings.value("log-level", static_cast<int>(PGE_LogLevel::Debug)).toInt());
+    m_enabled   = (m_logLevel != PGE_LogLevel::NoLog);
     logSettings.endGroup();
-    qDebug() << QString("LogLevel %1, log file %2").arg(static_cast<int>(logLevel)).arg(DebugLogFile);
-    _out_file = std::make_shared<QFile>(DebugLogFile);
+    qDebug() << QString("LogLevel %1, log file %2").arg(static_cast<int>(m_logLevel)).arg(m_logFilePath);
 
-    if(_out_file.get()->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    if(m_enabled)
     {
-        _out_stream = std::make_shared<QTextStream>(_out_file.get());
-        _out_stream.get()->setCodec("UTF-8");
-        qInstallMessageHandler(logMessageHandler);
-        _file_is_opened = true;
+        #ifdef _WIN32
+        m_logout = _wfopen(m_logFilePath.toStdWString().data(), L"a");
+        #else
+        m_logout = fopen(m_logFilePath.toLocal8Bit().data(), "a");
+        #endif
+
+        if(m_logout)
+        {
+            m_out_stream = std::make_shared<QTextStream>(m_logout);
+            m_out_stream.get()->setCodec("UTF-8");
+            qInstallMessageHandler(logMessageHandler);
+            m_logIsOpened = true;
+        }
+        else
+            qWarning() << "Impossible to open " << m_logFilePath << " for write, all logs are will be printed through QtDebug...";
     }
-    else
-        qWarning() << "Impossible to open " << DebugLogFile << " for write, all logs are will be printed through QtDebug...";
 }
+
+void LoadLogSettings()
+{
+    LogWriter::LoadLogSettings();
+}
+
+void CloseLog()
+{
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+
+    fclose(LogWriter::m_logout);
+    LogWriter::m_logout = nullptr;
+    LogWriter::m_out_stream.reset();
+    LogWriter::m_logIsOpened = false;
+}
+
+void pLogDebug(const char *format, ...)
+{
+    va_list arg;
+    if(LogWriter::m_logout==nullptr)
+        return;
+    if(LogWriter::m_logLevel < PGE_LogLevel::Debug)
+        return;
+
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+    va_start(arg, format);
+    fwrite(reinterpret_cast<const void*>("Debug: "), 1, 7, LogWriter::m_logout);
+    vfprintf(LogWriter::m_logout, format, arg);
+    fwrite(reinterpret_cast<const void*>("\n"), 1, 1, LogWriter::m_logout);
+    va_end(arg);
+    fflush(LogWriter::m_logout);
+}
+
+void pLogWarning(const char *format, ...)
+{
+    va_list arg;
+    if(LogWriter::m_logout==nullptr)
+        return;
+    if(LogWriter::m_logLevel < PGE_LogLevel::Warning)
+        return;
+
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+    va_start(arg, format);
+    fwrite(reinterpret_cast<const void*>("Warning: "), 1, 9, LogWriter::m_logout);
+    vfprintf(LogWriter::m_logout, format, arg);
+    fwrite(reinterpret_cast<const void*>("\n"), 1, 1, LogWriter::m_logout);
+    va_end(arg);
+    fflush(LogWriter::m_logout);
+}
+
+void pLogCritical(const char *format, ...)
+{
+    va_list arg;
+    if(LogWriter::m_logout==nullptr)
+        return;
+    if(LogWriter::m_logLevel < PGE_LogLevel::Critical)
+        return;
+
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+    va_start(arg, format);
+    fwrite(reinterpret_cast<const void*>("Critical: "), 1, 10, LogWriter::m_logout);
+    vfprintf(LogWriter::m_logout, format, arg);
+    fwrite(reinterpret_cast<const void*>("\n"), 1, 1, LogWriter::m_logout);
+    va_end(arg);
+    fflush(LogWriter::m_logout);
+}
+
+void pLogFatal(const char *format, ...)
+{
+    va_list arg;
+    if(LogWriter::m_logout==nullptr)
+        return;
+    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
+        return;
+
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+    va_start(arg, format);
+    fwrite(reinterpret_cast<const void*>("Fatal: "), 1, 7, LogWriter::m_logout);
+    vfprintf(LogWriter::m_logout, format, arg);
+    fwrite(reinterpret_cast<const void*>("\n"), 1, 1, LogWriter::m_logout);
+    va_end(arg);
+    fflush(LogWriter::m_logout);
+}
+
+void pLogInfo(const char *format, ...)
+{
+    va_list arg;
+    if(LogWriter::m_logout==nullptr)
+        return;
+    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
+        return;
+
+    MutexLocker mutex(&g_lockLocker);
+    Q_UNUSED(mutex);
+    va_start(arg, format);
+    fwrite(reinterpret_cast<const void*>("Info: "), 1, 6, LogWriter::m_logout);
+    vfprintf(LogWriter::m_logout, format, arg);
+    fwrite(reinterpret_cast<const void*>("\n"), 1, 1, LogWriter::m_logout);
+    va_end(arg);
+    fflush(LogWriter::m_logout);
+}
+
+void WriteToLog(PGE_LogLevel type, QString msg)
+{
+    LogWriter::WriteToLog(type, msg);
+}
+
 
 void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
 {
     MutexLocker mutex(&g_lockLocker);
     Q_UNUSED(mutex);
 
-    if(!enabled) return; //if logging disabled
+    if(!m_enabled) return; //if logging disabled
 
-    if(!_file_is_opened)
+    if(!m_logIsOpened)
     {
         switch(type)
         {
@@ -132,13 +260,13 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
     switch(type)
     {
     case PGE_LogLevel::Debug:
-        if(logLevel == PGE_LogLevel::Fatal) return;
+        if(m_logLevel == PGE_LogLevel::Fatal) return;
 
     case PGE_LogLevel::Warning:
-        if(logLevel == PGE_LogLevel::Critical) return;
+        if(m_logLevel == PGE_LogLevel::Critical) return;
 
     case PGE_LogLevel::Critical:
-        if(logLevel == PGE_LogLevel::Warning) return;
+        if(m_logLevel == PGE_LogLevel::Warning) return;
 
     case PGE_LogLevel::Fatal:
         break;
@@ -169,8 +297,8 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
         return;
     }
 
-    *_out_stream.get() << txt << "\n";
-    _out_stream.get()->flush();
+    *m_out_stream.get() << txt << "\n";
+    m_out_stream.get()->flush();
 }
 
 void LogWriter::logMessageHandler(QtMsgType type,
@@ -180,7 +308,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
     MutexLocker mutex(&g_lockLocker);
     Q_UNUSED(mutex);
 
-    if(!_file_is_opened)
+    if(!m_logIsOpened)
     {
         switch(type)
         {
@@ -213,13 +341,13 @@ void LogWriter::logMessageHandler(QtMsgType type,
     switch(type)
     {
     case QtDebugMsg:
-        if(logLevel == PGE_LogLevel::Warning) return;
+        if(m_logLevel == PGE_LogLevel::Warning) return;
 
     case QtWarningMsg:
-        if(logLevel == PGE_LogLevel::Critical) return;
+        if(m_logLevel == PGE_LogLevel::Critical) return;
 
     case QtCriticalMsg:
-        if(logLevel == PGE_LogLevel::Fatal) return;
+        if(m_logLevel == PGE_LogLevel::Fatal) return;
 
     case QtFatalMsg:
         break;
@@ -265,8 +393,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
               .arg(context.line)
               .arg(context.function)
               .arg(lMessage.constData());
-        abort();
-#if QT_VERSION >= 050500
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
 
     case QtInfoMsg:
         txt = QString("Info: (%1:%2, %3): %4")
@@ -278,8 +405,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
 #endif
     }
 
-    *_out_stream.get() << txt << "\n";
-    _out_stream.get()->flush();
+    *m_out_stream.get() << txt << "\n";
+    m_out_stream.get()->flush();
+
+    if(type==QtFatalMsg)
+        abort();
     //    QFile outFile(DebugLogFile);
     //    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     //    QTextStream ts(&outFile);
@@ -287,23 +417,3 @@ void LogWriter::logMessageHandler(QtMsgType type,
     //    outFile.close();
 }
 
-
-void LoadLogSettings()
-{
-    LogWriter::LoadLogSettings();
-}
-
-void WriteToLog(PGE_LogLevel type, QString msg)
-{
-    LogWriter::WriteToLog(type, msg);
-}
-
-void CloseLog()
-{
-    MutexLocker mutex(&g_lockLocker);
-    Q_UNUSED(mutex);
-    LogWriter::_out_file.get()->close();
-    LogWriter::_out_stream.reset();
-    LogWriter::_out_file.reset();
-    LogWriter::_file_is_opened = false;
-}

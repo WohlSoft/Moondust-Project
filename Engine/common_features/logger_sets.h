@@ -30,12 +30,16 @@
 class LogWriter
 {
 public:
-    static QString DebugLogFile;
-    static PGE_LogLevel logLevel;
-    static bool   enabled;
-    static bool   _file_is_opened;
-    static std::shared_ptr<QFile>  _out_file;
-    static std::shared_ptr<QTextStream>  _out_stream;
+    static QString m_logFilePath;
+    static PGE_LogLevel m_logLevel;
+    //! Is logging system is enabmed
+    static bool  m_enabled;
+    //! Is log file is opened
+    static bool  m_logIsOpened;
+    //! Output file
+    static FILE*                        m_logout;
+    //! Output text stream
+    static std::shared_ptr<QTextStream> m_out_stream;
 
     static void WriteToLog(PGE_LogLevel type, QString msg);
     static void LoadLogSettings();

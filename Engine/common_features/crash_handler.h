@@ -19,14 +19,12 @@
 #ifndef CRASHHANDLER_H
 #define CRASHHANDLER_H
 
-
 class CrashHandler
 {
 public:
     CrashHandler();
     static void crashByUnhandledException();
     static void crashByFlood();
-    static void handle_signal(int signal);
     static void initSigs();
 };
 

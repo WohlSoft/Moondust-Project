@@ -100,9 +100,10 @@ FIBITMAP* GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     }
 
     #ifdef DEBUG_BUILD
-    LogDebug(QString("File read of texture %1 passed in %2 milliseconds").arg(file).arg(fReadTimeElapsed));
-    LogDebug(QString("Conv to 32-bit of %1 passed in %2 milliseconds").arg(file).arg(imgConvertElapsed));
-    LogDebug(QString("Total Loading of image %1 passed in %2 milliseconds").arg(file).arg(loadingTime.elapsed()));
+    std::string file_s = file.toStdString();
+    pLogDebug("File read of texture %s passed in %d milliseconds", file_s.c_str(), fReadTimeElapsed);
+    pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file_s.c_str(), imgConvertElapsed);
+    pLogDebug("Total Loading of image %s passed in %d milliseconds", file_s.c_str(), loadingTime.elapsed());
     #endif
     return img;
 }

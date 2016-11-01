@@ -19,7 +19,6 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <QString>
-#include <QtMsgHandler>
 
 enum class PGE_LogLevel
 {
@@ -32,6 +31,13 @@ enum class PGE_LogLevel
 
 void LoadLogSettings();
 void CloseLog();
+
+void pLogDebug(const char *format, ...);
+void pLogWarning(const char *format, ...);
+void pLogCritical(const char *format, ...);
+void pLogFatal(const char *format, ...);
+void pLogInfo(const char *format, ...);
+
 void WriteToLog(PGE_LogLevel type, QString msg);
 
 #define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg)

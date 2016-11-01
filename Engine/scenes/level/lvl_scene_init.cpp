@@ -325,9 +325,9 @@ bool LevelScene::init_items()
     luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
     luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)->void
     {
-        LogWarning("Lua-Error: ");
-        LogWarning("Error Message: " + errorMessage);
-        LogWarning("Stacktrace: \n" + stacktrace);
+        pLogWarning("Lua-Error: ");
+        pLogWarning("Error Message: %s", errorMessage.toUtf8().data());
+        pLogWarning("Stacktrace: \n%s", stacktrace.toUtf8().data());
         _errorString = QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
         //return false;
     });
