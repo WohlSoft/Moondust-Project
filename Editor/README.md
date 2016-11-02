@@ -1,6 +1,6 @@
 # PGE Editor
 
-![PGE Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_128.png)
+![PGE Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
 
 The main development tool which allows a creating and editing levels, world map, NPC configurations and providing some maintenance utilities.
 
