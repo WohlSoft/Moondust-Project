@@ -77,7 +77,7 @@ android: {
 }
 win32: {
     RC_FILE = _resources/engine.rc
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lversion -lopengl32 -lfreeimagelite
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lversion -lopengl32 -lfreeimagelite -ldbghelp
 }
 macx: {
     ICON = _resources/cat.icns
