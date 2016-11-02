@@ -881,22 +881,22 @@ File path: %3</source>
         <translation>Konfigurationsordner:</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="190"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="196"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="195"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="204"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="217"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Errors of configuration loading:</source>
         <translation>Fehler mit Konfigurationen:</translation>
     </message>
@@ -953,22 +953,22 @@ File path: %3</source>
         <translation type="vanished">Level: NPC (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="120"/>
         <source>Music (level) (%1/%2)</source>
         <translation>Musik (level) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
         <source>Music (world) (%1/%2)</source>
         <translation>Musik (welt) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="145"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
         <source>Music (special) (%1/%2)</source>
         <translation>Musik (spezial) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="157"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="124"/>
         <source>Sounds (%1/%2)</source>
         <translation>Töne (%1/%2)</translation>
     </message>
@@ -989,87 +989,87 @@ File path: %3</source>
         <translation type="vanished">Weltkarte Levels (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="75"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="112"/>
         <source>Level: Blocks (%1/%2)</source>
         <translation>Level Blöcke (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="87"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="114"/>
         <source>Level: Background objects (%1/%2)</source>
         <translation>Level Hintergrund Objekte (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="99"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="116"/>
         <source>Level: Background images (%1/%2)</source>
         <translation>Level Hintergrundbilder (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="111"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Level: NPCs (%1/%2)</source>
         <translation>Level: NPC (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="170"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="126"/>
         <source>World map: Terrain tiles (%1/%2)</source>
         <translation>Weltkarte Landschaft (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="182"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="128"/>
         <source>World map: Scenery (%1/%2)</source>
         <translation>Weltkarte Landschaftobjecte (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="195"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="130"/>
         <source>World map: Path tiles (%1/%2)</source>
         <translation>Weltkarte Pfade (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="208"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="132"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
         <translation>Weltkarte Levels (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="220"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
         <source>Default rotation rules (%1)</source>
         <translation>Standard Rotationsregeln (%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="231"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Level data</source>
         <translation>Leveldaten</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="237"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>World data</source>
         <translation>Weltdaten</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="244"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Characters</source>
         <translation>Charaktere</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="251"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Game worlds</source>
         <translation>Spielwelten</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="258"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="142"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="265"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="143"/>
         <source>Sounds</source>
         <translation>Ton</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="272"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="144"/>
         <source>Custom data</source>
         <translation>Benutzerdefinierte Daten</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="284"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="152"/>
         <source>[Error list is empty]</source>
         <translation>[Fehler Liste ist Leer]</translation>
     </message>
@@ -5526,19 +5526,19 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
         <translation type="vanished">BGO Sortierung Priorität</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="237"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="232"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="238"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="262"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="270"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -10063,7 +10063,7 @@ Error description:
 <context>
     <name>PGE_EditorPluginManager</name>
     <message>
-        <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="43"/>
+        <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="46"/>
         <source>%1 at line %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10840,7 +10840,7 @@ Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
         <translation>Lade Blöcke...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_npc.cpp" line="124"/>
+        <location filename="../data_configs/obj_npc.cpp" line="116"/>
         <source>Loading NPCs...</source>
         <translation>Lade NPCs...</translation>
     </message>
@@ -11038,7 +11038,7 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="440"/>
+        <location filename="../data_configs/data_configs.cpp" line="409"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12575,7 +12575,7 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
         <translation type="vanished">Sterne insgesamt</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_control.cpp" line="241"/>
+        <location filename="../editing/_scenes/world/wld_control.cpp" line="250"/>
         <source>Tiles:		%1
 Sceneries:			%2
 Paths:	%3
@@ -13323,7 +13323,7 @@ Möchtest du die Änderungen speichern?</translation>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="195"/>
+        <location filename="../data_configs/data_configs.cpp" line="175"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
