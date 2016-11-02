@@ -188,14 +188,11 @@ static LLVM_ATTRIBUTE_NORETURN void abortEngine(int signal)
 void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
 {
     std::string stack = getStacktrace();
-    static bool tried_throw = false;
     std::string exc = "";
 
     try
     {
-        // try once to re-throw currently active exception
-        if(!(tried_throw = !tried_throw))
-            throw;
+        //throw;
     }
     catch(const std::exception &e)
     {
@@ -206,7 +203,7 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
     catch(...)
     {
         exc.append(__FUNCTION__);
-        exc.append(" caught unhandled exception. what(): ");
+        exc.append(" caught unhandled exception. (unknown) ");
     }
 
     pLogFatal("<Unhandled exception! %s>\n"
@@ -489,6 +486,7 @@ void CrashHandler::initSigs()
 {
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
+
 #ifndef _WIN32//Unsupported signals by Windows
     memset(&act, 0, sizeof(struct sigaction));
     sigemptyset(&act.sa_mask);

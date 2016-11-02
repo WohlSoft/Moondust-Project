@@ -509,6 +509,8 @@ void FontManager::quit()
     fontTable_2.clear();
     fonts.clear();
 
+    rasterFonts.clear();
+
     if(defaultFont)
         delete defaultFont;
 }
