@@ -16,26 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <QString>
-#include <QtMsgHandler>
 
-enum class PGE_LogLevel {
-    Debug=4,
-    Warning=3,
-    Critical=2,
-    Fatal=1,
-    NoLog=0,
+enum class PGE_LogLevel
+{
+    Debug    = 4,
+    Warning  = 3,
+    Critical = 2,
+    Fatal    = 1,
+    NoLog    = 0,
 };
 
-void LoadLogSettings();
-void CloseLog();
-void WriteToLog(PGE_LogLevel type, QString msg);
+extern void LoadLogSettings();
+extern void CloseLog();
 
-#define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg);
-#define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg);
-#define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg);
-#define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg);
+extern void pLogDebug(const char *format, ...);
+extern void pLogWarning(const char *format, ...);
+extern void pLogCritical(const char *format, ...);
+extern void pLogFatal(const char *format, ...);
+extern void pLogInfo(const char *format, ...);
+
+extern void WriteToLog(PGE_LogLevel type, QString msg);
+
+#ifdef DEBUG_BUILD
+#define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)
+#define D_pLogWarning(fmt, ...) pLogWarning(fmt, ##__VA_ARGS__)
+#define D_pLogCritical(fmt, ...) pLogCritical(fmt, ##__VA_ARGS__)
+#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
+#define D_pLogInfo(fmt, ...) pLogInfo(fmt, ##__VA_ARGS__)
+#else
+#define D_pLogDebug(fmt, ...)
+#define D_pLogWarning(fmt, ...)
+#define D_pLogCritical(fmt, ...)
+#define D_pLogFatal(fmt, ...)
+#define D_pLogInfo(fmt, ...)
+#endif
+
+#define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg)
+#define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg)
+#define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg)
+#define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg)
 
 #endif // LOGGER_H

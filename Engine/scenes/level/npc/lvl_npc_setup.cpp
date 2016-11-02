@@ -31,23 +31,25 @@ void LVL_Npc::init()
 {
     if(m_isInited) return;
 
-    phys_setup.gravityAccel=ConfigManager::g_setup_npc.phs_gravity_accel;
-    phys_setup.max_vel_y=   ConfigManager::g_setup_npc.phs_max_fall_speed;
-
+    phys_setup.gravityAccel = ConfigManager::g_setup_npc.phs_gravity_accel;
+    phys_setup.max_vel_y =   ConfigManager::g_setup_npc.phs_max_fall_speed;
     transformTo_x(data.id);
     setDirection(data.direct);
 
-    if(isLuaNPC && !data.generator){
-        try{
+    if(isLuaNPC && !data.generator)
+    {
+        try
+        {
             lua_onInit();
-        } catch (luabind::error& e) {
+        }
+        catch(luabind::error &e)
+        {
             _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 
-    m_isInited=true;
+    m_isInited = true;
     _scene->layers.registerItem(data.layer, this);
-
     m_momentum.saveOld();
 }
 
@@ -64,11 +66,17 @@ LevelNPC LVL_Npc::getData()
 
 void LVL_Npc::setDirection(int dir)
 {
-    if(dir==0) dir=(rand()%2) ? -1 : 1;
-    _direction=Maths::sgn(dir);
-    int imgOffsetX = -((int)round( - ( ( (double)setup->setup.gfx_w - (double)setup->setup.width ) / 2 ) )
-                        +(-((double)setup->setup.gfx_offset_x)*_direction));
-    int imgOffsetY = -(int)round( - (double)setup->setup.gfx_h + (double)setup->setup.height + (double)setup->setup.gfx_offset_y);
+    if(dir == 0) dir = (rand() % 2) ? -1 : 1;
+
+    _direction = Maths::sgn(dir);
+    double gfxW = static_cast<double>(setup->setup.gfx_w);
+    double gfxH = static_cast<double>(setup->setup.gfx_h);
+    double offsetX = static_cast<double>(setup->setup.gfx_offset_x);
+    double offsetY = static_cast<double>(setup->setup.gfx_offset_y);
+    double physW = static_cast<double>(setup->setup.width);
+    double physH = static_cast<double>(setup->setup.height);
+    double imgOffsetX = -(((gfxW - physW) / -2.0) + (-offsetX * static_cast<double>(_direction)));
+    double imgOffsetY = -(-gfxH + physH + offsetY);
     offset.setPoint(imgOffsetX, imgOffsetY);
 }
 
@@ -77,32 +85,36 @@ int LVL_Npc::direction()
     return _direction;
 }
 
-void LVL_Npc::transformTo(long id, int type)
+void LVL_Npc::transformTo(unsigned long id, int type)
 {
-    if(id<=0) return;
+    if(id <= 0) return;
 
-    if(type==2)//block
+    if(type == 2) //block
     {
         LevelBlock def = FileFormats::CreateLvlBlock();
-        if( transformedFromBlock )
+
+        if(transformedFromBlock)
         {
             def = transformedFromBlock->data;
             _scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
             transformedFromBlock->data.layer = data.layer;
             _scene->layers.registerItem(data.layer, transformedFromBlock);
-            transformedFromBlock->setPos( round(posX()), round(posY()) );
-            transformedFromBlock->setDestroyed( false );
+            transformedFromBlock->setPos(round(posX()), round(posY()));
+            transformedFromBlock->setDestroyed(false);
             transformedFromBlock->transformTo(id, 2);
             transformedFromBlock->transformedFromNpcID = data.id;
             transformedFromBlock->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
-        } else {
-            def.x = round( posX() );
-            def.y = round( posY() );
+        }
+        else
+        {
+            def.x = static_cast<long>(round(posX()));
+            def.y = static_cast<long>(round(posY()));
             def.layer = data.layer;
-            def.w = round( width() );
-            def.h = round( height() );
+            def.w = static_cast<long>(round(width()));
+            def.h = static_cast<long>(round(height()));
             def.id = id;
-            LVL_Block* res = _scene->spawnBlock(def);
+            LVL_Block *res = _scene->spawnBlock(def);
+
             if(res)
             {
                 res->transformedFromNpcID = data.id;
@@ -112,66 +124,72 @@ void LVL_Npc::transformTo(long id, int type)
                 res->data.y = long(round(res->m_momentum.y));
             }
         }
+
         this->unregister();
     }
 
-    if(type==1)//Other NPC
-    {
+    if(type == 1) //Other NPC
         transformTo_x(id);
-    }
 }
 
 void LVL_Npc::setDefaults()
 {
     if(!setup) return;
+
     setDirection(_direction);//Re-apply offset preferences
-    motionSpeed = ((!data.nomove)&&(setup->setup.movement)) ? (setup->setup.speed) : 0.0;
+    motionSpeed = ((!data.nomove) && (setup->setup.movement)) ? (setup->setup.speed) : 0.0;
     is_scenery  = setup->setup.scenery;
     is_activity = setup->setup.activity;
     is_shared_animation = setup->setup.shared_ani;
     keep_position_on_despawn = setup->setup.keep_position;
 }
 
-void LVL_Npc::transformTo_x(long id)
+void LVL_Npc::transformTo_x(unsigned long id)
 {
     if(m_isInited)
     {
-        if(_npc_id==abs(id)) return;
-        if(id<=0) return;
+        if(_npc_id == id) return;
+
+        if(id <= 0) return;
+
         if(!ConfigManager::lvl_npc_indexes.contains(id))
             return;
+
         setup = &ConfigManager::lvl_npc_indexes[id];
         transformedFromNpcID = _npc_id;
         _npc_id = id;
-    } else {
-        _npc_id=id;
+    }
+    else
+    {
+        _npc_id = id;
         m_momentum.x = data.x;
         m_momentum.y = data.y;
         _syncSection(false);
     }
 
-    double targetZ = 0;
+    long double targetZ = 0;
+
     if(setup->setup.foreground)
         targetZ = LevelScene::zOrder.npcFront;
-    else
-    if(setup->setup.background)
+    else if(setup->setup.background)
         targetZ = LevelScene::zOrder.npcBack;
     else
         targetZ = LevelScene::zOrder.npcStd;
 
-    z_index = targetZ + setup->setup.z_offset;
-
+    z_index = targetZ + static_cast<long double>(setup->setup.z_offset);
     _scene->zCounter += 0.0000000000001L;
     z_index += _scene->zCounter;
-    if( _scene->zCounter >= 1.0L )
-        _scene->zCounter=0.0L;
 
-    long tID = ConfigManager::getNpcTexture(_npc_id);
-    if( tID >= 0 )
+    if(_scene->zCounter >= 1.0L)
+        _scene->zCounter = 0.0L;
+
+    int tID = ConfigManager::getNpcTexture(_npc_id);
+
+    if(tID >= 0)
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
-        animated = ((setup->setup.frames>1) || (setup->setup.framestyle>0));
+        animated = ((setup->setup.frames > 1) || (setup->setup.framestyle > 0));
         animator_ID = setup->animator_ID;
     }
 
@@ -184,18 +202,19 @@ void LVL_Npc::transformTo_x(long id)
         double oldB = m_momentum.bottom();
         m_momentum.w = setup->setup.width;
         m_momentum.h = setup->setup.height;
-        m_momentum.x = oldCX-m_momentum.w/2.0;
-        m_momentum.y = oldB-m_momentum.h;
+        m_momentum.x = oldCX - m_momentum.w / 2.0;
+        m_momentum.y = oldB - m_momentum.h;
     }
     else
     {
         m_momentum.w = setup->setup.width;
         m_momentum.h = setup->setup.height;
     }
+
     m_width_toRegister  = m_momentum.w;
     m_height_toRegister = m_momentum.h;
-    m_width_half = m_width_toRegister/2.0f;
-    m_height_half = m_height_toRegister/2.0f;
+    m_width_half = m_width_toRegister / 2.0;
+    m_height_half = m_height_toRegister / 2.0;
     _syncPositionAndSize();
 
     if(data.generator)
@@ -204,37 +223,34 @@ void LVL_Npc::transformTo_x(long id)
         generatorDirection = data.generator_direct;
         generatorTimeLeft  = 1;
         generatorType      = data.generator_type;
-
         deActivatable     = true;
         activationTimeout = 150;
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
         m_contactPadding = 1.0;
         m_disableBlockCollision = true;
-        setGravityScale(0.0f);
+        setGravityScale(0.0);
         return;
     }
 
-    deActivatable = ((setup->setup.deactivation)||(!setup->setup.activity));
+    deActivatable = ((setup->setup.deactivation) || (!setup->setup.activity));
     offSectionDeactivate = setup->setup.deactivate_off_room;
-    activationTimeout= setup->setup.deactivationDelay;
-
-    m_disableBlockCollision=!setup->setup.collision_with_blocks;
+    activationTimeout = setup->setup.deactivationDelay;
+    m_disableBlockCollision = !setup->setup.collision_with_blocks;
     disableNpcCollision  = setup->setup.no_npc_collisions;
-
     m_contactPadding = setup->setup.contact_padding;
-
     frameSize.setSize(setup->setup.gfx_w, setup->setup.gfx_h);
     animator.construct(texture, *setup);
-
     setDefaults();
-    setGravityScale(setup->setup.gravity ? 1.0f : 0.f);
-
+    setGravityScale(setup->setup.gravity ? 1.0 : 0.0);
     m_blocked[1] = Block_NONE;
+
     if(setup->setup.block_player)
-        m_blocked[1] = Block_LEFT|Block_RIGHT;
+        m_blocked[1] = Block_LEFT | Block_RIGHT;
+
     if(setup->setup.block_player_top)
         m_blocked[1] |= Block_TOP;
+
     if(setup->setup.block_player && setup->setup.block_player_top)
         m_blocked[1] = Block_ALL;
 
@@ -242,10 +258,13 @@ void LVL_Npc::transformTo_x(long id)
         m_blocked[1] = Block_NONE;
 
     m_blocked[2] = Block_NONE;
+
     if(setup->setup.block_npc)
-        m_blocked[2] = Block_LEFT|Block_RIGHT;
+        m_blocked[2] = Block_LEFT | Block_RIGHT;
+
     if(setup->setup.block_npc_top)
         m_blocked[2] |= Block_TOP;
+
     if(setup->setup.block_npc && setup->setup.block_npc_top)
         m_blocked[2] = Block_ALL;
 
@@ -254,18 +273,21 @@ void LVL_Npc::transformTo_x(long id)
 
     if(m_isInited)
     {
-       int leftHealth=setup->setup.health-(setup->setup.health-health);
-       health=(leftHealth>0)? leftHealth : 1;
-       animator.start();
+        int leftHealth = setup->setup.health - (setup->setup.health - health);
+        health = (leftHealth > 0) ? leftHealth : 1;
+        animator.start();
     }
     else
-       health=(setup->setup.health>0)?setup->setup.health : 1;
+        health = (setup->setup.health > 0) ? setup->setup.health : 1;
 
     if(m_isInited)
     {
-        try{
+        try
+        {
             lua_onTransform(_npc_id);
-        } catch (luabind::error& e) {
+        }
+        catch(luabind::error &e)
+        {
             _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }

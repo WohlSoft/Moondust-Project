@@ -27,41 +27,40 @@
 
 class LoadingScene_misc_img
 {
-public:
-    LoadingScene_misc_img();
-    ~LoadingScene_misc_img();
-    LoadingScene_misc_img(const LoadingScene_misc_img &im);
+    public:
+        LoadingScene_misc_img();
+        LoadingScene_misc_img(const LoadingScene_misc_img &im);
 
-    int x;
-    int y;
-    PGE_Texture t;
-    SimpleAnimator a;
-    int frmH;
+        int x;
+        int y;
+        PGE_Texture t;
+        SimpleAnimator a;
+        int frmH;
 };
 
 class LoadingScene : public Scene
 {
-public:
-    LoadingScene();
-    ~LoadingScene();
-    void init();
+    public:
+        LoadingScene();
+        ~LoadingScene();
+        void init();
 
-    void setWaitTime(int time);
-    void exitFromScene();
+        void setWaitTime(int time);
+        void exitFromScene();
 
-    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
-    void onMousePressed(SDL_MouseButtonEvent &mbevent);
+        void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+        void onMousePressed(SDL_MouseButtonEvent &mbevent);
 
-    void update();
-    void render();
-    int exec();
+        void update();
+        void render();
+        int exec();
 
-private:
-    float _waitTimer;
+    private:
+        float _waitTimer;
 
-    PGE_Texture background;
-    PGEColor    bgcolor;
-    QVector<LoadingScene_misc_img > imgs;
+        PGE_Texture background;
+        PGEColor    bgcolor;
+        QVector<LoadingScene_misc_img > imgs;
 };
 
 #endif // SCENE_LOADING_H

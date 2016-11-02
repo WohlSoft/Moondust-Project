@@ -36,8 +36,8 @@
 
 Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
     //Virtual resolution of renderable zone
-    window_w(800),
-    window_h(600),
+    window_w(800.0),
+    window_h(600.0),
     //Scale of virtual and window resolutuins
     scale_x(1.0f),
     scale_y(1.0f),
@@ -79,10 +79,8 @@ void Render_OpenGL31::set_SDL_settings()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-
     //  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
     //  SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
     //  SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      0);
@@ -103,49 +101,56 @@ unsigned int Render_OpenGL31::SDL_InitFlags()
 bool Render_OpenGL31::init()
 {
     LogDebug("Create OpenGL context...");
-
     //Creating of the OpenGL Context
     PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window);
-    if( !PGE_Window::glcontext )
+
+    if(!PGE_Window::glcontext)
     {
-        LogWarning( QString("GL 3.1: Failed to create context! ") + SDL_GetError() );
+        pLogWarning("GL 3.1: Failed to create context! %s", SDL_GetError());
         return false;
     }
 
-    if( PGE_Window::isSdlError() )
+    if(PGE_Window::isSdlError())
     {
-        LogWarning( QString("GL 3.1: Failed to init context! ") + SDL_GetError() );
+        pLogWarning("GL 3.1: Failed to init context! %s", SDL_GetError());
         return false;
     }
 
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
-    if( PGE_Window::isSdlError() )
+
+    if(PGE_Window::isSdlError())
     {
-        LogWarning( QString("GL 3.1: Failed to set context as current! ") + SDL_GetError() );
+        pLogWarning("GL 3.1: Failed to set context as current! %s", SDL_GetError());
         return false;
     }
 
-    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height ); GLERRORCHECK();
-
+    glViewport(0.f, 0.f, PGE_Window::Width, PGE_Window::Height);
+    GLERRORCHECK();
     //Initialize clear color
-    glClearColor( 0.f, 0.f, 0.f, 1.f ); GLERRORCHECK();
-    glDisable( GL_DEPTH_TEST ); GLERRORCHECK();
-    glDepthFunc(GL_NEVER); GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
-    glEnable(GL_BLEND); GLERRORCHECK();
-    glEnable(GL_TEXTURE_2D); GLERRORCHECK();
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    GLERRORCHECK();
+    glDisable(GL_DEPTH_TEST);
+    GLERRORCHECK();
+    glDepthFunc(GL_NEVER);
+    GLERRORCHECK(); //Ignore depth values (Z) to cause drawing bottom to top
+    glEnable(GL_BLEND);
+    GLERRORCHECK();
+    glEnable(GL_TEXTURE_2D);
+    GLERRORCHECK();
     return true;
 }
 
 bool Render_OpenGL31::uninit()
 {
-    glDeleteTextures( 1, &(_dummyTexture.texture) );
-    SDL_GL_DeleteContext( PGE_Window::glcontext );
+    glDeleteTextures(1, &(_dummyTexture.texture));
+    SDL_GL_DeleteContext(PGE_Window::glcontext);
     return true;
 }
 
 void Render_OpenGL31::initDummyTexture()
 {
-    FIBITMAP* image = GraphicsHelps::loadImageRC("://images/_broken.png");
+    FIBITMAP *image = GraphicsHelps::loadImageRC("://images/_broken.png");
+
     if(!image)
     {
         std::string msg = QString("Can't initialize dummy texture!\n"
@@ -154,14 +159,14 @@ void Render_OpenGL31::initDummyTexture()
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();
     }
-    int w = FreeImage_GetWidth(image);
-    int h = FreeImage_GetHeight(image);
 
+    int w = static_cast<int>(FreeImage_GetWidth(image));
+    int h = static_cast<int>(FreeImage_GetHeight(image));
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
     _dummyTexture.w = w;
     _dummyTexture.h = h;
-    GLubyte* textura = (GLubyte*)FreeImage_GetBits(image);
+    GLubyte *textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
     loadTexture(_dummyTexture, w, h, textura);
     GraphicsHelps::closeImage(image);
 }
@@ -174,18 +179,22 @@ PGE_Texture Render_OpenGL31::getDummyTexture()
 void Render_OpenGL31::loadTexture(PGE_Texture &target, int width, int height, unsigned char *RGBApixels)
 {
     // Have OpenGL generate a texture object handle for us
-    glGenTextures( 1, &(target.texture) ); GLERRORCHECK();
+    glGenTextures(1, &(target.texture));
+    GLERRORCHECK();
     // Bind the texture object
-    glBindTexture( GL_TEXTURE_2D, target.texture ); GLERRORCHECK();
+    glBindTexture(GL_TEXTURE_2D, target.texture);
+    GLERRORCHECK();
     glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, width, height,
-           0, target.format, GL_UNSIGNED_BYTE, (GLubyte*)RGBApixels); GLERRORCHECK();
-    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
+                 0, target.format, GL_UNSIGNED_BYTE, reinterpret_cast<GLubyte *>(RGBApixels));
+    GLERRORCHECK();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    GLERRORCHECK();
     target.inited = true;
 }
 
 void Render_OpenGL31::deleteTexture(PGE_Texture &tx)
 {
-    glDeleteTextures( 1, &(tx.texture) );
+    glDeleteTextures(1, &(tx.texture));
 }
 
 bool Render_OpenGL31::isTopDown()
@@ -205,11 +214,13 @@ void Render_OpenGL31::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned c
 
 void Render_OpenGL31::setViewport(int x, int y, int w, int h)
 {
-    glViewport(offset_x+x*viewport_scale_x,
-               offset_y+(window_h-(y+h))*viewport_scale_y,
-               w*viewport_scale_x, h*viewport_scale_y);  GLERRORCHECK();
-    viewport_x=x;
-    viewport_y=y;
+    glViewport(static_cast<GLint>(offset_x + x * viewport_scale_x),
+               static_cast<GLint>(offset_y + (window_h - (y + h))*viewport_scale_y),
+               static_cast<GLsizei>(w * viewport_scale_x),
+               static_cast<GLsizei>(h * viewport_scale_y));
+    GLERRORCHECK();
+    viewport_x = x;
+    viewport_y = y;
     setViewportSize(w, h);
 }
 
@@ -218,40 +229,53 @@ void Render_OpenGL31::resetViewport()
     float w, w1, h, h1;
     int   wi, hi;
     SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
-    w=wi;h=hi; w1=w;h1=h;
-    scale_x=(float)((float)(w)/(float)window_w);
-    scale_y=(float)((float)(h)/(float)window_h);
+    w = wi;
+    h = hi;
+    w1 = w;
+    h1 = h;
+    scale_x = w / window_w;
+    scale_y = h / window_h;
     viewport_scale_x = scale_x;
     viewport_scale_y = scale_y;
-    if(scale_x>scale_y)
+
+    if(scale_x > scale_y)
     {
-        w1=scale_y*window_w;
-        viewport_scale_x=w1/window_w;
+        w1 = scale_y * window_w;
+        viewport_scale_x = w1 / window_w;
     }
-    else if(scale_x<scale_y)
+    else if(scale_x < scale_y)
     {
-        h1=scale_x*window_h;
-        viewport_scale_y=h1/window_h;
+        h1 = scale_x * window_h;
+        viewport_scale_y = h1 / window_h;
     }
 
-    offset_x=(w-w1)/2;
-    offset_y=(h-h1)/2;
-    glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1); GLERRORCHECK();
+    offset_x = (w - w1) / 2.0f;
+    offset_y = (h - h1) / 2.0f;
+    glViewport(static_cast<GLint>(offset_x),
+               static_cast<GLint>(offset_y),
+               static_cast<GLsizei>(w1),
+               static_cast<GLsizei>(h1));
+    GLERRORCHECK();
     setViewportSize(window_w, window_h);
 }
 
 void Render_OpenGL31::setViewportSize(int w, int h)
 {
-    viewport_w=w;
-    viewport_h=h;
-    viewport_w_half=w/2;
-    viewport_h_half=h/2;
+    setViewportSize(static_cast<float>(w), static_cast<float>(h));
+}
+
+void Render_OpenGL31::setViewportSize(float w, float h)
+{
+    viewport_w = w;
+    viewport_h = h;
+    viewport_w_half = w / 2.0f;
+    viewport_h_half = h / 2.0f;
 }
 
 void Render_OpenGL31::setWindowSize(int w, int h)
 {
-    window_w=w;
-    window_h=h;
+    window_w = static_cast<float>(w);
+    window_h = static_cast<float>(h);
     resetViewport();
 }
 
@@ -267,55 +291,72 @@ void Render_OpenGL31::repaint()
 
 void Render_OpenGL31::setClearColor(float r, float g, float b, float a)
 {
-    glClearColor( r, g, b, a ); GLERRORCHECK();
+    glClearColor(r, g, b, a);
+    GLERRORCHECK();
 }
 
 void Render_OpenGL31::clearScreen()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GLERRORCHECK();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    GLERRORCHECK();
 }
 
 
 
 static inline void setRenderColors()
 {
-    glBindTexture( GL_TEXTURE_2D, 0 );  GLERRORCHECK();
-    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    GLERRORCHECK();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+    glEnableClientState(GL_COLOR_ARRAY);
+    GLERRORCHECK();
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
 }
 
 static inline void setRenderTexture(GLuint &tID)
 {
-    glBindTexture( GL_TEXTURE_2D, tID ); GLERRORCHECK();
-    glEnableClientState(GL_VERTEX_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_COLOR_ARRAY); GLERRORCHECK();
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY); GLERRORCHECK();
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);  GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); GLERRORCHECK();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); GLERRORCHECK();
+    glBindTexture(GL_TEXTURE_2D, tID);
+    GLERRORCHECK();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLERRORCHECK();
+    glEnableClientState(GL_COLOR_ARRAY);
+    GLERRORCHECK();
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    GLERRORCHECK();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    GLERRORCHECK();
 }
 
 static inline void setUnbindTexture()
 {
-    glBindTexture( GL_TEXTURE_2D, 0 ); GLERRORCHECK();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    GLERRORCHECK();
 }
 
 static inline void setAlphaBlending()
 {
-    #ifdef GL_GLEXT_PROTOTYPES
-    glBlendEquation(GL_FUNC_ADD); GLERRORCHECK();
-    #endif
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); GLERRORCHECK();
+#ifdef GL_GLEXT_PROTOTYPES
+    glBlendEquation(GL_FUNC_ADD);
+    GLERRORCHECK();
+#endif
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GLERRORCHECK();
 }
 
 void Render_OpenGL31::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
 {
     if(!tx)
         return;
-    setRenderTexture(((PGE_Texture *)tx)->texture);
+
+    setRenderTexture(const_cast<PGE_Texture *>(tx)->texture);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixelData);
     setUnbindTexture();
 }
@@ -323,11 +364,10 @@ void Render_OpenGL31::getPixelData(const PGE_Texture *tx, unsigned char *pixelDa
 void Render_OpenGL31::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
     PGE_RectF rect = MapToGl(x, y, w, h);
-
     setRenderColors();
     setAlphaBlending();
-
-    GLdouble Vertices[] = {
+    GLdouble Vertices[] =
+    {
         rect.left(),  rect.top(), 0,
         rect.right(), rect.top(), 0,
         rect.right(), rect.bottom(), 0,
@@ -336,30 +376,37 @@ void Render_OpenGL31::renderRect(float x, float y, float w, float h, GLfloat red
     GLfloat Colors[] = { red, green, blue, alpha,
                          red, green, blue, alpha,
                          red, green, blue, alpha,
-                         red, green, blue, alpha };
+                         red, green, blue, alpha
+                       };
+    glVertexPointer(3, GL_DOUBLE, 0, Vertices);
+    GLERRORCHECK();
+    glColorPointer(4, GL_FLOAT, 0, Colors);
+    GLERRORCHECK();
 
-    glVertexPointer(3, GL_DOUBLE, 0, Vertices); GLERRORCHECK();
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
     if(filled)
     {
-        GLubyte indices[] = {
+        GLubyte indices[] =
+        {
             0, 1, 2,
             0, 2, 3
         };
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-    } else {
-        glDrawArrays(GL_LINE_LOOP, 0, 4); GLERRORCHECK();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+        GLERRORCHECK();
+    }
+    else
+    {
+        glDrawArrays(GL_LINE_LOOP, 0, 4);
+        GLERRORCHECK();
     }
 }
 
 void Render_OpenGL31::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
     PGE_RectF rect = MapToGlSI(_left, _top, _right, _bottom);
-
     setRenderColors();
     setAlphaBlending();
-
-    GLdouble Vertices[] = {
+    GLdouble Vertices[] =
+    {
         rect.left(),  rect.top(), 0,
         rect.right(), rect.top(), 0,
         rect.right(), rect.bottom(), 0,
@@ -368,48 +415,54 @@ void Render_OpenGL31::renderRectBR(float _left, float _top, float _right, float 
     GLfloat Colors[] = { red, green, blue, alpha,
                          red, green, blue, alpha,
                          red, green, blue, alpha,
-                         red, green, blue, alpha };
-
-    GLubyte indices[] = {
+                         red, green, blue, alpha
+                       };
+    GLubyte indices[] =
+    {
         0, 1, 2,
         0, 2, 3
     };
-    glVertexPointer(3, GL_DOUBLE, 0, Vertices); GLERRORCHECK();
-    glColorPointer(4, GL_FLOAT, 0, Colors); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+    glVertexPointer(3, GL_DOUBLE, 0, Vertices);
+    GLERRORCHECK();
+    glColorPointer(4, GL_FLOAT, 0, Colors);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
 }
 
 void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y)
 {
     if(!texture) return;
 
-    PGE_RectF rect = MapToGl(x, y, (float)texture->w, (float)texture->h);
-
-    setRenderTexture( texture->texture );
+    PGE_RectF rect = MapToGl(x, y, static_cast<float>(texture->w), static_cast<float>(texture->h));
+    setRenderTexture(texture->texture);
     setAlphaBlending();
-
-    GLdouble Vertices[] = {
+    GLdouble Vertices[] =
+    {
         rect.left(),  rect.top(), 0,
         rect.right(), rect.top(), 0,
         rect.right(), rect.bottom(), 0,
         rect.left(),  rect.bottom(), 0
     };
-    GLfloat TexCoord[] = {
+    GLfloat TexCoord[] =
+    {
         0.0f, 0.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
         0.0f, 1.0f
     };
-
-    GLubyte indices[] = {
+    GLubyte indices[] =
+    {
         0, 1, 3, 2
     };
-
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_DOUBLE, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-
+    glColorPointer(4, GL_FLOAT, 0, color_binded_texture);
+    GLERRORCHECK();
+    glVertexPointer(3, GL_DOUBLE, 0, Vertices);
+    GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
     setUnbindTexture();
 }
 
@@ -418,72 +471,79 @@ void Render_OpenGL31::renderTexture(PGE_Texture *texture, float x, float y, floa
     if(!texture) return;
 
     PGE_RectF rect = MapToGl(x, y, w, h);
-
-    setRenderTexture( texture->texture );
+    setRenderTexture(texture->texture);
     setAlphaBlending();
-
-    GLdouble Vertices[] = {
+    GLdouble Vertices[] =
+    {
         rect.left(),  rect.top(), 0,
         rect.right(), rect.top(), 0,
         rect.right(), rect.bottom(), 0,
         rect.left(),  rect.bottom(), 0
     };
-    GLfloat TexCoord[] = {
+    GLfloat TexCoord[] =
+    {
         ani_left, ani_top,
         ani_right, ani_top,
         ani_right, ani_bottom,
         ani_left, ani_bottom
     };
-    GLubyte indices[] = {
+    GLubyte indices[] =
+    {
         0, 1, 3, 2
     };
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_DOUBLE, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
-
+    glColorPointer(4, GL_FLOAT, 0, color_binded_texture);
+    GLERRORCHECK();
+    glVertexPointer(3, GL_DOUBLE, 0, Vertices);
+    GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
     setUnbindTexture();
 }
 
 void Render_OpenGL31::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     PGE_RectF rect = MapToGl(x, y, w, h);
-
-    GLdouble Vertices[] = {
+    GLdouble Vertices[] =
+    {
         rect.left(),  rect.top(), 0,
         rect.right(), rect.top(), 0,
         rect.right(), rect.bottom(), 0,
         rect.left(),  rect.bottom(), 0
     };
-
-    GLfloat TexCoord[] = {
+    GLfloat TexCoord[] =
+    {
         ani_left, ani_top,
         ani_right, ani_top,
         ani_right, ani_bottom,
         ani_left, ani_bottom
     };
     GLubyte indices[] = { 0, 1, 3, 2 };
-
-    glColorPointer(4, GL_FLOAT, 0, color_binded_texture); GLERRORCHECK();
-    glVertexPointer(3, GL_DOUBLE, 0, Vertices); GLERRORCHECK();
-    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord); GLERRORCHECK();
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices); GLERRORCHECK();
+    glColorPointer(4, GL_FLOAT, 0, color_binded_texture);
+    GLERRORCHECK();
+    glVertexPointer(3, GL_DOUBLE, 0, Vertices);
+    GLERRORCHECK();
+    glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
+    GLERRORCHECK();
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices);
+    GLERRORCHECK();
 }
 
 void Render_OpenGL31::BindTexture(PGE_Texture *texture)
 {
-    setRenderTexture( texture->texture );
+    setRenderTexture(texture->texture);
     setAlphaBlending();
 }
 
 void Render_OpenGL31::setTextureColor(float Red, float Green, float Blue, float Alpha)
 {
-    for(int i=0; i<4; i++)
+    for(int i = 0; i < 4; i++)
     {
-        color_binded_texture[i*4+0] = Red;
-        color_binded_texture[i*4+1] = Green;
-        color_binded_texture[i*4+2] = Blue;
-        color_binded_texture[i*4+3] = Alpha;
+        color_binded_texture[i * 4 + 0] = Red;
+        color_binded_texture[i * 4 + 1] = Green;
+        color_binded_texture[i * 4 + 2] = Blue;
+        color_binded_texture[i * 4 + 3] = Alpha;
     }
 }
 
@@ -495,20 +555,20 @@ void Render_OpenGL31::UnBindTexture()
 PGE_RectF Render_OpenGL31::MapToGl(float x, float y, float w, float h)
 {
     PGE_RectF rect;
-    rect.setLeft( roundf(x)/(viewport_w_half)-1.0f );
-    rect.setTop(  (viewport_h-(roundf(y)))/viewport_h_half-1.0f );
-    rect.setRight(  roundf(x+w)/(viewport_w_half)-1.0f);
-    rect.setBottom(  (viewport_h-(roundf(y+h)))/viewport_h_half-1.0f);
+    rect.setLeft(static_cast<double>(roundf(x) / (viewport_w_half) - 1.0f));
+    rect.setTop(static_cast<double>((viewport_h - (roundf(y))) / viewport_h_half - 1.0f));
+    rect.setRight(static_cast<double>(roundf(x + w) / (viewport_w_half) - 1.0f));
+    rect.setBottom(static_cast<double>((viewport_h - (roundf(y + h))) / viewport_h_half - 1.0f));
     return rect;
 }
 
 PGE_RectF Render_OpenGL31::MapToGlSI(float left, float top, float right, float bottom)
 {
     PGE_RectF rect;
-    rect.setLeft( roundf(left)/(viewport_w_half)-1.0f );
-    rect.setTop(  (viewport_h-(roundf(top)))/viewport_h_half-1.0f );
-    rect.setRight(  roundf(right)/(viewport_w_half)-1.0f);
-    rect.setBottom(  (viewport_h-(roundf(bottom)))/viewport_h_half-1.0f);
+    rect.setLeft(static_cast<double>(roundf(left) / (viewport_w_half) - 1.0f));
+    rect.setTop(static_cast<double>((viewport_h - (roundf(top))) / viewport_h_half - 1.0f));
+    rect.setRight(static_cast<double>(roundf(right) / (viewport_w_half) - 1.0f));
+    rect.setBottom(static_cast<double>((viewport_h - (roundf(bottom))) / viewport_h_half - 1.0f));
     return rect;
 }
 
@@ -519,11 +579,12 @@ PGE_Point Render_OpenGL31::MapToScr(PGE_Point point)
 
 PGE_Point Render_OpenGL31::MapToScr(int x, int y)
 {
-    return PGE_Point(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
+    return PGE_Point(
+               static_cast<int>(((static_cast<float>(x)) / viewport_scale_x) - offset_x),
+               static_cast<int>(((static_cast<float>(y)) / viewport_scale_y) - offset_y));
 }
 
 int Render_OpenGL31::alignToCenter(int x, int w)
 {
-    return x+(viewport_w_half-(w/2));
+    return x + (static_cast<int>(viewport_w_half) - (w / 2));
 }
-

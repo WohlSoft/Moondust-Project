@@ -42,84 +42,85 @@ class Controller;
 
 class PGE_MenuBoxBase : public PGE_BoxBase
 {
-public:
-    PGE_MenuBoxBase(Scene * _parentScene=NULL, PGE_Menu::menuAlignment alignment=PGE_Menu::menuAlignment::VERTICLE, int gapSpace=0, QString _title="Menu is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
-    PGE_MenuBoxBase(const PGE_MenuBoxBase &mb);
+    public:
+        PGE_MenuBoxBase(Scene *_parentScene = NULL, PGE_Menu::menuAlignment alignment = PGE_Menu::menuAlignment::VERTICLE, int gapSpace = 0, QString _title = "Menu is works!",
+                        msgType _type = msg_info, PGE_Point boxCenterPos = PGE_Point(-1, -1), double _padding = -1, QString texture = "");
+        PGE_MenuBoxBase(const PGE_MenuBoxBase &mb);
 
-    void construct(QString _title="Menu is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+        void construct(QString _title = "Menu is works!",
+                       msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1), double _padding = -1, QString texture = "");
 
-    ~PGE_MenuBoxBase();
+        ~PGE_MenuBoxBase();
 
-    void setParentScene(Scene * _parentScene);
-    void setType(msgType _type);
-    void setTitleFont(QString fontName);
-    void setTitleFontColor(GlColor color);
-    void setTitleText(QString text);
-    void setPadding(int _padding);
+        void setParentScene(Scene *_parentScene);
+        void setType(msgType _type);
+        void setTitleFont(QString fontName);
+        void setTitleFontColor(GlColor color);
+        void setTitleText(QString text);
+        void setPadding(int _padding);
+        void setPadding(double _padding);
 
-    void clearMenu();
-    void addMenuItem(QString &menuitem);
-    void addMenuItems(QStringList &menuitems);
+        void clearMenu();
+        void addMenuItem(QString &menuitem);
+        void addMenuItems(QStringList &menuitems);
 
-    void setPos(double x, double y);
-    void setMaxMenuItems(int items);
-    void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double ticks);
-    void render();
-    void restart();
-    bool isRunning();
-    void exec();
-    void setRejectSnd(long sndRole);
-    int  answer();
+        void setPos(double x, double y);
+        void setMaxMenuItems(int items);
+        void setBoxSize(double _Width, double _Height, double _padding);
+        void update(double ticks);
+        void render();
+        void restart();
+        bool isRunning();
+        void exec();
+        void setRejectSnd(long sndRole);
+        int  answer();
 
-    void reject();
+        void reject();
 
-    void processKeyEvent(SDL_Keycode &key);
+        void processKeyEvent(SDL_Keycode &key);
 
-    void processLoader(double ticks);
-    void processBox(double);
-    void processUnLoader(double ticks);
+        void processLoader(double ticks);
+        void processBox(double);
+        void processUnLoader(double ticks);
 
-protected:
-    PGE_Menu _menu;
+    protected:
+        PGE_Menu _menu;
 
-private:
-    void updateSize();
-    int     _page;
-    bool    running;
-    int     fontID;
-    GlColor fontRgba;
-    int     _answer_id;
+    private:
+        void updateSize();
+        int     _page;
+        bool    running;
+        int     fontID;
+        GlColor fontRgba;
+        int     _answer_id;
 
-    long    reject_snd;
-    PGE_Point _pos;
-    Controller *_ctrl1;
-    Controller *_ctrl2;
-    msgType type;
+        long    reject_snd;
+        PGE_Point _pos;
+        Controller *_ctrl1;
+        Controller *_ctrl2;
+        msgType type;
 
-    PGE_Rect _sizeRect;
-    QString  title;
-    PGE_Size title_size;
+        PGE_Rect _sizeRect;
+        QString  title;
+        PGE_Size title_size;
 
-    double width;
-    double height;
-    double padding;
-    QColor bg_color;
-    void initControllers();
-    void updateControllers();
+        double width;
+        double height;
+        double padding;
+        QColor bg_color;
+        void initControllers();
+        void updateControllers();
 
-    virtual void onUpButton() {}
-    virtual void onDownButton() {}
-    virtual void onLeftButton() {}
-    virtual void onRightButton() {}
-    virtual void onJumpButton() {}
-    virtual void onAltJumpButton() {}
-    virtual void onRunButton() {}
-    virtual void onAltRunButton() {}
-    virtual void onStartButton() {}
-    virtual void onDropButton() {}
+        virtual void onUpButton() {}
+        virtual void onDownButton() {}
+        virtual void onLeftButton() {}
+        virtual void onRightButton() {}
+        virtual void onJumpButton() {}
+        virtual void onAltJumpButton() {}
+        virtual void onRunButton() {}
+        virtual void onAltRunButton() {}
+        virtual void onStartButton() {}
+        virtual void onDropButton() {}
 };
 
 #endif // PGE_MENUBOXBASE_H

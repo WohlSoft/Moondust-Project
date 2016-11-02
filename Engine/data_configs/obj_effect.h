@@ -28,16 +28,16 @@
 struct obj_effect
 {
     unsigned long id;
-        QString image_n;
-        QString mask_n;
-        //QPixmap image;
-        //QPixmap mask;
+    QString image_n;
+    QString mask_n;
+    //QPixmap image;
+    //QPixmap mask;
 
     /*   OpenGL    */
     bool isInit;
-    PGE_Texture * image;
+    PGE_Texture *image;
     GLuint textureID;
-    long textureArrayId;
+    int textureArrayId;
     /*   OpenGL    */
 
     QString name;

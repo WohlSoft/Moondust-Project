@@ -28,7 +28,7 @@ class LevelScene;
 struct CharacterSwitchState
 {
     CharacterSwitchState();
-    int CharacterID;
+    unsigned int CharacterID;
     QList<int> sequence_on;
     QList<int> sequence_off;
     SimpleAnimator *animator_p;
@@ -37,7 +37,7 @@ struct CharacterSwitchState
 struct CharacterBlockState
 {
     CharacterBlockState();
-    int CharacterID;
+    unsigned int CharacterID;
     QList<int> sequence_on;
     QList<int> sequence_off;
     SimpleAnimator *animator_p;
@@ -45,16 +45,16 @@ struct CharacterBlockState
 
 class CharacterSwitcherEngine
 {
-public:
-    CharacterSwitcherEngine();
-    CharacterSwitcherEngine(LevelScene * scene);
-    void setScene(LevelScene * scene);
-    void buildSwitch(obj_block &blk);
-    void buildBrick(obj_block &blk);
-    void refreshState();
-    QList<CharacterSwitchState> m_switches;
-    QList<CharacterBlockState> m_blocks;
-    LevelScene * m_scene;
+    public:
+        CharacterSwitcherEngine();
+        CharacterSwitcherEngine(LevelScene *scene);
+        void setScene(LevelScene *scene);
+        void buildSwitch(obj_block &blk);
+        void buildBrick(obj_block &blk);
+        void refreshState();
+        QList<CharacterSwitchState> m_switches;
+        QList<CharacterBlockState> m_blocks;
+        LevelScene *m_scene;
 };
 
 #endif // CHARACTERSWITCHERENGINE_H

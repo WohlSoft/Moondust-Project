@@ -153,7 +153,6 @@ SOURCES += \
     fontman/font_manager.cpp \
     networking/editor_pipe.cpp \
     networking/intproc.cpp \
-    common_features/logger.cpp \
     gui/pge_menu.cpp \
     scenes/scene_loading.cpp \
     scenes/scene_title.cpp \
@@ -288,7 +287,8 @@ SOURCES += \
     scenes/level/npc/lvl_npc_physics.cpp \
     scenes/_base/msgbox_queue.cpp \
     data_configs/config_select_scene/scene_config_select.cpp \
-    common_features/point_mover.cpp
+    common_features/point_mover.cpp \
+    common_features/logger_sets.cpp
 
 HEADERS  += \
     graphics/graphics.h \

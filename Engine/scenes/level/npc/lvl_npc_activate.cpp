@@ -30,51 +30,56 @@ void LVL_Npc::Activate()
         return;
 
     setPaused(false);
-
-    deActivatable = ((setup->setup.deactivation)||(!setup->setup.activity)); //!< Allow deactivation of this NPC when it going offscreen
-    wasDeactivated=false;
+    deActivatable = ((setup->setup.deactivation) || (!setup->setup.activity)); //!< Allow deactivation of this NPC when it going offscreen
+    wasDeactivated = false;
 
     if(m_spawnedGeneratorType != LevelScene::GENERATOR_PROJECTILE)
         setSpeed(0.0, 0.0);
 
     animator.start();
-    isActivated=true;
+    isActivated = true;
 
     if(!data.event_activate.isEmpty())
         _scene->events.triggerEvent(data.event_activate);
 
-    if(isLuaNPC){
-        try{
+    if(isLuaNPC)
+    {
+        try
+        {
             lua_onActivated();
-        } catch (luabind::error& e) {
+        }
+        catch(luabind::error &e)
+        {
             _scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
+
     lua_activate_neighbours();//Also activate neighours
 }
 
 void LVL_Npc::deActivate()
 {
     if(!wasDeactivated)
-    {
-        wasDeactivated=true;
-    }
+        wasDeactivated = true;
+
     if(!isActivated) return;
 
-    isActivated=false;
+    isActivated = false;
+
     if(!is_shared_animation)
         animator.stop();
 
     if(!keep_position_on_despawn)
     {
         if(!reSpawnable)
-        {
             unregister();
-        } else {
-            if((signed)data.id!=_npc_id)
+        else
+        {
+            if(data.id != _npc_id)
             {
                 transformTo_x(data.id); //Transform NPC back into initial form
             }
+
             setDefaults();
             setPos(data.x, data.y);
             setDirection(data.direct);

@@ -31,106 +31,106 @@
 
 struct MatrixAnimatorFrame
 {
-    float x;
-    float y;
-    float offset_x;
-    float offset_y;
+    double x;
+    double y;
+    double offset_x;
+    double offset_y;
 };
 
 class MatrixAnimator
 {
-public:
+    public:
 
-    enum MatrixAnimates
-    {
-        Nothing=-1,
-        Idle=0,
-        Run,
-        JumpFloat,
-        JumpFall,
-        SpinJump,
-        Sliding,
-        Climbing,
-        Fire,
-        SitDown,
-        Dig,
-        GrabIdle,
-        GrabRun,
-        GrabJump,
-        GrabSitDown,
-        RacoonRun,
-        RacoonFloat,
-        RacoonFly,
-        RacoonFlyDown,
-        RacoonTail,
-        Swim,
-        SwimUp,
-        OnYoshi,
-        OnYoshiSit,
-        PipeUpDown,
-        PipeUpDownRear,
-        SlopeSlide,
-        TanookiStatue,
-        SwordAttak,
-        JumpSwordUp,
-        JumpSwordDown,
-        DownSwordAttak,
-        Hurted,
-    };
+        enum MatrixAnimates
+        {
+            Nothing = -1,
+            Idle = 0,
+            Run,
+            JumpFloat,
+            JumpFall,
+            SpinJump,
+            Sliding,
+            Climbing,
+            Fire,
+            SitDown,
+            Dig,
+            GrabIdle,
+            GrabRun,
+            GrabJump,
+            GrabSitDown,
+            RacoonRun,
+            RacoonFloat,
+            RacoonFly,
+            RacoonFlyDown,
+            RacoonTail,
+            Swim,
+            SwimUp,
+            OnYoshi,
+            OnYoshiSit,
+            PipeUpDown,
+            PipeUpDownRear,
+            SlopeSlide,
+            TanookiStatue,
+            SwordAttak,
+            JumpSwordUp,
+            JumpSwordDown,
+            DownSwordAttak,
+            Hurted,
+        };
 
-    MatrixAnimator();
-    MatrixAnimator(int _width, int _height);
-    MatrixAnimator(const MatrixAnimator &a);
-    ~MatrixAnimator();
-    void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
-    void setFrameSpeed(int speed);
-    void setDirection(int _direction, bool force=false);
-    void setSize(int _width, int _height);
-    PGE_SizeF size();
-    PGE_SizeF sizeOfFrame();
-    void tickAnimation(float frametime);
-    PGE_RectF curFrame();
-    PGE_PointF curOffset();
-    MatrixAnimates curAnimation();
-    int curFramespeed();
+        MatrixAnimator();
+        MatrixAnimator(int _width, int _height);
+        MatrixAnimator(const MatrixAnimator &a);
+        ~MatrixAnimator();
+        void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
+        void setFrameSpeed(int speed);
+        void setDirection(int _direction, bool force = false);
+        void setSize(int _width, int _height);
+        PGE_SizeF size();
+        PGE_SizeF sizeOfFrame();
+        void tickAnimation(double frametime);
+        PGE_RectF curFrame();
+        PGE_PointF curOffset();
+        MatrixAnimates curAnimation();
+        int curFramespeed();
 
-    void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1, bool fixed_speed=false, bool locked=false, int skipLastFrames=0);
-    void unlock();
-    void switchAnimation(MatrixAnimates aniName, int _direction, int speed=-1);
+        void installAnimationSet(obj_player_calibration &calibration);
+        void playOnce(MatrixAnimates aniName, int _direction, int speed = -1, bool fixed_speed = false, bool locked = false, int skipLastFrames = 0);
+        void unlock();
+        void switchAnimation(MatrixAnimates aniName, int _direction, int speed = -1);
 
-    MatrixAnimates toEnum(QString aniName);
-private:
-    void nextFrame();
-    void buildRect();
+        MatrixAnimates toEnum(QString aniName);
+    private:
+        void nextFrame();
+        void buildRect();
 
-    float width; //!< width of frame matrix
-    float height; //!< height of frame matrix
-    float width_f; //!< width of one frame; (from 0 to 1)
-    float height_f; //!< height of one frame; (from 0 to 1)
-    float delay_wait; //!< Delay between next frame will be switched
-    int framespeed; //!< delay between frames
-    int framespeed_once; //!< delay between frames for "once" mode
-    int curFrameI; //!< index of current frame
-    PGE_RectF curRect;
-    PGE_PointF curOffsets;
-    typedef QList<MatrixAnimatorFrame > AniSequence;
+        double width; //!< width of frame matrix
+        double height; //!< height of frame matrix
+        double width_f; //!< width of one frame; (from 0 to 1)
+        double height_f; //!< height of one frame; (from 0 to 1)
+        double delay_wait; //!< Delay between next frame will be switched
+        int framespeed; //!< delay between frames
+        int framespeed_once; //!< delay between frames for "once" mode
+        int curFrameI; //!< index of current frame
+        PGE_RectF curRect;
+        PGE_PointF curOffsets;
+        typedef QList<MatrixAnimatorFrame > AniSequence;
 
-    int direction;
-    bool once;
-    bool once_fixed_speed;
-    bool once_locked;
-    bool once_play_again;
-    int  once_play_again_skip_last_frames;
-    int  once_play_again_direction;
-    MatrixAnimates backup_sequance;
-    MatrixAnimates current_sequance;
-    AniSequence sequence;//!< Current frame sequance
-    QHash<MatrixAnimates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
-    QHash<MatrixAnimates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
+        int direction;
+        bool once;
+        bool once_fixed_speed;
+        bool once_locked;
+        bool once_play_again;
+        int  once_play_again_skip_last_frames;
+        int  once_play_again_direction;
+        MatrixAnimates backup_sequance;
+        MatrixAnimates current_sequance;
+        AniSequence sequence;//!< Current frame sequance
+        QHash<MatrixAnimates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
+        QHash<MatrixAnimates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
 
-    void buildEnums();
-    QHash<QString, MatrixAnimates > StrToEnum;
+        void buildEnums();
+        QHash<QString, MatrixAnimates > StrToEnum;
 };
 
 #endif // MATRIXANIMATOR_H

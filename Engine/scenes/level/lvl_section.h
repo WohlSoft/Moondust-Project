@@ -26,77 +26,77 @@
 #include "lvl_backgrnd.h"
 
 
-typedef QVector<PGE_Phys_Object* > R_itemList;
+typedef QVector<PGE_Phys_Object * > R_itemList;
 
 class PGE_Phys_Object;
 class PGE_LevelCamera;
 
 class LVL_Section
 {
-    friend class PGE_Phys_Object;
-    friend class PGE_LevelCamera;
-public:
-    LVL_Section();
-    LVL_Section(const LVL_Section& _sct);
-    ~LVL_Section();
-    void setData(LevelSection _d);
-    LevelSection data;
-    void registerElement(PGE_Phys_Object* item);
-    void unregisterElement(PGE_Phys_Object* item);
-    void queryItems(PGE_RectF zone, R_itemList* resultList);
-    void queryItems(double x, double y, R_itemList* resultList);
+        friend class PGE_Phys_Object;
+        friend class PGE_LevelCamera;
+    public:
+        LVL_Section();
+        LVL_Section(const LVL_Section &_sct);
+        ~LVL_Section();
+        void setData(LevelSection _d);
+        LevelSection data;
+        void registerElement(PGE_Phys_Object *item);
+        void unregisterElement(PGE_Phys_Object *item);
+        void queryItems(PGE_RectF zone, R_itemList *resultList);
+        void queryItems(double x, double y, R_itemList *resultList);
 
-    void changeSectionBorders(long left, long top, long right, long bottom);
-    void changeLimitBorders(long left, long top, long right, long bottom);
-    void resetLimits();
+        void changeSectionBorders(long left, long top, long right, long bottom);
+        void changeLimitBorders(long left, long top, long right, long bottom);
+        void resetLimits();
 
-    void initBG();
-    void setMusicRoot(QString _path);
-    int  getBgId();
+        void initBG();
+        void setMusicRoot(QString _path);
+        unsigned long getBgId();
 
-    void playMusic();
-    void resetMusic();
-    void setMusic(int musID);
-    void setMusic(QString musFile);
+        void playMusic();
+        void resetMusic();
+        void setMusic(int musID);
+        void setMusic(QString musFile);
 
-    void renderBG(float x, float y, float w, float h);
+        void renderBG(double x, double y, double w, double h);
 
-    void setBG(int bgID);
-    void resetBG();
+        void setBG(unsigned long bgID);
+        void resetBG();
 
-    bool isAutoscroll;
-    float _autoscrollVelocityX;
-    float _autoscrollVelocityY;
+        bool isAutoscroll;
+        double _autoscrollVelocityX;
+        double _autoscrollVelocityY;
 
-    PGE_RectF sectionRect();
-    PGE_RectF sectionLimitBox();
+        PGE_RectF sectionRect();
+        PGE_RectF sectionLimitBox();
 
-    bool isWrapH();
-    bool isWrapV();
-    bool LeftOnly();
-    bool RightOnly();
-    bool ExitOffscreen();
+        bool isWrapH();
+        bool isWrapV();
+        bool LeftOnly();
+        bool RightOnly();
+        bool ExitOffscreen();
 
-    int  getPhysicalEnvironment();
+        int  getPhysicalEnvironment();
 
-private:
-    typedef double RPoint[2];
-    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
-    IndexTree tree;
+    private:
+        typedef double RPoint[2];
+        typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
+        IndexTree tree;
 
-    QString        music_root;
-    int            curMus;
-    QString        curCustomMus;
-    int            curBgID;
-    LVL_Background _background;
+        QString        music_root;
+        int            curMus;
+        QString        curCustomMus;
+        unsigned long  curBgID;
+        LVL_Background _background;
 
-    bool isInit;
+        bool isInit;
 
-    /// Limits of section motion
-    PGE_RectF limitBox;
+        /// Limits of section motion
+        PGE_RectF limitBox;
 
-    /// Default section box
-    PGE_RectF sectionBox;
+        /// Default section box
+        PGE_RectF sectionBox;
 };
 
 #endif // LVL_SECTION_H

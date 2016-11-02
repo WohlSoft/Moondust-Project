@@ -34,44 +34,44 @@ struct obj_player_physics
 {
     obj_player_physics();
     inline void make() {} //!< Dummy function
-    float walk_force; //!< Move force
-    float run_force;  //!< Running force
+    double walk_force; //!< Move force
+    double run_force;  //!< Running force
 
-    float decelerate_stop; //!< Deceleration while stopping
-    float decelerate_run;  //!< Deceleration running while speed higher than walking
-    float decelerate_turn; //!< Deceleration while turning
-    float decelerate_air;  //!< Decelerate in air
+    double decelerate_stop; //!< Deceleration while stopping
+    double decelerate_run;  //!< Deceleration running while speed higher than walking
+    double decelerate_turn; //!< Deceleration while turning
+    double decelerate_air;  //!< Decelerate in air
 
-    float ground_c_max; //!< On-Ground max speed     coefficient
-    float ground_c;     //!< On-Ground accelerations coefficient
-    float slippery_c;   //!< Slippery accelerations coefficien
+    double ground_c_max; //!< On-Ground max speed     coefficient
+    double ground_c;     //!< On-Ground accelerations coefficient
+    double slippery_c;   //!< Slippery accelerations coefficien
 
-    float gravity_accel; //!< Gravity acceleration
-    float gravity_scale; //!< Gravity scale
-    float velocity_jump; //!< Jump velocity
-    float velocity_jump_bounce; //!< Boubce velocity
-    float velocity_jump_spring; //!< Jump velocity on spring
-    float velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed
+    double gravity_accel; //!< Gravity acceleration
+    double gravity_scale; //!< Gravity scale
+    double velocity_jump; //!< Jump velocity
+    double velocity_jump_bounce; //!< Boubce velocity
+    double velocity_jump_spring; //!< Jump velocity on spring
+    double velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed
     int   jump_time;     //!< Time to jump
     int   jump_time_bounce;//!< Time to bounce
     int   jump_time_spring;     //!< Time to jump
 
-    float velocity_climb_x; //!< Climbing velocity
-    float velocity_climb_y_up; //!< Climbing velocity
-    float velocity_climb_y_down; //!< Climbing velocity
+    double velocity_climb_x; //!< Climbing velocity
+    double velocity_climb_y_up; //!< Climbing velocity
+    double velocity_climb_y_down; //!< Climbing velocity
 
-    float MaxSpeed_walk; //!< Max walk speed
-    float MaxSpeed_run;  //!< Max run speed
+    double MaxSpeed_walk; //!< Max walk speed
+    double MaxSpeed_run;  //!< Max run speed
 
-    float MaxSpeed_up;   //!< Fly UP Max fall speed
-    float MaxSpeed_down; //!< Max fall down speed
+    double MaxSpeed_up;   //!< Fly UP Max fall speed
+    double MaxSpeed_down; //!< Max fall down speed
 
     bool  strict_max_speed_on_ground;//!< reduce speed to max if faster than allowed on ground
 
     bool    zero_speed_y_on_enter;
-    float   slow_up_speed_y_coeff; //!< Coefficient to slow speed if it going up
+    double   slow_up_speed_y_coeff; //!< Coefficient to slow speed if it going up
     bool    slow_speed_x_on_enter;
-    float   slow_speed_x_coeff; //!< Coefficient to slow speed
+    double   slow_speed_x_coeff; //!< Coefficient to slow speed
 };
 
 struct obj_player_state
@@ -82,8 +82,8 @@ struct obj_player_state
     bool    duck_allow;
     int     duck_height;
     bool    allow_floating;
-      int   floating_max_time;
-    float   floating_amplitude;
+    int     floating_max_time;
+    double  floating_amplitude;
 
     PGE_DataArray<obj_player_physics > phys;
     QString event_script;   //!< LUA-Script with events
@@ -94,10 +94,10 @@ struct obj_player_state
     QString mask_n;
     /*   OpenGL    */
     bool            isInit;
-    PGE_Texture*    image;
+    PGE_Texture    *image;
     GLuint          textureID;
-    long            textureArrayId;
-    long            animator_ID;
+    int             textureArrayId;
+    int             animator_ID;
     /*   OpenGL    */
 };
 
@@ -120,12 +120,12 @@ struct obj_player
     SpawnEffectDef slide_effect;
 
     /*   OpenGL    */
-        //for world map
+    //for world map
     bool isInit_wld;
     PGE_Texture *image_wld;
     GLuint textureID_wld;
-    long textureArrayId_wld;
-    long animator_ID_wld;
+    int textureArrayId_wld;
+    int animator_ID_wld;
     /*   OpenGL    */
 
     //! LUA-Script of playable character
@@ -135,12 +135,12 @@ struct obj_player
     QString sprite_folder;
     enum StateTypes
     {
-        powerup=0,
+        powerup = 0,
         suites
     };
     int state_type;
 
-/* World map */
+    /* World map */
     int wld_framespeed;
     int wld_frames;
     int wld_offset_y;
@@ -148,7 +148,7 @@ struct obj_player
     QList<int > wld_frames_right;
     QList<int > wld_frames_down;
     QList<int > wld_frames_left;
-/* World map */
+    /* World map */
 
     PGE_DataArray<obj_player_state > states;
     PGE_DataArray<obj_player_physics > phys_default;
@@ -157,4 +157,3 @@ struct obj_player
 };
 
 #endif // OBJ_PLAYER_H
-

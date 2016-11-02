@@ -34,11 +34,11 @@
 #include <QFontMetrics>
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, QString _title, msgType _type,
-                       PGE_Point boxCenterPos, double _padding, QString texture)
+                                 PGE_Point boxCenterPos, double _padding, QString texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
 {
     setParentScene(_parentScene);
-    construct(_title,_type, boxCenterPos, _padding, texture);
+    construct(_title, _type, boxCenterPos, _padding, texture);
 }
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
@@ -48,20 +48,17 @@ PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
     running   = mb.running;
     fontID    = mb.fontID;
     fontRgba  = mb.fontRgba;
-    _answer_id= mb._answer_id;
-
-    reject_snd= mb.reject_snd;
+    _answer_id = mb._answer_id;
+    reject_snd = mb.reject_snd;
     _ctrl1    = mb._ctrl1;
     _ctrl2    = mb._ctrl2;
     type      = mb.type;
-    _pos=       mb._pos;
-
+    _pos =       mb._pos;
     _sizeRect = mb._sizeRect;
     title     = mb.title;
-    title_size= mb.title_size;
+    title_size = mb.title_size;
     //_menu     = mb._menu;
     width     = mb.width;
-
     height    = mb.height;
     padding   = mb.padding;
     bg_color  = mb.bg_color;
@@ -69,7 +66,7 @@ PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
 
 
 void PGE_MenuBoxBase::construct(QString _title, PGE_MenuBoxBase::msgType _type,
-                            PGE_Point pos, double _padding, QString texture)
+                                PGE_Point pos, double _padding, QString texture)
 {
     if(!texture.isEmpty())
         loadTexture(texture);
@@ -78,10 +75,10 @@ void PGE_MenuBoxBase::construct(QString _title, PGE_MenuBoxBase::msgType _type,
     _ctrl2 = nullptr;
     fontRgba.setRgba(qRgba(255, 255, 255, 255));
     updateTickValue();
-    _page=0;
-    running=false;
+    _page = 0;
+    running = false;
     _answer_id = -1;
-    _pos=pos;
+    _pos = pos;
     _menu.setTextLenLimit(30, true);
     setTitleFont(ConfigManager::setup_menu_box.title_font_name);
     setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
@@ -108,14 +105,28 @@ void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
 {
     switch(type)
     {
-        case msg_info: bg_color =       QColor(qRgb(0,0,0)); break;
-        case msg_info_light: bg_color = QColor(qRgb(0,0,125)); break;
-        case msg_warn: bg_color =       QColor(qRgb(255,201,14)); break;
-        case msg_error: bg_color =      QColor(qRgb(125,0,0)); break;
-        case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
-        default:  bg_color =            QColor(qRgb(0,0,0)); break;
+    case msg_info:
+        bg_color =       QColor(qRgb(0, 0, 0));
+        break;
+
+    case msg_info_light:
+        bg_color = QColor(qRgb(0, 0, 125));
+        break;
+
+    case msg_warn:
+        bg_color =       QColor(qRgb(255, 201, 14));
+        break;
+
+    case msg_error:
+        bg_color =      QColor(qRgb(125, 0, 0));
+        break;
+
+    case msg_fatal:
+        bg_color =      QColor(qRgb(255, 0, 0));
+        break;
     }
-    type=_type;
+
+    type = _type;
 }
 
 void PGE_MenuBoxBase::setTitleFont(QString fontName)
@@ -125,7 +136,7 @@ void PGE_MenuBoxBase::setTitleFont(QString fontName)
 
 void PGE_MenuBoxBase::setTitleFontColor(GlColor color)
 {
-    fontRgba=color;
+    fontRgba = color;
 }
 
 void PGE_MenuBoxBase::setTitleText(QString text)
@@ -138,15 +149,21 @@ void PGE_MenuBoxBase::setTitleText(QString text)
 
 void PGE_MenuBoxBase::setPadding(int _padding)
 {
-    if(_padding<0)
+    setPadding(static_cast<double>(_padding));
+}
+
+void PGE_MenuBoxBase::setPadding(double _padding)
+{
+    if(_padding < 0.0)
         _padding = ConfigManager::setup_menu_box.box_padding;
-    padding=_padding;
+
+    padding = _padding;
 }
 
 void PGE_MenuBoxBase::setPos(double x, double y)
 {
-    _pos.setX(x);
-    _pos.setY(y);
+    _pos.setX(static_cast<int>(x));
+    _pos.setY(static_cast<int>(y));
     updateSize();
 }
 
@@ -166,31 +183,37 @@ void PGE_MenuBoxBase::setBoxSize(double _Width, double _Height, double _padding)
 void PGE_MenuBoxBase::updateSize()
 {
     PGE_Rect menuRect = _menu.rectFull();
-    if(menuRect.width()>title_size.w())
-        width = menuRect.width()/2;
-    else
-        width = title_size.w()/2;
-    height=(title_size.h()+menuRect.height())/2;
 
-    if((_pos.x()==-1)&&(_pos.y()==-1))
+    if(menuRect.width() > title_size.w())
+        width = menuRect.width() / 2;
+    else
+        width = title_size.w() / 2;
+
+    height = (title_size.h() + menuRect.height()) / 2;
+    int pad = static_cast<int>(padding);
+    int w = static_cast<int>(width);
+    int h = static_cast<int>(height);
+
+    if((_pos.x() == -1) && (_pos.y() == -1))
     {
-        _sizeRect.setLeft(PGE_Window::Width/2-width-padding);
-        _sizeRect.setTop(PGE_Window::Height/2-height-padding);
-        _sizeRect.setRight(PGE_Window::Width/2 + width + padding);
-        _sizeRect.setBottom(PGE_Window::Height/2+height + padding);
+        _sizeRect.setLeft(PGE_Window::Width / 2 - w - pad);
+        _sizeRect.setTop(PGE_Window::Height / 2 - h - pad);
+        _sizeRect.setRight(PGE_Window::Width / 2 + w + pad);
+        _sizeRect.setBottom(PGE_Window::Height / 2 + h + pad);
+
         if(_sizeRect.top() < padding)
-            _sizeRect.setY(padding);
+            _sizeRect.setY(pad);
     }
     else
     {
-        _sizeRect.setLeft( _pos.x() - width-padding);
-        _sizeRect.setTop(_pos.y() - height-padding);
-        _sizeRect.setRight(_pos.x() + width + padding);
-        _sizeRect.setBottom(_pos.y() + height + padding);
+        _sizeRect.setLeft(_pos.x() - w - pad);
+        _sizeRect.setTop(_pos.y() - h - pad);
+        _sizeRect.setRight(_pos.x() + w + pad);
+        _sizeRect.setBottom(_pos.y() + h + pad);
     }
 
-    _menu.setPos(_sizeRect.right() - ( menuRect.width()>title_size.w() ? menuRect.width() : title_size.w() ),
-                 _sizeRect.bottom() - menuRect.height() + _menu.topOffset() - padding);
+    _menu.setPos(_sizeRect.right() - (menuRect.width() > title_size.w() ? menuRect.width() : title_size.w()),
+                 _sizeRect.bottom() - menuRect.height() + _menu.topOffset() - pad);
 }
 
 
@@ -211,6 +234,7 @@ void PGE_MenuBoxBase::addMenuItems(QStringList &menuitems)
 {
     foreach(QString menuitem, menuitems)
         _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
+
     updateSize();
 }
 
@@ -219,70 +243,84 @@ void PGE_MenuBoxBase::update(double ticks)
 {
     switch(_page)
     {
-        case 0: setFade(10, 1.0f, 0.05f); _page++; break;
-        case 1: processLoader(ticks); break;
-        case 2: processBox(ticks); break;
-        case 3: processUnLoader(ticks); break;
-        case 4:
-        default: running=false; break;
+    case 0:
+        setFade(10, 1.0, 0.05);
+        _page++;
+        break;
+
+    case 1:
+        processLoader(ticks);
+        break;
+
+    case 2:
+        processBox(ticks);
+        break;
+
+    case 3:
+        processUnLoader(ticks);
+        break;
+
+    case 4:
+    default:
+        running = false;
+        break;
     }
 }
 
 void PGE_MenuBoxBase::render()
 {
-    if(_page==2)
+    if(_page == 2)
     {
         if(_textureUsed)
-        {
-            drawTexture(_sizeRect, 32, fader_opacity);
-        }
+            drawTexture(_sizeRect, 32, static_cast<float>(fader_opacity));
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   float(bg_color.red())/255.0f,
-                                   float(bg_color.green())/255.0f,
-                                   float(bg_color.blue())/255.0f, fader_opacity);
+                                   static_cast<float>(bg_color.red()) / 255.0f,
+                                   static_cast<float>(bg_color.green()) / 255.0f,
+                                   static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(fader_opacity));
         }
+
         FontManager::printText(title,
-                               _sizeRect.center().x()-title_size.w()/2,
-                               _sizeRect.top()+padding,
+                               _sizeRect.center().x() - title_size.w() / 2,
+                               _sizeRect.top() + static_cast<int>(padding),
                                fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
         _menu.render();
-//        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-//                                         _sizeRect.top()+padding,
-//                                         &textTexture);
+        //        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
+        //                                         _sizeRect.top()+padding,
+        //                                         &textTexture);
     }
     else
     {
         if(_textureUsed)
         {
-            drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
-                        _sizeRect.center().y()-(height + padding)*fader_opacity,
-                        _sizeRect.center().x()+(width + padding)*fader_opacity,
-                        _sizeRect.center().y()+(height + padding)*fader_opacity,
-                        32, fader_opacity);
+            drawTexture(_sizeRect.center().x() - static_cast<int>((width + padding)*fader_opacity),
+                        _sizeRect.center().y() - static_cast<int>((height + padding)*fader_opacity),
+                        _sizeRect.center().x() + static_cast<int>((width + padding)*fader_opacity),
+                        _sizeRect.center().y() + static_cast<int>((height + padding)*fader_opacity),
+                        32, static_cast<float>(fader_opacity));
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity,
-                                    _sizeRect.center().y() - (height+padding)*fader_opacity,
-                                    _sizeRect.center().x() + (width+padding)*fader_opacity,
-                                    _sizeRect.center().y() + (height+padding)*fader_opacity,
-                                    float(bg_color.red())/255.0f,
-                                    float(bg_color.green())/255.0f,
-                                    float(bg_color.blue())/255.0f, fader_opacity);
+            GlRenderer::renderRectBR(_sizeRect.center().x() - static_cast<int>((width + padding)*fader_opacity),
+                                     _sizeRect.center().y() - static_cast<int>((height + padding)*fader_opacity),
+                                     _sizeRect.center().x() + static_cast<int>((width + padding)*fader_opacity),
+                                     _sizeRect.center().y() + static_cast<int>((height + padding)*fader_opacity),
+                                     static_cast<float>(bg_color.red()) / 255.0f,
+                                     static_cast<float>(bg_color.green()) / 255.0f,
+                                     static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(fader_opacity));
         }
     }
 }
 
 void PGE_MenuBoxBase::restart()
 {
-    _page=0;
+    _page = 0;
     _menu.resetState();
     _menu.reset();
-    running=true;
+    running = true;
 }
 
 bool PGE_MenuBoxBase::isRunning()
@@ -296,8 +334,7 @@ void PGE_MenuBoxBase::exec()
 
     while(running)
     {
-        Uint32 start_render=SDL_GetTicks();
-
+        Uint32 start_render = SDL_GetTicks();
         updateControllers();
         update(uTickf);
         PGE_BoxBase::render();
@@ -305,8 +342,8 @@ void PGE_MenuBoxBase::exec()
         GlRenderer::flush();
         GlRenderer::repaint();
 
-        if((!PGE_Window::vsync)&&(uTick > (signed)(SDL_GetTicks() - start_render)))
-                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+        if((!PGE_Window::vsync) && (uTick > static_cast<int>(SDL_GetTicks() - start_render)))
+            SDL_Delay(static_cast<unsigned int>(uTick) - (SDL_GetTicks() - start_render));
     }
 }
 
@@ -323,62 +360,100 @@ int PGE_MenuBoxBase::answer()
 
 void PGE_MenuBoxBase::reject()
 {
-    _answer_id=-1; _page++; setFade(10, 0.0f, 0.05f);
-    if(reject_snd>0)
+    _answer_id = -1;
+    _page++;
+    setFade(10, 0.0, 0.05);
+
+    if(reject_snd > 0)
         PGE_Audio::playSound(reject_snd);
 }
 
 void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
 {
-    if(_page!=2) return;
+    if(_page != 2) return;
 
     if(_ctrl1)
     {
-        if(_ctrl1->keys.up) {
-            onUpButton(); return;
-        } else if(_ctrl1->keys.down) {
-            onDownButton(); return;
-        } else if(_ctrl1->keys.left) {
-            onLeftButton(); return;
-        } else if(_ctrl1->keys.right) {
-            onRightButton(); return;
-        } else if(_ctrl1->keys.jump) {
-            onJumpButton(); return;
-        } else if(_ctrl1->keys.alt_jump) {
-            onAltJumpButton(); return;
-        } else if(_ctrl1->keys.run) {
-            onRunButton(); return;
-        } else if(_ctrl1->keys.alt_run){
-            onAltRunButton(); return;
-        } else if(_ctrl1->keys.start) {
-            onStartButton(); return;
-        } else if(_ctrl1->keys.drop) {
-           onDropButton(); return;
+        if(_ctrl1->keys.up)
+        {
+            onUpButton();
+            return;
+        }
+        else if(_ctrl1->keys.down)
+        {
+            onDownButton();
+            return;
+        }
+        else if(_ctrl1->keys.left)
+        {
+            onLeftButton();
+            return;
+        }
+        else if(_ctrl1->keys.right)
+        {
+            onRightButton();
+            return;
+        }
+        else if(_ctrl1->keys.jump)
+        {
+            onJumpButton();
+            return;
+        }
+        else if(_ctrl1->keys.alt_jump)
+        {
+            onAltJumpButton();
+            return;
+        }
+        else if(_ctrl1->keys.run)
+        {
+            onRunButton();
+            return;
+        }
+        else if(_ctrl1->keys.alt_run)
+        {
+            onAltRunButton();
+            return;
+        }
+        else if(_ctrl1->keys.start)
+        {
+            onStartButton();
+            return;
+        }
+        else if(_ctrl1->keys.drop)
+        {
+            onDropButton();
+            return;
         }
     }
 
     switch(key)
     {
-      case SDLK_UP:
+    case SDLK_UP:
         onUpButton();
-      break;
-      case SDLK_DOWN:
+        break;
+
+    case SDLK_DOWN:
         onDownButton();
-      break;
-      case SDLK_LEFT:
+        break;
+
+    case SDLK_LEFT:
         onLeftButton();
-      break;
-      case SDLK_RIGHT:
+        break;
+
+    case SDLK_RIGHT:
         onRightButton();
-      break;
-      case SDLK_RETURN:
-      case SDLK_KP_ENTER:
+        break;
+
+    case SDLK_RETURN:
+    case SDLK_KP_ENTER:
         onStartButton();
-      break;
-      case SDLK_ESCAPE:
-         onDropButton(); return;
-      break;
-      default:
+        break;
+
+    case SDLK_ESCAPE:
+        onDropButton();
+        return;
+
+    default:
         break;
     }
 }
@@ -386,44 +461,57 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
 void PGE_MenuBoxBase::processLoader(double ticks)
 {
     SDL_Event event;
-    while ( SDL_PollEvent(&event) ) {
+
+    while(SDL_PollEvent(&event))
+    {
         PGE_Window::processEvents(event);
-        if(event.type==SDL_QUIT)
-            fader_opacity=1.0;
+
+        if(event.type == SDL_QUIT)
+            fader_opacity = 1.0;
     }
+
     tickFader(ticks);
-    if(fader_opacity>=1.0f) _page++;
+
+    if(fader_opacity >= 1.0) _page++;
 }
 
 void PGE_MenuBoxBase::processBox(double)
 {
-//    #ifndef __APPLE__
-//    if(g_AppSettings.interprocessing)
-//        qApp->processEvents();
-//    #endif
+    //    #ifndef __APPLE__
+    //    if(g_AppSettings.interprocessing)
+    //        qApp->processEvents();
+    //    #endif
     SDL_Event event;
-    while ( SDL_PollEvent(&event) )
+
+    while(SDL_PollEvent(&event))
     {
         PGE_Window::processEvents(event);
+
         switch(event.type)
         {
-            case SDL_QUIT:
-                reject();
+        case SDL_QUIT:
+            reject();
             break;
-            case SDL_KEYDOWN: // If pressed key
-                processKeyEvent(event.key.keysym.sym);
+
+        case SDL_KEYDOWN: // If pressed key
+            processKeyEvent(event.key.keysym.sym);
             break;
-            default:
-              break;
+
+        default:
+            break;
         }
     }
+
     if(_menu.isSelected())
     {
         if(_menu.isAccepted())
             _answer_id = _menu.currentItemI();
         else
             _answer_id = -1;
-        _page++; setFade(10, 0.0f, 0.05f);return;
+
+        _page++;
+        setFade(10, 0.0, 0.05);
+        return;
     }
 }
 
@@ -432,13 +520,18 @@ void PGE_MenuBoxBase::processBox(double)
 void PGE_MenuBoxBase::processUnLoader(double ticks)
 {
     SDL_Event event;
-    while ( SDL_PollEvent(&event) ) {
+
+    while(SDL_PollEvent(&event))
+    {
         PGE_Window::processEvents(event);
-        if(event.type==SDL_QUIT)
-            fader_opacity=0.0;
+
+        if(event.type == SDL_QUIT)
+            fader_opacity = 0.0;
     }
+
     tickFader(ticks);
-    if(fader_opacity<=0.0f) _page++;
+
+    if(fader_opacity <= 0.0) _page++;
 }
 
 
@@ -446,36 +539,40 @@ void PGE_MenuBoxBase::initControllers()
 {
     if(parentScene != nullptr)
     {
-        if(parentScene->type()==Scene::Level)
+        if(parentScene->type() == Scene::Level)
         {
-            LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(parentScene);
+
             if(s)
             {
                 _ctrl1 = s->player1Controller;
                 _ctrl2 = s->player2Controller;
             }
         }
-        else if(parentScene->type()==Scene::World)
+        else if(parentScene->type() == Scene::World)
         {
-            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(parentScene);
+
             if(s)
             {
                 _ctrl1 = s->player1Controller;
                 _ctrl2 = nullptr;
             }
         }
-        else if(parentScene->type()==Scene::GameOver)
+        else if(parentScene->type() == Scene::GameOver)
         {
-            GameOverScene * s = dynamic_cast<GameOverScene *>(parentScene);
+            GameOverScene *s = dynamic_cast<GameOverScene *>(parentScene);
+
             if(s)
             {
                 _ctrl1 = s->player1Controller;
                 _ctrl2 = nullptr;
             }
         }
-        else if(parentScene->type()==Scene::ConfigSelect)
+        else if(parentScene->type() == Scene::ConfigSelect)
         {
-            ConfigSelectScene * s = dynamic_cast<ConfigSelectScene *>(parentScene);
+            ConfigSelectScene *s = dynamic_cast<ConfigSelectScene *>(parentScene);
+
             if(s)
             {
                 _ctrl1 = s->controller;
@@ -484,47 +581,48 @@ void PGE_MenuBoxBase::initControllers()
         }
         else
         {
-            _ctrl1=nullptr;
-            _ctrl2=nullptr;
+            _ctrl1 = nullptr;
+            _ctrl2 = nullptr;
         }
     }
     else
     {
-        _ctrl1=nullptr;
-        _ctrl2=nullptr;
+        _ctrl1 = nullptr;
+        _ctrl2 = nullptr;
     }
 }
 
 void PGE_MenuBoxBase::updateControllers()
 {
     SDL_PumpEvents();
+
     if(_ctrl1)
     {
         _ctrl1->update();
         _ctrl1->sendControls();
     }
+
     if(_ctrl2)
     {
         _ctrl2->update();
         _ctrl2->sendControls();
     }
-    if(parentScene!=NULL)
+
+    if(parentScene != NULL)
     {
-        if(parentScene->type()==Scene::Level)
+        if(parentScene->type() == Scene::Level)
         {
-            LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(parentScene);
+
             if(s)
-            {
                 s->tickAnimations(uTickf);
-            }
         }
-        else if(parentScene->type()==Scene::World)
+        else if(parentScene->type() == Scene::World)
         {
-            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(parentScene);
+
             if(s)
-            {
                 s->tickAnimations(uTickf);
-            }
         }
     }
 }

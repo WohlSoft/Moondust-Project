@@ -38,14 +38,19 @@ dataconfigs::dataconfigs()
 {
     m_isValid = false;
 
+    total_data = 0;
+
+    music_custom_id = 1;
+    music_w_custom_id = 1;
+
     defaultGrid.general = 0;
-    defaultGrid.block = 32;
-    defaultGrid.bgo = 32;
-    defaultGrid.npc = 32;
-    defaultGrid.terrain = 32;
+    defaultGrid.block = 32;     //-V112
+    defaultGrid.bgo = 32;       //-V112
+    defaultGrid.npc = 32;       //-V112
+    defaultGrid.terrain = 32;   //-V112
     defaultGrid.scenery = 16;
-    defaultGrid.paths = 32;
-    defaultGrid.levels = 32;
+    defaultGrid.paths = 32;     //-V112
+    defaultGrid.levels = 32;    //-V112
 
     engine.screen_w=800;
     engine.screen_h=600;
@@ -307,7 +312,7 @@ bool dataconfigs::loadconfigs()
     ConfStatus::configPath = config_dir;
 
     mainset.beginGroup("graphics");
-        defaultGrid.general = mainset.value("default-grid", 32).toUInt();
+        defaultGrid.general = mainset.value("default-grid", 32).toUInt();   //-V112
     mainset.endGroup();
 
     if( mainset.status() != QSettings::NoError )
@@ -454,19 +459,19 @@ bool dataconfigs::check()
 
 long dataconfigs::getCharacterI(unsigned long itemID)
 {
-    long j;
+    int j;
     bool found=false;
 
     for(j=0; j < main_characters.size(); j++)
     {
-        if(main_characters[int(j)].id == itemID)
+        if(main_characters[j].id == itemID)
         {
             found=true;
             break;
         }
     }
     if(!found) j=-1;
-    return j;
+    return static_cast<long>(j);
 }
 
 

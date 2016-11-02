@@ -35,9 +35,9 @@ void MessageBoxQueue::process()
 {
     while(!messages.empty())
     {
-        QString msg = messages.back();
+        QString msg = messages.front();
         PGE_MsgBox box(m_scene, msg,
-                       PGE_MsgBox::msg_info, PGE_Point(-1,-1),
+                       PGE_MsgBox::msg_info, PGE_Point(-1, -1),
                        ConfigManager::setup_message_box.box_padding,
                        ConfigManager::setup_message_box.sprite);
         box.exec();

@@ -49,164 +49,165 @@ struct WorldScene_misc_img
 
 class WorldScene : public Scene
 {
-    friend class PGE_MsgBox;
-    friend class PGE_TextInputBox;
-    friend class PGE_MenuBoxBase;
-    friend class WldPathOpener;
-public:
-    WorldScene();
-    ~WorldScene();
+        friend class PGE_MsgBox;
+        friend class PGE_TextInputBox;
+        friend class PGE_MenuBoxBase;
+        friend class WldPathOpener;
+    public:
+        WorldScene();
+        ~WorldScene();
 
-    bool init();
-    bool loadConfigs();
+        bool init();
+        bool loadConfigs();
 
-    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
-    LuaEngine* getLuaEngine();
+        void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+        LuaEngine *getLuaEngine();
 
-    void processEvents();
-    void update();
-    void render();
-    int  exec();
+        void processEvents();
+        void update();
+        void render();
+        int  exec();
 
-    bool isVizibleOnScreen(PGE_RectF &rect);
+        bool isVizibleOnScreen(PGE_RectF &rect);
 
-    void tickAnimations(float ticks);
+        void tickAnimations(double ticks);
 
-    bool isExit();
-    void setExiting(int delay, int reason);
+        bool isExit();
+        void setExiting(int delay, int reason);
 
-    bool loadFile(QString filePath);
+        bool loadFile(QString filePath);
 
-    QString getLastError();
-    void setGameState(EpisodeState *_state);
+        QString getLastError();
+        void setGameState(EpisodeState *_state);
 
-private:
-    bool isInit;
+    private:
+        bool isInit;
 
-    Controller *    player1Controller;
-    controller_keys controls_1;
+        Controller     *player1Controller;
+        controller_keys controls_1;
 
-    bool frameSkip;
+        bool frameSkip;
 
-    EpisodeState *  gameState;
-    QString         errorMsg;
+        EpisodeState   *gameState;
+        QString         errorMsg;
 
-    WorldMapSetup   common_setup;
-    WorldData       data;
+        WorldMapSetup   common_setup;
+        WorldData       data;
 
-    bool     worldIsContinues;
-    bool     lock_controls;
+        bool     worldIsContinues;
+        bool     lock_controls;
 
-    PGE_Rect viewportRect;
+        PGE_Rect viewportRect;
 
-    int     exitWorldDelay;
-    int     exitWorldCode;
+        int     exitWorldDelay;
+        int     exitWorldCode;
 
-    int                 numOfPlayers;
-    QList<PlayerState > players;
+        int                 numOfPlayers;
+        QList<PlayerState > players;
 
-    PGE_Texture         backgroundTex;
-    QList<PGE_Texture > textures_bank;
+        PGE_Texture         backgroundTex;
+        QList<PGE_Texture > textures_bank;
 
-    enum WalkDirections{
-        Walk_Idle=0,
-        Walk_Left,
-        Walk_Right,
-        Walk_Up,
-        Walk_Down
-    };
-    double  posX;
-    double  posY;
-    int     walk_direction;
-    float   move_speed;//!< Calculated movement step dependent to physical step
-    float   move_steps_count;//!< Speps counterm, used to correct inter-cell position
-    void    doMoveStep(double &posVal);
-    void    setDir(int dr);
+        enum WalkDirections
+        {
+            Walk_Idle = 0,
+            Walk_Left,
+            Walk_Right,
+            Walk_Up,
+            Walk_Down
+        };
+        double  posX;
+        double  posY;
+        int     walk_direction;
+        double  move_speed;//!< Calculated movement step dependent to physical step
+        double  move_steps_count;//!< Speps counterm, used to correct inter-cell position
+        void    doMoveStep(double &posVal);
+        void    setDir(int dr);
 
-    obj_player     mapwalker_setup;
-    PGE_Texture    mapwalker_texture;
-    float          mapwalker_img_h;
-    SimpleAnimator mapwalker_ani;
-    int            mapwalker_offset_x;
-    int            mapwalker_offset_y;
-    void           mapwalker_refreshDirection();
-
-
-    void    playMusic(long musicID, QString customMusicFile, bool fade=false, int fadeLen=300);
-    void    stopMusic(bool fade=false, int fadeLen=300);
-    bool    _playStopSnd;
-    bool    _playDenySnd;
-
-    QString currentMusicFile;
-
-    void      jump();
-    bool      jumpTo;
-    PGE_Point jumpToXY;
-
-    /************Printable stuff****************/
-    long      health;
-    long      lives;
-    long      stars;
-    long      points;
-    long      coins;
-    QString   levelTitle;
-    /*******************************************/
-    bool    allow_left;
-    bool    allow_up;
-    bool    allow_right;
-    bool    allow_down;
-    void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
-    void    updateCenter();
-    static void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, long cx, long cy);
-    void    initElementsVisibility();
-    void    saveElementsVisibility();
-
-    bool    pathOpeningInProcess;
-    WldPathOpener pathOpener;
-
-    QVector<WorldScene_misc_img > imgs;
-    QVector<WorldScene_Portrait > portraits;
-
-    TileBox _indexTable;
-    QList<WldTileItem >     wld_tiles;
-    QList<WldSceneryItem >  wld_sceneries;
-    QList<WldPathItem >     wld_paths;
-    QList<WldLevelItem >    wld_levels;
-    QList<WldMusicBoxItem > wld_musicboxes;
-    EventQueue<WorldScene > wld_events;
-
-    QList<WorldNode >       wldItems;
-    QVector<WorldNode * >   _itemsToRender;
+        obj_player     mapwalker_setup;
+        PGE_Texture    mapwalker_texture;
+        float          mapwalker_img_h;
+        SimpleAnimator mapwalker_ani;
+        int            mapwalker_offset_x;
+        int            mapwalker_offset_y;
+        void           mapwalker_refreshDirection();
 
 
-    /*****************Pause Menu*******************/
-    enum PauseMenuItems_Menu1
-    {
-        PAUSE_Continue=0,
-        PAUSE_SaveCont,
-        PAUSE_SaveQuit,
-        PAUSE_Exit
-    };
-    enum PauseMenuItems_Menu2
-    {
-        PAUSE_2_Continue=0,
-        PAUSE_2_Exit
-    };
-    int         _pauseMenuID;
-    bool        isPauseMenu;
-    PGE_MenuBox _pauseMenu;
-    bool        _pauseMenu_opened;
-    void initPauseMenu1();
-    void initPauseMenu2();
-    void processPauseMenu();
-    /*****************Pause Menu**end**************/
+        void    playMusic(unsigned long musicID, QString customMusicFile, bool fade = false, int fadeLen = 300);
+        void    stopMusic(bool fade = false, int fadeLen = 300);
+        bool    _playStopSnd;
+        bool    _playDenySnd;
 
-    int     debug_render_delay;
-    int     debug_phys_delay;
-    int     debug_event_delay;
-    int     debug_total_delay;
+        QString currentMusicFile;
 
-    LuaWorldEngine luaEngine;
+        void       jump();
+        bool       jumpTo;
+        PGE_PointF jumpToXY;
+
+        /************Printable stuff****************/
+        long      health;
+        long      lives;
+        long      stars;
+        long      points;
+        long      coins;
+        QString   levelTitle;
+        /*******************************************/
+        bool    allow_left;
+        bool    allow_up;
+        bool    allow_right;
+        bool    allow_down;
+        void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
+        void    updateCenter();
+        static void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, long cx, long cy);
+        void    initElementsVisibility();
+        void    saveElementsVisibility();
+
+        bool    pathOpeningInProcess;
+        WldPathOpener pathOpener;
+
+        QVector<WorldScene_misc_img > imgs;
+        QVector<WorldScene_Portrait > portraits;
+
+        TileBox _indexTable;
+        QList<WldTileItem >     wld_tiles;
+        QList<WldSceneryItem >  wld_sceneries;
+        QList<WldPathItem >     wld_paths;
+        QList<WldLevelItem >    wld_levels;
+        QList<WldMusicBoxItem > wld_musicboxes;
+        EventQueue<WorldScene > wld_events;
+
+        QList<WorldNode >       wldItems;
+        QVector<WorldNode * >   _itemsToRender;
+
+
+        /*****************Pause Menu*******************/
+        enum PauseMenuItems_Menu1
+        {
+            PAUSE_Continue = 0,
+            PAUSE_SaveCont,
+            PAUSE_SaveQuit,
+            PAUSE_Exit
+        };
+        enum PauseMenuItems_Menu2
+        {
+            PAUSE_2_Continue = 0,
+            PAUSE_2_Exit
+        };
+        int         _pauseMenuID;
+        bool        isPauseMenu;
+        PGE_MenuBox _pauseMenu;
+        bool        _pauseMenu_opened;
+        void initPauseMenu1();
+        void initPauseMenu2();
+        void processPauseMenu();
+        /*****************Pause Menu**end**************/
+
+        int     debug_render_delay;
+        int     debug_phys_delay;
+        int     debug_event_delay;
+        int     debug_total_delay;
+
+        LuaWorldEngine luaEngine;
 };
 
 #endif // SCENE_WORLD_H

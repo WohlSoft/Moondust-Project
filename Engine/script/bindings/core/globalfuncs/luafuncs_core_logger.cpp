@@ -1,20 +1,19 @@
 #include "luafuncs_core_logger.h"
-
-#include <QtDebug>
+#include <common_features/logger.h>
 
 void Binding_Core_GlobalFuncs_Logger::debug(const std::string &msg)
 {
-    qDebug() << msg.c_str();
+    pLogDebug(msg.c_str());
 }
 
 void Binding_Core_GlobalFuncs_Logger::warning(const std::string &msg)
 {
-    qWarning() << msg.c_str();
+    pLogDebug(msg.c_str());
 }
 
 void Binding_Core_GlobalFuncs_Logger::critical(const std::string &msg)
 {
-    qCritical() << msg.c_str();
+    pLogDebug(msg.c_str());
 }
 
 luabind::scope Binding_Core_GlobalFuncs_Logger::bindToLua()

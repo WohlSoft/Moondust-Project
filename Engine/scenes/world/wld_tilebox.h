@@ -29,102 +29,102 @@
 
 class WorldNode
 {
-public:
-    enum nodeType
-    {
-        unknown=0,
-        tile,
-        scenery,
-        path,
-        level,
-        musicbox
-    };
+    public:
+        enum nodeType
+        {
+            unknown = 0,
+            tile,
+            scenery,
+            path,
+            level,
+            musicbox
+        };
 
-    WorldNode();
-    virtual ~WorldNode();
-    WorldNode(const WorldNode &xx);
-    virtual void render(float, float) {}
-    virtual bool collidePoint(long rx, long ry);
-    virtual bool collideWith(WorldNode *it);
-    int type;
-    long x;
-    long y;
-    long w;
-    long h;
-    float r;
-    float g;
-    float b;
-    double Z;
-    PGE_Texture texture;
-    bool animated;
-    long animatorID;
-    bool vizible;
+        WorldNode();
+        virtual ~WorldNode();
+        WorldNode(const WorldNode &xx);
+        virtual void render(double, double) {}
+        virtual bool collidePoint(long rx, long ry);
+        virtual bool collideWith(WorldNode *it);
+        int type;
+        long x;
+        long y;
+        long w;
+        long h;
+        float r;
+        float g;
+        float b;
+        double Z;
+        PGE_Texture texture;
+        bool animated;
+        int animatorID;
+        bool vizible;
 };
 
 class WldTileItem: public WorldNode
 {
-public:
-    WldTileItem(WorldTerrainTile _data);
-    WldTileItem(const WldTileItem &x);
-    ~WldTileItem();
-    bool init();
-    void render(float rx, float ry);
-    obj_w_tile setup;
-    WorldTerrainTile data;
+    public:
+        WldTileItem(WorldTerrainTile _data);
+        WldTileItem(const WldTileItem &x);
+        ~WldTileItem();
+        bool init();
+        void render(double rx, double ry);
+        obj_w_tile setup;
+        WorldTerrainTile data;
 };
 
 class WldSceneryItem: public WorldNode
 {
-public:
-    WldSceneryItem(WorldScenery _data);
-    WldSceneryItem(const WldSceneryItem &x);
-    ~WldSceneryItem();
-    bool init();
-    void render(float rx, float ry);
-    obj_w_scenery setup;
-    WorldScenery data;
+    public:
+        WldSceneryItem(WorldScenery _data);
+        WldSceneryItem(const WldSceneryItem &x);
+        ~WldSceneryItem();
+        bool init();
+        void render(double rx, double ry);
+        obj_w_scenery setup;
+        WorldScenery data;
 };
 
 class WldPathItem: public WorldNode
 {
-public:
-    WldPathItem(WorldPathTile _data);
-    WldPathItem(const WldPathItem &x);
-    ~WldPathItem();
-    bool init();
-    void render(float rx, float ry);
-    obj_w_path setup;
-    WorldPathTile data;
+    public:
+        WldPathItem(WorldPathTile _data);
+        WldPathItem(const WldPathItem &x);
+        ~WldPathItem();
+        bool init();
+        void render(double rx, double ry);
+        obj_w_path setup;
+        WorldPathTile data;
 };
 
 class WldLevelItem: public WorldNode
 {
-public:
-    WldLevelItem(WorldLevelTile _data);
-    WldLevelItem(const WldLevelItem &x);
-    ~WldLevelItem();
-    bool init();
-    void render(float rx, float ry);
+    public:
+        WldLevelItem(WorldLevelTile _data);
+        WldLevelItem(const WldLevelItem &x);
+        ~WldLevelItem();
+        bool init();
+        void render(double rx, double ry);
 
-    obj_w_level setup;
-    float offset_x;
-    float offset_y;
-    PGE_Texture _path_tex;
-    float       _path_offset_x;
-    float       _path_offset_y;
-    PGE_Texture _path_big_tex;
-    float       _path_big_offset_x;
-    float       _path_big_offset_y;
-    WorldLevelTile data;
+        obj_w_level setup;
+        double      offset_x;
+        double      offset_y;
+        PGE_Texture _path_tex;
+        double      _path_offset_x;
+        double      _path_offset_y;
+        PGE_Texture _path_big_tex;
+        double      _path_big_offset_x;
+        double      _path_big_offset_y;
+        WorldLevelTile data;
 };
 
 class WldMusicBoxItem: public WorldNode
 {
-public:
-    WldMusicBoxItem(WorldMusicBox _data);
-    WldMusicBoxItem(const WldMusicBoxItem &x);
-    ~WldMusicBoxItem();
-    WorldMusicBox data;
+    public:
+        WldMusicBoxItem(WorldMusicBox _data);
+        WldMusicBoxItem(const WldMusicBoxItem &x);
+        ~WldMusicBoxItem();
+        WorldMusicBox data;
 };
 
 
@@ -132,31 +132,30 @@ public:
 
 class TileBox
 {
-public:
-    TileBox();
-    TileBox(unsigned long size);
-    ~TileBox();
-    void addNode(long X, long Y, long W, long H, WorldNode* item);
-    void query(long X, long Y, QVector<WorldNode * > &list);
-    void query(long Left, long Top, long Right, long Bottom, QVector<WorldNode * > &list, bool z_sort=false);
-    PGE_Point applyGrid(long x, long y);
-    void clean();
+    public:
+        TileBox();
+        TileBox(unsigned long size);
+        ~TileBox();
+        void addNode(long X, long Y, long W, long H, WorldNode *item);
+        void query(long X, long Y, QVector<WorldNode * > &list);
+        void query(long Left, long Top, long Right, long Bottom, QVector<WorldNode * > &list, bool z_sort = false);
+        PGE_Point applyGrid(long x, long y);
+        void clean();
 
-    const long &grid();
-    const long &grid_half();
+        const long &grid();
+        const long &grid_half();
 
-    void registerElement(WorldNode* item);
-    void registerElement(WorldNode *item, long X, long Y, long W, long H);
-    void unregisterElement(WorldNode* item);
-    typedef long RPoint[2];
-private:
-    void sortElements(QVector<WorldNode * > &list);
-    typedef RTree<WorldNode*, long, 2, long > IndexTree;
-    IndexTree tree;
-    long gridSize;
-    long gridSize_h;
+        void registerElement(WorldNode *item);
+        void registerElement(WorldNode *item, long X, long Y, long W, long H);
+        void unregisterElement(WorldNode *item);
+        typedef long RPoint[2];
+    private:
+        void sortElements(QVector<WorldNode * > &list);
+        typedef RTree<WorldNode *, long, 2, long > IndexTree;
+        IndexTree tree;
+        long gridSize;
+        long gridSize_h;
 };
 
 
 #endif // WLD_TILEBOX_H
-

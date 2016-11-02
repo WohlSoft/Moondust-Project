@@ -34,10 +34,10 @@ struct obj_wld_generic
     {}
     /*   OpenGL    */
     bool isInit;
-    PGE_Texture * image;
+    PGE_Texture *image;
     GLuint textureID;
-    long textureArrayId;
-    long animator_ID;
+    int textureArrayId;
+    int animator_ID;
     /*   OpenGL    */
 
     WldGenericSetup setup;

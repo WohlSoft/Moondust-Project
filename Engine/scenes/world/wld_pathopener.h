@@ -27,37 +27,38 @@ class WorldScene;
 
 class WldPathOpener
 {
-    void construct();
-public:
-    WldPathOpener();
-    WldPathOpener(WorldScene * _s);
-    void setScene(WorldScene * _s);
-    void setInterval(float _ms);
-    void startAt(PGE_PointF pos);
-    bool processOpener(float tickTime);
-    void initFetcher();
-    void setForce();
-    enum SideExitCode {
-        SIDE_AllowAny   = -1,
-        SIDE_DenyAny    = 0
-    };
-    bool isAllowedSide(int SideCode, int ExitCode);
+        void construct();
+    public:
+        WldPathOpener();
+        WldPathOpener(WorldScene *_s);
+        void setScene(WorldScene *_s);
+        void setInterval(double _ms);
+        void startAt(PGE_PointF pos);
+        bool processOpener(double tickTime);
+        void initFetcher();
+        void setForce();
+        enum SideExitCode
+        {
+            SIDE_AllowAny   = -1,
+            SIDE_DenyAny    = 0
+        };
+        bool isAllowedSide(int SideCode, int ExitCode);
 
-private:
-    void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, float cx, float cy);
-    void doFetch();
-    void findAndHideSceneries(WorldNode *relativeTo);
+    private:
+        void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, double cx, double cy);
+        void doFetch();
+        void findAndHideSceneries(WorldNode *relativeTo);
 
-    PGE_PointF _start_at;
-    PGE_PointF _current_pos;
-    PGE_PointF _search_pos;
-    QStack<PGE_PointF> need_to_walk;
-    QStack<WorldNode*> next;
+        PGE_PointF _start_at;
+        PGE_PointF _current_pos;
+        PGE_PointF _search_pos;
+        QStack<PGE_PointF> need_to_walk;
+        QStack<WorldNode *> next;
 
-    float interval;
-    float _time;
-    bool force;
-    WorldScene *s;
+        double interval;
+        double _time;
+        bool force;
+        WorldScene *s;
 };
 
 #endif // WLDPATHOPENER_H

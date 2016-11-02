@@ -27,9 +27,8 @@ LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelFileList)
 {
-    parentFolder=Folder;
-    lastCurrentFile=current;
-
+    parentFolder = Folder;
+    lastCurrentFile = current;
     ui->setupUi(this);
     connect(this, SIGNAL(itemAdded(QString)), this, SLOT(addItem(QString)));
     fileWalker = QtConcurrent::run(this, &LevelFileList::buildLevelList);
@@ -45,16 +44,17 @@ void LevelFileList::buildLevelList()
     QDir musicDir(parentFolder);
     QStringList filters;
     filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
-
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
     QDirIterator dirsList(parentFolder, filters,
-                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                          QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
                           QDirIterator::Subdirectories);
+
     while(dirsList.hasNext())
     {
         dirsList.next();
         emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
+
         if(fileWalker.isCanceled()) break;
     }
 }
@@ -62,9 +62,11 @@ void LevelFileList::buildLevelList()
 void LevelFileList::addItem(QString item)
 {
     ui->FileList->addItem(item);
-    if(lastCurrentFile==item)
+
+    if(lastCurrentFile == item)
     {
-        QList<QListWidgetItem*> list=ui->FileList->findItems(item, Qt::MatchFixedString);
+        QList<QListWidgetItem *> list = ui->FileList->findItems(item, Qt::MatchFixedString);
+
         if(!list.isEmpty())
         {
             list.first()->setSelected(true);
@@ -81,10 +83,10 @@ void LevelFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 
 void LevelFileList::on_buttonBox_accepted()
 {
-    foreach (QListWidgetItem * container, ui->FileList->selectedItems()) {
-    SelectedFile = container->text();
-    }
-    if(SelectedFile!="")
+    foreach(QListWidgetItem *container, ui->FileList->selectedItems())
+        SelectedFile = container->text();
+
+    if(SelectedFile != "")
         accept();
 }
 

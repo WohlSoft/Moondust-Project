@@ -71,6 +71,7 @@ Pods
 *.pro.user.*
 *.qbs.user
 *.qbs.user.*
+*.error
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
@@ -142,4 +143,7 @@ libSDL2_mixer.dylib
 
 #Coverity Scan output
 /cov-int/
+
+#PVS-Studio
+PVS-Studio.pri
 

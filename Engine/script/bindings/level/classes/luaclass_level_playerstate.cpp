@@ -29,7 +29,7 @@ lua_LevelPlayerState::lua_LevelPlayerState(const lua_LevelPlayerState &ps)
     m_stateID = ps.m_stateID;
 }
 
-unsigned int lua_LevelPlayerState::currentHealth()
+int lua_LevelPlayerState::currentHealth()
 {
     return m_health;
 }
@@ -49,7 +49,7 @@ unsigned int lua_LevelPlayerState::countCoins()
     return m_scene->getGameState()->game_state.coins;
 }
 
-unsigned int lua_LevelPlayerState::countLives()
+int lua_LevelPlayerState::countLives()
 {
     return m_scene->getGameState()->game_state.lives;
 }
@@ -64,7 +64,7 @@ void lua_LevelPlayerState::appendCoins(unsigned int newCoins)
     m_scene->getGameState()->game_state.coins += newCoins;
 }
 
-void lua_LevelPlayerState::appendLives(unsigned int newLives)
+void lua_LevelPlayerState::appendLives(int newLives)
 {
     m_scene->getGameState()->game_state.lives += newLives;
 }
@@ -84,7 +84,7 @@ void lua_LevelPlayerState::setCoins(unsigned int newCoins)
     m_scene->getGameState()->game_state.coins = newCoins;
 }
 
-void lua_LevelPlayerState::setLives(unsigned int newLives)
+void lua_LevelPlayerState::setLives(int newLives)
 {
     m_scene->getGameState()->game_state.lives = newLives;
 }
@@ -94,43 +94,43 @@ void lua_LevelPlayerState::setStars(unsigned int newStars)
     m_scene->getGameState()->game_state.totalStars = newStars;
 }
 
-void lua_LevelPlayerState::setCharacterID(int id)
+void lua_LevelPlayerState::setCharacterID(unsigned long id)
 {
     m_characterID = id;
 }
 
-void lua_LevelPlayerState::setStateID(int id)
+void lua_LevelPlayerState::setStateID(unsigned long id)
 {
     m_stateID = id;
 }
 
 void lua_LevelPlayerState::setHealth(int health)
 {
-    m_health=health;
+    m_health = health;
 }
 
 luabind::scope lua_LevelPlayerState::bindToLua()
 {
     using namespace luabind;
     return class_<lua_LevelPlayerState>("LevelPlayerState")
-            .def_readonly("points", &lua_LevelPlayerState::countPoints)
-            .def_readonly("coins",  &lua_LevelPlayerState::countCoins)
-            .def_readonly("lives",  &lua_LevelPlayerState::countLives)
-            .def_readonly("stars",  &lua_LevelPlayerState::countStars)
-            .def_readonly("leeks",  &lua_LevelPlayerState::countStars)
-            .def_readonly("health", &lua_LevelPlayerState::m_health)
-            .def_readonly("characterID", &lua_LevelPlayerState::m_characterID)
-            .def_readonly("stateID", &lua_LevelPlayerState::m_stateID)
-            .def("addPoints", &lua_LevelPlayerState::appendPoints)
-            .def("addCoins",  &lua_LevelPlayerState::appendCoins)
-            .def("addStars",  &lua_LevelPlayerState::appendStars)
-            .def("addLeeks",  &lua_LevelPlayerState::appendStars)
-            .def("addLives",  &lua_LevelPlayerState::appendLives)
-            .def("setPoints", &lua_LevelPlayerState::setPoints)
-            .def("setCoins",  &lua_LevelPlayerState::setCoins)
-            .def("setStars",  &lua_LevelPlayerState::setStars)
-            .def("setLeeks",  &lua_LevelPlayerState::setStars)
-            .def("setLives",  &lua_LevelPlayerState::setLives)
-            .def_readonly("playerID",  &lua_LevelPlayerState::m_playerID)
-            ;
+           .def_readonly("points", &lua_LevelPlayerState::countPoints)
+           .def_readonly("coins",  &lua_LevelPlayerState::countCoins)
+           .def_readonly("lives",  &lua_LevelPlayerState::countLives)
+           .def_readonly("stars",  &lua_LevelPlayerState::countStars)
+           .def_readonly("leeks",  &lua_LevelPlayerState::countStars)
+           .def_readonly("health", &lua_LevelPlayerState::m_health)
+           .def_readonly("characterID", &lua_LevelPlayerState::m_characterID)
+           .def_readonly("stateID", &lua_LevelPlayerState::m_stateID)
+           .def("addPoints", &lua_LevelPlayerState::appendPoints)
+           .def("addCoins",  &lua_LevelPlayerState::appendCoins)
+           .def("addStars",  &lua_LevelPlayerState::appendStars)
+           .def("addLeeks",  &lua_LevelPlayerState::appendStars)
+           .def("addLives",  &lua_LevelPlayerState::appendLives)
+           .def("setPoints", &lua_LevelPlayerState::setPoints)
+           .def("setCoins",  &lua_LevelPlayerState::setCoins)
+           .def("setStars",  &lua_LevelPlayerState::setStars)
+           .def("setLeeks",  &lua_LevelPlayerState::setStars)
+           .def("setLives",  &lua_LevelPlayerState::setLives)
+           .def_readonly("playerID",  &lua_LevelPlayerState::m_playerID)
+           ;
 }
