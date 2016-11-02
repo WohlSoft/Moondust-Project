@@ -1,6 +1,6 @@
 # PGE Engine
 
-![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_128.png)
+![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_256.png)
 
 Is the main part of PGE Project which allows users to play levels and episodes.
 
