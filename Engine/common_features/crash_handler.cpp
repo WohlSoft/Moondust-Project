@@ -234,9 +234,15 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByFlood()
     abortEngine(-2);
 }
 
+#ifdef _WIN32//Unsupported signals by Windows
+struct siginfo_t;
+#endif
 
 static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 {
+#ifdef _WIN32  //Unsupported signals by Windows
+    (void)siginfo;
+#endif
     // Find out which signal we're handling
     switch(signal)
     {
@@ -336,7 +342,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
     case SIGFPE:
     {
         std::string stack = getStacktrace();
-
+#ifndef _WIN32  //Unsupported signals by Windows
         if(siginfo)
         {
             switch(siginfo->si_code)
@@ -372,6 +378,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
             }
         }
         else
+#endif
         {
             pLogFatal("<wrong arithmetical operation>\n"
                       STACK_FORMAT,
@@ -408,7 +415,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                   "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
 #endif
         std::string stack = getStacktrace();
-
+#ifndef _WIN32  //Unsupported signals by Windows
         if(siginfo)
         {
             switch(siginfo->si_code)
@@ -433,6 +440,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
             }
         }
         else
+#endif
         {
             pLogFatal("<Segmentation fault crash!>\n"
                       STACK_FORMAT,
@@ -465,17 +473,28 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
     }
 }
 
+#ifndef _WIN32//Unsupported signals by Windows
 static struct sigaction act;
+#else
+struct siginfo_t;
+
+static void handle_signalWIN32(int signal)
+{
+    handle_signal(signal, NULL, NULL);
+}
+#endif
+
 
 void CrashHandler::initSigs()
 {
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
+#ifndef _WIN32//Unsupported signals by Windows
     memset(&act, 0, sizeof(struct sigaction));
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = handle_signal;
     act.sa_flags = SA_SIGINFO;
-#ifndef _WIN32 //Unsupported signals by Windows
+
     sigaction(SIGHUP,  &act, NULL);
     sigaction(SIGQUIT, &act, NULL);
     sigaction(SIGKILL, &act, NULL);
@@ -484,11 +503,17 @@ void CrashHandler::initSigs()
     sigaction(SIGUSR1, &act, NULL);
     sigaction(SIGUSR2, &act, NULL);
     sigaction(SIGBUS,  &act, NULL);
-#endif
     sigaction(SIGILL,  &act, NULL);
     sigaction(SIGFPE,  &act, NULL);
     sigaction(SIGSEGV, &act, NULL);
     sigaction(SIGINT,  &act, NULL);
     sigaction(SIGABRT, &act, NULL);
+#else
+    signal(SIGILL,  &handle_signalWIN32);
+    signal(SIGFPE,  &handle_signalWIN32);
+    signal(SIGSEGV, &handle_signalWIN32);
+    signal(SIGINT,  &handle_signalWIN32);
+    signal(SIGABRT, &handle_signalWIN32);
+#endif
 }
 /* Signals End */
