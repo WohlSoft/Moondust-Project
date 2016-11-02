@@ -841,22 +841,22 @@ Are you want to configure it?</source>
         <translation>Папки конфигуркции:</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="190"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="196"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="195"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
         <translation>Путь</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="204"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
         <translation>Ошибки</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.ui" line="217"/>
+        <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Errors of configuration loading:</source>
         <translation>Ошибки загрузки конфигурации:</translation>
     </message>
@@ -913,22 +913,22 @@ Are you want to configure it?</source>
         <translation type="vanished">Уровень: НИПы (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="120"/>
         <source>Music (level) (%1/%2)</source>
         <translation>Музыка (уровень) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
         <source>Music (world) (%1/%2)</source>
         <translation>Музыка (карта мира) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="145"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
         <source>Music (special) (%1/%2)</source>
         <translation>Музыка (специальная) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="157"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="124"/>
         <source>Sounds (%1/%2)</source>
         <translation>Звуки (%1/%2)</translation>
     </message>
@@ -949,22 +949,22 @@ Are you want to configure it?</source>
         <translation type="vanished">Карта мира: Уровни (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="75"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="112"/>
         <source>Level: Blocks (%1/%2)</source>
         <translation>Уровень: Блоки (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="87"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="114"/>
         <source>Level: Background objects (%1/%2)</source>
         <translation>Уровень: Фоновые объекты (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="99"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="116"/>
         <source>Level: Background images (%1/%2)</source>
         <translation>Уровень: Фоновые изображения (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="111"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Level: NPCs (%1/%2)</source>
         <translation>Уровень: НИПы (%1/%2)</translation>
     </message>
@@ -973,67 +973,67 @@ Are you want to configure it?</source>
         <translation type="vanished">Карта мира: Ландшафтные плитки (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="170"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="126"/>
         <source>World map: Terrain tiles (%1/%2)</source>
         <translation>Карта мира: Ландшафтные плитки (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="182"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="128"/>
         <source>World map: Scenery (%1/%2)</source>
         <translation>Карта мира: Декорации (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="195"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="130"/>
         <source>World map: Path tiles (%1/%2)</source>
         <translation>Карта мира: Дорожные плитки (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="208"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="132"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
         <translation>Карта мира: Плитки уровневых входов (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="220"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
         <source>Default rotation rules (%1)</source>
         <translation>Основные правила вращения (%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="231"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Level data</source>
         <translation>Данные уровня</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="237"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>World data</source>
         <translation>Данные карты мира</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="244"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="251"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Game worlds</source>
         <translation>Игровые миры</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="258"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="142"/>
         <source>Music</source>
         <translation>Музыка</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="265"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="143"/>
         <source>Sounds</source>
         <translation>Звуки</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="272"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="144"/>
         <source>Custom data</source>
         <translation>Польз. данные</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="284"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="152"/>
         <source>[Error list is empty]</source>
         <translation>[Список ошибок пуст]</translation>
     </message>
@@ -5674,19 +5674,19 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="vanished">Настройки секции</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="237"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
         <translation>Настройки секции...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="232"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="238"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Настройки уровня...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="262"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="270"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -10524,7 +10524,7 @@ Error description:
         <translation type="vanished">Строка</translation>
     </message>
     <message>
-        <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="43"/>
+        <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="46"/>
         <source>%1 at line %2</source>
         <translation>%1 на %2-й строке</translation>
     </message>
@@ -11321,7 +11321,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <translation>Загружаются Блоки...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_npc.cpp" line="124"/>
+        <location filename="../data_configs/obj_npc.cpp" line="116"/>
         <source>Loading NPCs...</source>
         <translation>Загружаются НИПы...</translation>
     </message>
@@ -11544,7 +11544,7 @@ The maximum number of Music Boxes is %2.</source>
         <translation>Загрузка групп палитр элементов...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="440"/>
+        <location filename="../data_configs/data_configs.cpp" line="409"/>
         <source>Finishing loading...</source>
         <translation>Завершение загрузки...</translation>
     </message>
@@ -13227,7 +13227,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="vanished">Всего звёзд</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_control.cpp" line="241"/>
+        <location filename="../editing/_scenes/world/wld_control.cpp" line="250"/>
         <source>Tiles:		%1
 Sceneries:			%2
 Paths:	%3
@@ -13964,7 +13964,7 @@ Do you want to save your changes?</source>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="195"/>
+        <location filename="../data_configs/data_configs.cpp" line="175"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;

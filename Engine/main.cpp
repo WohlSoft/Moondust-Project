@@ -1000,7 +1000,7 @@ ExitFromApplication:
     FontManager::quit();
     PGE_Window::uninit();
     pLogDebug("<Application closed>");
-    CloseLog();
     a.quit();
+    CloseLog();
     return 0;
 }
