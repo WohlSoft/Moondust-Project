@@ -155,13 +155,13 @@ bool Render_OpenGL21::init()
 
     if(!PGE_Window::glcontext)
     {
-        LogWarning(QString("GL 2.1: Failed to create context! ") + SDL_GetError());
+        pLogWarning("GL 2.1: Failed to create context! %s", SDL_GetError());
         return false;
     }
 
     if(PGE_Window::isSdlError())
     {
-        LogWarning(QString("GL 2.1: Failed to init context! ") + SDL_GetError());
+        pLogWarning("GL 2.1: Failed to init context! %s", SDL_GetError());
         return false;
     }
 
@@ -169,7 +169,7 @@ bool Render_OpenGL21::init()
 
     if(PGE_Window::isSdlError())
     {
-        LogWarning(QString("GL 2.1: Failed to set context as current! ") + SDL_GetError());
+        pLogWarning("GL 2.1: Failed to set context as current! %s", SDL_GetError());
         return false;
     }
 
@@ -187,7 +187,7 @@ bool Render_OpenGL21::init()
     glEnable(GL_TEXTURE_2D);
     GLERRORCHECK();
     g_OpenGL2_convertToPowof2 = isNonPowOf2Supported();
-    LogDebug(QString("OpenGL 2.1: Non-Pow-of-two textures supported: %1").arg(g_OpenGL2_convertToPowof2));
+    pLogDebug("OpenGL 2.1: Non-Pow-of-two textures supported: %d", g_OpenGL2_convertToPowof2);
     return true;
 }
 
@@ -583,13 +583,13 @@ int Render_OpenGL21::alignToCenter(int x, int w)
 
 bool Render_OpenGL21::init()
 {
-    LogWarning(QString("GL 2.1: this renderer is not supported!"));
+    pLogWarning("GL 2.1: this renderer is not supported!");
     return false;
 }
 
 bool Render_OpenGL21::uninit()
 {
-    LogWarning(QString("GL 2.1: this renderer is not supported!"));
+    pLogWarning("GL 2.1: this renderer is not supported!");
     return false;
 }
 #endif

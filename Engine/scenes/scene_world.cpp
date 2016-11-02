@@ -134,7 +134,7 @@ WorldScene::~WorldScene()
     wld_musicboxes.clear();
     GlRenderer::deleteTexture(backgroundTex);
     //destroy textures
-    qDebug() << "clear world textures";
+    D_pLogDebug("clear world textures");
 
     for(int i = 0; i < textures_bank.size(); i++)
         GlRenderer::deleteTexture(textures_bank[i]);

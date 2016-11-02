@@ -19,6 +19,7 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
@@ -174,9 +175,9 @@ bool TitleScene::init()
         PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
         msgBox.exec();
     });
-    qDebug() << "Attempt to init...";
+    D_pLogDebug("Attempt to init...");
     luaEngine.init();
-    qDebug() << "done!";
+    D_pLogDebug("done!");
     return true;
 }
 

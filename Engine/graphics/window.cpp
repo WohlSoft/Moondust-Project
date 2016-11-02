@@ -252,13 +252,13 @@ void PGE_Window::toggleVSync(bool vsync)
 
         if((display_count = SDL_GetNumVideoDisplays()) < 1)
         {
-            LogWarning(QString("SDL_GetNumVideoDisplays returned: %1").arg(display_count));
+            pLogWarning("SDL_GetNumVideoDisplays returned: %d", display_count);
             return;
         }
 
         if(SDL_GetCurrentDisplayMode(display_index, &mode) != 0)
         {
-            LogWarning(QString("SDL_GetDisplayMode failed: %1").arg(SDL_GetError()));
+            pLogWarning("SDL_GetDisplayMode failed: %s", SDL_GetError());
             return;
         }
 
@@ -298,7 +298,7 @@ bool PGE_Window::uninit()
     // Swith to WINDOWED mode
     if(SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
     {
-        LogWarning(QString("Setting windowed failed: ") + SDL_GetError());
+        pLogWarning("Setting windowed failed: %s", SDL_GetError());
         return false;
     }
 
@@ -354,7 +354,7 @@ int PGE_Window::setFullScreen(bool fs)
             if(SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
             {
                 //Hide mouse cursor in full screen mdoe
-                LogWarning(QString("Setting fullscreen failed: ") + SDL_GetError());
+                pLogWarning("Setting fullscreen failed: %s", SDL_GetError());
                 return -1;
             }
 
@@ -370,7 +370,7 @@ int PGE_Window::setFullScreen(bool fs)
             // Swith to WINDOWED mode
             if(SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
             {
-                LogWarning(QString("Setting windowed failed: ") + SDL_GetError());
+                pLogWarning("Setting windowed failed: %s", SDL_GetError());
                 return -1;
             }
 
@@ -405,7 +405,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
         // Swith to WINDOWED mode
         if(SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
         {
-            LogWarning(QString("Setting windowed failed: ") + SDL_GetError());
+            pLogWarning("Setting windowed failed: %s", SDL_GetError());
             return -1;
         }
 
@@ -416,7 +416,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     if(SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
     {
         //Hide mouse cursor in full screen mdoe
-        LogWarning(QString("Setting fullscreen failed: ") + SDL_GetError());
+        pLogWarning("Setting fullscreen failed: %s", SDL_GetError());
         return -1;
     }
 

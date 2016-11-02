@@ -20,6 +20,7 @@
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
+#include <common_features/logger.h>
 #include <scenes/level/lvl_physenv.h>
 
 /*****Playable Characters************/
@@ -129,7 +130,7 @@ obj_player_physics::obj_player_physics()
 
 bool ConfigManager::loadPlayableCharacters()
 {
-    qDebug() << "Loading playable characters...";
+    pLogDebug("Loading playable characters...");
     unsigned int i;
     unsigned long players_total = 0;
     QString plr_ini = config_dir + "lvl_characters.ini";

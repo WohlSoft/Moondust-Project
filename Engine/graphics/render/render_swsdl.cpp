@@ -84,7 +84,7 @@ bool Render_SW_SDL::init()
 
     if(!m_gRenderer)
     {
-        LogWarning(QString("SW SDL: Failed to initialize screen surface! ") + SDL_GetError());
+        pLogWarning("SW SDL: Failed to initialize screen surface! %s", SDL_GetError());
         return false;
     }
 

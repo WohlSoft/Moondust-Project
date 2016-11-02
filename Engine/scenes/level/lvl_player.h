@@ -271,7 +271,7 @@ class LVL_Player :
         /*---------------------*/
 
         virtual void lua_onInit() {}
-        virtual void lua_onLoop(float) {}
+        virtual void lua_onLoop(double) {}
         virtual void lua_onHarm(LVL_Player_harm_event *) {}
         virtual void lua_onTransform(unsigned long, unsigned long) {}
         virtual void lua_onTakeNpc(LVL_Npc *) {}

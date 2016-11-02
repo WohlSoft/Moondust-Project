@@ -357,10 +357,10 @@ int main(int argc, char *argv[])
             if(QFile::exists(file))
             {
                 fileToOpen = file;
-                LogDebug("Got file path: [" + file + "]");
+                pLogDebug("Got file path: [%s]", file.toStdString().c_str());
             }
             else
-                LogWarning("Invalid file path, sent by Mac OS X Finder event: [" + file + "]");
+                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toStdString().c_str());
         }
     }
 
@@ -395,7 +395,9 @@ int main(int argc, char *argv[])
 
     if(_flags.audioEnabled && (PGE_MusPlayer::initAudio(44100, 32, 4096) == -1))
     {
-        std::string msg = QString("Unable to load audio sub-system!\n%1\n\nContinuing without sound...").arg(Mix_GetError()).toStdString();
+        std::string msg = QString("Unable to load audio sub-system!\n"
+                                  "%1\n\n"
+                                  "Continuing without sound...").arg(Mix_GetError()).toStdString();
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "Audio subsystem Error",
                                  msg.c_str(),
@@ -421,7 +423,8 @@ int main(int argc, char *argv[])
     GlRenderer::flush();
     GlRenderer::repaint();
 
-    if(g_AppSettings.fullScreen) qDebug() << "Toggle fullscreen...";
+    if(g_AppSettings.fullScreen)
+        pLogDebug("Toggle fullscreen...");
 
     PGE_Window::setFullScreen(g_AppSettings.fullScreen);
     GlRenderer::resetViewport();

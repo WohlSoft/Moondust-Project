@@ -106,13 +106,13 @@ bool Render_OpenGL31::init()
 
     if(!PGE_Window::glcontext)
     {
-        LogWarning(QString("GL 3.1: Failed to create context! ") + SDL_GetError());
+        pLogWarning("GL 3.1: Failed to create context! %s", SDL_GetError());
         return false;
     }
 
     if(PGE_Window::isSdlError())
     {
-        LogWarning(QString("GL 3.1: Failed to init context! ") + SDL_GetError());
+        pLogWarning("GL 3.1: Failed to init context! %s", SDL_GetError());
         return false;
     }
 
@@ -120,7 +120,7 @@ bool Render_OpenGL31::init()
 
     if(PGE_Window::isSdlError())
     {
-        LogWarning(QString("GL 3.1: Failed to set context as current! ") + SDL_GetError());
+        pLogWarning("GL 3.1: Failed to set context as current! %s", SDL_GetError());
         return false;
     }
 

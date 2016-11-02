@@ -87,7 +87,7 @@ static bool isGlExtensionSupported(const char *ext, const unsigned char *exts)
 #ifndef __ANDROID__
 static bool detectOpenGL2()
 {
-    const char* errorPlace = "";
+    const char *errorPlace = "";
     SDL_GLContext glcontext = NULL;
     SDL_Window *dummy = NULL;
     GLubyte *sExtensions = NULL;
@@ -351,7 +351,7 @@ sdl_error:
 #ifndef __APPLE__
 static bool detectOpenGL3()
 {
-    const char* errorPlace = "";
+    const char *errorPlace = "";
     SDL_GLContext glcontext = NULL;
     SDL_Window *dummy = NULL;
     GLubyte *sExtensions = NULL;
@@ -806,8 +806,11 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     if(!sourceImage)
     {
-        LogWarning(QString("Error loading of image file: \n%1\nReason: %2.")
-                   .arg(path).arg(QFileInfo(path).exists() ? "wrong image format" : "file not exist"));
+        pLogWarning("Error loading of image file:\n"
+                    "%s\n"
+                    "Reason: %s.",
+                    path.toStdString().c_str(),
+                    (QFileInfo(path).exists() ? "wrong image format" : "file not exist"));
         target = g_renderer->getDummyTexture();
         return;
     }
@@ -841,8 +844,11 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     if((w <= 0) || (h <= 0))
     {
         FreeImage_Unload(sourceImage);
-        LogWarning(QString("Error loading of image file: \n%1\nReason: %2.")
-                   .arg(path).arg("Zero image size!"));
+        pLogWarning("Error loading of image file:\n"
+                    "%s\n"
+                    "Reason: %s.",
+                    path.toStdString().c_str(),
+                    "Zero image size!");
         target = g_renderer->getDummyTexture();
         return;
     }
@@ -1063,10 +1069,10 @@ int GlRenderer::makeShot_action(void *_pixels)
     QString saveTo = QString("%1Scr_%2_%3_%4_%5_%6_%7_%8.png").arg(ScreenshotPath)
                      .arg(date.year()).arg(date.month()).arg(date.day())
                      .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
-    qDebug() << saveTo << shoot->w << shoot->h;
+    pLogDebug("%s %d %d", saveTo.toStdString().c_str(), shoot->w, shoot->h);
 
     if(FreeImage_HasPixels(shotImg) == FALSE)
-        qWarning() << "Can't save screenshot: no pixel data!";
+        pLogWarning("Can't save screenshot: no pixel data!");
     else
         FreeImage_Save(FIF_PNG, shotImg, saveTo.toUtf8().data(), PNG_Z_BEST_COMPRESSION);
 

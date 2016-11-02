@@ -17,7 +17,7 @@ void Binding_Level_ClassWrapper_LVL_Player::lua_onInit()
         call<void>("onInit");
 }
 
-void Binding_Level_ClassWrapper_LVL_Player::lua_onLoop(float tickTime)
+void Binding_Level_ClassWrapper_LVL_Player::lua_onLoop(double tickTime)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
         call<void>("onLoop", tickTime);

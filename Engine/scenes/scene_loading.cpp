@@ -22,6 +22,7 @@
 #include <graphics/window.h>
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
@@ -114,15 +115,19 @@ void LoadingScene::onKeyboardPressedSDL(SDL_Keycode code, Uint16)
 
     if((code == SDLK_LCTRL) || (code == SDLK_RCTRL)) return;
 
-    if(code == SDLK_f) return;
+    if(code == SDLK_f)
+        return;
 
-    if(code == SDLK_NUMLOCKCLEAR) return;
+    if(code == SDLK_NUMLOCKCLEAR)
+        return;
 
-    if(code == SDLK_CAPSLOCK) return;
+    if(code == SDLK_CAPSLOCK)
+        return;
 
-    if(code == SDLK_SCROLLLOCK) return;
+    if(code == SDLK_SCROLLLOCK)
+        return;
 
-    qDebug() << "LoadingScene: key pressed " << SDL_GetKeyName(code);
+    D_pLogDebug("LoadingScene: key pressed %d", SDL_GetKeyName(code));
     exitFromScene();
 }
 
@@ -130,7 +135,7 @@ void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
 {
     if(m_doExit) return;
 
-    qDebug() << "LoadingScene: Mouse pressed";
+    D_pLogDebug("LoadingScene: Mouse pressed");
     exitFromScene();
 }
 

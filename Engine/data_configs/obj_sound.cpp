@@ -65,7 +65,7 @@ void obj_sound_index::play()
     if(chunk)
         Mix_PlayChannel(channel, chunk, 0);
     else
-        qDebug() << "obj_sound_index::play() Null chunk!, file path:" << path;
+        pLogDebug("obj_sound_index::play() Null chunk!, file path: %s", path.toStdString().c_str());
 }
 
 void ConfigManager::buildSoundIndex()
@@ -107,7 +107,7 @@ void ConfigManager::buildSoundIndex()
                 sound.path = snd.absPath;
 
                 if(!sound.chunk)
-                    qDebug() << "Fail to load sound-" << i << ":" << Mix_GetError();
+                    pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
                 else
                     need_to_reserve += (snd.channel >= 0 ? 1 : 0);
 
@@ -146,7 +146,7 @@ void ConfigManager::buildSoundIndex()
                 }
 
                 if(!sound.chunk)
-                    qDebug() << "Fail to load sound-" << i << ":" << Mix_GetError();
+                    pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
                 else
                     need_to_reserve += (snd.channel >= 0 ? 1 : 0);
 
@@ -177,14 +177,14 @@ void ConfigManager::buildSoundIndex()
 
     //else
     //    need_to_reserve=set_channel;
-#define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
-#ifdef DEBUG_BUILD
-    LogDebug(QString("Loading of sounds passed in %1 milliseconds").arg(loadingTime.elapsed()));
-    qDebug() << "Reserved audio channels: " << RESERVE_CHANS_COMMAND;
-    qDebug() << "SFX Index entries: " << main_sfx_index.size();
-#else
-    RESERVE_CHANS_COMMAND;
+#ifndef DEBUG_BUILD
+    Mix_ReserveChannels(need_to_reserve)
 #endif
+#define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
+    D_pLogDebug("Loading of sounds passed in %d milliseconds", static_cast<int>(loadingTime.elapsed()));
+    D_pLogDebug("Reserved audio channels: %d", RESERVE_CHANS_COMMAND);
+    D_pLogDebug("SFX Index entries: %d", main_sfx_index.size());
+#undef RESERVE_CHANS_COMMAND
     SDL_ClearError();
 }
 

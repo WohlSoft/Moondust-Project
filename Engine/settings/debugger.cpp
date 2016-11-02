@@ -17,6 +17,7 @@
  */
 
 #include "debugger.h"
+#include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_textinputbox.h>
 #include <gui/pge_msgbox.h>
@@ -40,106 +41,126 @@ bool PGE_Debugger::cheat_superman = false;
 
 bool PGE_Debugger::cheat_worldfreedom = false;
 
-static inline void showMsg(Scene *parent, const char*msg)
+static inline void showMsg(Scene *parent, const char *msg)
 {
     PGE_MsgBox msgBox(parent, msg,
                       PGE_MsgBox::msg_warn);
+
     if(!ConfigManager::setup_message_box.sprite.isEmpty())
         msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+
     msgBox.exec();
 }
 
 void PGE_Debugger::executeCommand(Scene *parent)
 {
-    PGE_TextInputBox inputBox(parent, "Please type message:", PGE_TextInputBox::msg_info, PGE_Point(-1,-1),
+    PGE_TextInputBox inputBox(parent, "Please type message:", PGE_TextInputBox::msg_info, PGE_Point(-1, -1),
                               ConfigManager::setup_message_box.box_padding,
                               ConfigManager::setup_message_box.sprite);
     inputBox.exec();
 
-    if(inputBox.inputText()=="") return;
+    if(inputBox.inputText() == "") return;
 
-    bool cheatfound=false;
-    bool en=false;
+    bool cheatfound = false;
+    bool en = false;
     /*Special commands part*/
 
     /*Cheat codes part (must be at bottom!)*/
-    if(cheat_allowed && (parent!=NULL))
+    if(cheat_allowed && (parent != nullptr))
     {
         ///////////////////////////////////////////////
         ////////////////Common commands////////////////
         ///////////////////////////////////////////////
         QString input = inputBox.inputText().toLower();
         QString hash  = md5hash(input);
-        qDebug() << input << hash;
+        D_pLogDebug("%s -> %s", input.toStdString().c_str(), hash.toStdString().c_str());
 
-        if(input=="redigitiscool") {
+        if(input == "redigitiscool")
+        {
             showMsg(parent, "Redigit is no more cool,\nSorry!\n\n"
-                                      "If you wanna a super-secret code, look at SMBX Forums: "
-                                      "it's automatically appears when you try to quote old code!");
-        } else
-        if(input=="wohlstandiscool") {
+                    "If you wanna a super-secret code, look at SMBX Forums: "
+                    "it's automatically appears when you try to quote old code!");
+        }
+        else if(input == "wohlstandiscool")
             showMsg(parent, "You flatter me!");
-        } else
-        if(input=="kevsoftiscool") {
+        else if(input == "kevsoftiscool")
             showMsg(parent, "Thanks! You got hacked now!");
-        } else
-        if(input=="raocowiscool") {
+        else if(input == "raocowiscool")
             showMsg(parent, "Oh, man! Thanks a lot!");
-        } else
-        if(input=="joeyiscool") {
+        else if(input == "joeyiscool")
             showMsg(parent, "Don't try to guess code, or I'll ban you on SMBX Forums!");
-        } else
-        if(hash.toLower()=="0f89f93d5e6338d384c5d6bddb69e715") {
+        else if(hash.toLower() == "0f89f93d5e6338d384c5d6bddb69e715")
+        {
+            pLogCritical("What the heck you typed this silly command?!   Joke! You found an... EASTER EGG!");
             showMsg(parent, "Congratulation!\nYou found a secret code!");
-            cheatfound=true;
-            cheat_chucknorris=true;
-            cheat_superman=true;
-            cheat_pagangod=true;
-            en=true;
-        } else
-        if(parent->type()==Scene::Level) {
+            cheatfound = true;
+            cheat_chucknorris = true;
+            cheat_superman = true;
+            cheat_pagangod = true;
+            en = true;
+        }
+        else if(parent->type() == Scene::Level)
+        {
             ///////////////////////////////////////////////
             ////////////Level specific commands////////////
             ///////////////////////////////////////////////
-            if(input=="takesecretkeychain") {
+            if(input == "takesecretkeychain")
+            {
                 cheat_debugkeys = !cheat_debugkeys;
                 en = cheat_debugkeys;
                 cheatfound = true;
-            } else if(input=="donthurtme") {
+            }
+            else if(input == "donthurtme")
+            {
                 cheat_pagangod = !cheat_pagangod;
                 en = cheat_pagangod;
                 cheatfound = true;
-            } else if(input=="chucknorris") {
+            }
+            else if(input == "chucknorris")
+            {
                 cheat_chucknorris = !cheat_chucknorris;
-                en=cheat_chucknorris;
-                cheatfound=true;
-            } else if(input=="iamsuperman") {
+                en = cheat_chucknorris;
+                cheatfound = true;
+            }
+            else if(input == "iamsuperman")
+            {
                 cheat_superman = !cheat_superman;
                 en = cheat_superman;
                 cheatfound = true;
-            } else if(input.startsWith("iwishexitas")) {
-                QStringList args=input.split(' ');
-                if(args.size()==2)
+            }
+            else if(input.startsWith("iwishexitas"))
+            {
+                QStringList args = input.split(' ');
+
+                if(args.size() == 2)
                 {
-                    bool ok=false;
-                    int exitcode=args[1].toInt(&ok);
+                    bool ok = false;
+                    int exitcode = args[1].toInt(&ok);
+
                     if(ok)
                     {
                         LevelScene *s = static_cast<LevelScene *>(parent);
-                        if(s) { s->setExiting(1500, exitcode);
-                        en=true;
-                        cheatfound=true; }
+
+                        if(s)
+                        {
+                            s->setExiting(1500, exitcode);
+                            en = true;
+                            cheatfound = true;
+                        }
                     }
                 }
             }
-        } else if(parent->type()==Scene::World) {
+        }
+        else if(parent->type() == Scene::World)
+        {
             ///////////////////////////////////////////////
             //////////World map specific commands//////////
             ///////////////////////////////////////////////
-            if(input=="illparkwhereiwant") {
-                cheat_worldfreedom=!cheat_worldfreedom;
-                en=cheat_worldfreedom;
-                cheatfound=true;
+            if(input == "illparkwhereiwant")
+            {
+                cheat_worldfreedom = !cheat_worldfreedom;
+                en = cheat_worldfreedom;
+                cheatfound = true;
             }
         }
     }
@@ -155,14 +176,12 @@ void PGE_Debugger::executeCommand(Scene *parent)
 
 void PGE_Debugger::resetEverything()
 {
-    cheat_pagangod=false;
-    cheat_chucknorris=false;
-    cheat_superman=false;
+    cheat_pagangod = false;
+    cheat_chucknorris = false;
+    cheat_superman = false;
 }
 
 void PGE_Debugger::setRestriction(bool denyed)
 {
-    cheat_allowed=denyed;
+    cheat_allowed = denyed;
 }
-
-

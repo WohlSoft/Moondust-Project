@@ -20,6 +20,7 @@
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
 #include <common_features/logger.h>
+#include <common_features/maths.h>
 #include <gui/pge_msgbox.h>
 
 #include <QDebug>
@@ -355,8 +356,8 @@ bool LevelScene::init_items()
     }
 
     zCounter = 0.0L;
+    D_pLogDebug("Build sections");
 
-    //qDebug()<<"Build sections";
     for(int i = 0; i < data.sections.size(); i++)
     {
         LVL_Section sct;
@@ -365,7 +366,8 @@ bool LevelScene::init_items()
         sections.last().setMusicRoot(data.meta.path);
     }
 
-    //qDebug()<<"Create cameras";
+    D_pLogDebug("Create cameras");
+
     //quit from game if window was closed
     if(!isLevelContinues) return false;
 
@@ -373,7 +375,7 @@ bool LevelScene::init_items()
     {
         int width  = PGE_Window::Width;
         int height = PGE_Window::Height / numberOfPlayers;
-        LVL_PlayerDef d = player_defs[i + 1];
+        LVL_PlayerDef d = player_defs[static_cast<const unsigned int>(i + 1)];
 
         if(isWarpEntrance)
         {
@@ -410,7 +412,8 @@ bool LevelScene::init_items()
             }
         }
 
-        int sID = findNearestSection(cameraStart.x(), cameraStart.y());
+        int sID = findNearestSection(Maths::lRound(cameraStart.x()),
+                                     Maths::lRound(cameraStart.y()));
         LVL_Section *t_sct = getSection(sID);
 
         if(!t_sct)
@@ -422,17 +425,13 @@ bool LevelScene::init_items()
             return false;
         }
 
-        int x = cameraStart.x();
-        int y = cameraStart.y();
+        double x = cameraStart.x();
+        double y = cameraStart.y();
         //Init Cameras
         PGE_LevelCamera camera(this);
-        camera.init(
-            (float)x,
-            (float)y,
-            (float)width, (float)height
-        );
+        camera.init(x, y, width, height);
         camera.playerID = (i + 1);
-        camera.setRenderPos(0.0f, (float)(height * i));
+        camera.setRenderPos(0.0, (height * i));
         camera.setRenderObjectsCacheEnabled(i == 0);
         camera.changeSection(t_sct, true);
         camera.setPos(x - camera.w() / 2 + d.width() / 2,
@@ -485,7 +484,8 @@ place_door_again:
         warpP = new LVL_Warp(this);
         warpP->data = door;
         warpP->init();
-        int sID = findNearestSection(warpP->posX(), warpP->posY());
+        int sID = findNearestSection(Maths::lRound(warpP->posX()),
+                                     Maths::lRound(warpP->posY()));
         LVL_Section *sct = getSection(sID);
 
         if(sct)
@@ -518,7 +518,7 @@ place_door_again:
         physenvs.push_back(physesP);
     }
 
-    //qDebug() << "Total textures loaded: " << ConfigManager::level_textures.size();
+    D_pLogDebug("Total textures loaded: %d", ConfigManager::level_textures.size());
     int added_players = 0;
 
     if(!isWarpEntrance) //Dont place players if entered through warp
@@ -527,7 +527,7 @@ place_door_again:
             if(!isLevelContinues) return false;//!< quit from game if window was closed
 
             PlayerPoint startPoint = getStartLocation(i);
-            startPoint.id = i;
+            startPoint.id = static_cast<unsigned int>(i);
 
             //Don't place player if point is null!
             if(startPoint.w == 0 && startPoint.h == 0) continue;
@@ -543,14 +543,16 @@ place_door_again:
         return false;
     }
 
-    //qDebug() << "Apply layers";
+    D_pLogDebug("Apply layers");
+
     for(int i = 0; i < data.layers.size(); i++)
     {
         if(data.layers[i].hidden)
             layers.hide(data.layers[i].name, false);
     }
 
-    //qDebug() << "Apply Events";
+    D_pLogDebug("Apply Events");
+
     for(int i = 0; i < data.events.size(); i++)
         events.addSMBX64Event(data.events[i]);
 

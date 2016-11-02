@@ -17,7 +17,7 @@ class Binding_Level_ClassWrapper_LVL_Player : public LVL_Player, public luabind:
         virtual ~Binding_Level_ClassWrapper_LVL_Player();
 
         virtual void lua_onInit();
-        virtual void lua_onLoop(float tickTime);
+        virtual void lua_onLoop(double tickTime);
         virtual void lua_onHarm(LVL_Player_harm_event *harmevent);
         virtual void lua_onTransform(unsigned long character, unsigned long state);
         virtual void lua_onTakeNpc(LVL_Npc *npc);
@@ -28,7 +28,7 @@ class Binding_Level_ClassWrapper_LVL_Player : public LVL_Player, public luabind:
         {
             base->LVL_Player::lua_onInit();
         }
-        static void def_lua_onLoop(LVL_Player *base, float tickTime)
+        static void def_lua_onLoop(LVL_Player *base, double tickTime)
         {
             base->LVL_Player::lua_onLoop(tickTime);
         }

@@ -254,7 +254,7 @@ void LevelScene::placeItemByMouse(int x, int y)
         }
     }
 
-    qDebug() << "Placed:" << placingMode_item_type << " in pos:" << x << y;
+    pLogDebug("Placed: %d in pos: %d x %d", placingMode_item_type, x, y);
 
     switch(placingMode_item_type)
     {

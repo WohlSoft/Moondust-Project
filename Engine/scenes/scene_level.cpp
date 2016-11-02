@@ -178,15 +178,15 @@ LevelScene::~LevelScene()
     switch_blocks.clear();
     //destroy textures
     int i = 0;
-    qDebug() << "clear level textures";
+    D_pLogDebug("clear level textures");
 
     for(i = 0; i < textures_bank.size(); i++)
         GlRenderer::deleteTexture(textures_bank[i]);
 
     textures_bank.clear();
-    qDebug() << "Destroy cameras";
+    D_pLogDebug("Destroy cameras");
     cameras.clear();
-    qDebug() << "Destroy players";
+    D_pLogDebug("Destroy players");
 
     for(i = 0; i < players.size(); i++)
     {
@@ -207,7 +207,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    qDebug() << "Destroy blocks";
+    D_pLogDebug("Destroy blocks");
 
     for(i = 0; i < blocks.size(); i++)
     {
@@ -222,7 +222,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    qDebug() << "Destroy BGO";
+    D_pLogDebug("Destroy BGO");
 
     for(i = 0; i < bgos.size(); i++)
     {
@@ -237,7 +237,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    qDebug() << "Destroy NPC";
+    D_pLogDebug("Destroy NPC");
 
     for(i = 0; i < npcs.size(); i++)
     {
@@ -260,7 +260,7 @@ LevelScene::~LevelScene()
     //        tmp = npcs.last();
     //        npcs.pop_back();
     //    }
-    qDebug() << "Destroy Warps";
+    D_pLogDebug("Destroy Warps");
 
     for(i = 0; i < warps.size(); i++)
     {
@@ -275,7 +275,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    qDebug() << "Destroy Physical Environment zones";
+    D_pLogDebug("Destroy Physical Environment zones");
 
     for(i = 0; i < physenvs.size(); i++)
     {
@@ -290,7 +290,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    qDebug() << "Destroy sections";
+    D_pLogDebug("Destroy sections");
     sections.clear();
     luaEngine.shutdown();
     destroyLoaderTexture();

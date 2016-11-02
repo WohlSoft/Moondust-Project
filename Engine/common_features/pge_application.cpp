@@ -23,9 +23,9 @@
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
     m_connected = false;
-    #endif
+#endif
 }
 
 PGE_OSXApplication::~PGE_OSXApplication()
@@ -42,35 +42,41 @@ bool PGE_OSXApplication::event(QEvent *event)
     if(event->type() == QEvent::FileOpen)
     {
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+
         if(openEvent)
         {
             if(m_connected)
             {
                 QString file = openEvent->file();
-                LogDebug("Opened file "+file + " (signal)");
-                emit openFileRequested( file );
+                std::string file_s = file.toStdString();
+                pLogDebug("Opened file %s (signal)", file_s.c_str());
+                emit openFileRequested(file);
             }
             else
             {
                 QString file = openEvent->file();
-                LogDebug("Opened file "+file + " (queue)");
+                std::string file_s = file.toStdString();
+                pLogDebug("Opened file %s (queue)", file_s.c_str());
                 m_openFileRequests.enqueue(file);
             }
-        } else {
-            LogWarning("Failed to process openEvent: pointer is null!");
         }
+        else
+            pLogWarning("Failed to process openEvent: pointer is null!");
     }
+
     return QApplication::event(event);
 }
 
 QStringList PGE_OSXApplication::getOpenFileChain()
 {
     QStringList chain;
+
     while(!m_openFileRequests.isEmpty())
     {
         QString file = m_openFileRequests.dequeue();
         chain.push_back(file);
     }
+
     return chain;
 }
 #endif
