@@ -4,7 +4,7 @@
 
 The main development tool which allows a creating and editing levels, world map, NPC configurations and providing some maintenance utilities.
 
-Provides a compatibility layer with the legacy game (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
+Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
 [More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/PGE_Editor)
 
