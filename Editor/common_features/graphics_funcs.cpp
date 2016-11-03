@@ -29,10 +29,8 @@
 
 #include <common_features/file_mapper.h>
 
-#include <EasyBMP/EasyBMP.h>
-extern "C" {
-#include <giflib/gif_lib.h>
-}
+#include <EasyBMP.h>
+#include <giflib.hpp>
 
 #ifdef _WIN32
 #define FREEIMAGE_LIB 1

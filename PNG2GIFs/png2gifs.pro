@@ -38,24 +38,17 @@ TEMPLATE = app
 
 include(../_common/strip_garbage.pri)
 
+# Dependent libraries
+include($$PWD/../_Libs/giflib/giflib.pri)
+
 RC_FILE = _resources/png2gifs.rc
 
 SOURCES += \
     png2gifs.cpp \
-    ../_Libs/giflib/dgif_lib.c \
-    ../_Libs/giflib/egif_lib.c \
-    ../_Libs/giflib/gif_err.c \
-    ../_Libs/giflib/gif_font.c \
-    ../_Libs/giflib/gif_hash.c \
-    ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c \
     png2gifs_gui.cpp \
     png2gifs_converter.cpp
 
 HEADERS += \
-    ../_Libs/giflib/gif_hash.h \
-    ../_Libs/giflib/gif_lib.h \
-    ../_Libs/giflib/gif_lib_private.h \
     version.h \
     png2gifs_gui.h \
     png2gifs_converter.h

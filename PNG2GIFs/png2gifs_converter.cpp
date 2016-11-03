@@ -3,10 +3,7 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include "png2gifs_converter.h"
-extern "C"{
-    #include "../_Libs/giflib/gif_lib.h"
-}
-
+#include <giflib.hpp>
 
 bool removeSource=false;
 

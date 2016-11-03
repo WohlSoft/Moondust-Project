@@ -120,19 +120,16 @@ else
     QT -= multimedia
 }
 
+# Dependent libraries
+include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
+include($$PWD/../_Libs/giflib/giflib.pri)
+
+# Common code
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    ../_Libs/EasyBMP/EasyBMP.cpp \
-    ../_Libs/giflib/dgif_lib.c \
-    ../_Libs/giflib/egif_lib.c \
-    ../_Libs/giflib/gif_err.c \
-    ../_Libs/giflib/gif_font.c \
-    ../_Libs/giflib/gif_hash.c \
-    ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c \
     common_features/crashhandler.cpp \
     common_features/edit_mode_base.cpp \
     common_features/flowlayout.cpp \
@@ -390,16 +387,11 @@ SOURCES += main.cpp\
     main_window/greeting_dialog/greeting_dialog.cpp \
     data_configs/obj_player.cpp
 
-HEADERS  += defines.h \
+HEADERS  += \
+    ../_common/data_functions/smbx64_validation_messages.h \
+    defines.h \
     version.h \
     mainwindow.h \
-    ../_Libs/EasyBMP/EasyBMP_BMP.h \
-    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
-    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    ../_Libs/EasyBMP/EasyBMP.h \
-    ../_Libs/giflib/gif_hash.h \
-    ../_Libs/giflib/gif_lib.h \
-    ../_Libs/giflib/gif_lib_private.h \
     common_features/app_path.h \
     common_features/crashhandler.h \
     common_features/edit_mode_base.h \
@@ -556,7 +548,6 @@ HEADERS  += defines.h \
     common_features/version_cmp.h \
     common_features/RTree.h \
     main_window/tip_of_day/tip_of_day.h \
-    ../_common/data_functions/smbx64_validation_messages.h \
     main_window/testing/testing_settings.h \
     common_features/data_array.h \
     common_features/file_mapper.h \

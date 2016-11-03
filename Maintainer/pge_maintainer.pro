@@ -35,7 +35,6 @@ TEMPLATE = app
 
 debug: DEFINES += DEBUG_BUILD
 
-
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 
