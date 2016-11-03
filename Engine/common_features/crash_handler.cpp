@@ -34,7 +34,8 @@
 #include <version.h>
 #include <graphics/window.h>
 
-#define STACK_FORMAT    "====Stack trace====\n" \
+#define STACK_FORMAT    \
+    "====Stack trace====\n" \
     "%s\n" \
     "===================\n" \
     "%s"
@@ -406,11 +407,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
     case SIGSEGV:
     {
-#ifdef DEBUGTRACER
-        pLogDebug("\n===========================================================\n"
-                  "Attempt to take a backtrace..."
-                  "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
-#endif
+        D_pLogDebug("\n===========================================================\n"
+                    "Attempt to take a backtrace..."
+                    "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
         std::string stack = getStacktrace();
 #ifndef _WIN32  //Unsupported signals by Windows
         if(siginfo)
