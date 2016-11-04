@@ -18,14 +18,16 @@
 
 #include "pge_texture.h"
 
-PGE_Texture::PGE_Texture()
-{
-    inited=false;
-    w=0;
-    h=0;
-    frame_w=0;
-    frame_h=0;
-    texture_layout=NULL; format=0;nOfColors=0;
-    ColorUpper.r=0; ColorUpper.g=0; ColorUpper.b=0;
-    ColorLower.r=0; ColorLower.g=0; ColorLower.b=0;
-}
+PGE_Texture::PGE_Texture():
+    texture(0),
+    w(0),
+    h(0),
+    frame_w(0),
+    frame_h(0),
+    inited(false),
+    texture_layout(nullptr),
+    format(0),
+    nOfColors(0),
+    ColorUpper{0.0f, 0.0f, 0.0f},
+    ColorLower{0.0f, 0.0f, 0.0f}
+{}
