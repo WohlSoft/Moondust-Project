@@ -368,13 +368,13 @@ void CalibrationMain::on_calibrateImage_clicked()
     imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(!imgCalibrator.init(currentFile)) return;
 
-    imgCalibrator.Scene = Scene;
+    imgCalibrator.m_scene = Scene;
 
     this->hide();
     imgCalibrator.exec();
     this->show();
     this->raise();
-    OpenFile(imgCalibrator.targetPath);
+    OpenFile(imgCalibrator.m_targetPath);
 }
 
 

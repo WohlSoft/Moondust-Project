@@ -7,11 +7,17 @@
 #include <QDir>
 #include <QSettings>
 
-bool ImgCalibratorLock = false;
 
 ImageCalibrator::ImageCalibrator(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ImageCalibrator)
+    m_scene(nullptr),
+    m_frmX(0),
+    m_frmY(0),
+    m_imgFrame(nullptr),
+    m_phsFrame(nullptr),
+    m_physics(nullptr),
+    ui(new Ui::ImageCalibrator),
+    m_lockUI(false)
 {
     ui->setupUi(this);
 }
@@ -29,140 +35,135 @@ bool ImageCalibrator::init(QString imgPath)
     QString imgOrig;
     QFileInfo ourFile(imgPath);
     tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
-    if(tmp.size()==2)
+
+    if(tmp.size() == 2)
         imgFileM = tmp[0] + "m." + tmp[1];
     else
         imgFileM = "";
+
     //mask = ;
-
     imgOrig = ourFile.absoluteDir().path() + "/" + tmp[0] + "_orig.png";
+    bool createOrig = false;
 
-    bool createOrig=false;
     if(!QFile::exists(imgOrig))
-    {
-        createOrig=true;
-    }
+        createOrig = true;
 
     //Scene->mSpriteImage = QPixmap(fileName);
     if(createOrig)
     {
-        sprite = QPixmap::fromImage(
-                    Graphics::setAlphaMask(
-                        Graphics::loadQImage( imgPath )
-                        ,Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM ))
-                    );
-        if(sprite.isNull()) return false;
-        sprite.save(imgOrig, "PNG");
-         // Generate backup image
+        m_sprite = QPixmap::fromImage(
+                       Graphics::setAlphaMask(
+                           Graphics::loadQImage(imgPath)
+                           , Graphics::loadQImage(ourFile.absoluteDir().path() + "/" + imgFileM))
+                   );
+
+        if(m_sprite.isNull()) return false;
+
+        m_sprite.save(imgOrig, "PNG");
+        // Generate backup image
     }
     else
-        sprite = QPixmap::fromImage(
-                            Graphics::loadQImage( imgOrig )
-                    ); // load original sprite instead current
+        m_sprite = QPixmap::fromImage(
+                       Graphics::loadQImage(imgOrig)
+                   ); // load original sprite instead current
 
+    if(m_sprite.isNull()) return false;
 
-    if(sprite.isNull()) return false;
-
-    targetPath = imgPath;
-
-    pngPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".png";
-    gifPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".gif";
-    gifPathM = ourFile.absoluteDir().path() + "/" + tmp[0] + "m.gif";
-    iniPath =  ourFile.absoluteDir().path() + "/" + tmp[0] + "_orig_calibrates.ini";
-
+    m_targetPath = imgPath;
+    m_pngPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".png";
+    m_gifPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".gif";
+    m_gifPathM = ourFile.absoluteDir().path() + "/" + tmp[0] + "m.gif";
+    m_iniPath =  ourFile.absoluteDir().path() + "/" + tmp[0] + "_orig_calibrates.ini";
     //generate scene
     ui->PreviewGraph->setScene(new QGraphicsScene(ui->PreviewGraph));
-    QGraphicsScene * sc = ui->PreviewGraph->scene();
-
-    frmX=0;
-    frmY=0;
-
+    QGraphicsScene *sc = ui->PreviewGraph->scene();
+    m_frmX = 0;
+    m_frmY = 0;
     frameOpts xyCell;
-    xyCell.offsetX=0;
-    xyCell.offsetY=0;
-    xyCell.W=0;
-    xyCell.H=0;
-    xyCell.used=false;
-    xyCell.isDuck=false;
-    xyCell.isRightDir=false;
-    xyCell.showGrabItem=false;
+    xyCell.offsetX = 0;
+    xyCell.offsetY = 0;
+    xyCell.W = 0;
+    xyCell.H = 0;
+    xyCell.used = false;
+    xyCell.isDuck = false;
+    xyCell.isRightDir = false;
+    xyCell.showGrabItem = false;
     // Write default values
     QVector<frameOpts > xRow;
-    for(int i=0; i<10; i++)
+
+    for(int i = 0; i < 10; i++)
     {
         xRow.clear();
-        for(int j=0; j<10; j++)
-        {
+
+        for(int j = 0; j < 10; j++)
             xRow.push_back(xyCell);
-        }
+
         imgOffsets.push_back(xRow);
     }
 
-
     loadCalibrates();
-
-    imgFrame = sc->addPixmap(sprite.copy(frmX*100,frmY*100,100,100));
-    imgFrame->setZValue(0);
-    imgFrame->setPos(0,0);
-
-    phsFrame = sc->addRect(0,0,99,99, QPen(QBrush(Qt::gray), 1));
-    phsFrame->setZValue(-2);
-    phsFrame->setOpacity(0.5f);
-    phsFrame->setPos(0,0);
-
-    physics = sc->addRect(0,0,99,99, QPen(QBrush(Qt::green), 1));
-    physics->setZValue(4);
-    physics->setPos(0,0);
-
+    m_imgFrame = sc->addPixmap(m_sprite.copy(m_frmX * 100, m_frmY * 100, 100, 100));
+    m_imgFrame->setZValue(0);
+    m_imgFrame->setPos(0, 0);
+    m_phsFrame = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::gray), 1));
+    m_phsFrame->setZValue(-2);
+    m_phsFrame->setOpacity(0.5);
+    m_phsFrame->setPos(0, 0);
+    m_physics = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::green), 1));
+    m_physics->setZValue(4);
+    m_physics->setPos(0, 0);
     updateScene();
-
     return true;
 }
 
 
 void ImageCalibrator::on_FrameX_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    frmX = arg1;
+    if(m_lockUI) return;
+
+    m_frmX = arg1;
     updateControls();
     updateScene();
-
 }
 
 void ImageCalibrator::on_FrameY_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    frmY = arg1;
+    if(m_lockUI) return;
+
+    m_frmY = arg1;
     updateControls();
     updateScene();
 }
 
 void ImageCalibrator::on_OffsetX_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].offsetX = arg1;
+    if(m_lockUI) return;
+
+    imgOffsets[m_frmX][m_frmY].offsetX = arg1;
     updateScene();
 }
 
 void ImageCalibrator::on_OffsetY_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].offsetY = arg1;
+    if(m_lockUI) return;
+
+    imgOffsets[m_frmX][m_frmY].offsetY = arg1;
     updateScene();
 }
 
 void ImageCalibrator::on_CropW_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].W = arg1;
-    updateScene();
+    if(m_lockUI) return;
 
+    imgOffsets[m_frmX][m_frmY].W = static_cast<unsigned int>(arg1);
+    updateScene();
 }
 
 void ImageCalibrator::on_CropH_valueChanged(int arg1)
 {
-    if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].H = arg1;
+    if(m_lockUI) return;
+
+    imgOffsets[m_frmX][m_frmY].H = static_cast<unsigned int>(arg1);
     updateScene();
 }
 
@@ -170,27 +171,29 @@ void ImageCalibrator::on_Matrix_clicked()
 {
     Matrix dialog(this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.setFrame(frmX, frmY);
-    if(dialog.exec()==QDialog::Accepted)
+    dialog.setFrame(m_frmX, m_frmY);
+
+    if(dialog.exec() == QDialog::Accepted)
     {
-        frmX = dialog.frameX;
-        frmY = dialog.frameY;
-        ImgCalibratorLock=true;
-        ui->FrameX->setValue(frmX);
-        ui->FrameY->setValue(frmY);
+        m_frmX = dialog.frameX;
+        m_frmY = dialog.frameY;
+        m_lockUI = true;
+        ui->FrameX->setValue(m_frmX);
+        ui->FrameY->setValue(m_frmY);
         updateControls();
-        ImgCalibratorLock=false;
+        m_lockUI = false;
     }
+
     this->raise();
     updateScene();
 }
 
 void ImageCalibrator::on_Reset_clicked()
 {
-    imgOffsets[frmX][frmY].offsetX = 0;
-    imgOffsets[frmX][frmY].offsetY = 0;
-    imgOffsets[frmX][frmY].W = 0;
-    imgOffsets[frmX][frmY].H = 0;
+    imgOffsets[m_frmX][m_frmY].offsetX = 0;
+    imgOffsets[m_frmX][m_frmY].offsetY = 0;
+    imgOffsets[m_frmX][m_frmY].W = 0;
+    imgOffsets[m_frmX][m_frmY].H = 0;
     updateControls();
     updateScene();
 }
@@ -198,34 +201,26 @@ void ImageCalibrator::on_Reset_clicked()
 void ImageCalibrator::on_WritePNG_GIF_clicked()
 {
     QPixmap target = generateTarget();
-    target.save(pngPath, "PNG");
-
+    target.save(m_pngPath, "PNG");
     QImage targetGif = target.toImage();
     QImage mask = targetGif.alphaChannel();
     mask.invertPixels();
-
-    Graphics::toGif(targetGif, gifPath);
-    Graphics::toGif(mask, gifPathM);
-
+    Graphics::toGif(targetGif, m_gifPath);
+    Graphics::toGif(mask, m_gifPathM);
     saveCalibrates();
-
     QMessageBox::information(this,
-         "Image was overwritten",
-         "Calibrated sprite was saved in:\n"+pngPath+"\n"+gifPath, QMessageBox::Ok);
-
+                             "Image was overwritten",
+                             "Calibrated sprite was saved in:\n" + m_pngPath + "\n" + m_gifPath, QMessageBox::Ok);
 }
 
 void ImageCalibrator::on_WritePNG_clicked()
 {
     QPixmap target = generateTarget();
-    target.save(pngPath, "PNG");
-
+    target.save(m_pngPath, "PNG");
     saveCalibrates();
-
     QMessageBox::information(this,
-         "Image was overwritten",
-         "Calibrated sprite was saved in:\n"+pngPath, QMessageBox::Ok);
-
+                             "Image was overwritten",
+                             "Calibrated sprite was saved in:\n" + m_pngPath, QMessageBox::Ok);
 }
 
 void ImageCalibrator::on_WriteGIF_clicked()
@@ -233,50 +228,50 @@ void ImageCalibrator::on_WriteGIF_clicked()
     QImage target = generateTarget().toImage();
     QImage mask = target.alphaChannel();
     mask.invertPixels();
-
-    Graphics::toGif(target, gifPath);
-    Graphics::toGif(mask, gifPathM);
-
+    Graphics::toGif(target, m_gifPath);
+    Graphics::toGif(mask, m_gifPathM);
     saveCalibrates();
-
     QMessageBox::information(this,
-         "Image was overwritten",
-         "Calibrated sprite was saved in:\n"+gifPath, QMessageBox::Ok);
-
-
-
+                             "Image was overwritten",
+                             "Calibrated sprite was saved in:\n" + m_gifPath, QMessageBox::Ok);
 }
 
 void ImageCalibrator::updateControls()
 {
-    ImgCalibratorLock = true;
-    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
-    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
-    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
-    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
-    ImgCalibratorLock = false;
+    m_lockUI = true;
+    ui->OffsetX->setValue(imgOffsets[m_frmX][m_frmY].offsetX);
+    ui->OffsetY->setValue(imgOffsets[m_frmX][m_frmY].offsetY);
+    ui->CropW->setValue(static_cast<int>(imgOffsets[m_frmX][m_frmY].W));
+    ui->CropH->setValue(static_cast<int>(imgOffsets[m_frmX][m_frmY].H));
+    m_lockUI = false;
 }
 
 void ImageCalibrator::updateScene()
 {
-    imgFrame->setPixmap(
-                getFrame(frmX, frmY, imgOffsets[frmX][frmY].offsetX, imgOffsets[frmX][frmY].offsetY,
-                         imgOffsets[frmX][frmY].W, imgOffsets[frmX][frmY].H)
-                );
-    physics->setRect(framesX[frmX][frmY].offsetX, framesX[frmX][frmY].offsetY,
-                     frameWidth-1, (framesX[frmX][frmY].isDuck?
-                                   frameHeightDuck:frameHeight)-1);
+    m_imgFrame->setPixmap(
+        getFrame(m_frmX,
+                 m_frmY,
+                 imgOffsets[m_frmX][m_frmY].offsetX,
+                 imgOffsets[m_frmX][m_frmY].offsetY,
+                 static_cast<int>(imgOffsets[m_frmX][m_frmY].W),
+                 static_cast<int>(imgOffsets[m_frmX][m_frmY].H))
+    );
+    m_physics->setRect(framesX[m_frmX][m_frmY].offsetX,
+                       framesX[m_frmX][m_frmY].offsetY,
+                       frameWidth - 1,
+                       (framesX[m_frmX][m_frmY].isDuck ?
+                        frameHeightDuck : frameHeight) - 1);
 }
 
 void ImageCalibrator::saveCalibrates()
 {
-    QSettings conf(iniPath, QSettings::IniFormat);
+    QSettings conf(m_iniPath, QSettings::IniFormat);
 
-    for(int i=0; i<10; i++)
+    for(int i = 0; i < 10; i++)
     {
-        for(int j=0; j<10; j++)
+        for(int j = 0; j < 10; j++)
         {
-            conf.beginGroup(QString::number(i)+"-"+QString::number(j));
+            conf.beginGroup(QString::number(i) + "-" + QString::number(j));
             conf.setValue("x", imgOffsets[i][j].offsetX);
             conf.setValue("y", imgOffsets[i][j].offsetY);
             conf.setValue("w", imgOffsets[i][j].W);
@@ -284,22 +279,21 @@ void ImageCalibrator::saveCalibrates()
             conf.endGroup();
         }
     }
-
 }
 
 void ImageCalibrator::loadCalibrates()
 {
-    QSettings conf(iniPath, QSettings::IniFormat);
+    QSettings conf(m_iniPath, QSettings::IniFormat);
 
-    for(int i=0; i<10; i++)
+    for(int i = 0; i < 10; i++)
     {
-        for(int j=0; j<10; j++)
+        for(int j = 0; j < 10; j++)
         {
-            conf.beginGroup(QString::number(i)+"-"+QString::number(j));
+            conf.beginGroup(QString::number(i) + "-" + QString::number(j));
             imgOffsets[i][j].offsetX = conf.value("x", 0).toInt();
             imgOffsets[i][j].offsetY = conf.value("y", 0).toInt();
-            imgOffsets[i][j].W = conf.value("w", 0).toInt();
-            imgOffsets[i][j].H = conf.value("h", 0).toInt();
+            imgOffsets[i][j].W = conf.value("w", 0).toUInt();
+            imgOffsets[i][j].H = conf.value("h", 0).toUInt();
             conf.endGroup();
         }
     }
@@ -307,62 +301,58 @@ void ImageCalibrator::loadCalibrates()
 
 QPixmap ImageCalibrator::generateTarget()
 {
-    QPixmap target(1000,1000);
+    QPixmap target(1000, 1000);
     target.fill(Qt::transparent);
     QPainter x(&target);
-    for(int i=0; i<10; i++)
+
+    for(int i = 0; i < 10; i++)
     {
-        for(int j=0; j<10; j++)
+        for(int j = 0; j < 10; j++)
         {
-            x.drawPixmap(i*100, j*100, 100, 100,
+            x.drawPixmap(i * 100, j * 100, 100, 100,
                          getFrame(i, j, imgOffsets[i][j].offsetX, imgOffsets[i][j].offsetY,
-                                  imgOffsets[i][j].W, imgOffsets[i][j].H)
-                         );
+                                  static_cast<int>(imgOffsets[i][j].W),
+                                  static_cast<int>(imgOffsets[i][j].H))
+                        );
         }
     }
+
     x.end();
     return target;
 }
 
 QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
 {
-    int pX=0, pY=0, pXo=0, pYo=0;
+    int pX = 0, pY = 0, pXo = 0, pYo = 0;
     int X, Y;
-    X = x*100 + oX;
-    Y = y*100 + oY;
+    X = x * 100 + oX;
+    Y = y * 100 + oY;
 
-    if(X<0)
+    if(X < 0)
     {
         pX = X;
         pXo = -pX;
     }
-    else
-    if(X+100 > 1000)
-        pXo = X+100-1000;
+    else if(X + 100 > 1000)
+        pXo = X + 100 - 1000;
 
-
-    if(Y<0)
+    if(Y < 0)
     {
         pY = Y;
         pYo = -pY;
     }
-    else
-    if(Y+100 > 1000)
-        pYo = Y+100-1000;
+    else if(Y + 100 > 1000)
+        pYo = Y + 100 - 1000;
 
-    qDebug() << pX << 100-pXo;
-    qDebug() << pY << 100-pYo;
-    qDebug() << X-pX << Y-pY << 100-pXo << 100-pYo;
-
-    QPixmap frame(100,100);
+    qDebug() << pX << 100 - pXo;
+    qDebug() << pY << 100 - pYo;
+    qDebug() << X - pX << Y - pY << 100 - pXo << 100 - pYo;
+    QPixmap frame(100, 100);
     frame.fill(Qt::transparent);
     QPainter pt(&frame);
-    pt.drawPixmap(-pX, -pY, 100-pXo-cW, 100-pYo-cH,
-                 sprite.copy(X-pX,
-                             Y-pY, 100-pXo-cW,100-pYo-cH));
+    pt.drawPixmap(-pX, -pY, 100 - pXo - cW, 100 - pYo - cH,
+                  m_sprite.copy(X - pX,
+                                Y - pY, 100 - pXo - cW, 100 - pYo - cH));
     pt.end();
-
     return frame;
 }
-
-
