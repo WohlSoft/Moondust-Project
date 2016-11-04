@@ -140,33 +140,7 @@ bool SimpleAnimator::operator==(const SimpleAnimator &animator) const
     return true;
 }
 
-SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &animator)
-{
-    m_frameDelay = animator.m_frameDelay;
-    m_pos1 = animator.m_pos1;
-    m_pos2 = animator.m_pos2;
-    m_nextFrameTime = animator.m_nextFrameTime;
-    m_onceMode = animator.m_onceMode;
-    m_onceMode_loops = animator.m_onceMode_loops;
-    m_animationFinished = animator.m_animationFinished;
-    m_frameSequanceEnabled = animator.m_frameSequanceEnabled;
-    m_frameSequance = animator.m_frameSequance;
-    m_frameSequanceCur = animator.m_frameSequanceCur;
-    m_currentFrame = animator.m_currentFrame;
-    m_animated = animator.m_animated;
-    m_bidirectional = animator.m_bidirectional;
-    m_reverce = animator.m_reverce;
-    m_isEnabled = animator.m_isEnabled;
-    m_timerId = animator.m_timerId;
-    m_framesCount = animator.m_framesCount;
-    //Animation alhorithm
-    m_frameFirst = animator.m_frameFirst;
-    m_frameLast = animator.m_frameLast;
-    return *this;
-}
-
 //Returns images
-
 AniPos SimpleAnimator::image(double frame)
 {
     if((frame < 0) || (frame >= m_framesCount))
