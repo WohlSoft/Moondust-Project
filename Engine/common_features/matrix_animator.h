@@ -79,7 +79,7 @@ class MatrixAnimator
         };
 
         MatrixAnimator();
-        MatrixAnimator(int _width, int _height);
+        MatrixAnimator(int width, int height);
         MatrixAnimator(const MatrixAnimator &a);
         ~MatrixAnimator();
         void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
@@ -104,30 +104,57 @@ class MatrixAnimator
         void nextFrame();
         void buildRect();
 
-        double width; //!< width of frame matrix
-        double height; //!< height of frame matrix
-        double width_f; //!< width of one frame; (from 0 to 1)
-        double height_f; //!< height of one frame; (from 0 to 1)
-        double delay_wait; //!< Delay between next frame will be switched
-        int framespeed; //!< delay between frames
-        int framespeed_once; //!< delay between frames for "once" mode
-        int curFrameI; //!< index of current frame
-        PGE_RectF curRect;
-        PGE_PointF curOffsets;
-        typedef QList<MatrixAnimatorFrame > AniSequence;
+        //! width of frame matrix
+        double m_width;
+        //! height of frame matrix
+        double m_height;
+        //! width of one frame; (from 0 to 1)
+        double m_width_f;
+        //! height of one frame; (from 0 to 1)
+        double m_height_f;
+        //! Delay between next frame will be switched
+        double m_nextFrameDelay;
+        //! delay between frames
+        int m_frameDelay;
+        //! delay between frames for "once" mode
+        int m_frameDelay_once;
+        //! index of current frame
+        int m_currentFrameIndex;
 
-        int direction;
-        bool once;
-        bool once_fixed_speed;
-        bool once_locked;
-        bool once_play_again;
-        int  once_play_again_skip_last_frames;
-        int  once_play_again_direction;
-        MatrixAnimates backup_sequance;
-        MatrixAnimates current_sequance;
-        AniSequence sequence;//!< Current frame sequance
-        QHash<MatrixAnimates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
-        QHash<MatrixAnimates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
+        //! Current frame rectangle
+        PGE_RectF   m_currentFrameRect;
+        //! Current frame offsets
+        PGE_PointF  m_currentFrameOffsets;
+
+        //! Face direction (<1 left, >1 - right)
+        int  m_direction;
+        //! Once mode (animation sequence will be played once and stopped)
+        bool m_once;
+        //! Once mode Lock current frame delay
+        bool m_once_fixed_speed;
+        //! Once mode: delay can't be toggled until animation finished
+        bool m_once_locked;
+        //! Once mode: requested a repeat of animation
+        bool m_once_play_again;
+        //! Once mode: skip last frames count on repeating
+        int  m_once_play_again_skip_last_frames;
+        //! Once mode: repeat animation with direction
+        int  m_once_play_again_direction;
+        //! Currently processing animation sequence
+        MatrixAnimates m_current_sequance;
+        //! Remembered animation sequence which will be restored on finishing once mode animation
+        MatrixAnimates m_backup_sequance;
+
+        //! Animation sequence list type
+        typedef QList<MatrixAnimatorFrame > AniSequence;
+        //! Custom frame sequance
+        AniSequence  m_sequence;
+        //! Pointer to current sequence
+        AniSequence *m_sequenceP;
+        //! Animation sequances bank for left  frames
+        QHash<MatrixAnimates, AniSequence > s_bank_left;
+        //! Animation sequances bank for right frames
+        QHash<MatrixAnimates, AniSequence > s_bank_right;
 
         void buildEnums();
         QHash<QString, MatrixAnimates > StrToEnum;

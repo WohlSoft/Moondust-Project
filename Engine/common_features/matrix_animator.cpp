@@ -18,76 +18,79 @@
 
 #include "matrix_animator.h"
 
-#ifdef __APPLE__
-#include <tgmath.h>
-#endif
+#include <cassert>
+#include <cmath>
 
-MatrixAnimator::MatrixAnimator()
+MatrixAnimator::MatrixAnimator():
+    m_width(0.0),
+    m_height(0.0),
+    m_width_f(0.0),
+    m_height_f(0.0),
+    m_nextFrameDelay(128.0),
+    m_frameDelay(128),
+    m_frameDelay_once(128),
+    m_currentFrameIndex(0),
+    m_direction(1),
+    m_once(false),
+    m_once_fixed_speed(false),
+    m_once_locked(false),
+    m_once_play_again(false),
+    m_once_play_again_skip_last_frames(0),
+    m_once_play_again_direction(0),
+    m_current_sequance(Idle),
+    m_backup_sequance(Idle),
+    m_sequenceP(nullptr)
 {
-    framespeed = 128;
-    delay_wait = framespeed;
-    direction = 1;
-    current_sequance = Idle;
-    backup_sequance = Idle;
-    curFrameI = 0;
-    once = false;
-    once_fixed_speed = false;
-    once_locked = false;
-    once_play_again = false;
-    once_play_again_skip_last_frames = 0;
-    once_play_again_direction = 0;
-    width = 0.0;
-    height = 0.0;
-    width_f = 0.0;
-    height_f = 0.0;
-    framespeed_once = 0;
     buildRect();
 }
 
-MatrixAnimator::MatrixAnimator(int _width, int _height)
+MatrixAnimator::MatrixAnimator(int width, int height):
+    m_width(std::fabs(static_cast<double>(width))),
+    m_height(std::fabs(static_cast<double>(height))),
+    m_width_f(m_width == 0.0 ? 0.0 : (1.0 / m_width)),
+    m_height_f(m_height == 0.0 ? 0.0 : (1.0 / m_height)),
+    m_nextFrameDelay(128.0),
+    m_frameDelay(128),
+    m_frameDelay_once(128),
+    m_currentFrameIndex(0),
+    m_direction(1),
+    m_once(false),
+    m_once_fixed_speed(false),
+    m_once_locked(false),
+    m_once_play_again(false),
+    m_once_play_again_skip_last_frames(0),
+    m_once_play_again_direction(0),
+    m_current_sequance(Idle),
+    m_backup_sequance(Idle),
+    m_sequenceP(nullptr)
 {
-    width = abs(_width);
-    height = abs(_height);
-    width_f = 1.0 / width;
-    height_f = 1.0 / height;
-    framespeed = 128;
-    framespeed_once = 0;
-    current_sequance = Idle;
-    backup_sequance = Idle;
-    curFrameI = 0;
-    delay_wait = framespeed;
-    direction = 1;
-    once = false;
-    once_fixed_speed = false;
-    once_locked = false;
-    once_play_again = false;
-    once_play_again_skip_last_frames = 0;
-    once_play_again_direction = 0;
     buildRect();
 }
 
-MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
+MatrixAnimator::MatrixAnimator(const MatrixAnimator &a):
+    m_width(a.m_width),
+    m_height(a.m_height),
+    m_width_f(a.m_width_f),
+    m_height_f(a.m_height_f),
+    m_nextFrameDelay(a.m_nextFrameDelay),
+    m_frameDelay(a.m_frameDelay),
+    m_frameDelay_once(a.m_frameDelay_once),
+    m_currentFrameIndex(a.m_currentFrameIndex),
+    m_direction(a.m_direction),
+    m_once(a.m_once),
+    m_once_fixed_speed(a.m_once_fixed_speed),
+    m_once_locked(a.m_once_locked),
+    m_once_play_again(a.m_once_play_again),
+    m_once_play_again_skip_last_frames(a.m_once_play_again_skip_last_frames),
+    m_once_play_again_direction(a.m_once_play_again_direction),
+    m_current_sequance(a.m_current_sequance),
+    m_backup_sequance(a.m_backup_sequance),
+    m_sequence(a.m_sequence),
+    m_sequenceP(&m_sequence),
+    s_bank_left(a.s_bank_left),
+    s_bank_right(a.s_bank_right)
 {
-    width = a.width;
-    height = a.height;
-    width_f = a.width_f;
-    height_f = a.height_f;
-    framespeed = a.framespeed;
-    framespeed_once = a.framespeed_once;
-    current_sequance = a.current_sequance;
-    delay_wait = a.delay_wait;
-    curFrameI = a.curFrameI;
-    sequence = a.sequence;
-    direction = a.direction;
-    once = a.once;
-    once_fixed_speed = a.once_fixed_speed;
-    once_locked = a.once_locked;
-    once_play_again = a.once_play_again;
-    once_play_again_skip_last_frames = a.once_play_again_skip_last_frames;
-    once_play_again_direction = a.once_play_again_direction;
-    backup_sequance = a.backup_sequance;
-    s_bank_left = a.s_bank_left;
-    s_bank_right = a.s_bank_right;
+    setDirection(m_direction, true);
     buildRect();
 }
 
@@ -96,110 +99,120 @@ MatrixAnimator::~MatrixAnimator()
 
 void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
 {
-    curFrameI = 0;
-    sequence.clear();
-    sequence = _sequence;
+    m_currentFrameIndex = 0;
+    m_sequence.clear();
+    m_sequence = _sequence;
+    m_sequenceP = &m_sequence;
     buildRect();
 }
 
 void MatrixAnimator::setFrameSpeed(int speed)
 {
-    if(once && once_fixed_speed) return;
+    if(m_once && m_once_fixed_speed)
+        return;
 
-    if(framespeed == speed) return;
+    if(m_frameDelay == speed)
+        return;
 
     if(speed <= 0)
     {
-        framespeed = -1;//Stop animation if <=0
+        m_frameDelay = -1;//Stop animation if <=0
         return;
     }
 
-    delay_wait = ((framespeed - speed) < 1) ? delay_wait : delay_wait - (framespeed - speed);
-    framespeed = abs(speed);
+    m_nextFrameDelay = ((m_frameDelay - speed) < 1) ? m_nextFrameDelay : m_nextFrameDelay - (m_frameDelay - speed);
+    m_frameDelay = std::abs(speed);
 }
 
 void MatrixAnimator::setDirection(int _direction, bool force)
 {
-    if(force || (direction != _direction))
-        direction = _direction;
+    if(force || (m_direction != _direction))
+        m_direction = _direction;
 
-    if(direction < 0)
+    m_sequenceP = nullptr;
+
+    if(m_direction < 0)
     {
         //left
-        if(!s_bank_left.contains(current_sequance)) return;
+        if(!s_bank_left.contains(m_current_sequance))
+            return;
 
-        sequence = s_bank_left[current_sequance];
+        m_sequenceP = &s_bank_left[m_current_sequance];
     }
     else
     {
         //right
-        if(!s_bank_right.contains(current_sequance)) return;
+        if(!s_bank_right.contains(m_current_sequance))
+            return;
 
-        sequence = s_bank_right[current_sequance];
+        m_sequenceP = &s_bank_right[m_current_sequance];
     }
+
+    assert(m_sequenceP);
 }
 
-void MatrixAnimator::setSize(int _width, int _height)
+void MatrixAnimator::setSize(int width, int height)
 {
-    width = abs(_width);
-    height = abs(_height);
-    width_f = 1.0 / width;
-    height_f = 1.0 / height;
+    m_width = std::fabs(static_cast<double>(width));
+    m_height = std::fabs(static_cast<double>(height));
+    m_width_f = m_width == 0.0 ? 0.0 : (1.0 / m_width);
+    m_height_f = m_height == 0.0 ? 0.0 : (1.0 / m_height);
 }
 
 PGE_SizeF MatrixAnimator::size()
 {
-    return PGE_SizeF(width, height);
+    return PGE_SizeF(m_width, m_height);
 }
 
 PGE_SizeF MatrixAnimator::sizeOfFrame()
 {
-    return PGE_SizeF(width_f, height_f);
+    return PGE_SizeF(m_width_f, m_height_f);
 }
 
 void MatrixAnimator::tickAnimation(double frametime)
 {
-    if((!once) && (framespeed < 1)) return; //Idling animation
+    if((!m_once) && (m_frameDelay < 1)) return; //Idling animation
 
-    delay_wait -= fabs(frametime);
+    m_nextFrameDelay -= std::fabs(frametime);
 
-    while(delay_wait <= 0.0)
+    while(m_nextFrameDelay <= 0.0)
     {
         nextFrame();
 
-        if((!once) && (framespeed < 1)) break;
+        if((!m_once) && (m_frameDelay < 1))
+            break;
 
-        delay_wait += once ? framespeed_once : framespeed;
+        m_nextFrameDelay += m_once ? m_frameDelay_once : m_frameDelay;
     }
 }
 
 void MatrixAnimator::nextFrame()
 {
-    if(sequence.isEmpty())
+    if(!m_sequenceP || m_sequenceP->isEmpty())
     {
         buildRect();
         return;
     }
 
-    curFrameI++;
+    m_currentFrameIndex++;
 
-    if(curFrameI > (sequence.size() - 1 - once_play_again_skip_last_frames))
+    if(m_currentFrameIndex > (m_sequenceP->size() - 1 - m_once_play_again_skip_last_frames))
     {
-        curFrameI = 0;
+        m_currentFrameIndex = 0;
 
-        if(once)
+        if(m_once)
         {
-            if(once_play_again)
+            if(m_once_play_again)
             {
-                once_play_again = false;
-                once_play_again_skip_last_frames = 0;
-                setDirection(once_play_again_direction);
+                m_once_play_again = false;
+                m_once_play_again_skip_last_frames = 0;
+                setDirection(m_once_play_again_direction);
             }
             else
             {
-                once = false;
-                once_play_again_skip_last_frames = 0;
-                switchAnimation(backup_sequance, direction, framespeed);
+                m_once = false;
+                m_once_play_again_skip_last_frames = 0;
+                switchAnimation(m_backup_sequance, m_direction, m_frameDelay);
             }
         }
     }
@@ -209,37 +222,38 @@ void MatrixAnimator::nextFrame()
 
 void MatrixAnimator::buildRect()
 {
-    if(sequence.isEmpty())
-        curRect.setRect(0.0, 0.0, width_f, height_f);
+    if(!m_sequenceP || m_sequenceP->isEmpty())
+        m_currentFrameRect.setRect(0.0, 0.0, m_width_f, m_height_f);
     else
     {
-        curRect.setLeft(sequence[curFrameI].x);
-        curRect.setTop(sequence[curFrameI].y);
-        curRect.setRight(sequence[curFrameI].x + width_f);
-        curRect.setBottom(sequence[curFrameI].y + height_f);
-        curOffsets.setX(sequence[curFrameI].offset_x);
-        curOffsets.setY(sequence[curFrameI].offset_y);
+        MatrixAnimatorFrame &f = (*m_sequenceP)[m_currentFrameIndex];
+        m_currentFrameRect.setLeft(f.x);
+        m_currentFrameRect.setTop(f.y);
+        m_currentFrameRect.setRight(f.x + m_width_f);
+        m_currentFrameRect.setBottom(f.y + m_height_f);
+        m_currentFrameOffsets.setX(f.offset_x);
+        m_currentFrameOffsets.setY(f.offset_y);
     }
 }
 
 PGE_RectF MatrixAnimator::curFrame()
 {
-    return curRect;
+    return m_currentFrameRect;
 }
 
 PGE_PointF MatrixAnimator::curOffset()
 {
-    return curOffsets;
+    return m_currentFrameOffsets;
 }
 
 MatrixAnimator::MatrixAnimates MatrixAnimator::curAnimation()
 {
-    return current_sequance;
+    return m_current_sequance;
 }
 
 int MatrixAnimator::curFramespeed()
 {
-    return framespeed;
+    return m_frameDelay;
 }
 
 void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
@@ -261,8 +275,8 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             if(y > (calibration.framesX[x].size() - 1)) continue;
 
             MatrixAnimatorFrame frame;
-            frame.x = static_cast<double>(x) / width;
-            frame.y = static_cast<double>(y) / width;
+            frame.x = static_cast<double>(x) / m_width;
+            frame.y = static_cast<double>(y) / m_width;
             frame.offset_x = calibration.framesX[x][y].offsetX;
             frame.offset_y = calibration.framesX[x][y].offsetY;
             s_bank_left[seq].push_back(frame);
@@ -278,43 +292,43 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             if(y > (calibration.framesX[x].size() - 1)) continue;
 
             MatrixAnimatorFrame frame;
-            frame.x = static_cast<double>(x) / width;
-            frame.y = static_cast<double>(y) / width;
+            frame.x = static_cast<double>(x) / m_width;
+            frame.y = static_cast<double>(y) / m_width;
             frame.offset_x = calibration.framesX[x][y].offsetX;
             frame.offset_y = calibration.framesX[x][y].offsetY;
             s_bank_right[seq].push_back(frame);
         }
     }
 
-    if(!s_bank_left.contains(current_sequance))
-        current_sequance = Idle;
+    if(!s_bank_left.contains(m_current_sequance))
+        m_current_sequance = Idle;
 
-    if(!s_bank_right.contains(current_sequance))
-        current_sequance = Idle;
+    if(!s_bank_right.contains(m_current_sequance))
+        m_current_sequance = Idle;
 
     /*Update sequence settings*/
-    if(direction < 0)
+    if(m_direction < 0)
     {
         //left
-        sequence = s_bank_left[current_sequance];
+        m_sequenceP = &s_bank_left[m_current_sequance];
     }
     else
     {
         //right
-        sequence = s_bank_right[current_sequance];
+        m_sequenceP = &s_bank_right[m_current_sequance];
     }
 
-    if(curFrameI > (sequence.size() - 1))
+    if(m_currentFrameIndex > (m_sequenceP->size() - 1))
     {
-        curFrameI = 0;
+        m_currentFrameIndex = 0;
 
-        if(once)
+        if(m_once)
         {
-            once = false;
-            once_fixed_speed = false;
-            once_locked = false;
-            once_play_again_skip_last_frames = false;
-            switchAnimation(backup_sequance, direction, framespeed);
+            m_once = false;
+            m_once_fixed_speed = false;
+            m_once_locked = false;
+            m_once_play_again_skip_last_frames = false;
+            switchAnimation(m_backup_sequance, m_direction, m_frameDelay);
         }
     }
 
@@ -323,76 +337,76 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 
 void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed, bool locked, int skipLastFrames)
 {
-    if(once)
+    if(m_once)
     {
-        if(once_locked || (current_sequance == aniName))
+        if(m_once_locked || (m_current_sequance == aniName))
         {
-            if(current_sequance == aniName)
+            if(m_current_sequance == aniName)
             {
-                once_play_again = true;
-                once_play_again_direction = _direction;
-                once_play_again_skip_last_frames = (skipLastFrames >= 0) ? skipLastFrames : 0;
+                m_once_play_again = true;
+                m_once_play_again_direction = _direction;
+                m_once_play_again_skip_last_frames = (skipLastFrames >= 0) ? skipLastFrames : 0;
             }
 
             return;
         }
     }
 
-    once_fixed_speed = fixed_speed;
-    once_locked = locked;
-    once_play_again = false;
-    once_play_again_skip_last_frames = 0;
-    once = true;
-    framespeed_once = (speed > 0) ? speed : 0;
-    curFrameI = 0;
-    backup_sequance = current_sequance;
-    current_sequance = aniName;
+    m_once_fixed_speed = fixed_speed;
+    m_once_locked = locked;
+    m_once_play_again = false;
+    m_once_play_again_skip_last_frames = 0;
+    m_once = true;
+    m_frameDelay_once = (speed > 0) ? speed : 0;
+    m_currentFrameIndex = 0;
+    m_backup_sequance = m_current_sequance;
+    m_current_sequance = aniName;
     setDirection(_direction, true);
     buildRect();
 }
 
 void MatrixAnimator::unlock()
 {
-    once_locked = false;
+    m_once_locked = false;
 }
 
 void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int speed)
 {
-    if(once)
+    if(m_once)
     {
-        if(once_locked || (backup_sequance == aniName))
+        if(m_once_locked || (m_backup_sequance == aniName))
         {
-            if(!once_fixed_speed)
-                framespeed_once = (speed > 0) ? speed : 1;
+            if(!m_once_fixed_speed)
+                m_frameDelay_once = (speed > 0) ? speed : 1;
 
             setFrameSpeed(speed);
-            backup_sequance = aniName;
+            m_backup_sequance = aniName;
             return;
         }
-        else backup_sequance = aniName;
+        else m_backup_sequance = aniName;
 
-        if(direction != _direction)
+        if(m_direction != _direction)
         {
             setDirection(_direction);
 
-            if(curFrameI > (sequence.size() - 1))
-                curFrameI = 0;
+            if(m_currentFrameIndex > (m_sequenceP->size() - 1))
+                m_currentFrameIndex = 0;
         }
     }
-    else if((current_sequance == aniName) && (direction == _direction))
+    else if((m_current_sequance == aniName) && (m_direction == _direction))
     {
         setFrameSpeed(speed);
         return;
     }
 
-    current_sequance = aniName;
+    m_current_sequance = aniName;
     setFrameSpeed(speed);
     setDirection(_direction);
 
-    if((current_sequance != aniName) || (curFrameI > (sequence.size() - 1)))
-        curFrameI = 0;
+    if((m_current_sequance != aniName) || (m_currentFrameIndex > (m_sequenceP->size() - 1)))
+        m_currentFrameIndex = 0;
 
-    once = false;
+    m_once = false;
     buildRect();
 }
 
