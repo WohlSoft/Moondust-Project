@@ -20,6 +20,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <cstdlib>
 
 MatrixAnimator::MatrixAnimator():
     m_width(0.0),
