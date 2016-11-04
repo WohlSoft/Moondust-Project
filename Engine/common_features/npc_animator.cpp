@@ -22,72 +22,91 @@
 
 AdvNpcAnimator::AdvNpcAnimator()
 {
-    isValid=false;
-    manual_ticks=0;
+    m_isValid = false;
+    m_ticks = 0;
+    m_onceMode = false;
+    m_animationFinished = false;
+    m_isEnabled = false;
+    m_animated = false;
+    m_frameDelay = 0.0;
+    m_frameStyle = 0;
+    m_aniBiDirect = false;
+    m_frameStep = 0;
+    m_customAnimate = false;
+    m_customAniAlg = 0;
+    m_custom_frameFL = 0;
+    m_custom_frameEL = 0;
+    m_custom_frameFR = 0;
+    m_custom_frameER = 0;
+    m_frameSequance = false;
+    m_framesCount = 0;
+    m_frameHeight = 0.0;
+    m_frameWidth = 0.0;
+    m_spriteHeight = 0.0;
+    m_aniDirectL = 0;
+    m_aniDirectR = 0;
+    m_curFrameL_real = 0;
+    m_curFrameR_real = 0;
+    m_curFrameL_timer = 0;
+    m_curFrameR_timer = 0;
+    m_frameFirstL = 0;
+    m_frameLastL = -1;
+    m_frameFirstR = 0;
+    m_frameLastR = -1;
 }
 
 AdvNpcAnimator::AdvNpcAnimator(PGE_Texture &sprite, obj_npc &config)
 {
-    isValid=false;
-    manual_ticks=0;
+    m_isValid = false;
+    m_ticks = 0;
     construct(sprite, config);
 }
 
 void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
 {
-    mainImage = sprite;
-    setup = config;
-
-    aniBiDirect=false;
-    frameStep = 1;
-    frameSize=1;
-
-    CurrentFrameL=0; //Real frame
-    CurrentFrameR=0; //Real frame
-    frameCurrentL=0; //Timer frame
-    frameCurrentR=0; //Timer frame
-
-    frameFirstL=0; //from first frame
-    frameLastL=-1; //to unlimited frameset
-    frameFirstR=0; //from first frame
-    frameLastR=-1; //to unlimited frameset
-
-    onceMode=false;
-    _animationFinished=false;
-
-    isEnabled=false;
-
-    animated = true;
-    framesQ = setup.setup.frames;
-    _frameSpeed = setup.setup.framespeed;
-    frameStyle = setup.setup.framestyle;
-    frameStep = 1;
-
-    frameSequance = false;
-
-    aniBiDirect = setup.setup.ani_bidir;
-    customAniAlg = setup.setup.custom_ani_alg;
-
-    customAnimate = setup.setup.custom_animate;
-
-    custom_frameFL = setup.setup.custom_ani_fl;//first left
-    custom_frameEL = setup.setup.custom_ani_el;//end left
-    custom_frameFR = setup.setup.custom_ani_fr;//first right
-    custom_frameER = setup.setup.custom_ani_er;//enf right
-
+    m_mainImage = sprite;
+    m_setup = config;
+    m_curFrameL_real = 0; //Real frame
+    m_curFrameR_real = 0; //Real frame
+    m_curFrameL_timer = 0; //Timer frame
+    m_curFrameR_timer = 0; //Timer frame
+    m_frameFirstL = 0; //from first frame
+    m_frameLastL = -1; //to unlimited frameset
+    m_frameFirstR = 0; //from first frame
+    m_frameLastR = -1; //to unlimited frameset
+    m_onceMode = false;
+    m_animationFinished = false;
+    m_isEnabled = false;
+    m_animated = true;
+    m_framesCount = static_cast<int>(m_setup.setup.frames);
+    m_frameDelay = m_setup.setup.framespeed;
+    m_frameStyle = m_setup.setup.framestyle;
+    m_frameStep = 1;
+    m_frameSequance = false;
+    m_aniBiDirect = m_setup.setup.ani_bidir;
+    m_customAniAlg = m_setup.setup.custom_ani_alg;
+    m_customAnimate = m_setup.setup.custom_animate;
+    m_custom_frameFL = m_setup.setup.custom_ani_fl;//first left
+    m_custom_frameEL = m_setup.setup.custom_ani_el;//end left
+    m_custom_frameFR = m_setup.setup.custom_ani_fr;//first right
+    m_custom_frameER = m_setup.setup.custom_ani_er;//enf right
     //bool refreshFrames = updFrames;
-
-    frameSize = setup.setup.gfx_h; // height of one frame
-    frameWidth = setup.setup.gfx_w; //width of target image
-
-    frameHeight = mainImage.h; // Height of target image
+    m_frameHeight = m_setup.setup.gfx_h; // height of one frame
+    m_frameWidth = m_setup.setup.gfx_w; //width of target image
+    m_spriteHeight = m_mainImage.h; // Height of complete image
 
     //Protectors
-    if(frameSize<=0) frameSize=1;
-    if(frameSize>mainImage.h) frameSize = mainImage.h;
+    if(m_frameHeight <= 0)
+        m_frameHeight = 1;
 
-    if(frameWidth<=0) frameWidth=1;
-    if(frameWidth>mainImage.w) frameWidth = mainImage.w;
+    if(m_frameHeight > m_mainImage.h)
+        m_frameHeight = m_mainImage.h;
+
+    if(m_frameWidth <= 0)
+        m_frameWidth = 1;
+
+    if(m_frameWidth > m_mainImage.w)
+        m_frameWidth = m_mainImage.w;
 
     //    int dir=direction;
 
@@ -96,95 +115,104 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     //        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
     //    }
 
-    if(setup.setup.ani_directed_direct)
+    if(m_setup.setup.ani_directed_direct)
     {
-        aniDirectL = (true) ^ (setup.setup.ani_direct);
-        aniDirectR = (false) ^ (setup.setup.ani_direct);
+        m_aniDirectL = (true) ^ (m_setup.setup.ani_direct);
+        m_aniDirectR = (false) ^ (m_setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.setup.ani_direct;
-        aniDirectR = setup.setup.ani_direct;
+        m_aniDirectL = m_setup.setup.ani_direct;
+        m_aniDirectR = m_setup.setup.ani_direct;
     }
 
-    if(customAnimate) // User defined spriteSet (example: boss)
+    if(m_customAnimate) // User defined spriteSet (example: boss)
     {
-
         //LEFT
-        frameFirstL = custom_frameFL;
-        switch(customAniAlg)
+        m_frameFirstL = m_custom_frameFL;
+
+        switch(m_customAniAlg)
         {
         case ANI_CustomSequence:
-            frameSequance = true;
-            frames_listL = setup.setup.frames_left;
-            frameFirstL = 0;
-            frameLastL = frames_listL.size()-1;
+            m_frameSequance = true;
+            s_framesL = m_setup.setup.frames_left;
+            m_frameFirstL = 0;
+            m_frameLastL = s_framesL.size() - 1;
             break;
+
         case ANI_FrameJump:
-            frameStep = custom_frameEL;
-            frameLastL = -1; break;
+            m_frameStep = m_custom_frameEL;
+            m_frameLastL = -1;
+            break;
+
         case ANI_DefaultSequence:
         default:
-            frameLastL = custom_frameEL; break;
+            m_frameLastL = m_custom_frameEL;
+            break;
         }
 
         //RIGHT
-        frameFirstR = custom_frameFR;
-        switch(customAniAlg)
+        m_frameFirstR = m_custom_frameFR;
+
+        switch(m_customAniAlg)
         {
         case ANI_CustomSequence:
-            frameSequance = true;
-            frames_listR = setup.setup.frames_right;
-            frameFirstR = 0;
-            frameLastR = frames_listR.size()-1; break;
+            m_frameSequance = true;
+            s_framesR = m_setup.setup.frames_right;
+            m_frameFirstR = 0;
+            m_frameLastR = s_framesR.size() - 1;
+            break;
+
         case ANI_FrameJump:
-            frameStep = custom_frameER;
-            frameLastR = -1; break;
+            m_frameStep = m_custom_frameER;
+            m_frameLastR = -1;
+            break;
+
         case ANI_DefaultSequence:
         default:
-            frameLastR = custom_frameER; break;
+            m_frameLastR = m_custom_frameER;
+            break;
         }
     }
     else
-    {   //Standard animation
-        switch(frameStyle)
+    {
+        //Standard animation
+        switch(m_frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesQ = setup.setup.frames*4;
-
-             //left
-                frameFirstL = 0;
-                frameLastL = (int)(framesQ-(framesQ/4)*3)-1;
-             //Right
-                frameFirstR = (int)(framesQ-(framesQ/4)*3);
-                frameLastR = (int)(framesQ/2)-1;
-
+            m_framesCount = static_cast<int>(m_setup.setup.frames) * 4;
+            //left
+            m_frameFirstL = 0;
+            m_frameLastL = (m_framesCount - (m_framesCount / 4) * 3) - 1;
+            //Right
+            m_frameFirstR = (m_framesCount - (m_framesCount / 4) * 3);
+            m_frameLastR = (m_framesCount / 2) - 1;
             break;
+
         case 1: //Left-Right sprite
-            framesQ=setup.setup.frames*2;
-             //left
-                frameFirstL = 0;
-                frameLastL = (int)(framesQ / 2)-1;
-             //Right
-                frameFirstR = (int)(framesQ / 2);
-                frameLastR = framesQ-1;
-
+            m_framesCount = static_cast<int>(m_setup.setup.frames) * 2;
+            //left
+            m_frameFirstL = 0;
+            m_frameLastL = (m_framesCount / 2) - 1;
+            //Right
+            m_frameFirstR = (m_framesCount / 2);
+            m_frameLastR = m_framesCount - 1;
             break;
+
         case 0: //Single sprite
         default:
-            frameFirstL = 0;
-            frameLastL = framesQ-1;
-
-            frameFirstR = 0;
-            frameLastR = framesQ-1;
+            m_frameFirstL = 0;
+            m_frameLastL = m_framesCount - 1;
+            m_frameFirstR = 0;
+            m_frameLastR = m_framesCount - 1;
             break;
         }
     }
 
     createAnimationFrames();
-    setFrameL(frameFirstL);
-    setFrameR(frameFirstR);
-    isValid=true;
+    setFrameL(m_frameFirstL);
+    setFrameR(m_frameFirstR);
+    m_isValid = true;
 }
 
 AdvNpcAnimator::~AdvNpcAnimator()
@@ -193,19 +221,20 @@ AdvNpcAnimator::~AdvNpcAnimator()
 AniPos AdvNpcAnimator::image(int dir, int frame)
 {
     if(frames.isEmpty())
-    {   //If animator haven't frames, return red sqare
-        AniPos tmp(0,1);
+    {
+        //If animator haven't frames, return red sqare
+        AniPos tmp(0, 1);
         return tmp;
     }
 
-    if((frame<0)||(frame>=frames.size()))
+    if((frame < 0) || (frame >= frames.size()))
     {
-        if(dir<0)
-            return frames[CurrentFrameL];
-        else if(dir==0)
-            return frames[CurrentFrameL];
+        if(dir < 0)
+            return frames[m_curFrameL_real];
+        else if(dir == 0)
+            return frames[m_curFrameL_real];
         else
-            return frames[CurrentFrameR];
+            return frames[m_curFrameR_real];
     }
     else return frames[frame];
 }
@@ -218,284 +247,327 @@ AniPos AdvNpcAnimator::wholeImage()
 void AdvNpcAnimator::setSequenceL(QList<int> _frames)
 {
     if(_frames.isEmpty()) return;
-    customAniAlg=ANI_CustomSequence;
-    frameSequance = true;
-    frames_listL = _frames;
-    frameFirstL = 0;
-    frameLastL = _frames.size()-1;
-    onceMode=false;
-    _animationFinished=false;
-    if(frameCurrentL > frames_listL.size()-1) frameCurrentL=frameFirstL;
-    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+
+    m_customAniAlg = ANI_CustomSequence;
+    m_frameSequance = true;
+    s_framesL = _frames;
+    m_frameFirstL = 0;
+    m_frameLastL = _frames.size() - 1;
+    m_onceMode = false;
+    m_animationFinished = false;
+
+    if(m_curFrameL_timer > s_framesL.size() - 1) m_curFrameL_timer = m_frameFirstL;
+
+    setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
 }
 
 void AdvNpcAnimator::setSequenceR(QList<int> _frames)
 {
     if(_frames.isEmpty()) return;
-    customAniAlg=ANI_CustomSequence;
-    frameSequance = true;
-    frames_listR =  _frames;
-    frameFirstR = 0;
-    frameLastR = _frames.size()-1;
-    onceMode=false;
-    _animationFinished=false;
-    if(frameCurrentR > frames_listR.size()-1) frameCurrentR=frameFirstR;
-    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+
+    m_customAniAlg = ANI_CustomSequence;
+    m_frameSequance = true;
+    s_framesR =  _frames;
+    m_frameFirstR = 0;
+    m_frameLastR = _frames.size() - 1;
+    m_onceMode = false;
+    m_animationFinished = false;
+
+    if(m_curFrameR_timer > s_framesR.size() - 1) m_curFrameR_timer = m_frameFirstR;
+
+    setFrameR(m_frameSequance ? s_framesR[m_curFrameR_timer] : m_curFrameR_timer);
 }
 
 void AdvNpcAnimator::setSequence(QList<int> _frames)
 {
     if(_frames.isEmpty()) return;
 
-    customAniAlg=ANI_CustomSequence;
-    frameSequance = true;
-    switch(frameStyle)
+    m_customAniAlg = ANI_CustomSequence;
+    m_frameSequance = true;
+
+    switch(m_frameStyle)
     {
     case 2:
     case 1:
-        frames_listL = _frames;
-        frameFirstL = 0;
-        frameLastL = _frames.size()-1;
-        frames_listR.clear();
-        for(int i=0;i<_frames.size();i++)
-            frames_listR.push_back(_frames[i]+setup.setup.frames);
-        frameFirstR = 0;
-        frameLastR = _frames.size()-1;
+        s_framesL = _frames;
+        m_frameFirstL = 0;
+        m_frameLastL = _frames.size() - 1;
+        s_framesR.clear();
+
+        for(int i = 0; i < _frames.size(); i++)
+            s_framesR.push_back(_frames[i] + static_cast<int>(m_setup.setup.frames));
+
+        m_frameFirstR = 0;
+        m_frameLastR = _frames.size() - 1;
         break;
+
     case 0:
     default:
-        frames_listL = _frames;
-        frameFirstL = 0;
-        frameLastL = _frames.size()-1;
-        frames_listR =  _frames;
-        frameFirstR = 0;
-        frameLastR = _frames.size()-1;
+        s_framesL = _frames;
+        m_frameFirstL = 0;
+        m_frameLastL = _frames.size() - 1;
+        s_framesR =  _frames;
+        m_frameFirstR = 0;
+        m_frameLastR = _frames.size() - 1;
         break;
     }
-    onceMode=false;
-    _animationFinished=false;
-    if(frameCurrentL > frames_listL.size()-1) frameCurrentL=frameFirstL;
-    if(frameCurrentR > frames_listR.size()-1) frameCurrentR=frameFirstR;
-    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
-    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+
+    m_onceMode = false;
+    m_animationFinished = false;
+
+    if(m_curFrameL_timer > s_framesL.size() - 1)
+        m_curFrameL_timer = m_frameFirstL;
+
+    if(m_curFrameR_timer > s_framesR.size() - 1)
+        m_curFrameR_timer = m_frameFirstR;
+
+    setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
+    setFrameR(m_frameSequance ? s_framesR[m_curFrameR_timer] : m_curFrameR_timer);
 }
 
 void AdvNpcAnimator::setFrameL(int y)
 {
-    if(frames.isEmpty()) return;
+    if(frames.isEmpty())
+        return;
 
     //Out of range protection
-    if( y < frameFirstL) y = (frameLastL<0)? frames.size()-1 : frameLastL;
-    if( y >= frames.size()) y = (frameFirstL<frames.size()) ? frameFirstL : 0;
-    CurrentFrameL = y;
+    if(y < m_frameFirstL)
+        y = (m_frameLastL < 0) ? frames.size() - 1 : m_frameLastL;
+
+    if(y >= frames.size())
+        y = (m_frameFirstL < frames.size()) ? m_frameFirstL : 0;
+
+    m_curFrameL_real = y;
 }
 
 void AdvNpcAnimator::setFrameR(int y)
 {
-    if(frames.isEmpty()) return;
+    if(frames.isEmpty())
+        return;
 
     //Out of range protection
-    if( y < frameFirstR) y = (frameLastR<0)? frames.size()-1 : frameLastR;
-    if( y >= frames.size()) y = (frameFirstR<frames.size()) ? frameFirstR : 0;
+    if(y < m_frameFirstR)
+        y = (m_frameLastR < 0) ? frames.size() - 1 : m_frameLastR;
 
-    CurrentFrameR = y;
+    if(y >= frames.size())
+        y = (m_frameFirstR < frames.size()) ? m_frameFirstR : 0;
+
+    m_curFrameR_real = y;
 }
 
 int AdvNpcAnimator::frameSpeed()
 {
-    return _frameSpeed;
+    return static_cast<int>(m_frameDelay);
 }
 
 void AdvNpcAnimator::setFrameSpeed(int ms)
 {
-    if(ms<=0) return;
-    _frameSpeed=ms;
+    if(ms <= 0) return;
+
+    m_frameDelay = ms;
 }
 
 void AdvNpcAnimator::setBidirectional(bool bid)
 {
-    aniBiDirect=bid;
+    m_aniBiDirect = bid;
 }
 
 void AdvNpcAnimator::setDirectedSequence(bool dd)
 {
-    setup.setup.ani_directed_direct=dd;
+    m_setup.setup.ani_directed_direct = dd;
+
     if(dd)
     {
-        aniDirectL = (true) ^ (setup.setup.ani_direct);
-        aniDirectR = (false) ^ (setup.setup.ani_direct);
+        m_aniDirectL = (true) ^ (m_setup.setup.ani_direct);
+        m_aniDirectR = (false) ^ (m_setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.setup.ani_direct;
-        aniDirectR = setup.setup.ani_direct;
+        m_aniDirectL = m_setup.setup.ani_direct;
+        m_aniDirectR = m_setup.setup.ani_direct;
     }
 }
 
 void AdvNpcAnimator::setOnceMode(bool en)
 {
-    onceMode=en;
+    m_onceMode = en;
+
     if(en/*&&_animationFinished*/)
     {
-        _animationFinished=false;
-        frameCurrentL = frameFirstL;
-        frameCurrentR = frameFirstR;
-        setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
-        setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
-    } else {
-        _animationFinished=false;
+        m_animationFinished = false;
+        m_curFrameL_timer = m_frameFirstL;
+        m_curFrameR_timer = m_frameFirstR;
+        setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
+        setFrameR(m_frameSequance ? s_framesR[m_curFrameR_timer] : m_curFrameR_timer);
     }
+    else
+        m_animationFinished = false;
 }
 
 bool AdvNpcAnimator::animationFinished()
 {
-    return this->_animationFinished;
+    return this->m_animationFinished;
 }
 
 PGE_SizeF AdvNpcAnimator::sizeOfFrame()
 {
-    return PGE_SizeF(1.0, frameSize/frameHeight );
+    return PGE_SizeF(1.0, m_frameHeight / m_spriteHeight);
 }
 
 void AdvNpcAnimator::start()
 {
-    if(!animated) return;
-    if((frameLastL>0)&&((frameLastL-frameFirstL)<=0)) return; //Don't start singleFrame animation
-    if((frameLastR>0)&&((frameLastR-frameFirstR)<=0)) return; //Don't start singleFrame animation
+    if(!m_animated) return;
 
-    frameCurrentL = frameFirstL;
-    frameCurrentR = frameFirstR;
-    manual_ticks=_frameSpeed;
+    if((m_frameLastL > 0) && ((m_frameLastL - m_frameFirstL) <= 0))
+        return; //Don't start singleFrame animation
 
-    isEnabled=true;
+    if((m_frameLastR > 0) && ((m_frameLastR - m_frameFirstR) <= 0))
+        return; //Don't start singleFrame animation
+
+    m_curFrameL_timer = m_frameFirstL;
+    m_curFrameR_timer = m_frameFirstR;
+    m_ticks = m_frameDelay;
+    m_isEnabled = true;
 }
 
 void AdvNpcAnimator::stop()
 {
-    if(!animated) return;
-    isEnabled=false;
-    setFrameL(frameFirstL);
-    setFrameR(frameFirstR);
+    if(!m_animated) return;
+
+    m_isEnabled = false;
+    setFrameL(m_frameFirstL);
+    setFrameR(m_frameFirstR);
 }
 
 void AdvNpcAnimator::manualTick(double ticks)
 {
-    if(!isEnabled) return;
-    if(_frameSpeed<1) return; //Idling animation
+    if(!m_isEnabled) return;
 
-    manual_ticks-=fabs(ticks);
-        while(manual_ticks <= 0.0)
-        {
-            nextFrame();
-            manual_ticks += _frameSpeed;
-        }
+    if(m_frameDelay < 1)
+        return; //Idling animation
+
+    m_ticks -= std::fabs(ticks);
+
+    while(m_ticks <= 0.0)
+    {
+        nextFrame();
+        m_ticks += m_frameDelay;
+    }
 }
 
 void AdvNpcAnimator::nextFrame()
 {
-    if(!isEnabled) return;
+    if(!m_isEnabled) return;
 
-    if(onceMode && _animationFinished) return;
+    if(m_onceMode && m_animationFinished) return;
 
     //Left
-    if(!aniDirectL)
+    if(!m_aniDirectL)
     {
-        frameCurrentL += frameStep;
-        if ( ((frameCurrentL >= frames.size()-(frameStep-1) )&&(frameLastL<=-1)) ||
-             ((frameCurrentL > frameLastL )&&(frameLastL>=0)) )
-            {
-                if(!aniBiDirect)
-                {
-                     frameCurrentL = frameFirstL;
-                }
-                else
-                {
-                    if(onceMode) {
-                        frameCurrentL-=frameStep;
-                        _animationFinished=true;
-                    } else {
-                    frameCurrentL -= frameStep*2;
-                    aniDirectL=!aniDirectL;}
-                }
-            }
-    }
-    else
-    {
-        frameCurrentL -= frameStep;
-        if ( frameCurrentL < frameFirstL )
-            {
-                if(onceMode) {
-                    frameCurrentL+=frameStep;
-                    _animationFinished=true;
-                } else {
-                    if(!aniBiDirect)
-                    {
-                        frameCurrentL = ((frameLastL==-1)? frames.size()-1 : frameLastL);
-                    }
-                    else
-                    {
-                        frameCurrentL+=frameStep*2;
-                        aniDirectL=!aniDirectL;
-                    }
-                }
-            }
-    }
-    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+        m_curFrameL_timer += m_frameStep;
 
-    //Right
-    if(!aniDirectR)
-    {
-        frameCurrentR += frameStep;
-        if ( ((frameCurrentR >= frames.size()-(frameStep-1) )&&(frameLastR<=-1)) ||
-             ((frameCurrentR > frameLastR )&&(frameLastR>=0)) )
-            {
-                if(!aniBiDirect)
-                {
-                     frameCurrentR = frameFirstR;
-                }
-                else
-                {
-                    if(onceMode) {
-                        frameCurrentR-=frameStep;
-                        _animationFinished=true;
-                    } else {
-                        frameCurrentR -= frameStep*2;
-                        aniDirectR=!aniDirectR;
-                    }
-                }
-            }
-    }
-    else
-    {
-        frameCurrentR -= frameStep;
-
-        if ( frameCurrentR < frameFirstR )
+        if(((m_curFrameL_timer >= frames.size() - (m_frameStep - 1)) && (m_frameLastL <= -1)) ||
+           ((m_curFrameL_timer > m_frameLastL) && (m_frameLastL >= 0)))
         {
-            if(onceMode) {
-                frameCurrentR+=frameStep;
-                _animationFinished=true;
-            } else {
-                if(!aniBiDirect)
+            if(!m_aniBiDirect)
+                m_curFrameL_timer = m_frameFirstL;
+            else
+            {
+                if(m_onceMode)
                 {
-
-                    frameCurrentR = ((frameLastR==-1)? frames.size()-1 : frameLastR);
+                    m_curFrameL_timer -= m_frameStep;
+                    m_animationFinished = true;
                 }
                 else
                 {
-                    frameCurrentR+=frameStep*2;
-                    aniDirectR=!aniDirectR;
+                    m_curFrameL_timer -= m_frameStep * 2;
+                    m_aniDirectL = !m_aniDirectL;
                 }
             }
         }
     }
-    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+    else
+    {
+        m_curFrameL_timer -= m_frameStep;
+
+        if(m_curFrameL_timer < m_frameFirstL)
+        {
+            if(m_onceMode)
+            {
+                m_curFrameL_timer += m_frameStep;
+                m_animationFinished = true;
+            }
+            else
+            {
+                if(!m_aniBiDirect)
+                    m_curFrameL_timer = ((m_frameLastL == -1) ? frames.size() - 1 : m_frameLastL);
+                else
+                {
+                    m_curFrameL_timer += m_frameStep * 2;
+                    m_aniDirectL = !m_aniDirectL;
+                }
+            }
+        }
+    }
+
+    setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
+
+    //Right
+    if(!m_aniDirectR)
+    {
+        m_curFrameR_timer += m_frameStep;
+
+        if(((m_curFrameR_timer >= frames.size() - (m_frameStep - 1)) && (m_frameLastR <= -1)) ||
+           ((m_curFrameR_timer > m_frameLastR) && (m_frameLastR >= 0)))
+        {
+            if(!m_aniBiDirect)
+                m_curFrameR_timer = m_frameFirstR;
+            else
+            {
+                if(m_onceMode)
+                {
+                    m_curFrameR_timer -= m_frameStep;
+                    m_animationFinished = true;
+                }
+                else
+                {
+                    m_curFrameR_timer -= m_frameStep * 2;
+                    m_aniDirectR = !m_aniDirectR;
+                }
+            }
+        }
+    }
+    else
+    {
+        m_curFrameR_timer -= m_frameStep;
+
+        if(m_curFrameR_timer < m_frameFirstR)
+        {
+            if(m_onceMode)
+            {
+                m_curFrameR_timer += m_frameStep;
+                m_animationFinished = true;
+            }
+            else
+            {
+                if(!m_aniBiDirect)
+                    m_curFrameR_timer = ((m_frameLastR == -1) ? frames.size() - 1 : m_frameLastR);
+                else
+                {
+                    m_curFrameR_timer += m_frameStep * 2;
+                    m_aniDirectR = !m_aniDirectR;
+                }
+            }
+        }
+    }
+
+    setFrameR(m_frameSequance ? s_framesR[m_curFrameR_timer] : m_curFrameR_timer);
 }
 
 void AdvNpcAnimator::createAnimationFrames()
 {
     frames.clear();
-    for(int i=0; (frameSize*i < frameHeight); i++)
-    {
-        frames.push_back( AniPos((frameSize*i)/frameHeight, (frameSize*i+frameSize)/frameHeight) );
-    }
+
+    for(int i = 0; (m_frameHeight * i < m_spriteHeight); i++)
+        frames.push_back(AniPos((m_frameHeight * i) / m_spriteHeight, (m_frameHeight * i + m_frameHeight) / m_spriteHeight));
 }
