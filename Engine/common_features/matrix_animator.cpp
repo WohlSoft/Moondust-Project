@@ -36,6 +36,11 @@ MatrixAnimator::MatrixAnimator()
     once_play_again = false;
     once_play_again_skip_last_frames = 0;
     once_play_again_direction = 0;
+    width = 0.0;
+    height = 0.0;
+    width_f = 0.0;
+    height_f = 0.0;
+    framespeed_once = 0;
     buildRect();
 }
 
@@ -46,6 +51,10 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     width_f = 1.0 / width;
     height_f = 1.0 / height;
     framespeed = 128;
+    framespeed_once = 0;
+    current_sequance = Idle;
+    backup_sequance = Idle;
+    curFrameI = 0;
     delay_wait = framespeed;
     direction = 1;
     once = false;
@@ -62,8 +71,10 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     width = a.width;
     height = a.height;
     width_f = a.width_f;
-    height = a.height_f;
+    height_f = a.height_f;
     framespeed = a.framespeed;
+    framespeed_once = a.framespeed_once;
+    current_sequance = a.current_sequance;
     delay_wait = a.delay_wait;
     curFrameI = a.curFrameI;
     sequence = a.sequence;
