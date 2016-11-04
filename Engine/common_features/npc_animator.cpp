@@ -19,6 +19,7 @@
 
 #include "logger.h"
 #include "npc_animator.h"
+#include <cstdlib>
 
 AdvNpcAnimator::AdvNpcAnimator()
 {
@@ -108,12 +109,12 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     if(m_frameWidth > m_mainImage.w)
         m_frameWidth = m_mainImage.w;
 
-    //    int dir=direction;
+    //int dir=direction;
 
-    //    if(direction==0) //if direction=random
-    //    {
-    //        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
-    //    }
+    //if(direction==0) //if direction=random
+    //{
+    //    dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
+    //}
 
     if(m_setup.setup.ani_directed_direct)
     {

@@ -24,22 +24,16 @@ PGE_Point::PGE_Point()
     setPoint(0, 0);
 }
 
-PGE_Point::PGE_Point(const PGE_Point &p)
-{
-    _x = p._x;
-    _y = p._y;
-}
-
 PGE_Point::PGE_Point(const PGE_PointF &p)
 {
-    _x = static_cast<int>(p._x);
-    _y = static_cast<int>(p._y);
+    m_x = static_cast<int>(p.m_x);
+    m_y = static_cast<int>(p.m_y);
 }
 
 PGE_Point::PGE_Point(int x, int y)
 {
-    _x = x;
-    _y = y;
+    m_x = x;
+    m_y = y;
 }
 
 PGE_Point::~PGE_Point()
@@ -47,42 +41,41 @@ PGE_Point::~PGE_Point()
 
 void PGE_Point::setPoint(int x, int y)
 {
-    _x = x;
-    _y = y;
+    m_x = x;
+    m_y = y;
 }
 
 void PGE_Point::setX(int x)
 {
-    _x = x;
+    m_x = x;
 }
 
 void PGE_Point::setY(int y)
 {
-    _y = y;
+    m_y = y;
 }
 
 bool PGE_Point::isNull()
 {
-    return ((_x == 0) && (_y == 0));
+    return ((m_x == 0) && (m_y == 0));
 }
 
 int PGE_Point::x()
 {
-    return _x;
+    return m_x;
 }
 
 int PGE_Point::y()
 {
-    return _y;
+    return m_y;
 }
 
 bool operator==(const PGE_Point &lhs, const PGE_Point &rhs)
 {
-    return ((lhs._x == rhs._x) && (lhs._y == rhs._y));
+    return ((lhs.m_x == rhs.m_x) && (lhs.m_y == rhs.m_y));
 }
 
 bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs)
 {
-    return ((lhs._x != rhs._x) || (lhs._y != rhs._y));
+    return ((lhs.m_x != rhs.m_x) || (lhs.m_y != rhs.m_y));
 }
-

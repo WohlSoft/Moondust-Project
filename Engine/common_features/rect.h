@@ -25,66 +25,66 @@ class PGE_Size;
 
 class PGE_Rect
 {
-    friend class PGE_RectF;
-public:
-    PGE_Rect();
-    PGE_Rect(int x, int y, int w, int h);
-    PGE_Rect(const PGE_Rect& r);
-    PGE_Rect(const PGE_RectF& r);
-    ~PGE_Rect();
-    void setRect(int x, int y, int w, int h);
-    void setPos(int x, int y);
-    void setSize(int w, int h);
+        friend class PGE_RectF;
+    public:
+        PGE_Rect();
+        PGE_Rect(int x, int y, int w, int h);
+        PGE_Rect(const PGE_Rect &r) = default;
+        PGE_Rect(const PGE_RectF &r);
+        ~PGE_Rect();
+        void setRect(int x, int y, int w, int h);
+        void setPos(int x, int y);
+        void setSize(int w, int h);
 
-    void setLeft(int l);
-    void setRight(int r);
-    void setTop(int t);
-    void setBottom(int b);
+        void setLeft(int l);
+        void setRight(int r);
+        void setTop(int t);
+        void setBottom(int b);
 
-    void setX(int x);
-    void setY(int y);
-    void setWidth(int w);
-    void setHeight(int h);
-    void addX(int x);
-    void addY(int y);
+        void setX(int x);
+        void setY(int y);
+        void setWidth(int w);
+        void setHeight(int h);
+        void addX(int x);
+        void addY(int y);
 
-    void setTopLeft(PGE_Point p);
-    void setTopRight(PGE_Point p);
-    void setBottomRight(PGE_Point p);
-    void setBottomLeft(PGE_Point p);
+        void setTopLeft(PGE_Point p);
+        void setTopRight(PGE_Point p);
+        void setBottomRight(PGE_Point p);
+        void setBottomLeft(PGE_Point p);
 
-    void setTopLeft(int l, int t);
-    void setTopRight(int r, int t);
-    void setBottomRight(int r, int b);
-    void setBottomLeft(int l, int b);
+        void setTopLeft(int l, int t);
+        void setTopRight(int r, int t);
+        void setBottomRight(int r, int b);
+        void setBottomLeft(int l, int b);
 
-    int x();
-    int y();
+        int x();
+        int y();
 
-    int left();
-    int top();
-    int bottom();
-    int right();
+        int left();
+        int top();
+        int bottom();
+        int right();
 
-    int width();
-    int height();
+        int width();
+        int height();
 
-    PGE_Point center();
-    PGE_Size size();
-    int centerX();
-    int centerY();
+        PGE_Point center();
+        PGE_Size size();
+        int centerX();
+        int centerY();
 
-    bool collidePoint(int x, int y);
-    bool collideRect(int x, int y, int w, int h);
-    bool collideRect(PGE_Rect &rect);
-    bool collideRect(PGE_RectF &rect);
-private:
-    int _x;
-    int _y;
-    int _w;
-    int _h;
-    int _r;
-    int _b;
+        bool collidePoint(int x, int y);
+        bool collideRect(int x, int y, int w, int h);
+        bool collideRect(PGE_Rect &rect);
+        bool collideRect(PGE_RectF &rect);
+    private:
+        int m_x;
+        int m_y;
+        int m_w;
+        int m_h;
+        int m_r;
+        int m_b;
 };
 
 #endif // PGE_RECT_H

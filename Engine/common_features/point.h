@@ -22,27 +22,28 @@
 class PGE_PointF;
 class PGE_Point
 {
-    friend class PGE_PointF;
-public:
-    PGE_Point();
-    PGE_Point(const PGE_Point &p);
-    PGE_Point(const PGE_PointF &p);
-    PGE_Point(int x, int y);
-    ~PGE_Point();
-    void setPoint(int x, int y);
-    void setX(int x);
-    void setY(int y);
-    bool isNull();
-    int x();
-    int y();
-    friend bool operator==(const PGE_Point& lhs, const PGE_Point& rhs);
-    friend bool operator!=(const PGE_Point& lhs, const PGE_Point& rhs);
-private:
-    int _x;
-    int _y;
+        friend class PGE_PointF;
+    public:
+        PGE_Point();
+        PGE_Point(const PGE_Point &p) = default;
+        PGE_Point(const PGE_PointF &p);
+        PGE_Point(int x, int y);
+        ~PGE_Point();
+        void setPoint(int x, int y);
+        void setX(int x);
+        void setY(int y);
+        bool isNull();
+        int x();
+        int y();
+        friend bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);
+        friend bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs);
+
+    private:
+        int m_x;
+        int m_y;
 };
 
-bool operator==(const PGE_Point& lhs, const PGE_Point& rhs);
-bool operator!=(const PGE_Point& lhs, const PGE_Point& rhs);
+bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);
+bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs);
 
 #endif // PGE_Point_H

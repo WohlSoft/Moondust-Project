@@ -22,27 +22,65 @@
 class PGE_Point;
 class PGE_PointF
 {
-    friend class PGE_Point;
-public:
-    inline PGE_PointF() { setPoint(0, 0); }
-    inline PGE_PointF(const PGE_PointF &p) { _x=p._x; _y=p._y; }
-    PGE_PointF(const PGE_Point &p);
-    inline PGE_PointF(double x, double y) { _x=x; _y=y; }
-    inline ~PGE_PointF() {}
-    inline void setPoint(double x, double y) { _x=x; _y=y; }
-    inline void setX(double x) { _x=x; }
-    inline void setY(double y) { _y=y; }
-    inline bool isNull() { return ((_x==0)&&(_y==0)); }
-    inline double x() { return _x; }
-    inline double y() { return _y; }
-    friend bool operator==(const PGE_PointF& lhs, const PGE_PointF& rhs);
-    friend bool operator!=(const PGE_PointF& lhs, const PGE_PointF& rhs);
-private:
-    double _x;
-    double _y;
+        friend class PGE_Point;
+    public:
+        inline PGE_PointF()
+        {
+            setPoint(0, 0);
+        }
+
+        inline PGE_PointF(const PGE_PointF &p) = default;
+
+        PGE_PointF(const PGE_Point &p);
+
+        inline PGE_PointF(double x, double y)
+        {
+            m_x = x;
+            m_y = y;
+        }
+
+        inline ~PGE_PointF() {}
+
+        inline void setPoint(double x, double y)
+        {
+            m_x = x;
+            m_y = y;
+        }
+
+        inline void setX(double x)
+        {
+            m_x = x;
+        }
+
+        inline void setY(double y)
+        {
+            m_y = y;
+        }
+
+        inline bool isNull()
+        {
+            return ((m_x == 0.0) && (m_y == 0.0));
+        }
+
+        inline double x()
+        {
+            return m_x;
+        }
+
+        inline double y()
+        {
+            return m_y;
+        }
+
+        friend bool operator==(const PGE_PointF &lhs, const PGE_PointF &rhs);
+        friend bool operator!=(const PGE_PointF &lhs, const PGE_PointF &rhs);
+
+    private:
+        double m_x;
+        double m_y;
 };
 
-bool operator==(const PGE_PointF& lhs, const PGE_PointF& rhs);
-bool operator!=(const PGE_PointF& lhs, const PGE_PointF& rhs);
+bool operator==(const PGE_PointF &lhs, const PGE_PointF &rhs);
+bool operator!=(const PGE_PointF &lhs, const PGE_PointF &rhs);
 
 #endif // PGE_POINTF_H

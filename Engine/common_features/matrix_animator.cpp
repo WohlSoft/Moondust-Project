@@ -268,36 +268,46 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 
         for(int j = 0; j < calibration.AniFrames.set[i].L.size(); j++)
         {
-            int x = calibration.AniFrames.set[i].L[j].x;
-            int y = calibration.AniFrames.set[i].L[j].y;
+            size_t x = calibration.AniFrames.set[i].L[j].x;
+            size_t y = calibration.AniFrames.set[i].L[j].y;
 
-            if(x > (calibration.framesX.size() - 1)) continue;
-
-            if(y > (calibration.framesX[x].size() - 1)) continue;
-
-            MatrixAnimatorFrame frame;
-            frame.x = static_cast<double>(x) / m_width;
-            frame.y = static_cast<double>(y) / m_width;
-            frame.offset_x = calibration.framesX[x][y].offsetX;
-            frame.offset_y = calibration.framesX[x][y].offsetY;
-            s_bank_left[seq].push_back(frame);
+            try
+            {
+                frameOpts &fr = calibration.frame(x, y);
+                MatrixAnimatorFrame frame;
+                frame.x = static_cast<double>(x) / m_width;
+                frame.y = static_cast<double>(y) / m_height;
+                frame.offset_x = fr.offsetX;
+                frame.offset_y = fr.offsetY;
+                s_bank_left[seq].push_back(frame);
+            }
+            catch(...)
+            {
+                //Frame is not exists, skip it
+                continue;
+            }
         }
 
         for(int j = 0; j < calibration.AniFrames.set[i].R.size(); j++)
         {
-            int x = calibration.AniFrames.set[i].R[j].x;
-            int y = calibration.AniFrames.set[i].R[j].y;
+            size_t x = calibration.AniFrames.set[i].R[j].x;
+            size_t y = calibration.AniFrames.set[i].R[j].y;
 
-            if(x > (calibration.framesX.size() - 1)) continue;
-
-            if(y > (calibration.framesX[x].size() - 1)) continue;
-
-            MatrixAnimatorFrame frame;
-            frame.x = static_cast<double>(x) / m_width;
-            frame.y = static_cast<double>(y) / m_width;
-            frame.offset_x = calibration.framesX[x][y].offsetX;
-            frame.offset_y = calibration.framesX[x][y].offsetY;
-            s_bank_right[seq].push_back(frame);
+            try
+            {
+                frameOpts &fr = calibration.frame(x, y);
+                MatrixAnimatorFrame frame;
+                frame.x = static_cast<double>(x) / m_width;
+                frame.y = static_cast<double>(y) / m_height;
+                frame.offset_x = fr.offsetX;
+                frame.offset_y = fr.offsetY;
+                s_bank_right[seq].push_back(frame);
+            }
+            catch(...)
+            {
+                //Frame is not exists, skip it
+                continue;
+            }
         }
     }
 

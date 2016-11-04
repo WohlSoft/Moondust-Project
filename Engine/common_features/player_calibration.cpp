@@ -22,73 +22,73 @@
 
 #include "player_calibration.h"
 
-
-void obj_player_calibration::init(int x, int y)
+void obj_player_calibration::init(size_t x, size_t y)
 {
-    QList<frameOpts > framesY;
-    frameOpts spriteData;
+    size_t newSize = x * y;
+    frames.resize(newSize);
+
     // Write default values
-    for(int i=0; i<x; i++)
-    {
-        framesY.clear();
-        for(int j=0; j<y; j++)
-        {
-            framesY.push_back(spriteData);
-        }
-        framesX.push_back(framesY);
-    }
+    for(size_t i = 0; i < newSize; i++)
+        frames[i] = frameOpts();
 }
 
 bool obj_player_calibration::load(QString fileName)
 {
     QFileInfo ourFile(fileName);
     QString ini_sprite;
+
     //Load Customized
-    if(QFileInfo(ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini").exists())
-        ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
+    if(QFileInfo(ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini").exists())
+        ini_sprite = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
     else
         return false;
+
     QSettings conf(ini_sprite, QSettings::IniFormat);
-
     conf.beginGroup("common");
-        frameWidth = conf.value("width", "-1").toInt();
-        frameHeight = conf.value("height", "-1").toInt();
-        frameHeightDuck = conf.value("height-duck", "-1").toInt();
-        frameGrabOffsetX = conf.value("grab-offset-x", "0").toInt();
-        frameGrabOffsetY = conf.value("grab-offset-y", "0").toInt();
-        frameOverTopGrab = conf.value("over-top-grab", "false").toBool();
+    matrixWidth =       static_cast<size_t>(conf.value("matrix-width",  10u).toUInt());
+    matrixHeight =      static_cast<size_t>(conf.value("matrix-height", 10u).toUInt());
+    frameWidth =        conf.value("width", -1).toInt();
+    frameHeight =       conf.value("height", -1).toInt();
+    frameHeightDuck =   conf.value("height-duck", -1).toInt();
+    frameGrabOffsetX =  conf.value("grab-offset-x", 0).toInt();
+    frameGrabOffsetY =  conf.value("grab-offset-y", 0).toInt();
+    frameOverTopGrab =  conf.value("over-top-grab", false).toBool();
     conf.endGroup();
-    int i, j;
+    init(matrixWidth, matrixHeight);
+    size_t x, y;
 
-    for(i=0; i<10;i++)
+    for(x = 0; x < matrixWidth; x++)
     {
-        for(j=0; j<10;j++)
+        for(y = 0; y < matrixHeight; y++)
         {
-            conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-            framesX[i][j].H = conf.value("height", "100").toInt();
-            framesX[i][j].W = conf.value("width", "100").toInt();
-            framesX[i][j].offsetX = conf.value("offsetX", "0").toInt();
-            framesX[i][j].offsetY = conf.value("offsetY", "0").toInt();
-            framesX[i][j].used = conf.value("used", "false").toBool();
-            framesX[i][j].isDuck = conf.value("duck", "false").toBool();
-            framesX[i][j].isRightDir = conf.value("isRightDir", "false").toBool();
-            framesX[i][j].showGrabItem = conf.value("showGrabItem", "false").toBool();
+            frameOpts &f = frame(x, y);
+            conf.beginGroup(QString("frame-%1-%2").arg(x).arg(y));
+            f.H = conf.value("height", 100).toUInt();
+            f.W = conf.value("width", 100).toUInt();
+            f.offsetX = conf.value("offsetX", 0).toInt();
+            f.offsetY = conf.value("offsetY", 0).toInt();
+            f.used = conf.value("used", false).toBool();
+            f.isDuck = conf.value("duck", false).toBool();
+            f.isRightDir = conf.value("isRightDir", false).toBool();
+            f.showGrabItem = conf.value("showGrabItem", false).toBool();
             conf.endGroup();
 
             if(frameWidth < 0)
             {
-                if(framesX[i][j].used)
-                    frameWidth=framesX[i][j].W;
+                if(f.used)
+                    frameWidth = static_cast<int>(f.W);
             }
+
             if(frameHeight < 0)
             {
-                if(framesX[i][j].used)
-                    frameHeight=framesX[i][j].H;
+                if(f.used)
+                    frameHeight = static_cast<int>(f.H);
             }
+
             if(frameHeightDuck < 0)
             {
-                if(framesX[i][j].used)
-                    frameHeightDuck=framesX[i][j].H;
+                if(f.used)
+                    frameHeightDuck = static_cast<int>(f.H);
             }
         }
     }
@@ -129,30 +129,42 @@ bool obj_player_calibration::load(QString fileName)
     return true;
 }
 
+frameOpts &obj_player_calibration::frame(size_t x, size_t y)
+{
+    size_t get = (matrixWidth * y) + x;
+
+    if(get >= frames.size())
+        throw;
+
+    return frames[get];
+}
+
 void obj_player_calibration::getSpriteAniData(QSettings &set, QString name)
 {
     AniFrameSet frameSet;
     AniFrame frameXY;
     int frameTotal, i;
+    set.beginGroup(QString("Animation%1_L").arg(name));
+    frameTotal = set.value("frames", 0).toInt();
 
-    set.beginGroup("Animation"+name+"_L");
-        frameTotal = set.value("frames", "0").toInt();
-        for(i=0;i<frameTotal;i++)
-        {
-            frameXY.x = set.value(QString("frame"+QString::number(i)+"x"), "0").toInt();
-            frameXY.y = set.value(QString("frame"+QString::number(i)+"y"), "0").toInt();
-            frameSet.L.push_back(frameXY);
-        }
+    for(i = 0; i < frameTotal; i++)
+    {
+        frameXY.x = static_cast<size_t>(set.value(QString("frame%1x").arg(i), 0).toUInt());
+        frameXY.y = static_cast<size_t>(set.value(QString("frame%1y").arg(i), 0).toUInt());
+        frameSet.L.push_back(frameXY);
+    }
+
     set.endGroup();
+    set.beginGroup("Animation" + name + "_R");
+    frameTotal = set.value("frames", 0).toInt();
 
-    set.beginGroup("Animation"+name+"_R");
-        frameTotal = set.value("frames", "0").toInt();
-        for(i=0;i<frameTotal;i++)
-        {
-            frameXY.x = set.value(QString("frame"+QString::number(i)+"x"), "0").toInt();
-            frameXY.y = set.value(QString("frame"+QString::number(i)+"y"), "0").toInt();
-            frameSet.R.push_back(frameXY);
-        }
+    for(i = 0; i < frameTotal; i++)
+    {
+        frameXY.x = static_cast<size_t>(set.value(QString("frame%1x").arg(i), 0).toUInt());
+        frameXY.y = static_cast<size_t>(set.value(QString("frame%1y").arg(i), 0).toUInt());
+        frameSet.R.push_back(frameXY);
+    }
+
     set.endGroup();
     frameSet.name = name;
     AniFrames.set.push_back(frameSet);

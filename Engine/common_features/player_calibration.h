@@ -22,11 +22,12 @@
 class QSettings;
 #include <QString>
 #include <QList>
+#include <vector>
 
 struct AniFrame
 {
-    int x;
-    int y;
+    size_t x;
+    size_t y;
 };
 
 struct AniFrameSet
@@ -43,6 +44,16 @@ struct FrameSets
 
 struct frameOpts
 {
+    frameOpts():
+        H(0),
+        W(0),
+        offsetX(0),
+        offsetY(0),
+        used(false),
+        isDuck(false),
+        isRightDir(false),
+        showGrabItem(false)
+    {}
     unsigned int H;
     unsigned int W;
     int offsetX;
@@ -55,19 +66,23 @@ struct frameOpts
 
 struct obj_player_calibration
 {
-    int frameWidth;
-    int frameHeight;
-    int frameHeightDuck;
-    int frameGrabOffsetX;
-    int frameGrabOffsetY;
-    int frameOverTopGrab;
-    QList<QList<frameOpts > > framesX; //!< Collision boxes settings
-    FrameSets AniFrames;               //!< Animation settings
-    void init(int x, int y);
-    bool load(QString fileName);
-private:
-    void getSpriteAniData(QSettings &set, QString name);
+        size_t matrixWidth;
+        size_t matrixHeight;
+        int frameWidth;
+        int frameHeight;
+        int frameHeightDuck;
+        int frameGrabOffsetX;
+        int frameGrabOffsetY;
+        int frameOverTopGrab;
+        //! Collision boxes settings
+        std::vector<frameOpts> frames;
+        FrameSets AniFrames;               //!< Animation settings
+        //! Grabber which allows take frame by X and Y
+        frameOpts &frame(size_t x, size_t y);
+        void init(size_t x, size_t y);
+        bool load(QString fileName);
+    private:
+        void getSpriteAniData(QSettings &set, QString name);
 };
 
 #endif // PLAYER_CALIBRATION_H
-
