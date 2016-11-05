@@ -36,32 +36,32 @@
  */
 class PGEProgressDialog : public QProgressDialog
 {
-public:
-    explicit PGEProgressDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags())
-     : QProgressDialog(parent, flags) {}
+    public:
+        explicit PGEProgressDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags())
+            : QProgressDialog(parent, flags) {}
 
-    PGEProgressDialog(const QString &labelText, const QString &cancelButtonText,
-                    int minimum, int maximum, QWidget *parent = Q_NULLPTR,
-                    Qt::WindowFlags flags = Qt::WindowFlags()):
-        QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, flags)
-    {}
-    virtual ~PGEProgressDialog() {}
+        PGEProgressDialog(const QString &labelText, const QString &cancelButtonText,
+                          int minimum, int maximum, QWidget *parent = Q_NULLPTR,
+                          Qt::WindowFlags flags = Qt::WindowFlags()):
+            QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, flags)
+        {}
+        virtual ~PGEProgressDialog() {}
 
-    virtual void keyPressEvent(QKeyEvent *e)
-    {
-        if(e->key()!= Qt::Key_Escape)
-            QProgressDialog::keyPressEvent(e);
-    }
-    virtual void closeEvent(QCloseEvent *e)
-    {
-        //No way to close this dialog box!
-        e->ignore();
-    }
+        virtual void keyPressEvent(QKeyEvent *e)
+        {
+            if(e->key() != Qt::Key_Escape)
+                QProgressDialog::keyPressEvent(e);
+        }
+        virtual void closeEvent(QCloseEvent *e)
+        {
+            //No way to close this dialog box!
+            e->ignore();
+        }
 };
 
 void MainWindow::on_actionLoad_configs_triggered()
-{   
-    if(ui->centralWidget->subWindowList().size()>0)
+{
+    if(ui->centralWidget->subWindowList().size() > 0)
     {
         QMessageBox::warning(this,
                              tr("Configuration is busy"),
@@ -70,19 +70,18 @@ void MainWindow::on_actionLoad_configs_triggered()
         return;
     }
 
-//    //Disable all animations to take speed-up
-//    foreach( QMdiSubWindow *window, ui->centralWidget->subWindowList() )
-//    {
-//        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-//            qobject_cast<LevelEdit *>(window->widget())->scene->stopAnimation();
-//        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-//            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
-//    }
-
+    //    //Disable all animations to take speed-up
+    //    foreach( QMdiSubWindow *window, ui->centralWidget->subWindowList() )
+    //    {
+    //        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+    //            qobject_cast<LevelEdit *>(window->widget())->scene->stopAnimation();
+    //        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+    //            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
+    //    }
     PGEProgressDialog progress("Please wait...", tr("Abort"),
-                              0, 100,//Value, Maximum
-                              this,//Parent
-                              Qt::Window|Qt::WindowTitleHint|Qt::CustomizeWindowHint);
+                               0, 100,//Value, Maximum
+                               this,//Parent
+                               Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progress.setWindowTitle(tr("Reloading configurations"));
     //progress.setWindowModality(Qt::WindowModal);
     progress.setModal(true);
@@ -93,79 +92,76 @@ void MainWindow::on_actionLoad_configs_triggered()
     progress.setAutoClose(false);
     progress.show();
 
-    if(!progress.wasCanceled()) progress.setValue(1);
+    if(!progress.wasCanceled())
+        progress.setValue(1);
 
     //Reload configs
     qApp->processEvents();
-
     progress.connect(&configs, SIGNAL(progressPartsTotal(int)),
                      &progress, SLOT(setMaximum(int)), Qt::BlockingQueuedConnection);
     progress.connect(&configs, SIGNAL(progressTitle(QString)),
                      &progress, SLOT(setLabelText(QString)), Qt::BlockingQueuedConnection);
     progress.connect(&configs, SIGNAL(progressPartNumber(int)),
                      &progress, SLOT(setValue(int)), Qt::BlockingQueuedConnection);
-
     LogDebug("Lock tile item box...");
-    dock_TilesetBox->lockTilesetBox=true;
+    dock_TilesetBox->lockTilesetBox = true;
     dock_TilesetBox->clearTilesetGroups();
-
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
-    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(1); }
+
+    while(!isOk.isFinished())
+    {
+        qApp->processEvents();
+        QThread::msleep(1);
+    }
 
     LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
-    dock_TilesetBox->lockTilesetBox=false;
-
+    dock_TilesetBox->lockTilesetBox = false;
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);
-
     dock_LvlSectionProps->initDefaults();
     dock_LvlEvents->reloadSoundsList();
     dock_LvlItemBox->clearFilter();
-
     //Set tools from loaded configs
     //setLevelSectionData();
     LogDebug("Closing progress dialog...");
-
     progress.hide();
-
     LogDebug("Disconnecting slots...");
-
     progress.disconnect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
     progress.disconnect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
     progress.disconnect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
-
-//    //Restore all animations states back
-//    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
-//    {
-//        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-//        {
-//            if(qobject_cast<LevelEdit *>(window->widget())->scene->opts.animationEnabled)
-//                qobject_cast<LevelEdit *>(window->widget())->scene->startAnimation();
-//        }
-//        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-//        {
-//            if(qobject_cast<WorldEdit *>(window->widget())->scene->opts.animationEnabled)
-//                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
-//        }
-//    }
+    //    //Restore all animations states back
+    //    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    //    {
+    //        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+    //        {
+    //            if(qobject_cast<LevelEdit *>(window->widget())->scene->opts.animationEnabled)
+    //                qobject_cast<LevelEdit *>(window->widget())->scene->startAnimation();
+    //        }
+    //        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+    //        {
+    //            if(qobject_cast<WorldEdit *>(window->widget())->scene->opts.animationEnabled)
+    //                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
+    //        }
+    //    }
     LogDebug("Checking result...");
 
     if(isOk.result())
     {
         QMessageBox::information(this, tr("Reloading configuration"),
-        tr("Configuration succesfully reloaded!"),
-        QMessageBox::Ok);
+                                 tr("Configuration succesfully reloaded!"),
+                                 QMessageBox::Ok);
     }
     else
     {
         if(configs.check())
         {
             QMessageBox::warning(this, tr("Configuration error"),
-                tr("Configuration package is loaded with errors."), QMessageBox::Ok);
+                                 tr("Configuration package is loaded with errors."), QMessageBox::Ok);
             on_actionCurConfig_triggered();
         }
     }
+
     LogDebug("Completed!");
 }
 
@@ -180,7 +176,6 @@ void MainWindow::on_actionReConfigure_triggered()
 void MainWindow::on_actionCurConfig_triggered()
 {
     ConfigStatus cnfWindow(configs, this);
-
     cnfWindow.exec();
 }
 
@@ -190,10 +185,10 @@ void MainWindow::on_actionChangeConfig_triggered()
     ConfigManager cmanager(this);
     QString configPath = cmanager.loadConfigs();
 
-    if( cmanager.exec() == QDialog::Accepted )
+    if(cmanager.exec() == QDialog::Accepted)
     {
         configPath          =  cmanager.m_currentConfig;
-        currentConfigDir    = (cmanager.m_doAskAgain)? "" : configPath;
+        currentConfigDir    = (cmanager.m_doAskAgain) ? "" : configPath;
         saveSettings();
         QMessageBox::information(this,
                                  tr("Configuration changed"),
@@ -202,4 +197,3 @@ void MainWindow::on_actionChangeConfig_triggered()
                                  QMessageBox::Ok);
     }
 }
-
