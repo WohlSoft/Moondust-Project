@@ -19,6 +19,7 @@
 
 #include "logger.h"
 #include "npc_animator.h"
+#include <cmath>
 #include <cstdlib>
 
 AdvNpcAnimator::AdvNpcAnimator()
