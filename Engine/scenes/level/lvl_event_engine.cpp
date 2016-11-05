@@ -22,17 +22,9 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
-LVL_EventAction::LVL_EventAction()
-{
-    m_timeDelayLeft = 0.0;
-}
-
-LVL_EventAction::LVL_EventAction(const LVL_EventAction &ea)
-{
-    m_action        = ea.m_action;
-    m_timeDelayLeft = ea.m_timeDelayLeft;
-    m_eventName     = ea.m_eventName;
-}
+LVL_EventAction::LVL_EventAction():
+    m_timeDelayLeft(0.0)
+{}
 
 LVL_EventAction::~LVL_EventAction()
 {}
@@ -40,7 +32,8 @@ LVL_EventAction::~LVL_EventAction()
 
 
 
-LVL_EventEngine::LVL_EventEngine()
+LVL_EventEngine::LVL_EventEngine() :
+    m_scene(nullptr)
 {}
 
 LVL_EventEngine::~LVL_EventEngine()
@@ -62,7 +55,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         hideLayers.makeCaller([this, layers, smoke]()->void
         {
             foreach(QString ly, layers)
-                _scene->layers.hide(ly, smoke);
+                m_scene->layers.hide(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(hideLayers);
     }
@@ -75,7 +68,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         showLayers.makeCaller([this, layers, smoke]()->void
         {
             foreach(QString ly, layers)
-                _scene->layers.show(ly, smoke);
+                m_scene->layers.show(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(showLayers);
     }
@@ -88,7 +81,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         toggleLayers.makeCaller([this, layers, smoke]()->void
         {
             foreach(QString ly, layers)
-                _scene->layers.toggle(ly, smoke);
+                m_scene->layers.toggle(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(toggleLayers);
     }
@@ -114,14 +107,14 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             {
                 bgToggle.makeCaller([this, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].resetBG();
+                        m_scene->sections[i].resetBG();
 
-                        for(int j = 0; j < _scene->cameras.size(); j++)
+                        for(int j = 0; j < m_scene->cameras.size(); j++)
                         {
-                            if(_scene->cameras[j].cur_section == &_scene->sections[i])
-                                _scene->sections[i].initBG();
+                            if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
+                                m_scene->sections[i].initBG();
                         }
                     }
 
@@ -132,14 +125,14 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                 unsigned long bgID = static_cast<unsigned long>(evt.sets[i].background_id);
                 bgToggle.makeCaller([this, bgID, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].setBG(bgID);
+                        m_scene->sections[i].setBG(bgID);
 
-                        for(int j = 0; j < _scene->cameras.size(); j++)
+                        for(int j = 0; j < m_scene->cameras.size(); j++)
                         {
-                            if(_scene->cameras[j].cur_section == &_scene->sections[i])
-                                _scene->sections[i].initBG();
+                            if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
+                                m_scene->sections[i].initBG();
                         }
                     }
                 }, 0);
@@ -156,14 +149,14 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             {
                 musToggle.makeCaller([this, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].resetMusic();
+                        m_scene->sections[i].resetMusic();
 
-                        for(int j = 0; j < _scene->cameras.size(); j++)
+                        for(int j = 0; j < m_scene->cameras.size(); j++)
                         {
-                            if(_scene->cameras[j].cur_section == &_scene->sections[i])
-                                _scene->sections[i].playMusic();
+                            if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
+                                m_scene->sections[i].playMusic();
                         }
                     }
                 }, 0);
@@ -173,14 +166,14 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                 int musID = static_cast<int>(evt.sets[i].music_id);
                 musToggle.makeCaller([this, musID, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].setMusic(musID);
+                        m_scene->sections[i].setMusic(musID);
 
-                        for(int j = 0; j < _scene->cameras.size(); j++)
+                        for(int j = 0; j < m_scene->cameras.size(); j++)
                         {
-                            if(_scene->cameras[j].cur_section == &_scene->sections[i])
-                                _scene->sections[i].playMusic();
+                            if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
+                                m_scene->sections[i].playMusic();
                         }
                     }
                 }, 0);
@@ -197,9 +190,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             {
                 bordersToggle.makeCaller([this, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].resetLimits();
+                        m_scene->sections[i].resetLimits();
                     }
                 }, 0);
             }
@@ -214,9 +207,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                 };
                 bordersToggle.makeCaller([this, box, i]()->void
                 {
-                    if(i < _scene->sections.size())
+                    if(i < m_scene->sections.size())
                     {
-                        _scene->sections[i].changeLimitBorders(box[0], box[1], box[2], box[3]);
+                        m_scene->sections[i].changeLimitBorders(box[0], box[1], box[2], box[3]);
                     }
                 }, 0);
             }
@@ -225,22 +218,22 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         }
     }
 
-    if((evt.scroll_section < _scene->sections.size()) && ((evt.move_camera_x != 0.0) || (evt.move_camera_y != 0.0)))
+    if((evt.scroll_section < m_scene->sections.size()) && ((evt.move_camera_x != 0.0) || (evt.move_camera_y != 0.0)))
     {
         EventQueueEntry<LVL_EventAction> installAutoscroll;
         installAutoscroll.makeCaller([this, evt]()->void
         {
-            LVL_Section &section = _scene->sections[static_cast<int>(evt.scroll_section)];
+            LVL_Section &section = m_scene->sections[static_cast<int>(evt.scroll_section)];
             section.isAutoscroll = true;
             section._autoscrollVelocityX = evt.move_camera_x;
             section._autoscrollVelocityY = evt.move_camera_y;
 
-            for(int j = 0; j < _scene->cameras.size(); j++)
+            for(int j = 0; j < m_scene->cameras.size(); j++)
             {
-                if(_scene->cameras[j].cur_section == &section)
+                if(m_scene->cameras[j].cur_section == &section)
                 {
-                    _scene->cameras[j].m_autoScrool.enabled = true;
-                    _scene->cameras[j].m_autoScrool.resetAutoscroll();
+                    m_scene->cameras[j].m_autoScrool.enabled = true;
+                    m_scene->cameras[j].m_autoScrool.resetAutoscroll();
                 }
             }
         }, 0);
@@ -256,13 +249,13 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             QString message = evt.msg;
             msgBox.makeCaller(
             [this, message]()->void{
-                _scene->m_messages.showMsg(message);
+                m_scene->m_messages.showMsg(message);
                 //                                   PGE_MsgBox box(_scene, evt.msg,
                 //                                   PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
                 //                                   ConfigManager::setup_message_box.sprite);
                 //                                   box.exec();
             }, 0.0);
-            _scene->system_events.events.push_back(msgBox);
+            m_scene->system_events.events.push_back(msgBox);
         }, 0);
         evntAct.m_action.events.push_back(message);
     }
@@ -272,7 +265,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         EventQueueEntry<LVL_EventAction> movelayer;
         movelayer.makeCaller([this, evt]()->void
         {
-            _scene->layers.installLayerMotion(evt.movelayer, evt.layer_speed_x, evt.layer_speed_y);
+            m_scene->layers.installLayerMotion(evt.movelayer, evt.layer_speed_x, evt.layer_speed_y);
         }, 0);
         evntAct.m_action.events.push_back(movelayer);
         evntAct.m_timeDelayLeft = 0.0;
@@ -288,7 +281,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         QString trgr = evt.trigger;
         triggerEvent.makeCaller([this, trgr]()->void
         {
-            _scene->events.triggerEvent(trgr);
+            m_scene->events.triggerEvent(trgr);
         },
         static_cast<double>(evt.trigger_timer) * 100.0
         //                ((double(evt.trigger_timer) / 10.0) * 65.0)

@@ -35,7 +35,7 @@ static int   chan_count;
 
 static void exit_with_error( const char* str )
 {
-	printf( "Error: %s\n", str ); getchar();
+    printf( "Error: %s\n", str );
 	exit( EXIT_FAILURE );
 }
 
@@ -71,7 +71,7 @@ void wave_enable_stereo( void )
 
 static void flush_()
 {
-	if ( buf_pos && !fwrite( buf, buf_pos, 1, file ) )
+    if ( buf_pos && !fwrite( buf, (size_t)buf_pos, 1, file ) )
 		exit_with_error( "Couldn't write WAVE data" );
 	buf_pos = 0;
 }
@@ -86,7 +86,7 @@ void wave_write( short const* in, long remain )
 		
 		{
 			unsigned char* p = &buf [buf_pos];
-			long n = (buf_size - buf_pos) / sizeof (sample_t);
+            long n = (buf_size - (unsigned long)buf_pos) / sizeof (sample_t);
 			if ( n > remain )
 				n = remain;
 			remain -= n;
@@ -140,15 +140,15 @@ void wave_close( void )
 			0,0,0,0,        /* size of sample data */
 			/* ... */       /* sample data */
 		};
-		long ds = sample_count_ * sizeof (sample_t);
-		int frame_size = chan_count * sizeof (sample_t);
+        long ds = sample_count_ * (long)sizeof (sample_t);
+        int frame_size = chan_count * (long)sizeof (sample_t);
 		
 		set_le32( h + 0x04, header_size - 8 + ds );
-		h [0x16] = chan_count;
-		set_le32( h + 0x18, sample_rate_ );
-		set_le32( h + 0x1C, sample_rate_ * frame_size );
-		h [0x20] = frame_size;
-		set_le32( h + 0x28, ds );
+        h [0x16] = (unsigned char)chan_count;
+        set_le32( h + 0x18, (unsigned long)sample_rate_ );
+        set_le32( h + 0x1C, (unsigned long)sample_rate_ * (unsigned long)frame_size );
+        h [0x20] = (unsigned char)frame_size;
+        set_le32( h + 0x28, (unsigned long)ds );
 		
 		flush_();
 		

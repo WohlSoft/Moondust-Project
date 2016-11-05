@@ -31,7 +31,7 @@
 #include <QtDebug>
 #include <QStack>
 
-const float PGE_LevelCamera::_smbxTickTime = 15.285; //1000.0f/65.f;
+const double PGE_LevelCamera::_smbxTickTime = 15.285; //1000.0f/65.f;
 
 PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
 {
@@ -49,7 +49,7 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
     fader.setNull();
     m_autoScrool.camera = this;
     _objects_to_render_max = 1000;
-    _objects_to_render = (PGE_Phys_Object **)malloc(sizeof(PGE_Phys_Object *)*_objects_to_render_max);
+    _objects_to_render = reinterpret_cast<PGE_Phys_Object **>(malloc(sizeof(PGE_Phys_Object *) * static_cast<size_t>(_objects_to_render_max)));
     assert(_objects_to_render && "Out of memory");
     _objects_to_render_stored = 0;
     _objects_to_render_recent = 0;
@@ -80,8 +80,8 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam) : _scene(cam._scene
     _objects_to_render_max = cam._objects_to_render_max;
     _objects_to_render_stored = cam._objects_to_render_stored;
     _objects_to_render_recent = cam._objects_to_render_recent;
-    _objects_to_render = (PGE_Phys_Object **)malloc(sizeof(PGE_Phys_Object *)*_objects_to_render_max);
-    memcpy(_objects_to_render, cam._objects_to_render, _objects_to_render_max);
+    _objects_to_render = static_cast<PGE_Phys_Object **>(malloc(sizeof(PGE_Phys_Object *) * static_cast<size_t>(_objects_to_render_max)));
+    memcpy(_objects_to_render, cam._objects_to_render, static_cast<size_t>(_objects_to_render_max));
     _disable_cache_mode = cam._disable_cache_mode;
     shake_enabled_x = cam.shake_enabled_x;
     shake_enabled_y = cam.shake_enabled_y;
@@ -104,12 +104,12 @@ void PGE_LevelCamera::init(double x, double y, double w, double h)
 
 int PGE_LevelCamera::w()
 {
-    return posRect.width();
+    return static_cast<int>(posRect.width());
 }
 
 int PGE_LevelCamera::h()
 {
-    return posRect.height();
+    return static_cast<int>(posRect.height());
 }
 
 double PGE_LevelCamera::posX()
@@ -122,24 +122,24 @@ double PGE_LevelCamera::posY()
     return posRect.y() + offset_y;
 }
 
-float PGE_LevelCamera::renderX()
+double PGE_LevelCamera::renderX()
 {
     return render_x;
 }
 
-float PGE_LevelCamera::renderY()
+double PGE_LevelCamera::renderY()
 {
     return render_y;
 }
 
 double PGE_LevelCamera::centerX()
 {
-    return (double)render_x + (posRect.width() / 2.0);
+    return render_x + (posRect.width() / 2.0);
 }
 
 double PGE_LevelCamera::centerY()
 {
-    return (double)render_y + (posRect.height() / 2.0);
+    return render_y + (posRect.height() / 2.0);
 }
 
 void PGE_LevelCamera::setPos(double x, double y)
@@ -260,12 +260,12 @@ void PGE_LevelCamera::updatePost(double ticks)
     /*****************************Screen shaking*******************************/
     if(shake_enabled_x)
     {
-        int force_x = (int)round(shake_force_x);
+        int force_x = static_cast<int>(round(shake_force_x));
 
         if(force_x != 0)
-            offset_x = (float)(rand() % (force_x) * (rand() % 2 ? -1 : 1));
+            offset_x = static_cast<double>(rand() % (force_x) * (rand() % 2 ? -1 : 1));
         else
-            offset_x = 0.0f;
+            offset_x = 0.0;
 
         if(shake_force_x > 0.0)
             shake_force_x -= ticks * shake_force_decelerate_x;
@@ -273,19 +273,19 @@ void PGE_LevelCamera::updatePost(double ticks)
         if(shake_force_x <= 0.0)
         {
             shake_force_x = 0.0;
-            offset_x = 0.0f;
+            offset_x = 0.0;
             shake_enabled_x = false;
         }
     }
 
     if(shake_enabled_y)
     {
-        int force_y = (int)round(shake_force_y);
+        int force_y = static_cast<int>(round(shake_force_y));
 
         if(force_y != 0)
-            offset_y = (float)(rand() % (force_y) * (rand() % 2 ? -1 : 1));
+            offset_y = static_cast<double>(rand() % (force_y) * (rand() % 2 ? -1 : 1));
         else
-            offset_y = 0.0f;
+            offset_y = 0.0;
 
         if(shake_force_y > 0.0)
             shake_force_y -= ticks * shake_force_decelerate_y;
@@ -293,7 +293,7 @@ void PGE_LevelCamera::updatePost(double ticks)
         if(shake_force_y <= 0.0)
         {
             shake_force_y = 0.0;
-            offset_y = 0.0f;
+            offset_y = 0.0;
             shake_enabled_y = false;
         }
     }
@@ -311,7 +311,7 @@ void PGE_LevelCamera::shakeScreenX(double forceX, double dec_step_x)
 {
     if(forceX <= 0.0)
     {
-        offset_x = 0.0f;
+        offset_x = 0.0;
         shake_enabled_x = false;
         shake_force_x = 0.0;
     }
@@ -327,7 +327,7 @@ void PGE_LevelCamera::shakeScreenY(double forceY, double dec_step_y)
 {
     if(forceY <= 0.0)
     {
-        offset_y = 0.0f;
+        offset_y = 0.0;
         shake_enabled_y = false;
         shake_force_x = 0.0;
     }
@@ -452,6 +452,8 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
             {
             case PGE_Phys_Object::LVLNPC:
                 list->npcs_to_activate.push(item);
+                renderable = true;
+                break;
 
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
@@ -469,7 +471,7 @@ checkRenderability:
                 if(list->_objects_to_render_stored >= list->_objects_to_render_max - 2)
                 {
                     list->_objects_to_render_max += 1000;
-                    list->_objects_to_render = (PGE_Phys_Object **)realloc(list->_objects_to_render, sizeof(PGE_Phys_Object *)*list->_objects_to_render_max);
+                    list->_objects_to_render = static_cast<PGE_Phys_Object **>(realloc(list->_objects_to_render, sizeof(PGE_Phys_Object *) * static_cast<size_t>(list->_objects_to_render_max)));
 
                     if(!list->_objects_to_render)
                         throw("Memory overflow!");
@@ -491,7 +493,7 @@ void PGE_LevelCamera::queryItems(PGE_RectF &zone)
 {
     double lt[2] = { zone.left(),  zone.top() };
     double rb[2] = { zone.right(), zone.bottom() };
-    _scene->tree.Search(lt, rb, _TreeSearchCallback, (void *)this);
+    _scene->tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
 }
 
 void PGE_LevelCamera::AutoScrooler::resetAutoscroll()
@@ -519,14 +521,14 @@ void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
 
     if((velXmax > 0.0) && (velX < velXmax))
     {
-        velX += 0.05f * coff;
+        velX += 0.05 * coff;
 
         if(velX > velXmax)
             velX = velXmax;
     }
     else if((velXmax < 0.0) && (velX > velXmax))
     {
-        velX -= 0.05f * coff;
+        velX -= 0.05 * coff;
 
         if(velX < velXmax)
             velX = velXmax;
@@ -534,14 +536,14 @@ void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
 
     if((velYmax > 0.0) && (velY < velYmax))
     {
-        velY += 0.05f * coff;
+        velY += 0.05 * coff;
 
         if(velY > velYmax)
             velY = velYmax;
     }
     else if((velYmax < 0.0) && (velY > velYmax))
     {
-        velY -= 0.05f * coff;
+        velY -= 0.05 * coff;
 
         if(velY < velYmax)
             velY = velYmax;
@@ -650,32 +652,50 @@ void PGE_LevelCamera::drawBackground()
 void PGE_LevelCamera::drawForeground()
 {
     if(!fader.isNull())
-        GlRenderer::renderRect(0, 0, posRect.width(), posRect.height(), 0.0f, 0.0f, 0.0f, fader.fadeRatio());
+        GlRenderer::renderRect(0, 0,
+                               static_cast<float>(posRect.width()),
+                               static_cast<float>(posRect.height()),
+                               0.0f, 0.0f, 0.0f,
+                               static_cast<float>(fader.fadeRatio()));
 
     if(cur_section)
     {
         PGE_RectF *limBox = m_autoScrool.enabled ? &limitBox : &(cur_section->limitBox);
-        double left   = posRect.left() + (double)offset_x;
-        double top    = posRect.top() + (double)offset_y;
-        double right  = posRect.right() + (double)offset_x;
-        double bottom = posRect.bottom() + (double)offset_y;
+        double left   = posRect.left() + offset_x;
+        double top    = posRect.top() + offset_y;
+        double right  = posRect.right() + offset_x;
+        double bottom = posRect.bottom() + offset_y;
 
         if(left < limBox->left())
-            GlRenderer::renderRect(0, 0, fabs(left - limBox->left()), posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(0, 0,
+                                   static_cast<float>(std::fabs(left - limBox->left())),
+                                   static_cast<float>(posRect.height()),
+                                   0.0f, 0.0f, 0.0f, 1.0f);
 
         if(top < limBox->top())
-            GlRenderer::renderRect(0, 0, posRect.width(), fabs(top - limBox->top()), 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(0, 0,
+                                   static_cast<float>(posRect.width()),
+                                   static_cast<float>(std::fabs(top - limBox->top())),
+                                   0.0f, 0.0f, 0.0f, 1.0f);
 
         if(right > limBox->right())
         {
             double width = fabs(limBox->right() - right);
-            GlRenderer::renderRect(posRect.width() - width, 0, width, posRect.height(), 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(static_cast<float>(posRect.width() - width),
+                                   0.0f,
+                                   static_cast<float>(width),
+                                   static_cast<float>(posRect.height()),
+                                   0.0f, 0.0f, 0.0f, 1.0f);
         }
 
         if(bottom > limBox->bottom())
         {
             double height = fabs(limBox->bottom() - bottom);
-            GlRenderer::renderRect(0, posRect.height() - height, posRect.width(), height, 0.0f, 0.0f, 0.0f, 1.0f);
+            GlRenderer::renderRect(0.0f,
+                                   static_cast<float>(posRect.height() - height),
+                                   static_cast<float>(posRect.width()),
+                                   static_cast<float>(height),
+                                   0.0f, 0.0f, 0.0f, 1.0f);
         }
     }
 }
