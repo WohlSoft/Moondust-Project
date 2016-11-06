@@ -20,12 +20,19 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/main_window_ptr.h>
 #include <common_features/app_path.h>
+#include <common_features/logger.h>
 #include <QSharedPointer>
 
-static QString base64_encode(QString string)
+static void base64_encode(QByteArray &out, const char *msg)
+{
+    QByteArray ba(msg);
+    out = ba.toBase64();
+}
+
+static void base64_encode(QByteArray &out, QString &string)
 {
     QByteArray ba(string.toUtf8());
-    return ba.toBase64();
+    out = ba.toBase64();
 }
 
 IntEngine::IntEngine()
@@ -36,28 +43,28 @@ IntEngine::~IntEngine()
 
 void IntEngine::onData()
 {
-    if(engine)
+    if(isWorking())
     {
         QByteArray strdata = engine->readAllStandardOutput();
-        QByteArray msgEn = QByteArray::fromBase64(strdata);
-        QString msg(QString::fromUtf8(msgEn));
+        QByteArray msg = QByteArray::fromBase64(strdata);
 
         if(msg.startsWith("CMD:"))
         {
-            msg.remove("CMD:");
+            char *msgP = msg.data() + 4; //"CMD:"
+            LogDebug("ENGINE COMMAND: >>");
+            LogDebug(msgP);
+            LogDebug("<<ENGINE COMMAND END");
 
-            if("CONNECT_TO_ENGINE" == msg)
+            if(strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
                 sendLevelBuffer();
-            else if("ENGINE_CLOSED" == msg)
+            else if(strcmp(msgP, "ENGINE_CLOSED") == 0)
             {
                 MainWinConnect::pMainWin->show();
                 MainWinConnect::pMainWin->raise();
             }
-
-            qDebug() << "ENGINE MESSAGE: >>\n" << msg << "\n<<ENGINE MESSAGE END";
         }
         else
-            emit engineInputMsg(msg);
+            emit engineInputMsg(QString::fromUtf8(msg));
     }
 }
 
@@ -86,28 +93,24 @@ void IntEngine::quit()
     if(engine)
         engine->close();
 
-    engine = NULL;
+    engine = nullptr;
 }
 
 bool IntEngine::isWorking()
 {
-    bool isRuns = false;
-    isRuns = (engine != NULL);
-
-    if(!isRuns) return false;
-
-    isRuns = (engine->state() == QProcess::Running);
-    return isRuns;
+    return ((engine != nullptr) && (engine->state() == QProcess::Running));
 }
 
 bool IntEngine::sendCheat(QString _args)
 {
-    if(engine)
+    if(isWorking())
     {
-        if(_args.isEmpty()) return false;
+        if(_args.isEmpty())
+            return false;
 
-        _args = _args.replace('\n', "\\n");
-        return sendMessage(QString("CHEAT: %1").arg(_args));
+        _args.replace('\n', "\\n");
+        QString out = QString("CHEAT: %1").arg(_args);
+        return sendMessage(out);
     }
     else
         return false;
@@ -115,12 +118,14 @@ bool IntEngine::sendCheat(QString _args)
 
 bool IntEngine::sendMessageBox(QString _args)
 {
-    if(engine)
+    if(isWorking())
     {
-        if(_args.isEmpty()) return false;
+        if(_args.isEmpty())
+            return false;
 
-        _args = _args.replace('\n', "\\n");
-        return sendMessage(QString("MSGBOX: %1").arg(_args));
+        _args.replace('\n', "\\n");
+        QString out = QString("MSGBOX: %1").arg(_args);
+        return sendMessage(out);
     }
     else
         return false;
@@ -128,11 +133,12 @@ bool IntEngine::sendMessageBox(QString _args)
 
 bool IntEngine::sendItemPlacing(QString _args)
 {
-    if(engine)
+    if(isWorking())
     {
-        qDebug() << "ENGINE: Place item command: " << _args;
-        bool answer = sendMessage(QString("PLACEITEM: %1").arg(_args));
-        return answer;
+        LogDebug("ENGINE: Place item command: " + _args);
+        QString out = QString("PLACEITEM: %1").arg(_args);
+        bool ret = sendMessage(out);
+        return ret;
     }
 
     return false;
@@ -140,9 +146,9 @@ bool IntEngine::sendItemPlacing(QString _args)
 
 void IntEngine::sendLevelBuffer()
 {
-    if(engine)
+    if(isWorking())
     {
-        qDebug() << "Attempt to send LVLX buffer";
+        LogDebug("Attempt to send LVLX buffer");
         QString output;
         FileFormats::WriteExtendedLvlFileRaw(testBuffer, output);
         QString sendLvlx;
@@ -159,14 +165,16 @@ void IntEngine::sendLevelBuffer()
         if(output.size() <= 0)
             output = "HEAD\nEMPTY:1\nHEAD_END\n";
 
-#ifdef DEBUG_BUILD
-        qDebug() << "Sent File data BEGIN >>>>>>>>>>>\n" << output << "\n<<<<<<<<<<<<Sent File data END";
-#endif
+        //#ifdef DEBUG_BUILD
+        //        qDebug() << "Sent File data BEGIN >>>>>>>>>>>\n" << output << "\n<<<<<<<<<<<<Sent File data END";
+        //#endif
         sendMessage(sendLvlx);
-        QString output_e = base64_encode(output) + "\n";
-        engine->write(output_e.toUtf8());
+        QByteArray output_e;
+        base64_encode(output_e, output);
+        output_e.append('\n');
+        engine->write(output_e);
         sendMessage("PARSE_LVLX");
-        qDebug() << "LVLX buffer sent";
+        LogDebug("LVLX buffer sent");
     }
 }
 
@@ -175,8 +183,25 @@ void IntEngine::setTestLvlBuffer(LevelData &buffer)
     testBuffer = buffer;
 }
 
-bool IntEngine::sendMessage(QString msg)
+bool IntEngine::sendMessage(const char *msg)
 {
-    QString output_e = base64_encode(msg) + "\n";
-    return (engine->write(output_e.toUtf8()) > 0);
+    if(!isWorking())
+        return false;
+
+    QByteArray output_e;
+    base64_encode(output_e, msg);
+    output_e.append('\n');
+    return (engine->write(output_e) > 0);
+}
+
+
+bool IntEngine::sendMessage(QString &msg)
+{
+    if(!isWorking())
+        return false;
+
+    QByteArray output_e;
+    base64_encode(output_e, msg);
+    output_e.append('\n');
+    return (engine->write(output_e) > 0);
 }
