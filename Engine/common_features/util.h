@@ -34,18 +34,20 @@
 #define gcc_force_inline
 #endif
 
-class util
+namespace util
 {
-public:
-    static QString filePath(QString s);
-    static bool strempty(const char* str);
+    QString filePath(QString s);
+    bool strempty(const char *str);
 
-    static QString resolveRelativeOrAbsolute(const QString &path, const QStringList& relativeLookup);
+    QString resolveRelativeOrAbsolute(const QString &path, const QStringList &relativeLookup);
 
-    static void CSV2IntArr(QString source, QList<int> &dest);
-    static void CSV2IntArr(QString source, QVector<int> &dest);
-    static void CSV2DoubleArr(QString source, QList<double> &dest);
-    static void CSV2DoubleArr(QString source, QVector<double> &dest);
+    void CSV2IntArr(QString source, QList<int> &dest);
+    void CSV2IntArr(QString source, QVector<int> &dest);
+    void CSV2DoubleArr(QString source, QList<double> &dest);
+    void CSV2DoubleArr(QString source, QVector<double> &dest);
+    void base64_encode(std::string &ret, const unsigned char *bytes_to_encode, size_t in_len);
+    void base64_decode(std::string &ret, std::string const &encoded_string);
+
 };
 
 namespace varadic_util
@@ -54,31 +56,39 @@ namespace varadic_util
     struct seq { };
 
     template<int N, int ...S>
-    struct gens : gens<N-1, N-1, S...> { };
+    struct gens : gens < N - 1, N - 1, S... > { };
 
     template<int ...S>
-    struct gens<0, S...> {
+    struct gens<0, S...>
+    {
         typedef seq<S...> type;
     };
 }
 
 
 
-namespace luabind_utils {
+namespace luabind_utils
+{
     template<typename T>
-    static inline gcc_force_inline QList<T> convArrayTo(luabind::object& obj){
+    static inline gcc_force_inline QList<T> convArrayTo(luabind::object &obj)
+    {
         QList<T> container;
-        for (luabind::iterator it(obj), end; it != end; ++it)
+
+        for(luabind::iterator it(obj), end; it != end; ++it)
         {
-            try{
+            try
+            {
                 container << luabind::object_cast<T>(*it);
-            } catch (luabind::cast_failed& e) { }
+            }
+            catch(luabind::cast_failed & /*e*/) { }
         }
+
         return container;
     }
 }
 
-namespace charsets_utils {
+namespace charsets_utils
+{
     /*!
      * \brief returns length of UTF8 string line
      * \param Input 8-bit string in UTF8 codepage

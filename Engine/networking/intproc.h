@@ -24,49 +24,41 @@
 #include <QObject>
 #include "editor_pipe.h"
 
-class IntProc : public QObject
+namespace IntProc
 {
-    Q_OBJECT
-public:
-    explicit IntProc(QObject *parent = 0);
-    static void init();
-    static void quit();
-    static bool isWorking();
+    void init();
+    void quit();
+    bool isEnabled();
+    bool isWorking();
 
-    static QString      getState();
-    static void         setState(QString instate);
-    static QString      state;
-    static std::mutex   state_lock;
+    QString      getState();
+    void         setState(QString instate);
 
     enum ExternalCommands
     {
-        MsgBox=0,
-        Cheat=1,
-        PlaceItem=2
+        MsgBox = 0,
+        Cheat = 1,
+        PlaceItem = 2
     };
 
-    static ExternalCommands command;
+    struct cmdEntry
+    {
+        QString cmd;
+        ExternalCommands type;
+    };
 
-    static void             storeCommand(QString in, ExternalCommands type);
-    static void             cmdLock();
-    static void             cmdUnLock();
-    static bool             hasCommand();
-    static ExternalCommands commandType();
-    static QString          getCMD();
+    bool sendMessage(const char *command);
+    bool sendMessageS(std::string command);
+    bool sendMessage(QString command);
 
-private:
-    static std::deque<QString>  cmd_queue;
-    static std::mutex           cmd_mutex;
+    void             storeCommand(const char *cmd, size_t length, ExternalCommands type);
+    void             cmdLock();
+    void             cmdUnLock();
+    bool             hasCommand();
+    ExternalCommands commandType();
+    QString          getCMD();
 
-public:
-    static EditorPipe * editor;
-    static bool enabled;
-    static bool isEnabled();
-
-signals:
-
-public slots:
-
+    extern EditorPipe *editor;
 };
 
 #endif // INTPROC_H

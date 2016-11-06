@@ -29,6 +29,7 @@
 bool LevelScene::loadFile(QString filePath)
 {
     data.meta.ReadFileValid = false;
+
     if(!QFileInfo(filePath).exists())
     {
         errorMsg += "File not exist\n\n";
@@ -36,7 +37,7 @@ bool LevelScene::loadFile(QString filePath)
         return false;
     }
 
-    if( !FileFormats::OpenLevelFile(filePath, data) )
+    if(!FileFormats::OpenLevelFile(filePath, data))
         errorMsg += "Bad file format\n";
 
     return data.meta.ReadFileValid;
@@ -49,55 +50,46 @@ bool LevelScene::loadFileIP()
 
     FileFormats::CreateLevelData(data);
     data.meta.ReadFileValid = false;
-
     LogDebug("ICP: Requesting editor for a file....");
-
-    if(!IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE"))
-    {
-        errorMsg += "Editor is not started!\n";
-        return false;
-    }
-
+    IntProc::sendMessage("CMD:CONNECT_TO_ENGINE");
     QElapsedTimer time;
     time.start();
     //wait for accepting of level data
-    bool timeOut=false;
-    int attempts=0;
-
+    bool timeOut = false;
+    int attempts = 0;
     LogDebug("ICP: Waiting reply....");
 
     while(!IntProc::editor->levelIsLoad())
     {
         loaderStep();
+
         //Abort loading process and exit from game if window was closed
         if(!isLevelContinues)
             return false;
 
-        if(time.elapsed()>1500)
+        if(time.elapsed() > 1500)
         {
             LogDebug(QString("ICP: Waiting #%1....").arg(attempts));
             time.restart();
-            attempts+=1;
+            attempts += 1;
         }
 
-        if(attempts>4)
+        if(attempts > 4)
         {
             errorMsg += "Wait timeout\n";
-            timeOut=true;
+            timeOut = true;
             break;
         }
+
         SDL_Delay(30);
     }
 
-    data = IntProc::editor->accepted_lvl;
+    data = IntProc::editor->m_acceptedLevel;
 
     if(!timeOut && !data.meta.ReadFileValid)
         errorMsg += "Bad file format\n";
 
     LogDebug("ICP: Done, starting a game....");
-
     IntProc::setState("Done. Starting game...");
-
     return data.meta.ReadFileValid;
 }
-

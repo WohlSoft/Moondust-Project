@@ -176,6 +176,7 @@ int main(int argc, char *argv[])
         else if(arg == "--version")
         {
             std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE "-" _BUILD_VER << std::endl;
+            std::cout.flush();
             PGE_Application::quit();
             PGE_Application::exit();
             return 0;
@@ -715,7 +716,7 @@ PlayWorldMap:
                 msg += qtTrId("MSG_START_LEVEL").arg(_game_state.LevelFile) + "\n\n";
                 //% "Type an exit code (signed integer)"
                 msg += qtTrId("MSG_WLDTEST_EXIT_CODE");
-                PGE_TextInputBox text(NULL, msg, PGE_BoxBase::msg_info_light,
+                PGE_TextInputBox text(nullptr, msg, PGE_BoxBase::msg_info_light,
                                       PGE_Point(-1, -1),
                                       ConfigManager::setup_message_box.box_padding,
                                       ConfigManager::setup_message_box.sprite);
@@ -987,16 +988,15 @@ PlayLevel:
     }
 ExitFromApplication:
     ConfigManager::unluadAll();
-
-    if(IntProc::isEnabled())
-        IntProc::editor->shut();
-
     PGE_MusPlayer::freeStream();
     PGE_Sounds::clearSoundBuffer();
     Mix_CloseAudio();
     g_AppSettings.save();
     g_AppSettings.closeJoysticks();
-    IntProc::quit();
+
+    if(IntProc::isEnabled())
+        IntProc::quit();
+
     FontManager::quit();
     PGE_Window::uninit();
     pLogDebug("<Application closed>");

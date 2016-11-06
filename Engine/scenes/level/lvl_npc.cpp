@@ -32,70 +32,55 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     m_allowHoleRuning = false;
     m_onSlopeFloorTopAlign = true;
     /* ****** PHYSICS ******* */
-
     type = LVLNPC;
     m_bodytype = Body_DYNAMIC;
-
     _npc_id = 0;
     data = FileFormats::CreateLvlNpc();
-    animated=false;
-    animator_ID=0;
-    killed=false;
-
+    animated = false;
+    animator_ID = 0;
+    killed = false;
     transformedFromBlock = NULL;
-    transformedFromBlockID = -1;
-    transformedFromNpcID = -1;
-
-    isActivated=false;
-    deActivatable=true;
-    reSpawnable=true;
-    wasDeactivated=false;
-    offSectionDeactivate=false;
-    activationTimeout=4000;
+    transformedFromBlockID = -1ul;
+    transformedFromNpcID = -1ul;
+    isActivated = false;
+    deActivatable = true;
+    reSpawnable = true;
+    wasDeactivated = false;
+    offSectionDeactivate = false;
+    activationTimeout = 4000;
     m_spawnedGeneratorType = LevelScene::GENERATOR_APPEAR;
     m_spawnedGeneratorDirection = LevelScene::SPAWN_UP;
-    warpSpawing=false;
-
-    m_isInited=false;
-    isLuaNPC=false;
-    isWarping=false;
-    is_scenery=false;
-    is_activity=true;
-    is_shared_animation=false;
-    keep_position_on_despawn=false;
-
-    warpDirectO=0;
-    warpSpriteOffset=1.0f;
-    warpFrameW=0.0f;
-    warpFrameH=0.0f;
-
-    _onGround=false;
-
-    m_disableBlockCollision=false;
-    disableNpcCollision=false;
-    enablePlayerCollision=true;
-    _stucked=false;
-
-    bumpDown=false;
-    bumpUp=false;
-
-    forceCollideCenter=false;
-    _heightDelta=0.0f;
-    LEGACY_cliffDetected=false;
-
+    warpSpawing = false;
+    m_isInited = false;
+    isLuaNPC = false;
+    isWarping = false;
+    is_scenery = false;
+    is_activity = true;
+    is_shared_animation = false;
+    keep_position_on_despawn = false;
+    warpDirectO = 0;
+    warpSpriteOffset = 1.0f;
+    warpFrameW = 0.0f;
+    warpFrameH = 0.0f;
+    _onGround = false;
+    m_disableBlockCollision = false;
+    disableNpcCollision = false;
+    enablePlayerCollision = true;
+    _stucked = false;
+    bumpDown = false;
+    bumpUp = false;
+    forceCollideCenter = false;
+    _heightDelta = 0.0f;
+    LEGACY_cliffDetected = false;
     health = 1;
-
-    m_isGenerator=false;
-    generatorTimeLeft=0;
-    generatorType=0;
-    generatorDirection=0;
-
+    m_isGenerator = false;
+    generatorTimeLeft = 0;
+    generatorType = 0;
+    generatorDirection = 0;
     resetThrowned();
-
-    buddies_list=NULL;
-    buddies_updated=false;
-    buddies_leader=NULL;
-
+    buddies_list = NULL;
+    buddies_updated = false;
+    buddies_leader = NULL;
     //collision_speed_add.clear();
 }
 
@@ -105,13 +90,13 @@ LVL_Npc::~LVL_Npc()
 
 void LVL_Npc::hide()
 {
-    activationTimeout=-1;
+    activationTimeout = -1;
     PGE_Phys_Object::hide();
 }
 
 void LVL_Npc::show()
 {
-    wasDeactivated=false;
+    wasDeactivated = false;
     PGE_Phys_Object::show();
 }
 
@@ -119,38 +104,38 @@ void LVL_Npc::show()
 /****************Additional event callbacks******************/
 LVL_Npc::KillEvent::KillEvent()
 {
-    cancel=false;
-    reason_code=DAMAGE_NOREASON;
-    killed_by=self;
-    killer_p=NULL;
-    killer_n=NULL;
+    cancel = false;
+    reason_code = DAMAGE_NOREASON;
+    killed_by = self;
+    killer_p = NULL;
+    killer_n = NULL;
 }
 
 LVL_Npc::KillEvent::KillEvent(const LVL_Npc::KillEvent &ke)
 {
-    cancel=ke.cancel;
-    reason_code=ke.reason_code;
-    killed_by=ke.killed_by;
-    killer_p=ke.killer_p;
-    killer_n=ke.killer_n;
+    cancel = ke.cancel;
+    reason_code = ke.reason_code;
+    killed_by = ke.killed_by;
+    killer_p = ke.killer_p;
+    killer_n = ke.killer_n;
 }
 
 LVL_Npc::HarmEvent::HarmEvent()
 {
-    cancel=false;
-    damage=1;
-    reason_code=DAMAGE_NOREASON;
-    killed_by=self;
-    killer_p=NULL;
-    killer_n=NULL;
+    cancel = false;
+    damage = 1;
+    reason_code = DAMAGE_NOREASON;
+    killed_by = self;
+    killer_p = NULL;
+    killer_n = NULL;
 }
 
 LVL_Npc::HarmEvent::HarmEvent(const LVL_Npc::HarmEvent &he)
 {
-    cancel=he.cancel;
-    damage=he.damage;
-    reason_code=he.reason_code;
-    killed_by=he.killed_by;
-    killer_p=he.killer_p;
-    killer_n=he.killer_n;
+    cancel = he.cancel;
+    damage = he.damage;
+    reason_code = he.reason_code;
+    killed_by = he.killed_by;
+    killer_p = he.killer_p;
+    killer_n = he.killer_n;
 }

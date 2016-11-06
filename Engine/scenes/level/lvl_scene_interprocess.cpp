@@ -25,7 +25,7 @@
 
 void LevelScene::process_InterprocessCommands()
 {
-    if(!IntProc::enabled)
+    if(!IntProc::isEnabled())
         return;
 
     IntProc::cmdLock();
