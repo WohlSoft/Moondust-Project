@@ -174,7 +174,11 @@ void Scene::render()
         (rf.render)(0.0, 0.0);
 
     if(!m_fader.isNull())
-        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, m_fader.fadeRatio());
+        GlRenderer::renderRect(0, 0,
+                               PGE_Window::Width,
+                               PGE_Window::Height,
+                               0.f, 0.f,
+                               0.f, static_cast<float>(m_fader.fadeRatio()));
 }
 
 void Scene::renderMouse()
