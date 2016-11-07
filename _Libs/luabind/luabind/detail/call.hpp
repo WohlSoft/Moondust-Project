@@ -44,7 +44,10 @@ namespace luabind {
 		struct LUABIND_API invoke_context
 		{
 			invoke_context()
-				: best_score((std::numeric_limits<int>::max)())
+                : best_score((std::numeric_limits<int>::max)())
+                  //This need to avoid static analyzer's treats
+                , candidates{nullptr,nullptr,nullptr,nullptr,nullptr,
+                             nullptr,nullptr,nullptr,nullptr,nullptr}
 				, candidate_index(0)
 			{}
 

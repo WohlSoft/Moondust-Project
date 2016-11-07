@@ -115,9 +115,9 @@ bool Graphics::toGif(QImage &img, QString &path)
     for(size_t i = 0; i < 255; i++)
     {
         QRgb rgb = clTab[i];
-        colorArr[i].Red = static_cast<unsigned char>(qRed(rgb));
-        colorArr[i].Green = static_cast<unsigned char>(qGreen(rgb));
-        colorArr[i].Blue = static_cast<unsigned char>(qBlue(rgb));
+        colorArr[i].Red     = static_cast<unsigned char>(qRed(rgb));
+        colorArr[i].Green   = static_cast<unsigned char>(qGreen(rgb));
+        colorArr[i].Blue    = static_cast<unsigned char>(qBlue(rgb));
     }
 
     cmo->Colors = colorArr.data();
@@ -158,14 +158,6 @@ bool Graphics::toGif(QImage &img, QString &path)
 
         byteArr += tarQImg.width();
         byteArr += ((tarQImg.width() % 4) != 0 ? 4 - (tarQImg.width() % 4) : 0);
-    }
-
-    if(errcode != GIF_OK)
-    {
-        GifFreeMapObject(cmo);
-        EGifCloseFile(t, &errcode);
-        std::cout << "GIF error 4\n";
-        return false;
     }
 
     GifFreeMapObject(cmo);
