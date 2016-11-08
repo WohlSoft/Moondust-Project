@@ -69,6 +69,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
         break;
     }
 
+    texId = 0;
     z_index = 0.0L;
     m_slippery_surface = false;
     _parentSection = NULL;

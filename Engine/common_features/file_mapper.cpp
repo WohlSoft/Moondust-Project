@@ -31,28 +31,31 @@
 #endif
 
 PGE_FileMapper::PGE_FileMapper() :
-    #ifdef _WIN32
-        m_File(NULL),m_Map(NULL),m_Address(NULL),
-    #endif
-        data(NULL),size(0)
+#ifdef _WIN32
+    m_File(NULL), m_Map(NULL), m_Address(NULL),
+#endif
+    data(NULL), size(0)
 {}
 
-PGE_FileMapper::PGE_FileMapper(std::string file)
+PGE_FileMapper::PGE_FileMapper(std::string file):
+#ifdef _WIN32
+    m_File(NULL), m_Map(NULL), m_Address(NULL),
+#endif
+    data(NULL), size(0)
 {
     open_file(file);
 }
 
 PGE_FileMapper::PGE_FileMapper(const PGE_FileMapper &fm) :
-    #ifdef _WIN32
-        m_File(NULL),m_Map(NULL),m_Address(NULL),
-    #endif
-        data(NULL),size(0)
+#ifdef _WIN32
+    m_File(NULL), m_Map(NULL), m_Address(NULL),
+#endif
+    data(NULL), size(0)
 {
     if(fm.data)
-    {
         open_file(fm.m_path);
-    }
-    m_error=fm.m_error;
+
+    m_error = fm.m_error;
 }
 
 bool PGE_FileMapper::open_file(std::string path)
@@ -62,70 +65,73 @@ bool PGE_FileMapper::open_file(std::string path)
     int     m_fd;
     m_fd = open(path.c_str(), O_RDONLY);
 
-    if(m_fd == -1 )
-    {
+    if(m_fd == -1)
         return false;
-    }
 
     if(fstat(m_fd, &sb) == -1)
     {
-        m_error="Failed to take state of file "+path;
+        close(m_fd);
+        m_error = "Failed to take state of file " + path;
         return false;
     }
 
-    if(!S_ISREG (sb.st_mode))
+    if(!S_ISREG(sb.st_mode))
     {
-        m_error=path+" is not a file";
+        close(m_fd);
+        m_error = path + " is not a file";
         return false;
     }
 
-    data = mmap(0, sb.st_size, PROT_READ, MAP_SHARED, m_fd, 0);
+    data = mmap(0, static_cast<size_t>(sb.st_size), PROT_READ, MAP_SHARED, m_fd, 0);
 
-    if(data == MAP_FAILED)
+    if(data == reinterpret_cast<void *>(-1))
     {
-        m_error="Failed to map file "+path;
+        close(m_fd);
+        m_error = "Failed to map file " + path;
         return false;
     }
 
-    if(close(m_fd) ==-1 )
+    if(close(m_fd) == -1)
     {
-        m_error="fd is not closed validely "+path;
+        m_error = "fd is not closed validely " + path;
         return false;
     }
-    size = sb.st_size;
+
+    size = static_cast<PGEFileManSize>(sb.st_size);
 #elif _WIN32
     std::wstring wpath;
     charsets_utils::UTF8Str_To_WStr(wpath, path);
     m_File = CreateFileW(wpath.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (m_File == INVALID_HANDLE_VALUE)
+
+    if(m_File == INVALID_HANDLE_VALUE)
     {
-        m_error="Failed to open file "+path;
+        m_error = "Failed to open file " + path;
         return false;
     }
 
     size = GetFileSize(m_File, NULL);
-
     m_Map = CreateFileMappingW(m_File, NULL, PAGE_READONLY, 0, 0, NULL);
-    if( m_Map == NULL )
+
+    if(m_Map == NULL)
     {
         CloseHandle(m_File);
-        m_error="Failed to map file "+path;
+        m_error = "Failed to map file " + path;
         return false;
     }
 
     m_Address = MapViewOfFile(m_Map, FILE_MAP_READ, 0, 0, size);
+
     if(m_Address == NULL)
     {
         CloseHandle(m_Map);
         CloseHandle(m_File);
-        m_error="Failed to take map address for a file "+path;
+        m_error = "Failed to take map address for a file " + path;
         return false;
     }
 
     data = m_Address;
 #endif
-
-    m_path=path;
+    m_path = path;
     return true;
 }
 
@@ -133,43 +139,61 @@ bool PGE_FileMapper::close_file()
 {
     if(data)
     {
-        #if defined(__unix__) || defined(__APPLE__)
-        if(munmap(data, size)==-1)
+#if defined(__unix__) || defined(__APPLE__)
+
+        if(munmap(data, static_cast<size_t>(size)) == -1)
         {
-            m_error="Fail to unmap";
+            m_error = "Fail to unmap";
             return false;
         }
-        #elif _WIN32
-        if (m_Address != NULL)
+
+#elif _WIN32
+
+        if(m_Address != NULL)
         {
-            try{ UnmapViewOfFile(m_Address); } catch(void * /*e*/) {}
-            m_Address=NULL;
+            try
+            {
+                UnmapViewOfFile(m_Address);
+            }
+            catch(void * /*e*/) {}
+
+            m_Address = NULL;
         }
 
-        if (m_Map != NULL)
+        if(m_Map != NULL)
         {
-            try{ CloseHandle(m_Map); } catch(void * /*e*/) {}
-            m_Map=NULL;
+            try
+            {
+                CloseHandle(m_Map);
+            }
+            catch(void * /*e*/) {}
+
+            m_Map = NULL;
         }
 
-        if (m_File != INVALID_HANDLE_VALUE)
+        if(m_File != INVALID_HANDLE_VALUE)
         {
-            try{ CloseHandle(m_File);} catch(void* /*e*/) {}
+            try
+            {
+                CloseHandle(m_File);
+            }
+            catch(void * /*e*/) {}
+
             m_File = NULL;
         }
-        #endif
+
+#endif
         m_path.clear();
         data = NULL;
     }
+
     return true;
 }
 
 PGE_FileMapper::~PGE_FileMapper()
 {
     if(data)
-    {
         close_file();
-    }
 }
 
 std::string PGE_FileMapper::error()

@@ -28,6 +28,7 @@ LVL_Bgo::LVL_Bgo(LevelScene *_parent) : PGE_Phys_Object(_parent)
     data = FileFormats::CreateLvlBgo();
     animated = false;
     animator_ID = 0;
+    setup = nullptr;
     _isInited = false;
 }
 

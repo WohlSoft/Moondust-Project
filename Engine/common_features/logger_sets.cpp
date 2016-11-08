@@ -268,45 +268,27 @@ void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
         if(m_logLevel < PGE_LogLevel::Debug)
             return;
 
+        txt = QString("Debug: %1").arg(msg);
         break;
 
     case PGE_LogLevel::Warning:
         if(m_logLevel < PGE_LogLevel::Warning)
             return;
 
+        txt = QString("Warning: %1").arg(msg);
         break;
 
     case PGE_LogLevel::Critical:
         if(m_logLevel < PGE_LogLevel::Critical)
             return;
 
+        txt = QString("Critical: %1").arg(msg);
         break;
 
     case PGE_LogLevel::Fatal:
         if(m_logLevel < PGE_LogLevel::Fatal)
             return;
 
-        break;
-
-    case PGE_LogLevel::NoLog:
-        return;
-    }
-
-    switch(type)
-    {
-    case PGE_LogLevel::Debug:
-        txt = QString("Debug: %1").arg(msg);
-        break;
-
-    case PGE_LogLevel::Warning:
-        txt = QString("Warning: %1").arg(msg);
-        break;
-
-    case PGE_LogLevel::Critical:
-        txt = QString("Critical: %1").arg(msg);
-        break;
-
-    case PGE_LogLevel::Fatal:
         txt = QString("Fatal: %1").arg(msg);
         break;
 
@@ -344,7 +326,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
         case QtFatalMsg:
             qCritical() << "<FATAL ERROR> " << msg;
             break;
-#if QT_VERSION >= 050500
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
 
         case QtInfoMsg:
             qDebug() << "<INFO> " << msg;

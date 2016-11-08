@@ -23,7 +23,7 @@
 
 PGE_Rect::PGE_Rect()
 {
-    setRect(0,0,0,0);
+    setRect(0, 0, 0, 0);
 }
 
 PGE_Rect::PGE_Rect(int x, int y, int w, int h)
@@ -31,24 +31,14 @@ PGE_Rect::PGE_Rect(int x, int y, int w, int h)
     setRect(x, y,  w, h);
 }
 
-PGE_Rect::PGE_Rect(const PGE_Rect &r)
-{
-    _x = r._x;
-    _y = r._y;
-    _w = r._w;
-    _h = r._h;
-    _r = r._r;
-    _b = r._b;
-}
-
 PGE_Rect::PGE_Rect(const PGE_RectF &r)
 {
-    _x = r._x;
-    _y = r._y;
-    _w = r._w;
-    _h = r._h;
-    _r = r._r;
-    _b = r._b;
+    m_x = static_cast<int>(r.m_x);
+    m_y = static_cast<int>(r.m_y);
+    m_w = static_cast<int>(r.m_w);
+    m_h = static_cast<int>(r.m_h);
+    m_r = static_cast<int>(r.m_r);
+    m_b = static_cast<int>(r.m_b);
 }
 
 PGE_Rect::~PGE_Rect()
@@ -56,89 +46,89 @@ PGE_Rect::~PGE_Rect()
 
 void PGE_Rect::setRect(int x, int y, int w, int h)
 {
-    _x=x;
-    _y=y;
-    _w=w;
-    _h=h;
-    _r=_x+_w;
-    _b=_y+_h;
+    m_x = x;
+    m_y = y;
+    m_w = w;
+    m_h = h;
+    m_r = m_x + m_w;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::setPos(int x, int y)
 {
-    _x=x;
-    _y=y;
-    _r=_x+_w;
-    _b=_y+_h;
+    m_x = x;
+    m_y = y;
+    m_r = m_x + m_w;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::setSize(int w, int h)
 {
-    _w=w;
-    _h=h;
-    _r=_x+_w;
-    _b=_y+_h;
+    m_w = w;
+    m_h = h;
+    m_r = m_x + m_w;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::setLeft(int l)
 {
-    _x=l;
-    _w=_r-_x;
+    m_x = l;
+    m_w = m_r - m_x;
 }
 
 void PGE_Rect::setRight(int r)
 {
-    _r=r;
-    _w=_r-_x;
+    m_r = r;
+    m_w = m_r - m_x;
 }
 
 void PGE_Rect::setTop(int t)
 {
-    _y=t;
-    _h=_b-_y;
+    m_y = t;
+    m_h = m_b - m_y;
 }
 
 void PGE_Rect::setBottom(int b)
 {
-    _b=b;
-    _h=_b-_y;
+    m_b = b;
+    m_h = m_b - m_y;
 }
 
 
 void PGE_Rect::setX(int x)
 {
-    _x=x;
-    _r=_x+_w;
+    m_x = x;
+    m_r = m_x + m_w;
 }
 
 void PGE_Rect::setY(int y)
 {
-    _y=y;
-    _b=_y+_h;
+    m_y = y;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::setWidth(int w)
 {
-    _w=w;
-    _r=_x+_w;
+    m_w = w;
+    m_r = m_x + m_w;
 }
 
 void PGE_Rect::setHeight(int h)
 {
-    _h=h;
-    _b=_y+_h;
+    m_h = h;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::addX(int x)
 {
-    _x += x;
-    _r = _x+_w;
+    m_x += x;
+    m_r = m_x + m_w;
 }
 
 void PGE_Rect::addY(int y)
 {
-    _y += y;
-    _b = _y+_h;
+    m_y += y;
+    m_b = m_y + m_h;
 }
 
 void PGE_Rect::setTopLeft(PGE_Point p)
@@ -193,97 +183,112 @@ void PGE_Rect::setBottomLeft(int l, int b)
 
 int PGE_Rect::x()
 {
-    return _x;
+    return m_x;
 }
 
 int PGE_Rect::y()
 {
-    return _y;
+    return m_y;
 }
 
 int PGE_Rect::left()
 {
-    return _x;
+    return m_x;
 }
 
 int PGE_Rect::top()
 {
-    return _y;
+    return m_y;
 }
 
 int PGE_Rect::bottom()
 {
-    return _b;
+    return m_b;
 }
 
 int PGE_Rect::right()
 {
-    return _r;
+    return m_r;
 }
 
 int PGE_Rect::width()
 {
-    return _w;
+    return m_w;
 }
 
 int PGE_Rect::height()
 {
-    return _h;
+    return m_h;
 }
 
 PGE_Point PGE_Rect::center()
 {
-    return PGE_Point(_x+_w/2, _y+_h/2);
+    return PGE_Point(m_x + (m_w / 2), m_y + (m_h / 2));
 }
 
 PGE_Size PGE_Rect::size()
 {
-    return PGE_Size(_w, _h);
+    return PGE_Size(m_w, m_h);
 }
 
 int PGE_Rect::centerX()
 {
-    return _x+_w/2.0;
+    return static_cast<int>(m_x + (m_w / 2));
 }
 
 int PGE_Rect::centerY()
 {
-    return _y+_h/2.0;
+    return static_cast<int>(m_y + (m_h / 2));
 }
 
 bool PGE_Rect::collidePoint(int x, int y)
 {
-    if(x<_x) return false;
-    if(y<_y) return false;
-    if(x>_r) return false;
-    if(y>_b) return false;
+    if(x < m_x) return false;
+
+    if(y < m_y) return false;
+
+    if(x > m_r) return false;
+
+    if(y > m_b) return false;
+
     return true;
 }
 
 bool PGE_Rect::collideRect(int x, int y, int w, int h)
 {
-    if((x+w) <_x) return false;
-    if((y+h) <_y) return false;
-    if( x > _r) return false;
-    if( y > _b) return false;
+    if((x + w) < m_x) return false;
+
+    if((y + h) < m_y) return false;
+
+    if(x > m_r) return false;
+
+    if(y > m_b) return false;
+
     return true;
 }
 
 bool PGE_Rect::collideRect(PGE_Rect &rect)
 {
-    if(rect._r<_x) return false;
-    if(rect._b<_y) return false;
-    if(rect._x>_r) return false;
-    if(rect._y>_b) return false;
+    if(rect.m_r < m_x) return false;
+
+    if(rect.m_b < m_y) return false;
+
+    if(rect.m_x > m_r) return false;
+
+    if(rect.m_y > m_b) return false;
+
     return true;
 }
 
 bool PGE_Rect::collideRect(PGE_RectF &rect)
 {
-    if((int)rect._r<_x) return false;
-    if((int)rect._b<_y) return false;
-    if((int)rect._x>_r) return false;
-    if((int)rect._y>_b) return false;
+    if(static_cast<int>(rect.m_r) < m_x) return false;
+
+    if(static_cast<int>(rect.m_b) < m_y) return false;
+
+    if(static_cast<int>(rect.m_x) > m_r) return false;
+
+    if(static_cast<int>(rect.m_y) > m_b) return false;
+
     return true;
 }
-

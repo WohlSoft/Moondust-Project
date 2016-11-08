@@ -9,25 +9,24 @@ ConfPacksRepos::ConfPacksRepos(QWidget *parent) :
     ui(new Ui::ConfPacksRepos)
 {
     ui->setupUi(this);
-    lockAdd=false;
-
-
+    lockAdd = false;
     clearList();
-    for(int i=0; i<cpacks_reposList.size(); i++)
+
+    for(int i = 0; i < cpacks_reposList.size(); i++)
         addItemToList(cpacks_reposList[i]);
 }
 
 void ConfPacksRepos::addItemToList(ConfigPackRepo &rp)
 {
-    lockAdd=true;
-    int itemFlags = (Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsUserCheckable|Qt::ItemIsSelectable);
+    lockAdd = true;
+    int itemFlags = (Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable);
     QListWidgetItem *x = new QListWidgetItem(ui->repoList);
     x->setText(rp.url);
-    x->setCheckState(rp.enabled?Qt::Checked:Qt::Unchecked);
-    x->setFlags((Qt::ItemFlag)itemFlags);
-    x->setData(Qt::UserRole, QVariant::fromValue<void* >(&rp));
+    x->setCheckState(rp.enabled ? Qt::Checked : Qt::Unchecked);
+    x->setFlags(static_cast<Qt::ItemFlag>(itemFlags));
+    x->setData(Qt::UserRole, QVariant::fromValue<void * >(&rp));
     ui->repoList->addItem(x);
-    lockAdd=false;
+    lockAdd = false;
 }
 
 
@@ -40,51 +39,61 @@ ConfPacksRepos::~ConfPacksRepos()
 
 void ConfPacksRepos::on_add_clicked()
 {
-    bool ok=false;
-    tryAgain:
-    QString url=QInputDialog::getText(this, tr("Add repository"), tr("Please enter repository URL"), QLineEdit::Normal, QString(), &ok);
+    bool ok = false;
+tryAgain:
+    QString url = QInputDialog::getText(this, tr("Add repository"), tr("Please enter repository URL"), QLineEdit::Normal, QString(), &ok);
+
     if(!ok) return;
+
     foreach(ConfigPackRepo rp, cpacks_reposList)
     {
-        if(rp.url==url)
+        if(rp.url == url)
         {
             QMessageBox::warning(this, tr("Repo exist"), tr("This repository already exists in the list.\nPlease try again!"), QMessageBox::Ok);
             goto tryAgain;
         }
     }
+
     ConfigPackRepo rp;
-    rp.url=url;
-    rp.enabled=true;
+    rp.url = url;
+    rp.enabled = true;
     cpacks_reposList.push_back(rp);
     addItemToList(cpacks_reposList.last());
 }
 
 void ConfPacksRepos::on_checkRepo_clicked()
-{
-
-}
+{}
 
 void ConfPacksRepos::on_remove_clicked()
 {
-    QList<QListWidgetItem*> itms = ui->repoList->selectedItems();
+    QList<QListWidgetItem *> itms = ui->repoList->selectedItems();
+
     if(itms.isEmpty()) return;
-    if(QMessageBox::question(this, tr("Remove repository"), tr("Are you want to remove selected repository from list?"), QMessageBox::Yes|QMessageBox::No)!=QMessageBox::Yes)
+
+    if(QMessageBox::question(this, tr("Remove repository"), tr("Are you want to remove selected repository from list?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         return;
 
-    ConfigPackRepo rp=*(ConfigPackRepo*)itms.first()->data(Qt::UserRole).value<void*>();
-    for(int i=0;i<cpacks_reposList.size(); i++)
-        if(cpacks_reposList[i].url==rp.url)
+    ConfigPackRepo *rpP = reinterpret_cast<ConfigPackRepo *>(itms.first()->data(Qt::UserRole).value<void *>());
+    Q_ASSERT(rpP);
+    ConfigPackRepo rp = *rpP;
+
+    if(!rpP) return;
+
+    for(int i = 0; i < cpacks_reposList.size(); i++)
+        if(cpacks_reposList[i].url == rp.url)
         {
             cpacks_reposList.removeAt(i);
             break;
         }
+
     delete itms.first();
 }
 
 void ConfPacksRepos::clearList()
 {
-    QList<QListWidgetItem*> items = ui->repoList->findItems("*", Qt::MatchWildcard);
-    foreach(QListWidgetItem*it, items)
+    QList<QListWidgetItem *> items = ui->repoList->findItems("*", Qt::MatchWildcard);
+
+    foreach(QListWidgetItem *it, items)
         delete it;
 }
 
@@ -92,12 +101,17 @@ void ConfPacksRepos::clearList()
 void ConfPacksRepos::on_repoList_itemChanged(QListWidgetItem *item)
 {
     if(lockAdd) return;
+
     if(!item) return;
+
     if(item->data(Qt::UserRole).isNull()) return;
-    ConfigPackRepo*rpp = (ConfigPackRepo*)item->data(Qt::UserRole).value<void*>();
-    Q_ASSERT(rpp && "Item pointer is null!");
-    if(!rpp) return;
-    ConfigPackRepo &rp = *rpp;
-    rp.url=item->text();
-    rp.enabled=(item->checkState()==Qt::Checked);
+
+    ConfigPackRepo *rpP = reinterpret_cast<ConfigPackRepo *>(item->data(Qt::UserRole).value<void *>());
+    Q_ASSERT(rpP && "Item pointer is null!");
+
+    if(!rpP) return;
+
+    ConfigPackRepo &rp = *rpP;
+    rp.url = item->text();
+    rp.enabled = (item->checkState() == Qt::Checked);
 }

@@ -38,29 +38,18 @@ TEMPLATE = app
 
 include($$PWD/../_common/strip_garbage.pri)
 
+# Dependent libraries
+include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
+include($$PWD/../_Libs/giflib/giflib.pri)
+
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 RC_FILE = _resources/lazyfix_tool.rc
 
 SOURCES += \
-    LazyFixTool.cpp \
-    ../_Libs/giflib/dgif_lib.c \
-    ../_Libs/giflib/egif_lib.c \
-    ../_Libs/giflib/gif_err.c \
-    ../_Libs/giflib/gif_font.c \
-    ../_Libs/giflib/gif_hash.c \
-    ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c \
-    ../_Libs/EasyBMP/EasyBMP.cpp
+    LazyFixTool.cpp
 
 HEADERS += \
-    ../_Libs/giflib/gif_hash.h \
-    ../_Libs/giflib/gif_lib.h \
-    ../_Libs/giflib/gif_lib_private.h \
-    ../_Libs/EasyBMP/EasyBMP.h \
-    ../_Libs/EasyBMP/EasyBMP_BMP.h \
-    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
-    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
     version.h
 
 RESOURCES += \

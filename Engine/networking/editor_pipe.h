@@ -1,57 +1,47 @@
 #ifndef EDITOR_PIPE_H
 #define EDITOR_PIPE_H
 
-#include <QThread>
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL_thread.h>
 #include <QVector>
+#include <atomic>
 #include <mutex>
 #include <PGE_File_Formats/file_formats.h>
 
-class EditorPipe_std : public QThread
+class EditorPipe
 {
-    Q_OBJECT
-public:
-    EditorPipe_std();
-    void run();
-signals:
-    void msg(QString m);
-public slots:
-    void sendMessage(QString msg);
-private:
-    QTextStream m_input;
-    QTextStream m_output;
-};
+        friend class EditorPipe_std;
+        SDL_Thread *m_thread;
+        bool        m_thread_isAlive;
+    public:
+        EditorPipe();
+        ~EditorPipe();
+        void shut();
+        bool        m_isWorking;
 
-class EditorPipe : public QObject
-{
-    Q_OBJECT
-public:
-    EditorPipe();
-    ~EditorPipe();
-    void shut();
-    bool isWorking;
+        static int run(void *self);
+        void start();
+        void stop();
 
-                               // SEND_LVLX: /some/path/to/level file\n\n
-    QString accepted_lvl_path; // Send to client the "READY\n\n" before accent raw data
-    bool do_acceptLevelData;
-    QString accepted_lvl_raw;  // accept any raw data before will be accepted '\n\n'
-    bool do_parseLevelData;
-    LevelData accepted_lvl;    // When accepted PARSE_LVLX\n\n, parse data and call signal
-    bool levelIsLoad();
-    bool sendToEditor(QString command);
+        // SEND_LVLX: /some/path/to/level file\n\n
+        QString     m_accepted_lvl_path; // Send to client the "READY\n\n" before accent raw data
+        bool        m_doAcceptLevelData;
+        QString     m_acceptedRawData;  // accept any raw data before will be accepted '\n\n'
+        bool        m_doParseLevelData;
+        LevelData   m_acceptedLevel;    // When accepted PARSE_LVLX\n\n, parse data and call signal
 
-private:
-    bool        m_levelAccepted;
-    std::mutex  m_levelAccepted_lock;
+        bool levelIsLoad();
 
-signals:
-    void sendMessage(QString msg);
-    void openFile(QString path);
+        void sendMessage(const QString &msg);
+        void sendMessage(const std::string &in);
+        void sendMessage(const char *in);
 
-private slots:
-    void icomingData(QString in);
+    private:
+        std::atomic_bool    m_levelAccepted;
+        std::mutex          m_levelAccepted_lock;
 
-private:
-    EditorPipe_std msgr;
+    private slots:
+        void icomingData(std::string &in);
 };
 
 #endif // EDITOR_PIPE_H

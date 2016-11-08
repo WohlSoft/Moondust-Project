@@ -3,10 +3,7 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include "png2gifs_converter.h"
-extern "C"{
-    #include "../_Libs/giflib/gif_lib.h"
-}
-
+#include <giflib.hpp>
 
 bool removeSource=false;
 
@@ -57,43 +54,55 @@ bool toGif(QImage& img, QString& path)
 
     EGifSetGifVersion(t, true);
 
-    GifColorType* colorArr = new GifColorType[256];
+    std::vector<GifColorType> colorArrV;
+    colorArrV.resize(256);
+    GifColorType* colorArr = colorArrV.data();
     ColorMapObject* cmo = GifMakeMapObject(256, colorArr);
 
     bool unfinished = false;
     QImage tarQImg(img.width(), img.height(), QImage::Format_Indexed8);
     QVector<QRgb> table;
-    for(int y = 0; y < img.height(); y++){
-        for(int x = 0; x < img.width(); x++){
-            if(table.size() >= 256){
+    for(int y = 0; y < img.height(); y++)
+    {
+        for(int x = 0; x < img.width(); x++)
+        {
+            if(table.size() >= 256)
+            {
                 unfinished = true;
                 break;
             }
             QRgb pix;
-            if(!table.contains(pix = img.pixel(x,y))){
+            if(!table.contains(pix = img.pixel(x,y)))
+            {
                 table.push_back(pix);
                 tarQImg.setColor(tarQImg.colorCount(), pix);
             }
-            tarQImg.setPixel(x,y,table.indexOf(pix));
+            tarQImg.setPixel(x, y, static_cast<uint>(table.indexOf(pix)));
         }
-        if(table.size() >= 256){
+        if(table.size() >= 256)
+        {
             unfinished = true;
             break;
         }
     }
 
-    if(unfinished){
+    if(unfinished)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "Unfinished\n";
         return false;
     }
 
 
-    for(int l = tarQImg.colorCount(); l < 256; l++){
+    for(int l = tarQImg.colorCount(); l < 256; l++)
+    {
         tarQImg.setColor(l,0);
     }
 
-    if(tarQImg.colorTable().size() != 256){
+    if(tarQImg.colorTable().size() != 256)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "A lot of colors\n";
         return false;
@@ -101,23 +110,28 @@ bool toGif(QImage& img, QString& path)
 
     QVector<QRgb> clTab = tarQImg.colorTable();
 
-    for(int i = 0; i < 255; i++){
+    for(int i = 0; i < 255; i++)
+    {
         QRgb rgb = clTab[i];
-        colorArr[i].Red = qRed(rgb);
-        colorArr[i].Green = qGreen(rgb);
-        colorArr[i].Blue = qBlue(rgb);
+        colorArr[i].Red     = static_cast<GifByteType>(qRed(rgb));
+        colorArr[i].Green   = static_cast<GifByteType>(qGreen(rgb));
+        colorArr[i].Blue    = static_cast<GifByteType>(qBlue(rgb));
     }
     cmo->Colors = colorArr;
 
     errcode = EGifPutScreenDesc(t, img.width(), img.height(), 256, 0, cmo);
-    if(errcode != GIF_OK){
+    if(errcode != GIF_OK)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "EGifPutScreenDesc error 1\n";
         return false;
     }
 
     errcode = EGifPutImageDesc(t, 0, 0, img.width(), img.height(), false, 0);
-    if(errcode != GIF_OK){
+    if(errcode != GIF_OK)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "EGifPutImageDesc error 2\n";
         return false;
@@ -126,9 +140,12 @@ bool toGif(QImage& img, QString& path)
     //gen byte array
     GifByteType* byteArr = tarQImg.bits();
 
-    for(int h = 0; h < tarQImg.height(); h++){
+    for(int h = 0; h < tarQImg.height(); h++)
+    {
         errcode = EGifPutLine(t, byteArr, tarQImg.width());
-        if(errcode != GIF_OK){
+        if(errcode != GIF_OK)
+        {
+            GifFreeMapObject(cmo);
             EGifCloseFile(t, &errcode);
             QTextStream(stdout)  << "EGifPutLine error 3\n";
             return false;
@@ -138,10 +155,7 @@ bool toGif(QImage& img, QString& path)
         byteArr += ((tarQImg.width() % 4)!=0 ? 4 - (tarQImg.width() % 4) : 0);
     }
 
-    if(errcode != GIF_OK){
-        QTextStream(stdout)  << "GIF error 4\n";
-        return false;
-    }
+    GifFreeMapObject(cmo);
     EGifCloseFile(t, &errcode);
 
     return true;
@@ -149,8 +163,7 @@ bool toGif(QImage& img, QString& path)
 
 QImage loadQImage(QString file)
 {
-    QImage image = QImage(file);
-    return image;
+    return QImage(file);
 }
 
 

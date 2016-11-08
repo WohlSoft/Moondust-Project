@@ -51,20 +51,17 @@ QMAKE_CFLAGS += -Wno-sign-compare
 
 include($$PWD/../_common/strip_garbage.pri)
 
-SOURCES += main.cpp\
+# Dependent libraries
+include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
+include($$PWD/../_Libs/giflib/giflib.pri)
+
+SOURCES += \
+    main.cpp\
     calibrationmain.cpp \
     frame_matrix/matrix.cpp \
     about/about.cpp \
     animator/animate.cpp \
     animator/animationedit.cpp \
-    ../_Libs/EasyBMP/EasyBMP.cpp \
-    ../_Libs/giflib/dgif_lib.c \
-    ../_Libs/giflib/egif_lib.c \
-    ../_Libs/giflib/gif_err.c \
-    ../_Libs/giflib/gif_font.c \
-    ../_Libs/giflib/gif_hash.c \
-    ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c \
     main/files_io.cpp \
     main/globals.cpp \
     main/graphics.cpp \
@@ -74,20 +71,14 @@ SOURCES += main.cpp\
     animator/AnimationScene.cpp \
     main/app_path.cpp
 
-HEADERS  += calibrationmain.h \
+HEADERS  += \
+    calibrationmain.h \
     frame_matrix/matrix.h \
     about/about.h \
     animator/aniFrames.h \
     animator/animate.h \
     animator/animationedit.h \
     animator/AnimationScene.h \
-    ../_Libs/EasyBMP/EasyBMP.h \
-    ../_Libs/EasyBMP/EasyBMP_BMP.h \
-    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
-    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    ../_Libs/giflib/gif_hash.h \
-    ../_Libs/giflib/gif_lib.h \
-    ../_Libs/giflib/gif_lib_private.h \
     main/globals.h \
     main/graphics.h \
     version.h \
@@ -95,7 +86,8 @@ HEADERS  += calibrationmain.h \
     main/mw.h \
     main/app_path.h
 
-FORMS    += calibrationmain.ui \
+FORMS    += \
+    calibrationmain.ui \
     about/about.ui \
     animator/animate.ui \
     animator/animationedit.ui \

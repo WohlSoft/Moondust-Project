@@ -38,14 +38,17 @@ LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
     offset_y = 0.0;
     m_isHidden = false;
     m_destroyed = false;
+    setup = nullptr;
+    hitDirection = up;
     fadeOffset = 0;
     targetOffset = 0;
     fade_step = 0;
     fadeSpeed = 0;
+    manual_ticks = 0.0;
     taskToTransform = -1;
     taskToTransform_t = 0;
-    transformedFromBlockID = -1;
-    transformedFromNpcID = -1;
+    transformedFromBlockID = -1ul;
+    transformedFromNpcID = -1ul;
     _isInited = false;
 }
 
@@ -58,7 +61,7 @@ void LVL_Block::init()
     if(_isInited) return;
 
     _scene->layers.registerItem(data.layer, this);
-    transformTo_x(signed(data.id));
+    transformTo_x(data.id);
     _isInited = true;
     m_momentum.saveOld();
 }
@@ -110,15 +113,17 @@ void LVL_Block::transformTo(unsigned long id, int type)
 
 void LVL_Block::transformTo_x(unsigned long id)
 {
-    obj_block *newSetup = NULL;
+    obj_block *newSetup = nullptr;
 
     if(_isInited)
     {
-        if(data.id == unsigned(labs(id))) return;
+        if(data.id == id)
+            return;
 
-        if(!ConfigManager::lvl_block_indexes.contains(int(id))) return;
+        if(!ConfigManager::lvl_block_indexes.contains(id))
+            return;
 
-        newSetup = &ConfigManager::lvl_block_indexes[int(id)];
+        newSetup = &ConfigManager::lvl_block_indexes[id];
 
         //Remove registration of switch block
         if(setup->setup.switch_Block &&
@@ -128,12 +133,12 @@ void LVL_Block::transformTo_x(unsigned long id)
                 _scene->switch_blocks[setup->setup.switch_ID].removeAll(this);
         }
 
-        transformedFromBlockID = int(data.id);//Remember transform source
+        transformedFromBlockID = data.id;//Remember transform source
     }
     else
-        newSetup = &ConfigManager::lvl_block_indexes[int(data.id)];
+        newSetup = &ConfigManager::lvl_block_indexes[data.id];
 
-    data.id = unsigned(id);
+    data.id = id;
     setup = newSetup;
 
     if(setup->setup.sizable)
@@ -281,7 +286,7 @@ void LVL_Block::transformTo_x(unsigned long id)
         if(!_scene->switch_blocks.contains(setup->setup.switch_ID))
             _scene->switch_blocks[setup->setup.switch_ID].clear();
 
-        _scene->switch_blocks[static_cast<int>(setup->setup.switch_ID)].push_back(this);
+        _scene->switch_blocks[static_cast<unsigned int>(setup->setup.switch_ID)].push_back(this);
 
         //Fill switch states until it will be fited to defined SwitchID
         while(static_cast<unsigned int>(_scene->switch_states.size()) <= setup->setup.switch_ID)
@@ -582,7 +587,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         if((!setup->setup.bounce) && (!setup->setup.switch_Button))
         {
             if(data.npc_id == 0)
-                transformTo(long(setup->setup.transfororm_on_hit_into), 2);
+                transformTo(static_cast<unsigned long>(setup->setup.transfororm_on_hit_into), 2);
         }
 
         if(!_scene->player_states.isEmpty())
@@ -644,9 +649,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         playHitSnd = true;
 
         //NPC!
-        if(ConfigManager::lvl_npc_indexes.contains(int(data.npc_id)))
+        if(ConfigManager::lvl_npc_indexes.contains(static_cast<unsigned long>(data.npc_id)))
         {
-            obj_npc &npcSet = ConfigManager::lvl_npc_indexes[int(data.npc_id)];
+            obj_npc &npcSet = ConfigManager::lvl_npc_indexes[static_cast<unsigned long>(data.npc_id)];
 
             if(npcSet.block_spawn_sound)
                 PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
@@ -654,7 +659,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             doFade = true;
 
             if((!setup->setup.bounce) && (!setup->setup.switch_Button))
-                transformTo(long(setup->setup.transfororm_on_hit_into), 2);
+                transformTo(static_cast<unsigned long>(setup->setup.transfororm_on_hit_into), 2);
 
             LevelNPC npcDef = FileFormats::CreateLvlNpc();
             npcDef.id = unsigned(data.npc_id);
@@ -694,7 +699,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(setup->setup.hitable)
     {
         triggerEvent = true;
-        transformTo(long(setup->setup.spawn_obj_id), setup->setup.spawn_obj);
+        transformTo(setup->setup.spawn_obj_id, setup->setup.spawn_obj);
         doFade = true;
         playHitSnd = !m_destroyed;
     }

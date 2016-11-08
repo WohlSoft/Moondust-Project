@@ -285,7 +285,6 @@ bool ConfigManager::loadPlayableCharacters()
                 pstate.width = setup.value("default-width", 24).toInt();
                 pstate.event_script = setup.value("events", QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
                 QString sprite_settings = setup.value("sprite-settings", QString("%2-%1.ini").arg(i).arg(splayer.sprite_folder)).toString();
-                pstate.sprite_setup.init(splayer.matrix_width, splayer.matrix_height);
 
                 if(pstate.sprite_setup.load(config_dir + "characters/" + sprite_settings))
                 {

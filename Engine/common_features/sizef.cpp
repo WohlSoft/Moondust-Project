@@ -24,22 +24,16 @@ PGE_SizeF::PGE_SizeF()
     setSize(0, 0);
 }
 
-PGE_SizeF::PGE_SizeF(const PGE_SizeF &p)
-{
-    _w=p._w;
-    _h=p._h;
-}
-
 PGE_SizeF::PGE_SizeF(const PGE_Size &p)
 {
-    _w=p._w;
-    _h=p._h;
+    m_w = static_cast<double>(p.m_w);
+    m_h = static_cast<double>(p.m_h);
 }
 
 PGE_SizeF::PGE_SizeF(double w, double h)
 {
-    _w=w;
-    _h=h;
+    m_w = w;
+    m_h = h;
 }
 
 PGE_SizeF::~PGE_SizeF()
@@ -47,32 +41,31 @@ PGE_SizeF::~PGE_SizeF()
 
 void PGE_SizeF::setSize(double w, double h)
 {
-    _w=w;
-    _h=h;
+    m_w = w;
+    m_h = h;
 }
 
 void PGE_SizeF::setWidth(double w)
 {
-    _w=w;
+    m_w = w;
 }
 
 void PGE_SizeF::setHeight(double h)
 {
-    _h=h;
+    m_h = h;
 }
 
 bool PGE_SizeF::isNull()
 {
-    return ((_w==0)&&(_h==0));
+    return ((m_w == 0.0) && (m_h == 0.0));
 }
 
 double PGE_SizeF::w()
 {
-    return _w;
+    return m_w;
 }
 
 double PGE_SizeF::h()
 {
-    return _h;
+    return m_h;
 }
-

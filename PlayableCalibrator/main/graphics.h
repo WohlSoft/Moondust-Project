@@ -21,11 +21,8 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include "../../_Libs/EasyBMP/EasyBMP.h"
-extern "C"
-{
-    #include "../../_Libs/giflib/gif_lib.h"
-}
+#include <EasyBMP.h>
+#include <giflib.hpp>
 
 #include <QFile>
 #include <QImage>

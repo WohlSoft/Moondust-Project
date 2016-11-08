@@ -21,74 +21,60 @@
 #include <graphics/gl_renderer.h>
 
 WorldScene_Portrait::WorldScene_Portrait():
-    posX(0),
-    posY(0),
-    posX_render(0),
-    posY_render(0),
-    setup(ConfigManager::playable_characters[1]),
-    state_cur(ConfigManager::playable_characters[1].states[1]),
-    frameW(0),
-    frameH(0)
+    m_setup(ConfigManager::playable_characters[1]),
+    m_state_cur(ConfigManager::playable_characters[1].states[1])
 {}
 
 WorldScene_Portrait::WorldScene_Portrait(
     unsigned long CharacterID,
     unsigned long stateID,
-    int _posX,
-    int _posY,
+    int posX,
+    int posY,
     QString ani,
     int framedelay,
     int dir)
 {
-    posX = _posX;
-    posY = _posY;
-    setup = ConfigManager::playable_characters[CharacterID];
-    state_cur = ConfigManager::playable_characters[CharacterID].states[stateID];
-    posX_render = posX - state_cur.width / 2;
-    posY_render = posY - state_cur.height;
-    frameW = 0;
-    frameH = 0;
-    int tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
-
-    if(tID >= 0)
-    {
-        texture = ConfigManager::level_textures[tID];
-        frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
-        frameH = ConfigManager::level_textures[tID].h / setup.matrix_height;
-    }
-
-    animator.setSize(setup.matrix_width, setup.matrix_height);
-    animator.installAnimationSet(state_cur.sprite_setup);
-    animator.switchAnimation(animator.toEnum(ani), dir, framedelay);
+    init(CharacterID, stateID, posX, posY, ani, framedelay, dir);
 }
-
-WorldScene_Portrait::WorldScene_Portrait(const WorldScene_Portrait &pt):
-    posX(pt.posX),
-    posY(pt.posY),
-    posX_render(pt.posX_render),
-    posY_render(pt.posY_render),
-    setup(pt.setup),
-    state_cur(pt.state_cur),
-    animator(pt.animator),
-    texture(pt.texture),
-    frameW(pt.frameW),
-    frameH(pt.frameH)
-{}
 
 WorldScene_Portrait::~WorldScene_Portrait()
 {}
 
+void WorldScene_Portrait::init(unsigned long CharacterID, unsigned long stateID, int _posX, int _posY, QString ani, int framedelay, int dir)
+{
+    m_posX = _posX;
+    m_posY = _posY;
+    m_setup = ConfigManager::playable_characters[CharacterID];
+    m_state_cur = ConfigManager::playable_characters[CharacterID].states[stateID];
+    m_posX_render = m_posX - m_state_cur.width / 2;
+    m_posY_render = m_posY - m_state_cur.height;
+    m_frameW = 0;
+    m_frameH = 0;
+    int tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
+
+    if(tID >= 0)
+    {
+        m_texture = ConfigManager::level_textures[tID];
+        m_frameW = ConfigManager::level_textures[tID].w / m_setup.matrix_width;
+        m_frameH = ConfigManager::level_textures[tID].h / m_setup.matrix_height;
+    }
+
+    m_animator.setSize(m_setup.matrix_width, m_setup.matrix_height);
+    m_animator.installAnimationSet(m_state_cur.sprite_setup);
+    m_animator.switchAnimation(m_animator.toEnum(ani), dir, framedelay);
+}
+
 void WorldScene_Portrait::render()
 {
-    PGE_RectF tPos = animator.curFrame();
-    PGE_PointF Ofs = animator.curOffset();
+    PGE_RectF tPos = m_animator.curFrame();
+    PGE_PointF Ofs = m_animator.curOffset();
     PGE_RectF player;
-    player.setRect(posX_render - Ofs.x(),
-                   posY_render - Ofs.y(),
-                   frameW,
-                   frameH
+    player.setRect(m_posX_render - Ofs.x(),
+                   m_posY_render - Ofs.y(),
+                   m_frameW,
+                   m_frameH
                   );
-    GlRenderer::renderTexture(&texture,
+    GlRenderer::renderTexture(&m_texture,
                               static_cast<float>(player.x()),
                               static_cast<float>(player.y()),
                               static_cast<float>(player.width()),
@@ -101,5 +87,5 @@ void WorldScene_Portrait::render()
 
 void WorldScene_Portrait::update(double ticks)
 {
-    animator.tickAnimation(ticks);
+    m_animator.tickAnimation(ticks);
 }

@@ -25,7 +25,6 @@
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 
-#include <QtDebug>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -81,11 +80,10 @@ RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
 
 RasterFont::~RasterFont()
 {
-    while(!textures.isEmpty())
-    {
-        GlRenderer::deleteTexture(textures.last());
-        textures.pop_back();
-    }
+    for(PGE_Texture &t : textures)
+        GlRenderer::deleteTexture(t);
+
+    textures.clear();
 }
 
 void RasterFont::loadFont(QString font_ini)
@@ -94,7 +92,7 @@ void RasterFont::loadFont(QString font_ini)
 
     if(!fm_ini.exists())
     {
-        qWarning() << "Can't load font " << font_ini << ": file not exist";
+        pLogWarning("Can't load font %s: file not exist", font_ini.toStdString().c_str());
         return;
     }
 
@@ -151,13 +149,14 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
     if((w <= 0) || (h <= 0))
     {
-        qWarning() << "Wrong width and height values ! " << w << h;
+        pLogWarning("Wrong width and height values! %d x %d",  w, h);
         return;
     }
 
     if(!QFileInfo(root + texFile).exists())
     {
-        qWarning() << "Failed to load font texture! file not exists: " << (root + texFile);
+        pLogWarning("Failed to load font texture! file not exists: %s",
+                    (root + texFile).toStdString().c_str());
         return;
     }
 
@@ -165,7 +164,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
     GlRenderer::loadTextureP(fontTexture, root + texFile);
 
     if(!fontTexture.inited)
-        qWarning() << "Failed to load font texture! Invalid image!";
+        pLogWarning("Failed to load font texture! Invalid image!");
 
     textures.push_back(fontTexture);
     PGE_Texture *loadedTexture = &textures.last();
@@ -508,7 +507,6 @@ void FontManager::quit()
     fontTable_1.clear();
     fontTable_2.clear();
     fonts.clear();
-
     rasterFonts.clear();
 
     if(defaultFont)
@@ -679,7 +677,11 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
         return;
     }
     else
-        printTextTTF(text, x, y, ttf_FontSize, qRgba(Red * 255.0, Green * 255.0, Blue * 255.0, Alpha * 255.0));
+        printTextTTF(text, x, y, ttf_FontSize,
+                     qRgba(static_cast<int>(Red * 255.0f),
+                           static_cast<int>(Green * 255.0f),
+                           static_cast<int>(Blue * 255.0f),
+                           static_cast<int>(Alpha * 255.0f)));
 }
 
 void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb color)

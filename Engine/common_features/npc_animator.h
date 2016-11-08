@@ -32,99 +32,99 @@ typedef std::pair<double, double > AniPos;
 
 class AdvNpcAnimator
 {
-public:
-    AdvNpcAnimator();
-    AdvNpcAnimator(PGE_Texture &sprite, obj_npc &config);
-    void construct(PGE_Texture &sprite, obj_npc &config);
-    ~AdvNpcAnimator();
+    public:
+        AdvNpcAnimator();
+        AdvNpcAnimator(PGE_Texture &sprite, obj_npc &config);
+        void construct(PGE_Texture &sprite, obj_npc &config);
+        ~AdvNpcAnimator();
 
-    AniPos image(int dir, int frame=-1);
-    AniPos wholeImage();
+        AniPos image(int dir, int frame = -1);
+        AniPos wholeImage();
 
-    enum CustomAnimationAlgorithms
-    {
-        ANI_DefaultSequence=0,
-        ANI_FrameJump=1,
-        ANI_CustomSequence=2
-    };
+        enum CustomAnimationAlgorithms
+        {
+            ANI_DefaultSequence = 0,
+            ANI_FrameJump = 1,
+            ANI_CustomSequence = 2
+        };
 
-    void setSequenceL(QList<int> _frames);
-    void setSequenceR(QList<int> _frames);
-    void setSequence(QList<int> _frames);
+        void setSequenceL(QList<int> _frames);
+        void setSequenceR(QList<int> _frames);
+        void setSequence(QList<int> _frames);
 
-    void setFrameL(int y);
-    void setFrameR(int y);
+        void setFrameL(int y);
+        void setFrameR(int y);
 
-    int  frameSpeed();
-    void setFrameSpeed(int ms);
-    void setBidirectional(bool bid);
-    void setDirectedSequence(bool dd);
-    void setOnceMode(bool en);
-    bool animationFinished();
-    PGE_SizeF sizeOfFrame();
+        int  frameSpeed();
+        void setFrameSpeed(int ms);
+        void setBidirectional(bool bid);
+        void setDirectedSequence(bool dd);
+        void setOnceMode(bool en);
+        bool animationFinished();
+        PGE_SizeF sizeOfFrame();
 
-    void start();
-    void stop();
+        void start();
+        void stop();
 
-    void manualTick(double ticks);
+        void manualTick(double ticks);
 
-private:
-    bool isValid;
-    void nextFrame();
-    obj_npc setup;
+    private:
+        bool m_isValid;
+        void nextFrame();
+        obj_npc m_setup;
 
-    PGE_Texture mainImage;
+        PGE_Texture m_mainImage;
 
-    QList<AniPos> frames;
+        QList<AniPos> frames;
 
-    double manual_ticks;
-    bool onceMode;
-    bool _animationFinished;
+        double m_ticks;
+        bool m_onceMode;
+        bool m_animationFinished;
 
-    bool isEnabled;
+        bool m_isEnabled;
 
-    void createAnimationFrames();
+        void createAnimationFrames();
 
-    bool animated;
+        bool m_animated;
 
-    double _frameSpeed;
-    int frameStyle;
+        double m_frameDelay;
+        int m_frameStyle;
 
-    bool aniBiDirect;
-    int frameStep;
+        bool m_aniBiDirect;
+        int m_frameStep;
 
-    bool customAnimate;
-    int customAniAlg; //custom animation algorythm 0 - forward, 1 - frameJump
-    int custom_frameFL;//first left
-    int custom_frameEL;//end left / jump step
-    int custom_frameFR;//first right
-    int custom_frameER;//enf right / jump step
+        bool m_customAnimate;
+        int m_customAniAlg; //custom animation algorythm 0 - forward, 1 - frameJump
+        int m_custom_frameFL;//first left
+        int m_custom_frameEL;//end left / jump step
+        int m_custom_frameFR;//first right
+        int m_custom_frameER;//enf right / jump step
 
-    bool frameSequance;
+        bool m_frameSequance;
 
-    QList<int> frames_listL;     //Current frame srquence
-    QList<int> frames_listR;     //Current frame srquence
+        QList<int> s_framesL;     //Current frame srquence
+        QList<int> s_framesR;     //Current frame srquence
 
-    int framesQ;
-    double frameSize; // size of one frame
-    double frameWidth; // sprite width
-    double frameHeight; //sprite height
+        int m_framesCount;
+        double m_frameHeight; // size of one frame
+        double m_frameWidth; // sprite width
+        double m_spriteHeight; //sprite height
 
-    //Animation alhorithm
-    bool aniDirectL;
-    bool aniDirectR;
+        //Animation alhorithm
+        bool m_aniDirectL;
+        bool m_aniDirectR;
 
-    int CurrentFrameL;
-    int CurrentFrameR;
+        int m_curFrameL_real;
+        int m_curFrameR_real;
 
-    int frameCurrentL;
-    int frameCurrentR;
+        int m_curFrameL_timer;
+        int m_curFrameR_timer;
 
-    int frameFirstL;
-    int frameLastL;
+        int m_frameFirstL;
+        int m_frameLastL;
 
-    int frameFirstR;
-    int frameLastR;
+        int m_frameFirstR;
+        int m_frameLastR;
 
 };
 

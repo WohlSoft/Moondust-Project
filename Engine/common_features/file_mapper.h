@@ -23,15 +23,13 @@
 
 #if defined(__unix__) || defined(__APPLE__)
 #include <sys/types.h>
-    #if defined(__APPLE__)
-        #define PGEFileManSize off_t
-    #elif defined __x86_64__ || !defined __USE_FILE_OFFSET64
-        #define PGEFileManSize __off_t
-    #else
-        #define PGEFileManSize __off64_t
-    #endif
+#if defined(__APPLE__) || defined(__x86_64__) || !defined(__USE_FILE_OFFSET64)
+#define PGEFileManSize off_t
 #else
-    #define PGEFileManSize long
+#define PGEFileManSize off64_t
+#endif
+#else
+#define PGEFileManSize long
 #endif
 
 /*!
@@ -39,61 +37,60 @@
  */
 class PGE_FileMapper
 {
-    #ifdef _WIN32
-    void* m_File;
-    void* m_Map;
-    void* m_Address;
-    #endif
-    //! Full path to opened file
-    std::string m_path;
-    //! Recent occouped error description
-    std::string m_error;
+#ifdef _WIN32
+        void       *m_File;
+        void       *m_Map;
+        void       *m_Address;
+#endif
+        //! Full path to opened file
+        std::string m_path;
+        //! Recent occouped error description
+        std::string m_error;
 
-public:
-    //! Pointer to mapped file data
-    void            *data;
+    public:
+        //! Pointer to mapped file data
+        void           *data;
+        //! Size of mapped file
+        PGEFileManSize  size;
 
-    //! Size of mapped file
-    PGEFileManSize  size;
+        /*!
+         * \brief Constructor
+         */
+        PGE_FileMapper();
 
-    /*!
-     * \brief Constructor
-     */
-    PGE_FileMapper();
+        /*!
+         * \brief Constructor with pre-opened file
+         */
+        PGE_FileMapper(std::string file);
 
-    /*!
-     * \brief Constructor with pre-opened file
-     */
-    PGE_FileMapper(std::string file);
+        /*!
+         * \brief Copy Constructor
+         */
+        PGE_FileMapper(const PGE_FileMapper &fm);
 
-    /*!
-     * \brief Copy Constructor
-     */
-    PGE_FileMapper(const PGE_FileMapper &fm);
+        /*!
+         * \brief Opens file
+         * \param path to file
+         * \return True if success. False if error occouped
+         */
+        bool open_file(std::string path);
 
-    /*!
-     * \brief Opens file
-     * \param path to file
-     * \return True if success. False if error occouped
-     */
-    bool open_file(std::string path);
+        /*!
+         * \brief Closes opened file
+         * \return True if no errors
+         */
+        bool close_file();
 
-    /*!
-     * \brief Closes opened file
-     * \return True if no errors
-     */
-    bool close_file();
+        /*!
+         * \brief Destructor
+         */
 
-    /*!
-     * \brief Destructor
-     */
-
-    virtual ~PGE_FileMapper();
-    /*!
-     * \brief Returns recent occouped error info
-     * \return recent occouped error info
-     */
-    std::string error();
+        virtual ~PGE_FileMapper();
+        /*!
+         * \brief Returns recent occouped error info
+         * \return recent occouped error info
+         */
+        std::string error();
 };
 
 #endif // PGE_FILEMAPPER_H

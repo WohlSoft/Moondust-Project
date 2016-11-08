@@ -36,60 +36,62 @@
 void MainWindow::on_actionReload_triggered()
 {
     if(m_isFileReloading) return;
-    m_isFileReloading=true;
-    BoolReseter rst(&m_isFileReloading); Q_UNUSED(rst);
 
+    m_isFileReloading = true;
+    BoolReseter rst(&m_isFileReloading);
+    Q_UNUSED(rst);
     QString filePath;
     QRect wnGeom;
     int activeWindow = activeChildWindow(LastActiveSubWindow);
 
-    if( activeWindow == 1 )
+    if(activeWindow == 1)
     {
-        LevelEdit* lvlEdit = activeLvlEditWin(LastActiveSubWindow);
+        LevelEdit *lvlEdit = activeLvlEditWin(LastActiveSubWindow);
         LevelData FileData;
         filePath = lvlEdit->curFile;
 
         if(lvlEdit->isUntitled)
         {
             QMessageBox::warning(this, tr("File not saved"),
-            tr("File doesn't saved on disk."), QMessageBox::Ok);
-                return;
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
         }
 
-        if (!QFileInfo(filePath).exists() ) {
+        if(!QFileInfo(filePath).exists())
+        {
             QMessageBox::critical(this, tr("File open error"),
-            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
-                return;
+                                  tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+            return;
         }
 
         if(lvlEdit->LvlData.meta.modified)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
-            if((ret==QMessageBox::Cancel)||(ret==0))
+                                              tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+            if((ret == QMessageBox::Cancel) || (ret == 0))
                 return;
-            else
-              if(ret==QMessageBox::Yes)
+            else if(ret == QMessageBox::Yes)
                 save();
         }
 
         //Open level file
-        if( !FileFormats::OpenLevelFile( filePath, FileData) )
+        if(!FileFormats::OpenLevelFile(filePath, FileData))
         {
             formatErrorMsgBox(filePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;
         }
+
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         lvlEdit->LvlData.meta.modified = false;
-
         //Remember last section ID and positions!
-        int lastSection=0;
+        int lastSection = 0;
         QHash<int, QPair<long, long> > sectionPoss;
         lastSection = lvlEdit->LvlData.CurSection;
         SetCurrentLevelSection(lastSection); //Need to remember position of current section
 
-        for(int i=0; i<lvlEdit->LvlData.sections.size(); i++)
+        for(int i = 0; i < lvlEdit->LvlData.sections.size(); i++)
         {
             LevelSection sct = lvlEdit->LvlData.sections[i];
             sectionPoss[sct.id] = QPair<long, long >(sct.PositionX, sct.PositionY);
@@ -97,36 +99,33 @@ void MainWindow::on_actionReload_triggered()
 
         long posX = lvlEdit->scene->m_viewPort->horizontalScrollBar()->value();
         long posY = lvlEdit->scene->m_viewPort->verticalScrollBar()->value();
-
         lvlEdit->close();//Close old widget without closing of sub-window
-
         //Get geometry of current subwindow
         wnGeom = LastActiveSubWindow->geometry();
         //delete window->widget();
         LevelEdit *chLvlWin = new LevelEdit(this, LastActiveSubWindow);
         connect(chLvlWin, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
         LastActiveSubWindow->setWidget(chLvlWin);
-        GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(chLvlWin->getGraphicsView());
+        GraphicsWorkspace *gr = static_cast<GraphicsWorkspace *>(chLvlWin->getGraphicsView());
         connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
-
         //LastActiveSubWindow->close();
         LevelEdit *child = chLvlWin;//createLvlChild();
         LvlMusPlay::setNoMusic();
         setMusic();
-        if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
+
+        if(static_cast<bool>(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
         {
             child->show();
             LastActiveSubWindow->setGeometry(wnGeom);
             child->updateGeometry();
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
-            LvlMusPlay::musicForceReset=true; //reset musics
+            LvlMusPlay::musicForceReset = true; //reset musics
             updateMenus(LastActiveSubWindow, true);
-
             child->setFocus();
 
             //Restore saved section positions
-            for(int i=0; i<child->LvlData.sections.size(); i++)
+            for(int i = 0; i < child->LvlData.sections.size(); i++)
             {
                 if(sectionPoss.contains(child->LvlData.sections[i].id))
                 {
@@ -137,9 +136,8 @@ void MainWindow::on_actionReload_triggered()
             }
 
             SetCurrentLevelSection(lastSection);
-
-            child->scene->m_viewPort->horizontalScrollBar()->setValue(posX);
-            child->scene->m_viewPort->verticalScrollBar()->setValue(posY);
+            child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
+            child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
 
             if(GlobalSettings::autoPlayMusic)
                 ui->actionPlayMusic->setChecked(true);
@@ -149,47 +147,47 @@ void MainWindow::on_actionReload_triggered()
             LogDebug(">>File loading aborted");
             LogDebug(">>Window showed");
             child->LvlData.meta.modified = false;
-                LogDebug(">>Option set");
+            LogDebug(">>Option set");
             LastActiveSubWindow->close();
-                LogDebug(">>Windows closed");
+            LogDebug(">>Windows closed");
         }
     }
-    else
-    if( activeWindow == 2 )
+    else if(activeWindow == 2)
     {
-        NpcEdit* npcEdit = activeNpcEditWin(LastActiveSubWindow);
+        NpcEdit *npcEdit = activeNpcEditWin(LastActiveSubWindow);
         filePath = npcEdit->curFile;
 
         if(npcEdit->isUntitled)
         {
-                    QMessageBox::warning(this, tr("File not saved"),
-                    tr("File doesn't saved on disk."), QMessageBox::Ok);
-                        return;
+            QMessageBox::warning(this, tr("File not saved"),
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
         }
 
         if(npcEdit->isModyfied)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
-            if((ret==QMessageBox::Cancel)||(ret==0))
+                                              tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+            if((ret == QMessageBox::Cancel) || (ret == 0))
                 return;
-            else
-              if(ret==QMessageBox::Yes)
+            else if(ret == QMessageBox::Yes)
                 save();
         }
 
-//        if (!fileIn.open(QIODevice::ReadOnly)) {
-//        QMessageBox::critical(this, tr("File open error"),
-//        tr("Can't open the file."), QMessageBox::Ok);
-//            return;
-//        }
-
+        //        if (!fileIn.open(QIODevice::ReadOnly)) {
+        //        QMessageBox::critical(this, tr("File open error"),
+        //        tr("Can't open the file."), QMessageBox::Ok);
+        //            return;
+        //        }
         NPCConfigFile FileData;
-        if( !FileFormats::ReadNpcTXTFileF(filePath, FileData) )
+
+        if(!FileFormats::ReadNpcTXTFileF(filePath, FileData))
         {
             QMessageBox::critical(this, QObject::tr("File open error"), tr("Can't read the file"), QMessageBox::Ok);
             return;
         }
+
         wnGeom = LastActiveSubWindow->geometry();
         npcEdit->isModyfied = false;
         npcEdit->close();
@@ -198,49 +196,51 @@ void MainWindow::on_actionReload_triggered()
         NpcEdit *child = new NpcEdit(&configs, LastActiveSubWindow);
         LastActiveSubWindow->setWidget(child);
 
-        if (child->loadFile(filePath, FileData)) {
+        if(child->loadFile(filePath, FileData))
+        {
             statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
             child->show();
             LastActiveSubWindow->setGeometry(wnGeom);
             updateMenus(LastActiveSubWindow, true);
-        } else {
+        }
+        else
+        {
             child->close();
             LastActiveSubWindow->close();
         }
     }
-    else
-    if( activeWindow == 3 )
+    else if(activeWindow == 3)
     {
-        WorldEdit* wldEdit = activeWldEditWin(LastActiveSubWindow);
+        WorldEdit *wldEdit = activeWldEditWin(LastActiveSubWindow);
         WorldData FileData;
         filePath = wldEdit->curFile;
 
         if(wldEdit->isUntitled)
         {
-                    QMessageBox::warning(this, tr("File not saved"),
-                    tr("File doesn't saved on disk."), QMessageBox::Ok);
-                        return;
+            QMessageBox::warning(this, tr("File not saved"),
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
         }
 
-        if (!QFileInfo(filePath).exists() )
+        if(!QFileInfo(filePath).exists())
         {
             QMessageBox::critical(this, tr("File open error"),
-            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
-                return;
+                                  tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+            return;
         }
 
         if(wldEdit->WldData.meta.modified)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
-            if((ret==QMessageBox::Cancel)||(ret==0))
+                                              tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+            if((ret == QMessageBox::Cancel) || (ret == 0))
                 return;
-            else
-              if(ret==QMessageBox::Yes)
+            else if(ret == QMessageBox::Yes)
                 save();
         }
 
-        if( !FileFormats::OpenWorldFile( filePath, FileData ) )
+        if(!FileFormats::OpenWorldFile(filePath, FileData))
         {
             formatErrorMsgBox(filePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
@@ -252,21 +252,18 @@ void MainWindow::on_actionReload_triggered()
         FileData.meta.path = finfo.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         wldEdit->WldData.meta.modified = false;
-
         wnGeom = LastActiveSubWindow->geometry();
         QMdiSubWindow *worldWindow = LastActiveSubWindow;
         long posX = wldEdit->scene->m_viewPort->horizontalScrollBar()->value();
         long posY = wldEdit->scene->m_viewPort->verticalScrollBar()->value();
-
         wldEdit->close();
-
         WorldEdit *child = new WorldEdit(this, worldWindow);
         connect(child, &WorldEdit::forceReload, this, &MainWindow::on_actionReload_triggered);
         worldWindow->setWidget(child);
-        GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
-
+        GraphicsWorkspace *gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
         connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
-        if ( bool(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) )
+
+        if(bool(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
         {
             child->show();
             LastActiveSubWindow->setGeometry(wnGeom);
@@ -274,17 +271,19 @@ void MainWindow::on_actionReload_triggered()
             child->ResetPosition();
             updateMenus(LastActiveSubWindow, true);
             dock_WldSettingsBox->setCurrentWorldSettings();
+
             if(FileData.HubStyledWorld)
             {
                 dock_WldSettingsBox->setVisible(true);
                 dock_WldSettingsBox->raise();
             }
 
-            child->scene->m_viewPort->horizontalScrollBar()->setValue(posX);
-            child->scene->m_viewPort->verticalScrollBar()->setValue(posY);
-
+            child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
+            child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
             statusBar()->showMessage(tr("World map file loaded"), 2000);
-        } else {
+        }
+        else
+        {
             LogDebug(">>File loading aborted");
             //child->show();
             LogDebug(">>Window showed");
@@ -293,10 +292,7 @@ void MainWindow::on_actionReload_triggered()
             LastActiveSubWindow->close();
             LogDebug(">>Windows closed");
         }
-
     }
 
     dock_LvlItemBox->clearFilter();
 }
-
-

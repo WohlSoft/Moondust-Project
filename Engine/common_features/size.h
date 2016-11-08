@@ -22,22 +22,22 @@
 class PGE_SizeF;
 class PGE_Size
 {
-    friend class PGE_SizeF;
-public:
-    PGE_Size();
-    PGE_Size(const PGE_Size &p);
-    PGE_Size(const PGE_SizeF &p);
-    PGE_Size(int w, int h);
-    ~PGE_Size();
-    void setSize(int w, int h);
-    void setWidth(int w);
-    void setHeight(int h);
-    bool isNull();
-    int w();
-    int h();
-private:
-    int _w;
-    int _h;
+        friend class PGE_SizeF;
+    public:
+        PGE_Size();
+        PGE_Size(const PGE_Size &p) = default;
+        PGE_Size(const PGE_SizeF &p);
+        PGE_Size(int w, int h);
+        ~PGE_Size();
+        void setSize(int w, int h);
+        void setWidth(int w);
+        void setHeight(int h);
+        bool isNull();
+        int w();
+        int h();
+    private:
+        int m_w;
+        int m_h;
 };
 
 #endif // PGE_Size_H

@@ -30,141 +30,160 @@ QImage Graphics::setAlphaMask(QImage image, QImage mask)
     QImage target = image;
     QImage newmask = mask;
 
-    if(target.size()!= newmask.size())
-    {
-        newmask = newmask.copy(0,0, target.width(), target.height());
-    }
+    if(target.size() != newmask.size())
+        newmask = newmask.copy(0, 0, target.width(), target.height());
 
     newmask.invertPixels();
-
     target.setAlphaChannel(newmask);
-
     return target;
 }
 
 
-bool Graphics::toGif(QImage& img, QString& path)
+bool Graphics::toGif(QImage &img, QString &path)
 {
     int errcode;
 
     if(QFile(path).exists()) // Remove old file
         QFile::remove(path);
 
-    GifFileType* t = EGifOpenFileName(path.toStdString().c_str(),true, &errcode);
-    if(!t){
+    GifFileType *t = EGifOpenFileName(path.toStdString().c_str(), true, &errcode);
+
+    if(!t)
+    {
         EGifCloseFile(t, &errcode);
         std::cout << "Can't open\n";
         return false;
     }
 
     EGifSetGifVersion(t, true);
-
-    GifColorType* colorArr = new GifColorType[256];
-    ColorMapObject* cmo = GifMakeMapObject(256, colorArr);
-
+    std::vector<GifColorType>colorArr;
+    colorArr.resize(256);
+    ColorMapObject *cmo = GifMakeMapObject(256, colorArr.data());
     bool unfinished = false;
     QImage tarQImg(img.width(), img.height(), QImage::Format_Indexed8);
     QVector<QRgb> table;
-    for(int y = 0; y < img.height(); y++){
-        for(int x = 0; x < img.width(); x++){
-            if(table.size() >= 256){
+
+    for(int y = 0; y < img.height(); y++)
+    {
+        for(int x = 0; x < img.width(); x++)
+        {
+            if(table.size() >= 256)
+            {
                 unfinished = true;
                 break;
             }
+
             QRgb pix;
-            if(!table.contains(pix = img.pixel(x,y))){
+
+            if(!table.contains(pix = img.pixel(x, y)))
+            {
                 table.push_back(pix);
                 tarQImg.setColor(tarQImg.colorCount(), pix);
             }
-            tarQImg.setPixel(x,y,table.indexOf(pix));
+
+            tarQImg.setPixel(x, y, static_cast<uint>(table.indexOf(pix)));
         }
-        if(table.size() >= 256){
+
+        if(table.size() >= 256)
+        {
             unfinished = true;
             break;
         }
     }
 
-    if(unfinished){
+    if(unfinished)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         std::cout << "Unfinished\n";
         return false;
     }
 
+    for(int l = tarQImg.colorCount(); l < 256; l++)
+        tarQImg.setColor(l, 0);
 
-    for(int l = tarQImg.colorCount(); l < 256; l++){
-        tarQImg.setColor(l,0);
-    }
-
-    if(tarQImg.colorTable().size() != 256){
+    if(tarQImg.colorTable().size() != 256)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         std::cout << "A lot of colors\n";
         return false;
     }
 
-    QVector<QRgb> clTab = tarQImg.colorTable();
+    std::vector<QRgb> clTab = tarQImg.colorTable().toStdVector();
 
-    for(int i = 0; i < 255; i++){
+    for(size_t i = 0; i < 255; i++)
+    {
         QRgb rgb = clTab[i];
-        colorArr[i].Red = qRed(rgb);
-        colorArr[i].Green = qGreen(rgb);
-        colorArr[i].Blue = qBlue(rgb);
+        colorArr[i].Red     = static_cast<unsigned char>(qRed(rgb));
+        colorArr[i].Green   = static_cast<unsigned char>(qGreen(rgb));
+        colorArr[i].Blue    = static_cast<unsigned char>(qBlue(rgb));
     }
-    cmo->Colors = colorArr;
 
+    cmo->Colors = colorArr.data();
     errcode = EGifPutScreenDesc(t, img.width(), img.height(), 256, 0, cmo);
-    if(errcode != GIF_OK){
+
+    if(errcode != GIF_OK)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         std::cout << "EGifPutScreenDesc error 1\n";
         return false;
     }
 
     errcode = EGifPutImageDesc(t, 0, 0, img.width(), img.height(), false, 0);
-    if(errcode != GIF_OK){
+
+    if(errcode != GIF_OK)
+    {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         std::cout << "EGifPutImageDesc error 2\n";
         return false;
     }
 
     //gen byte array
-    GifByteType* byteArr = tarQImg.bits();
+    GifByteType *byteArr = tarQImg.bits();
 
-    for(int h = 0; h < tarQImg.height(); h++){
+    for(int h = 0; h < tarQImg.height(); h++)
+    {
         errcode = EGifPutLine(t, byteArr, tarQImg.width());
-        if(errcode != GIF_OK){
+
+        if(errcode != GIF_OK)
+        {
+            GifFreeMapObject(cmo);
             EGifCloseFile(t, &errcode);
             std::cout << "EGifPutLine error 3\n";
             return false;
         }
 
         byteArr += tarQImg.width();
-        byteArr += ((tarQImg.width() % 4)!=0 ? 4 - (tarQImg.width() % 4) : 0);
+        byteArr += ((tarQImg.width() % 4) != 0 ? 4 - (tarQImg.width() % 4) : 0);
     }
 
-    if(errcode != GIF_OK){
-        std::cout << "GIF error 4\n";
-        return false;
-    }
+    GifFreeMapObject(cmo);
     EGifCloseFile(t, &errcode);
-
     return true;
 }
 
 QImage Graphics::fromBMP(QString &file)
 {
     QImage errImg;
-
     BMP tarBMP;
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+
+    if(!tarBMP.ReadFromFile(file.toStdString().c_str()))
+    {
         //WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
         return errImg; //Check if empty with errImg.isNull();
     }
 
-    QImage bmpImg(tarBMP.TellWidth(),tarBMP.TellHeight(),QImage::Format_RGB666);
+    QImage bmpImg(tarBMP.TellWidth(), tarBMP.TellHeight(), QImage::Format_RGB666);
 
-    for(int x = 0; x < tarBMP.TellWidth(); x++){
-        for(int y = 0; y < tarBMP.TellHeight(); y++){
-            RGBApixel pixAt = tarBMP.GetPixel(x,y);
-            bmpImg.setPixel(x,y,qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
+    for(int x = 0; x < tarBMP.TellWidth(); x++)
+    {
+        for(int y = 0; y < tarBMP.TellHeight(); y++)
+        {
+            RGBApixel pixAt = tarBMP.GetPixel(x, y);
+            bmpImg.setPixel(x, y, qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
         }
     }
 
@@ -174,7 +193,9 @@ QImage Graphics::fromBMP(QString &file)
 QImage Graphics::loadQImage(QString file)
 {
     QImage image = QImage(file);
+
     if(image.isNull())
         image = fromBMP(file);
+
     return image;
 }

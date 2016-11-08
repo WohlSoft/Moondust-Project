@@ -28,22 +28,20 @@
 #include <QFileInfo>
 #include "version.h"
 
-#include "../_Libs/EasyBMP/EasyBMP.h"
-extern "C"{
-#include "../_Libs/giflib/gif_lib.h"
-}
+#include <EasyBMP.h>
+#include <giflib.hpp>
 
-bool noBackUp=false;
+bool   noBackUp = false;
 
 QImage setAlphaMask(QImage image, QImage mask);
 QImage setAlphaMask_VB(QImage image, QImage mask);
 
 
-bool toGif(QImage& img, QString& path);
+bool   toGif(QImage& img, QString& path);
 QImage fromBMP(QString &file);
 QImage loadQImage(QString file);
 
-void doMagicIn(QString path, QString q, QString OPath);
+void   doMagicIn(QString path, QString q, QString OPath);
 
 
 QImage setAlphaMask(QImage image, QImage mask)

@@ -17,51 +17,49 @@
  */
 
 #include "intproc.h"
-#include <QtDebug>
+#include <common_features/logger.h>
 
-EditorPipe *    IntProc::editor  = NULL;
-bool            IntProc::enabled = false;
+EditorPipe            *IntProc::editor = nullptr;
+static bool            ipc_enabled = false;
 
-QString         IntProc::state   = "";
-std::mutex      IntProc::state_lock;
+static QString         state;
+static std::mutex      state_lock;
 
-IntProc::ExternalCommands   IntProc::command = IntProc::MsgBox;
+static IntProc::ExternalCommands        cmd_recentType = IntProc::MsgBox;
 
-std::deque<QString> IntProc::cmd_queue;
-std::mutex          IntProc::cmd_mutex;
-
-IntProc::IntProc(QObject *parent) :
-    QObject(parent)
-{
-    editor = NULL;
-}
+static std::deque<IntProc::cmdEntry>    cmd_queue;
+static std::mutex                       cmd_mutex;
 
 void IntProc::init()
 {
-    qDebug()<<"IntProc constructing...";
+    pLogDebug("IntProc constructing...");
     editor = new EditorPipe();
-    editor->isWorking = true;
-
-    qDebug()<<"IntProc started!";
-    enabled=true;
+    editor->m_isWorking = true;
+    pLogDebug("IntProc started!");
+    ipc_enabled = true;
 }
-
 
 void IntProc::quit()
 {
-    if(editor!=NULL)
+    if(editor != nullptr)
     {
-        editor->isWorking=false;
+        editor->m_isWorking = false;
         editor->shut();
         delete editor;
-        editor = NULL;
-        enabled=false;
     }
+
+    editor  = nullptr;
+    ipc_enabled = false;
+}
+
+bool IntProc::isEnabled()
+{
+    return ipc_enabled;
 }
 
 bool IntProc::isWorking()
 {
-    return (editor!=NULL);
+    return (editor != nullptr);
 }
 
 QString IntProc::getState()
@@ -79,11 +77,35 @@ void IntProc::setState(QString instate)
     state_lock.unlock();
 }
 
-void IntProc::storeCommand(QString in, IntProc::ExternalCommands type)
+void IntProc::storeCommand(const char *cmd, size_t length, IntProc::ExternalCommands type)
 {
     cmd_mutex.lock();
-    cmd_queue.push_back(in.replace("\\n", "\n"));
-    command = type;
+    std::string in;
+    in.reserve(length);
+    bool escape = false;
+
+    for(size_t i = 0; i < length; i++)
+    {
+        const char &c = cmd[i];
+
+        if(escape)
+        {
+            if(c == 'n')
+                in.push_back('\n');
+
+            escape = false;
+        }
+        else if(c == '\\')
+        {
+            escape = true;
+            continue;
+        }
+        else
+            in.push_back(c);
+    }
+
+    cmd_queue.push_back({QString::fromStdString(in), type});
+    cmd_recentType = type;
     cmd_mutex.unlock();
 }
 
@@ -104,17 +126,43 @@ bool IntProc::hasCommand()
 
 IntProc::ExternalCommands IntProc::commandType()
 {
-    return command;
+    return cmd_recentType;
 }
 
 QString IntProc::getCMD()
 {
-    QString tmp = cmd_queue.front();
+    cmdEntry tmp = cmd_queue.front();
     cmd_queue.pop_front();
-    return tmp;
+
+    if(!cmd_queue.empty())
+        cmd_recentType = cmd_queue.front().type;
+
+    return tmp.cmd;
 }
 
-bool IntProc::isEnabled()
+bool IntProc::sendMessage(QString command)
 {
-    return enabled;
+    if(!editor)
+        return false;
+
+    editor->sendMessage(command);
+    return true;
+}
+
+bool IntProc::sendMessageS(std::string command)
+{
+    if(!editor)
+        return false;
+
+    editor->sendMessage(command);
+    return true;
+}
+
+bool IntProc::sendMessage(const char *command)
+{
+    if(!editor)
+        return false;
+
+    editor->sendMessage(command);
+    return true;
 }

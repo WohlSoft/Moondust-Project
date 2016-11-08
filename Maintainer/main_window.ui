@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>334</height>
+    <width>412</width>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,11 +40,11 @@
      <x>10</x>
      <y>100</y>
      <width>391</width>
-     <height>191</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
-    <string>Music conversion</string>
+    <string>Converters</string>
    </property>
    <widget class="QPushButton" name="music_converter_batch">
     <property name="geometry">
@@ -54,6 +54,9 @@
       <width>391</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Convert audio files between various formats and converting sample rates</string>
     </property>
     <property name="text">
      <string>Batch conversion of musics</string>
@@ -68,8 +71,59 @@
       <height>51</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Converts levels and episodes between different formats and tries to fix old files with some damages.</string>
+    </property>
     <property name="text">
      <string>Levels and Episodes format converting/fixing</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="gifs2png_converter">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>120</y>
+      <width>391</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</string>
+    </property>
+    <property name="text">
+     <string>GIFs to PNG converter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="png2gifs_converter">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>170</y>
+      <width>391</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Converts regular PNG graphics into pair of GIF files (frontend and it's mask) compatible with bitblit algorithm (required by SMBX legacy engine).</string>
+    </property>
+    <property name="text">
+     <string>PNG to GIFs converter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pathcase_fixer">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>220</y>
+      <width>391</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</string>
+    </property>
+    <property name="text">
+     <string>Fix case sensitive paths compatibility</string>
     </property>
    </widget>
   </widget>
@@ -77,7 +131,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>300</y>
+     <y>390</y>
      <width>85</width>
      <height>26</height>
     </rect>

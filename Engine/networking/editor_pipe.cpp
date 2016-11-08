@@ -1,45 +1,76 @@
 #include "editor_pipe.h"
 #include <common_features/logger.h>
+#include <common_features/util.h>
 
 #include <QFile>
 #include <QStringList>
 #include <QtDebug>
 #include <QElapsedTimer>
 
+#include <iostream>
+#include <cstdio>
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
 
 /**************************************************************************************************************/
-static QString base64_encode(QString string){
-    QByteArray ba;
-    ba.append(string);
-    return ba.toBase64();
-}
 
-static QString base64_decode(QString string){
-    QByteArray ba;
-    ba.append(string);
-    return QByteArray::fromBase64(ba);
-}
-
-EditorPipe_std::EditorPipe_std() : m_input(stdin, QIODevice::ReadOnly), m_output(stdout, QIODevice::WriteOnly)
+int EditorPipe::run(void *self)
 {
-    m_input.setCodec("UTF-8");
-}
+    EditorPipe &me = *reinterpret_cast<EditorPipe *>(self);
 
-void EditorPipe_std::run()
-{
-    forever
+    while(me.m_thread_isAlive)
     {
-        QString m = m_input.readLine();
-        emit msg(base64_decode(m));
+        std::string buffer;
+        std::string out;
+        std::cin >> buffer;
+
+        if(me.m_thread_isAlive)
+        {
+            util::base64_decode(out, buffer);
+            me.icomingData(out);
+        }
     }
+
+    return 0;
 }
 
-void EditorPipe_std::sendMessage(QString msg)
+void EditorPipe::start()
 {
-    m_output << base64_encode(msg);
-    m_output.flush();
+    std::cin.sync_with_stdio(false);
+    m_thread_isAlive = true;
+    m_thread = SDL_CreateThread(&run, "EditorPipe_std", this);
+}
+
+void EditorPipe::stop()
+{
+    m_thread_isAlive = false;
+    //int status = 0;
+    //SDL_WaitThread(m_thread, &status);
+}
+
+void EditorPipe::sendMessage(const QString &msg)
+{
+    std::string in = msg.toStdString();
+    std::string outO;
+    util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in.c_str()), in.size());
+    std::fprintf(stdout, "%s\n", outO.c_str());
+    std::fflush(stdout);
+}
+
+void EditorPipe::sendMessage(const std::string &in)
+{
+    std::string outO;
+    util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in.c_str()), in.size());
+    std::fprintf(stdout, "%s\n", outO.c_str());
+    std::fflush(stdout);
+}
+
+void EditorPipe::sendMessage(const char *in)
+{
+    std::string outO;
+    util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in), strlen(in));
+    std::fprintf(stdout, "%s\n", outO.c_str());
+    std::fflush(stdout);
 }
 /**************************************************************************************************************/
 
@@ -49,21 +80,19 @@ void EditorPipe_std::sendMessage(QString msg)
  *  Constructor
  */
 
-EditorPipe::EditorPipe() : QObject(NULL)
+EditorPipe::EditorPipe():
+    m_thread(nullptr),
+    m_thread_isAlive(false),
+    m_isWorking(false),
+    m_doAcceptLevelData(false),
+    m_doParseLevelData(false),
+    m_levelAccepted(false)
 {
-    //direct connection is required, because main thread is not processes signal-slots system events
-    connect(&msgr, SIGNAL(msg(QString)),         this,  SLOT(icomingData(QString)), Qt::DirectConnection);
-    connect(this,  SIGNAL(sendMessage(QString)), &msgr, SLOT(sendMessage(QString)));
-    msgr.start();
-
-    qDebug() << "Construct interprocess pipe";
-    do_acceptLevelData=false;
-    do_parseLevelData=false;
-
-    accepted_lvl_raw="";
-    accepted_lvl.meta.ReadFileValid = false;
-    isWorking = false;
-    m_levelAccepted=false;
+    m_acceptedRawData.clear();
+    FileFormats::CreateLevelData(m_acceptedLevel);
+    m_acceptedLevel.meta.ReadFileValid = false;
+    pLogDebug("Construct interprocess pipe...");
+    start();
 }
 
 /**
@@ -72,13 +101,14 @@ EditorPipe::EditorPipe() : QObject(NULL)
  */
 EditorPipe::~EditorPipe()
 {
-    msgr.terminate();
+    pLogDebug("Destroying interprocess pipe...");
+    stop();
 }
 
 void EditorPipe::shut()
 {
-    sendToEditor("CMD:ENGINE_CLOSED");
-    msgr.terminate();
+    sendMessage("CMD:ENGINE_CLOSED");
+    stop();
 }
 
 bool EditorPipe::levelIsLoad()
@@ -90,112 +120,104 @@ bool EditorPipe::levelIsLoad()
     return state;
 }
 
-bool EditorPipe::sendToEditor(QString command)
+void EditorPipe::icomingData(std::string &in)
 {
-    msgr.sendMessage(command);
-    return true;
-}
-
-void EditorPipe::icomingData(QString in)
-{
-    if( ("PARSE_LVLX"==in) || ("OPEN_TEMP_LVLX"==in) )
+    if(("PARSE_LVLX" == in) || ("OPEN_TEMP_LVLX" == in))
     {
-        do_acceptLevelData=false;
-        qDebug() << "LVLX accepting is done";
+        m_doAcceptLevelData = false;
+        pLogDebug("LVLX accepting is done!");
         IntProc::setState("LVLX Accepted, do parsing of LVLX");
     }
 
-    if(do_acceptLevelData)
+    if(m_doAcceptLevelData)
     {
-        accepted_lvl_raw.append(in);
-        qDebug() << "append LVLX data";
+        m_acceptedRawData.append(in.c_str());
+        pLogDebug("Append LVLX data...");
     }
-    else
-    if(in.startsWith("SEND_LVLX: ", Qt::CaseSensitive))
+    else if(in.compare(0, 11, "SEND_LVLX: ") == 0)
     {
         //Delete old cached stuff
-        accepted_lvl_raw.clear();
-        qDebug() << "IN: >>"<< (in.size()>30 ? QString(in).remove(30, in.size()-31) : in);
-        in.remove("SEND_LVLX: ");
-        accepted_lvl_path   = in;
-        do_acceptLevelData  = true;
+        m_acceptedRawData.clear();
+        D_pLogDebug("IN: >> %s",
+                    (in.size() > 30 ?
+                     in.substr(0, 30).c_str() :
+                     in.c_str())
+                   );
+        m_accepted_lvl_path   = QString::fromUtf8(in.c_str() + 11, static_cast<int>(in.size() - 11));//skip "SEND_LVLX: "
+        m_doAcceptLevelData  = true;
         IntProc::setState("Accepted SEND_LVLX");
         sendMessage("READY\n\n");
     }
-    else
-    if(in=="PARSE_LVLX")
+    else if(in.compare("PARSE_LVLX") == 0)
     {
-        qDebug() << "do Parse LVLX: >>"<< in;
-        do_parseLevelData=true;
-        FileFormats::ReadExtendedLvlFileRaw(accepted_lvl_raw, accepted_lvl_path, accepted_lvl);
-        IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
-        qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
-        if(!accepted_lvl.meta.ReadFileValid)
+        pLogDebug("do Parse LVLX: PARSE_LVLX");
+        m_doParseLevelData = true;
+        FileFormats::ReadExtendedLvlFileRaw(m_acceptedRawData, m_accepted_lvl_path, m_acceptedLevel);
+        IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
+        pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
+
+        if(!m_acceptedLevel.meta.ReadFileValid)
         {
-            qDebug()<<"Error reason: "  << accepted_lvl.meta.ERROR_info;
-            qDebug()<<"line number: "   << accepted_lvl.meta.ERROR_linenum;
-            qDebug()<<"line contents: " << accepted_lvl.meta.ERROR_linedata;
-            #ifdef DEBUG_BUILD
-            qDebug()<<"Invalid File data BEGIN >>>>>>>>>>>\n" << accepted_lvl_raw << "\n<<<<<<<<<<<<INVALID File data END";
-            #endif
+            pLogDebug("Error reason:  %s", m_acceptedLevel.meta.ERROR_info.toStdString().c_str());
+            pLogDebug("line number:   %d", m_acceptedLevel.meta.ERROR_linenum);
+            pLogDebug("line contents: %s", m_acceptedLevel.meta.ERROR_linedata.toStdString().c_str());
+            D_pLogDebug("Invalid File data BEGIN >>>>>>>>>>>\n"
+                        "%s"
+                        "\n<<<<<<<<<<<<INVALID File data END",
+                        m_acceptedRawData.toStdString().c_str());
         }
+
         m_levelAccepted_lock.lock();
-        m_levelAccepted=true;
+        m_levelAccepted = true;
         m_levelAccepted_lock.unlock();
     }
-    else
-    if(in=="OPEN_TEMP_LVLX")
+    else if(in.compare("OPEN_TEMP_LVLX") == 0)
     {
-        qDebug() << "do Parse LVLX: >>"<< in;
-        do_parseLevelData=true;
-        QFile temp(accepted_lvl_raw.remove("\n"));
+        pLogDebug("do Parse LVLX: >> OPEN_TEMP_LVLX");
+        m_doParseLevelData = true;
+        QFile temp(m_acceptedRawData.remove("\n"));
+
         //if( FileFormats::ReadExtendedLvlFileF(accepted_lvl_raw.remove("\n"), accepted_lvl) )
-        if(temp.open(QFile::ReadOnly|QFile::Text))
+        if(temp.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream x(&temp);
-            QString raw=x.readAll();
-            FileFormats::ReadExtendedLvlFileRaw(raw, accepted_lvl_path, accepted_lvl);
-            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
-            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
+            QString raw = x.readAll();
+            FileFormats::ReadExtendedLvlFileRaw(raw, m_accepted_lvl_path, m_acceptedLevel);
+            IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
+            pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
         }
         else
         {
-            IntProc::setState(QString("LVLX is valid: %1").arg(accepted_lvl.meta.ReadFileValid));
-            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.meta.ReadFileValid;
-            qDebug()<<"ERROR: Can't open temp file";
-            accepted_lvl.meta.ReadFileValid = false;
+            IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
+            pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
+            pLogDebug("ERROR: Can't open temp file");
+            m_acceptedLevel.meta.ReadFileValid = false;
         }
+
         temp.remove();
         m_levelAccepted_lock.lock();
-        m_levelAccepted=true;
+        m_levelAccepted = true;
         m_levelAccepted_lock.unlock();
     }
-    else
-    if(in.startsWith("PLACEITEM: ", Qt::CaseSensitive))
+    else if(in.compare(0, 11, "PLACEITEM: ") == 0)
     {
-        qDebug() << "Accepted Placing item!";
-        in.remove("PLACEITEM: ");
-        IntProc::storeCommand(in, IntProc::PlaceItem);
+        D_pLogDebug("Accepted Placing item!");
+        IntProc::storeCommand(in.c_str() + 11, in.size() - 11, IntProc::PlaceItem);
     }
-    else
-    if(in.startsWith("MSGBOX: ", Qt::CaseSensitive))
+    else if(in.compare(0, 8, "MSGBOX: ") == 0)
     {
-        qDebug() << "Accepted Message box";
-        in.remove("MSGBOX: ");
-        IntProc::storeCommand(in, IntProc::MsgBox);
+        pLogDebug("Accepted Message box: %s", in.c_str());
+        IntProc::storeCommand(in.c_str() + 8, in.size() - 8, IntProc::MsgBox);
     }
-    else
-    if(in.startsWith("CHEAT: ", Qt::CaseSensitive))
+    else if(in.compare("CHEAT: ") == 0)
     {
-        qDebug() << "Accepted cheat code";
-        in.remove("CHEAT: ");
-        IntProc::storeCommand(in, IntProc::Cheat);
+        pLogDebug("Accepted cheat code: %s", in.c_str());
+        IntProc::storeCommand(in.c_str() + 7, in.size() - 7, IntProc::Cheat);
     }
-    else
-    if(in=="PING")
+    else if(in.compare("PING") == 0)
     {
-        qDebug() << "IN: >>"<< in;
+        D_pLogDebug("IN: >> PING");
         sendMessage("PONG\n\n");
-        qDebug()<< "Ping-Pong!";
+        pLogDebug("Ping-Pong!");
     }
 }

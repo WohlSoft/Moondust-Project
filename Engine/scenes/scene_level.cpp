@@ -76,7 +76,7 @@ LevelScene::LevelScene()
 {
     tree.RemoveAll();
     layers.m_scene = this;
-    events._scene = this;
+    events.m_scene = this;
     data.meta.ReadFileValid = false;
     zCounter = 0.0L;
     /**************************/

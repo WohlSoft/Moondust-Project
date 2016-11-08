@@ -27,33 +27,34 @@ struct LevelData;
 
 class IntEngine: public QObject
 {
-    Q_OBJECT
-public:
-    IntEngine();
-    ~IntEngine();
-    static void init(QProcess *engine_proc);
+        Q_OBJECT
+    public:
+        IntEngine();
+        ~IntEngine();
+        static void init(QProcess *engine_proc);
 
-    static void quit();
-    static bool isWorking();
+        static void quit();
+        static bool isWorking();
 
-    static bool sendCheat(QString _args);
-    static bool sendMessageBox(QString _args);
-    static bool sendItemPlacing(QString _args);
-    static void sendLevelBuffer();
+        static bool sendCheat(QString _args);
+        static bool sendMessageBox(QString _args);
+        static bool sendItemPlacing(QString _args);
+        static void sendLevelBuffer();
 
-    static void setTestLvlBuffer(LevelData &buffer);
+        static void setTestLvlBuffer(LevelData &buffer);
 
-    static bool sendMessage(QString msg);
+        static bool sendMessage(const char *msg);
+        static bool sendMessage(QString &msg);
 
-    static LevelData testBuffer;
-signals:
-    void engineInputMsg(QString msg);
+        static LevelData testBuffer;
+    signals:
+        void engineInputMsg(QString msg);
 
-private slots:
-    void onData();
+    private slots:
+        void onData();
 
-private:
-    static QProcess *engine;
+    private:
+        static QProcess *engine;
 };
 
 #endif // ENGINE_INTPROCINTPROC_H

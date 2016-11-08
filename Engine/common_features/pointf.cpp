@@ -18,15 +18,20 @@
 
 #include "pointf.h"
 #include "point.h"
+#include "maths.h"
 
 PGE_PointF::PGE_PointF(const PGE_Point &p)
 {
-    _x=p._x;
-    _y=p._y;
+    m_x = p.m_x;
+    m_y = p.m_y;
 }
 
-bool operator==(const PGE_PointF& lhs, const PGE_PointF& rhs)
-{return ((lhs._x==rhs._x)&&(lhs._y==rhs._y));}
+bool operator==(const PGE_PointF &lhs, const PGE_PointF &rhs)
+{
+    return (Maths::equals(lhs.m_x, rhs.m_x) && Maths::equals(lhs.m_y, rhs.m_y));
+}
 
-bool operator!=(const PGE_PointF& lhs, const PGE_PointF& rhs)
-{return ((lhs._x!=rhs._x)||(lhs._y!=rhs._y));}
+bool operator!=(const PGE_PointF &lhs, const PGE_PointF &rhs)
+{
+    return (!Maths::equals(lhs.m_x, rhs.m_x) || Maths::equals(lhs.m_y, rhs.m_y));
+}

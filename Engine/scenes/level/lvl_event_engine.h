@@ -25,31 +25,32 @@
 #include <QList>
 #include <QString>
 
-class LVL_EventAction{
-public:
-    LVL_EventAction();
-    LVL_EventAction(const LVL_EventAction& ea);
-    virtual ~LVL_EventAction();
+class LVL_EventAction
+{
+    public:
+        LVL_EventAction();
+        LVL_EventAction(const LVL_EventAction &ea) = default;
+        virtual ~LVL_EventAction();
 
-    QString m_eventName;
-    EventQueue<LVL_EventAction > m_action;
-    double m_timeDelayLeft;
+        QString m_eventName;
+        EventQueue<LVL_EventAction > m_action;
+        double m_timeDelayLeft;
 };
 
 class LevelScene;
 class LVL_EventEngine
 {
-    friend class LevelScene;
-    LevelScene * _scene;
-public:
-    LVL_EventEngine();
-    ~LVL_EventEngine();
-    void addSMBX64Event(LevelSMBX64Event &evt);
-    void processTimers(double tickTime);
-    void triggerEvent(QString event);
+        friend class LevelScene;
+        LevelScene *m_scene;
+    public:
+        LVL_EventEngine();
+        ~LVL_EventEngine();
+        void addSMBX64Event(LevelSMBX64Event &evt);
+        void processTimers(double tickTime);
+        void triggerEvent(QString event);
 
-    QList<QList<LVL_EventAction > > workingEvents;
-    QHash<QString, QList<LVL_EventAction >> events;
+        QList<QList<LVL_EventAction > > workingEvents;
+        QHash<QString, QList<LVL_EventAction >> events;
 };
 
 #endif // LVL_EVENTENGINE_H
