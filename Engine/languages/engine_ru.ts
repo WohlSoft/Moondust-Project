@@ -172,13 +172,13 @@ Fail to start world map
         <location filename="../main.cpp" line="715"/>
         <source>Start level
 %1</source>
-        <translation>Запуск уровняl
+        <translation>Запуск уровня:
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <location filename="../main.cpp" line="717"/>
         <source>Type an exit code (signed integer)</source>
-        <translation>Введие код выхода (знаковое целое)</translation>
+        <translation>Введите код выхода (знаковое целое)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <location filename="../main.cpp" line="892"/>
