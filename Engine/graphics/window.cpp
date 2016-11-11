@@ -180,8 +180,8 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
     GraphicsHelps::initFreeImage();
 #ifdef _WIN32
     FIBITMAP *img[2];
-    img[0] = GraphicsHelps::loadImageRC(":/icon/cat_16.png");
-    img[1] = GraphicsHelps::loadImageRC(":/icon/cat_32.png");
+    img[0] = GraphicsHelps::loadImageRC("cat_16.png");
+    img[1] = GraphicsHelps::loadImageRC("cat_32.png");
 
     if(!GraphicsHelps::setWindowIcon(window, img[0], 16))
     {
@@ -202,9 +202,9 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
 #else//IF _WIN32
     FIBITMAP *img;
 #ifdef Q_OS_MACX
-    img = GraphicsHelps::loadImageRC(":/icon/cat_256.png");
+    img = GraphicsHelps::loadImageRC("cat_256.png");
 #else
-    img = GraphicsHelps::loadImageRC(":/icon/cat_16.png");
+    img = GraphicsHelps::loadImageRC("cat_32.png");
 #endif
 
     if(img)

@@ -1,18 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>cat.icns</file>
-        <file>cat.ico</file>
         <file>engine.rc</file>
-        <file>icon/cat_16.png</file>
-        <file>icon/cat_32.png</file>
-        <file>icon/cat_48.png</file>
-        <file>icon/cat_128.png</file>
-        <file>icon/cat_256.png</file>
-        <file>images/cat_splash.png</file>
-        <file>images/shell.png</file>
-        <file>images/coin.png</file>
         <file>PressStart2P.ttf</file>
-        <file>images/_broken.png</file>
         <file>script/maincore_credits.lua</file>
         <file>script/maincore_level.lua</file>
         <file>script/maincore_title.lua</file>
@@ -20,9 +9,5 @@
         <file>script/player/maincore_player.lua</file>
         <file>script/npcs/maincore_npc.lua</file>
         <file>JosefinSans-Regular.ttf</file>
-        <file>images/scroll_down.png</file>
-        <file>images/scroll_up.png</file>
-        <file>images/selector.png</file>
-        <file>images/cursor.png</file>
     </qresource>
 </RCC>

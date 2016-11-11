@@ -33,6 +33,8 @@
 #include <common_features/file_mapper.h>
 #include <ConfigPackManager/image_size.h>
 
+#include <_resources/resource.h>
+
 #ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
 #define FREEIMAGE_LIB 1
@@ -122,16 +124,13 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     return img;
 }
 
-FIBITMAP *GraphicsHelps::loadImageRC(QString file)
+FIBITMAP *GraphicsHelps::loadImageRC(const char *file)
 {
-    QFile _file(file);
-
-    if(!_file.open(QIODevice::ReadOnly))
-        return NULL;
-
-    QByteArray data = _file.readAll();
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(data.data()),
-                                            static_cast<unsigned int>(data.size()));
+    char *memory = nullptr;
+    size_t fileSize = 0;
+    RES_getMem(file, memory, fileSize);
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(memory),
+                                            static_cast<unsigned int>(fileSize));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato == FIF_UNKNOWN)

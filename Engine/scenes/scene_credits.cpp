@@ -75,7 +75,7 @@ void CreditsScene::init()
     if(!ConfigManager::setup_CreditsScreen.backgroundImg.isEmpty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_CreditsScreen.backgroundImg);
     else
-        GlRenderer::loadTextureP(background, ":/images/cat_splash.png");
+        GlRenderer::loadTextureP(background, ":cat_splash.png");
 
     imgs.clear();
 

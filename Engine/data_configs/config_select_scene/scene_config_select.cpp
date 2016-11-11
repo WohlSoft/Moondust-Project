@@ -54,7 +54,7 @@ ConfigSelectScene::ConfigSelectScene():
     m_waterMarkRect.setSize(s.w(), s.h());
     m_waterMarkColor.setRgba(0.5, 0.5, 1.0, 1.0);
     mousePos.setPoint(-1000, -1000);
-    GlRenderer::loadTextureP(cursor, ":/images/cursor.png");
+    GlRenderer::loadTextureP(cursor, ":cursor.png");
     controller = g_AppSettings.openController(1);
     currentConfig   = "";
     themePack       = "";
@@ -117,13 +117,13 @@ ConfigSelectScene::ConfigSelectScene():
 
         //Default splash image
         if(splash_logo.isEmpty())
-            splash_logo = ":/images/splash_editor.png";
+            splash_logo = ":cat_256.png";
         else
         {
             splash_logo = data_dir + splash_logo;
 
             if(QPixmap(splash_logo).isNull())
-                splash_logo = ":/images/splash_editor.png";
+                splash_logo = ":cat_256.png";
         }
 
         ConfigPackEntry item;

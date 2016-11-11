@@ -71,12 +71,12 @@ void LevelScene::setLoaderAnimation(int speed)
     if(IntProc::isEnabled())
     {
         if(!loading_texture.inited)
-            GlRenderer::loadTextureP(loading_texture, ":/images/coin.png");
+            GlRenderer::loadTextureP(loading_texture, ":coin.png");
     }
     else
     {
         if(!loading_texture.inited)
-            GlRenderer::loadTextureP(loading_texture, ":/images/shell.png");
+            GlRenderer::loadTextureP(loading_texture, ":shell.png");
     }
 
     loading_Ani = new SimpleAnimator(true,

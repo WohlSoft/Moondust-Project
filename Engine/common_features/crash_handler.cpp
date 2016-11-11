@@ -241,6 +241,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 #ifdef _WIN32  //Unsupported signals by Windows
     (void)siginfo;
 #endif
+
     // Find out which signal we're handling
     switch(signal)
     {
@@ -341,6 +342,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
     {
         std::string stack = getStacktrace();
 #ifndef _WIN32  //Unsupported signals by Windows
+
         if(siginfo)
         {
             switch(siginfo->si_code)
@@ -412,6 +414,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                     "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
         std::string stack = getStacktrace();
 #ifndef _WIN32  //Unsupported signals by Windows
+
         if(siginfo)
         {
             switch(siginfo->si_code)
@@ -483,15 +486,15 @@ static void handle_signalWIN32(int signal)
 
 void CrashHandler::initSigs()
 {
+#ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
-
+#endif
 #ifndef _WIN32//Unsupported signals by Windows
     memset(&act, 0, sizeof(struct sigaction));
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = handle_signal;
     act.sa_flags = SA_SIGINFO;
-
     sigaction(SIGHUP,  &act, NULL);
     sigaction(SIGQUIT, &act, NULL);
     sigaction(SIGKILL, &act, NULL);

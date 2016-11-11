@@ -96,8 +96,7 @@ void ConfigManager::buildSoundIndex()
                 if(fileMap.open_file(snd.absPath.toUtf8().data()))
                 {
                     sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data,
-                                                 static_cast<int>(fileMap.size)),
-                                                 static_cast<int>(fileMap.size));
+                                                 static_cast<int>(fileMap.size)), 1);
                     fileMap.close_file();
                 }
 

@@ -288,7 +288,8 @@ SOURCES += \
     scenes/_base/msgbox_queue.cpp \
     data_configs/config_select_scene/scene_config_select.cpp \
     common_features/point_mover.cpp \
-    common_features/logger_sets.cpp
+    common_features/logger_sets.cpp \
+    _resources/resource.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -440,7 +441,8 @@ HEADERS  += \
     scenes/_base/msgbox_queue.h \
     scenes/level/lvl_z_constants.h \
     data_configs/config_select_scene/scene_config_select.h \
-    common_features/point_mover.h
+    common_features/point_mover.h \
+    _resources/resource.h
 
 RESOURCES += \
     _resources/engine.qrc
