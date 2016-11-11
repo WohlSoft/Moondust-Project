@@ -364,13 +364,13 @@ bool IniProcessing::parseFile(const char *filename)
 #ifdef _WIN32
     //Convert UTF8 file path into UTF16 to support non-ASCII paths on Windows
     std::wstring dest;
-    dest.resize(filename);
+    dest.resize(std::strlen(filename));
     int newSize = MultiByteToWideChar(CP_UTF8,
                                       0,
                                       filename,
-                                      std::strlen(filename),
+                                      dest.size(),
                                       (wchar_t *)dest.c_str(),
-                                      source.length());
+                                      dest.size());
     dest.resize(newSize);
     FILE *cFile = _wfopen(dest.c_str(), L"rb");
 #else
