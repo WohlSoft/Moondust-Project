@@ -1,6 +1,5 @@
+#include <cstdio>
 #include <string>
-#include <unordered_map>
-#include <stdio.h>
 #include <vector>
 #include <ini_processing.h>
 
@@ -9,6 +8,13 @@ const char* splash =    "/******************************************************
                         "     Suggested to DONT EDIT THIS\n"
                         "     Edit the _common/res_generator/res_generator.cpp instead\n"
                         " *****************************************************************/\n\n";
+
+struct FileEntry
+{
+    std::string name;
+    std::string path;
+    unsigned long size;
+};
 
 int main(int argc, char**argv)
 {
@@ -28,8 +34,7 @@ int main(int argc, char**argv)
         return 1;
     }
 
-    typedef std::unordered_map<std::string, std::string> filesMap;
-    filesMap files;
+    std::vector<FileEntry> files;
 
     for(unsigned int i=0; i<count; i++)
     {
@@ -40,15 +45,15 @@ int main(int argc, char**argv)
         ini.read("path", path, "");
         ini.endGroup();
 
-        files[name] = folderAt + path;
+        files.push_back({name, folderAt + path, 0});
     }
 
     std::string outH     = folderAt + "resource.h";
     std::string outHdata = folderAt + "resource_data.h";
     std::string outC     = folderAt + "resource.cpp";
-    FILE* outh = fopen(outH.c_str(), "w");
-    FILE* outd = fopen(outHdata.c_str(), "w");
-    FILE* outc = fopen(outC.c_str(), "w");
+    FILE* outh = fopen(outH.c_str(), "wb");
+    FILE* outd = fopen(outHdata.c_str(), "wb");
+    FILE* outc = fopen(outC.c_str(), "wb");
 
     if(!outh || !outd || !outc)
     {
@@ -62,9 +67,6 @@ int main(int argc, char**argv)
 
     unsigned int fileCount = 0;
 
-    std::vector<std::string> fileNames;
-    std::vector<unsigned long> fileSizes;
-
     fprintf(outc,   "#include <stdio.h>\n"
                     "#include <string>\n"
                     "#include \"resource_data.h\"\n"
@@ -77,14 +79,15 @@ int main(int argc, char**argv)
                     "   size_t size;\n"
                     "};\n\n");
 
-    for(filesMap::iterator it = files.begin(); it != files.end(); it++, fileCount++)
+    for(unsigned long i=0; i<files.size(); i++, fileCount++)
     {
+        FileEntry& it = files[i];
         unsigned long fileSize = 0;
-        fprintf(outd, "// %s\nstatic const unsigned char file_%d[] = \n{\n    ", it->first.c_str(), fileCount);
-        FILE* ps = fopen(it->second.c_str(), "rb");
+        fprintf(outd, "// %s\nstatic const unsigned char file_%d[] = \n{\n    ", it.name.c_str(), fileCount);
+        FILE* ps = fopen(it.path.c_str(), "rb");
         if(!ps)
         {
-            printf("FAILED TO OPEN FILE %s", it->second.c_str());
+            printf("FAILED TO OPEN FILE %s", it.path.c_str());
             continue;
         }
         int c;
@@ -102,15 +105,15 @@ int main(int argc, char**argv)
         }
         fprintf(outd, " 0x00");
         fclose(ps);
-        fileSizes.push_back(fileSize);
-        fileNames.push_back(it->first);
+        it.size = fileSize;
         fprintf(outd, "\n};\n\n");
     }
 
     fprintf(outd, "// List of availalbe resource files\nstatic std::unordered_map<std::string, FileEntry> filesMap = \n{\n");
-    for(unsigned long i=0; i<fileSizes.size(); i++)
+    for(unsigned long i=0; i<files.size(); i++, fileCount++)
     {
-        fprintf(outd, "\t{\"%s\",\t{file_%lu,\t%lu}},\n", fileNames[i].c_str(), i, fileSizes[i]);
+        FileEntry& it = files[i];
+        fprintf(outd, "\t{\"%s\",\t{file_%lu,\t%lu}},\n", it.name.c_str(), i, it.size);
     }
     fprintf(outd, "};\n\n\n");
 
