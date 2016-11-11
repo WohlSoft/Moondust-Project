@@ -115,6 +115,7 @@ include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 
 SOURCES += \
+    _resources/resource.cpp \
     main.cpp \
     graphics/graphics.cpp \
     scenes/scene_level.cpp \
@@ -291,6 +292,8 @@ SOURCES += \
     common_features/logger_sets.cpp
 
 HEADERS  += \
+    _resources/resource.h \
+    _resources/resource_data.h \
     graphics/graphics.h \
     scenes/scene_level.h \
     scenes/scene.h \

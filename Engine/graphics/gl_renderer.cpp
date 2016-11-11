@@ -797,7 +797,10 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     // Load the OpenGL texture
     //sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
     if(path[0] == QChar(':'))
-        sourceImage = GraphicsHelps::loadImageRC(path);
+    {
+        path.remove(0, 1);
+        sourceImage = GraphicsHelps::loadImageRC(path.toUtf8().data());
+    }
     else
         sourceImage = GraphicsHelps::loadImage(path);
 

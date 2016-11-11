@@ -122,9 +122,9 @@ struct MenuBoxSetup
 struct MenuSetup
 {
     MenuSetup() :
-        selector(":/images/selector.png"),
-        scrollerUp(":/images/scroll_up.png"),
-        scrollerDown(":/images/scroll_down.png"),
+        selector(":selector.png"),
+        scrollerUp(":scroll_up.png"),
+        scrollerDown(":scroll_down.png"),
         item_height(32),
         font_offset(4),
         font_id(-1)

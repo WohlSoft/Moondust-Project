@@ -101,7 +101,7 @@ bool Render_SW_SDL::uninit()
 
 void Render_SW_SDL::initDummyTexture()
 {
-    FIBITMAP *image = GraphicsHelps::loadImageRC("://images/_broken.png");
+    FIBITMAP *image = GraphicsHelps::loadImageRC("_broken.png");
 
     if(!image)
     {

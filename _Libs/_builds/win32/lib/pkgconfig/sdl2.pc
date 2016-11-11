@@ -2,12 +2,12 @@
 
 prefix=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32
 exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+libdir=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib
+includedir=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/include
 
 Name: sdl2
 Description: Simple DirectMedia Layer is a cross-platform multimedia library designed to provide low level access to audio, keyboard, mouse, joystick, 3D hardware via OpenGL, and 2D video framebuffer.
-Version: 2.0.4
+Version: 2.0.5
 Requires:
 Conflicts:
 Libs: -L${libdir}  -lmingw32 -lSDL2main -lSDL2  -mwindows

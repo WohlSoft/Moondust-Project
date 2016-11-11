@@ -52,7 +52,9 @@ goto quit
 echo.
 echo =========ERROR!!===========
 echo.
+PATH=%OldPATH%
+if "%NoPause%"=="0" pause
+exit /B 1
 :quit
 PATH=%OldPATH%
 if "%NoPause%"=="0" pause
-
