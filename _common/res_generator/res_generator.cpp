@@ -82,7 +82,6 @@ int main(int argc, char**argv)
     for(unsigned long i=0; i<files.size(); i++, fileCount++)
     {
         FileEntry& it = files[i];
-        unsigned long fileSize = 0;
         fprintf(outd, "// %s\nstatic const unsigned char file_%d[] = \n{\n    ", it.name.c_str(), fileCount);
         FILE* ps = fopen(it.path.c_str(), "rb");
         if(!ps)
@@ -92,6 +91,7 @@ int main(int argc, char**argv)
         }
         int c;
         int breaker = 0;
+        unsigned long fileSize = 0;
         while( (c = fgetc(ps)) != -1 )
         {
             fprintf(outd, " 0x%02X,", static_cast<unsigned int>(c));
