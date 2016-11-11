@@ -39,15 +39,25 @@ int main(int argc, char**argv)
         ini.read("name", name, "");
         ini.read("path", path, "");
         ini.endGroup();
+
         files[name] = folderAt + path;
     }
 
-    std::string outH = folderAt + "resource.h";
-    std::string outC = folderAt + "resource.cpp";
+    std::string outH     = folderAt + "resource.h";
+    std::string outHdata = folderAt + "resource_data.h";
+    std::string outC     = folderAt + "resource.cpp";
     FILE* outh = fopen(outH.c_str(), "w");
+    FILE* outd = fopen(outHdata.c_str(), "w");
     FILE* outc = fopen(outC.c_str(), "w");
 
+    if(!outh || !outd || !outc)
+    {
+        printf("CAN'T OPEN FILES FOR WRITE\n");
+        return 1;
+    }
+
     fprintf(outc, "%s", splash);
+    fprintf(outd, "%s", splash);
     fprintf(outh, "%s", splash);
 
     unsigned int fileCount = 0;
@@ -56,17 +66,21 @@ int main(int argc, char**argv)
     std::vector<unsigned long> fileSizes;
 
     fprintf(outc,   "#include <stdio.h>\n"
-                    "#include <unordered_map>\n"
                     "#include <string>\n"
+                    "#include \"resource_data.h\"\n"
                     "#include \"resource.h\"\n"
-                    "\n\n"
-                    "struct FileEntry{ const unsigned char*array; size_t size; };\n"
-                    );
+                    "\n");
+
+    fprintf(outd,   "#include <unordered_map>\n\n"
+                    "struct FileEntry{\n"
+                    "   const unsigned char*array;\n"
+                    "   size_t size;\n"
+                    "};\n\n");
 
     for(filesMap::iterator it = files.begin(); it != files.end(); it++, fileCount++)
     {
         unsigned long fileSize = 0;
-        fprintf(outc, "\n\nstatic const unsigned char file_%d[] = \n{\n", fileCount);
+        fprintf(outd, "// %s\nstatic const unsigned char file_%d[] = \n{\n    ", it->first.c_str(), fileCount);
         FILE* ps = fopen(it->second.c_str(), "rb");
         if(!ps)
         {
@@ -77,37 +91,40 @@ int main(int argc, char**argv)
         int breaker = 0;
         while( (c = fgetc(ps)) != -1 )
         {
-            fprintf(outc, "\t0x%0X,", static_cast<unsigned int>(c));
+            fprintf(outd, " 0x%02X,", static_cast<unsigned int>(c));
             fileSize++;
             breaker++;
-            if(breaker>=20)
+            if(breaker>=10)
             {
-                fprintf(outc, "\n");
+                fprintf(outd, "\n    ");
                 breaker = 0;
             }
         }
+        fprintf(outd, " 0x00");
         fclose(ps);
         fileSizes.push_back(fileSize);
         fileNames.push_back(it->first);
-        fprintf(outc, "\n};\n");
+        fprintf(outd, "\n};\n\n");
     }
 
-    fprintf(outc, "static std::unordered_map<std::string, FileEntry> filesMap = \n{\n");
+    fprintf(outd, "// List of availalbe resource files\nstatic std::unordered_map<std::string, FileEntry> filesMap = \n{\n");
     for(unsigned long i=0; i<fileSizes.size(); i++)
     {
-        fprintf(outc, "\t{\"%s\",\t{file_%lu,\t%lu}},\n", fileNames[i].c_str(), i, fileSizes[i]);
+        fprintf(outd, "\t{\"%s\",\t{file_%lu,\t%lu}},\n", fileNames[i].c_str(), i, fileSizes[i]);
     }
-    fprintf(outc, "};\n\n\n");
+    fprintf(outd, "};\n\n\n");
 
+    /*
     fprintf(outc,   "FILE* RES_open(const char* file)\n{\n"
                     "   std::unordered_map<std::string, FileEntry>::iterator f = filesMap.find(file);\n"
                     "   if(f == filesMap.end())\n"
                     "       return nullptr;\n\n"
                     "   FileEntry& e = f->second;\n"
                     "   return fmemopen(reinterpret_cast<void*>(const_cast<unsigned char*>(e.array)), e.size, \"rb\");\n"
-                    "}\n\n"
+                    "}\n\n");
+    */ //Windows OS is totally sucks because fmemopen() isn't implemented on the kernel
 
-                    "void RES_getMem(const char* file, char* &mem, size_t &size)\n{\n"
+    fprintf(outc,   "void RES_getMem(const char* file, char* &mem, size_t &size)\n{\n"
                     "   std::unordered_map<std::string, FileEntry>::iterator f = filesMap.find(file);\n"
                     "   if(f == filesMap.end())\n"
                     "       throw(\"Resource doesn't exists!\");\n\n"
@@ -117,8 +134,14 @@ int main(int argc, char**argv)
                     "}\n\n");
 
     fprintf(outh, "#include <stdio.h>\n\n");
-    fprintf(outh, "extern FILE* RES_open(const char* file);\n");
-    fprintf(outh, "extern void RES_getMem(const char* file, char* &mem, size_t &size);\n\n");
+    //fprintf(outh, "extern FILE* RES_open(const char* file);\n");
+    fprintf(outh,   "/**\n"
+                    " * @brief Get memory pointer and block size to resource file\n"
+                    " * @param [IN] file name of resource file\n"
+                    " * @param [OUT] mem reference to null pointer\n"
+                    " * @param [OUT] size reference to size variable\n"
+                    " */\n"
+                    "extern void RES_getMem(const char* file, char* &mem, size_t &size);\n\n");
 
     fclose(outh);
     fclose(outc);
