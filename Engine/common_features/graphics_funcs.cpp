@@ -24,13 +24,13 @@
 #include <QSysInfo>
 
 #include "graphics_funcs.h"
+#include "file_mapper.h"
+#include "logger.h"
 
 #ifdef DEBUG_BUILD
-#include <common_features/logger.h>
 #include <QElapsedTimer>
 #endif
 
-#include <common_features/file_mapper.h>
 #include <ConfigPackManager/image_size.h>
 
 #include <_resources/resource.h>
