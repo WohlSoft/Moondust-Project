@@ -75,14 +75,16 @@ int main(int argc, char**argv)
 
     fprintf(outd,   "#include <unordered_map>\n\n"
                     "struct FileEntry{\n"
-                    "   const unsigned char*array;\n"
+                    "   unsigned char*array;\n"
                     "   size_t size;\n"
                     "};\n\n");
 
     for(unsigned long i=0; i<files.size(); i++, fileCount++)
     {
         FileEntry& it = files[i];
-        fprintf(outd, "// %s\nstatic const unsigned char file_%d[] = \n{\n    ", it.name.c_str(), fileCount);
+        fprintf(outd,   "// %s\n"
+                        "static unsigned char file_%d[] =\n"
+                        "{\n    ", it.name.c_str(), fileCount);
         FILE* ps = fopen(it.path.c_str(), "rb");
         if(!ps)
         {
@@ -109,13 +111,15 @@ int main(int argc, char**argv)
         fprintf(outd, "\n};\n\n");
     }
 
-    fprintf(outd, "// List of availalbe resource files\nstatic std::unordered_map<std::string, FileEntry> filesMap = \n{\n");
+    fprintf(outd,   "// List of availalbe resource files\n"
+                    "static std::unordered_map<std::string, FileEntry> filesMap =\n"
+                    "{\n");
     for(unsigned long i=0; i<files.size(); i++, fileCount++)
     {
         FileEntry& it = files[i];
-        fprintf(outd, "\t{\"%s\",\t{file_%lu,\t%lu}},\n", it.name.c_str(), i, it.size);
+        fprintf(outd, "    {\"%s\",\t{file_%lu,%8lu}},\n", it.name.c_str(), i, it.size);
     }
-    fprintf(outd, "};\n\n\n");
+    fprintf(outd, "};\n\n");
 
     /*
     fprintf(outc,   "FILE* RES_open(const char* file)\n{\n"
@@ -127,13 +131,14 @@ int main(int argc, char**argv)
                     "}\n\n");
     */ //Windows OS is totally sucks because fmemopen() isn't implemented on the kernel
 
-    fprintf(outc,   "void RES_getMem(const char* file, char* &mem, size_t &size)\n{\n"
+    fprintf(outc,   "bool RES_getMem(const char* file, unsigned char* &mem, size_t &size)\n{\n"
                     "   std::unordered_map<std::string, FileEntry>::iterator f = filesMap.find(file);\n"
                     "   if(f == filesMap.end())\n"
-                    "       throw(\"Resource doesn't exists!\");\n\n"
+                    "       return false;\n\n"
                     "   FileEntry& e = f->second;\n"
-                    "   mem = const_cast<char*>(reinterpret_cast<const char*>(e.array));\n"
+                    "   mem = e.array;\n"
                     "   size = e.size;\n"
+                    "   return true;\n"
                     "}\n\n");
 
     fprintf(outh, "#include <stdio.h>\n\n");
@@ -144,7 +149,7 @@ int main(int argc, char**argv)
                     " * @param [OUT] mem reference to null pointer\n"
                     " * @param [OUT] size reference to size variable\n"
                     " */\n"
-                    "extern void RES_getMem(const char* file, char* &mem, size_t &size);\n\n");
+                    "extern bool RES_getMem(const char* file, unsigned char* &mem, size_t &size);\n\n");
 
     fclose(outh);
     fclose(outc);

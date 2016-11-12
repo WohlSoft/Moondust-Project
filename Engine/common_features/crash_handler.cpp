@@ -497,7 +497,7 @@ void CrashHandler::initSigs()
     act.sa_flags = SA_SIGINFO;
     sigaction(SIGHUP,  &act, NULL);
     sigaction(SIGQUIT, &act, NULL);
-    sigaction(SIGKILL, &act, NULL);
+    //sigaction(SIGKILL, &act, NULL); This signal is unhandlable
     sigaction(SIGALRM, &act, NULL);
     sigaction(SIGURG,  &act, NULL);
     sigaction(SIGUSR1, &act, NULL);

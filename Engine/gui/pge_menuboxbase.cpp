@@ -103,7 +103,7 @@ void PGE_MenuBoxBase::setParentScene(Scene *_parentScene)
 
 void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
 {
-    switch(type)
+    switch(_type)
     {
     case msg_info:
         bg_color =       QColor(qRgb(0, 0, 0));
