@@ -102,8 +102,6 @@ BuildSDL()
     UnArch $LatestSDL
 
     #--------------Apply some patches--------------
-    #++++Fix random crashes caused by resampler
-    patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.c < ../patches/SDL_audiotypecvt.patch
     #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
     patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
     #----------------------------------------------
@@ -111,7 +109,11 @@ BuildSDL()
     ###########SDL2###########
     echo "=======SDL2========="
     #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
-    $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
+    $Sed -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL/Makefile.in
+    $Sed -i 's/libSDL2-2\.0\.so\.0/libSDL2\.so/g' $LatestSDL/SDL2.spec.in
+    #cd $LatestSDL
+    #autoreconf -vfi
+    #cd ..
     if [[ "$OurOS" != "macos" ]]; then
         #on any other OS'es build via autotools
         BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib'
@@ -127,11 +129,9 @@ BuildSDL()
 
             xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
 
-            if [ $? -eq 0 ]
+            if [ ! $? -eq 0 ]
             then
-              echo "[good]"
-            else
-              errorofbuild
+                errorofbuild
             fi
 
             #move out built framework from "Release" folder
@@ -144,9 +144,6 @@ BuildSDL()
 
         cd ..
     fi
-
-    #apply fix of SDL2 bug (no more needed!)
-    #cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 }
 
 BuildOGG()
