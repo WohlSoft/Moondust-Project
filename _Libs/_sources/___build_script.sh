@@ -100,6 +100,13 @@ BuildSDL()
         #LatestSDL='SDL-afd286e26823'
         UnArch $LatestSDL
 
+        #--------------Apply some patches--------------
+        #++++Fix random crashes caused by resampler
+        patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.c < ../patches/SDL_audiotypecvt.patch
+        #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
+        patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
+        #----------------------------------------------
+
         ###########SDL2###########
         echo "=======SDL2========="
         #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
