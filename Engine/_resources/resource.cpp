@@ -9,14 +9,15 @@
 #include "resource_data.h"
 #include "resource.h"
 
-void RES_getMem(const char* file, char* &mem, size_t &size)
+bool RES_getMem(const char* file, unsigned char* &mem, size_t &size)
 {
    std::unordered_map<std::string, FileEntry>::iterator f = filesMap.find(file);
    if(f == filesMap.end())
-       throw("Resource doesn't exists!");
+       return false;
 
    FileEntry& e = f->second;
-   mem = const_cast<char*>(reinterpret_cast<const char*>(e.array));
+   mem = e.array;
    size = e.size;
+   return true;
 }
 

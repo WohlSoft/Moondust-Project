@@ -24,13 +24,13 @@
 #include <QSysInfo>
 
 #include "graphics_funcs.h"
+#include "file_mapper.h"
+#include "logger.h"
 
 #ifdef DEBUG_BUILD
-#include <common_features/logger.h>
 #include <QElapsedTimer>
 #endif
 
-#include <common_features/file_mapper.h>
 #include <ConfigPackManager/image_size.h>
 
 #include <_resources/resource.h>
@@ -126,27 +126,30 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 
 FIBITMAP *GraphicsHelps::loadImageRC(const char *file)
 {
-    char *memory = nullptr;
+    unsigned char *memory = nullptr;
     size_t fileSize = 0;
-    RES_getMem(file, memory, fileSize);
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(memory),
-                                            static_cast<unsigned int>(fileSize));
+    if(!RES_getMem(file, memory, fileSize))
+    {
+        pLogCritical("Resource file \"%s\" is not found!", file);
+        return nullptr;
+    }
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(memory, static_cast<FI_DWORD>(fileSize));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
 
     if(!img)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *temp;
     temp = FreeImage_ConvertTo32Bits(img);
 
     if(!temp)
-        return NULL;
+        return nullptr;
 
     FreeImage_Unload(img);
     img = temp;

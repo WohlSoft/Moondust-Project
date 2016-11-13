@@ -23,9 +23,9 @@ dependency_libs=''
 weak_library_names=''
 
 # Version information for libogg.
-current=0
-age=0
-revision=0
+current=8
+age=8
+revision=2
 
 # Is this an already installed library?
 installed=yes

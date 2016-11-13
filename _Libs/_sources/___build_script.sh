@@ -35,9 +35,9 @@ errorofbuild()
 #=======================================================================
 
 if [ ! -d SDL ] 
-	then
+then
 	mkdir SDL
-	fi
+fi
 
 cd SDL
 
@@ -48,10 +48,11 @@ UnArch()
 	    then
         printf "tar -xf ../$1.tar.*z* ..."
 	    tar -xf ../$1.tar.*z*
-        if [ $? -eq 0 ]; then
-          printf "OK!\n"
+        if [ $? -eq 0 ]; 
+        then
+            printf "OK!\n"
         else
-          printf "FAILED!\n"
+            printf "FAILED!\n"
         fi
     fi
 }
@@ -66,17 +67,17 @@ BuildSrc()
     ./configure $2  
     if [ $? -eq 0 ]
     then
-      echo "[good]"
+        echo "[good]"
     else
-      errorofbuild
+        errorofbuild
     fi
 
     make
     if [ $? -eq 0 ]
     then
-      echo "[good]"
+        echo "[good]"
     else
-      errorofbuild
+        errorofbuild
     fi
 
     #if [[ "$OurOS" != "macos" ]]; then
@@ -97,112 +98,119 @@ BuildSrc()
 
 BuildSDL()
 {
-        #LatestSDL='SDL-afd286e26823'
-        UnArch $LatestSDL
+    #LatestSDL='SDL-afd286e26823'
+    UnArch $LatestSDL
 
-        ###########SDL2###########
-        echo "=======SDL2========="
-        #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
-        if [[ "$OurOS" != "macos" ]]; then
-            #on any other OS'es build via autotools
-            BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib'
-        else
-            #on Mac OS X build via X-Code
-            cd $LatestSDL
-                UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
-                if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
-                    #Deletion of old builds
-                    rm -Rf $UNIVERSAL_OUTPUTFOLDER
-                fi
-                mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
+    #--------------Apply some patches--------------
+    #++++Fix random crashes caused by resampler
+    patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.c < ../patches/SDL_audiotypecvt.patch
+    #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
+    patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
+    #----------------------------------------------
 
-                xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
+    ###########SDL2###########
+    echo "=======SDL2========="
+    #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
+    $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
+    if [[ "$OurOS" != "macos" ]]; then
+        #on any other OS'es build via autotools
+        BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib'
+    else
+        #on Mac OS X build via X-Code
+        cd $LatestSDL
+            UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
+            if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
+                #Deletion of old builds
+                rm -Rf $UNIVERSAL_OUTPUTFOLDER
+            fi
+            mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
 
-                if [ $? -eq 0 ]
-                then
-                  echo "[good]"
-                else
-                  errorofbuild
-                fi
+            xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
 
-                #move out built framework from "Release" folder
-                mv -f $InstallTo/frameworks/Release/SDL2.framework $InstallTo/frameworks/
-                rm -Rf $InstallTo/frameworks/Release
+            if [ $? -eq 0 ]
+            then
+              echo "[good]"
+            else
+              errorofbuild
+            fi
 
-                #make RIGHT headers organization in the SDL Framework
-                mkdir -p -- ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
-                mv ${InstallTo}/frameworks/SDL2.framework/Headers/*.h ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
+            #move out built framework from "Release" folder
+            mv -f $InstallTo/frameworks/Release/SDL2.framework $InstallTo/frameworks/
+            rm -Rf $InstallTo/frameworks/Release
 
-            cd ..
-        fi
+            #make RIGHT headers organization in the SDL Framework
+            mkdir -p -- ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
+            mv ${InstallTo}/frameworks/SDL2.framework/Headers/*.h ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
 
-        #apply fix of SDL2 bug (no more needed!)
-        #cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
+        cd ..
+    fi
+
+    #apply fix of SDL2 bug (no more needed!)
+    #cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 }
 
 BuildOGG()
 {
-        UnArch 'libogg-1.3.2'
+    UnArch 'libogg-1.3.2'
 
-        ###########OGG###########
-        echo "=========OGG==========="
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
-        BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    ###########OGG###########
+    echo "=========OGG==========="
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am' # NO NEED FOR STATIC VERSION
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
+    BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 
-        #if [[ "$OurOS" == "macos" ]]; then
-            #install libOGG
-        #    cp -a ./libogg-1.3.2/src/.libs/*.dylib $installTo/lib
-        #    cp -a ./libogg-1.3.2/src/.libs/*.a $installTo/lib
-        #    cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
-        #    mkdir -p $InstallTo/include/ogg
-        #    cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
-        #    cd ./libogg-1.3.2/src
-        #        bash ../libtool --mode=install ginstall -c libogg.la $InstallTo/lib
-        #        gmkdir -p $InstallTo/share/aclocal
-        #        ginstall -c -m 644 ogg.m4 $InstallTo/share/aclocal
-        #        gmkdir -p $InstallTo/lib/pkgconfig
-        #        ginstall -c -m 644 ogg.pc $InstallTo/lib/pkgconfig
-        #    cd ../../
-        #fi
+    #if [[ "$OurOS" == "macos" ]]; then
+        #install libOGG
+    #    cp -a ./libogg-1.3.2/src/.libs/*.dylib $installTo/lib
+    #    cp -a ./libogg-1.3.2/src/.libs/*.a $installTo/lib
+    #    cp -a ./libogg-1.3.2/src/.libs/*.la* $installTo/lib
+    #    mkdir -p $InstallTo/include/ogg
+    #    cp -a ./libogg-1.3.2/include/ogg/*.h $InstallTo/include/ogg
+    #    cd ./libogg-1.3.2/src
+    #        bash ../libtool --mode=install ginstall -c libogg.la $InstallTo/lib
+    #        gmkdir -p $InstallTo/share/aclocal
+    #        ginstall -c -m 644 ogg.m4 $InstallTo/share/aclocal
+    #        gmkdir -p $InstallTo/lib/pkgconfig
+    #        ginstall -c -m 644 ogg.pc $InstallTo/lib/pkgconfig
+    #    cd ../../
+    #fi
 }
 
 BuildVORBIS()
 {
-        UnArch 'libvorbis-1.3.4'
+    UnArch 'libvorbis-1.3.5'
 
-        ###########VORBIS###########
-        echo "============VORBIS=========="
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
-        BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --with-ogg='$InstallTo' --disable-oggtest --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    ###########VORBIS###########
+    echo "============VORBIS=========="
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.5/lib/Makefile.am' # NO NEED FOR STATIC VERSION
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.5/lib/Makefile.in'
+    BuildSrc 'libvorbis-1.3.5' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib --with-ogg='$InstallTo' --disable-oggtest --enable-static=yes --enable-shared=no CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildFLAC()
 {
-        UnArch 'flac-1.3.1'
+    UnArch 'flac-1.3.1'
 
-        #Debug output of environment (because sometimes flac failing to build because "missing of automake-1.14")
-        #... however, second attempt to run build is successful
-        set > env_flac.txt
-        unset COLUMNS
-        unset LINES
-        if [[ "$OurOS" == "linux" ]]; then
-            #Re-generate automake script to compare with version on current machine
-            cd "flac-1.3.1"
-            aclocal
-            automake --foreign --add-missing
-            autoconf
-            cd ..
-        fi
-        ###########FLAC###########
-        echo "==========FLAC========="
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
-        $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
-        $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
-        $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
-        BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --disable-cpplibs --enable-static=yes --enable-shared=no --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    #Debug output of environment (because sometimes flac failing to build because "missing of automake-1.14")
+    #... however, second attempt to run build is successful
+    set > env_flac.txt
+    unset COLUMNS
+    unset LINES
+    if [[ "$OurOS" == "linux" ]]; then
+        #Re-generate automake script to compare with version on current machine
+        cd "flac-1.3.1"
+        aclocal
+        automake --foreign --add-missing
+        autoconf
+        cd ..
+    fi
+    ###########FLAC###########
+    echo "==========FLAC========="
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in' # NO NEED FOR STATIC VERSION
+    # $Sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
+    # $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
+    # $Sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
+    BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --disable-cpplibs --enable-static=yes --enable-shared=no --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 #BuildMikMOD()
@@ -216,105 +224,119 @@ BuildFLAC()
 
 BuildMODPLUG()
 {
-        UnArch 'libmodplug-0.8.8.5'
+    UnArch 'libmodplug-0.8.8.5'
 
-        ###########MODPLUG###########
-        echo "==========MODPLUG=========="
-        $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
-        $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
-        BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    ###########MODPLUG###########
+    echo "==========MODPLUG=========="
+    $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
+    $Sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
+    BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
 }
 
 BuildMAD()
 {
-        UnArch 'libmad-0.15.1b'
+    UnArch 'libmad-0.15.1b'
 
-        ###########LibMAD###########
-        echo "==========LibMAD============"
-        #cp ../libmad-0.15.1b.patched_osx_configure.txt .
-        #cp ../libmad-0.15.1b.patched_configure.txt .
-        cd libmad-0.15.1b
-        if [ ! -f ./configure_before_patch ]
-        then
-	        mv ./configure ./configure_before_patch
-            if [[ "$OurOS" == "macos" ]]; then
-                cp ../../libmad-0.15.1b.patched_osx_configure.txt ./configure
-            else
-                cp ../../libmad-0.15.1b.patched_configure.txt ./configure
-            fi
-            chmod u+x ./configure
-        fi
-        cd ..
-        $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
-        $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
+    ###########LibMAD###########
+    echo "==========LibMAD============"
+    #cp ../libmad-0.15.1b.patched_osx_configure.txt .
+    #cp ../libmad-0.15.1b.patched_configure.txt .
+    cd libmad-0.15.1b
+    if [ ! -f ./configure_before_patch ]
+    then
+        mv ./configure ./configure_before_patch
         if [[ "$OurOS" == "macos" ]]; then
-            BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+            cp ../../libmad-0.15.1b.patched_osx_configure.txt ./configure
         else
-            BuildSrc 'libmad-0.15.1b' '--enable-shared=no --enable-static=yes --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
+            cp ../../libmad-0.15.1b.patched_configure.txt ./configure
         fi
+        chmod u+x ./configure
+    fi
+    cd ..
+    $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
+    $Sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
+    if [[ "$OurOS" == "macos" ]]; then
+        BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --enable-shared=no --enable-static=yes --prefix='$InstallTo' CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    else
+        BuildSrc 'libmad-0.15.1b' '--enable-shared=no --enable-static=yes --prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC'
+    fi
+}
+
+BuildMADrepak()
+{
+    UnArch 'libmad-0.15.1b-repack'
+    ###########LibMAD###########
+    echo "==========LibMAD============"
+    cd libmad-0.15.1b-repack
+    ./build.sh $InstallTo
+    if [ ! $? -eq 0 ];
+    then
+        errorofbuild
+    fi
+    cd ..
 }
 
 BuildFluidSynth()
 {
-        UnArch 'fluidsynth-1.1.6'
-        ###########MODPLUG###########
-        echo "==========FLUIDSYNTH=========="
-        #Build minimalistic FluidSynth version to just generate raw audio output to handle in the SDL Mixer X
-        #./configure CFLAGS=-fPIC --prefix=/home/vitaly/_git_repos/PGE-Project/_Libs/_builds/linux/ --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --enable-static=yes --enable-shared=no
-        BuildSrc 'fluidsynth-1.1.6' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --without-readline --enable-static=yes --enable-shared=no'
+    UnArch 'fluidsynth-1.1.6'
+    ###########MODPLUG###########
+    echo "==========FLUIDSYNTH=========="
+    #Build minimalistic FluidSynth version to just generate raw audio output to handle in the SDL Mixer X
+    #./configure CFLAGS=-fPIC --prefix=/home/vitaly/_git_repos/PGE-Project/_Libs/_builds/linux/ --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --enable-static=yes --enable-shared=no
+    BuildSrc 'fluidsynth-1.1.6' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --without-readline --enable-static=yes --enable-shared=no'
 }
 
 BuildLUAJIT()
 {
-        UnArch 'luajit'
-        
-        ###########LuaJIT###########
-        echo "==========LuaJIT============"
-        cd LuaJIT
-        make PREFIX=$InstallTo BUILDMODE=static
+    UnArch 'luajit'
+    
+    ###########LuaJIT###########
+    echo "==========LuaJIT============"
+    cd LuaJIT
+    make PREFIX=$InstallTo BUILDMODE=static
+    if [ $? -eq 0 ]
+    then
+      echo "[good]"
+    else
+      errorofbuild
+    fi
+
+        make install PREFIX=$InstallTo BUILDMODE=static
         if [ $? -eq 0 ]
         then
           echo "[good]"
         else
           errorofbuild
         fi
-
-            make install PREFIX=$InstallTo BUILDMODE=static
-            if [ $? -eq 0 ]
-            then
-              echo "[good]"
-            else
-              errorofbuild
-            fi
-            if [[ "$OurOS" == "macos" ]]; then
-                cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
-                cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
-            fi
-        cd ..
+        if [[ "$OurOS" == "macos" ]]; then
+            cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
+            cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
+        fi
+    cd ..
 }
 
 BuildGLEW()
 {
-        UnArch 'glew-1.13.0'
+    UnArch 'glew-1.13.0'
 
-        ###########GLEW###########
-        echo "==========GLEW============"
-        cd glew-1.13.0
-        make GLEW_PREFIX=$InstallTo GLEW_DEST=$InstallTo CFLAGS.EXTRA="-DGLEW_STATIC -fPIC" GLEW_NO_GLU="-DGLEW_NO_GLU"
+    ###########GLEW###########
+    echo "==========GLEW============"
+    cd glew-1.13.0
+    make GLEW_PREFIX=$InstallTo GLEW_DEST=$InstallTo CFLAGS.EXTRA="-DGLEW_STATIC -fPIC" GLEW_NO_GLU="-DGLEW_NO_GLU"
+    if [ $? -eq 0 ]
+    then
+      echo "[good]"
+    else
+      errorofbuild
+    fi
+        make install GLEW_PREFIX=$InstallTo GLEW_DEST=$InstallTo CFLAGS.EXTRA="-DGLEW_STATIC" GLEW_NO_GLU="-DGLEW_NO_GLU"
         if [ $? -eq 0 ]
         then
           echo "[good]"
         else
           errorofbuild
         fi
-            make install GLEW_PREFIX=$InstallTo GLEW_DEST=$InstallTo CFLAGS.EXTRA="-DGLEW_STATIC" GLEW_NO_GLU="-DGLEW_NO_GLU"
-            if [ $? -eq 0 ]
-            then
-              echo "[good]"
-            else
-              errorofbuild
-            fi
-        cd ..
+    cd ..
 }
 
 ############ZLib###########
@@ -389,7 +411,8 @@ BuildOGG
 BuildVORBIS
 BuildFLAC
 #BuildMODPLUG
-BuildMAD
+#BuildMAD
+BuildMADrepak
 #BuildFluidSynth
 BuildSDL
 BuildLUAJIT
