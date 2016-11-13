@@ -20,6 +20,8 @@
  * so by contacting: Underbit Technologies, Inc. <info@underbit.com>
  */
 
+#include <stdint.h>
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -60,6 +62,11 @@ extern char const mad_build[];
 # ifndef LIBMAD_FIXED_H
 # define LIBMAD_FIXED_H
 
+#if 1
+typedef   int_least32_t mad_fixed_t;
+typedef   int_least64_t mad_fixed64hi_t;
+typedef  uint_least64_t mad_fixed64lo_t;
+#else
 # if SIZEOF_INT >= 4
 typedef   signed int mad_fixed_t;
 
@@ -77,12 +84,14 @@ typedef unsigned long mad_fixed64lo_t;
 # elif 1 || defined(__GNUC__)
 #  define mad_fixed64_t  signed long long
 # endif
+#endif
 
 # if defined(FPM_FLOAT)
 typedef double mad_sample_t;
 # else
 typedef mad_fixed_t mad_sample_t;
 # endif
+
 
 /*
  * Fixed-point format: 0xABBBBBBB
