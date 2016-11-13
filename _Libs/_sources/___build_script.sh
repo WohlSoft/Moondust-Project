@@ -39,13 +39,6 @@ errorofbuild()
 LatestSDL=$(find . -maxdepth 1 -name "SDL-*.tar.gz" | sed "s/\.tar\.gz//;s/\.\///");
 echo "=====Latest SDL is $LatestSDL====="
 
-if [ ! -d SDL ] 
-then
-	mkdir SDL
-fi
-
-cd SDL
-
 UnArch()
 {
 # $1 - archive name
@@ -53,7 +46,7 @@ UnArch()
 	    then
         printf "tar -xf ../$1.tar.*z* ..."
 	    tar -xf ../$1.tar.*z*
-        if [ $? -eq 0 ]; 
+        if [ $? -eq 0 ];
         then
             printf "OK!\n"
         else
@@ -69,7 +62,7 @@ BuildSrc()
     cd $1
     #Build debug version of SDL
     #CFLAGS='-O0 -g' ./configure $2
-    ./configure $2  
+    ./configure $2
     if [ $? -eq 0 ]
     then
         printf "\n[Configure completed]\n\n"
@@ -99,7 +92,6 @@ BuildSrc()
 BuildSrc2()
 {
 # $1 - archive name
-    UnArch $1
     cd $1
     ./build.sh $InstallTo
     if [ ! $? -eq 0 ];
@@ -167,28 +159,28 @@ BuildOGG()
 {
     CURRENT_TARBALL="OGG"
     echo "=========OGG==========="
-    BuildSrc2 'libogg-1.3.2-repack'
+    BuildSrc2 'libogg'
 }
 
 BuildVORBIS()
 {
     CURRENT_TARBALL="Vorbis"
     echo "=========Vorbis==========="
-    BuildSrc2 'libvorbis-1.3.5-repack'
+    BuildSrc2 'libvorbis'
 }
 
 BuildFLAC()
 {
     CURRENT_TARBALL="FLAC"
     echo "=========FLAC==========="
-    BuildSrc2 'flac-1.3.1-repack'
+    BuildSrc2 'libFLAC'
 }
 
 BuildMAD()
 {
     CURRENT_TARBALL="MAD (MPEG Audio Decoder)"
     echo "==========LibMAD============"
-    BuildSrc2 'libmad-0.15.1b-repack'
+    BuildSrc2 'libmad'
 }
 
 BuildFluidSynth()
@@ -206,7 +198,7 @@ BuildLUAJIT()
 {
     CURRENT_TARBALL="LuaJIT"
     UnArch 'luajit'
-    
+
     ###########LuaJIT###########
     echo "==========LuaJIT============"
     cd LuaJIT
@@ -258,18 +250,23 @@ BuildGLEW()
 }
 
 ########################Build & Install libraries##################################
-
+# in-folder
 BuildOGG
 BuildVORBIS
 BuildFLAC
 BuildMAD
 
-BuildSDL
+# in-archives
+if [ ! -d SDL ]
+then
+	mkdir SDL
+fi
+cd SDL
+
 BuildLUAJIT
+BuildSDL
 
 #BuildFluidSynth
 #BuildGLEW
 
 echo Libraries installed into $InstallTo
-
-
