@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
-    <height>500</height>
+    <width>311</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -47,6 +47,9 @@
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -54,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-826</y>
-         <width>290</width>
-         <height>1640</height>
+         <y>-659</y>
+         <width>297</width>
+         <height>1598</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1066,6 +1069,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </item>
            <item row="29" column="0" colspan="3">
             <widget class="QGroupBox" name="PROPS_NPCGenBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1079,6 +1088,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               <set>Qt::AlignCenter</set>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
               <property name="leftMargin">
                <number>5</number>
               </property>
@@ -1395,10 +1407,16 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <item row="3" column="0" colspan="3">
             <widget class="QGroupBox" name="PROPS_NpcDir">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="title">
               <string>Direction</string>
@@ -1409,6 +1427,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <layout class="QHBoxLayout" name="horizontalLayout">
               <property name="spacing">
                <number>0</number>
+              </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
               </property>
               <property name="leftMargin">
                <number>5</number>
@@ -1451,10 +1472,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Expanding</enum>
+             </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>20</width>
-               <height>40</height>
+               <width>0</width>
+               <height>48</height>
               </size>
              </property>
             </spacer>

@@ -65,12 +65,18 @@ public slots:
     void re_translate();
 
     void LvlItemProps_updateLayer(QString lname);
-    void OpenBlock(LevelBlock block, bool newItem=false, bool dont_reset_props=false);
-    void OpenBGO(LevelBGO bgo, bool newItem=false, bool dont_reset_props=false);
-    void OpenNPC(LevelNPC npc, bool newItem=false, bool dont_reset_props=false);
+    void OpenBlock(LevelBlock block, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void OpenBGO(LevelBGO bgo, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void OpenNPC(LevelNPC npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
     void CloseBox();
 
-    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false, bool dont_reset_props=false);
+    void LvlItemProps(int Type,
+                      LevelBlock block,
+                      LevelBGO bgo,
+                      LevelNPC npc,
+                      bool newItem=false,
+                      bool dont_reset_props=false,
+                      bool dontShow=false);
     void refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem=false, bool dont_reset_props=false);
     void refreshSecondNpcSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
 
@@ -125,12 +131,9 @@ private slots:
     void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    QPoint mouse_pos;
+    void keyPressEvent(QKeyEvent *event);
 
 private:
-    void npc_refreshMinHeight();
     void processNpcContainerButton(QPushButton *btn);
 
     int npcSpecSpinOffset;

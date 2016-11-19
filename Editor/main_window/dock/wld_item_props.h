@@ -22,7 +22,7 @@ private:
     ~WLD_ItemProps();
 
 public:
-    void WldItemProps(int Type, WorldLevelTile level, bool newItem=false);
+    void WldItemProps(int Type, WorldLevelTile level, bool newItem=false, bool dontShow=false);
     void WldItemProps_hide();
     long wlvlPtr;   //!< ArrayID of editing item
 
@@ -34,8 +34,6 @@ public slots:
     void WLD_returnPointToLevelProperties(QPoint p);
 
 private slots:
-    void on_WLD_ItemProps_visibilityChanged(bool visible);
-
     void on_WLD_PROPS_PathBG_clicked(bool checked);
     void on_WLD_PROPS_BigPathBG_clicked(bool checked);
     void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
