@@ -14,6 +14,7 @@ Editor 0.3.1.11-patch-1
 - Added welcome dialog for newbies
 - Get characters information from lvl_characters.ini instead of main.ini!
 - Fixed missed "modified" mark on elements deleting
+- Fixed the focus stealing in the "don't show properties box" mode
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

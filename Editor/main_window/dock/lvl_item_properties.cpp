@@ -53,8 +53,12 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     ui(new Ui::LvlItemProperties)
 {
     setVisible(false);
-    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
+    setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    setFocusPolicy(Qt::StrongFocus);
+    setFocusProxy(mw());
+    ui->scrollArea->setWidgetResizable(true);
     npcSpecSpinOffset=0;
     npcSpecSpinOffset_2=0;
     LockItemProps=true;
@@ -79,8 +83,9 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), &MainWindow::languageSwitched, this, &LvlItemProperties::re_translate);
-    connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
-    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLevelProp, SLOT(setChecked(bool)));
+    connect(mw(), &MainWindow::setSMBX64Strict, this, &LvlItemProperties::setSMBX64Strict);
+    connect(this, &QDockWidget::visibilityChanged, mw()->ui->action_Placing_ShowProperties, &QAction::setChecked);
+    mw()->ui->action_Placing_ShowProperties->setChecked(isVisible());
 
     setFloating(true);
     setGeometry(
@@ -159,45 +164,46 @@ void LvlItemProperties::re_translate()
     LvlItemPropsLock=false;
 }
 
-void LvlItemProperties::mousePressEvent(QMouseEvent *event)
-{
-    mouse_pos = event->pos();
-    QDockWidget::mousePressEvent(event);
+static LevelBlock   dummyBlock = FileFormats::CreateLvlBlock();
+static LevelBGO     dummyBgo   = FileFormats::CreateLvlBgo();
+static LevelNPC     dummyNpc   = FileFormats::CreateLvlNpc();
 
+void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props, bool dontShow)
+{
+    LvlItemProps(ItemTypes::LVL_Block,
+                 block,
+                 dummyBgo,
+                 dummyNpc,
+                 newItem,
+                 dont_reset_props,
+                 dontShow);
 }
 
-void LvlItemProperties::mouseMoveEvent(QMouseEvent *event)
+void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props, bool dontShow)
 {
-    if (event->buttons() && Qt::LeftButton)
-    {
-        QPoint diff = event->pos() - mouse_pos;
-        QPoint newpos = this->pos() + diff;
-        this->move(newpos);
-    }
-    QDockWidget::mouseMoveEvent(event);
+    LvlItemProps(ItemTypes::LVL_BGO,
+                 dummyBlock,
+                 bgo,
+                 dummyNpc,
+                 newItem,
+                 dont_reset_props,
+                 dontShow);
 }
 
-
-void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props)
+void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props, bool dontShow)
 {
-    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::CreateLvlBgo(), FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
-}
-
-void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props)
-{
-    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::CreateLvlBlock(), bgo, FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
-}
-
-void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props)
-{
-    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::CreateLvlBlock(), FileFormats::CreateLvlBgo(), npc, newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_NPC,
+                 dummyBlock,
+                 dummyBgo,
+                 npc,
+                 newItem,
+                 dont_reset_props,
+                 dontShow);
 }
 
 void LvlItemProperties::CloseBox()
 {
-    this->hide();
-    mw()->ui->action_Placing_ShowProperties->setChecked(false);
-
+    hide();
     ui->blockProp->setVisible(false);
     ui->bgoProps->setVisible(false);
     ui->npcProps->setVisible(false);
@@ -207,7 +213,7 @@ void LvlItemProperties::CloseBox()
     LvlPlacingItems::npcSpecialAutoIncrement=false;
 }
 
-void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem, bool dont_reset_props)
+void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem, bool dont_reset_props, bool dontShow)
 {
     mw()->LayerListsSync();
     mw()->EventListsSync();
@@ -343,11 +349,12 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LvlItemPropsLock=false;
         LockItemProps=false;
 
-        this->setVisible(true);
-        this->show();
-        this->raise();
         ui->blockProp->show();
-        ui->blockProp->raise();
+        if(!dontShow)
+        {
+            show();
+            raise();
+        }
         break;
     }
     case ItemTypes::LVL_BGO:
@@ -406,11 +413,12 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LvlItemPropsLock=false;
         LockItemProps=false;
 
-        mw()->ui->action_Placing_ShowProperties->setChecked(true);
-        this->show();
-        this->raise();
         ui->bgoProps->show();
-        ui->bgoProps->raise();
+        if(!dontShow)
+        {
+            show();
+            raise();
+        }
         break;
     }
     case ItemTypes::LVL_NPC:
@@ -644,18 +652,17 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LvlItemPropsLock=false;
         LockItemProps=false;
 
-        mw()->ui->action_Placing_ShowProperties->setChecked(true);
-        this->show();
-        this->raise();
         ui->npcProps->show();
-        ui->npcProps->raise();
-        npc_refreshMinHeight();
+        if(!dontShow)
+        {
+            show();
+            raise();
+        }
         break;
     }
     case -1: //Nothing to edit
     default:
-        this->hide();
-        mw()->ui->action_Placing_ShowProperties->setChecked(false);
+        hide();
     }
 }
 
@@ -1238,63 +1245,6 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// ///////////NPC///////////////////////////
-void LvlItemProperties::npc_refreshMinHeight()
-{
-    //Calculate max height value
-    int minHeightOfBox=0;
-    minHeightOfBox+=ui->PROPS_NpcPos->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcID->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcDir->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcFri->height()+2;
-    minHeightOfBox+=ui->PROPS_NPCNoMove->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcTMsgLabel->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcTMsg->height()+2;
-    if(ui->line_6->isVisible())
-        minHeightOfBox+=ui->line_6->height()+2;
-    if(ui->PROPS_NPCContaiter->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCContaiter->height()+2;
-    if(ui->PROPS_NpcContainsLabel->isVisible())
-        minHeightOfBox+=ui->PROPS_NpcContainsLabel->height()+2;
-    if(ui->PROPS_NPCNpcLabel->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCNpcLabel->height()+2;
-    if(ui->PROPS_NPCSpecialNPC->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecialNPC->height()+2;
-    if(ui->PROPS_NpcSpinLabel->isVisible())
-        minHeightOfBox+=ui->PROPS_NpcSpinLabel->height()+2;
-    if(ui->PROPS_NPCSpecialSpin->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecialSpin->height()+2;
-    if(ui->PROPS_NPCSpecialSpin_Auto->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecialSpin_Auto->height()+2;
-    if(ui->PROPS_NPCBoxLabel->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCBoxLabel->height()+2;
-    if(ui->PROPS_NPCSpecialBox->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecialBox->height()+2;
-    if(ui->Line_Special2_sep->isVisible())
-        minHeightOfBox+=ui->Line_Special2_sep->height()+2;
-    if(ui->PROPS_NpcSpecial2title->isVisible())
-        minHeightOfBox+=ui->PROPS_NpcSpecial2title->height()+2;
-    if(ui->PROPS_NPCSpecial2Spin->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecial2Spin->height()+2;
-    if(ui->PROPS_NPCSpecial2Box->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCSpecial2Box->height()+2;
-
-    minHeightOfBox+=ui->line_5->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcGenerator->height()+2;
-
-    if(ui->PROPS_NPCGenBox->isVisible())
-        minHeightOfBox+=ui->PROPS_NPCGenBox->height()+2;
-    if(ui->line_2->isVisible())
-        minHeightOfBox+=ui->line_2->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcLayer->height()+2;
-    minHeightOfBox+=ui->line_3->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcEventActivate->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcEventDeath->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcEventTalk->height()+2;
-    minHeightOfBox+=ui->PROPS_NpcEventEmptyLayer->height()+2;
-    ui->npcProps->setMinimumHeight(minHeightOfBox);
-}
-
 void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem, bool dont_reset_props)
 {
     obj_npc &t_npc = getNpcProps(npc, mw());
@@ -1464,7 +1414,7 @@ void LvlItemProperties::refreshSecondNpcSpecialOption(long npcID, long spcOpts, 
             ui->PROPS_NPCSpecial2Spin->setValue( spcOpts2 + npcSpecSpinOffset_2 );
         }
     }
-    npc_refreshMinHeight();
+    //npc_refreshMinHeight();
 }
 
 void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
@@ -1962,8 +1912,6 @@ void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
         }
         //mw()->activeLvlEditWin()->scene->m_history->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset_2));
     }
-
-
 }
 
 void LvlItemProperties::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
@@ -2081,8 +2029,6 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         mw()->activeLvlEditWin()->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENACTIVATE, QVariant(checked));
     }
     ui->PROPS_NPCGenBox->setVisible( checked );
-
-    npc_refreshMinHeight();
 }
 
 void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
@@ -2489,4 +2435,25 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
             mw()->activeLvlEditWin()->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(""));
         }
     }
+}
+
+void LvlItemProperties::keyPressEvent(QKeyEvent* event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+        if(mw())
+        {
+            qApp->setActiveWindow(mw());
+            mw()->setFocus(Qt::MouseFocusReason);
+            mw()->ui->centralWidget->setFocus(Qt::MouseFocusReason);
+            //mw()->keyPressEvent(event);
+            return;
+        }
+    default: break;
+    }
+    QDockWidget::keyPressEvent(event);
 }
