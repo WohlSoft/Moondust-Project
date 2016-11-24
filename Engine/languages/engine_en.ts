@@ -40,7 +40,7 @@
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="267"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>Engine has abourted because alarm() time out!</translation>
+        <translation>Engine has aborted because alarm() time out!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="312"/>
