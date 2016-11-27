@@ -464,7 +464,7 @@ struct id3_file *id3_file_fdopen(int fd, enum id3_file_mode mode)
   FILE *iofile;
   struct id3_file *file;
 
-  iofile = fdopen(fd, (mode == ID3_FILE_MODE_READWRITE) ? "r+b" : "rb");
+  iofile = (FILE *)fdopen(fd, (mode == ID3_FILE_MODE_READWRITE) ? "r+b" : "rb");
   if (iofile == 0)
     return 0;
 

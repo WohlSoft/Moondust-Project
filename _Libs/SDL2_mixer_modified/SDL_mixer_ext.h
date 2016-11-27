@@ -679,7 +679,7 @@ extern DECLSPEC void SDLCALL MIX_Timidity_addToPathList(const char *path);
 
 /* ADLMIDI Setup functions */
 extern DECLSPEC int    SDLCALL MIX_ADLMIDI_getTotalBanks();
-extern DECLSPEC const char *const*MIX_ADLMIDI_getBankNames();
+extern DECLSPEC const char *const* SDLCALL MIX_ADLMIDI_getBankNames();
 extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getBankID();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setBankID(int bnk);
 extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getTremolo();
