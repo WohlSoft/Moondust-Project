@@ -65,18 +65,19 @@ public slots:
     void re_translate();
 
     void LvlItemProps_updateLayer(QString lname);
-    void OpenBlock(LevelBlock block, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
-    void OpenBGO(LevelBGO bgo, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
-    void OpenNPC(LevelNPC npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void OpenBlock(LevelBlock& block, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void OpenBGO(LevelBGO& bgo, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void OpenNPC(LevelNPC& npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
     void CloseBox();
 
     void LvlItemProps(int Type,
-                      LevelBlock block,
-                      LevelBGO bgo,
-                      LevelNPC npc,
-                      bool newItem=false,
-                      bool dont_reset_props=false,
-                      bool dontShow=false);
+                      LevelBlock& block,
+                      LevelBGO& bgo,
+                      LevelNPC& npc,
+                      bool isPlacingNew=false,
+                      bool dontResetProps=false,
+                      bool dontShowToolbox=false);
+
     void refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem=false, bool dont_reset_props=false);
     void refreshSecondNpcSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
 

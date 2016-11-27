@@ -168,7 +168,7 @@ static LevelBlock   dummyBlock = FileFormats::CreateLvlBlock();
 static LevelBGO     dummyBgo   = FileFormats::CreateLvlBgo();
 static LevelNPC     dummyNpc   = FileFormats::CreateLvlNpc();
 
-void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::OpenBlock(LevelBlock &block, bool newItem, bool dont_reset_props, bool dontShow)
 {
     LvlItemProps(ItemTypes::LVL_Block,
                  block,
@@ -179,7 +179,7 @@ void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_rese
                  dontShow);
 }
 
-void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::OpenBGO(LevelBGO &bgo, bool newItem, bool dont_reset_props, bool dontShow)
 {
     LvlItemProps(ItemTypes::LVL_BGO,
                  dummyBlock,
@@ -190,7 +190,7 @@ void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_prop
                  dontShow);
 }
 
-void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::OpenNPC(LevelNPC& npc, bool newItem, bool dont_reset_props, bool dontShow)
 {
     LvlItemProps(ItemTypes::LVL_NPC,
                  dummyBlock,
@@ -213,7 +213,13 @@ void LvlItemProperties::CloseBox()
     LvlPlacingItems::npcSpecialAutoIncrement=false;
 }
 
-void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::LvlItemProps(int Type,
+                                     LevelBlock &block,
+                                     LevelBGO &bgo,
+                                     LevelNPC &npc,
+                                     bool isPlacingNew,
+                                     bool dontResetProps,
+                                     bool dontShowToolbox)
 {
     mw()->LayerListsSync();
     mw()->EventListsSync();
@@ -227,14 +233,14 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
     LvlPlacingItems::npcSpecialAutoIncrement=false;
 
-    ui->PROPS_BlkEventDestroyedLock->setVisible(newItem);
-    ui->PROPS_BlkEventHitLock->setVisible(newItem);
-    ui->PROPS_BlkEventLEmptyLock->setVisible(newItem);
+    ui->PROPS_BlkEventDestroyedLock->setVisible(isPlacingNew);
+    ui->PROPS_BlkEventHitLock->setVisible(isPlacingNew);
+    ui->PROPS_BlkEventLEmptyLock->setVisible(isPlacingNew);
 
-    ui->PROPS_NpcEventActovateLock->setVisible(newItem);
-    ui->PROPS_NpcEventDeathLock->setVisible(newItem);
-    ui->PROPS_NpcEventTalkLock->setVisible(newItem);
-    ui->PROPS_NpcEventLEmptyLock->setVisible(newItem);
+    ui->PROPS_NpcEventActovateLock->setVisible(isPlacingNew);
+    ui->PROPS_NpcEventDeathLock->setVisible(isPlacingNew);
+    ui->PROPS_NpcEventTalkLock->setVisible(isPlacingNew);
+    ui->PROPS_NpcEventLEmptyLock->setVisible(isPlacingNew);
 
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
@@ -249,7 +255,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
     {
     case ItemTypes::LVL_Block:
     {
-        if(newItem)
+        if(isPlacingNew)
             blockPtr = -1;
         else
             blockPtr = block.meta.array_id;
@@ -265,7 +271,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             t_block = mw()->configs.main_block[1];
 
 
-        if(newItem && (!dont_reset_props))
+        if(isPlacingNew && (!dontResetProps))
         {
             LvlPlacingItems::blockSet.invisible = t_block.setup.default_invisible_value;
             block.invisible = t_block.setup.default_invisible_value;
@@ -302,7 +308,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
         ui->PROPS_BlockResize->setVisible( t_block.setup.sizable );
-        ui->sizeOfBlock->setVisible( t_block.setup.sizable && (!newItem) );
+        ui->sizeOfBlock->setVisible( t_block.setup.sizable && (!isPlacingNew) );
         ui->BLOCK_Width->setValue(block.w);
         ui->BLOCK_Height->setValue(block.h);
 
@@ -350,7 +356,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LockItemProps=false;
 
         ui->blockProp->show();
-        if(!dontShow)
+        if(!dontShowToolbox)
         {
             show();
             raise();
@@ -359,13 +365,13 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
     }
     case ItemTypes::LVL_BGO:
     {
-        if(newItem)
+        if(isPlacingNew)
             bgoPtr = -1;
         else
             bgoPtr = bgo.meta.array_id;
 
 
-        if((bgoPtr<0)&&(!dont_reset_props))
+        if((bgoPtr<0)&&(!dontResetProps))
         {
             LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             bgo.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
@@ -414,7 +420,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LockItemProps=false;
 
         ui->bgoProps->show();
-        if(!dontShow)
+        if(!dontShowToolbox)
         {
             show();
             raise();
@@ -423,7 +429,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
     }
     case ItemTypes::LVL_NPC:
     {
-        if(newItem)
+        if(isPlacingNew)
             npcPtr = -1;
         else
             npcPtr = npc.meta.array_id;
@@ -452,7 +458,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->PROPS_NPCSpecial2Box->hide();
         ui->Line_Special2_sep->hide();
 
-        if((npcPtr<0)&&(!dont_reset_props))
+        if((npcPtr<0)&&(!dontResetProps))
         {
             LvlPlacingItems::npcSet.msg="";
             npc.msg="";
@@ -552,9 +558,9 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         }
 
         //refresh special option 1
-        refreshFirstNpcSpecialOption(npc, newItem, dont_reset_props);
+        refreshFirstNpcSpecialOption(npc, isPlacingNew, dontResetProps);
         //refresh special option 2
-        refreshSecondNpcSpecialOption(npc.id, npc.special_data, npc.special_data2, newItem, dont_reset_props);
+        refreshSecondNpcSpecialOption(npc.id, npc.special_data, npc.special_data2, isPlacingNew, dontResetProps);
 
         QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
         if(npcmsg.size()>20)
@@ -653,7 +659,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         LockItemProps=false;
 
         ui->npcProps->show();
-        if(!dontShow)
+        if(!dontShowToolbox)
         {
             show();
             raise();
