@@ -36,6 +36,9 @@
 #include "SDL_mixer_ext.h"
 #include <SDL2/SDL_rwops.h>
 
+/* Needed for ADLMIDI_getBankNames() */
+#include "music_midi_adl.h"
+
 #define SDL_INIT_AUDIO          0x00000010
 extern DECLSPEC int SDL_Init(Uint32 flags);
 extern DECLSPEC void SDL_Quit();
@@ -121,6 +124,11 @@ __declspec(dllexport) int __stdcall SDL_RWwriteVB6(SDL_RWops * ctx, void* ptr, i
 __declspec(dllexport) int __stdcall SDL_RWcloseVB6(SDL_RWops * ctx)
 {
     return (int)(ctx)->close(ctx);
+}
+
+__declspec(dllexport) const char* __stdcall MIX_ADLMIDI_getBankName(int bankID)
+{
+    return ADLMIDI_getBankNames()[bankID];
 }
 
 #endif
