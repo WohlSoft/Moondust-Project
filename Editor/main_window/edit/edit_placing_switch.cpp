@@ -323,7 +323,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                         dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
-                case ItemTypes::WLD_Path:\
+                case ItemTypes::WLD_Path:
                     {
                         activeWldEditWin()->scene->setItemPlacer(2, itemID);
                         dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
