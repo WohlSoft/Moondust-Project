@@ -24,6 +24,15 @@ int LevelScene::findNearestSection(long x, long y)
     long lessDistance = 0;
     int  result = 0;
 
+    //Try to find intersecting section first
+    for(int i = 0; i < data.sections.size(); i++)
+    {
+        LevelSection &s = data.sections[i];
+        if( (x >= s.size_left) && (x <= s.size_right) &&
+            (y >= s.size_top)  && (y <= s.size_bottom) )
+            return i;
+    }
+
     //Find section by nearest center or corner
     for(int i = 0; i < data.sections.size(); i++)
     {
