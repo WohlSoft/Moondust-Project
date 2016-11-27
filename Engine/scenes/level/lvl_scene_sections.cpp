@@ -18,7 +18,6 @@
 
 #include "../scene_level.h"
 #include <cmath>
-#include <functional>
 
 int LevelScene::findNearestSection(long x, long y)
 {
@@ -44,7 +43,7 @@ int LevelScene::findNearestSection(long x, long y)
         //Find distance to center
         long distanceC = std::sqrt(std::pow(centerX - x, 2) + std::pow(centerY - y, 2));
 
-        std::function<void(long)> addDistance = [&](long f)
+        auto addDistance = [&](long f)
         {
             long distanceCorner = f;
             if(distanceC > distanceCorner)
