@@ -52,7 +52,6 @@
 #include <QDir>
 #include <QImage>
 #include <QDateTime>
-#include <QtDebug>
 
 #ifdef DEBUG_BUILD
 #include <QElapsedTimer>
@@ -396,7 +395,7 @@ static bool detectOpenGL3()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    LogDebug("GL3PROBE: Create hidden window");
+    pLogDebug("GL3PROBE: Create hidden window");
     dummy = SDL_CreateWindow("OpenGL 3 probe dummy window",
                              SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED,
@@ -408,7 +407,7 @@ static bool detectOpenGL3()
         goto sdl_error;
     }
 
-    LogDebug("GL3PROBE: Create context");
+    pLogDebug("GL3PROBE: Create context");
     glcontext = SDL_GL_CreateContext(dummy);
 
     if(!glcontext)
@@ -423,7 +422,7 @@ static bool detectOpenGL3()
         goto sdl_error;
     }
 
-    LogDebug("GL3PROBE: take extensions list");
+    pLogDebug("GL3PROBE: take extensions list");
     sExtensions = const_cast<GLubyte *>(glGetString(GL_EXTENSIONS));
 
     if(!sExtensions)
@@ -432,7 +431,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check GL_EXT_bgra");
+    pLogDebug("GL3PROBE: check GL_EXT_bgra");
 
     if(!isGlExtensionSupported("GL_EXT_bgra", sExtensions))
     {
@@ -440,7 +439,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check GL_ARB_texture_non_power_of_two");
+    pLogDebug("GL3PROBE: check GL_ARB_texture_non_power_of_two");
 
     if(!isGlExtensionSupported("GL_ARB_texture_non_power_of_two", sExtensions))
     {
@@ -448,7 +447,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glEnable(GL_BLEND)");
+    pLogDebug("GL3PROBE: check glEnable(GL_BLEND)");
     glEnable(GL_BLEND);
 
     if(isGL_Error())
@@ -457,7 +456,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glEnable(GL_TEXTURE_2D)");
+    pLogDebug("GL3PROBE: check glEnable(GL_TEXTURE_2D)");
     glEnable(GL_TEXTURE_2D);
 
     if(isGL_Error())
@@ -466,7 +465,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glEnableClientState");
+    pLogDebug("GL3PROBE: check glEnableClientState");
     //Deep test of OpenGL functions
     glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -476,7 +475,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glEnableClientState");
+    pLogDebug("GL3PROBE: check glEnableClientState");
     glEnableClientState(GL_COLOR_ARRAY);
 
     if(isGL_Error())
@@ -485,7 +484,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glEnableClientState");
+    pLogDebug("GL3PROBE: check glEnableClientState");
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     if(isGL_Error())
@@ -494,7 +493,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glGenTextures");
+    pLogDebug("GL3PROBE: check glGenTextures");
     glGenTextures(1, &test_texture);
 
     if(isGL_Error())
@@ -503,7 +502,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glBindTexture");
+    pLogDebug("GL3PROBE: check glBindTexture");
     glBindTexture(GL_TEXTURE_2D, test_texture);
 
     if(isGL_Error())
@@ -512,7 +511,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexImage2D");
+    pLogDebug("GL3PROBE: check glTexImage2D");
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 4, 4, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, dummy_texture);
 
@@ -522,7 +521,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glBindTexture");
+    pLogDebug("GL3PROBE: check glBindTexture");
     glBindTexture(GL_TEXTURE_2D, 0);
 
     if(isGL_Error())
@@ -531,7 +530,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glBindTexture");
+    pLogDebug("GL3PROBE: check glBindTexture");
     glBindTexture(GL_TEXTURE_2D, test_texture);
 
     if(isGL_Error())
@@ -540,7 +539,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexParameteri");
+    pLogDebug("GL3PROBE: check glTexParameteri");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
     if(isGL_Error())
@@ -549,7 +548,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexParameteri");
+    pLogDebug("GL3PROBE: check glTexParameteri");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     if(isGL_Error())
@@ -558,7 +557,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexParameteri");
+    pLogDebug("GL3PROBE: check glTexParameteri");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     if(isGL_Error())
@@ -567,7 +566,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexParameteri");
+    pLogDebug("GL3PROBE: check glTexParameteri");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     if(isGL_Error())
@@ -576,7 +575,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glBlendFunc");
+    pLogDebug("GL3PROBE: check glBlendFunc");
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if(isGL_Error())
@@ -585,7 +584,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glColorPointer");
+    pLogDebug("GL3PROBE: check glColorPointer");
     glColorPointer(4, GL_FLOAT, 0, Colors);
 
     if(isGL_Error())
@@ -594,7 +593,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glVertexPointer");
+    pLogDebug("GL3PROBE: check glVertexPointer");
     glVertexPointer(3, GL_DOUBLE, 0, Vertices);
 
     if(isGL_Error())
@@ -603,7 +602,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glTexCoordPointer");
+    pLogDebug("GL3PROBE: check glTexCoordPointer");
     glTexCoordPointer(2, GL_FLOAT, 0, TexCoord);
 
     if(isGL_Error())
@@ -612,7 +611,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glDrawElements");
+    pLogDebug("GL3PROBE: check glDrawElements");
     glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices);
 
     if(isGL_Error())
@@ -621,7 +620,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glBindTexture");
+    pLogDebug("GL3PROBE: check glBindTexture");
     glBindTexture(GL_TEXTURE_2D, 0);
 
     if(isGL_Error())
@@ -630,7 +629,7 @@ static bool detectOpenGL3()
         goto gl_error;
     }
 
-    LogDebug("GL3PROBE: check glDeleteTextures");
+    pLogDebug("GL3PROBE: check glDeleteTextures");
     glDeleteTextures(1, &test_texture);
 
     if(isGL_Error())
@@ -1172,7 +1171,7 @@ void GlRenderer::processRecorder(double /*ticktime*/)
         }
 
         if(FreeImage_HasPixels(shotImg) == FALSE)
-            qWarning() << "Can't save gif frame: no pixel data!";
+            pLogWarning("Can't save gif frame: no pixel data!");
 
         uint8_t *img = FreeImage_GetBits(shotImg);
         GifWriteFrame(&g_gif.writer, img,

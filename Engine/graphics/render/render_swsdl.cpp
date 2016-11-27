@@ -25,7 +25,9 @@
 #include <common_features/maths.h>
 #include <cmath>
 
+#ifndef SDL_MAIN_HANDLED
 #define SDL_MAIN_HANDLED
+#endif
 #include <SDL2/SDL.h> // SDL 2 Library
 
 #include "../gl_debug.h"
