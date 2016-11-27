@@ -160,6 +160,7 @@ void BookmarksBox::updateBookmarkBoxByList()
         if(!edit) return;
 
         mData = &(edit->LvlData.metaData);
+        edit->LvlData.meta.modified = true;
     }
     else if(wType == MainWindow::WND_World)
     {
@@ -168,6 +169,7 @@ void BookmarksBox::updateBookmarkBoxByList()
         if(!edit) return;
 
         mData = &(edit->WldData.metaData);
+        edit->WldData.meta.modified = true;
     }
     else
         return;
@@ -190,9 +192,11 @@ void BookmarksBox::updateBookmarkBoxByData()
     while(ui->bookmarkList->count())
         delete ui->bookmarkList->item(0);
 
+    int wType = mw()->activeChildWindow();
+
     MetaData *mData;
 
-    if(mw()->activeChildWindow() == 1)
+    if(wType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -200,7 +204,7 @@ void BookmarksBox::updateBookmarkBoxByData()
 
         mData = &(edit->LvlData.metaData);
     }
-    else if(mw()->activeChildWindow() == 3)
+    else if(wType == MainWindow::WND_World)
     {
         WorldEdit *edit = mw()->activeWldEditWin();
 
@@ -232,16 +236,17 @@ void BookmarksBox::updateBookmarkBoxByData()
 
 void BookmarksBox::on_bookmarkList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->bookmarkList->selectedItems().isEmpty()) return;
+    if(ui->bookmarkList->selectedItems().isEmpty())
+        return;
 
     QPoint globPos = ui->bookmarkList->mapToGlobal(pos);
     LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
              .arg(pos.x()).arg(pos.y())
              .arg(globPos.x()).arg(globPos.y()));
-    QMenu *bookmark_menu = new QMenu(this);
-    QAction *rename = bookmark_menu->addAction(tr("Rename Bookmark"));
+    QMenu bookmark_menu(this);
+    QAction *rename = bookmark_menu.addAction(tr("Rename Bookmark"));
     //bookmark_menu->addSeparator();
-    QAction *selected = bookmark_menu->exec(globPos);
+    QAction *selected = bookmark_menu.exec(globPos);
 
     if(selected == rename)
         ui->bookmarkList->editItem(ui->bookmarkList->selectedItems()[0]);
