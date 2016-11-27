@@ -285,6 +285,10 @@ void ItemScene::arrayApply()
             break;
         }
     }
+
+    //Mark world map as modified
+    m_scene->m_data->meta.modified = true;
+
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
 }
@@ -312,6 +316,9 @@ void ItemScene::removeFromArray()
             m_scene->m_data->scenery.removeAt(i); break;
         }
     }
+
+    //Mark world map as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 void ItemScene::returnBack()

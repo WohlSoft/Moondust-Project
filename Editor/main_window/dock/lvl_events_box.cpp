@@ -1084,6 +1084,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
                 ModifyEvent(edit->LvlData.events[i].name, "");
                 edit->LvlData.events.removeAt(i);
                 delete ui->LVLEvents_List->selectedItems()[0];
+                edit->LvlData.meta.modified = true;
                 break;
             }
         }

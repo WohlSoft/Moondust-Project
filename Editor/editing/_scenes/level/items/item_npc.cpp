@@ -785,6 +785,8 @@ void ItemNPC::arrayApply()
             break;
         }
     }
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
     m_scene->unregisterElement(this);
@@ -815,6 +817,9 @@ void ItemNPC::removeFromArray()
             m_scene->m_data->npc.removeAt(i); break;
         }
     }
+
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 

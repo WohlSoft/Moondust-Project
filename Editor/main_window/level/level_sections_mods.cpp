@@ -242,7 +242,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 void MainWindow::on_actionSCT_Delete_triggered()
 {
     qApp->setActiveWindow(this);
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         int id=0;
 
@@ -356,6 +356,7 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
                 itemsToModify.push_back(x);
         }
         edit->scene->rotateGroup(itemsToModify, false, true, true);
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -383,6 +384,7 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
                 itemsToModify.push_back(x);
         }
         edit->scene->rotateGroup(itemsToModify, true, true, true);
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -410,6 +412,7 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
                 itemsToModify.push_back(x);
         }
         edit->scene->flipGroup(itemsToModify, false, true, true);
+        edit->LvlData.meta.modified = true;
     }
 }
 
@@ -437,6 +440,7 @@ void MainWindow::on_actionSCT_FlipVertical_triggered()
                 itemsToModify.push_back(x);
         }
         edit->scene->flipGroup(itemsToModify, true, true, true);
+        edit->LvlData.meta.modified = true;
     }
 }
 

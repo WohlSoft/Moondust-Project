@@ -293,6 +293,9 @@ void ItemPhysEnv::arrayApply()
         }
     }
 
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
+
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -321,6 +324,9 @@ void ItemPhysEnv::removeFromArray()
             m_scene->m_data->physez.removeAt(i); break;
         }
     }
+
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 
