@@ -28,8 +28,9 @@ int LevelScene::findNearestSection(long x, long y)
     for(int i = 0; i < data.sections.size(); i++)
     {
         LevelSection &s = data.sections[i];
-        if( (x >= s.size_left) && (x <= s.size_right) &&
-            (y >= s.size_top)  && (y <= s.size_bottom) )
+
+        if((x >= s.size_left) && (x <= s.size_right) &&
+           (y >= s.size_top)  && (y <= s.size_bottom))
             return i;
     }
 
@@ -39,27 +40,38 @@ int LevelScene::findNearestSection(long x, long y)
         LevelSection &s = data.sections[i];
         long centerX = s.size_left + std::abs(s.size_left - s.size_right) / 2;
         long centerY = s.size_top  + std::abs(s.size_top  - s.size_bottom) / 2;
+        //Find distance to center
         long distanceC = std::sqrt(std::pow(centerX - x, 2) + std::pow(centerY - y, 2));
-        long distanceCorner = distanceC;
-        distanceCorner = std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_top - y, 2));
 
-        if(distanceC > distanceCorner)
-            distanceC = distanceCorner;
+        #define addDistance(f) \
+        {\
+            long distanceCorner = f; \
+            if(distanceC > distanceCorner) \
+                distanceC = distanceCorner; \
+        }
 
-        distanceCorner = std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_top - y, 2));
+        //Find distance to left-top corner
+        addDistance(std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_top - y, 2)));
+        //Find distance to right-top corner
+        addDistance(std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_top - y, 2)));
+        //Find distance to right-bottom corner
+        addDistance(std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_bottom - y, 2)));
+        //Find distance to left-bottom corner
+        addDistance(std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_bottom - y, 2)));
 
-        if(distanceC > distanceCorner)
-            distanceC = distanceCorner;
+        //Find distance to nearest vertical edge
+        if((x >= s.size_left) && (x <= s.size_right))
+        {
+            addDistance(std::abs(s.size_top - y));
+            addDistance(std::abs(s.size_bottom - y));
+        }
 
-        distanceCorner = std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_bottom - y, 2));
-
-        if(distanceC > distanceCorner)
-            distanceC = distanceCorner;
-
-        distanceCorner = std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_bottom - y, 2));
-
-        if(distanceC > distanceCorner)
-            distanceC = distanceCorner;
+        //Find distance to nearest horizontal edge
+        if((y >= s.size_top) && (y <= s.size_bottom))
+        {
+            addDistance(std::abs(s.size_left - x));
+            addDistance(std::abs(s.size_right - x));
+        }
 
         if(i == 0)
             lessDistance = distanceC;
@@ -68,6 +80,8 @@ int LevelScene::findNearestSection(long x, long y)
             lessDistance = distanceC;
             result = i;
         }
+
+        #undef addDistance
     }
 
     return result;
