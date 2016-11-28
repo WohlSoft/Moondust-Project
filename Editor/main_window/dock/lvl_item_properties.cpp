@@ -629,7 +629,7 @@ void LvlItemProperties::LvlItemProps(int Type,
         }
 
         ui->PROPS_NpcEventActivate->setCurrentIndex(0);
-        for(int i=0; i<ui->PROPS_BlkEventDestroy->count();i++)
+        for(int i=0; i<ui->PROPS_NpcEventActivate->count();i++)
         {
             if(ui->PROPS_NpcEventActivate->itemText(i)==npc.event_activate)
             {ui->PROPS_NpcEventActivate->setCurrentIndex(i); break;}
