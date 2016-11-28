@@ -1,4 +1,4 @@
-Editor 0.3.1.11-patch-1
+Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
 - Added ability to define fixed size for exportable section piece
 - Fixed crash, caused by very small pictures (1 px height)
@@ -15,6 +15,8 @@ Editor 0.3.1.11-patch-1
 - Get characters information from lvl_characters.ini instead of main.ini!
 - Fixed missed "modified" mark on elements deleting
 - Fixed the focus stealing in the "don't show properties box" mode
+- Better nearest section detection calculation by position bookmarks
+- Fixed some missed "file modified" triggers
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
