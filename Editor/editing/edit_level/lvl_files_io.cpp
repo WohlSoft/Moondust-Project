@@ -170,23 +170,26 @@ RetrySave:
 
         if(selectedFilter == fileSMBXany)
         {
-            int file_format = LvlData.meta.RecentFormatVersion;
+            unsigned int file_format = LvlData.meta.RecentFormatVersion;
             bool ok = true;
-            file_format = QInputDialog::getInt(this, tr("SMBX file version"),
-                                               tr("Which version you wish to save? (from 0 to 64)\n"
-                                                  "List of known SMBX versions and format codes:\n%1\n"
-                                                  "(To allow level file work in specific SMBX version,\n"
-                                                  "version code must be less or equal specific code)"
-                                                 ).arg(" 1 - SMBX 1.0.0\n"
-                                                         " 2 - SMBX 1.0.2\n"
-                                                         "18 - SMBX 1.1.1\n"
-                                                         "20 - SMBX 1.1.2\n"
-                                                         "28 - SMBX 1.2.0 Beta 3\n"
-                                                         "51 - SMBX 1.2.1\n"
-                                                         "58 - SMBX 1.2.2\n"
-                                                         "59 - SMBX 1.2.2 (with some patch)\n"
-                                                         "64 - SMBX 1.3\n"),
-                                               LvlData.meta.RecentFormatVersion, 0, 64, 1, &ok);
+            file_format = static_cast<unsigned int>(
+                              QInputDialog::getInt(this, tr("SMBX file version"),
+                                                   tr("Which version you wish to save? (from 0 to 64)\n"
+                                                           "List of known SMBX versions and format codes:\n%1\n"
+                                                           "(To allow level file work in specific SMBX version,\n"
+                                                           "version code must be less or equal specific code)"
+                                                     ).arg(" 1 - SMBX 1.0.0\n"
+                                                             " 2 - SMBX 1.0.2\n"
+                                                             "18 - SMBX 1.1.1\n"
+                                                             "20 - SMBX 1.1.2\n"
+                                                             "28 - SMBX 1.2.0 Beta 3\n"
+                                                             "51 - SMBX 1.2.1\n"
+                                                             "58 - SMBX 1.2.2\n"
+                                                             "59 - SMBX 1.2.2 (with some patch)\n"
+                                                             "64 - SMBX 1.3\n"),
+                                                   static_cast<int>(LvlData.meta.RecentFormatVersion),
+                                                   0, 64, 1, &ok)
+                          );
 
             if(!ok)
                 return false;
@@ -266,7 +269,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     {
         if(LvlData.npc[q].id <= 0) continue;
 
-        LvlData.npc[q].is_star = m_mw->configs.main_npc[LvlData.npc[q].id].setup.is_star;
+        LvlData.npc[q].is_star = m_mw->configs.main_npc[static_cast<int>(LvlData.npc[q].id)].setup.is_star;
 
         if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
             LvlData.npc[q].is_star = false;
