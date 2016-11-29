@@ -32,7 +32,7 @@
 - Fixed custom folder confusion caused with dot-contained file names
 - Added more physical environment zones types include air chambers for underwater sections
 - Added separated support of portal and instant warps: instant warp will do same as in SMBX, portal warp will teleport character with keeping of kinetic energy
-- Added support of entering event for warps
+- Added support for entering event for warps
 - Added support of two-way directed warps
 - Added support of cannon exit warps
 - Better and stable inter-processing with editor based on stdin/stdout!1
@@ -99,7 +99,7 @@
 - The player can climb on NPC-based climbable walls, not only on the BGO-based!
 - Fixed a lot of bugs
 - NPC's finally can be spawned from blocks where there are was included!
-- Added support for the layers and basic events! [layers: show, hide, toggle; message box; play SFX; trigger another event; auto-scroll speed, changing of limit borders per section, toggling section background, toggling section music, other event actions are not implemented yet]. Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer [talk is not implemented yet!]
+- Added support for the layers and basic events! [layers: show, hide, toggle; message box; play SFX; trigger another event; auto-scroll speed, changing of limit boundaries per section, toggling section background, toggling section music, other event actions are not implemented yet]. Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer [talk is not implemented yet!]
 - Fixed random crash caused by lua activation event when camera caught a corpse of NPC
 - Fixed slow performance caused by bad time delay function
 - Player finally can ride on NPC's heads [anyway, is not finished yet]

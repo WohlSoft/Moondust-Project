@@ -17,6 +17,8 @@ Editor 0.3.1.12
 - Fixed the focus stealing in the "don't show properties box" mode
 - Better nearest section detection calculation by position bookmarks
 - Fixed some missed "file modified" triggers
+- Fixed confused events history tracking
+- Added a scroll area into "Warps and Doors" toolbox
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
@@ -157,7 +159,7 @@ Minor updates after release (updated version since 11 may 2015 build date):
 - Fixed music-box history
 - Fixed history of z-values
 - Copy-pasting bugs has been fixed
-- Added support of custom music on world map (WLDX files only!)
+- Added support of custom music on the world maps (WLDX files only!)
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
@@ -212,7 +214,7 @@ Editor 0.2.1
 - Added SDL library to give better music and sound playback
 - Fixed grid alignment after duplicating/pasting
 - Added semi-transparent paths view for world map
-- Added displaying of the items statistics to the debugger box
+- Added displaying of the item's statistics to the debugger box
 - Fixed config directory path on Mac OS X
 - Fixed bug with item boxes updating when you switch between other applications
 - Added SMBX64 standard validator which prevents you from saving a file that would cause SMBX to crash, such as exceeding SMBX's maximum level size, etc.
@@ -400,3 +402,4 @@ Editor 0.0.2
 
 Editor 0.0.1
 - First test version, can only check parsing of LVL files
+
