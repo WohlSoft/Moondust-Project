@@ -10,8 +10,8 @@ Created by Vitaly Novichkov "Wohlstand" &lt;admin@wohlnet.ru&gt;
 
 [![Official project site](https://img.shields.io/badge/Official%20Site-Visit-yellow.svg)](http://wohlsoft.ru/PGE/)
 [![Official community](https://img.shields.io/badge/Community-Visit-green.svg)](http://wohlsoft.ru/forum/)
-[![Official documentation](https://img.shields.io/badge/Community-Visit-green.svg)](http://wohlsoft.ru/pgewiki/)
-[![Contact us by special form](https://img.shields.io/badge/Documentation-Read-red.svg)](http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin)
+[![Official documentation](https://img.shields.io/badge/Documentation-Read-green.svg)](http://wohlsoft.ru/pgewiki/)
+[![Contact us by special form](https://img.shields.io/badge/Contact-us-blue.svg)](http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin)
 
 How to build (Linux, Windows, Mac OS X):
 http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
