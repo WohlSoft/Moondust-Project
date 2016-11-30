@@ -7,6 +7,7 @@
 - Font manager has been improved and fixed
 - Special pause menu for the level testing mode with ability to restart the level!
 - Don't close IPC-ran level on restarting
+- Added interpreting of "Spawned NPCs" and "Destroyed Blocks" special layers: deactivate all spawned NPCs and turn all "destroyed" blocks into their initial states
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

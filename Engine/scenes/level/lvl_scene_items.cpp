@@ -26,9 +26,10 @@
 #include <QFileInfo>
 
 
-void LevelScene::placeBlock(LevelBlock blockData)
+void LevelScene::placeBlock(LevelBlock &blockData)
 {
-    if(blockData.id <= 0) return;
+    if(blockData.id <= 0)
+        return;
 
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return;
@@ -85,7 +86,7 @@ void LevelScene::destroyBlock(LVL_Block *&_block)
     _block = NULL;
 }
 
-void LevelScene::placeBGO(LevelBGO bgoData)
+void LevelScene::placeBGO(LevelBGO& bgoData)
 {
     if(bgoData.id <= 0) return;
 
@@ -121,9 +122,10 @@ LVL_Bgo *LevelScene::spawnBGO(LevelBGO bgoData)
     return bgo;
 }
 
-void LevelScene::placeNPC(LevelNPC npcData)
+void LevelScene::placeNPC(LevelNPC& npcData)
 {
-    if(npcData.id <= 0) return;
+    if(npcData.id <= 0)
+        return;
 
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;

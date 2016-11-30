@@ -445,7 +445,8 @@ bool LevelScene::init_items()
     //blocks
     for(int i = 0; i < data.blocks.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
 
         placeBlock(data.blocks[i]);
     }

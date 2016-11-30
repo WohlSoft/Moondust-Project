@@ -23,28 +23,16 @@
 #include <audio/pge_audio.h>
 #include <graphics/gl_renderer.h>
 
-LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
+void LVL_Block::construct()
 {
-    type = LVLBlock;
-    m_bodytype = Body_STATIC;
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
     animated = false;
     sizable = false;
     animator_ID = 0;
-    LEGACY_shape = 0;
-    LEGACY_shape_slope_angle_ratio = 0.0;
-    offset_x = 0.0;
-    offset_y = 0.0;
     m_isHidden = false;
     m_destroyed = false;
     setup = nullptr;
-    hitDirection = up;
-    fadeOffset = 0;
-    targetOffset = 0;
-    fade_step = 0;
-    fadeSpeed = 0;
-    manual_ticks = 0.0;
     taskToTransform = -1;
     taskToTransform_t = 0;
     transformedFromBlockID = -1ul;
@@ -52,13 +40,39 @@ LVL_Block::LVL_Block(LevelScene *_parent) : PGE_Phys_Object(_parent)
     _isInited = false;
 }
 
+LVL_Block::LVL_Block(LevelScene *_parent) :
+    PGE_Phys_Object(_parent)
+{
+    type = LVLBlock;
+    m_bodytype = Body_STATIC;
+    hitDirection = up;
+    fadeOffset = 0;
+    targetOffset = 0;
+    fade_step = 0;
+    fadeSpeed = 0;
+    manual_ticks = 0.0;
+    offset_x = 0.0;
+    offset_y = 0.0;
+    construct();
+}
+
 LVL_Block::~LVL_Block()
 {}
 
 
-void LVL_Block::init()
+void LVL_Block::init(bool force)
 {
-    if(_isInited) return;
+    if(_isInited && !force)
+        return;
+
+    if(!_isInited)
+        dataInitial = data;
+    else
+    if(force)
+    {
+        construct();//reset ALL values into initial state
+        data = dataInitial;
+    }
 
     _scene->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
@@ -263,22 +277,6 @@ void LVL_Block::transformTo_x(unsigned long id)
         m_danger[1] = Block_ALL;
         break;
     }
-
-    /*
-    this->LEGACY_shape = setup->setup.phys_shape;
-    if(LEGACY_shape==shape_tr_right_bottom)
-        shape_slope_angle_ratio=-(height()/width());
-    if(LEGACY_shape==shape_tr_left_bottom)
-        shape_slope_angle_ratio=(height()/width());
-    if(LEGACY_shape==shape_tr_left_top)
-        shape_slope_angle_ratio=(height()/width());
-    if(LEGACY_shape==shape_tr_right_top)
-        shape_slope_angle_ratio=-(height()/width());
-    */
-
-    //LEGACY_m_isRectangle=(setup->setup.phys_shape == 0);
-    //    if(setup->setup.algorithm==3)
-    //         ConfigManager::Animator_Blocks[int(animator_ID)].setFrames(1, -1);
 
     // Register switch block
     if(setup->setup.switch_Block)
@@ -707,6 +705,12 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(playHitSnd && (setup->setup.hit_sound_id > 0))
         PGE_Audio::playSound(setup->setup.hit_sound_id);
 
+    if(triggerEvent)
+    {
+        //Register block as "destroyed" to be able turn it into it's initial state
+        _scene->layers.registerItem(DESTROYED_LAYER_NAME, this);
+    }
+
     if(triggerEvent && (!data.event_hit.isEmpty()))
         _scene->events.triggerEvent(data.event_hit);
 
@@ -754,7 +758,7 @@ void LVL_Block::destroy(bool playEffect)
     m_destroyed = true;
     QString oldLayer = data.layer;
     _scene->layers.removeRegItem(data.layer, this);
-    data.layer = "Destroyed Blocks";
+    data.layer = DESTROYED_LAYER_NAME;
     _scene->layers.registerItem(data.layer, this);
 
     if(!data.event_destroy.isEmpty())
