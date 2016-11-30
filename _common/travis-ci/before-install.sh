@@ -43,10 +43,13 @@ then
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
-    brew install lftp
-    brew install coreutils
-    brew install binutils
-    brew install gnu-sed
+    brew install lftp coreutils binutils gnu-sed
+
+# Workaround for ElCapitan
+    if [ ! -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ];
+    then
+        ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+    fi
 
 # ==============================================================================
 # Making "_paths.sh" config file
