@@ -43,7 +43,9 @@ then
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
-    brew install lftp coreutils binutils gnu-sed
+    brew install coreutils binutils gnu-sed
+    # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra
+    brew install homebrew/boneyard/lftp
 
 # Workaround for ElCapitan
     if [ ! -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ];
