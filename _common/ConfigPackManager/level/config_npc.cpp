@@ -19,7 +19,6 @@
 #include "config_npc.h"
 #include <QSettings>
 #include <cmath>
-#include <tgmath.h>
 #include <PGE_File_Formats/npc_filedata.h>
 
 #include "../image_size.h"
@@ -117,7 +116,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
     frames = setup->value("frames", merge_with ? merge_with->frames : 1).toUInt();
     NumberLimiter::apply(frames, 1u);
     /****************Calculating of default frame height******************/
-    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(pow(2.0, static_cast<double>(framestyle))));
+    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
     /****************Calculating of default frame height**end*************/
     custom_physics_to_gfx = setup->value("physics-to-gfx", merge_with ? merge_with->custom_physics_to_gfx : true).toBool();
     gfx_h =                setup->value("gfx-height", merge_with ? merge_with->gfx_h : defGFX_h).toInt();

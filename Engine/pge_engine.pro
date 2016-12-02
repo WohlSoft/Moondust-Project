@@ -25,7 +25,7 @@ QT += core gui network widgets
 QT -= dbus declarative svg testlib opengl winextras
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0
-!macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
+!macx:!linux-ic*: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
 macx:  QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
