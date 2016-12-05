@@ -143,7 +143,8 @@ void LVL_LayerEngine::registerItem(QString layer, PGE_Phys_Object *item)
     //Register item in the layer
     Layer &lyr = m_layers[layer];
     lyr.m_members[reinterpret_cast<intptr_t>(item)] = item;
-    item->setVisible(lyr.m_vizible);
+    if(lyr.m_layerType == Layer::T_REGULAR)
+        item->setVisible(lyr.m_vizible);
 }
 
 void LVL_LayerEngine::removeRegItem(QString layer, PGE_Phys_Object *item)
@@ -181,11 +182,11 @@ void LVL_LayerEngine::processMoving(double tickTime)
     if(m_movingLayers.isEmpty())
         return;
     QVector<QString> remove_list;
-    for(QHash<QString, MovingLayer>::iterator it = m_movingLayers.begin();
-        it != m_movingLayers.end();
-        it++)
+    for(QHash<QString, MovingLayer>::iterator layerIt = m_movingLayers.begin();
+        layerIt != m_movingLayers.end();
+        layerIt++)
     {
-        MovingLayer &l = (*it);
+        MovingLayer &l = (*layerIt);
         for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++ )
         {
             PGE_Phys_Object* obj = it->second;
@@ -217,7 +218,7 @@ void LVL_LayerEngine::processMoving(double tickTime)
         }
         if( (l.m_speedX==0.0) && (l.m_speedY==0.0) )
         {
-            remove_list.push_back(it.key());
+            remove_list.push_back(layerIt.key());
         }
     }
     //Remove zero-speed layers
