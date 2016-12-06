@@ -432,7 +432,6 @@ SOURCES += \
     gme/Ym2413_Emu.cpp \
     gme/Ym2612_Emu.cpp \
     music_gme.c \
-    ADLMIDI/dbopl.cpp \
     music_midi_adl.c \
     ADLMIDI/adlmidi.cpp \
     ADLMIDI/adldata.cpp \
