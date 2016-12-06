@@ -690,7 +690,7 @@ class MIDIplay
             {
                 if(users.empty())
                     koff_time_until_neglible =
-                        std::max(koff_time_until_neglible - ms, -0x1FFFFFFFl);
+                        std::max(koff_time_until_neglible - ms, static_cast<int64_t>(-0x1FFFFFFFl));
                 else
                 {
                     koff_time_until_neglible = 0;
@@ -698,7 +698,7 @@ class MIDIplay
                     for(users_t::iterator i = users.begin(); i != users.end(); ++i)
                     {
                         i->second.kon_time_until_neglible =
-                            std::max(i->second.kon_time_until_neglible - ms, -0x1FFFFFFFl);
+                            std::max(i->second.kon_time_until_neglible - ms, static_cast<int64_t>(-0x1FFFFFFFl));
                         i->second.vibdelay += ms;
                     }
                 }
