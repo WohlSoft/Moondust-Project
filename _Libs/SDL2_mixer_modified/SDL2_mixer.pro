@@ -488,6 +488,7 @@ SOURCES += \
     timidity/resample_timidity.c \
     resample/my_resample.c \
     music_fluidsynth.c \
-    ADLMIDI/nukedopl3.c
+    ADLMIDI/nukedopl3.c \
+    ADLMIDI/dbopl.cpp
 
 

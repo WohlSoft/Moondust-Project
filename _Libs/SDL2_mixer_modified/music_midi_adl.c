@@ -191,7 +191,7 @@ void ADLMIDI_setvolume(struct MUSIC_MIDIADL *music, int volume)
 {
     if(music)
     {
-        music->volume=(int)round(128.0f*sqrt(((float)volume)*(1.f/128.f) ));
+        music->volume = (int)round(128.0*sqrt(((double)volume)*(1.0/128.0) ));
     }
 }
 
@@ -211,12 +211,12 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         }
 
         SDL_RWseek(src, 0, RW_SEEK_SET);
-        bytes = malloc(length);
+        bytes = malloc((size_t)length);
 
-        long bytes_l;
+        size_t bytes_l;
         unsigned char byte[1];
         spcsize=0;
-        while( (bytes_l=SDL_RWread(src, &byte, sizeof(unsigned char), 1))!=0)
+        while( (bytes_l = SDL_RWread(src, &byte, sizeof(Uint8), 1)) != 0)
         {
             ((unsigned char*)bytes)[spcsize] = byte[0];
             spcsize++;
@@ -309,13 +309,14 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     if( music->adlmidi == NULL ) return 0;
     if( music->playing == -1 ) return 0;
     if( len < 0 ) return 0;
-    int     srgArraySize = (int)ceil( (double)len / music->cvt.len_ratio );
-    short   buf[srgArraySize];
+    int srgArraySize = len * music->cvt.len_mult;
+    short* buf = (short*)SDL_malloc((size_t)srgArraySize);
     int srcLen = (int)((double)(len/2.0)/music->cvt.len_ratio);
 
     int gottenLen = adl_play( music->adlmidi, srcLen, buf );
     if( gottenLen <= 0 )
     {
+        free(buf);
         return 0;
     }
 
@@ -335,6 +336,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     } else {
         SDL_MixAudioFormat( stream, (Uint8*)buf, mixer.format, (Uint32)dest_len, music->volume );
     }
+    free(buf);
     return len-dest_len;
 }
 
