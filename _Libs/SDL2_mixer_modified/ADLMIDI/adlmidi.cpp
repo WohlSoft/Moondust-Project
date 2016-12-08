@@ -175,7 +175,7 @@ static const uint32_t DMX_volume_mapping_table[] =
     127, 127, 127, 127, 127, 127, 127, 127,
 };
 
-const uint8_t W9X_volume_mapping_table[32] =
+static const uint8_t W9X_volume_mapping_table[32] =
 {
     63, 63, 40, 36, 32, 28, 23, 21,
     19, 17, 15, 14, 13, 12, 11, 10,
