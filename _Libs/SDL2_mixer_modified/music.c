@@ -733,27 +733,27 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     if (strncmp((char *)magic, "Vgm ", 4) == 0) {
         return MUS_SPC;
     }
-    if (strncmp(magic, "\x1f\x8b", 2) == 0) {
+    if (strncmp((char *)magic, "\x1f\x8b", 2) == 0) {
         return MUS_SPC;
     }
 
     /* Detect some module files */
-    if(strncmp(extramagic, "Extended Module", 15) == 0) {
+    if(strncmp((char *)extramagic, "Extended Module", 15) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(extramagic, "ASYLUM Music Format V", 22) == 0) {
+    if(strncmp((char *)extramagic, "ASYLUM Music Format V", 22) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "Extreme", 7) == 0) {
+    if(strncmp((char *)magic, "Extreme", 7) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "IMPM", 4) == 0) {
+    if(strncmp((char *)magic, "IMPM", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "DBM0", 4) == 0) {
+    if(strncmp((char *)magic, "DBM0", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "DDMF", 4) == 0) {
+    if(strncmp((char *)magic, "DDMF", 4) == 0) {
         return MUS_MOD;
     }
     /* SMF files have the magic four bytes "RIFF" */
@@ -763,37 +763,37 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     {
         return MUS_MOD;
     }
-    if(strncmp(extramagic, "MAS_UTrack_V00", 14) == 0) {
+    if(strncmp((char *)extramagic, "MAS_UTrack_V00", 14) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(extramagic, "GF1PATCH110", 11) == 0) {
+    if(strncmp((char *)extramagic, "GF1PATCH110", 11) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "FAR=", 4) == 0) {
+    if(strncmp((char *)magic, "FAR=", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "MTM", 3) == 0) {
+    if(strncmp((char *)magic, "MTM", 3) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "MMD", 3) == 0) {
+    if(strncmp((char *)magic, "MMD", 3) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "PSM\x20", 4) == 0) {
+    if(strncmp((char *)magic, "PSM\x20", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "PTMF", 4) == 0) {
+    if(strncmp((char *)magic, "PTMF", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "MT20", 4) == 0) {
+    if(strncmp((char *)magic, "MT20", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "OKTA", 4) == 0) {
+    if(strncmp((char *)magic, "OKTA", 4) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "JN", 2) == 0) {
+    if(strncmp((char *)magic, "JN", 2) == 0) {
         return MUS_MOD;
     }
-    if(strncmp(magic, "if", 2) == 0) {
+    if(strncmp((char *)magic, "if", 2) == 0) {
         return MUS_MOD;
     }
 
@@ -2571,7 +2571,39 @@ void SDLCALLCC MIX_ADLMIDI_setSetDefaults()
     #endif
 }
 
+int SDLCALLCC MIX_ADLMIDI_getLogarithmicVolumes()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getLogarithmicVolumes();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
 
+void SDLCALLCC MIX_ADLMIDI_setLogarithmicVolumes(int lv)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setLogarithmicVolumes(lv);
+    #endif
+}
+
+int SDLCALLCC MIX_ADLMIDI_getVolumeModel()
+{
+    #ifdef USE_ADL_MIDI
+    return ADLMIDI_getVolumeModel();
+    #else
+    Mix_SetError("SDL2 Mixer X built without ADLMIDI support!");
+    return -1;
+    #endif
+}
+
+void SDLCALLCC MIX_ADLMIDI_setVolumeModel(int vm)
+{
+    #ifdef USE_ADL_MIDI
+    ADLMIDI_setVolumeModel(vm);
+    #endif
+}
 
 
 int SDLCALLCC MIX_SetMidiDevice(int device)

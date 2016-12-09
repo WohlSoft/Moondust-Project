@@ -94,6 +94,8 @@ static int adlmidi_tremolo      = 1;
 static int adlmidi_vibrato      = 1;
 static int adlmidi_scalemod     = 0;
 static int adlmidi_adlibdrums   = 0;
+static int adlmidi_logVolumes   = 0;
+static int adlmidi_volumeModel  = 0;
 
 int ADLMIDI_getBanksCount()
 {
@@ -154,6 +156,30 @@ void ADLMIDI_setScaleMod(int sc)
 {
     adlmidi_scalemod = sc;
 }
+
+int ADLMIDI_getLogarithmicVolumes()
+{
+    return adlmidi_logVolumes;
+}
+
+void ADLMIDI_setLogarithmicVolumes(int vm)
+{
+    adlmidi_logVolumes = vm;
+}
+
+int ADLMIDI_getVolumeModel()
+{
+    return adlmidi_volumeModel;
+}
+
+void ADLMIDI_setVolumeModel(int vm)
+{
+    adlmidi_volumeModel = vm;
+    if(vm < 0)
+        adlmidi_volumeModel = 0;
+}
+
+
 
 void ADLMIDI_setDefaults()
 {
@@ -243,6 +269,8 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         adl_setScaleModulators( adl_midiplayer, adlmidi_scalemod );
         adl_setPercMode( adl_midiplayer, adlmidi_adlibdrums );
         adl_setNumFourOpsChn( adl_midiplayer, tableOf_num4opChans[adlmidi_bank] );
+        adl_setLogarithmicVolumes( adl_midiplayer, adlmidi_logVolumes );
+        adl_setVolumeRangeModel( adl_midiplayer, adlmidi_volumeModel );
         adl_setNumCards( adl_midiplayer, 4 );
 
         int err = adl_openData( adl_midiplayer, bytes, spcsize );
@@ -379,3 +407,4 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
 }
 
 #endif
+

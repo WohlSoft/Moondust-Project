@@ -50,6 +50,10 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     {
         on_fmbank_currentIndexChanged(x);
     });
+    connect(ui->volumeModel, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this](int x)
+    {
+        on_volumeModel_currentIndexChanged(x);
+    });
     connect(ui->tremolo, &QCheckBox::clicked, this, [this](int x)
     {
         on_tremolo_clicked(x);
@@ -65,6 +69,10 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     connect(ui->adlibMode, &QCheckBox::clicked, this, [this](int x)
     {
         on_adlibMode_clicked(x);
+    });
+    connect(ui->logVolumes, &QCheckBox::clicked, this, [this](int x)
+    {
+        on_logVolumes_clicked(x);
     });
     QApplication::setOrganizationName(_COMPANY);
     QApplication::setOrganizationDomain(_PGE_URL);
@@ -103,6 +111,8 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 
     ui->fmbank->setCurrentIndex(setup.value("ADLMIDI-Bank-ID", 58).toInt());
     MIX_ADLMIDI_setBankID(ui->fmbank->currentIndex());
+    ui->volumeModel->setCurrentIndex(setup.value("ADLMIDI-VolumeModel", 0).toInt());
+    MIX_ADLMIDI_setVolumeModel(ui->volumeModel->currentIndex());
     ui->tremolo->setChecked(setup.value("ADLMIDI-Tremolo", true).toBool());
     MIX_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
     ui->vibrato->setChecked(setup.value("ADLMIDI-Vibrato", true).toBool());
@@ -111,6 +121,8 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MIX_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
     ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
     MIX_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
+    ui->logVolumes->setChecked(setup.value("ADLMIDI-LogarithmicVolumes", false).toBool());
+    MIX_ADLMIDI_setScaleMod(static_cast<int>(ui->logVolumes->isChecked()));
     ui->volume->setValue(setup.value("Volume", 128).toInt());
     m_prevTrackID = ui->trackID->value();
     ui->adlmidi_xtra->setVisible(false);
@@ -127,10 +139,12 @@ MusPlayer_Qt::~MusPlayer_Qt()
     setup.setValue("Window-Geometry", saveGeometry());
     setup.setValue("MIDI-Device", ui->mididevice->currentIndex());
     setup.setValue("ADLMIDI-Bank-ID", ui->fmbank->currentIndex());
+    setup.setValue("ADLMIDI-VolumeModel", ui->volumeModel->currentIndex());
     setup.setValue("ADLMIDI-Tremolo", ui->tremolo->isChecked());
     setup.setValue("ADLMIDI-Vibrato", ui->vibrato->isChecked());
     setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
+    setup.setValue("ADLMIDI-LogarithmicVolumes", ui->logVolumes->isChecked());
     setup.setValue("Volume", ui->volume->value());
     delete ui;
 }
@@ -402,10 +416,13 @@ void MusPlayer_Qt::on_resetDefaultADLMIDI_clicked()
     ui->vibrato->setChecked(true);
     ui->adlibMode->setChecked(false);
     ui->modulation->setChecked(false);
+    ui->logVolumes->setChecked(false);
     MIX_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
     MIX_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
     MIX_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
     MIX_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
+    MIX_ADLMIDI_setLogarithmicVolumes(static_cast<int>(ui->logVolumes->isChecked()));
+    on_volumeModel_currentIndexChanged(ui->volumeModel->currentIndex());
     on_fmbank_currentIndexChanged(ui->fmbank->currentIndex());
 }
 
