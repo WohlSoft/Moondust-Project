@@ -113,6 +113,7 @@ unix:{
 
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
+include($$PWD/../_common/Utils/Utils.pri)
 
 SOURCES += \
     _resources/resource.cpp \
@@ -177,7 +178,6 @@ SOURCES += \
     data_configs/obj_sound.cpp \
     audio/pge_audio.cpp \
     settings/global_settings.cpp \
-    common_features/maths.cpp \
     scenes/level/lvl_npc.cpp \
     controls/controller_joystick.cpp \
     scenes/world/wld_player_portrait.cpp \
@@ -351,7 +351,6 @@ HEADERS  += \
     audio/pge_audio.h \
     data_configs/obj_sound_roles.h \
     settings/global_settings.h \
-    common_features/maths.h \
     scenes/level/lvl_npc.h \
     controls/controller_joystick.h \
     controls/controller_key_map.h \
@@ -444,6 +443,7 @@ HEADERS  += \
     scenes/level/lvl_z_constants.h \
     data_configs/config_select_scene/scene_config_select.h \
     common_features/point_mover.h
+
 
 RESOURCES += \
     _resources/engine.qrc

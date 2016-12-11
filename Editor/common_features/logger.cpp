@@ -151,7 +151,7 @@ void LogWriter::LoadLogSettings()
 
 }
 
-void LogWriter::WriteToLog(PGE_LogLevel type, QString msg)
+void LogWriter::writeLog(PGE_LogLevel type, QString msg)
 {
     QString txt;
 
@@ -304,7 +304,7 @@ static  QMutex logger_mutex;
 void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
 {
     QMutexLocker muLocker(&logger_mutex); Q_UNUSED(muLocker);
-    LogWriter::WriteToLog(type, msg);
+    LogWriter::writeLog(type, msg);
 
     if(noConsole)
         return;

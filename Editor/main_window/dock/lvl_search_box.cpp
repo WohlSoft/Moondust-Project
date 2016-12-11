@@ -60,14 +60,14 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     lockReset = false;
 
     curSearchBlock.id = 0;
-    curSearchBlock.meta.index = -1; //When incrementing then starting with 0
+    curSearchBlock.meta.index = 0; //When incrementing then starting with 0
     curSearchBlock.npc_id = 0;
 
     curSearchBGO.id = 0;
-    curSearchBGO.meta.index = -1; //When incrementing then starting with 0
+    curSearchBGO.meta.index = 0; //When incrementing then starting with 0
 
     curSearchNPC.id = 0;
-    curSearchNPC.meta.index = -1; //When incrementing then starting with 0
+    curSearchNPC.meta.index = 0; //When incrementing then starting with 0
 
     currentSearches=0;
 
@@ -407,7 +407,7 @@ void LvlSearchBox::on_Find_Button_ResetBlock_clicked()
         currentSearches ^= SEARCH_BLOCK;
         ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
         ui->FindStartBlock->setText(tr("Search Block"));
-        curSearchBlock.meta.index = -1; //When incrementing then starting with 0
+        curSearchBlock.meta.index = 0; //When incrementing then starting with 0
     }
 }
 
@@ -423,7 +423,7 @@ void LvlSearchBox::on_Find_Button_ResetBGO_clicked()
         currentSearches ^= SEARCH_BGO;
         ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
         ui->FindStartBGO->setText(tr("Search BGO"));
-        curSearchBGO.meta.index = -1; //When incrementing then starting with 0
+        curSearchBGO.meta.index = 0; //When incrementing then starting with 0
     }
 }
 
@@ -445,7 +445,7 @@ void LvlSearchBox::on_Find_Button_ResetNPC_clicked()
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
         ui->FindStartNPC->setText(tr("Search NPC"));
-        curSearchNPC.meta.index = -1; //When incrementing then starting with 0
+        curSearchNPC.meta.index = 0; //When incrementing then starting with 0
     }
 }
 
@@ -493,10 +493,13 @@ void LvlSearchBox::resetNPCSearch()
 bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchBlock.meta.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchBlock.meta.index+1; i < gr.size(); ++i){
+    if(curSearchBlock.meta.index < (unsigned int)gr.size())
+    {
+        for(int i = curSearchBlock.meta.index; i < gr.size(); ++i)
+        {
             qDebug() << "Next Index: " << i;
-            if(gr[i]->data(ITEM_TYPE).toString()=="Block"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="Block")
+            {
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBlock->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->m_data.id == (unsigned int)curSearchBlock.id;
@@ -536,16 +539,19 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
         }
     }
     //end search
-    curSearchBlock.meta.index = -1; //When incrementing then starting with 0
+    curSearchBlock.meta.index = 0; //When incrementing then starting with 0
     return true;
 }
 
 bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchBGO.meta.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchBGO.meta.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(ITEM_TYPE).toString()=="BGO"){
+    if(curSearchBGO.meta.index < (unsigned int)gr.size())
+    {
+        for(int i = curSearchBGO.meta.index; i < gr.size(); ++i)
+        {
+            if(gr[i]->data(ITEM_TYPE).toString()=="BGO")
+            {
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBGO->isChecked()&&curSearchBGO.id!=0&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->m_data.id == (unsigned int)curSearchBGO.id;
@@ -556,7 +562,8 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
                 if(ui->Find_Check_PriorityBGO->isChecked()&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->m_data.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
                 }
-                if(toBeFound){
+                if(toBeFound)
+                {
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
                     {
                         i->setSelected(false);
@@ -570,15 +577,17 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
         }
     }
     //end search
-    curSearchBGO.meta.index = -1; //When incrementing then starting with 0
+    curSearchBGO.meta.index = 0; //When incrementing then starting with 0
     return true;
 }
 
 bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchNPC.meta.index+1 < (unsigned int)gr.size()){
-        for(int i = curSearchNPC.meta.index+1; i < gr.size(); ++i){
+    if(curSearchNPC.meta.index < (unsigned int)gr.size())
+    {
+        for(int i = curSearchNPC.meta.index; i < gr.size(); ++i)
+        {
             if(gr[i]->data(ITEM_TYPE).toString()=="NPC"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeNPC->isChecked()&&curSearchNPC.id!=0&&toBeFound){
@@ -643,7 +652,7 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
         }
     }
     //end search
-    curSearchNPC.meta.index = -1; //When incrementing then starting with 0
+    curSearchNPC.meta.index = 0; //When incrementing then starting with 0
     return true;
 }
 

@@ -186,13 +186,13 @@ void PGE_TextInputBox::render()
 {
     if(_page == 2)
     {
-        if(_textureUsed)
-            drawTexture(_sizeRect, 32, fader_opacity);
+        if(m_textureUsed)
+            drawTexture(_sizeRect, 32, m_faderOpacity);
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, fader_opacity);
+                                   bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, m_faderOpacity);
         }
 
         FontManager::printText(message, _sizeRect.left() + padding, _sizeRect.top() + padding, fontID,
@@ -202,21 +202,21 @@ void PGE_TextInputBox::render()
     }
     else
     {
-        if(_textureUsed)
+        if(m_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - (width + padding)*fader_opacity,
-                        _sizeRect.center().y() - (height + padding)*fader_opacity,
-                        _sizeRect.center().x() + (width + padding)*fader_opacity,
-                        _sizeRect.center().y() + (height + padding)*fader_opacity,
-                        32, fader_opacity);
+            drawTexture(_sizeRect.center().x() - (width + padding)*m_faderOpacity,
+                        _sizeRect.center().y() - (height + padding)*m_faderOpacity,
+                        _sizeRect.center().x() + (width + padding)*m_faderOpacity,
+                        _sizeRect.center().y() + (height + padding)*m_faderOpacity,
+                        32, m_faderOpacity);
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width + padding)*fader_opacity ,
-                                     _sizeRect.center().y() - (height + padding)*fader_opacity,
-                                     _sizeRect.center().x() + (width + padding)*fader_opacity,
-                                     _sizeRect.center().y() + (height + padding)*fader_opacity,
-                                     bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, fader_opacity);
+            GlRenderer::renderRectBR(_sizeRect.center().x() - (width + padding)*m_faderOpacity ,
+                                     _sizeRect.center().y() - (height + padding)*m_faderOpacity,
+                                     _sizeRect.center().x() + (width + padding)*m_faderOpacity,
+                                     _sizeRect.center().y() + (height + padding)*m_faderOpacity,
+                                     bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, m_faderOpacity);
         }
     }
 }
@@ -241,15 +241,15 @@ void PGE_TextInputBox::exec()
     while(running)
     {
         Uint32 start_render = SDL_GetTicks();
-        update(uTickf);
+        update(m_uTickf);
         PGE_BoxBase::render();
         render();
         GlRenderer::flush();
         GlRenderer::repaint();
 
-        if((!PGE_Window::vsync) && (uTick > static_cast<signed>(SDL_GetTicks() - start_render)))
+        if((!PGE_Window::vsync) && (m_uTick > static_cast<signed>(SDL_GetTicks() - start_render)))
         {
-            Uint32 delay = static_cast<Uint32>(uTick) - (SDL_GetTicks() - start_render);
+            Uint32 delay = static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render);
             assert(delay < 2000u);
             SDL_Delay(delay);
         }
@@ -265,13 +265,13 @@ void PGE_TextInputBox::processLoader(double ticks)
         PGE_Window::processEvents(event);
 
         if(event.type == SDL_QUIT)
-            fader_opacity = 1.0;
+            m_faderOpacity = 1.0;
     }
 
     updateControllers();
     tickFader(ticks);
 
-    if(fader_opacity >= 1.0f) _page++;
+    if(m_faderOpacity >= 1.0f) _page++;
 }
 
 void PGE_TextInputBox::processBox(double tickTime)
@@ -385,13 +385,13 @@ void PGE_TextInputBox::processUnLoader(double ticks)
         PGE_Window::processEvents(event);
 
         if(event.type == SDL_QUIT)
-            fader_opacity = 0.0;
+            m_faderOpacity = 0.0;
     }
 
     updateControllers();
     tickFader(ticks);
 
-    if(fader_opacity <= 0.0f) _page++;
+    if(m_faderOpacity <= 0.0f) _page++;
 }
 
 void PGE_TextInputBox::setInputText(QString text)
@@ -411,16 +411,16 @@ QString PGE_TextInputBox::inputText()
 
 void PGE_TextInputBox::updateControllers()
 {
-    if(parentScene != NULL)
+    if(m_parentScene != nullptr)
     {
-        if(parentScene->type() == Scene::Level)
+        if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
 
             if(s)
             {
-                s->tickAnimations(uTickf);
-                s->m_fader.tickFader(uTickf);
+                s->tickAnimations(m_uTickf);
+                s->m_fader.tickFader(m_uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
@@ -428,14 +428,14 @@ void PGE_TextInputBox::updateControllers()
                 keys = s->player1Controller->keys;
             }
         }
-        else if(parentScene->type() == Scene::World)
+        else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
 
             if(s)
             {
-                s->tickAnimations(uTickf);
-                s->m_fader.tickFader(uTickf);
+                s->tickAnimations(m_uTickf);
+                s->m_fader.tickFader(m_uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 keys = s->player1Controller->keys;

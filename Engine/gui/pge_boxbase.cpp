@@ -2,55 +2,58 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
 #include <common_features/graphics_funcs.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 
 PGE_BoxBase::PGE_BoxBase()
 {
-    construct(NULL);
+    construct(nullptr);
 }
 
-PGE_BoxBase::PGE_BoxBase(Scene *_parentScene)
+PGE_BoxBase::PGE_BoxBase(Scene *parentScene)
 {
-    construct(_parentScene);
+    construct(parentScene);
 }
 
 PGE_BoxBase::PGE_BoxBase(const PGE_BoxBase &bb)
 {
-    fader_opacity =  bb.fader_opacity;
-    target_opacity = bb.target_opacity;
-    fade_step =      bb.fade_step;
-    fadeSpeed =      bb.fadeSpeed;
-    manual_ticks =   bb.manual_ticks;
-    parentScene =    bb.parentScene;
-    uTickf =         bb.uTickf;
-    uTick =          bb.uTick;
-    _textureUsed =   bb._textureUsed;
-    styleTexture =   bb.styleTexture;
+    m_faderOpacity  =   bb.m_faderOpacity;
+    m_targetOpacity =   bb.m_targetOpacity;
+    m_fadeStep =        bb.m_fadeStep;
+    m_fadeSpeed =       bb.m_fadeSpeed;
+    m_manualTicks =     bb.m_manualTicks;
+    m_parentScene =     bb.m_parentScene;
+    m_uTickf =          bb.m_uTickf;
+    m_uTick =           bb.m_uTick;
+    m_textureUsed =     bb.m_textureUsed;
+    m_styleTexture =    bb.m_styleTexture;
 }
 
-void PGE_BoxBase::construct(Scene *_parentScene)
+void PGE_BoxBase::construct(Scene *parentScene)
 {
-    fader_opacity = 0.0;
-    fade_step = 0.02;
-    target_opacity = 0.0;
-    fadeSpeed = 10;
-    _textureUsed = false;
-    setParentScene(_parentScene);
+    m_faderOpacity = 0.0;
+    m_fadeStep = 0.02;
+    m_targetOpacity = 0.0;
+    m_fadeSpeed = 10;
+    m_textureUsed = false;
+    setParentScene(parentScene);
 }
 
 PGE_BoxBase::~PGE_BoxBase()
 {
-    if(_textureUsed)
-        GlRenderer::deleteTexture(styleTexture);
+    if(m_textureUsed)
+        GlRenderer::deleteTexture(m_styleTexture);
 }
 
-void PGE_BoxBase::setParentScene(Scene *_parentScene)
+void PGE_BoxBase::setParentScene(Scene *parentScene)
 {
-    parentScene = _parentScene;
+    if(parentScene == nullptr)
+        m_parentScene = PGE_Window::m_currentScene;// Use current scene by default
+    else
+        m_parentScene = parentScene;
 
-    if(!parentScene)
+    if(!m_parentScene)
         GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -62,8 +65,8 @@ void PGE_BoxBase::update(double)
 
 void PGE_BoxBase::render()
 {
-    if(parentScene)
-        parentScene->render();
+    if(m_parentScene)
+        m_parentScene->render();
     else
         GlRenderer::clearScreen();
 }
@@ -73,38 +76,39 @@ void PGE_BoxBase::render()
 /**************************Fader*******************************/
 void PGE_BoxBase::setFade(int speed, double target, double step)
 {
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    manual_ticks = speed;
+    m_fadeStep = fabs(step);
+    m_targetOpacity = target;
+    m_fadeSpeed = speed;
+    m_manualTicks = speed;
 }
 
 bool PGE_BoxBase::tickFader(double ticks)
 {
-    if(fadeSpeed < 1) return true; //Idling animation
+    if(m_fadeSpeed < 1)
+        return true; //Idling animation
 
-    manual_ticks -= fabs(ticks);
+    m_manualTicks -= std::max(ticks, 0.0);
 
-    while(manual_ticks <= 0.0)
+    while(m_manualTicks <= 0.0)
     {
         fadeStep();
-        manual_ticks += fadeSpeed;
+        m_manualTicks += m_fadeSpeed;
     }
 
-    return Maths::equals(fader_opacity, target_opacity);
+    return Maths::equals(m_faderOpacity, m_targetOpacity);
 }
 
 void PGE_BoxBase::fadeStep()
 {
-    if(fader_opacity < target_opacity)
-        fader_opacity += fade_step;
+    if(m_faderOpacity < m_targetOpacity)
+        m_faderOpacity += m_fadeStep;
     else
-        fader_opacity -= fade_step;
+        m_faderOpacity -= m_fadeStep;
 
-    if(fader_opacity > 1.0)
-        fader_opacity = 1.0;
-    else if(fader_opacity < 0.0)
-        fader_opacity = 0.0;
+    if(m_faderOpacity > 1.0)
+        m_faderOpacity = 1.0;
+    else if(m_faderOpacity < 0.0)
+        m_faderOpacity = 0.0;
 }
 /**************************Fader**end**************************/
 
@@ -113,26 +117,26 @@ void PGE_BoxBase::loadTexture(QString path)
 {
     if(path.isEmpty()) return;
 
-    if(_textureUsed)
+    if(m_textureUsed)
     {
         //remove old texture
-        GlRenderer::deleteTexture(styleTexture);
+        GlRenderer::deleteTexture(m_styleTexture);
     }
 
-    GlRenderer::loadTextureP(styleTexture, path);
+    GlRenderer::loadTextureP(m_styleTexture, path);
 
-    if(styleTexture.texture > 0)
-        _textureUsed = true;
+    if(m_styleTexture.texture > 0)
+        m_textureUsed = true;
 }
 
 void PGE_BoxBase::updateTickValue()
 {
-    uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
-    uTick = static_cast<int>(round(uTickf));
+    m_uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
+    m_uTick = static_cast<int>(round(m_uTickf));
 
-    if(uTick <= 0)    uTick = 1;
+    if(m_uTick <= 0)    m_uTick = 1;
 
-    if(uTickf <= 0.0) uTickf = 1.0;
+    if(m_uTickf <= 0.0) m_uTickf = 1.0;
 }
 
 void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border, float opacity)
@@ -147,9 +151,9 @@ void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int bord
 
 void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
 {
-    if(_textureUsed)
+    if(m_textureUsed)
     {
-        GlRenderer::BindTexture(&styleTexture);
+        GlRenderer::BindTexture(&m_styleTexture);
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
         int w = _rect.width();
         int h = _rect.height();
@@ -160,8 +164,8 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
         //Double size
         x2 = x << 1;
         y2 = y << 1;
-        int pWidth = styleTexture.w - x2; //Width of center piece
-        int pHeight = styleTexture.h - y2; //Height of center piece
+        int pWidth = m_styleTexture.w - x2; //Width of center piece
+        int pHeight = m_styleTexture.h - y2; //Height of center piece
         int fLnt = 0; // Free Lenght
         int fWdt = 0; // Free Width
         int dX = 0; //Draw Offset. This need for crop junk on small sizes
@@ -217,14 +221,14 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
 
             for(i = 0; i < totalW; i++)
             {
-                drawPiece(_rect, PGE_RectF(x + hc, h - y + dY, pWidth, y - dY), PGE_RectF(x, styleTexture.h - y + dY, pWidth, y - dY));
+                drawPiece(_rect, PGE_RectF(x + hc, h - y + dY, pWidth, y - dY), PGE_RectF(x, m_styleTexture.h - y + dY, pWidth, y - dY));
                 hc += pWidth;
             }
 
             fLnt = (w - x2) % pWidth;
 
             if(fLnt != 0)
-                drawPiece(_rect, PGE_RectF(x + hc, h - y + dY, fLnt, y - dY), PGE_RectF(x, styleTexture.h - y + dY, fLnt, y - dY));
+                drawPiece(_rect, PGE_RectF(x + hc, h - y + dY, fLnt, y - dY), PGE_RectF(x, m_styleTexture.h - y + dY, fLnt, y - dY));
         }
 
         //R Draw right border
@@ -234,14 +238,14 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
 
             for(i = 0; i < totalH; i++)
             {
-                drawPiece(_rect, PGE_RectF(w - x + dX, y + hc, x - dX, pHeight), PGE_RectF(styleTexture.w - x + dX, y, x - dX, pHeight));
+                drawPiece(_rect, PGE_RectF(w - x + dX, y + hc, x - dX, pHeight), PGE_RectF(m_styleTexture.w - x + dX, y, x - dX, pHeight));
                 hc += pHeight;
             }
 
             fLnt = (h - y2) % pHeight;
 
             if(fLnt != 0)
-                drawPiece(_rect, PGE_RectF(w - x + dX, y + hc, x - dX, fLnt), PGE_RectF(styleTexture.w - x + dX, y, x - dX, fLnt));
+                drawPiece(_rect, PGE_RectF(w - x + dX, y + hc, x - dX, fLnt), PGE_RectF(m_styleTexture.w - x + dX, y, x - dX, fLnt));
         }
 
         //C Draw center
@@ -291,11 +295,11 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
         //1 Left-top
         drawPiece(_rect, PGE_RectF(0, 0, x - dX, y - dY), PGE_RectF(0, 0, x - dX, y - dY));
         //2 Right-top
-        drawPiece(_rect, PGE_RectF(w - x + dX, 0, x - dX, y - dY), PGE_RectF(styleTexture.w - x + dX, 0, x - dX, y - dY));
+        drawPiece(_rect, PGE_RectF(w - x + dX, 0, x - dX, y - dY), PGE_RectF(m_styleTexture.w - x + dX, 0, x - dX, y - dY));
         //3 Right-bottom
-        drawPiece(_rect, PGE_RectF(w - x + dX, h - y + dY, x - dX, y - dY), PGE_RectF(styleTexture.w - x + dX, styleTexture.h - y + dY, x - dX, y - dY));
+        drawPiece(_rect, PGE_RectF(w - x + dX, h - y + dY, x - dX, y - dY), PGE_RectF(m_styleTexture.w - x + dX, m_styleTexture.h - y + dY, x - dX, y - dY));
         //4 Left-bottom
-        drawPiece(_rect, PGE_RectF(0, h - y + dY, x - dX, y - dY), PGE_RectF(0, styleTexture.h - y + dY, x - dX, y - dY));
+        drawPiece(_rect, PGE_RectF(0, h - y + dY, x - dX, y - dY), PGE_RectF(0, m_styleTexture.h - y + dY, x - dX, y - dY));
         GlRenderer::UnBindTexture();
         //glDisable(GL_TEXTURE_2D);
     }
@@ -304,10 +308,10 @@ void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border, float opacity)
 void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
 {
     PGE_RectF tx;
-    tx.setLeft(texture.left() / this->styleTexture.w);
-    tx.setRight(texture.right() / this->styleTexture.w);
-    tx.setTop(texture.top() / this->styleTexture.h);
-    tx.setBottom(texture.bottom() / this->styleTexture.h);
+    tx.setLeft(texture.left() / this->m_styleTexture.w);
+    tx.setRight(texture.right() / this->m_styleTexture.w);
+    tx.setTop(texture.top() / this->m_styleTexture.h);
+    tx.setBottom(texture.bottom() / this->m_styleTexture.h);
     GlRenderer::renderTextureCur(static_cast<float>(target.x() + block.x()),
                                  static_cast<float>(target.y() + block.y()),
                                  static_cast<float>(block.width()),

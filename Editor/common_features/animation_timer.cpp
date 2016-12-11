@@ -1,5 +1,5 @@
 #include "animation_timer.h"
-#include <tgmath.h>
+#include <cmath>
 
 AnimationTimer::AnimationTimer(QObject *parent) : QObject(parent)
 {
@@ -9,7 +9,9 @@ AnimationTimer::AnimationTimer(QObject *parent) : QObject(parent)
 
 void AnimationTimer::registerAnimation(TimedAnimation *animator)
 {
-    if(animator->frame_delay <= 0) return;
+    if(animator->frame_delay <= 0)
+        return;
+
     registered_animators.push_back(animator);
 }
 
@@ -37,7 +39,8 @@ void AnimationTimer::processTime()
 {
     TimedAnimation **data = registered_animators.data();
     int count            = registered_animators.size();
-    float interval = (float)timer.interval();
+    double interval = static_cast<double>(timer.interval());
+
     for(int i=0; i<count; i++)
         (*(data++))->processTimer(interval);
 }
@@ -45,19 +48,21 @@ void AnimationTimer::processTime()
 
 
 
-TimedAnimation::TimedAnimation() : ticks_left(0.f), frame_delay(0.f) {}
+TimedAnimation::TimedAnimation() : ticks_left(0.0), frame_delay(0.0) {}
 
 TimedAnimation::TimedAnimation(const TimedAnimation &a) :
     ticks_left(a.ticks_left), frame_delay(a.frame_delay) {}
 
-
-void TimedAnimation::processTimer(float ticks)
+void TimedAnimation::processTimer(double ticks)
 {
-    if(frame_delay<1) return; //Idling animation
-    ticks_left -= fabs(ticks);
-        while(ticks_left <= 0.0f)
-        {
-            nextFrame();
-            ticks_left+=frame_delay;
-        }
+    if(frame_delay < 1)
+        return; //Idling animation
+
+    ticks_left -= std::fabs(ticks);
+
+    while(ticks_left <= 0.0)
+    {
+        nextFrame();
+        ticks_left += frame_delay;
+    }
 }

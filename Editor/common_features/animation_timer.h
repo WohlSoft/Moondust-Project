@@ -11,9 +11,9 @@ public:
     TimedAnimation();
     virtual ~TimedAnimation() {}
     TimedAnimation(const TimedAnimation&a);
-    void processTimer(float ticks);
-    float  ticks_left;
-    float  frame_delay;
+    void processTimer(double ticks);
+    double  ticks_left;
+    double  frame_delay;
     virtual void resetFrame() {}
     virtual void nextFrame() {}
 };

@@ -18,7 +18,7 @@
 
 #include "../lvl_npc.h"
 #include "../../scene_level.h"
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <data_configs/config_manager.h>
 
 

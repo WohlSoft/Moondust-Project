@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QImage>
 #include <QCloseEvent>
+#include <Utils/maths.h>
 #ifdef Q_OS_ANDROID
 #include <QPixmap>
 #include <QDesktopWidget>
@@ -11,8 +12,6 @@
 #define RatioWidth
 #define RatioHeight
 #endif
-
-#include <tgmath.h>
 
 EditorSpashScreen::EditorSpashScreen()
 {
@@ -65,7 +64,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(QBrush(Qt::green));
     painter->setPen(Qt::transparent);
     painter->drawRect(0, rect().height()-4,
-                        (int)round(double(rect().width()) *( (double)_percents/100.0)), 2);
+                        Maths::iRound(double(rect().width()) *( (double)_percents/100.0)), 2);
 
     QPainterPath path;
     painter->setPen(Qt::white);

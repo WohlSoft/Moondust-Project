@@ -481,12 +481,12 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
 
     if(Direction <= 0)
     {
-        int frame=0;
+        int frame = 0;
         if(merged.setup.custom_animate)
         {
-            frame=merged.setup.custom_ani_fl;
+            frame = merged.setup.custom_ani_fl;
         }
-        return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
+        return merged.cur_image->copy(0, frame*gfxH, merged.cur_image->width(), gfxH );
     }
     else
     {
@@ -494,7 +494,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
         int framesQ;
         if(merged.setup.custom_animate)
         {
-            frame=merged.setup.custom_ani_fr;
+            frame = merged.setup.custom_ani_fr;
         }
         else
         {
@@ -512,7 +512,6 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
             default:
                 break;
             }
-
         }
         return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
     }

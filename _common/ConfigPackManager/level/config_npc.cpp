@@ -149,6 +149,16 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
         CSV2NumArray(tmp, frames_left,  0);
         tmp = setup->value("ani-frames-right", common).toString().remove(' '); //right direction
         CSV2NumArray(tmp, frames_right, 0);
+        if(!common.isEmpty())
+        {
+            int framesOffset = ((framestyle > 0)? 1 : 0) *frames;
+            for(int i=0; i < frames_right.size(); i++)
+                frames_right[i] += framesOffset;
+        }
+        custom_ani_fl = frames_left.front();
+        custom_ani_el = frames_left.back();
+        custom_ani_fr = frames_right.front();
+        custom_ani_er = frames_right.back();
     }
 
     /*************Build custom animation settings**end**********/

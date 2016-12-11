@@ -22,7 +22,7 @@
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <cmath>
 
 #ifndef SDL_MAIN_HANDLED

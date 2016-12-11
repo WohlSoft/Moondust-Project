@@ -19,7 +19,7 @@
 #include "wld_pathopener.h"
 #include "wld_tilebox.h"
 #include <audio/pge_audio.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 
 #include "../scene_world.h"
 

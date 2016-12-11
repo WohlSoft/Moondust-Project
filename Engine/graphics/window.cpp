@@ -26,7 +26,7 @@
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-#include <QtDebug>
+Scene* PGE_Window::m_currentScene = nullptr;
 
 int PGE_Window::Width = 800;
 int PGE_Window::Height = 600;

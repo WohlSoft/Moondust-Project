@@ -20,13 +20,16 @@
 #include <QString>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
 
 void Scene::construct()
 {
+    if(PGE_Window::m_currentScene == nullptr)
+        PGE_Window::m_currentScene = this;//Register this scene as current global
+
     m_messages.m_scene = this;
     m_fader.setFull();
     m_fader.setFade(10, 0.0, 0.02); //!< Fade in scene when it was started
@@ -65,6 +68,9 @@ Scene::Scene(TypeOfScene _type)
 Scene::~Scene()
 {
     GlRenderer::clearScreen();
+    //Reset scene pointer only if this scene was current
+    if(PGE_Window::m_currentScene == this)
+        PGE_Window::m_currentScene = nullptr;
 }
 
 void Scene::onKeyInput(int)
