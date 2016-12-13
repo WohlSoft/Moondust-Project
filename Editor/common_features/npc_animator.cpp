@@ -196,7 +196,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
         switch(frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesCountOneSide = setup.setup.frames * 4;
+            framesCountOneSide = (int)setup.setup.frames * 4;
             //left
             frameFirstL = 0;
             frameLastL = (int)(framesCountOneSide - (framesCountOneSide / 4) * 3) - 1;
@@ -206,7 +206,7 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
             break;
 
         case 1: //Left-Right sprite
-            framesCountOneSide = setup.setup.frames * 2;
+            framesCountOneSide = (int)setup.setup.frames * 2;
             //left
             frameFirstL = 0;
             frameLastL = (int)(framesCountOneSide / 2) - 1;
