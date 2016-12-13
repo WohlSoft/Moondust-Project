@@ -4,22 +4,22 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="214"/>
+        <location filename="../common_features/crash_handler.cpp" line="215"/>
         <source>Unhandled exception!</source>
         <translation>Необработанное исключение!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="216"/>
+        <location filename="../common_features/crash_handler.cpp" line="217"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>Движок аварийно завершился в связи с получением необработанного исключения!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="228"/>
+        <location filename="../common_features/crash_handler.cpp" line="229"/>
         <source>Out of memory!</source>
         <translation>Недостаточно памяти!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="230"/>
+        <location filename="../common_features/crash_handler.cpp" line="231"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>Движок аварийно завершился в связи с переполнением памяти!
 Попробуйте закрыть другие приложения и перезапустить игру.</translation>
@@ -34,63 +34,63 @@
         <translation type="vanished">Движок был убит сумасшедшим маньяком :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="265"/>
+        <location filename="../common_features/crash_handler.cpp" line="267"/>
         <source>Time out!</source>
         <translation>Время вышло!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="267"/>
+        <location filename="../common_features/crash_handler.cpp" line="269"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="312"/>
+        <location filename="../common_features/crash_handler.cpp" line="314"/>
         <source>Physical memory address error!</source>
         <translation>Неверный физический адрес памяти!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="314"/>
+        <location filename="../common_features/crash_handler.cpp" line="316"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>Движок аварийно завершился в связи с ошибочным фищическим адресом памяти</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="331"/>
+        <location filename="../common_features/crash_handler.cpp" line="333"/>
         <source>Wrong CPU Instruction!</source>
         <translation>Неверная инструкция процессора!</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="333"/>
+        <location filename="../common_features/crash_handler.cpp" line="335"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессора</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="387"/>
+        <location filename="../common_features/crash_handler.cpp" line="390"/>
         <source>Wrong arithmetical operation</source>
         <translation>Неверная арифметическая операция</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="389"/>
+        <location filename="../common_features/crash_handler.cpp" line="392"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="401"/>
+        <location filename="../common_features/crash_handler.cpp" line="404"/>
         <source>Aborted</source>
         <translation>Прервано</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="403"/>
+        <location filename="../common_features/crash_handler.cpp" line="406"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>Работа движка была прервана в связи с критической ошибкой.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="449"/>
+        <location filename="../common_features/crash_handler.cpp" line="451"/>
         <source>Segmentation fault</source>
         <translation>Ошибка сегментирования</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="453"/>
+        <location filename="../common_features/crash_handler.cpp" line="455"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -103,55 +103,55 @@ and retry your recent action to take more detail info.</oldsource>
 спровоцировавшие эту ошибку.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="462"/>
+        <location filename="../common_features/crash_handler.cpp" line="464"/>
         <source>Interrupt</source>
         <translation>Прерывание</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="464"/>
+        <location filename="../common_features/crash_handler.cpp" line="466"/>
         <source>Engine has been interrupted</source>
         <oldsource>Engine has interrupted</oldsource>
         <translation>Работа движка была прервана</translation>
     </message>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="361"/>
+        <location filename="../gui/pge_msgbox.cpp" line="370"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="376"/>
+        <location filename="../gui/pge_msgbox.cpp" line="385"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="391"/>
+        <location filename="../gui/pge_msgbox.cpp" line="400"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="406"/>
+        <location filename="../gui/pge_msgbox.cpp" line="415"/>
         <source>Fatal error</source>
         <oldsource>Fatal</oldsource>
         <translation>Авария</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="389"/>
+        <location filename="../main.cpp" line="390"/>
         <source>Unable to init SDL!</source>
         <translation>Невозможно инициализировать SDL!</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="444"/>
+        <location filename="../main.cpp" line="445"/>
         <source>Choose a game to test:</source>
         <translation>Выберите игру для теста:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="665"/>
-        <location filename="../main.cpp" line="815"/>
+        <location filename="../main.cpp" line="666"/>
+        <location filename="../main.cpp" line="816"/>
         <source>No opened files</source>
         <translation>Нет открытых файлов</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="680"/>
+        <location filename="../main.cpp" line="681"/>
         <source>ERROR:
 Fail to start world map
 
@@ -162,26 +162,26 @@ Fail to start world map
 %1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="698"/>
+        <location filename="../main.cpp" line="699"/>
         <source>World map was closed with error.
 %1</source>
         <translation>Карта мира завершилась с ошибкой
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="715"/>
+        <location filename="../main.cpp" line="716"/>
         <source>Start level
 %1</source>
         <translation>Запуск уровня:
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="717"/>
+        <location filename="../main.cpp" line="718"/>
         <source>Type an exit code (signed integer)</source>
         <translation>Введите код выхода (знаковое целое)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="892"/>
+        <location filename="../main.cpp" line="893"/>
         <source>Warp exit
 
 Exit into:
@@ -202,7 +202,7 @@ Enter to: %2</oldsource>
 Входной проход №: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="951"/>
+        <location filename="../main.cpp" line="952"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Уровень завершился с ошибкой.
