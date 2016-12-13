@@ -156,7 +156,12 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
         #ifdef Q_OS_WIN
-        m_luna->initLunaMenu(this, ui->menuTest, ui->action_Start_Engine, ui->action_doTest);
+        m_luna->initLunaMenu(this,
+                             ui->menuTest,
+                             ui->action_Start_Engine,
+                             ui->action_doTest,
+                             ui->action_doSafeTest,
+                             ui->action_Start_Engine);
         #endif
 
         splash.progressTitle(tr("Initializing dock widgets..."));

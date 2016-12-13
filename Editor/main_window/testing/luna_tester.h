@@ -55,14 +55,22 @@ public:
     //! Pointer to main window
     MainWindow* m_mw;
     //! List of registered menu items
-    QAction* m_menuItems[4];
+    QAction* m_menuItems[5];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
      * @param mainmenu Menu where insert LunaTester
      * @param insert_before Action where is need to insert LunaTester menu
+     * @param defaultTestAction pointer to default test launcher (run interprocessing test)
+     * @param secondaryTestAction pointer to second test launcher (run test of saved file)
+     * @param startEngineAction pointer to engine launcher
      */
-    void initLunaMenu(MainWindow *mw, QMenu* mainmenu, QAction* insert_before, QAction *defaultTestAction);
+    void initLunaMenu(MainWindow*   mw,
+                      QMenu*        mainmenu,
+                      QAction*      insert_before,
+                      QAction*      defaultTestAction,
+                      QAction*      secondaryTestAction,
+                      QAction*      startEngineAction);
     /**
      * @brief Refresh menu text
      */
@@ -109,6 +117,12 @@ private:
      * @param isUntitled Is untitled level (just created but not saved)
      */
     void lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled);
+
+    /**
+     * @brief Start legacy engine in game mode
+     */
+    void lunaRunGame();
+
     /**
      * @brief Process checkpoints resetting
      */
