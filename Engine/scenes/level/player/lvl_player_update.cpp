@@ -577,10 +577,14 @@ void LVL_Player::update(double tickTime)
         }
         else
         {
+            //Add extra pixel limit to allow touching instant warps placed offscreen
+            double leftBorder = sBox.left() - 1.0;
+            double rightBorder = sBox.right() + 1.0;
+
             //Prevent moving of player away from screen
-            if(posX() < sBox.left())
+            if(posX() < leftBorder)
             {
-                setPosX(sBox.left());
+                setPosX(leftBorder);
 
                 if(sAS.speedX == 0.0)
                     setSpeedX(0.0);
@@ -592,9 +596,9 @@ void LVL_Player::update(double tickTime)
                         kill(DEAD_killed);
                 }
             }
-            else if(posX() + m_width_registered > sBox.right())
+            else if(posX() + m_width_registered > rightBorder)
             {
-                setPosX(sBox.right() - m_width_registered);
+                setPosX(rightBorder - m_width_registered);
 
                 if(sAS.speedX == 0.0)
                     setSpeedX(0.0);
@@ -617,7 +621,8 @@ void LVL_Player::update(double tickTime)
     }*/
     processWarpChecking();
 
-    if(_doSafeSwitchCharacter) setCharacter(characterID, stateID);
+    if(_doSafeSwitchCharacter)
+        setCharacter(characterID, stateID);
 
     try
     {

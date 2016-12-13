@@ -25,7 +25,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
 #include <gui/pge_msgbox.h>

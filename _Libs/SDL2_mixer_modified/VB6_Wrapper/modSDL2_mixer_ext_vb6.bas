@@ -421,6 +421,12 @@ Public Declare Sub MIX_Timidity_addToPathList Lib "SDL2MixerVB.dll" (ByVal path 
 
 
 '/* ADLMIDI Setup functions */
+'int    MIX_ADLMIDI_getTotalBanks();
+Public Declare Function MIX_ADLMIDI_getTotalBanks Lib "SDL2MixerVB.dll" () As Long
+'const char *const* MIX_ADLMIDI_getBankNames();
+'const char *MIX_ADLMIDI_getBankName(int bankID)
+Public Declare Function MIX_ADLMIDI_getBankName Lib "SDL2MixerVB.dll" (ByVal bankID As Long) As String
+
 'int  MIX_ADLMIDI_getBankID();
 Public Declare Function MIX_ADLMIDI_getBankID Lib "SDL2MixerVB.dll" () As Long
 'void MIX_ADLMIDI_setBankID(int bnk);

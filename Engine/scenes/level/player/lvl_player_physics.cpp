@@ -395,9 +395,9 @@ void LVL_Player::processContacts()
     {
         LVL_Block *candidate = nullptr;
 
-        for(/*unsigned*/ int bump = 0; bump < blocks_to_bounce_bottom.size(); bump++)
+        for(/*unsigned*/ int bumpI = 0; bumpI < blocks_to_bounce_bottom.size(); bumpI++)
         {
-            LVL_Block *x = blocks_to_bounce_bottom[bump];
+            LVL_Block *x = blocks_to_bounce_bottom[bumpI];
             assert(x);
 
             if((x->m_blocked[m_filterID]&Block_TOP) == 0)
@@ -495,9 +495,9 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 {
     PGE_Phys_Object *candidate = nullptr;
 
-    for(unsigned int bump = 0; bump < blocksHit.size(); bump++)
+    for(unsigned int bumpI = 0; bumpI < blocksHit.size(); bumpI++)
     {
-        PGE_Phys_Object *x = blocksHit[bump];
+        PGE_Phys_Object *x = blocksHit[bumpI];
 
         if((x->m_blocked[m_filterID]&Block_BOTTOM) == 0)
             continue;

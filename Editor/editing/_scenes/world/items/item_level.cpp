@@ -363,6 +363,9 @@ void ItemLevel::arrayApply()
         }
     }
 
+    //Mark world map as modified
+    m_scene->m_data->meta.modified = true;
+
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
 }
@@ -390,6 +393,9 @@ void ItemLevel::removeFromArray()
             m_scene->m_data->levels.removeAt(i); break;
         }
     }
+
+    //Mark world map as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 void ItemLevel::returnBack()

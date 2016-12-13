@@ -24,17 +24,14 @@
 #include <common_features/rect.h>
 #include "render_base.h"
 
+#ifndef SDL_MAIN_HANDLED
+#define SDL_MAIN_HANDLED
+#endif
+#include <SDL2/SDL_rect.h>
+
 struct SDL_Surface;
 struct SDL_Renderer;
 struct SDL_Texture;
-
-#ifndef _SDL_rect_h
-typedef struct SDL_Rect
-{
-    int x, y;
-    int w, h;
-} SDL_Rect;
-#endif
 
 class Render_SW_SDL : public Render_Base
 {

@@ -472,6 +472,9 @@ void ItemBGO::arrayApply()
         }
     }
 
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
+
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -500,6 +503,9 @@ void ItemBGO::removeFromArray()
             m_scene->m_data->bgo.removeAt(i); break;
         }
     }
+
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 void ItemBGO::returnBack()

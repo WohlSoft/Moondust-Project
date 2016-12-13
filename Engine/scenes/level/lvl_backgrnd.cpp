@@ -17,7 +17,7 @@
  */
 
 #include <data_configs/config_manager.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <graphics/graphics.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>

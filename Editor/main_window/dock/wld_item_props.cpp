@@ -37,7 +37,7 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     ui(new Ui::WLD_ItemProps)
 {
     setVisible(false);
-    setAttribute(Qt::WA_ShowWithoutActivating);
+    //setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     wld_tools_lock=false;
 
@@ -45,6 +45,8 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     int GOffset=10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, &QDockWidget::visibilityChanged, mw()->ui->action_Placing_ShowProperties, &QAction::setChecked);
+    mw()->ui->action_Placing_ShowProperties->setChecked(isVisible());
     setFloating(true);
     setGeometry(
                 mwg.right() - width() - GOffset,
@@ -65,14 +67,7 @@ void WLD_ItemProps::re_translate()
     WldLvlExitTypeListReset();
 }
 
-void WLD_ItemProps::on_WLD_ItemProps_visibilityChanged(bool visible)
-{
-    mw()->ui->action_Placing_ShowProperties->setChecked(visible);
-}
-
-
-
-void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem)
+void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem, bool dontShow)
 {
     wld_tools_lock=true;
 
@@ -141,19 +136,17 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem)
                 }
             }
             ui->WLD_PROPS_ExitBottom->setCurrentIndex( level.bottom_exit+1 );
-
-            mw()->ui->action_Placing_ShowProperties->setChecked(true);
-            setVisible(true);
-            show();
-            raise();
             wld_tools_lock=false;
-
+            if(!dontShow)
+            {
+                show();
+                raise();
+            }
             break;
         }
     case -1: //Nothing to edit
     default:
         hide();
-        mw()->ui->action_Placing_ShowProperties->setChecked(false);
     }
     wld_tools_lock=false;
 }
@@ -161,7 +154,6 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem)
 void WLD_ItemProps::WldItemProps_hide()
 {
     hide();
-    mw()->ui->action_Placing_ShowProperties->setChecked(false);
 }
 
 

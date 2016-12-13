@@ -26,7 +26,7 @@ public:
     };
 
     PGE_BoxBase();
-    PGE_BoxBase(Scene *_parentScene = 0);
+    PGE_BoxBase(Scene *parentScene = 0);
     PGE_BoxBase(const PGE_BoxBase &bb);
     virtual ~PGE_BoxBase();
 
@@ -37,14 +37,14 @@ public:
     virtual void render();
 
     /**************Fader**************/
-    double fader_opacity;
-    double target_opacity;
-    double fade_step;
-    int fadeSpeed;
-    double manual_ticks;
-    void setFade(int speed, double target, double step);
-    bool tickFader(double ticks);
-    void fadeStep();
+    double  m_faderOpacity;
+    double  m_targetOpacity;
+    double  m_fadeStep;
+    int     m_fadeSpeed;
+    double  m_manualTicks;
+    void    setFade(int speed, double target, double step);
+    bool    tickFader(double ticks);
+    void    fadeStep();
     /**************Fader**************/
 
     void loadTexture(QString path);
@@ -52,16 +52,16 @@ public:
     void updateTickValue();
 
 protected:
-    Scene * parentScene;
-    void construct(Scene *_parentScene = 0);
-    double uTickf;
-    int    uTick;
+    Scene * m_parentScene;
+    void construct(Scene *parentScene = 0);
+    double m_uTickf;
+    int    m_uTick;
 
     void drawTexture(int left, int top, int right, int bottom, int border=32, float opacity=1.0f);
     void drawTexture(PGE_Rect _rect, int border=32, float opacity=1.0f);
-    bool _textureUsed;
+    bool m_textureUsed;
     void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
-    PGE_Texture styleTexture;
+    PGE_Texture m_styleTexture;
 };
 
 #endif // PGE_BOXBASE_H

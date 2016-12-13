@@ -33,7 +33,6 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
-
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
@@ -41,18 +40,16 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionBookmarkBox, SLOT(setChecked(bool)));
     setFloating(true);
     setGeometry(
-                mwg.right() - width() - GOffset,
-                mwg.y()+120,
-                width(),
-                height()
-                );
-
-    connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
-            this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
-
+        mwg.right() - width() - GOffset,
+        mwg.y() + 120,
+        width(),
+        height()
+    );
+    connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)),
+            this, SLOT(DragAndDroppedBookmark(QModelIndex, int, int, QModelIndex, int)));
     m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
-          addState(this, &m_lastVisibilityState);
+    addState(this, &m_lastVisibilityState);
 }
 
 BookmarksBox::~BookmarksBox()
@@ -70,12 +67,13 @@ void BookmarksBox::re_translate()
 void MainWindow::on_actionBookmarkBox_triggered(bool checked)
 {
     dock_BookmarksBox->setVisible(checked);
+
     if(checked) dock_BookmarksBox->raise();
 }
 
 void BookmarksBox::on_bookmarkAdd_clicked()
 {
-    QListWidgetItem * item;
+    QListWidgetItem *item;
     item = new QListWidgetItem;
     item->setText("New Bookmark");
     item->setFlags(item->flags() |
@@ -83,39 +81,41 @@ void BookmarksBox::on_bookmarkAdd_clicked()
                    Qt::ItemIsDragEnabled |
                    Qt::ItemIsEnabled |
                    Qt::ItemIsSelectable);
-    item->setData(Qt::UserRole+1, true); //x is init
-    item->setData(Qt::UserRole+2, true); //y is init
+    item->setData(Qt::UserRole + 1, true); //x is init
+    item->setData(Qt::UserRole + 2, true); //y is init
     ui->bookmarkList->addItem(item);
     ui->bookmarkList->setFocus();
-    ui->bookmarkList->scrollToItem( item );
-    ui->bookmarkList->editItem( item );
+    ui->bookmarkList->scrollToItem(item);
+    ui->bookmarkList->editItem(item);
 }
 
 void BookmarksBox::on_bookmarkList_itemChanged(QListWidgetItem *item)
 {
-    if(item->data(Qt::UserRole+1).type() == QVariant::Type::Bool ||
-            item->data(Qt::UserRole+2).type() == QVariant::Type::Bool){
-
+    if(
+        (item->data(Qt::UserRole + 1).type() == QVariant::Type::Bool) ||
+        (item->data(Qt::UserRole + 2).type() == QVariant::Type::Bool)
+    )
+    {
         qreal x, y;
-        if(mw()->getCurrentSceneCoordinates(x,y))
+
+        if(mw()->getCurrentSceneCoordinates(x, y))
         {
-            item->setData(Qt::UserRole+1, x);
-            item->setData(Qt::UserRole+2, y);
+            item->setData(Qt::UserRole + 1, x);
+            item->setData(Qt::UserRole + 2, y);
         }
         else
-        {
             delete item;
-        }
     }
+
     updateBookmarkBoxByList();
 }
 
 void BookmarksBox::on_bookmarkRemove_clicked()
 {
-    if(ui->bookmarkList->selectedItems().isEmpty()) return;
+    if(ui->bookmarkList->selectedItems().isEmpty())
+        return;
 
     delete ui->bookmarkList->selectedItems()[0];
-
     updateBookmarkBoxByList();
 }
 
@@ -123,22 +123,27 @@ void BookmarksBox::on_bookmarkGoto_clicked()
 {
     if(ui->bookmarkList->selectedItems().isEmpty()) return;
 
-    QListWidgetItem* item = ui->bookmarkList->selectedItems()[0];
-    qreal x = item->data(Qt::UserRole+1).toReal();
-    qreal y = item->data(Qt::UserRole+2).toReal();
+    QListWidgetItem *item = ui->bookmarkList->selectedItems()[0];
+    qreal x = item->data(Qt::UserRole + 1).toReal();
+    qreal y = item->data(Qt::UserRole + 2).toReal();
     long a = qRound(x);
     long b = qRound(y);
-    if(mw()->activeChildWindow() == 1)
+    int wType = mw()->activeChildWindow();
+
+    if(wType == MainWindow::WND_Level)
     {
-        LevelEdit* edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
         if(!edit) return;
+
         edit->goTo(a, b, true);
     }
-    else
-    if(mw()->activeChildWindow() == 3)
+    else if(wType == MainWindow::WND_World)
     {
-        WorldEdit* edit = mw()->activeWldEditWin();
+        WorldEdit *edit = mw()->activeWldEditWin();
+
         if(!edit) return;
+
         edit->goTo(a, b, true);
     }
 }
@@ -146,27 +151,38 @@ void BookmarksBox::on_bookmarkGoto_clicked()
 void BookmarksBox::updateBookmarkBoxByList()
 {
     MetaData *mData;
-    if(mw()->activeChildWindow() == 1){
-        LevelEdit* edit = mw()->activeLvlEditWin();
+    int wType = mw()->activeChildWindow();
+
+    if(wType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
         if(!edit) return;
+
         mData = &(edit->LvlData.metaData);
+        edit->LvlData.meta.modified = true;
     }
-    else if(mw()->activeChildWindow() == 3){
-        WorldEdit* edit = mw()->activeWldEditWin();
+    else if(wType == MainWindow::WND_World)
+    {
+        WorldEdit *edit = mw()->activeWldEditWin();
+
         if(!edit) return;
+
         mData = &(edit->WldData.metaData);
+        edit->WldData.meta.modified = true;
     }
-    else{
+    else
         return;
-    }
+
     mData->bookmarks.clear();
+
     for(int i = 0; i < ui->bookmarkList->count(); ++i)
     {
         QListWidgetItem *item = ui->bookmarkList->item(i);
         Bookmark bmItem;
         bmItem.bookmarkName = item->text();
-        bmItem.x = item->data(Qt::UserRole+1).toReal();
-        bmItem.y = item->data(Qt::UserRole+2).toReal();
+        bmItem.x = item->data(Qt::UserRole + 1).toReal();
+        bmItem.y = item->data(Qt::UserRole + 2).toReal();
         mData->bookmarks << bmItem;
     }
 }
@@ -176,24 +192,33 @@ void BookmarksBox::updateBookmarkBoxByData()
     while(ui->bookmarkList->count())
         delete ui->bookmarkList->item(0);
 
+    int wType = mw()->activeChildWindow();
+
     MetaData *mData;
-    if(mw()->activeChildWindow() == 1){
-        LevelEdit* edit = mw()->activeLvlEditWin();
+
+    if(wType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
         if(!edit) return;
+
         mData = &(edit->LvlData.metaData);
     }
-    else if(mw()->activeChildWindow() == 3){
-        WorldEdit* edit = mw()->activeWldEditWin();
+    else if(wType == MainWindow::WND_World)
+    {
+        WorldEdit *edit = mw()->activeWldEditWin();
+
         if(!edit) return;
+
         mData = &(edit->WldData.metaData);
     }
-    else{
+    else
         return;
-    }
 
-    for(int i = 0; i < mData->bookmarks.size(); ++i){
+    for(int i = 0; i < mData->bookmarks.size(); ++i)
+    {
         Bookmark &bmItem = mData->bookmarks[i];
-        QListWidgetItem * item;
+        QListWidgetItem *item;
         item = new QListWidgetItem;
         item->setText(bmItem.bookmarkName);
         item->setFlags(item->flags() |
@@ -201,8 +226,8 @@ void BookmarksBox::updateBookmarkBoxByData()
                        Qt::ItemIsDragEnabled |
                        Qt::ItemIsEnabled |
                        Qt::ItemIsSelectable);
-        item->setData(Qt::UserRole+1, bmItem.x); //x is init
-        item->setData(Qt::UserRole+2, bmItem.y); //y is init
+        item->setData(Qt::UserRole + 1, bmItem.x); //x is init
+        item->setData(Qt::UserRole + 2, bmItem.y); //y is init
         ui->bookmarkList->addItem(item);
     }
 }
@@ -211,28 +236,23 @@ void BookmarksBox::updateBookmarkBoxByData()
 
 void BookmarksBox::on_bookmarkList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->bookmarkList->selectedItems().isEmpty()) return;
+    if(ui->bookmarkList->selectedItems().isEmpty())
+        return;
 
     QPoint globPos = ui->bookmarkList->mapToGlobal(pos);
-
     LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
-               .arg(pos.x()).arg(pos.y())
-               .arg(globPos.x()).arg(globPos.y()));
-
-    QMenu *bookmark_menu = new QMenu(this);
-    QAction * rename = bookmark_menu->addAction(tr("Rename Bookmark"));
-
+             .arg(pos.x()).arg(pos.y())
+             .arg(globPos.x()).arg(globPos.y()));
+    QMenu bookmark_menu(this);
+    QAction *rename = bookmark_menu.addAction(tr("Rename Bookmark"));
     //bookmark_menu->addSeparator();
-    QAction *selected = bookmark_menu->exec( globPos );
-    if(selected==rename)
-    {
+    QAction *selected = bookmark_menu.exec(globPos);
+
+    if(selected == rename)
         ui->bookmarkList->editItem(ui->bookmarkList->selectedItems()[0]);
-    }
-
-
 }
 
-void BookmarksBox::DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int /*sourceStart*/,int /*sourceEnd*/,QModelIndex /*destinationParent*/,int /*destinationRow*/)
+void BookmarksBox::DragAndDroppedBookmark(QModelIndex /*sourceParent*/, int /*sourceStart*/, int /*sourceEnd*/, QModelIndex /*destinationParent*/, int /*destinationRow*/)
 {
     updateBookmarkBoxByList();
 }

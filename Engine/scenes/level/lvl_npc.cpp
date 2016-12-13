@@ -88,16 +88,25 @@ LVL_Npc::~LVL_Npc()
 {}
 
 
+void LVL_Npc::show()
+{
+    wasDeactivated = false;
+    PGE_Phys_Object::show();
+}
+
 void LVL_Npc::hide()
 {
     activationTimeout = -1;
     PGE_Phys_Object::hide();
 }
 
-void LVL_Npc::show()
+void LVL_Npc::setVisible(bool visible)
 {
-    wasDeactivated = false;
-    PGE_Phys_Object::show();
+    if(visible)
+        wasDeactivated = false;
+    else
+        activationTimeout = -1;
+    PGE_Phys_Object::setVisible(visible);
 }
 
 

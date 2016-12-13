@@ -130,7 +130,7 @@ void MainWindow::on_actionDrawSand_triggered()
 
 void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props)
 {
-    if(activeChildWindow()==1) // Level editing window
+    if(activeChildWindow()==WND_Level) // Level editing window
     {
        bool valid=false;
        switch(itemType)
@@ -153,7 +153,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 activeLvlEditWin()->scene->clearSelection();
                 activeLvlEditWin()->changeCursor(LevelEdit::MODE_PlaceItem);
                 activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
-
 
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
@@ -181,16 +180,14 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
            {
            case ItemTypes::LVL_Block:
                {
-                   ui->action_Placing_ShowProperties->setChecked(true);
                    ui->action_Placing_ShowProperties->setEnabled(true);
                    //Switch scene to placing mode:
                    activeLvlEditWin()->scene->setItemPlacer(0, itemID);
-
                    //Open block properties toolbox for define placing properties
-                   dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet, true, dont_reset_props);
-
-                   if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        dock_LvlItemProps->hide();
+                   dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet,
+                                                true,
+                                                dont_reset_props,
+                                                GlobalSettings::Placing_dontShowPropertiesBox);
 
                    if(IntEngine::isWorking())
                    {
@@ -207,15 +204,12 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                }
            case ItemTypes::LVL_BGO:
                {
-                   ui->action_Placing_ShowProperties->setChecked(true);
                    ui->action_Placing_ShowProperties->setEnabled(true);
-
                    activeLvlEditWin()->scene->setItemPlacer(1, itemID );
-
-                   dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet, true, dont_reset_props);
-
-                   if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        dock_LvlItemProps->hide();
+                   dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet,
+                                              true,
+                                              dont_reset_props,
+                                              GlobalSettings::Placing_dontShowPropertiesBox);
 
                    if(IntEngine::isWorking())
                    {
@@ -233,19 +227,17 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                }
            case ItemTypes::LVL_NPC:
                {
-                   ui->action_Placing_ShowProperties->setChecked(true);
                    ui->action_Placing_ShowProperties->setEnabled(true);
-
                    ui->actionRectFill->setEnabled(false);
                    ui->actionCircleFill->setEnabled(false);
                    ui->actionFill->setEnabled(false);
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
-                   dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet, true, dont_reset_props);
-
-                   if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        dock_LvlItemProps->hide();
+                   dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet,
+                                              true,
+                                              dont_reset_props,
+                                              GlobalSettings::Placing_dontShowPropertiesBox);
 
                    if(IntEngine::isWorking())
                    {
@@ -264,14 +256,12 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
            }
            qApp->setActiveWindow(this);
            raise();
-           setFocus(Qt::ActiveWindowFocusReason);
-           activeLvlEditWin()->scene->setFocus(Qt::MouseFocusReason);
+           activeLvlEditWin()->setFocus(Qt::MouseFocusReason);
        }
     }
-    else if(activeChildWindow()==3) // World editing window
+    else if(activeChildWindow()==WND_World) // World editing window
     {
         bool valid=false;
-        ui->action_Placing_ShowProperties->setChecked(false);
         ui->action_Placing_ShowProperties->setEnabled(false);
         switch(itemType)
         {
@@ -333,7 +323,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                         dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
-                case ItemTypes::WLD_Path:\
+                case ItemTypes::WLD_Path:
                     {
                         activeWldEditWin()->scene->setItemPlacer(2, itemID);
                         dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
@@ -341,15 +331,12 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                     }
                 case ItemTypes::WLD_Level:
                     {
-                        ui->action_Placing_ShowProperties->setChecked(true);
                         ui->action_Placing_ShowProperties->setEnabled(true);
-
                         activeWldEditWin()->scene->setItemPlacer(3, itemID);
-                        dock_WldItemProps->WldItemProps(0, WldPlacingItems::LevelSet, true);
-
-                        if(GlobalSettings::Placing_dontShowPropertiesBox)
-                             dock_WldItemProps->hide();
-
+                        dock_WldItemProps->WldItemProps(0,
+                                                        WldPlacingItems::LevelSet,
+                                                        true,
+                                                        GlobalSettings::Placing_dontShowPropertiesBox);
                         break;
                     }
                 case ItemTypes::WLD_MusicBox:
@@ -365,8 +352,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
             }
             qApp->setActiveWindow(this);
             raise();
-            setFocus(Qt::ActiveWindowFocusReason);
-            activeWldEditWin()->scene->setFocus(Qt::MouseFocusReason);
+            activeWldEditWin()->setFocus(Qt::MouseFocusReason);
         }
     }
 }

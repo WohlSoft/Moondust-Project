@@ -1,7 +1,7 @@
 SDL2
-SDL2_mixer
-mikmod
+SDL2_mixer_ext
 mad
 ogg
 vorbis
 flac
+freeimage_lite

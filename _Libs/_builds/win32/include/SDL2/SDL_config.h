@@ -20,8 +20,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef _SDL_config_h
-#define _SDL_config_h
+#ifndef SDL_config_h_
+#define SDL_config_h_
 
 /**
  *  \file SDL_config.h.in
@@ -83,6 +83,7 @@
 /* #undef HAVE_LIBUDEV_H */
 /* #undef HAVE_DBUS_DBUS_H */
 /* #undef HAVE_IBUS_IBUS_H */
+/* #undef HAVE_FCITX_FRONTEND_H */
 
 /* C library functions */
 #define HAVE_MALLOC 1
@@ -173,6 +174,7 @@
 /* #undef HAVE_PTHREAD_SETNAME_NP */
 /* #undef HAVE_PTHREAD_SET_NAME_NP */
 /* #undef HAVE_SEM_TIMEDWAIT */
+/* #undef HAVE_GETAUXVAL */
 
 #else
 #define HAVE_STDARG_H 1
@@ -253,7 +255,6 @@
 /* #undef SDL_HAPTIC_XINPUT */
 
 /* Enable various shared object loading systems */
-/* #undef SDL_LOADSO_HAIKU */
 /* #undef SDL_LOADSO_DLOPEN */
 /* #undef SDL_LOADSO_DUMMY */
 /* #undef SDL_LOADSO_LDG */
@@ -357,4 +358,10 @@
 #define SDL_ASSEMBLY_ROUTINES 1
 /* #undef SDL_ALTIVEC_BLITTERS */
 
-#endif /* _SDL_config_h */
+/* Enable ime support */
+/* #undef SDL_USE_IME */
+
+/* Enable dynamic udev support */
+/* #undef SDL_UDEV_DYNAMIC */
+
+#endif /* SDL_config_h_ */

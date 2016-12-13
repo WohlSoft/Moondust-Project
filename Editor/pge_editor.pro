@@ -127,6 +127,7 @@ include($$PWD/../_Libs/giflib/giflib.pri)
 # Common code
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
+include($$PWD/../_common/Utils/Utils.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \

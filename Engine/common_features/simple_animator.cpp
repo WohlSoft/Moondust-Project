@@ -17,7 +17,7 @@
  */
 
 #include "simple_animator.h"
-#include "maths.h"
+#include <Utils/maths.h>
 #include "logger.h"
 
 SimpleAnimator::SimpleAnimator()

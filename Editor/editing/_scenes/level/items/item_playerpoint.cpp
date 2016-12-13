@@ -229,6 +229,9 @@ void ItemPlayerPoint::arrayApply()
         }
     }
 
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
+
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -244,6 +247,9 @@ void ItemPlayerPoint::removeFromArray()
             break;
         }
     }
+
+    //Mark level as modified
+    m_scene->m_data->meta.modified = true;
 }
 
 void ItemPlayerPoint::returnBack()

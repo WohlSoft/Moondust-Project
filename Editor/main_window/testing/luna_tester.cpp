@@ -70,7 +70,8 @@ LunaTester::LunaTester() :
     m_ipc_pipe_out_i(0),
     m_ipc_pipe_in(0),
     m_ipc_pipe_in_o(0),
-    m_helperThread(0)
+    m_helperThread(0),
+    m_noGL(false)
 {}
 
 LunaTester::~LunaTester()
@@ -97,32 +98,59 @@ LunaTester::~LunaTester()
     }
 }
 
-void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_before, QAction *defaultTestAction)
+void LunaTester::initLunaMenu(MainWindow* mw,
+                              QMenu *mainmenu,
+                              QAction *insert_before,
+                              QAction *defaultTestAction,
+                              QAction *secondaryTestAction,
+                              QAction *startEngineAction)
 {
     m_mw = mw;
-    QMenu* lunaMenu = mainmenu->addMenu(QIcon(":/lunalua.ico"), "LunaTester");
+    QIcon lunaIcon(":/lunalua.ico");
+    QMenu* lunaMenu = mainmenu->addMenu(lunaIcon, "LunaTester");
     mainmenu->insertMenu(insert_before, lunaMenu);
 
-    QAction* RunLunaTest = lunaMenu->addAction("runTesting");
-    mw->connect(RunLunaTest,    &QAction::triggered,
-                this,           &LunaTester::startLunaTester,
-                Qt::QueuedConnection);
-    m_menuItems[0] = RunLunaTest;
-
-
-    QAction* ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
-    mw->connect(ResetCheckPoints,   &QAction::triggered,
-                this,               &LunaTester::resetCheckPoints,
-                Qt::QueuedConnection);
-    m_menuItems[1] = ResetCheckPoints;
-
-
-    QAction* KillFrozenThread = lunaMenu->addAction("Termitate frozen loader");
-    mw->connect(KillFrozenThread,   &QAction::triggered,
-                this,               &LunaTester::killFrozenThread,
-                Qt::QueuedConnection);
-    m_menuItems[2] = KillFrozenThread;
-
+    QAction* RunLunaTest;
+    {
+        RunLunaTest = lunaMenu->addAction("runTesting");
+        mw->connect(RunLunaTest,    &QAction::triggered,
+                    this,           &LunaTester::startLunaTester,
+                    Qt::QueuedConnection);
+        m_menuItems[0] = RunLunaTest;
+    }
+    {
+        QAction* ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
+        mw->connect(ResetCheckPoints,   &QAction::triggered,
+                    this,               &LunaTester::resetCheckPoints,
+                    Qt::QueuedConnection);
+        m_menuItems[1] = ResetCheckPoints;
+    }
+    {
+        QAction* disableOpenGL = lunaMenu->addAction("Disable OpenGL");
+        disableOpenGL->setCheckable(true);
+        disableOpenGL->setChecked(m_noGL);
+        mw->connect(disableOpenGL,   &QAction::toggled,
+                    [this](bool state)
+                    {
+                        m_noGL = state;
+                    });
+        m_menuItems[2] = disableOpenGL;
+    }
+    {
+        QAction* KillFrozenThread = lunaMenu->addAction("Termitate frozen loader");
+        mw->connect(KillFrozenThread,   &QAction::triggered,
+                    this,               &LunaTester::killFrozenThread,
+                    Qt::QueuedConnection);
+        m_menuItems[3] = KillFrozenThread;
+    }
+    {
+        lunaMenu->addSeparator();
+        QAction* runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
+        mw->connect(runLegacyEngine,   &QAction::triggered,
+                    this,              &LunaTester::lunaRunGame,
+                    Qt::QueuedConnection);
+        m_menuItems[4] = runLegacyEngine;
+    }
 
     QAction* sep = lunaMenu->addSeparator();
     mainmenu->insertAction(insert_before, sep);
@@ -134,28 +162,64 @@ void LunaTester::initLunaMenu(MainWindow* mw, QMenu *mainmenu, QAction *insert_b
     {
         defaultTestAction->setShortcut(QStringLiteral(""));
         defaultTestAction->setShortcutContext(Qt::WindowShortcut);
+        QIcon pgeEngine;
+        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_16.png"));
+        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_32.png"));
+        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_48.png"));
+
+        mainmenu->insertAction(defaultTestAction, RunLunaTest);
+
+        QMenu* pgeEngineMenu = mainmenu->addMenu(pgeEngine, "PGE Engine");
+        mainmenu->insertMenu(lunaMenu->menuAction(), pgeEngineMenu);
+        mainmenu->removeAction(defaultTestAction);
+        mainmenu->removeAction(secondaryTestAction);
+        mainmenu->removeAction(startEngineAction);
+
+        pgeEngineMenu->insertAction(nullptr, defaultTestAction);
+        pgeEngineMenu->insertAction(nullptr, secondaryTestAction);
+        pgeEngineMenu->addSeparator();
+        pgeEngineMenu->insertAction(nullptr, startEngineAction);
 
         RunLunaTest->setShortcut(QStringLiteral("F5"));
         RunLunaTest->setShortcutContext(Qt::WindowShortcut);
+        RunLunaTest->setIcon(lunaIcon);
     }
 }
 
 void LunaTester::retranslateMenu()
 {
-    QAction* RunLunaTest = m_menuItems[0];
-    RunLunaTest->setText(tr("Run testing"));
-    RunLunaTest->setToolTip(tr("Starts testing in the legacy engine.\n"
-                               "To have this feature work, latest LunaLUA must be installed.\n"
-                               "Otherwise it will be very limited."));
-
-    QAction* ResetCheckPoints = m_menuItems[1];
-    ResetCheckPoints->setText(tr("Reset checkpoints"));
-    ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
-
-    QAction* KillFrozenThread = m_menuItems[2];
-    KillFrozenThread->setText(tr("Termitate frozen loader"));
-    KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
-
+    {
+        QAction* RunLunaTest = m_menuItems[0];
+        RunLunaTest->setText(tr("Test level",
+                                "Run the LunaTester based level testing."));
+        RunLunaTest->setToolTip(tr("Starts level testing in the legacy engine.\n"
+                                   "To have this feature work, latest LunaLUA must be installed.\n"
+                                   "Otherwise, it will be very limited."));
+    }
+    {
+        QAction* ResetCheckPoints = m_menuItems[1];
+        ResetCheckPoints->setText(tr("Reset checkpoints"));
+        ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+    }
+    {
+        QAction* disableOpenGL = m_menuItems[2];
+        disableOpenGL->setText(tr("Disable OpenGL", "Disable OpenGL on LunaTester side"));
+        disableOpenGL->setToolTip(tr("Disable OpenGL rendering engine and use the GDI. "
+                                        "Useful if your video card does not support OpenGL or "
+                                        "LunaLua is crashing on the attempt to use it."));
+    }
+    {
+        QAction* KillFrozenThread = m_menuItems[3];
+        KillFrozenThread->setText(tr("Termitate frozen loader",
+                                     "Terminite frozen LunaTester on the attempt to send any command to LunaLua."));
+        KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
+    }
+    {
+        QAction* runLegacyEngine = m_menuItems[4];
+        runLegacyEngine->setText(tr("Start Legacy Engine",
+                                     "Launch legacy engine in game mode"));
+        runLegacyEngine->setToolTip(tr("Launch legacy engine in game mode."));
+    }
 }
 
 /*****************************************Menu slots*************************************************/
@@ -176,8 +240,10 @@ void LunaTester::startLunaTester()
     if(m_helper.isRunning())
     {
         busyThreadBox(m_mw);
-    } else {
-        if( m_mw->activeChildWindow() == 1 )
+    }
+    else
+    {
+        if( m_mw->activeChildWindow() == MainWindow::WND_Level )
         {
             LevelEdit * lvl = m_mw->activeLvlEditWin();
             if(lvl)
@@ -189,6 +255,16 @@ void LunaTester::startLunaTester()
                                              lvl->isUntitled);
             }
         }
+        else
+        {
+            QMessageBox::information(m_mw,
+                                     "LunaTester",
+                                     LunaTester::tr("LunaTester can't be used on world map because the legacy engine "
+                                                    "doesn't provide ability to run testing of world maps. "
+                                                    "Instead, you can use PGE Engine (\"Test\" -> \"Test saved file\" "
+                                                    "menu item) to test your world map file in action without episode running."),
+                                     QMessageBox::Ok);
+        }
     }
 }
 
@@ -197,7 +273,9 @@ void LunaTester::resetCheckPoints()
     if(m_helper.isRunning())
     {
         busyThreadBox(m_mw);
-    } else {
+    }
+    else
+    {
         m_helper = QtConcurrent::run(this, &LunaTester::lunaChkResetThread);
     }
 }
@@ -210,12 +288,12 @@ void LunaTester::killFrozenThread()
                                             "LunaTester",
                                             tr("Are you really want to termitate loader thread?"),
                                             QMessageBox::Yes|QMessageBox::No);
-        if(reply==QMessageBox::Yes)
+        if(reply == QMessageBox::Yes)
         {
             DWORD lpExitCode=0;
             if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode))
             {
-                if(lpExitCode==STILL_ACTIVE)
+                if(lpExitCode == STILL_ACTIVE)
                 {
                     WaitForSingleObject(m_pi.hProcess, 0);
                     TerminateProcess(m_pi.hProcess, lpExitCode);
@@ -223,10 +301,17 @@ void LunaTester::killFrozenThread()
                 }
             }
         }
-    } else {
+    }
+    else
+    {
         QMessageBox::information(m_mw,
-                                "LunaTester",
-                                tr("Loader thread is not running."), QMessageBox::Ok);
+                                 "LunaTester",
+                                 tr("Loader thread is not running.",
+                                    "LunaTester thread now doing nothing.\n"
+                                    "This message is shown on request to terminate "
+                                    "frozen LunaTester while it is not "
+                                    "actually frozen and responds."),
+                                 QMessageBox::Ok);
     }
 }
 
@@ -238,6 +323,21 @@ void LunaTester::killFrozenThread()
 static bool SMBXEditorIsStarted()
 {
     HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
+
+    if(smbxWind == 0)
+        return false;
+
+    wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
+    HANDLE  hMapFile;
+    hMapFile = OpenFileMappingW(
+                        FILE_MAP_ALL_ACCESS,   // read/write access
+                        FALSE,                 // do not inherit the name
+                        szName);               // name of mapping object
+
+    if(hMapFile == NULL)
+        return false;
+
+    CloseHandle(hMapFile);
     return (smbxWind);
 }
 
@@ -254,23 +354,29 @@ static std::string ReadMsgString(HANDLE hInputRead)
         data.clear();
         // Read until : delimiter
         bool err = false;
-        while (1)
+        while(true)
         {
             DWORD bytesRead;
             ReadFile(hInputRead, &c, 1, &bytesRead, NULL);
-            if (bytesRead != 1)
-            {
+
+            if(bytesRead != 1)
                 return "";
-            }
-            if (c == ':') break;
+
+            if (c == ':')
+                break;
+
             if ((c > '9') || (c < '0'))
             {
                 err = true;
                 break;
             }
+
             data.push_back(c);
         }
-        if (err) continue;
+
+        if(err)
+            continue;
+
         std::string byteCountStr = std::string(&data[0], data.size());
         data.clear();
         // Interpret as number
@@ -292,13 +398,12 @@ static std::string ReadMsgString(HANDLE hInputRead)
         {
             DWORD bytesRead;
             ReadFile(hInputRead, &c, 1, &bytesRead, NULL);
-            if (bytesRead != 1) {
+
+            if (bytesRead != 1)
                 return "";
-            }
-            if (c != ',')
-            {
+
+            if(c != ',')
                 continue;
-            }
         }
         return std::string(&data[0], data.size());
     }
@@ -557,20 +662,24 @@ LunaTester::LunaLoaderResult LunaTester::LunaLoaderRun(
     // Prepare command line
     size_t pos = 0;
     std::wstring quotedPathToSMBX(pathToLegacyEngine);
-    while ((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos) {
+
+    while((pos = quotedPathToSMBX.find(L"\"", pos)) != std::string::npos)
+    {
         quotedPathToSMBX.replace(pos, 1, L"\\\"");
         pos += 2;
     }
+
     std::wstring strCmdLine = (
         std::wstring(L"\"") + quotedPathToSMBX + std::wstring(L"\" ") +
         std::wstring(cmdLineArgs)
         );
+
     uint32_t cmdLineMemoryLen = sizeof(wchar_t) * (strCmdLine.length() + 1); // Include null terminator
     wchar_t* cmdLine = (wchar_t*)malloc(cmdLineMemoryLen);
     std::memcpy(cmdLine, strCmdLine.c_str(), cmdLineMemoryLen);
 
     // Create process
-    if (!CreateProcessW(pathToLegacyEngine, // Launch legacy engine executable
+    if(!CreateProcessW(pathToLegacyEngine, // Launch legacy engine executable
         cmdLine,          // Command line
         NULL,             // Process handle not inheritable
         NULL,             // Thread handle not inheritable
@@ -705,6 +814,7 @@ bool LunaTester::sendLevelData(LevelData& lvl, QString levelPath, bool isUntitle
             //mountType
 
             JSONPlayers.push_back(JSONPlayer1);
+
         if(t.numOfPlayers>1)
             JSONPlayers.push_back(JSONPlayer2);
 
@@ -963,7 +1073,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             }
         }
 
-        QString command = smbxPath+ConfStatus::SmbxEXE_Name;
+        QString command = smbxPath + ConfStatus::SmbxEXE_Name;
         QStringList params;
 
         if( !QFile(smbxPath+"LunaDll.dll").exists() )
@@ -999,7 +1109,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QDir dummyWorld(dst_Episode);
             if(dummyWorld.exists(dst_Episode))
             {
-                QString testFolder = dst_Episode+"templevel/";
+                QString testFolder = dst_Episode + "templevel/";
                 RemoveDirectoryW(testFolder.toStdWString().c_str());//Remove symblic link if possible
                 //Clean-up old stuff
                 dummyWorld.removeRecursively();
@@ -1007,9 +1117,9 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             dummyWorld.mkpath(dst_Episode);
 
             FileFormats::WriteSMBX64LvlFileF(dst_Episode+"/templevel.lvl", in_levelData, 64);
+
             if(!isUntitled)
             {
-
                 //Copy available custom stuff into temp directory
                 QDir episodeDir(src_episodePath);
                 QDir customDir(src_customPath);
@@ -1023,7 +1133,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                               //Uncompressed audio data
                               << "*.wav" << "*.voc" << "*.aiff"
                               //MIDI
-                              << "*.mid"
+                              << "*.mid" << "*.cmf"
                               //MikMod (Modules)
                               << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
                               << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
@@ -1036,7 +1146,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 customDir.setNameFilters(fileters_cdir);
 
                 //***********************Attempt to make symbolic link*******************************/
-                bool needToCopyEverything=true;
+                bool needToCopyEverything = true;
                 typedef BOOL *(WINAPI *FUNK_OF_SYMLINKS) (TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
                 HMODULE hKernel32 = NULL;
                 FUNK_OF_SYMLINKS fCreateSymbolicLink = NULL;
@@ -1046,7 +1156,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                     fCreateSymbolicLink = (FUNK_OF_SYMLINKS)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
                     if(fCreateSymbolicLink) //Try to make a symblic link
                     {
-                        QString newPath=dst_Episode+"templevel/";
+                        QString newPath = dst_Episode + "templevel/";
                         if(fCreateSymbolicLink((TCHAR*)newPath.toStdWString().c_str(),
                                                (TCHAR*)src_customPath.toStdWString().c_str(), 0x1))
                             needToCopyEverything = false;
@@ -1152,12 +1262,16 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
             return;
 
-        } else {
+        }
+        else
+        {
         /**********************************************
          **********Do LunaLUA testing launch!**********
          **********************************************/
             //params << "--patch";
             params << "--hideOnCloseIPC";
+            if(m_noGL)
+                params << "--nogl";
 
             QString argString;
             for (int i=0; i<params.length(); i++)
@@ -1199,13 +1313,17 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                     //Stop music playback in the PGE Editor!
                     QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
                     QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                } else {
+                }
+                else
+                {
                     msg.warning(LunaTester::tr("LunaTester error"),
                                 LunaTester::tr("Failed to send level into LunaLUA-SMBX!"),
                     QMessageBox::Ok);
                 }
-            } else {
-                QString luna_error="Unknown error";
+            }
+            else
+            {
+                QString luna_error = "Unknown error";
 
                 switch(res)
                 {
@@ -1278,8 +1396,8 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 if(ret==QMessageBox::Cancel)
                     return;
                 else
-                if(ret==QMessageBox::Yes)
-                        QMetaObject::invokeMethod(m_mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
+                if(ret == QMessageBox::Yes)
+                    QMetaObject::invokeMethod(m_mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
             }
 
             /****************Write file path into shared memory**************************/
@@ -1364,7 +1482,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
 
             //Minimize PGE Editor
-            if(qApp->desktop()->screenCount()==1) // Minimize editor window if alone screen was found
+            if(qApp->desktop()->screenCount() == 1) // Minimize editor window if alone screen was found
             {
                 QMetaObject::invokeMethod(m_mw, "showMinimized", Qt::QueuedConnection);
             }
@@ -1382,6 +1500,114 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                         QMessageBox::Ok);
         }
     }
+}
+
+void LunaTester::lunaRunGame()
+{
+    QString smbxPath = ConfStatus::configDataPath;
+    QString command = smbxPath + ConfStatus::SmbxEXE_Name;
+
+    if(!QFile(smbxPath + ConfStatus::SmbxEXE_Name).exists())
+    {
+        QMessageBox::warning(m_mw,
+                             LunaTester::tr("Directory of Legacy Engine wasn't configured right"),
+                             LunaTester::tr("%1 not found!\nTo use LunaTester you should have right "
+                                            "Integration configuration package!")
+                             .arg(command),
+        QMessageBox::Ok);
+        return;
+    }
+
+    QStringList params;
+    params << "--patch";
+    params << "--game";
+
+    if(m_noGL)
+        params << "--nogl";
+
+    if( !QFile(smbxPath + "LunaDll.dll").exists() )
+    {
+        QProcess::startDetached(command, params, smbxPath);
+    }
+    else
+    {
+        QString argString;
+        for (int i=0; i<params.length(); i++)
+        {
+            if (i > 0)
+            {
+                argString += " ";
+            }
+            argString += params[i];
+        }
+
+        DWORD lpExitCode = 0;
+        //Abort engine staying in background
+        if(GetExitCodeProcess(this->m_pi.hProcess, &lpExitCode))
+        {
+            if(lpExitCode==STILL_ACTIVE)
+            {
+                WaitForSingleObject(this->m_pi.hProcess, 100);
+                TerminateProcess(this->m_pi.hProcess, lpExitCode);
+                CloseHandle(this->m_pi.hProcess);
+            }
+        }
+
+        // Make sure any old pipe handle is closed
+        if(this->m_ipc_pipe_out)
+        {
+            CloseHandle(this->m_ipc_pipe_out);
+            this->m_ipc_pipe_out = 0;
+        }
+        if(this->m_ipc_pipe_in)
+        {
+            CloseHandle(this->m_ipc_pipe_in);
+            this->m_ipc_pipe_in = 0;
+        }
+
+#ifdef USE_LUNAHEXER //Hexes legacy SMBX.exe and starts it as regular exe
+        LunaLoaderResult res = LunaHexerRun(command.toStdWString().c_str(),
+                                             argString.toStdWString().c_str(),
+                                             smbxPath.toStdWString().c_str());
+#else
+        LunaLoaderResult res = LunaLoaderRun(command.toStdWString().c_str(),
+                                             argString.toStdWString().c_str(),
+                                             smbxPath.toStdWString().c_str());
+#endif
+        if(res != LUNALOADER_OK)
+        {
+            QString luna_error = "Unknown error";
+
+            switch(res)
+            {
+            case LUNALOADER_CREATEPROCESS_FAIL:
+                luna_error=LunaTester::tr("process execution is failed."); break;
+            case LUNALOADER_PATCH_FAIL:
+                luna_error=LunaTester::tr("patching has failed."); break;
+            default:
+                break;
+            }
+
+            QMessageBox::warning(m_mw,
+                                 LunaTester::tr("LunaTester error"),
+                                 LunaTester::tr("Impossible to launch Legacy Engine, because %1")
+                                 .arg(luna_error),
+            QMessageBox::Ok);
+            return;
+        }
+    }
+
+    //Stop music playback in the PGE Editor!
+    QMetaObject::invokeMethod(m_mw,
+                              "setMusicButton",
+                              Qt::QueuedConnection,
+                              Q_ARG(bool, false));
+
+    // not sure how efficient it is
+    QMetaObject::invokeMethod(m_mw,
+                              "on_actionPlayMusic_triggered",
+                              Qt::QueuedConnection,
+                              Q_ARG(bool, false));
 }
 
 #endif //_WIN32

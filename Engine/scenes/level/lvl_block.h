@@ -30,13 +30,15 @@
 
 class LVL_Block : public PGE_Phys_Object
 {
+        void construct();
     public:
         LVL_Block(LevelScene *_parent = nullptr);
-        LVL_Block(const LVL_Block &) = default;
+        LVL_Block(const LVL_Block &) = default;        
         ~LVL_Block();
-        void init();
+        void init(bool force=false);
 
-        LevelBlock data; //Local settings
+        LevelBlock  data; //Local settings
+        LevelBlock  dataInitial; //Initial settings
 
         bool animated;
         bool sizable;
@@ -58,19 +60,6 @@ class LVL_Block : public PGE_Phys_Object
             up,
             down
         };
-
-        enum shapes
-        {
-            shape_rect              = 0,
-            shape_tr_left_bottom    = 1,
-            shape_tr_right_bottom   = -1,
-            shape_tr_left_top       = 2,
-            shape_tr_right_top      = -2,
-            stape_polygon           = 3
-        };
-
-        int LEGACY_shape;
-        double LEGACY_shape_slope_angle_ratio;
 
         int taskToTransform;
         int taskToTransform_t;

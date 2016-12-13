@@ -103,7 +103,7 @@ void PGE_MenuBoxBase::setParentScene(Scene *_parentScene)
 
 void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
 {
-    switch(type)
+    switch(_type)
     {
     case msg_info:
         bg_color =       QColor(qRgb(0, 0, 0));
@@ -271,15 +271,15 @@ void PGE_MenuBoxBase::render()
 {
     if(_page == 2)
     {
-        if(_textureUsed)
-            drawTexture(_sizeRect, 32, static_cast<float>(fader_opacity));
+        if(m_textureUsed)
+            drawTexture(_sizeRect, 32, static_cast<float>(m_faderOpacity));
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
                                    static_cast<float>(bg_color.red()) / 255.0f,
                                    static_cast<float>(bg_color.green()) / 255.0f,
-                                   static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(fader_opacity));
+                                   static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(m_faderOpacity));
         }
 
         FontManager::printText(title,
@@ -294,23 +294,23 @@ void PGE_MenuBoxBase::render()
     }
     else
     {
-        if(_textureUsed)
+        if(m_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - static_cast<int>((width + padding)*fader_opacity),
-                        _sizeRect.center().y() - static_cast<int>((height + padding)*fader_opacity),
-                        _sizeRect.center().x() + static_cast<int>((width + padding)*fader_opacity),
-                        _sizeRect.center().y() + static_cast<int>((height + padding)*fader_opacity),
-                        32, static_cast<float>(fader_opacity));
+            drawTexture(_sizeRect.center().x() - static_cast<int>((width + padding)*m_faderOpacity),
+                        _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
+                        _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
+                        _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
+                        32, static_cast<float>(m_faderOpacity));
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - static_cast<int>((width + padding)*fader_opacity),
-                                     _sizeRect.center().y() - static_cast<int>((height + padding)*fader_opacity),
-                                     _sizeRect.center().x() + static_cast<int>((width + padding)*fader_opacity),
-                                     _sizeRect.center().y() + static_cast<int>((height + padding)*fader_opacity),
+            GlRenderer::renderRectBR(_sizeRect.center().x() - static_cast<int>((width + padding)*m_faderOpacity),
+                                     _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
+                                     _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
+                                     _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
                                      static_cast<float>(bg_color.red()) / 255.0f,
                                      static_cast<float>(bg_color.green()) / 255.0f,
-                                     static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(fader_opacity));
+                                     static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(m_faderOpacity));
         }
     }
 }
@@ -336,14 +336,14 @@ void PGE_MenuBoxBase::exec()
     {
         Uint32 start_render = SDL_GetTicks();
         updateControllers();
-        update(uTickf);
+        update(m_uTickf);
         PGE_BoxBase::render();
         render();
         GlRenderer::flush();
         GlRenderer::repaint();
 
-        if((!PGE_Window::vsync) && (uTick > static_cast<int>(SDL_GetTicks() - start_render)))
-            SDL_Delay(static_cast<unsigned int>(uTick) - (SDL_GetTicks() - start_render));
+        if((!PGE_Window::vsync) && (m_uTick > static_cast<int>(SDL_GetTicks() - start_render)))
+            SDL_Delay(static_cast<unsigned int>(m_uTick) - (SDL_GetTicks() - start_render));
     }
 }
 
@@ -467,12 +467,12 @@ void PGE_MenuBoxBase::processLoader(double ticks)
         PGE_Window::processEvents(event);
 
         if(event.type == SDL_QUIT)
-            fader_opacity = 1.0;
+            m_faderOpacity = 1.0;
     }
 
     tickFader(ticks);
 
-    if(fader_opacity >= 1.0) _page++;
+    if(m_faderOpacity >= 1.0) _page++;
 }
 
 void PGE_MenuBoxBase::processBox(double)
@@ -526,22 +526,22 @@ void PGE_MenuBoxBase::processUnLoader(double ticks)
         PGE_Window::processEvents(event);
 
         if(event.type == SDL_QUIT)
-            fader_opacity = 0.0;
+            m_faderOpacity = 0.0;
     }
 
     tickFader(ticks);
 
-    if(fader_opacity <= 0.0) _page++;
+    if(m_faderOpacity <= 0.0) _page++;
 }
 
 
 void PGE_MenuBoxBase::initControllers()
 {
-    if(parentScene != nullptr)
+    if(m_parentScene != nullptr)
     {
-        if(parentScene->type() == Scene::Level)
+        if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
 
             if(s)
             {
@@ -549,9 +549,9 @@ void PGE_MenuBoxBase::initControllers()
                 _ctrl2 = s->player2Controller;
             }
         }
-        else if(parentScene->type() == Scene::World)
+        else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
 
             if(s)
             {
@@ -559,9 +559,9 @@ void PGE_MenuBoxBase::initControllers()
                 _ctrl2 = nullptr;
             }
         }
-        else if(parentScene->type() == Scene::GameOver)
+        else if(m_parentScene->type() == Scene::GameOver)
         {
-            GameOverScene *s = dynamic_cast<GameOverScene *>(parentScene);
+            GameOverScene *s = dynamic_cast<GameOverScene *>(m_parentScene);
 
             if(s)
             {
@@ -569,9 +569,9 @@ void PGE_MenuBoxBase::initControllers()
                 _ctrl2 = nullptr;
             }
         }
-        else if(parentScene->type() == Scene::ConfigSelect)
+        else if(m_parentScene->type() == Scene::ConfigSelect)
         {
-            ConfigSelectScene *s = dynamic_cast<ConfigSelectScene *>(parentScene);
+            ConfigSelectScene *s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
 
             if(s)
             {
@@ -608,21 +608,21 @@ void PGE_MenuBoxBase::updateControllers()
         _ctrl2->sendControls();
     }
 
-    if(parentScene != NULL)
+    if(m_parentScene != NULL)
     {
-        if(parentScene->type() == Scene::Level)
+        if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
 
             if(s)
-                s->tickAnimations(uTickf);
+                s->tickAnimations(m_uTickf);
         }
-        else if(parentScene->type() == Scene::World)
+        else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
 
             if(s)
-                s->tickAnimations(uTickf);
+                s->tickAnimations(m_uTickf);
         }
     }
 }

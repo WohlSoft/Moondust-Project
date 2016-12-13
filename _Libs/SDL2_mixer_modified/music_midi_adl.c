@@ -94,6 +94,8 @@ static int adlmidi_tremolo      = 1;
 static int adlmidi_vibrato      = 1;
 static int adlmidi_scalemod     = 0;
 static int adlmidi_adlibdrums   = 0;
+static int adlmidi_logVolumes   = 0;
+static int adlmidi_volumeModel  = 0;
 
 int ADLMIDI_getBanksCount()
 {
@@ -155,6 +157,30 @@ void ADLMIDI_setScaleMod(int sc)
     adlmidi_scalemod = sc;
 }
 
+int ADLMIDI_getLogarithmicVolumes()
+{
+    return adlmidi_logVolumes;
+}
+
+void ADLMIDI_setLogarithmicVolumes(int vm)
+{
+    adlmidi_logVolumes = vm;
+}
+
+int ADLMIDI_getVolumeModel()
+{
+    return adlmidi_volumeModel;
+}
+
+void ADLMIDI_setVolumeModel(int vm)
+{
+    adlmidi_volumeModel = vm;
+    if(vm < 0)
+        adlmidi_volumeModel = 0;
+}
+
+
+
 void ADLMIDI_setDefaults()
 {
     adlmidi_tremolo     = 1;
@@ -191,7 +217,7 @@ void ADLMIDI_setvolume(struct MUSIC_MIDIADL *music, int volume)
 {
     if(music)
     {
-        music->volume=(int)round(128.0f*sqrt(((float)volume)*(1.f/128.f) ));
+        music->volume = (int)round(128.0*sqrt(((double)volume)*(1.0/128.0) ));
     }
 }
 
@@ -211,12 +237,12 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         }
 
         SDL_RWseek(src, 0, RW_SEEK_SET);
-        bytes = malloc(length);
+        bytes = malloc((size_t)length);
 
-        long bytes_l;
+        size_t bytes_l;
         unsigned char byte[1];
         spcsize=0;
-        while( (bytes_l=SDL_RWread(src, &byte, sizeof(unsigned char), 1))!=0)
+        while( (bytes_l = SDL_RWread(src, &byte, sizeof(Uint8), 1)) != 0)
         {
             ((unsigned char*)bytes)[spcsize] = byte[0];
             spcsize++;
@@ -243,6 +269,8 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         adl_setScaleModulators( adl_midiplayer, adlmidi_scalemod );
         adl_setPercMode( adl_midiplayer, adlmidi_adlibdrums );
         adl_setNumFourOpsChn( adl_midiplayer, tableOf_num4opChans[adlmidi_bank] );
+        adl_setLogarithmicVolumes( adl_midiplayer, adlmidi_logVolumes );
+        adl_setVolumeRangeModel( adl_midiplayer, adlmidi_volumeModel );
         adl_setNumCards( adl_midiplayer, 4 );
 
         int err = adl_openData( adl_midiplayer, bytes, spcsize );
@@ -309,13 +337,14 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     if( music->adlmidi == NULL ) return 0;
     if( music->playing == -1 ) return 0;
     if( len < 0 ) return 0;
-    int     srgArraySize = (int)ceil( (double)len / music->cvt.len_ratio );
-    short   buf[srgArraySize];
+    int srgArraySize = len * music->cvt.len_mult;
+    short* buf = (short*)SDL_malloc((size_t)srgArraySize);
     int srcLen = (int)((double)(len/2.0)/music->cvt.len_ratio);
 
     int gottenLen = adl_play( music->adlmidi, srcLen, buf );
     if( gottenLen <= 0 )
     {
+        free(buf);
         return 0;
     }
 
@@ -335,6 +364,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     } else {
         SDL_MixAudioFormat( stream, (Uint8*)buf, mixer.format, (Uint32)dest_len, music->volume );
     }
+    free(buf);
     return len-dest_len;
 }
 
@@ -377,3 +407,4 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
 }
 
 #endif
+

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>580</width>
-    <height>507</height>
+    <height>552</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -35,17 +35,21 @@ background-color: rgb(0, 0, 0);
 color: rgb(0, 255, 0);
 }
 QPushButton {
-	background-color: rgb(52, 52, 52);
-	border-color: rgb(0, 170, 0);
+	background-color: rgb(65, 65, 65);
+	border-color: rgb(80, 80, 80);
+	border-style: outset;
     border-width: 2px;
 	color: rgb(0, 255, 255);
 	border-radius: 3px;
     height: 25px;
  }
+QPushButton:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}
 QCheckBox {
 	border-color: rgb(0, 170, 0);
     border-width: 0px;
-    border-style: solid;
 	color: rgb(0, 255, 255);
  }
 QComboBox, QSpinBox{
@@ -62,6 +66,10 @@ QGroupBox
     border-style: solid;
     border-color: rgb(0, 170, 0);
 	border-radius: 3px;
+}
+QLabel
+{
+	background-color: transparent;
 }
 </string>
   </property>
@@ -136,10 +144,58 @@ QGroupBox
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
+          <item row="8" column="0" colspan="2">
            <widget class="QPushButton" name="resetDefaultADLMIDI">
             <property name="text">
              <string>Reset to defaults</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Volume ranges model:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="volumeModel">
+            <item>
+             <property name="text">
+              <string>[Auto]</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Generic</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>CMF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>DMX</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Apogee</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>9X</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="logVolumes">
+            <property name="text">
+             <string>Use logarithmic volumes (Generic and CMF volume models only)</string>
             </property>
            </widget>
           </item>

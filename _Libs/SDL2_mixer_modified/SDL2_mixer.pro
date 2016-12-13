@@ -324,7 +324,8 @@ HEADERS += \
     resample/my_resample.h \
     gme/GZipHelper.h \
     mixer.h \
-    music_fluidsynth.h
+    music_fluidsynth.h \
+    ADLMIDI/nukedopl3.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -431,7 +432,6 @@ SOURCES += \
     gme/Ym2413_Emu.cpp \
     gme/Ym2612_Emu.cpp \
     music_gme.c \
-    ADLMIDI/dbopl.cpp \
     music_midi_adl.c \
     ADLMIDI/adlmidi.cpp \
     ADLMIDI/adldata.cpp \
@@ -487,6 +487,8 @@ SOURCES += \
     vb6_sdl_binds.c \
     timidity/resample_timidity.c \
     resample/my_resample.c \
-    music_fluidsynth.c
+    music_fluidsynth.c \
+    ADLMIDI/nukedopl3.c \
+    ADLMIDI/dbopl.cpp
 
 

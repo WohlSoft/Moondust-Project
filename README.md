@@ -1,21 +1,40 @@
 Platform Game Engine by Wohlstand
 ===========
-    Linux    |    Windows     |   Mac OS X
------------- | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/projects/604cbe8f-44de-4754-99a5-28bc11764b39/471601/badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project)
+a free and open source game engine and toolkit which gives the ability to create games of platform genre.
 
-a free platform for game making
+------
 
-Created by Vitaly Novichkov "Wohlstand" <admin@wohlnet.ru>
+Created by Vitaly Novichkov "Wohlstand" &lt;admin@wohlnet.ru&gt;
 
-Official Project Site: http://wohlsoft.ru/PGE/
+## Contacts and help
+
+[![Official project site](https://img.shields.io/badge/Official%20Site-Visit-yellow.svg)](http://wohlsoft.ru/PGE/)
+[![Official community](https://img.shields.io/badge/Community-Visit-green.svg)](http://wohlsoft.ru/forum/)
+[![Official documentation](https://img.shields.io/badge/Documentation-Read-green.svg)](http://wohlsoft.ru/pgewiki/)
+[![Contact us by special form](https://img.shields.io/badge/Contact-us-blue.svg)](http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin)
 
 How to build (Linux, Windows, Mac OS X):
 http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 
-Downloads: http://wohlsoft.ru/PGE/#links
+## Downloads 
+[![Download latest stable release](https://img.shields.io/badge/Download-Stable-green.svg)](http://wohlsoft.ru/PGE/#links)
+[![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)
+[![Configuration packages are requires to work with PGE Project](https://img.shields.io/badge/Download-Config%20packs-blue.svg)](http://wohlsoft.ru/config_packs/)
 
-Official forums: http://wohlsoft.ru/forum/
+
+## Donate us
+
+[![Donate to this project using Flattr](https://img.shields.io/badge/flattr-donate-green.svg)](https://flattr.com/submit/auto?fid=lgdjjy&url=https%3A%2F%2Fgithub.com%2FWohlSoft%2FPGE-Project)
+[![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-orange.svg)](http://patreon.com/Wohlstand)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-blue.svg)](http://wohlsoft.ru/paypal)
+
+
+## CI Build status
+    Linux    |    Windows     |   Mac OS X
+------------ | ------------- | -------------
+[![Build Status](https://semaphoreci.com/api/v1/projects/604cbe8f-44de-4754-99a5-28bc11764b39/471601/badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project)
+
+Get a most fresh assembies you can get here: [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)!
 
 # Components
 A list of components are included with PGE Project

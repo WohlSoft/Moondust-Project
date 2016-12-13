@@ -19,7 +19,7 @@
 #include "lvl_base_object.h"
 #include <scenes/scene_level.h>
 #include <graphics/gl_renderer.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 
 #include <QVector>
 

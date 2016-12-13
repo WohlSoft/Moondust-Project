@@ -20,7 +20,7 @@
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
 #include <common_features/logger.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <gui/pge_msgbox.h>
 
 #include <QDebug>
@@ -445,7 +445,8 @@ bool LevelScene::init_items()
     //blocks
     for(int i = 0; i < data.blocks.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
 
         placeBlock(data.blocks[i]);
     }

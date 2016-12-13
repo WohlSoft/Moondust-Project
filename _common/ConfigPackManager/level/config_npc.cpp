@@ -19,7 +19,6 @@
 #include "config_npc.h"
 #include <QSettings>
 #include <cmath>
-#include <tgmath.h>
 #include <PGE_File_Formats/npc_filedata.h>
 
 #include "../image_size.h"
@@ -117,7 +116,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
     frames = setup->value("frames", merge_with ? merge_with->frames : 1).toUInt();
     NumberLimiter::apply(frames, 1u);
     /****************Calculating of default frame height******************/
-    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(pow(2.0, static_cast<double>(framestyle))));
+    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
     /****************Calculating of default frame height**end*************/
     custom_physics_to_gfx = setup->value("physics-to-gfx", merge_with ? merge_with->custom_physics_to_gfx : true).toBool();
     gfx_h =                setup->value("gfx-height", merge_with ? merge_with->gfx_h : defGFX_h).toInt();
@@ -150,6 +149,16 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
         CSV2NumArray(tmp, frames_left,  0);
         tmp = setup->value("ani-frames-right", common).toString().remove(' '); //right direction
         CSV2NumArray(tmp, frames_right, 0);
+        if(!common.isEmpty())
+        {
+            int framesOffset = ((framestyle > 0)? 1 : 0) *frames;
+            for(int i=0; i < frames_right.size(); i++)
+                frames_right[i] += framesOffset;
+        }
+        custom_ani_fl = frames_left.front();
+        custom_ani_el = frames_left.back();
+        custom_ani_fr = frames_right.front();
+        custom_ani_er = frames_right.back();
     }
 
     /*************Build custom animation settings**end**********/

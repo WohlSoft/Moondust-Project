@@ -61,7 +61,7 @@
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="333"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессра</translation>
+        <translation>Движок аварийно завершился в связи с ошибочной инструкцией процессора</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="387"/>
@@ -414,7 +414,7 @@ Are you placed player start point (or entrance warp point) too far off of the se
     <message id="VIDEO_SHOW_DEBUG">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="421"/>
         <source>Show debug info</source>
-        <translation>Показ. отдад. инфо</translation>
+        <translation>Показ. отлад. инфо</translation>
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="423"/>

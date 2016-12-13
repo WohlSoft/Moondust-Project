@@ -18,7 +18,7 @@
 
 #include "pointf.h"
 #include "point.h"
-#include "maths.h"
+#include <Utils/maths.h>
 
 PGE_PointF::PGE_PointF(const PGE_Point &p)
 {

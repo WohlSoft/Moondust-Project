@@ -39,8 +39,12 @@ class PGE_MsgBox : public PGE_BoxBase
 {
 public:
     PGE_MsgBox();
-    PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+    PGE_MsgBox(Scene * _parentScene=nullptr,
+               QString msg = "Message box is works!",
+               msgType _type = msg_info,
+               PGE_Point boxCenterPos = PGE_Point(-1,-1),
+               double _padding = -1,
+               QString texture = QString());
     PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
@@ -67,17 +71,17 @@ public:
 private:
     void construct(QString msg="Message box is works!",
                     msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
-    int     _page;
-    bool    running;
+    int     m_page;
+    bool    m_running;
     int     fontID;
     GlColor fontRgba;
 
     controller_keys keys;
-    bool   _exit_key_lock; //Don't close message box if exiting key already holden (for example, 'Run' key)
+    bool   m_exitKeyLock; //Don't close message box if exiting key already holden (for example, 'Run' key)
 
-    msgType type;
-    PGE_Rect _sizeRect;
-    QString message;
+    msgType m_type;
+    PGE_Rect m_sizeRect;
+    QString m_message;
     double width;
     double height;
     double padding;

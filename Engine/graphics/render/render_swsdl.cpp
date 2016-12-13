@@ -22,10 +22,12 @@
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <common_features/maths.h>
+#include <Utils/maths.h>
 #include <cmath>
 
+#ifndef SDL_MAIN_HANDLED
 #define SDL_MAIN_HANDLED
+#endif
 #include <SDL2/SDL.h> // SDL 2 Library
 
 #include "../gl_debug.h"
@@ -101,7 +103,7 @@ bool Render_SW_SDL::uninit()
 
 void Render_SW_SDL::initDummyTexture()
 {
-    FIBITMAP *image = GraphicsHelps::loadImageRC("://images/_broken.png");
+    FIBITMAP *image = GraphicsHelps::loadImageRC("_broken.png");
 
     if(!image)
     {

@@ -102,7 +102,8 @@ QString PGE_MusPlayer::MUS_Title()
 
 void  PGE_MusPlayer::MUS_playMusicFadeIn(int ms)
 {
-    if(!isLoaded) return;
+    if(!isLoaded)
+        return;
 	if(play_mus)
     {
 		if(Mix_PausedMusic()==0)

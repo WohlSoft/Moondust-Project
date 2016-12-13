@@ -27,9 +27,12 @@
 
 #define SDLCHECKERROR() PGE_Window::checkSDLError(__FILE__, __LINE__, __FUNCTION__)
 
+class Scene;//Currently processing scene
+
 class PGE_Window
 {
     public:
+        static Scene* m_currentScene;
         static int Width;
         static int Height;
         static int MaxFPS;

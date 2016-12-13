@@ -200,7 +200,7 @@ bool Render_OpenGL21::uninit()
 
 void Render_OpenGL21::initDummyTexture()
 {
-    FIBITMAP *image = GraphicsHelps::loadImageRC("://images/_broken.png");
+    FIBITMAP *image = GraphicsHelps::loadImageRC("_broken.png");
 
     if(!image)
     {

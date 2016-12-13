@@ -53,14 +53,14 @@ public:
 
     static void loadLogLevels(QComboBox* targetComboBox);
 
-    static void WriteToLog(PGE_LogLevel type, QString msg);
+    static void writeLog(PGE_LogLevel type, QString msg);
     static void LoadLogSettings();
 
     static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     static void installConsole(DevConsole *console);
     static void uninstallConsole();
 private:
-    friend void ::WriteToLog(PGE_LogLevel type, QString msg, bool noConsole);
+    friend void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole);
     static LogWriterSignal *consoleConnector;
 };
 

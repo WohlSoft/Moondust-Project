@@ -31,7 +31,7 @@ struct ADL_MIDIPlayer;
 /* This structure supports ADLMIDI-based MIDI music streams */
 struct MUSIC_MIDIADL
 {
-    struct ADL_MIDIPlayer* adlmidi;
+    struct ADL_MIDIPlayer *adlmidi;
     int playing;
     int volume;
     int gme_t_sample_rate;
@@ -41,7 +41,7 @@ struct MUSIC_MIDIADL
 
 /*Setup editing functions (changes applying on file reopening)*/
 extern int  ADLMIDI_getBanksCount();
-extern const char * const *ADLMIDI_getBankNames();
+extern const char *const *ADLMIDI_getBankNames();
 extern int  ADLMIDI_getBankID();
 extern void ADLMIDI_setBankID(int bnk);
 extern int  ADLMIDI_getTremolo();
@@ -52,6 +52,10 @@ extern int  ADLMIDI_getAdLibDrumsMode();
 extern void ADLMIDI_setAdLibDrumsMode(int ald);
 extern int  ADLMIDI_getScaleMod();
 extern void ADLMIDI_setScaleMod(int sc);
+extern int  ADLMIDI_getLogarithmicVolumes();
+extern void ADLMIDI_setLogarithmicVolumes(int vm);
+extern int  ADLMIDI_getVolumeModel();
+extern void ADLMIDI_setVolumeModel(int vm);
 /* Reset all properties to default values */
 extern void ADLMIDI_setDefaults();
 
@@ -87,4 +91,3 @@ extern void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time);
 #endif /* USE_ADL_MIDI */
 
 #endif // MUSIC_MIDI_ADL_H
-

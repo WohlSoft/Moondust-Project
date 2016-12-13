@@ -31,20 +31,20 @@
 
 static void SDL_Upsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_U16LSB, 1 channel.\n", cvt->rate_incr);
 #endif
     const int dstsize = (int)(((double)res->buf_len/2.0) * res->ratio) * 2;
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
     int oldSam0 = (int)p_src;
     short old0 = s_src[oldSam0];
     double offset=1.0/res->ratio;
 
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); q_dst+=1.f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=1.0 )
     {
         s_dst[(int)q_dst] = old0;
         r_ps += offset;
@@ -64,21 +64,21 @@ static void SDL_Upsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
 
 static void SDL_Downsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_U16LSB, 1 channel.\n", cvt->rate_incr);
 #endif
     const int dstsize = (int)(((double)res->buf_len/2.0) * res->ratio) * 2;
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
     int oldSam0 = (int)p_src;
     short old0 = s_src[oldSam0];
     s_dst[(int)q_dst]   = old0;
 
     double offset=res->ratio;
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); p_src+=1.f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=1.0 )
     {
         r_ps += offset;
         if( r_ps >= 1.0 )
@@ -99,14 +99,14 @@ static void SDL_Downsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
 
 static void SDL_Upsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, 2 channels.\n", cvt->rate_incr);
 #endif
     const int dstsize = (int)(((double)res->buf_len/4.0) * res->ratio) * 4;
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
     int oldSam1 = (int)p_src+1;
     int oldSam0 = (int)p_src;
     short old1 = s_src[oldSam1];
@@ -114,7 +114,7 @@ static void SDL_Upsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
     double offset=1.0/res->ratio;
 
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); q_dst+=2.f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=2.0 )
     {
         s_dst[(int)q_dst+1] = old1;
         s_dst[(int)q_dst]   = old0;
@@ -137,14 +137,14 @@ static void SDL_Upsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
 
 static void SDL_Downsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, 2 channels.\n", cvt->rate_incr);
 #endif
     const int dstsize = (int)(((double)res->buf_len/4.0) * res->ratio) * 4;
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
     int oldSam1 = (int)p_src+1;
     int oldSam0 = (int)p_src;
     short old1 = s_src[oldSam1];
@@ -154,7 +154,7 @@ static void SDL_Downsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
 
     double offset = res->ratio;
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); p_src+=2.f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=2.0 )
     {
         r_ps += offset;
         if( r_ps >= 1.0 )
@@ -179,7 +179,7 @@ static void SDL_Downsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
 //Upsample ANY number of channels
 static void SDL_Upsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, %i channels.\n", res->ratio, res->channels );
 #endif
 
@@ -191,7 +191,7 @@ static void SDL_Upsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
 
     int i;
     int oldSam[channels];
@@ -205,7 +205,7 @@ static void SDL_Upsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
     double offset=1.0/res->ratio;
 
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); q_dst+=channells_f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=channells_f )
     {
         for(i=0;i<channels;++i)
             s_dst[(int)q_dst+i] = old[i];
@@ -229,7 +229,7 @@ static void SDL_Upsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
 //Downsample ANY number of channels
 static void SDL_Downsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
 {
-#if DEBUG_CONVERT
+#ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, %i channels.\n", res->ratio, res->channels );
 #endif
     if(res->channels<=0) return;
@@ -242,7 +242,7 @@ static void SDL_Downsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
     short *s_src = (Uint16 *) (res->buf);
     short s_dst[dstsize];
 
-    register double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
 
     int i=0;
     int oldSam[channels];
@@ -258,7 +258,7 @@ static void SDL_Downsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
     double offset = res->ratio;
 
     //Resample it!
-    for(p_src=0.f, q_dst=0.f, r_ps=0.f; (p_src < s_size) && (q_dst < d_size); p_src+=channells_f )
+    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=channells_f )
     {
         r_ps += offset;
         if( r_ps >= 1.0 )

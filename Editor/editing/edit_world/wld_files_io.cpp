@@ -21,6 +21,7 @@
 #include <QGraphicsScene>
 #include <QProgressDialog>
 #include <QLineEdit>
+#include <QCheckBox>
 #include <QDesktopWidget>
 #include <QInputDialog>
 
@@ -40,7 +41,6 @@
 bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
-
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
@@ -48,11 +48,10 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     WldData.meta.modified = true;
     WldData.meta.untitled = true;
     StartWldData = WldData;
-
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
     //Check if data configs exists
-    if( configs.check() )
+    if(configs.check())
     {
         LogCritical("Error! *.INI configs not loaded");
         this->close();
@@ -61,7 +60,6 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
 
     scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
     scene->m_opts = options;
-
     //scene->InitSection(0);
     //scene->drawSpace();
     scene->buildAnimators();
@@ -74,22 +72,24 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     }
 
     if(options.animationEnabled) scene->startAnimation();
+
     setAutoUpdateTimer(31);
     return true;
 }
 
 namespace wld_file_io
 {
-    bool isSMBX64limit=false;
-    bool choiceVersionID=false;
+    static bool isSMBX64limit = false;
+    static bool choiceVersionID = false;
 }
 
 bool WorldEdit::save(bool savOptionsDialog)
 {
-    if (isUntitled) {
+    if(isUntitled)
         return saveAs(savOptionsDialog);
-    } else {
-        wld_file_io::choiceVersionID=false;
+    else
+    {
+        wld_file_io::choiceVersionID = false;
         return saveFile(curFile);
     }
 }
@@ -97,100 +97,110 @@ bool WorldEdit::save(bool savOptionsDialog)
 bool WorldEdit::saveAs(bool savOptionsDialog)
 {
     using namespace wld_file_io;
+    bool makeCustomFolder = false;
 
-    if(savOptionsDialog){
-        SavingNotificationDialog* sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
+    if(savOptionsDialog)
+    {
+        SavingNotificationDialog *sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
         util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
-        QLineEdit* wldNameBox = new QLineEdit();
-        sav->addUserItem(tr("Episode Title: "),wldNameBox);
-        sav->setAdjustSize(400,150);
+        QLineEdit *wldNameBox = new QLineEdit();
+        QCheckBox *mkDirCustom = new QCheckBox();
+        sav->addUserItem(tr("Episode Title: "), wldNameBox);
+        sav->addUserItem(tr("Make custom folder"), mkDirCustom);
+        mkDirCustom->setToolTip(tr("Note: Custom folders are not supported for legacy SMBX Engine!"));
+        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
-        if(sav->exec() == QDialog::Accepted){
+
+        if(sav->exec() == QDialog::Accepted)
+        {
             WldData.EpisodeTitle = wldNameBox->text();
+            makeCustomFolder = mkDirCustom->isChecked();
             wldNameBox->deleteLater();
+            mkDirCustom->deleteLater();
             sav->deleteLater();
-            if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+
+            if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE)
                 return false;
-            }
-        }else{
-            return false;
         }
+        else
+            return false;
     }
 
-    bool isNotDone=true;
-    QString fileName = (isUntitled)?GlobalSettings::savePath+QString("/")+
-                                    (WldData.EpisodeTitle.isEmpty()?curFile:util::filePath(WldData.EpisodeTitle)):curFile;
-
-    QString fileSMBX64="SMBX64 (1.3) World map file (*.wld)";
-    QString fileSMBXany="SMBX0...64 Level file [choose version] (*.wld)";
-    QString filePGEX="Extended World map file (*.wldx)";
-
+    bool isNotDone = true;
+    QString fileName = (isUntitled) ? GlobalSettings::savePath + QString("/") +
+                       (WldData.EpisodeTitle.isEmpty() ? curFile : util::filePath(WldData.EpisodeTitle)) : curFile;
+    QString fileSMBX64 = "SMBX64 (1.3) World map file (*.wld)";
+    QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.wld)";
+    QString filePGEX = "Extended World map file (*.wldx)";
     QString selectedFilter;
+
     if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
         selectedFilter = filePGEX;
     else
         selectedFilter = fileSMBX64;
 
     QString filter =
-            fileSMBX64+";;"+
-            fileSMBXany+";;"+
-            filePGEX;
-
+        fileSMBX64 + ";;" +
+        fileSMBXany + ";;" +
+        filePGEX;
     bool ret;
+RetrySave:
+    isSMBX64limit = false;
+    choiceVersionID = false;
+    isNotDone = true;
 
-    RetrySave:
-
-    isSMBX64limit=false;
-    choiceVersionID=false;
-    isNotDone=true;
     while(isNotDone)
     {
         fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
 
-        if (fileName.isEmpty())
+        if(fileName.isEmpty())
             return false;
 
-        if(selectedFilter==fileSMBXany)
-            choiceVersionID=true;
+        if(selectedFilter == fileSMBXany)
+            choiceVersionID = true;
 
-        if((selectedFilter==fileSMBXany)||(selectedFilter==fileSMBX64))
+        if((selectedFilter == fileSMBXany) || (selectedFilter == fileSMBX64))
         {
             if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
-                fileName.remove(fileName.size()-1, 1);
+                fileName.remove(fileName.size() - 1, 1);
+
             if(!fileName.endsWith(".wld", Qt::CaseInsensitive))
                 fileName.append(".wld");
         }
-        else if(selectedFilter==filePGEX)
+        else if(selectedFilter == filePGEX)
         {
             if(fileName.endsWith(".wld", Qt::CaseInsensitive))
                 fileName.append("x");
+
             if(!fileName.endsWith(".wldx", Qt::CaseInsensitive))
                 fileName.append(".wldx");
         }
 
-
-        if( (!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)) )
+        if((!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)))
         {
             QMessageBox::warning(this, tr("Extension is not set"),
-               tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+                                 tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
             continue;
         }
 
-        /*if(makeCustomFolder)
+        if(makeCustomFolder)
         {
-            QDir dir = fileName.section("/",0,-2);
-            dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
-        }*/
-        isNotDone=false;
+            QFileInfo finfo(fileName);
+            finfo.absoluteDir().mkpath(finfo.absoluteDir().absolutePath() +
+                                       "/" + util::getBaseFilename(finfo.fileName())
+                                      );
+        }
+
+        isNotDone = false;
     }
 
     ret = saveFile(fileName);
+
     if(isSMBX64limit) goto RetrySave;
 
     return ret;
-
     /*
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
@@ -207,56 +217,58 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     using namespace wld_file_io;
 
-    if( (!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)) )
+    if((!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)))
     {
         QMessageBox::warning(this, tr("Extension is not set"),
-           tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+                             tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
         return false;
     }
 
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
         //SMBX64 Standard check
-        isSMBX64limit=false;
-
-        int file_format=64;
+        isSMBX64limit = false;
+        int file_format = 64;
 
         if(choiceVersionID)
         {
             QApplication::restoreOverrideCursor();
-            bool ok=true;
+            bool ok = true;
             file_format = QInputDialog::getInt(this, tr("SMBX file version"),
-                                  tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+                                               tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+
             if(!ok) return false;
+
             QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
-        int ErrorCode=FileFormats::smbx64WorldCheckLimits(WldData);
-        if(ErrorCode!=FileFormats::SMBX64_FINE)
+        int ErrorCode = FileFormats::smbx64WorldCheckLimits(WldData);
+
+        if(ErrorCode != FileFormats::SMBX64_FINE)
         {
             QMessageBox::warning(this,
                                  tr("The SMBX64 limit has been exceeded"),
                                  smbx64ErrMsgs(WldData, ErrorCode),
                                  QMessageBox::Ok);
-            isSMBX64limit=true;
+            isSMBX64limit = true;
         }
 
         if(isSMBX64limit)
         {
             if(QMessageBox::question(this, tr("The SMBX64 limit has been exceeded"),
-            tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'overflow' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No)
+                                     tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'overflow' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
             {
                 QApplication::restoreOverrideCursor();
                 return false;
             }
             else
-                isSMBX64limit=false;
+                isSMBX64limit = false;
         }
 
-        if (!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
+        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -264,16 +276,17 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                                  .arg(FileFormats::errorString));
             return false;
         }
+
         WldData.meta.smbx64strict = true; //Enable SMBX64 standard strict mode
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
-
     // ////////////////// Write Extended WLD file (WLDX)/////////////////////
     else if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
     {
         WldData.meta.smbx64strict = false; //Disable strict mode
-        if( !FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX) )
+
+        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -281,21 +294,22 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                                  .arg(FileFormats::errorString));
             return false;
         }
+
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
+
     // //////////////////////////////////////////////////////////////////////
-
-
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
-
     WldData.meta.modified = false;
     WldData.meta.untitled = false;
 
-    if(addToRecent){
+    if(addToRecent)
+    {
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
+
     return true;
 }
 
@@ -304,12 +318,14 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 {
     QFile file(fileName);
     WldData = FileData;
-    bool modifystate=false;
-    bool untitledstate=false;
-    QString curFName=fileName;
+    bool modifystate = false;
+    bool untitledstate = false;
+    QString curFName = fileName;
     WldData.meta.modified = false;
     WldData.meta.untitled = false;
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
@@ -333,11 +349,10 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     setCurrentFile(curFName);
     StartWldData = WldData; //Save current history for made reset
-
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
     //Check if data configs exists
-    if( configs.check() )
+    if(configs.check())
     {
         LogCritical("Error! *.INI configs not loaded");
         this->close();
@@ -345,27 +360,22 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     }
 
     LogDebug(QString(">>Starting to load file"));
-
     //Declaring of the scene
     scene = new WldScene(m_mw, ui->graphicsView, configs, WldData, this);
-
     scene->m_opts = options;
-
-    int DataSize=0;
-
+    int DataSize = 0;
     DataSize += 3;
     DataSize += 6;
-
     QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, MainWinConnect::pMainWin);
-         progress.setWindowTitle(tr("Loading World data"));
-         progress.setWindowModality(Qt::WindowModal);
-         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-         progress.setFixedSize(progress.size());
-         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-         progress.setMinimumDuration(0);
-         progress.setAutoClose(false);
+    progress.setWindowTitle(tr("Loading World data"));
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    progress.setFixedSize(progress.size());
+    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setMinimumDuration(0);
+    progress.setAutoClose(false);
 
-    if(! DrawObjects(progress) )
+    if(! DrawObjects(progress))
     {
         WldData.meta.modified = false;
         this->close();
@@ -374,18 +384,14 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    if( !progress.wasCanceled() )
+    if(!progress.wasCanceled())
         progress.close();
 
     QApplication::restoreOverrideCursor();
-
     setAutoUpdateTimer(31);
-
     WldData.meta.modified = modifystate;
     WldData.meta.untitled = untitledstate;
-
     progress.deleteLater();
-
     return true;
 }
 
@@ -397,28 +403,31 @@ void WorldEdit::documentWasModified()
 
 bool WorldEdit::maybeSave()
 {
-    if (WldData.meta.modified) {
-        SavingNotificationDialog* sav = new SavingNotificationDialog(true,SavingNotificationDialog::D_WARN, this);
+    if(WldData.meta.modified)
+    {
+        SavingNotificationDialog *sav = new SavingNotificationDialog(true, SavingNotificationDialog::D_WARN, this);
         util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
-        sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
-        QLineEdit* wldNameBox = new QLineEdit();
-        sav->addUserItem(tr("Episode title: "),wldNameBox);
-        sav->setAdjustSize(400,150);
+        sav->setWindowTitle(userFriendlyCurrentFile() + tr(" not saved"));
+        QLineEdit *wldNameBox = new QLineEdit();
+        sav->addUserItem(tr("Episode title: "), wldNameBox);
+        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
-        if(sav->exec() == QDialog::Accepted){
+
+        if(sav->exec() == QDialog::Accepted)
+        {
             WldData.EpisodeTitle = wldNameBox->text();
             wldNameBox->deleteLater();
             sav->deleteLater();
-            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
+
+            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE)
                 return save();
-            }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+            else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE)
                 return false;
-            }
-        }else{
-            return false;
         }
+        else
+            return false;
     }
 
     return true;
@@ -441,37 +450,44 @@ void WorldEdit::closeEvent(QCloseEvent *event)
     else
         MainWinConnect::pMainWin->on_actionSelect_triggered();
 
-    if(maybeSave()) {
+    if(maybeSave())
+    {
         stopAutoUpdateTimer();
-
         scene->setMessageBoxItem(false);
         scene->clear();
         LogDebug("!<-Cleared->!");
-
         LogDebug("!<-Delete animators->!");
-        while(! scene->m_animatorsTerrain.isEmpty() )
+
+        while(! scene->m_animatorsTerrain.isEmpty())
         {
-            SimpleAnimator* tmp = scene->m_animatorsTerrain.first();
+            SimpleAnimator *tmp = scene->m_animatorsTerrain.first();
             scene->m_animatorsTerrain.pop_front();
-            if(tmp!=NULL) delete tmp;
+
+            if(tmp != NULL) delete tmp;
         }
-        while(! scene->m_animatorsScenery.isEmpty() )
+
+        while(! scene->m_animatorsScenery.isEmpty())
         {
-            SimpleAnimator* tmp = scene->m_animatorsScenery.first();
+            SimpleAnimator *tmp = scene->m_animatorsScenery.first();
             scene->m_animatorsScenery.pop_front();
-            if(tmp!=NULL) delete tmp;
+
+            if(tmp != NULL) delete tmp;
         }
-        while(! scene->m_animatorsPaths.isEmpty() )
+
+        while(! scene->m_animatorsPaths.isEmpty())
         {
-            SimpleAnimator* tmp = scene->m_animatorsPaths.first();
+            SimpleAnimator *tmp = scene->m_animatorsPaths.first();
             scene->m_animatorsPaths.pop_front();
-            if(tmp!=NULL) delete tmp;
+
+            if(tmp != NULL) delete tmp;
         }
-        while(! scene->m_animatorsLevels.isEmpty() )
+
+        while(! scene->m_animatorsLevels.isEmpty())
         {
-            SimpleAnimator* tmp = scene->m_animatorsLevels.first();
+            SimpleAnimator *tmp = scene->m_animatorsLevels.first();
             scene->m_animatorsLevels.pop_front();
-            if(tmp!=NULL) delete tmp;
+
+            if(tmp != NULL) delete tmp;
         }
 
         LogDebug("!<-Delete scene->!");
@@ -481,9 +497,9 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         LogDebug("!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
-    } else {
-        event->ignore();
     }
+    else
+        event->ignore();
 }
 
 void WorldEdit::setCurrentFile(const QString &fileName)
@@ -496,11 +512,10 @@ void WorldEdit::setCurrentFile(const QString &fileName)
     WldData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(QString(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle).replace("&", "&&&") );
+    setWindowTitle(QString(WldData.EpisodeTitle == "" ? userFriendlyCurrentFile() : WldData.EpisodeTitle).replace("&", "&&&"));
 }
 
 QString WorldEdit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }
-

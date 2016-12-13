@@ -405,6 +405,7 @@ class LVL_Npc : public PGE_Phys_Object
         /**Layers***/
         void show();
         void hide();
+        void setVisible(bool visible);
 
         bool isInited();
     private:

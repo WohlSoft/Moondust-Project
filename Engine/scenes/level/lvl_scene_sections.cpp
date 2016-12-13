@@ -17,43 +17,71 @@
  */
 
 #include "../scene_level.h"
-
-#include <QtDebug>
+#include <cmath>
 
 int LevelScene::findNearestSection(long x, long y)
 {
+    long lessDistance = 0;
+    int  result = 0;
 
-    bool found=false;
-    int result=0;
-    int padding=0;
-
-    while( (!found) && (padding < 1024) )
+    //Try to find intersecting section first
+    for(int i = 0; i < data.sections.size(); i++)
     {
-        for(int i=0; i<data.sections.size(); i++)
-        {
-            if(
-                    (data.sections[i].size_left==0)
-                    &&(data.sections[i].size_right==0)
-                    &&(data.sections[i].size_top==0)
-                    &&(data.sections[i].size_bottom==0) )
-                continue;
+        LevelSection &s = data.sections[i];
 
-            if(data.sections[i].size_left-padding > x)
-                continue;
-            if(data.sections[i].size_right + padding < x)
-                continue;
-            if(data.sections[i].size_top - padding > y)
-                continue;
-            if(data.sections[i].size_bottom + padding < y)
-                continue;
-
-            found=true;
-            result = i;
-
-            break;
-        }
-        padding+=32;
+        if((x >= s.size_left) && (x <= s.size_right) &&
+           (y >= s.size_top)  && (y <= s.size_bottom))
+            return i;
     }
+
+    //Find section by nearest center or corner
+    for(int i = 0; i < data.sections.size(); i++)
+    {
+        LevelSection &s = data.sections[i];
+        long centerX = s.size_left + std::abs(s.size_left - s.size_right) / 2;
+        long centerY = s.size_top  + std::abs(s.size_top  - s.size_bottom) / 2;
+        //Find distance to center
+        long distanceC = std::sqrt(std::pow(centerX - x, 2) + std::pow(centerY - y, 2));
+
+        auto addDistance = [&](long f)
+        {
+            long distanceCorner = f;
+            if(distanceC > distanceCorner)
+                distanceC = distanceCorner;
+        };
+
+        //Find distance to left-top corner
+        addDistance(std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_top - y, 2)));
+        //Find distance to right-top corner
+        addDistance(std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_top - y, 2)));
+        //Find distance to right-bottom corner
+        addDistance(std::sqrt(std::pow(s.size_right - x, 2) + std::pow(s.size_bottom - y, 2)));
+        //Find distance to left-bottom corner
+        addDistance(std::sqrt(std::pow(s.size_left - x, 2) + std::pow(s.size_bottom - y, 2)));
+
+        //Find distance to nearest vertical edge
+        if((x >= s.size_left) && (x <= s.size_right))
+        {
+            addDistance(std::abs(s.size_top - y));
+            addDistance(std::abs(s.size_bottom - y));
+        }
+
+        //Find distance to nearest horizontal edge
+        if((y >= s.size_top) && (y <= s.size_bottom))
+        {
+            addDistance(std::abs(s.size_left - x));
+            addDistance(std::abs(s.size_right - x));
+        }
+
+        if(i == 0)
+            lessDistance = distanceC;
+        else if(distanceC < lessDistance)
+        {
+            lessDistance = distanceC;
+            result = i;
+        }
+    }
+
     return result;
 }
 
@@ -61,24 +89,24 @@ int LevelScene::findNearestSection(long x, long y)
 
 LVL_Section *LevelScene::getSection(int sct)
 {
-    if((sct>=0)&&(sct<sections.size()))
+    if((sct >= 0) && (sct < sections.size()))
     {
-        if(sections[sct].data.id==sct)
+        if(sections[sct].data.id == sct)
             return &sections[sct];
         else
         {
-            for(LVL_SectionsList::iterator it=sections.begin(); it!=sections.end(); it++)
-                if(it->data.id==sct)
+            for(LVL_SectionsList::iterator it = sections.begin(); it != sections.end(); it++)
+                if(it->data.id == sct)
                     return &(*it);
         }
     }
-    return NULL;
+
+    return nullptr;
 }
 
 EpisodeState *LevelScene::getGameState()
 {
     return gameState;
 }
-
 
 

@@ -75,7 +75,7 @@ void LoadingScene::init()
     if(!ConfigManager::setup_LoadingScreen.backgroundImg.isEmpty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_LoadingScreen.backgroundImg);
     else
-        GlRenderer::loadTextureP(background, ":/images/cat_splash.png");
+        GlRenderer::loadTextureP(background, ":cat_splash.png");
 
     imgs.clear();
 
