@@ -55,7 +55,7 @@ public:
     //! Pointer to main window
     MainWindow* m_mw;
     //! List of registered menu items
-    QAction* m_menuItems[3];
+    QAction* m_menuItems[4];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
@@ -83,6 +83,8 @@ public:
     QThread*            m_helperThread;
     //! Don't run same function multiple times
     QMutex              m_engine_mutex;
+    //! Disable OpenGL on LunaLua side
+    bool                m_noGL;
 public slots:
     /********Menu items*******/
     /**

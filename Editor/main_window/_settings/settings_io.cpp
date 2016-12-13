@@ -29,6 +29,9 @@
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
+#ifdef _WIN32
+#include <main_window/testing/luna_tester.h>
+#endif
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -71,6 +74,7 @@ void MainWindow::loadSettings()
 #endif
 
     settings.beginGroup("Main");
+    {
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
@@ -157,13 +161,17 @@ void MainWindow::loadSettings()
            updateWindowMenu();
            updateMenus(NULL, true);
         }
+    }
     settings.endGroup();
 
     settings.beginGroup("ext-tools");
+    {
         GlobalSettings::tools_sox_bin_path = settings.value("sox-bin-path", GlobalSettings::tools_sox_bin_path).toString();
+    }
     settings.endGroup();
 
     settings.beginGroup("testing");
+    {
         GlobalSettings::testing.xtra_god = settings.value("ex-god", false).toBool();
         GlobalSettings::testing.xtra_flyup = settings.value("ex-flyup", false).toBool();
         GlobalSettings::testing.xtra_chuck = settings.value("ex-chuck", false).toBool();
@@ -180,20 +188,33 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.p2_state= settings.value("p2-state", 1).toInt();
         GlobalSettings::testing.p2_vehicleID    = settings.value("p2-vehicle-id", 0).toInt();
         GlobalSettings::testing.p2_vehicleType  = settings.value("p2-vehicle-type", 0).toInt();
+    }
     settings.endGroup();
 
     settings.beginGroup("screen-grab");
+    {
         GlobalSettings::screenGrab.sizeType   = settings.value("grab-size", 0).toInt();
         GlobalSettings::screenGrab.width      = settings.value("grab-w", 800).toInt();
         GlobalSettings::screenGrab.height      = settings.value("grab-h", 600).toInt();
+    }
     settings.endGroup();
 
     settings.beginGroup("Recent");
+    {
         for(int i = 1; i<=10;i++){
             recentOpen.push_back(settings.value("recent"+QString::number(i),"<empty>").toString());
         }
         SyncRecentFiles();
+    }
     settings.endGroup();
+
+#ifdef _WIN32
+    settings.beginGroup("LunaTester");
+    {
+        m_luna->m_noGL = settings.value("nogl", false).toBool();
+    }
+    settings.endGroup();
+#endif
 }
 
 
@@ -310,6 +331,14 @@ void MainWindow::saveSettings()
         settings.setValue("recent"+QString::number(i),recentOpen[i-1]);
     }
     settings.endGroup();
+
+#ifdef _WIN32
+    settings.beginGroup("LunaTester");
+    {
+        settings.setValue("nogl", m_luna->m_noGL);
+    }
+    settings.endGroup();
+#endif
 
     settings.beginGroup("logging");
         settings.setValue("log-path",  LogWriter::DebugLogFile);
