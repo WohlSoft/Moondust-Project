@@ -33,6 +33,7 @@ struct MyResampler
 {
     int   needed;
     double ratio;
+    int len_mult;
     int buf_len;
     int channels;
     Uint8 buf[MyResampler_BUFFER_SIZE];//200 KB for backup stuff;
@@ -43,7 +44,7 @@ void MyResample_zero(struct MyResampler *res);
 
 void MyResample_init(struct MyResampler *res, int rate_in, int rate_out, int channels, SDL_AudioFormat format);
 
-void MyResample_addSource(struct MyResampler *res, Uint8* in_buffer, int in_len);
+void MyResample_addSource(struct MyResampler *res, Uint8 *in_buffer, int in_len);
 
 void MyResample_Process(struct MyResampler *res);
 
