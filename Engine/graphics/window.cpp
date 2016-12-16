@@ -26,7 +26,7 @@
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-Scene* PGE_Window::m_currentScene = nullptr;
+Scene *PGE_Window::m_currentScene = nullptr;
 
 int PGE_Window::Width = 800;
 int PGE_Window::Height = 600;
@@ -143,7 +143,8 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
         GlRenderer::setup_SW_SDL();
         break;
 
-    default:
+    case GlRenderer::RENDER_AUTO:
+    case GlRenderer::RENDER_INVALID:
         //% "Renderer is not selected!"
         printSDLError(qtTrId("NO_RENDERER_ERROR"));
         return false;
