@@ -466,7 +466,7 @@ void ConfigSelectScene::processMenu()
         ret = 0;
 
     m_doExit = true;
-    m_fader.setFade(10, 1.0f, 0.05f);
+    m_fader.setFade(10, 1.0, 0.05);
 }
 
 void ConfigSelectScene::processEvents()
