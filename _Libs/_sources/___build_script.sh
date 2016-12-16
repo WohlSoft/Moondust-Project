@@ -10,6 +10,7 @@
 #InstallTo = /usr/
 
 CURRENT_TARBALL=""
+CACHE_DIR="_build_cache"
 
 OurOS="linux_defaut"
 
@@ -257,11 +258,11 @@ BuildFLAC
 BuildMAD
 
 # in-archives
-if [ ! -d SDL ]
+if [ ! -d $CACHE_DIR ]
 then
-	mkdir SDL
+	mkdir $CACHE_DIR
 fi
-cd SDL
+cd $CACHE_DIR
 
 BuildLUAJIT
 BuildSDL
