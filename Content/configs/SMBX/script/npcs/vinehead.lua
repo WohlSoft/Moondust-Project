@@ -66,9 +66,9 @@ function vinehead:onLoop(tickTime)
 
     self.npc_obj.speedY=self.speed
     self.passed_height = math.abs(self.init_y-self.npc_obj.y)
-    if(self.passed_height>=32)then
-        self:spawnVine()
-        self.init_y = self.init_y-32
+
+    if(self.passed_height >= 32)then
+        self.init_y = self.init_y - 32
         -- selfDestroy on contact with solid blocks
         if(self.contacts:detected())then
             local blocks= self.contacts:getBlocks()
@@ -81,6 +81,7 @@ function vinehead:onLoop(tickTime)
                 end
             end
         end
+        self:spawnVine()
     end
 end
 
