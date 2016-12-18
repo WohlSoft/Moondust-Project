@@ -114,6 +114,8 @@ BuildSDL()
     #--------------Apply some patches--------------
     #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
     patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
+    #++++Fixed resampler which no more produces clicks between buffer chunks
+    patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.c < ../patches/SDL_audiotypecvt.c.patch
     #----------------------------------------------
 
     ###########SDL2###########
