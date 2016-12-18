@@ -140,7 +140,8 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
     }
 
     wave = (WAVStream *)SDL_malloc(sizeof *wave);
-    if (wave) {
+    if (wave)
+    {
         Uint32 magic;
 
         SDL_zerop(wave);
@@ -156,25 +157,38 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
         } else {
             Mix_SetError("Unknown WAVE format");
         }
-        if (!loaded) {
+
+        if (!loaded)
+        {
+            //Don't free SRC on error (to avoid crash in future)
+            wave->freesrc = SDL_FALSE;
             WAVStream_FreeSong(wave);
             return(NULL);
         }
-        if(wave->spec.format==AUDIO_S16) {//Build resampler for Signed-16 PCM files only!
+
+        if(wave->spec.format == AUDIO_S16)
+        {
+            //Build resampler for Signed-16 PCM files only!
             MyResample_init(&wave->resample,
                             wave->spec.freq,
                             mixer.freq,
                             mixer.channels,
                             AUDIO_S16);
             SDL_BuildAudioCVT(&wave->cvt,
-                wave->spec.format, wave->spec.channels, mixer.freq,
+                wave->spec.format, wave->spec.channels,
+                mixer.freq, //HACK: Use same frequency as mixer to don't use internal resampler
                 mixer.format, mixer.channels, mixer.freq);
-        } else { //Overwise, use SDL's shitty resamplers
+        }
+        else
+        {
+            //Overwise, use SDL's <s>shitty</s> hardcoded resamplers
             SDL_BuildAudioCVT(&wave->cvt,
                 wave->spec.format, wave->spec.channels, wave->spec.freq,
                 mixer.format, mixer.channels, mixer.freq);
         }
-    } else {
+    }
+    else
+    {
         SDL_OutOfMemory();
         return(NULL);
     }
@@ -195,19 +209,21 @@ void WAVStream_Start(WAVStream *wave)
 }
 
 /* Play some of a stream previously started with WAVStream_Start() */
-static int PlaySome(Uint8 *stream, int len)
+#if 0
+static int PlaySomeOLD(Uint8 *stream, int len)
 {
     Sint64 pos, stop;
     WAVLoopPoint *loop;
-    Sint64 loop_start=0;
-    Sint64 loop_stop=0;
+    Sint64 loop_start = 0;
+    Sint64 loop_stop = 0;
     int i;
-    int consumed=0;
+    int consumed = 0;
 
     pos = SDL_RWtell(music->src);
     stop = music->stop;
     loop = NULL;
-    for (i = 0; i < music->numloops; ++i) {
+    for(i = 0; i < music->numloops; ++i)
+    {
         loop = &music->loops[i];
         if (loop->active) {
             const unsigned int bytes_per_sample = (SDL_AUDIO_BITSIZE(music->spec.format) / 8) * music->spec.channels;
@@ -362,18 +378,149 @@ static int PlaySome(Uint8 *stream, int len)
     return consumed;
 }
 
-int WAVStream_PlaySome(Uint8 *stream, int len)
+static int WAVStream_PlaySomeOLD(Uint8 *stream, int len)
 {
     if (!music)
         return 0;
 
     while ((SDL_RWtell(music->src) < music->stop) && (len > 0)) {
-        int consumed = PlaySome(stream, len);
+        int consumed = PlaySomeOLD(stream, len);
         if (!consumed)
             break;
 
         stream += consumed;
         len -= consumed;
+    }
+    return len;
+}
+#endif
+
+static void PlaySome(WAVStream* music)
+{
+    long len;
+    Uint8 data[4096];
+    SDL_AudioCVT *cvt;
+    struct MyResampler  *resampler;
+
+    Sint64 pos, stop;
+    WAVLoopPoint *loop;
+    Sint64 loop_start = 0;
+    Sint64 loop_stop = 0;
+    int i;
+
+    pos = SDL_RWtell(music->src);
+    stop = music->stop;
+    loop = NULL;
+    for(i = 0; i < music->numloops; ++i)
+    {
+        loop = &music->loops[i];
+        if (loop->active) {
+            const unsigned int bytes_per_sample = (SDL_AUDIO_BITSIZE(music->spec.format) / 8) * music->spec.channels;
+            loop_start = music->start + loop->start * bytes_per_sample;
+            loop_stop = music->start + (loop->stop + 1) * bytes_per_sample;
+            if (pos >= loop_start && pos < loop_stop)
+            {
+                stop = loop_stop;
+                break;
+            }
+        }
+        loop = NULL;
+    }
+
+    len = sizeof(data);
+
+    /* At least at the time of writing, SDL_ConvertAudio()
+       does byte-order swapping starting at the end of the
+       buffer. Thus, if we are reading 16-bit samples, we
+       had better make damn sure that we get an even
+       number of bytes, or we'll get garbage.
+     */
+    if((music->cvt.src_format & 0x0010) && (len & 1))
+    {
+        len--;
+    }
+
+    len = (long)SDL_RWread(music->src, data, 1, len);
+    if(loop && SDL_RWtell(music->src) >= stop)
+    {
+        if (loop->current_play_count == 1) {
+            loop->active = SDL_FALSE;
+        } else {
+            if (loop->current_play_count > 0)
+            {
+                --loop->current_play_count;
+            }
+            SDL_RWseek(music->src, loop_start, RW_SEEK_SET);
+        }
+    }
+
+    if(len <= 0)
+        return;
+
+    cvt = &music->cvt;
+    resampler = &music->resample;
+
+    if ( cvt->buf ) {
+        SDL_free(cvt->buf);
+    }
+    cvt->buf = (Uint8 *)SDL_malloc(sizeof(data) * (size_t)cvt->len_mult * (size_t)resampler->len_mult);
+    if ( cvt->buf )
+    {
+        if( music->resample.needed )
+        {
+            MyResample_addSource(resampler, data, (int)len);
+            MyResample_Process(resampler);
+            SDL_memcpy(cvt->buf, resampler->buf, (size_t)resampler->buf_len);
+            cvt->len = resampler->buf_len;
+            cvt->len_cvt = resampler->buf_len;
+        }
+        else
+        {
+            cvt->len = (int)len;
+            cvt->len_cvt = (int)len;
+            SDL_memcpy(cvt->buf, data, (size_t)len);
+        }
+        if ( cvt->needed )
+        {
+            SDL_ConvertAudio(cvt);
+        }
+        music->len_available = cvt->len_cvt;
+        music->snd_available = cvt->buf;
+    }
+    else
+    {
+        SDL_SetError("Out of memory");
+        music = NULL;
+    }
+}
+
+int WAVStream_PlaySome(Uint8 *stream, int len)
+{
+    if (!music)
+        return 0;
+
+    int mixable;
+
+    while ((SDL_RWtell(music->src) < music->stop) && (len > 0))
+    {
+        if ( !music->len_available )
+        {
+            PlaySome(music);
+        }
+        mixable = len;
+        if ( mixable > music->len_available ) {
+            mixable = music->len_available;
+        }
+        if( wavestream_volume == MIX_MAX_VOLUME ) {
+            SDL_memcpy(stream, music->snd_available, (size_t)mixable);
+        } else {
+            SDL_MixAudioFormat(stream, music->snd_available, mixer.format,
+                               (Uint32)mixable, wavestream_volume);
+        }
+        music->len_available -= mixable;
+        music->snd_available += mixable;
+        len -= mixable;
+        stream += mixable;
     }
     return len;
 }

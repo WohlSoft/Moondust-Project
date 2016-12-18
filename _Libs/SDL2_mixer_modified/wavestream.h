@@ -40,9 +40,11 @@ typedef struct {
     Sint64 start;
     Sint64 stop;
     SDL_AudioCVT cvt;
+    struct MyResampler resample;
+    int len_available;
+    Uint8 *snd_available;
     int numloops;
     WAVLoopPoint *loops;
-    struct MyResampler resample;
 } WAVStream;
 
 /* Initialize the WAVStream player, with the given mixer settings
