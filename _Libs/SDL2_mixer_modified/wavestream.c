@@ -166,6 +166,7 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
             return(NULL);
         }
 
+        #if 1
         if(wave->spec.format == AUDIO_S16)
         {
             //Build resampler for Signed-16 PCM files only!
@@ -180,6 +181,7 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
                 mixer.format, mixer.channels, mixer.freq);
         }
         else
+        #endif
         {
             //Overwise, use SDL's <s>shitty</s> hardcoded resamplers
             SDL_BuildAudioCVT(&wave->cvt,

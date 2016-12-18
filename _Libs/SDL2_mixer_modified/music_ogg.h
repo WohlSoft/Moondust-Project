@@ -46,6 +46,7 @@ typedef struct {
     struct MyResampler resample;
     int len_available;
     Uint8 *snd_available;
+    int channels;
     /* Loop points stuff [by Wohlstand] */
     int loop;
     ogg_int64_t loop_start;

@@ -29,269 +29,129 @@
 
 #include "my_resample.h"
 
-static void SDL_Upsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
-{
-#ifdef DEBUG_CONVERT
-    fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_U16LSB, 1 channel.\n", cvt->rate_incr);
-#endif
-    const int dstsize = (int)(((double)res->buf_len/2.0) * res->ratio) * 2;
-    Uint16 *s_src = (Uint16 *)(res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
-
-    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
-    int oldSam0 = (int)p_src;
-    Uint16 old0 = s_src[oldSam0];
-    double offset=1.0/res->ratio;
-
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=1.0 )
-    {
-        s_dst[(int)q_dst] = old0;
-        r_ps += offset;
-        if( r_ps >= 1.0 )
-        {
-            p_src += 1.0;
-            r_ps -= 1.0;
-            oldSam0 = (int)p_src;
-            old0 = s_src[oldSam0];
-        }
-    }
-
-    int i;
-    for(i=0; i<dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-}
-
-static void SDL_Downsample_S16LSB_1c_KoKoKo(struct MyResampler *res)
-{
-#ifdef DEBUG_CONVERT
-    fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_U16LSB, 1 channel.\n", cvt->rate_incr);
-#endif
-    const int dstsize = (int)(((double)res->buf_len/2.0) * res->ratio) * 2;
-    Uint16 *s_src = (Uint16 *) (res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
-
-    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
-    int oldSam0 = (int)p_src;
-    Uint16 old0 = s_src[oldSam0];
-    s_dst[(int)q_dst]   = old0;
-
-    double offset=res->ratio;
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=1.0 )
-    {
-        r_ps += offset;
-        if( r_ps >= 1.0 )
-        {
-            oldSam0 = (int)p_src;
-            old0 = s_src[oldSam0];
-            s_dst[(int)q_dst]   = old0;
-            q_dst += 1.0;
-            r_ps -= 1.0;
-        }
-    }
-
-    int i;
-    for(i=0; i < dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-}
-
-
-static void SDL_Upsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
-{
-#ifdef DEBUG_CONVERT
-    fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, 2 channels.\n", cvt->rate_incr);
-#endif
-    const int dstsize = (int)(((double)res->buf_len/4.0) * res->ratio) * 4;
-    Uint16 *s_src = (Uint16 *) (res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
-
-    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
-    int oldSam1 = (int)p_src+1;
-    int oldSam0 = (int)p_src;
-    Uint16 old1 = s_src[oldSam1];
-    Uint16 old0 = s_src[oldSam0];
-    double offset=1.0/res->ratio;
-
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=2.0 )
-    {
-        s_dst[(int)q_dst+1] = old1;
-        s_dst[(int)q_dst]   = old0;
-        r_ps += offset;
-        if( r_ps >= 1.0 )
-        {
-            p_src += 2.0;
-            r_ps -= 1.0;
-            oldSam1 = (int)p_src+1;
-            oldSam0 = (int)p_src;
-            old1 = s_src[oldSam1];
-            old0 = s_src[oldSam0];
-        }
-    }
-
-    int i;
-    for(i=0; i < dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-}
-
-static void SDL_Downsample_S16LSB_2c_KoKoKo(struct MyResampler *res)
-{
-#ifdef DEBUG_CONVERT
-    fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, 2 channels.\n", cvt->rate_incr);
-#endif
-    const int dstsize = (int)(((double)res->buf_len/4.0) * res->ratio) * 4;
-    Uint16 *s_src = (Uint16 *) (res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
-
-    double p_src = 0.0, q_dst = 0.0, r_ps = 0.0, s_size=res->buf_len, d_size = dstsize;
-    int oldSam1 = (int)p_src+1;
-    int oldSam0 = (int)p_src;
-    Uint16 old1 = s_src[oldSam1];
-    Uint16 old0 = s_src[oldSam0];
-    s_dst[(int)q_dst+1] = old1;
-    s_dst[(int)q_dst]   = old0;
-
-    double offset = res->ratio;
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=2.0 )
-    {
-        r_ps += offset;
-        if( r_ps >= 1.0 )
-        {
-            oldSam1 = (int)p_src+1;
-            oldSam0 = (int)p_src;
-            old1 = s_src[oldSam1];
-            old0 = s_src[oldSam0];
-            s_dst[(int)q_dst+1] = old1;
-            s_dst[(int)q_dst]   = old0;
-            q_dst += 2.0;
-            r_ps -= 1.0;
-        }
-    }
-
-    int i;
-    for(i=0; i<dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-}
-
-
 //Upsample ANY number of channels
-static void SDL_Upsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
+static void SDL_Upsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 {
 #ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, %i channels.\n", res->ratio, res->channels );
 #endif
-
+#define SAMPLE_TYPE Sint16
+    static const int sampleSize = sizeof(SAMPLE_TYPE);
     int channels = res->channels;
-    double channells_f = (double)channels;
-    int chan_coeff=2*res->channels;
+    // Size of one sample multipled to number of channels
+    int cpy = sampleSize * channels;
+    int s_size = res->buf_len / cpy;
+    int d_size = (int)(((double)s_size) * res->ratio);
 
-    const int dstsize = (int)(((double)res->buf_len/chan_coeff) * res->ratio) * chan_coeff;
-    Uint16 *s_src = (Uint16 *) (res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
+    SAMPLE_TYPE *s_src = (SAMPLE_TYPE *)(res->buf);
+    SAMPLE_TYPE *p_src = s_src + (s_size * channels) - channels;
+    SAMPLE_TYPE *p_dst = s_src + (d_size * channels) - channels;
 
-    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    SAMPLE_TYPE *sample = (SAMPLE_TYPE*)SDL_malloc((size_t)cpy);
+    #if USE_INTERPOLATE
+    SAMPLE_TYPE *last_sample = (SAMPLE_TYPE*)SDL_malloc((size_t)cpy);
+    #endif
 
-    int i;
-    int *oldSam = (int*)SDL_malloc((size_t)channels * sizeof(int));
-    Uint16 *old = (Uint16*)SDL_malloc((size_t)channels * sizeof(Uint16));
-    for(i=0;i<channels;++i)
+    double r_ps     = 0.0;
+    double offset   = 1.0 / res->ratio;
+
+    SDL_memcpy(sample, p_src, cpy);
+    #ifdef USE_INTERPOLATE
+    SDL_memcpy(last_sample, p_src, cpy);
+    #endif
+
+    #ifdef USE_INTERPOLATE
+    int i = 0;
+    #endif
+    while(p_dst > s_src)
     {
-        oldSam[i] = (int)p_src+i;
-        old[i] = s_src[oldSam[i]];
-    }
-
-    double offset=1.0/res->ratio;
-
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); q_dst+=channells_f )
-    {
-        for(i=0;i<channels;++i)
-            s_dst[(int)q_dst+i] = old[i];
+        SDL_memcpy(p_dst, sample, cpy);
+        p_dst -= channels;
         r_ps += offset;
-        if( r_ps >= 1.0 )
+        if(r_ps >= 1.0)
         {
-            p_src += channells_f;
-            r_ps -= 1.0;
-            for(i=0;i<channels;i++)
-            {
-                oldSam[i] = (int)p_src+i;
-                old[i] = s_src[oldSam[i]];
+            p_src -= channels;
+            #if USE_INTERPOLATE
+            for (i = 0; i < channels; i++) {
+                sample[i] = (SAMPLE_TYPE)( ((((double)p_src[i]) + (double)last_sample[i]) * 0.5) );
             }
+            SDL_memcpy(last_sample, sample, cpy);
+            #else
+            SDL_memcpy(sample, p_src, cpy);
+            #endif
+            r_ps -= 1.0;
         }
     }
 
-    for(i=0; i < dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-    free(oldSam);
-    free(old);
+    res->buf_len = (int)(d_size*cpy);
+    free(sample);
+    #ifdef USE_INTERPOLATE
+    free(last_sample);
+    #endif
+#undef SAMPLE_TYPE
 }
 
 //Downsample ANY number of channels
-static void SDL_Downsample_S16LSB_Xc_KoKoKo(struct MyResampler *res)
+static void SDL_Downsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 {
 #ifdef DEBUG_CONVERT
     fprintf(stderr, "Upsample arbitrary (x%f) AUDIO_S16LSB, %i channels.\n", res->ratio, res->channels );
 #endif
-    if(res->channels<=0) return;
-
+#define SAMPLE_TYPE Sint16
+    static const int sampleSize = sizeof(SAMPLE_TYPE);
     int channels = res->channels;
-    double channells_f = (double)channels;
-    int chan_coeff=2*res->channels;
+    // Size of one sample multipled to number of channels
+    int cpy = sampleSize * channels;
+    int s_size = res->buf_len / cpy;
+    int d_size = (int)(((double)s_size) * res->ratio);
 
-    const int dstsize = (int)(((double)res->buf_len/(double)chan_coeff) * res->ratio) * chan_coeff;
-    Uint16 *s_src = (Uint16 *) (res->buf);
-    Uint16 *s_dst = (Uint16*)SDL_malloc((size_t)dstsize * sizeof(Uint16));
+    SAMPLE_TYPE *s_src = (SAMPLE_TYPE *)(res->buf);
+    SAMPLE_TYPE *s_src_end = s_src + (s_size * channels);
+    SAMPLE_TYPE *p_src = s_src;
+    SAMPLE_TYPE *p_dst = s_src;
 
-    double p_src=0.0, q_dst=0.0, r_ps=0.0, s_size=res->buf_len, d_size=dstsize;
+    SAMPLE_TYPE *sample = (SAMPLE_TYPE*)SDL_malloc((size_t)cpy);
+    #if USE_INTERPOLATE
+    SAMPLE_TYPE *last_sample = (SAMPLE_TYPE*)SDL_malloc((size_t)cpy);
+    #endif
 
-    int i=0;
-    int *oldSam = (int*)SDL_malloc((size_t)channels * sizeof(int));
-    Uint16 *old = (Uint16*)SDL_malloc((size_t)channels * sizeof(Uint16));
+    double r_ps     = 0.0;
+    double offset   = res->ratio;
 
-    for(i=0; i<channels; ++i)
+    SDL_memcpy(sample, p_src, cpy);
+    #ifdef USE_INTERPOLATE
+    SDL_memcpy(last_sample, p_src, cpy);
+    #endif
+
+    #ifdef USE_INTERPOLATE
+    int i = 0;
+    #endif
+    while(p_src < s_src_end)
     {
-        oldSam[i] = (int)p_src+i;
-        old[i]    = s_src[oldSam[i]];
-        s_dst[(int)q_dst+i] = old[i];
-    }
-
-    double offset = res->ratio;
-
-    //Resample it!
-    for(p_src=0.0, q_dst=0.0, r_ps=0.0; (p_src < s_size) && (q_dst < d_size); p_src+=channells_f )
-    {
+        p_src += channels;
         r_ps += offset;
-        if( r_ps >= 1.0 )
+        if(r_ps >= 1.0)
         {
-            for(i=0;i<channels;++i)
-            {
-                oldSam[i] = (int)p_src+1;
-                old[i] = s_src[oldSam[i]];
-                s_dst[(int)q_dst+i] = old[i];
+            SDL_memcpy(p_dst, sample, cpy);
+            p_dst += channels;
+            #if USE_INTERPOLATE
+            for (i = 0; i < channels; i++) {
+                sample[i] = (SAMPLE_TYPE) ((((double) p_src[i]) + ((double)last_sample[i])) * 0.5);
             }
-            q_dst += channells_f;
+            SDL_memcpy(last_sample, sample, cpy);
+            #else
+            SDL_memcpy(sample, p_src, cpy);
+            #endif
             r_ps -= 1.0;
         }
     }
 
-    for(i=0; i < dstsize; ++i)
-        s_src[i] = s_dst[i];
-    res->buf_len = dstsize;
-    free(s_dst);
-    free(oldSam);
-    free(old);
+    res->buf_len = (int)(d_size*cpy);
+    free(sample);
+    #ifdef USE_INTERPOLATE
+    free(last_sample);
+    #endif
+#undef SAMPLE_TYPE
 }
 
 static void doNothing(struct MyResampler *res) {
@@ -310,27 +170,9 @@ void MyResample_init(struct MyResampler *res, int rate_in, int rate_out , int ch
     if(res->needed)
     {
         if(res->ratio > 1.0)
-        {
-            switch(res->channels)
-            {
-                case 1://Upsample mono stream
-                    res->filter = &SDL_Upsample_S16LSB_1c_KoKoKo;break;
-                case 2://Upsample stereo stream
-                    res->filter = &SDL_Upsample_S16LSB_2c_KoKoKo;break;
-                default://Upsample stream with X channels number
-                    res->filter = &SDL_Upsample_S16LSB_Xc_KoKoKo;break;
-            }
-        } else {
-            switch(res->channels)
-            {
-                case 1://Downsample mono stream
-                    res->filter = &SDL_Downsample_S16LSB_1c_KoKoKo;break;
-                case 2://Downsample stereo stream
-                    res->filter = &SDL_Downsample_S16LSB_2c_KoKoKo;break;
-                default://Downsample stream with X channels number
-                    res->filter = &SDL_Downsample_S16LSB_Xc_KoKoKo;break;
-            }
-        }
+            res->filter = &SDL_Upsample_S16LSB_Xc_MixerX;
+        else
+            res->filter = &SDL_Downsample_S16LSB_Xc_MixerX;
     }
 }
 

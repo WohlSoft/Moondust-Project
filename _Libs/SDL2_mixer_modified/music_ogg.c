@@ -82,7 +82,8 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
     callbacks.tell_func = sdl_tell_func;
 
     music = (OGG_music *)SDL_malloc(sizeof *music);
-    if ( music ) {
+    if ( music )
+    {
         /* Initialize the music structure */
         SDL_memset(music, 0, (sizeof *music));
         music->src = src;
@@ -90,6 +91,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         OGG_stop(music);
         OGG_setvolume(music, MIX_MAX_VOLUME);
         music->section = -1;
+        music->channels = 0;
 
         music->mus_title=NULL;
         music->mus_artist=NULL;
@@ -109,11 +111,15 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             return(NULL);
         }
 
+        vorbis_info *vi = vorbis.ov_info(&music->vf, -1);
+        music->channels = vi->channels;
+
         /* Parse comments and extract title and loop points */
-        vorbis_comment *ptr=ov_comment(&music->vf,-1);
+        vorbis_comment *ptr = ov_comment(&music->vf,-1);
         int doValue=0;
         int isLength=0;
-        for(int i=0;i<ptr->comments;i++)
+
+        for(int i = 0; i < ptr->comments; i++)
         {
             char argument[ptr->comment_lengths[i]+1];
             char value[ptr->comment_lengths[i]+1];
@@ -142,34 +148,34 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
 
             if(isLoopStart==0) {
                 music->loop_start = atoi(value);
-            } else if(isLoopLen==0) {
-                music->loop_len= atoi(value);
+            } else if(isLoopLen == 0) {
+                music->loop_len = atoi(value);
                 isLength=1;
-            } else if(isLoopEnd==0) {
+            } else if(isLoopEnd == 0) {
                 isLength=0;
-                music->loop_end= atoi(value);
-            } else if(isMusicTitle==0) {
-                music->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                music->loop_end = atoi(value);
+            } else if(isMusicTitle == 0) {
+                music->mus_title = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
                 strcpy(music->mus_title, value);
-            } else if(isMusicArtist==0) {
-                music->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+            } else if(isMusicArtist == 0) {
+                music->mus_artist = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
                 strcpy(music->mus_artist, value);
-            } else if(isMusicAlbum==0) {
-                music->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+            } else if(isMusicAlbum == 0) {
+                music->mus_album = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
                 strcpy(music->mus_album, value);
-            } else if(isMusicCopyright==0) {
-                music->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+            } else if(isMusicCopyright == 0) {
+                music->mus_copyright = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
                 strcpy(music->mus_copyright, value);
             }
-            doValue=0;
+            doValue = 0;
         }
 
-        if(isLength==1)
-            music->loop_end=music->loop_start+music->loop_len;
+        if(isLength == 1)
+            music->loop_end = music->loop_start + music->loop_len;
         else
-            music->loop_len=music->loop_end-music->loop_start;
+            music->loop_len = music->loop_end - music->loop_start;
 
-        ogg_int64_t total = ov_pcm_total(&music->vf,-1);
+        ogg_int64_t total = ov_pcm_total(&music->vf, -1);
         if( ((music->loop_start >= 0) || (music->loop_end > 0))&&
             ((music->loop_start < music->loop_end) || (music->loop_end==0)) &&
             (music->loop_start < total)&&
@@ -179,17 +185,17 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
                 music->loop_start = 0;
             if(music->loop_end == 0)
                 music->loop_end = total;
-            music->loop=1;
-            vorbis_info *vi;
-            vi = vorbis.ov_info(&music->vf, -1);
-            music->loop_len_ch = vi->channels;
+            music->loop = 1;
+            music->loop_len_ch = music->channels;
         }
-    } else {
+    }
+    else
+    {
         SDL_OutOfMemory();
         return(NULL);
     }
 
-    return(music);
+    return (music);
 }
 
 /* Ignore loop points if found */
@@ -215,19 +221,26 @@ int OGG_playing(OGG_music *music)
 static void OGG_getsome(OGG_music *music)
 {
     int section;
+
     long len;
     Uint8 data[4096];
+    SDL_zero(data);
     SDL_AudioCVT *cvt;
+    struct MyResampler *res;
+
+    len = sizeof(data);
+    //Align length to the channels position
+    len -= len % (music->channels * sizeof(Uint16));
 
 #ifdef OGG_USE_TREMOR
     len = vorbis.ov_read(&music->vf, data, sizeof(data), &section);
 #else
-    len = vorbis.ov_read(&music->vf, (char*)data, sizeof(data), 0, 2, 1, &section);
+    len = vorbis.ov_read(&music->vf, (char*)data, len, 0, 2, 1, &section);
 #endif
     ogg_int64_t pcmpos = ov_pcm_tell(&music->vf);
     if( (music->loop == 1) && ( pcmpos >= music->loop_end ) )
     {
-        len -= ((pcmpos-music->loop_end) * music->loop_len_ch) * 2;
+        len -= ((pcmpos-music->loop_end) * music->loop_len_ch) * sizeof(Uint16);
         ov_pcm_seek(&music->vf, music->loop_start);
     }
 
@@ -238,11 +251,13 @@ static void OGG_getsome(OGG_music *music)
         return;
     }
     cvt = &music->cvt;
-    if ( section != music->section ) {
+    res = &music->resample;
+    if( section != music->section )
+    {
         vorbis_info *vi;
-
         vi = vorbis.ov_info(&music->vf, -1);
-        MyResample_init(&music->resample,
+
+        MyResample_init(res,
                         (int)vi->rate,
                         mixer.freq,
                         vi->channels,
@@ -257,17 +272,18 @@ static void OGG_getsome(OGG_music *music)
         if ( cvt->buf ) {
             SDL_free(cvt->buf);
         }
-        cvt->buf = (Uint8 *)SDL_malloc(sizeof(data) * (size_t)cvt->len_mult * (size_t)music->resample.len_mult);
+        cvt->buf = (Uint8 *)SDL_malloc(sizeof(data) * (size_t)cvt->len_mult * (size_t)res->len_mult);
         music->section = section;
     }
 
-    if ( cvt->buf ) {
-        if( music->resample.needed ) {
-            MyResample_addSource(&music->resample, data, (int)len);
-            MyResample_Process(&music->resample);
-            SDL_memcpy(cvt->buf, music->resample.buf, (size_t)music->resample.buf_len);
-            cvt->len = music->resample.buf_len;
-            cvt->len_cvt = music->resample.buf_len;
+    if( cvt->buf )
+    {
+        if( res->needed ) {
+            MyResample_addSource(res, data, (int)len);
+            MyResample_Process(res);
+            SDL_memcpy(cvt->buf, res->buf, (size_t)res->buf_len);
+            cvt->len = res->buf_len;
+            cvt->len_cvt = res->buf_len;
         } else {
             cvt->len = (int)len;
             cvt->len_cvt = (int)len;
