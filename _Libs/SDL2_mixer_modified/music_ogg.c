@@ -188,13 +188,14 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         SDL_OutOfMemory();
         return(NULL);
     }
+
     return(music);
 }
 
 /* Ignore loop points if found */
 void OGG_IgnoreLoop(OGG_music *music)
 {
-    if( music ) music->loop=-1;
+    if(music) music->loop = -1;
 }
 
 
@@ -224,9 +225,9 @@ static void OGG_getsome(OGG_music *music)
     len = vorbis.ov_read(&music->vf, (char*)data, sizeof(data), 0, 2, 1, &section);
 #endif
     ogg_int64_t pcmpos = ov_pcm_tell(&music->vf);
-    if( (music->loop==1) && ( pcmpos >= music->loop_end ) )
+    if( (music->loop == 1) && ( pcmpos >= music->loop_end ) )
     {
-        len -= ((pcmpos-music->loop_end)*music->loop_len_ch)*2;
+        len -= ((pcmpos-music->loop_end) * music->loop_len_ch) * 2;
         ov_pcm_seek(&music->vf, music->loop_start);
     }
 

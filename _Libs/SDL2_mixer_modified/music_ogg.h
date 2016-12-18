@@ -43,6 +43,7 @@ typedef struct {
     OggVorbis_File vf;
     int section;
     SDL_AudioCVT cvt;
+    struct MyResampler resample;
     int len_available;
     Uint8 *snd_available;
     /* Loop points stuff [by Wohlstand] */
@@ -56,7 +57,6 @@ typedef struct {
     char *mus_artist;
     char *mus_album;
     char *mus_copyright;
-    struct MyResampler resample;
 } OGG_music;
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
