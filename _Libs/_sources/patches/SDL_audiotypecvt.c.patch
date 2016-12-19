@@ -18,9 +18,10 @@
 -    float *dst = ((float *) (cvt->buf + dstsize)) - channels;
 -    const float *src = ((float *) (cvt->buf + cvt->len_cvt)) - channels;
 -    const float *target = ((const float *) cvt->buf);
-     const size_t cpy = sizeof (float) * channels;
-+    int s_size = cvt->len_cvt / cpy;
-+    int d_size = (int)(((double)s_size) * cvt->rate_incr);
+-    const size_t cpy = sizeof (float) * channels;
++    const size_t cpy = sizeof (float) * (size_t)channels;
++    const int s_size = cvt->len_cvt / (int)cpy;
++    const int d_size = (int)(((double)s_size) * cvt->rate_incr);
 +    float *target = ((float *) cvt->buf);
 +          float *dst = target + (d_size * channels) - channels;
 +    const float *src = target + (s_size * channels) - channels;
@@ -67,7 +68,7 @@
 +        }
 +    }
 +
-+    cvt->len_cvt = d_size * cpy;
++    cvt->len_cvt = d_size * (int)cpy;
 +    if (cvt->filters[++cvt->filter_index]) {
 +        cvt->filters[cvt->filter_index](cvt, AUDIO_F32SYS);
 +    }
@@ -76,9 +77,9 @@
 +void
 +SDL_Downsample_Arbitrary(SDL_AudioCVT *cvt, const int channels)
 +{
-+    const size_t cpy = sizeof(float) * channels;
-+    int s_size = cvt->len_cvt / cpy;
-+    int d_size = (int)(((double)s_size) * cvt->rate_incr);
++    const size_t cpy = sizeof(float) * (size_t)channels;
++    const int s_size = cvt->len_cvt / (int)cpy;
++    const int d_size = (int)(((double)s_size) * cvt->rate_incr);
 +    float *dst = (float *)cvt->buf;
 +    const float *src = (float *)cvt->buf;
 +    const float *target = src + (s_size * channels);
@@ -152,11 +153,11 @@
 -    SDL_memcpy(last_sample, src, cpy);
 -
 -    while (dst < target) {
--        src += 8;
+-        src += channels;
 -        eps += dstsize;
 -        if ((eps << 1) >= srcsize) {
 -            SDL_memcpy(dst, sample, cpy);
--            dst += 8;
+-            dst += channels;
 -            for (i = 0; i < channels; i++) {
 -                sample[i] = (float) ((((double) src[i]) + ((double) last_sample[i])) * 0.5);
 -            }
@@ -171,7 +172,7 @@
 +        }
 +    }
 +
-+    cvt->len_cvt = d_size * cpy;
++    cvt->len_cvt = d_size * (int)cpy;
      if (cvt->filters[++cvt->filter_index]) {
          cvt->filters[cvt->filter_index](cvt, AUDIO_F32SYS);
      }
@@ -183,9 +184,10 @@
 -    float *dst = ((float *) (cvt->buf + dstsize)) - (channels * 2);
 -    const float *src = ((float *) (cvt->buf + cvt->len_cvt)) - channels;
 -    const float *target = ((const float *) cvt->buf);
-     const size_t cpy = sizeof (float) * channels;
-+    int s_size = cvt->len_cvt / cpy;
-+    int d_size = s_size * 2;
+-    const size_t cpy = sizeof (float) * channels;
++    const size_t cpy = sizeof (float) * (size_t)channels;
++    const int s_size = cvt->len_cvt / (int)cpy;
++    const int d_size = s_size * 2;
 +    float *target = ((float *) cvt->buf);
 +          float *dst = target + (d_size * channels) - channels;
 +    const float *src = target + (s_size * channels) - channels;
@@ -198,7 +200,7 @@
      }
  
 -    cvt->len_cvt = dstsize;
-+    cvt->len_cvt = d_size * cpy;
++    cvt->len_cvt = d_size * (int)cpy;
      if (cvt->filters[++cvt->filter_index]) {
          cvt->filters[cvt->filter_index](cvt, AUDIO_F32SYS);
      }
@@ -210,9 +212,10 @@
 -    float *dst = ((float *) (cvt->buf + dstsize)) - (channels * 4);
 -    const float *src = ((float *) (cvt->buf + cvt->len_cvt)) - channels;
 -    const float *target = ((const float *) cvt->buf);
-     const size_t cpy = sizeof (float) * channels;
-+    int s_size = cvt->len_cvt / cpy;
-+    int d_size = s_size * 4;
+-    const size_t cpy = sizeof (float) * channels;
++    const size_t cpy = sizeof (float) * (size_t)channels;
++    const int s_size = cvt->len_cvt / (int)cpy;
++    const int d_size = s_size * 4;
 +    float *target = ((float *) cvt->buf);
 +          float *dst = target + (d_size * channels) - channels;
 +    const float *src = target + (s_size * channels) - channels;
@@ -225,7 +228,7 @@
      }
  
 -    cvt->len_cvt = dstsize;
-+    cvt->len_cvt = d_size * cpy;
++    cvt->len_cvt = d_size * (int)cpy;
      if (cvt->filters[++cvt->filter_index]) {
          cvt->filters[cvt->filter_index](cvt, AUDIO_F32SYS);
      }
@@ -238,9 +241,9 @@
 -    const float *src = (float *) cvt->buf;
 -    const float *target = (const float *) (cvt->buf + dstsize);
 -    const size_t cpy = sizeof (float) * channels;
-+    const size_t cpy = sizeof(float) * channels;
-+    int s_size = cvt->len_cvt / cpy;
-+    int d_size = s_size / multiple;
++    const size_t cpy = sizeof(float) * (size_t)channels;
++    const int s_size = cvt->len_cvt / (int)cpy;
++    const int d_size = s_size / multiple;
 +    float *dst = (float *)cvt->buf;
 +    const float *src = (float *)cvt->buf;
 +    const float *target = src + (s_size * channels);
@@ -253,7 +256,8 @@
      }
  
 -    cvt->len_cvt = dstsize;
-+    cvt->len_cvt = d_size * cpy;
++    cvt->len_cvt = d_size * (int)cpy;
      if (cvt->filters[++cvt->filter_index]) {
          cvt->filters[cvt->filter_index](cvt, AUDIO_F32SYS);
      }
+
