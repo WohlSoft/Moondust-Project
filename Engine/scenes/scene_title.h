@@ -22,6 +22,7 @@
 #include <QMap>
 #include <QPair>
 #include <QStack>
+#include <atomic>
 #include "scene.h"
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
@@ -57,104 +58,104 @@ struct PlayEpisodeResult
 
 class TitleScene : public Scene
 {
-public:
-    TitleScene();
-    ~TitleScene();
+    public:
+        TitleScene();
+        ~TitleScene();
 
-    bool init();
+        bool init();
 
-    void onKeyboardPressed(SDL_Scancode scancode);
-    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
-    void onMouseMoved(SDL_MouseMotionEvent &mmevent);
-    void onMousePressed(SDL_MouseButtonEvent &mbevent);
-    void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
-    LuaEngine* getLuaEngine();
+        void onKeyboardPressed(SDL_Scancode scancode);
+        void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+        void onMouseMoved(SDL_MouseMotionEvent &mmevent);
+        void onMousePressed(SDL_MouseButtonEvent &mbevent);
+        void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+        LuaEngine *getLuaEngine();
 
-    void processEvents();
+        void processEvents();
 
-    void update();
-    void render();
-    void renderMouse();
+        void update();
+        void render();
+        void renderMouse();
 
-    void processMenu();
+        void processMenu();
 
-    int exec();
-    void resetController();
-    PGE_Menu menu;
+        int exec();
+        void resetController();
+        PGE_Menu menu;
 
-    enum CurrentMenu
-    {
-        menu_main=0,
-        menu_options,
-        menu_playlevel,
-        menu_playlevel_wait,
-        menu_playepisode,
-        menu_playepisode_wait,
-        menu_playbattle,
-        menu_playbattle_wait,
-        menu_opensave,
-        menu_tests,
-        menu_testboxes,
-        menu_controls,
-        menu_controls_plr1,
-        menu_controls_plr2,
-        menu_videosettings,
-        menu_player,
-        menu_volume,
-        menu_dummy_and_big,//leave it!
-        //For fetching
-        menuFirst=menu_main,
-        menuLast=menu_dummy_and_big
-    };
+        enum CurrentMenu
+        {
+            menu_main = 0,
+            menu_options,
+            menu_playlevel,
+            menu_playlevel_wait,
+            menu_playepisode,
+            menu_playepisode_wait,
+            menu_playbattle,
+            menu_playbattle_wait,
+            menu_opensave,
+            menu_tests,
+            menu_testboxes,
+            menu_controls,
+            menu_controls_plr1,
+            menu_controls_plr2,
+            menu_videosettings,
+            menu_player,
+            menu_volume,
+            menu_dummy_and_big,//leave it!
+            //For fetching
+            menuFirst = menu_main,
+            menuLast = menu_dummy_and_big
+        };
 
-    enum menuAnswer
-    {
-        ANSWER_EXIT=0,
-        ANSWER_PLAYLEVEL,
-        ANSWER_PLAYEPISODE,
-        ANSWER_PLAYEPISODE_2P,
-        ANSWER_PLAYBATTLE,
-        ANSWER_CREDITS,
-        ANSWER_LOADING,
-        ANSWER_GAMEOVER
-    };
+        enum menuAnswer
+        {
+            ANSWER_EXIT = 0,
+            ANSWER_PLAYLEVEL,
+            ANSWER_PLAYEPISODE,
+            ANSWER_PLAYEPISODE_2P,
+            ANSWER_PLAYBATTLE,
+            ANSWER_CREDITS,
+            ANSWER_LOADING,
+            ANSWER_GAMEOVER
+        };
 
-    int numOfPlayers;
-    PlayEpisodeResult result_episode; //play episode
-    PlayLevelResult   result_level; //Play level/battle
+        int numOfPlayers;
+        PlayEpisodeResult result_episode; //play episode
+        PlayLevelResult   result_level; //Play level/battle
 
-    Controller *controller;
+        Controller *controller;
 
-    /**********************file_finder************************/
-    static int findEpisodes(void *);
-    static int findLevels(void *);
-    static SDL_Thread *                     filefind_thread;
-    static QString                          filefind_folder;
-    static QList<QPair<QString, QString > > filefind_found_files;
-    static std::atomic_bool                 filefind_finished;
-    /**********************file_finder************************/
+        /**********************file_finder************************/
+        static int findEpisodes(void *);
+        static int findLevels(void *);
+        static SDL_Thread                      *filefind_thread;
+        static QString                          filefind_folder;
+        static QList<QPair<QString, QString > > filefind_found_files;
+        static std::atomic_bool                 filefind_finished;
+        /**********************file_finder************************/
 
-private:
-    int ret;//!< Exit code
-    PGE_Point mousePos;
-    CurrentMenu _currentMenu;
-    void setMenu(CurrentMenu _menu);
-    QMap<CurrentMenu, menustate> menustates;
-    QStack<int > menuChain;
+    private:
+        int ret;//!< Exit code
+        PGE_Point mousePos;
+        CurrentMenu _currentMenu;
+        void setMenu(CurrentMenu _menu);
+        QMap<CurrentMenu, menustate> menustates;
+        QStack<int > menuChain;
 
-    PGE_Texture background;
-    bool        _bgIsLoaded;
-    PGEColor    bgcolor;
-    QVector<TitleScene_misc_img > imgs;
+        PGE_Texture background;
+        bool        _bgIsLoaded;
+        PGEColor    bgcolor;
+        QVector<TitleScene_misc_img > imgs;
 
-    PGE_Texture cursor;
-    bool _cursorIsLoaded;
+        PGE_Texture cursor;
+        bool _cursorIsLoaded;
 
-    int debug_joy_keyval;
-    int debug_joy_keyid;
-    int debug_joy_keytype;
+        int debug_joy_keyval;
+        int debug_joy_keyid;
+        int debug_joy_keytype;
 
-    LuaTitleScreenEngine luaEngine;
+        LuaTitleScreenEngine luaEngine;
 };
 
 #endif // SCENE_TITLE_H
