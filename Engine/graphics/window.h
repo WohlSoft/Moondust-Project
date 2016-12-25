@@ -99,9 +99,6 @@ void printSDLError(QString info);
 int  msgBoxInfo(QString title, QString text);
 int  msgBoxWarning(QString title, QString text);
 int  msgBoxCritical(QString title, QString text);
-
-static SDL_bool IsFullScreen(SDL_Window *win);
-
 }//namespace PGE_Window
 
 #endif // WINDOW_H

@@ -47,7 +47,7 @@ static  bool g_isRenderInit     = false;
 //! Is mouse cursor must be shown?
 static  bool g_showMouseCursor  = true;
 
-static SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
+static SDL_bool IsFullScreen(SDL_Window *win)
 {
     Uint32 flags = SDL_GetWindowFlags(win);
     return (flags & SDL_WINDOW_FULLSCREEN_DESKTOP) ? SDL_TRUE : SDL_FALSE;
@@ -250,7 +250,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     return true;
 }
 
-void PGE_Window::setWindowTitle(std::__cxx11::string title)
+void PGE_Window::setWindowTitle(std::string title)
 {
     SDL_SetWindowTitle(window, title.c_str());
 }
