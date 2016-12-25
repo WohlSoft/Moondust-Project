@@ -191,16 +191,16 @@ void PGE_MusPlayer::MUS_freeStream()
 
 
 #ifdef USE_QMEDIAPLAYER
-QMediaPlayer * PGE_Sounds::mp3Play = nullptr;
+QMediaPlayer * PGE_SfxPlayer::mp3Play = nullptr;
 #elif USE_SDL_MIXER
-Mix_Chunk *PGE_Sounds::sound = nullptr;
+Mix_Chunk *PGE_SfxPlayer::sound = nullptr;
 #endif
 
 QString PGE_SfxPlayer::current = "";
 
 void PGE_SfxPlayer::SND_PlaySnd(QString sndFile)
 {
-    if(current!=sndFile)
+    if(current != sndFile)
     {
         #ifdef USE_QMEDIAPLAYER
         if(mp3Play) { mp3Play->stop(); delete mp3Play; mp3Play = nullptr; }
