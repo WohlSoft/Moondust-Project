@@ -156,7 +156,7 @@ void PGEEngineApp::unloadAll()
     }
 }
 
-PGE_Application *PGEEngineApp::loadQApp(int argc, char** argv)
+PGE_Application *PGEEngineApp::loadQApp(int argc, char **argv)
 {
     PGE_Application::addLibraryPath(".");
     PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
@@ -178,7 +178,7 @@ PGE_Application *PGEEngineApp::loadQApp(int argc, char** argv)
     return m_qApp;
 }
 
-PGE_Translator&PGEEngineApp::loadTr()
+PGE_Translator &PGEEngineApp::loadTr()
 {
     pLogDebug("Constructing translator...");
     m_tr = new PGE_Translator();
@@ -290,7 +290,7 @@ void PGEEngineApp::loadLogger()
     enable(LOGGER);
 }
 
-bool PGEEngineApp::parseLowArgs(int argc, char** argv)
+bool PGEEngineApp::parseLowArgs(int argc, char **argv)
 {
     if(argc > 1)
     {
@@ -312,41 +312,63 @@ bool PGEEngineApp::parseLowArgs(int argc, char** argv)
             return true;
         }
     }
+
     return false;
 }
 
-static QString takeStrFromArg(QString &arg, bool &ok)
+static void removeQuotes(char* &s, int &len)
 {
-    QStringList tmp;
-    QString out;
-    tmp = arg.split('=');
-
-    if(tmp.size() > 1)
+    if(len > 0)
     {
-        out = FileFormats::removeQuotes(tmp.last());
-        ok = true;
-    }
-    else
-        ok = false;
+        if(s[0] == '\"')
+        {
+            s++;
+            len--;
+        }
 
-    return out;
+        if((len > 0) && (s[len-1] == '\"'))
+        {
+            s[len - 1] = '\0';
+            len--;
+        }
+    }
 }
 
-static int takeIntFromArg(QString &arg, bool &ok)
+static void findEqual(char* &s, int &len)
 {
-    QStringList tmp;
-    QString out;
-    tmp = arg.split('=');
-
-    if(tmp.size() > 1)
+    while(len > 0)
     {
-        out = FileFormats::removeQuotes(tmp.last());
-        ok = true;
+        len--;
+        if(*s++ == '=')
+            break;
     }
-    else
-        ok = false;
+}
 
-    return out.toInt(&ok);
+static QString takeStrFromArg(std::string &arg, bool &ok)
+{
+    std::string target = arg;
+    int     len = arg.size();
+    char*   s = &target[0];
+
+    removeQuotes(s, len);
+    findEqual(s, len);
+    ok = (len > 0);
+
+    return QString::fromUtf8(s, len);
+}
+
+static int takeIntFromArg(std::string &arg, bool &ok)
+{
+    std::string target = arg;
+    int len = arg.size();
+    char* s = &target[0];
+
+    removeQuotes(s, len);
+    findEqual(s, len);
+
+    ok = (len > 0);
+
+    return atoi(s);
 }
 
 void PGEEngineApp::parseHighArgs()
@@ -364,24 +386,30 @@ void PGEEngineApp::parseHighArgs()
         std::string param_s = param.toStdString();
         pLogDebug("Argument: [%s]", param_s.c_str());
         int i = 0;
+        char characterParam[8] = "\0";
+        char stateParam[8] = "\0";
 
         for(i = 0; i < 4; i++)
         {
-            if(param.startsWith(QString("--p%1c=").arg(i + 1)))
+            sprintf(characterParam, "--p%dc=", i + 1);
+            sprintf(stateParam, "--p%ds=", i + 1);
+
+            if(param_s.compare(0, 6, characterParam) == 0)
             {
                 int tmp;
                 bool ok = false;
-                tmp = takeIntFromArg(param, ok);
+                tmp = takeIntFromArg(param_s, ok);
 
                 if(ok) g_flags.test_Characters[i] = tmp;
 
                 break;
             }
-            else if(param.startsWith(QString("--p%1s=").arg(i + 1)))
+            else
+            if(param_s.compare(0, 6, stateParam) == 0)
             {
                 int tmp;
                 bool ok = false;
-                tmp = takeIntFromArg(param, ok);
+                tmp = takeIntFromArg(param_s, ok);
 
                 if(ok)
                 {
@@ -402,7 +430,7 @@ void PGEEngineApp::parseHighArgs()
         {
             QString tmp;
             bool ok = false;
-            tmp = takeStrFromArg(param, ok);
+            tmp = takeStrFromArg(param_s, ok);
 
             if(ok) g_configPackPath = tmp;
         }
@@ -410,7 +438,7 @@ void PGEEngineApp::parseHighArgs()
         {
             int tmp;
             bool ok = false;
-            tmp = takeIntFromArg(param, ok);
+            tmp = takeIntFromArg(param_s, ok);
 
             if(ok) g_flags.test_NumPlayers = tmp;
 
@@ -469,7 +497,7 @@ void PGEEngineApp::parseHighArgs()
         {
             QString tmp;
             bool ok = false;
-            tmp = takeStrFromArg(param, ok);
+            tmp = takeStrFromArg(param_s, ok);
             ok &= (tmp.size() == 2);
 
             if(ok) m_tr->toggleLanguage(tmp);
@@ -501,6 +529,26 @@ void PGEEngineApp::parseHighArgs()
                 pLogWarning("Invalid argument or file path: [%s]", param_s.c_str());
         }
     }
+
+    #ifdef __APPLE__
+    if(g_fileToOpen.isEmpty())
+    {
+        m_qApp->processEvents(QEventLoop::QEventLoop::AllEvents);
+        pLogDebug("Attempt to take Finder args...");
+        QStringList openArgs = m_qApp->getOpenFileChain();
+
+        foreach(QString file, openArgs)
+        {
+            if(QFile::exists(file))
+            {
+                g_fileToOpen = file;
+                pLogDebug("Got file path: [%s]", file.toStdString().c_str());
+            }
+            else
+                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toStdString().c_str());
+        }
+    }
+    #endif
 }
 
 void PGEEngineApp::createConfigsDir()

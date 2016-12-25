@@ -60,176 +60,176 @@ class PGE_Translator;
 class PGEEngineApp
 {
 private:
-        /**
-         * @brief Flags of module states
-         */
-        enum LoadedModules
-        {
-            NOTHING         = 0x000,
-            CONFIG_MANAGER  = 0x001,
-            LIBSDL          = 0x002,
-            AUDIO_ENGINE    = 0x004,
-            SETTINGS_LOADED = 0x008,
-            INTERPROCESSOR  = 0x010,
-            FONT_MANAGER    = 0x020,
-            PGE_WINDOW      = 0x040,
-            QAPP            = 0x080,
-            LOGGER          = 0x100,
-            TRANSLATOR      = 0x200,
-            JOYSTICKS       = 0x400
-        } m_lib;
+    /**
+     * @brief Flags of module states
+     */
+    enum LoadedModules
+    {
+        NOTHING         = 0x000,
+        CONFIG_MANAGER  = 0x001,
+        LIBSDL          = 0x002,
+        AUDIO_ENGINE    = 0x004,
+        SETTINGS_LOADED = 0x008,
+        INTERPROCESSOR  = 0x010,
+        FONT_MANAGER    = 0x020,
+        PGE_WINDOW      = 0x040,
+        QAPP            = 0x080,
+        LOGGER          = 0x100,
+        TRANSLATOR      = 0x200,
+        JOYSTICKS       = 0x400
+    } m_lib;
 
-        /* Constructed instances */
-        //! Qt Application instance
-        PGE_Application    *m_qApp;
-        //! List of command line arguments
-        QStringList         m_args;
-        //! Translator instance
-        PGE_Translator     *m_tr;
-        //! Audio loading erro string
-        std::string         m_audioError;
-        /*************************/
+    /* Constructed instances */
+    //! Qt Application instance
+    PGE_Application    *m_qApp;
+    //! List of command line arguments
+    QStringList         m_args;
+    //! Translator instance
+    PGE_Translator     *m_tr;
+    //! Audio loading erro string
+    std::string         m_audioError;
+    /*************************/
 
-        /**
-         * @brief Is module enabled
-         * @param lib ID of module
-         * @return true if module is marked as enabled
-         */
-        inline bool enabled(LoadedModules lib)
-        {
-            return (0 != (m_lib & lib));
-        }
+    /**
+     * @brief Is module enabled
+     * @param lib ID of module
+     * @return true if module is marked as enabled
+     */
+    inline bool enabled(LoadedModules lib)
+    {
+        return (0 != (m_lib & lib));
+    }
 
-        /**
-         * @brief Change mark of module state to "enabled"
-         * @param lib ID of module
-         */
-        inline void enable(LoadedModules lib)
-        {
-            m_lib = static_cast<LoadedModules>(m_lib | lib);
-        }
+    /**
+     * @brief Change mark of module state to "enabled"
+     * @param lib ID of module
+     */
+    inline void enable(LoadedModules lib)
+    {
+        m_lib = static_cast<LoadedModules>(m_lib | lib);
+    }
 
-        /**
-         * @brief Change mark of module state to "disabled"
-         * @param lib ID of module
-         */
-        inline void disable(LoadedModules lib)
-        {
-            m_lib = static_cast<LoadedModules>(m_lib & (~lib));
-        }
+    /**
+     * @brief Change mark of module state to "disabled"
+     * @param lib ID of module
+     */
+    inline void disable(LoadedModules lib)
+    {
+        m_lib = static_cast<LoadedModules>(m_lib & (~lib));
+    }
 
-    public:
+public:
 
-        PGEEngineApp();
+    PGEEngineApp();
 
-        ~PGEEngineApp();
+    ~PGEEngineApp();
 
-        /**
-         * @brief Unload all loaded modules
-         */
-        void unloadAll();
+    /**
+     * @brief Unload all loaded modules
+     */
+    void unloadAll();
 
-        /**
-         * @brief Initialize Qt Application instance
-         * @param argc Count of command line arguments
-         * @param argv Pointer to array of command line arguments
-         * @return pointer to instance of Qt Application sub-system. Null if failed to initalize Qt Application
-         */
-        PGE_Application *loadQApp(int argc, char **argv);
+    /**
+     * @brief Initialize Qt Application instance
+     * @param argc Count of command line arguments
+     * @param argv Pointer to array of command line arguments
+     * @return pointer to instance of Qt Application sub-system. Null if failed to initalize Qt Application
+     */
+    PGE_Application *loadQApp(int argc, char **argv);
 
-        /**
-         * @brief Command line arguments
-         * @return Reference to list of command line arguments
-         */
-        QStringList &args()
-        {
-            return m_args;
-        }
+    /**
+     * @brief Command line arguments
+     * @return Reference to list of command line arguments
+     */
+    QStringList &args()
+    {
+        return m_args;
+    }
 
-        /**
-         * @brief Initialize translation sub-system
-         * @return Reference to loaded translator sub-system
-         */
-        PGE_Translator &loadTr();
+    /**
+     * @brief Initialize translation sub-system
+     * @return Reference to loaded translator sub-system
+     */
+    PGE_Translator &loadTr();
 
-        /**
-         * @brief Initialize interprocessing subsystem
-         */
-        void initInterprocessor();
+    /**
+     * @brief Initialize interprocessing subsystem
+     */
+    void initInterprocessor();
 
-        /**
-         * @brief Initialize SDL library
-         * @return true if initializing of SDL was failed
-         */
-        bool initSDL();
+    /**
+     * @brief Initialize SDL library
+     * @return true if initializing of SDL was failed
+     */
+    bool initSDL();
 
-        /**
-         * @brief Initialize audio subsystem if needed
-         * @param useAudio true if audio subsystem is needed. False will results continuation without audio.
-         * @return true if error has occouped
-         */
-        bool initAudio(bool useAudio);
+    /**
+     * @brief Initialize audio subsystem if needed
+     * @param useAudio true if audio subsystem is needed. False will results continuation without audio.
+     * @return true if error has occouped
+     */
+    bool initAudio(bool useAudio);
 
-        std::string errorAudio();
+    std::string errorAudio();
 
-        /**
-         * @brief Create game window
-         * @param title Initial title of game window
-         * @param renderType renderer type to use
-         * @return true if creating of window was failed
-         */
-        bool initWindow(std::string title, int renderType);
+    /**
+     * @brief Create game window
+     * @param title Initial title of game window
+     * @param renderType renderer type to use
+     * @return true if creating of window was failed
+     */
+    bool initWindow(std::string title, int renderType);
 
-        /**
-         * @brief Initialize basics of the font manager
-         */
-        void initFontBasics();
+    /**
+     * @brief Initialize basics of the font manager
+     */
+    void initFontBasics();
 
-        /**
-         * @brief Initialize complete font manager sub-system
-         */
-        void initFontFull();
+    /**
+     * @brief Initialize complete font manager sub-system
+     */
+    void initFontFull();
 
-        /**
-         * @brief Mark config manager as enabled module
-         */
-        void enableConfigManager()
-        {
-            enable(CONFIG_MANAGER);
-        }
+    /**
+     * @brief Mark config manager as enabled module
+     */
+    void enableConfigManager()
+    {
+        enable(CONFIG_MANAGER);
+    }
 
-        /**
-         * @brief Load application settings
-         */
-        void loadSettings();
+    /**
+     * @brief Load application settings
+     */
+    void loadSettings();
 
-        /**
-         * @brief Load joysticks and joystick settings
-         */
-        void loadJoysticks();
+    /**
+     * @brief Load joysticks and joystick settings
+     */
+    void loadJoysticks();
 
-        /**
-         * @brief Initialize logging sub-system
-         */
-        void loadLogger();
+    /**
+     * @brief Initialize logging sub-system
+     */
+    void loadLogger();
 
-        /**
-         * @brief Parse low arguments (before initializing of any sub-system)
-         * @param argc Count of command line arguments
-         * @param argv Pointer to array of command line arguments
-         * @return true if exit from application is requested
-         */
-        static bool parseLowArgs(int argc, char **argv);
+    /**
+     * @brief Parse low arguments (before initializing of any sub-system)
+     * @param argc Count of command line arguments
+     * @param argv Pointer to array of command line arguments
+     * @return true if exit from application is requested
+     */
+    static bool parseLowArgs(int argc, char **argv);
 
-        /**
-         * @brief Parse hight arguments (after initializing of some sub-systems)
-         */
-        void parseHighArgs();
+    /**
+     * @brief Parse hight arguments (after initializing of some sub-systems)
+     */
+    void parseHighArgs();
 
-        /**
-         * @brief Create configs diretory if that is not exists
-         */
-        void createConfigsDir();
+    /**
+     * @brief Create configs diretory if that is not exists
+     */
+    void createConfigsDir();
 };
 
 #endif // ENGINE_HPP

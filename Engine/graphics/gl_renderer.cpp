@@ -107,9 +107,9 @@ static bool detectOpenGL2()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-#ifdef __APPLE__
+    #ifdef __APPLE__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
-#endif
+    #endif
     pLogDebug("GL2PROBE: Create hidden window");
     dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
                              SDL_WINDOWPOS_CENTERED,
@@ -673,30 +673,29 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
 {
     if(rtype == RENDER_AUTO)
     {
-#ifndef __APPLE__
-
+        #ifndef __APPLE__
         if(detectOpenGL3())
         {
             rtype = RENDER_OPENGL_3_1;
             pLogDebug("OpenGL 3.1 detected!");
         }
         else
-#endif
-#ifndef __ANDROID__
+        #endif
+        #ifndef __ANDROID__
             if(detectOpenGL2())
             {
                 rtype = RENDER_OPENGL_2_1;
                 pLogDebug("OpenGL 2.1 detected!");
             }//RENDER_SDL2
             else
-#endif
+        #endif
             {
                 rtype = RENDER_INVALID;
                 pLogCritical("OpenGL not detected!");
             }
-
-#ifndef __APPLE__
     }
+
+    #ifndef __APPLE__
     else if(rtype == RENDER_OPENGL_3_1)
     {
         if(detectOpenGL3())
@@ -706,10 +705,10 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
             rtype = RENDER_INVALID;
             pLogWarning("OpenGL 3.1 selected, but proble failed!");
         }
-
-#endif
-#ifndef __ANDROID__
     }
+    #endif
+
+    #ifndef __ANDROID__
     else if(rtype == RENDER_OPENGL_2_1)
     {
         if(detectOpenGL2())
@@ -719,9 +718,8 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
             rtype = RENDER_INVALID;
             pLogWarning("OpenGL 2.1 selected, but proble failed!");
         }
-
-#endif
     }
+    #endif
     else if(rtype == RENDER_SW_SDL)
         pLogDebug("SDL Software renderer selected!");
 
@@ -804,7 +802,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         sourceImage = GraphicsHelps::loadImage(path);
 
     //Don't load mask if PNG image is used
-    if(path.endsWith(".png", Qt::CaseInsensitive)) maskPath.clear();
+    if(path.endsWith(".png", Qt::CaseInsensitive))
+        maskPath.clear();
 
     if(!sourceImage)
     {
@@ -817,7 +816,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         return;
     }
 
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     QElapsedTimer totalTime;
     QElapsedTimer maskMergingTime;
     QElapsedTimer bindingTime;
@@ -826,18 +825,18 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     qint64 maskElapsed = 0;
     qint64 bindElapsed = 0;
     qint64 unloadElapsed = 0;
-#endif
+    #endif
 
     //Apply Alpha mask
     if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
     {
-#ifdef DEBUG_BUILD
+        #ifdef DEBUG_BUILD
         maskMergingTime.start();
-#endif
+        #endif
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
-#ifdef DEBUG_BUILD
+        #ifdef DEBUG_BUILD
         maskElapsed = maskMergingTime.elapsed();
-#endif
+        #endif
     }
 
     int w = static_cast<int>(FreeImage_GetWidth(sourceImage));
@@ -855,9 +854,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         return;
     }
 
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     bindingTime.start();
-#endif
+    #endif
     RGBQUAD upperColor;
     FreeImage_GetPixelColor(sourceImage, 0, 0, &upperColor);
     target.ColorUpper.r = float(upperColor.rgbRed) / 255.0f;
@@ -890,23 +889,23 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     //           0, target.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
     //    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     //    target.inited = true;
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     bindElapsed = bindingTime.elapsed();
     unloadTime.start();
-#endif
+    #endif
     //SDL_FreeSurface(sourceImage);
     GraphicsHelps::closeImage(sourceImage);
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     unloadElapsed = unloadTime.elapsed();
-#endif
-#ifdef DEBUG_BUILD
+    #endif
+    #ifdef DEBUG_BUILD
     LogDebug(QString("Mask merging of %1 passed in %2 milliseconds").arg(path).arg(maskElapsed));
     LogDebug(QString("Binding time of %1 passed in %2 milliseconds").arg(path).arg(bindElapsed));
     LogDebug(QString("Unload time of %1 passed in %2 milliseconds").arg(path).arg(unloadElapsed));
     LogDebug(QString("Total Loading of texture %1 passed in %2 milliseconds (%3x%4)")
              .arg(path).arg(totalTime.elapsed())
              .arg(w).arg(h));
-#endif
+    #endif
     return;
 }
 

@@ -88,27 +88,6 @@ int main(int argc, char *argv[])
     // Parse high arguments
     app.parseHighArgs();
 
-#ifdef __APPLE__
-    if(g_fileToOpen.isEmpty())
-    {
-        a.processEvents(QEventLoop::QEventLoop::AllEvents);
-        LogDebug("Attempt to take Finder args...");
-        QStringList openArgs = a.getOpenFileChain();
-
-        foreach(QString file, openArgs)
-        {
-            if(QFile::exists(file))
-            {
-                g_fileToOpen = file;
-                pLogDebug("Got file path: [%s]", file.toStdString().c_str());
-            }
-            else
-                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toStdString().c_str());
-        }
-    }
-
-#endif
-
     // Initalizing SDL
     if(app.initSDL())
     {
@@ -460,9 +439,7 @@ PlayWorldMap:
                 goto PlayWorldMap;
             }
             else
-            {
                 goto ExitFromApplication;
-            }
         }
 
         switch(ExitCode)
@@ -710,7 +687,6 @@ PlayLevel:
             goto CreditsScreen;
         }
     }
-
 ExitFromApplication:
     return 0;
 }
