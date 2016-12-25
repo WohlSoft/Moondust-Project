@@ -2297,7 +2297,7 @@ void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 
     if(!QFileInfo::exists(sndPath)) return;
 
-    PGE_Sounds::SND_PlaySnd(sndPath);
+    PGE_SfxPlayer::SND_PlaySnd(sndPath);
     LogDebug(QString("Test Sound -> done!"));
 }
 

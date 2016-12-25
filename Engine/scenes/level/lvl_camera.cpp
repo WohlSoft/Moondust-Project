@@ -23,7 +23,7 @@
 #include <graphics/window.h>
 
 #include <data_configs/config_manager.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 #include <graphics/gl_renderer.h>
 
 #include "../scene_level.h"

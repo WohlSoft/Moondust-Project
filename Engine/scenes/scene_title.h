@@ -27,6 +27,7 @@
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
+#include <common_features/episode_state.h>
 #include <common_features/point.h>
 #include <controls/controller.h>
 #include <SDL2/SDL_thread.h>
@@ -42,18 +43,6 @@ struct TitleScene_misc_img
     PGE_Texture t;
     SimpleAnimator a;
     int frmH;
-};
-
-struct PlayLevelResult
-{
-    QString levelfile;
-};
-
-struct PlayEpisodeResult
-{
-    QString worldfile;
-    QString savefile;
-    int character;
 };
 
 class TitleScene : public Scene

@@ -17,7 +17,7 @@
  */
 
 #include "scene_world.h"
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 #include <audio/pge_audio.h>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
@@ -122,7 +122,7 @@ WorldScene::WorldScene()
 
 WorldScene::~WorldScene()
 {
-    PGE_MusPlayer::MUS_stopMusic();
+    PGE_MusPlayer::stop();
     wld_events.abort();
     _indexTable.clean();
     wldItems.clear();
@@ -1507,9 +1507,9 @@ void WorldScene::jump()
 void WorldScene::stopMusic(bool fade, int fadeLen)
 {
     if(fade)
-        PGE_MusPlayer::MUS_stopMusicFadeOut(fadeLen);
+        PGE_MusPlayer::fadeOut(fadeLen);
     else
-        PGE_MusPlayer::MUS_stopMusic();
+        PGE_MusPlayer::stop();
 }
 
 void WorldScene::playMusic(unsigned long musicID, QString customMusicFile, bool fade, int fadeLen)
@@ -1518,12 +1518,12 @@ void WorldScene::playMusic(unsigned long musicID, QString customMusicFile, bool 
 
     if(musPath.isEmpty()) return;
 
-    PGE_MusPlayer::MUS_openFile(musPath);
+    PGE_MusPlayer::openFile(musPath);
 
     if(fade)
-        PGE_MusPlayer::MUS_playMusicFadeIn(fadeLen);
+        PGE_MusPlayer::fadeIn(fadeLen);
     else
-        PGE_MusPlayer::MUS_playMusic();
+        PGE_MusPlayer::play();
 
     if(gameState)
     {

@@ -17,6 +17,7 @@
  */
 
 #include "config_manager.h"
+#include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>

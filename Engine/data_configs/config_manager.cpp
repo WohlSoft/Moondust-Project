@@ -19,6 +19,7 @@
 #include <common_features/pge_texture.h>
 #include <common_features/version_cmp.h>
 #include "config_manager.h"
+#include "config_manager_private.h"
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <gui/pge_msgbox.h>
@@ -32,10 +33,8 @@
 
 #include <QtDebug>
 
-ConfigManager::ConfigManager()
-{}
-
 DataFolders      ConfigManager::dirs;
+std::string      ConfigManager::config_name;
 QString          ConfigManager::config_dir;
 QString          ConfigManager::config_id = "dummy";
 QString          ConfigManager::data_dir;
@@ -100,8 +99,10 @@ bool ConfigManager::loadBasics()
     QSettings guiset(gui_ini, QSettings::IniFormat);
     guiset.setIniCodec("UTF-8");
     guiset.beginGroup("main");
-    data_dir = (guiset.value("application-dir", "0").toBool() ?
-                ApplicationPath + "/" : config_dir + "data/");
+    {
+        data_dir = (guiset.value("application-dir", "0").toBool() ?
+                    ApplicationPath + "/" : config_dir + "data/");
+    }
     guiset.endGroup();
     errorsList.clear();
 
@@ -126,71 +127,77 @@ bool ConfigManager::loadBasics()
     mainset.setIniCodec("UTF-8");
     QString customAppPath = ApplicationPath;
     mainset.beginGroup("main");
-    customAppPath = mainset.value("application-path", ApplicationPath).toString();
-    customAppPath.replace('\\', '/');
-    bool appDir = mainset.value("application-dir", false).toBool();
-    data_dir = (appDir ? customAppPath + "/" : config_dir + "data/");
-
-    if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
-        data_dir = ApplicationPath + "/" + data_dir;
-    else if(!QDir(data_dir).exists()) //Check as absolute
     {
-        msgBox("Config error",
-               QString("Config data path not exists: %1").arg(data_dir));
-        return false;
+        config_name = mainset.value("config_name").toString().toStdString();
+        customAppPath = mainset.value("application-path", ApplicationPath).toString();
+        customAppPath.replace('\\', '/');
+        bool appDir = mainset.value("application-dir", false).toBool();
+        data_dir = (appDir ? customAppPath + "/" : config_dir + "data/");
+
+        if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
+            data_dir = ApplicationPath + "/" + data_dir;
+        else
+        if(!QDir(data_dir).exists()) //Check as absolute
+        {
+            msgBox("Config error",
+                   QString("Config data path not exists: %1").arg(data_dir));
+            return false;
+        }
+
+        data_dir = QDir(data_dir).absolutePath() + "/";
+        QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+        QString version = mainset.value("pge-engine-version", "0.0").toString();
+        bool ver_notify = mainset.value("enable-version-notify", true).toBool();
+
+        if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
+        {
+            std::string title = "Legacy configuration package";
+            std::string msg = QString("You have a legacy configuration package.\n"
+                                      "Game will be started, but you may have a some problems with gameplay.\n\n"
+                                      "Please download and install latest version of a configuration package:\n\n"
+                                      "Download: %1\n"
+                                      "Note: most of config packs are updates togeter with PGE,\n"
+                                      "therefore you can use same link to get updated version")
+                              /*.arg("<a href=\"%1\">%1</a>")*/.arg(url).toStdString();
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                     title.c_str(), msg.c_str(),
+                                     PGE_Window::window);
+            QDesktopServices::openUrl(QUrl(url));
+            /*QMessageBox box;
+            box.setWindowTitle( "Legacy configuration package" );
+            box.setTextFormat(Qt::RichText);
+            box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+            box.setText();
+            box.setStandardButtons(QMessageBox::Ok);
+            box.setIcon(QMessageBox::Warning);
+            box.exec();*/
+        }
+
+        if(appDir)
+            dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
+        else
+            dirs.worlds = AppPathManager::userAppDir() + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
+
+        if(!QDir(dirs.worlds).exists())
+            QDir().mkpath(dirs.worlds);
+
+        dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
+        dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
+        dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
+        setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
+        setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
+        setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
+        setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
+        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     }
-
-    data_dir = QDir(data_dir).absolutePath() + "/";
-    QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
-    QString version = mainset.value("pge-engine-version", "0.0").toString();
-    bool ver_notify = mainset.value("enable-version-notify", true).toBool();
-
-    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
-    {
-        std::string title = "Legacy configuration package";
-        std::string msg = QString("You have a legacy configuration package.\n"
-                                  "Game will be started, but you may have a some problems with gameplay.\n\n"
-                                  "Please download and install latest version of a configuration package:\n\n"
-                                  "Download: %1\n"
-                                  "Note: most of config packs are updates togeter with PGE,\n"
-                                  "therefore you can use same link to get updated version")
-                          /*.arg("<a href=\"%1\">%1</a>")*/.arg(url).toStdString();
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
-                                 title.c_str(), msg.c_str(),
-                                 PGE_Window::window);
-        QDesktopServices::openUrl(QUrl(url));
-        /*QMessageBox box;
-        box.setWindowTitle( "Legacy configuration package" );
-        box.setTextFormat(Qt::RichText);
-        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
-        box.setText();
-        box.setStandardButtons(QMessageBox::Ok);
-        box.setIcon(QMessageBox::Warning);
-        box.exec();*/
-    }
-
-    if(appDir)
-        dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
-    else
-        dirs.worlds = AppPathManager::userAppDir() + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
-
-    if(!QDir(dirs.worlds).exists())
-        QDir().mkpath(dirs.worlds);
-
-    dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
-    dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
-    dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
-    dirs.gworld = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-    dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
-    dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
-    setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
-    setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
-    setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
-    setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
-    dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
     mainset.beginGroup("graphics");
-    default_grid = mainset.value("default-grid", 32).toUInt();
+    {
+        default_grid = mainset.value("default-grid", 32).toUInt();
+    }
     mainset.endGroup();
 
     if(mainset.status() != QSettings::NoError)

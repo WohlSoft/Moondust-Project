@@ -3,6 +3,18 @@
 
 #include <PGE_File_Formats/save_filedata.h>
 
+struct PlayLevelResult
+{
+    QString levelfile;
+};
+
+struct PlayEpisodeResult
+{
+    QString worldfile;
+    QString savefile;
+    int     character;
+};
+
 class LvlExit
 {
     public:
@@ -54,7 +66,7 @@ class EpisodeState
         void reset();//!< Sets initial state of episode
         bool load();
         bool save();
-        int numOfPlayers;//!< Number of players
+        int  numOfPlayers;//!< Number of players
         bool episodeIsStarted;
         bool isEpisode;
         bool isHubLevel;

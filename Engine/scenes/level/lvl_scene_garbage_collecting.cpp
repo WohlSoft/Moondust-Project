@@ -19,7 +19,7 @@
 #include "../scene_level.h"
 
 #include <audio/pge_audio.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 
 void LevelScene::collectGarbageNPCs()
 {
@@ -115,7 +115,7 @@ void LevelScene::collectGarbagePlayers()
 
     if(players.isEmpty())
     {
-        PGE_MusPlayer::MUS_stopMusic();
+        PGE_MusPlayer::stop();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }

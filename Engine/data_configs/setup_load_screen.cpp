@@ -20,8 +20,9 @@
 
 #include "setup_load_screen.h"
 #include "config_manager.h"
+#include "config_manager_private.h"
 
-LoadingScreenSetup ConfigManager::setup_LoadingScreen;
+LoadingScreenSetup  ConfigManager::setup_LoadingScreen;
 
 void LoadingScreenSetup::init(QSettings &engine_ini)
 {

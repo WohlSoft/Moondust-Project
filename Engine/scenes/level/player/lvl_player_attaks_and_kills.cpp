@@ -20,7 +20,7 @@
 #include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 
 #include <settings/debugger.h>
 
@@ -166,7 +166,7 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         }
         if(snd>0)
         {
-            PGE_MusPlayer::MUS_stopMusic();
+            PGE_MusPlayer::stop();
             PGE_Audio::playSound(snd);
         }
         /***********************Reset and unplug controllers************************/

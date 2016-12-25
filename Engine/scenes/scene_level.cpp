@@ -33,7 +33,7 @@
 #include <gui/pge_textinputbox.h>
 
 #include <audio/pge_audio.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 #include <settings/global_settings.h>
 
 #include <algorithm>
@@ -343,8 +343,8 @@ void LevelScene::update()
 
             if(m_fader.isNull())
             {
-                if(PGE_MusPlayer::MUS_IsPlaying())
-                    PGE_MusPlayer::MUS_stopMusicFadeOut(500);
+                if(PGE_MusPlayer::isPlaying())
+                    PGE_MusPlayer::fadeOut(500);
 
                 m_fader.setFade(10, 1.0, 0.01);
             }
@@ -660,7 +660,7 @@ void LevelScene::render()
                                    .arg(placingMode_renderAt.y()), 10, 10, 0);
         else
             FontManager::printText(QString("%1")
-                                   .arg(PGE_MusPlayer::MUS_Title()), 10, 10, 0);
+                                   .arg(PGE_MusPlayer::getTitle()), 10, 10, 0);
     }
 
 renderBlack:

@@ -22,7 +22,9 @@
 #include "logger.h"
 
 PGE_Translator::PGE_Translator() :
-    m_isInit(false)
+    m_isInit(false),
+    m_currLang("en"),
+    m_langPath("./languages/")
 {}
 
 void PGE_Translator::init()
@@ -35,9 +37,9 @@ void PGE_Translator::init()
 
     m_langPath = ApplicationPath;
     m_langPath.append("/languages");
-    LogDebug( "Initializing translator in the path: " + m_langPath );
-    LogDebug( "Locale detected: " + m_currLang );
+    pLogDebug( "Initializing translator in the path: %s", m_langPath.toStdString().c_str() );
     toggleLanguage(defaultLocale);
+    pLogDebug( "Locale detected: %s", m_currLang.toStdString().c_str() );
 }
 
 void PGE_Translator::toggleLanguage(QString lang)

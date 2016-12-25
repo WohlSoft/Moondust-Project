@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pge_application.h"
+#include "pge_qt_application.h"
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
@@ -54,15 +54,6 @@ void AppPathManager::initAppPath()
         appPath.mkpath(ApplicationPath);
 
 #endif
-
-    /*
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    QString test="/home/vasya/pge/"+osX_bundle;
-    qDebug() << test << " <- before";
-    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
-        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    qDebug() << test << " <- after";
-    */
 
     if(isPortable())
         return;

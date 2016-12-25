@@ -27,48 +27,81 @@
 
 #define SDLCHECKERROR() PGE_Window::checkSDLError(__FILE__, __LINE__, __FUNCTION__)
 
-class Scene;//Currently processing scene
+// Currently processing scene
+class Scene;
 
-class PGE_Window
+namespace PGE_Window
 {
-    public:
-        static Scene* m_currentScene;
-        static int Width;
-        static int Height;
-        static int MaxFPS;
-        static bool vsync;
-        static bool vsyncIsSupported;
-        static double TicksPerSecond;
-        static int  TimeOfFrame;
-        static bool showDebugInfo;
-        static bool showPhysicsDebug;
-        static bool init(QString WindowTitle = "Platformer Game Engine by Wohldtand", int renderType = 0);
-        static void toggleVSync(bool vsync);
-        static bool uninit();
-        static bool isReady();
-        static void setCursorVisibly(bool viz);
-        static void clean();
 
-        static SDL_Window *window;
-        static SDL_GLContext glcontext_background;
-        static SDL_GLContext glcontext;
-        static int setFullScreen(bool fs);
-        static int SDL_ToggleFS(SDL_Window *win = NULL);
+//! Currently processing scene
+extern Scene*   m_currentScene;
+//! Width of world screen surface in pixels
+extern int      Width;
+//! Height of world screen surface in pixels
+extern int      Height;
+//! Is vertical synchronization is enabled
+extern bool     vsync;
+//! Is vertical synchronization is supported by this video driver
+extern bool     vsyncIsSupported;
+//! Framerate
+extern double   TicksPerSecond;
+//! Time of one frame rounded into integers
+extern int      TimeOfFrame;
+//! Enable printing of debug information
+extern bool     showDebugInfo;
+//! Enable rendering of physical engine debug shapes
+extern bool     showPhysicsDebug;
+//! Descriptor of the game window
+extern SDL_Window       *window;
+//! Descriptor of the OpenGL context
+extern SDL_GLContext    glcontext;
 
-        static int processEvents(SDL_Event &event);
+/* Functions */
+/**
+ * @brief Create window with title and specified renderer type
+ * @param WindowTitle Initial title of the window
+ * @param renderType Type of renderer
+ * @return
+ */
+bool init(std::string WindowTitle = "Platformer Game Engine by Wohldtand", int renderType = 0);
 
-        static bool isSdlError();
-        static bool checkSDLError(const char *fn, int line, const char *func);
-        static void printSDLWarn(QString info);
-        static void printSDLError(QString info);
+/**
+ * @brief Change title of the window
+ * @param title Title of window to change
+ */
+void setWindowTitle(std::string title);
 
-        static int  msgBoxInfo(QString title, QString text);
-        static int  msgBoxWarning(QString title, QString text);
-        static int  msgBoxCritical(QString title, QString text);
-    private:
-        static bool IsInit;
-        static bool showCursor;
-        static SDL_bool IsFullScreen(SDL_Window *win);
-};
+/**
+ * @brief Toggle Vertical synchronization mode
+ * @param vsync State of vertical synchronization mode
+ */
+void toggleVSync(bool vsync);
+
+/**
+ * @brief Unload graphical subsystem and destroy window
+ * @return true if everything successfully completed
+ */
+bool uninit();
+bool isReady();
+void setCursorVisibly(bool viz);
+void clean();
+
+int setFullScreen(bool fs);
+int SDL_ToggleFS(SDL_Window *win = NULL);
+
+int processEvents(SDL_Event &event);
+
+bool isSdlError();
+bool checkSDLError(const char *fn, int line, const char *func);
+void printSDLWarn(QString info);
+void printSDLError(QString info);
+
+int  msgBoxInfo(QString title, QString text);
+int  msgBoxWarning(QString title, QString text);
+int  msgBoxCritical(QString title, QString text);
+
+static SDL_bool IsFullScreen(SDL_Window *win);
+
+}//namespace PGE_Window
 
 #endif // WINDOW_H

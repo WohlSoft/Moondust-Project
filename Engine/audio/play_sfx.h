@@ -16,24 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_TRANSLATOR_H
-#define PGE_TRANSLATOR_H
+#ifndef PLAY_SFX_H
+#define PLAY_SFX_H
 
-#include <QTranslator>
-#include "pge_qt_application.h"
+#include <unordered_map>
+#include <QString>
 
-class PGE_Translator
+struct Mix_Chunk;
+class PGE_SfxPlayer
 {
 public:
-    PGE_Translator();
-    void init();
-    void toggleLanguage(QString lang);
+    static void playFile(QString sndFile);
+    static void clearSoundBuffer();
+    static Mix_Chunk *openSFX(QString sndFile);
+
 private:
-    bool            m_isInit;
-    QTranslator     m_translator;   /**< contains the translations for this application */
-    QTranslator     m_translatorQt; /**< contains the translations for qt */
-    QString         m_currLang;     /**< contains the currently loaded language */
-    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+    typedef std::unordered_map<std::string, Mix_Chunk* > sfxHash;
+    static  sfxHash chunksBuffer;
 };
 
-#endif // PGE_TRANSLATOR_H
+#endif // PLAY_SFX_H

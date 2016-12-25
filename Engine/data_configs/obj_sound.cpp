@@ -1,5 +1,6 @@
 #include "obj_sound.h"
 #include "config_manager.h"
+#include "config_manager_private.h"
 
 #include <QFileInfo>
 #include <QSettings>

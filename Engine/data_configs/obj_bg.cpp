@@ -17,6 +17,7 @@
  */
 
 #include "config_manager.h"
+#include "config_manager_private.h"
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
 

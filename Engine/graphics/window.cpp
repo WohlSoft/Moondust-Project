@@ -26,26 +26,32 @@
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-Scene *PGE_Window::m_currentScene = nullptr;
+Scene  *PGE_Window::m_currentScene      = nullptr;
 
-int PGE_Window::Width = 800;
-int PGE_Window::Height = 600;
+int     PGE_Window::Width               = 800;
+int     PGE_Window::Height              = 600;
 
-int PGE_Window::MaxFPS = 250;
-double PGE_Window::TicksPerSecond = 1000.0 / 15.0;
-int PGE_Window::TimeOfFrame = 15;
-bool PGE_Window::vsync = true;
-bool PGE_Window::vsyncIsSupported = true;
+double  PGE_Window::TicksPerSecond      = 1000.0 / 15.0;
+int     PGE_Window::TimeOfFrame         = 15;
+bool    PGE_Window::vsync               = true;
+bool    PGE_Window::vsyncIsSupported    = true;
 
-bool PGE_Window::showDebugInfo = false;
-bool PGE_Window::showPhysicsDebug = false;
+bool    PGE_Window::showDebugInfo       = false;
+bool    PGE_Window::showPhysicsDebug    = false;
 
-SDL_Window *PGE_Window::window;
-SDL_GLContext PGE_Window::glcontext_background;
-SDL_GLContext PGE_Window::glcontext;
+SDL_Window      *PGE_Window::window     = NULL;
+SDL_GLContext    PGE_Window::glcontext  = NULL;
 
-bool PGE_Window::IsInit = false;
-bool PGE_Window::showCursor = true;
+//! Is graphical sub-system initialized?
+static  bool g_isRenderInit     = false;
+//! Is mouse cursor must be shown?
+static  bool g_showMouseCursor  = true;
+
+static SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
+{
+    Uint32 flags = SDL_GetWindowFlags(win);
+    return (flags & SDL_WINDOW_FULLSCREEN_DESKTOP) ? SDL_TRUE : SDL_FALSE;
+}
 
 bool PGE_Window::isSdlError()
 {
@@ -111,7 +117,7 @@ int PGE_Window::msgBoxCritical(QString title, QString text)
                                     ttl.c_str(), msg.c_str(), window);
 }
 
-bool PGE_Window::init(QString WindowTitle, int renderType)
+bool PGE_Window::init(std::string WindowTitle, int renderType)
 {
 #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
     GlRenderer::setup_SW_SDL();
@@ -152,7 +158,7 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
 
 #endif
     GlRenderer::setViewportSize(Width, Height);
-    window = SDL_CreateWindow(WindowTitle.toStdString().c_str(),
+    window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
                               Width, Height,
@@ -224,7 +230,7 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
     }
 
 #endif//IF _WIN32 #else
-    IsInit = true;
+    g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
     LogDebug("Init OpenGL settings...");
 
@@ -233,7 +239,7 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
         //% "Unable to initialize renderer context!"
         printSDLError(qtTrId("RENDERER_CONTEXT_INIT_ERROR"));
         SDL_ClearError();
-        IsInit = false;
+        g_isRenderInit = false;
         return false;
     }
 
@@ -242,6 +248,11 @@ bool PGE_Window::init(QString WindowTitle, int renderType)
     toggleVSync(vsync);
     LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
     return true;
+}
+
+void PGE_Window::setWindowTitle(std::__cxx11::string title)
+{
+    SDL_SetWindowTitle(window, title.c_str());
 }
 
 void PGE_Window::toggleVSync(bool vsync)
@@ -296,6 +307,9 @@ void PGE_Window::toggleVSync(bool vsync)
 
 bool PGE_Window::uninit()
 {
+    if(!g_isRenderInit)
+        return false;
+
     // Swith to WINDOWED mode
     if(SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
     {
@@ -307,25 +321,25 @@ bool PGE_Window::uninit()
     GlRenderer::uninit();
     GraphicsHelps::closeFreeImage();
     SDL_DestroyWindow(window);
-    SDL_Quit();
-    IsInit = false;
+    window = NULL;
+    g_isRenderInit = false;
     return true;
 }
 
 bool PGE_Window::isReady()
 {
-    return IsInit;
+    return g_isRenderInit;
 }
 
 void PGE_Window::setCursorVisibly(bool viz)
 {
-    showCursor = viz;
+    g_showMouseCursor = viz;
 
     if(window != NULL)
     {
         if(!IsFullScreen(window))
         {
-            if(showCursor)
+            if(g_showMouseCursor)
                 SDL_ShowCursor(SDL_ENABLE);
             else
                 SDL_ShowCursor(SDL_DISABLE);
@@ -365,7 +379,7 @@ int PGE_Window::setFullScreen(bool fs)
         else
         {
             //Show mouse cursor
-            if(showCursor)
+            if(g_showMouseCursor)
                 SDL_ShowCursor(SDL_ENABLE);
 
             // Swith to WINDOWED mode
@@ -383,13 +397,6 @@ int PGE_Window::setFullScreen(bool fs)
 }
 
 
-
-SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
-{
-    Uint32 flags = SDL_GetWindowFlags(win);
-    return (flags & SDL_WINDOW_FULLSCREEN_DESKTOP) ? SDL_TRUE : SDL_FALSE;
-}
-
 /// Toggles On/Off FullScreen
 /// @returns -1 on error, 1 on Set fullscreen successful, 0 on Set Windowed successful
 int PGE_Window::SDL_ToggleFS(SDL_Window *win)
@@ -400,7 +407,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     if(IsFullScreen(win))
     {
         //Show mouse cursor
-        if(showCursor)
+        if(g_showMouseCursor)
             SDL_ShowCursor(SDL_ENABLE);
 
         // Swith to WINDOWED mode

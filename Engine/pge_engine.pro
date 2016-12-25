@@ -169,7 +169,6 @@ SOURCES += \
     scenes/level/lvl_backgrnd.cpp \
     scenes/level/lvl_camera.cpp \
     common_features/player_calibration.cpp \
-    audio/SdlMusPlayer.cpp \
     data_configs/config_engine.cpp \
     data_configs/setup_wld_scene.cpp \
     data_configs/setup_load_screen.cpp \
@@ -283,13 +282,16 @@ SOURCES += \
     script/bindings/level/classes/luaclass_level_playerstate.cpp \
     script/bindings/level/classes/luaclass_level_camera.cpp \
     script/bindings/core/classes/luaclass_core_scene_effects.cpp \
-    common_features/pge_application.cpp \
     scenes/level/base/lvl_base_physics.cpp \
     scenes/level/npc/lvl_npc_physics.cpp \
     scenes/_base/msgbox_queue.cpp \
     data_configs/config_select_scene/scene_config_select.cpp \
     common_features/point_mover.cpp \
-    common_features/logger_sets.cpp
+    common_features/logger_sets.cpp \
+    common_features/pge_qt_application.cpp \
+    engine.cpp \
+    audio/play_music.cpp \
+    audio/play_sfx.cpp
 
 HEADERS  += \
     _resources/resource.h \
@@ -342,7 +344,6 @@ HEADERS  += \
     scenes/level/lvl_backgrnd.h \
     scenes/level/lvl_camera.h \
     common_features/player_calibration.h \
-    audio/SdlMusPlayer.h \
     data_configs/setup_wld_scene.h \
     data_configs/setup_load_screen.h \
     data_configs/setup_title_screen.h \
@@ -436,13 +437,17 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_paths.h \
     script/bindings/level/classes/luaclass_level_playerstate.h \
     script/bindings/core/classes/luaclass_core_scene_effects.h \
-    common_features/pge_application.h \
     scenes/level/base/lvl_base_physics.h \
     common_features/gif-h/gif.h \
     scenes/_base/msgbox_queue.h \
     scenes/level/lvl_z_constants.h \
     data_configs/config_select_scene/scene_config_select.h \
-    common_features/point_mover.h
+    common_features/point_mover.h \
+    data_configs/config_manager_private.h \
+    common_features/pge_qt_application.h \
+    engine.hpp \
+    audio/play_music.h \
+    audio/play_sfx.h
 
 
 RESOURCES += \

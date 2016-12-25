@@ -17,7 +17,7 @@
  */
 
 #include <QFileOpenEvent>
-#include "pge_application.h"
+#include "pge_qt_application.h"
 #include <common_features/logger.h>
 
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)

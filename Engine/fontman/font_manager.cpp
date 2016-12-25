@@ -19,7 +19,7 @@
 #include "font_manager.h"
 
 #include <common_features/app_path.h>
-#include <common_features/pge_application.h>
+#include <common_features/pge_qt_application.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <data_configs/config_manager.h>

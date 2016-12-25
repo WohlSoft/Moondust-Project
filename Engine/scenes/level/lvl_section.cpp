@@ -19,7 +19,7 @@
 #include "lvl_section.h"
 #include "lvl_base_object.h"
 #include <PGE_File_Formats/file_formats.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 #include <data_configs/config_manager.h>
 
 #include "lvl_physenv.h"
@@ -97,11 +97,11 @@ void LVL_Section::playMusic()
 
     if(!musFile.isEmpty())
     {
-        PGE_MusPlayer::MUS_openFile(musFile);
-        PGE_MusPlayer::MUS_playMusic();
+        PGE_MusPlayer::openFile(musFile);
+        PGE_MusPlayer::play();
     }
     else
-        PGE_MusPlayer::MUS_stopMusic();
+        PGE_MusPlayer::stop();
 }
 
 void LVL_Section::resetMusic()

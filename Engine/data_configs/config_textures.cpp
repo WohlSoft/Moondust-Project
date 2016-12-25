@@ -17,6 +17,7 @@
  */
 
 #include "config_manager.h"
+#include "config_manager_private.h"
 #include <graphics/gl_renderer.h>
 
 int  ConfigManager::getBlockTexture(unsigned long blockID)
@@ -168,7 +169,7 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
     }
     else
     {
-        QString imgFile = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
+        QString imgFile  = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
         QString maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
         int id = level_textures.size();
         npcSetup->textureArrayId = id;

@@ -62,7 +62,7 @@ private:
     static QString current;
 };
 
-class PGE_Sounds : public QObject
+class PGE_SfxPlayer : public QObject
 {
     Q_OBJECT
 public:

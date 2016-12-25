@@ -3,6 +3,7 @@
 
 #include "obj_music.h"
 #include "config_manager.h"
+#include "config_manager_private.h"
 
 #include <QSettings>
 #include <QFileInfo>

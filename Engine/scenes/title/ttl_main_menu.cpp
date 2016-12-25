@@ -20,7 +20,7 @@
 
 #include <common_features/logger.h>
 #include <audio/pge_audio.h>
-#include <audio/SdlMusPlayer.h>
+#include <audio/play_music.h>
 #include <graphics/window.h>
 #include <gui/pge_msgbox.h>
 #include <gui/pge_menubox.h>
@@ -384,7 +384,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addMenuItem("videosetup", qtTrId("MAINMENU_OPTIONS_VIDEO"));
                                                                                       //% "Music volume"
                 menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", qtTrId("MAINMENU_OPTIONS_MUS_VOL"), false,
-                                    []()->void{ PGE_MusPlayer::MUS_changeVolume(g_AppSettings.volume_music); });
+                                    []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
                                                                                       //% "Sound volume"
                 menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qtTrId("MAINMENU_OPTIONS_SND_VOL"), false);
                                                                                       //% "Full Screen mode"

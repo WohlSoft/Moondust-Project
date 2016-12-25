@@ -17,7 +17,7 @@
  */
 
 #include "config_manager.h"
-
+#include "config_manager_private.h"
 
 QString ConfigManager::bgoPath;
 QString ConfigManager::BGPath;

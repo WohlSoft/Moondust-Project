@@ -196,9 +196,9 @@ QMediaPlayer * PGE_Sounds::mp3Play = nullptr;
 Mix_Chunk *PGE_Sounds::sound = nullptr;
 #endif
 
-QString PGE_Sounds::current = "";
+QString PGE_SfxPlayer::current = "";
 
-void PGE_Sounds::SND_PlaySnd(QString sndFile)
+void PGE_SfxPlayer::SND_PlaySnd(QString sndFile)
 {
     if(current!=sndFile)
     {
@@ -234,7 +234,7 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
 #endif
 }
 
-void PGE_Sounds::freeBuffer()
+void PGE_SfxPlayer::freeBuffer()
 {
     #ifdef USE_SDL_MIXER
     if(sound)

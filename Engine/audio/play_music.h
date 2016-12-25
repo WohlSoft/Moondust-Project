@@ -16,24 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_TRANSLATOR_H
-#define PGE_TRANSLATOR_H
+#ifndef PLAY_MUSIC_H
+#define PLAY_MUSIC_H
 
-#include <QTranslator>
-#include "pge_qt_application.h"
+#include <QString>
 
-class PGE_Translator
+class PGE_MusPlayer
 {
 public:
-    PGE_Translator();
-    void init();
-    void toggleLanguage(QString lang);
-private:
-    bool            m_isInit;
-    QTranslator     m_translator;   /**< contains the translations for this application */
-    QTranslator     m_translatorQt; /**< contains the translations for qt */
-    QString         m_currLang;     /**< contains the currently loaded language */
-    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+    static QString getTitle();
+
+    static void play();
+    static void fadeIn(int ms);
+    static void pause();
+    static void stop();
+    static void fadeOut(int ms);
+
+    static void setVolume(int vlm);
+    static void openFile(QString musFile);
+
+    static bool isPlaying();
+    static bool isPaused();
+    static bool IsFading();
+
+    static void freeStream();
 };
 
-#endif // PGE_TRANSLATOR_H
+#endif

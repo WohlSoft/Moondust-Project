@@ -17,6 +17,7 @@
  */
 
 #include "config_manager.h"
+#include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 
 /*****Level Effects************/
