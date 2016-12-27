@@ -296,25 +296,31 @@ void PGEEngineApp::loadLogger()
 static void printUsage(char *arg0)
 {
     std::string arg0s(arg0);
-    std::string msg(
+    #ifndef _WIN32
+    const char* logo =
         "=================================================\n"
         INITIAL_WINDOW_TITLE "\n"
         "=================================================\n"
-        "\n"
+        "\n";
+    #define OPTIONAL_BREAK "\n"
+    #else
+    #define OPTIONAL_BREAK " "
+    #endif
+
+    std::string msg(
         "Command line syntax:\n"
         "\n"
         "Start game with a specific config pack:\n"
         "   " + arg0s + " [options] --config=\"./configs/Config Pack Name/\"\n"
         "\n"
-        "Play single level:\n"
-        "   " + arg0s + " [options] level_filename.lvlx\n"
+        "Play single level or episode:\n"
+        "   " + arg0s + " [options] <path to level or world map file>\n"
         "\n"
-        "Play episode:\n"
-        "   " + arg0s + " [options] level_filename.wldx\n"
-        "\n"
+        #ifndef _WIN32
         "Show application version:\n"
         "   " + arg0s + " --version\n"
         "\n"
+        #endif
         "Copy settings into "
         #if defined(_WIN32)
         "%UserProfile%/.PGE_Project/"
@@ -323,13 +329,15 @@ static void printUsage(char *arg0)
         #else
         "~/.PGE_Project/"
         #endif
-        " folder and use it as\n"
+        " folder and use it as" OPTIONAL_BREAK
         "placement of config packs, episodes, for screenshots store, etc.:\n"
         "   " + arg0s + " --install\n"
         "\n"
+        #ifndef _WIN32
         "Show this help:\n"
         "   " + arg0s + " --help\n"
         "\n\n"
+        #endif
         "Options:\n\n"
         "  --config=\"{path}\"          - Use a specific configuration package\n"
         #if defined(__APPLE__)
@@ -361,25 +369,13 @@ static void printUsage(char *arg0)
         "\n"
         "More detailed information can be found here:\n"
         "http://wohlsoft.ru/pgewiki/PGE_Engine#Command_line_arguments\n"
-        "\n");
+        OPTIONAL_BREAK);
 
     #ifdef _WIN32
-    //MessageBoxA(NULL, msg.c_str(), INITIAL_WINDOW_TITLE, MB_OK | MB_ICONINFORMATION);
-    int hCrt;
-    FILE *hf;
-
-    AllocConsole();
-    hCrt = _open_osfhandle(
-               (long) GetStdHandle(STD_ERROR_HANDLE), /*STD_OUTPUT_HANDLE*/
-               _O_TEXT
-           );
-    hf = _fdopen(hCrt, "w");
-    *stderr = *hf;
-    i = setvbuf(stderr, NULL, _IONBF, 0);
-    //#else
+    MessageBoxA(NULL, msg.c_str(), INITIAL_WINDOW_TITLE, MB_OK | MB_ICONINFORMATION);
+    #else
+    fprintf(stderr, "%s%s", logo, msg.c_str());
     #endif
-    fprintf(stderr, "%s", msg.c_str());
-    //#endif
 }
 
 bool PGEEngineApp::parseLowArgs(int argc, char **argv)
