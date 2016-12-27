@@ -80,7 +80,9 @@ QStringList ConfigManager::tmp;
 
 void ConfigManager::setConfigPath(QString p)
 {
-    config_dir = p + "/";
+    config_dir = p;
+    if(!config_dir.endsWith('/'))
+        config_dir.append('/');
     config_id = QDir(p).dirName();
 }
 
@@ -136,8 +138,7 @@ bool ConfigManager::loadBasics()
 
         if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
             data_dir = ApplicationPath + "/" + data_dir;
-        else
-        if(!QDir(data_dir).exists()) //Check as absolute
+        else if(!QDir(data_dir).exists()) //Check as absolute
         {
             msgBox("Config error",
                    QString("Config data path not exists: %1").arg(data_dir));
@@ -163,14 +164,6 @@ bool ConfigManager::loadBasics()
                                      title.c_str(), msg.c_str(),
                                      PGE_Window::window);
             QDesktopServices::openUrl(QUrl(url));
-            /*QMessageBox box;
-            box.setWindowTitle( "Legacy configuration package" );
-            box.setTextFormat(Qt::RichText);
-            box.setTextInteractionFlags(Qt::TextBrowserInteraction);
-            box.setText();
-            box.setStandardButtons(QMessageBox::Ok);
-            box.setIcon(QMessageBox::Warning);
-            box.exec();*/
         }
 
         if(appDir)

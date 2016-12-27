@@ -52,13 +52,13 @@
  * \brief Shows a notification about PGE Engine alpha-testing
  * \param parent Pointer to parent main window
  */
-static void pge_engine_alphatestingNotify(MainWindow*parent)
+static void pge_engine_alphatestingNotify(MainWindow *parent)
 {
     /************************Alpha-testing notify*****************************/
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
     cCounters.beginGroup("message-boxes");
-    bool showNotice=cCounters.value("pge-engine-test-launch",true).toBool();
+    bool showNotice = cCounters.value("pge-engine-test-launch", true).toBool();
     if(showNotice)
     {
         QMessageBox msg(parent);
@@ -68,20 +68,20 @@ static void pge_engine_alphatestingNotify(MainWindow*parent)
         box.setText(MainWindow::tr("Don't show this message again."));
         msg.setCheckBox(&box);
         msg.setText(MainWindow::tr("Hello! This is a test in PGE Engine.\n"
-                       "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. "
-                       "Currently, it's experimental and has not implemented many features yet. "
-                       "Some features may not be implemented or may work incorrectly. "
-                       "If you are making levels or episodes for the old SMBX Engine and you want to run "
-                       "a test with a complete feature-set, please run level tests in the SMBX Engine. "
-                       "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE specific levels "
-                       "or episodes.")
-                      );
+                                   "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. "
+                                   "Currently, it's experimental and has not implemented many features yet. "
+                                   "Some features may not be implemented or may work incorrectly. "
+                                   "If you are making levels or episodes for the old SMBX Engine and you want to run "
+                                   "a test with a complete feature-set, please run level tests in the SMBX Engine. "
+                                   "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE specific levels "
+                                   "or episodes.")
+                   );
         msg.setStandardButtons(QMessageBox::Ok);
         msg.setWindowModality(Qt::WindowModal);
         msg.exec();
         showNotice = !box.isChecked();
     }
-    cCounters.setValue("pge-engine-test-launch",showNotice);
+    cCounters.setValue("pge-engine-test-launch", showNotice);
     cCounters.endGroup();
     /************************Alpha-testing notify*****************************/
 }
@@ -134,29 +134,30 @@ void MainWindow::on_action_doTest_triggered()
         return;
     }
 
-    if(engine_proc.state()==QProcess::Running)
+    if(engine_proc.state() == QProcess::Running)
     {
         if(QMessageBox::warning(this, tr("Engine already runned"),
-                             tr("Engine is already testing another level.\n"
-                                "Do you want to abort current testing process?"),
-                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+                                tr("Engine is already testing another level.\n"
+                                   "Do you want to abort current testing process?"),
+                                QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
+        {
             engine_proc.terminate();
             engine_proc.close();
         }
         return;
     }
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
         IntEngine::init(&engine_proc);
 
         //if(activeLvlEditWin()->isUntitled) return;
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return;
 
         QStringList args;
         args << "--debug";
-        args << "--config=\""+configs.config_dir+"\"";
+        args << "--config=\"" + configs.config_dir + "\"";
         args << "--interprocessing";//activeLvlEditWin()->curFile;
         SETTINGS_TestSettings t = GlobalSettings::testing;
         args << QString("--num-players=%1").arg(t.numOfPlayers);
@@ -183,9 +184,9 @@ void MainWindow::on_action_doTest_triggered()
             qDebug() << "Started";
             //Stop music playback in the PGE Editor!
             stopMusicForTesting();
-        } else {
-            qWarning() << "Failed to start PGE Engine!" << command << "with args" << args;
         }
+        else
+            qWarning() << "Failed to start PGE Engine!" << command << "with args" << args;
 
     }
     else
@@ -214,12 +215,13 @@ void MainWindow::on_action_doSafeTest_triggered()
         return;
     }
 
-    if(engine_proc.state()==QProcess::Running)
+    if(engine_proc.state() == QProcess::Running)
     {
         if(QMessageBox::warning(this, tr("Engine already runned"),
-                             tr("Engine is already testing another level.\n"
-                                "Do you want to abort current testing process?"),
-                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort) {
+                                tr("Engine is already testing another level.\n"
+                                   "Do you want to abort current testing process?"),
+                                QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
+        {
             engine_proc.terminate();
             engine_proc.close();
         }
@@ -228,7 +230,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 
     QStringList args;
     args << "--debug";
-    args << "--config=\""+configs.config_dir+"\"";
+    args << "--config=\"" + configs.config_dir + "\"";
 
     SETTINGS_TestSettings t = GlobalSettings::testing;
     args << QString("--num-players=%1").arg(t.numOfPlayers);
@@ -246,34 +248,33 @@ void MainWindow::on_action_doSafeTest_triggered()
     else
         args << "--debug-print=no";
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
         if(activeLvlEditWin()->isUntitled)
         {
             QMessageBox::warning(this, tr("Save file first"),
-            tr("To run testing of saved file, please save them into disk first!\n"
-               "You can run testing without saving of file if you will use \"Run testing\" menu item."),
-            QMessageBox::Ok);
+                                 tr("To run testing of saved file, please save them into disk first!\n"
+                                    "You can run testing without saving of file if you will use \"Run testing\" menu item."),
+                                 QMessageBox::Ok);
             return;
         }
         args << activeLvlEditWin()->curFile;
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == 3)
     {
         if(activeWldEditWin()->isUntitled)
         {
             QMessageBox::warning(this, tr("Save file first"),
-            tr("To run testing of saved file, please save them into disk first!\n"
-               "You can run testing without saving of file if you will use \"Run testing\" menu item."),
-            QMessageBox::Ok);
+                                 tr("To run testing of saved file, please save them into disk first!\n"
+                                    "You can run testing without saving of file if you will use \"Run testing\" menu item."),
+                                 QMessageBox::Ok);
             return;
         }
         args << activeWldEditWin()->curFile;
     }
 
     engine_proc.start(command, args);
-    if( engine_proc.waitForStarted() )
+    if(engine_proc.waitForStarted())
     {
         //Stop music playback in the PGE Editor!
         stopMusicForTesting();
@@ -301,7 +302,7 @@ void MainWindow::on_action_Start_Engine_triggered()
     }
 
     QStringList args;
-    args << "--config=\""+configs.config_dir+"\"";
+    args << "--config=\"" + configs.config_dir + "\"";
 
     QProcess::startDetached(command, args);
 
@@ -320,5 +321,4 @@ void MainWindow::on_action_testSettings_triggered()
     util::DialogToCenter(&testingSetup, true);
     testingSetup.exec();
 }
-
 

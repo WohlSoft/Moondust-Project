@@ -52,11 +52,11 @@ dataconfigs::dataconfigs()
     defaultGrid.paths = 32;     //-V112
     defaultGrid.levels = 32;    //-V112
 
-    engine.screen_w=800;
-    engine.screen_h=600;
+    engine.screen_w = 800;
+    engine.screen_h = 600;
 
-    engine.wld_viewport_w=668;
-    engine.wld_viewport_h=403;
+    engine.wld_viewport_w = 668;
+    engine.wld_viewport_h = 403;
 }
 
 dataconfigs::~dataconfigs()
@@ -64,15 +64,15 @@ dataconfigs::~dataconfigs()
 
 /*
 [background-1]
-name="Smallest bush"		;background name, default="background-%n"
-type="scenery"			;Background type, default="Scenery"
-grid=32				; 32 | 16 Default="32"
-view=background			; background | foreground, default="background"
-image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
-climbing=0			; default = 0
-animated = 0			; default = 0 - no
-frames = 1			; default = 1
-frame-speed=125			; default = 125 ms, etc. 8 frames per sec
+name="Smallest bush"        ;background name, default="background-%n"
+type="scenery"          ;Background type, default="Scenery"
+grid=32             ; 32 | 16 Default="32"
+view=background         ; background | foreground, default="background"
+image="background-1.gif"    ;Image file with level file ; the image mask will be have *m.gif name.
+climbing=0          ; default = 0
+animated = 0            ; default = 0 - no
+frames = 1          ; default = 1
+frame-speed=125         ; default = 125 ms, etc. 8 frames per sec
 */
 
 QString dataconfigs::getFullIniPath(QString iniFileName)
@@ -86,7 +86,7 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
     return path_ini;
 }
 
-bool dataconfigs::openSection(QSettings*config, QString section)
+bool dataconfigs::openSection(QSettings *config, QString section)
 {
     //Cache name of recent INI-file and it's sections
     if(m_recentIniFile != config->fileName())
@@ -99,8 +99,8 @@ bool dataconfigs::openSection(QSettings*config, QString section)
     if(!m_sectionsCache.contains(section))
     {
         addError(QString("ERROR LOADING %1: [%2] section is missed!")
-                 .arg( config->fileName() )
-                 .arg( section ), PGE_LogLevel::Critical);
+                 .arg(config->fileName())
+                 .arg(section), PGE_LogLevel::Critical);
         return false;
     }
     config->beginGroup(section);
@@ -109,13 +109,15 @@ bool dataconfigs::openSection(QSettings*config, QString section)
 
 void dataconfigs::addError(QString bug, PGE_LogLevel level)
 {
-    WriteToLog(level, QString("LoadConfig -> ")+bug);
-    errorsList<<bug;
+    WriteToLog(level, QString("LoadConfig -> ") + bug);
+    errorsList << bug;
 }
 
 void dataconfigs::setConfigPath(QString p)
 {
     config_dir = p;
+    if(!config_dir.endsWith('/'))
+        config_dir.append('/');
 }
 
 bool dataconfigs::loadBasics()
@@ -129,59 +131,57 @@ bool dataconfigs::loadBasics()
     QSettings guiset(gui_ini, QSettings::IniFormat);
     guiset.setIniCodec("UTF-8");
 
-    int Animations=0;
+    int Animations = 0;
     guiset.beginGroup("gui");
-        splash_logo =               guiset.value("editor-splash", "").toString();
-        #ifdef __linux__
-            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-            QString envir = env.value("XDG_CURRENT_DESKTOP", "");
-            qApp->setStyle("GTK");
-            if(envir=="KDE" || envir=="XFCE")
-            {
-                ConfStatus::defaultTheme = "Breeze";
-            } else {
-                ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
-            }
-        #elif __APPLE__
-            ConfStatus::defaultTheme = "Breeze";
-        #elif _WIN32
-            if(QSysInfo::WindowsVersion==QSysInfo::WV_WINDOWS10)
-                ConfStatus::defaultTheme = "Breeze";
-            else
-                ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
-        #else
-            ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
-        #endif
-        Animations     =            guiset.value("animations", 0).toInt();
+    splash_logo =               guiset.value("editor-splash", "").toString();
+    #ifdef __linux__
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString envir = env.value("XDG_CURRENT_DESKTOP", "");
+    qApp->setStyle("GTK");
+    if(envir == "KDE" || envir == "XFCE")
+        ConfStatus::defaultTheme = "Breeze";
+    else
+        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
+    #elif __APPLE__
+    ConfStatus::defaultTheme = "Breeze";
+    #elif _WIN32
+    if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+        ConfStatus::defaultTheme = "Breeze";
+    else
+        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
+    #else
+    ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
+    #endif
+    Animations     =            guiset.value("animations", 0).toInt();
     guiset.endGroup();
 
-    if( !openSection(&guiset, "main") )
+    if(!openSection(&guiset, "main"))
         return false;
 
-        data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        ApplicationPath + "/" : config_dir + "data/" );
+    data_dir = (guiset.value("application-dir", "0").toBool() ?
+                ApplicationPath + "/" : config_dir + "data/");
 
-        QString url     = guiset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
-        QString version = guiset.value("pge-editor-version", "0.0").toString();
-        bool ver_notify = guiset.value("enable-version-notify", true).toBool();
-        if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_FILE_VERSION), version)))
-        {
-            QMessageBox box;
-            box.setWindowTitle( "Legacy configuration package" );
-            box.setTextFormat(Qt::RichText);
-            #if (QT_VERSION >= 0x050100)
-            box.setTextInteractionFlags(Qt::TextBrowserInteraction);
-            #endif
-            box.setText(tr("You have a legacy configuration package.\n<br>"
-                           "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
-                           "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
-                           "Note: most of config packs are updates togeter with PGE,<br>\n"
-                           "therefore you can use same link to get updated version")
-                                .arg("<a href=\"%1\">%1</a>").arg(url));
-            box.setStandardButtons(QMessageBox::Ok);
-            box.setIcon(QMessageBox::Warning);
-            box.exec();
-        }
+    QString url     = guiset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+    QString version = guiset.value("pge-editor-version", "0.0").toString();
+    bool ver_notify = guiset.value("enable-version-notify", true).toBool();
+    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_FILE_VERSION), version)))
+    {
+        QMessageBox box;
+        box.setWindowTitle("Legacy configuration package");
+        box.setTextFormat(Qt::RichText);
+        #if (QT_VERSION >= 0x050100)
+        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+        #endif
+        box.setText(tr("You have a legacy configuration package.\n<br>"
+                       "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
+                       "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
+                       "Note: most of config packs are updates togeter with PGE,<br>\n"
+                       "therefore you can use same link to get updated version")
+                    .arg("<a href=\"%1\">%1</a>").arg(url));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.setIcon(QMessageBox::Warning);
+        box.exec();
+    }
     closeSection(&guiset);
 
     if(!splash_logo.isEmpty())
@@ -196,20 +196,20 @@ bool dataconfigs::loadBasics()
         obj_splash_ani tempAni;
 
         animations.clear();
-        for(;Animations > 0; Animations--)
+        for(; Animations > 0; Animations--)
         {
             guiset.beginGroup(QString("splash-animation-%1").arg(Animations));
-                QString img =   guiset.value("image", "").toString();
-                    if(img.isEmpty()) goto skip;
-                    tempAni.img = QPixmap(data_dir + img);
-                    if(tempAni.img.isNull()) goto skip;
-                tempAni.frames= guiset.value("frames", 1).toUInt();
-                tempAni.speed = guiset.value("speed", 128).toUInt();
-                tempAni.x =     guiset.value("x", 0).toUInt();
-                tempAni.y =     guiset.value("y", 0).toUInt();
+            QString img =   guiset.value("image", "").toString();
+            if(img.isEmpty()) goto skip;
+            tempAni.img = QPixmap(data_dir + img);
+            if(tempAni.img.isNull()) goto skip;
+            tempAni.frames = guiset.value("frames", 1).toUInt();
+            tempAni.speed = guiset.value("speed", 128).toUInt();
+            tempAni.x =     guiset.value("x", 0).toUInt();
+            tempAni.y =     guiset.value("y", 0).toUInt();
 
-                animations.push_front(tempAni);
-            skip:
+            animations.push_front(tempAni);
+skip:
             guiset.endGroup();
         }
     }
@@ -226,8 +226,8 @@ bool dataconfigs::loadconfigs()
 
     m_isValid = false;
 
-    total_data=0;
-    defaultGrid.general=0;
+    total_data = 0;
+    defaultGrid.general = 0;
     errorsList.clear();
 
     m_recentIniFile.clear();
@@ -236,9 +236,9 @@ bool dataconfigs::loadconfigs()
     LogDebug("=== Starting of global configuration loading ===");
 
     //dirs
-    if( (!QDir(config_dir).exists()) || (QFileInfo(config_dir).isFile()) )
+    if((!QDir(config_dir).exists()) || (QFileInfo(config_dir).isFile()))
     {
-        LogCritical( QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir) );
+        LogCritical(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
         return false;
     }
 
@@ -246,7 +246,7 @@ bool dataconfigs::loadconfigs()
     emit progressPartNumber(0);
 
     QString main_ini = getFullIniPath("main.ini");
-    if( main_ini.isEmpty() )
+    if(main_ini.isEmpty())
         return false;
 
     QSettings mainset(main_ini, QSettings::IniFormat);
@@ -258,52 +258,51 @@ bool dataconfigs::loadconfigs()
     if(!openSection(&mainset, "main"))
         return false;
 
-        customAppPath = mainset.value("application-path", ApplicationPath).toString();
-        customAppPath.replace('\\', '/');
-        bool lookAppDir = mainset.value("application-dir", false).toBool();
-        data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/" );
-        if(QDir(ApplicationPath+"/"+data_dir).exists()) //Check as relative
-            data_dir = ApplicationPath+"/"+data_dir;
-        else
-        if(!QDir(data_dir).exists()) //Check as absolute
-        {
-            LogCritical(QString("Config data path not exists: %1").arg(data_dir));
-            return false;
-        }
+    customAppPath = mainset.value("application-path", ApplicationPath).toString();
+    customAppPath.replace('\\', '/');
+    bool lookAppDir = mainset.value("application-dir", false).toBool();
+    data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/");
+    if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
+        data_dir = ApplicationPath + "/" + data_dir;
+    else if(!QDir(data_dir).exists()) //Check as absolute
+    {
+        LogCritical(QString("Config data path not exists: %1").arg(data_dir));
+        return false;
+    }
 
-        data_dir = QDir(data_dir).absolutePath()+"/";
-        ConfStatus::configDataPath = data_dir;
+    data_dir = QDir(data_dir).absolutePath() + "/";
+    ConfStatus::configDataPath = data_dir;
 
-        ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
-        #ifdef _WIN32
-        ConfStatus::SmbxEXE_Name        = mainset.value("smbx-exe-name", "smbx.exe").toString();
-        ConfStatus::SmbxTest_By_Default = mainset.value("smbx-test-by-default", false).toBool();
-        #endif
+    ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
+    #ifdef _WIN32
+    ConfStatus::SmbxEXE_Name        = mainset.value("smbx-exe-name", "smbx.exe").toString();
+    ConfStatus::SmbxTest_By_Default = mainset.value("smbx-test-by-default", false).toBool();
+    #endif
 
-        dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toString() + "/";
+    dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music      = data_dir + mainset.value("music", "data/music").toString() + "/";
-        dirs.sounds     = data_dir + mainset.value("sound", "data/sound").toString() + "/";
+    dirs.music      = data_dir + mainset.value("music", "data/music").toString() + "/";
+    dirs.sounds     = data_dir + mainset.value("sound", "data/sound").toString() + "/";
 
-        dirs.glevel     = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+    dirs.glevel     = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+    dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+    dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toString();
-        commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toString();
-        localScriptName_wld  = mainset.value("local-script-name-wld", "world.lua").toString();
-        commonScriptName_wld = mainset.value("common-script-name-wld", "world.lua").toString();
+    localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toString();
+    commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toString();
+    localScriptName_wld  = mainset.value("local-script-name-wld", "world.lua").toString();
+    commonScriptName_wld = mainset.value("common-script-name-wld", "world.lua").toString();
 
-        dirs.gcustom = data_dir+mainset.value("custom-data", "data-custom").toString() + "/";
+    dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     closeSection(&mainset);
 
     //Check existing of most important graphics paths
-    if( !QDir( dirs.glevel ).exists() )
+    if(!QDir(dirs.glevel).exists())
     {
         LogCritical(QString("Level graphics path not exists: %1").arg(dirs.glevel));
         return false;
     }
-    if( !QDir( dirs.gworld ).exists() )
+    if(!QDir(dirs.gworld).exists())
     {
         LogCritical(QString("World map graphics path not exists: %1").arg(dirs.gworld));
         return false;
@@ -312,10 +311,10 @@ bool dataconfigs::loadconfigs()
     ConfStatus::configPath = config_dir;
 
     mainset.beginGroup("graphics");
-        defaultGrid.general = mainset.value("default-grid", 32).toUInt();   //-V112
+    defaultGrid.general = mainset.value("default-grid", 32).toUInt();   //-V112
     mainset.endGroup();
 
-    if( mainset.status() != QSettings::NoError )
+    if(mainset.status() != QSettings::NoError)
     {
         LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
         return false;
@@ -358,49 +357,49 @@ bool dataconfigs::loadconfigs()
 
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
-        LogDebug("Loading of lvl_characters.ini...");
+    LogDebug("Loading of lvl_characters.ini...");
     loadPlayers();
-        LogDebug("Loading of lvl_bkgrd.ini...");
+    LogDebug("Loading of lvl_bkgrd.ini...");
     loadLevelBackgrounds();
-        LogDebug("Loading of lvl_bgo.ini...");
+    LogDebug("Loading of lvl_bgo.ini...");
     loadLevelBGO();
-        LogDebug("Loading of lvl_blocks.ini...");
+    LogDebug("Loading of lvl_blocks.ini...");
     loadLevelBlocks();
-        LogDebug("Loading of lvl_npc.ini...");
+    LogDebug("Loading of lvl_npc.ini...");
     loadLevelNPC();
     ///////////////////////////////////////Level items////////////////////////////////////////////
 
     ///////////////////////////////////////World map items////////////////////////////////////////
-        LogDebug("Loading of wld_tiles.ini...");
+    LogDebug("Loading of wld_tiles.ini...");
     loadWorldTiles();
-        LogDebug("Loading of wld_scenery.ini...");
+    LogDebug("Loading of wld_scenery.ini...");
     loadWorldScene();
-        LogDebug("Loading of wld_paths.ini...");
+    LogDebug("Loading of wld_paths.ini...");
     loadWorldPaths();
-        LogDebug("Loading of wld_levels.ini...");
+    LogDebug("Loading of wld_levels.ini...");
     loadWorldLevels();
     ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
     ///////////////////////////////////////Music////////////////////////////////////////////
-        LogDebug("Loading of music.ini...");
+    LogDebug("Loading of music.ini...");
     loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
     ///////////////////////////////////////Sound////////////////////////////////////////////
-        LogDebug("Loading of sounds.ini...");
+    LogDebug("Loading of sounds.ini...");
     loadSound();
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
 
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
-        LogDebug("Loading global tilesets INI files...");
+    LogDebug("Loading global tilesets INI files...");
     loadTilesets();
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
 
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
-        LogDebug("Loading rotation_table.ini...");
+    LogDebug("Loading rotation_table.ini...");
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
 
@@ -440,38 +439,37 @@ bool dataconfigs::loadconfigs()
 bool dataconfigs::check()
 {
     return
-            (
-    (main_bgo.stored() <= 0)||
-    (main_bg.stored() <= 0)||
-    (main_block.stored()<=0)||
-    (main_npc.stored()<=0)||
-    (main_wtiles.stored()<=0)||
-    (main_wscene.stored()<=0)||
-    (main_wpaths.stored()<=0)||
-    (main_wlevels.stored()<=0)||
-    (main_music_lvl.stored()<=0)||
-    (main_music_wld.stored()<=0)||
-    (main_music_spc.stored()<=0)||
-    (main_sound.stored()<=0)||
-      !errorsList.isEmpty()
-            ) && (!m_isValid);
+        (
+            (main_bgo.stored() <= 0) ||
+            (main_bg.stored() <= 0) ||
+            (main_block.stored() <= 0) ||
+            (main_npc.stored() <= 0) ||
+            (main_wtiles.stored() <= 0) ||
+            (main_wscene.stored() <= 0) ||
+            (main_wpaths.stored() <= 0) ||
+            (main_wlevels.stored() <= 0) ||
+            (main_music_lvl.stored() <= 0) ||
+            (main_music_wld.stored() <= 0) ||
+            (main_music_spc.stored() <= 0) ||
+            (main_sound.stored() <= 0) ||
+            !errorsList.isEmpty()
+        ) && (!m_isValid);
 }
 
 long dataconfigs::getCharacterI(unsigned long itemID)
 {
     int j;
-    bool found=false;
+    bool found = false;
 
-    for(j=0; j < main_characters.size(); j++)
+    for(j = 0; j < main_characters.size(); j++)
     {
         if(main_characters[j].id == itemID)
         {
-            found=true;
+            found = true;
             break;
         }
     }
-    if(!found) j=-1;
+    if(!found) j = -1;
     return static_cast<long>(j);
 }
-
 
