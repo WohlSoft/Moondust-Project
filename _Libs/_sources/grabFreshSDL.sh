@@ -22,7 +22,7 @@ then
     freshLatestSDL
     if [[ "$OldSDL" != "$LatestSDL" ]];
     then
-        rm $LatestSDL'.tar.gz'
+        rm $OldSDL'.tar.gz'
     fi
     echo "Fresh now is $LatestSDL"
 else
