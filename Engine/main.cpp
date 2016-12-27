@@ -59,16 +59,16 @@ extern int main(int argc, char *argv[]);
 static void buildUtf8Args(std::vector<std::string> &utf8_args)
 {
     //Get raw UTF-16 command line
-    wchar_t*    cmdLineW = GetCommandLineW();
+    wchar_t    *cmdLineW = GetCommandLineW();
     int         argc     = 0;
     //Convert it into array of strings
-    wchar_t**   argvW    = CommandLineToArgvW(cmdLineW, &argc);
+    wchar_t   **argvW    = CommandLineToArgvW(cmdLineW, &argc);
 
     utf8_args.reserve(argc);
     //Convert every argument into UTF-8
     for(int i = 0; i < argc; i++)
     {
-        wchar_t* argW = argvW[i];
+        wchar_t *argW = argvW[i];
         int argWlen = wcslen(argW);
         std::string arg;
         arg.resize(argWlen * 2);
@@ -76,7 +76,6 @@ static void buildUtf8Args(std::vector<std::string> &utf8_args)
         arg.resize(newLen);
         utf8_args.push_back(arg);
     }
-
 }
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
@@ -84,7 +83,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
     //! Storage of UTF8-encoded command line arguments
     std::vector<std::string> g_utf8_args;
     //! Storage of the pointers to begin of every argument
-    std::vector<char*>       g_utf8_argvV;
+    std::vector<char *>       g_utf8_argvV;
 
     buildUtf8Args(g_utf8_args);
 
