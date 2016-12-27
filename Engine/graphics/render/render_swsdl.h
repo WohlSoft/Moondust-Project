@@ -24,9 +24,6 @@
 #include <common_features/rect.h>
 #include "render_base.h"
 
-#ifndef SDL_MAIN_HANDLED
-#define SDL_MAIN_HANDLED
-#endif
 #include <SDL2/SDL_rect.h>
 
 struct SDL_Surface;

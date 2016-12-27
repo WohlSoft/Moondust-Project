@@ -41,7 +41,7 @@ macx:  TARGET = "PGE Engine"
 TEMPLATE = app
 CONFIG += c++11
 CONFIG += thread
-
+CONFIG += console
 CONFIG += static
 
 DEPENDPATH += "$$PWD/../_Libs/SDL2_mixer_modified/"

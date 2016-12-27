@@ -20,6 +20,8 @@
 #include <iostream>
 #ifdef _WIN32
 #include <windows.h>
+#include <io.h>
+#include <fcntl.h>
 #endif
 
 #include <QDir>
@@ -296,12 +298,13 @@ void PGEEngineApp::loadLogger()
 static void printUsage(char *arg0)
 {
     std::string arg0s(arg0);
-    #ifndef _WIN32
     const char *logo =
         "=================================================\n"
         INITIAL_WINDOW_TITLE "\n"
         "=================================================\n"
         "\n";
+
+#ifndef _WIN32
 #define OPTIONAL_BREAK "\n"
     #else
 #define OPTIONAL_BREAK " "
@@ -370,12 +373,25 @@ static void printUsage(char *arg0)
         "More detailed information can be found here:\n"
         "http://wohlsoft.ru/pgewiki/PGE_Engine#Command_line_arguments\n"
         OPTIONAL_BREAK);
-
+    /*
     #ifdef _WIN32
-    MessageBoxA(NULL, msg.c_str(), INITIAL_WINDOW_TITLE, MB_OK | MB_ICONINFORMATION);
-    #else
-    fprintf(stderr, "%s%s", logo, msg.c_str());
+    if(AttachConsole(ATTACH_PARENT_PROCESS))
+    {
+        HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
+        int hCrt = _open_osfhandle((long) handle_out, _O_TEXT);
+        FILE* hf_out = _fdopen(hCrt, "w");
+        setvbuf(hf_out, NULL, _IONBF, 1);
+        *stdout = *hf_out;
+
+        HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
+        hCrt = _open_osfhandle((long) handle_in, _O_TEXT);
+        FILE* hf_in = _fdopen(hCrt, "r");
+        setvbuf(hf_in, NULL, _IONBF, 128);
+        *stdin = *hf_in;
+    }
     #endif
+    */
+    fprintf(stdout, "%s%s", logo, msg.c_str());
 }
 
 bool PGEEngineApp::parseLowArgs(int argc, char **argv)
@@ -405,6 +421,11 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
             return true;
         }
     }
+
+    #ifdef _WIN32
+    //Close console which is no more needed
+    FreeConsole();
+    #endif
 
     return false;
 }
@@ -464,7 +485,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
     return atoi(s);
 }
 
-void PGEEngineApp::parseHighArgs()
+void PGEEngineApp::parseHighArgs(int argc, char**argv)
 {
     /* Set defaults to global properties */
     g_Episode.character = 0;
@@ -473,10 +494,9 @@ void PGEEngineApp::parseHighArgs()
     g_AppSettings.debugMode         = false; //enable debug mode
     g_AppSettings.interprocessing   = false; //enable interprocessing
 
-    for(int pi = 1; pi < m_args.size(); pi++)
+    for(int pi = 1; pi < argc; pi++)
     {
-        QString &param = m_args[pi];
-        std::string param_s = param.toStdString();
+        std::string param_s = argv[pi];
         pLogDebug("Argument: [%s]", param_s.c_str());
         int i = 0;
         char characterParam[8] = "\0";
@@ -609,16 +629,18 @@ void PGEEngineApp::parseHighArgs()
         }
         else
         {
-            param = FileFormats::removeQuotes(param);
-            param_s = param.toStdString();
+            char* str = &param_s[0];
+            size_t len = param_s.size();
+            removeQuotes(str, len);
 
+            QString param = QString::fromUtf8(str, (int)len);
             if(QFile::exists(param))
             {
                 g_fileToOpen = param;
-                pLogDebug("Got file path: [%s]", param_s.c_str());
+                pLogDebug("Got file path: [%s]", str);
             }
             else
-                pLogWarning("Invalid argument or file path: [%s]", param_s.c_str());
+                pLogWarning("Invalid argument or file path: [%s]", str);
         }
     }
 

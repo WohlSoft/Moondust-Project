@@ -1,5 +1,4 @@
 #include "pge_boxbase.h"
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
 #include <common_features/graphics_funcs.h>
 #include <Utils/maths.h>

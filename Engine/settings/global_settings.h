@@ -22,8 +22,7 @@
 #include <controls/controller_key_map.h>
 #include <QList>
 
-#define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_joystick.h>
 
 class QSettings;
 class Controller;

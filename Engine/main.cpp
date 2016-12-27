@@ -18,6 +18,11 @@
 
 #include <memory> //shared_ptr
 
+#ifdef _WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
 #include <QDir> //QDir
 #include "engine.hpp"
 
@@ -45,6 +50,53 @@
 
 #include <networking/intproc.h>
 
+#ifdef _WIN32
+/************************************************************
+ * A wrapper to pass into the main() function the UTF8 args *
+ ************************************************************/
+extern int main(int argc, char *argv[]);
+
+static void buildUtf8Args(std::vector<std::string> &utf8_args)
+{
+    //Get raw UTF-16 command line
+    wchar_t*    cmdLineW = GetCommandLineW();
+    int         argc     = 0;
+    //Convert it into array of strings
+    wchar_t**   argvW    = CommandLineToArgvW(cmdLineW, &argc);
+
+    utf8_args.reserve(argc);
+    //Convert every argument into UTF-8
+    for(int i = 0; i < argc; i++)
+    {
+        wchar_t* argW = argvW[i];
+        int argWlen = wcslen(argW);
+        std::string arg;
+        arg.resize(argWlen * 2);
+        size_t newLen = WideCharToMultiByte(CP_UTF8, 0, argW, argWlen, &arg[0], arg.size(), 0, 0);
+        arg.resize(newLen);
+        utf8_args.push_back(arg);
+    }
+
+}
+
+int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
+{
+    //! Storage of UTF8-encoded command line arguments
+    std::vector<std::string> g_utf8_args;
+    //! Storage of the pointers to begin of every argument
+    std::vector<char*>       g_utf8_argvV;
+
+    buildUtf8Args(g_utf8_args);
+
+    size_t argc = g_utf8_args.size();
+    g_utf8_argvV.reserve(argc);
+    for(size_t i = 0; i < argc; i++)
+        g_utf8_argvV.push_back(&g_utf8_args[i][0]);
+
+    return  main((int)argc, g_utf8_argvV.data());
+}
+#endif
+
 
 /*!
  * \brief Apply test settings to the game state
@@ -68,7 +120,6 @@ static void applyTestSettings(EpisodeState &state)
     }
 }
 
-
 int main(int argc, char *argv[])
 {
     // Parse --version or --install low args
@@ -86,7 +137,7 @@ int main(int argc, char *argv[])
     //Initialize translation sub-system
     app.loadTr();
     // Parse high arguments
-    app.parseHighArgs();
+    app.parseHighArgs(argc, argv);
 
     // Initalizing SDL
     if(app.initSDL())
