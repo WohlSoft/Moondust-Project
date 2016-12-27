@@ -117,10 +117,6 @@ int main(int argc, char *argv[])
     }
 
     app.loadJoysticks();
-    pLogDebug("Clear screen...");
-    GlRenderer::clearScreen();
-    GlRenderer::flush();
-    GlRenderer::repaint();
     SDL_PumpEvents();
 
     if(g_AppSettings.fullScreen)
@@ -132,6 +128,10 @@ int main(int argc, char *argv[])
     app.initFontBasics();
     pLogDebug("Showing window...");
     SDL_ShowWindow(PGE_Window::window);
+    pLogDebug("Clear screen...");
+    GlRenderer::clearScreen();
+    GlRenderer::flush();
+    GlRenderer::repaint();
     SDL_PumpEvents();
     /************************************************
      *      Check & ask for configuration pack      *
