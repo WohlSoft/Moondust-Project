@@ -224,7 +224,7 @@ public:
     /**
      * @brief Parse hight arguments (after initializing of some sub-systems)
      */
-    void parseHighArgs();
+    void parseHighArgs(int argc, char **argv);
 
     /**
      * @brief Create configs diretory if that is not exists

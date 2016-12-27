@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL_messagebox.h>
 #include <cstdlib>
 #include <signal.h>

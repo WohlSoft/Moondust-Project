@@ -31,7 +31,6 @@
 #include <common_features/gif-h/gif.h>
 #include <gui/pge_msgbox.h>
 
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_thread.h>

@@ -1,7 +1,6 @@
 #ifndef EDITOR_PIPE_H
 #define EDITOR_PIPE_H
 
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL_thread.h>
 #include <QVector>
 #include <atomic>

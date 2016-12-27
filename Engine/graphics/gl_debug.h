@@ -1,7 +1,6 @@
 #ifndef GL_DEBUG_H
 #define GL_DEBUG_H
 
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_messagebox.h>
 #include <sstream>
