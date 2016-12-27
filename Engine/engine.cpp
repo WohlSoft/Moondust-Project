@@ -297,14 +297,14 @@ static void printUsage(char *arg0)
 {
     std::string arg0s(arg0);
     #ifndef _WIN32
-    const char* logo =
+    const char *logo =
         "=================================================\n"
         INITIAL_WINDOW_TITLE "\n"
         "=================================================\n"
         "\n";
-    #define OPTIONAL_BREAK "\n"
+#define OPTIONAL_BREAK "\n"
     #else
-    #define OPTIONAL_BREAK " "
+#define OPTIONAL_BREAK " "
     #endif
 
     std::string msg(
@@ -341,7 +341,7 @@ static void printUsage(char *arg0)
         "Options:\n\n"
         "  --config=\"{path}\"          - Use a specific configuration package\n"
         #if defined(__APPLE__)
-        "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
+        "  --render-[auto|sw|gl2] - Choose a graphical sub-system\n"
         #else
         "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
         #endif
