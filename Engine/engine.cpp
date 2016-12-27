@@ -18,6 +18,9 @@
 
 #include <ctime>
 #include <iostream>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include <QDir>
 #include <QFileInfo>
@@ -290,6 +293,95 @@ void PGEEngineApp::loadLogger()
     enable(LOGGER);
 }
 
+static void printUsage(char *arg0)
+{
+    std::string arg0s(arg0);
+    std::string msg(
+        "=================================================\n"
+        INITIAL_WINDOW_TITLE "\n"
+        "=================================================\n"
+        "\n"
+        "Command line syntax:\n"
+        "\n"
+        "Start game with a specific config pack:\n"
+        "   " + arg0s + " [options] --config=\"./configs/Config Pack Name/\"\n"
+        "\n"
+        "Play single level:\n"
+        "   " + arg0s + " [options] level_filename.lvlx\n"
+        "\n"
+        "Play episode:\n"
+        "   " + arg0s + " [options] level_filename.wldx\n"
+        "\n"
+        "Show application version:\n"
+        "   " + arg0s + " --version\n"
+        "\n"
+        "Copy settings into "
+        #if defined(_WIN32)
+        "%UserProfile%/.PGE_Project/"
+        #elif defined(__APPLE__)
+        "/Library/Application Support/PGE_Project/"
+        #else
+        "~/.PGE_Project/"
+        #endif
+        " folder and use it as\n"
+        "placement of config packs, episodes, for screenshots store, etc.:\n"
+        "   " + arg0s + " --install\n"
+        "\n"
+        "Show this help:\n"
+        "   " + arg0s + " --help\n"
+        "\n\n"
+        "Options:\n\n"
+        "  --config=\"{path}\"          - Use a specific configuration package\n"
+        #if defined(__APPLE__)
+        "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
+        #else
+        "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
+        #endif
+        "             auto - Automatically detect it (DEFAULT)\n"
+        #if !defined(__APPLE__)
+        "             gl3  - Use OpenGL 3.1 renderer\n"
+        #endif
+        "             gl2  - Use OpenGL 2.1 renderer\n"
+        "             sw   - Use software renderer (may overload CPU)\n"
+        "  --render-vsync             - Toggle on VSync if supported on your hardware\n"
+        "  --lang=xx                  - Use a specific language (default is locale)\n"
+        "            (where xx - a code of language. I.e., en, ru, es, nl, pl, etc.)\n"
+        "  --num-players=X            - Start game with X number of players\n"
+        "  --pXc=Y                    - Set character Y for player X\n"
+        "            (for example --p1c=2 will set character with ID 2 to first player)\n"
+        "  --pXs=Y                    - Set character state Y for player X\n"
+        "            (for example --p2s=4 will set state with ID 4 to second player)\n"
+        "  --debug                    - Enable debug mode\n"
+        "  --debug-physics            - Enable debug rendering of the physics\n"
+        "  --debug-print=[yes|no]     - Enable/Disable debug information printing\n"
+        "  --debug-pagan-god          - Enable god mode\n"
+        "  --debug-superman           - Enable unlimited flying up\n"
+        "  --debug-chucknorris        - Allow to playable character destroy any objects\n"
+        "  --debug-worldfreedom       - Allow to walk everywhere on the world map\n"
+        "\n"
+        "More detailed information can be found here:\n"
+        "http://wohlsoft.ru/pgewiki/PGE_Engine#Command_line_arguments\n"
+        "\n");
+
+    #ifdef _WIN32
+    //MessageBoxA(NULL, msg.c_str(), INITIAL_WINDOW_TITLE, MB_OK | MB_ICONINFORMATION);
+    int hCrt;
+    FILE *hf;
+
+    AllocConsole();
+    hCrt = _open_osfhandle(
+               (long) GetStdHandle(STD_ERROR_HANDLE), /*STD_OUTPUT_HANDLE*/
+               _O_TEXT
+           );
+    hf = _fdopen(hCrt, "w");
+    *stderr = *hf;
+    i = setvbuf(stderr, NULL, _IONBF, 0);
+    //#else
+    #endif
+    fprintf(stderr, "%s", msg.c_str());
+    //#endif
+}
+
 bool PGEEngineApp::parseLowArgs(int argc, char **argv)
 {
     if(argc > 1)
@@ -309,6 +401,11 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
             lib.loadQApp(argc, argv);
             AppPathManager::install();
             AppPathManager::initAppPath();
+            return true;
+        }
+        else if(strcmp(arg, "--help") == 0)
+        {
+            printUsage(argv[0]);
             return true;
         }
     }
