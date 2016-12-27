@@ -37,26 +37,42 @@ enum Level_returnTo
 struct PGEEngineCmdArgs
 {
     PGEEngineCmdArgs();
+    //! Debug mode is enabled
     bool debugMode;
+    //! Audio subsystem is enabled
     bool audioEnabled;
+    //! Do episode testing and exit
     bool testWorld;
+    //! Do single level testing and exit
     bool testLevel;
+    //! Number of players in the testing
     int  test_NumPlayers;
+    //! Playable character ID per each player
     int  test_Characters[4];
+    //! Character state ID per each player
     int  test_States[4];
+    //! Renderer type (OpenGL or software)
     GlRenderer::RenderEngineType rendererType;
 };
 
-extern PGEEngineCmdArgs g_flags;
-extern Level_returnTo   g_jumpOnLevelEndTo;
-
-extern QString             g_configPackPath;
-extern QString             g_fileToOpen;
-extern EpisodeState        g_GameState;
-extern PlayEpisodeResult   g_Episode;
+//! Global flags states configured from the command line
+extern PGEEngineCmdArgs     g_flags;
+//! Target scene after exiting from the level scene
+extern Level_returnTo       g_jumpOnLevelEndTo;
+//! Path to config pack configured from the command line
+extern QString              g_configPackPath;
+//! Path to the file to open (requested from a command line)
+extern QString              g_fileToOpen;
+//! Global game state
+extern EpisodeState         g_GameState;
+//! Episode state meta data
+extern PlayEpisodeResult    g_Episode;
 
 class PGE_Translator;
 
+/**
+ * @brief Global manager of PGE Engine's modules
+ */
 class PGEEngineApp
 {
 private:
@@ -65,17 +81,29 @@ private:
      */
     enum LoadedModules
     {
+        //! No modules loaded
         NOTHING         = 0x000,
+        //! Config manager is initialized
         CONFIG_MANAGER  = 0x001,
+        //! libSDL is initialized
         LIBSDL          = 0x002,
+        //! Audio subsystem is initialized
         AUDIO_ENGINE    = 0x004,
+        //! Application settings are loaded
         SETTINGS_LOADED = 0x008,
+        //! Interprocess subsystem is enabled
         INTERPROCESSOR  = 0x010,
+        //! Font manager is initialized
         FONT_MANAGER    = 0x020,
+        //! Game window is created
         PGE_WINDOW      = 0x040,
+        //! Qt Application class is constructed
         QAPP            = 0x080,
+        //! Logger is initalized
         LOGGER          = 0x100,
+        //! Translation subsystem is initialized
         TRANSLATOR      = 0x200,
+        //! Joysticks subsystem is initialized
         JOYSTICKS       = 0x400
     } m_lib;
 
@@ -170,6 +198,10 @@ public:
      */
     bool initAudio(bool useAudio);
 
+    /**
+     * @brief Error message of audio subsystem initializing
+     * @return string with the message text
+     */
     std::string errorAudio();
 
     /**
