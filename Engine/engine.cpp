@@ -316,7 +316,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
     return false;
 }
 
-static void removeQuotes(char* &s, int &len)
+static void removeQuotes(char *&s, size_t &len)
 {
     if(len > 0)
     {
@@ -326,7 +326,7 @@ static void removeQuotes(char* &s, int &len)
             len--;
         }
 
-        if((len > 0) && (s[len-1] == '\"'))
+        if((len > 0) && (s[len - 1] == '\"'))
         {
             s[len - 1] = '\0';
             len--;
@@ -334,7 +334,7 @@ static void removeQuotes(char* &s, int &len)
     }
 }
 
-static void findEqual(char* &s, int &len)
+static void findEqual(char *&s, size_t &len)
 {
     while(len > 0)
     {
@@ -347,24 +347,24 @@ static void findEqual(char* &s, int &len)
 static QString takeStrFromArg(std::string &arg, bool &ok)
 {
     std::string target = arg;
-    int     len = arg.size();
-    char*   s = &target[0];
+    size_t      len = arg.size();
+    char        *s = &target[0];
 
-    removeQuotes(s, len);
     findEqual(s, len);
+    removeQuotes(s, len);
     ok = (len > 0);
 
-    return QString::fromUtf8(s, len);
+    return QString::fromUtf8(s, (int)len);
 }
 
 static int takeIntFromArg(std::string &arg, bool &ok)
 {
     std::string target = arg;
-    int len = arg.size();
-    char* s = &target[0];
+    size_t  len = arg.size();
+    char    *s  = &target[0];
 
-    removeQuotes(s, len);
     findEqual(s, len);
+    removeQuotes(s, len);
 
     ok = (len > 0);
 
@@ -404,8 +404,7 @@ void PGEEngineApp::parseHighArgs()
 
                 break;
             }
-            else
-            if(param_s.compare(0, 6, stateParam) == 0)
+            else if(param_s.compare(0, 6, stateParam) == 0)
             {
                 int tmp;
                 bool ok = false;
