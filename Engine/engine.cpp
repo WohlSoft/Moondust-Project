@@ -166,6 +166,10 @@ PGE_Application *PGEEngineApp::loadQApp(int argc, char **argv)
     PGE_Application::addLibraryPath(".");
     PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
     PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
+#endif
     PGE_Application::setAttribute(Qt::AA_Use96Dpi);
     m_qApp = new PGE_Application(argc, argv);
 

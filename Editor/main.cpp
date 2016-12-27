@@ -137,6 +137,10 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath(".");
     QApplication::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
     QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, false);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#endif
 
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();

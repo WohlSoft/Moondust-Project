@@ -164,6 +164,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
                               Width, Height,
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
+                              SDL_WINDOW_ALLOW_HIGHDPI |
                               GlRenderer::SDL_InitFlags());
 
     if(window == NULL)
