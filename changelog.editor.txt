@@ -25,6 +25,7 @@ Editor 0.3.1.12
 patch 1
 - Attempt to fix scaling on the HighDPI screens
 - Fixed a bug caused duplicated ArrayID value by physical environment zones (after copy-pasting)
+- Fixed support of tilesets with the same title name
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
